@@ -1,0 +1,112 @@
+[
+    {
+        "images": [
+            {
+                "men": "gosha_men.jpg",
+                "women": "gosha_women.jpg",
+                "kids": "gosha_kids.jpg"
+            }
+        ],
+        "_id": "5e77302401154a04f4607a7a",
+        "brand": "gosha"
+    },
+    {
+        "images": [
+            {
+                "men": "ruma_men.jpg",
+                "women": "ruma_women.jpg",
+                "kids": "ruma_kids.jpg"
+            }
+        ],
+        "_id": "5e77302501154a04f4607a7d",
+        "brand": "ruma"
+    },
+    {
+        "images": [
+            {
+                "men": "cassics_men.jpg",
+                "women": "cassics_women.jpg",
+                "kids": "cassics_kids.jpg"
+            }
+        ],
+        "_id": "5e77302601154a04f4607a82",
+        "brand": "cassics"
+    },
+    {
+        "images": [
+            {
+                "men": "medicine_men.jpg",
+                "women": "medicine_women.jpg",
+                "kids": "medicine_kids.jpg"
+            }
+        ],
+        "_id": "5e77302801154a04f4607a86",
+        "brand": "medicine"
+    },
+    {
+        "images": [
+            {
+                "men": "dive_men.jpg",
+                "women": "dive_women.jpg",
+                "kids": "dive_kids.jpg"
+            }
+        ],
+        "_id": "5e77302a01154a04f4607a88",
+        "brand": "dive"
+    },
+    {
+        "images": [
+            {
+                "men": "tier_men.jpg",
+                "women": "tier_women.jpg",
+                "kids": "tier_kids.jpg"
+            }
+        ],
+        "_id": "5e77302d01154a04f4607a8b",
+        "brand": "tier"
+    },
+    {
+        "images": [
+            {
+                "men": "addic_men.jpg",
+                "women": "addic_women.jpg",
+                "kids": "addic_kids.jpg"
+            }
+        ],
+        "_id": "5e77302e01154a04f4607a8c",
+        "brand": "addic"
+    },
+        {
+        "images": [
+            {
+                "men": "hikee_men.jpg",
+                "women": "hikee_women.jpg",
+                "kids": "hikee_kids.jpg"
+            }
+        ],
+        "_id": "5e77302f01154a04f4607a8e",
+        "brand": "hikee"
+    },
+    {
+        "images": [
+            {
+                "men": "zori_men.jpg",
+                "women": "zori_women.jpg",
+                "kids": "zori_kids.jpg"
+            }
+        ],
+        "_id": "5e77303601154a04f4607a91",
+        "brand": "zori"
+    },
+    {
+        "images": [
+            {
+                "men": "tommy_kesh_men.jpg",
+                "women": "tommy_kesh_women.jpg",
+                "kids": "tommy_kesh_kids.jpg"
+            }
+        ],
+        "_id": "5e77303901154a04f4607a92",
+        "brand": "tommy kesh"
+    }
+]

@@ -1,0 +1,377 @@
+[
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Kyiv",
+            "street": "Shevchenka",
+            "buildingNumber": "15"
+        },
+        "_id": "5eDQWDSS03be9924fc80e922",
+        "orderItems": [
+            {
+                "_id": "5e77791e03be9924fc80e923",
+                "item": "5e5a7fdcdf94e157582dff9c",
+                "quantity": 5
+            }
+        ],
+        "userId": {
+            "role": "user",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNTgzOTUxMzc0fQ.g1m2J8LQRGQk5TpCxvTWXx-shxWXpw_4pATDXfI6vE8"
+            ],
+            "wishlist": [],
+            "_id": "5e692e0e10aff8001730df0a",
+            "email": "user1@gmail.com",
+            "password": "$2a$10$ySbgCyEY8d4jS.ncK3LxgeAYgA4JsqRDIh.izXk6zBKNf6Vq7bgxm",
+            "date": "2020-03-11T18:29:34.840Z",
+            "__v": 0
+        },
+        "date": "2020-03-22T14:41:34.188Z",
+        "deliveryType": "currier",
+        "contactPhone": 546545843,
+        "paymentMethod": "cash",
+        "status": "pending",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Kyiv",
+            "street": "Shevchenka",
+            "buildingNumber": "15"
+        },
+        "_id": "5DQWQWXe9924fc80e922",
+        "orderItems": [
+            {
+                "_id": "5e77791e03be9924fc80e923",
+                "item": "5e5a7fdcdf94e157582dff9c",
+                "quantity": 5
+            }
+        ],
+        "userId": {
+            "role": "user",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNTgzOTUxMzc0fQ.g1m2J8LQRGQk5TpCxvTWXx-shxWXpw_4pATDXfI6vE8"
+            ],
+            "wishlist": [],
+            "_id": "5e692e0e10aff8001730df0a",
+            "email": "user1@gmail.com",
+            "password": "$2a$10$ySbgCyEY8d4jS.ncK3LxgeAYgA4JsqRDIh.izXk6zBKNf6Vq7bgxm",
+            "date": "2020-03-11T18:29:34.840Z",
+            "__v": 0
+        },
+        "date": "2020-03-22T14:41:34.188Z",
+        "deliveryType": "currier",
+        "contactPhone": 546545843,
+        "paymentMethod": "cash",
+        "status": "pending",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Kyiv",
+            "street": "Shevchenka",
+            "buildingNumber": "15"
+        },
+        "_id": "5e77791e03be9924fc80e922",
+        "orderItems": [
+            {
+                "_id": "5e77791e03be9924fc80e923",
+                "item": "5e5a7fdcdf94e157582dff9c",
+                "quantity": 5
+            }
+        ],
+        "userId": {
+            "role": "user",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNTgzOTUxMzc0fQ.g1m2J8LQRGQk5TpCxvTWXx-shxWXpw_4pATDXfI6vE8"
+            ],
+            "wishlist": [],
+            "_id": "5e692e0e10aff8001730df0a",
+            "email": "user1@gmail.com",
+            "password": "$2a$10$ySbgCyEY8d4jS.ncK3LxgeAYgA4JsqRDIh.izXk6zBKNf6Vq7bgxm",
+            "date": "2020-03-11T18:29:34.840Z",
+            "__v": 0
+        },
+        "date": "2020-03-22T14:41:34.188Z",
+        "deliveryType": "currier",
+        "contactPhone": 546545843,
+        "paymentMethod": "cash",
+        "status": "pending",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Kyiv",
+            "street": "Shevchenka",
+            "buildingNumber": "15"
+        },
+        "_id": "5e7DQWXQWX803d883c9351",
+        "orderItems": [
+            {
+                "_id": "5e777616ac0d803d883c9352",
+                "item": "5e5a7fd9df94e157582dff90",
+                "quantity": 1
+            },
+            {
+                "_id": "5e777616ac0d803d883c9353",
+                "item": "5e5a7fdcdf94e157582dff9c",
+                "quantity": 2
+            }
+        ],
+        "userId": {
+            "role": "user",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNTgzOTUxMzc0fQ.g1m2J8LQRGQk5TpCxvTWXx-shxWXpw_4pATDXfI6vE8"
+            ],
+            "wishlist": [],
+            "_id": "5e692e0e10aff8001730df0a",
+            "email": "user1@gmail.com",
+            "password": "$2a$10$ySbgCyEY8d4jS.ncK3LxgeAYgA4JsqRDIh.izXk6zBKNf6Vq7bgxm",
+            "date": "2020-03-11T18:29:34.840Z",
+            "__v": 0
+        },
+        "date": "2020-03-22T14:28:38.048Z",
+        "deliveryType": "currier",
+        "contactPhone": 546545843,
+        "paymentMethod": "cash",
+        "status": "pending",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Kyiv",
+            "street": "Shevchenka",
+            "buildingNumber": "15"
+        },
+        "_id": "5e7210bc5cc52929d8fc6a4e",
+        "orderItems": [
+            {
+                "_id": "5e7210bc5cc52929d8fc6a4f",
+                "item": "5e5a7fd9df94e157582dff90",
+                "quantity": 3
+            },
+            {
+                "_id": "5e7210bc5cc52929d8fc6a50",
+                "item": "5e5a7fdcdf94e157582dff9c",
+                "quantity": 2
+            }
+        ],
+        "userId": {
+            "role": "user",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNTgzOTUxMzc0fQ.g1m2J8LQRGQk5TpCxvTWXx-shxWXpw_4pATDXfI6vE8"
+            ],
+            "wishlist": [],
+            "_id": "5e692e0e10aff8001730df0a",
+            "email": "user1@gmail.com",
+            "password": "$2a$10$ySbgCyEY8d4jS.ncK3LxgeAYgA4JsqRDIh.izXk6zBKNf6Vq7bgxm",
+            "date": "2020-03-11T18:29:34.840Z",
+            "__v": 0
+        },
+        "date": "2020-03-18T12:14:52.231Z",
+        "deliveryType": "currier",
+        "contactPhone": 546545843,
+        "paymentMethod": "cash",
+        "status": "pending",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Kyiv",
+            "street": "Shevchenka",
+            "buildingNumber": "15"
+        },
+        "_id": "5e72100e5c4955165c9b5381",
+        "orderItems": [
+            {
+                "_id": "5e72100e5c4955165c9b5382",
+                "item": "5e5a7fd9df94e157582dff90",
+                "quantity": 1
+            },
+            {
+                "_id": "5e72100e5c4955165c9b5383",
+                "item": "5e5a7fdcdf94e157582dff9c",
+                "quantity": 2
+            }
+        ],
+        "userId": {
+            "role": "user",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNTgzOTUxMzc0fQ.g1m2J8LQRGQk5TpCxvTWXx-shxWXpw_4pATDXfI6vE8"
+            ],
+            "wishlist": [],
+            "_id": "5e692e0e10aff8001730df0a",
+            "email": "user1@gmail.com",
+            "password": "$2a$10$ySbgCyEY8d4jS.ncK3LxgeAYgA4JsqRDIh.izXk6zBKNf6Vq7bgxm",
+            "date": "2020-03-11T18:29:34.840Z",
+            "__v": 0
+        },
+        "date": "2020-03-18T12:11:58.968Z",
+        "deliveryType": "currier",
+        "contactPhone": 546545843,
+        "paymentMethod": "cash",
+        "status": "pending",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Kyiv",
+            "street": "Shevchenka",
+            "buildingNumber": "15"
+        },
+        "_id": "5e6a461dfeebf82614b774ba",
+        "orderItems": [
+            {
+                "_id": "5e6a461dfeebf82614b774bb",
+                "item": "5e5a7fd9df94e157582dff90",
+                "quantity": 1
+            },
+            {
+                "_id": "5e6a461dfeebf82614b774bc",
+                "item": "5e5a7fdcdf94e157582dff9c",
+                "quantity": 2
+            }
+        ],
+        "userId": {
+            "role": "user",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNTgzOTUxMzc0fQ.g1m2J8LQRGQk5TpCxvTWXx-shxWXpw_4pATDXfI6vE8"
+            ],
+            "wishlist": [],
+            "_id": "5e692e0e10aff8001730df0a",
+            "email": "user1@gmail.com",
+            "password": "$2a$10$ySbgCyEY8d4jS.ncK3LxgeAYgA4JsqRDIh.izXk6zBKNf6Vq7bgxm",
+            "date": "2020-03-11T18:29:34.840Z",
+            "__v": 0
+        },
+        "date": "2020-03-12T14:24:29.411Z",
+        "deliveryType": "currier",
+        "contactPhone": 546545843,
+        "paymentMethod": "cash",
+        "status": "canceled",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Lviv",
+            "street": "++++++++++",
+            "buildingNumber": "2a"
+        },
+        "_id": "5e68f5a10d45114af4c90673",
+        "orderItems": [
+            {
+                "_id": "5e68f5a10d45114af4c90674",
+                "item": "5e5a7fcedf94e157582dff64",
+                "quantity": 2
+            }
+        ],
+        "userId": {
+            "role": "admin",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAbWFpbC5jb20iLCJpYXQiOjE1ODMxNDk1NjN9.9szBgOHpf7JOuOwr5SQXRY0G6bWpcsVdOhoR84XILU8"
+            ],
+            "wishlist": [],
+            "_id": "5e5cf1fb9884051830c4162f",
+            "email": "user1@mail.com",
+            "password": "$2a$10$YBx154k3.O8pTS.6JExh1uzaNowHlauGeiL7851mrLoKCWhbrR52a",
+            "date": "2020-03-02T11:46:03.810Z",
+            "__v": 0
+        },
+        "date": "2020-03-11T14:28:49.556Z",
+        "deliveryType": "currier",
+        "contactPhone": 546546554,
+        "paymentMethod": "cash",
+        "status": "delivered",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Lviv",
+            "street": "++++++++++",
+            "buildingNumber": "2a"
+        },
+        "_id": "5e68f5840d45114af4c9066f",
+        "orderItems": [
+            {
+                "_id": "5e68f5840d45114af4c90670",
+                "item": "5e5a7fcedf94e157582dff64",
+                "quantity": 2
+            },
+            {
+                "_id": "5e68f5840d45114af4c90671",
+                "item": "5e5a7fcfdf94e157582dff68",
+                "quantity": 3
+            },
+            {
+                "_id": "5e68f5840d45114af4c90672",
+                "item": "5e5a7fd0df94e157582dff6c",
+                "quantity": 1
+            }
+        ],
+        "userId": {
+            "role": "admin",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAbWFpbC5jb20iLCJpYXQiOjE1ODMxNDk1NjN9.9szBgOHpf7JOuOwr5SQXRY0G6bWpcsVdOhoR84XILU8"
+            ],
+            "wishlist": [],
+            "_id": "5e5cf1fb9884051830c4162f",
+            "email": "user1@mail.com",
+            "password": "$2a$10$YBx154k3.O8pTS.6JExh1uzaNowHlauGeiL7851mrLoKCWhbrR52a",
+            "date": "2020-03-02T11:46:03.810Z",
+            "__v": 0
+        },
+        "date": "2020-03-11T14:28:20.818Z",
+        "deliveryType": "currier",
+        "contactPhone": 546546554,
+        "paymentMethod": "cash",
+        "status": "delivered",
+        "__v": 0
+    },
+    {
+        "deliveryAddress": {
+            "country": "Ukraine",
+            "city": "Kyiv",
+            "street": "Shevchenka",
+            "buildingNumber": "15"
+        },
+        "_id": "5e68f161e3b7550ef4f00127",
+        "orderItems": [
+            {
+                "_id": "5e68f161e3b7550ef4f00128",
+                "item": "5e5a7fcfdf94e157582dff68",
+                "quantity": 2
+            },
+            {
+                "_id": "5e68f161e3b7550ef4f00129",
+                "item": "5e5a7fd0df94e157582dff6c",
+                "quantity": 5
+            }
+        ],
+        "userId": {
+            "role": "admin",
+            "tokens": [
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjFAbWFpbC5jb20iLCJpYXQiOjE1ODMxNDk1NjN9.9szBgOHpf7JOuOwr5SQXRY0G6bWpcsVdOhoR84XILU8"
+            ],
+            "wishlist": [],
+            "_id": "5e5cf1fb9884051830c4162f",
+            "email": "user1@mail.com",
+            "password": "$2a$10$YBx154k3.O8pTS.6JExh1uzaNowHlauGeiL7851mrLoKCWhbrR52a",
+            "date": "2020-03-02T11:46:03.810Z",
+            "__v": 0
+        },
+        "date": "2020-03-11T14:10:41.639Z",
+        "deliveryType": "currier",
+        "contactPhone": 111222111,
+        "paymentMethod": "cash",
+        "status": "delivered",
+        "__v": 0
+    }
+]

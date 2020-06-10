@@ -1,0 +1,19 @@
+[{
+    "id": "newproduct",
+    "catalog": "women",
+    "category": "jeans",
+    "brand": "ruma",
+    "color": "black",
+    "title": "New test product",
+    "description": "This is product description",
+    "mrsp": 900,
+    "price": 1000,
+    "images": [],
+    "propetries": [
+        {
+            "size": "L",
+            "sku": "ASDQWD45",
+            "available": 45
+        }
+    ]
+}]

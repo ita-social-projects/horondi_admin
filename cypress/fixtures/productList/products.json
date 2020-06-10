@@ -1,0 +1,406 @@
+{
+    "products": [
+        {
+            "id": "5e773657cb8d2519689e1adb",
+            "title": "t-shirts dive zoj seg eponifu.",
+            "images": [
+                "t-shirts_women.jpg"
+            ],
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.",
+            "propetries": [
+                {
+                    "size": [
+                        "XS"
+                    ],
+                    "_id": "5e773657cb8d2519689e1adc",
+                    "available": 9,
+                    "sku": "4T1W1P94"
+                },
+                {
+                    "size": [
+                        "M"
+                    ],
+                    "_id": "5e773657cb8d2519689e1add",
+                    "available": 2,
+                    "sku": "D2HVVTF8"
+                },
+                {
+                    "size": [
+                        "XXL"
+                    ],
+                    "_id": "5e773657cb8d2519689e1ade",
+                    "available": 8,
+                    "sku": "8J3Y9SLI"
+                }
+            ],
+            "price": 64,
+            "mrsp": 128,
+            "brand": "dive",
+            "catalog": "women",
+            "category": "t-shirts",
+            "color": "black"
+        },
+        {
+            "id": "5e7735dacb8d2519689e18fb",
+            "title": "sweaters hikee ivat tav gadja.",
+            "images": [
+                "sweaters_kids.jpg"
+            ],
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "propetries": [
+                {
+                    "size": [
+                        "XS"
+                    ],
+                    "_id": "5e7735dacb8d2519689e18fc",
+                    "available": 7,
+                    "sku": "N1QW7NXC"
+                },
+                {
+                    "size": [
+                        "M"
+                    ],
+                    "_id": "5e7735dacb8d2519689e18fd",
+                    "available": 1,
+                    "sku": "ZZAPXKOP"
+                },
+                {
+                    "size": [
+                        "XXL"
+                    ],
+                    "_id": "5e7735dacb8d2519689e18fe",
+                    "available": 2,
+                    "sku": "V4NSL17Z"
+                }
+            ],
+            "price": 74,
+            "mrsp": 107,
+            "brand": "hikee",
+            "catalog": "kids",
+            "category": "sweaters",
+            "color": "yellow"
+        },
+        {
+            "id": "5e7735a0cb8d2519689e182b",
+            "title": "shoes gosha en cot jipa.",
+            "images": [
+                "shoes_kids.jpg"
+            ],
+            "description": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+            "propetries": [
+                {
+                    "size": [
+                        "37"
+                    ],
+                    "_id": "5e7735a0cb8d2519689e182c",
+                    "available": 10,
+                    "sku": "S8SCAOKH"
+                },
+                {
+                    "size": [
+                        "39"
+                    ],
+                    "_id": "5e7735a0cb8d2519689e182d",
+                    "available": 10,
+                    "sku": "IM10H55V"
+                },
+                {
+                    "size": [
+                        "43"
+                    ],
+                    "_id": "5e7735a0cb8d2519689e182e",
+                    "available": 1,
+                    "sku": "XUJ3W3WS"
+                }
+            ],
+            "price": 79,
+            "mrsp": 132,
+            "brand": "gosha",
+            "catalog": "kids",
+            "category": "shoes",
+            "color": "blue"
+        },
+        {
+            "id": "5e77342ecb8d2519689e12ab",
+            "title": "jeans ruma fim vovrubvu hojewjiz.",
+            "images": [
+                "jeans_women.jpg"
+            ],
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "propetries": [
+                {
+                    "size": [
+                        "XS"
+                    ],
+                    "_id": "5e77342ecb8d2519689e12ac",
+                    "available": 2,
+                    "sku": "LZZ1GTRD"
+                },
+                {
+                    "size": [
+                        "M"
+                    ],
+                    "_id": "5e77342ecb8d2519689e12ad",
+                    "available": 9,
+                    "sku": "6RT4XBH5"
+                },
+                {
+                    "size": [
+                        "XXL"
+                    ],
+                    "_id": "5e77342ecb8d2519689e12ae",
+                    "available": 4,
+                    "sku": "IQZTY7XQ"
+                }
+            ],
+            "price": 81,
+            "mrsp": 117,
+            "brand": "ruma",
+            "catalog": "women",
+            "category": "jeans",
+            "color": "black"
+        },
+        {
+            "id": "5e7735becb8d2519689e189b",
+            "title": "shirts hikee ga citgerus igis.",
+            "images": [
+                "shirts_kids.jpg"
+            ],
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "propetries": [
+                {
+                    "size": [
+                        "XS"
+                    ],
+                    "_id": "5e7735becb8d2519689e189c",
+                    "available": 5,
+                    "sku": "WXH1IN9S"
+                },
+                {
+                    "size": [
+                        "M"
+                    ],
+                    "_id": "5e7735becb8d2519689e189d",
+                    "available": 5,
+                    "sku": "U8VSR70T"
+                },
+                {
+                    "size": [
+                        "XXL"
+                    ],
+                    "_id": "5e7735becb8d2519689e189e",
+                    "available": 9,
+                    "sku": "0E0FO6W7"
+                }
+            ],
+            "price": 81,
+            "mrsp": 102,
+            "brand": "hikee",
+            "catalog": "kids",
+            "category": "shirts",
+            "color": "red"
+        },
+        {
+            "id": "5e773608cb8d2519689e19ab",
+            "title": "jeans zori hilan tiruvaj cejjiuhu.",
+            "images": [
+                "jeans_men.jpg"
+            ],
+            "description": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+            "propetries": [
+                {
+                    "size": [
+                        "XS"
+                    ],
+                    "_id": "5e773608cb8d2519689e19ac",
+                    "available": 10,
+                    "sku": "M97TIRV1"
+                },
+                {
+                    "size": [
+                        "M"
+                    ],
+                    "_id": "5e773608cb8d2519689e19ad",
+                    "available": 10,
+                    "sku": "A2FOZ46N"
+                },
+                {
+                    "size": [
+                        "XXL"
+                    ],
+                    "_id": "5e773608cb8d2519689e19ae",
+                    "available": 4,
+                    "sku": "AELW0W3R"
+                }
+            ],
+            "price": 81,
+            "mrsp": 136,
+            "brand": "zori",
+            "catalog": "men",
+            "category": "jeans",
+            "color": "white"
+        },
+        {
+            "id": "5e773660cb8d2519689e1afb",
+            "title": "shirts tier ufkaz os sodfet.",
+            "images": [
+                "shirts_men.jpg"
+            ],
+            "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.",
+            "propetries": [
+                {
+                    "size": [
+                        "XS"
+                    ],
+                    "_id": "5e773660cb8d2519689e1afc",
+                    "available": 9,
+                    "sku": "PSE71DH4"
+                },
+                {
+                    "size": [
+                        "M"
+                    ],
+                    "_id": "5e773660cb8d2519689e1afd",
+                    "available": 1,
+                    "sku": "U8UEOT47"
+                },
+                {
+                    "size": [
+                        "XXL"
+                    ],
+                    "_id": "5e773660cb8d2519689e1afe",
+                    "available": 4,
+                    "sku": "76HN38WD"
+                }
+            ],
+            "price": 82,
+            "mrsp": 118,
+            "brand": "tier",
+            "catalog": "men",
+            "category": "shirts",
+            "color": "blue"
+        },
+        {
+            "id": "5e7735e1cb8d2519689e1913",
+            "title": "shoes tier loiszu er dahnocu.",
+            "images": [
+                "shoes_kids.jpg"
+            ],
+            "description": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+            "propetries": [
+                {
+                    "size": [
+                        "37"
+                    ],
+                    "_id": "5e7735e1cb8d2519689e1914",
+                    "available": 3,
+                    "sku": "23XIIW9J"
+                },
+                {
+                    "size": [
+                        "39"
+                    ],
+                    "_id": "5e7735e1cb8d2519689e1915",
+                    "available": 10,
+                    "sku": "R7VHI90D"
+                },
+                {
+                    "size": [
+                        "43"
+                    ],
+                    "_id": "5e7735e1cb8d2519689e1916",
+                    "available": 2,
+                    "sku": "UCL4TDIS"
+                }
+            ],
+            "price": 84,
+            "mrsp": 121,
+            "brand": "tier",
+            "catalog": "kids",
+            "category": "shoes",
+            "color": "white"
+        },
+        {
+            "id": "5e773463cb8d2519689e137f",
+            "title": "sweaters ruma pajfeneb comlu nuj.",
+            "images": [
+                "sweaters_women.jpg"
+            ],
+            "description": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+            "propetries": [
+                {
+                    "size": [
+                        "XS"
+                    ],
+                    "_id": "5e773463cb8d2519689e1380",
+                    "available": 8,
+                    "sku": "OMYY3TYI"
+                },
+                {
+                    "size": [
+                        "M"
+                    ],
+                    "_id": "5e773463cb8d2519689e1381",
+                    "available": 6,
+                    "sku": "HW0O7MC1"
+                },
+                {
+                    "size": [
+                        "XXL"
+                    ],
+                    "_id": "5e773463cb8d2519689e1382",
+                    "available": 10,
+                    "sku": "F8KHVZHW"
+                }
+            ],
+            "price": 85,
+            "mrsp": 122,
+            "brand": "ruma",
+            "catalog": "women",
+            "category": "sweaters",
+            "color": "white"
+        },
+        {
+            "id": "5e773517cb8d2519689e1627",
+            "title": "dresses zori en jatit dim.",
+            "images": [
+                "dresses_women.jpg"
+            ],
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "propetries": [
+                {
+                    "size": [
+                        "XS"
+                    ],
+                    "_id": "5e773517cb8d2519689e1628",
+                    "available": 5,
+                    "sku": "54KUWU3A"
+                },
+                {
+                    "size": [
+                        "M"
+                    ],
+                    "_id": "5e773517cb8d2519689e1629",
+                    "available": 3,
+                    "sku": "B1OKSR6O"
+                },
+                {
+                    "size": [
+                        "XXL"
+                    ],
+                    "_id": "5e773517cb8d2519689e162a",
+                    "available": 6,
+                    "sku": "RAE29GC3"
+                }
+            ],
+            "price": 85,
+            "mrsp": 143,
+            "brand": "zori",
+            "catalog": "women",
+            "category": "dresses",
+            "color": "yellow"
+        }
+    ],
+    "pagesCount": 54,
+    "foundProductsNumber": 536
+}
