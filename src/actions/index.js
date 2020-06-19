@@ -1,39 +1,4 @@
-export {
-  setCatalog,
-  setCatalogs,
-  catalogLoadingStatus
-} from './Catalogs-actions';
-
-export { setBrand, setBrands, brandLoadingStatus } from './Brand-actions';
-
 export { setNews, newsLoadingStatus, setNewsItem } from './News-actions';
-
-export { setAdmin } from './Auth-actions';
-
-export {
-  setCategory,
-  setCategories,
-  categoryLoadingStatus,
-  categoryUpdateCatalogs,
-  categoryLoadingStop
-} from './Categories-actions';
-
-export {
-  setProduct,
-  setProducts,
-  setProductsFilters,
-  setProductPropetries,
-  setProductEditStatus,
-  setProductLoadingStatus
-} from './Products-actions';
-
-export {
-  setProductModel,
-  setSizeModel,
-  setProductSizes
-} from './Product-model-actions';
-
-export { setUsers, setUser, userLoadingStatus } from './Users-actions';
 
 export {
   setPagesCount,
@@ -70,12 +35,3 @@ export {
   setButtonTitle,
   setEventHandler
 } from './Dialog-window-actions';
-
-export { setDaysValue } from './Charts-actions';
-
-export {
-  setOrder,
-  setOrders,
-  ordersLoadingStatus,
-  setOrderStatus
-} from './Orders-actions';

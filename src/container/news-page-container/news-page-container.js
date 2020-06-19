@@ -1,13 +1,13 @@
 import React from 'react';
 import { useStyles } from './news-page-container-styles';
-import TestList from '../../components/news-page';
+import NewsPage from '../../components/news-page';
 
 const NewsPageContainer = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
-      <TestList />
+      <NewsPage />
     </div>
   );
 };

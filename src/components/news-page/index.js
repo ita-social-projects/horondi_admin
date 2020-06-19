@@ -1,3 +1,3 @@
-import TestList from './News-page';
+import NewsPage from './News-page';
 
-export default TestList;
+export default NewsPage;

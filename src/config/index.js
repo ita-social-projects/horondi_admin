@@ -6,28 +6,12 @@ import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 const routes = {
-  pathToOrders: '/',
-  pathToProducts: '/products',
-  pathToProductDetails: '/product/:id',
-  pathToAddProduct: '/productadd',
-  pathToCategories: '/categories',
-  pathToCategoryDetails: '/category/:id',
-  pathToAddCategory: '/categoryadd',
-  pathToBrands: '/brands',
-  pathToNews: '/news',
-  pathToBrandDetails: '/brand/:id',
-  pathToNewsDetails: '/news/:id',
-  pathToAddBrand: '/brandadd',
-  pathToAddNews: '/newsadd',
-  pathToUsers: '/users',
-  pathToUserDetails: '/user/:id',
-  pathToLogin: '/login',
-  pathToOrderDetails: '/order/:id'
+  pathToNews: '/'
 };
 
 export const config = {
   app: {
-    title: 'NChoice Admin Portal',
+    title: 'Horondi Admin Portal',
     menuCategories: [
       ['Orders', routes.pathToOrders, AssessmentIcon],
       ['Products', routes.pathToProducts, ShoppingBasketIcon],

@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import { useStyles } from './News-page-style';
 import wrapWithAdminService from '../wrappers';
+import newsService from '../../services/News-service';
+
 import {
   setSnackBarStatus,
   setSnackBarSeverity,
@@ -16,7 +19,6 @@ import {
   newsLoadingStatus
 } from '../../actions';
 
-import useStyle from './News-page-style';
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
@@ -30,9 +32,8 @@ const REMOVE_TITLE = 'Remove news';
 const REMOVE_MESSAGE = 'Are you sure you want to remove this item?';
 const SUCCESS_STATUS = 'success';
 
-const TestList = ({
+const NewsPage = ({
   news,
-  adminService,
   loading,
   setNews,
   newsLoadingStatus,
@@ -46,14 +47,12 @@ const TestList = ({
   setButtonTitle,
   setEventHandler
 }) => {
-  const { newsService } = adminService;
-
-  const classes = useStyle();
+  const classes = useStyles();
 
   useEffect(() => {
     newsLoadingStatus();
     newsService.getAllNews().then((res) => setNews(res));
-  }, [newsService, setNews, newsLoadingStatus]);
+  }, [setNews, newsLoadingStatus]);
 
   const openSuccessSnackbar = (eventHandler) => {
     setDialogTitle(REMOVE_TITLE);
@@ -78,13 +77,13 @@ const TestList = ({
   };
 
   const newsItems =
-    news.length > 0
-      ? news.map((newsItem, index) => (
+    news.data !== undefined
+      ? news.data.allNews.map((newsItem, index) => (
           <TableContainerRow
             key={index}
             id={newsItem._id}
-            author={newsItem.author}
-            title={newsItem.title}
+            author={newsItem.author.name}
+            title={newsItem.title[0].value}
             editHandler={() => {
               history.push(`/news/${newsItem._id}`);
             }}
@@ -137,5 +136,5 @@ const mapDispatchToProps = {
 };
 
 export default wrapWithAdminService()(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(TestList))
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(NewsPage))
 );
