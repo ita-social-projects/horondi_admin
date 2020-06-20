@@ -10,8 +10,7 @@ Admin app for the `Horondi` online store
       variables are located
 - Styles
     - For styling function `makeStyles` from `@material-ui`
-      should be used and all styles should be located inside separate
-      component
+      should be used and all styles should be located inside a separate file `{modelName}-styles.js` in the component folder.
 - Components
     - Components that are connected to redux should be located inside
       `containers` folder. Components without connection to redux should
