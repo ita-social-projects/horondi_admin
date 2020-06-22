@@ -1,8 +1,8 @@
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import CategoryIcon from '@material-ui/icons/Category';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
+// import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+// import AssessmentIcon from '@material-ui/icons/Assessment';
+// import CategoryIcon from '@material-ui/icons/Category';
+// import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+// import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 const routes = {
@@ -12,14 +12,7 @@ const routes = {
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [
-      ['Orders', routes.pathToOrders, AssessmentIcon],
-      ['Products', routes.pathToProducts, ShoppingBasketIcon],
-      ['Categories', routes.pathToCategories, CategoryIcon],
-      ['Brands', routes.pathToBrands, CollectionsBookmarkIcon],
-      ['News', routes.pathToNews, ImportContactsIcon],
-      ['Users', routes.pathToUsers, PeopleAltIcon]
-    ],
+    menuCategories: [['News', routes.pathToNews, ImportContactsIcon]],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,

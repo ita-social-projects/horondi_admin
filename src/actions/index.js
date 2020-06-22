@@ -1,6 +1,15 @@
 export { setNews, newsLoadingStatus, setNewsItem } from './News-actions';
 
 export {
+  setProduct,
+  setProducts,
+  setProductsFilters,
+  setProductEditStatus,
+  setProductPropetries,
+  setProductLoadingStatus
+} from './Products-actions';
+
+export {
   setPagesCount,
   setCurrentPage,
   setRowsPerPage

@@ -64,9 +64,9 @@ const NewsPage = ({
 
   const newsDeleteHandler = (id) => async () => {
     const removeNews = async () => {
-      const res = await newsService.deleteNewsItem(id);
+      await newsService.deleteNewsItem(id);
       setDialogStatus(false);
-      setSnackBarMessage(res);
+      setSnackBarMessage(SUCCESS_STATUS);
       setSnackBarSeverity(SUCCESS_STATUS);
       setSnackBarStatus(true);
       newsLoadingStatus();
@@ -78,18 +78,18 @@ const NewsPage = ({
 
   const newsItems =
     news.data !== undefined
-      ? news.data.allNews.map((newsItem, index) => (
-          <TableContainerRow
-            key={index}
-            id={newsItem._id}
-            author={newsItem.author.name}
-            title={newsItem.title[0].value}
-            editHandler={() => {
-              history.push(`/news/${newsItem._id}`);
-            }}
-            deleteHandler={newsDeleteHandler(newsItem._id)}
-          />
-        ))
+      ? news.data.getAllNews.map((newsItem, index) => (
+        <TableContainerRow
+          key={index}
+          id={newsItem._id}
+          author={newsItem.author.name}
+          title={newsItem.title[0].value}
+          editHandler={() => {
+            history.push(`/news/${newsItem._id}`);
+          }}
+          deleteHandler={newsDeleteHandler(newsItem._id)}
+        />
+      ))
       : null;
 
   if (loading) {
