@@ -1,12 +1,8 @@
-// import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-// import AssessmentIcon from '@material-ui/icons/Assessment';
-// import CategoryIcon from '@material-ui/icons/Category';
-// import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-// import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 const routes = {
-  pathToNews: '/'
+  pathToNews: '/',
+  pathToAddNews: '/newsadd'
 };
 
 export const config = {

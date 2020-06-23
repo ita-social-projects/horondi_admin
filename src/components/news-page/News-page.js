@@ -82,7 +82,7 @@ const NewsPage = ({
         <TableContainerRow
           key={index}
           id={newsItem._id}
-          author={newsItem.author.name}
+          author={newsItem.author.name[0].value}
           title={newsItem.title[0].value}
           editHandler={() => {
             history.push(`/news/${newsItem._id}`);

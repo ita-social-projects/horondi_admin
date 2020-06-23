@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { useStyles } from './News-add-page-style';
 import { SaveButton } from '../buttons';
 import wrapWithAdminService from '../wrappers';
+import newsService from '../../services/News-service';
 
 import {
   setSnackBarStatus,
@@ -12,20 +13,19 @@ import {
   setSnackBarMessage
 } from '../../actions';
 
+const languages = ['uk', 'en'];
+
 const NewsAddPage = (props) => {
   const classes = useStyles();
 
   const {
-    adminService,
     history,
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage
   } = props;
 
-  const { newsService } = adminService;
-
-  const [author, setAuthor] = useState('');
+  const [authorName, setAuthor] = useState('');
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
   const [newsVideo, setNewsVideo] = useState('');
@@ -34,26 +34,37 @@ const NewsAddPage = (props) => {
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
-    const newNewsItem = {
-      author: e.target.author.value,
-      authorPhoto: e.target.authorPhoto.value,
-      newsImage: e.target.newsImage.value,
-      newsVideo: e.target.newsVideo.value,
-      text: e.target.text.value,
-      title: e.target.title.value
-    };
+    // const newNewsItem = {
+    //   authorName: e.target.author.value,
+    //   authorPhoto: e.target.authorPhoto.value,
+    //   newsImage: e.target.newsImage.value,
+    //   newsVideo: e.target.newsVideo.value,
+    //   text: e.target.text.value,
+    //   title: e.target.title.value
+    // };
 
-    const res = await newsService.postNewsItem(newNewsItem);
-    setSnackBarSeverity('success');
-    setSnackBarMessage(`"${res.title}" succesfully saved!`);
-    setSnackBarStatus(true);
-    setAuthor('');
-    setAuthorPhoto('');
-    setNewsImage('');
-    setNewsVideo('');
-    setText('');
-    setTitle('');
-    history.push(`/news`);
+    const video = e.target.newsVideo.value;
+    const author = {
+      name: {
+        lang: languages[0],
+        value: e.target.author.value
+      },
+      image: {
+        small: e.target.newsImage.value
+      }
+    };
+    const date = new Date().toISOString();
+    const res = await newsService.createNewsItem(video, author, date);
+    // setSnackBarSeverity('success');
+    // setSnackBarMessage(`succesfully saved!`);
+    // setSnackBarStatus(true);
+    // setAuthor('');
+    // setAuthorPhoto('');
+    // setNewsImage('');
+    // setNewsVideo('');
+    // setText('');
+    // setTitle('');
+    // history.push(`/news`);
   };
 
   const authorHandler = (e) => {
@@ -80,9 +91,8 @@ const NewsAddPage = (props) => {
       className: classes.textfield,
       variant: 'outlined',
       label: 'Author',
-      author,
-      handler: authorHandler,
-      required: true
+      authorName,
+      handler: authorHandler
     },
     {
       id: 'authorPhoto',
@@ -154,6 +164,12 @@ const NewsAddPage = (props) => {
           <SaveButton id='save' type='submit' title='Save' />
         </Paper>
       </FormControl>
+      {/* <FormControl>
+        <Paper className={classes.brandAdd}>
+          {newsInputs}
+          <SaveButton id='save' type='submit' title='Save' />
+        </Paper>
+      </FormControl> */}
     </form>
   );
 };

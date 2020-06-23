@@ -9,12 +9,16 @@ class NewsService {
           getAllNews {
             _id
             author {
-              name
+              name {
+                lang
+                value
+              }
               image {
                 small
               }
             }
             title {
+              lang
               value
             }
           }
@@ -29,7 +33,9 @@ class NewsService {
       mutation($id: ID!) {
         deleteNews(id: $id) {
           author {
-            name
+            name {
+              value
+            }
           }
         }
       }
@@ -39,6 +45,40 @@ class NewsService {
       mutation
     });
     client.resetStore();
+  };
+
+  createNewsItem = async (video, author, date) => {
+    const mutation = gql`
+      mutation(
+        $video: String!
+        $author: AuthorInput!
+        $title: [LanguageInput!]
+        $text: [LanguageInput!]
+        $date: String!
+        $images: [PrimaryImageInput!]
+      ) {
+        addNews(
+          news: {
+            video: $video
+            author: $author
+            title: $title
+            text: $text
+            date: $date
+            images: $images
+          }
+        ) {
+          video
+        }
+      }
+    `;
+    client.mutate({
+      variables: {
+        video,
+        author,
+        date
+      },
+      mutation
+    });
   };
 }
 

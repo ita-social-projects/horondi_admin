@@ -12,6 +12,8 @@ import { NewsPageContainer } from '../../container';
 
 import { config } from '../../config';
 
+import NewsAddPage from '../news-add-page';
+
 import DialogWindow from '../dialog-window';
 import SnackbarItem from '../snackbar-item';
 
@@ -27,6 +29,7 @@ const AppRouter = () => (
     <NavMenu />
     <Switch>
       <Route path={routes.pathToNews} exact component={NewsPageContainer} />
+      <Route path={routes.pathToAddNews} exact component={NewsAddPage} />
       <Redirect to={routes.pathToNews} />
     </Switch>
     <DialogWindow />
