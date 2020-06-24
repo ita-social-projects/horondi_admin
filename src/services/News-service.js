@@ -47,7 +47,7 @@ class NewsService {
     client.resetStore();
   };
 
-  createNewsItem = async (video, author, date) => {
+  createNewsItem = async (video, author, date, text, title, images) => {
     const mutation = gql`
       mutation(
         $video: String!
@@ -75,10 +75,14 @@ class NewsService {
       variables: {
         video,
         author,
-        date
+        date,
+        text,
+        title,
+        images
       },
       mutation
     });
+    client.resetStore();
   };
 }
 

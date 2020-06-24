@@ -7,13 +7,15 @@ import { SaveButton } from '../buttons';
 import wrapWithAdminService from '../wrappers';
 import newsService from '../../services/News-service';
 
+import { config } from '../../config';
+
 import {
   setSnackBarStatus,
   setSnackBarSeverity,
   setSnackBarMessage
 } from '../../actions';
 
-const languages = ['uk', 'en'];
+const {languages} = config.app;
 
 const NewsAddPage = (props) => {
   const classes = useStyles();
@@ -25,51 +27,92 @@ const NewsAddPage = (props) => {
     setSnackBarMessage
   } = props;
 
-  const [authorName, setAuthor] = useState('');
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
   const [newsVideo, setNewsVideo] = useState('');
-  const [text, setText] = useState('');
-  const [title, setTitle] = useState('');
+
+  const [ukAuthorName, ukSetAuthor] = useState('');
+  const [ukText, ukSetText] = useState('');
+  const [ukTitle, ukSetTitle] = useState('');
+
+  const [enAuthorName, enSetAuthor] = useState('');
+  const [enText, enSetText] = useState('');
+  const [enTitle, enSetTitle] = useState('');
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
-    // const newNewsItem = {
-    //   authorName: e.target.author.value,
-    //   authorPhoto: e.target.authorPhoto.value,
-    //   newsImage: e.target.newsImage.value,
-    //   newsVideo: e.target.newsVideo.value,
-    //   text: e.target.text.value,
-    //   title: e.target.title.value
-    // };
 
     const video = e.target.newsVideo.value;
+
     const author = {
-      name: {
-        lang: languages[0],
-        value: e.target.author.value
-      },
+      name: [
+        {
+          lang: 'ua',
+          value: e.target.ukAuthorName.value
+        },
+        {
+          lang: 'en',
+          value: e.target.enAuthorName.value
+        }
+      ],
       image: {
-        small: e.target.newsImage.value
+        small: e.target.authorPhoto.value
       }
     };
+
+    const title = [
+      {
+        lang: languages[0],
+        value: e.target.ukTitle.value
+      },
+      {
+        lang: languages[1],
+        value: e.target.enTitle.value
+      }
+    ];
+
+    const text = [
+      {
+        lang: languages[0],
+        value: e.target.ukText.value
+      },
+      {
+        lang: languages[1],
+        value: e.target.enText.value
+      }
+    ];
+
+    const images = {
+      primary: {
+        medium: e.target.newsImage.value
+      },
+      additional: {
+        medium: 'Test_additional_photo'
+      }
+    };
+
     const date = new Date().toISOString();
-    const res = await newsService.createNewsItem(video, author, date);
-    // setSnackBarSeverity('success');
-    // setSnackBarMessage(`succesfully saved!`);
-    // setSnackBarStatus(true);
-    // setAuthor('');
-    // setAuthorPhoto('');
-    // setNewsImage('');
-    // setNewsVideo('');
-    // setText('');
-    // setTitle('');
-    // history.push(`/news`);
+
+    await newsService.createNewsItem(video, author, date, text, title, images);
+    setSnackBarSeverity('success');
+    setSnackBarMessage(`succesfully saved!`);
+    setSnackBarStatus(true);
+
+    setAuthorPhoto('');
+    setNewsImage('');
+    setNewsVideo('');
+
+    ukSetAuthor('');
+    ukSetText('');
+    ukSetTitle('');
+
+    enSetAuthor('');
+    enSetText('');
+    enSetTitle('');
+
+    history.push(`/news`);
   };
 
-  const authorHandler = (e) => {
-    setAuthor(e.target.value);
-  };
   const authorPhotoHandler = (e) => {
     setAuthorPhoto(e.target.value);
   };
@@ -79,21 +122,28 @@ const NewsAddPage = (props) => {
   const newsVideoHandler = (e) => {
     setNewsVideo(e.target.value);
   };
-  const textHandler = (e) => {
-    setText(e.target.value);
+
+  const ukAuthorHandler = (e) => {
+    ukSetAuthor(e.target.value);
   };
-  const titleHandler = (e) => {
-    setTitle(e.target.value);
+  const ukTextHandler = (e) => {
+    ukSetText(e.target.value);
   };
-  const newsOptions = [
-    {
-      id: 'author',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Author',
-      authorName,
-      handler: authorHandler
-    },
+  const ukTitleHandler = (e) => {
+    ukSetTitle(e.target.value);
+  };
+
+  const enAuthorHandler = (e) => {
+    enSetAuthor(e.target.value);
+  };
+  const enTextHandler = (e) => {
+    enSetText(e.target.value);
+  };
+  const enTitleHandler = (e) => {
+    enSetTitle(e.target.value);
+  };
+
+  const entertaimentOptions = [
     {
       id: 'authorPhoto',
       className: classes.textfield,
@@ -119,28 +169,100 @@ const NewsAddPage = (props) => {
       label: 'Video Link',
       newsVideo,
       handler: newsVideoHandler
+    }
+  ];
+
+  const ukNewsOptions = [
+    {
+      id: 'ukAuthorName',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Author',
+      ukAuthorName,
+      handler: ukAuthorHandler
     },
     {
-      id: 'text',
+      id: 'ukText',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Text',
-      text,
-      handler: textHandler,
+      ukText,
+      handler: ukTextHandler,
       required: true
     },
     {
-      id: 'title',
+      id: 'ukTitle',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Title',
-      title,
-      handler: titleHandler,
+      ukTitle,
+      handler: ukTitleHandler,
       required: true
     }
   ];
 
-  const newsInputs = newsOptions.map(
+  const enNewsOptions = [
+    {
+      id: 'enAuthorName',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Author',
+      enAuthorName,
+      handler: enAuthorHandler
+    },
+    {
+      id: 'enText',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Text',
+      enText,
+      handler: enTextHandler,
+      required: true
+    },
+    {
+      id: 'enTitle',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Title',
+      enTitle,
+      handler: enTitleHandler,
+      required: true
+    }
+  ];
+
+  const entertaimentInputs = entertaimentOptions.map(
+    ({ id, className, variant, label, value, handler, required }) => (
+      <TextField
+        id={id}
+        key={id}
+        className={className}
+        variant={variant}
+        label={label}
+        value={value}
+        onChange={() => handler}
+        required={required}
+        multiline
+      />
+    )
+  );
+
+  const ukNewsInputs = ukNewsOptions.map(
+    ({ id, className, variant, label, value, handler, required }) => (
+      <TextField
+        id={id}
+        key={id}
+        className={className}
+        variant={variant}
+        label={label}
+        value={value}
+        onChange={() => handler}
+        required={required}
+        multiline
+      />
+    )
+  );
+
+  const enNewsInputs = enNewsOptions.map(
     ({ id, className, variant, label, value, handler, required }) => (
       <TextField
         id={id}
@@ -158,18 +280,17 @@ const NewsAddPage = (props) => {
 
   return (
     <form onSubmit={newsSaveHandler}>
-      <FormControl>
-        <Paper className={classes.brandAdd}>
-          {newsInputs}
-          <SaveButton id='save' type='submit' title='Save' />
-        </Paper>
+      <FormControl className={classes.newsAdd}>
+        <Paper className={classes.newsItemAdd}>{entertaimentInputs}</Paper>
+        <Paper className={classes.newsItemAdd}>{ukNewsInputs}</Paper>
+        <Paper className={classes.newsItemAdd}>{enNewsInputs}</Paper>
       </FormControl>
-      {/* <FormControl>
-        <Paper className={classes.brandAdd}>
-          {newsInputs}
-          <SaveButton id='save' type='submit' title='Save' />
-        </Paper>
-      </FormControl> */}
+      <SaveButton
+        className={classes.saveButton}
+        id='save'
+        type='submit'
+        title='Save'
+      />
     </form>
   );
 };
