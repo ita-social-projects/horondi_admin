@@ -4,7 +4,8 @@ const languages = ['uk', 'en'];
 
 const routes = {
   pathToNews: '/',
-  pathToAddNews: '/newsadd'
+  pathToAddNews: '/newsadd',
+  pathToNewsDetails: '/news/:id'
 };
 
 export const config = {
