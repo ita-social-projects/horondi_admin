@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
     "cors": "^2.8.5",
+    "create-components-react": "git+https://github.com/horondi/template_creator.git",
     "express": "^4.17.1",
     "moment": "^2.24.0",
     "react": "^16.13.0",
@@ -32,7 +33,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix --color",
     "cypress": "cypress open",
-    "eslint-check": "eslint --print-config src/components/App/App.js | eslint-config-prettier-check"
+    "eslint-check": "eslint --print-config src/components/App/App.js | eslint-config-prettier-check",
+    "create": "ccr create"
   },
   "eslintConfig": {
     "extends": "wesbos"
