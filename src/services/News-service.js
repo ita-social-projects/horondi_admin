@@ -28,6 +28,47 @@ class NewsService {
     return news;
   };
 
+  getNewsItemById = (id) => {
+    const query = gql`
+      query($id: ID!) {
+        getNewsById(id: $id) {
+          title {
+            lang
+            value
+          }
+          text {
+            lang
+            value
+          }
+          images {
+            primary {
+              large
+            }
+            additional {
+              large
+            }
+          }
+          video
+          author {
+            name {
+              lang
+              value
+            }
+            image {
+              large
+            }
+          }
+          date
+        }
+      }
+    `;
+    const newsItem = client.query({
+      variables: { id },
+      query
+    });
+    return newsItem;
+  };
+
   deleteNewsItem = async (id) => {
     const mutation = gql`
       mutation($id: ID!) {
@@ -47,38 +88,36 @@ class NewsService {
     client.resetStore();
   };
 
-  createNewsItem = async (video, author, date, text, title, images) => {
+  createNewsItem = async (news) => {
     const mutation = gql`
-      mutation(
-        $video: String!
-        $author: AuthorInput!
-        $title: [LanguageInput!]
-        $text: [LanguageInput!]
-        $date: String!
-        $images: [PrimaryImageInput!]
-      ) {
-        addNews(
-          news: {
-            video: $video
-            author: $author
-            title: $title
-            text: $text
-            date: $date
-            images: $images
-          }
-        ) {
+      mutation($news: NewsInput!) {
+        addNews(news: $news) {
           video
         }
       }
     `;
     client.mutate({
       variables: {
-        video,
-        author,
-        date,
-        text,
-        title,
-        images
+        news
+      },
+      mutation
+    });
+    client.resetStore();
+  };
+
+  updateNewsItem = async (id, news) => {
+    const mutation = gql`
+      mutation($id: ID!, $news: NewsInput!) {
+        updateNews(id: $id, news: $news) {
+          video
+        }
+      }
+    `;
+
+    client.mutate({
+      variables: {
+        id,
+        news
       },
       mutation
     });

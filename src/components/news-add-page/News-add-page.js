@@ -15,7 +15,7 @@ import {
   setSnackBarMessage
 } from '../../actions';
 
-const {languages} = config.app;
+const { languages } = config.app;
 
 const NewsAddPage = (props) => {
   const classes = useStyles();
@@ -41,59 +41,55 @@ const NewsAddPage = (props) => {
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
-
-    const video = e.target.newsVideo.value;
-
-    const author = {
-      name: [
+    const news = {
+      video: e.target.newsVideo.value,
+      author: {
+        name: [
+          {
+            lang: languages[0],
+            value: e.target.ukAuthorName.value
+          },
+          {
+            lang: languages[1],
+            value: e.target.enAuthorName.value
+          }
+        ],
+        image: {
+          small: e.target.authorPhoto.value
+        }
+      },
+      title: [
         {
-          lang: 'ua',
-          value: e.target.ukAuthorName.value
+          lang: languages[0],
+          value: e.target.ukTitle.value
         },
         {
-          lang: 'en',
-          value: e.target.enAuthorName.value
+          lang: languages[1],
+          value: e.target.enTitle.value
         }
       ],
-      image: {
-        small: e.target.authorPhoto.value
-      }
+      text: [
+        {
+          lang: languages[0],
+          value: e.target.ukText.value
+        },
+        {
+          lang: languages[1],
+          value: e.target.enText.value
+        }
+      ],
+      images: {
+        primary: {
+          medium: e.target.newsImage.value
+        },
+        additional: {
+          medium: 'Test_additional_photo'
+        }
+      },
+      date: new Date().toISOString()
     };
 
-    const title = [
-      {
-        lang: languages[0],
-        value: e.target.ukTitle.value
-      },
-      {
-        lang: languages[1],
-        value: e.target.enTitle.value
-      }
-    ];
-
-    const text = [
-      {
-        lang: languages[0],
-        value: e.target.ukText.value
-      },
-      {
-        lang: languages[1],
-        value: e.target.enText.value
-      }
-    ];
-
-    const images = {
-      primary: {
-        medium: e.target.newsImage.value
-      },
-      additional: {
-        medium: 'Test_additional_photo'
-      }
-    };
-
-    const date = new Date().toISOString();
-
-    await newsService.createNewsItem(video, author, date, text, title, images);
+    await newsService.createNewsItem(news);
     setSnackBarSeverity('success');
     setSnackBarMessage(`succesfully saved!`);
     setSnackBarStatus(true);
