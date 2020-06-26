@@ -55,7 +55,7 @@ const NewsAddPage = (props) => {
           }
         ],
         image: {
-          small: e.target.authorPhoto.value
+          large: e.target.authorPhoto.value
         }
       },
       title: [
@@ -80,10 +80,10 @@ const NewsAddPage = (props) => {
       ],
       images: {
         primary: {
-          medium: e.target.newsImage.value
+          large: e.target.newsImage.value
         },
         additional: {
-          medium: 'Test_additional_photo'
+          large: 'Test_additional_photo'
         }
       },
       date: new Date().toISOString()

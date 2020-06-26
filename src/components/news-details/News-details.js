@@ -30,7 +30,6 @@ const NewsDetails = (props) => {
   const [enTitle, enSetTitle] = useState('');
 
   const {
-    adminService,
     setSnackBarStatus,
     setSnackBarSeverity,
     setSnackBarMessage,
@@ -44,29 +43,22 @@ const NewsDetails = (props) => {
 
   useEffect(() => {
     newsService.getNewsItemById(id).then((res) => {
-      setAuthorPhoto();
-      setNewsImage();
-      setNewsVideo();
+      const { getNewsById } = res.data;
+      setNewsItem(getNewsById);
 
-      ukSetAuthor();
-      ukSetText();
-      ukSetTitle();
+      setAuthorPhoto(getNewsById.author.image.large);
+      setNewsImage(getNewsById.images[0].primary.large);
+      setNewsVideo(getNewsById.video);
 
-      enSetAuthor();
-      enSetText();
-      enSetTitle();
+      ukSetAuthor(getNewsById.author.name[0].value);
+      ukSetText(getNewsById.text[0].value);
+      ukSetTitle(getNewsById.title[0].value);
+
+      enSetAuthor(getNewsById.author.name[1].value);
+      enSetText(getNewsById.text[1].value);
+      enSetTitle(getNewsById.title[1].value);
+      console.log(getNewsById);
     });
-    // newsService.getNewsItemById(id).then((res) => {
-    //   setNewsItem(res);
-    //   setAuthor(res.author);
-    //   setAuthorPhoto(res.authorPhoto);
-    //   setNewsImage(res.newsImage);
-    //   if (res.newsVideo) {
-    //     setNewsVideo(res.newsVideo);
-    //   }
-    //   setText(res.text);
-    //   setTitle(res.title);
-    // });
   }, [newsService, id, setNewsItem]);
 
   const newsSaveHandler = async (e) => {
@@ -108,147 +100,107 @@ const NewsDetails = (props) => {
     enSetTitle(e.target.value);
   };
 
-  const entertaimentOptions = [
-    {
-      id: 'authorPhoto',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Author Photo',
-      authorPhoto,
-      handler: authorPhotoHandler,
-      required: true
-    },
-    {
-      id: 'newsImage',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'News Image',
-      newsImage,
-      handler: newsImageHandler,
-      required: true
-    },
-    {
-      id: 'newsVideo',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Video Link',
-      newsVideo,
-      handler: newsVideoHandler
-    }
-  ];
-
-  const ukNewsOptions = [
-    {
-      id: 'ukAuthorName',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Author',
-      ukAuthorName,
-      handler: ukAuthorHandler
-    },
-    {
-      id: 'ukText',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Text',
-      ukText,
-      handler: ukTextHandler,
-      required: true
-    },
-    {
-      id: 'ukTitle',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Title',
-      ukTitle,
-      handler: ukTitleHandler,
-      required: true
-    }
-  ];
-
-  const enNewsOptions = [
-    {
-      id: 'enAuthorName',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Author',
-      enAuthorName,
-      handler: enAuthorHandler
-    },
-    {
-      id: 'enText',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Text',
-      enText,
-      handler: enTextHandler,
-      required: true
-    },
-    {
-      id: 'enTitle',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Title',
-      enTitle,
-      handler: enTitleHandler,
-      required: true
-    }
-  ];
-
-  const entertaimentInputs = entertaimentOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={() => handler}
-        required={required}
-        multiline
-      />
-    )
-  );
-
-  const ukNewsInputs = ukNewsOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={() => handler}
-        required={required}
-        multiline
-      />
-    )
-  );
-
-  const enNewsInputs = enNewsOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={() => handler}
-        required={required}
-        multiline
-      />
-    )
-  );
-
   return (
     <form onSubmit={newsSaveHandler}>
       <FormControl className={classes.newsAdd}>
-        <Paper className={classes.newsItemAdd}>{entertaimentInputs}</Paper>
-        <Paper className={classes.newsItemAdd}>{ukNewsInputs}</Paper>
-        <Paper className={classes.newsItemAdd}>{enNewsInputs}</Paper>
+        <Paper className={classes.newsItemAdd}>
+          <TextField
+            id='authorPhoto'
+            className={classes.textfield}
+            variant='outlined'
+            label='Author Photo'
+            multiline
+            value={authorPhoto}
+            onChange={authorPhotoHandler}
+            required
+          />
+          <TextField
+            id='newsImage'
+            className={classes.textfield}
+            variant='outlined'
+            label='News Image'
+            multiline
+            value={newsImage}
+            onChange={newsImageHandler}
+            required
+          />
+          <TextField
+            id='newsVideo'
+            className={classes.textfield}
+            variant='outlined'
+            label='Video Link'
+            multiline
+            value={newsVideo}
+            onChange={newsVideoHandler}
+            required
+          />
+        </Paper>
+
+        <Paper className={classes.newsItemAdd}>
+          <TextField
+            id='ukAuthorName'
+            className={classes.textfield}
+            variant='outlined'
+            label='UK Author'
+            multiline
+            value={ukAuthorName}
+            onChange={ukAuthorHandler}
+            required
+          />
+          <TextField
+            id='ukText'
+            className={classes.textfield}
+            variant='outlined'
+            label='UK Text'
+            multiline
+            value={ukText}
+            onChange={ukTextHandler}
+            required
+          />
+          <TextField
+            id='ukTitle'
+            className={classes.textfield}
+            variant='outlined'
+            label='UK Title'
+            multiline
+            value={ukTitle}
+            onChange={ukTitleHandler}
+            required
+          />
+        </Paper>
+
+        <Paper className={classes.newsItemAdd}>
+          <TextField
+            id='enAuthorName'
+            className={classes.textfield}
+            variant='outlined'
+            label='EN Author'
+            multiline
+            value={enAuthorName}
+            onChange={enAuthorHandler}
+            required
+          />
+          <TextField
+            id='enText'
+            className={classes.textfield}
+            variant='outlined'
+            label='EN Text'
+            multiline
+            value={enText}
+            onChange={enTextHandler}
+            required
+          />
+          <TextField
+            id='enTitle'
+            className={classes.textfield}
+            variant='outlined'
+            label='EN Title'
+            multiline
+            value={enTitle}
+            onChange={enTitleHandler}
+            required
+          />
+        </Paper>
       </FormControl>
       <SaveButton
         id='save'
