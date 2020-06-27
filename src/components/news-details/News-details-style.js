@@ -20,5 +20,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   saveButton: {
     margin: theme.spacing(2)
+  },
+  form: {
+    marginTop: 50
   }
 }));

@@ -285,7 +285,7 @@ const NewsAddPage = (props) => {
         className={classes.saveButton}
         id='save'
         type='submit'
-        title='Save'
+        title='Зберегти'
       />
     </form>
   );

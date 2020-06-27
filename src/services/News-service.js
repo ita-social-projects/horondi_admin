@@ -113,7 +113,6 @@ class NewsService {
         }
       }
     `;
-
     client.mutate({
       variables: {
         id,

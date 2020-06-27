@@ -7,14 +7,33 @@ import { SaveButton } from '../buttons';
 import wrapWithAdminService from '../wrappers';
 import newsService from '../../services/News-service';
 
+import { config } from '../../config';
+
 import {
   setSnackBarStatus,
   setSnackBarSeverity,
   setSnackBarMessage,
-  setNewsItem
+  setNewsItem,
+  newsLoadingStatus
 } from '../../actions';
 
-const NewsDetails = (props) => {
+import LoadingBar from '../loading-bar';
+
+const SUCCESS_STATUS = 'Успішно змінено!';
+
+const { languages } = config.app;
+
+const NewsDetails = ({
+  setSnackBarStatus,
+  setSnackBarSeverity,
+  setSnackBarMessage,
+  setNewsItem,
+  newsItem,
+  loading,
+  newsLoadingStatus,
+  match,
+  history
+}) => {
   const classes = useStyles();
 
   const [authorPhoto, setAuthorPhoto] = useState('');
@@ -29,19 +48,11 @@ const NewsDetails = (props) => {
   const [enText, enSetText] = useState('');
   const [enTitle, enSetTitle] = useState('');
 
-  const {
-    setSnackBarStatus,
-    setSnackBarSeverity,
-    setSnackBarMessage,
-    setNewsItem,
-    newsItem,
-    match,
-    history
-  } = props;
-
   const { id } = match.params;
 
   useEffect(() => {
+    newsLoadingStatus();
+
     newsService.getNewsItemById(id).then((res) => {
       const { getNewsById } = res.data;
       setNewsItem(getNewsById);
@@ -57,17 +68,63 @@ const NewsDetails = (props) => {
       enSetAuthor(getNewsById.author.name[1].value);
       enSetText(getNewsById.text[1].value);
       enSetTitle(getNewsById.title[1].value);
-      console.log(getNewsById);
     });
-  }, [newsService, id, setNewsItem]);
+  }, [id, setNewsItem, newsLoadingStatus]);
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
+    const newsItem = {
+      video: e.target.newsVideo.value,
+      author: {
+        name: [
+          {
+            lang: languages[0],
+            value: e.target.ukAuthorName.value
+          },
+          {
+            lang: languages[1],
+            value: e.target.enAuthorName.value
+          }
+        ],
+        image: {
+          large: e.target.authorPhoto.value
+        }
+      },
+      title: [
+        {
+          lang: languages[0],
+          value: e.target.ukTitle.value
+        },
+        {
+          lang: languages[1],
+          value: e.target.enTitle.value
+        }
+      ],
+      text: [
+        {
+          lang: languages[0],
+          value: e.target.ukText.value
+        },
+        {
+          lang: languages[1],
+          value: e.target.enText.value
+        }
+      ],
+      images: {
+        primary: {
+          large: e.target.newsImage.value
+        },
+        additional: {
+          large: 'Test_additional_photo'
+        }
+      }
+    };
 
-    // setSnackBarSeverity('success');
-    // setSnackBarMessage(`'${title}' succesfully edited!`);
-    // setSnackBarStatus(true);
-    // history.push(`/news`);
+    await newsService.updateNewsItem(id, newsItem);
+    setSnackBarSeverity('success');
+    setSnackBarMessage(SUCCESS_STATUS);
+    setSnackBarStatus(true);
+    history.push(`/news`);
   };
 
   const authorPhotoHandler = (e) => {
@@ -100,8 +157,12 @@ const NewsDetails = (props) => {
     enSetTitle(e.target.value);
   };
 
+  if (loading) {
+    return <LoadingBar />;
+  }
+
   return (
-    <form onSubmit={newsSaveHandler}>
+    <form className={classes.form} onSubmit={newsSaveHandler}>
       <FormControl className={classes.newsAdd}>
         <Paper className={classes.newsItemAdd}>
           <TextField
@@ -205,17 +266,19 @@ const NewsDetails = (props) => {
       <SaveButton
         id='save'
         type='submit'
-        title='Save'
+        title='Зберегти'
         className={classes.saveButton}
       />
     </form>
   );
 };
 
-const mapStateToProps = ({ newsState: { newsItem } }) => ({
-  newsItem
+const mapStateToProps = ({ newsState: { newsItem, loading } }) => ({
+  newsItem,
+  loading
 });
 const mapDispatchToProps = {
+  newsLoadingStatus,
   setSnackBarStatus,
   setSnackBarSeverity,
   setSnackBarMessage,

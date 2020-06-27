@@ -11,7 +11,7 @@ import {
 import { setDialogStatus } from '../../actions';
 import { StandardButton } from '../buttons';
 
-const CANCEL_TITLE = 'Cancel';
+const CANCEL_TITLE = 'Відмінити';
 const ACCEPT_BUTTON_STYLE = 'secondary';
 
 const DialogWindow = ({

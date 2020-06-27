@@ -10,5 +10,11 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
+  },
+  container: {
+    width: `100%`,
+    marginTop: 65,
+    position: 'static',
+    padding: 20
   }
 }));

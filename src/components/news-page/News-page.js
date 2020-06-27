@@ -28,9 +28,9 @@ import { config } from '../../config';
 const tableTitles = config.tableHeadRowTitles.news;
 const pathToNewsAddPage = '/newsadd';
 
-const REMOVE_TITLE = 'Remove news';
-const REMOVE_MESSAGE = 'Are you sure you want to remove this item?';
-const SUCCESS_STATUS = 'success';
+const REMOVE_TITLE = 'Видалити новину';
+const REMOVE_MESSAGE = 'Ви впевнені, що хочете видалити цю новину?';
+const SUCCESS_STATUS = 'Успішно видалено!';
 
 const NewsPage = ({
   news,
@@ -96,7 +96,7 @@ const NewsPage = ({
     return <LoadingBar />;
   }
   return (
-    <div>
+    <div className={classes.container}>
       <div className={classes.tableNav}>
         <Button
           id='add-news'
@@ -105,7 +105,7 @@ const NewsPage = ({
           variant='contained'
           color='primary'
         >
-          Create News
+          Додати новину
         </Button>
       </div>
       <TableContainerGenerator
