@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, TextField, FormControl } from '@material-ui/core';
+import { Paper, TextField, FormControl, Grid } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useStyles } from './News-details-style';
@@ -162,114 +162,178 @@ const NewsDetails = ({
   }
 
   return (
-    <form className={classes.form} onSubmit={newsSaveHandler}>
-      <FormControl className={classes.newsAdd}>
-        <Paper className={classes.newsItemAdd}>
-          <TextField
-            id='authorPhoto'
-            className={classes.textfield}
-            variant='outlined'
-            label='Author Photo'
-            multiline
-            value={authorPhoto}
-            onChange={authorPhotoHandler}
-            required
-          />
-          <TextField
-            id='newsImage'
-            className={classes.textfield}
-            variant='outlined'
-            label='News Image'
-            multiline
-            value={newsImage}
-            onChange={newsImageHandler}
-            required
-          />
-          <TextField
-            id='newsVideo'
-            className={classes.textfield}
-            variant='outlined'
-            label='Video Link'
-            multiline
-            value={newsVideo}
-            onChange={newsVideoHandler}
-            required
-          />
-        </Paper>
+    <div className={classes.container}>
+      <form className={classes.form} onSubmit={newsSaveHandler}>
+        <FormControl className={classes.newsAdd}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Paper className={classes.newsItemAdd}>
+                <TextField
+                  id='authorPhoto'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Фото автора'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={authorPhoto}
+                  onChange={authorPhotoHandler}
+                  required
+                />
+                <TextField
+                  id='newsImage'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Головне зображення'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={newsImage}
+                  onChange={newsImageHandler}
+                  required
+                />
+                <TextField
+                  id='newsVideo'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Посилання на відео'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={newsVideo}
+                  onChange={newsVideoHandler}
+                  required
+                />
+              </Paper>
+            </Grid>
 
-        <Paper className={classes.newsItemAdd}>
-          <TextField
-            id='ukAuthorName'
-            className={classes.textfield}
-            variant='outlined'
-            label='UK Author'
-            multiline
-            value={ukAuthorName}
-            onChange={ukAuthorHandler}
-            required
-          />
-          <TextField
-            id='ukText'
-            className={classes.textfield}
-            variant='outlined'
-            label='UK Text'
-            multiline
-            value={ukText}
-            onChange={ukTextHandler}
-            required
-          />
-          <TextField
-            id='ukTitle'
-            className={classes.textfield}
-            variant='outlined'
-            label='UK Title'
-            multiline
-            value={ukTitle}
-            onChange={ukTitleHandler}
-            required
-          />
-        </Paper>
+            <Grid item xs={6}>
+              <Paper className={classes.newsItemAdd}>
+                <TextField
+                  id='ukAuthorName'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Автор (укр.)'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={ukAuthorName}
+                  onChange={ukAuthorHandler}
+                  required
+                />
+                <TextField
+                  id='ukTitle'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Заголовок (укр.)'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={ukTitle}
+                  onChange={ukTitleHandler}
+                  required
+                />
+                <TextField
+                  id='ukText'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Текст (укр.)'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={ukText}
+                  onChange={ukTextHandler}
+                  required
+                />
+              </Paper>
+            </Grid>
 
-        <Paper className={classes.newsItemAdd}>
-          <TextField
-            id='enAuthorName'
-            className={classes.textfield}
-            variant='outlined'
-            label='EN Author'
-            multiline
-            value={enAuthorName}
-            onChange={enAuthorHandler}
-            required
-          />
-          <TextField
-            id='enText'
-            className={classes.textfield}
-            variant='outlined'
-            label='EN Text'
-            multiline
-            value={enText}
-            onChange={enTextHandler}
-            required
-          />
-          <TextField
-            id='enTitle'
-            className={classes.textfield}
-            variant='outlined'
-            label='EN Title'
-            multiline
-            value={enTitle}
-            onChange={enTitleHandler}
-            required
-          />
-        </Paper>
-      </FormControl>
-      <SaveButton
-        id='save'
-        type='submit'
-        title='Зберегти'
-        className={classes.saveButton}
-      />
-    </form>
+            <Grid item xs={6}>
+              <Paper className={classes.newsItemAdd}>
+                <TextField
+                  id='enAuthorName'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Автор (англ.)'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={enAuthorName}
+                  onChange={enAuthorHandler}
+                  required
+                />
+                <TextField
+                  id='enTitle'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Заголовок (англ.)'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={enTitle}
+                  onChange={enTitleHandler}
+                  required
+                />
+                <TextField
+                  id='enText'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Текст (англ.)'
+                  multiline
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.inputLabel,
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={enText}
+                  onChange={enTextHandler}
+                  required
+                />
+              </Paper>
+            </Grid>
+          </Grid>
+        </FormControl>
+        <SaveButton
+          id='save'
+          type='submit'
+          title='Зберегти'
+          className={classes.saveButton}
+        />
+      </form>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormControl, Paper, TextField } from '@material-ui/core';
+import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useStyles } from './News-add-page-style';
@@ -16,6 +16,7 @@ import {
 } from '../../actions';
 
 const { languages } = config.app;
+const SUCCESS_STATUS = 'Успішно додано!';
 
 const NewsAddPage = (props) => {
   const classes = useStyles();
@@ -91,7 +92,7 @@ const NewsAddPage = (props) => {
 
     await newsService.createNewsItem(news);
     setSnackBarSeverity('success');
-    setSnackBarMessage(`succesfully saved!`);
+    setSnackBarMessage(SUCCESS_STATUS);
     setSnackBarStatus(true);
 
     setAuthorPhoto('');
@@ -144,7 +145,7 @@ const NewsAddPage = (props) => {
       id: 'authorPhoto',
       className: classes.textfield,
       variant: 'outlined',
-      label: 'Author Photo',
+      label: 'Фото автора',
       authorPhoto,
       handler: authorPhotoHandler,
       required: true
@@ -153,7 +154,7 @@ const NewsAddPage = (props) => {
       id: 'newsImage',
       className: classes.textfield,
       variant: 'outlined',
-      label: 'News Image',
+      label: 'Головне зображення',
       newsImage,
       handler: newsImageHandler,
       required: true
@@ -162,7 +163,7 @@ const NewsAddPage = (props) => {
       id: 'newsVideo',
       className: classes.textfield,
       variant: 'outlined',
-      label: 'Video Link',
+      label: 'Посилання на відео',
       newsVideo,
       handler: newsVideoHandler
     }
@@ -173,26 +174,26 @@ const NewsAddPage = (props) => {
       id: 'ukAuthorName',
       className: classes.textfield,
       variant: 'outlined',
-      label: 'Author',
+      label: 'Автор (укр.)',
       ukAuthorName,
       handler: ukAuthorHandler
-    },
-    {
-      id: 'ukText',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Text',
-      ukText,
-      handler: ukTextHandler,
-      required: true
     },
     {
       id: 'ukTitle',
       className: classes.textfield,
       variant: 'outlined',
-      label: 'Title',
+      label: 'Заголовок (укр.)',
       ukTitle,
       handler: ukTitleHandler,
+      required: true
+    },
+    {
+      id: 'ukText',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Текст (укр.)',
+      ukText,
+      handler: ukTextHandler,
       required: true
     }
   ];
@@ -202,26 +203,26 @@ const NewsAddPage = (props) => {
       id: 'enAuthorName',
       className: classes.textfield,
       variant: 'outlined',
-      label: 'Author',
+      label: 'Автор (англ.)',
       enAuthorName,
       handler: enAuthorHandler
-    },
-    {
-      id: 'enText',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Text',
-      enText,
-      handler: enTextHandler,
-      required: true
     },
     {
       id: 'enTitle',
       className: classes.textfield,
       variant: 'outlined',
-      label: 'Title',
+      label: 'Заголовок (англ.)',
       enTitle,
       handler: enTitleHandler,
+      required: true
+    },
+    {
+      id: 'enText',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Текст (англ.)',
+      enText,
+      handler: enTextHandler,
       required: true
     }
   ];
@@ -238,6 +239,12 @@ const NewsAddPage = (props) => {
         onChange={() => handler}
         required={required}
         multiline
+        InputLabelProps={{
+          classes: {
+            root: classes.inputLabel,
+            shrink: 'shrink'
+          }
+        }}
       />
     )
   );
@@ -254,6 +261,12 @@ const NewsAddPage = (props) => {
         onChange={() => handler}
         required={required}
         multiline
+        InputLabelProps={{
+          classes: {
+            root: classes.inputLabel,
+            shrink: 'shrink'
+          }
+        }}
       />
     )
   );
@@ -270,24 +283,42 @@ const NewsAddPage = (props) => {
         onChange={() => handler}
         required={required}
         multiline
+        InputLabelProps={{
+          classes: {
+            root: classes.inputLabel,
+            shrink: 'shrink'
+          }
+        }}
       />
     )
   );
 
   return (
-    <form onSubmit={newsSaveHandler}>
-      <FormControl className={classes.newsAdd}>
-        <Paper className={classes.newsItemAdd}>{entertaimentInputs}</Paper>
-        <Paper className={classes.newsItemAdd}>{ukNewsInputs}</Paper>
-        <Paper className={classes.newsItemAdd}>{enNewsInputs}</Paper>
-      </FormControl>
-      <SaveButton
-        className={classes.saveButton}
-        id='save'
-        type='submit'
-        title='Зберегти'
-      />
-    </form>
+    <div className={classes.container}>
+      <form onSubmit={newsSaveHandler}>
+        <FormControl className={classes.newsAdd}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Paper className={classes.newsItemAdd}>
+                {entertaimentInputs}
+              </Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper className={classes.newsItemAdd}>{ukNewsInputs}</Paper>
+            </Grid>
+            <Grid item xs={6}>
+              <Paper className={classes.newsItemAdd}>{enNewsInputs}</Paper>
+            </Grid>
+          </Grid>
+        </FormControl>
+        <SaveButton
+          className={classes.saveButton}
+          id='save'
+          type='submit'
+          title='Зберегти'
+        />
+      </form>
+    </div>
   );
 };
 

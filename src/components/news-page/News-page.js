@@ -67,7 +67,7 @@ const NewsPage = ({
       await newsService.deleteNewsItem(id);
       setDialogStatus(false);
       setSnackBarMessage(SUCCESS_STATUS);
-      setSnackBarSeverity(SUCCESS_STATUS);
+      setSnackBarSeverity('success');
       setSnackBarStatus(true);
       newsLoadingStatus();
       const newNewsItems = await newsService.getAllNews();

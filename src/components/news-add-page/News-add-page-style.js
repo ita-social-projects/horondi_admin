@@ -5,13 +5,13 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     margin: theme.spacing(2),
-    flexGrow: 1,
-    marginTop: 70
+    paddingTop: 10
   },
   textfield: {
     textTransform: 'uppercase',
-    margin: 10,
-    width: 400
+    padding: 10,
+    margin: '5px 0',
+    width: '100%'
   },
   newsAdd: {
     display: 'flex',
@@ -20,5 +20,16 @@ export const useStyles = makeStyles((theme) => ({
   },
   saveButton: {
     margin: theme.spacing(2)
+  },
+  container: {
+    width: '100%',
+    padding: 20,
+    marginTop: 70
+  },
+  inputLabel: {
+    fontSize: 12,
+    '&.shrink': {
+      transform: 'translate(32px, -3px) scale(0.75)'
+    }
   }
 }));
