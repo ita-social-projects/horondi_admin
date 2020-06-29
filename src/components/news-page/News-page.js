@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import { useStyles } from './News-page-style';
 import wrapWithAdminService from '../wrappers';
+import newsService from '../../services/News-service';
+
 import {
   setSnackBarStatus,
   setSnackBarSeverity,
@@ -16,7 +19,6 @@ import {
   newsLoadingStatus
 } from '../../actions';
 
-import useStyle from './News-page-style';
 import LoadingBar from '../loading-bar';
 import TableContainerRow from '../table-container-row';
 import TableContainerGenerator from '../table-container-generator/Table-container-generator';
@@ -26,13 +28,12 @@ import { config } from '../../config';
 const tableTitles = config.tableHeadRowTitles.news;
 const pathToNewsAddPage = '/newsadd';
 
-const REMOVE_TITLE = 'Remove news';
-const REMOVE_MESSAGE = 'Are you sure you want to remove this item?';
-const SUCCESS_STATUS = 'success';
+const REMOVE_TITLE = 'Видалити новину';
+const REMOVE_MESSAGE = 'Ви впевнені, що хочете видалити цю новину?';
+const SUCCESS_STATUS = 'Успішно видалено!';
 
-const TestList = ({
+const NewsPage = ({
   news,
-  adminService,
   loading,
   setNews,
   newsLoadingStatus,
@@ -46,14 +47,12 @@ const TestList = ({
   setButtonTitle,
   setEventHandler
 }) => {
-  const { newsService } = adminService;
-
-  const classes = useStyle();
+  const classes = useStyles();
 
   useEffect(() => {
     newsLoadingStatus();
     newsService.getAllNews().then((res) => setNews(res));
-  }, [newsService, setNews, newsLoadingStatus]);
+  }, [setNews, newsLoadingStatus]);
 
   const openSuccessSnackbar = (eventHandler) => {
     setDialogTitle(REMOVE_TITLE);
@@ -65,10 +64,10 @@ const TestList = ({
 
   const newsDeleteHandler = (id) => async () => {
     const removeNews = async () => {
-      const res = await newsService.deleteNewsItem(id);
+      await newsService.deleteNewsItem(id);
       setDialogStatus(false);
-      setSnackBarMessage(res);
-      setSnackBarSeverity(SUCCESS_STATUS);
+      setSnackBarMessage(SUCCESS_STATUS);
+      setSnackBarSeverity('success');
       setSnackBarStatus(true);
       newsLoadingStatus();
       const newNewsItems = await newsService.getAllNews();
@@ -78,26 +77,26 @@ const TestList = ({
   };
 
   const newsItems =
-    news.length > 0
-      ? news.map((newsItem, index) => (
-          <TableContainerRow
-            key={index}
-            id={newsItem._id}
-            author={newsItem.author}
-            title={newsItem.title}
-            editHandler={() => {
-              history.push(`/news/${newsItem._id}`);
-            }}
-            deleteHandler={newsDeleteHandler(newsItem._id)}
-          />
-        ))
+    news.data !== undefined
+      ? news.data.getAllNews.map((newsItem, index) => (
+        <TableContainerRow
+          key={index}
+          id={newsItem._id}
+          author={newsItem.author.name[0].value}
+          title={newsItem.title[0].value}
+          editHandler={() => {
+            history.push(`/news/${newsItem._id}`);
+          }}
+          deleteHandler={newsDeleteHandler(newsItem._id)}
+        />
+      ))
       : null;
 
   if (loading) {
     return <LoadingBar />;
   }
   return (
-    <div>
+    <div className={classes.container}>
       <div className={classes.tableNav}>
         <Button
           id='add-news'
@@ -106,7 +105,7 @@ const TestList = ({
           variant='contained'
           color='primary'
         >
-          Create News
+          Додати новину
         </Button>
       </div>
       <TableContainerGenerator
@@ -137,5 +136,5 @@ const mapDispatchToProps = {
 };
 
 export default wrapWithAdminService()(
-  connect(mapStateToProps, mapDispatchToProps)(withRouter(TestList))
+  connect(mapStateToProps, mapDispatchToProps)(withRouter(NewsPage))
 );

@@ -1,29 +1,126 @@
-import AdminService from './Admin-service';
+import { gql } from 'apollo-boost';
+import client from './client';
 
-class NewsService extends AdminService {
-  getAllNews = async () => {
-    const news = await this.getResource('news');
+class NewsService {
+  getAllNews = () => {
+    const news = client.query({
+      query: gql`
+        {
+          getAllNews {
+            _id
+            author {
+              name {
+                lang
+                value
+              }
+              image {
+                small
+              }
+            }
+            title {
+              lang
+              value
+            }
+          }
+        }
+      `
+    });
     return news;
   };
 
-  getNewsItemById = async (id) => {
-    const newsItem = await this.getResource(`news/${id}`);
+  getNewsItemById = (id) => {
+    const query = gql`
+      query($id: ID!) {
+        getNewsById(id: $id) {
+          title {
+            lang
+            value
+          }
+          text {
+            lang
+            value
+          }
+          images {
+            primary {
+              large
+            }
+            additional {
+              large
+            }
+          }
+          video
+          author {
+            name {
+              lang
+              value
+            }
+            image {
+              large
+            }
+          }
+          date
+        }
+      }
+    `;
+    const newsItem = client.query({
+      variables: { id },
+      query
+    });
     return newsItem;
   };
 
-  postNewsItem = async (newsItem) => {
-    const res = await this.postData('news', newsItem);
-    return res;
-  };
-
-  putNewsItem = async (newsItem) => {
-    const res = await this.putData(`news/${newsItem._id}`, newsItem);
-    return res;
-  };
-
   deleteNewsItem = async (id) => {
-    const res = await this.deleteResource(`news/${id}`);
-    return res;
+    const mutation = gql`
+      mutation($id: ID!) {
+        deleteNews(id: $id) {
+          author {
+            name {
+              value
+            }
+          }
+        }
+      }
+    `;
+    client.mutate({
+      variables: { id },
+      mutation
+    });
+    client.resetStore();
+  };
+
+  createNewsItem = async (news) => {
+    const mutation = gql`
+      mutation($news: NewsInput!) {
+        addNews(news: $news) {
+          video
+        }
+      }
+    `;
+    client.mutate({
+      variables: {
+        news
+      },
+      mutation
+    });
+    client.resetStore();
+  };
+
+  updateNewsItem = async (id, news) => {
+    const mutation = gql`
+      mutation($id: ID!, $news: NewsInput!) {
+        updateNews(id: $id, news: $news) {
+          video
+        }
+      }
+    `;
+    client.mutate({
+      variables: {
+        id,
+        news
+      },
+      mutation
+    });
+    client.resetStore();
   };
 }
 

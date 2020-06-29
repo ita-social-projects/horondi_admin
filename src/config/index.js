@@ -1,42 +1,19 @@
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import CategoryIcon from '@material-ui/icons/Category';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
+const languages = ['uk', 'en'];
+
 const routes = {
-  pathToOrders: '/',
-  pathToProducts: '/products',
-  pathToProductDetails: '/product/:id',
-  pathToAddProduct: '/productadd',
-  pathToCategories: '/categories',
-  pathToCategoryDetails: '/category/:id',
-  pathToAddCategory: '/categoryadd',
-  pathToBrands: '/brands',
-  pathToNews: '/news',
-  pathToBrandDetails: '/brand/:id',
-  pathToNewsDetails: '/news/:id',
-  pathToAddBrand: '/brandadd',
+  pathToNews: '/',
   pathToAddNews: '/newsadd',
-  pathToUsers: '/users',
-  pathToUserDetails: '/user/:id',
-  pathToLogin: '/login',
-  pathToOrderDetails: '/order/:id'
+  pathToNewsDetails: '/news/:id'
 };
 
 export const config = {
   app: {
-    title: 'NChoice Admin Portal',
-    menuCategories: [
-      ['Orders', routes.pathToOrders, AssessmentIcon],
-      ['Products', routes.pathToProducts, ShoppingBasketIcon],
-      ['Categories', routes.pathToCategories, CategoryIcon],
-      ['Brands', routes.pathToBrands, CollectionsBookmarkIcon],
-      ['News', routes.pathToNews, ImportContactsIcon],
-      ['Users', routes.pathToUsers, PeopleAltIcon]
-    ],
+    title: 'Horondi Admin Portal',
+    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
     routes,
+    languages,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
     snackBarDuration: 4000,
@@ -55,7 +32,7 @@ export const config = {
     ],
     users: ['Avatar', 'Email', 'First Name', 'Last Name', 'Role', 'Actions'],
     brands: ['Avatar', 'Brand', 'Actions'],
-    news: ['Avatar', 'Author', 'Title', 'Actions'],
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     categories: ['Avatar', 'Category', 'Actions']
   },
   stepper: {
