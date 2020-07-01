@@ -10,11 +10,13 @@ import {
   withWidth
 } from '@material-ui/core';
 
+import PropTypes from 'prop-types';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { useStyles } from './nav-menu.styles';
 
 import { config } from '../../configs';
-import { setThemeMode, setDrawerStatus } from '../../redux/theme/theme.actions';
+import { setDrawerStatus } from '../../redux/theme/theme.actions';
 
 const { menuCategories } = config.app;
 
@@ -70,6 +72,10 @@ const NavMenu = ({ width }) => {
       <Divider />
     </Drawer>
   );
+};
+
+NavMenu.propTypes = {
+  width: PropTypes.string.isRequired
 };
 
 export default withWidth()(NavMenu);

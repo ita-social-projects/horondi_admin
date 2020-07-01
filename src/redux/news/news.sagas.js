@@ -9,7 +9,6 @@ function* handleNewsLoad() {
       getItems,
       `query{
          getAllNews{
-           _id
            title {
              value
            }
@@ -17,23 +16,7 @@ function* handleNewsLoad() {
              name{
              value
              }
-             image{
-             small
-                  }
                 }
-                text{
-                  value
-                }
-                date
-                images{
-                  primary{
-                    medium
-                  }
-                  additional{
-                    medium
-                  }
-                }
-                video
                }
              }`
     );
