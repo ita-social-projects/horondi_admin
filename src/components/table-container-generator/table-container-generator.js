@@ -41,7 +41,13 @@ TableContainerGenerator.propTypes = {
 TableContainerGenerator.defaultProps = {
   pagination: false,
   tableTitles: [''],
-  tableItems: [<TableContainerRow key={0} />]
+  tableItems: [
+    <TableContainerRow
+      key={0}
+      deleteHandler={() => {}}
+      editHandler={() => {}}
+    />
+  ]
 };
 
 export default TableContainerGenerator;
