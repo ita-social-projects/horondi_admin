@@ -9,7 +9,8 @@ const newsReducer = (state = initialState, action) => {
     case SET_NEWS:
       return {
         ...state,
-        list: action.payload
+        list: action.payload,
+        loading: false
       };
     default:
       return state;
