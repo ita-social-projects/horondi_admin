@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { setNews } from './news.actions';
-import getItems from '../../utils/client';
+import { getItems } from '../../utils/client';
 import { GET_NEWS } from './news.types';
 import { hideLoader } from '../app/app.actions';
 

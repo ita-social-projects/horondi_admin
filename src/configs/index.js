@@ -8,7 +8,7 @@ const routes = {
 
 export const config = {
   app: {
-    title: 'NChoice Admin Portal',
+    title: 'Horondi Admin Portal',
     menuCategories: [['News', routes.pathToNews, ImportContactsIcon]],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -29,7 +29,7 @@ export const config = {
     ],
     users: ['Avatar', 'Email', 'First Name', 'Last Name', 'Role', 'Actions'],
     brands: ['Avatar', 'Brand', 'Actions'],
-    news: ['Avatar', 'Author', 'Title', 'Actions'],
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     categories: ['Avatar', 'Category', 'Actions']
   },
   stepper: {
