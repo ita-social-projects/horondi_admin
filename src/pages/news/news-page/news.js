@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { useStyles } from './news.style';
 import { config } from '../../../configs';
 import { getNews } from '../../../redux/news/news.actions';
-import { getArticle } from '../../../redux/news/news-details/news-details.actions';
 
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
@@ -12,61 +11,12 @@ import LoadingBar from '../../../components/loading-bar';
 
 const tableTitles = config.tableHeadRowTitles.news;
 
-const news = {
-  video: 'test2',
-  author: {
-    name: [
-      {
-        lang: 'test2',
-        value: 'test2'
-      },
-      {
-        lang: 'test2',
-        value: 'test2'
-      }
-    ],
-    image: {
-      large: 'test2'
-    }
-  },
-  title: [
-    {
-      lang: 'test2',
-      value: 'test2'
-    },
-    {
-      lang: 'test2',
-      value: 'test2'
-    }
-  ],
-  text: [
-    {
-      lang: 'test2',
-      value: 'test2'
-    },
-    {
-      lang: 'test2',
-      value: 'test2'
-    }
-  ],
-  images: {
-    primary: {
-      large: 'test2'
-    },
-    additional: {
-      large: 'Test_additional_photo'
-    }
-  },
-  date: new Date().toISOString()
-};
-
-const NewsPage = ({ getNews, list, getArticle }) => {
+const NewsPage = ({ getNews, list }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    getArticle(news);
     getNews();
-  }, [getNews, getArticle]);
+  }, [getNews]);
 
   const loading = useSelector(({ App }) => App.loading);
 
@@ -104,13 +54,11 @@ const mapStateToProps = ({ News: { list } }) => ({
   list
 });
 const mapDispatchToProps = {
-  getNews,
-  getArticle
+  getNews
 };
 
 NewsPage.propTypes = {
   getNews: PropTypes.func.isRequired,
-  getArticle: PropTypes.func.isRequired,
   list: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.arrayOf(

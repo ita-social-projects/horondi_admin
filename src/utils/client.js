@@ -26,4 +26,4 @@ const createItems = (mutation, variables) =>
     `
   });
 
-export { getItems, createItems };
+export { client, getItems, createItems };

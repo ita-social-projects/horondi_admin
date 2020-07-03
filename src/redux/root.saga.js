@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
 import newsSaga from './news/news.sagas';
-import newsDetailsSaga from './news/news-details/news-details.sagas';
+import newsAddSaga from './news/news-add/news-add.sagas';
 
 export default function* rootSaga() {
-  yield all([newsSaga(), newsDetailsSaga()]);
+  yield all([newsSaga(), newsAddSaga()]);
 }
