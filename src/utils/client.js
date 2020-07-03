@@ -16,14 +16,25 @@ const getItems = (query) =>
     `
   });
 
-const createItems = (mutation, variables) =>
+const createItems = (mutation) =>
   client.mutate({
-    variables: {
-      variables
-    },
     mutation: gql`
       ${mutation}
     `
   });
+
+// I want to do this service like a:
+
+// const createItems = (mutation, variables) =>
+// client.mutate({
+//   mutation: gql`
+//     ${mutation}
+//   `,
+//   variables: {
+//     variables
+//   }
+// });
+
+// Problem: I can't add variable (news object as a payload) in news-add-sagas
 
 export { client, getItems, createItems };

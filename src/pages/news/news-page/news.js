@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { useStyles } from './news.style';
 import { config } from '../../../configs';
 import { getNews } from '../../../redux/news/news.actions';
-
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 
 const tableTitles = config.tableHeadRowTitles.news;
 
-const NewsPage = ({ getNews, list }) => {
+const NewsPage = () => {
   const classes = useStyles();
+  const list = useSelector(({ News }) => News.list);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getNews();
-  }, [getNews]);
+    dispatch(getNews());
+  }, [dispatch]);
 
   const loading = useSelector(({ App }) => App.loading);
 
@@ -50,50 +50,4 @@ const NewsPage = ({ getNews, list }) => {
   );
 };
 
-const mapStateToProps = ({ News: { list } }) => ({
-  list
-});
-const mapDispatchToProps = {
-  getNews
-};
-
-NewsPage.propTypes = {
-  getNews: PropTypes.func.isRequired,
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.arrayOf(
-        PropTypes.shape({
-          value: PropTypes.string.isRequired
-        })
-      ),
-      author: PropTypes.shape({
-        name: PropTypes.arrayOf(
-          PropTypes.shape({
-            value: PropTypes.string.isRequired
-          })
-        )
-      })
-    })
-  )
-};
-
-NewsPage.defaultProps = {
-  list: [
-    {
-      title: [
-        {
-          value: ''
-        }
-      ],
-      author: {
-        name: [
-          {
-            value: ''
-          }
-        ]
-      }
-    }
-  ]
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewsPage);
+export default NewsPage;
