@@ -30,9 +30,8 @@ Admin app for the `Horondi` online store
 Order of testing components:
 1) simple stateless components that are used in multiple places
 2) components that depends on other components but not connected to redux and don’t have any state
-3) components that depend on other components but not connected to redux and don’t have any state
-4) components that have internal state but are not connected to redux
-5) components that connected to redux
+3) components that have internal state but are not connected to redux
+4) components that connected to redux
 
 ##### Don’t test:
 - third-party libraries
@@ -78,14 +77,16 @@ Checks:
 - changes of state when action is dispatched for different values of state 
 
 ## Starting a project
-In the project directory, you should run:
-- Copy content of `.env.example` file to the newly created `.env`
-- Ensure that backend is running. You can use deployed version and just put remote url in `.env` file. If remote backend
-  is not available pull repository [https://github.com/horondi/horondi_client_be](https://github.com/horondi/horondi_client_be)
-  and follow steps that are described in its README
-- Run `npm install` to install all dependencies
-- Run `npm run start` to start application
-- Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+##### Setup backend (two ways):
+- Use deployed version of backend and just put remote url in `.env` file in the client. 
+- Pull repository from [https://github.com/horondi/horondi_client_be](https://github.com/horondi/horondi_client_be)
+  and setup it locally using its readme.
+##### Setup frontend application:
+1) Copy content of `.env.example` file to the newly created `.env`.
+   Replace environment variable for the backend url with the url to running backend in `.env` file.
+2) Run `npm install` to install all dependencies
+3) Run `npm run start` to start application
+4) Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
