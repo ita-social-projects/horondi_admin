@@ -1,26 +1,12 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { setNews } from './news.actions';
-import { getItems } from '../../utils/client';
+import { getAllNews } from '../../utils/client';
 import { GET_NEWS } from './news.types';
 import { hideLoader } from '../app/app.actions';
 
 function* handleNewsLoad() {
   try {
-    const news = yield call(
-      getItems,
-      `query{
-         getAllNews{
-           title {
-             value
-           }
-           author{
-             name{
-             value
-             }
-                }
-               }
-             }`
-    );
+    const news = yield call(getAllNews, null);
     yield put(setNews(news.data.getAllNews));
     yield put(hideLoader());
   } catch (error) {

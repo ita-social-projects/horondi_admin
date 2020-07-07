@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import { useStyles } from './news.style';
 import { config } from '../../../configs';
 import { getNews } from '../../../redux/news/news.actions';
@@ -7,6 +9,11 @@ import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 
+const { routes } = config.app;
+
+const CREATE_NEWS_TITLE = 'Додати новину';
+
+const pathToNewsAddPage = routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;
 
 const NewsPage = () => {
@@ -25,7 +32,7 @@ const NewsPage = () => {
       ? list.map((newsItem, index) => (
           <TableContainerRow
             key={index}
-            id={newsItem._id}
+            id={newsItem.id}
             author={newsItem.author.name[0].value}
             title={newsItem.title[0].value}
             deleteHandler={() => {}}
@@ -40,7 +47,17 @@ const NewsPage = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.tableNav} />
+      <div className={classes.tableNav}>
+        <Button
+          id='add-news'
+          component={Link}
+          to={pathToNewsAddPage}
+          variant='contained'
+          color='primary'
+        >
+          {CREATE_NEWS_TITLE}
+        </Button>
+      </div>
       <TableContainerGenerator
         id='newsTable'
         tableTitles={tableTitles}
@@ -50,4 +67,4 @@ const NewsPage = () => {
   );
 };
 
-export default NewsPage;
+export default withRouter(NewsPage);

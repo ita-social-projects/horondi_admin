@@ -16,10 +16,14 @@ const SaveButton = ({ title, type, eventHandler, ...props }) => (
 );
 
 SaveButton.propTypes = {
-  eventHandler: PropTypes.func.isRequired,
-  size: PropTypes.string.isRequired,
+  eventHandler: PropTypes.func,
+  size: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired
 };
 
+SaveButton.defaultProps = {
+  size: 'small',
+  eventHandler: () => {}
+};
 export default SaveButton;

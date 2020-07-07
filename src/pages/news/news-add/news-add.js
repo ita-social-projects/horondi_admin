@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useStyles } from './news-add.styles';
 import { SaveButton } from '../../../components/buttons';
+import { addNewsItem } from '../../../redux/news/news-add/news-add.actions';
 
-// import { config } from '../../../configs';
+import { config } from '../../../configs';
 
-// const { languages } = config.app;
+const { languages } = config.app;
 
-const NewsAddPage = () => {
+const NewsAddPage = ({ history }) => {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
   const [newsVideo, setNewsVideo] = useState('');
@@ -25,20 +27,56 @@ const NewsAddPage = () => {
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
-
-    setAuthorPhoto('');
-    setNewsImage('');
-    setNewsVideo('');
-
-    ukSetAuthor('');
-    ukSetText('');
-    ukSetTitle('');
-
-    enSetAuthor('');
-    enSetText('');
-    enSetTitle('');
-
-    // history.push(`/news`);
+    const news = {
+      video: e.target.newsVideo.value,
+      author: {
+        name: [
+          {
+            lang: languages[0],
+            value: e.target.ukAuthorName.value
+          },
+          {
+            lang: languages[1],
+            value: e.target.enAuthorName.value
+          }
+        ],
+        image: {
+          small: e.target.authorPhoto.value
+        }
+      },
+      title: [
+        {
+          lang: languages[0],
+          value: e.target.ukTitle.value
+        },
+        {
+          lang: languages[1],
+          value: e.target.enTitle.value
+        }
+      ],
+      text: [
+        {
+          lang: languages[0],
+          value: e.target.ukText.value
+        },
+        {
+          lang: languages[1],
+          value: e.target.enText.value
+        }
+      ],
+      images: {
+        primary: {
+          medium: e.target.newsImage.value
+        },
+        additional: {
+          large: 'Test_additional_photo'
+        }
+      },
+      date: new Date().toISOString()
+    };
+    dispatch(addNewsItem(news));
+    console.log(news);
+    history.push(`/`);
   };
 
   const authorPhotoHandler = (e) => {
