@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './news-add.styles';
 import { SaveButton } from '../../../components/buttons';
 import { addNewsItem } from '../../../redux/news/news-add/news-add.actions';
-
+import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
 const { languages } = config.app;
 
-const NewsAddPage = ({ history }) => {
+const NewsAddPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const loading = useSelector(({ News }) => News.loading);
+
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
   const [newsVideo, setNewsVideo] = useState('');
@@ -75,8 +76,6 @@ const NewsAddPage = ({ history }) => {
       date: new Date().toISOString()
     };
     dispatch(addNewsItem(news));
-    console.log(news);
-    history.push(`/`);
   };
 
   const authorPhotoHandler = (e) => {
@@ -262,6 +261,10 @@ const NewsAddPage = ({ history }) => {
     )
   );
 
+  if (loading) {
+    return <LoadingBar />;
+  }
+
   return (
     <div className={classes.container}>
       <form onSubmit={newsSaveHandler}>
@@ -291,4 +294,4 @@ const NewsAddPage = ({ history }) => {
   );
 };
 
-export default withRouter(NewsAddPage);
+export default NewsAddPage;

@@ -30,73 +30,7 @@ export const config = {
       'Mrsp',
       'Actions'
     ],
-    users: ['Avatar', 'Email', 'First Name', 'Last Name', 'Role', 'Actions'],
-    brands: ['Avatar', 'Brand', 'Actions'],
-    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    categories: ['Avatar', 'Category', 'Actions']
-  },
-  stepper: {
-    labels: [
-      'Please choose products Catalog, Category, Brand and Color',
-      'Please provide product descriptions',
-      'Please provide product sizes information',
-      'Please verify and confirm product saving'
-    ]
-  },
-  productFilters: {
-    filterLabels: ['catalog', 'category', 'brand'],
-    initialFilters: {
-      catalog: [],
-      category: [],
-      brand: []
-    },
-    filterCounters: {
-      catalog: 0,
-      brand: 0,
-      category: 0,
-      total: 0
-    }
-  },
-  product: {
-    productKeys: [
-      'catalog',
-      'category',
-      'brand',
-      'color',
-      'title',
-      'description',
-      'mrsp',
-      'price'
-    ],
-    productLabels: ['catalog', 'category', 'brand', 'color'],
-    productInitialModel: {
-      catalog: '',
-      category: '',
-      brand: '',
-      color: '',
-      title: '',
-      description: '',
-      mrsp: '',
-      price: '',
-      images: [],
-      propetries: []
-    },
-    descriptionLabels: ['title', 'mrsp', 'price', 'description'],
-    descriptionRules: {
-      typeNumber: ['price', 'mrsp'],
-      typeMultiline: ['description']
-    },
-    sizeKeys: ['size', 'available', 'sku'],
-    sizeInitialModel: {
-      size: '',
-      available: '',
-      sku: ''
-    },
-    sizesRules: {
-      numberCategories: ['shoes'],
-      typeNumber: ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'],
-      typeString: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
-    }
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
   }
 };
 

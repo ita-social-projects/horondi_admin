@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "create-components-react": "^2.1.4",
     "graphql": "^15.1.0",
+    "history": "^5.0.0",
     "html-react-parser": "^0.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

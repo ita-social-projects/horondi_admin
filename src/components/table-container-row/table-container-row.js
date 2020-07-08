@@ -39,13 +39,15 @@ const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
 };
 
 TableContainerRow.propTypes = {
-  editHandler: PropTypes.func.isRequired,
-  deleteHandler: PropTypes.func.isRequired,
-  id: PropTypes.number
+  editHandler: PropTypes.func,
+  deleteHandler: PropTypes.func,
+  id: PropTypes.string
 };
 
 TableContainerRow.defaultProps = {
-  id: 0
+  id: '',
+  deleteHandler: () => {},
+  editHandler: () => {}
 };
 
 export default TableContainerRow;

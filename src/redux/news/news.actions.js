@@ -1,4 +1,10 @@
-import { GET_NEWS, SET_NEWS } from './news.types';
+import {
+  GET_NEWS,
+  SET_NEWS,
+  SHOW_LOADER,
+  HIDE_LOADER,
+  DELETE_NEWS_ITEM
+} from './news.types';
 
 const setNews = (news) => ({
   type: SET_NEWS,
@@ -9,4 +15,17 @@ const getNews = () => ({
   type: GET_NEWS
 });
 
-export { setNews, getNews };
+const deleteNewsItem = (payload) => ({
+  type: DELETE_NEWS_ITEM,
+  payload
+});
+
+const showLoader = () => ({
+  type: SHOW_LOADER
+});
+
+const hideLoader = () => ({
+  type: HIDE_LOADER
+});
+
+export { setNews, getNews, showLoader, hideLoader, deleteNewsItem };

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { useStyles } from './news.style';
 import { config } from '../../../configs';
-import { getNews } from '../../../redux/news/news.actions';
+import { getNews, deleteNewsItem } from '../../../redux/news/news.actions';
+
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
@@ -25,7 +26,11 @@ const NewsPage = () => {
     dispatch(getNews());
   }, [dispatch]);
 
-  const loading = useSelector(({ App }) => App.loading);
+  const loading = useSelector(({ News }) => News.loading);
+
+  const newsDeleteHandler = (id) => {
+    dispatch(deleteNewsItem(id));
+  };
 
   const newsItems =
     list !== undefined
@@ -35,7 +40,7 @@ const NewsPage = () => {
             id={newsItem.id}
             author={newsItem.author.name[0].value}
             title={newsItem.title[0].value}
-            deleteHandler={() => {}}
+            deleteHandler={() => newsDeleteHandler(newsItem._id)}
             editHandler={() => {}}
           />
         ))
@@ -67,4 +72,4 @@ const NewsPage = () => {
   );
 };
 
-export default withRouter(NewsPage);
+export default NewsPage;

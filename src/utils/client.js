@@ -71,8 +71,8 @@ const getNewsItemById = (id) =>
     `
   });
 
-const deleteNewsItem = (id) => {
-  client.mutate({
+const deleteNewsItem = async (id) => {
+  await client.mutate({
     variables: { id },
     mutation: gql`
       mutation($id: ID!) {
@@ -86,10 +86,11 @@ const deleteNewsItem = (id) => {
       }
     `
   });
+  client.resetStore();
 };
 
-const createNewsItem = (news) =>
-  client.mutate({
+const createNewsItem = async (news) => {
+  await client.mutate({
     mutation: gql`
       mutation($news: NewsInput!) {
         addNews(news: $news) {
@@ -99,6 +100,8 @@ const createNewsItem = (news) =>
     `,
     variables: { news }
   });
+  client.resetStore();
+};
 
 const updateNewsItem = (id, news) => {
   client.mutate({
