@@ -20,8 +20,11 @@ const { title } = config.app;
 const NavBar = () => {
   const classes = useStyles();
 
-  const darkMode = useSelector(({ Theme }) => Theme.darkMode);
-  const drawerStatus = useSelector(({ Theme }) => Theme.drawerStatus);
+  const { darkMode, drawerStatus } = useSelector(({ Theme }) => ({
+    darkMode: Theme.darkMode,
+    drawerStatus: Theme.drawerStatus
+  }));
+
   const dispatch = useDispatch();
 
   const themeChangeHandler = () => dispatch(setThemeMode(!darkMode));

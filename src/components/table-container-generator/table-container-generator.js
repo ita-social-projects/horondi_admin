@@ -8,13 +8,13 @@ import TableContainerRow from '../table-container-row';
 
 import useStyles from './table-container-generator.styles';
 import TablePaginator from '../table-container-paginator';
-
-const SMALL_SIZE = 'small';
-const DEFAULT_SIZE = 'medium';
+import { config } from '../../configs';
 
 const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
+  const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
   const classes = useStyles();
   const dense = useSelector((Table) => Table.dense);
+
   return (
     <div>
       <TableContainer className={classes.container} component={Paper}>

@@ -12,7 +12,7 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { routes } = config.app;
 
-const CREATE_NEWS_TITLE = 'Додати новину';
+const { CREATE_NEWS_TITLE } = config.app.buttonTitles;
 
 const pathToNewsAddPage = routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;
@@ -35,15 +35,15 @@ const NewsPage = () => {
   const newsItems =
     list !== undefined
       ? list.map((newsItem, index) => (
-          <TableContainerRow
-            key={index}
-            id={newsItem.id}
-            author={newsItem.author.name[0].value}
-            title={newsItem.title[0].value}
-            deleteHandler={() => newsDeleteHandler(newsItem._id)}
-            editHandler={() => {}}
-          />
-        ))
+        <TableContainerRow
+          key={index}
+          id={newsItem.id}
+          author={newsItem.author.name[0].value}
+          title={newsItem.title[0].value}
+          deleteHandler={() => newsDeleteHandler(newsItem._id)}
+          editHandler={() => {}}
+        />
+      ))
       : null;
 
   if (loading) {

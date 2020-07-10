@@ -7,15 +7,16 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../../snackbar/snackbar.actions';
+import { config } from '../../../configs';
 
-const SUCCESS_STATUS = 'Успішно додано!';
+const { SUCCESS_ADD_STATUS } = config.app.statuses;
 
 function* handleAddNews({ payload }) {
   try {
     yield call(createNewsItem, payload);
     yield put(push('/'));
     yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_STATUS));
+    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
   } catch (err) {
     console.log(err);

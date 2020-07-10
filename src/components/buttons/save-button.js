@@ -26,4 +26,5 @@ SaveButton.defaultProps = {
   size: 'small',
   eventHandler: () => {}
 };
+
 export default SaveButton;

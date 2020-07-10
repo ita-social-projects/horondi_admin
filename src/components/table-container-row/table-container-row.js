@@ -5,11 +5,10 @@ import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
 import { DeleteButton, EditButton } from '../buttons';
 import { useStyles } from './table-container-row.styles';
-
-const SMALL_SIZE = 'small';
-const DEFAULT_SIZE = 'default';
+import { config } from '../../configs';
 
 const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
+  const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
   const classes = useStyles();
 
   const dense = useSelector(({ Table }) => Table.dense);

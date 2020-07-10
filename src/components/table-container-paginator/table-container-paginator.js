@@ -15,12 +15,17 @@ const selectProps = {
 };
 
 const TablePaginator = () => {
-  const pagesCount = useSelector(({ Pagination }) => Pagination.pagesCount);
-  const rowsPerPageOptions = useSelector(
-    ({ Pagination }) => Pagination.rowsPerPageOptions
-  );
-  const rowsPerPage = useSelector(({ Pagination }) => Pagination.rowsPerPage);
-  const currentPage = useSelector(({ Pagination }) => Pagination.currentPage);
+  const {
+    pagesCount,
+    rowsPerPageOptions,
+    rowsPerPage,
+    currentPage
+  } = useSelector(({ Pagination }) => ({
+    pagesCount: Pagination.pagesCount,
+    rowsPerPageOptions: Pagination.rowsPerPageOptions,
+    rowsPerPage: Pagination.rowsPerPage,
+    currentPage: Pagination.currentPage
+  }));
 
   const dispatch = useDispatch();
 

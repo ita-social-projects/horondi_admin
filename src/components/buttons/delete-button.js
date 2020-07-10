@@ -3,8 +3,9 @@ import React from 'react';
 import { Tooltip, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PropTypes from 'prop-types';
+import { config } from '../../configs';
 
-const DELETE_TITLE = 'Видалити';
+const { DELETE_TITLE } = config.app.buttonTitles;
 
 const DeleteButton = (props) => {
   const { eventHandler, size } = props;

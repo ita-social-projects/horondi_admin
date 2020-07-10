@@ -6,10 +6,9 @@ import { CssBaseline } from '@material-ui/core';
 import Routes from '../../routes';
 import { theme } from './app-theme/app.theme';
 import { useStyles } from './App.styles';
-// import { DARK_THEME, LIGHT_THEME } from '../../configs';
+import { config } from '../../configs';
 
-const DARK_THEME = 'dark';
-const LIGHT_THEME = 'light';
+const { DARK_THEME, LIGHT_THEME } = config.app.theme;
 
 const App = () => {
   const darkMode = useSelector(({ Theme }) => Theme.darkMode);
