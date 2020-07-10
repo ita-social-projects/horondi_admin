@@ -4,7 +4,6 @@ import News from './news/news.reducer';
 import Theme from './theme/theme.reducer';
 import Table from './table/table.reducer';
 import Pagination from './pagination/pagination.reducer';
-import App from './app/app.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
 
 const rootReducer = (history) =>
@@ -13,7 +12,6 @@ const rootReducer = (history) =>
     Theme,
     Table,
     Pagination,
-    App,
     Snackbar,
     router: connectRouter(history)
   });
