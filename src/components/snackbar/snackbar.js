@@ -13,10 +13,10 @@ const SnackbarItem = () => {
   const dispatch = useDispatch();
 
   const { snackBarStatus, snackBarSeverity, snackBarMessage } = useSelector(
-    ({ Snackbar }) => ({
-      snackBarStatus: Snackbar.snackBarStatus,
-      snackBarSeverity: Snackbar.snackBarSeverity,
-      snackBarMessage: Snackbar.snackBarMessage
+    ({ Snackbar: snackbar }) => ({
+      snackBarStatus: snackbar.snackBarStatus,
+      snackBarSeverity: snackbar.snackBarSeverity,
+      snackBarMessage: snackbar.snackBarMessage
     })
   );
 

@@ -9,28 +9,28 @@ const initialState = {
   rowsPerPageOptions
 };
 
-const paginationState = (state = initialState, action) => {
+const paginationState = (state = initialState, action = {}) => {
   switch (action.type) {
-    case 'SET_PAGES_COUNT':
-      return {
-        ...state,
-        pagesCount: action.payload
-      };
+  case 'SET_PAGES_COUNT':
+    return {
+      ...state,
+      pagesCount: action.payload
+    };
 
-    case 'SET_ROWS_PER_PAGE':
-      return {
-        ...state,
-        rowsPerPage: action.payload
-      };
+  case 'SET_ROWS_PER_PAGE':
+    return {
+      ...state,
+      rowsPerPage: action.payload
+    };
 
-    case 'SET_CURRENT_PAGE':
-      return {
-        ...state,
-        currentPage: action.payload
-      };
+  case 'SET_CURRENT_PAGE':
+    return {
+      ...state,
+      currentPage: action.payload
+    };
 
-    default:
-      return state;
+  default:
+    return state;
   }
 };
 

@@ -8,7 +8,7 @@ import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
 
 const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
-  const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
+  const { SMALL_SIZE, DEFAULT_SIZE } = config.iconSizes;
   const classes = useStyles();
 
   const dense = useSelector(({ Table }) => Table.dense);

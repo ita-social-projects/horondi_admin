@@ -43,6 +43,10 @@ export const config = {
   tableSizes: {
     SMALL_SIZE: 'small',
     DEFAULT_SIZE: 'medium'
+  },
+  iconSizes: {
+    SMALL_SIZE: 'small',
+    DEFAULT_SIZE: 'default'
   }
 };
 

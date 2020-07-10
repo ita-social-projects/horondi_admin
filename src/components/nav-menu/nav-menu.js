@@ -50,7 +50,7 @@ const NavMenu = ({ width }) => {
     dispatch(setDrawerStatus(!drawerStatus));
   };
 
-  const checkWidth = (width) =>
+  const checkWidth = () =>
     TEMPORARY_WIDTHS.find((element) => element === width);
 
   const drawerVariant = checkWidth(width) ? DRAWER_TEMPORARY : DRAWER_PERMANENT;
