@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core';
 import { paletteGenerator } from './app.pallete';
-import appTypography from './app.typography';
+import appTypography from './typography.styles';
 
 export const theme = (colorSchema) => {
   const palette = paletteGenerator(colorSchema);

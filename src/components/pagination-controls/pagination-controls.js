@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function TablePaginationActions(props) {
+function PaginationControls(props) {
   const classes = useStyles();
 
   const { count, page, rowsPerPage, onChangePage } = props;
@@ -68,11 +68,11 @@ function TablePaginationActions(props) {
   );
 }
 
-TablePaginationActions.propTypes = {
+PaginationControls.propTypes = {
   count: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   onChangePage: PropTypes.func.isRequired
 };
 
-export default TablePaginationActions;
+export default PaginationControls;

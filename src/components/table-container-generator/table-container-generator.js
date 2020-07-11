@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { TableContainer, Table, TableBody, Paper } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import TableContainerHead from '../table-container-head';
-import TableContainerRow from '../table-container-row';
 
 import useStyles from './table-container-generator.styles';
 import TablePaginator from '../table-container-paginator';
@@ -40,14 +39,8 @@ TableContainerGenerator.propTypes = {
 
 TableContainerGenerator.defaultProps = {
   pagination: false,
-  tableTitles: [''],
-  tableItems: [
-    <TableContainerRow
-      key={0}
-      deleteHandler={() => {}}
-      editHandler={() => {}}
-    />
-  ]
+  tableTitles: [],
+  tableItems: []
 };
 
 export default TableContainerGenerator;

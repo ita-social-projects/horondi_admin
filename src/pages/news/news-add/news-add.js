@@ -3,13 +3,13 @@ import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './news-add.styles';
 import { SaveButton } from '../../../components/buttons';
-import { addNewsItem } from '../../../redux/news/news-add/news-add.actions';
+import { addNewsItem } from '../../../redux/news/news.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
-const { languages } = config.app;
+const { languages } = config;
 
-const NewsAddPage = () => {
+const NewsAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.loading);
@@ -294,4 +294,4 @@ const NewsAddPage = () => {
   );
 };
 
-export default NewsAddPage;
+export default NewsAdd;

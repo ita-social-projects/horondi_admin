@@ -6,7 +6,7 @@ import {
   setCurrentPage,
   setRowsPerPage
 } from '../../redux/pagination/pagination.actions';
-import TablePaginationActions from './paginator-control';
+import PaginationControls from '../pagination-controls';
 
 const FIRST_PAGE = 0;
 
@@ -49,7 +49,7 @@ const TablePaginator = () => {
       SelectProps={selectProps}
       onChangePage={handleChangePage}
       onChangeRowsPerPage={handleChangeRowsPerPage}
-      ActionsComponent={TablePaginationActions}
+      ActionsComponent={PaginationControls}
     />
   );
 };

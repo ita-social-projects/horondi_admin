@@ -20,7 +20,7 @@ TableContainerHead.propTypes = {
 };
 
 TableContainerHead.defaultProps = {
-  titles: ['']
+  titles: []
 };
 
 export default TableContainerHead;

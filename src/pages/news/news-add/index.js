@@ -1,3 +1,3 @@
-import NewsAddPage from './news-add';
+import NewsAdd from './news-add';
 
-export default NewsAddPage;
+export default NewsAdd;

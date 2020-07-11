@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { useStyles } from './news.style';
+import { useStyles } from './news-page.styles';
 import { config } from '../../../configs';
 import { getNews, deleteNewsItem } from '../../../redux/news/news.actions';
 
@@ -12,7 +12,7 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { routes } = config.app;
 
-const { CREATE_NEWS_TITLE } = config.app.buttonTitles;
+const { CREATE_NEWS_TITLE } = config.buttonTitles;
 
 const pathToNewsAddPage = routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;

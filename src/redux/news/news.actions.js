@@ -3,7 +3,8 @@ import {
   SET_NEWS,
   SHOW_LOADER,
   HIDE_LOADER,
-  DELETE_NEWS_ITEM
+  DELETE_NEWS_ITEM,
+  ADD_NEWS_ITEM
 } from './news.types';
 
 const setNews = (news) => ({
@@ -20,6 +21,11 @@ const deleteNewsItem = (payload) => ({
   payload
 });
 
+const addNewsItem = (payload) => ({
+  type: ADD_NEWS_ITEM,
+  payload
+});
+
 const showLoader = () => ({
   type: SHOW_LOADER
 });
@@ -28,4 +34,11 @@ const hideLoader = () => ({
   type: HIDE_LOADER
 });
 
-export { setNews, getNews, showLoader, hideLoader, deleteNewsItem };
+export {
+  setNews,
+  getNews,
+  showLoader,
+  hideLoader,
+  deleteNewsItem,
+  addNewsItem
+};

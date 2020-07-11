@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import NewsPage from '../pages/news/news-page';
-import NewsAddPage from '../pages/news/news-add';
+import NewsAdd from '../pages/news/news-add';
 import NavBar from '../components/nav-bar';
 import NavMenu from '../components/nav-menu';
 import SnackbarItem from '../components/snackbar';
@@ -19,7 +19,7 @@ const Routes = () => (
     <NavMenu />
     <Switch>
       <Route path={routes.pathToNews} exact component={NewsPage} />
-      <Route path={routes.pathToAddNews} exact component={NewsAddPage} />
+      <Route path={routes.pathToAddNews} exact component={NewsAdd} />
     </Switch>
     <SnackbarItem />
   </ConnectedRouter>
