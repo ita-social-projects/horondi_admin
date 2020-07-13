@@ -3,7 +3,6 @@ import { connectRouter } from 'connected-react-router';
 import News from './news/news.reducer';
 import Theme from './theme/theme.reducer';
 import Table from './table/table.reducer';
-import Pagination from './pagination/pagination.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
 
 const rootReducer = (history) =>
@@ -11,7 +10,6 @@ const rootReducer = (history) =>
     News,
     Theme,
     Table,
-    Pagination,
     Snackbar,
     router: connectRouter(history)
   });
