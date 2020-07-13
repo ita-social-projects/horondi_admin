@@ -13,16 +13,19 @@ import { useStyles } from './nav-bar.styles';
 
 import { config } from '../../configs';
 
-import { setThemeMode, setDrawerStatus } from '../../redux/theme/theme.actions';
+import {
+  setThemeMode,
+  setSideMenuStatus
+} from '../../redux/theme/theme.actions';
 
 const { title } = config.app;
 
 const NavBar = () => {
   const classes = useStyles();
 
-  const { darkMode, drawerStatus } = useSelector(({ Theme }) => ({
+  const { darkMode, sideMenuStatus } = useSelector(({ Theme }) => ({
     darkMode: Theme.darkMode,
-    drawerStatus: Theme.drawerStatus
+    sideMenuStatus: Theme.sideMenuStatus
   }));
 
   const dispatch = useDispatch();
@@ -32,7 +35,7 @@ const NavBar = () => {
   const themeButton = darkMode ? <Brightness7Icon /> : <Brightness4Icon />;
 
   const handleDrawerToggle = () => {
-    dispatch(setDrawerStatus(!drawerStatus));
+    dispatch(setSideMenuStatus(!sideMenuStatus));
   };
 
   const menuToggle = (

@@ -3,9 +3,9 @@ const setThemeMode = (changeTheme) => ({
   payload: changeTheme
 });
 
-const setDrawerStatus = (newDrawerStatus) => ({
-  type: 'SET_DRAWER_STATUS',
-  payload: newDrawerStatus
+const setSideMenuStatus = (newSideMenuStatus) => ({
+  type: 'SET_SIDE_MENU_STATUS',
+  payload: newSideMenuStatus
 });
 
-export { setThemeMode, setDrawerStatus };
+export { setThemeMode, setSideMenuStatus };

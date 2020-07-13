@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import TableContainerHead from '../table-container-head';
 
 import useStyles from './table-container-generator.styles';
-import TablePaginator from '../table-container-paginator';
 import { config } from '../../configs';
 
 const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
@@ -26,7 +25,6 @@ const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
           <TableBody id='table-body'>{tableItems}</TableBody>
         </Table>
       </TableContainer>
-      {pagination && <TablePaginator />}
     </div>
   );
 };

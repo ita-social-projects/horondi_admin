@@ -1,6 +1,6 @@
 const initialState = {
   darkMode: true,
-  drawerStatus: false
+  sideMenuStatus: false
 };
 
 const themeState = (state = initialState, action = {}) => {
@@ -11,10 +11,10 @@ const themeState = (state = initialState, action = {}) => {
       darkMode: action.payload
     };
 
-  case 'SET_DRAWER_STATUS':
+  case 'SET_SIDE_MENU_STATUS':
     return {
       ...state,
-      drawerStatus: action.payload
+      sideMenuStatus: action.payload
     };
 
   default:

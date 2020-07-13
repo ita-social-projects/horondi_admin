@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useStyles } from './nav-menu.styles';
 
 import { config } from '../../configs';
-import { setDrawerStatus } from '../../redux/theme/theme.actions';
+import { setSideMenuStatus } from '../../redux/theme/theme.actions';
 
 const { menuCategories } = config.app;
 
@@ -29,7 +29,7 @@ const NavMenu = ({ width }) => {
 
   const dispatch = useDispatch();
 
-  const drawerStatus = useSelector(({ Theme }) => Theme.drawerStatus);
+  const sideMenuStatus = useSelector(({ Theme }) => Theme.sideMenuStatus);
 
   const menuItems = menuCategories.map((category) => {
     const pathTitle = category[0];
@@ -47,7 +47,7 @@ const NavMenu = ({ width }) => {
   });
 
   const handleDrawerToggle = () => {
-    dispatch(setDrawerStatus(!drawerStatus));
+    dispatch(setSideMenuStatus(!sideMenuStatus));
   };
 
   const checkWidth = () =>
@@ -60,7 +60,7 @@ const NavMenu = ({ width }) => {
       id='menuDrawer'
       className={classes.drawer}
       variant={drawerVariant}
-      open={drawerStatus}
+      open={sideMenuStatus}
       onClose={handleDrawerToggle}
       classes={{
         paper: classes.drawerPaper
