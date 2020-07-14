@@ -38,6 +38,10 @@ export const config = {
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
-    CREATE_NEWS_TITLE: 'Додати новину'
+    CREATE_NEWS_TITLE: 'Додати новину',
+    REMOVE_TITLE: 'Видалити новину'
+  },
+  messages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?'
   }
 };

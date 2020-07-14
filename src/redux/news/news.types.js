@@ -4,3 +4,6 @@ export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const DELETE_NEWS_ITEM = 'DELETE_NEWS_ITEM';
 export const ADD_NEWS_ITEM = 'ADD_NEWS_ITEM';
+export const GET_NEWS_ITEM = 'GET_NEWS_ITEM';
+export const SET_NEWS_ITEM = 'SET_NEWS_ITEM';
+export const UPDATE_NEWS_ITEM = 'UPDATE_NEWS_ITEM';

@@ -4,7 +4,10 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   DELETE_NEWS_ITEM,
-  ADD_NEWS_ITEM
+  ADD_NEWS_ITEM,
+  GET_NEWS_ITEM,
+  SET_NEWS_ITEM,
+  UPDATE_NEWS_ITEM
 } from './news.types';
 
 const setNews = (news) => ({
@@ -34,11 +37,29 @@ const hideLoader = () => ({
   type: HIDE_LOADER
 });
 
+const updateNewsItem = (payload) => ({
+  type: UPDATE_NEWS_ITEM,
+  payload
+});
+
+const setNewsItem = (payload) => ({
+  type: SET_NEWS_ITEM,
+  payload
+});
+
+const getNewsItem = (payload) => ({
+  type: GET_NEWS_ITEM,
+  payload
+});
+
 export {
   setNews,
   getNews,
   showLoader,
   hideLoader,
   deleteNewsItem,
-  addNewsItem
+  addNewsItem,
+  updateNewsItem,
+  setNewsItem,
+  getNewsItem
 };

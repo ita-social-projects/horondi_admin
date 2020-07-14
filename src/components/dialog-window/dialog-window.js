@@ -1,0 +1,56 @@
+import React from 'react';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography
+} from '@material-ui/core/';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setDialogStatus } from '../../redux/dialog-window/dialog-window.actions';
+import { StandardButton } from '../buttons';
+
+const CANCEL_TITLE = 'Відмінити';
+const ACCEPT_BUTTON_STYLE = 'secondary';
+
+const DialogWindow = () => {
+  const {
+    dialogStatus,
+    dialogTitle,
+    dialogContent,
+    buttonTitle,
+    eventHandler
+  } = useSelector(({ DialogWindow }) => ({
+    dialogStatus: DialogWindow.dialogStatus,
+    dialogTitle: DialogWindow.dialogTitle,
+    dialogContent: DialogWindow.dialogContent,
+    buttonTitle: DialogWindow.buttonTitle,
+    eventHandler: DialogWindow.eventHandler
+  }));
+
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    dispatch(setDialogStatus(false));
+  };
+
+  return (
+    <Dialog id='dialog-window' onClose={handleClose} open={dialogStatus}>
+      <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
+      <DialogContent dividers>
+        <Typography gutterBottom>{dialogContent}</Typography>
+      </DialogContent>
+      <DialogActions>
+        <StandardButton title={CANCEL_TITLE} eventHandler={handleClose} />
+        <StandardButton
+          title={buttonTitle}
+          eventHandler={eventHandler}
+          color={ACCEPT_BUTTON_STYLE}
+        />
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+export default DialogWindow;

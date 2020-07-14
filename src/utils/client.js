@@ -49,7 +49,7 @@ const getNewsItemById = (id) =>
           }
           images {
             primary {
-              large
+              medium
             }
             additional {
               large
@@ -62,7 +62,7 @@ const getNewsItemById = (id) =>
               value
             }
             image {
-              large
+              small
             }
           }
           date
@@ -103,8 +103,8 @@ const createNewsItem = async (news) => {
   client.resetStore();
 };
 
-const updateNewsItem = (id, news) => {
-  client.mutate({
+const updateNewsItem = async (id, news) => {
+  await client.mutate({
     variables: {
       id,
       news
@@ -117,6 +117,7 @@ const updateNewsItem = (id, news) => {
       }
     `
   });
+  client.resetStore();
 };
 
 export {
