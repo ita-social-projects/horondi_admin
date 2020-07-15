@@ -1,3 +1,3 @@
-import TableContainerGenerator from './Table-container-generator';
+import TableContainerGenerator from './table-container-generator';
 
 export default TableContainerGenerator;

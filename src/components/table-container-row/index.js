@@ -1,3 +1,3 @@
-import TableContainerRow from './Table-container-row';
+import TableContainerRow from './table-container-row';
 
 export default TableContainerRow;

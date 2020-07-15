@@ -1,29 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { Provider } from 'react-redux';
 
-import 'typeface-roboto';
-
 import App from './components/app';
-import { newsService } from './services';
-import { AdminServiceProvider } from './components/context';
+import configureStore from './store/store';
 
-import store from './store';
+import './index.css';
 
-const adminService = {
-  newsService
-};
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <AdminServiceProvider value={adminService}>
-      <App />
-    </AdminServiceProvider>
+    <App />
   </Provider>,
   document.getElementById('root')
 );
 
 if (window.Cypress) {
-  window.store = store;
+  window.store = configureStore;
 }
