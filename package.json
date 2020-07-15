@@ -90,14 +90,12 @@
     "eslint-plugin-react-hooks": "^2.5.1",
     "html-webpack-plugin": "^4.3.0",
     "husky": "^4.2.5",
-    "jest": "^26.0.1",
     "jest-dom": "^4.0.0",
     "lint-staged": "^10.2.6",
     "prettier": "^2.0.5",
     "prettier-eslint": "^10.1.1",
     "react-test-render": "^1.1.2",
-    "terser-webpack-plugin": "^3.0.3",
-    "webpack": "^4.43.0"
+    "terser-webpack-plugin": "^3.0.3"
   },
   "husky": {
     "hooks": {
