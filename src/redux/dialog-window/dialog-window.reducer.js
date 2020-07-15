@@ -3,7 +3,7 @@ const initialState = {
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
-  eventHandler: ''
+  eventHandler: () => {}
 };
 
 const dialogWindowState = (state = initialState, action) => {
