@@ -5,17 +5,21 @@ import {
   SET_NEWS_ITEM
 } from './news.types';
 
+import { config } from '../../configs';
+
+const { languages } = config;
+
 const initialState = {
   list: [],
   newsItem: {
     author: {
       name: [
         {
-          lang: 'uk',
+          lang: languages[0],
           value: 'default'
         },
         {
-          lang: 'en',
+          lang: languages[1],
           value: 'default'
         }
       ],
@@ -25,21 +29,21 @@ const initialState = {
     },
     text: [
       {
-        lang: 'uk',
+        lang: languages[0],
         value: 'default'
       },
       {
-        lang: 'en',
+        lang: languages[1],
         value: 'default'
       }
     ],
     title: [
       {
-        lang: 'uk',
+        lang: languages[0],
         value: 'default'
       },
       {
-        lang: 'en',
+        lang: languages[1],
         value: 'default'
       }
     ],
