@@ -6,7 +6,7 @@ const initialState = {
   eventHandler: () => {}
 };
 
-const dialogWindowState = (state = initialState, action) => {
+const dialogWindowState = (state = initialState, action = {}) => {
   switch (action.type) {
   case 'SET_DIALOG_STATUS':
     return {

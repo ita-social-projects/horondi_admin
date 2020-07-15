@@ -21,12 +21,12 @@ const DialogWindow = () => {
     dialogContent,
     buttonTitle,
     eventHandler
-  } = useSelector(({ DialogWindow }) => ({
-    dialogStatus: DialogWindow.dialogStatus,
-    dialogTitle: DialogWindow.dialogTitle,
-    dialogContent: DialogWindow.dialogContent,
-    buttonTitle: DialogWindow.buttonTitle,
-    eventHandler: DialogWindow.eventHandler
+  } = useSelector(({ DialogWindow: dialogWindow }) => ({
+    dialogStatus: dialogWindow.dialogStatus,
+    dialogTitle: dialogWindow.dialogTitle,
+    dialogContent: dialogWindow.dialogContent,
+    buttonTitle: dialogWindow.buttonTitle,
+    eventHandler: dialogWindow.eventHandler
   }));
 
   const dispatch = useDispatch();
