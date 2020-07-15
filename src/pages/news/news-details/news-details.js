@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useStyles } from './news-details.styles';
 import { SaveButton } from '../../../components/buttons';
-import useHandler from '../../../utils/useHandlers';
 import { config } from '../../../configs';
+import useNewsHandlers from '../../../utils/useNewsHandlers';
+
 import LoadingBar from '../../../components/loading-bar';
 import { getNewsItem, updateNewsItem } from '../../../redux/news/news.actions';
 
@@ -47,19 +48,7 @@ const NewsDetails = ({ match }) => {
     enAuthorHandler,
     enTextHandler,
     enTitleHandler
-  } = useHandler();
-
-  // const [authorPhoto, setAuthorPhoto] = useState('');
-  // const [newsImage, setNewsImage] = useState('');
-  // const [newsVideo, setNewsVideo] = useState('');
-
-  // const [ukAuthorName, ukSetAuthor] = useState('');
-  // const [ukText, ukSetText] = useState('');
-  // const [ukTitle, ukSetTitle] = useState('');
-
-  // const [enAuthorName, enSetAuthor] = useState('');
-  // const [enText, enSetText] = useState('');
-  // const [enTitle, enSetTitle] = useState('');
+  } = useNewsHandlers();
 
   const { id } = match.params;
   useEffect(() => {

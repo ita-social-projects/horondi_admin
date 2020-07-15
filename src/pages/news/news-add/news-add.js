@@ -6,7 +6,7 @@ import { SaveButton } from '../../../components/buttons';
 import { addNewsItem } from '../../../redux/news/news.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
-import useHandler from '../../../utils/useHandlers';
+import useNewsHandlers from '../../../utils/useNewsHandlers';
 
 const { languages } = config;
 
@@ -34,7 +34,7 @@ const NewsAdd = () => {
     enAuthorHandler,
     enTextHandler,
     enTitleHandler
-  } = useHandler();
+  } = useNewsHandlers();
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();

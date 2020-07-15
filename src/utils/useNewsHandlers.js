@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useHandler = () => {
+const useNewsHandlers = () => {
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
   const [newsVideo, setNewsVideo] = useState('');
@@ -73,4 +73,4 @@ const useHandler = () => {
   };
 };
 
-export default useHandler;
+export default useNewsHandlers;
