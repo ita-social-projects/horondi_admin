@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Paper, TextField, FormControl, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useStyles } from './news-details.styles';
 import { SaveButton } from '../../../components/buttons';
+import useHandler from '../../../utils/useHandlers';
 import { config } from '../../../configs';
 import LoadingBar from '../../../components/loading-bar';
 import { getNewsItem, updateNewsItem } from '../../../redux/news/news.actions';
@@ -18,17 +19,47 @@ const NewsDetails = ({ match }) => {
   }));
   const classes = useStyles();
 
-  const [authorPhoto, setAuthorPhoto] = useState('');
-  const [newsImage, setNewsImage] = useState('');
-  const [newsVideo, setNewsVideo] = useState('');
+  const {
+    authorPhoto,
+    newsImage,
+    newsVideo,
+    ukAuthorName,
+    ukText,
+    ukTitle,
+    enAuthorName,
+    enText,
+    enTitle,
+    setAuthorPhoto,
+    setNewsImage,
+    setNewsVideo,
+    ukSetAuthor,
+    ukSetText,
+    ukSetTitle,
+    enSetAuthor,
+    enSetText,
+    enSetTitle,
+    authorPhotoHandler,
+    newsImageHandler,
+    newsVideoHandler,
+    ukAuthorHandler,
+    ukTextHandler,
+    ukTitleHandler,
+    enAuthorHandler,
+    enTextHandler,
+    enTitleHandler
+  } = useHandler();
 
-  const [ukAuthorName, ukSetAuthor] = useState('');
-  const [ukText, ukSetText] = useState('');
-  const [ukTitle, ukSetTitle] = useState('');
+  // const [authorPhoto, setAuthorPhoto] = useState('');
+  // const [newsImage, setNewsImage] = useState('');
+  // const [newsVideo, setNewsVideo] = useState('');
 
-  const [enAuthorName, enSetAuthor] = useState('');
-  const [enText, enSetText] = useState('');
-  const [enTitle, enSetTitle] = useState('');
+  // const [ukAuthorName, ukSetAuthor] = useState('');
+  // const [ukText, ukSetText] = useState('');
+  // const [ukTitle, ukSetTitle] = useState('');
+
+  // const [enAuthorName, enSetAuthor] = useState('');
+  // const [enText, enSetText] = useState('');
+  // const [enTitle, enSetTitle] = useState('');
 
   const { id } = match.params;
   useEffect(() => {
@@ -45,7 +76,20 @@ const NewsDetails = ({ match }) => {
     enSetAuthor(newsItem.author.name[1].value);
     enSetText(newsItem.text[1].value);
     enSetTitle(newsItem.title[1].value);
-  }, [newsItem, dispatch, id]);
+  }, [
+    newsItem,
+    dispatch,
+    id,
+    setAuthorPhoto,
+    setNewsImage,
+    setNewsVideo,
+    ukSetAuthor,
+    ukSetText,
+    ukSetTitle,
+    enSetAuthor,
+    enSetText,
+    enSetTitle
+  ]);
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
@@ -119,7 +163,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={authorPhoto}
-                  onChange={(e) => setAuthorPhoto(e.target.value)}
+                  onChange={authorPhotoHandler}
                   required
                 />
                 <TextField
@@ -135,7 +179,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={newsImage}
-                  onChange={(e) => setNewsImage(e.target.value)}
+                  onChange={newsImageHandler}
                   required
                 />
                 <TextField
@@ -151,7 +195,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={newsVideo}
-                  onChange={(e) => setNewsVideo(e.target.value)}
+                  onChange={newsVideoHandler}
                   required
                 />
               </Paper>
@@ -172,7 +216,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukAuthorName}
-                  onChange={(e) => ukSetAuthor(e.target.value)}
+                  onChange={ukAuthorHandler}
                   required
                 />
                 <TextField
@@ -188,7 +232,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukTitle}
-                  onChange={(e) => ukSetTitle(e.target.value)}
+                  onChange={ukTitleHandler}
                   required
                 />
                 <TextField
@@ -204,7 +248,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukText}
-                  onChange={(e) => ukSetText(e.target.value)}
+                  onChange={ukTextHandler}
                   required
                 />
               </Paper>
@@ -225,7 +269,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enAuthorName}
-                  onChange={(e) => enSetAuthor(e.target.value)}
+                  onChange={enAuthorHandler}
                   required
                 />
                 <TextField
@@ -241,7 +285,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enTitle}
-                  onChange={(e) => enSetTitle(e.target.value)}
+                  onChange={enTitleHandler}
                   required
                 />
                 <TextField
@@ -257,7 +301,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enText}
-                  onChange={(e) => enSetText(e.target.value)}
+                  onChange={enTextHandler}
                   required
                 />
               </Paper>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './news-add.styles';
@@ -6,6 +6,7 @@ import { SaveButton } from '../../../components/buttons';
 import { addNewsItem } from '../../../redux/news/news.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
+import useHandler from '../../../utils/useHandlers';
 
 const { languages } = config;
 
@@ -14,17 +15,26 @@ const NewsAdd = () => {
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.loading);
 
-  const [authorPhoto, setAuthorPhoto] = useState('');
-  const [newsImage, setNewsImage] = useState('');
-  const [newsVideo, setNewsVideo] = useState('');
-
-  const [ukAuthorName, ukSetAuthor] = useState('');
-  const [ukText, ukSetText] = useState('');
-  const [ukTitle, ukSetTitle] = useState('');
-
-  const [enAuthorName, enSetAuthor] = useState('');
-  const [enText, enSetText] = useState('');
-  const [enTitle, enSetTitle] = useState('');
+  const {
+    authorPhoto,
+    newsImage,
+    newsVideo,
+    ukAuthorName,
+    ukText,
+    ukTitle,
+    enAuthorName,
+    enText,
+    enTitle,
+    authorPhotoHandler,
+    newsImageHandler,
+    newsVideoHandler,
+    ukAuthorHandler,
+    ukTextHandler,
+    ukTitleHandler,
+    enAuthorHandler,
+    enTextHandler,
+    enTitleHandler
+  } = useHandler();
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
@@ -76,36 +86,6 @@ const NewsAdd = () => {
       date: new Date().toISOString()
     };
     dispatch(addNewsItem(news));
-  };
-
-  const authorPhotoHandler = (e) => {
-    setAuthorPhoto(e.target.value);
-  };
-  const newsImageHandler = (e) => {
-    setNewsImage(e.target.value);
-  };
-  const newsVideoHandler = (e) => {
-    setNewsVideo(e.target.value);
-  };
-
-  const ukAuthorHandler = (e) => {
-    ukSetAuthor(e.target.value);
-  };
-  const ukTextHandler = (e) => {
-    ukSetText(e.target.value);
-  };
-  const ukTitleHandler = (e) => {
-    ukSetTitle(e.target.value);
-  };
-
-  const enAuthorHandler = (e) => {
-    enSetAuthor(e.target.value);
-  };
-  const enTextHandler = (e) => {
-    enSetText(e.target.value);
-  };
-  const enTitleHandler = (e) => {
-    enSetTitle(e.target.value);
   };
 
   const entertaimentOptions = [
