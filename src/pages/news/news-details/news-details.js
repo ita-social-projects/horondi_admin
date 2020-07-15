@@ -95,50 +95,20 @@ const NewsDetails = ({ match }) => {
     dispatch(updateNewsItem({ id, newNewsItem }));
   };
 
-  const authorPhotoHandler = (e) => {
-    setAuthorPhoto(e.target.value);
-  };
-  const newsImageHandler = (e) => {
-    setNewsImage(e.target.value);
-  };
-  const newsVideoHandler = (e) => {
-    setNewsVideo(e.target.value);
-  };
-
-  const ukAuthorHandler = (e) => {
-    ukSetAuthor(e.target.value);
-  };
-  const ukTextHandler = (e) => {
-    ukSetText(e.target.value);
-  };
-  const ukTitleHandler = (e) => {
-    ukSetTitle(e.target.value);
-  };
-
-  const enAuthorHandler = (e) => {
-    enSetAuthor(e.target.value);
-  };
-  const enTextHandler = (e) => {
-    enSetText(e.target.value);
-  };
-  const enTitleHandler = (e) => {
-    enSetTitle(e.target.value);
-  };
-
   if (loading) {
     return <LoadingBar />;
   }
 
   return (
-    <div className={classes.container}>
+    <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={newsSaveHandler}>
-        <FormControl className={classes.newsAdd}>
+        <FormControl className={classes.newsDetails}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Paper className={classes.newsItemAdd}>
+              <Paper className={classes.newsItemUpdate}>
                 <TextField
                   id='authorPhoto'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Фото автора'
                   multiline
@@ -149,12 +119,12 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={authorPhoto}
-                  onChange={authorPhotoHandler}
+                  onChange={(e) => setAuthorPhoto(e.target.value)}
                   required
                 />
                 <TextField
                   id='newsImage'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Головне зображення'
                   multiline
@@ -165,12 +135,12 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={newsImage}
-                  onChange={newsImageHandler}
+                  onChange={(e) => setNewsImage(e.target.value)}
                   required
                 />
                 <TextField
                   id='newsVideo'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Посилання на відео'
                   multiline
@@ -181,17 +151,17 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={newsVideo}
-                  onChange={newsVideoHandler}
+                  onChange={(e) => setNewsVideo(e.target.value)}
                   required
                 />
               </Paper>
             </Grid>
 
             <Grid item xs={6}>
-              <Paper className={classes.newsItemAdd}>
+              <Paper className={classes.newsItemUpdate}>
                 <TextField
                   id='ukAuthorName'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Автор (укр.)'
                   multiline
@@ -202,12 +172,12 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukAuthorName}
-                  onChange={ukAuthorHandler}
+                  onChange={(e) => ukSetAuthor(e.target.value)}
                   required
                 />
                 <TextField
                   id='ukTitle'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Заголовок (укр.)'
                   multiline
@@ -218,12 +188,12 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukTitle}
-                  onChange={ukTitleHandler}
+                  onChange={(e) => ukSetTitle(e.target.value)}
                   required
                 />
                 <TextField
                   id='ukText'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Текст (укр.)'
                   multiline
@@ -234,17 +204,17 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukText}
-                  onChange={ukTextHandler}
+                  onChange={(e) => ukSetText(e.target.value)}
                   required
                 />
               </Paper>
             </Grid>
 
             <Grid item xs={6}>
-              <Paper className={classes.newsItemAdd}>
+              <Paper className={classes.newsItemUpdate}>
                 <TextField
                   id='enAuthorName'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Автор (англ.)'
                   multiline
@@ -255,12 +225,12 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enAuthorName}
-                  onChange={enAuthorHandler}
+                  onChange={(e) => enSetAuthor(e.target.value)}
                   required
                 />
                 <TextField
                   id='enTitle'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Заголовок (англ.)'
                   multiline
@@ -271,12 +241,12 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enTitle}
-                  onChange={enTitleHandler}
+                  onChange={(e) => enSetTitle(e.target.value)}
                   required
                 />
                 <TextField
                   id='enText'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Текст (англ.)'
                   multiline
@@ -287,7 +257,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enText}
-                  onChange={enTextHandler}
+                  onChange={(e) => enSetText(e.target.value)}
                   required
                 />
               </Paper>
