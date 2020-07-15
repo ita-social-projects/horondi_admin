@@ -92,7 +92,6 @@ const NewsDetails = ({ match }) => {
         }
       }
     };
-
     dispatch(updateNewsItem({ id, newNewsItem }));
   };
 

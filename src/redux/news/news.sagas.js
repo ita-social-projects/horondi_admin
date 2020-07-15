@@ -48,11 +48,14 @@ function* handleNewsItemLoad({ payload }) {
 
 function* handleAddNews({ payload }) {
   try {
+    yield put(showLoader());
     yield call(createNewsItem, payload);
-    yield put(push('/'));
+    const news = yield call(getAllNews, null);
+    yield put(setNews(news.data.getAllNews));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
+    yield put(push('/'));
   } catch (err) {
     console.log(err);
   }

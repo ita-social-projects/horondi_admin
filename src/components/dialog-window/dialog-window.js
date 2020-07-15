@@ -6,13 +6,13 @@ import {
   DialogTitle,
   Typography
 } from '@material-ui/core/';
-
 import { useDispatch, useSelector } from 'react-redux';
+import { config } from '../../configs';
 import { setDialogStatus } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton } from '../buttons';
 
-const CANCEL_TITLE = 'Відмінити';
-const ACCEPT_BUTTON_STYLE = 'secondary';
+const { CANCEL_TITLE } = config.buttonTitles;
+const { ACCEPT_BUTTON_STYLE } = config.buttonStyles;
 
 const DialogWindow = () => {
   const {
