@@ -43,7 +43,7 @@ const NewsDetails = ({ match }) => {
 
   const { id } = match.params;
   useEffect(() => {
-    dispatch(getNewsItem('5f10b48b7724242fc459c302'));
+    dispatch(getNewsItem(id));
 
     setAuthorPhoto(newsItem.author.image.small);
     setNewsImage(newsItem.images.primary.medium);
