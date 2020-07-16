@@ -52,6 +52,7 @@ const NewsDetails = ({ match }) => {
 
   const { id } = match.params;
   useEffect(() => {
+    console.log(id);
     dispatch(getNewsItem(id));
 
     setAuthorPhoto(newsItem.author.image.small);

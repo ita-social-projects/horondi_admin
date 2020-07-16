@@ -1,6 +1,7 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { setNews, hideLoader, showLoader, setNewsItem } from './news.actions';
+import { setError } from '../error/error.actions';
 import {
   getAllNews,
   deleteNewsItem,
@@ -22,7 +23,7 @@ import {
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
 
-const { SUCCESS_ADD_STATUS } = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS } = config.statuses;
 
 function* handleNewsLoad() {
   try {
@@ -31,7 +32,7 @@ function* handleNewsLoad() {
     yield put(setNews(news.data.getAllNews));
     yield put(hideLoader());
   } catch (error) {
-    console.log(error);
+    yield call(handleNewsError, error);
   }
 }
 
@@ -42,7 +43,7 @@ function* handleNewsItemLoad({ payload }) {
     yield put(setNewsItem(newsItem.data.getNewsById));
     yield put(hideLoader());
   } catch (error) {
-    console.log(error);
+    yield call(handleNewsError, error);
   }
 }
 
@@ -56,8 +57,8 @@ function* handleAddNews({ payload }) {
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
     yield put(push('/'));
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    yield call(handleNewsError, error);
   }
 }
 
@@ -68,8 +69,11 @@ function* handleNewsDelete({ payload }) {
     const news = yield call(getAllNews, null);
     yield put(setNews(news.data.getAllNews));
     yield put(hideLoader());
+    yield put(setSnackBarSeverity('success'));
+    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
+    yield put(setSnackBarStatus(true));
   } catch (error) {
-    console.log(error);
+    yield call(handleNewsError, error);
   }
 }
 
@@ -82,8 +86,16 @@ function* handleNewsUpdate({ payload }) {
     yield put(setNews(news.data.getAllNews));
     yield put(push('/'));
   } catch (error) {
-    console.log(error);
+    yield call(handleNewsError, error);
   }
+}
+
+function* handleNewsError(e) {
+  yield put(hideLoader());
+  yield put(setError({ e }));
+  yield put(setSnackBarSeverity('error'));
+  yield put(setSnackBarMessage(e.message));
+  yield put(setSnackBarStatus(true));
 }
 
 export default function* newsSaga() {

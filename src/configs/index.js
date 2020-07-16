@@ -36,7 +36,8 @@ export const config = {
     LIGHT_THEME: 'light'
   },
   statuses: {
-    SUCCESS_ADD_STATUS: 'Успішно додано!'
+    SUCCESS_ADD_STATUS: 'Успішно додано!',
+    SUCCESS_DELETE_STATUS: 'Успішно видалено!'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
