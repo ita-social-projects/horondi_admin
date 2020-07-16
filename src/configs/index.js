@@ -37,7 +37,8 @@ export const config = {
   },
   statuses: {
     SUCCESS_ADD_STATUS: 'Успішно додано!',
-    SUCCESS_DELETE_STATUS: 'Успішно видалено!'
+    SUCCESS_DELETE_STATUS: 'Успішно видалено!',
+    ERROR_PAGE_STATUS: 'Сторінку не знайдено!'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',

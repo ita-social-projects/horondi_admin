@@ -43,6 +43,7 @@ function* handleNewsItemLoad({ payload }) {
     yield put(setNewsItem(newsItem.data.getNewsById));
     yield put(hideLoader());
   } catch (error) {
+    // console.log(JSON.parse(error.graphQLErrors[0].message))
     yield call(handleNewsError, error);
   }
 }
