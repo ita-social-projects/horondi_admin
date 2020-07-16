@@ -38,21 +38,12 @@ const NewsDetails = ({ match }) => {
     ukSetTitle,
     enSetAuthor,
     enSetText,
-    enSetTitle,
-    authorPhotoHandler,
-    newsImageHandler,
-    newsVideoHandler,
-    ukAuthorHandler,
-    ukTextHandler,
-    ukTitleHandler,
-    enAuthorHandler,
-    enTextHandler,
-    enTitleHandler
+    enSetTitle
   } = useNewsHandlers();
 
   const { id } = match.params;
   useEffect(() => {
-    dispatch(getNewsItem(id));
+    dispatch(getNewsItem('5f10b48b7724242fc459c302'));
 
     setAuthorPhoto(newsItem.author.image.small);
     setNewsImage(newsItem.images.primary.medium);
@@ -152,7 +143,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={authorPhoto}
-                  onChange={authorPhotoHandler}
+                  onChange={(e) => setAuthorPhoto(e.target.value)}
                   required
                 />
                 <TextField
@@ -168,7 +159,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={newsImage}
-                  onChange={newsImageHandler}
+                  onChange={(e) => setNewsImage(e.target.value)}
                   required
                 />
                 <TextField
@@ -184,7 +175,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={newsVideo}
-                  onChange={newsVideoHandler}
+                  onChange={(e) => setNewsVideo(e.target.value)}
                   required
                 />
               </Paper>
@@ -205,7 +196,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukAuthorName}
-                  onChange={ukAuthorHandler}
+                  onChange={(e) => ukSetAuthor(e.target.value)}
                   required
                 />
                 <TextField
@@ -221,7 +212,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukTitle}
-                  onChange={ukTitleHandler}
+                  onChange={(e) => ukSetTitle(e.target.value)}
                   required
                 />
                 <TextField
@@ -237,7 +228,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={ukText}
-                  onChange={ukTextHandler}
+                  onChange={(e) => ukSetText(e.target.value)}
                   required
                 />
               </Paper>
@@ -258,7 +249,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enAuthorName}
-                  onChange={enAuthorHandler}
+                  onChange={(e) => enSetAuthor(e.target.value)}
                   required
                 />
                 <TextField
@@ -274,7 +265,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enTitle}
-                  onChange={enTitleHandler}
+                  onChange={(e) => enSetTitle(e.target.value)}
                   required
                 />
                 <TextField
@@ -290,7 +281,7 @@ const NewsDetails = ({ match }) => {
                     }
                   }}
                   value={enText}
-                  onChange={enTextHandler}
+                  onChange={(e) => enSetText(e.target.value)}
                   required
                 />
               </Paper>

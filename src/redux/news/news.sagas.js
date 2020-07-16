@@ -43,8 +43,12 @@ function* handleNewsItemLoad({ payload }) {
     yield put(setNewsItem(newsItem.data.getNewsById));
     yield put(hideLoader());
   } catch (error) {
-    // console.log(JSON.parse(error.graphQLErrors[0].message))
-    yield call(handleNewsError, error);
+    if (error.graphQLErrors[0]) {
+      const err = JSON.parse(error.graphQLErrors[0].message);
+      yield call(handleCustomNewsError, err[0].value);
+    } else {
+      yield call(handleNewsError, error);
+    }
   }
 }
 
@@ -96,6 +100,14 @@ function* handleNewsError(e) {
   yield put(setError({ e }));
   yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(e.message));
+  yield put(setSnackBarStatus(true));
+}
+
+function* handleCustomNewsError(e) {
+  yield put(hideLoader());
+  yield put(setError({ e }));
+  yield put(setSnackBarSeverity('error'));
+  yield put(setSnackBarMessage(e));
   yield put(setSnackBarStatus(true));
 }
 
