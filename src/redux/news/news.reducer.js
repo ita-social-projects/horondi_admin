@@ -16,42 +16,42 @@ const initialState = {
       name: [
         {
           lang: languages[0],
-          value: 'default'
+          value: ''
         },
         {
           lang: languages[1],
-          value: 'default'
+          value: ''
         }
       ],
       image: {
-        small: 'default'
+        small: ''
       }
     },
     text: [
       {
         lang: languages[0],
-        value: 'default'
+        value: ''
       },
       {
         lang: languages[1],
-        value: 'default'
+        value: ''
       }
     ],
     title: [
       {
         lang: languages[0],
-        value: 'default'
+        value: ''
       },
       {
         lang: languages[1],
-        value: 'default'
+        value: ''
       }
     ],
-    video: 'default',
-    date: 'default',
+    video: '',
+    date: '',
     images: {
       primary: {
-        medium: 'default'
+        medium: ''
       }
     }
   },

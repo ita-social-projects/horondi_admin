@@ -25,15 +25,15 @@ const NewsAdd = () => {
     enAuthorName,
     enText,
     enTitle,
-    authorPhotoHandler,
-    newsImageHandler,
-    newsVideoHandler,
-    ukAuthorHandler,
-    ukTextHandler,
-    ukTitleHandler,
-    enAuthorHandler,
-    enTextHandler,
-    enTitleHandler
+    setAuthorPhoto,
+    setNewsImage,
+    setNewsVideo,
+    ukSetAuthor,
+    ukSetText,
+    ukSetTitle,
+    enSetAuthor,
+    enSetText,
+    enSetTitle
   } = useNewsHandlers();
 
   const newsSaveHandler = async (e) => {
@@ -95,7 +95,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Фото автора',
       authorPhoto,
-      handler: authorPhotoHandler,
+      handler: (e) => setAuthorPhoto(e.target.value),
       required: true
     },
     {
@@ -104,7 +104,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Головне зображення',
       newsImage,
-      handler: newsImageHandler,
+      handler: (e) => setNewsImage(e.target.value),
       required: true
     },
     {
@@ -113,7 +113,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Посилання на відео',
       newsVideo,
-      handler: newsVideoHandler
+      handler: (e) => setNewsVideo(e.target.value)
     }
   ];
 
@@ -124,7 +124,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Автор (укр.)',
       ukAuthorName,
-      handler: ukAuthorHandler
+      handler: (e) => ukSetAuthor(e.target.value)
     },
     {
       id: 'ukTitle',
@@ -132,7 +132,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Заголовок (укр.)',
       ukTitle,
-      handler: ukTitleHandler,
+      handler: (e) => ukSetTitle(e.target.value),
       required: true
     },
     {
@@ -141,7 +141,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Текст (укр.)',
       ukText,
-      handler: ukTextHandler,
+      handler: (e) => ukSetText(e.target.value),
       required: true
     }
   ];
@@ -153,7 +153,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Автор (англ.)',
       enAuthorName,
-      handler: enAuthorHandler
+      handler: (e) => enSetAuthor(e.target.value)
     },
     {
       id: 'enTitle',
@@ -161,7 +161,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Заголовок (англ.)',
       enTitle,
-      handler: enTitleHandler,
+      handler: (e) => enSetTitle(e.target.value),
       required: true
     },
     {
@@ -170,7 +170,7 @@ const NewsAdd = () => {
       variant: 'outlined',
       label: 'Текст (англ.)',
       enText,
-      handler: enTextHandler,
+      handler: (e) => enSetText(e.target.value),
       required: true
     }
   ];
