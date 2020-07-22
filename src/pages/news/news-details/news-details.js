@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import { useStyles } from './news-details.styles';
 import { SaveButton } from '../../../components/buttons';
 import { config } from '../../../configs';
-import useNewsHandlers from '../../../utils/useNewsHandlers';
+import useNewsHandlers from '../../../utils/use-news-handlers';
 
 import LoadingBar from '../../../components/loading-bar';
 import { getNewsItem, updateNewsItem } from '../../../redux/news/news.actions';

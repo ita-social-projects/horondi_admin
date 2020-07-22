@@ -49,9 +49,9 @@ const NewsPage = () => {
   };
 
   const newsDeleteHandler = (id) => {
-    const removeNews = async () => {
+    const removeNews = () => {
       dispatch(setDialogStatus(false));
-      await dispatch(deleteNewsItem(id));
+      dispatch(deleteNewsItem(id));
     };
     openSuccessSnackbar(removeNews);
   };

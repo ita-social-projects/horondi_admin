@@ -1,3 +1,11 @@
+import {
+  SET_DIALOG_STATUS,
+  SET_DIALOG_TITLE,
+  SET_DIALOG_CONTENT,
+  SET_BUTTON_TITLE,
+  SET_EVENT_HANDLER
+} from './dialog-window.types';
+
 const initialState = {
   dialogStatus: false,
   dialogTitle: '',
@@ -8,31 +16,31 @@ const initialState = {
 
 const dialogWindowState = (state = initialState, action = {}) => {
   switch (action.type) {
-  case 'SET_DIALOG_STATUS':
+  case SET_DIALOG_STATUS:
     return {
       ...state,
       dialogStatus: action.payload
     };
 
-  case 'SET_DIALOG_TITLE':
+  case SET_DIALOG_TITLE:
     return {
       ...state,
       dialogTitle: action.payload
     };
 
-  case 'SET_DIALOG_CONTENT':
+  case SET_DIALOG_CONTENT:
     return {
       ...state,
       dialogContent: action.payload
     };
 
-  case 'SET_BUTTON_TITLE':
+  case SET_BUTTON_TITLE:
     return {
       ...state,
       buttonTitle: action.payload
     };
 
-  case 'SET_EVENT_HANDLER':
+  case SET_EVENT_HANDLER:
     return {
       ...state,
       eventHandler: action.payload

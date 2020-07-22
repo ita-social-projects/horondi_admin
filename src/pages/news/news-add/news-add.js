@@ -6,7 +6,7 @@ import { SaveButton } from '../../../components/buttons';
 import { addNewsItem } from '../../../redux/news/news.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
-import useNewsHandlers from '../../../utils/useNewsHandlers';
+import useNewsHandlers from '../../../utils/use-news-handlers';
 
 const { languages } = config;
 
