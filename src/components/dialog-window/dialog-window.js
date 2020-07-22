@@ -20,13 +20,13 @@ const DialogWindow = () => {
     dialogTitle,
     dialogContent,
     buttonTitle,
-    eventHandler
+    onClickHandler
   } = useSelector(({ DialogWindow: dialogWindow }) => ({
     dialogStatus: dialogWindow.dialogStatus,
     dialogTitle: dialogWindow.dialogTitle,
     dialogContent: dialogWindow.dialogContent,
     buttonTitle: dialogWindow.buttonTitle,
-    eventHandler: dialogWindow.eventHandler
+    onClickHandler: dialogWindow.onClickHandler
   }));
 
   const dispatch = useDispatch();
@@ -42,10 +42,10 @@ const DialogWindow = () => {
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
       <DialogActions>
-        <StandardButton title={CANCEL_TITLE} eventHandler={handleClose} />
+        <StandardButton title={CANCEL_TITLE} onClickHandler={handleClose} />
         <StandardButton
           title={buttonTitle}
-          eventHandler={eventHandler}
+          onClickHandler={onClickHandler}
           color={ACCEPT_BUTTON_STYLE}
         />
       </DialogActions>

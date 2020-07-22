@@ -3,10 +3,10 @@ const initialState = {
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
-  eventHandler: () => {}
+  onClickHandler: () => {}
 };
 
-const dialogWindowState = (state = initialState, action = {}) => {
+const dialogWindowReducer = (state = initialState, action = {}) => {
   switch (action.type) {
   case 'SET_DIALOG_STATUS':
     return {
@@ -35,12 +35,11 @@ const dialogWindowState = (state = initialState, action = {}) => {
   case 'SET_EVENT_HANDLER':
     return {
       ...state,
-      eventHandler: action.payload
+      onClickHandler: action.payload
     };
-
   default:
     return state;
   }
 };
 
-export default dialogWindowState;
+export default dialogWindowReducer;

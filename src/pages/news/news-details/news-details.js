@@ -44,7 +44,9 @@ const NewsDetails = ({ match }) => {
   const { id } = match.params;
   useEffect(() => {
     dispatch(getNewsItem(id));
+  }, [dispatch, id]);
 
+  useEffect(() => {
     setAuthorPhoto(newsItem.author.image.small);
     setNewsImage(newsItem.images.primary.medium);
     setNewsVideo(newsItem.video);
@@ -57,9 +59,6 @@ const NewsDetails = ({ match }) => {
     enSetText(newsItem.text[1].value);
     enSetTitle(newsItem.title[1].value);
   }, [
-    newsItem,
-    dispatch,
-    id,
     setAuthorPhoto,
     setNewsImage,
     setNewsVideo,
@@ -68,7 +67,8 @@ const NewsDetails = ({ match }) => {
     ukSetTitle,
     enSetAuthor,
     enSetText,
-    enSetTitle
+    enSetTitle,
+    newsItem
   ]);
 
   const newsSaveHandler = async (e) => {

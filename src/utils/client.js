@@ -1,5 +1,9 @@
 import ApolloClient, { gql } from 'apollo-boost';
-// import { InMemoryCache } from 'apollo-cache-inmemory';
+// import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+
+// const fragmentMatcher = new IntrospectionFragmentMatcher({
+
+// })
 
 export const REACT_APP_API_URL =
   window.env && window.env.REACT_APP_API_URL
@@ -8,6 +12,9 @@ export const REACT_APP_API_URL =
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_API_URL
+  // cache: new InMemoryCache({
+  //   fragmentMatcher
+  // })
 });
 
 const getAllNews = () =>
@@ -77,7 +84,8 @@ const getNewsItemById = (id) =>
           }
         }
       }
-    `
+    `,
+    fetchPolicy: 'no-cache'
   });
 
 const deleteNewsItem = async (id) => {
