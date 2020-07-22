@@ -8,11 +8,8 @@ import { config } from '../../../configs';
 import { getNews, deleteArticle } from '../../../redux/news/news.actions';
 
 import {
-  setDialogStatus,
-  setDialogTitle,
-  setDialogContent,
-  setButtonTitle,
-  setClickHandler
+  showDialog,
+  closeDialog
 } from '../../../redux/dialog-window/dialog-window.actions';
 
 import TableContainerRow from '../../../components/table-container-row';
@@ -41,16 +38,20 @@ const NewsPage = () => {
   }, [dispatch]);
 
   const openSuccessSnackbar = (onClickHandler) => {
-    dispatch(setDialogTitle(REMOVE_TITLE));
-    dispatch(setDialogContent(REMOVE_MESSAGE));
-    dispatch(setButtonTitle(REMOVE_TITLE));
-    dispatch(setClickHandler(onClickHandler));
-    dispatch(setDialogStatus(true));
+    dispatch(
+      showDialog({
+        dialogStatus: true,
+        dialogTitle: REMOVE_TITLE,
+        dialogContent: REMOVE_MESSAGE,
+        buttonTitle: REMOVE_TITLE,
+        onClickHandler
+      })
+    );
   };
 
   const newsDeleteHandler = (id) => {
     const removeNews = () => {
-      dispatch(setDialogStatus(false));
+      dispatch(closeDialog());
       dispatch(deleteArticle(id));
     };
     openSuccessSnackbar(removeNews);

@@ -1,21 +1,24 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { setNews, hideLoader, showLoader, setArticle } from './news.actions';
+import { setNews, setLoading, setArticle } from './news.actions';
 import {
   getAllNews,
   deleteArticle,
   createArticle,
   updateArticle,
   getArticleById
-} from '../../utils/client';
+} from './news.operations';
+
 import {
   GET_NEWS,
-  DELETE_NEWS_ITEM,
+  DELETE_ARTICLE,
   ADD_ARTICLE,
-  UPDATE_NEWS_ITEM,
+  UPDATE_ARTICLE,
   GET_ARTICLE
 } from './news.types';
+
 import { config } from '../../configs';
+
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -26,10 +29,10 @@ const { SUCCESS_ADD_STATUS } = config.statuses;
 
 function* handleNewsLoad() {
   try {
-    yield put(showLoader());
+    yield put(setLoading(true));
     const news = yield call(getAllNews, null);
-    yield put(setNews(news.data.getAllNews));
-    yield put(hideLoader());
+    yield put(setNews(news));
+    yield put(setLoading(false));
   } catch (error) {
     console.log(error);
   }
@@ -37,10 +40,10 @@ function* handleNewsLoad() {
 
 function* handleArticleLoad({ payload }) {
   try {
-    yield put(showLoader());
+    yield put(setLoading(true));
     const newsArticle = yield call(getArticleById, payload);
-    yield put(setArticle(newsArticle.data.getNewsById));
-    yield put(hideLoader());
+    yield put(setArticle(newsArticle));
+    yield put(setLoading(false));
   } catch (error) {
     console.log(error);
   }
@@ -48,10 +51,10 @@ function* handleArticleLoad({ payload }) {
 
 function* handleAddNews({ payload }) {
   try {
-    yield put(showLoader());
+    yield put(setLoading(true));
     yield call(createArticle, payload);
     const news = yield call(getAllNews, null);
-    yield put(setNews(news.data.getAllNews));
+    yield put(setNews(news));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
@@ -63,11 +66,11 @@ function* handleAddNews({ payload }) {
 
 function* handleNewsDelete({ payload }) {
   try {
-    yield put(showLoader());
+    yield put(setLoading(true));
     yield call(deleteArticle, payload);
     const news = yield call(getAllNews, null);
-    yield put(setNews(news.data.getAllNews));
-    yield put(hideLoader());
+    yield put(setNews(news));
+    yield put(setLoading(false));
   } catch (error) {
     console.log(error);
   }
@@ -76,10 +79,10 @@ function* handleNewsDelete({ payload }) {
 function* handleNewsUpdate({ payload }) {
   const { id, newArticle } = payload;
   try {
-    yield put(showLoader());
+    yield put(setLoading(true));
     yield call(updateArticle, id, newArticle);
     const news = yield call(getAllNews, null);
-    yield put(setNews(news.data.getAllNews));
+    yield put(setNews(news));
     yield put(push('/'));
   } catch (error) {
     console.log(error);
@@ -88,8 +91,8 @@ function* handleNewsUpdate({ payload }) {
 
 export default function* newsSaga() {
   yield takeEvery(GET_NEWS, handleNewsLoad);
-  yield takeEvery(DELETE_NEWS_ITEM, handleNewsDelete);
+  yield takeEvery(DELETE_ARTICLE, handleNewsDelete);
   yield takeEvery(GET_ARTICLE, handleArticleLoad);
   yield takeEvery(ADD_ARTICLE, handleAddNews);
-  yield takeEvery(UPDATE_NEWS_ITEM, handleNewsUpdate);
+  yield takeEvery(UPDATE_ARTICLE, handleNewsUpdate);
 }

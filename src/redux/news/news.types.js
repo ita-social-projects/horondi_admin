@@ -1,9 +1,8 @@
 export const SET_NEWS = 'SET_NEWS';
 export const GET_NEWS = 'GET_NEWS';
-export const SHOW_LOADER = 'SHOW_LOADER';
-export const HIDE_LOADER = 'HIDE_LOADER';
-export const DELETE_NEWS_ITEM = 'DELETE_NEWS_ITEM';
+export const DELETE_ARTICLE = 'DELETE_ARTICLE';
 export const ADD_ARTICLE = 'ADD_ARTICLE';
 export const GET_ARTICLE = 'GET_ARTICLE';
 export const SET_ARTICLE = 'SET_ARTICLE';
-export const UPDATE_NEWS_ITEM = 'UPDATE_NEWS_ITEM';
+export const SET_LOADING = 'SET_LOADING';
+export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';

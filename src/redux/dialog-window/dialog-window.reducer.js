@@ -1,10 +1,4 @@
-import {
-  SET_DIALOG_STATUS,
-  SET_DIALOG_TITLE,
-  SET_DIALOG_CONTENT,
-  SET_BUTTON_TITLE,
-  SET_ON_CLICK_HANDLER
-} from './dialog-window.types';
+import { CLOSE_DIALOG, SHOW_DIALOG } from './dialog-window.types';
 
 const initialState = {
   dialogStatus: false,
@@ -16,34 +10,16 @@ const initialState = {
 
 const dialogWindowReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_DIALOG_STATUS:
+  case SHOW_DIALOG:
     return {
       ...state,
-      dialogStatus: action.payload
+      ...action.payload
     };
 
-  case SET_DIALOG_TITLE:
+  case CLOSE_DIALOG:
     return {
       ...state,
-      dialogTitle: action.payload
-    };
-
-  case SET_DIALOG_CONTENT:
-    return {
-      ...state,
-      dialogContent: action.payload
-    };
-
-  case SET_BUTTON_TITLE:
-    return {
-      ...state,
-      buttonTitle: action.payload
-    };
-
-  case SET_ON_CLICK_HANDLER:
-    return {
-      ...state,
-      onClickHandler: action.payload
+      dialogStatus: false
     };
 
   default:
