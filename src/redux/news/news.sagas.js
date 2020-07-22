@@ -40,15 +40,17 @@ function* handleNewsItemLoad({ payload }) {
   try {
     yield put(showLoader());
     const newsItem = yield call(getNewsItemById, payload);
+    console.log(newsItem);
     yield put(setNewsItem(newsItem.data.getNewsById));
     yield put(hideLoader());
   } catch (error) {
-    if (error.graphQLErrors[0]) {
-      const err = JSON.parse(error.graphQLErrors[0].message);
-      yield call(handleCustomNewsError, err[0].value);
-    } else {
-      yield call(handleNewsError, error);
-    }
+    console.log(error);
+    // if (error.graphQLErrors[0]) {
+    //   const err = JSON.parse(error.graphQLErrors[0].message);
+    //   yield call(handleCustomNewsError, err[0].value);
+    // } else {
+    //   yield call(handleNewsError, error);
+    // }
   }
 }
 

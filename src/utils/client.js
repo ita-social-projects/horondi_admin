@@ -1,4 +1,5 @@
 import ApolloClient, { gql } from 'apollo-boost';
+// import { InMemoryCache } from 'apollo-cache-inmemory';
 
 export const REACT_APP_API_URL =
   window.env && window.env.REACT_APP_API_URL
@@ -38,34 +39,42 @@ const getNewsItemById = (id) =>
     variables: { id },
     query: gql`
       query($id: ID!) {
-        getNewsById(id: $id) {
-          title {
-            lang
-            value
-          }
-          text {
-            lang
-            value
-          }
-          images {
-            primary {
-              medium
-            }
-            additional {
-              large
-            }
-          }
-          video
-          author {
-            name {
+        getNewsById(id: $id, language: 1) {
+          ... on News {
+            __typename
+            title {
               lang
               value
             }
-            image {
-              small
+            text {
+              lang
+              value
             }
+            images {
+              primary {
+                medium
+              }
+              additional {
+                large
+              }
+            }
+            video
+            author {
+              name {
+                lang
+                value
+              }
+              image {
+                small
+              }
+            }
+            date
           }
-          date
+          ... on Error {
+            __typename
+            message
+            statusCode
+          }
         }
       }
     `
