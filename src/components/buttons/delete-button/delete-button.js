@@ -8,11 +8,11 @@ import { config } from '../../../configs';
 const { DELETE_TITLE } = config.buttonTitles;
 
 const DeleteButton = (props) => {
-  const { eventHandler, size } = props;
+  const { onClickHandler, size } = props;
 
   return (
     <Tooltip title={DELETE_TITLE}>
-      <IconButton aria-label={DELETE_TITLE} onClick={eventHandler}>
+      <IconButton aria-label={DELETE_TITLE} onClick={onClickHandler}>
         <DeleteIcon fontSize={size} color='error' />
       </IconButton>
     </Tooltip>
@@ -20,12 +20,12 @@ const DeleteButton = (props) => {
 };
 
 DeleteButton.propTypes = {
-  eventHandler: PropTypes.func,
+  onClickHandler: PropTypes.func,
   size: PropTypes.string.isRequired
 };
 
 DeleteButton.defaultProps = {
-  eventHandler: () => {}
+  onClickHandler: () => {}
 };
 
 export default DeleteButton;

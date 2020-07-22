@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { useStyles } from './news-page.styles';
 import { config } from '../../../configs';
-import { getNews, deleteNewsItem } from '../../../redux/news/news.actions';
+import { getNews, deleteArticle } from '../../../redux/news/news.actions';
 
 import {
   setDialogStatus,
   setDialogTitle,
   setDialogContent,
   setButtonTitle,
-  setEventHandler
+  setClickHandler
 } from '../../../redux/dialog-window/dialog-window.actions';
 
 import TableContainerRow from '../../../components/table-container-row';
@@ -40,18 +40,18 @@ const NewsPage = () => {
     dispatch(getNews());
   }, [dispatch]);
 
-  const openSuccessSnackbar = (eventHandler) => {
+  const openSuccessSnackbar = (onClickHandler) => {
     dispatch(setDialogTitle(REMOVE_TITLE));
     dispatch(setDialogContent(REMOVE_MESSAGE));
     dispatch(setButtonTitle(REMOVE_TITLE));
-    dispatch(setEventHandler(eventHandler));
+    dispatch(setClickHandler(onClickHandler));
     dispatch(setDialogStatus(true));
   };
 
   const newsDeleteHandler = (id) => {
     const removeNews = () => {
       dispatch(setDialogStatus(false));
-      dispatch(deleteNewsItem(id));
+      dispatch(deleteArticle(id));
     };
     openSuccessSnackbar(removeNews);
   };

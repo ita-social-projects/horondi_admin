@@ -3,7 +3,7 @@ import {
   SET_DIALOG_TITLE,
   SET_DIALOG_CONTENT,
   SET_BUTTON_TITLE,
-  SET_EVENT_HANDLER
+  SET_ON_CLICK_HANDLER
 } from './dialog-window.types';
 
 const initialState = {
@@ -11,10 +11,10 @@ const initialState = {
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
-  eventHandler: () => {}
+  onClickHandler: () => {}
 };
 
-const dialogWindowState = (state = initialState, action = {}) => {
+const dialogWindowReducer = (state = initialState, action = {}) => {
   switch (action.type) {
   case SET_DIALOG_STATUS:
     return {
@@ -40,10 +40,10 @@ const dialogWindowState = (state = initialState, action = {}) => {
       buttonTitle: action.payload
     };
 
-  case SET_EVENT_HANDLER:
+  case SET_ON_CLICK_HANDLER:
     return {
       ...state,
-      eventHandler: action.payload
+      onClickHandler: action.payload
     };
 
   default:
@@ -51,4 +51,4 @@ const dialogWindowState = (state = initialState, action = {}) => {
   }
 };
 
-export default dialogWindowState;
+export default dialogWindowReducer;

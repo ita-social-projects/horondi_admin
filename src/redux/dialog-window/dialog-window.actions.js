@@ -3,7 +3,7 @@ import {
   SET_BUTTON_TITLE,
   SET_DIALOG_CONTENT,
   SET_DIALOG_TITLE,
-  SET_EVENT_HANDLER
+  SET_ON_CLICK_HANDLER
 } from './dialog-window.types';
 
 const setDialogStatus = (newDialogStatus) => ({
@@ -26,9 +26,9 @@ const setButtonTitle = (newButtonTitle) => ({
   payload: newButtonTitle
 });
 
-const setEventHandler = (newEventHandler) => ({
-  type: SET_EVENT_HANDLER,
-  payload: newEventHandler
+const setClickHandler = (newOnClickHandler) => ({
+  type: SET_ON_CLICK_HANDLER,
+  payload: newOnClickHandler
 });
 
 export {
@@ -36,5 +36,5 @@ export {
   setDialogTitle,
   setDialogContent,
   setButtonTitle,
-  setEventHandler
+  setClickHandler
 };

@@ -33,7 +33,7 @@ const getAllNews = () =>
     `
   });
 
-const getNewsItemById = (id) =>
+const getArticleById = (id) =>
   client.query({
     variables: { id },
     query: gql`
@@ -71,7 +71,7 @@ const getNewsItemById = (id) =>
     `
   });
 
-const deleteNewsItem = async (id) => {
+const deleteArticle = async (id) => {
   await client.mutate({
     variables: { id },
     mutation: gql`
@@ -89,7 +89,7 @@ const deleteNewsItem = async (id) => {
   client.resetStore();
 };
 
-const createNewsItem = async (news) => {
+const createArticle = async (news) => {
   await client.mutate({
     mutation: gql`
       mutation($news: NewsInput!) {
@@ -103,7 +103,7 @@ const createNewsItem = async (news) => {
   client.resetStore();
 };
 
-const updateNewsItem = async (id, news) => {
+const updateArticle = async (id, news) => {
   await client.mutate({
     variables: {
       id,
@@ -122,8 +122,8 @@ const updateNewsItem = async (id, news) => {
 
 export {
   getAllNews,
-  deleteNewsItem,
-  getNewsItemById,
-  createNewsItem,
-  updateNewsItem
+  deleteArticle,
+  getArticleById,
+  createArticle,
+  updateArticle
 };

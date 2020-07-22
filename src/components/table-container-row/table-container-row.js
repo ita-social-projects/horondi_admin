@@ -30,8 +30,8 @@ const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
       </TableCell>
       {tableCells}
       <TableCell>
-        <EditButton size={iconSize} eventHandler={editHandler} />
-        <DeleteButton size={iconSize} eventHandler={deleteHandler} />
+        <EditButton size={iconSize} onClickHandler={editHandler} />
+        <DeleteButton size={iconSize} onClickHandler={deleteHandler} />
       </TableCell>
     </TableRow>
   );

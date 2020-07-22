@@ -3,12 +3,12 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-const SaveButton = ({ title, type, eventHandler, ...props }) => (
+const SaveButton = ({ title, type, onClickHandler, ...props }) => (
   <Button
     variant='contained'
     color='primary'
     type={type}
-    onClick={eventHandler}
+    onClick={onClickHandler}
     {...props}
   >
     {title}
@@ -16,7 +16,7 @@ const SaveButton = ({ title, type, eventHandler, ...props }) => (
 );
 
 SaveButton.propTypes = {
-  eventHandler: PropTypes.func,
+  onClickHandler: PropTypes.func,
   size: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired
@@ -24,7 +24,7 @@ SaveButton.propTypes = {
 
 SaveButton.defaultProps = {
   size: 'small',
-  eventHandler: () => {}
+  onClickHandler: () => {}
 };
 
 export default SaveButton;

@@ -1,60 +1,8 @@
-import {
-  SET_NEWS,
-  SHOW_LOADER,
-  HIDE_LOADER,
-  SET_NEWS_ITEM
-} from './news.types';
-
-import { config } from '../../configs';
-
-const { languages } = config;
+import { SET_NEWS, SHOW_LOADER, HIDE_LOADER, SET_ARTICLE } from './news.types';
 
 const initialState = {
   list: [],
-  newsItem: {
-    author: {
-      name: [
-        {
-          lang: languages[0],
-          value: ''
-        },
-        {
-          lang: languages[1],
-          value: ''
-        }
-      ],
-      image: {
-        small: ''
-      }
-    },
-    text: [
-      {
-        lang: languages[0],
-        value: ''
-      },
-      {
-        lang: languages[1],
-        value: ''
-      }
-    ],
-    title: [
-      {
-        lang: languages[0],
-        value: ''
-      },
-      {
-        lang: languages[1],
-        value: ''
-      }
-    ],
-    video: '',
-    date: '',
-    images: {
-      primary: {
-        medium: ''
-      }
-    }
-  },
+  newsArticle: null,
   loading: false
 };
 
@@ -65,10 +13,10 @@ const newsReducer = (state = initialState, action = {}) => {
       ...state,
       list: action.payload
     };
-  case SET_NEWS_ITEM:
+  case SET_ARTICLE:
     return {
       ...state,
-      newsItem: action.payload
+      newsArtcile: action.payload
     };
   case SHOW_LOADER:
     return {

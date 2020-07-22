@@ -1,19 +1,19 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { setNews, hideLoader, showLoader, setNewsItem } from './news.actions';
+import { setNews, hideLoader, showLoader, setArticle } from './news.actions';
 import {
   getAllNews,
-  deleteNewsItem,
-  createNewsItem,
-  updateNewsItem,
-  getNewsItemById
+  deleteArticle,
+  createArticle,
+  updateArticle,
+  getArticleById
 } from '../../utils/client';
 import {
   GET_NEWS,
   DELETE_NEWS_ITEM,
-  ADD_NEWS_ITEM,
+  ADD_ARTICLE,
   UPDATE_NEWS_ITEM,
-  GET_NEWS_ITEM
+  GET_ARTICLE
 } from './news.types';
 import { config } from '../../configs';
 import {
@@ -35,11 +35,11 @@ function* handleNewsLoad() {
   }
 }
 
-function* handleNewsItemLoad({ payload }) {
+function* handleArticleLoad({ payload }) {
   try {
     yield put(showLoader());
-    const newsItem = yield call(getNewsItemById, payload);
-    yield put(setNewsItem(newsItem.data.getNewsById));
+    const newsArticle = yield call(getArticleById, payload);
+    yield put(setArticle(newsArticle.data.getNewsById));
     yield put(hideLoader());
   } catch (error) {
     console.log(error);
@@ -49,7 +49,7 @@ function* handleNewsItemLoad({ payload }) {
 function* handleAddNews({ payload }) {
   try {
     yield put(showLoader());
-    yield call(createNewsItem, payload);
+    yield call(createArticle, payload);
     const news = yield call(getAllNews, null);
     yield put(setNews(news.data.getAllNews));
     yield put(setSnackBarSeverity('success'));
@@ -64,7 +64,7 @@ function* handleAddNews({ payload }) {
 function* handleNewsDelete({ payload }) {
   try {
     yield put(showLoader());
-    yield call(deleteNewsItem, payload);
+    yield call(deleteArticle, payload);
     const news = yield call(getAllNews, null);
     yield put(setNews(news.data.getAllNews));
     yield put(hideLoader());
@@ -74,10 +74,10 @@ function* handleNewsDelete({ payload }) {
 }
 
 function* handleNewsUpdate({ payload }) {
-  const { id, newNewsItem } = payload;
+  const { id, newArticle } = payload;
   try {
     yield put(showLoader());
-    yield call(updateNewsItem, id, newNewsItem);
+    yield call(updateArticle, id, newArticle);
     const news = yield call(getAllNews, null);
     yield put(setNews(news.data.getAllNews));
     yield put(push('/'));
@@ -89,7 +89,7 @@ function* handleNewsUpdate({ payload }) {
 export default function* newsSaga() {
   yield takeEvery(GET_NEWS, handleNewsLoad);
   yield takeEvery(DELETE_NEWS_ITEM, handleNewsDelete);
-  yield takeEvery(GET_NEWS_ITEM, handleNewsItemLoad);
-  yield takeEvery(ADD_NEWS_ITEM, handleAddNews);
+  yield takeEvery(GET_ARTICLE, handleArticleLoad);
+  yield takeEvery(ADD_ARTICLE, handleAddNews);
   yield takeEvery(UPDATE_NEWS_ITEM, handleNewsUpdate);
 }

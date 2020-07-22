@@ -9,14 +9,14 @@ import { config } from '../../../configs';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 
 import LoadingBar from '../../../components/loading-bar';
-import { getNewsItem, updateNewsItem } from '../../../redux/news/news.actions';
+import { getArticle, updateArticle } from '../../../redux/news/news.actions';
 
 const { languages } = config;
 const NewsDetails = ({ match }) => {
   const dispatch = useDispatch();
-  const { loading, newsItem } = useSelector(({ News }) => ({
+  const { loading, newsArticle } = useSelector(({ News }) => ({
     loading: News.loading,
-    newsItem: News.newsItem
+    newsArticle: News.newsArticle
   }));
   const classes = useStyles();
 
@@ -43,21 +43,21 @@ const NewsDetails = ({ match }) => {
 
   const { id } = match.params;
   useEffect(() => {
-    dispatch(getNewsItem(id));
+    dispatch(getArticle(id));
 
-    setAuthorPhoto(newsItem.author.image.small);
-    setNewsImage(newsItem.images.primary.medium);
-    setNewsVideo(newsItem.video);
+    setAuthorPhoto(newsArticle.author.image.small);
+    setNewsImage(newsArticle.images.primary.medium);
+    setNewsVideo(newsArticle.video);
 
-    ukSetAuthor(newsItem.author.name[0].value);
-    ukSetText(newsItem.text[0].value);
-    ukSetTitle(newsItem.title[0].value);
+    ukSetAuthor(newsArticle.author.name[0].value);
+    ukSetText(newsArticle.text[0].value);
+    ukSetTitle(newsArticle.title[0].value);
 
-    enSetAuthor(newsItem.author.name[1].value);
-    enSetText(newsItem.text[1].value);
-    enSetTitle(newsItem.title[1].value);
+    enSetAuthor(newsArticle.author.name[1].value);
+    enSetText(newsArticle.text[1].value);
+    enSetTitle(newsArticle.title[1].value);
   }, [
-    newsItem,
+    newsArticle,
     dispatch,
     id,
     setAuthorPhoto,
@@ -73,7 +73,7 @@ const NewsDetails = ({ match }) => {
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
-    const newNewsItem = {
+    const newArticle = {
       video: newsVideo,
       author: {
         name: [
@@ -116,7 +116,7 @@ const NewsDetails = ({ match }) => {
         }
       }
     };
-    dispatch(updateNewsItem({ id, newNewsItem }));
+    dispatch(updateArticle({ id, newArticle }));
   };
 
   if (loading) {
