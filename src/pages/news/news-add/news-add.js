@@ -3,10 +3,10 @@ import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './news-add.styles';
 import { SaveButton } from '../../../components/buttons';
-import { addNewsItem } from '../../../redux/news/news.actions';
+import { addArticle } from '../../../redux/news/news.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
-import useNewsHandlers from '../../../utils/useNewsHandlers';
+import useNewsHandlers from '../../../utils/use-news-handlers';
 
 const { languages } = config;
 
@@ -85,7 +85,7 @@ const NewsAdd = () => {
       },
       date: new Date().toISOString()
     };
-    dispatch(addNewsItem(news));
+    dispatch(addArticle(news));
   };
 
   const entertaimentOptions = [

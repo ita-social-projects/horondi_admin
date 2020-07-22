@@ -5,14 +5,11 @@ import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { useStyles } from './news-page.styles';
 import { config } from '../../../configs';
-import { getNews, deleteNewsItem } from '../../../redux/news/news.actions';
+import { getNews, deleteArticle } from '../../../redux/news/news.actions';
 
 import {
-  setDialogStatus,
-  setDialogTitle,
-  setDialogContent,
-  setButtonTitle,
-  setEventHandler
+  showDialog,
+  closeDialog
 } from '../../../redux/dialog-window/dialog-window.actions';
 
 import TableContainerRow from '../../../components/table-container-row';
@@ -40,18 +37,22 @@ const NewsPage = () => {
     dispatch(getNews());
   }, [dispatch]);
 
-  const openSuccessSnackbar = (eventHandler) => {
-    dispatch(setDialogTitle(REMOVE_TITLE));
-    dispatch(setDialogContent(REMOVE_MESSAGE));
-    dispatch(setButtonTitle(REMOVE_TITLE));
-    dispatch(setEventHandler(eventHandler));
-    dispatch(setDialogStatus(true));
+  const openSuccessSnackbar = (onClickHandler) => {
+    dispatch(
+      showDialog({
+        dialogStatus: true,
+        dialogTitle: REMOVE_TITLE,
+        dialogContent: REMOVE_MESSAGE,
+        buttonTitle: REMOVE_TITLE,
+        onClickHandler
+      })
+    );
   };
 
   const newsDeleteHandler = (id) => {
-    const removeNews = async () => {
-      dispatch(setDialogStatus(false));
-      dispatch(deleteNewsItem(id));
+    const removeNews = () => {
+      dispatch(closeDialog());
+      dispatch(deleteArticle(id));
     };
     openSuccessSnackbar(removeNews);
   };

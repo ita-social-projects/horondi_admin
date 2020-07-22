@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../configs';
-import { setDialogStatus } from '../../redux/dialog-window/dialog-window.actions';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton } from '../buttons';
 
 const { CANCEL_TITLE } = config.buttonTitles;
@@ -32,7 +32,7 @@ const DialogWindow = () => {
   const dispatch = useDispatch();
 
   const handleClose = () => {
-    dispatch(setDialogStatus(false));
+    dispatch(closeDialog());
   };
 
   return (
