@@ -1,12 +1,13 @@
 import {
   GET_NEWS,
   SET_NEWS,
-  SET_LOADING,
+  SET_NEWS_LOADING,
   DELETE_ARTICLE,
   ADD_ARTICLE,
   GET_ARTICLE,
   SET_ARTICLE,
-  UPDATE_ARTICLE
+  UPDATE_ARTICLE,
+  SET_NEWS_ERROR
 } from './news.types';
 
 const setNews = (news) => ({
@@ -28,8 +29,8 @@ const addArticle = (payload) => ({
   payload
 });
 
-const setLoading = (loading) => ({
-  type: SET_LOADING,
+const setNewsLoading = (loading) => ({
+  type: SET_NEWS_LOADING,
   payload: loading
 });
 
@@ -48,10 +49,16 @@ const getArticle = (payload) => ({
   payload
 });
 
+const setNewsError = (error) => ({
+  type: SET_NEWS_ERROR,
+  payload: error
+});
+
 export {
   setNews,
   getNews,
-  setLoading,
+  setNewsLoading,
+  setNewsError,
   deleteArticle,
   addArticle,
   updateArticle,

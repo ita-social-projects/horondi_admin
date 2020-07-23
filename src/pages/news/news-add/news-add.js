@@ -13,7 +13,7 @@ const { languages } = config;
 const NewsAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const loading = useSelector(({ News }) => News.loading);
+  const loading = useSelector(({ News }) => News.newsLoading);
 
   const {
     authorPhoto,

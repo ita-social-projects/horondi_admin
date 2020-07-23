@@ -9,6 +9,7 @@ import NavBar from '../components/nav-bar';
 import NavMenu from '../components/nav-menu';
 import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
+import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
 
 import { config } from '../configs';
@@ -21,6 +22,7 @@ const Routes = () => (
     <NavBar />
     <NavMenu />
     <Switch>
+      <Route path={routes.pathToLogin} exact component={LoginPage} />
       <Route path={routes.pathToNews} exact component={NewsPage} />
       <Route path={routes.pathToAddNews} exact component={NewsAdd} />
       <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />

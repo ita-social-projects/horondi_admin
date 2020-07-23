@@ -29,7 +29,7 @@ const NewsPage = () => {
   const classes = useStyles();
   const { list, loading } = useSelector(({ News }) => ({
     list: News.list,
-    loading: News.loading
+    loading: News.newsLoading
   }));
   const dispatch = useDispatch();
 

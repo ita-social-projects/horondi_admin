@@ -15,7 +15,7 @@ const { languages } = config;
 const NewsDetails = ({ match }) => {
   const dispatch = useDispatch();
   const { loading, newsArticle } = useSelector(({ News }) => ({
-    loading: News.loading,
+    loading: News.newsLoading,
     newsArticle: News.newsArticle
   }));
   const classes = useStyles();
