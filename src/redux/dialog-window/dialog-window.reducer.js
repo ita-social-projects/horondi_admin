@@ -1,7 +1,7 @@
 import { CLOSE_DIALOG, SHOW_DIALOG } from './dialog-window.types';
 
 const initialState = {
-  dialogStatus: false,
+  isOpen: false,
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
@@ -19,7 +19,11 @@ const dialogWindowReducer = (state = initialState, action = {}) => {
   case CLOSE_DIALOG:
     return {
       ...state,
-      dialogStatus: false
+      isOpen: false,
+      dialogTitle: '',
+      dialogContent: '',
+      buttonTitle: '',
+      onClickHandler: () => {}
     };
 
   default:

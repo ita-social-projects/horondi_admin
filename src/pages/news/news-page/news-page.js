@@ -40,7 +40,7 @@ const NewsPage = () => {
   const openSuccessSnackbar = (onClickHandler) => {
     dispatch(
       showDialog({
-        dialogStatus: true,
+        isOpen: true,
         dialogTitle: REMOVE_TITLE,
         dialogContent: REMOVE_MESSAGE,
         buttonTitle: REMOVE_TITLE,
