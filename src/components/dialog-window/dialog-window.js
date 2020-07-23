@@ -16,13 +16,13 @@ const { ACCEPT_BUTTON_STYLE } = config.buttonStyles;
 
 const DialogWindow = () => {
   const {
-    dialogStatus,
+    isOpen,
     dialogTitle,
     dialogContent,
     buttonTitle,
     onClickHandler
   } = useSelector(({ DialogWindow: dialogWindow }) => ({
-    dialogStatus: dialogWindow.dialogStatus,
+    isOpen: dialogWindow.isOpen,
     dialogTitle: dialogWindow.dialogTitle,
     dialogContent: dialogWindow.dialogContent,
     buttonTitle: dialogWindow.buttonTitle,
@@ -36,7 +36,7 @@ const DialogWindow = () => {
   };
 
   return (
-    <Dialog id='dialog-window' onClose={handleClose} open={dialogStatus}>
+    <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
       <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{dialogContent}</Typography>
