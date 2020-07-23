@@ -9,7 +9,7 @@ const routes = {
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [['News', routes.pathToNews, ImportContactsIcon]],
+    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
@@ -17,6 +17,7 @@ export const config = {
     rowsPerPageOptions: [10, 25, 50, 100]
   },
   languages: ['uk', 'en'],
+  errorsLanguage: 0,
   buttonStyles: {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
@@ -38,6 +39,7 @@ export const config = {
   statuses: {
     SUCCESS_ADD_STATUS: 'Успішно додано!',
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
+    SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!'
   },
   buttonTitles: {

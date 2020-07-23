@@ -27,7 +27,12 @@ import {
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
 
-const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS } = config.statuses;
+const {
+  SUCCESS_ADD_STATUS,
+  SUCCESS_DELETE_STATUS,
+  SUCCESS_UPDATE_STATUS
+} = config.statuses;
+const {errorsLanguage} = config;
 
 function* handleNewsLoad() {
   try {
@@ -44,23 +49,28 @@ function* handleArticleLoad({ payload }) {
   try {
     yield put(setLoading(true));
     const newsArticle = yield call(getArticleById, payload);
-    yield put(setArticle(newsArticle));
+    if (newsArticle.author) {
+      yield put(setArticle(newsArticle));
+    }
+    if (newsArticle.message) {
+      yield call(
+        handleCustomNewsError,
+        newsArticle.message[errorsLanguage].value
+      );
+    }
     yield put(setLoading(false));
   } catch (error) {
-    console.log(error);
-    // if (error.graphQLErrors[0]) {
-    //   const err = JSON.parse(error.graphQLErrors[0].message);
-    //   yield call(handleCustomNewsError, err[0].value);
-    // } else {
-    //   yield call(handleNewsError, error);
-    // }
+    yield call(handleNewsError, error);
   }
 }
 
 function* handleAddNews({ payload }) {
   try {
     yield put(setLoading(true));
-    yield call(createArticle, payload);
+    const result = yield call(createArticle, payload);
+    if (result.message) {
+      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
+    }
     const news = yield call(getAllNews, null);
     yield put(setNews(news));
     yield put(setSnackBarSeverity('success'));
@@ -75,7 +85,10 @@ function* handleAddNews({ payload }) {
 function* handleNewsDelete({ payload }) {
   try {
     yield put(setLoading(true));
-    yield call(deleteArticle, payload);
+    const result = yield call(deleteArticle, payload);
+    if (result.message) {
+      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
+    }
     const news = yield call(getAllNews, null);
     yield put(setNews(news));
     yield put(setLoading(false));
@@ -91,9 +104,15 @@ function* handleNewsUpdate({ payload }) {
   const { id, newArticle } = payload;
   try {
     yield put(setLoading(true));
-    yield call(updateArticle, id, newArticle);
+    const result = yield call(updateArticle, id, newArticle);
+    if (result.message) {
+      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
+    }
     const news = yield call(getAllNews, null);
     yield put(setNews(news));
+    yield put(setSnackBarSeverity('success'));
+    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
+    yield put(setSnackBarStatus(true));
     yield put(push('/'));
   } catch (error) {
     yield call(handleNewsError, error);

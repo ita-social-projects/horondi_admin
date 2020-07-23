@@ -80,59 +80,88 @@ const getArticleById = (id) =>
     .then((res) => res.data.getNewsById);
 
 const deleteArticle = async (id) => {
-  await client.mutate({
-    variables: { id },
-    mutation: gql`
-      mutation($id: ID!) {
-        deleteNews(id: $id) {
-          ... on News {
-            title {
-              lang
+  const result = await client
+    .mutate({
+      variables: { id },
+      mutation: gql`
+        mutation($id: ID!) {
+          deleteNews(id: $id) {
+            ... on News {
+              author {
+                name {
+                  value
+                }
+              }
             }
-          }
-          ... on Error {
-            message {
-              lang
+            ... on Error {
+              message {
+                lang
+              }
+              statusCode
             }
-            statusCode
           }
         }
-      }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+      `,
+      fetchPolicy: 'no-cache'
+    })
+    .then((res) => res.data.deleteNews);
   client.resetStore();
+  return result;
 };
 
 const createArticle = async (news) => {
-  await client.mutate({
-    mutation: gql`
-      mutation($news: NewsInput!) {
-        addNews(news: $news) {
-          video
+  const result = await client
+    .mutate({
+      mutation: gql`
+        mutation($news: NewsInput!) {
+          addNews(news: $news) {
+            author {
+              name {
+                value
+              }
+            }
+          }
         }
-      }
-    `,
-    variables: { news }
-  });
+      `,
+      variables: { news }
+    })
+    .then((res) => res.data.addNews);
   client.resetStore();
+  return result;
 };
 
 const updateArticle = async (id, news) => {
-  await client.mutate({
-    variables: {
-      id,
-      news
-    },
-    mutation: gql`
-      mutation($id: ID!, $news: NewsInput!) {
-        updateNews(id: $id, news: $news) {
-          video
+  const result = await client
+    .mutate({
+      variables: {
+        id,
+        news
+      },
+      mutation: gql`
+        mutation($id: ID!, $news: NewsInput!) {
+          updateNews(id: $id, news: $news) {
+            ... on News {
+              author {
+                name {
+                  value
+                }
+              }
+            }
+            ... on Error {
+              message {
+                lang
+                value
+              }
+              statusCode
+            }
+          }
         }
-      }
-    `
-  });
+      `,
+      fetchPolicy: 'no-cache'
+    })
+    .then((res) => res.data.updateNews);
   client.resetStore();
+  return result;
 };
 
 export {

@@ -46,7 +46,7 @@ const NewsDetails = ({ match }) => {
     dispatch(getArticle(id));
   }, [dispatch, id]);
   useEffect(() => {
-    if (newsArticle != null) {
+    if (newsArticle !== null) {
       setAuthorPhoto(newsArticle.author.image.small);
       setNewsImage(newsArticle.images.primary.medium);
       setNewsVideo(newsArticle.video);
