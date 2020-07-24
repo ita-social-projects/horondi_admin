@@ -5,6 +5,7 @@ import Theme from './theme/theme.reducer';
 import Table from './table/table.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
 import DialogWindow from './dialog-window/dialog-window.reducer';
+import Admin from './admin/admin.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = (history) =>
     Table,
     Snackbar,
     DialogWindow,
+    Admin,
     router: connectRouter(history)
   });
 export default rootReducer;

@@ -25,5 +25,8 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 65,
     padding: theme.spacing(2),
     width: '100%'
+  },
+  input: {
+    maxWidth: '300px'
   }
 }));

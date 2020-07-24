@@ -1,13 +1,14 @@
 import {
   LOGIN_ADMIN,
-  SET_ADMIN,
+  SET_AUTH,
   LOGOUT_ADMIN,
   SET_ADMIN_ERROR,
-  SET_ADMIN_LOADING
+  SET_ADMIN_LOADING,
+  CHECK_ADMIN_BY_TOKEN
 } from './admin.types';
 
-const setAdmin = (admin) => ({
-  type: SET_ADMIN,
+const setAuth = (admin) => ({
+  type: SET_AUTH,
   payload: admin
 });
 
@@ -29,4 +30,16 @@ const setAdminLoading = () => ({
   type: SET_ADMIN_LOADING
 });
 
-export { loginAdmin, setAdmin, setAdminError, setAdminLoading, logoutAdmin };
+const checkAdminByToken = (token) => ({
+  type: CHECK_ADMIN_BY_TOKEN,
+  payload: token
+});
+
+export {
+  loginAdmin,
+  setAuth,
+  setAdminError,
+  setAdminLoading,
+  logoutAdmin,
+  checkAdminByToken
+};

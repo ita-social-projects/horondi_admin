@@ -1,24 +1,24 @@
 import {
-  SET_ADMIN,
+  SET_AUTH,
   SET_ADMIN_ERROR,
   SET_ADMIN_LOADING,
   LOGOUT_ADMIN
 } from './admin.types';
 
 const initialState = {
-  adminData: null,
+  isAuth: null,
   adminError: null,
   adminLoading: false
 };
 
 const adminReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_ADMIN:
+  case SET_AUTH:
     return {
       ...state,
       adminError: false,
       adminLoading: false,
-      adminData: action.payload
+      isAuth: action.payload
     };
 
   case SET_ADMIN_ERROR:

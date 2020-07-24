@@ -1,14 +1,30 @@
-import React from 'react';
-import { Avatar, Typography, Button } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Avatar, Typography, Button, TextField } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import LoginInput from '../login-input';
+import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './login-page.styles';
+import { loginAdmin } from '../../../redux/admin/admin.actions';
+import LoadingBar from '../../../components/loading-bar';
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { loading } = useSelector(({ Admin }) => ({
+    loading: Admin.adminLoading
+  }));
+  const dispatch = useDispatch();
+
   const classes = useStyles();
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    dispatch(loginAdmin({ email, password }));
   };
+
+  if (loading) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className={classes.container}>
@@ -19,8 +35,34 @@ const LoginPage = () => {
         <Typography component='h1' variant='h5'>
           Увійти
         </Typography>
-        <LoginInput name='email' lable='Email' focus />
-        <LoginInput name='password' lable='Пароль' />
+        <TextField
+          className={classes.input}
+          variant='outlined'
+          margin='normal'
+          required
+          fullWidth
+          id='email'
+          label='Email'
+          value={email}
+          name='email'
+          autoFocus
+          type='text'
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          className={classes.input}
+          variant='outlined'
+          margin='normal'
+          required
+          fullWidth
+          id='password'
+          label='Пароль'
+          value={password}
+          name='password'
+          type='password'
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
         <Button
           type='submit'
           variant='contained'

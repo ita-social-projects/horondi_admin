@@ -1,7 +1,7 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 const routes = {
-  pathToLogin: '/login',
+  pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd'
