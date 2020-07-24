@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Toolbar, AppBar, Typography, IconButton } from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import Brightness4Icon from '@material-ui/icons/Brightness4';
@@ -18,7 +17,15 @@ import {
   setSideMenuStatus
 } from '../../redux/theme/theme.actions';
 
+import { logoutAdmin } from '../../redux/admin/admin.actions';
+import {
+  showDialog,
+  closeDialog
+} from '../../redux/dialog-window/dialog-window.actions';
+
 const { title } = config.app;
+const { LOGOUT_TITLE } = config.buttonTitles;
+const { LOGOUT_MESSAGE } = config.messages;
 
 const NavBar = () => {
   const classes = useStyles();
@@ -26,6 +33,10 @@ const NavBar = () => {
   const { darkMode, sideMenuStatus } = useSelector(({ Theme }) => ({
     darkMode: Theme.darkMode,
     sideMenuStatus: Theme.sideMenuStatus
+  }));
+
+  const { isAuth } = useSelector(({ Admin }) => ({
+    isAuth: Admin.isAuth
   }));
 
   const dispatch = useDispatch();
@@ -36,6 +47,26 @@ const NavBar = () => {
 
   const handleDrawerToggle = () => {
     dispatch(setSideMenuStatus(!sideMenuStatus));
+  };
+
+  const openSuccessSnackbar = (onClickHandler) => {
+    dispatch(
+      showDialog({
+        isOpen: true,
+        dialogTitle: LOGOUT_TITLE,
+        dialogContent: LOGOUT_MESSAGE,
+        buttonTitle: LOGOUT_TITLE,
+        onClickHandler
+      })
+    );
+  };
+
+  const logoutHandler = () => {
+    const logout = () => {
+      dispatch(logoutAdmin());
+      dispatch(closeDialog());
+    };
+    openSuccessSnackbar(logout);
   };
 
   const menuToggle = (
@@ -58,9 +89,11 @@ const NavBar = () => {
         <IconButton id='themeToggler' onClick={themeChangeHandler}>
           {themeButton}
         </IconButton>
-        <IconButton component={Link} to='/login'>
-          <AccountCircle id='profileButton' />
-        </IconButton>
+        {isAuth && (
+          <IconButton onClick={logoutHandler}>
+            <ExitToAppIcon id='logoutButton' />
+          </IconButton>
+        )}
       </Toolbar>
     </AppBar>
   );

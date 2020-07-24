@@ -2,7 +2,7 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { setAuth, setAdminError, setAdminLoading } from './admin.actions';
 import { loginAdmin, getUserByToken } from './admin.operations';
-import { LOGIN_ADMIN, CHECK_ADMIN_BY_TOKEN } from './admin.types';
+import { LOGIN_ADMIN, CHECK_ADMIN_BY_TOKEN, LOGOUT_ADMIN } from './admin.types';
 
 function* handleAdminLoad({ payload }) {
   try {
@@ -28,7 +28,13 @@ function* handleAdminCheckByToken({ payload }) {
   }
 }
 
+function* handleAdminLogout() {
+  localStorage.removeItem('authToken');
+  yield put(push('/'));
+}
+
 export default function* adminSaga() {
   yield takeEvery(LOGIN_ADMIN, handleAdminLoad);
   yield takeEvery(CHECK_ADMIN_BY_TOKEN, handleAdminCheckByToken);
+  yield takeEvery(LOGOUT_ADMIN, handleAdminLogout);
 }
