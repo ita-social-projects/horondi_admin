@@ -17,6 +17,9 @@ export const config = {
     rowsPerPageOptions: [10, 25, 50, 100]
   },
   languages: ['uk', 'en'],
+  buttonStyles: {
+    ACCEPT_BUTTON_STYLE: 'secondary'
+  },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
   },
@@ -38,6 +41,11 @@ export const config = {
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
-    CREATE_NEWS_TITLE: 'Додати новину'
+    CREATE_NEWS_TITLE: 'Додати новину',
+    REMOVE_TITLE: 'Видалити новину',
+    CANCEL_TITLE: 'Відмінити'
+  },
+  messages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?'
   }
 };

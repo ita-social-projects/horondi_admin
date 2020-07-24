@@ -37,7 +37,15 @@ const NavMenu = ({ width }) => {
     const PathIcon = category[2];
 
     return (
-      <ListItem button key={pathTitle} component={Link} to={pathTo}>
+      <ListItem
+        onClick={() => {
+          dispatch(setSideMenuStatus(!sideMenuStatus));
+        }}
+        button
+        key={pathTitle}
+        component={Link}
+        to={pathTo}
+      >
         <ListItemIcon>
           <PathIcon />
         </ListItemIcon>

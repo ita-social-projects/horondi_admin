@@ -8,13 +8,13 @@ import { config } from '../../../configs';
 const { EDIT_TITLE } = config.buttonTitles;
 
 const EditButton = (props) => {
-  const { eventHandler, size } = props;
+  const { onClickHandler, size } = props;
 
   return (
     <Tooltip title={EDIT_TITLE}>
       <IconButton
         aria-label={EDIT_TITLE}
-        onClick={eventHandler}
+        onClick={onClickHandler}
         color='secondary'
       >
         <EditIcon fontSize={size} />
@@ -24,7 +24,7 @@ const EditButton = (props) => {
 };
 
 EditButton.propTypes = {
-  eventHandler: PropTypes.func.isRequired,
+  onClickHandler: PropTypes.func.isRequired,
   size: PropTypes.string.isRequired
 };
 

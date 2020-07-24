@@ -1,7 +1,8 @@
-import { SET_NEWS, SHOW_LOADER, HIDE_LOADER } from './news.types';
+import { SET_NEWS, SET_LOADING, SET_ARTICLE } from './news.types';
 
 const initialState = {
   list: [],
+  newsArticle: null,
   loading: false
 };
 
@@ -12,15 +13,15 @@ const newsReducer = (state = initialState, action = {}) => {
       ...state,
       list: action.payload
     };
-  case SHOW_LOADER:
+  case SET_ARTICLE:
     return {
       ...state,
-      loading: true
+      newsArtcile: action.payload
     };
-  case HIDE_LOADER:
+  case SET_LOADING:
     return {
       ...state,
-      loading: false
+      loading: action.payload
     };
   default:
     return state;
