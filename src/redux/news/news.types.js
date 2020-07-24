@@ -4,5 +4,5 @@ export const DELETE_ARTICLE = 'DELETE_ARTICLE';
 export const ADD_ARTICLE = 'ADD_ARTICLE';
 export const GET_ARTICLE = 'GET_ARTICLE';
 export const SET_ARTICLE = 'SET_ARTICLE';
-export const SET_LOADING = 'SET_LOADING';
+export const SET_NEWS_LOADING = 'SET_NEWS_LOADING';
 export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';

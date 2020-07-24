@@ -1,7 +1,7 @@
 import {
   GET_NEWS,
   SET_NEWS,
-  SET_LOADING,
+  SET_NEWS_LOADING,
   DELETE_ARTICLE,
   ADD_ARTICLE,
   GET_ARTICLE,
@@ -28,8 +28,8 @@ const addArticle = (payload) => ({
   payload
 });
 
-const setLoading = (loading) => ({
-  type: SET_LOADING,
+const setNewsLoading = (loading) => ({
+  type: SET_NEWS_LOADING,
   payload: loading
 });
 
@@ -51,7 +51,7 @@ const getArticle = (payload) => ({
 export {
   setNews,
   getNews,
-  setLoading,
+  setNewsLoading,
   deleteArticle,
   addArticle,
   updateArticle,

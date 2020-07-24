@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { setNews, setLoading, setArticle } from './news.actions';
+import { setNews, setNewsLoading, setArticle } from './news.actions';
 import { setError } from '../error/error.actions';
 
 import {
@@ -32,14 +32,14 @@ const {
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
-const {errorsLanguage} = config;
+const { errorsLanguage } = config;
 
 function* handleNewsLoad() {
   try {
-    yield put(setLoading(true));
+    yield put(setNewsLoading(true));
     const news = yield call(getAllNews, null);
-    yield put(setNews(news));
-    yield put(setLoading(false));
+    yield put(setNews(news.data.getAllNews));
+    yield put(setNewsLoading(false));
   } catch (error) {
     yield call(handleNewsError, error);
   }
@@ -47,18 +47,18 @@ function* handleNewsLoad() {
 
 function* handleArticleLoad({ payload }) {
   try {
-    yield put(setLoading(true));
+    yield put(setNewsLoading(true));
     const newsArticle = yield call(getArticleById, payload);
-    if (newsArticle.author) {
-      yield put(setArticle(newsArticle));
+    if (newsArticle.data.getNewsById.author) {
+      yield put(setArticle(newsArticle.data.getNewsById));
     }
-    if (newsArticle.message) {
+    if (newsArticle.data.getNewsById.message) {
       yield call(
         handleCustomNewsError,
-        newsArticle.message[errorsLanguage].value
+        newsArticle.data.getNewsById.message[errorsLanguage].value
       );
     }
-    yield put(setLoading(false));
+    yield put(setNewsLoading(false));
   } catch (error) {
     yield call(handleNewsError, error);
   }
@@ -66,13 +66,16 @@ function* handleArticleLoad({ payload }) {
 
 function* handleAddNews({ payload }) {
   try {
-    yield put(setLoading(true));
+    yield put(setNewsLoading(true));
     const result = yield call(createArticle, payload);
-    if (result.message) {
-      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
+    if (result.data.addNews.message) {
+      yield call(
+        handleCustomNewsError,
+        result.data.addNews.message[errorsLanguage].value
+      );
     }
     const news = yield call(getAllNews, null);
-    yield put(setNews(news));
+    yield put(setNews(news.data.getAllNews));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
@@ -84,14 +87,17 @@ function* handleAddNews({ payload }) {
 
 function* handleNewsDelete({ payload }) {
   try {
-    yield put(setLoading(true));
+    yield put(setNewsLoading(true));
     const result = yield call(deleteArticle, payload);
-    if (result.message) {
-      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
+    if (result.data.deleteNews.message) {
+      yield call(
+        handleCustomNewsError,
+        result.data.deleteNews.message[errorsLanguage].value
+      );
     }
     const news = yield call(getAllNews, null);
-    yield put(setNews(news));
-    yield put(setLoading(false));
+    yield put(setNews(news.data.getAllNews));
+    yield put(setNewsLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
     yield put(setSnackBarStatus(true));
@@ -103,13 +109,16 @@ function* handleNewsDelete({ payload }) {
 function* handleNewsUpdate({ payload }) {
   const { id, newArticle } = payload;
   try {
-    yield put(setLoading(true));
+    yield put(setNewsLoading(true));
     const result = yield call(updateArticle, id, newArticle);
-    if (result.message) {
-      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
+    if (result.data.updateNews.message) {
+      yield call(
+        handleCustomNewsError,
+        result.data.updateNews.message[errorsLanguage].value
+      );
     }
     const news = yield call(getAllNews, null);
-    yield put(setNews(news));
+    yield put(setNews(news.data.getAllNews));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));
@@ -120,7 +129,7 @@ function* handleNewsUpdate({ payload }) {
 }
 
 function* handleNewsError(e) {
-  yield put(setLoading(false));
+  yield put(setNewsLoading(false));
   yield put(setError({ e }));
   yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(e.message));
@@ -128,7 +137,7 @@ function* handleNewsError(e) {
 }
 
 function* handleCustomNewsError(e) {
-  yield put(setLoading(false));
+  yield put(setNewsLoading(false));
   yield put(setError({ e }));
   yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(e));
