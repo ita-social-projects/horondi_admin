@@ -63,8 +63,8 @@ const NavBar = () => {
 
   const logoutHandler = () => {
     const logout = () => {
-      dispatch(logoutAdmin());
       dispatch(closeDialog());
+      dispatch(logoutAdmin());
     };
     openSuccessSnackbar(logout);
   };

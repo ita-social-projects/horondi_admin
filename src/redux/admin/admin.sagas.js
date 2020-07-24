@@ -29,6 +29,7 @@ function* handleAdminCheckByToken({ payload }) {
 }
 
 function* handleAdminLogout() {
+  yield put(setAuth(false));
   localStorage.removeItem('authToken');
   yield put(push('/'));
 }

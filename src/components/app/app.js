@@ -16,17 +16,12 @@ const App = () => {
   const themeMode = darkMode ? DARK_THEME : LIGHT_THEME;
   const themeValue = theme(themeMode);
   const classes = useStyles();
-  const isAuth = useSelector(({ Admin }) => ({
-    isAuth: Admin.isAuth
-  }));
   const dispatch = useDispatch();
   const authToken = localStorage.getItem('authToken');
 
   useEffect(() => {
-    if (!isAuth == null) {
-      dispatch(checkAdminByToken(authToken));
-    }
-  }, [dispatch, authToken, isAuth]);
+    dispatch(checkAdminByToken(authToken));
+  }, [dispatch, authToken]);
 
   return (
     <ThemeProvider theme={themeValue}>
