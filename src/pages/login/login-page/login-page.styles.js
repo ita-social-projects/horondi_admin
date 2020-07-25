@@ -27,6 +27,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   input: {
-    maxWidth: '300px'
+    width: '300px',
+    margin: theme.spacing(1)
   }
 }));

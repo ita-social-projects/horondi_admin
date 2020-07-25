@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { Avatar, Typography, Button, TextField } from '@material-ui/core';
+import {
+  Avatar,
+  Typography,
+  Button,
+  TextField,
+  FormControl
+} from '@material-ui/core';
+
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
+
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './login-page.styles';
@@ -9,6 +23,10 @@ import LoadingBar from '../../../components/loading-bar';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [values, setValues] = React.useState({
+    password: '',
+    showPassword: false
+  });
 
   const { loading } = useSelector(({ Admin }) => ({
     loading: Admin.adminLoading
@@ -20,6 +38,13 @@ const LoginPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     dispatch(loginAdmin({ email, password }));
+  };
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
   };
 
   if (loading) {
@@ -62,6 +87,29 @@ const LoginPage = () => {
           type='password'
           onChange={(e) => setPassword(e.target.value)}
         />
+        <FormControl className={classes.input} variant='outlined'>
+          <InputLabel htmlFor='outlined-adornment-password'>
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id='outlined-adornment-password'
+            type={values.showPassword ? 'text' : 'password'}
+            value={values.password}
+            onChange={handleChange('password')}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  aria-label='toggle password visibility'
+                  onClick={handleClickShowPassword}
+                  edge='end'
+                >
+                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+            labelWidth={70}
+          />
+        </FormControl>
 
         <Button
           type='submit'

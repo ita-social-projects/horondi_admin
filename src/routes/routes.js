@@ -17,12 +17,12 @@ import { config } from '../configs';
 import { history } from '../store/store';
 
 const { routes } = config.app;
-// null => loading -req on back
-//
+
 const Routes = () => {
   const { isAuth } = useSelector(({ Admin }) => ({
     isAuth: Admin.isAuth
   }));
+
   if (!isAuth) {
     return (
       <ConnectedRouter history={history}>
