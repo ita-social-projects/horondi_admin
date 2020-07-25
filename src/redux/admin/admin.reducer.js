@@ -6,7 +6,7 @@ import {
 } from './admin.types';
 
 const initialState = {
-  isAuth: null,
+  isAuth: false,
   adminError: null,
   adminLoading: false
 };
@@ -16,29 +16,25 @@ const adminReducer = (state = initialState, action = {}) => {
   case SET_AUTH:
     return {
       ...state,
-      adminError: false,
-      adminLoading: false,
       isAuth: action.payload
     };
 
   case SET_ADMIN_ERROR:
     return {
       ...state,
-      adminLoading: false,
       adminError: action.payload
     };
 
   case LOGOUT_ADMIN:
     return {
       ...state,
-      isAuth: null,
-      adminLoading: false
+      isAuth: false
     };
 
   case SET_ADMIN_LOADING:
     return {
       ...state,
-      adminLoading: true
+      adminLoading: action.payload
     };
 
   default:

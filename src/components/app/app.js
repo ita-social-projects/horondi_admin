@@ -21,9 +21,7 @@ const App = () => {
   const authToken = localStorage.getItem('authToken');
 
   useEffect(() => {
-    // if (isAuth != null) {
     dispatch(checkAdminByToken(authToken));
-    // };
   }, [dispatch, authToken]);
 
   return (

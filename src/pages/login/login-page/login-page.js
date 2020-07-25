@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Avatar,
   Typography,
@@ -20,31 +20,59 @@ import { useStyles } from './login-page.styles';
 import { loginAdmin } from '../../../redux/admin/admin.actions';
 import LoadingBar from '../../../components/loading-bar';
 
-const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [values, setValues] = React.useState({
-    password: '',
-    showPassword: false
-  });
+import { config } from '../../../configs';
 
+const { formRegExp } = config;
+
+const LoginPage = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
   const { loading } = useSelector(({ Admin }) => ({
     loading: Admin.adminLoading
   }));
-  const dispatch = useDispatch();
 
-  const classes = useStyles();
+  const [adminValues, setAdminValues] = useState({
+    password: '',
+    email: '',
+    showPassword: false
+  });
+
+  const [shouldValidate, setShouldValidate] = useState(false);
+  const [emailValidated, setEmailValidated] = useState(false);
+  const [passwordValidated, setPasswordValidated] = useState(false);
+  const [allFieldsValidated, setAllFieldsValidated] = useState(false);
+
+  const { email, password } = adminValues;
+
+  useEffect(() => {
+    if (emailValidated && passwordValidated) {
+      setAllFieldsValidated(true);
+    } else {
+      setAllFieldsValidated(false);
+    }
+  }, [emailValidated, passwordValidated]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(loginAdmin({ email, password }));
+    setShouldValidate(true);
+    if (allFieldsValidated) {
+      console.log('valid');
+      dispatch(loginAdmin({ email, password }));
+    }
   };
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+  const handleChange = (event, setValid, regExp) => {
+    const input = event.target.value;
+    const inputName = event.target.name;
+    setAdminValues({ ...adminValues, [inputName]: input });
+    if (input.match(regExp)) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
   };
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setAdminValues({ ...adminValues, showPassword: !adminValues.showPassword });
   };
 
   if (loading) {
@@ -69,33 +97,28 @@ const LoginPage = () => {
           id='email'
           label='Email'
           value={email}
+          error={!emailValidated && shouldValidate}
           name='email'
           autoFocus
           type='text'
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          className={classes.input}
-          variant='outlined'
-          margin='normal'
-          required
-          fullWidth
-          id='password'
-          label='Пароль'
-          value={password}
-          name='password'
-          type='password'
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => handleChange(e, setEmailValidated, formRegExp.email)}
         />
         <FormControl className={classes.input} variant='outlined'>
-          <InputLabel htmlFor='outlined-adornment-password'>
+          <InputLabel
+            htmlFor='outlined-adornment-password'
+            error={!passwordValidated && shouldValidate}
+          >
             Password
           </InputLabel>
           <OutlinedInput
             id='outlined-adornment-password'
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
+            type={adminValues.showPassword ? 'text' : 'password'}
+            value={password}
+            error={!passwordValidated && shouldValidate}
+            name='password'
+            onChange={(e) =>
+              handleChange(e, setPasswordValidated, formRegExp.password)
+            }
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
@@ -103,7 +126,11 @@ const LoginPage = () => {
                   onClick={handleClickShowPassword}
                   edge='end'
                 >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                  {adminValues.showPassword ? (
+                    <Visibility />
+                  ) : (
+                    <VisibilityOff />
+                  )}
                 </IconButton>
               </InputAdornment>
             }

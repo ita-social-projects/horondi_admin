@@ -10,6 +10,7 @@ function* handleAdminLoad({ payload }) {
     const admin = yield call(loginAdmin, payload);
     localStorage.setItem('authToken', admin.token); // authToken
     yield put(setAuth(true));
+    yield put(setAdminLoading(false));
     yield put(push('/'));
   } catch (error) {
     yield put(setAdminError(error));
@@ -21,16 +22,17 @@ function* handleAdminCheckByToken({ payload }) {
     yield put(setAdminLoading(true));
     yield call(getUserByToken, payload);
     yield put(setAuth(true));
+    yield put(setAdminLoading(false));
   } catch (error) {
     yield put(setAuth(false));
-    localStorage.removeItem('authToken');
+    yield localStorage.removeItem('authToken');
     yield put(push('/'));
   }
 }
 
 function* handleAdminLogout() {
+  yield localStorage.removeItem('authToken');
   yield put(setAuth(false));
-  localStorage.removeItem('authToken');
   yield put(push('/'));
 }
 
