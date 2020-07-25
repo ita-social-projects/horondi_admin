@@ -38,7 +38,7 @@ function* handleNewsLoad() {
   try {
     yield put(setNewsLoading(true));
     const news = yield call(getAllNews, null);
-    yield put(setNews(news.data.getAllNews));
+    yield put(setNews(news));
     yield put(setNewsLoading(false));
   } catch (error) {
     yield call(handleNewsError, error);
@@ -49,13 +49,13 @@ function* handleArticleLoad({ payload }) {
   try {
     yield put(setNewsLoading(true));
     const newsArticle = yield call(getArticleById, payload);
-    if (newsArticle.data.getNewsById.author) {
-      yield put(setArticle(newsArticle.data.getNewsById));
+    if (newsArticle.author) {
+      yield put(setArticle(newsArticle));
     }
-    if (newsArticle.data.getNewsById.message) {
+    if (newsArticle.message) {
       yield call(
         handleCustomNewsError,
-        newsArticle.data.getNewsById.message[errorsLanguage].value
+        newsArticle.message[errorsLanguage].value
       );
     }
     yield put(setNewsLoading(false));
@@ -68,14 +68,11 @@ function* handleAddNews({ payload }) {
   try {
     yield put(setNewsLoading(true));
     const result = yield call(createArticle, payload);
-    if (result.data.addNews.message) {
-      yield call(
-        handleCustomNewsError,
-        result.data.addNews.message[errorsLanguage].value
-      );
+    if (result.message) {
+      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
     }
     const news = yield call(getAllNews, null);
-    yield put(setNews(news.data.getAllNews));
+    yield put(setNews(news));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
@@ -89,14 +86,11 @@ function* handleNewsDelete({ payload }) {
   try {
     yield put(setNewsLoading(true));
     const result = yield call(deleteArticle, payload);
-    if (result.data.deleteNews.message) {
-      yield call(
-        handleCustomNewsError,
-        result.data.deleteNews.message[errorsLanguage].value
-      );
+    if (result.message) {
+      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
     }
     const news = yield call(getAllNews, null);
-    yield put(setNews(news.data.getAllNews));
+    yield put(setNews(news));
     yield put(setNewsLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
@@ -111,14 +105,11 @@ function* handleNewsUpdate({ payload }) {
   try {
     yield put(setNewsLoading(true));
     const result = yield call(updateArticle, id, newArticle);
-    if (result.data.updateNews.message) {
-      yield call(
-        handleCustomNewsError,
-        result.data.updateNews.message[errorsLanguage].value
-      );
+    if (result.message) {
+      yield call(handleCustomNewsError, result.message[errorsLanguage].value);
     }
     const news = yield call(getAllNews, null);
-    yield put(setNews(news.data.getAllNews));
+    yield put(setNews(news));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));
