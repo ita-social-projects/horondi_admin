@@ -56,7 +56,6 @@ const LoginPage = () => {
     e.preventDefault();
     setShouldValidate(true);
     if (allFieldsValidated) {
-      console.log('valid');
       dispatch(loginAdmin({ email, password }));
     }
   };

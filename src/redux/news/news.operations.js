@@ -1,13 +1,61 @@
 import { gql } from 'apollo-boost';
 import { client } from '../../utils/client';
+import { config } from '../../configs';
 
-const getAllNews = () =>
-  client
-    .query({
-      query: gql`
-        {
-          getAllNews {
-            _id
+const { errorsLanguage } = config;
+
+const getAllNews = async () => {
+  const result = await client.query({
+    query: gql`
+      {
+        getAllNews {
+          _id
+          author {
+            name {
+              lang
+              value
+            }
+            image {
+              small
+            }
+          }
+          title {
+            lang
+            value
+          }
+        }
+      }
+    `
+  });
+  const { data } = result;
+  return data.getAllNews;
+};
+
+const getArticleById = async (id) => {
+  const result = await client.query({
+    variables: { id },
+    query: gql`
+      query($id: ID!) {
+        getNewsById(id: $id) {
+          ... on News {
+            __typename
+            title {
+              lang
+              value
+            }
+            text {
+              lang
+              value
+            }
+            images {
+              primary {
+                medium
+              }
+              additional {
+                large
+              }
+            }
+            video
             author {
               name {
                 lang
@@ -17,151 +65,120 @@ const getAllNews = () =>
                 small
               }
             }
-            title {
+            date
+          }
+          ... on Error {
+            __typename
+            message {
               lang
               value
             }
+            statusCode
           }
         }
-      `
-    })
-    .then((res) => res.data.getAllNews);
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  const { data } = result;
 
-const getArticleById = (id) =>
-  client
-    .query({
-      variables: { id },
-      query: gql`
-        query($id: ID!) {
-          getNewsById(id: $id) {
-            ... on News {
-              __typename
-              title {
-                lang
-                value
-              }
-              text {
-                lang
-                value
-              }
-              images {
-                primary {
-                  medium
-                }
-                additional {
-                  large
-                }
-              }
-              video
-              author {
-                name {
-                  lang
-                  value
-                }
-                image {
-                  small
-                }
-              }
-              date
-            }
-            ... on Error {
-              __typename
-              message {
-                lang
-                value
-              }
-              statusCode
-            }
-          }
-        }
-      `,
-      fetchPolicy: 'no-cache'
-    })
-    .then((res) => res.data.getNewsById);
+  if (data.getNewsById.message) {
+    throw new Error(data.getNewsById.message[errorsLanguage].value);
+  }
 
-const deleteArticle = async (id) => {
-  const result = await client
-    .mutate({
-      variables: { id },
-      mutation: gql`
-        mutation($id: ID!) {
-          deleteNews(id: $id) {
-            ... on News {
-              author {
-                name {
-                  value
-                }
-              }
-            }
-            ... on Error {
-              message {
-                lang
-              }
-              statusCode
-            }
-          }
-        }
-      `,
-      fetchPolicy: 'no-cache'
-    })
-    .then((res) => res.data.deleteNews);
-  client.resetStore();
-  return result;
+  return data.getNewsById;
 };
 
-const createArticle = async (news) => {
-  const result = await client
-    .mutate({
-      mutation: gql`
-        mutation($news: NewsInput!) {
-          addNews(news: $news) {
+const deleteArticle = async (id) => {
+  const result = await client.mutate({
+    variables: { id },
+    mutation: gql`
+      mutation($id: ID!) {
+        deleteNews(id: $id) {
+          ... on News {
             author {
               name {
                 value
               }
             }
           }
+          ... on Error {
+            message {
+              lang
+            }
+            statusCode
+          }
         }
-      `,
-      variables: { news }
-    })
-    .then((res) => res.data.addNews);
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
   client.resetStore();
-  return result;
+  const { data } = result;
+
+  if (data.deleteNews.message) {
+    throw new Error(data.deleteNews.message[errorsLanguage].value);
+  }
+
+  return data.deleteNews;
 };
 
-const updateArticle = async (id, news) => {
-  const result = await client
-    .mutate({
-      variables: {
-        id,
-        news
-      },
-      mutation: gql`
-        mutation($id: ID!, $news: NewsInput!) {
-          updateNews(id: $id, news: $news) {
-            ... on News {
-              author {
-                name {
-                  value
-                }
-              }
-            }
-            ... on Error {
-              message {
-                lang
-                value
-              }
-              statusCode
+const createArticle = async (news) => {
+  const result = await client.mutate({
+    mutation: gql`
+      mutation($news: NewsInput!) {
+        addNews(news: $news) {
+          author {
+            name {
+              value
             }
           }
         }
-      `,
-      fetchPolicy: 'no-cache'
-    })
-    .then((res) => res.data.updateNews);
+      }
+    `,
+    variables: { news }
+  });
   client.resetStore();
-  return result;
+  const { data } = result;
+  return data.addNews;
+};
+
+const updateArticle = async (id, news) => {
+  const result = await client.mutate({
+    variables: {
+      id,
+      news
+    },
+    mutation: gql`
+      mutation($id: ID!, $news: NewsInput!) {
+        updateNews(id: $id, news: $news) {
+          ... on News {
+            author {
+              name {
+                value
+              }
+            }
+          }
+          ... on Error {
+            message {
+              lang
+              value
+            }
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+  const { data } = result;
+
+  if (data.updateNews.message) {
+    throw new Error(data.updateNews.message[errorsLanguage].value);
+  }
+
+  return data.updateNews;
 };
 
 export {

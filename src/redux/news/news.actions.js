@@ -58,10 +58,10 @@ export {
   setNews,
   getNews,
   setNewsLoading,
-  setNewsError,
   deleteArticle,
   addArticle,
   updateArticle,
   setArticle,
-  getArticle
+  getArticle,
+  setNewsError
 };

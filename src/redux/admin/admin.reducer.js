@@ -6,7 +6,7 @@ import {
 } from './admin.types';
 
 const initialState = {
-  isAuth: false,
+  isAuth: null,
   adminError: null,
   adminLoading: false
 };
