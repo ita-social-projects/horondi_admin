@@ -27,8 +27,9 @@ const adminReducer = (state = initialState, action = {}) => {
 
   case LOGOUT_ADMIN:
     return {
-      ...state,
-      isAuth: false
+      isAuth: false,
+      adminError: null,
+      adminLoading: false
     };
 
   case SET_ADMIN_LOADING:

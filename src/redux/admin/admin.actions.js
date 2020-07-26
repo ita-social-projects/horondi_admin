@@ -26,8 +26,9 @@ const logoutAdmin = () => ({
   type: LOGOUT_ADMIN
 });
 
-const setAdminLoading = () => ({
-  type: SET_ADMIN_LOADING
+const setAdminLoading = (loading) => ({
+  type: SET_ADMIN_LOADING,
+  payload: loading
 });
 
 const checkAdminByToken = (token) => ({

@@ -38,26 +38,20 @@ const Routes = () => {
     );
   }
 
-  if (isAuth) {
-    return (
-      <ConnectedRouter history={history}>
-        <NavBar />
-        <NavMenu />
-        <Switch>
-          <Route path={routes.pathToNews} exact component={NewsPage} />
-          <Route path={routes.pathToAddNews} exact component={NewsAdd} />
-          <Route
-            path={routes.pathToNewsDetails}
-            exact
-            component={NewsDetails}
-          />
-          <Route component={ErrorPage} />
-        </Switch>
-        <DialogWindow />
-        <SnackbarItem />
-      </ConnectedRouter>
-    );
-  }
+  return (
+    <ConnectedRouter history={history}>
+      <NavBar />
+      <NavMenu />
+      <Switch>
+        <Route path={routes.pathToNews} exact component={NewsPage} />
+        <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+        <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route component={ErrorPage} />
+      </Switch>
+      <DialogWindow />
+      <SnackbarItem />
+    </ConnectedRouter>
+  );
 };
 
 export default Routes;

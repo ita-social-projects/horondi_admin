@@ -8,22 +8,31 @@ function* handleAdminLoad({ payload }) {
   try {
     yield put(setAdminLoading(true));
     const admin = yield call(loginAdmin, payload);
-    localStorage.setItem('authToken', admin.token); // authToken
+    yield localStorage.setItem('authToken', admin.token);
     yield put(setAuth(true));
-    yield put(setAdminLoading(false));
     yield put(push('/'));
+    yield put(setAdminLoading(false));
   } catch (error) {
+    yield put(setAdminLoading(false));
     yield put(setAdminError(error));
   }
 }
 
 function* handleAdminCheckByToken({ payload }) {
   try {
+    const authToken = localStorage.getItem('authToken');
     yield put(setAdminLoading(true));
-    yield call(getUserByToken, payload);
+    if (!authToken) {
+      yield put(setAdminLoading(false));
+      yield put(setAuth(false));
+      yield put(push('/'));
+      return;
+    }
+    yield call(getUserByToken, authToken);
     yield put(setAuth(true));
     yield put(setAdminLoading(false));
   } catch (error) {
+    yield put(setAdminLoading(false));
     yield put(setAuth(false));
     yield localStorage.removeItem('authToken');
     yield put(push('/'));
