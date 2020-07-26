@@ -18,12 +18,7 @@ const dialogWindowReducer = (state = initialState, action = {}) => {
 
   case CLOSE_DIALOG:
     return {
-      ...state,
-      isOpen: false,
-      dialogTitle: '',
-      dialogContent: '',
-      buttonTitle: '',
-      onClickHandler: () => {}
+      ...initialState
     };
   default:
     return state;
