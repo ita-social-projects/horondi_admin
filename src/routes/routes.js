@@ -19,8 +19,8 @@ import { history } from '../store/store';
 const { routes } = config.app;
 
 const Routes = () => {
-  const { isAuth } = useSelector(({ Admin }) => ({
-    isAuth: Admin.isAuth
+  const { isAuth } = useSelector(({ Auth }) => ({
+    isAuth: Auth.isAuth
   }));
 
   if (!isAuth) {

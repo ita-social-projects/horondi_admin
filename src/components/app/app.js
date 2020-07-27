@@ -7,7 +7,7 @@ import Routes from '../../routes';
 import { theme } from './app-theme/app.theme';
 import { useStyles } from './app.styles';
 import { config } from '../../configs';
-import { checkAdminByToken } from '../../redux/admin/admin.actions';
+import { checkAdminByToken } from '../../redux/auth/auth.actions';
 
 const { DARK_THEME, LIGHT_THEME } = config.theme;
 

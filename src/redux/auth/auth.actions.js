@@ -1,11 +1,11 @@
 import {
-  LOGIN_ADMIN,
+  LOGIN_USER,
   SET_AUTH,
-  LOGOUT_ADMIN,
-  SET_ADMIN_ERROR,
-  SET_ADMIN_LOADING,
-  CHECK_ADMIN_BY_TOKEN
-} from './admin.types';
+  LOGOUT_USER,
+  SET_AUTH_ERROR,
+  SET_AUTH_LOADING,
+  CHECK_USER_BY_TOKEN
+} from './auth.types';
 
 const setAuth = (admin) => ({
   type: SET_AUTH,
@@ -13,34 +13,34 @@ const setAuth = (admin) => ({
 });
 
 const loginAdmin = (payload) => ({
-  type: LOGIN_ADMIN,
+  type: LOGIN_USER,
   payload
 });
 
-const setAdminError = (error) => ({
-  type: SET_ADMIN_ERROR,
+const setAuthError = (error) => ({
+  type: SET_AUTH_ERROR,
   payload: error
 });
 
 const logoutAdmin = () => ({
-  type: LOGOUT_ADMIN
+  type: LOGOUT_USER
 });
 
-const setAdminLoading = (loading) => ({
-  type: SET_ADMIN_LOADING,
+const setAuthLoading = (loading) => ({
+  type: SET_AUTH_LOADING,
   payload: loading
 });
 
 const checkAdminByToken = (token) => ({
-  type: CHECK_ADMIN_BY_TOKEN,
+  type: CHECK_USER_BY_TOKEN,
   payload: token
 });
 
 export {
   loginAdmin,
   setAuth,
-  setAdminError,
-  setAdminLoading,
+  setAuthError,
+  setAuthLoading,
   logoutAdmin,
   checkAdminByToken
 };

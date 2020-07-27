@@ -17,7 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './login-page.styles';
-import { loginAdmin } from '../../../redux/admin/admin.actions';
+import { loginAdmin } from '../../../redux/auth/auth.actions';
 import LoadingBar from '../../../components/loading-bar';
 
 import { config } from '../../../configs';
@@ -27,8 +27,8 @@ const { formRegExp } = config;
 const LoginPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading } = useSelector(({ Admin }) => ({
-    loading: Admin.adminLoading
+  const { loading } = useSelector(({ Auth }) => ({
+    loading: Auth.loading
   }));
 
   const [adminValues, setAdminValues] = useState({

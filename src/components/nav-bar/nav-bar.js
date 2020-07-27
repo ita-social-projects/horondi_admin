@@ -17,11 +17,10 @@ import {
   setSideMenuStatus
 } from '../../redux/theme/theme.actions';
 
-import { logoutAdmin } from '../../redux/admin/admin.actions';
-import {
-  showDialog,
-  closeDialog
-} from '../../redux/dialog-window/dialog-window.actions';
+import { logoutAdmin } from '../../redux/auth/auth.actions';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
 
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
@@ -29,14 +28,15 @@ const { LOGOUT_MESSAGE } = config.messages;
 
 const NavBar = () => {
   const classes = useStyles();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const { darkMode, sideMenuStatus } = useSelector(({ Theme }) => ({
     darkMode: Theme.darkMode,
     sideMenuStatus: Theme.sideMenuStatus
   }));
 
-  const { isAuth } = useSelector(({ Admin }) => ({
-    isAuth: Admin.isAuth
+  const { isAuth } = useSelector(({ Auth }) => ({
+    isAuth: Auth.isAuth
   }));
 
   const dispatch = useDispatch();
@@ -49,24 +49,12 @@ const NavBar = () => {
     dispatch(setSideMenuStatus(!sideMenuStatus));
   };
 
-  const openSuccessSnackbar = (onClickHandler) => {
-    dispatch(
-      showDialog({
-        isOpen: true,
-        dialogTitle: LOGOUT_TITLE,
-        dialogContent: LOGOUT_MESSAGE,
-        buttonTitle: LOGOUT_TITLE,
-        onClickHandler
-      })
-    );
-  };
-
   const logoutHandler = () => {
     const logout = () => {
       dispatch(closeDialog());
       dispatch(logoutAdmin());
     };
-    openSuccessSnackbar(logout);
+    openSuccessSnackbar(logout, LOGOUT_TITLE, LOGOUT_MESSAGE, LOGOUT_TITLE);
   };
 
   const menuToggle = (

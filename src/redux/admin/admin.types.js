@@ -1,6 +1,0 @@
-export const SET_AUTH = 'SET_AUTH';
-export const SET_ADMIN_LOADING = 'SET_ADMIN_LOADING';
-export const SET_ADMIN_ERROR = 'SET_ADMIN_ERROR';
-export const LOGIN_ADMIN = 'LOGIN_ADMIN';
-export const LOGOUT_ADMIN = 'LOGOUT_ADMIN';
-export const CHECK_ADMIN_BY_TOKEN = 'CHECK_ADMIN_BY_TOKEN';
