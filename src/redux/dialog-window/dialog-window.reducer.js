@@ -25,7 +25,6 @@ const dialogWindowReducer = (state = initialState, action = {}) => {
       buttonTitle: '',
       onClickHandler: () => {}
     };
-
   default:
     return state;
   }

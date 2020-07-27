@@ -1,4 +1,4 @@
-import { SET_NEWS, SET_LOADING, SET_ARTICLE } from './news.types';
+import { SET_NEWS, SET_NEWS_LOADING, SET_ARTICLE } from './news.types';
 
 const initialState = {
   list: [],
@@ -16,9 +16,9 @@ const newsReducer = (state = initialState, action = {}) => {
   case SET_ARTICLE:
     return {
       ...state,
-      newsArtcile: action.payload
+      newsArticle: action.payload
     };
-  case SET_LOADING:
+  case SET_NEWS_LOADING:
     return {
       ...state,
       loading: action.payload

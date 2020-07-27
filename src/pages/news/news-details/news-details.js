@@ -44,22 +44,23 @@ const NewsDetails = ({ match }) => {
   const { id } = match.params;
   useEffect(() => {
     dispatch(getArticle(id));
+  }, [dispatch, id]);
+  useEffect(() => {
+    if (newsArticle !== null) {
+      setAuthorPhoto(newsArticle.author.image.small);
+      setNewsImage(newsArticle.images.primary.medium);
+      setNewsVideo(newsArticle.video);
 
-    setAuthorPhoto(newsArticle.author.image.small);
-    setNewsImage(newsArticle.images.primary.medium);
-    setNewsVideo(newsArticle.video);
+      ukSetAuthor(newsArticle.author.name[0].value);
+      ukSetText(newsArticle.text[0].value);
+      ukSetTitle(newsArticle.title[0].value);
 
-    ukSetAuthor(newsArticle.author.name[0].value);
-    ukSetText(newsArticle.text[0].value);
-    ukSetTitle(newsArticle.title[0].value);
-
-    enSetAuthor(newsArticle.author.name[1].value);
-    enSetText(newsArticle.text[1].value);
-    enSetTitle(newsArticle.title[1].value);
+      enSetAuthor(newsArticle.author.name[1].value);
+      enSetText(newsArticle.text[1].value);
+      enSetTitle(newsArticle.title[1].value);
+    }
   }, [
     newsArticle,
-    dispatch,
-    id,
     setAuthorPhoto,
     setNewsImage,
     setNewsVideo,

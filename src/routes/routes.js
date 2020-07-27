@@ -9,6 +9,7 @@ import NavBar from '../components/nav-bar';
 import NavMenu from '../components/nav-menu';
 import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
+import ErrorPage from '../pages/error-page';
 
 import { config } from '../configs';
 import { history } from '../store/store';
@@ -23,6 +24,7 @@ const Routes = () => (
       <Route path={routes.pathToNews} exact component={NewsPage} />
       <Route path={routes.pathToAddNews} exact component={NewsAdd} />
       <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+      <Route component={ErrorPage} />
     </Switch>
     <DialogWindow />
     <SnackbarItem />
