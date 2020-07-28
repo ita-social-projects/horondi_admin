@@ -18,7 +18,7 @@ function* handleAdminLoad({ payload }) {
   }
 }
 
-function* handleAdminCheckByToken({ payload }) {
+function* handleAdminCheckByToken() {
   try {
     const authToken = localStorage.getItem('HORONDI_AUTH_TOKEN');
     yield put(setAuthLoading(true));
