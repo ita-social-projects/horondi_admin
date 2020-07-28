@@ -6,3 +6,4 @@ export const GET_ARTICLE = 'GET_ARTICLE';
 export const SET_ARTICLE = 'SET_ARTICLE';
 export const SET_NEWS_LOADING = 'SET_NEWS_LOADING';
 export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';
+export const SET_NEWS_ERROR = 'SET_NEWS_ERROR';

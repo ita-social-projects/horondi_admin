@@ -7,10 +7,8 @@ import { useStyles } from './news-page.styles';
 import { config } from '../../../configs';
 import { getNews, deleteArticle } from '../../../redux/news/news.actions';
 
-import {
-  showDialog,
-  closeDialog
-} from '../../../redux/dialog-window/dialog-window.actions';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
@@ -27,9 +25,10 @@ const tableTitles = config.tableHeadRowTitles.news;
 
 const NewsPage = () => {
   const classes = useStyles();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ News }) => ({
     list: News.list,
-    loading: News.loading
+    loading: News.newsLoading
   }));
   const dispatch = useDispatch();
 
@@ -37,24 +36,12 @@ const NewsPage = () => {
     dispatch(getNews());
   }, [dispatch]);
 
-  const openSuccessSnackbar = (onClickHandler) => {
-    dispatch(
-      showDialog({
-        isOpen: true,
-        dialogTitle: REMOVE_TITLE,
-        dialogContent: REMOVE_MESSAGE,
-        buttonTitle: REMOVE_TITLE,
-        onClickHandler
-      })
-    );
-  };
-
   const newsDeleteHandler = (id) => {
     const removeNews = () => {
       dispatch(closeDialog());
       dispatch(deleteArticle(id));
     };
-    openSuccessSnackbar(removeNews);
+    openSuccessSnackbar(removeNews, REMOVE_TITLE, REMOVE_MESSAGE, REMOVE_TITLE);
   };
 
   const newsItems =

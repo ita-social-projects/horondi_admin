@@ -6,7 +6,8 @@ import {
   ADD_ARTICLE,
   GET_ARTICLE,
   SET_ARTICLE,
-  UPDATE_ARTICLE
+  UPDATE_ARTICLE,
+  SET_NEWS_ERROR
 } from './news.types';
 
 const setNews = (news) => ({
@@ -48,6 +49,11 @@ const getArticle = (payload) => ({
   payload
 });
 
+const setNewsError = (error) => ({
+  type: SET_NEWS_ERROR,
+  payload: error
+});
+
 export {
   setNews,
   getNews,
@@ -56,5 +62,6 @@ export {
   addArticle,
   updateArticle,
   setArticle,
-  getArticle
+  getArticle,
+  setNewsError
 };

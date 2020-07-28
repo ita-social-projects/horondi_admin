@@ -1,6 +1,7 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 const routes = {
+  pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd'
@@ -47,9 +48,16 @@ export const config = {
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
-    CANCEL_TITLE: 'Відмінити'
+    CANCEL_TITLE: 'Відмінити',
+    LOGOUT_TITLE: 'Вихід'
   },
   messages: {
-    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?'
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
+  },
+  formRegExp: {
+    email:
+      '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
+    password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
   }
 };

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Toolbar, AppBar, Typography, IconButton } from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import Brightness4Icon from '@material-ui/icons/Brightness4';
@@ -18,14 +17,26 @@ import {
   setSideMenuStatus
 } from '../../redux/theme/theme.actions';
 
+import { logoutUser } from '../../redux/auth/auth.actions';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
+
 const { title } = config.app;
+const { LOGOUT_TITLE } = config.buttonTitles;
+const { LOGOUT_MESSAGE } = config.messages;
 
 const NavBar = () => {
   const classes = useStyles();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const { darkMode, sideMenuStatus } = useSelector(({ Theme }) => ({
     darkMode: Theme.darkMode,
     sideMenuStatus: Theme.sideMenuStatus
+  }));
+
+  const { isAuth } = useSelector(({ Auth }) => ({
+    isAuth: Auth.isAuth
   }));
 
   const dispatch = useDispatch();
@@ -36,6 +47,14 @@ const NavBar = () => {
 
   const handleDrawerToggle = () => {
     dispatch(setSideMenuStatus(!sideMenuStatus));
+  };
+
+  const logoutHandler = () => {
+    const logout = () => {
+      dispatch(closeDialog());
+      dispatch(logoutUser());
+    };
+    openSuccessSnackbar(logout, LOGOUT_TITLE, LOGOUT_MESSAGE, LOGOUT_TITLE);
   };
 
   const menuToggle = (
@@ -58,9 +77,11 @@ const NavBar = () => {
         <IconButton id='themeToggler' onClick={themeChangeHandler}>
           {themeButton}
         </IconButton>
-        <IconButton component={Link} to='/login'>
-          <AccountCircle id='profileButton' />
-        </IconButton>
+        {isAuth && (
+          <IconButton onClick={logoutHandler}>
+            <ExitToAppIcon id='logoutButton' />
+          </IconButton>
+        )}
       </Toolbar>
     </AppBar>
   );

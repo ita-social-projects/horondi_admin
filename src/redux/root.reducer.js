@@ -5,7 +5,7 @@ import Theme from './theme/theme.reducer';
 import Table from './table/table.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
 import DialogWindow from './dialog-window/dialog-window.reducer';
-import Error from './error/error.reducer';
+import Auth from './auth/auth.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
@@ -14,7 +14,7 @@ const rootReducer = (history) =>
     Table,
     Snackbar,
     DialogWindow,
-    Error,
+    Auth,
     router: connectRouter(history)
   });
 export default rootReducer;
