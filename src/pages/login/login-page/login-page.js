@@ -17,7 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './login-page.styles';
-import { loginAdmin } from '../../../redux/auth/auth.actions';
+import { loginUser } from '../../../redux/auth/auth.actions';
 import LoadingBar from '../../../components/loading-bar';
 
 import { config } from '../../../configs';
@@ -56,7 +56,7 @@ const LoginPage = () => {
     e.preventDefault();
     setShouldValidate(true);
     if (allFieldsValidated) {
-      dispatch(loginAdmin({ email, password }));
+      dispatch(loginUser({ email, password }));
     }
   };
   const handleChange = (event, setValid, regExp) => {

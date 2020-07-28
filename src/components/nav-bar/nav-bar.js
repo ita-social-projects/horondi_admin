@@ -17,7 +17,7 @@ import {
   setSideMenuStatus
 } from '../../redux/theme/theme.actions';
 
-import { logoutAdmin } from '../../redux/auth/auth.actions';
+import { logoutUser } from '../../redux/auth/auth.actions';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -52,7 +52,7 @@ const NavBar = () => {
   const logoutHandler = () => {
     const logout = () => {
       dispatch(closeDialog());
-      dispatch(logoutAdmin());
+      dispatch(logoutUser());
     };
     openSuccessSnackbar(logout, LOGOUT_TITLE, LOGOUT_MESSAGE, LOGOUT_TITLE);
   };

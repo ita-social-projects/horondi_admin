@@ -7,7 +7,7 @@ import Routes from '../../routes';
 import { theme } from './app-theme/app.theme';
 import { useStyles } from './app.styles';
 import { config } from '../../configs';
-import { checkAdminByToken } from '../../redux/auth/auth.actions';
+import { checkUserByToken } from '../../redux/auth/auth.actions';
 
 const { DARK_THEME, LIGHT_THEME } = config.theme;
 
@@ -18,7 +18,7 @@ const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(checkAdminByToken());
+    dispatch(checkUserByToken());
   }, [dispatch]);
 
   return (

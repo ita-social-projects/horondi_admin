@@ -12,7 +12,7 @@ const setAuth = (admin) => ({
   payload: admin
 });
 
-const loginAdmin = (payload) => ({
+const loginUser = (payload) => ({
   type: LOGIN_USER,
   payload
 });
@@ -22,7 +22,7 @@ const setAuthError = (error) => ({
   payload: error
 });
 
-const logoutAdmin = () => ({
+const logoutUser = () => ({
   type: LOGOUT_USER
 });
 
@@ -31,16 +31,16 @@ const setAuthLoading = (loading) => ({
   payload: loading
 });
 
-const checkAdminByToken = (token) => ({
+const checkUserByToken = (token) => ({
   type: CHECK_USER_BY_TOKEN,
   payload: token
 });
 
 export {
-  loginAdmin,
+  loginUser,
   setAuth,
   setAuthError,
   setAuthLoading,
-  logoutAdmin,
-  checkAdminByToken
+  logoutUser,
+  checkUserByToken
 };
