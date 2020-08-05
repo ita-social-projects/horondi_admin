@@ -1,8 +1,5 @@
 import { gql } from 'apollo-boost';
 import { client } from '../../utils/client';
-import { config } from '../../configs';
-
-const { errorsLanguage } = config;
 
 const getAllNews = async () => {
   const result = await client.query({
@@ -78,7 +75,9 @@ const getArticleById = async (id) => {
   const { data } = result;
 
   if (data.getNewsById.message) {
-    throw new Error(data.getNewsById.message[errorsLanguage].value);
+    throw new Error(
+      `${data.getNewsById.statusCode} ${data.getNewsById.message}`
+    );
   }
 
   return data.getNewsById;
@@ -110,7 +109,7 @@ const deleteArticle = async (id) => {
   const { data } = result;
 
   if (data.deleteNews.message) {
-    throw new Error(data.deleteNews.message[errorsLanguage].value);
+    throw new Error(`${data.deleteNews.statusCode} ${data.deleteNews.message}`);
   }
 
   return data.deleteNews;
@@ -165,7 +164,7 @@ const updateArticle = async (id, news) => {
   const { data } = result;
 
   if (data.updateNews.message) {
-    throw new Error(data.updateNews.message[errorsLanguage].value);
+    throw new Error(`${data.updateNews.statusCode} ${data.updateNews.message}`);
   }
 
   return data.updateNews;
