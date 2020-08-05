@@ -120,18 +120,30 @@ const createArticle = async (news) => {
     mutation: gql`
       mutation($news: NewsInput!) {
         addNews(news: $news) {
-          author {
-            name {
-              value
+          ... on News {
+            author {
+              name {
+                value
+              }
             }
+          }
+          ... on Error {
+            message
+            statusCode
           }
         }
       }
     `,
+    fetchPolicy: 'no-cache',
     variables: { news }
   });
   client.resetStore();
   const { data } = result;
+
+  if (data.addNews.message) {
+    throw new Error(`${data.addNews.statusCode} ${data.addNews.message}`);
+  }
+
   return data.addNews;
 };
 
