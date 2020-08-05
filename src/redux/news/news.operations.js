@@ -38,7 +38,6 @@ const getArticleById = async (id) => {
       query($id: ID!) {
         getNewsById(id: $id) {
           ... on News {
-            __typename
             title {
               lang
               value
@@ -68,11 +67,7 @@ const getArticleById = async (id) => {
             date
           }
           ... on Error {
-            __typename
-            message {
-              lang
-              value
-            }
+            message
             statusCode
           }
         }
@@ -103,9 +98,7 @@ const deleteArticle = async (id) => {
             }
           }
           ... on Error {
-            message {
-              lang
-            }
+            message
             statusCode
           }
         }
@@ -160,10 +153,7 @@ const updateArticle = async (id, news) => {
             }
           }
           ... on Error {
-            message {
-              lang
-              value
-            }
+            message
             statusCode
           }
         }

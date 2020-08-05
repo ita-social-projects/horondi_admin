@@ -1,7 +1,9 @@
 import { SET_SIDE_MENU_STATUS, SET_THEME_MODE } from './theme.types';
 
+const darkModeStatus = localStorage.getItem('darkMode') === 'true';
+
 const initialState = {
-  darkMode: true,
+  darkMode: darkModeStatus,
   sideMenuStatus: false
 };
 
