@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './news-add.styles';
 import { SaveButton } from '../../../components/buttons';
 import { addArticle } from '../../../redux/news/news.actions';
 import LoadingBar from '../../../components/loading-bar';
+import Editor from '../../../components/editor';
 import { config } from '../../../configs';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 
@@ -15,40 +19,30 @@ const NewsAdd = () => {
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.newsLoading);
 
+  const [language, setLanguage] = useState('');
+
   const {
     authorPhoto,
     newsImage,
-    newsVideo,
     ukAuthorName,
-    ukText,
     ukTitle,
-    enAuthorName,
-    enText,
-    enTitle,
     setAuthorPhoto,
     setNewsImage,
-    setNewsVideo,
     ukSetAuthor,
-    ukSetText,
     ukSetTitle,
-    enSetAuthor,
-    enSetText,
-    enSetTitle
+    content,
+    onEditorChange,
+    onFilesChange
   } = useNewsHandlers();
 
   const newsSaveHandler = async (e) => {
     e.preventDefault();
     const news = {
-      video: e.target.newsVideo.value,
       author: {
         name: [
           {
-            lang: languages[0],
+            lang: language,
             value: e.target.ukAuthorName.value
-          },
-          {
-            lang: languages[1],
-            value: e.target.enAuthorName.value
           }
         ],
         image: {
@@ -57,30 +51,19 @@ const NewsAdd = () => {
       },
       title: [
         {
-          lang: languages[0],
+          lang: language,
           value: e.target.ukTitle.value
-        },
-        {
-          lang: languages[1],
-          value: e.target.enTitle.value
         }
       ],
       text: [
         {
-          lang: languages[0],
-          value: e.target.ukText.value
-        },
-        {
-          lang: languages[1],
-          value: e.target.enText.value
+          lang: language,
+          value: content
         }
       ],
       images: {
         primary: {
           medium: e.target.newsImage.value
-        },
-        additional: {
-          large: 'Test_additional_photo'
         }
       },
       date: new Date().toISOString()
@@ -88,158 +71,11 @@ const NewsAdd = () => {
     dispatch(addArticle(news));
   };
 
-  const entertaimentOptions = [
-    {
-      id: 'authorPhoto',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Фото автора',
-      authorPhoto,
-      handler: (e) => setAuthorPhoto(e.target.value),
-      required: true
-    },
-    {
-      id: 'newsImage',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Головне зображення',
-      newsImage,
-      handler: (e) => setNewsImage(e.target.value),
-      required: true
-    },
-    {
-      id: 'newsVideo',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Посилання на відео',
-      newsVideo,
-      handler: (e) => setNewsVideo(e.target.value)
-    }
-  ];
-
-  const ukNewsOptions = [
-    {
-      id: 'ukAuthorName',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Автор (укр.)',
-      ukAuthorName,
-      handler: (e) => ukSetAuthor(e.target.value)
-    },
-    {
-      id: 'ukTitle',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Заголовок (укр.)',
-      ukTitle,
-      handler: (e) => ukSetTitle(e.target.value),
-      required: true
-    },
-    {
-      id: 'ukText',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Текст (укр.)',
-      ukText,
-      handler: (e) => ukSetText(e.target.value),
-      required: true
-    }
-  ];
-
-  const enNewsOptions = [
-    {
-      id: 'enAuthorName',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Автор (англ.)',
-      enAuthorName,
-      handler: (e) => enSetAuthor(e.target.value)
-    },
-    {
-      id: 'enTitle',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Заголовок (англ.)',
-      enTitle,
-      handler: (e) => enSetTitle(e.target.value),
-      required: true
-    },
-    {
-      id: 'enText',
-      className: classes.textfield,
-      variant: 'outlined',
-      label: 'Текст (англ.)',
-      enText,
-      handler: (e) => enSetText(e.target.value),
-      required: true
-    }
-  ];
-
-  const entertaimentInputs = entertaimentOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={() => handler}
-        required={required}
-        multiline
-        InputLabelProps={{
-          classes: {
-            root: classes.inputLabel,
-            shrink: 'shrink'
-          }
-        }}
-      />
-    )
-  );
-
-  const ukNewsInputs = ukNewsOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={() => handler}
-        required={required}
-        multiline
-        InputLabelProps={{
-          classes: {
-            root: classes.inputLabel,
-            shrink: 'shrink'
-          }
-        }}
-      />
-    )
-  );
-
-  const enNewsInputs = enNewsOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={() => handler}
-        required={required}
-        multiline
-        InputLabelProps={{
-          classes: {
-            root: classes.inputLabel,
-            shrink: 'shrink'
-          }
-        }}
-      />
-    )
-  );
+  const languagesOptions = languages.map((lang, index) => (
+    <MenuItem key={index} value={lang}>
+      {lang}
+    </MenuItem>
+  ));
 
   if (loading) {
     return <LoadingBar />;
@@ -248,27 +84,85 @@ const NewsAdd = () => {
   return (
     <div className={classes.container}>
       <form onSubmit={newsSaveHandler}>
+        <div className={classes.controlsBlock}>
+          <FormControl className={classes.formControl}>
+            <InputLabel id='demo-simple-select-label'>Мова</InputLabel>
+            <Select
+              className={classes.select}
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              required
+            >
+              {languagesOptions}
+            </Select>
+          </FormControl>
+
+          <SaveButton
+            className={classes.saveButton}
+            id='save'
+            type='submit'
+            title='Зберегти'
+          />
+        </div>
+
         <FormControl className={classes.newsAdd}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Paper className={classes.newsItemAdd}>
-                {entertaimentInputs}
+                <TextField
+                  id='authorPhoto'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Фото автора'
+                  multiline
+                  value={authorPhoto}
+                  onChange={(e) => setAuthorPhoto(e.target.value)}
+                  required
+                />
+                <TextField
+                  id='newsImage'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Головне зображення'
+                  multiline
+                  value={newsImage}
+                  onChange={(e) => setNewsImage(e.target.value)}
+                  required
+                />
+                <TextField
+                  id='ukAuthorName'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Автор (укр.)'
+                  multiline
+                  value={ukAuthorName}
+                  onChange={(e) => ukSetAuthor(e.target.value)}
+                  required
+                />
+                <TextField
+                  id='ukTitle'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Заголовок (укр.)'
+                  multiline
+                  value={ukTitle}
+                  onChange={(e) => ukSetTitle(e.target.value)}
+                  required
+                />
               </Paper>
             </Grid>
-            <Grid item xs={6}>
-              <Paper className={classes.newsItemAdd}>{ukNewsInputs}</Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper className={classes.newsItemAdd}>{enNewsInputs}</Paper>
+            <Grid item xs={12}>
+              <Editor
+                value={content}
+                placeholder='Текст'
+                onEditorChange={onEditorChange}
+                onFilesChange={onFilesChange}
+              />
             </Grid>
           </Grid>
         </FormControl>
-        <SaveButton
-          className={classes.saveButton}
-          id='save'
-          type='submit'
-          title='Зберегти'
-        />
       </form>
     </div>
   );

@@ -25,6 +25,7 @@
     "react-customer-chat": "^1.0.2",
     "react-dom": "^16.13.1",
     "react-player": "^2.3.1",
+    "react-quill": "^1.3.5",
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",

@@ -17,7 +17,7 @@ export const config = {
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
-  languages: ['uk', 'en'],
+  languages: ['uk', 'en', 'ru'],
   errorsLanguage: 0,
   buttonStyles: {
     ACCEPT_BUTTON_STYLE: 'secondary'

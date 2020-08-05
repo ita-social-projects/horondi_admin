@@ -13,6 +13,17 @@ const useNewsHandlers = () => {
   const [enText, enSetText] = useState('');
   const [enTitle, enSetTitle] = useState('');
 
+  const [content, setContent] = useState('');
+  const [files, setFiles] = useState([]);
+
+  const onEditorChange = (value) => {
+    setContent(value);
+  };
+
+  const onFilesChange = (files) => {
+    setFiles(files);
+  };
+
   return {
     authorPhoto,
     newsImage,
@@ -23,6 +34,10 @@ const useNewsHandlers = () => {
     enAuthorName,
     enText,
     enTitle,
+    content,
+    files,
+    setContent,
+    setFiles,
     setAuthorPhoto,
     setNewsImage,
     setNewsVideo,
@@ -31,7 +46,9 @@ const useNewsHandlers = () => {
     ukSetTitle,
     enSetAuthor,
     enSetText,
-    enSetTitle
+    enSetTitle,
+    onEditorChange,
+    onFilesChange
   };
 };
 
