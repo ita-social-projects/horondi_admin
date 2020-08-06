@@ -1,6 +1,8 @@
 import { gql } from 'apollo-boost';
 import { client } from '../../utils/client';
 
+import { errLocalization } from '../../configs';
+
 const getAllNews = async () => {
   const result = await client.query({
     query: gql`
@@ -76,7 +78,9 @@ const getArticleById = async (id) => {
 
   if (data.getNewsById.message) {
     throw new Error(
-      `${data.getNewsById.statusCode} ${data.getNewsById.message}`
+      `${data.getNewsById.statusCode} ${
+        errLocalization[data.getNewsById.message]
+      }`
     );
   }
 
@@ -109,7 +113,11 @@ const deleteArticle = async (id) => {
   const { data } = result;
 
   if (data.deleteNews.message) {
-    throw new Error(`${data.deleteNews.statusCode} ${data.deleteNews.message}`);
+    throw new Error(
+      `${data.deleteNews.statusCode} ${
+        errLocalization[data.deleteNews.message]
+      }`
+    );
   }
 
   return data.deleteNews;
@@ -141,7 +149,9 @@ const createArticle = async (news) => {
   const { data } = result;
 
   if (data.addNews.message) {
-    throw new Error(`${data.addNews.statusCode} ${data.addNews.message}`);
+    throw new Error(
+      `${data.addNews.statusCode} ${errLocalization[data.addNews.message]}`
+    );
   }
 
   return data.addNews;
@@ -176,7 +186,11 @@ const updateArticle = async (id, news) => {
   const { data } = result;
 
   if (data.updateNews.message) {
-    throw new Error(`${data.updateNews.statusCode} ${data.updateNews.message}`);
+    throw new Error(
+      `${data.updateNews.statusCode} ${
+        errLocalization[data.updateNews.message]
+      }`
+    );
   }
 
   return data.updateNews;

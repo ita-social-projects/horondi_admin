@@ -7,6 +7,19 @@ const routes = {
   pathToAddNews: '/newsadd'
 };
 
+export const errLocalization = {
+  NEWS_NOT_FOUND: 'Новину не знайдено!',
+  NEWS_ALREADY_EXIST: 'Така новина вже існує!',
+  CATEGORY_NOT_FOUND: 'Категорія не знайдена!',
+  CATEGORY_ALREADY_EXIST: 'Така категорія вже існує!',
+  CURRENCY_NOT_FOUND: 'Курс валюти не знайдений!',
+  CURRENCY_ALREADY_EXIST: 'Такий курс валюти вже існує!',
+  MATERIAL_NOT_FOUND: 'Матеріал не знайдений!',
+  MATERIAL_ALREADY_EXIST: 'Такий матеріал вже існує!',
+  PATTERN_NOT_FOUND: 'Гобелен не знайдений!',
+  PATTERN_ALREADY_EXIST: 'Такий гобелен вже існує!'
+};
+
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
