@@ -69,10 +69,7 @@ const getArticleById = async (id) => {
           }
           ... on Error {
             __typename
-            message {
-              lang
-              value
-            }
+            message
             statusCode
           }
         }
@@ -103,9 +100,7 @@ const deleteArticle = async (id) => {
             }
           }
           ... on Error {
-            message {
-              lang
-            }
+            message
             statusCode
           }
         }
@@ -128,14 +123,21 @@ const createArticle = async (news) => {
     mutation: gql`
       mutation($news: NewsInput!) {
         addNews(news: $news) {
-          author {
-            name {
-              value
+          ... on News {
+            author {
+              name {
+                value
+              }
             }
+          }
+          ... on Error {
+            message
+            statusCode
           }
         }
       }
     `,
+    fetchPolicy: 'no-cache',
     variables: { news }
   });
   client.resetStore();
@@ -160,10 +162,7 @@ const updateArticle = async (id, news) => {
             }
           }
           ... on Error {
-            message {
-              lang
-              value
-            }
+            message
             statusCode
           }
         }
