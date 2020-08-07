@@ -1,8 +1,9 @@
 import { takeEvery } from 'redux-saga/effects';
 import { SET_THEME_MODE } from './theme.types';
+import { setToLocalStorage } from '../../services/local-storage.service';
 
 function* handleThemeChange({ payload }) {
-  yield localStorage.setItem('darkMode', payload);
+  yield setToLocalStorage('darkMode', payload);
 }
 
 export default function* themeSaga() {
