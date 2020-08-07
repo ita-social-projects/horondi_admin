@@ -4,7 +4,7 @@ import { client } from '../../utils/client';
 export const loginAdmin = async (loginInput) => {
   const result = await client.mutate({
     mutation: gql`
-      mutation($loginInput: userLoginInput!) {
+      mutation($loginInput: LoginInput!) {
         loginAdmin(loginInput: $loginInput) {
           token
         }
