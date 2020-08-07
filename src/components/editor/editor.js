@@ -12,24 +12,24 @@ import 'react-quill/dist/quill.snow.css';
 Quill.debug('error');
 
 Quill.register('modules/clipboard', Clipboard, true);
-Quill.register(ImageBlot);
-Quill.register(VideoBlot);
-Quill.register(FileBlot);
-Quill.register(PollBlot);
 
 ImageBlot.blotName = 'image';
 ImageBlot.tagName = 'img';
-
-VideoBlot.blotName = 'video';
-VideoBlot.tagName = 'video';
+Quill.register(ImageBlot);
 
 FileBlot.blotName = 'file';
 FileBlot.tagName = 'p';
 FileBlot.className = 'file-inner-post';
+Quill.register(FileBlot);
 
 PollBlot.blotName = 'poll';
 PollBlot.tagName = 'p';
 PollBlot.className = 'poll-inner-post';
+Quill.register(PollBlot);
+
+VideoBlot.blotName = 'video';
+VideoBlot.tagName = 'video';
+Quill.register(VideoBlot);
 
 class Editor extends React.Component {
   modules = {
@@ -90,13 +90,12 @@ class Editor extends React.Component {
 
   handleChange = (html) => {
     const { onEditorChange } = this.props;
-    const { editorHtml } = this.state;
     this.setState(
       {
         editorHtml: html
       },
       () => {
-        onEditorChange(editorHtml);
+        onEditorChange(html);
       }
     );
   };
