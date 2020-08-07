@@ -39,13 +39,13 @@ function* handleAdminCheckByToken() {
   } catch (error) {
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
-    yield put(clearLocalStorage());
+    clearLocalStorage();
     yield put(push('/'));
   }
 }
 
 function* handleAdminLogout() {
-  yield put(clearLocalStorage());
+  clearLocalStorage();
   yield put(setAuth(false));
   yield put(push('/'));
 }
