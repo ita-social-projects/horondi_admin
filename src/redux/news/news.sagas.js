@@ -4,7 +4,8 @@ import {
   setNews,
   setNewsLoading,
   setArticle,
-  setNewsError
+  setNewsError,
+  setPagesCount
 } from './news.actions';
 
 import {
@@ -37,11 +38,18 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-function* handleNewsLoad() {
+function* handleNewsLoad({
+  payload = {
+    skip: 1,
+    limit: 1,
+    productsPerPage: 1
+  }
+}) {
   try {
     yield put(setNewsLoading(true));
-    const news = yield call(getAllNews, null);
-    yield put(setNews(news));
+    const news = yield call(getAllNews, payload.skip, payload.limit);
+    yield put(setPagesCount(Math.ceil(news.count / payload.productsPerPage)));
+    yield put(setNews(news.items));
     yield put(setNewsLoading(false));
   } catch (error) {
     yield call(handleNewsError, error);

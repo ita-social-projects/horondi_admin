@@ -16,5 +16,12 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 65,
     position: 'static',
     padding: 20
+  },
+  paginationDiv: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  tableContainer: {
+    height: '70vh'
   }
 }));
