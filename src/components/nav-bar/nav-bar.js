@@ -28,6 +28,7 @@ const { LOGOUT_MESSAGE } = config.messages;
 
 const NavBar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const { darkMode, sideMenuStatus } = useSelector(({ Theme }) => ({
@@ -38,8 +39,6 @@ const NavBar = () => {
   const { isAuth } = useSelector(({ Auth }) => ({
     isAuth: Auth.isAuth
   }));
-
-  const dispatch = useDispatch();
 
   const themeChangeHandler = () => dispatch(setThemeMode(!darkMode));
 

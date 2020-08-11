@@ -18,7 +18,6 @@ export const config = {
     rowsPerPageOptions: [10, 25, 50, 100]
   },
   languages: ['uk', 'en'],
-  errorsLanguage: 0,
   buttonStyles: {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },

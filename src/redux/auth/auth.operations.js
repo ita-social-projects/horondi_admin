@@ -1,18 +1,16 @@
 import { gql } from 'apollo-boost';
 import { client } from '../../utils/client';
 
-export const loginAdmin = async (user) => {
+export const loginAdmin = async (loginInput) => {
   const result = await client.mutate({
     mutation: gql`
-      mutation($user: UserInput!) {
-        loginAdmin(user: $user) {
+      mutation($loginInput: LoginInput!) {
+        loginAdmin(loginInput: $loginInput) {
           token
-          id
-          role
         }
       }
     `,
-    variables: { user }
+    variables: { loginInput }
   });
   const { data } = result;
 
