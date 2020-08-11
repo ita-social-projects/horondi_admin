@@ -79,7 +79,8 @@ const getArticleById = async (id) => {
           }
         }
       }
-    `
+    `,
+    fetchPolicy: 'no-cache'
   });
   const { data } = result;
 

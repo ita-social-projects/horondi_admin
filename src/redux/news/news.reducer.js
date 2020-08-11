@@ -14,7 +14,7 @@ const initialState = {
   newsLoading: false,
   newsError: null,
   currentPage: 0,
-  productsPerPage: 1,
+  productsPerPage: 5,
   pagesCount: 1
 };
 
