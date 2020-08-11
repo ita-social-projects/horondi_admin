@@ -1,8 +1,10 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import PeopleIcon from '@material-ui/icons/People';
 
 const routes = {
   pathToLogin: '/',
   pathToNews: '/',
+  pathToUsers: '/users',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd'
 };
@@ -10,7 +12,10 @@ const routes = {
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
+    menuCategories: [
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon]
+    ],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,

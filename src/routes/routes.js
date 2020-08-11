@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import { useSelector } from 'react-redux';
+import UsersPage from '../pages/users/users-page';
 import NewsPage from '../pages/news/news-page';
 import NewsAdd from '../pages/news/news-add';
 import NewsDetails from '../pages/news/news-details';
@@ -43,6 +44,7 @@ const Routes = () => {
       <NavBar />
       <NavMenu />
       <Switch>
+        <Route path={routes.pathToUsers} exact component={UsersPage} />
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
