@@ -39,7 +39,6 @@ const NewsAdd = () => {
   const newsSaveHandler = async (e) => {
     e.preventDefault();
     const news = {
-      video: e.target.newsVideo.value,
       author: {
         name: [
           {

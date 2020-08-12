@@ -53,7 +53,6 @@ const getArticleById = async (id) => {
                 large
               }
             }
-            video
             author {
               name {
                 lang
