@@ -4,7 +4,9 @@ import {
   setNews,
   setNewsLoading,
   setArticle,
-  setNewsError
+  setNewsError,
+  setPagesCount,
+  setCurrentPage
 } from './news.actions';
 
 import {
@@ -37,11 +39,20 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-function* handleNewsLoad() {
+const { skip, limit, productsPerPage } = config.paginationPayload;
+
+function* handleNewsLoad({
+  payload = {
+    skip: 1,
+    limit: 1,
+    productsPerPage: 1
+  }
+}) {
   try {
     yield put(setNewsLoading(true));
-    const news = yield call(getAllNews, null);
-    yield put(setNews(news));
+    const news = yield call(getAllNews, payload.skip, payload.limit);
+    yield put(setPagesCount(Math.ceil(news.count / payload.productsPerPage)));
+    yield put(setNews(news.items));
     yield put(setNewsLoading(false));
   } catch (error) {
     yield call(handleNewsError, error);
@@ -63,8 +74,9 @@ function* handleAddNews({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(createArticle, payload);
-    const news = yield call(getAllNews, null);
-    yield put(setNews(news));
+    const news = yield call(getAllNews, skip, limit);
+    yield put(setPagesCount(Math.ceil(news.count / productsPerPage)));
+    yield put(setNews(news.items));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
@@ -78,8 +90,10 @@ function* handleNewsDelete({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(deleteArticle, payload);
-    const news = yield call(getAllNews, null);
-    yield put(setNews(news));
+    const news = yield call(getAllNews, skip, limit);
+    yield put(setPagesCount(Math.ceil(news.count / productsPerPage)));
+    yield put(setCurrentPage(1));
+    yield put(setNews(news.items));
     yield put(setNewsLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
@@ -94,8 +108,9 @@ function* handleNewsUpdate({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(updateArticle, id, newArticle);
-    const news = yield call(getAllNews, null);
-    yield put(setNews(news));
+    const news = yield call(getAllNews, skip, limit);
+    yield put(setPagesCount(Math.ceil(news.count / productsPerPage)));
+    yield put(setNews(news.items));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));
