@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import { TextField, Paper, Grid } from '@material-ui/core';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import AppBar from '@material-ui/core/AppBar';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {
+  TextField,
+  Paper,
+  Grid,
+  Tabs,
+  Tab,
+  AppBar,
+  FormControlLabel
+} from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import TabPanel from '../../../components/tab-panel';
 import { useStyles } from './news-add.styles';
+import TabPanel from '../../../components/tab-panel';
 import { SaveButton } from '../../../components/buttons';
-import { addArticle } from '../../../redux/news/news.actions';
 import LoadingBar from '../../../components/loading-bar';
+import { addArticle } from '../../../redux/news/news.actions';
 import { config } from '../../../configs';
 
 const { languages } = config;
