@@ -83,7 +83,6 @@ const NewsAdd = () => {
       newsImage: ''
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       const news = {
         author: {
           name: [
@@ -142,7 +141,7 @@ const NewsAdd = () => {
               variant='outlined'
               label={`Автор ${lang}`}
               multiline
-              value={formik.values.uaAuthorName}
+              value={formik.values[`${lang}AuthorName`]}
               onChange={formik.handleChange}
               required
             />
