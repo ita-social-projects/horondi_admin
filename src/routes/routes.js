@@ -16,6 +16,7 @@ import ErrorPage from '../pages/error-page';
 
 import { config } from '../configs';
 import { history } from '../store/store';
+import UsersDetails from '../pages/users/users-details';
 
 const { routes } = config.app;
 
@@ -45,6 +46,11 @@ const Routes = () => {
       <NavMenu />
       <Switch>
         <Route path={routes.pathToUsers} exact component={UsersPage} />
+        <Route
+          path={routes.pathToUsersDetails}
+          exact
+          component={UsersDetails}
+        />
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />

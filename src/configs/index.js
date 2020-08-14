@@ -5,6 +5,7 @@ const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToUsers: '/users',
+  pathToUsersDetails: '/users/:id',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd'
 };
@@ -27,7 +28,8 @@ export const config = {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
   tableHeadRowTitles: {
-    news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
