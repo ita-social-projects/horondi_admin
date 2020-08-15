@@ -1,7 +1,15 @@
-import { SET_USERS } from './users.types';
+import {
+  SET_USERS,
+  SET_USER,
+  SET_USERS_LOADING,
+  SET_USERS_ERROR
+} from './users.types';
 
 const initialState = {
-  list: []
+  list: [],
+  user: null,
+  userLoading: false,
+  userError: null
 };
 
 const usersReducer = (state = initialState, action = {}) => {
@@ -10,6 +18,21 @@ const usersReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       list: action.payload
+    };
+  case SET_USER:
+    return {
+      ...state,
+      user: action.payload
+    };
+  case SET_USERS_LOADING:
+    return {
+      ...state,
+      userLoading: action.payload
+    };
+  case SET_USERS_ERROR:
+    return {
+      ...state,
+      userError: action.payload
     };
   default:
     return state;
