@@ -83,7 +83,7 @@ const UsersDetails = (props) => {
             <Grid item xs={12}>
               <Paper className={styles.userBlock}>
                 <Grid container spacing={1} className={styles.userHeader}>
-                  <Grid item xs={1}>
+                  <Grid item xs={1} className={styles.userAvatar}>
                     <Avatar>{`${firstName[0]}${lastName[0]}`}</Avatar>
                   </Grid>
                   <Grid item xs={2}>

@@ -26,6 +26,12 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     paddingTop: 10
   },
+  userAvatar: {
+    [theme.breakpoints.up('sm')]: {
+      marginRight: 5
+    },
+    marginRight: 30
+  },
   userHeader: {
     display: 'flex',
     alignItems: 'center',
@@ -43,14 +49,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   textField: {
     textTransform: 'uppercase',
-    padding: 10,
-    margin: '5px 0',
-    width: '100%'
+    margin: '10px 5px'
   },
   inputLabel: {
-    fontSize: 12,
-    '&.shrink': {
-      transform: 'translate(32px, -3px) scale(0.75)'
-    }
+    fontSize: 12
   }
 }));
