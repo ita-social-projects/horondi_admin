@@ -66,6 +66,11 @@ const NewsDetails = ({ match }) => {
   const [checkboxes, setCheckboxes] = useState(
     Object.assign(...checkboxStates)
   );
+  for (const [key, value] of Object.entries(checkboxes)) {
+    if (value === true && !preferredLanguages.includes(key)) {
+      preferredLanguages.push(key);
+    }
+  }
   console.log(checkboxes);
   useEffect(() => {
     dispatch(getArticle(id));
