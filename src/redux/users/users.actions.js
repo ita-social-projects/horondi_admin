@@ -5,6 +5,7 @@ import {
   SET_USER,
   SET_USERS_ERROR,
   SET_USERS_LOADING,
+  DELETE_USER,
   UPDATE_USER_STATUS
 } from './users.types';
 
@@ -30,6 +31,10 @@ const getUser = (payload) => ({
   payload
 });
 
+const deleteUser = (payload) => ({
+  type: DELETE_USER,
+  payload
+});
 const updateUserStatus = (payload) => ({
   type: UPDATE_USER_STATUS,
   payload
@@ -45,6 +50,7 @@ export {
   setUsers,
   setUser,
   getUser,
+  deleteUser,
   updateUserStatus,
   setUserError,
   setUsersLoading

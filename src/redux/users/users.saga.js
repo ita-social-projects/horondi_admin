@@ -1,5 +1,4 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
 
 import { config } from '../../configs';
 
@@ -69,9 +68,8 @@ function* handleUserStatusSwitch({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(switchUserStatus, payload);
-    yield call(handleUsersLoad, null);
     yield call(handleSnackBarSuccess, SUCCESS_UPDATE_STATUS);
-    yield put(push('/'));
+    yield call(handleUserLoad, { payload });
   } catch (err) {
     yield call(handleUsersError, err);
   }

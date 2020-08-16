@@ -47,18 +47,27 @@ export const config = {
     SUCCESS_ADD_STATUS: 'Успішно додано!',
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
-    ERROR_PAGE_STATUS: 'Сторінку не знайдено!'
+    ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
+    USER_ACTIVE_STATUS: 'Активний',
+    USER_UNACTIVE_STATUS: 'Неактивний'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
+    REMOVE_USER_TITLE: 'Видалити користувача',
+    SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
     CANCEL_TITLE: 'Відмінити',
-    LOGOUT_TITLE: 'Вихід'
+    LOGOUT_TITLE: 'Вихід',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
+    USER_ACTIVE_TITLE: 'Активувати'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
+    SWITCH_USER_STATUS_MESSAGE:
+      'Ви впевнені,що хочете змінити статус користувача?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   formRegExp: {

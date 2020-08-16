@@ -3,6 +3,8 @@ import { client } from '../../utils/client';
 
 import { userTranslations } from '../../translations/users.translations';
 
+const transformError = (err) => err.message.replace('GraphQL error: ', '');
+
 const getAllUsers = async () => {
   const result = await client.query({
     query: gql`
@@ -16,7 +18,8 @@ const getAllUsers = async () => {
           banned
         }
       }
-    `
+    `,
+    fetchPolicy: 'no-cache'
   });
   const { data } = result;
 
@@ -24,77 +27,78 @@ const getAllUsers = async () => {
 };
 
 const getUserById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
-      query($id: ID!) {
-        getUserById(id: $id) {
-          ... on User {
-            firstName
-            lastName
-            email
-            address {
-              country
-              city
-              buildingNumber
-              appartment
-              street
+  const result = await client
+    .query({
+      variables: { id },
+      query: gql`
+        query($id: ID!) {
+          getUserById(id: $id) {
+            ... on User {
+              firstName
+              lastName
+              email
+              address {
+                country
+                city
+                buildingNumber
+                appartment
+                street
+              }
+              banned
             }
-            banned
           }
         }
-      }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { errors, data } = result;
+      `,
+      fetchPolicy: 'no-cache'
+    })
+    .catch((err) => {
+      throw new Error(`Помилка: ${userTranslations[transformError(err)]}`);
+    });
 
-  if (errors) {
-    throw new Error(`Помилка: ${userTranslations[errors[0].message]}`);
-  }
+  const { data } = result;
 
   return data.getUserById;
 };
 
 const deleteUser = async (id) => {
-  const result = await client.mutate({
-    variables: { id },
-    mutation: gql`
-      mutation($id: ID!) {
-        deleteUser(id: $id) {
-          firstName
-          lastName
+  const result = await client
+    .mutate({
+      variables: { id },
+      mutation: gql`
+        mutation($id: ID!) {
+          deleteUser(id: $id) {
+            firstName
+            lastName
+          }
         }
-      }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+      `,
+      fetchPolicy: 'no-cache'
+    })
+    .catch((err) => {
+      throw new Error(`Помилка: ${userTranslations[transformError(err)]}`);
+    });
 
-  const { errors, data } = result;
-
-  if (errors) {
-    throw new Error(`Помилка: ${userTranslations[errors[0].message]}`);
-  }
+  const { data } = result;
 
   return data.deleteUser;
 };
 
 const switchUserStatus = async (id) => {
-  const result = client.mutate({
-    variables: { id },
-    mutation: gql`
-      mutation($id: ID!) {
-        switchUserStatus(id: $id)
-      }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+  const result = await client
+    .mutate({
+      variables: { id },
+      mutation: gql`
+        mutation($id: ID!) {
+          switchUserStatus(id: $id)
+        }
+      `,
+      fetchPolicy: 'no-cache'
+    })
+    .catch((err) => {
+      throw new Error(`Помилка: ${userTranslations[transformError(err)]}`);
+    });
 
-  const { data, errors } = result;
-
-  if (errors) {
-    throw new Error(`Помилка: ${userTranslations[errors[0].message]}`);
-  }
+  const { data } = result;
 
   return data.switchUserStatus;
 };
