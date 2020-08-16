@@ -150,10 +150,51 @@ const NewsDetails = ({ match }) => {
             name: ''
           }}
           onSubmit={(values, actions) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              actions.setSubmitting(false);
-            }, 1000);
+            const newArticle = {
+              author: {
+                name: [
+                  {
+                    lang: languages[0],
+                    value: values.ukAuthorName || null
+                  },
+                  {
+                    lang: languages[1],
+                    value: values.enAuthorName || null
+                  }
+                ],
+                image: {
+                  small: values.authorPhoto
+                }
+              },
+              title: [
+                {
+                  lang: languages[0],
+                  value: values.ukTitle || null
+                },
+                {
+                  lang: languages[1],
+                  value: values.enTitle || null
+                }
+              ],
+              text: [
+                {
+                  lang: languages[0],
+                  value: values.ukText || null
+                },
+                {
+                  lang: languages[1],
+                  value: values.enText || null
+                }
+              ],
+              images: {
+                primary: {
+                  medium: values.newsImage
+                }
+              },
+              date: new Date().toISOString()
+            };
+            console.log(newArticle);
+            dispatch(updateArticle({ id, newArticle }));
           }}
         >
           {(props) => (
