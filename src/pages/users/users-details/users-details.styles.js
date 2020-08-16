@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-const fontStyle = (fontSize = 12, isBold = false, { palette }) => {
+const fontStyle = ({ palette }, fontSize = 12, isBold = false) => {
   let fontWeight = '400';
   if (isBold) {
     fontWeight = 'bold';
@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     padding: 25
   },
-  detailsTitle: fontStyle(24, true, theme),
+  detailsTitle: fontStyle(theme, 24, true),
   userBlock: {
     display: 'flex',
     flexDirection: 'column',
@@ -42,8 +42,8 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-around'
   },
-  userName: fontStyle(14, true, theme),
-  userStatus: fontStyle(10, false, theme),
+  userName: fontStyle(theme, 14, true),
+  userStatus: fontStyle(theme, 10, false),
   userDetails: {
     width: '95%'
   },

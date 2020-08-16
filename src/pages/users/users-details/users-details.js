@@ -53,10 +53,10 @@ const UsersDetails = (props) => {
   const status = ban ? USER_UNACTIVE_STATUS : USER_ACTIVE_STATUS;
   const buttonStatus = ban ? USER_ACTIVE_TITLE : USER_UNACTIVE_TITLE;
 
-  const userStatusHandler = (id) => {
+  const userStatusHandler = (userId) => {
     const updateStatus = () => {
       dispatch(closeDialog());
-      dispatch(updateUserStatus(id));
+      dispatch(updateUserStatus(userId));
     };
     openSuccessSnackbar(
       updateStatus,
