@@ -1,9 +1,11 @@
 import { gql } from 'apollo-boost';
 import { client } from '../../utils/client';
+import { getFromLocalStorage } from '../../services/local-storage.service';
 
 import { userTranslations } from '../../translations/users.translations';
 
 const transformError = (err) => err.message.replace('GraphQL error: ', '');
+const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
 const getAllUsers = async () => {
   const result = await client.query({
@@ -19,8 +21,14 @@ const getAllUsers = async () => {
         }
       }
     `,
+    context: {
+      headers: {
+        token
+      }
+    },
     fetchPolicy: 'no-cache'
   });
+
   const { data } = result;
 
   return data.getAllUsers;
@@ -49,6 +57,11 @@ const getUserById = async (id) => {
           }
         }
       `,
+      context: {
+        headers: {
+          token
+        }
+      },
       fetchPolicy: 'no-cache'
     })
     .catch((err) => {
@@ -72,6 +85,11 @@ const deleteUser = async (id) => {
           }
         }
       `,
+      context: {
+        headers: {
+          token
+        }
+      },
       fetchPolicy: 'no-cache'
     })
     .catch((err) => {
@@ -92,6 +110,11 @@ const switchUserStatus = async (id) => {
           switchUserStatus(id: $id)
         }
       `,
+      context: {
+        headers: {
+          token
+        }
+      },
       fetchPolicy: 'no-cache'
     })
     .catch((err) => {

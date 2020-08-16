@@ -75,9 +75,11 @@ const UsersDetails = (props) => {
       <form>
         <FormControl className={styles.userDetails}>
           <Grid container spacing={1}>
-            <Typography variant='h1' className={styles.detailsTitle}>
-              Інформація про користувача
-            </Typography>
+            <Grid item xs={12}>
+              <Typography variant='h1' className={styles.detailsTitle}>
+                Інформація про користувача
+              </Typography>
+            </Grid>
             <Grid item xs={12}>
               <Paper className={styles.userBlock}>
                 <Grid container spacing={1} className={styles.userHeader}>
@@ -86,7 +88,7 @@ const UsersDetails = (props) => {
                   </Grid>
                   <Grid item xs={2}>
                     <Typography className={styles.userName}>
-                      {`${firstName } ${ lastName}`}
+                      {`${firstName} ${lastName}`}
                     </Typography>
                     <Typography className={styles.userStatus}>
                       {status}

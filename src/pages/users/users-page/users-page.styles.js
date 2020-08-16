@@ -15,6 +15,11 @@ export const useStyles = makeStyles((theme) => ({
     width: `100%`,
     marginTop: 65,
     position: 'static',
-    padding: 20
+    padding: 25
+  },
+  usersTitle: {
+    fontSize: 24,
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold'
   }
 }));

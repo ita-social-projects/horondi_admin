@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
+import { Typography } from '@material-ui/core';
 import { useStyles } from './users-page.styles';
-import { getUsers , deleteUser } from '../../../redux/users/users.actions';
+import { getUsers, deleteUser } from '../../../redux/users/users.actions';
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import { config } from '../../../configs';
@@ -10,13 +11,14 @@ import LoadingBar from '../../../components/loading-bar';
 
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { refactorPhoneNumber } from '../../../services/refactor.service';
 
 const tableHeaders = config.tableHeadRowTitles.users;
 const { REMOVE_USER_TITLE } = config.buttonTitles;
 const { REMOVE_USER_MESSAGE } = config.messages;
 
 const UsersPage = (props) => {
-  const classes = useStyles();
+  const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ Users }) => ({
     list: Users.list,
@@ -48,7 +50,7 @@ const UsersPage = (props) => {
           key={index}
           id={userItem._id}
           name={`${userItem.firstName} ${userItem.lastName}`}
-          mobile={userItem.phoneNumber}
+          mobile={refactorPhoneNumber(userItem.phoneNumber)}
           email={userItem.email}
           banned={userItem.banned ? 'Неактивний' : 'Активний'}
           deleteHandler={() => userDeleteHandler(userItem._id)}
@@ -62,9 +64,11 @@ const UsersPage = (props) => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.tableNav}>
-        <h1>Hek</h1>
+    <div className={styles.container}>
+      <div className={styles.tableNav}>
+        <Typography variant='h1' className={styles.usersTitle}>
+          Інформація про користувачів
+        </Typography>
       </div>
       <TableContainerGenerator
         id='usersTable'

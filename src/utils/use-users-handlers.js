@@ -30,7 +30,7 @@ const useUsersHandler = (id) => {
       setCountry(user.address.country);
       setCity(user.address.city);
       setAdress(
-        `м. ${user.address.city} / вул. ${user.address.street}, ${user.address.buildingNumber}/${user.address.appartment}`
+        `вул. ${user.address.street}, ${user.address.buildingNumber}/${user.address.appartment}`
       );
       setPostCode('79000');
       setBan(user.banned);
