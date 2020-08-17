@@ -285,6 +285,12 @@ const NewsDetails = ({ match }) => {
 };
 
 NewsDetails.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  values: PropTypes.shape({
+    authorPhoto: PropTypes.string.isRequired,
+    newsImage: PropTypes.string.isRequired
+  }).isRequired,
+  handleChange: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
