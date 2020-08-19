@@ -73,9 +73,8 @@ const NewsDetails = ({ match }) => {
 
       const checkboxStates = languages.reduce((obj, lang) =>
         newsArticle.languages.includes(lang) ? { ...obj, [lang]: true } : { ...obj, [lang]: false }
-        , {})
-      console.log(checkboxStates)
-      setCheckboxes(checkboxStates)
+        , {});
+      setCheckboxes(checkboxStates);
     }
   }, [
     newsArticle,
@@ -92,16 +91,22 @@ const NewsDetails = ({ match }) => {
 
   const [checkboxes, setCheckboxes] = useState({});
 
-  for (const [key, value] of Object.entries(checkboxes)) {
-    if (value === true && !preferredLanguages.includes(key)) {
-      preferredLanguages.push(key);
+  useEffect(() => {
+    const prefLanguages = [];
+    for (let key in checkboxes) {
+      if (checkboxes[key] === true) {
+        prefLanguages.push(key);
+      }
     }
-  }
+    setPreferredLanguages(prefLanguages);
+  }, [
+    checkboxes,
+    setPreferredLanguages
+  ]);
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const handleChange = (event) => {
     setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
   };
@@ -281,6 +286,7 @@ const NewsDetails = ({ match }) => {
 };
 
 NewsDetails.propTypes = {
+  handleSubmit: PropTypes.func,
   values: PropTypes.shape({
     authorPhoto: PropTypes.string,
     newsImage: PropTypes.string
@@ -291,6 +297,12 @@ NewsDetails.propTypes = {
       id: PropTypes.string.isRequired
     })
   }).isRequired
+};
+
+NewsDetails.defaultProps = {
+  values: {},
+  handleChange: () => { },
+  handleSubmit: () => { }
 };
 
 export default withRouter(NewsDetails);
