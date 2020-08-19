@@ -19,12 +19,6 @@ import { addArticle } from '../../../redux/news/news.actions';
 import { config } from '../../../configs';
 
 const { languages } = config;
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
-  };
-}
 
 const NewsAdd = () => {
   const classes = useStyles();
@@ -124,6 +118,7 @@ const NewsAdd = () => {
             medium: values.newsImage
           }
         },
+        languages: preferredLanguages,
         date: new Date().toISOString()
       };
       dispatch(addArticle(news));
@@ -173,7 +168,7 @@ const NewsAdd = () => {
   const LanguageTabs =
     preferredLanguages.length > 0
       ? preferredLanguages.map((lang, index) => (
-        <Tab label={lang} key={index} {...a11yProps(index)} />
+        <Tab label={lang} key={index} />
       ))
       : null;
 

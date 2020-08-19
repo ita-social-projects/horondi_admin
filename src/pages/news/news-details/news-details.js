@@ -21,23 +21,12 @@ import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import { getArticle, updateArticle } from '../../../redux/news/news.actions';
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
-  };
-}
-
 const { languages } = config;
+
 const NewsDetails = ({ match }) => {
+  const { id } = match.params;
+  const [value, setValue] = useState(0);
   const dispatch = useDispatch();
-  const preferredLanguages = ['uk'];
-  const checkboxStates = languages.map((lang) => {
-    if (preferredLanguages.includes(lang)) {
-      return { [lang]: true };
-    }
-    return { [lang]: false };
-  });
   const { loading, newsArticle } = useSelector(({ News }) => ({
     loading: News.newsLoading,
     newsArticle: News.newsArticle
@@ -52,6 +41,7 @@ const NewsDetails = ({ match }) => {
     enAuthorName,
     enText,
     enTitle,
+    preferredLanguages,
     setAuthorPhoto,
     setNewsImage,
     ukSetAuthor,
@@ -59,19 +49,10 @@ const NewsDetails = ({ match }) => {
     ukSetTitle,
     enSetAuthor,
     enSetText,
-    enSetTitle
+    enSetTitle,
+    setPreferredLanguages
   } = useNewsHandlers();
-  const { id } = match.params;
-  const [value, setValue] = useState(0);
-  const [checkboxes, setCheckboxes] = useState(
-    Object.assign(...checkboxStates)
-  );
-  for (const [key, value] of Object.entries(checkboxes)) {
-    if (value === true && !preferredLanguages.includes(key)) {
-      preferredLanguages.push(key);
-    }
-  }
-  console.log(checkboxes);
+
   useEffect(() => {
     dispatch(getArticle(id));
   }, [dispatch, id]);
@@ -88,6 +69,13 @@ const NewsDetails = ({ match }) => {
       enSetAuthor(newsArticle.author.name[1].value || '');
       enSetText(newsArticle.text[1].value || '');
       enSetTitle(newsArticle.title[1].value || '');
+      setPreferredLanguages(newsArticle.languages);
+
+      const checkboxStates = languages.reduce((obj, lang) =>
+        newsArticle.languages.includes(lang) ? { ...obj, [lang]: true } : { ...obj, [lang]: false }
+        , {})
+      console.log(checkboxStates)
+      setCheckboxes(checkboxStates)
     }
   }, [
     newsArticle,
@@ -98,8 +86,17 @@ const NewsDetails = ({ match }) => {
     ukSetTitle,
     enSetAuthor,
     enSetText,
-    enSetTitle
+    enSetTitle,
+    setPreferredLanguages
   ]);
+
+  const [checkboxes, setCheckboxes] = useState({});
+
+  for (const [key, value] of Object.entries(checkboxes)) {
+    if (value === true && !preferredLanguages.includes(key)) {
+      preferredLanguages.push(key);
+    }
+  }
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);
@@ -127,7 +124,7 @@ const NewsDetails = ({ match }) => {
   const LanguageTabs =
     preferredLanguages.length > 0
       ? preferredLanguages.map((lang, index) => (
-        <Tab label={lang} key={index} {...a11yProps(index)} />
+        <Tab label={lang} key={index} />
       ))
       : null;
   if (loading) {
@@ -147,7 +144,6 @@ const NewsDetails = ({ match }) => {
             enAuthorName,
             enTitle,
             enText,
-            name: ''
           }}
           onSubmit={(values, actions) => {
             const newArticle = {
@@ -285,12 +281,11 @@ const NewsDetails = ({ match }) => {
 };
 
 NewsDetails.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
   values: PropTypes.shape({
-    authorPhoto: PropTypes.string.isRequired,
-    newsImage: PropTypes.string.isRequired
-  }).isRequired,
-  handleChange: PropTypes.func.isRequired,
+    authorPhoto: PropTypes.string,
+    newsImage: PropTypes.string
+  }),
+  handleChange: PropTypes.func,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired

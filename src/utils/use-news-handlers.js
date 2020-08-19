@@ -13,6 +13,8 @@ const useNewsHandlers = () => {
   const [enText, enSetText] = useState('');
   const [enTitle, enSetTitle] = useState('');
 
+  const [preferredLanguages, setPreferredLanguages] = useState([]);
+
   return {
     authorPhoto,
     newsImage,
@@ -23,6 +25,7 @@ const useNewsHandlers = () => {
     enAuthorName,
     enText,
     enTitle,
+    preferredLanguages,
     setAuthorPhoto,
     setNewsImage,
     setNewsVideo,
@@ -31,7 +34,8 @@ const useNewsHandlers = () => {
     ukSetTitle,
     enSetAuthor,
     enSetText,
-    enSetTitle
+    enSetTitle,
+    setPreferredLanguages
   };
 };
 

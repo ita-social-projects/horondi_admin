@@ -70,6 +70,7 @@ const getArticleById = async (id) => {
                 small
               }
             }
+            languages
             date
           }
           ... on Error {
@@ -86,7 +87,7 @@ const getArticleById = async (id) => {
   if (data.getNewsById.message) {
     throw new Error(
       `${data.getNewsById.statusCode} ${
-        newsTranslations[data.getNewsById.message]
+      newsTranslations[data.getNewsById.message]
       }`
     );
   }
@@ -122,7 +123,7 @@ const deleteArticle = async (id) => {
   if (data.deleteNews.message) {
     throw new Error(
       `${data.deleteNews.statusCode} ${
-        newsTranslations[data.deleteNews.message]
+      newsTranslations[data.deleteNews.message]
       }`
     );
   }
@@ -195,7 +196,7 @@ const updateArticle = async (id, news) => {
   if (data.updateNews.message) {
     throw new Error(
       `${data.updateNews.statusCode} ${
-        newsTranslations[data.updateNews.message]
+      newsTranslations[data.updateNews.message]
       }`
     );
   }
