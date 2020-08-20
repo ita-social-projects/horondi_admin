@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   TextField,
   Paper,
@@ -27,29 +27,20 @@ const NewsAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.newsLoading);
-  const { tabsValue, setTabsValue } = useNewsHandlers();
+  const {
+    tabsValue,
+    checkboxes,
+    handleCheckboxChange,
+    handleTabsChange
+  } = useNewsHandlers();
 
   const preferredLanguages = [];
-  const checkboxStates = languages.reduce(
-    (obj, lang) => ({ ...obj, [lang]: false }),
-    {}
-  );
-
-  const [checkboxes, setCheckboxes] = useState(checkboxStates);
 
   Object.keys(checkboxes).forEach((key) => {
     if (checkboxes[key] === true) {
       preferredLanguages.push(key);
     }
   });
-
-  const handleTabsChange = (event, newValue) => {
-    setTabsValue(newValue);
-  };
-
-  const handleCheckboxChange = (event) => {
-    setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
-  };
 
   const languageCheckboxes = languages.map((lang, index) => (
     <FormControlLabel

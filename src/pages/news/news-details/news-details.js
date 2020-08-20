@@ -55,8 +55,9 @@ const NewsDetails = ({ match }) => {
     enSetText,
     enSetTitle,
     setPreferredLanguages,
-    setTabsValue,
-    setCheckboxes
+    setCheckboxes,
+    handleCheckboxChange,
+    handleTabsChange
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -110,12 +111,12 @@ const NewsDetails = ({ match }) => {
     setPreferredLanguages(prefLanguages);
   }, [checkboxes, setPreferredLanguages]);
 
-  const handleTabsChange = (event, newValue) => {
-    setTabsValue(newValue);
-  };
-  const handleCheckboxChange = (event) => {
-    setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
-  };
+  // const handleTabsChange = (event, newValue) => {
+  //   setTabsValue(newValue);
+  // };
+  // const handleCheckboxChange = (event) => {
+  //   setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
+  // };
 
   const languageCheckboxes = languages.map((lang, index) => (
     <FormControlLabel

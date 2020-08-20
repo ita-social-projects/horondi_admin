@@ -1,6 +1,14 @@
 import { useState } from 'react';
+import { config } from '../configs';
+
+const { languages } = config;
 
 const useNewsHandlers = () => {
+  const checkboxStates = languages.reduce(
+    (obj, lang) => ({ ...obj, [lang]: false }),
+    {}
+  );
+
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
   const [newsVideo, setNewsVideo] = useState('');
@@ -14,8 +22,16 @@ const useNewsHandlers = () => {
   const [enTitle, enSetTitle] = useState('');
 
   const [tabsValue, setTabsValue] = useState(0);
-  const [checkboxes, setCheckboxes] = useState({});
+  const [checkboxes, setCheckboxes] = useState(checkboxStates);
   const [preferredLanguages, setPreferredLanguages] = useState([]);
+
+  const handleTabsChange = (event, newValue) => {
+    setTabsValue(newValue);
+  };
+
+  const handleCheckboxChange = (event) => {
+    setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
+  };
 
   return {
     checkboxes,
@@ -41,7 +57,9 @@ const useNewsHandlers = () => {
     enSetTitle,
     setPreferredLanguages,
     setTabsValue,
-    setCheckboxes
+    setCheckboxes,
+    handleTabsChange,
+    handleCheckboxChange
   };
 };
 
