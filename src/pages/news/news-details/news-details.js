@@ -71,9 +71,13 @@ const NewsDetails = ({ match }) => {
       enSetTitle(newsArticle.title[1].value || '');
       setPreferredLanguages(newsArticle.languages);
 
-      const checkboxStates = languages.reduce((obj, lang) =>
-        newsArticle.languages.includes(lang) ? { ...obj, [lang]: true } : { ...obj, [lang]: false }
-        , {});
+      const checkboxStates = languages.reduce(
+        (obj, lang) =>
+          newsArticle.languages.includes(lang)
+            ? { ...obj, [lang]: true }
+            : { ...obj, [lang]: false },
+        {}
+      );
       setCheckboxes(checkboxStates);
     }
   }, [
@@ -93,16 +97,13 @@ const NewsDetails = ({ match }) => {
 
   useEffect(() => {
     const prefLanguages = [];
-    for (let key in checkboxes) {
+    Object.keys(checkboxes).forEach((key) => {
       if (checkboxes[key] === true) {
         prefLanguages.push(key);
       }
-    }
+    });
     setPreferredLanguages(prefLanguages);
-  }, [
-    checkboxes,
-    setPreferredLanguages
-  ]);
+  }, [checkboxes, setPreferredLanguages]);
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);
@@ -148,7 +149,7 @@ const NewsDetails = ({ match }) => {
             ukTitle,
             enAuthorName,
             enTitle,
-            enText,
+            enText
           }}
           onSubmit={(values, actions) => {
             const newArticle = {
@@ -192,9 +193,9 @@ const NewsDetails = ({ match }) => {
                   medium: values.newsImage
                 }
               },
+              languages: preferredLanguages,
               date: new Date().toISOString()
             };
-            console.log(newArticle);
             dispatch(updateArticle({ id, newArticle }));
           }}
         >
@@ -301,8 +302,8 @@ NewsDetails.propTypes = {
 
 NewsDetails.defaultProps = {
   values: {},
-  handleChange: () => { },
-  handleSubmit: () => { }
+  handleChange: () => {},
+  handleSubmit: () => {}
 };
 
 export default withRouter(NewsDetails);

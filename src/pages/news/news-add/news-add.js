@@ -27,17 +27,18 @@ const NewsAdd = () => {
   const loading = useSelector(({ News }) => News.newsLoading);
 
   const preferredLanguages = [];
-  const checkboxStates = languages.map((lang) => ({ [lang]: false }));
-  const [checkboxes, setCheckboxes] = useState(
-    Object.assign(...checkboxStates)
+  const checkboxStates = languages.reduce(
+    (obj, lang) => ({ ...obj, [lang]: false }),
+    {}
   );
+  const [checkboxes, setCheckboxes] = useState(checkboxStates);
   const [value, setValue] = useState(0);
 
-  for (const [key, value] of Object.entries(checkboxes)) {
-    if (value === true) {
+  Object.keys(checkboxes).forEach((key) => {
+    if (checkboxes[key] === true) {
       preferredLanguages.push(key);
     }
-  }
+  });
 
   const handleTabsChange = (event, newValue) => {
     setValue(newValue);
