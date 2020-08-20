@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import {
   Paper,
   TextField,
@@ -9,23 +11,23 @@ import {
   FormControlLabel,
   Checkbox
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router';
 import { Formik } from 'formik';
-import TabPanel from '../../../components/tab-panel';
-import { useStyles } from './news-details.styles';
-import { config } from '../../../configs';
+import PropTypes from 'prop-types';
 import useNewsHandlers from '../../../utils/use-news-handlers';
+import { useStyles } from './news-details.styles';
 import { SaveButton } from '../../../components/buttons';
+import TabPanel from '../../../components/tab-panel';
 import LoadingBar from '../../../components/loading-bar';
+
 import { getArticle, updateArticle } from '../../../redux/news/news.actions';
+
+import { config } from '../../../configs';
 
 const { languages } = config;
 
 const NewsDetails = ({ match }) => {
   const { id } = match.params;
-  const [value, setValue] = useState(0);
+
   const dispatch = useDispatch();
   const { loading, newsArticle } = useSelector(({ News }) => ({
     loading: News.newsLoading,
@@ -34,6 +36,8 @@ const NewsDetails = ({ match }) => {
   const classes = useStyles();
   const {
     authorPhoto,
+    checkboxes,
+    tabsValue,
     newsImage,
     ukAuthorName,
     ukText,
@@ -50,7 +54,9 @@ const NewsDetails = ({ match }) => {
     enSetAuthor,
     enSetText,
     enSetTitle,
-    setPreferredLanguages
+    setPreferredLanguages,
+    setTabsValue,
+    setCheckboxes
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -81,6 +87,7 @@ const NewsDetails = ({ match }) => {
       setCheckboxes(checkboxStates);
     }
   }, [
+    setCheckboxes,
     newsArticle,
     setAuthorPhoto,
     setNewsImage,
@@ -93,8 +100,6 @@ const NewsDetails = ({ match }) => {
     setPreferredLanguages
   ]);
 
-  const [checkboxes, setCheckboxes] = useState({});
-
   useEffect(() => {
     const prefLanguages = [];
     Object.keys(checkboxes).forEach((key) => {
@@ -106,9 +111,9 @@ const NewsDetails = ({ match }) => {
   }, [checkboxes, setPreferredLanguages]);
 
   const handleTabsChange = (event, newValue) => {
-    setValue(newValue);
+    setTabsValue(newValue);
   };
-  const handleChange = (event) => {
+  const handleCheckboxChange = (event) => {
     setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
   };
 
@@ -118,7 +123,7 @@ const NewsDetails = ({ match }) => {
       control={
         <Checkbox
           checked={checkboxes[`${lang}`]}
-          onChange={handleChange}
+          onChange={handleCheckboxChange}
           name={`${lang}`}
           color='primary'
         />
@@ -235,7 +240,7 @@ const NewsDetails = ({ match }) => {
               <AppBar position='static'>
                 <Tabs
                   className={classes.tabs}
-                  value={value}
+                  value={tabsValue}
                   onChange={handleTabsChange}
                   aria-label='simple tabs example'
                 >
@@ -243,7 +248,7 @@ const NewsDetails = ({ match }) => {
                 </Tabs>
               </AppBar>
               {preferredLanguages.map((lang, index) => (
-                <TabPanel key={index} value={value} index={index}>
+                <TabPanel key={index} value={tabsValue} index={index}>
                   <Paper className={classes.newsItemUpdate}>
                     <TextField
                       id={`${lang}AuthorName`}

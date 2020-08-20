@@ -6,15 +6,18 @@ import {
   Tabs,
   Tab,
   AppBar,
-  FormControlLabel
+  FormControlLabel,
+  Checkbox
 } from '@material-ui/core';
-import Checkbox from '@material-ui/core/Checkbox';
+
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useStyles } from './news-add.styles';
 import TabPanel from '../../../components/tab-panel';
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
+import useNewsHandlers from '../../../utils/use-news-handlers';
+import { useStyles } from './news-add.styles';
+
 import { addArticle } from '../../../redux/news/news.actions';
 import { config } from '../../../configs';
 
@@ -22,17 +25,17 @@ const { languages } = config;
 
 const NewsAdd = () => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.newsLoading);
+  const { tabsValue, setTabsValue } = useNewsHandlers();
 
   const preferredLanguages = [];
   const checkboxStates = languages.reduce(
     (obj, lang) => ({ ...obj, [lang]: false }),
     {}
   );
+
   const [checkboxes, setCheckboxes] = useState(checkboxStates);
-  const [value, setValue] = useState(0);
 
   Object.keys(checkboxes).forEach((key) => {
     if (checkboxes[key] === true) {
@@ -41,10 +44,10 @@ const NewsAdd = () => {
   });
 
   const handleTabsChange = (event, newValue) => {
-    setValue(newValue);
+    setTabsValue(newValue);
   };
 
-  const handleChange = (event) => {
+  const handleCheckboxChange = (event) => {
     setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
   };
 
@@ -54,7 +57,7 @@ const NewsAdd = () => {
       control={
         <Checkbox
           checked={checkboxes[`${lang}`]}
-          onChange={handleChange}
+          onChange={handleCheckboxChange}
           name={`${lang}`}
           color='primary'
         />
@@ -129,7 +132,7 @@ const NewsAdd = () => {
   const TabPanels =
     preferredLanguages.length > 0
       ? preferredLanguages.map((lang, index) => (
-        <TabPanel key={index} value={value} index={index}>
+        <TabPanel key={index} value={tabsValue} index={index}>
           <Paper className={classes.newsItemAdd}>
             <TextField
               id={`${lang}AuthorName`}
@@ -216,7 +219,7 @@ const NewsAdd = () => {
             <AppBar position='static'>
               <Tabs
                 className={classes.tabs}
-                value={value}
+                value={tabsValue}
                 onChange={handleTabsChange}
                 aria-label='simple tabs example'
               >

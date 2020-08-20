@@ -13,9 +13,12 @@ const useNewsHandlers = () => {
   const [enText, enSetText] = useState('');
   const [enTitle, enSetTitle] = useState('');
 
+  const [tabsValue, setTabsValue] = useState(0);
+  const [checkboxes, setCheckboxes] = useState({});
   const [preferredLanguages, setPreferredLanguages] = useState([]);
 
   return {
+    checkboxes,
     authorPhoto,
     newsImage,
     newsVideo,
@@ -26,6 +29,7 @@ const useNewsHandlers = () => {
     enText,
     enTitle,
     preferredLanguages,
+    tabsValue,
     setAuthorPhoto,
     setNewsImage,
     setNewsVideo,
@@ -35,7 +39,9 @@ const useNewsHandlers = () => {
     enSetAuthor,
     enSetText,
     enSetTitle,
-    setPreferredLanguages
+    setPreferredLanguages,
+    setTabsValue,
+    setCheckboxes
   };
 };
 
