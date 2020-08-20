@@ -34,11 +34,12 @@ const NewsPage = () => {
     ({ News }) => ({
       list: News.list,
       loading: News.newsLoading,
-      pagesCount: News.pagesCount,
-      currentPage: News.currentPage,
-      newsPerPage: News.newsPerPage
+      pagesCount: News.pagination.pagesCount,
+      currentPage: News.pagination.currentPage,
+      newsPerPage: News.pagination.newsPerPage
     })
   );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const NewsPage = () => {
         newsPerPage
       })
     );
-  }, [dispatch, currentPage, newsPerPage]);
+  }, [dispatch, newsPerPage, currentPage]);
 
   const newsDeleteHandler = (id) => {
     const removeNews = () => {
