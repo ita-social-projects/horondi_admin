@@ -102,26 +102,36 @@ const deleteUser = async (id) => {
 };
 
 const switchUserStatus = async (id) => {
-  const result = await client
-    .mutate({
-      variables: { id },
-      mutation: gql`
-        mutation($id: ID!) {
-          switchUserStatus(id: $id)
+  const result = await client.mutate({
+    variables: { id },
+    mutation: gql`
+      mutation($id: ID!) {
+        switchUserStatus(id: $id) {
+          ... on SuccessfulResponse {
+            isSuccess
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
-      `,
-      context: {
-        headers: {
-          token
-        }
-      },
-      fetchPolicy: 'no-cache'
-    })
-    .catch((err) => {
-      throw new Error(`Помилка: ${userTranslations[transformError(err)]}`);
-    });
+      }
+    `,
+    context: {
+      headers: {
+        token
+      }
+    },
+    fetchPolicy: 'no-cache'
+  });
 
   const { data } = result;
+
+  if (data.switchUserStatus.message) {
+    throw new Error(
+      `Помилка: ${userTranslations[data.switchUserStatus.message]}`
+    );
+  }
 
   return data.switchUserStatus;
 };
