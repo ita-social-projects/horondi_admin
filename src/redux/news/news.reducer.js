@@ -4,7 +4,7 @@ import {
   SET_ARTICLE,
   SET_NEWS_ERROR,
   SET_CURRENT_PAGE,
-  SET_PRODUCTS_PER_PAGE,
+  SET_NEWS_PER_PAGE,
   SET_PAGES_COUNT
 } from './news.types';
 
@@ -14,7 +14,7 @@ const initialState = {
   newsLoading: false,
   newsError: null,
   currentPage: 0,
-  productsPerPage: 5,
+  newsPerPage: 6,
   pagesCount: 1
 };
 
@@ -45,10 +45,10 @@ const newsReducer = (state = initialState, action = {}) => {
       ...state,
       currentPage: action.payload - 1
     };
-  case SET_PRODUCTS_PER_PAGE:
+  case SET_NEWS_PER_PAGE:
     return {
       ...state,
-      productsPerPage: action.payload
+      newsPerPage: action.payload
     };
   case SET_PAGES_COUNT:
     return {
