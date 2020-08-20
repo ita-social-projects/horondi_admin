@@ -46,13 +46,13 @@ describe('User list and items test', () => {
           .get("button[aria-label='Редагувати']:first")
           .click()
           .wait(2000)
-          .get('.makeStyles-userName-25')
+          .get('.makeStyles-userName-26')
           .invoke('text')
           .should('equal', textList);
       });
   });
   it('When user changes status, page and user information should be updated', () => {
-    cy.visit('/users/a1881c06eec96db9901c7bbf').wait(2000);
+    cy.visit('/users/9c031d62a3c4909b216e1d86').wait(2000);
 
     cy.get('button:last')
       .should('have.text', 'Деактивувати')
@@ -64,7 +64,7 @@ describe('User list and items test', () => {
 
     cy.get('button:last').should('have.text', 'Активувати');
 
-    cy.get('.makeStyles-userStatus-16').should('have.text', 'Неактивний');
+    cy.get('.makeStyles-userStatus-17').should('have.text', 'Неактивний');
 
     cy.get('button:last')
       .should('have.text', 'Активувати')
@@ -74,18 +74,15 @@ describe('User list and items test', () => {
       .click()
       .wait(2000);
 
-    cy.get('.makeStyles-userStatus-16').should('have.text', 'Активний');
+    cy.get('.makeStyles-userStatus-17').should('have.text', 'Активний');
   });
   it('Data from the server should be equal with the incoming data', () => {
-    cy.visit('users/a1881c06eec96db9901c7bbf');
-    cy.get('#firstName').should('have.text', 'Віталій');
-    cy.get('#lastName').should('have.text', 'Арбатов');
+    cy.visit('users/9c031d62a3c4909b216e1d86');
+    cy.get('#firstName').should('have.text', 'Богдана');
+    cy.get('#lastName').should('have.text', 'Гаращенко');
     cy.get('#country').should('have.text', 'Україна');
-    cy.get('#city').should('have.text', 'Південне');
-    cy.get('#adress').should(
-      'have.text',
-      'вул. Вулиця Степана Руданського, 127/122'
-    );
-    cy.get('#postalCode').should('have.text', '79000');
+    cy.get('#city').should('have.text', 'Докучаєвськ');
+    cy.get('#adress').should('have.text', 'Вулиця Володимира Шульгина, 53/34');
+    cy.get('#postalCode').should('have.text', '61886');
   });
 });

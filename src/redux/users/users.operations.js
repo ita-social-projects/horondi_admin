@@ -51,6 +51,7 @@ const getUserById = async (id) => {
                 buildingNumber
                 appartment
                 street
+                zipcode
               }
               banned
             }
