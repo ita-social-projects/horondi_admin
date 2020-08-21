@@ -22,7 +22,8 @@ const NewsAdd = () => {
     tabsValue,
     checkboxes,
     languageCheckboxes,
-    handleTabsChange
+    handleTabsChange,
+    createArticle
   } = useNewsHandlers();
 
   const preferredLanguages = [];
@@ -48,51 +49,8 @@ const NewsAdd = () => {
       newsImage: ''
     },
     onSubmit: (values) => {
-      const news = {
-        author: {
-          name: [
-            {
-              lang: languages[0],
-              value: values.ukAuthorName || null
-            },
-            {
-              lang: languages[1],
-              value: values.enAuthorName || null
-            }
-          ],
-          image: {
-            small: values.authorPhoto
-          }
-        },
-        title: [
-          {
-            lang: languages[0],
-            value: values.ukTitle || null
-          },
-          {
-            lang: languages[1],
-            value: values.enTitle || null
-          }
-        ],
-        text: [
-          {
-            lang: languages[0],
-            value: values.ukText || null
-          },
-          {
-            lang: languages[1],
-            value: values.enText || null
-          }
-        ],
-        images: {
-          primary: {
-            medium: values.newsImage
-          }
-        },
-        languages: preferredLanguages,
-        date: new Date().toISOString()
-      };
-      dispatch(addArticle(news));
+      const article = createArticle(values);
+      dispatch(addArticle(article));
     }
   });
 

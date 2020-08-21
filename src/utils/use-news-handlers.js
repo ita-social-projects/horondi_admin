@@ -49,6 +49,54 @@ const useNewsHandlers = () => {
     />
   ));
 
+  const createArticle = (values) => {
+    const article = {
+      author: {
+        name: [
+          {
+            lang: languages[0],
+            value: values.ukAuthorName || null
+          },
+          {
+            lang: languages[1],
+            value: values.enAuthorName || null
+          }
+        ],
+        image: {
+          small: values.authorPhoto
+        }
+      },
+      title: [
+        {
+          lang: languages[0],
+          value: values.ukTitle || null
+        },
+        {
+          lang: languages[1],
+          value: values.enTitle || null
+        }
+      ],
+      text: [
+        {
+          lang: languages[0],
+          value: values.ukText || null
+        },
+        {
+          lang: languages[1],
+          value: values.enText || null
+        }
+      ],
+      images: {
+        primary: {
+          medium: values.newsImage
+        }
+      },
+      languages: preferredLanguages,
+      date: new Date().toISOString()
+    };
+    return article;
+  };
+
   return {
     checkboxes,
     authorPhoto,
@@ -76,7 +124,8 @@ const useNewsHandlers = () => {
     setCheckboxes,
     handleTabsChange,
     handleCheckboxChange,
-    languageCheckboxes
+    languageCheckboxes,
+    createArticle
   };
 };
 

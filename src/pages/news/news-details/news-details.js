@@ -48,7 +48,8 @@ const NewsDetails = ({ match }) => {
     setPreferredLanguages,
     setCheckboxes,
     handleTabsChange,
-    languageCheckboxes
+    languageCheckboxes,
+    createArticle
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -127,51 +128,8 @@ const NewsDetails = ({ match }) => {
             enText
           }}
           onSubmit={(values, actions) => {
-            const newArticle = {
-              author: {
-                name: [
-                  {
-                    lang: languages[0],
-                    value: values.ukAuthorName || null
-                  },
-                  {
-                    lang: languages[1],
-                    value: values.enAuthorName || null
-                  }
-                ],
-                image: {
-                  small: values.authorPhoto
-                }
-              },
-              title: [
-                {
-                  lang: languages[0],
-                  value: values.ukTitle || null
-                },
-                {
-                  lang: languages[1],
-                  value: values.enTitle || null
-                }
-              ],
-              text: [
-                {
-                  lang: languages[0],
-                  value: values.ukText || null
-                },
-                {
-                  lang: languages[1],
-                  value: values.enText || null
-                }
-              ],
-              images: {
-                primary: {
-                  medium: values.newsImage
-                }
-              },
-              languages: preferredLanguages,
-              date: new Date().toISOString()
-            };
-            dispatch(updateArticle({ id, newArticle }));
+            const updatedArticle = createArticle(values);
+            dispatch(updateArticle({ id, updatedArticle }));
           }}
         >
           {(props) => (
