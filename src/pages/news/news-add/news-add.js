@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  TextField,
-  Paper,
-  Grid,
-  Tabs,
-  Tab,
-  AppBar,
-  FormControlLabel,
-  Checkbox
-} from '@material-ui/core';
+import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,7 +21,7 @@ const NewsAdd = () => {
   const {
     tabsValue,
     checkboxes,
-    handleCheckboxChange,
+    languageCheckboxes,
     handleTabsChange
   } = useNewsHandlers();
 
@@ -41,21 +32,6 @@ const NewsAdd = () => {
       preferredLanguages.push(key);
     }
   });
-
-  const languageCheckboxes = languages.map((lang, index) => (
-    <FormControlLabel
-      key={index}
-      control={
-        <Checkbox
-          checked={checkboxes[`${lang}`]}
-          onChange={handleCheckboxChange}
-          name={`${lang}`}
-          color='primary'
-        />
-      }
-      label={lang}
-    />
-  ));
 
   const langValues = languages.map((lang) => ({
     [`${lang}AuthorName`]: '',

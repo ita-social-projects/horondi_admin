@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 import { config } from '../configs';
 
 const { languages } = config;
@@ -33,6 +34,21 @@ const useNewsHandlers = () => {
     setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
   };
 
+  const languageCheckboxes = languages.map((lang, index) => (
+    <FormControlLabel
+      key={index}
+      control={
+        <Checkbox
+          checked={checkboxes[`${lang}`]}
+          onChange={handleCheckboxChange}
+          name={`${lang}`}
+          color='primary'
+        />
+      }
+      label={lang}
+    />
+  ));
+
   return {
     checkboxes,
     authorPhoto,
@@ -59,7 +75,8 @@ const useNewsHandlers = () => {
     setTabsValue,
     setCheckboxes,
     handleTabsChange,
-    handleCheckboxChange
+    handleCheckboxChange,
+    languageCheckboxes
   };
 };
 
