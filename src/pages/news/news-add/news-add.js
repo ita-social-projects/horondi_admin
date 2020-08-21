@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 
 import { useFormik } from 'formik';
@@ -21,18 +21,22 @@ const NewsAdd = () => {
   const {
     tabsValue,
     checkboxes,
+    preferredLanguages,
+    setPreferredLanguages,
     languageCheckboxes,
     handleTabsChange,
     createArticle
   } = useNewsHandlers();
 
-  const preferredLanguages = [];
-
-  Object.keys(checkboxes).forEach((key) => {
-    if (checkboxes[key] === true) {
-      preferredLanguages.push(key);
-    }
-  });
+  useEffect(() => {
+    const prefLanguages = [];
+    Object.keys(checkboxes).forEach((key) => {
+      if (checkboxes[key] === true) {
+        prefLanguages.push(key);
+      }
+    });
+    setPreferredLanguages(prefLanguages);
+  }, [checkboxes, setPreferredLanguages]);
 
   const langValues = languages.map((lang) => ({
     [`${lang}AuthorName`]: '',

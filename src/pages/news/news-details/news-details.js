@@ -128,8 +128,8 @@ const NewsDetails = ({ match }) => {
             enText
           }}
           onSubmit={(values, actions) => {
-            const updatedArticle = createArticle(values);
-            dispatch(updateArticle({ id, updatedArticle }));
+            const newArticle = createArticle(values);
+            dispatch(updateArticle({ id, newArticle }));
           }}
         >
           {(props) => (
