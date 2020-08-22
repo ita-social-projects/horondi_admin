@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Avatar,
   Typography,
@@ -15,12 +15,21 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { useFormik, errorMessage, ErrorMessage } from 'formik';
+import { useFormik } from 'formik';
+
+import * as Yup from 'yup';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './login-page.styles';
 import { loginUser } from '../../../redux/auth/auth.actions';
 import LoadingBar from '../../../components/loading-bar';
+// import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+
+// import {
+//   setSnackBarSeverity,
+//   setSnackBarStatus,
+//   setSnackBarMessage
+// } from '../../../redux/snackbar/snackbar.actions';
 
 import { config } from '../../../configs';
 
@@ -29,6 +38,7 @@ const { formRegExp } = config;
 const LoginPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  // const { openSuccessSnackbar } = useSuccessSnackbar();
   const { loading } = useSelector(({ Auth }) => ({
     loading: Auth.loading
   }));
@@ -39,62 +49,71 @@ const LoginPage = () => {
     showPassword: false
   });
 
-  const [shouldValidate, setShouldValidate] = useState(false);
-  const [emailValidated, setEmailValidated] = useState(false);
-  const [passwordValidated, setPasswordValidated] = useState(false);
-  const [allFieldsValidated, setAllFieldsValidated] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  // const [shouldValidate, setShouldValidate] = useState(false);
+  // const [emailValidated, setEmailValidated] = useState(false);
+  // const [passwordValidated, setPasswordValidated] = useState(false);
+  // const [allFieldsValidated, setAllFieldsValidated] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState('');
 
-  const { email, password } = adminValues;
+  // const { email, password } = adminValues;
 
-  useEffect(() => {
-    if (emailValidated && passwordValidated) {
-      setAllFieldsValidated(true);
-    } else {
-      setAllFieldsValidated(false);
-    }
-  }, [emailValidated, passwordValidated]);
+  // useEffect(() => {
+  //   if (emailValidated && passwordValidated) {
+  //     setAllFieldsValidated(true);
+  //   } else {
+  //     setAllFieldsValidated(false);
+  //     console.log(formSchema);
+  //   }
+  // }, [emailValidated, passwordValidated]);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setShouldValidate(true);
-    if (allFieldsValidated) {
-      dispatch(loginUser({ email, password }));
-    }
-  };
+  // const submitHandler = async (e) => {
+  //   console.log('ASDASD');
+  //   e.preventDefault();
+  //      dispatch(setSnackBarSeverity('error'));
+  //       errors.email
+  //         ? dispatch(setSnackBarMessage(errors.email))
+  //         : dispatch(setSnackBarMessage(errors.password));
+  //       dispatch(setSnackBarStatus(true));
+  // };
 
-  const validate = (values) => {
-    const errors = {};
+  const formSchema = Yup.object().shape({
+    email: Yup.string()
+      .email('Некоректна email адреса')
+      .required('Введіть email'),
+    password: Yup.string()
+      .min(8, 'Пароль повинен містити не менше 8 символів')
+      .matches(
+        formRegExp.password,
+        'Використовуйте латиницю різних регістрів та цифри'
+      )
+      .required('Введіть пароль')
+  });
 
-    if (!values.email) {
-      errors.email = 'Required';
-    }
-
-    if (!values.password) {
-      errors.password = 'Required';
-    }
-
-    return errors;
-  };
-
-  const formik = useFormik({
+  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: adminValues,
-    validate,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    validationSchema: formSchema,
+    validateOnBlur: true,
+    onSubmit: ({ email, password }) => {
+      dispatch(loginUser({ email, password }));
+
+      // dispatch(setSnackBarSeverity('error'));
+      // errors.email
+      //   ? dispatch(setSnackBarMessage(errors.email))
+      //   : dispatch(setSnackBarMessage(errors.password));
+      // dispatch(setSnackBarStatus(true));
     }
   });
 
-  const handleChange = (event, setValid, regExp) => {
-    const input = event.target.value;
-    const inputName = event.target.name;
-    setAdminValues({ ...adminValues, [inputName]: input });
-    if (input.match(regExp)) {
-      setValid(true);
-    } else {
-      setValid(false);
-    }
-  };
+  // const handleChange = (event, setValid, regExp) => {
+  //   const input = event.target.value;
+  //   const inputName = event.target.name;
+  //   setAdminValues({ ...adminValues, [inputName]: input });
+  //   if (input.match(regExp)) {
+  //     setValid(true);
+  //   } else {
+  //     setValid(false);
+  //   }
+  // };
 
   const handleClickShowPassword = () => {
     setAdminValues({ ...adminValues, showPassword: !adminValues.showPassword });
@@ -103,10 +122,10 @@ const LoginPage = () => {
   if (loading) {
     return <LoadingBar />;
   }
-
+  // {handleSubmit, handleChange, values, touched, errors}
   return (
     <div className={classes.container}>
-      <form onSubmit={formik.handleSubmit} className={classes.login}>
+      <form onSubmit={handleSubmit} className={classes.login}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -121,29 +140,35 @@ const LoginPage = () => {
           fullWidth
           id='email'
           label='Email'
-          value={formik.values.email}
-          error={!emailValidated && shouldValidate}
+          value={values.email}
+          error={touched.email && !!errors.email}
           name='email'
           autoFocus
           type='text'
-          onChange={formik.handleChange}
+          onChange={handleChange}
+          onBlur={handleChange}
           // {(e) => handleChange(e, setEmailValidated, formRegExp.email)}
         />
-        <ErrorMessage />
+        {touched.email && errors.email ? (
+          <div className={classes.inputError}>{errors.email}</div>
+        ) : (
+          ''
+        )}
         <FormControl className={classes.input} variant='outlined'>
           <InputLabel
             htmlFor='outlined-adornment-password'
-            error={!passwordValidated && shouldValidate}
+            error={touched.password && !!errors.password}
           >
             Password
           </InputLabel>
           <OutlinedInput
             id='outlined-adornment-password'
             type={adminValues.showPassword ? 'text' : 'password'}
-            value={formik.values.password}
-            error={!passwordValidated && shouldValidate}
+            value={values.password}
+            error={touched.password && !!errors.password}
             name='password'
-            onChange={formik.handleChange}
+            required
+            onChange={handleChange}
             // {(e) =>
             //   handleChange(e, setPasswordValidated, formRegExp.password)
             // }
@@ -165,6 +190,11 @@ const LoginPage = () => {
             labelWidth={70}
           />
         </FormControl>
+        {touched.password && errors.password ? (
+          <div className={classes.inputError}>{errors.password}</div>
+        ) : (
+          ''
+        )}
         <Button
           type='submit'
           variant='contained'

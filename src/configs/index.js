@@ -40,7 +40,8 @@ export const config = {
     SUCCESS_ADD_STATUS: 'Успішно додано!',
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
-    ERROR_PAGE_STATUS: 'Сторінку не знайдено!'
+    ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
+    LOGIN_PAGE_STATUS: 'Користувача не знайдено!'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',

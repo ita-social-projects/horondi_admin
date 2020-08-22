@@ -27,7 +27,6 @@ const Routes = () => {
     return (
       <ConnectedRouter history={history}>
         <NavBar />
-        <NavMenu />
         <Switch>
           <Route path={routes.pathToLogin} exact component={LoginPage} />
           <Route component={ErrorPage} />
