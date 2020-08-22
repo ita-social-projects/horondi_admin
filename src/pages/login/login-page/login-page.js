@@ -13,8 +13,10 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
-
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+
+import { useFormik, errorMessage, ErrorMessage } from 'formik';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './login-page.styles';
 import { loginUser } from '../../../redux/auth/auth.actions';
@@ -41,6 +43,7 @@ const LoginPage = () => {
   const [emailValidated, setEmailValidated] = useState(false);
   const [passwordValidated, setPasswordValidated] = useState(false);
   const [allFieldsValidated, setAllFieldsValidated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { email, password } = adminValues;
 
@@ -59,6 +62,29 @@ const LoginPage = () => {
       dispatch(loginUser({ email, password }));
     }
   };
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = 'Required';
+    }
+
+    if (!values.password) {
+      errors.password = 'Required';
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: adminValues,
+    validate,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    }
+  });
+
   const handleChange = (event, setValid, regExp) => {
     const input = event.target.value;
     const inputName = event.target.name;
@@ -80,7 +106,7 @@ const LoginPage = () => {
 
   return (
     <div className={classes.container}>
-      <form onSubmit={submitHandler} className={classes.login}>
+      <form onSubmit={formik.handleSubmit} className={classes.login}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -95,13 +121,15 @@ const LoginPage = () => {
           fullWidth
           id='email'
           label='Email'
-          value={email}
+          value={formik.values.email}
           error={!emailValidated && shouldValidate}
           name='email'
           autoFocus
           type='text'
-          onChange={(e) => handleChange(e, setEmailValidated, formRegExp.email)}
+          onChange={formik.handleChange}
+          // {(e) => handleChange(e, setEmailValidated, formRegExp.email)}
         />
+        <ErrorMessage />
         <FormControl className={classes.input} variant='outlined'>
           <InputLabel
             htmlFor='outlined-adornment-password'
@@ -112,12 +140,13 @@ const LoginPage = () => {
           <OutlinedInput
             id='outlined-adornment-password'
             type={adminValues.showPassword ? 'text' : 'password'}
-            value={password}
+            value={formik.values.password}
             error={!passwordValidated && shouldValidate}
             name='password'
-            onChange={(e) =>
-              handleChange(e, setPasswordValidated, formRegExp.password)
-            }
+            onChange={formik.handleChange}
+            // {(e) =>
+            //   handleChange(e, setPasswordValidated, formRegExp.password)
+            // }
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
@@ -136,7 +165,6 @@ const LoginPage = () => {
             labelWidth={70}
           />
         </FormControl>
-
         <Button
           type='submit'
           variant='contained'
