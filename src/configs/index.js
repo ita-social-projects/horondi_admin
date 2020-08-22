@@ -69,5 +69,10 @@ export const config = {
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
+  },
+  paginationPayload: {
+    skip: 0,
+    limit: 5,
+    newsPerPage: 6
   }
 };
