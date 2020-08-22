@@ -37,6 +37,7 @@ const NewsAdd = () => {
   } = useNewsHandlers();
 
   const newsSaveHandler = async (e) => {
+    console.log(e.target);
     e.preventDefault();
     const news = {
       video: e.target.newsVideo.value,

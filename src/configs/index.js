@@ -1,16 +1,22 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
-const routes = {
+export const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd'
+  pathToAddNews: '/newsadd',
+  pathToAddPatern: '/paternadd',
+  pathToPatterns: '/patterns',
+  pathToPatternDetails: '/pattern/:id'
 };
 
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
+    menuCategories: [
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Гобелени', routes.pathToPatterns, ImportContactsIcon]
+    ],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
@@ -22,7 +28,8 @@ export const config = {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
   tableHeadRowTitles: {
-    news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    pattern: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -46,13 +53,17 @@ export const config = {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
-    REMOVE_TITLE: 'Видалити новину',
+    CREATE_PATTERN_TITLE: 'Додати гобелен',
+    REMOVE_TITLE: 'Видалити',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
+  },
+  patternMessages: {
+    REMOVE_MESSAGE: 'Ви впевнені що хочете видалити гобелен?'
   },
   formRegExp: {
     email:

@@ -6,28 +6,30 @@ import { newsTranslations } from '../../translations/news.translations';
 const getAllNews = async () => {
   const result = await client.query({
     query: gql`
-      {
+      query {
         getAllNews {
-          _id
-          author {
-            name {
+          items {
+            _id
+            author {
+              name {
+                lang
+                value
+              }
+              image {
+                small
+              }
+            }
+            title {
               lang
               value
             }
-            image {
-              small
-            }
-          }
-          title {
-            lang
-            value
           }
         }
       }
     `
   });
   const { data } = result;
-  return data.getAllNews;
+  return data.getAllNews.items;
 };
 
 const getArticleById = async (id) => {

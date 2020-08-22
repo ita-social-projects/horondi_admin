@@ -13,9 +13,9 @@ const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
 
   const dense = useSelector(({ Table }) => Table.dense);
 
-  const propetries = { ...rest };
-  const tableCells = Object.values(propetries).map((propetry, index) => (
-    <TableCell key={index}>{propetry}</TableCell>
+  const properties = { ...rest };
+  const tableCells = Object.values(properties).map((property, index) => (
+    <TableCell key={index}>{`${property}`}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
