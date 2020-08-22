@@ -23,22 +23,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './login-page.styles';
 import { loginUser } from '../../../redux/auth/auth.actions';
 import LoadingBar from '../../../components/loading-bar';
-// import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-
-// import {
-//   setSnackBarSeverity,
-//   setSnackBarStatus,
-//   setSnackBarMessage
-// } from '../../../redux/snackbar/snackbar.actions';
-
 import { config } from '../../../configs';
 
-const { formRegExp } = config;
+const { formRegExp, loginErrorMessages } = config;
 
 const LoginPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const { openSuccessSnackbar } = useSuccessSnackbar();
   const { loading } = useSelector(({ Auth }) => ({
     loading: Auth.loading
   }));
@@ -49,44 +40,14 @@ const LoginPage = () => {
     showPassword: false
   });
 
-  // const [shouldValidate, setShouldValidate] = useState(false);
-  // const [emailValidated, setEmailValidated] = useState(false);
-  // const [passwordValidated, setPasswordValidated] = useState(false);
-  // const [allFieldsValidated, setAllFieldsValidated] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState('');
-
-  // const { email, password } = adminValues;
-
-  // useEffect(() => {
-  //   if (emailValidated && passwordValidated) {
-  //     setAllFieldsValidated(true);
-  //   } else {
-  //     setAllFieldsValidated(false);
-  //     console.log(formSchema);
-  //   }
-  // }, [emailValidated, passwordValidated]);
-
-  // const submitHandler = async (e) => {
-  //   console.log('ASDASD');
-  //   e.preventDefault();
-  //      dispatch(setSnackBarSeverity('error'));
-  //       errors.email
-  //         ? dispatch(setSnackBarMessage(errors.email))
-  //         : dispatch(setSnackBarMessage(errors.password));
-  //       dispatch(setSnackBarStatus(true));
-  // };
-
   const formSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Некоректна email адреса')
-      .required('Введіть email'),
+      .email(loginErrorMessages.INVALID_EMAIL_MESSAGE)
+      .required(loginErrorMessages.ENTER_EMAIL_MESSAGE),
     password: Yup.string()
-      .min(8, 'Пароль повинен містити не менше 8 символів')
-      .matches(
-        formRegExp.password,
-        'Використовуйте латиницю різних регістрів та цифри'
-      )
-      .required('Введіть пароль')
+      .min(8, loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE)
+      .matches(formRegExp.password, loginErrorMessages.PASSWORD_LANG_MESSAGE)
+      .required(loginErrorMessages.ENTER_PASSWORD_MESSAGE)
   });
 
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
@@ -95,25 +56,8 @@ const LoginPage = () => {
     validateOnBlur: true,
     onSubmit: ({ email, password }) => {
       dispatch(loginUser({ email, password }));
-
-      // dispatch(setSnackBarSeverity('error'));
-      // errors.email
-      //   ? dispatch(setSnackBarMessage(errors.email))
-      //   : dispatch(setSnackBarMessage(errors.password));
-      // dispatch(setSnackBarStatus(true));
     }
   });
-
-  // const handleChange = (event, setValid, regExp) => {
-  //   const input = event.target.value;
-  //   const inputName = event.target.name;
-  //   setAdminValues({ ...adminValues, [inputName]: input });
-  //   if (input.match(regExp)) {
-  //     setValid(true);
-  //   } else {
-  //     setValid(false);
-  //   }
-  // };
 
   const handleClickShowPassword = () => {
     setAdminValues({ ...adminValues, showPassword: !adminValues.showPassword });
@@ -122,7 +66,7 @@ const LoginPage = () => {
   if (loading) {
     return <LoadingBar />;
   }
-  // {handleSubmit, handleChange, values, touched, errors}
+
   return (
     <div className={classes.container}>
       <form onSubmit={handleSubmit} className={classes.login}>
@@ -147,7 +91,6 @@ const LoginPage = () => {
           type='text'
           onChange={handleChange}
           onBlur={handleChange}
-          // {(e) => handleChange(e, setEmailValidated, formRegExp.email)}
         />
         {touched.email && errors.email ? (
           <div className={classes.inputError}>{errors.email}</div>
@@ -169,9 +112,6 @@ const LoginPage = () => {
             name='password'
             required
             onChange={handleChange}
-            // {(e) =>
-            //   handleChange(e, setPasswordValidated, formRegExp.password)
-            // }
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton

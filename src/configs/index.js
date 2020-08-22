@@ -60,6 +60,13 @@ export const config = {
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
   },
+  loginErrorMessages: {
+    INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
+    ENTER_EMAIL_MESSAGE: 'Введіть email',
+    PASSWORD_MIN_LENGTH_MESSAGE: 'Пароль повинен містити не менше 8 символів',
+    PASSWORD_LANG_MESSAGE: 'Використовуйте латиницю різних регістрів та цифри',
+    ENTER_PASSWORD_MESSAGE: 'Введіть пароль'
+  },
   paginationPayload: {
     skip: 0,
     limit: 5,
