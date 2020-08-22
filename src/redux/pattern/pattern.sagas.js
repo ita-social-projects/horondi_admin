@@ -51,6 +51,7 @@ function* handlePatternLoad({ payload }) {
   try {
     yield put(setPatternLoading(true));
     const pattern = yield call(getPatternById, payload);
+    console.log(pattern);
     yield put(setPattern(pattern));
     yield put(setPatternLoading(false));
   } catch (error) {

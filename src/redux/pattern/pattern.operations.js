@@ -44,6 +44,9 @@ const getPatternById = async (id) => {
             available
             images {
               large
+              medium
+              small
+              thumbnail
             }
           }
           ... on Error {
@@ -79,6 +82,7 @@ const deletePattern = async (id) => {
               lang
               value
             }
+
             material
             available
           }

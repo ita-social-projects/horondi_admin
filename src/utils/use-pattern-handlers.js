@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
 const usePatternHandlers = () => {
-  const [image, setImage] = useState('');
+  const [large, setLarge] = useState('');
+  const [medium, setMedium] = useState('');
+  const [small, setSmall] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
   const [ukName, setUkName] = useState('');
   const [enName, setEnName] = useState('');
   const [handmade, setHandmade] = useState(false);
@@ -11,8 +14,6 @@ const usePatternHandlers = () => {
   const [enDescription, setEnDescription] = useState('');
 
   return {
-    image,
-    setImage,
     ukName,
     setUkName,
     enName,
@@ -26,7 +27,15 @@ const usePatternHandlers = () => {
     ukDescription,
     enDescription,
     setUkDescription,
-    setEnDescription
+    setEnDescription,
+    large,
+    setLarge,
+    medium,
+    setMedium,
+    small,
+    setSmall,
+    thumbnail,
+    setThumbnail
   };
 };
 export default usePatternHandlers;

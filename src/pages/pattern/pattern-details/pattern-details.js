@@ -33,22 +33,28 @@ const PatternDetails = ({ id }) => {
   const classes = useStyles();
 
   const {
-    ukName,
-    setUkName,
+    large,
+    setLarge,
+    medium,
+    setMedium,
+    small,
+    setSmall,
+    thumbnail,
+    setThumbnail,
     enName,
     setEnName,
+    ukName,
+    setUkName,
+    setAvailable,
     ukDescription,
     setUkDescription,
     enDescription,
     setEnDescription,
     material,
     setMaterial,
-    image,
-    setImage,
-    available,
-    setAvailable,
     handmade,
-    setHandmade
+    setHandmade,
+    available
   } = usePatternHandlers();
 
   useEffect(() => {
@@ -57,7 +63,10 @@ const PatternDetails = ({ id }) => {
 
   useEffect(() => {
     if (pattern !== null) {
-      setImage(pattern.images.large);
+      setLarge(pattern.images.large);
+      setMedium(pattern.images.medium);
+      setSmall(pattern.images.small);
+      setThumbnail(pattern.images.thumbnail);
       setUkName(pattern.name[0].value);
       setEnName(pattern.name[1].value);
       setUkDescription(pattern.description[0].value);
@@ -74,8 +83,11 @@ const PatternDetails = ({ id }) => {
     setEnDescription,
     setAvailable,
     setMaterial,
-    setImage,
-    setHandmade
+    setHandmade,
+    setLarge,
+    setMedium,
+    setSmall,
+    setThumbnail
   ]);
 
   const patternSaveHandler = () => {
@@ -101,7 +113,10 @@ const PatternDetails = ({ id }) => {
         }
       ],
       images: {
-        large: image
+        large,
+        medium,
+        small,
+        thumbnail
       },
       material,
       handmade,
@@ -145,6 +160,7 @@ const PatternDetails = ({ id }) => {
       />
     )
   );
+
   return (
     <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={patternSaveHandler}>
@@ -154,13 +170,43 @@ const PatternDetails = ({ id }) => {
             <Grid item xs={12}>
               <Paper className={classes.patternItemUpdate}>
                 <TextField
-                  id='image'
+                  id='large'
                   className={classes.textField}
                   variant='outlined'
-                  label='Фото гобелена'
+                  label='Фото великого розміру'
                   multiline
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
+                  value={large}
+                  onChange={(e) => setLarge(e.target.value)}
+                  required
+                />
+                <TextField
+                  id='medium'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Фото середнього розміру'
+                  multiline
+                  value={medium}
+                  onChange={(e) => setMedium(e.target.value)}
+                  required
+                />
+                <TextField
+                  id='small'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Фото малого розміру'
+                  multiline
+                  value={small}
+                  onChange={(e) => setSmall(e.target.value)}
+                  required
+                />
+                <TextField
+                  id='thumbnail'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Фото найменшого розміру'
+                  multiline
+                  value={thumbnail}
+                  onChange={(e) => setThumbnail(e.target.value)}
                   required
                 />
                 <TextField

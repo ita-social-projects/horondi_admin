@@ -23,8 +23,14 @@ const PatternAdd = () => {
   const loading = useSelector(({ Pattern }) => Pattern.newsLoading);
 
   const {
-    image,
-    setImage,
+    large,
+    setLarge,
+    medium,
+    setMedium,
+    small,
+    setSmall,
+    thumbnail,
+    setThumbnail,
     enName,
     setEnName,
     ukName,
@@ -65,7 +71,10 @@ const PatternAdd = () => {
         }
       ],
       images: {
-        large: image
+        large,
+        medium,
+        small,
+        thumbnail
       },
       material,
       handmade,
@@ -135,9 +144,36 @@ const PatternAdd = () => {
       id: 'patternImage',
       className: classes.textfield,
       variant: 'outlined',
-      label: 'Фото гобелена',
-      image,
-      handler: (e) => setImage(e.target.value),
+      label: 'Фото великого розміру',
+      large,
+      handler: (e) => setLarge(e.target.value),
+      required: true
+    },
+    {
+      id: 'patternImage',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Фото середнього розміру',
+      medium,
+      handler: (e) => setMedium(e.target.value),
+      required: true
+    },
+    {
+      id: 'patternImage',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Фото малого розміру',
+      small,
+      handler: (e) => setSmall(e.target.value),
+      required: true
+    },
+    {
+      id: 'patternImage',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Фото найменшого розміру',
+      thumbnail,
+      handler: (e) => setThumbnail(e.target.value),
       required: true
     },
     {
