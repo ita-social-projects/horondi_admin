@@ -62,6 +62,6 @@ export const config = {
   paginationPayload: {
     skip: 0,
     limit: 5,
-    productsPerPage: 5
+    newsPerPage: 6
   }
 };

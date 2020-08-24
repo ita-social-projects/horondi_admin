@@ -39,19 +39,19 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const { skip, limit, productsPerPage } = config.paginationPayload;
+const { skip, limit, newsPerPage } = config.paginationPayload;
 
 function* handleNewsLoad({
   payload = {
     skip: 1,
     limit: 1,
-    productsPerPage: 1
+    newsPerPage: 1
   }
 }) {
   try {
     yield put(setNewsLoading(true));
     const news = yield call(getAllNews, payload.skip, payload.limit);
-    yield put(setPagesCount(Math.ceil(news.count / payload.productsPerPage)));
+    yield put(setPagesCount(Math.ceil(news.count / payload.newsPerPage)));
     yield put(setNews(news.items));
     yield put(setNewsLoading(false));
   } catch (error) {
@@ -75,7 +75,7 @@ function* handleAddNews({ payload }) {
     yield put(setNewsLoading(true));
     yield call(createArticle, payload);
     const news = yield call(getAllNews, skip, limit);
-    yield put(setPagesCount(Math.ceil(news.count / productsPerPage)));
+    yield put(setPagesCount(Math.ceil(news.count / newsPerPage)));
     yield put(setNews(news.items));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
@@ -91,7 +91,7 @@ function* handleNewsDelete({ payload }) {
     yield put(setNewsLoading(true));
     yield call(deleteArticle, payload);
     const news = yield call(getAllNews, skip, limit);
-    yield put(setPagesCount(Math.ceil(news.count / productsPerPage)));
+    yield put(setPagesCount(Math.ceil(news.count / newsPerPage)));
     yield put(setCurrentPage(1));
     yield put(setNews(news.items));
     yield put(setNewsLoading(false));
@@ -109,7 +109,7 @@ function* handleNewsUpdate({ payload }) {
     yield put(setNewsLoading(true));
     yield call(updateArticle, id, newArticle);
     const news = yield call(getAllNews, skip, limit);
-    yield put(setPagesCount(Math.ceil(news.count / productsPerPage)));
+    yield put(setPagesCount(Math.ceil(news.count / newsPerPage)));
     yield put(setNews(news.items));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));

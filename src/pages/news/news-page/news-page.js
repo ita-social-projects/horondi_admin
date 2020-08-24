@@ -30,30 +30,27 @@ const tableTitles = config.tableHeadRowTitles.news;
 const NewsPage = () => {
   const classes = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const {
-    list,
-    loading,
-    pagesCount,
-    currentPage,
-    productsPerPage
-  } = useSelector(({ News }) => ({
-    list: News.list,
-    loading: News.newsLoading,
-    pagesCount: News.pagesCount,
-    currentPage: News.currentPage,
-    productsPerPage: News.productsPerPage
-  }));
+  const { list, loading, pagesCount, currentPage, newsPerPage } = useSelector(
+    ({ News }) => ({
+      list: News.list,
+      loading: News.newsLoading,
+      pagesCount: News.pagination.pagesCount,
+      currentPage: News.pagination.currentPage,
+      newsPerPage: News.pagination.newsPerPage
+    })
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
       getNews({
-        limit: productsPerPage,
-        skip: currentPage * productsPerPage,
-        productsPerPage
+        limit: newsPerPage,
+        skip: currentPage * newsPerPage,
+        newsPerPage
       })
     );
-  }, [dispatch, currentPage, productsPerPage]);
+  }, [dispatch, newsPerPage, currentPage]);
 
   const newsDeleteHandler = (id) => {
     const removeNews = () => {
