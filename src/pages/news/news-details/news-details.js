@@ -50,9 +50,7 @@ const NewsDetails = ({ match }) => {
     setCheckboxes,
     handleTabsChange,
     languageCheckboxes,
-    createArticle,
-    setUkFiles,
-    setEnFiles
+    createArticle
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -204,7 +202,6 @@ const NewsDetails = ({ match }) => {
                     value={ukText}
                     placeholder='Текст'
                     onEditorChange={(value) => ukSetText(value)}
-                    onFilesChange={(files) => setUkFiles(files)}
                   />
                 </Paper>
               </TabPanel>
@@ -234,7 +231,6 @@ const NewsDetails = ({ match }) => {
                     value={enText}
                     placeholder='Текст'
                     onEditorChange={(value) => enSetText(value)}
-                    onFilesChange={(files) => setEnFiles(files)}
                   />
                 </Paper>
               </TabPanel>

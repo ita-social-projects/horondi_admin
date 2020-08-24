@@ -29,9 +29,7 @@ const NewsAdd = () => {
     ukSetText,
     enSetText,
     ukText,
-    enText,
-    setEnFiles,
-    setUkFiles
+    enText
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -147,7 +145,6 @@ const NewsAdd = () => {
                   value={ukText}
                   placeholder='Текст'
                   onEditorChange={(value) => ukSetText(value)}
-                  onFilesChange={(files) => setUkFiles(files)}
                 />
               </Paper>
             </TabPanel>
@@ -177,7 +174,6 @@ const NewsAdd = () => {
                   value={enText}
                   placeholder='Текст'
                   onEditorChange={(value) => enSetText(value)}
-                  onFilesChange={(files) => setEnFiles(files)}
                 />
               </Paper>
             </TabPanel>
