@@ -3,29 +3,37 @@ import { client } from '../../utils/client';
 
 import { newsTranslations } from '../../translations/news.translations';
 
-const getAllNews = async () => {
+const getAllNews = async (skip, limit) => {
   const result = await client.query({
+    variables: {
+      skip,
+      limit
+    },
     query: gql`
-      {
-        getAllNews {
-          _id
-          author {
-            name {
+      query($skip: Int, $limit: Int) {
+        getAllNews(skip: $skip, limit: $limit) {
+          items {
+            _id
+            author {
+              name {
+                lang
+                value
+              }
+              image {
+                small
+              }
+            }
+            title {
               lang
               value
             }
-            image {
-              small
-            }
           }
-          title {
-            lang
-            value
-          }
+          count
         }
       }
     `
   });
+  client.resetStore();
   const { data } = result;
   return data.getAllNews;
 };
