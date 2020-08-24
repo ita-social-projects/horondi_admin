@@ -5,7 +5,7 @@ import {
   SET_PATTERN_ERROR
 } from './pattern.types';
 
-const initialState = {
+export const initialState = {
   patterns: [],
   pattern: null,
   patternLoading: false,

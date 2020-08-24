@@ -45,9 +45,8 @@ const setPatterns = (payload) => ({
   payload
 });
 
-const getPatterns = (payload) => ({
-  type: GET_PATTERNS,
-  payload
+const getPatterns = () => ({
+  type: GET_PATTERNS
 });
 
 const setPatternError = (payload) => ({
