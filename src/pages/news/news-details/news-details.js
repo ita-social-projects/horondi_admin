@@ -5,6 +5,7 @@ import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import useNewsHandlers from '../../../utils/use-news-handlers';
+import Editor from '../../../components/editor';
 import { useStyles } from './news-details.styles';
 import { SaveButton } from '../../../components/buttons';
 import TabPanel from '../../../components/tab-panel';
@@ -49,7 +50,9 @@ const NewsDetails = ({ match }) => {
     setCheckboxes,
     handleTabsChange,
     languageCheckboxes,
-    createArticle
+    createArticle,
+    setUkFiles,
+    setEnFiles
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -128,7 +131,7 @@ const NewsDetails = ({ match }) => {
             enText
           }}
           onSubmit={(values, actions) => {
-            const newArticle = createArticle(values);
+            const newArticle = createArticle({ ...values, enText, ukText });
             dispatch(updateArticle({ id, newArticle }));
           }}
         >
@@ -175,42 +178,66 @@ const NewsDetails = ({ match }) => {
                   {LanguageTabs}
                 </Tabs>
               </AppBar>
-              {preferredLanguages.map((lang, index) => (
-                <TabPanel key={index} value={tabsValue} index={index}>
-                  <Paper className={classes.newsItemUpdate}>
-                    <TextField
-                      id={`${lang}AuthorName`}
-                      className={classes.textField}
-                      variant='outlined'
-                      label={`Автор ${lang}`}
-                      multiline
-                      value={props.values[`${lang}AuthorName`]}
-                      onChange={props.handleChange}
-                      required
-                    />
-                    <TextField
-                      id={`${lang}Title`}
-                      className={classes.textField}
-                      variant='outlined'
-                      label={`Заголовок ${lang}`}
-                      multiline
-                      value={props.values[`${lang}Title`]}
-                      onChange={props.handleChange}
-                      required
-                    />
-                    <TextField
-                      id={`${lang}Text`}
-                      className={classes.textField}
-                      variant='outlined'
-                      label={`Текст ${lang}`}
-                      multiline
-                      value={props.values[`${lang}Text`]}
-                      onChange={props.handleChange}
-                      required
-                    />
-                  </Paper>
-                </TabPanel>
-              ))}
+              <TabPanel value={tabsValue} index={0}>
+                <Paper className={classes.newsItemUpdate}>
+                  <TextField
+                    id='ukAuthorName'
+                    className={classes.textField}
+                    variant='outlined'
+                    label='Автор uk'
+                    multiline
+                    value={props.values.ukAuthorName}
+                    onChange={props.handleChange}
+                    required
+                  />
+                  <TextField
+                    id='ukTitle'
+                    className={classes.textField}
+                    variant='outlined'
+                    label='Заголовок uk'
+                    multiline
+                    value={props.values.ukTitle}
+                    onChange={props.handleChange}
+                    required
+                  />
+                  <Editor
+                    value={ukText}
+                    placeholder='Текст'
+                    onEditorChange={(value) => ukSetText(value)}
+                    onFilesChange={(files) => setUkFiles(files)}
+                  />
+                </Paper>
+              </TabPanel>
+              <TabPanel value={tabsValue} index={1}>
+                <Paper className={classes.newsItemUpdate}>
+                  <TextField
+                    id='enAuthorName'
+                    className={classes.textField}
+                    variant='outlined'
+                    label='Автор en'
+                    multiline
+                    value={props.values.enAuthorName}
+                    onChange={props.handleChange}
+                    required
+                  />
+                  <TextField
+                    id='enTitle'
+                    className={classes.textField}
+                    variant='outlined'
+                    label='Заголовок en'
+                    multiline
+                    value={props.values.enTitle}
+                    onChange={props.handleChange}
+                    required
+                  />
+                  <Editor
+                    value={enText}
+                    placeholder='Текст'
+                    onEditorChange={(value) => enSetText(value)}
+                    onFilesChange={(files) => setEnFiles(files)}
+                  />
+                </Paper>
+              </TabPanel>
             </form>
           )}
         </Formik>
@@ -223,7 +250,11 @@ NewsDetails.propTypes = {
   handleSubmit: PropTypes.func,
   values: PropTypes.shape({
     authorPhoto: PropTypes.string,
-    newsImage: PropTypes.string
+    newsImage: PropTypes.string,
+    ukAuthorName: PropTypes.string,
+    ukTitle: PropTypes.string,
+    enAuthorName: PropTypes.string,
+    enTitle: PropTypes.string
   }),
   handleChange: PropTypes.func,
   match: PropTypes.shape({

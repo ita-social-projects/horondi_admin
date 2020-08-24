@@ -16,10 +16,12 @@ const useNewsHandlers = () => {
 
   const [ukAuthorName, ukSetAuthor] = useState('');
   const [ukText, ukSetText] = useState('');
+  const [ukFiles, setUkFiles] = useState([]);
   const [ukTitle, ukSetTitle] = useState('');
 
   const [enAuthorName, enSetAuthor] = useState('');
   const [enText, enSetText] = useState('');
+  const [enFiles, setEnFiles] = useState([]);
   const [enTitle, enSetTitle] = useState('');
 
   const [tabsValue, setTabsValue] = useState(0);
@@ -125,7 +127,11 @@ const useNewsHandlers = () => {
     handleTabsChange,
     handleCheckboxChange,
     languageCheckboxes,
-    createArticle
+    createArticle,
+    ukFiles,
+    enFiles,
+    setUkFiles,
+    setEnFiles
   };
 };
 

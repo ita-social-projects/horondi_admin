@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
-
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import Editor from '../../../components/editor';
 import TabPanel from '../../../components/tab-panel';
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
@@ -25,7 +25,13 @@ const NewsAdd = () => {
     setPreferredLanguages,
     languageCheckboxes,
     handleTabsChange,
-    createArticle
+    createArticle,
+    ukSetText,
+    enSetText,
+    ukText,
+    enText,
+    setEnFiles,
+    setUkFiles
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -53,50 +59,10 @@ const NewsAdd = () => {
       newsImage: ''
     },
     onSubmit: (values) => {
-      const article = createArticle(values);
+      const article = createArticle({ ...values, enText, ukText });
       dispatch(addArticle(article));
     }
   });
-
-  const TabPanels =
-    preferredLanguages.length > 0
-      ? preferredLanguages.map((lang, index) => (
-        <TabPanel key={index} value={tabsValue} index={index}>
-          <Paper className={classes.newsItemAdd}>
-            <TextField
-              id={`${lang}AuthorName`}
-              className={classes.textfield}
-              variant='outlined'
-              label={`Автор ${lang}`}
-              multiline
-              value={formik.values[`${lang}AuthorName`]}
-              onChange={formik.handleChange}
-              required
-            />
-            <TextField
-              id={`${lang}Title`}
-              className={classes.textfield}
-              variant='outlined'
-              label={`Заголовок ${lang}`}
-              multiline
-              value={formik.values[`${lang}Title`]}
-              onChange={formik.handleChange}
-              required
-            />
-            <TextField
-              id={`${lang}Text`}
-              className={classes.textfield}
-              variant='outlined'
-              label={`Текст ${lang}`}
-              multiline
-              value={formik.values[`${lang}Text`]}
-              onChange={formik.handleChange}
-              required
-            />
-          </Paper>
-        </TabPanel>
-      ))
-      : null;
 
   const LanguageTabs =
     preferredLanguages.length > 0
@@ -155,7 +121,66 @@ const NewsAdd = () => {
                 {LanguageTabs}
               </Tabs>
             </AppBar>
-            {TabPanels}
+            <TabPanel value={tabsValue} index={0}>
+              <Paper className={classes.newsItemAdd}>
+                <TextField
+                  id='ukAuthorName'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Автор uk'
+                  multiline
+                  value={formik.values.ukAuthorName}
+                  onChange={formik.handleChange}
+                  required
+                />
+                <TextField
+                  id='ukTitle'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Заголовок uk'
+                  multiline
+                  value={formik.values.ukTitle}
+                  onChange={formik.handleChange}
+                  required
+                />
+                <Editor
+                  value={ukText}
+                  placeholder='Текст'
+                  onEditorChange={(value) => ukSetText(value)}
+                  onFilesChange={(files) => setUkFiles(files)}
+                />
+              </Paper>
+            </TabPanel>
+            <TabPanel value={tabsValue} index={1}>
+              <Paper className={classes.newsItemAdd}>
+                <TextField
+                  id='enAuthorName'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Автор en'
+                  multiline
+                  value={formik.values.enAuthorName}
+                  onChange={formik.handleChange}
+                  required
+                />
+                <TextField
+                  id='enTitle'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Заголовок en'
+                  multiline
+                  value={formik.values.enTitle}
+                  onChange={formik.handleChange}
+                  required
+                />
+                <Editor
+                  value={enText}
+                  placeholder='Текст'
+                  onEditorChange={(value) => enSetText(value)}
+                  onFilesChange={(files) => setEnFiles(files)}
+                />
+              </Paper>
+            </TabPanel>
           </div>
         ) : null}
       </form>
