@@ -1,16 +1,22 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import InfoIcon from '@material-ui/icons/Info';
 
 const routes = {
   pathToLogin: '/',
-  pathToNews: '/',
+  pathToNews: '/news',
+  pathToBusinessPages: '/business-pages',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd'
+  pathToAddNews: '/newsadd',
+  pathToAddBusinessPage: '/business-page-add'
 };
 
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
+    menuCategories: [
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Бізнес сторінки', routes.pathToBusinessPages, InfoIcon]
+    ],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
@@ -22,7 +28,8 @@ export const config = {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
   tableHeadRowTitles: {
-    news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -48,7 +55,8 @@ export const config = {
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
     CANCEL_TITLE: 'Відмінити',
-    LOGOUT_TITLE: 'Вихід'
+    LOGOUT_TITLE: 'Вихід',
+    CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
