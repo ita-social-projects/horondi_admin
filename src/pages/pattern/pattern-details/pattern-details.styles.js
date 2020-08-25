@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     margin: theme.spacing(2),
-    paddingTop: 10
+    padding: '10px 10px'
   },
   patternDetails: {
     display: 'flex',
@@ -20,8 +20,7 @@ export const useStyles = makeStyles((theme) => ({
   saveButton: {
     margin: theme.spacing(2)
   },
-  textField: {
-    padding: '10px',
+  textfield: {
     margin: '5px 0'
   }
 }));

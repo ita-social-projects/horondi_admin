@@ -47,7 +47,7 @@ function* handlePatternsLoad() {
   }
 }
 
-function* handlePatternLoad({ payload }) {
+export function* handlePatternLoad({ payload }) {
   try {
     yield put(setPatternLoading(true));
     const pattern = yield call(getPatternById, payload);
@@ -62,8 +62,6 @@ function* handleAddPattern({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(createPattern, payload);
-    const patterns = yield call(getAllPatterns, null);
-    yield put(setPatterns(patterns));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
@@ -77,8 +75,6 @@ function* handlePatternDelete({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(deletePattern, payload);
-    const patterns = yield call(getAllPatterns, null);
-    yield put(setPatterns(patterns));
     yield put(setPatternLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
@@ -93,8 +89,6 @@ function* handlePatternUpdate({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(updatePattern, id, pattern);
-    const patterns = yield call(getAllPatterns, null);
-    yield put(setPatterns(patterns));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));

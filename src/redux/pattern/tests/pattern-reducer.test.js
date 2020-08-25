@@ -1,4 +1,4 @@
-import { pattern, patterns } from './dataForTests';
+import { pattern, patterns } from './pattern.mocks';
 import {
   setPatternError,
   setPatternLoading,

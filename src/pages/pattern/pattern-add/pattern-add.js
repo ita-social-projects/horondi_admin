@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FormControl,
-  Paper,
-  TextField,
-  Grid,
-  Checkbox,
-  FormControlLabel
-} from '@material-ui/core';
+import { FormControl, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './pattern-add.styles';
 import { SaveButton } from '../../../components/buttons';
@@ -14,13 +7,15 @@ import { addPattern } from '../../../redux/pattern/pattern.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 import usePatternHandlers from '../../../utils/use-pattern-handlers';
+import Options from '../../../components/options';
+import CheckboxOptions from '../../../components/checkboxOptions';
 
 const { languages } = config;
 
 const PatternAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const loading = useSelector(({ Pattern }) => Pattern.newsLoading);
+  const loading = useSelector(({ Pattern }) => Pattern.patternLoading);
 
   const {
     large,
@@ -84,14 +79,14 @@ const PatternAdd = () => {
   };
   const checkboxes = [
     {
-      id: 'handmade',
+      dataCy: 'handmade',
       value: handmade,
       color: 'primary',
       label: 'зроблений вручну',
       handler: (e) => setHandmade(e.target.checked)
     },
     {
-      id: 'available',
+      dataCy: 'available',
       value: available,
       color: 'primary',
       label: 'доступний',
@@ -101,7 +96,7 @@ const PatternAdd = () => {
 
   const ukPatternOptions = [
     {
-      id: 'ukName',
+      dataCy: 'ukName',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Назва гобелена (укр.)',
@@ -110,7 +105,7 @@ const PatternAdd = () => {
       required: true
     },
     {
-      id: 'ukDescription',
+      dataCy: 'ukDescription',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Опис гобелена (укр.)',
@@ -121,7 +116,7 @@ const PatternAdd = () => {
   ];
   const enPatternOptions = [
     {
-      id: 'enName',
+      dataCy: 'enName',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Назва гобелена (англ.)',
@@ -130,7 +125,7 @@ const PatternAdd = () => {
       required: true
     },
     {
-      id: 'enDescription',
+      dataCy: 'enDescription',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Опис гобелена (англ.)',
@@ -141,7 +136,7 @@ const PatternAdd = () => {
   ];
   const commonOptions = [
     {
-      id: 'patternImage',
+      dataCy: 'patternImage',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Фото великого розміру',
@@ -150,7 +145,7 @@ const PatternAdd = () => {
       required: true
     },
     {
-      id: 'patternImage',
+      dataCy: 'patternImage',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Фото середнього розміру',
@@ -159,7 +154,7 @@ const PatternAdd = () => {
       required: true
     },
     {
-      id: 'patternImage',
+      dataCy: 'patternImage',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Фото малого розміру',
@@ -168,7 +163,7 @@ const PatternAdd = () => {
       required: true
     },
     {
-      id: 'patternImage',
+      dataCy: 'patternImage',
       className: classes.textfield,
       variant: 'outlined',
       label: 'Фото найменшого розміру',
@@ -177,7 +172,7 @@ const PatternAdd = () => {
       required: true
     },
     {
-      id: 'patternMaterial',
+      dataCy: 'patternMaterial',
       className: classes.textfield,
       variant: 'outlined',
       label: 'матеріал гобелена',
@@ -186,62 +181,6 @@ const PatternAdd = () => {
       required: true
     }
   ];
-
-  const checkboxInputs = checkboxes.map(({ color, label, value, handler }) => (
-    <FormControlLabel
-      key={label}
-      value={value}
-      control={<Checkbox color={color} />}
-      label={label}
-      labelPlacement='start'
-      onChange={handler}
-    />
-  ));
-  const ukPatternInputs = ukPatternOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={handler}
-        required={required}
-        multiline
-      />
-    )
-  );
-  const enPatternInputs = enPatternOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={handler}
-        required={required}
-        multiline
-      />
-    )
-  );
-  const commonInputs = commonOptions.map(
-    ({ id, className, variant, label, value, handler, required }) => (
-      <TextField
-        id={id}
-        key={id}
-        className={className}
-        variant={variant}
-        label={label}
-        value={value}
-        onChange={handler}
-        required={required}
-        multiline
-      />
-    )
-  );
 
   if (loading) {
     return <LoadingBar />;
@@ -252,25 +191,21 @@ const PatternAdd = () => {
       <form onSubmit={patternSaveHandler}>
         <FormControl className={classes.patternAdd}>
           <Grid container spacing={1}>
-            {checkboxInputs}
+            <CheckboxOptions options={checkboxes} />
             <Grid item xs={12}>
-              <Paper className={classes.patternItemAdd}>{commonInputs}</Paper>
+              <Options options={commonOptions} />
             </Grid>
             <Grid item xs={6}>
-              <Paper className={classes.patternItemAdd}>
-                {ukPatternInputs}
-              </Paper>
+              <Options options={ukPatternOptions} />
             </Grid>
             <Grid item xs={6}>
-              <Paper className={classes.patternItemAdd}>
-                {enPatternInputs}
-              </Paper>
+              <Options options={enPatternOptions} />
             </Grid>
           </Grid>
         </FormControl>
         <SaveButton
           className={classes.saveButton}
-          id='save'
+          data-cy='save'
           type='submit'
           title='Зберегти'
         />

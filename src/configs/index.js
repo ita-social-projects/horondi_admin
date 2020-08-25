@@ -4,8 +4,8 @@ export const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd',
-  pathToAddPatern: '/paternadd',
+  pathToAddNews: '/news/add',
+  pathToAddPatern: '/patern/add',
   pathToPatterns: '/patterns',
   pathToPatternDetails: '/pattern/:id'
 };

@@ -10,58 +10,46 @@ import {
   SET_PATTERN_ERROR
 } from './pattern.types';
 
-const setPattern = (pattern) => ({
+export const setPattern = (payload) => ({
   type: SET_PATTERN,
-  payload: pattern
+  payload
 });
 
-const getPattern = (payload) => ({
+export const getPattern = (payload) => ({
   type: GET_PATTERN,
   payload
 });
 
-const deletePattern = (payload) => ({
+export const deletePattern = (payload) => ({
   type: DELETE_PATTERN,
   payload
 });
 
-const addPattern = (payload) => ({
+export const addPattern = (payload) => ({
   type: ADD_PATTERN,
   payload
 });
 
-const setPatternLoading = (payload) => ({
+export const setPatternLoading = (payload) => ({
   type: SET_PATTERN_LOADING,
   payload
 });
 
-const updatePattern = (payload) => ({
+export const updatePattern = (payload) => ({
   type: UPDATE_PATTERN,
   payload
 });
 
-const setPatterns = (payload) => ({
+export const setPatterns = (payload) => ({
   type: SET_PATTERNS,
   payload
 });
 
-const getPatterns = () => ({
+export const getPatterns = () => ({
   type: GET_PATTERNS
 });
 
-const setPatternError = (payload) => ({
+export const setPatternError = (payload) => ({
   type: SET_PATTERN_ERROR,
   payload
 });
-
-export {
-  setPattern,
-  getPattern,
-  setPatternLoading,
-  deletePattern,
-  addPattern,
-  updatePattern,
-  setPatterns,
-  getPatterns,
-  setPatternError
-};

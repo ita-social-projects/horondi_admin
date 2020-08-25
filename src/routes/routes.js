@@ -51,7 +51,7 @@ const Routes = () => {
         <Route
           path={routes.pathToPatternDetails}
           exact
-          render={({ match }) => <PatternDetails id={match.params.id} />}
+          component={PatternDetails}
         />
         <Route component={ErrorPage} />
       </Switch>

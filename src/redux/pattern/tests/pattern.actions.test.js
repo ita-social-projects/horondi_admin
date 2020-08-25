@@ -20,7 +20,7 @@ import {
   GET_PATTERNS,
   ADD_PATTERN
 } from '../pattern.types';
-import { pattern, patternId, patterns, patternToUpdate } from './dataForTests';
+import { pattern, patternId, patterns, patternToUpdate } from './pattern.mocks';
 
 describe('pattern actions tests', () => {
   it('should get pattern', () => {

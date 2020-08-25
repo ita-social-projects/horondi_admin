@@ -24,6 +24,7 @@ const patternReducer = (state = initialState, action = {}) => {
       ...state,
       pattern: action.payload
     };
+
   case SET_PATTERN_LOADING:
     return {
       ...state,
@@ -34,6 +35,7 @@ const patternReducer = (state = initialState, action = {}) => {
       ...state,
       patternError: action.payload
     };
+
   default:
     return state;
   }

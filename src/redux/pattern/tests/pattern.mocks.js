@@ -80,3 +80,29 @@ export const patternToUpdate = {
     ]
   }
 };
+export const fakePattern = {
+  data: {
+    getPatternById: {
+      _id: '0c3c7929dd85de268bed4fe8',
+      name: [
+        {
+          lang: 'uk',
+          value: 'Рожева хвилька'
+        },
+        {
+          lang: 'en',
+          value: 'Pink wave'
+        }
+      ],
+      images: {
+        large: 'large-pink-wave.jpg',
+        medium: 'medium-pink-wave.jpg',
+        small: 'small-pink-wave.jpg',
+        thumbnail: 'thumbnail-pink-wave.jpg'
+      },
+      material: 'Cotton',
+      available: true,
+      handmade: false
+    }
+  }
+};

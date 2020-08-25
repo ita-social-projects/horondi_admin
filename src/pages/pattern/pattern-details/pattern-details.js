@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-  Paper,
-  TextField,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  Checkbox
-} from '@material-ui/core';
-import propTypes from 'prop-types';
+import { FormControl, Grid } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useStyles } from './pattern-details.styles';
@@ -19,10 +12,13 @@ import {
   getPattern,
   updatePattern
 } from '../../../redux/pattern/pattern.actions';
+import Options from '../../../components/options';
+import CheckboxOptions from '../../../components/checkboxOptions';
 
 const { languages } = config;
 
-const PatternDetails = ({ id }) => {
+const PatternDetails = ({ match }) => {
+  const { id } = match.params;
   const dispatch = useDispatch();
   const { loading, pattern } = useSelector(
     ({ Pattern: { pattern, patternLoading } }) => ({
@@ -130,16 +126,18 @@ const PatternDetails = ({ id }) => {
   }
   const checkboxes = [
     {
-      id: 'handmade',
+      dataCy: 'handmade',
       value: handmade,
+      className: classes.textfield,
       checked: handmade,
       color: 'primary',
       label: 'зроблений вручну',
       handler: (e) => setHandmade(e.target.checked)
     },
     {
-      id: 'available',
+      dataCy: 'available',
       value: available,
+      className: classes.textfield,
       checked: available,
       color: 'primary',
       label: 'доступний',
@@ -147,132 +145,124 @@ const PatternDetails = ({ id }) => {
     }
   ];
 
-  const checkboxInputs = checkboxes.map(
-    ({ color, checked, label, value, handler }) => (
-      <FormControlLabel
-        key={label}
-        value={value}
-        checked={checked}
-        control={<Checkbox color={color} />}
-        label={label}
-        labelPlacement='start'
-        onChange={handler}
-      />
-    )
-  );
+  const ukPatternOptions = [
+    {
+      dataCy: 'ukName',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Назва гобелена (укр.)',
+      ukName,
+      handler: (e) => setUkName(e.target.value),
+      required: true,
+      value: ukName
+    },
+    {
+      dataCy: 'ukDescription',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Опис гобелена (укр.)',
+      ukDescription,
+      handler: (e) => setUkDescription(e.target.value),
+      required: true,
+      value: ukDescription
+    }
+  ];
+
+  const enPatternOptions = [
+    {
+      dataCy: 'enName',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Назва гобелена (англ.)',
+      enName,
+      handler: (e) => setEnName(e.target.value),
+      required: true,
+      value: enName
+    },
+    {
+      dataCy: 'enDescription',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Опис гобелена (англ.)',
+      enDescription,
+      handler: (e) => setEnDescription(e.target.value),
+      required: true,
+      value: enDescription
+    }
+  ];
+
+  const commonOptions = [
+    {
+      dataCy: 'patternImage',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Фото великого розміру',
+      large,
+      handler: (e) => setLarge(e.target.value),
+      required: true,
+      value: large
+    },
+    {
+      dataCy: 'patternImage',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Фото середнього розміру',
+      medium,
+      handler: (e) => setMedium(e.target.value),
+      required: true,
+      value: medium
+    },
+    {
+      dataCy: 'patternImage',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Фото малого розміру',
+      small,
+      handler: (e) => setSmall(e.target.value),
+      required: true,
+      value: small
+    },
+    {
+      dataCy: 'patternImage',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'Фото найменшого розміру',
+      thumbnail,
+      handler: (e) => setThumbnail(e.target.value),
+      required: true,
+      value: thumbnail
+    },
+    {
+      dataCy: 'patternMaterial',
+      className: classes.textfield,
+      variant: 'outlined',
+      label: 'матеріал гобелена',
+      material,
+      handler: (e) => setMaterial(e.target.value),
+      required: true,
+      value: material
+    }
+  ];
 
   return (
     <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={patternSaveHandler}>
         <FormControl className={classes.patternDetails}>
           <Grid container spacing={1}>
-            {checkboxInputs}
+            <CheckboxOptions options={checkboxes} />
             <Grid item xs={12}>
-              <Paper className={classes.patternItemUpdate}>
-                <TextField
-                  id='large'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Фото великого розміру'
-                  multiline
-                  value={large}
-                  onChange={(e) => setLarge(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='medium'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Фото середнього розміру'
-                  multiline
-                  value={medium}
-                  onChange={(e) => setMedium(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='small'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Фото малого розміру'
-                  multiline
-                  value={small}
-                  onChange={(e) => setSmall(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='thumbnail'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Фото найменшого розміру'
-                  multiline
-                  value={thumbnail}
-                  onChange={(e) => setThumbnail(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='material'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Матеріал'
-                  multiline
-                  value={material}
-                  onChange={(e) => setMaterial(e.target.value)}
-                  required
-                />
-              </Paper>
+              <Options options={commonOptions} />
             </Grid>
             <Grid item xs={6}>
-              <Paper className={classes.patternItemUpdate}>
-                <TextField
-                  id='ukName'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='назва (укр.)'
-                  multiline
-                  value={ukName}
-                  onChange={(e) => setUkName(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='ukDescription'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='опис (укр.)'
-                  multiline
-                  value={ukDescription}
-                  onChange={(e) => setUkDescription(e.target.value)}
-                  required
-                />
-              </Paper>
+              <Options options={ukPatternOptions} />
             </Grid>
             <Grid item xs={6}>
-              <Paper className={classes.patternItemUpdate}>
-                <TextField
-                  id='enName'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='назва (англ.)'
-                  multiline
-                  value={enName}
-                  onChange={(e) => setEnName(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='enDescription'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='опис (англ.)'
-                  multiline
-                  value={enDescription}
-                  onChange={(e) => setEnDescription(e.target.value)}
-                  required
-                />
-              </Paper>
+              <Options options={enPatternOptions} />
             </Grid>
           </Grid>
         </FormControl>
         <SaveButton
-          id='save'
+          data-cy='save'
           type='submit'
           title='Зберегти'
           className={classes.saveButton}
@@ -282,7 +272,11 @@ const PatternDetails = ({ id }) => {
   );
 };
 PatternDetails.propTypes = {
-  id: propTypes.string.isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  }).isRequired
 };
 
 export default withRouter(PatternDetails);

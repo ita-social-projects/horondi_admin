@@ -35,7 +35,7 @@ const getAllNews = async (skip, limit) => {
   });
   client.resetStore();
   const { data } = result;
-  return data.getAllNews.items;
+  return { items: data.getAllNews.items, pagesCount: data.getAllNews.count };
 };
 
 const getArticleById = async (id) => {
@@ -61,7 +61,6 @@ const getArticleById = async (id) => {
                 large
               }
             }
-            video
             author {
               name {
                 lang
