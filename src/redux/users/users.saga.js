@@ -13,7 +13,9 @@ import {
   setUsers,
   setUser,
   setUserError,
-  setUsersLoading
+  setUsersLoading,
+  deleteUserLocally,
+  updateUserLocally
 } from './users.actions';
 
 import {
@@ -57,7 +59,8 @@ function* handleUsersDelete({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(deleteUser, payload);
-    yield call(handleUsersLoad, null);
+    yield put(deleteUserLocally(payload));
+    yield put(setUsersLoading(false));
     yield call(handleSnackBarSuccess, SUCCESS_DELETE_STATUS);
   } catch (err) {
     yield call(handleUsersError, err);
@@ -68,8 +71,9 @@ function* handleUserStatusSwitch({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(switchUserStatus, payload);
+    yield put(updateUserLocally(payload));
+    yield put(setUsersLoading(false));
     yield call(handleSnackBarSuccess, SUCCESS_UPDATE_STATUS);
-    yield call(handleUserLoad, { payload });
   } catch (err) {
     yield call(handleUsersError, err);
   }

@@ -1,6 +1,24 @@
 /// <reference types="cypress" />
 
 describe('User list and items test', () => {
+  let firstName;
+  let lastName;
+  let country;
+  let city;
+  let adress;
+  let postalCode;
+  let id;
+
+  before(() => {
+    firstName = 'Богдана';
+    lastName = 'Гаращенко';
+    country = 'Україна';
+    city = 'Докучаєвськ';
+    adress = 'Вулиця Володимира Шульгина, 53/34';
+    postalCode = '61886';
+    id = '9c031d62a3c4909b216e1d86';
+  });
+
   beforeEach(() => {
     cy.visit('/');
     cy.get('input[name="email"]').type(Cypress.env('ADMIN_LOGIN'));
@@ -52,7 +70,7 @@ describe('User list and items test', () => {
       });
   });
   it('When user changes status, page and user information should be updated', () => {
-    cy.visit('/users/9c031d62a3c4909b216e1d86').wait(2000);
+    cy.visit(`/users/${id}`).wait(2000);
 
     cy.get('button:last')
       .should('have.text', 'Деактивувати')
@@ -64,7 +82,7 @@ describe('User list and items test', () => {
 
     cy.get('button:last').should('have.text', 'Активувати');
 
-    cy.get('.makeStyles-userStatus-17').should('have.text', 'Неактивний');
+    cy.get('#status').should('have.text', 'Неактивний');
 
     cy.get('button:last')
       .should('have.text', 'Активувати')
@@ -74,15 +92,15 @@ describe('User list and items test', () => {
       .click()
       .wait(2000);
 
-    cy.get('.makeStyles-userStatus-17').should('have.text', 'Активний');
+    cy.get('#status').should('have.text', 'Активний');
   });
   it('Data from the server should be equal with the incoming data', () => {
-    cy.visit('users/9c031d62a3c4909b216e1d86');
-    cy.get('#firstName').should('have.text', 'Богдана');
-    cy.get('#lastName').should('have.text', 'Гаращенко');
-    cy.get('#country').should('have.text', 'Україна');
-    cy.get('#city').should('have.text', 'Докучаєвськ');
-    cy.get('#adress').should('have.text', 'Вулиця Володимира Шульгина, 53/34');
-    cy.get('#postalCode').should('have.text', '61886');
+    cy.visit(`users/${id}`);
+    cy.get('#firstName').should('have.text', firstName);
+    cy.get('#lastName').should('have.text', lastName);
+    cy.get('#country').should('have.text', country);
+    cy.get('#city').should('have.text', city);
+    cy.get('#adress').should('have.text', adress);
+    cy.get('#postalCode').should('have.text', postalCode);
   });
 });

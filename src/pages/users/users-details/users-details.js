@@ -1,15 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  FormControl,
-  Grid,
-  Paper,
-  TextField,
-  Avatar,
-  Typography,
-  Button
-} from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../utils/use-users-handlers';
@@ -18,6 +10,10 @@ import { config } from '../../../configs';
 import { updateUserStatus } from '../../../redux/users/users.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import UserDetailsHeader from './containers/user-details-header';
+import UserDetailsBody from './containers/user-details-body';
+import UserDetailsSection from './containers/user-details-section';
+import UserInput from './containers/user-details-input';
 
 const {
   USER_ACTIVE_TITLE,
@@ -47,11 +43,11 @@ const UsersDetails = (props) => {
     city,
     adress,
     postCode,
-    ban
+    isBanned
   } = useUsersHandler(id);
 
-  const status = ban ? USER_UNACTIVE_STATUS : USER_ACTIVE_STATUS;
-  const buttonStatus = ban ? USER_ACTIVE_TITLE : USER_UNACTIVE_TITLE;
+  const status = isBanned ? USER_UNACTIVE_STATUS : USER_ACTIVE_STATUS;
+  const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_UNACTIVE_TITLE;
 
   const userStatusHandler = (userId) => {
     const updateStatus = () => {
@@ -71,143 +67,41 @@ const UsersDetails = (props) => {
   }
 
   return (
-    <div className={styles.detailsContainer}>
-      <form>
-        <FormControl className={styles.userDetails}>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Typography variant='h1' className={styles.detailsTitle}>
-                Інформація про користувача
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={styles.userBlock}>
-                <Grid container spacing={1} className={styles.userHeader}>
-                  <Grid item xs={1} className={styles.userAvatar}>
-                    <Avatar>{`${firstName[0]}${lastName[0]}`}</Avatar>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Typography className={styles.userName}>
-                      {`${firstName} ${lastName}`}
-                    </Typography>
-                    <Typography className={styles.userStatus}>
-                      {status}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={styles.userBlock}>
-                <TextField
-                  id='firstName'
-                  className={styles.textField}
-                  variant='outlined'
-                  label="Ім'я"
-                  value={firstName}
-                  InputLabelProps={{
-                    classes: {
-                      root: styles.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  multiline
-                  disabled
-                />
-                <TextField
-                  id='lastName'
-                  className={styles.textField}
-                  variant='outlined'
-                  label='Прізвище'
-                  value={lastName}
-                  InputLabelProps={{
-                    classes: {
-                      root: styles.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  multiline
-                  disabled
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={styles.userBlock}>
-                <TextField
-                  id='country'
-                  className={styles.textField}
-                  variant='outlined'
-                  label='Країна'
-                  value={country}
-                  InputLabelProps={{
-                    classes: {
-                      root: styles.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  multiline
-                  disabled
-                />
-                <TextField
-                  id='city'
-                  className={styles.textField}
-                  variant='outlined'
-                  label='Місто'
-                  value={city}
-                  InputLabelProps={{
-                    classes: {
-                      root: styles.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  multiline
-                  disabled
-                />
-                <TextField
-                  id='adress'
-                  className={styles.textField}
-                  variant='outlined'
-                  label='Адреса'
-                  value={adress}
-                  InputLabelProps={{
-                    classes: {
-                      root: styles.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  multiline
-                  disabled
-                />
-                <TextField
-                  id='postalCode'
-                  className={styles.textField}
-                  variant='outlined'
-                  label='Поштовий код'
-                  value={postCode}
-                  InputLabelProps={{
-                    classes: {
-                      root: styles.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  multiline
-                  disabled
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                variant='contained'
-                color='secondary'
-                onClick={() => userStatusHandler(id)}
-              >
-                {buttonStatus}
-              </Button>
-            </Grid>
-          </Grid>
-        </FormControl>
-      </form>
-    </div>
+    <Grid className={styles.detailsContainer}>
+      <Grid className={styles.userDetails}>
+        <UserDetailsHeader
+          title='Інформація про користувача'
+          firstName={firstName}
+          lastName={lastName}
+          status={status}
+        />
+        <UserDetailsBody>
+          <UserDetailsSection>
+            <UserInput label={"Ім'я"} value={firstName} id='firstName' />
+            <UserInput label='Прізвище' value={lastName} id='lastName' />
+          </UserDetailsSection>
+          <UserDetailsSection>
+            <UserInput label='Країна' value={country} id='country' />
+            <UserInput label='Місто' value={city} id='city' />
+            <UserInput label='Адреса' value={adress} id='adress' />
+            <UserInput
+              label='Поштовий індекс'
+              value={postCode}
+              id='postalCode'
+            />
+          </UserDetailsSection>
+          <UserDetailsSection withoutPaper size={2}>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={() => userStatusHandler(id)}
+            >
+              {buttonStatus}
+            </Button>
+          </UserDetailsSection>
+        </UserDetailsBody>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -17,7 +17,7 @@ const useUsersHandler = (id) => {
   const [adress, setAdress] = useState('');
   const [postCode, setPostCode] = useState('');
 
-  const [ban, setBan] = useState('');
+  const [isBanned, setBan] = useState('');
 
   useEffect(() => {
     dispatch(getUser(id));
@@ -53,7 +53,7 @@ const useUsersHandler = (id) => {
     city,
     adress,
     postCode,
-    ban
+    isBanned
   };
 };
 

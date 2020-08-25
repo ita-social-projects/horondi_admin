@@ -51,6 +51,10 @@ export const config = {
     USER_ACTIVE_STATUS: 'Активний',
     USER_UNACTIVE_STATUS: 'Неактивний'
   },
+  errorMessages: {
+    USER_NOT_FOUND: 'Користувач не знайдений!',
+    USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу'
+  },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',

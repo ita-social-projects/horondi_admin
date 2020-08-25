@@ -1,5 +1,7 @@
-export const refactorPhoneNumber = (phone = '') => {
-  if (typeof phone !== 'string') return '';
+export const formatPhoneNumber = (phone = '') => {
+  if (typeof phone !== 'string') {
+    return '';
+  }
   return (
     `+${phone.slice(0, 3)}(${phone.slice(3, 5)})-${phone.slice(
       5,

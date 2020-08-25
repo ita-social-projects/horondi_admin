@@ -2,7 +2,9 @@ import {
   SET_USERS,
   SET_USER,
   SET_USERS_LOADING,
-  SET_USERS_ERROR
+  SET_USERS_ERROR,
+  UPDATE_USER_LOCALLY,
+  DELETE_USER_LOCALLY
 } from './users.types';
 
 const initialState = {
@@ -33,6 +35,16 @@ const usersReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       userError: action.payload
+    };
+  case UPDATE_USER_LOCALLY:
+    return {
+      ...state,
+      user: { ...state.user, banned: !state.user.banned }
+    };
+  case DELETE_USER_LOCALLY:
+    return {
+      ...state,
+      list: state.list.filter((item) => item._id !== action.payload)
     };
   default:
     return state;

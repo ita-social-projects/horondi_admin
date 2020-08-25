@@ -6,7 +6,9 @@ import {
   SET_USERS_ERROR,
   SET_USERS_LOADING,
   DELETE_USER,
-  UPDATE_USER_STATUS
+  UPDATE_USER_STATUS,
+  DELETE_USER_LOCALLY,
+  UPDATE_USER_LOCALLY
 } from './users.types';
 
 const getUsers = () => ({ type: GET_USERS });
@@ -45,6 +47,15 @@ const setUserError = (error) => ({
   payload: error
 });
 
+const updateUserLocally = (id) => ({
+  type: UPDATE_USER_LOCALLY,
+  payload: id
+});
+
+const deleteUserLocally = (id) => ({
+  type: DELETE_USER_LOCALLY,
+  payload: id
+});
 export {
   getUsers,
   setUsers,
@@ -53,5 +64,7 @@ export {
   deleteUser,
   updateUserStatus,
   setUserError,
-  setUsersLoading
+  setUsersLoading,
+  updateUserLocally,
+  deleteUserLocally
 };

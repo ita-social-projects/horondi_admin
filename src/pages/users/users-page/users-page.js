@@ -11,13 +11,13 @@ import LoadingBar from '../../../components/loading-bar';
 
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import { refactorPhoneNumber } from '../../../services/refactor.service';
+import { formatPhoneNumber } from '../../../utils/format-phone-number';
 
 const tableHeaders = config.tableHeadRowTitles.users;
 const { REMOVE_USER_TITLE } = config.buttonTitles;
 const { REMOVE_USER_MESSAGE } = config.messages;
 
-const UsersPage = (props) => {
+const UsersPage = () => {
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ Users }) => ({
@@ -43,25 +43,22 @@ const UsersPage = (props) => {
     );
   };
 
-  const usersItems =
-    list !== undefined
-      ? list.map((userItem, index) => (
-        <TableContainerRow
-          key={index}
-          id={userItem._id}
-          name={`${userItem.firstName} ${userItem.lastName}`}
-          mobile={refactorPhoneNumber(userItem.phoneNumber)}
-          email={userItem.email}
-          banned={userItem.banned ? 'Неактивний' : 'Активний'}
-          deleteHandler={() => userDeleteHandler(userItem._id)}
-          editHandler={() => dispatch(push(`/users/${userItem._id}`))}
-        />
-      ))
-      : null;
-
   if (loading) {
     return <LoadingBar />;
   }
+
+  const usersItems = list.map((userItem, index) => (
+    <TableContainerRow
+      key={index}
+      id={userItem._id}
+      name={`${userItem.firstName} ${userItem.lastName}`}
+      mobile={formatPhoneNumber(userItem.phoneNumber)}
+      email={userItem.email}
+      banned={userItem.banned ? 'Неактивний' : 'Активний'}
+      deleteHandler={() => userDeleteHandler(userItem._id)}
+      editHandler={() => dispatch(push(`/users/${userItem._id}`))}
+    />
+  ));
 
   return (
     <div className={styles.container}>

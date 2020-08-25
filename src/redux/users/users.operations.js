@@ -1,10 +1,9 @@
 import { gql } from 'apollo-boost';
 import { client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
+import { config } from '../../configs';
 
-import { userTranslations } from '../../translations/users.translations';
-
-const transformError = (err) => err.message.replace('GraphQL error: ', '');
+const formError = (err) => err.message.replace('GraphQL error: ', '');
 const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
 const getAllUsers = async () => {
@@ -66,7 +65,7 @@ const getUserById = async (id) => {
       fetchPolicy: 'no-cache'
     })
     .catch((err) => {
-      throw new Error(`Помилка: ${userTranslations[transformError(err)]}`);
+      throw new Error(`Помилка: ${config.errorMessages[formError(err)]}`);
     });
 
   const { data } = result;
@@ -94,7 +93,7 @@ const deleteUser = async (id) => {
       fetchPolicy: 'no-cache'
     })
     .catch((err) => {
-      throw new Error(`Помилка: ${userTranslations[transformError(err)]}`);
+      throw new Error(`Помилка: ${config.errorMessages[formError(err)]}`);
     });
 
   const { data } = result;
@@ -130,7 +129,7 @@ const switchUserStatus = async (id) => {
 
   if (data.switchUserStatus.message) {
     throw new Error(
-      `Помилка: ${userTranslations[data.switchUserStatus.message]}`
+      `Помилка: ${config.errorMessages[data.switchUserStatus.message]}`
     );
   }
 
