@@ -2,7 +2,8 @@ import {
   SET_PATTERN,
   SET_PATTERN_LOADING,
   SET_PATTERNS,
-  SET_PATTERN_ERROR
+  SET_PATTERN_ERROR,
+  REMOVE_PATTERN_FROM_STORE
 } from './pattern.types';
 
 export const initialState = {
@@ -35,6 +36,11 @@ const patternReducer = (state = initialState, action = {}) => {
       ...state,
       patternError: action.payload
     };
+  case REMOVE_PATTERN_FROM_STORE:
+    const patterns = state.patterns.filter(
+      (pattern) => pattern._id !== action.payload
+    );
+    return { ...state, patterns };
 
   default:
     return state;

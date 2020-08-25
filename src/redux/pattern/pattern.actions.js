@@ -7,7 +7,8 @@ import {
   DELETE_PATTERN,
   ADD_PATTERN,
   UPDATE_PATTERN,
-  SET_PATTERN_ERROR
+  SET_PATTERN_ERROR,
+  REMOVE_PATTERN_FROM_STORE
 } from './pattern.types';
 
 export const setPattern = (payload) => ({
@@ -51,5 +52,10 @@ export const getPatterns = () => ({
 
 export const setPatternError = (payload) => ({
   type: SET_PATTERN_ERROR,
+  payload
+});
+
+export const removePatternFromStore = (payload) => ({
+  type: REMOVE_PATTERN_FROM_STORE,
   payload
 });

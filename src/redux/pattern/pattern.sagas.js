@@ -4,7 +4,8 @@ import {
   setPatterns,
   setPatternLoading,
   setPattern,
-  setPatternError
+  setPatternError,
+  removePatternFromStore
 } from './pattern.actions';
 
 import {
@@ -75,6 +76,7 @@ function* handlePatternDelete({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(deletePattern, payload);
+    yield put(removePatternFromStore(payload));
     yield put(setPatternLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
