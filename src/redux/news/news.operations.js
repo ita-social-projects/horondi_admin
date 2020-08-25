@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 
 import { newsTranslations } from '../../translations/news.translations';
@@ -61,7 +61,6 @@ const getArticleById = async (id) => {
                 large
               }
             }
-            video
             author {
               name {
                 lang
