@@ -15,11 +15,12 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './login-page.styles';
 import { loginUser } from '../../../redux/auth/auth.actions';
 import LoadingBar from '../../../components/loading-bar';
