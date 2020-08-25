@@ -1,16 +1,24 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import CategoryIcon from '@material-ui/icons/Category';
 
-const routes = {
+export const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd'
+  pathToAddNews: '/newsadd',
+  pathToCategories: '/categories',
+  pathToCategoriesDetails: '/categories/:id',
+  pathToAddCategory: '/add-category',
+  pathToEditCategory: '/add-category/:id'
 };
 
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
+    menuCategories: [
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Категорії', routes.pathToCategories, CategoryIcon]
+    ],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
@@ -21,8 +29,73 @@ export const config = {
   buttonStyles: {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
+  templates: {
+    categoryTemplate: {
+      available: false,
+      code: '',
+      images: {
+        large: '',
+        medium: '',
+        small: '',
+        thumbnail: ''
+      },
+      isMain: false,
+      name: [],
+      subcategories: []
+    },
+    filledCategory: {
+      available: false,
+      code: 'asd asd',
+      images: {
+        large: 'as',
+        medium: 'wew',
+        small: 'ee',
+        thumbnail: 'dd'
+      },
+      isMain: true,
+      name: [
+        {
+          lang: 'ru',
+          value: 'rukzak'
+        },
+        {
+          lang: 'eng',
+          value: 'some item'
+        }
+      ],
+      subcategories: [
+        {
+          _id: '1321',
+          available: true,
+          code: 'sub category',
+          images: {
+            large: '1',
+            medium: '2',
+            small: '3',
+            thumbnail: '4'
+          },
+          isMain: false,
+          name: [
+            {
+              lang: 'ru',
+              value: 'super rukzak'
+            },
+            {
+              lang: 'eng',
+              value: 'some super item'
+            }
+          ],
+          subcategories: []
+        }
+      ]
+    }
+  },
   tableHeadRowTitles: {
-    news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    categories: ['№', 'Категорія', 'Дії'],
+    subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
+    categoryName: ['№', 'Мова', 'Назва', 'Дії'],
+    categoryImages: ['№', 'Розмір', 'Посилання', 'Дії']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -48,11 +121,33 @@ export const config = {
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
     CANCEL_TITLE: 'Відмінити',
-    LOGOUT_TITLE: 'Вихід'
+    LOGOUT_TITLE: 'Вихід',
+    ADD_CATEGORY: 'Додати категорію',
+    DELETE_CATEGORY: 'Видалити категорію',
+    ADD_SUBCATEGORY: 'Додати підкатегорію',
+    ADD_CATEGORY_IMAGE: 'Зберегти посилання',
+    ADD_CATEGORY_NAME: 'Додати назву',
+    CANCEL: 'Відмінити',
+    SAVE_CATEGORY: 'Зберегти категорію',
+    SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
+    CREATE_CATEGORY: 'Створити категорію',
+    CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    titleGenerator: (editMode, isMain) => {
+      const editModeMap = new Map([
+        [true, 'Зберегти'],
+        [false, 'Створити']
+      ]);
+      const isMainMap = new Map([
+        [true, 'категорію'],
+        [false, 'підкатегорію']
+      ]);
+      return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
+    }
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
-    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
+    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?'
   },
   formRegExp: {
     email:

@@ -1,4 +1,14 @@
-import ApolloClient from 'apollo-boost';
+import ApolloClient, { gql } from 'apollo-boost';
+
+const {
+  InMemoryCache,
+  IntrospectionFragmentMatcher
+} = require('apollo-cache-inmemory');
+const introspectionResult = require('../fragmentTypes.json');
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData: introspectionResult
+});
 
 export const REACT_APP_API_URL =
   window.env && window.env.REACT_APP_API_URL
@@ -6,5 +16,26 @@ export const REACT_APP_API_URL =
     : process.env.REACT_APP_API_URL;
 
 export const client = new ApolloClient({
-  uri: process.env.REACT_APP_API_URL
+  uri: process.env.REACT_APP_API_URL,
+  cache: new InMemoryCache({
+    addTypename: true,
+    fragmentMatcher
+  })
 });
+
+export const getItems = (query, variables) =>
+  client.query({
+    query: gql`
+      ${query}
+    `,
+    variables,
+    fetchPolicy: 'no-cache'
+  });
+
+export const setItems = (query, variables) =>
+  client.mutate({
+    mutation: gql`
+      ${query}
+    `,
+    variables
+  });
