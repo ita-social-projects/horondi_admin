@@ -7,3 +7,6 @@ export const SET_ARTICLE = 'SET_ARTICLE';
 export const SET_NEWS_LOADING = 'SET_NEWS_LOADING';
 export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';
 export const SET_NEWS_ERROR = 'SET_NEWS_ERROR';
+export const SET_NEWS_PER_PAGE = 'SET_NEWS_PER_PAGE';
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+export const SET_PAGES_COUNT = 'SET_PAGES_COUNT';

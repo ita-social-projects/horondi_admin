@@ -1,32 +1,39 @@
 import { gql } from 'apollo-boost';
 import { client } from '../../utils/client';
-import { config } from '../../configs';
 
-const { errorsLanguage } = config;
+import { newsTranslations } from '../../translations/news.translations';
 
-const getAllNews = async () => {
+const getAllNews = async (skip, limit) => {
   const result = await client.query({
+    variables: {
+      skip,
+      limit
+    },
     query: gql`
-      {
-        getAllNews {
-          _id
-          author {
-            name {
+      query($skip: Int, $limit: Int) {
+        getAllNews(skip: $skip, limit: $limit) {
+          items {
+            _id
+            author {
+              name {
+                lang
+                value
+              }
+              image {
+                small
+              }
+            }
+            title {
               lang
               value
             }
-            image {
-              small
-            }
           }
-          title {
-            lang
-            value
-          }
+          count
         }
       }
     `
   });
+  client.resetStore();
   const { data } = result;
   return data.getAllNews;
 };
@@ -38,7 +45,6 @@ const getArticleById = async (id) => {
       query($id: ID!) {
         getNewsById(id: $id) {
           ... on News {
-            __typename
             title {
               lang
               value
@@ -80,7 +86,11 @@ const getArticleById = async (id) => {
   const { data } = result;
 
   if (data.getNewsById.message) {
-    throw new Error(data.getNewsById.message[errorsLanguage].value);
+    throw new Error(
+      `${data.getNewsById.statusCode} ${
+        newsTranslations[data.getNewsById.message]
+      }`
+    );
   }
 
   return data.getNewsById;
@@ -112,7 +122,11 @@ const deleteArticle = async (id) => {
   const { data } = result;
 
   if (data.deleteNews.message) {
-    throw new Error(data.deleteNews.message[errorsLanguage].value);
+    throw new Error(
+      `${data.deleteNews.statusCode} ${
+        newsTranslations[data.deleteNews.message]
+      }`
+    );
   }
 
   return data.deleteNews;
@@ -142,6 +156,13 @@ const createArticle = async (news) => {
   });
   client.resetStore();
   const { data } = result;
+
+  if (data.addNews.message) {
+    throw new Error(
+      `${data.addNews.statusCode} ${newsTranslations[data.addNews.message]}`
+    );
+  }
+
   return data.addNews;
 };
 
@@ -174,7 +195,11 @@ const updateArticle = async (id, news) => {
   const { data } = result;
 
   if (data.updateNews.message) {
-    throw new Error(data.updateNews.message[errorsLanguage].value);
+    throw new Error(
+      `${data.updateNews.statusCode} ${
+        newsTranslations[data.updateNews.message]
+      }`
+    );
   }
 
   return data.updateNews;
