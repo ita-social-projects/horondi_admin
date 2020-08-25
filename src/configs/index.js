@@ -41,7 +41,7 @@ export const config = {
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
-    LOGIN_PAGE_STATUS: 'Користувача не знайдено!'
+    LOGIN_PAGE_STATUS: 'Невірний логін або пароль'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
