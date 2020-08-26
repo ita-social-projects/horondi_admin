@@ -7,7 +7,6 @@ export const loginAdmin = async (loginInput) => {
       mutation($loginInput: LoginInput!) {
         loginAdmin(loginInput: $loginInput) {
           token
-          role
         }
       }
     `,

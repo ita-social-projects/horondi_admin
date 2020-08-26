@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     margin: '20px 0'
   },
-  textField: {
+  textfield: {
     margin: '10px 5px'
   },
   newsAdd: {
@@ -22,11 +22,11 @@ export const useStyles = makeStyles((theme) => ({
     padding: 20,
     marginTop: 70
   },
+  tabs: {
+    backgroundColor: '#424242'
+  },
   controlsBlock: {
     display: 'flex',
     justifyContent: 'space-between'
-  },
-  select: {
-    width: '150px'
   }
 }));

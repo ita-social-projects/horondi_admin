@@ -61,7 +61,6 @@ const getArticleById = async (id) => {
                 large
               }
             }
-            video
             author {
               name {
                 lang
@@ -71,10 +70,10 @@ const getArticleById = async (id) => {
                 small
               }
             }
+            languages
             date
           }
           ... on Error {
-            __typename
             message
             statusCode
           }

@@ -11,7 +11,7 @@ class VideoBlot extends BlockEmbed {
       videoTag.setAttribute('width', '100%');
       videoTag.setAttribute('controls', '');
       return videoTag;
-    } 
+    }
     const iframeTag = document.createElement('iframe');
     iframeTag.setAttribute('src', value);
     iframeTag.setAttribute('frameborder', '0');
@@ -19,15 +19,13 @@ class VideoBlot extends BlockEmbed {
     iframeTag.setAttribute('width', '100%');
     iframeTag.setAttribute('height', '400px');
     return iframeTag;
-    
   }
 
   static value(node) {
     if (node.getAttribute('title')) {
       return { src: node.getAttribute('src'), alt: node.getAttribute('title') };
-    } 
+    }
     return node.getAttribute('src');
-    
   }
 }
 

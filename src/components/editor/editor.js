@@ -13,12 +13,6 @@ VideoBlot.tagName = 'video';
 Quill.register(VideoBlot);
 
 class Editor extends React.Component {
-  modules = {
-    toolbar: {
-      container: '#toolbar'
-    }
-  };
-
   formats = [
     'header',
     'bold',
@@ -37,6 +31,12 @@ class Editor extends React.Component {
     'align',
     'color'
   ];
+
+  modules = {
+    toolbar: {
+      container: '#toolbar'
+    }
+  };
 
   constructor(props) {
     super(props);

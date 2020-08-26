@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import React, { useEffect } from 'react';
+import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
+import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useStyles } from './news-add.styles';
-import { SaveButton } from '../../../components/buttons';
-import { addArticle } from '../../../redux/news/news.actions';
-import LoadingBar from '../../../components/loading-bar';
 import Editor from '../../../components/editor';
-import { config } from '../../../configs';
+import TabPanel from '../../../components/tab-panel';
+import { SaveButton } from '../../../components/buttons';
+import LoadingBar from '../../../components/loading-bar';
 import useNewsHandlers from '../../../utils/use-news-handlers';
+import { useStyles } from './news-add.styles';
+
+import { addArticle } from '../../../redux/news/news.actions';
+import { config } from '../../../configs';
 
 const { languages } = config;
 
@@ -18,64 +18,56 @@ const NewsAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.newsLoading);
-
-  const [language, setLanguage] = useState('');
-
   const {
-    authorPhoto,
-    newsImage,
-    ukAuthorName,
-    ukTitle,
-    setAuthorPhoto,
-    setNewsImage,
-    ukSetAuthor,
-    ukSetTitle,
-    content,
-    onEditorChange,
-    onFilesChange
+    tabsValue,
+    checkboxes,
+    preferredLanguages,
+    setPreferredLanguages,
+    languageCheckboxes,
+    handleTabsChange,
+    createArticle,
+    ukSetText,
+    enSetText,
+    ukText,
+    enText
   } = useNewsHandlers();
 
-  const newsSaveHandler = async (e) => {
-    e.preventDefault();
-    const news = {
-      author: {
-        name: [
-          {
-            lang: language,
-            value: e.target.ukAuthorName.value
-          }
-        ],
-        image: {
-          small: e.target.authorPhoto.value
-        }
-      },
-      title: [
-        {
-          lang: language,
-          value: e.target.ukTitle.value
-        }
-      ],
-      text: [
-        {
-          lang: language,
-          value: content
-        }
-      ],
-      images: {
-        primary: {
-          medium: e.target.newsImage.value
-        }
-      },
-      date: new Date().toISOString()
-    };
-    dispatch(addArticle(news));
-  };
+  useEffect(() => {
+    const prefLanguages = [];
+    Object.keys(checkboxes).forEach((key) => {
+      if (checkboxes[key] === true) {
+        prefLanguages.push(key);
+      }
+    });
+    setPreferredLanguages(prefLanguages);
+  }, [checkboxes, setPreferredLanguages]);
 
-  const languagesOptions = languages.map((lang, index) => (
-    <MenuItem key={index} value={lang}>
-      {lang}
-    </MenuItem>
-  ));
+  const langValues = languages.map((lang) => ({
+    [`${lang}AuthorName`]: '',
+    [`${lang}Title`]: '',
+    [`${lang}Text`]: ''
+  }));
+
+  const formikValues =
+    langValues !== null ? Object.assign(...langValues) : null;
+  const formik = useFormik({
+    initialValues: {
+      ...formikValues,
+      authorPhoto: '',
+      newsImage: ''
+    },
+    onSubmit: (values) => {
+      const article = createArticle({ ...values, enText, ukText });
+      dispatch(addArticle(article));
+    }
+  });
+
+  const LanguageTabs =
+    preferredLanguages.length > 0
+      ? preferredLanguages.map((lang, index) => (
+        <Tab label={lang} key={index} />
+      ))
+      : null;
 
   if (loading) {
     return <LoadingBar />;
@@ -83,22 +75,9 @@ const NewsAdd = () => {
 
   return (
     <div className={classes.container}>
-      <form onSubmit={newsSaveHandler}>
+      <form onSubmit={formik.handleSubmit}>
         <div className={classes.controlsBlock}>
-          <FormControl className={classes.formControl}>
-            <InputLabel id='demo-simple-select-label'>Мова</InputLabel>
-            <Select
-              className={classes.select}
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              required
-            >
-              {languagesOptions}
-            </Select>
-          </FormControl>
-
+          <div>{languageCheckboxes}</div>
           <SaveButton
             className={classes.saveButton}
             id='save'
@@ -106,63 +85,100 @@ const NewsAdd = () => {
             title='Зберегти'
           />
         </div>
-
-        <FormControl className={classes.newsAdd}>
-          <Grid container spacing={1}>
+        {preferredLanguages.length > 0 ? (
+          <div>
             <Grid item xs={12}>
               <Paper className={classes.newsItemAdd}>
                 <TextField
                   id='authorPhoto'
-                  className={classes.textField}
+                  className={classes.textfield}
                   variant='outlined'
                   label='Фото автора'
-                  multiline
-                  value={authorPhoto}
-                  onChange={(e) => setAuthorPhoto(e.target.value)}
+                  value={formik.values.authorPhoto}
+                  onChange={formik.handleChange}
                   required
                 />
                 <TextField
                   id='newsImage'
-                  className={classes.textField}
+                  className={classes.textfield}
                   variant='outlined'
                   label='Головне зображення'
-                  multiline
-                  value={newsImage}
-                  onChange={(e) => setNewsImage(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='ukAuthorName'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Автор (укр.)'
-                  multiline
-                  value={ukAuthorName}
-                  onChange={(e) => ukSetAuthor(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='ukTitle'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Заголовок (укр.)'
-                  multiline
-                  value={ukTitle}
-                  onChange={(e) => ukSetTitle(e.target.value)}
+                  value={formik.values.newsImage}
+                  onChange={formik.handleChange}
                   required
                 />
               </Paper>
             </Grid>
-            <Grid item xs={12}>
-              <Editor
-                value={content}
-                placeholder='Текст'
-                onEditorChange={onEditorChange}
-                onFilesChange={onFilesChange}
-              />
-            </Grid>
-          </Grid>
-        </FormControl>
+            <AppBar position='static'>
+              <Tabs
+                className={classes.tabs}
+                value={tabsValue}
+                onChange={handleTabsChange}
+                aria-label='simple tabs example'
+              >
+                {LanguageTabs}
+              </Tabs>
+            </AppBar>
+            <TabPanel value={tabsValue} index={0}>
+              <Paper className={classes.newsItemAdd}>
+                <TextField
+                  id='ukAuthorName'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Автор uk'
+                  multiline
+                  value={formik.values.ukAuthorName}
+                  onChange={formik.handleChange}
+                  required
+                />
+                <TextField
+                  id='ukTitle'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Заголовок uk'
+                  multiline
+                  value={formik.values.ukTitle}
+                  onChange={formik.handleChange}
+                  required
+                />
+                <Editor
+                  value={ukText}
+                  placeholder='Текст'
+                  onEditorChange={(value) => ukSetText(value)}
+                />
+              </Paper>
+            </TabPanel>
+            <TabPanel value={tabsValue} index={1}>
+              <Paper className={classes.newsItemAdd}>
+                <TextField
+                  id='enAuthorName'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Автор en'
+                  multiline
+                  value={formik.values.enAuthorName}
+                  onChange={formik.handleChange}
+                  required
+                />
+                <TextField
+                  id='enTitle'
+                  className={classes.textfield}
+                  variant='outlined'
+                  label='Заголовок en'
+                  multiline
+                  value={formik.values.enTitle}
+                  onChange={formik.handleChange}
+                  required
+                />
+                <Editor
+                  value={enText}
+                  placeholder='Текст'
+                  onEditorChange={(value) => enSetText(value)}
+                />
+              </Paper>
+            </TabPanel>
+          </div>
+        ) : null}
       </form>
     </div>
   );
