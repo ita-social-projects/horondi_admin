@@ -40,7 +40,6 @@ const NewsAdd = () => {
     console.log(e.target);
     e.preventDefault();
     const news = {
-      video: e.target.newsVideo.value,
       author: {
         name: [
           {
