@@ -20,7 +20,7 @@ const { REMOVE_USER_MESSAGE } = config.messages;
 const UsersPage = () => {
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading } = useSelector(({ Users }) => ({
+  const { loading, list } = useSelector(({ Users }) => ({
     list: Users.list,
     loading: Users.userLoading
   }));
