@@ -110,3 +110,28 @@ export const deleteCategoryById = (data) => {
   `;
   return setItems(query, data);
 };
+
+export const getSubcategories = (data) => {
+  const query = `
+    query getSubcategories($id: ID!) {
+      getSubcategories(id: $id) {
+        _id
+        code
+        name {
+          lang
+          value
+        }
+        images {
+          large
+          medium
+          small
+          thumbnail
+        }
+        subcategories
+        isMain
+        available
+      }
+    }
+  `;
+  return getItems(query, data);
+};

@@ -11,10 +11,15 @@ import { config, routes } from '../../../configs';
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import { useStyles } from './categories.styles';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 
 const Categories = () => {
+  const { openSuccessSnackbar } = useSuccessSnackbar();
   const { tableHeadRowTitles, buttonTitles } = config;
   const { ADD_CATEGORY } = buttonTitles;
+  const { DELETE_CATEGORY_MESSAGE } = config.messages;
+  const { DELETE_CATEGORY } = config.buttonTitles;
 
   const dispatch = useDispatch();
 
@@ -28,6 +33,19 @@ const Categories = () => {
       productsPerPage: Categories.productsPerPage
     })
   );
+
+  const handleDeleteCategory = (id) => {
+    const removeCategory = () => {
+      dispatch(closeDialog());
+      dispatch(deleteCategory({ id }));
+    };
+    openSuccessSnackbar(
+      removeCategory,
+      DELETE_CATEGORY,
+      DELETE_CATEGORY_MESSAGE,
+      DELETE_CATEGORY
+    );
+  };
 
   const handleAddCategory = () => {
     dispatch(push(routes.pathToAddCategory));
@@ -52,9 +70,8 @@ const Categories = () => {
       .sort((a, b) => {
         if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
           return 1;
-        } if (
-          a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()
-        ) {
+        }
+        if (a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()) {
           return -1;
         }
         return 0;
@@ -66,12 +83,8 @@ const Categories = () => {
           id={category._id}
           num={index + 1}
           name={category.name.length ? category.name[0].value : ''}
-          deleteHandler={() =>
-            dispatch(deleteCategory({ id: category._id }))
-          }
-          editHandler={() =>
-            dispatch(push(`/add-category/${category._id}`))
-          }
+          deleteHandler={() => handleDeleteCategory(category._id)}
+          editHandler={() => dispatch(push(`/add-category/${category._id}`))}
           showAvatar={false}
         />
       ))

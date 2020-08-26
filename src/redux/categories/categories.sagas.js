@@ -5,7 +5,8 @@ import {
   GET_CATEGORY,
   CREATE_CATEGORY,
   EDIT_CATEGORY,
-  DELETE_CATEGORY
+  DELETE_CATEGORY,
+  GET_SUBCATEGORIES
 } from './categories.types';
 import {
   setCategories,
@@ -18,7 +19,8 @@ import {
   getCategoryById,
   createCategory,
   updateCategoryById,
-  deleteCategoryById
+  deleteCategoryById,
+  getSubcategories
 } from './categories.operations';
 
 function* handleCategoriesLoad() {
@@ -47,6 +49,7 @@ function* handleCreateCategory({ payload }) {
     yield call(createCategory, payload);
     yield put(push('/categories'));
   } catch (e) {
+    console.log('eeeeeeee');
     yield setCategoriesError(e);
   }
 }
@@ -76,10 +79,21 @@ function* handleDeleteCategory({ payload }) {
   }
 }
 
+function* handleSubcategoriesLoad({ payload }) {
+  try {
+    yield put(setCategoriesLoading(true));
+    const subcategories = yield call(getSubcategories, payload);
+    yield put(setCategories(subcategories.data.getSubcategories));
+  } catch (e) {
+    yield setCategoriesError(e);
+  }
+}
+
 export default function* newsSaga() {
   yield takeEvery(GET_CATEGORIES, handleCategoriesLoad);
   yield takeEvery(GET_CATEGORY, handleLoadCategoryById);
   yield takeEvery(CREATE_CATEGORY, handleCreateCategory);
   yield takeEvery(EDIT_CATEGORY, handleEditCategory);
   yield takeEvery(DELETE_CATEGORY, handleDeleteCategory);
+  yield takeEvery(GET_SUBCATEGORIES, handleSubcategoriesLoad);
 }

@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 
 export const loginAdmin = async (loginInput) => {

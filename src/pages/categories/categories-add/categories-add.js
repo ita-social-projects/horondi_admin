@@ -31,6 +31,7 @@ import {
 import LoadingBar from '../../../components/loading-bar';
 import { omitTypename } from '../../../utils/omitTypeName';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 
 const CategoriesAdd = ({ id, editMode }) => {
   // HOOKS
@@ -49,20 +50,24 @@ const CategoriesAdd = ({ id, editMode }) => {
   const { DELETE_CATEGORY } = config.buttonTitles;
 
   // MAIN CATEGORIES []
-  const mainCategories = useMemo(() => 
-    categories.filter((cat) => cat.isMain)
-    // .sort((a,b)=>{
-    //   if(a.name[0].value.toLowerCase()>b.name[0].value.toLowerCase()) {
-    //     return 1
-    //   } else if (a.name[0].value.toLowerCase()<b.name[0].value.toLowerCase()) {
-    //     return -1
-    //   }
-    //   return 0
-    // })
-  , [categories]);
+  const mainCategories = useMemo(
+    () =>
+      categories
+        .filter((cat) => cat.isMain)
+        .sort((a, b) => {
+          if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
+            return 1;
+          } if (
+            a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()
+          ) {
+            return -1;
+          }
+          return 0;
+        }),
+    [categories]
+  );
 
   const getCategoryCallback = useCallback(getCategory, [id]);
-  const resetCategory = useCallback(resetNewCategory, []);
   const parentCategory = useMemo(
     () => mainCategories.find((ctg) => ctg.subcategories.includes(id)),
     [id, mainCategories]
@@ -70,9 +75,9 @@ const CategoriesAdd = ({ id, editMode }) => {
 
   useEffect(() => {
     if (!editMode) {
-      dispatch(resetCategory());
+      dispatch(resetNewCategory());
     }
-  }, [dispatch, resetCategory, editMode]);
+  }, [dispatch, editMode]);
 
   useEffect(() => {
     if (id) {
@@ -118,6 +123,33 @@ const CategoriesAdd = ({ id, editMode }) => {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedSizeUrl, setSelectedSizeUrl] = useState('');
 
+  // VALIDATION
+  const [shouldValidate, setShouldValidate] = useState(false);
+  const [codeIsValid, setCodeIsValid] = useState(false);
+  const [nameIsValid, setNameIsValid] = useState(false);
+
+  const fillMissingImageSizes = (sizes) => ({
+    ...sizes,
+    ...Object.fromEntries(
+      Object.keys(sizes)
+        .filter((key) => !sizes[key])
+        .map((size) => [size, 'path-to-photo.jpg'])
+    )
+  });
+
+  useEffect(() => {
+    if (newCategory.code) {
+      setCodeIsValid(true);
+    } else {
+      setCodeIsValid(false);
+    }
+    if (newCategory.name.length >= 2) {
+      setNameIsValid(true);
+    } else {
+      setNameIsValid(false);
+    }
+  }, [newCategory.code, newCategory.name, setCodeIsValid, setNameIsValid]);
+
   // HANDLERS
   const handleChange = (e) => {
     const inputName = e.target.name;
@@ -133,10 +165,16 @@ const CategoriesAdd = ({ id, editMode }) => {
   };
 
   const handleCategorySave = () => {
+    setShouldValidate(true);
     if (isMain) {
       setParentId('');
     }
-    dispatch(createCategory({ category: newCategory, parentId }));
+    if (codeIsValid && nameIsValid) {
+      dispatch(
+        setCategory({ images: fillMissingImageSizes(newCategory.images) })
+      );
+      dispatch(createCategory({ category: newCategory, parentId }));
+    }
   };
 
   const handleCategoryEdit = () => {
@@ -152,6 +190,7 @@ const CategoriesAdd = ({ id, editMode }) => {
   const categoryDeleteHandler = useCallback(
     (id) => {
       const removeCategory = () => {
+        dispatch(closeDialog());
         dispatch(deleteCategory({ id }));
       };
       openSuccessSnackbar(
@@ -232,51 +271,47 @@ const CategoriesAdd = ({ id, editMode }) => {
   };
 
   // SUBCATEGORY LIST []
-  const subcategoryList = useMemo(
-    () =>
-      categories
-        .filter((subcategory) => {
-          const mainCategory = categories.find(
-            (category) => category._id === id
-          );
-          return (
-            mainCategory && mainCategory.subcategories.includes(subcategory._id)
-          );
-        })
-        .map((subcategory, index) => (
-          <TableContainerRow
-            key={index}
-            id={subcategory._id}
-            num={index + 1}
-            name={
-              subcategory.name.length
-                ? subcategory.name[0].value
-                : 'No name category'
-            }
-            available={subcategory.available ? 'Так' : 'Ні'}
-            deleteHandler={() => categoryDeleteHandler(subcategory._id)}
-            editHandler={() =>
-              dispatch(push(`/add-category/${subcategory._id}`))
-            }
-            showAvatar={false}
-          />
-        )),
-    [id, categories, dispatch, categoryDeleteHandler]
-  );
+  const subcategoryList = useMemo(() => {
+    const mainCategory = categories.find((category) => category._id === id);
+    return categories
+      .filter((subcategory) => (
+        mainCategory && mainCategory.subcategories.includes(subcategory._id)
+      ))
+      .map((subcategory, index) => (
+        <TableContainerRow
+          key={index}
+          id={subcategory._id}
+          num={index + 1}
+          name={
+            subcategory.name.length
+              ? subcategory.name[0].value
+              : 'No name category'
+          }
+          available={subcategory.available ? 'Так' : 'Ні'}
+          deleteHandler={() => categoryDeleteHandler(subcategory._id)}
+          editHandler={() => dispatch(push(`/add-category/${subcategory._id}`))}
+          showAvatar={false}
+        />
+      ));
+  }, [id, categories, dispatch, categoryDeleteHandler]);
 
   // CATEGORY NAME LIST []
-  const categoryNameList = useMemo(() => newCategory.name.map((nameItem, index) => (
-    <TableContainerRow
-      key={index}
-      id={nameItem.lang}
-      num={index + 1}
-      lang={nameItem.lang}
-      value={nameItem.value}
-      deleteHandler={() => categoryDeleteHandler(nameItem._id)}
-      editHandler={() => handleNameEdit(nameItem.lang, nameItem.value)}
-      showAvatar={false}
-    />
-  )), [newCategory, categoryDeleteHandler]);
+  const categoryNameList = useMemo(
+    () =>
+      newCategory.name.map((nameItem, index) => (
+        <TableContainerRow
+          key={index}
+          id={nameItem.lang}
+          num={index + 1}
+          lang={nameItem.lang}
+          value={nameItem.value}
+          deleteHandler={() => categoryDeleteHandler(nameItem._id)}
+          editHandler={() => handleNameEdit(nameItem.lang, nameItem.value)}
+          showAvatar={false}
+        />
+      )),
+    [newCategory, categoryDeleteHandler]
+  );
 
   // STYLES
   const classes = useStyles();
@@ -297,6 +332,12 @@ const CategoriesAdd = ({ id, editMode }) => {
                   variant='outlined'
                   name='code'
                   required
+                  error={!codeIsValid && shouldValidate}
+                  helperText={
+                    !codeIsValid && shouldValidate
+                      ? 'Введіть код категорії'
+                      : ''
+                  }
                   value={newCategory.code}
                   onChange={handleChange}
                 />
@@ -334,13 +375,8 @@ const CategoriesAdd = ({ id, editMode }) => {
                 >
                   <Tab label='Назва' />
                   <Tab label='Зображення' />
-                  {isMain ? null : <Tab label='Батьківська категорія' />}
-                  <Tab
-                    label='Підкатегорії'
-                    style={
-                      !isMain || !editMode ? { visibility: 'hidden' } : null
-                    }
-                  />
+                  {!isMain && <Tab label='Батьківська категорія' />}
+                  {isMain && <Tab label='Підкатегорії' />}
                 </Tabs>
                 <TabPanel value={tabValue} index={0}>
                   <div>
@@ -352,6 +388,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                             variant='outlined'
                             name='lang'
                             value={newName.lang}
+                            error={!nameIsValid && shouldValidate}
                             className={classes.addNameInput}
                             onChange={handleNameChange}
                             fullWidth
@@ -360,6 +397,12 @@ const CategoriesAdd = ({ id, editMode }) => {
                             label='Назва'
                             variant='outlined'
                             name='value'
+                            error={!nameIsValid && shouldValidate}
+                            helperText={
+                              !nameIsValid && shouldValidate
+                                ? "Ім'я повинно містити як мінімум 2 значення"
+                                : ''
+                            }
                             value={newName.value}
                             className={classes.addNameInput}
                             onChange={handleNameChange}
@@ -441,7 +484,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                     </Button>
                   </div>
                 </TabPanel>
-                {isMain ? null : (
+                {!isMain && (
                   <TabPanel value={tabValue} index={2}>
                     <div>
                       <div className={classes.addImageForm}>
@@ -461,10 +504,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                             {
                               // mainCategories.length ?
                               mainCategories.map((category) => (
-                                <option
-                                  key={category._id}
-                                  value={category._id}
-                                >
+                                <option key={category._id} value={category._id}>
                                   {category.name[0].value}
                                 </option>
                               ))
@@ -476,18 +516,16 @@ const CategoriesAdd = ({ id, editMode }) => {
                     </div>
                   </TabPanel>
                 )}
-                <TabPanel
-                  value={tabValue}
-                  index={3}
-                  style={!isMain && !editMode ? { visibility: 'hidden' } : null}
-                >
-                  <div>
-                    <TableContainerGenerator
-                      tableTitles={tableHeadRowTitles.subcategories}
-                      tableItems={subcategoryList}
-                    />
-                  </div>
-                </TabPanel>
+                {isMain && (
+                  <TabPanel value={tabValue} index={2}>
+                    <div>
+                      <TableContainerGenerator
+                        tableTitles={tableHeadRowTitles.subcategories}
+                        tableItems={subcategoryList}
+                      />
+                    </div>
+                  </TabPanel>
+                )}
               </Paper>
             </Grid>
           </Grid>

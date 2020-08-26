@@ -8,7 +8,8 @@ import {
   CREATE_CATEGORY,
   SET_CATEGORY,
   RESET_NEW_CATEGORY,
-  EDIT_CATEGORY
+  EDIT_CATEGORY,
+  GET_SUBCATEGORIES
 } from './categories.types';
 
 export const getCategories = () => ({
@@ -56,5 +57,9 @@ export const editCategory = (payload) => ({
 
 export const deleteCategory = (payload) => ({
   type: DELETE_CATEGORY,
+  payload
+});
+export const getSubcategories = (payload) => ({
+  type: GET_SUBCATEGORIES,
   payload
 });

@@ -1,9 +1,8 @@
-import ApolloClient, { gql } from 'apollo-boost';
+import { gql } from 'apollo-boost';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { createUploadLink } from 'apollo-upload-client';
 
-const {
-  InMemoryCache,
-  IntrospectionFragmentMatcher
-} = require('apollo-cache-inmemory');
+const { IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
 const introspectionResult = require('../fragmentTypes.json');
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -16,7 +15,7 @@ export const REACT_APP_API_URL =
     : process.env.REACT_APP_API_URL;
 
 export const client = new ApolloClient({
-  uri: process.env.REACT_APP_API_URL,
+  link: createUploadLink({ uri: REACT_APP_API_URL }),
   cache: new InMemoryCache({
     addTypename: true,
     fragmentMatcher
