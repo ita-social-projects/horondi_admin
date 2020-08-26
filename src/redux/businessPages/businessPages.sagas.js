@@ -1,15 +1,21 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-// import { push } from 'connected-react-router';
+import { push } from 'connected-react-router';
 
 import {
   setBusinessPages,
   setLoading,
   setBusinessPagesError
 } from './businessPages.actions';
-import { getAllBusinessPages } from './business-pages.operations';
-import { GET_ALL_BUSINESS_PAGES } from './businessPages.types';
+import {
+  getAllBusinessPages,
+  createBusinessPage
+} from './business-pages.operations';
+import {
+  ADD_BUSINESS_PAGE,
+  GET_ALL_BUSINESS_PAGES
+} from './businessPages.types';
 
-// import { config } from '../../configs';
+import { config } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -17,11 +23,11 @@ import {
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
 
-/* const {
+const {
   SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
-} = config.statuses; */
+} = config.statuses;
 
 export function* handleBusinessPagesLoad() {
   try {
@@ -29,6 +35,21 @@ export function* handleBusinessPagesLoad() {
     const businessPages = yield call(getAllBusinessPages);
     yield put(setBusinessPages(businessPages));
     yield put(setLoading(false));
+  } catch (error) {
+    yield call(handleBusinessPageError, error);
+  }
+}
+
+function* handleAddBusinessPage({ payload }) {
+  try {
+    yield put(setLoading(true));
+    yield call(createBusinessPage, payload);
+    const businessPages = yield call(getAllBusinessPages);
+    yield put(setBusinessPages(businessPages));
+    yield put(setSnackBarSeverity('success'));
+    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
+    yield put(setSnackBarStatus(true));
+    yield put(push('/business-pages'));
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
@@ -44,4 +65,5 @@ export function* handleBusinessPageError(e) {
 
 export default function* businessPagesSaga() {
   yield takeEvery(GET_ALL_BUSINESS_PAGES, handleBusinessPagesLoad);
+  yield takeEvery(ADD_BUSINESS_PAGE, handleAddBusinessPage);
 }

@@ -4,7 +4,7 @@ import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
-import { useStyles } from './business-page.styles';
+import { useStyles } from './business.styles';
 import { config } from '../../configs';
 import { getAllBusinessPages } from '../../redux/businessPages/businessPages.actions';
 
@@ -21,10 +21,10 @@ const { REMOVE_TITLE } = config.buttonTitles;
 
 const { CREATE_BUSINESS_PAGE } = config.buttonTitles;
 
-const {pathToAddBusinessPage} = routes;
+const { pathToAddBusinessPage } = routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
 
-const BusinessPages = () => {
+const Business = () => {
   const classes = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ BusinessPages }) => ({
@@ -90,4 +90,4 @@ const BusinessPages = () => {
   );
 };
 
-export default BusinessPages;
+export default Business;
