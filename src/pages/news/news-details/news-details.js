@@ -23,7 +23,6 @@ const NewsDetails = ({ match }) => {
   const {
     authorPhoto,
     newsImage,
-    newsVideo,
     ukAuthorName,
     ukText,
     ukTitle,
@@ -32,7 +31,6 @@ const NewsDetails = ({ match }) => {
     enTitle,
     setAuthorPhoto,
     setNewsImage,
-    setNewsVideo,
     ukSetAuthor,
     ukSetText,
     ukSetTitle,
@@ -49,7 +47,6 @@ const NewsDetails = ({ match }) => {
     if (newsArticle !== null) {
       setAuthorPhoto(newsArticle.author.image.small);
       setNewsImage(newsArticle.images.primary.medium);
-      setNewsVideo(newsArticle.video);
 
       ukSetAuthor(newsArticle.author.name[0].value);
       ukSetText(newsArticle.text[0].value);
@@ -63,7 +60,6 @@ const NewsDetails = ({ match }) => {
     newsArticle,
     setAuthorPhoto,
     setNewsImage,
-    setNewsVideo,
     ukSetAuthor,
     ukSetText,
     ukSetTitle,
@@ -75,7 +71,6 @@ const NewsDetails = ({ match }) => {
   const newsSaveHandler = async (e) => {
     e.preventDefault();
     const newArticle = {
-      video: newsVideo,
       author: {
         name: [
           {
@@ -161,22 +156,6 @@ const NewsDetails = ({ match }) => {
                   }}
                   value={newsImage}
                   onChange={(e) => setNewsImage(e.target.value)}
-                  required
-                />
-                <TextField
-                  id='newsVideo'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Посилання на відео'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.inputLabel,
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={newsVideo}
-                  onChange={(e) => setNewsVideo(e.target.value)}
                   required
                 />
               </Paper>

@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { config } from '../../configs';
