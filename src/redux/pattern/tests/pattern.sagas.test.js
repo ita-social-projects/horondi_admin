@@ -8,7 +8,7 @@ import {
   setPatternError
 } from '../pattern.actions';
 
-import { patterns, patternId, pattern } from './pattern.mocks';
+import { patterns, patternId, pattern } from './pattern.variables';
 import { getPatternById, getAllPatterns } from '../pattern.operations';
 
 describe('pattern sagas test', () => {

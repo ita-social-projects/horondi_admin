@@ -13,7 +13,7 @@ import {
   updatePattern
 } from '../../../redux/pattern/pattern.actions';
 import Options from '../../../components/options';
-import CheckboxOptions from '../../../components/checkboxOptions';
+import CheckboxOptions from '../../../components/checkbox-options';
 
 const { languages } = config;
 

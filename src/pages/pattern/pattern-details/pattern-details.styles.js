@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     margin: theme.spacing(2),
-    padding: '10px 10px'
+    padding: '10px'
   },
   patternDetails: {
     display: 'flex',

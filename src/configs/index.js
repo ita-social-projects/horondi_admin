@@ -1,4 +1,4 @@
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import { ImportContacts, Palette } from '@material-ui/icons';
 
 export const routes = {
   pathToLogin: '/',
@@ -14,8 +14,8 @@ export const config = {
   app: {
     title: 'Horondi Admin Portal',
     menuCategories: [
-      ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Гобелени', routes.pathToPatterns, ImportContactsIcon]
+      ['Новини', routes.pathToNews, ImportContacts],
+      ['Гобелени', routes.pathToPatterns, Palette]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',

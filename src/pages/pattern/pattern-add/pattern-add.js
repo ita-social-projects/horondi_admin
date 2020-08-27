@@ -8,7 +8,7 @@ import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 import usePatternHandlers from '../../../utils/use-pattern-handlers';
 import Options from '../../../components/options';
-import CheckboxOptions from '../../../components/checkboxOptions';
+import CheckboxOptions from '../../../components/checkbox-options';
 
 const { languages } = config;
 

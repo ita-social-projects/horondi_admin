@@ -1,4 +1,4 @@
-import { pattern, patterns, patternToRemoveId } from './pattern.mocks';
+import { pattern, patterns, patternToRemoveId } from './pattern.variables';
 import {
   setPatternError,
   setPatternLoading,

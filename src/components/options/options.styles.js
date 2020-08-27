@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     padding: '10px 10px'
   },
-  textfield: {
+  textField: {
     margin: '5px 0'
   }
 }));
