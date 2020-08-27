@@ -1,23 +1,27 @@
 export const pattern = {
-  name: [
+  _id: 'de57efa1b187d1913414b430',
+  description: [
     {
-      lang: 'uk',
-      value: 'Рожева хвилька'
+      value: 'Фабричний гобелен із зображенням квітів'
     },
     {
-      lang: 'en',
-      value: 'Pink wave'
+      value: 'Manufactured tapestry with flower pattern'
     }
   ],
-  images: {
-    large: 'large-pink-wave.jpg',
-    medium: 'medium-pink-wave.jpg',
-    small: 'small-pink-wave.jpg',
-    thumbnail: 'thumbnail-pink-wave.jpg'
-  },
-  material: 'Cotton',
+  name: [
+    {
+      value: 'Квіти'
+    },
+    {
+      value: 'Flowers'
+    }
+  ],
+  handmade: false,
   available: true,
-  handmade: false
+  material: 'Cotton',
+  images: {
+    thumbnail: 'thumbnail_335nr4j5dkebkvus7_flowers.jpg'
+  }
 };
 export const patternId = '0c3c7929dd85de268bed4fe8';
 export const patternToRemoveId = '0c3c7929dd85de268bed4fe8';
@@ -121,18 +125,18 @@ export const fakePattern = {
       name: [
         {
           lang: 'uk',
-          value: 'Рожева хвилька'
+          value: 'Олені'
         },
         {
           lang: 'en',
-          value: 'Pink wave'
+          value: 'Deers'
         }
       ],
       images: {
-        large: 'large-pink-wave.jpg',
-        medium: 'medium-pink-wave.jpg',
-        small: 'small-pink-wave.jpg',
-        thumbnail: 'thumbnail-pink-wave.jpg'
+        large: 'large-deers.jpg',
+        medium: 'medium-deers.jpg',
+        small: 'small-deers.jpg',
+        thumbnail: 'thumbnail-deers.jpg'
       },
       material: 'Cotton',
       available: true,

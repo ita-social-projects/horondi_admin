@@ -87,7 +87,7 @@ const PatternDetails = ({ match }) => {
   ]);
 
   const patternSaveHandler = () => {
-    const pattern = {
+    const newPattern = {
       name: [
         {
           lang: languages[0],
@@ -118,7 +118,7 @@ const PatternDetails = ({ match }) => {
       handmade,
       available
     };
-    dispatch(updatePattern({ id, pattern }));
+    dispatch(updatePattern({ id, pattern: newPattern }));
   };
 
   if (loading) {

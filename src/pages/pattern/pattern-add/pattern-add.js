@@ -44,7 +44,7 @@ const PatternAdd = () => {
 
   const patternSaveHandler = (e) => {
     e.preventDefault();
-    const pattern = {
+    const newPattern = {
       name: [
         {
           lang: languages[0],
@@ -75,7 +75,7 @@ const PatternAdd = () => {
       handmade,
       available
     };
-    dispatch(addPattern(pattern));
+    dispatch(addPattern(newPattern));
   };
   const checkboxes = [
     {

@@ -1,12 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { handlePatternsLoad, handlePatternLoad } from '../pattern.sagas';
-import {
-  setPatterns,
-  setPatternLoading,
-  setPattern,
-  setPatternError
-} from '../pattern.actions';
+import { setPatterns, setPatternLoading, setPattern } from '../pattern.actions';
 
 import { patterns, patternId, pattern } from './pattern.variables';
 import { getPatternById, getAllPatterns } from '../pattern.operations';
