@@ -20,48 +20,82 @@ export const pattern = {
   handmade: false
 };
 export const patternId = '0c3c7929dd85de268bed4fe8';
+export const patternToRemoveId = '0c3c7929dd85de268bed4fe8';
 export const patterns = [
   {
+    _id: '0c3c7929dd85de268bed4fe8',
+    description: [
+      {
+        value: 'Фабричний гобелен із зображенням рожевої хвильки'
+      },
+      {
+        value: 'Manufactured tapestry with pink wave pattern'
+      }
+    ],
     name: [
       {
-        lang: 'uk',
         value: 'Рожева хвилька'
       },
       {
-        lang: 'en',
         value: 'Pink wave'
       }
     ],
-    images: {
-      large: 'large-pink-wave.jpg',
-      medium: 'medium-pink-wave.jpg',
-      small: 'small-pink-wave.jpg',
-      thumbnail: 'thumbnail-pink-wave.jpg'
-    },
-    material: 'Cotton',
+    handmade: false,
     available: true,
-    handmade: false
+    material: 'Cotton',
+    images: {
+      thumbnail: 'thumbnail_335nr4j5dkebkw5cy_pink-wave.jpg'
+    }
   },
   {
-    name: [
+    _id: 'fdc7529135f2c050c877a67a',
+    description: [
       {
-        lang: 'uk',
-        value: 'Люди'
+        value: 'Фабричний гобелен із зображенням синьої хвильки'
       },
       {
-        lang: 'en',
-        value: 'People'
+        value: 'Manufactured tapestry with blue wave pattern'
       }
     ],
-    images: {
-      large: 'large-people.jpg',
-      medium: 'medium-people.jpg',
-      small: 'small-people.jpg',
-      thumbnail: 'thumbnail-people.jpg'
-    },
-    material: 'Cotton',
+    name: [
+      {
+        value: 'Синя хвилька'
+      },
+      {
+        value: 'Blue wave'
+      }
+    ],
+    handmade: false,
     available: true,
-    handmade: false
+    material: 'Cotton',
+    images: {
+      thumbnail: 'thumbnail_335nr4j5dkebkvle7_blue-wave.jpg'
+    }
+  },
+  {
+    _id: '51af3801f347948f14f6933c',
+    description: [
+      {
+        value: 'Фабричний гобелен із зображенням синьо-рожевої хвильки'
+      },
+      {
+        value: 'Manufactured tapestry with blue-pink wave pattern'
+      }
+    ],
+    name: [
+      {
+        value: 'Синьо-рожева хвилька'
+      },
+      {
+        value: 'Blue-pink wave'
+      }
+    ],
+    handmade: false,
+    available: true,
+    material: 'Cotton',
+    images: {
+      thumbnail: 'thumbnail_335nr431gkebp19ht_blue-pink.jpg'
+    }
   }
 ];
 

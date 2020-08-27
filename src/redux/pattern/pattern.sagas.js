@@ -37,7 +37,7 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-function* handlePatternsLoad() {
+export function* handlePatternsLoad() {
   try {
     yield put(setPatternLoading(true));
     const patterns = yield call(getAllPatterns, null);
