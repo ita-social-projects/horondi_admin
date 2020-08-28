@@ -96,19 +96,20 @@ const NewsDetails = ({ match }) => {
   useEffect(() => {
     const prefLanguages = [];
     Object.keys(checkboxes).forEach((key) => {
-      if (checkboxes[key] === true) {
+      if (checkboxes[key]) {
         prefLanguages.push(key);
       }
     });
     setPreferredLanguages(prefLanguages);
   }, [checkboxes, setPreferredLanguages]);
 
-  const LanguageTabs =
+  const languageTabs =
     preferredLanguages.length > 0
       ? preferredLanguages.map((lang, index) => (
         <Tab label={lang} key={index} />
       ))
       : null;
+
   if (loading) {
     return <LoadingBar />;
   }
@@ -138,7 +139,7 @@ const NewsDetails = ({ match }) => {
                 <div>{languageCheckboxes}</div>
                 <SaveButton
                   className={classes.saveButton}
-                  id='save'
+                  data-cy='save'
                   type='submit'
                   title='Зберегти'
                 />
@@ -172,7 +173,7 @@ const NewsDetails = ({ match }) => {
                   onChange={handleTabsChange}
                   aria-label='simple tabs example'
                 >
-                  {LanguageTabs}
+                  {languageTabs}
                 </Tabs>
               </AppBar>
               {preferredLanguages.map((lang, index) => (

@@ -31,7 +31,7 @@ const NewsAdd = () => {
   useEffect(() => {
     const prefLanguages = [];
     Object.keys(checkboxes).forEach((key) => {
-      if (checkboxes[key] === true) {
+      if (checkboxes[key]) {
         prefLanguages.push(key);
       }
     });
@@ -57,7 +57,7 @@ const NewsAdd = () => {
       dispatch(addArticle(article));
     }
   });
-
+  console.log(formikValues);
   const TabPanels =
     preferredLanguages.length > 0
       ? preferredLanguages.map((lang, index) => (
@@ -98,7 +98,7 @@ const NewsAdd = () => {
       ))
       : null;
 
-  const LanguageTabs =
+  const languageTabs =
     preferredLanguages.length > 0
       ? preferredLanguages.map((lang, index) => (
         <Tab label={lang} key={index} />
@@ -116,7 +116,7 @@ const NewsAdd = () => {
           <div>{languageCheckboxes}</div>
           <SaveButton
             className={classes.saveButton}
-            id='save'
+            data-cy='save'
             type='submit'
             title='Зберегти'
           />
@@ -152,7 +152,7 @@ const NewsAdd = () => {
                 onChange={handleTabsChange}
                 aria-label='simple tabs example'
               >
-                {LanguageTabs}
+                {languageTabs}
               </Tabs>
             </AppBar>
             {TabPanels}
