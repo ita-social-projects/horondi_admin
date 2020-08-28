@@ -93,10 +93,8 @@ const LoginPage = () => {
           onChange={handleChange}
           onBlur={handleChange}
         />
-        {touched.email && errors.email ? (
+        {touched.email && errors.email && (
           <div className={classes.inputError}>{errors.email}</div>
-        ) : (
-          ''
         )}
         <FormControl className={classes.input} variant='outlined'>
           <InputLabel
@@ -131,10 +129,8 @@ const LoginPage = () => {
             labelWidth={70}
           />
         </FormControl>
-        {touched.password && errors.password ? (
+        {touched.password && errors.password && (
           <div className={classes.inputError}>{errors.password}</div>
-        ) : (
-          ''
         )}
         <Button
           type='submit'
