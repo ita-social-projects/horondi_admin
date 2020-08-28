@@ -147,6 +147,7 @@ const NewsDetails = ({ match }) => {
               <Grid item xs={12}>
                 <Paper className={classes.newsItemUpdate}>
                   <TextField
+                    data-cy='authorPhoto'
                     id='authorPhoto'
                     className={classes.textField}
                     variant='outlined'
@@ -156,6 +157,7 @@ const NewsDetails = ({ match }) => {
                     required
                   />
                   <TextField
+                    data-cy='newsImage'
                     id='newsImage'
                     className={classes.textField}
                     variant='outlined'
@@ -180,6 +182,7 @@ const NewsDetails = ({ match }) => {
                 <TabPanel key={index} value={tabsValue} index={index}>
                   <Paper className={classes.newsItemUpdate}>
                     <TextField
+                      data-cy={`${lang}AuthorName`}
                       id={`${lang}AuthorName`}
                       className={classes.textField}
                       variant='outlined'
@@ -190,6 +193,7 @@ const NewsDetails = ({ match }) => {
                       required
                     />
                     <TextField
+                      data-cy={`${lang}Title`}
                       id={`${lang}Title`}
                       className={classes.textField}
                       variant='outlined'
@@ -200,6 +204,7 @@ const NewsDetails = ({ match }) => {
                       required
                     />
                     <TextField
+                      data-cy={`${lang}Text`}
                       id={`${lang}Text`}
                       className={classes.textField}
                       variant='outlined'

@@ -64,6 +64,7 @@ const NewsAdd = () => {
         <TabPanel key={index} value={tabsValue} index={index}>
           <Paper className={classes.newsItemAdd}>
             <TextField
+              data-cy={`${lang}AuthorName`}
               id={`${lang}AuthorName`}
               className={classes.textfield}
               variant='outlined'
@@ -74,6 +75,7 @@ const NewsAdd = () => {
               required
             />
             <TextField
+              data-cy={`${lang}Title`}
               id={`${lang}Title`}
               className={classes.textfield}
               variant='outlined'
@@ -84,6 +86,7 @@ const NewsAdd = () => {
               required
             />
             <TextField
+              data-cy={`${lang}Text`}
               id={`${lang}Text`}
               className={classes.textfield}
               variant='outlined'
@@ -126,6 +129,7 @@ const NewsAdd = () => {
             <Grid item xs={12}>
               <Paper className={classes.newsItemAdd}>
                 <TextField
+                  data-cy='authorPhoto'
                   id='authorPhoto'
                   className={classes.textfield}
                   variant='outlined'
@@ -135,6 +139,7 @@ const NewsAdd = () => {
                   required
                 />
                 <TextField
+                  data-cy='newsImage'
                   id='newsImage'
                   className={classes.textfield}
                   variant='outlined'
