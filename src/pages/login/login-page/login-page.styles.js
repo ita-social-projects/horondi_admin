@@ -1,7 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { config } from '../../../configs';
-
-const { drawerWidth } = config.app;
 
 export const useStyles = makeStyles((theme) => ({
   login: {
@@ -19,9 +16,6 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1)
   },
   container: {
-    [theme.breakpoints.up('md')]: {
-      width: `calc(100% - ${drawerWidth}px)`
-    },
     marginTop: 65,
     padding: theme.spacing(2),
     width: '100%'
@@ -29,5 +23,8 @@ export const useStyles = makeStyles((theme) => ({
   input: {
     width: '300px',
     margin: theme.spacing(1)
+  },
+  inputError: {
+    color: '#e60000'
   }
 }));
