@@ -1,11 +1,13 @@
+export const ukDescriptionBase = 'Фабричний гобелен із зображенням';
+export const enDescriptionBase = 'Manufactured tapestry with';
 export const pattern = {
   _id: 'de57efa1b187d1913414b430',
   description: [
     {
-      value: 'Фабричний гобелен із зображенням квітів'
+      value: `${ukDescriptionBase} квітів`
     },
     {
-      value: 'Manufactured tapestry with flower pattern'
+      value: `${enDescriptionBase} flower pattern`
     }
   ],
   name: [
@@ -30,10 +32,10 @@ export const patterns = [
     _id: '0c3c7929dd85de268bed4fe8',
     description: [
       {
-        value: 'Фабричний гобелен із зображенням рожевої хвильки'
+        value: `${ukDescriptionBase} рожевої хвильки`
       },
       {
-        value: 'Manufactured tapestry with pink wave pattern'
+        value: `${enDescriptionBase} pink wave pattern`
       }
     ],
     name: [
@@ -55,10 +57,10 @@ export const patterns = [
     _id: 'fdc7529135f2c050c877a67a',
     description: [
       {
-        value: 'Фабричний гобелен із зображенням синьої хвильки'
+        value: `${ukDescriptionBase} синьої хвильки`
       },
       {
-        value: 'Manufactured tapestry with blue wave pattern'
+        value: `${enDescriptionBase} blue wave pattern`
       }
     ],
     name: [
@@ -80,10 +82,10 @@ export const patterns = [
     _id: '51af3801f347948f14f6933c',
     description: [
       {
-        value: 'Фабричний гобелен із зображенням синьо-рожевої хвильки'
+        value: `${ukDescriptionBase} синьо-рожевої хвильки`
       },
       {
-        value: 'Manufactured tapestry with blue-pink wave pattern'
+        value: `${enDescriptionBase} blue-pink wave pattern`
       }
     ],
     name: [
