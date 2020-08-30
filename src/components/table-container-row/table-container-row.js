@@ -15,7 +15,7 @@ const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
 
   const propetries = { ...rest };
   const tableCells = Object.values(propetries).map((propetry, index) => (
-    <TableCell key={index}>{propetry}</TableCell>
+    <TableCell key={index}>{`${propetry}`}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;

@@ -12,7 +12,7 @@ import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
-
+import PatternPage from '../pages/pattern/pattern-page';
 import { config } from '../configs';
 import { history } from '../store/store';
 
@@ -43,6 +43,7 @@ const Routes = () => {
       <NavMenu />
       <Switch>
         <Route path={routes.pathToNews} exact component={NewsPage} />
+        <Route path={routes.pathToPatterns} exact component={PatternPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route component={ErrorPage} />
