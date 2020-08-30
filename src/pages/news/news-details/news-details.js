@@ -105,9 +105,7 @@ const NewsDetails = ({ match }) => {
 
   const languageTabs =
     preferredLanguages.length > 0
-      ? preferredLanguages.map((lang, index) => (
-        <Tab label={lang} key={index} />
-      ))
+      ? preferredLanguages.map((lang, index) => <Tab label={lang} key={lang} />)
       : null;
 
   if (loading) {
@@ -186,7 +184,7 @@ const NewsDetails = ({ match }) => {
                       id={`${lang}AuthorName`}
                       className={classes.textField}
                       variant='outlined'
-                      label={`Автор ${lang}`}
+                      label={`Ім'я автора`}
                       multiline
                       value={props.values[`${lang}AuthorName`]}
                       onChange={props.handleChange}
@@ -197,7 +195,7 @@ const NewsDetails = ({ match }) => {
                       id={`${lang}Title`}
                       className={classes.textField}
                       variant='outlined'
-                      label={`Заголовок ${lang}`}
+                      label='Заголовок'
                       multiline
                       value={props.values[`${lang}Title`]}
                       onChange={props.handleChange}
@@ -208,7 +206,7 @@ const NewsDetails = ({ match }) => {
                       id={`${lang}Text`}
                       className={classes.textField}
                       variant='outlined'
-                      label={`Текст ${lang}`}
+                      label='Текст'
                       multiline
                       value={props.values[`${lang}Text`]}
                       onChange={props.handleChange}

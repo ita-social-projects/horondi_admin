@@ -44,8 +44,8 @@ const NewsAdd = () => {
     [`${lang}Text`]: ''
   }));
 
-  const formikValues =
-    langValues !== null ? Object.assign(...langValues) : null;
+  const formikValues = langValues !== null ? Object.assign(...langValues) : {};
+
   const formik = useFormik({
     initialValues: {
       ...formikValues,
@@ -57,7 +57,7 @@ const NewsAdd = () => {
       dispatch(addArticle(article));
     }
   });
-  console.log(formikValues);
+
   const TabPanels =
     preferredLanguages.length > 0
       ? preferredLanguages.map((lang, index) => (
@@ -68,7 +68,7 @@ const NewsAdd = () => {
               id={`${lang}AuthorName`}
               className={classes.textfield}
               variant='outlined'
-              label={`Автор ${lang}`}
+              label={`Ім'я автора`}
               multiline
               value={formik.values[`${lang}AuthorName`]}
               onChange={formik.handleChange}
@@ -79,7 +79,7 @@ const NewsAdd = () => {
               id={`${lang}Title`}
               className={classes.textfield}
               variant='outlined'
-              label={`Заголовок ${lang}`}
+              label='Заголовок'
               multiline
               value={formik.values[`${lang}Title`]}
               onChange={formik.handleChange}
@@ -90,7 +90,7 @@ const NewsAdd = () => {
               id={`${lang}Text`}
               className={classes.textfield}
               variant='outlined'
-              label={`Текст ${lang}`}
+              label='Текст'
               multiline
               value={formik.values[`${lang}Text`]}
               onChange={formik.handleChange}
@@ -124,38 +124,38 @@ const NewsAdd = () => {
             title='Зберегти'
           />
         </div>
+        <Grid item xs={12}>
+          <Paper className={classes.newsItemAdd}>
+            <TextField
+              data-cy='authorPhoto'
+              id='authorPhoto'
+              className={classes.textfield}
+              variant='outlined'
+              label='Фото автора'
+              value={formik.values.authorPhoto}
+              onChange={formik.handleChange}
+              required
+            />
+            <TextField
+              data-cy='newsImage'
+              id='newsImage'
+              className={classes.textfield}
+              variant='outlined'
+              label='Головне зображення'
+              value={formik.values.newsImage}
+              onChange={formik.handleChange}
+              required
+            />
+          </Paper>
+        </Grid>
         {preferredLanguages.length > 0 ? (
           <div>
-            <Grid item xs={12}>
-              <Paper className={classes.newsItemAdd}>
-                <TextField
-                  data-cy='authorPhoto'
-                  id='authorPhoto'
-                  className={classes.textfield}
-                  variant='outlined'
-                  label='Фото автора'
-                  value={formik.values.authorPhoto}
-                  onChange={formik.handleChange}
-                  required
-                />
-                <TextField
-                  data-cy='newsImage'
-                  id='newsImage'
-                  className={classes.textfield}
-                  variant='outlined'
-                  label='Головне зображення'
-                  value={formik.values.newsImage}
-                  onChange={formik.handleChange}
-                  required
-                />
-              </Paper>
-            </Grid>
             <AppBar position='static'>
               <Tabs
                 className={classes.tabs}
                 value={tabsValue}
                 onChange={handleTabsChange}
-                aria-label='simple tabs example'
+                aria-label='tabs'
               >
                 {languageTabs}
               </Tabs>

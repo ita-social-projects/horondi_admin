@@ -23,7 +23,13 @@ export const useStyles = makeStyles((theme) => ({
     margin: '10px 5px'
   },
   tabs: {
-    backgroundColor: '#424242'
+    backgroundColor: 'white',
+    '& span.MuiTab-wrapper': {
+      color: '#3F51B5'
+    },
+    '& span.MuiTabs-indicator': {
+      backgroundColor: '#3F51B5'
+    }
   },
   controlsBlock: {
     display: 'flex',

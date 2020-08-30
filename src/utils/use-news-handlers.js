@@ -35,7 +35,7 @@ const useNewsHandlers = () => {
 
   const languageCheckboxes = languages.map((lang, index) => (
     <FormControlLabel
-      key={index}
+      key={lang}
       control={
         <Checkbox
           checked={checkboxes[lang]}
