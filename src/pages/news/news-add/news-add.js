@@ -3,16 +3,17 @@ import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 import TabPanel from '../../../components/tab-panel';
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 import { useStyles } from './news-add.styles';
-
 import { addArticle } from '../../../redux/news/news.actions';
 import { config } from '../../../configs';
 
 const { languages } = config;
+const { formRegExp, loginErrorMessages } = config;
 
 const NewsAdd = () => {
   const classes = useStyles();
