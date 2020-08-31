@@ -49,7 +49,8 @@ export const config = {
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
     USER_ACTIVE_STATUS: 'Активний',
-    USER_UNACTIVE_STATUS: 'Неактивний'
+    USER_UNACTIVE_STATUS: 'Неактивний',
+    LOGIN_PAGE_STATUS: 'Невірний логін або пароль'
   },
   errorMessages: {
     USER_NOT_FOUND: 'Користувач не знайдений!',
@@ -78,6 +79,13 @@ export const config = {
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
+  },
+  loginErrorMessages: {
+    INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
+    ENTER_EMAIL_MESSAGE: 'Введіть email',
+    PASSWORD_MIN_LENGTH_MESSAGE: 'Пароль повинен містити не менше 8 символів',
+    PASSWORD_LANG_MESSAGE: 'Використовуйте латиницю різних регістрів та цифри',
+    ENTER_PASSWORD_MESSAGE: 'Введіть пароль'
   },
   paginationPayload: {
     skip: 0,
