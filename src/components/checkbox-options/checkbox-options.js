@@ -12,7 +12,7 @@ const CheckboxOptions = ({ options }) => {
         checked={checked}
         control={<Checkbox color={color} />}
         label={label}
-        labelPlacement='start'
+        labelPlacement='end'
         onChange={handler}
       />
     )

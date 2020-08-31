@@ -96,7 +96,7 @@ const PatternPage = () => {
     <div className={classes.container}>
       <div className={classes.tableNav}>
         <Button
-          data-cy='add-news'
+          data-cy='add-pattern'
           component={Link}
           to={pathToPatternAddPage}
           variant='contained'
@@ -107,7 +107,7 @@ const PatternPage = () => {
       </div>
       <div className={classes.tableContainer}>
         <TableContainerGenerator
-          data-cy='newsTable'
+          data-cy='patternTable'
           tableTitles={tableTitles}
           tableItems={patternItems}
         />

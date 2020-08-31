@@ -9,7 +9,7 @@ import {
   REMOVE_PATTERN_FROM_STORE
 } from './pattern.types';
 
-const initialState = {
+export const initialState = {
   list: [],
   pattern: null,
   patternLoading: false,

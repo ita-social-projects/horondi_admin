@@ -61,7 +61,7 @@ export const config = {
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
-    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   formRegExp: {

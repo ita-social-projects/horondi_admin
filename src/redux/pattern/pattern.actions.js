@@ -24,7 +24,7 @@ export const setCurrentPage = (payload) => ({
   payload
 });
 
-export const setNewsPerPage = (payload) => ({
+export const setPatternsPerPage = (payload) => ({
   type: SET_PATTERNS_PER_PAGE,
   payload
 });

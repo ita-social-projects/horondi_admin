@@ -15,6 +15,7 @@ import ErrorPage from '../pages/error-page';
 import PatternPage from '../pages/pattern/pattern-page';
 import { config } from '../configs';
 import { history } from '../store/store';
+import PatternAdd from '../pages/pattern/pattern-add';
 
 const { routes } = config.app;
 
@@ -45,6 +46,7 @@ const Routes = () => {
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToPatterns} exact component={PatternPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+        <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route component={ErrorPage} />
       </Switch>
