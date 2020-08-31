@@ -13,7 +13,7 @@ import { addArticle } from '../../../redux/news/news.actions';
 import { config } from '../../../configs';
 
 const { languages } = config;
-const { formRegExp, loginErrorMessages } = config;
+const { loginErrorMessages } = config;
 
 const NewsAdd = () => {
   const classes = useStyles();
@@ -47,7 +47,25 @@ const NewsAdd = () => {
 
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
 
-  const formik = useFormik({
+  const formSchema = Yup.object().shape({
+    authorPhoto: Yup.string()
+      .min(8, loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE)
+      .required(loginErrorMessages.ENTER_PASSWORD_MESSAGE),
+    newsImage: Yup.string()
+      .max(8, loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE)
+      .required(loginErrorMessages.ENTER_PASSWORD_MESSAGE),
+    ukAuthorName: Yup.string().max(
+      8,
+      loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE
+    ),
+    enAuthorName: Yup.string().max(
+      8,
+      loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE
+    )
+  });
+
+  const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+    validationSchema: formSchema,
     initialValues: {
       ...formikValues,
       authorPhoto: '',
@@ -70,9 +88,12 @@ const NewsAdd = () => {
               className={classes.textfield}
               variant='outlined'
               label={`Ім'я автора`}
+              error={
+                touched[`${lang}AuthorName`] && !!errors[`${lang}AuthorName`]
+              }
               multiline
-              value={formik.values[`${lang}AuthorName`]}
-              onChange={formik.handleChange}
+              value={values[`${lang}AuthorName`]}
+              onChange={handleChange}
               required
             />
             <TextField
@@ -82,8 +103,8 @@ const NewsAdd = () => {
               variant='outlined'
               label='Заголовок'
               multiline
-              value={formik.values[`${lang}Title`]}
-              onChange={formik.handleChange}
+              value={values[`${lang}Title`]}
+              onChange={handleChange}
               required
             />
             <TextField
@@ -93,8 +114,8 @@ const NewsAdd = () => {
               variant='outlined'
               label='Текст'
               multiline
-              value={formik.values[`${lang}Text`]}
-              onChange={formik.handleChange}
+              value={values[`${lang}Text`]}
+              onChange={handleChange}
               required
             />
           </Paper>
@@ -115,7 +136,7 @@ const NewsAdd = () => {
 
   return (
     <div className={classes.container}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className={classes.controlsBlock}>
           <div>{languageCheckboxes}</div>
           <SaveButton
@@ -133,20 +154,27 @@ const NewsAdd = () => {
               className={classes.textfield}
               variant='outlined'
               label='Фото автора'
-              value={formik.values.authorPhoto}
-              onChange={formik.handleChange}
+              error={touched.authorPhoto && !!errors.authorPhoto}
+              value={values.authorPhoto}
+              onChange={handleChange}
               required
             />
+            {touched.authorPhoto && errors.authorPhoto && (
+              <div className={classes.inputError}>{errors.authorPhoto}</div>
+            )}
             <TextField
               data-cy='newsImage'
               id='newsImage'
               className={classes.textfield}
               variant='outlined'
               label='Головне зображення'
-              value={formik.values.newsImage}
-              onChange={formik.handleChange}
+              value={values.newsImage}
+              onChange={handleChange}
               required
             />
+            {touched.newsImage && errors.newsImage && (
+              <div className={classes.inputError}>{errors.newsImage}</div>
+            )}
           </Paper>
         </Grid>
         {preferredLanguages.length > 0 ? (

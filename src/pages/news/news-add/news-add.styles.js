@@ -34,5 +34,9 @@ export const useStyles = makeStyles((theme) => ({
   controlsBlock: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  inputError: {
+    color: '#e60000',
+    padding: '0 5px'
   }
 }));
