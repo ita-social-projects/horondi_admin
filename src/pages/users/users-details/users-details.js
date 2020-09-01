@@ -17,7 +17,7 @@ const {
   USER_UNACTIVE_TITLE,
   SWITCH_USER_STATUS_TITLE
 } = config.buttonTitles;
-const { USER_ACTIVE_STATUS, USER_UNACTIVE_STATUS } = config.statuses;
+const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
 
 const UsersDetails = (props) => {
@@ -48,12 +48,12 @@ const UsersDetails = (props) => {
   }
 
   const avatar = `${firstName[0]}${lastName[0]}`;
-  const name = `${firstName } ${ lastName}`;
+  const name = `${firstName} ${lastName}`;
 
   const primaryData = { country, city };
   const secondaryData = { adress, postCode };
 
-  const status = isBanned ? USER_UNACTIVE_STATUS : USER_ACTIVE_STATUS;
+  const status = isBanned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS;
   const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_UNACTIVE_TITLE;
 
   const userStatusHandler = (userId) => {

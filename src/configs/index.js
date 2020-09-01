@@ -64,7 +64,7 @@ export const config = {
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
     USER_ACTIVE_STATUS: 'Активний(-a)',
-    USER_UNACTIVE_STATUS: 'Неактивний(-a)',
+    USER_INACTIVE_STATUS: 'Неактивний(-a)',
     LOGIN_PAGE_STATUS: 'Невірний логін або пароль'
   },
   errorMessages: {
