@@ -43,22 +43,22 @@ const NewsAdd = () => {
   }, [checkboxes, setPreferredLanguages]);
 
   const langValues = languages.map((lang) => ({
-    [`${lang}AuthorName`]: '',
     [`${lang}Title`]: '',
     [`${lang}Text`]: ''
   }));
 
   const formikValues =
     langValues !== null ? Object.assign(...langValues) : null;
+
   const formik = useFormik({
     initialValues: {
       ...formikValues,
-      authorPhoto: '',
-      newsImage: ''
+      code: ''
     },
     onSubmit: (values) => {
-      const article = createBusinessPage({ ...values, enText, ukText });
-      dispatch(addBusinessPage(article));
+      console.log('values', values);
+      const page = createBusinessPage({ ...values, enText, ukText });
+      dispatch(addBusinessPage(page));
     }
   });
 
@@ -88,22 +88,13 @@ const NewsAdd = () => {
         {preferredLanguages.length > 0 ? (
           <div>
             <Grid item xs={12}>
-              <Paper className={classes.newsItemAdd}>
+              <Paper className={classes.businessPageAdd}>
                 <TextField
-                  id='authorPhoto'
-                  className={classes.textfield}
+                  id='code'
+                  className={classes.textField}
                   variant='outlined'
-                  label='Фото автора'
-                  value={formik.values.authorPhoto}
-                  onChange={formik.handleChange}
-                  required
-                />
-                <TextField
-                  id='newsImage'
-                  className={classes.textfield}
-                  variant='outlined'
-                  label='Головне зображення'
-                  value={formik.values.newsImage}
+                  label='Код сторінки'
+                  value={formik.values.businessPageCode}
                   onChange={formik.handleChange}
                   required
                 />
@@ -120,20 +111,10 @@ const NewsAdd = () => {
               </Tabs>
             </AppBar>
             <TabPanel value={tabsValue} index={0}>
-              <Paper className={classes.newsItemAdd}>
-                <TextField
-                  id='ukAuthorName'
-                  className={classes.textfield}
-                  variant='outlined'
-                  label='Автор uk'
-                  multiline
-                  value={formik.values.ukAuthorName}
-                  onChange={formik.handleChange}
-                  required
-                />
+              <Paper className={classes.businessPageAdd}>
                 <TextField
                   id='ukTitle'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Заголовок uk'
                   multiline
@@ -144,25 +125,18 @@ const NewsAdd = () => {
                 <Editor
                   value={ukText}
                   placeholder='Текст'
-                  onEditorChange={(value) => ukSetText(value)}
+                  onEditorChange={(value) => {
+                    console.log(value);
+                    ukSetText(value);
+                  }}
                 />
               </Paper>
             </TabPanel>
             <TabPanel value={tabsValue} index={1}>
-              <Paper className={classes.newsItemAdd}>
-                <TextField
-                  id='enAuthorName'
-                  className={classes.textfield}
-                  variant='outlined'
-                  label='Автор en'
-                  multiline
-                  value={formik.values.enAuthorName}
-                  onChange={formik.handleChange}
-                  required
-                />
+              <Paper className={classes.businessPageAdd}>
                 <TextField
                   id='enTitle'
-                  className={classes.textfield}
+                  className={classes.textField}
                   variant='outlined'
                   label='Заголовок en'
                   multiline

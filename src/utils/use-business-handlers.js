@@ -66,8 +66,7 @@ const useBusinessHandlers = () => {
         lang: languages[1],
         value: values.enText || null
       }
-    ],
-    languages: preferredLanguages
+    ]
   });
 
   return {

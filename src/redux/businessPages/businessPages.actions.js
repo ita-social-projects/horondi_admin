@@ -3,7 +3,8 @@ import {
   SET_BUSINESS_PAGES,
   GET_ALL_BUSINESS_PAGES,
   SET_BUSINESS_PAGES_ERROR,
-  ADD_BUSINESS_PAGE
+  ADD_BUSINESS_PAGE,
+  DELETE_BUSINESS_PAGE
 } from './businessPages.types';
 
 const setBusinessPages = (businessPage) => ({
@@ -31,10 +32,16 @@ const addBusinessPage = (page) => ({
   payload: page
 });
 
+const deleteBusinessPage = (payload) => ({
+  type: DELETE_BUSINESS_PAGE,
+  payload
+});
+
 export {
   setBusinessPages,
   getAllBusinessPages,
   addBusinessPage,
   setLoading,
-  setBusinessPagesError
+  setBusinessPagesError,
+  deleteBusinessPage
 };

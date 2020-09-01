@@ -1,6 +1,7 @@
 import { gql } from 'apollo-boost';
 import { client } from '../../utils/client';
 import { businessTranslations } from '../../translations/business.translations';
+import { newsTranslations } from '../../translations/news.translations';
 
 const getAllBusinessPages = async () => {
   const result = await client.query({
@@ -24,15 +25,13 @@ const getAllBusinessPages = async () => {
   return data.getAllBusinessTexts;
 };
 
-const createBusinessPage = async (page) => {
+const createBusinessPage = async (businessText) => {
   const result = await client.mutate({
     mutation: gql`
       mutation($businessText: BusinessTextInput!) {
         addBusinessText(businessText: $businessText) {
           ... on BusinessText {
-            title {
-              value
-            }
+            _id
           }
           ... on Error {
             message
@@ -42,7 +41,7 @@ const createBusinessPage = async (page) => {
       }
     `,
     fetchPolicy: 'no-cache',
-    variables: { page }
+    variables: { businessText }
   });
   client.resetStore();
   const { data } = result;
@@ -58,4 +57,38 @@ const createBusinessPage = async (page) => {
   return data.addBusinessText;
 };
 
-export { getAllBusinessPages, createBusinessPage };
+const deleteBusinessPage = async (id) => {
+  const result = await client.mutate({
+    variables: { id },
+    mutation: gql`
+      mutation($id: ID!) {
+        deleteBusinessText(id: $id) {
+          ... on BusinessText {
+            title {
+              value
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+  const { data } = result;
+
+  if (data.deleteBusinessText.message) {
+    throw new Error(
+      `${data.deleteBusinessText.statusCode} ${
+        newsTranslations[data.deleteBusinessText.message]
+      }`
+    );
+  }
+
+  return data.deleteBusinessText;
+};
+
+export { getAllBusinessPages, createBusinessPage, deleteBusinessPage };

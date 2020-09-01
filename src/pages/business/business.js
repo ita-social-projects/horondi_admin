@@ -6,20 +6,23 @@ import { Button } from '@material-ui/core';
 
 import { useStyles } from './business.styles';
 import { config } from '../../configs';
-import { getAllBusinessPages } from '../../redux/businessPages/businessPages.actions';
+import {
+  getAllBusinessPages,
+  deleteBusinessPage
+} from '../../redux/businessPages/businessPages.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../components/table-container-row';
 import TableContainerGenerator from '../../components/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
-import { deleteArticle } from '../../redux/news/news.actions';
 
 const { routes } = config.app;
-const { REMOVE_MESSAGE } = config.messages;
-const { REMOVE_TITLE } = config.buttonTitles;
-
-const { CREATE_BUSINESS_PAGE } = config.buttonTitles;
+const { REMOVE_BUSINESS_PAGE } = config.messages;
+const {
+  REMOVE_BUSINESS_PAGE_TITLE,
+  CREATE_BUSINESS_PAGE
+} = config.buttonTitles;
 
 const { pathToAddBusinessPage } = routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
@@ -38,12 +41,17 @@ const Business = () => {
     dispatch(getAllBusinessPages());
   }, [dispatch]);
 
-  const newsDeleteHandler = (id) => {
-    const removeNews = () => {
+  const pageDeleteHandler = (id) => {
+    const removeBusinessPage = () => {
       dispatch(closeDialog());
-      dispatch(deleteArticle(id));
+      dispatch(deleteBusinessPage(id));
     };
-    openSuccessSnackbar(removeNews, REMOVE_TITLE, REMOVE_MESSAGE, REMOVE_TITLE);
+    openSuccessSnackbar(
+      removeBusinessPage,
+      REMOVE_BUSINESS_PAGE_TITLE,
+      REMOVE_BUSINESS_PAGE,
+      REMOVE_BUSINESS_PAGE_TITLE
+    );
   };
 
   const pages =
@@ -54,7 +62,7 @@ const Business = () => {
           id={page._id}
           code={page.code}
           title={page.title[0].value}
-          deleteHandler={() => newsDeleteHandler(page._id)}
+          deleteHandler={() => pageDeleteHandler(page._id)}
           editHandler={() => {
             dispatch(push(`/business-pages/${page._id}`));
           }}

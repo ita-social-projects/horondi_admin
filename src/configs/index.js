@@ -54,12 +54,14 @@ export const config = {
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
+    REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
     CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   formRegExp: {

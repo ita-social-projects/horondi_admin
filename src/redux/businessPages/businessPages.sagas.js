@@ -8,10 +8,12 @@ import {
 } from './businessPages.actions';
 import {
   getAllBusinessPages,
-  createBusinessPage
+  createBusinessPage,
+  deleteBusinessPage
 } from './business-pages.operations';
 import {
   ADD_BUSINESS_PAGE,
+  DELETE_BUSINESS_PAGE,
   GET_ALL_BUSINESS_PAGES
 } from './businessPages.types';
 
@@ -22,6 +24,13 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+import {
+  setCurrentPage,
+  setNews,
+  setNewsLoading,
+  setPagesCount
+} from '../news/news.actions';
+import { deleteArticle, getAllNews } from '../news/news.operations';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -42,6 +51,7 @@ export function* handleBusinessPagesLoad() {
 
 function* handleAddBusinessPage({ payload }) {
   try {
+    console.log(payload);
     yield put(setLoading(true));
     yield call(createBusinessPage, payload);
     const businessPages = yield call(getAllBusinessPages);
@@ -50,6 +60,20 @@ function* handleAddBusinessPage({ payload }) {
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
     yield put(push('/business-pages'));
+  } catch (error) {
+    yield call(handleBusinessPageError, error);
+  }
+}
+
+function* handleBusinessPageDelete({ payload }) {
+  try {
+    yield put(setNewsLoading(true));
+    yield call(deleteBusinessPage, payload);
+    const businessPages = yield call(getAllBusinessPages);
+    yield put(setBusinessPages(businessPages));
+    yield put(setSnackBarSeverity('success'));
+    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
+    yield put(setSnackBarStatus(true));
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
@@ -66,4 +90,5 @@ export function* handleBusinessPageError(e) {
 export default function* businessPagesSaga() {
   yield takeEvery(GET_ALL_BUSINESS_PAGES, handleBusinessPagesLoad);
   yield takeEvery(ADD_BUSINESS_PAGE, handleAddBusinessPage);
+  yield takeEvery(DELETE_BUSINESS_PAGE, handleBusinessPageDelete);
 }
