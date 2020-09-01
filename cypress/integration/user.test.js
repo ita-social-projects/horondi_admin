@@ -64,7 +64,7 @@ describe('User list and items test', () => {
           .get("button[aria-label='Редагувати']:first")
           .click()
           .wait(2000)
-          .get('.makeStyles-userName-26')
+          .get('#name')
           .invoke('text')
           .should('equal', textList);
       });
@@ -82,7 +82,7 @@ describe('User list and items test', () => {
 
     cy.get('button:last').should('have.text', 'Активувати');
 
-    cy.get('#status').should('have.text', 'Неактивний');
+    cy.get('#status').should('have.text', 'Неактивний(-a)');
 
     cy.get('button:last')
       .should('have.text', 'Активувати')
@@ -92,15 +92,14 @@ describe('User list and items test', () => {
       .click()
       .wait(2000);
 
-    cy.get('#status').should('have.text', 'Активний');
+    cy.get('#status').should('have.text', 'Активний(-a)');
   });
   it('Data from the server should be equal with the incoming data', () => {
     cy.visit(`users/${id}`);
-    cy.get('#firstName').should('have.text', firstName);
-    cy.get('#lastName').should('have.text', lastName);
+    cy.get('#name').should('have.text', `${firstName } ${ lastName}`);
     cy.get('#country').should('have.text', country);
     cy.get('#city').should('have.text', city);
     cy.get('#adress').should('have.text', adress);
-    cy.get('#postalCode').should('have.text', postalCode);
+    cy.get('#postCode').should('have.text', postalCode);
   });
 });

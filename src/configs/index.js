@@ -33,16 +33,16 @@ export const config = {
   },
   detailTitles: {
     users: {
-      avatar: {id: "avatar"},
-      name: {id: "name"},
-      status: {id: "status"},
+      avatar: { id: 'avatar' },
+      name: { id: 'name' },
+      status: { id: 'status' },
       primarySection: [
-        {id: "country",label: 'Країна'},
-        {id: "city", label: 'Місто'},
+        { id: 'country', label: 'Країна' },
+        { id: 'city', label: 'Місто' }
       ],
       secondarySection: [
-        {id: "adress",label: 'Адреса'},
-        {id: "postalCode",label: 'Поштовий індекс'}
+        { id: 'adress', label: 'Адреса' },
+        { id: 'postCode', label: 'Поштовий індекс' }
       ]
     }
   },
@@ -63,8 +63,8 @@ export const config = {
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
-    USER_ACTIVE_STATUS: 'Активний',
-    USER_UNACTIVE_STATUS: 'Неактивний',
+    USER_ACTIVE_STATUS: 'Активний(-a)',
+    USER_UNACTIVE_STATUS: 'Неактивний(-a)',
     LOGIN_PAGE_STATUS: 'Невірний логін або пароль'
   },
   errorMessages: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../utils/use-users-handlers';
@@ -10,10 +10,6 @@ import { config } from '../../../configs';
 import { updateUserStatus } from '../../../redux/users/users.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import UserDetailsHeader from './containers/user-details-header';
-import UserDetailsBody from './containers/user-details-body';
-import UserDetailsSection from './containers/user-details-section';
-import UserInput from './containers/user-details-input';
 import UserDetailsCard from './containers/user-details-card';
 
 const {
@@ -47,6 +43,16 @@ const UsersDetails = (props) => {
     isBanned
   } = useUsersHandler(id);
 
+  if (loading) {
+    return <LoadingBar />;
+  }
+
+  const avatar = `${firstName[0]}${lastName[0]}`;
+  const name = `${firstName } ${ lastName}`;
+
+  const primaryData = { country, city };
+  const secondaryData = { adress, postCode };
+
   const status = isBanned ? USER_UNACTIVE_STATUS : USER_ACTIVE_STATUS;
   const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_UNACTIVE_TITLE;
 
@@ -63,45 +69,18 @@ const UsersDetails = (props) => {
     );
   };
 
-  if (loading) {
-    return <LoadingBar />;
-  }
-
   return (
     <Grid className={styles.detailsContainer}>
       <Grid className={styles.userDetails}>
-        <UserDetailsCard/>
-        {/* <UserDetailsHeader
-          title='Інформація про користувача'
-          firstName={firstName}
-          lastName={lastName}
+        <UserDetailsCard
+          avatar={avatar}
+          name={name}
           status={status}
+          primaryData={primaryData}
+          secondaryData={secondaryData}
+          buttonStatus={buttonStatus}
+          buttonHandler={() => userStatusHandler(id)}
         />
-        <UserDetailsBody>
-          <UserDetailsSection>
-            <UserInput label={"Ім'я"} value={firstName} id='firstName' />
-            <UserInput label='Прізвище' value={lastName} id='lastName' />
-          </UserDetailsSection>
-          <UserDetailsSection>
-            <UserInput label='Країна' value={country} id='country' />
-            <UserInput label='Місто' value={city} id='city' />
-            <UserInput label='Адреса' value={adress} id='adress' />
-            <UserInput
-              label='Поштовий індекс'
-              value={postCode}
-              id='postalCode'
-            />
-          </UserDetailsSection>
-          <UserDetailsSection withoutPaper size={2}>
-            <Button
-              variant='contained'
-              color='secondary'
-              onClick={() => userStatusHandler(id)}
-            >
-              {buttonStatus}
-            </Button>
-          </UserDetailsSection>
-        </UserDetailsBody> */}
       </Grid>
     </Grid>
   );

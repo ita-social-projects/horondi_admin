@@ -8,7 +8,19 @@ export const useStyles = makeStyles((theme) => ({
     padding: 25
   },
   userDetails: {
-    width: '40%',
-    margin: '0 auto'
+    width: '35%',
+    margin: '0 auto',
+    [theme.breakpoints.down('lg')]: {
+      width: '45%'
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '50%'
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '60%'
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
   }
 }));
