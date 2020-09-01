@@ -5,7 +5,7 @@ import {
   setPatterns,
   setPattern,
   removePatternFromStore,
-  setCurrentPage,
+  setPatternsCurrentPage,
   setPagesCount,
   setPatternsPerPage
 } from '../pattern.actions';
@@ -54,7 +54,7 @@ describe('reducer tests', () => {
     });
   });
   it('should set current page', () => {
-    expect(patternReducer(initialState, setCurrentPage(5))).toEqual({
+    expect(patternReducer(initialState, setPatternsCurrentPage(5))).toEqual({
       ...initialState,
       pagination: {
         currentPage: 4,

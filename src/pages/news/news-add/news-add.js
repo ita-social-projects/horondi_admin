@@ -57,7 +57,7 @@ const NewsAdd = () => {
       dispatch(addArticle(article));
     }
   });
-  console.log(formikValues);
+
   const TabPanels =
     preferredLanguages.length > 0
       ? preferredLanguages.map((lang, index) => (

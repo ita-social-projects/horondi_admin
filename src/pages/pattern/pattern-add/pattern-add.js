@@ -3,6 +3,7 @@ import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 import TabPanel from '../../../components/tab-panel';
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
@@ -13,6 +14,10 @@ import { config } from '../../../configs';
 import CheckboxOptions from '../../../components/checkbox-options';
 
 const { languages } = config;
+const {
+  PATTERN_VALIDATION_ERROR,
+  PATTERN_ERROR_MESSAGE
+} = config.patternErrorMessages;
 
 const PatternAdd = () => {
   const styles = useStyles();
@@ -35,8 +40,32 @@ const PatternAdd = () => {
     [`${lang}Description`]: ''
   }));
 
+  const patternValidationSchema = Yup.object().shape({
+    enDescription: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    enName: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    ukDescription: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    ukName: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    material: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    available: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    handmade: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE)
+  });
   const formikValues =
     langValues !== null ? Object.assign(...langValues) : null;
+
   const formik = useFormik({
     initialValues: {
       ...formikValues,
@@ -45,6 +74,8 @@ const PatternAdd = () => {
       available,
       handmade
     },
+    validationSchema: patternValidationSchema,
+    validateOnBlur: true,
     onSubmit: (values) => {
       const pattern = createPattern(values);
       dispatch(addPattern(pattern));
@@ -64,8 +95,17 @@ const PatternAdd = () => {
               multiline
               value={formik.values[`${lang}Name`]}
               onChange={formik.handleChange}
-              required
+              error={
+                formik.touched[`${lang}Name`] &&
+                  !!formik.errors[`${lang}Name`]
+              }
             />
+            {formik.touched[`${lang}Name`] &&
+                formik.errors[`${lang}Name`] && (
+              <div className={styles.inputError}>
+                {formik.errors[`${lang}Name`]}
+              </div>
+            )}
             <TextField
               data-cy={`${lang}Description`}
               id={`${lang}Description`}
@@ -75,8 +115,17 @@ const PatternAdd = () => {
               multiline
               value={formik.values[`${lang}Description`]}
               onChange={formik.handleChange}
-              required
+              error={
+                formik.touched[`${lang}Description`] &&
+                  !!formik.errors[`${lang}Description`]
+              }
             />
+            {formik.touched[`${lang}Description`] &&
+                formik.errors[`${lang}Description`] && (
+              <div className={styles.inputError}>
+                {formik.errors[`${lang}Description`]}
+              </div>
+            )}
           </Paper>
         </TabPanel>
       ))
@@ -145,8 +194,13 @@ const PatternAdd = () => {
                   label='Матеріал гобелена'
                   value={formik.values.material}
                   onChange={formik.handleChange}
-                  required
+                  error={formik.touched.material && !!formik.errors.material}
                 />
+                {formik.touched.material && formik.errors.material && (
+                  <div className={styles.inputError}>
+                    {formik.errors.material}
+                  </div>
+                )}
               </Paper>
             </Grid>
             <AppBar position='static'>

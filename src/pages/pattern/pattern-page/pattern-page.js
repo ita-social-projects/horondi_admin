@@ -9,7 +9,7 @@ import { config } from '../../../configs';
 import {
   getPatterns,
   deletePattern,
-  setCurrentPage
+  setPatternsCurrentPage
 } from '../../../redux/pattern/pattern.actions';
 
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
@@ -20,15 +20,14 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { routes } = config.app;
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { REMOVE_TITLE } = config.buttonTitles;
+const { REMOVE_TITLE, PATTERN_REMOVE_TITLE } = config.buttonTitles;
 
 const { CREATE_PATTERN_TITLE } = config.buttonTitles;
-
 const pathToPatternAddPage = routes.pathToAddPattern;
 const tableTitles = config.tableHeadRowTitles.patterns;
 
 const PatternPage = () => {
-  const classes = useStyles();
+  const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     list,
@@ -65,11 +64,11 @@ const PatternPage = () => {
       removePattern,
       REMOVE_TITLE,
       PATTERN_REMOVE_MESSAGE,
-      REMOVE_TITLE
+      PATTERN_REMOVE_TITLE
     );
   };
 
-  const changeHandler = (e, value) => dispatch(setCurrentPage(value));
+  const changeHandler = (e, value) => dispatch(setPatternsCurrentPage(value));
 
   const patternItems =
     list !== undefined
@@ -93,8 +92,8 @@ const PatternPage = () => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.tableNav}>
+    <div className={styles.container}>
+      <div className={styles.tableNav}>
         <Button
           data-cy='add-pattern'
           component={Link}
@@ -105,14 +104,14 @@ const PatternPage = () => {
           {CREATE_PATTERN_TITLE}
         </Button>
       </div>
-      <div className={classes.tableContainer}>
+      <div className={styles.tableContainer}>
         <TableContainerGenerator
           data-cy='patternTable'
           tableTitles={tableTitles}
           tableItems={patternItems}
         />
       </div>
-      <div className={classes.paginationDiv}>
+      <div className={styles.paginationDiv}>
         <Pagination
           count={pagesCount}
           variant='outlined'

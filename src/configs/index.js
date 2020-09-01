@@ -55,6 +55,7 @@ export const config = {
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     CREATE_PATTERN_TITLE: 'Додати гобелен',
+    REMOVE_TITLE: 'Видалити новину',
     PATTERN_REMOVE_TITLE: 'Видалити гобелен',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід'
@@ -75,6 +76,10 @@ export const config = {
     PASSWORD_MIN_LENGTH_MESSAGE: 'Пароль повинен містити не менше 8 символів',
     PASSWORD_LANG_MESSAGE: 'Використовуйте латиницю різних регістрів та цифри',
     ENTER_PASSWORD_MESSAGE: 'Введіть пароль'
+  },
+  patternErrorMessages: {
+    PATTERN_VALIDATION_ERROR: 'Поле не може бути пустим',
+    PATTERN_ERROR_MESSAGE: 'Мінімум 2 символи'
   },
   paginationPayload: {
     skip: 0,

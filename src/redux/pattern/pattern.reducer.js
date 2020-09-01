@@ -3,9 +3,9 @@ import {
   SET_PATTERN_LOADING,
   SET_PATTERN,
   SET_PATTERN_ERROR,
-  SET_CURRENT_PAGE,
+  SET_PATTERNS_CURRENT_PAGE,
   SET_PATTERNS_PER_PAGE,
-  SET_PAGES_COUNT,
+  SET_PATTERNS_PAGES_COUNT,
   REMOVE_PATTERN_FROM_STORE
 } from './pattern.types';
 
@@ -43,7 +43,7 @@ const patternReducer = (state = initialState, action = {}) => {
       ...state,
       patternError: action.payload
     };
-  case SET_CURRENT_PAGE:
+  case SET_PATTERNS_CURRENT_PAGE:
     return {
       ...state,
       pagination: {
@@ -59,7 +59,7 @@ const patternReducer = (state = initialState, action = {}) => {
         patternsPerPage: action.payload
       }
     };
-  case SET_PAGES_COUNT:
+  case SET_PATTERNS_PAGES_COUNT:
     return {
       ...state,
       pagination: {

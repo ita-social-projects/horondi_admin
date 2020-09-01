@@ -77,7 +77,7 @@ function* handleAddPattern({ payload }) {
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
-    yield put(push(routes.pathToPattern));
+    yield put(push(routes.pathToPatterns));
   } catch (error) {
     yield call(handlePatternError, error);
   }
