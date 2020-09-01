@@ -31,6 +31,21 @@ export const config = {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
   },
+  detailTitles: {
+    users: {
+      avatar: {id: "avatar"},
+      name: {id: "name"},
+      status: {id: "status"},
+      primarySection: [
+        {id: "country",label: 'Країна'},
+        {id: "city", label: 'Місто'},
+      ],
+      secondarySection: [
+        {id: "adress",label: 'Адреса'},
+        {id: "postalCode",label: 'Поштовий індекс'}
+      ]
+    }
+  },
   tableSizes: {
     SMALL_SIZE: 'small',
     DEFAULT_SIZE: 'medium'

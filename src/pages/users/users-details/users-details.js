@@ -14,6 +14,7 @@ import UserDetailsHeader from './containers/user-details-header';
 import UserDetailsBody from './containers/user-details-body';
 import UserDetailsSection from './containers/user-details-section';
 import UserInput from './containers/user-details-input';
+import UserDetailsCard from './containers/user-details-card';
 
 const {
   USER_ACTIVE_TITLE,
@@ -69,7 +70,8 @@ const UsersDetails = (props) => {
   return (
     <Grid className={styles.detailsContainer}>
       <Grid className={styles.userDetails}>
-        <UserDetailsHeader
+        <UserDetailsCard/>
+        {/* <UserDetailsHeader
           title='Інформація про користувача'
           firstName={firstName}
           lastName={lastName}
@@ -99,7 +101,7 @@ const UsersDetails = (props) => {
               {buttonStatus}
             </Button>
           </UserDetailsSection>
-        </UserDetailsBody>
+        </UserDetailsBody> */}
       </Grid>
     </Grid>
   );

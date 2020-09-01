@@ -8,6 +8,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: 25
   },
   userDetails: {
-    width: '95%'
+    width: '40%',
+    margin: '0 auto'
   }
 }));
