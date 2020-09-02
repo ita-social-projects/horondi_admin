@@ -12,6 +12,7 @@ import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
+import ProductsPage from '../pages/products/products-page';
 
 import { config } from '../configs';
 import { history } from '../store/store';
@@ -23,19 +24,19 @@ const Routes = () => {
     isAuth: Auth.isAuth
   }));
 
-  if (!isAuth) {
-    return (
-      <ConnectedRouter history={history}>
-        <NavBar />
-        <Switch>
-          <Route path={routes.pathToLogin} exact component={LoginPage} />
-          <Route component={ErrorPage} />
-        </Switch>
-        <DialogWindow />
-        <SnackbarItem />
-      </ConnectedRouter>
-    );
-  }
+  // if (!isAuth) {
+  //   return (
+  //     <ConnectedRouter history={history}>
+  //       <NavBar />
+  //       <Switch>
+  //         <Route path={routes.pathToLogin} exact component={LoginPage} />
+  //         <Route component={ErrorPage} />
+  //       </Switch>
+  //       <DialogWindow />
+  //       <SnackbarItem />
+  //     </ConnectedRouter>
+  //   );
+  // }
 
   return (
     <ConnectedRouter history={history}>
@@ -45,6 +46,7 @@ const Routes = () => {
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />

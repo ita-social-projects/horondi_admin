@@ -1,16 +1,21 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 
 const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd'
+  pathToAddNews: '/newsadd',
+  pathToProducts: '/products'
 };
 
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
+    menuCategories: [
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Продукти', routes.pathToProducts, ShoppingBasketIcon]
+    ],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
@@ -22,7 +27,17 @@ export const config = {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
   tableHeadRowTitles: {
-    news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    products: [
+      'Фото',
+      'Назва',
+      'Категорія',
+      'Модель',
+      'Гобелен',
+      'Ціна(грн)',
+      'Кількість покупок',
+      'Дії'
+    ]
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -71,5 +86,27 @@ export const config = {
     skip: 0,
     limit: 5,
     newsPerPage: 6
-  }
+  },
+  sortBySelectOptions: [
+    {
+      label: 'популярністю',
+      value: 'popularity'
+    },
+    {
+      label: 'від дорогих до дешевих',
+      value: 'sortDesc'
+    },
+    {
+      label: 'від дешевих до дорогих',
+      value: 'sortAsc'
+    },
+    {
+      label: 'рейтингом',
+      value: 'rate'
+    }
+  ],
+  popularity: 'popularity',
+  rate: 'rate',
+  sortAsc: 'sortAsc',
+  sortDesc: 'sortDesc'
 };

@@ -6,6 +6,7 @@ import Table from './table/table.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
 import DialogWindow from './dialog-window/dialog-window.reducer';
 import Auth from './auth/auth.reducer';
+import Products from './products/products.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = (history) =>
     Snackbar,
     DialogWindow,
     Auth,
+    Products,
     router: connectRouter(history)
   });
 export default rootReducer;
