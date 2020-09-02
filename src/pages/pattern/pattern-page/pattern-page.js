@@ -81,7 +81,7 @@ const PatternPage = () => {
           available={patternItem.available}
           deleteHandler={() => patternDeleteHandler(patternItem._id)}
           editHandler={() => {
-            dispatch(push(`/pattern/${patternItem._id}`));
+            dispatch(push(`/patterns/${patternItem._id}`));
           }}
         />
       ))

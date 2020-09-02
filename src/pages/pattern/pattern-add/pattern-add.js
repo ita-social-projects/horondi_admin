@@ -55,12 +55,6 @@ const PatternAdd = () => {
       .required(PATTERN_ERROR_MESSAGE),
     material: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
-    available: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
-    handmade: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE)
   });
   const formikValues =
@@ -70,9 +64,7 @@ const PatternAdd = () => {
     initialValues: {
       ...formikValues,
       patternImage,
-      material,
-      available,
-      handmade
+      material
     },
     validationSchema: patternValidationSchema,
     validateOnBlur: true,
@@ -89,7 +81,7 @@ const PatternAdd = () => {
             <TextField
               data-cy={`${lang}Name`}
               id={`${lang}Name`}
-              className={styles.textfield}
+              className={styles.textField}
               variant='outlined'
               label={`Назва ${lang}`}
               multiline
@@ -109,7 +101,7 @@ const PatternAdd = () => {
             <TextField
               data-cy={`${lang}Description`}
               id={`${lang}Description`}
-              className={styles.textfield}
+              className={styles.textField}
               variant='outlined'
               label={`Опис ${lang}`}
               multiline
@@ -139,21 +131,24 @@ const PatternAdd = () => {
   if (loading) {
     return <LoadingBar />;
   }
+
   const checkboxes = [
     {
       id: 'handmade',
       dataCy: 'handmade',
       value: handmade,
+      checked: handmade,
       color: 'primary',
-      label: 'зроблений вручну',
+      label: config.labels.pattern.handmade,
       handler: (e) => setHandmade(e.target.checked)
     },
     {
       id: 'available',
       dataCy: 'available',
       value: available,
+      checked: available,
       color: 'primary',
-      label: 'доступний',
+      label: config.labels.pattern.available,
       handler: (e) => setAvailable(e.target.checked)
     }
   ];
@@ -179,9 +174,9 @@ const PatternAdd = () => {
                 <TextField
                   id='patternImage'
                   data-cy='patternImage'
-                  className={styles.textfield}
+                  className={styles.textField}
                   variant='outlined'
-                  label='Фото гобелена'
+                  label={config.labels.pattern.image}
                   value={formik.values.patternImage}
                   onChange={formik.handleChange}
                   required
@@ -189,9 +184,9 @@ const PatternAdd = () => {
                 <TextField
                   id='material'
                   data-cy='material'
-                  className={styles.textfield}
+                  className={styles.textField}
                   variant='outlined'
-                  label='Матеріал гобелена'
+                  label={config.labels.pattern.material}
                   value={formik.values.material}
                   onChange={formik.handleChange}
                   error={formik.touched.material && !!formik.errors.material}

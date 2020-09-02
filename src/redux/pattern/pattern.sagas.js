@@ -39,7 +39,7 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-function* handlePatternsLoad({
+export function* handlePatternsLoad({
   payload = {
     skip: 1,
     limit: 1,
@@ -59,7 +59,7 @@ function* handlePatternsLoad({
   }
 }
 
-function* handlePatternLoad({ payload }) {
+export function* handlePatternLoad({ payload }) {
   try {
     yield put(setPatternLoading(true));
     const pattern = yield call(getPatternById, payload);

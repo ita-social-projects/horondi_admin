@@ -13,7 +13,7 @@ const usePatternHandlers = () => {
   const [tabsValue, setTabsValue] = useState(0);
   const [ukDescription, setUkDescription] = useState('');
   const [enDescription, setEnDescription] = useState('');
-
+  console.log(patternImage);
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
   };
@@ -42,9 +42,11 @@ const usePatternHandlers = () => {
         }
       ],
       material: values.material,
-      image: values.patternImage,
-      available: values.available,
-      handmade: values.handmade
+      images: {
+        medium: values.patternImage
+      },
+      available,
+      handmade
     };
     return newPattern;
   };

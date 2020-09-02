@@ -35,4 +35,8 @@ describe('pattern tests', () => {
       .its('currentPage')
       .should('be.equal', 1);
   });
+  it('should create pattern and add it to database and store ', () => {
+    cy.visit('/patterns/add');
+    cy.viewport(1280, 720);
+  });
 });

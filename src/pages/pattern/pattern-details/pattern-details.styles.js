@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  newsItemUpdate: {
+  patternItemUpdate: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
   },
-  newsDetails: {
+  patternDetails: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
@@ -28,5 +28,9 @@ export const useStyles = makeStyles((theme) => ({
   controlsBlock: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  inputError: {
+    color: '#e60000',
+    marginLeft: '5px'
   }
 }));

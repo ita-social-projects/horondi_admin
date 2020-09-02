@@ -85,5 +85,13 @@ export const config = {
     skip: 0,
     limit: 5,
     countPerPage: 6
+  },
+  labels: {
+    pattern: {
+      image: 'Фото гобелена',
+      material: 'Матеріал',
+      available: 'Доступний',
+      handmade: 'Зроблений вручну'
+    }
   }
 };

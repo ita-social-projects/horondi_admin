@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     margin: '20px 0'
   },
-  textfield: {
+  textField: {
     margin: '10px 5px'
   },
   patternAdd: {
