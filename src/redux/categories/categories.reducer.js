@@ -12,7 +12,6 @@ const initialState = {
   categoriesLoading: false,
   categoriesError: null,
   newCategory: config.templates.categoryTemplate
-  // newCategory: config.templates.filledCategory,
 };
 
 const categoriesReducer = (state = initialState, action = {}) => {

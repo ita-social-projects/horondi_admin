@@ -67,7 +67,6 @@ const CategoriesAdd = ({ id, editMode }) => {
     [categories]
   );
 
-  const getCategoryCallback = useCallback(getCategory, [id]);
   const parentCategory = useMemo(
     () => mainCategories.find((ctg) => ctg.subcategories.includes(id)),
     [id, mainCategories]
@@ -81,9 +80,9 @@ const CategoriesAdd = ({ id, editMode }) => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getCategoryCallback(id));
+      dispatch(getCategory(id));
     }
-  }, [dispatch, getCategoryCallback, id]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     dispatch(getCategories());
@@ -93,7 +92,7 @@ const CategoriesAdd = ({ id, editMode }) => {
     if (parentCategory) {
       setParentId(parentCategory._id);
     } else {
-      setParentId('');
+      setParentId(null);
     }
   }, [parentCategory]);
 
@@ -157,6 +156,9 @@ const CategoriesAdd = ({ id, editMode }) => {
     if (e.target.type === 'text') {
       inputValue = e.target.value;
     }
+    if (tabValue === 2 && !isMain) {
+      setTabValue(0);
+    }
     dispatch(setCategory({ [inputName]: inputValue }));
   };
 
@@ -167,7 +169,7 @@ const CategoriesAdd = ({ id, editMode }) => {
   const handleCategorySave = () => {
     setShouldValidate(true);
     if (isMain) {
-      setParentId('');
+      setParentId(null);
     }
     if (codeIsValid && nameIsValid) {
       dispatch(
@@ -274,9 +276,10 @@ const CategoriesAdd = ({ id, editMode }) => {
   const subcategoryList = useMemo(() => {
     const mainCategory = categories.find((category) => category._id === id);
     return categories
-      .filter((subcategory) => (
-        mainCategory && mainCategory.subcategories.includes(subcategory._id)
-      ))
+      .filter(
+        (subcategory) =>
+          mainCategory && mainCategory.subcategories.includes(subcategory._id)
+      )
       .map((subcategory, index) => (
         <TableContainerRow
           key={index}
@@ -305,12 +308,21 @@ const CategoriesAdd = ({ id, editMode }) => {
           num={index + 1}
           lang={nameItem.lang}
           value={nameItem.value}
-          deleteHandler={() => categoryDeleteHandler(nameItem._id)}
+          deleteHandler={() =>
+            dispatch(
+              setCategory({
+                name: [
+                  ...newCategory.name.slice(0, index),
+                  ...newCategory.name.slice(index + 1)
+                ]
+              })
+            )
+          }
           editHandler={() => handleNameEdit(nameItem.lang, nameItem.value)}
           showAvatar={false}
         />
       )),
-    [newCategory, categoryDeleteHandler]
+    [newCategory, dispatch]
   );
 
   // STYLES
@@ -376,7 +388,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                   <Tab label='Назва' />
                   <Tab label='Зображення' />
                   {!isMain && <Tab label='Батьківська категорія' />}
-                  {isMain && <Tab label='Підкатегорії' />}
+                  {isMain && editMode && <Tab label='Підкатегорії' />}
                 </Tabs>
                 <TabPanel value={tabValue} index={0}>
                   <div>
@@ -495,28 +507,24 @@ const CategoriesAdd = ({ id, editMode }) => {
                           <Select
                             native
                             fullWidth
-                            value={parentId}
+                            value={!parentId ? '' : parentId}
                             onChange={handleParentChange}
                           >
                             <option value='' disabled>
                               Оберіть батьківську категорію
                             </option>
-                            {
-                              // mainCategories.length ?
-                              mainCategories.map((category) => (
-                                <option key={category._id} value={category._id}>
-                                  {category.name[0].value}
-                                </option>
-                              ))
-                              // : null
-                            }
+                            {mainCategories.map((category) => (
+                              <option key={category._id} value={category._id}>
+                                {category.name[0].value}
+                              </option>
+                            ))}
                           </Select>
                         </FormControl>
                       </div>
                     </div>
                   </TabPanel>
                 )}
-                {isMain && (
+                {isMain && editMode && (
                   <TabPanel value={tabValue} index={2}>
                     <div>
                       <TableContainerGenerator

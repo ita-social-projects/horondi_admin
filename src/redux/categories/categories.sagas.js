@@ -29,6 +29,7 @@ function* handleCategoriesLoad() {
     const categories = yield call(getAllCategories);
     yield put(setCategories(categories.data.getAllCategories));
   } catch (e) {
+    yield put(push('/error-page'));
     yield setCategoriesError(e);
   }
 }
@@ -49,7 +50,6 @@ function* handleCreateCategory({ payload }) {
     yield call(createCategory, payload);
     yield put(push('/categories'));
   } catch (e) {
-    console.log('eeeeeeee');
     yield setCategoriesError(e);
   }
 }

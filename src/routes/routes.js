@@ -44,7 +44,7 @@ const Routes = () => {
     <ConnectedRouter history={history}>
       <NavBar />
       <NavMenu />
-      <Switch style={{ paddingTop: '90px' }}>
+      <Switch>
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />

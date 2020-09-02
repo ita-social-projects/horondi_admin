@@ -29,7 +29,7 @@ const TableContainerRow = ({
 
   return (
     <TableRow key={id} hover>
-      {!showAvatar ? null : (
+      {showAvatar && (
         <TableCell>
           <Avatar className={avatarSize}>
             <ImageIcon fontSize={iconSize} />

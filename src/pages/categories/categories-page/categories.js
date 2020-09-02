@@ -7,7 +7,7 @@ import {
   deleteCategory
 } from '../../../redux/categories/categories.actions';
 import LoadingBar from '../../../components/loading-bar';
-import { config, routes } from '../../../configs';
+import { config } from '../../../configs';
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import { useStyles } from './categories.styles';
@@ -16,23 +16,18 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 
 const Categories = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { tableHeadRowTitles, buttonTitles } = config;
+  const { tableHeadRowTitles, buttonTitles, app } = config;
+  const { routes } = app;
   const { ADD_CATEGORY } = buttonTitles;
   const { DELETE_CATEGORY_MESSAGE } = config.messages;
   const { DELETE_CATEGORY } = config.buttonTitles;
 
   const dispatch = useDispatch();
 
-  const { categories, categoriesLoading, categoriesError } = useSelector(
-    ({ Categories }) => ({
-      categories: Categories.categories,
-      categoriesLoading: Categories.categoriesLoading,
-      categoriesError: Categories.categoriesError,
-      pagesCount: Categories.pagesCount,
-      currentPage: Categories.currentPage,
-      productsPerPage: Categories.productsPerPage
-    })
-  );
+  const { categories, categoriesLoading } = useSelector(({ Categories }) => ({
+    categories: Categories.categories,
+    categoriesLoading: Categories.categoriesLoading
+  }));
 
   const handleDeleteCategory = (id) => {
     const removeCategory = () => {
@@ -59,10 +54,6 @@ const Categories = () => {
 
   if (categoriesLoading) {
     return <LoadingBar />;
-  }
-
-  if (categoriesError) {
-    dispatch(push('/error-page'));
   }
 
   const categoriesList = categories.length

@@ -1,13 +1,12 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import CategoryIcon from '@material-ui/icons/Category';
 
-export const routes = {
+const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
   pathToCategories: '/categories',
-  pathToCategoriesDetails: '/categories/:id',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id'
 };
@@ -42,52 +41,6 @@ export const config = {
       isMain: false,
       name: [],
       subcategories: []
-    },
-    filledCategory: {
-      available: false,
-      code: 'asd asd',
-      images: {
-        large: 'as',
-        medium: 'wew',
-        small: 'ee',
-        thumbnail: 'dd'
-      },
-      isMain: true,
-      name: [
-        {
-          lang: 'ru',
-          value: 'rukzak'
-        },
-        {
-          lang: 'eng',
-          value: 'some item'
-        }
-      ],
-      subcategories: [
-        {
-          _id: '1321',
-          available: true,
-          code: 'sub category',
-          images: {
-            large: '1',
-            medium: '2',
-            small: '3',
-            thumbnail: '4'
-          },
-          isMain: false,
-          name: [
-            {
-              lang: 'ru',
-              value: 'super rukzak'
-            },
-            {
-              lang: 'eng',
-              value: 'some super item'
-            }
-          ],
-          subcategories: []
-        }
-      ]
     }
   },
   tableHeadRowTitles: {
