@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
-
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
@@ -13,7 +12,7 @@ import { addArticle } from '../../../redux/news/news.actions';
 import { config } from '../../../configs';
 
 const { languages } = config;
-const { loginErrorMessages } = config;
+const { newsErrorMessages } = config;
 
 const NewsAdd = () => {
   const classes = useStyles();
@@ -48,20 +47,18 @@ const NewsAdd = () => {
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
 
   const formSchema = Yup.object().shape({
-    authorPhoto: Yup.string()
-      .min(8, loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE)
-      .required(loginErrorMessages.ENTER_PASSWORD_MESSAGE),
-    newsImage: Yup.string()
-      .max(8, loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE)
-      .required(loginErrorMessages.ENTER_PASSWORD_MESSAGE),
-    ukAuthorName: Yup.string().max(
-      8,
-      loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE
-    ),
-    enAuthorName: Yup.string().max(
-      8,
-      loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE
-    )
+    ukAuthorName: Yup.string()
+      .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
+      .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
+    enAuthorName: Yup.string()
+      .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
+      .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
+    ukTitle: Yup.string()
+      .min(10, newsErrorMessages.TITLE_MIN_LENGTH_MESSAGE)
+      .max(100, newsErrorMessages.TITLE_MAX_LENGTH_MESSAGE),
+    enTitle: Yup.string()
+      .min(10, newsErrorMessages.TITLE_MIN_LENGTH_MESSAGE)
+      .max(100, newsErrorMessages.TITLE_MAX_LENGTH_MESSAGE)
   });
 
   const { values, handleChange, handleSubmit, errors, touched } = useFormik({
@@ -96,6 +93,11 @@ const NewsAdd = () => {
               onChange={handleChange}
               required
             />
+            {touched[`${lang}AuthorName`] && errors[`${lang}AuthorName`] && (
+              <div className={classes.inputError}>
+                {errors[`${lang}AuthorName`]}
+              </div>
+            )}
             <TextField
               data-cy={`${lang}Title`}
               id={`${lang}Title`}
@@ -103,21 +105,33 @@ const NewsAdd = () => {
               variant='outlined'
               label='Заголовок'
               multiline
+              error={touched[`${lang}Title`] && !!errors[`${lang}Title`]}
               value={values[`${lang}Title`]}
               onChange={handleChange}
               required
             />
+            {touched[`${lang}Title`] && errors[`${lang}Title`] && (
+              <div className={classes.inputError}>
+                {errors[`${lang}Title`]}
+              </div>
+            )}
             <TextField
               data-cy={`${lang}Text`}
               id={`${lang}Text`}
               className={classes.textfield}
               variant='outlined'
+              error={touched[`${lang}Text`] && !!errors[`${lang}Text`]}
               label='Текст'
               multiline
               value={values[`${lang}Text`]}
               onChange={handleChange}
               required
             />
+            {touched[`${lang}Text`] && errors[`${lang}Text`] && (
+              <div className={classes.inputError}>
+                {errors[`${lang}Text`]}
+              </div>
+            )}
           </Paper>
         </TabPanel>
       ))
@@ -154,14 +168,10 @@ const NewsAdd = () => {
               className={classes.textfield}
               variant='outlined'
               label='Фото автора'
-              error={touched.authorPhoto && !!errors.authorPhoto}
               value={values.authorPhoto}
               onChange={handleChange}
               required
             />
-            {touched.authorPhoto && errors.authorPhoto && (
-              <div className={classes.inputError}>{errors.authorPhoto}</div>
-            )}
             <TextField
               data-cy='newsImage'
               id='newsImage'
@@ -172,9 +182,6 @@ const NewsAdd = () => {
               onChange={handleChange}
               required
             />
-            {touched.newsImage && errors.newsImage && (
-              <div className={classes.inputError}>{errors.newsImage}</div>
-            )}
           </Paper>
         </Grid>
         {preferredLanguages.length > 0 ? (
