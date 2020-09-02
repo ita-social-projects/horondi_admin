@@ -11,11 +11,6 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
-  detailsContainer: {
-    width: '100%',
-    padding: 20,
-    marginTop: 70
-  },
   saveButton: {
     margin: theme.spacing(2)
   },
