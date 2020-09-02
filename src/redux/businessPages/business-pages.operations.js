@@ -39,6 +39,7 @@ const getBusinessPageById = async (id) => {
               lang
               value
             }
+            languages
           }
           ... on Error {
             message
@@ -135,8 +136,8 @@ const updateBusinessPage = async (id, businessText) => {
       businessText
     },
     mutation: gql`
-      mutation($businessText: BusinessTextInput!) {
-        updateBusinessText(businessText: $businessText) {
+      mutation($id: ID!, $businessText: BusinessTextInput!) {
+        updateBusinessText(id: $id, businessText: $businessText) {
           ... on BusinessText {
             _id
             title {
