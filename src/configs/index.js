@@ -1,8 +1,11 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import PeopleIcon from '@material-ui/icons/People';
 
 const routes = {
   pathToLogin: '/',
   pathToNews: '/',
+  pathToUsers: '/users',
+  pathToUsersDetails: '/users/:id',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd'
 };
@@ -10,7 +13,10 @@ const routes = {
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
+    menuCategories: [
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon]
+    ],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
@@ -22,7 +28,23 @@ export const config = {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
   tableHeadRowTitles: {
-    news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
+  },
+  detailTitles: {
+    users: {
+      avatar: { id: 'avatar' },
+      name: { id: 'name' },
+      status: { id: 'status' },
+      primarySection: [
+        { id: 'country', label: 'Країна' },
+        { id: 'city', label: 'Місто' }
+      ],
+      secondarySection: [
+        { id: 'adress', label: 'Адреса' },
+        { id: 'postCode', label: 'Поштовий індекс' }
+      ]
+    }
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -41,18 +63,31 @@ export const config = {
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
+    USER_ACTIVE_STATUS: 'Активний(-a)',
+    USER_INACTIVE_STATUS: 'Неактивний(-a)',
     LOGIN_PAGE_STATUS: 'Невірний логін або пароль'
+  },
+  errorMessages: {
+    USER_NOT_FOUND: 'Користувач не знайдений!',
+    USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
+    REMOVE_USER_TITLE: 'Видалити користувача',
+    SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
     CANCEL_TITLE: 'Відмінити',
-    LOGOUT_TITLE: 'Вихід'
+    LOGOUT_TITLE: 'Вихід',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
+    USER_ACTIVE_TITLE: 'Активувати'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
+    SWITCH_USER_STATUS_MESSAGE:
+      'Ви впевнені,що хочете змінити статус користувача?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   formRegExp: {
