@@ -1,4 +1,5 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 
 const routes = {
@@ -7,7 +8,10 @@ const routes = {
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd'
+  pathToAddNews: '/newsadd',
+  pathToCategories: '/categories',
+  pathToAddCategory: '/add-category',
+  pathToEditCategory: '/add-category/:id'
 };
 
 export const config = {
@@ -15,7 +19,8 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Користувачі', routes.pathToUsers, PeopleIcon]
+      ['Категорії', routes.pathToCategories, CategoryIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon],
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -27,9 +32,28 @@ export const config = {
   buttonStyles: {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
+  templates: {
+    categoryTemplate: {
+      available: false,
+      code: '',
+      images: {
+        large: '',
+        medium: '',
+        small: '',
+        thumbnail: ''
+      },
+      isMain: false,
+      name: [],
+      subcategories: []
+    }
+  },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
+    categories: ['№', 'Категорія', 'Дії'],
+    subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
+    categoryName: ['№', 'Мова', 'Назва', 'Дії'],
+    categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
+    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
   },
   detailTitles: {
     users: {
@@ -80,15 +104,37 @@ export const config = {
     SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
-    USER_UNACTIVE_TITLE: 'Деактивувати',
-    USER_ACTIVE_TITLE: 'Активувати'
+    ADD_CATEGORY: 'Додати категорію',
+    DELETE_CATEGORY: 'Видалити категорію',
+    ADD_SUBCATEGORY: 'Додати підкатегорію',
+    ADD_CATEGORY_IMAGE: 'Зберегти посилання',
+    ADD_CATEGORY_NAME: 'Додати назву',
+    CANCEL: 'Відмінити',
+    SAVE_CATEGORY: 'Зберегти категорію',
+    SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
+    CREATE_CATEGORY: 'Створити категорію',
+    CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    titleGenerator: (editMode, isMain) => {
+      const editModeMap = new Map([
+        [true, 'Зберегти'],
+        [false, 'Створити']
+      ]);
+      const isMainMap = new Map([
+        [true, 'категорію'],
+        [false, 'підкатегорію']
+      ]);
+      return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
+    }
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
+    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
+    USER_ACTIVE_TITLE: 'Активувати',
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
-    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   formRegExp: {
     email:
