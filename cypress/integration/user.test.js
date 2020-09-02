@@ -20,13 +20,9 @@ describe('User list and items test', () => {
   });
 
   beforeEach(() => {
-    cy.visit('/');
-    cy.get('input[name="email"]').type(Cypress.env('ADMIN_LOGIN'));
-    cy.get('input[name="password"]').type(Cypress.env('ADMIN_PASSWORD'));
-    cy.get('button[type="submit"]').click();
-    cy.wait(2000);
+    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
     cy.visit('/users');
-    cy.wait(2000);
+    cy.wait(3000);
     cy.get('.MuiTableCell-root.MuiTableCell-body').as('table');
   });
 
@@ -64,7 +60,7 @@ describe('User list and items test', () => {
           .get("button[aria-label='Редагувати']:first")
           .click()
           .wait(2000)
-          .get('#name')
+          .get('[data-cy=name]')
           .invoke('text')
           .should('equal', textList);
       });
@@ -82,7 +78,7 @@ describe('User list and items test', () => {
 
     cy.get('button:last').should('have.text', 'Активувати');
 
-    cy.get('#status').should('have.text', 'Неактивний(-a)');
+    cy.get('[data-cy=status]').should('have.text', 'Неактивний(-a)');
 
     cy.get('button:last')
       .should('have.text', 'Активувати')
@@ -92,14 +88,14 @@ describe('User list and items test', () => {
       .click()
       .wait(2000);
 
-    cy.get('#status').should('have.text', 'Активний(-a)');
+    cy.get('[data-cy=status]').should('have.text', 'Активний(-a)');
   });
   it('Data from the server should be equal with the incoming data', () => {
     cy.visit(`users/${id}`);
-    cy.get('#name').should('have.text', `${firstName } ${ lastName}`);
-    cy.get('#country').should('have.text', country);
-    cy.get('#city').should('have.text', city);
-    cy.get('#adress').should('have.text', adress);
-    cy.get('#postCode').should('have.text', postalCode);
+    cy.get('[data-cy=name]').should('have.text', `${firstName} ${lastName}`);
+    cy.get('[data-cy=country]').should('have.text', country);
+    cy.get('[data-cy=city]').should('have.text', city);
+    cy.get('[data-cy=adress]').should('have.text', adress);
+    cy.get('[data-cy=postCode]').should('have.text', postalCode);
   });
 });

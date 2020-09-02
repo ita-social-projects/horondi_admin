@@ -21,7 +21,7 @@ function* handleAdminLoad({ payload }) {
   try {
     yield put(setAuthLoading(true));
     const admin = yield call(loginAdmin, payload);
-    yield call(setToLocalStorage,'HORONDI_AUTH_TOKEN', admin.token);
+    setToLocalStorage('HORONDI_AUTH_TOKEN', admin.token);
     yield put(setAuth(true));
     yield put(push('/'));
     yield put(setAuthLoading(false));
@@ -36,7 +36,7 @@ function* handleAdminLoad({ payload }) {
 
 function* handleAdminCheckByToken() {
   try {
-    const authToken = yield call(getFromLocalStorage,'HORONDI_AUTH_TOKEN');
+    const authToken = getFromLocalStorage('HORONDI_AUTH_TOKEN');
     yield put(setAuthLoading(true));
     if (!authToken) {
       yield put(setAuthLoading(false));
@@ -50,13 +50,13 @@ function* handleAdminCheckByToken() {
   } catch (error) {
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
-    yield call(clearLocalStorage,null);
+    clearLocalStorage(null);
     yield put(push('/'));
   }
 }
 
 function* handleAdminLogout() {
-  yield call(clearLocalStorage,null);
+  clearLocalStorage(null);
   yield put(setAuth(false));
   yield put(push('/'));
 }

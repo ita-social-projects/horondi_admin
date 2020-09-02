@@ -8,6 +8,7 @@ import {
   Button
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import InfoItem from './containers/info-item';
 import { useStyles } from './user-details-card.styles';
 import { config } from '../../../../../configs';
 
@@ -24,44 +25,37 @@ const UserDetailsCard = ({
 }) => {
   const styles = useStyles();
 
-  const buildInfoItem = (label, id, data, key) => (
-    <Grid item key={key}>
-      <Grid container spacing={1} direction='column'>
-        <Grid item xs={12}>
-          <Typography className={styles.detailTitle} variant='h6'>
-            {label}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography className={styles.detailSubtitle} id={id} variant='h6'>
-            {data}
-          </Typography>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-
   const avatarSection = (
-    <Avatar id={userTitles.avatar.id} className={styles.avatar}>
+    <Avatar data-cy={userTitles.avatar.id} className={styles.avatar}>
       {avatar}
     </Avatar>
   );
   const nameSection = (
-    <Typography id={userTitles.name.id} variant='h3'>
+    <Typography data-cy={userTitles.name.id} variant='h3'>
       {name}
     </Typography>
   );
   const statusSection = (
-    <Typography id={userTitles.status.id} variant='h5'>
+    <Typography data-cy={userTitles.status.id} variant='h5'>
       {status}
     </Typography>
   );
-  const primarySection = userTitles.primarySection.map((item, idx) =>
-    buildInfoItem(item.label, item.id, primaryData[item.id], idx)
-  );
-  const secondarySection = userTitles.secondarySection.map((item, idx) =>
-    buildInfoItem(item.label, item.id, secondaryData[item.id], idx)
-  );
+  const primarySection = userTitles.primarySection.map((item, idx) => (
+    <InfoItem
+      label={item.label}
+      id={item.id}
+      data={primaryData[item.id]}
+      key={idx}
+    />
+  ));
+  const secondarySection = userTitles.secondarySection.map((item, idx) => (
+    <InfoItem
+      label={item.label}
+      id={item.id}
+      data={secondaryData[item.id]}
+      key={idx}
+    />
+  ));
 
   return (
     <Card>
