@@ -57,9 +57,8 @@ const CategoriesAdd = ({ id, editMode }) => {
         .sort((a, b) => {
           if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
             return 1;
-          } if (
-            a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()
-          ) {
+          }
+          else if (a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()) {
             return -1;
           }
           return 0;
