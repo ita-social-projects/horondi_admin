@@ -66,7 +66,7 @@ const NewsForm = ({ article, id }) => {
       ukText: article.text[0].value || '',
       enText: article.text[1].value || ''
     },
-    onSubmit: (values) => {
+    onSubmit: () => {
       const newArticle = createArticle(values);
       dispatch(updateArticle({ id, newArticle }));
     }

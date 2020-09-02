@@ -68,7 +68,7 @@ const NewsAdd = () => {
       authorPhoto: '',
       newsImage: ''
     },
-    onSubmit: (values) => {
+    onSubmit: () => {
       const article = createArticle(values);
       dispatch(addArticle(article));
     }
