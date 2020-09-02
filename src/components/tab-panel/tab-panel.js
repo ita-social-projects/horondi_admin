@@ -10,6 +10,7 @@ function TabPanel(props) {
       role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
+      data-cy={`tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >

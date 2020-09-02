@@ -1,15 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  newsItemAdd: {
+  newsItemUpdate: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
   },
-  textfield: {
-    margin: '10px 5px'
-  },
-  newsAdd: {
+  newsDetails: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
@@ -17,10 +14,8 @@ export const useStyles = makeStyles((theme) => ({
   saveButton: {
     margin: theme.spacing(2)
   },
-  container: {
-    width: '100%',
-    padding: 20,
-    marginTop: 70
+  textField: {
+    margin: '10px 5px'
   },
   tabs: {
     backgroundColor: 'white',
@@ -34,9 +29,5 @@ export const useStyles = makeStyles((theme) => ({
   controlsBlock: {
     display: 'flex',
     justifyContent: 'space-between'
-  },
-  inputError: {
-    color: '#e60000',
-    padding: '0 5px'
   }
 }));
