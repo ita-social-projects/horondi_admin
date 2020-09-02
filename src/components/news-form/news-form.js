@@ -167,17 +167,13 @@ NewsForm.propTypes = {
   article: PropTypes.shape({
     languages: PropTypes.arrayOf.isRequired,
     author: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      name: PropTypes.arrayOf.isRequired,
       image: PropTypes.shape({
         small: PropTypes.string
       }).isRequired
     }),
-    title: PropTypes.shape({
-      value: PropTypes.string.isRequired
-    }),
-    text: PropTypes.shape({
-      value: PropTypes.string.isRequired
-    }),
+    title: PropTypes.arrayOf.isRequired,
+    text: PropTypes.arrayOf.isRequired,
     images: PropTypes.shape({
       primary: PropTypes.shape({
         medium: PropTypes.string
