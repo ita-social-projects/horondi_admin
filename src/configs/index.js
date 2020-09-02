@@ -67,6 +67,13 @@ export const config = {
     PASSWORD_LANG_MESSAGE: 'Використовуйте латиницю різних регістрів та цифри',
     ENTER_PASSWORD_MESSAGE: 'Введіть пароль'
   },
+  newsErrorMessages: {
+    NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
+    NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,
+    TITLE_MAX_LENGTH_MESSAGE:
+      'Заголовок повинен містити не більше 100 символів',
+    TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів'
+  },
   paginationPayload: {
     skip: 0,
     limit: 5,
