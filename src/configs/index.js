@@ -19,8 +19,8 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Категорії', routes.pathToCategories, CategoryIcon]
-      ['Користувачі', routes.pathToUsers, PeopleIcon]
+      ['Категорії', routes.pathToCategories, CategoryIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon],
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
