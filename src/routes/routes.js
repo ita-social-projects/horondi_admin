@@ -13,6 +13,7 @@ import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import Business from '../pages/business';
 import BusinessAdd from '../pages/business/business-add';
+import BusinessPageDetails from '../pages/business/business-details';
 import ErrorPage from '../pages/error-page';
 
 import { config } from '../configs';
@@ -53,6 +54,11 @@ const Routes = () => {
           path={routes.pathToAddBusinessPage}
           exact
           component={BusinessAdd}
+        />
+        <Route
+          path={routes.pathToBusinessPageDetails}
+          exact
+          component={BusinessPageDetails}
         />
         <Route component={ErrorPage} />
       </Switch>

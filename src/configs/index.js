@@ -4,10 +4,11 @@ import InfoIcon from '@material-ui/icons/Info';
 const routes = {
   pathToLogin: '/',
   pathToNews: '/news',
-  pathToBusinessPages: '/business-pages',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
-  pathToAddBusinessPage: '/business-page-add'
+  pathToBusinessPages: '/business-pages',
+  pathToAddBusinessPage: '/business-page-add',
+  pathToBusinessPageDetails: '/business-pages/:id'
 };
 
 export const config = {

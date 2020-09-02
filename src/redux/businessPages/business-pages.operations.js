@@ -13,9 +13,6 @@ const getAllBusinessPages = async () => {
           title {
             value
           }
-          text {
-            value
-          }
         }
       }
     `
@@ -23,6 +20,46 @@ const getAllBusinessPages = async () => {
   client.resetStore();
   const { data } = result;
   return data.getAllBusinessTexts;
+};
+
+const getBusinessPageById = async (id) => {
+  const result = await client.query({
+    variables: { id },
+    query: gql`
+      query($id: ID!) {
+        getBusinessTextById(id: $id) {
+          ... on BusinessText {
+            _id
+            code
+            title {
+              lang
+              value
+            }
+            text {
+              lang
+              value
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  const { data } = result;
+
+  if (data.getBusinessTextById.message) {
+    throw new Error(
+      `${data.getBusinessTextById.statusCode} ${
+        newsTranslations[data.getBusinessTextById.message]
+      }`
+    );
+  }
+
+  return data.getBusinessTextById;
 };
 
 const createBusinessPage = async (businessText) => {
@@ -91,4 +128,48 @@ const deleteBusinessPage = async (id) => {
   return data.deleteBusinessText;
 };
 
-export { getAllBusinessPages, createBusinessPage, deleteBusinessPage };
+const updateBusinessPage = async (id, businessText) => {
+  const result = await client.mutate({
+    variables: {
+      id,
+      businessText
+    },
+    mutation: gql`
+      mutation($businessText: BusinessTextInput!) {
+        updateBusinessText(businessText: $businessText) {
+          ... on BusinessText {
+            _id
+            title {
+              value
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+  const { data } = result;
+
+  if (data.updateBusinessText.message) {
+    throw new Error(
+      `${data.updateBusinessText.statusCode} ${
+        newsTranslations[data.updateBusinessText.message]
+      }`
+    );
+  }
+
+  return data.updateBusinessText;
+};
+
+export {
+  getAllBusinessPages,
+  createBusinessPage,
+  deleteBusinessPage,
+  getBusinessPageById,
+  updateBusinessPage
+};

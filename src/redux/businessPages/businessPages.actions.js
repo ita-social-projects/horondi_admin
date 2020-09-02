@@ -4,7 +4,10 @@ import {
   GET_ALL_BUSINESS_PAGES,
   SET_BUSINESS_PAGES_ERROR,
   ADD_BUSINESS_PAGE,
-  DELETE_BUSINESS_PAGE
+  DELETE_BUSINESS_PAGE,
+  SET_CURRENT_BUSINESS_PAGE,
+  GET_BUSINESS_PAGE_BY_ID,
+  UPDATE_BUSINESS_PAGE
 } from './businessPages.types';
 
 const setBusinessPages = (businessPage) => ({
@@ -14,6 +17,11 @@ const setBusinessPages = (businessPage) => ({
 
 const getAllBusinessPages = (payload) => ({
   type: GET_ALL_BUSINESS_PAGES,
+  payload
+});
+
+const getBusinessPageById = (payload) => ({
+  type: GET_BUSINESS_PAGE_BY_ID,
   payload
 });
 
@@ -37,11 +45,24 @@ const deleteBusinessPage = (payload) => ({
   payload
 });
 
+const updateBusinessPage = (payload) => ({
+  type: UPDATE_BUSINESS_PAGE,
+  payload
+});
+
+const setCurrentBusinessPage = (currentBusinessPage) => ({
+  type: SET_CURRENT_BUSINESS_PAGE,
+  payload: currentBusinessPage
+});
+
 export {
   setBusinessPages,
   getAllBusinessPages,
   addBusinessPage,
   setLoading,
   setBusinessPagesError,
-  deleteBusinessPage
+  deleteBusinessPage,
+  setCurrentBusinessPage,
+  getBusinessPageById,
+  updateBusinessPage
 };
