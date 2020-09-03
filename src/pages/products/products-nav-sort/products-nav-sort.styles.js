@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   select: {
     marginLeft: '.5rem',
-    marginRight: '17px !important',
     display: 'inline-block',
     '& .MuiOutlinedInput-input': {
       height: '25px',

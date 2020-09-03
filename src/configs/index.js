@@ -108,5 +108,6 @@ export const config = {
   popularity: 'popularity',
   rate: 'rate',
   sortAsc: 'sortAsc',
-  sortDesc: 'sortDesc'
+  sortDesc: 'sortDesc',
+  submitKey: 'enter'
 };

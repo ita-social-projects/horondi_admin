@@ -11,8 +11,10 @@ import {
 import { useStyles } from './products-nav-sort.styles';
 
 import { config } from '../../../configs';
+import { productsTranslations } from '../../../translations/product.translations';
 
 const { sortBySelectOptions, sortAsc, sortDesc, rate, popularity } = config;
+const { SORT } = productsTranslations;
 
 const ProductsNavSort = () => {
   const styles = useStyles();
@@ -41,7 +43,7 @@ const ProductsNavSort = () => {
 
   return (
     <div className={styles.sort}>
-      <Typography>Сортувати за:</Typography>
+      <Typography>{SORT}</Typography>
       <TextField
         select
         SelectProps={{ native: true }}

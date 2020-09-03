@@ -8,13 +8,13 @@ export const useStyles = makeStyles((theme) => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 200,
+    width: 230,
     height: '36px'
   },
   iconButton: {
     padding: 10
   },
   container: {
-    width: '365px'
+    width: 421
   }
 }));

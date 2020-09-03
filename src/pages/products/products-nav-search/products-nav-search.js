@@ -19,7 +19,11 @@ import {
   setSearchFilter
 } from '../../../redux/products/products.actions';
 
-const submitKey = 'Enter';
+import { productsTranslations } from '../../../translations/product.translations';
+import { config } from '../../../configs';
+
+const { submitKey } = config;
+const { CLEAR_FILTERS, SEARCH } = productsTranslations;
 
 const ProductsNavSearch = () => {
   const styles = useStyles();
@@ -39,9 +43,7 @@ const ProductsNavSearch = () => {
   };
 
   const handleSearchSubmit = (event) => {
-    const { key, target } = event;
-    const text = target.value.trim();
-    if (key === submitKey && text.length) {
+    if (event.key === submitKey) {
       searchValue();
     }
   };
@@ -55,16 +57,21 @@ const ProductsNavSearch = () => {
   };
 
   return (
-    <Grid container justify='space-between' className={styles.container}>
+    <Grid
+      container
+      justify='space-between'
+      className={styles.container}
+      spacing={2}
+    >
       <Grid item>
         <Paper className={styles.root}>
           <InputBase
-            placeholder='Шукати'
+            placeholder={SEARCH}
             value={searchFilter}
             onChange={handleSearch}
             onKeyPress={handleSearchSubmit}
           />
-          <Tooltip title='Шукати' placement='bottom'>
+          <Tooltip title={SEARCH} placement='bottom'>
             <IconButton
               className={styles.iconButton}
               aria-label='search'
@@ -75,7 +82,7 @@ const ProductsNavSearch = () => {
           </Tooltip>
         </Paper>
       </Grid>
-      <Grid item>
+      <Grid item xs={12} sm>
         <Button
           className={styles.clearButton}
           disabled={
@@ -86,7 +93,7 @@ const ProductsNavSearch = () => {
           color='primary'
           onClick={handleClearFilters}
         >
-          ОЧИСТИТИ ФІЛЬТРИ
+          {CLEAR_FILTERS}
         </Button>
       </Grid>
     </Grid>

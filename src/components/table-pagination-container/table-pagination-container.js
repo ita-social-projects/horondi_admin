@@ -8,14 +8,13 @@ import {
   setRowsPerPage
 } from '../../redux/table/table.actions';
 
+import { tableTranslations } from '../../translations/table.translations';
+
+const { ROWS_PER_PAGE } = tableTranslations;
+
 const TablePaginator = () => {
   const dispatch = useDispatch();
-  const {
-    count,
-    rowsPerPage,
-    rowsPerPageOptions,
-    currentPage
-  } = useSelector(
+  const { count, rowsPerPage, rowsPerPageOptions, currentPage } = useSelector(
     ({ Table: { currentPage, count, rowsPerPage, rowsPerPageOptions } }) => ({
       count,
       rowsPerPage,
@@ -44,7 +43,7 @@ const TablePaginator = () => {
       rowsPerPage={rowsPerPage}
       page={currentPage}
       SelectProps={{ native: true }}
-      labelRowsPerPage='Кількість рядків:'
+      labelRowsPerPage={ROWS_PER_PAGE}
       labelDisplayedRows={({ from, to, count }) =>
         getDisplayedRowsLabel(from, to, count)
       }

@@ -6,12 +6,14 @@ import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import { Button } from '@material-ui/core';
 import ProductsNavFilters from '../products-nav-filters';
-import { useStyles } from './products-nav.styles';
 
 import { setTableDense } from '../../../redux/table/table.actions';
 
+import { productsTranslations } from '../../../translations/product.translations';
+
+const { ADD_PRODUCT, COMPACT_TABLE } = productsTranslations;
+
 const ProductsNav = () => {
-  const styles = useStyles();
   const dispatch = useDispatch();
   const dense = useSelector(({ Table }) => Table.dense);
 
@@ -23,13 +25,13 @@ const ProductsNav = () => {
     <Grid container spacing={2}>
       <Grid item>
         <Button variant='contained' color='primary'>
-          ДОДАТИ ПРОДУКТ
+          {ADD_PRODUCT}
         </Button>
       </Grid>
       <Grid item>
         <FormControlLabel
           control={<Switch checked={dense} onChange={handleDense} />}
-          label='Компактна таблиця'
+          label={COMPACT_TABLE}
         />
       </Grid>
       <ProductsNavFilters />

@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
-import { ButtonGroup } from '@material-ui/core';
 import { useStyles } from './products-nav-filters.styles';
 
 import {
