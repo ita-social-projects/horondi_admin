@@ -69,6 +69,7 @@ const getArticleById = async (id) => {
                 small
               }
             }
+            languages
             date
           }
           ... on Error {

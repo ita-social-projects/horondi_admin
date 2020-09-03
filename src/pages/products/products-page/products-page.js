@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 
+import Typography from '@material-ui/core/Typography';
 import { useStyles } from './products-page.styles';
 
 import {
@@ -13,8 +14,11 @@ import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 import ProductsNav from '../products-nav';
-import { config } from '../../../configs';
 
+import { config } from '../../../configs';
+import { productsTranslations } from '../../../translations/product.translations';
+
+const { PRODUCT_NOT_FOUND } = productsTranslations;
 const tableTitles = config.tableHeadRowTitles.products;
 
 const ProductsPage = () => {
@@ -116,12 +120,16 @@ const ProductsPage = () => {
       </div>
       {loading ? (
         <LoadingBar />
-      ) : (
+      ) : products.length ? (
         <TableContainerGenerator
           pagination
           tableTitles={tableTitles}
           tableItems={productsItems}
         />
+      ) : (
+        <Typography variant='h1' className={styles.productsTitle}>
+          {PRODUCT_NOT_FOUND}
+        </Typography>
       )}
     </div>
   );

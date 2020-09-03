@@ -16,5 +16,12 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
+  },
+  productsTitle: {
+    fontSize: '1.5rem',
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold',
+    width: '270px',
+    margin: '30px auto'
   }
 }));
