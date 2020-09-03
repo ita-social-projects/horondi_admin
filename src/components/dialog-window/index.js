@@ -1,3 +1,3 @@
-import DialogWindow from './Dialog-window';
+import DialogWindow from './dialog-window';
 
 export default DialogWindow;

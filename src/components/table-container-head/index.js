@@ -1,3 +1,3 @@
-import TableContainerHead from './Table-container-head';
+import TableContainerHead from './table-container-head';
 
 export default TableContainerHead;

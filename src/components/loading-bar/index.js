@@ -1,3 +1,3 @@
-import LoadingBar from './Loading-bar';
+import LoadingBar from './loading-bar';
 
 export default LoadingBar;

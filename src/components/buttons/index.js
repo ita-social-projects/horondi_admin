@@ -1,15 +1,6 @@
-import DeleteButton from './Delete-button';
-import EditButton from './Edit-button';
-import SaveButton from './Save-button';
-import StepperBackButton from './Stepper-back-button';
-import StepperNextButton from './Stepper-next-button';
-import StandardButton from './Standard-button';
+import DeleteButton from './delete-button';
+import SaveButton from './save-button';
+import EditButton from './edit-button';
+import StandardButton from './standard-button';
 
-export {
-  DeleteButton,
-  EditButton,
-  SaveButton,
-  StepperBackButton,
-  StepperNextButton,
-  StandardButton
-};
+export { DeleteButton, SaveButton, EditButton, StandardButton };
