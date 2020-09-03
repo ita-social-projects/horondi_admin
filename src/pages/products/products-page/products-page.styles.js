@@ -13,14 +13,14 @@ export const useStyles = makeStyles((theme) => ({
   tableNav: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: theme.spacing(1),
+    marginBottom: theme.spacing(2),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
   },
   productsTitle: {
     fontSize: '1.5rem',
-    color: theme.palette.text.disabled,
     fontWeight: 'bold',
+    color: theme.palette.text.disabled,
     width: '270px',
     margin: '30px auto'
   }
