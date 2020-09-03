@@ -8,6 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Badge from '@material-ui/core/Badge';
 import { useStyles } from './products-filters-container.styles';
+import { setCurrentPage } from '../../redux/table/table.actions';
 
 const menuAnchorPosition = {
   vertical: 'bottom',
@@ -39,6 +40,7 @@ const ProductsFilterContainer = ({
     } else {
       dispatch(setFilter([...new Set([...productFilter, event.target.name])]));
     }
+    dispatch(setCurrentPage(0));
   };
 
   const formGroupOptions = list.map(({ _id }, idx) => {

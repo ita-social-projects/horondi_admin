@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 
-const getAllProducts = async (state) => {
+const getAllProducts = async (productsState, tableState) => {
   const result = await client.query({
     query: gql`
       query(
@@ -86,19 +86,19 @@ const getAllProducts = async (state) => {
       }
     `,
     variables: {
-      search: state.filters.searchFilter,
-      colors: state.filters.colorsFilter,
-      patterns: state.filters.patternsFilter,
-      price: state.filters.priceFilter,
-      skip: state.currentPage * state.productsPerPage,
-      limit: state.productsPerPage,
-      basePrice: state.sortByPrice || undefined,
-      category: state.filters.categoryFilter,
-      purchasedCount: state.sortByPopularity || undefined,
-      models: state.filters.modelsFilter
+      search: productsState.filters.searchFilter,
+      colors: productsState.filters.colorsFilter,
+      patterns: productsState.filters.patternsFilter,
+      price: productsState.filters.priceFilter,
+      skip: tableState.currentPage * tableState.rowsPerPage,
+      limit: tableState.rowsPerPage,
+      basePrice: productsState.sortByPrice || undefined,
+      category: productsState.filters.categoryFilter,
+      purchasedCount: productsState.sortByPopularity || undefined,
+      models: productsState.filters.modelsFilter
     }
   });
-  return result.data.getProducts.items;
+  return result.data.getProducts;
 };
 
 const getAllFilters = async () => {

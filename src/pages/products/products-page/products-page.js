@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { push } from 'connected-react-router';
+
 import { useStyles } from './products-page.styles';
 
-import TableContainerRow from '../../../components/table-container-row';
-import TableContainerGenerator from '../../../components/table-container-generator';
-import LoadingBar from '../../../components/loading-bar';
 import {
   getFiltredProducts,
   getAllFilters
 } from '../../../redux/products/products.actions';
 
-import { config } from '../../../configs';
+import TableContainerRow from '../../../components/table-container-row';
+import TableContainerGenerator from '../../../components/table-container-generator';
+import LoadingBar from '../../../components/loading-bar';
 import ProductsNav from '../products-nav';
+import { config } from '../../../configs';
 
 const tableTitles = config.tableHeadRowTitles.products;
 
@@ -24,9 +24,8 @@ const ProductsPage = () => {
   const {
     loading,
     products,
-    pagesCount,
     currentPage,
-    productsPerPage,
+    rowsPerPage,
     sortByRate,
     sortByPrice,
     filters,
@@ -36,23 +35,20 @@ const ProductsPage = () => {
       Products: {
         loading,
         products,
-        pagesCount,
         sortByRate,
         sortByPrice,
         filters,
-        sortByPopularity,
-        productsPerPage,
-        currentPage
-      }
+        sortByPopularity
+      },
+      Table: { rowsPerPage, currentPage }
     }) => ({
       loading,
       products,
-      pagesCount,
       sortByRate,
       sortByPrice,
       filters,
       sortByPopularity,
-      productsPerPage,
+      rowsPerPage,
       currentPage
     })
   );
@@ -76,7 +72,7 @@ const ProductsPage = () => {
     sortByRate,
     sortByPrice,
     sortByPopularity,
-    productsPerPage,
+    rowsPerPage,
     currentPage,
     categoryFilter,
     colorsFilter,
@@ -122,6 +118,7 @@ const ProductsPage = () => {
         <LoadingBar />
       ) : (
         <TableContainerGenerator
+          pagination
           tableTitles={tableTitles}
           tableItems={productsItems}
         />

@@ -33,7 +33,6 @@ const getAllNews = async (skip, limit) => {
       }
     `
   });
-  await client.resetStore();
   const { data } = result;
   return data.getAllNews;
 };

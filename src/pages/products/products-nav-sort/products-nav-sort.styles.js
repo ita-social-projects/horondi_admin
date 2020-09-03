@@ -1,30 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  tableNav: {
-    padding: theme.spacing(1)
-  },
-  wrapper: {
-    marginTop: '15px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    '& .MuiButton-root': {
-      padding: '6px !important'
-    }
-  },
-  clearButton: {
-    height: '36px'
-  },
-  root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 200,
-    height: '36px'
-  },
-  iconButton: {
-    padding: 10
-  },
   select: {
     marginLeft: '.5rem',
     marginRight: '17px !important',
@@ -44,11 +20,5 @@ export const useStyles = makeStyles((theme) => ({
   sort: {
     display: 'flex',
     alignItems: 'center'
-  },
-  buttons: {
-    display: 'flex'
-  },
-  search: {
-    display: 'flex'
   }
 }));

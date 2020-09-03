@@ -3,11 +3,11 @@ import {
   setAllProducts,
   setProductsLoading,
   setAllFilterData,
-  setPagesCount,
   setProduct,
   setProductLoading,
   setProductsError
 } from './products.actions';
+import { setItemsCount, setPagesCount } from '../table/table.actions';
 
 import {
   GET_ALL_FILTERS,
@@ -24,14 +24,18 @@ import {
 export function* handleFilterLoad() {
   try {
     yield put(setProductsLoading(true));
-    const state = yield select((state) => state.Products);
-    const products = yield call(getAllProducts, state);
-    // yield put(
-    //     setPagesCount(
-    //         Math.ceil(products.data.getProducts.count / state.productsPerPage)
-    //     )
-    // );
-    yield put(setAllProducts(products));
+    const { productsState, tableState } = yield select(
+      ({ Products, Table }) => ({
+        productsState: Products,
+        tableState: Table
+      })
+    );
+    const products = yield call(getAllProducts, productsState, tableState);
+    yield put(
+      setPagesCount(Math.ceil(products.count / tableState.rowsPerPage))
+    );
+    yield put(setItemsCount(products.count));
+    yield put(setAllProducts(products.items));
     yield put(setProductsLoading(false));
   } catch (e) {
     yield call(handleProductsErrors, e);
