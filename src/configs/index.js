@@ -1,6 +1,6 @@
 import { ImportContacts } from '@material-ui/icons';
 
-const routes = {
+export const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
@@ -29,7 +29,7 @@ export const config = {
   },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    materials: ['Фото', 'Назва', 'Опис', 'Дії']
+    materials: ['Фото', 'Назва', 'Призначення', 'Доступний', 'Дії']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -57,12 +57,15 @@ export const config = {
     REMOVE_TITLE: 'Видалити новину',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
-    CREATE_MATERIAL_TITLE: 'Додати новину',
-    REMOVE_MATERIAL_TITLE: 'Видалити новину'
+    CREATE_MATERIAL_TITLE: 'Додати матеріал',
+    REMOVE_MATERIAL_TITLE: 'Видалити матеріал'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
-    REMOVE_MATERIAL_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
+  },
+  materialMessages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   formRegExp: {
@@ -88,5 +91,10 @@ export const config = {
     skip: 0,
     limit: 5,
     newsPerPage: 6
+  },
+  materialPaginationPayload: {
+    skip: 0,
+    limit: 5,
+    materialsPerPage: 6
   }
 };

@@ -5,7 +5,8 @@ import {
   SET_MATERIALS_CURRENT_PAGE,
   SET_MATERIAL_LOADING,
   SET_MATERIAL_ERROR,
-  SET_MATERIALS_PER_PAGE
+  SET_MATERIALS_PER_PAGE,
+  REMOVE_MATERIAL_FROM_STORE
 } from './material.types';
 
 export const initialState = {
@@ -66,6 +67,13 @@ const materialReducer = (state = initialState, action = {}) => {
         pagesCount: action.payload
       }
     };
+
+  case REMOVE_MATERIAL_FROM_STORE:
+    const materials = state.materials.filter(
+      (material) => material._id !== action.payload
+    );
+    return { ...state, materials };
+
   default:
     return state;
   }

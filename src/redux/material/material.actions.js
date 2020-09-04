@@ -10,7 +10,8 @@ import {
   SET_MATERIAL_LOADING,
   SET_MATERIALS_PAGES_COUNT,
   SET_MATERIALS_PER_PAGE,
-  ADD_MATERIAL
+  ADD_MATERIAL,
+  REMOVE_MATERIAL_FROM_STORE
 } from './material.types';
 
 export const getMaterials = (payload) => ({
@@ -70,5 +71,10 @@ export const updateMaterial = (payload) => ({
 
 export const setMaterialError = (payload) => ({
   type: SET_MATERIAL_ERROR,
+  payload
+});
+
+export const removeMaterialFromStore = (payload) => ({
+  type: REMOVE_MATERIAL_FROM_STORE,
   payload
 });
