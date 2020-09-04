@@ -23,59 +23,59 @@ export const initialState = {
 
 const materialReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_MATERIALS:
-    return {
-      ...state,
-      list: action.payload
-    };
-  case SET_MATERIAL:
-    return {
-      ...state,
-      material: action.payload
-    };
-  case SET_MATERIAL_LOADING:
-    return {
-      ...state,
-      materialLoading: action.payload
-    };
-  case SET_MATERIAL_ERROR:
-    return {
-      ...state,
-      materialError: action.payload
-    };
-  case SET_MATERIALS_CURRENT_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        currentPage: action.payload - 1
-      }
-    };
-  case SET_MATERIALS_PER_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        materialsPerPage: action.payload
-      }
-    };
-  case SET_MATERIALS_PAGES_COUNT:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        pagesCount: action.payload
-      }
-    };
+    case SET_MATERIALS:
+      return {
+        ...state,
+        list: action.payload
+      };
+    case SET_MATERIAL:
+      return {
+        ...state,
+        material: action.payload
+      };
+    case SET_MATERIAL_LOADING:
+      return {
+        ...state,
+        materialLoading: action.payload
+      };
+    case SET_MATERIAL_ERROR:
+      return {
+        ...state,
+        materialError: action.payload
+      };
+    case SET_MATERIALS_CURRENT_PAGE:
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          currentPage: action.payload - 1
+        }
+      };
+    case SET_MATERIALS_PER_PAGE:
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          materialsPerPage: action.payload
+        }
+      };
+    case SET_MATERIALS_PAGES_COUNT:
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          pagesCount: action.payload
+        }
+      };
 
-  case REMOVE_MATERIAL_FROM_STORE:
-    const materials = state.materials.filter(
-      (material) => material._id !== action.payload
-    );
-    return { ...state, materials };
+    case REMOVE_MATERIAL_FROM_STORE:
+      const materials = state.list.filter(
+        (material) => material._id !== action.payload
+      );
+      return { ...state, list: materials };
 
-  default:
-    return state;
+    default:
+      return state;
   }
 };
 

@@ -8,7 +8,6 @@ import {
   setMaterialLoading,
   removeMaterialFromStore
 } from './material.actions';
-
 import {
   getAllMaterials,
   getMaterialById,

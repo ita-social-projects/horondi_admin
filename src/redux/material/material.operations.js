@@ -13,6 +13,7 @@ export const getAllMaterials = async (skip, limit) => {
       query($skip: Int, $limit: Int) {
         getAllMaterials(skip: $skip, limit: $limit) {
           items {
+            _id
             name {
               value
             }
@@ -100,6 +101,7 @@ export const getMaterialById = async (id) => {
 };
 
 export const deleteMaterial = async (id) => {
+  console.log(id);
   const result = await client.mutate({
     variables: { id },
     mutation: gql`

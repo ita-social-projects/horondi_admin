@@ -87,6 +87,11 @@ export const config = {
       'Заголовок повинен містити не більше 100 символів',
     TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів'
   },
+  materialErrorMessages: {
+    MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
+    MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
+    VALIDATION_ERROR: 'Поле обовязкове'
+  },
   paginationPayload: {
     skip: 0,
     limit: 5,

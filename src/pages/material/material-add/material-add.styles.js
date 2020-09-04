@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  newsItemAdd: {
+  materialItemAdd: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme) => ({
   textfield: {
     margin: '10px 5px'
   },
-  newsAdd: {
+  materialAdd: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'

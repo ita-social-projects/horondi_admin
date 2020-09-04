@@ -66,9 +66,8 @@ const MaterialPage = () => {
       REMOVE_MATERIAL_TITLE
     );
   };
-
+ 
   const changeHandler = (e, value) => dispatch(setMaterialsCurrentPage(value));
-
   const materialItems =
     list !== undefined
       ? list.map((materialItem, index) => (

@@ -12,9 +12,10 @@ import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
-import MaterialPage from '../pages/material/material-page';
 import { config } from '../configs';
 import { history } from '../store/store';
+import MaterialPage from '../pages/material/material-page';
+import MaterialAdd from '../pages/material/material-add';
 
 const { routes } = config.app;
 
@@ -46,6 +47,7 @@ const Routes = () => {
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+        <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />
