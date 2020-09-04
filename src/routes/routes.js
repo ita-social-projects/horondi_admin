@@ -12,6 +12,9 @@ import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
+import ContactsPage from '../pages/contacts-page';
+import ContactsEdit from '../pages/contacts-page/contacts-edit';
+import ContactsAdd from '../pages/contacts-page/contacts-add';
 
 import { config } from '../configs';
 import { history } from '../store/store';
@@ -45,6 +48,9 @@ const Routes = () => {
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route path={routes.pathToContacts} exact component={ContactsPage}/>
+        <Route path={routes.pathToContactsEdit} exact component={ContactsEdit}/>
+        <Route path={routes.pathToAddContact} exact component={ContactsAdd}/>
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />

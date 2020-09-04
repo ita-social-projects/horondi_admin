@@ -4,7 +4,10 @@ const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd'
+  pathToAddNews: '/newsadd',
+  pathToContacts: '/contacts',
+  pathToContactsEdit: '/contacts/:id',
+  pathToAddContact: '/contactadd'
 };
 
 export const config = {
@@ -49,7 +52,8 @@ export const config = {
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
     CANCEL_TITLE: 'Відмінити',
-    LOGOUT_TITLE: 'Вихід'
+    LOGOUT_TITLE: 'Вихід',
+    CREATE_CONTACT_TITLE: 'Додати контакти'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
