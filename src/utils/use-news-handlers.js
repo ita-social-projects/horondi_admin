@@ -12,7 +12,6 @@ const useNewsHandlers = () => {
 
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
-  const [newsVideo, setNewsVideo] = useState('');
 
   const [ukAuthorName, ukSetAuthor] = useState('');
   const [ukText, ukSetText] = useState('');
@@ -36,12 +35,12 @@ const useNewsHandlers = () => {
 
   const languageCheckboxes = languages.map((lang, index) => (
     <FormControlLabel
-      key={index}
+      key={lang}
       control={
         <Checkbox
-          checked={checkboxes[`${lang}`]}
+          checked={checkboxes[lang]}
           onChange={handleCheckboxChange}
-          name={`${lang}`}
+          name={lang}
           color='primary'
         />
       }
@@ -101,7 +100,6 @@ const useNewsHandlers = () => {
     checkboxes,
     authorPhoto,
     newsImage,
-    newsVideo,
     ukAuthorName,
     ukText,
     ukTitle,
@@ -112,7 +110,6 @@ const useNewsHandlers = () => {
     tabsValue,
     setAuthorPhoto,
     setNewsImage,
-    setNewsVideo,
     ukSetAuthor,
     ukSetText,
     ukSetTitle,
