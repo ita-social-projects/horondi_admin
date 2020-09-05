@@ -81,6 +81,7 @@ function* handleAddContact({ payload }) {
       setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
     );
     yield put(setContacts(contacts.items));
+
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
@@ -100,26 +101,28 @@ function* handleContactDelete({ payload }) {
     );
     yield put(setContactsCurrentPage(1));
     yield put(setContacts(contacts.items));
+
     yield put(setContactsLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
     yield put(setSnackBarStatus(true));
-    yield console.log('deleted');
   } catch (error) {
     yield call(handleContactsError, error);
   }
 }
 
-function* handleContactsUpdate({ payload }) {
-  const { id, apdatedContact } = payload;
+function* handleContactUpdate({ payload }) {
+  const { id, updatedContact } = payload;
   try {
     yield put(setContactsLoading(true));
-    yield call(updateContact, id, apdatedContact);
+    yield call(updateContact, id, updatedContact);
+
     const contacts = yield call(getContacts, skip, limit);
     yield put(
       setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
     );
     yield put(setContacts(contacts.items));
+
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));
@@ -139,8 +142,8 @@ function* handleContactsError(e) {
 
 export default function* contactsSaga() {
   yield takeEvery(GET_CONTACTS, handleContactsLoad);
-  yield takeEvery(DELETE_CONTACT, handleContactDelete);
   yield takeEvery(GET_CONTACT, handleContactLoad);
   yield takeEvery(ADD_CONTACT, handleAddContact);
-  yield takeEvery(UPDATE_CONTACT, handleContactsUpdate);
+  yield takeEvery(UPDATE_CONTACT, handleContactUpdate);
+  yield takeEvery(DELETE_CONTACT, handleContactDelete);
 }

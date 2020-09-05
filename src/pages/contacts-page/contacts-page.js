@@ -97,7 +97,7 @@ const ContactsPage = () => {
         />
       ))
       : null;
-  console.log(contacts);
+
   if (loading) {
     return <LoadingBar />;
   }

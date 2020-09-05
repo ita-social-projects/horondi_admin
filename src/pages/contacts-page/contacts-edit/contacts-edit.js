@@ -61,7 +61,6 @@ const ContactsEdit = ({ match }) => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    console.log(contact);
     if (contact !== null) {
       setPhone(contact.phoneNumber);
 

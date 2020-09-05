@@ -171,7 +171,6 @@ const addContact = async (contact) => {
 };
 
 const updateContact = async (id, contact) => {
-  console.log(contact, 'contact in updateContact');
   const result = await client.mutate({
     variables: {
       id,
@@ -181,23 +180,10 @@ const updateContact = async (id, contact) => {
       mutation($id: ID!, $contact: contactInput!) {
         updateContact(id: $id, contact: $contact) {
           ... on Contact {
-            _id
-            phoneNumber
-            openHours {
-              lang
-              value
-            }
             address {
               lang
               value
             }
-            email
-            images {
-              value {
-                medium
-              }
-            }
-            link
           }
           ... on Error {
             message
@@ -211,7 +197,7 @@ const updateContact = async (id, contact) => {
   });
   client.resetStore();
   const { data } = result;
-  console.log(contact, 'contact in updateContact 2');
+
   if (data.updateContact.message) {
     throw new Error(
       `${data.updateContact.statusCode} ${
