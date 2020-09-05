@@ -1,4 +1,5 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 
 const routes = {
   pathToLogin: '/',
@@ -13,7 +14,10 @@ const routes = {
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    menuCategories: [['Новини', routes.pathToNews, ImportContactsIcon]],
+    menuCategories: [
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Контакти', routes.pathToContacts, ImportLocationOnIcon]
+    ],
     routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
@@ -25,7 +29,8 @@ export const config = {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
   tableHeadRowTitles: {
-    news: ['Аватар', 'Автор', 'Заголовок', 'Дії']
+    news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    contacts: ['Аватар', 'Номер', 'Email', 'Адреса', 'Дії']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -62,7 +67,8 @@ export const config = {
   formRegExp: {
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
-    password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
+    password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
+    unwrapHtml: /(<([^>]+)>)/gi
   },
   loginErrorMessages: {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',

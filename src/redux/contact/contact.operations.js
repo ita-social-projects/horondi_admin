@@ -15,6 +15,10 @@ const getContacts = async (skip, limit) => {
           items {
             _id
             phoneNumber
+            openHours {
+              lang
+              value
+            }
             address {
               lang
               value
@@ -50,7 +54,10 @@ const getContactById = async (id) => {
             }
             email
             images {
-              medium
+              lang
+              value {
+                medium
+              }
             }
             link
           }
@@ -132,7 +139,10 @@ const addContact = async (contact) => {
             }
             email
             images {
-              medium
+              lang
+              value {
+                medium
+              }
             }
             link
           }
@@ -161,7 +171,12 @@ const addContact = async (contact) => {
 };
 
 const updateContact = async (id, contact) => {
+  console.log(contact, 'contact in updateContact');
   const result = await client.mutate({
+    variables: {
+      id,
+      contact
+    },
     mutation: gql`
       mutation($id: ID!, $contact: contactInput!) {
         updateContact(id: $id, contact: $contact) {
@@ -178,7 +193,9 @@ const updateContact = async (id, contact) => {
             }
             email
             images {
-              medium
+              value {
+                medium
+              }
             }
             link
           }
@@ -189,15 +206,12 @@ const updateContact = async (id, contact) => {
         }
       }
     `,
-    variables: {
-      id,
-      contact
-    },
+
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
   const { data } = result;
-
+  console.log(contact, 'contact in updateContact 2');
   if (data.updateContact.message) {
     throw new Error(
       `${data.updateContact.statusCode} ${

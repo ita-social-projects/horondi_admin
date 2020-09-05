@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import News from './news/news.reducer';
+import Contact from './contact/contact.reducer';
 import Theme from './theme/theme.reducer';
 import Table from './table/table.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
@@ -9,6 +10,7 @@ import Auth from './auth/auth.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
+    Contact,
     News,
     Theme,
     Table,

@@ -5,7 +5,9 @@ import { useStyles } from './contacts-add.style';
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
+
 import useContactHandlers from '../../../utils/use-contact-handlers';
+import { addContact } from '../../../redux/contact/contact.actions';
 
 const { languages } = config;
 
@@ -37,7 +39,7 @@ const ContactsAdd = () => {
 
   const contactSaveHandler = async (e) => {
     e.preventDefault();
-
+    console.log('[ADD CONTACT] openHours', ukSchedule, enSchedule);
     const newContact = {
       phoneNumber: phone,
       openHours: [
@@ -48,14 +50,14 @@ const ContactsAdd = () => {
         { lang: languages[0], value: ukAddress },
         { lang: languages[1], value: enAddress }
       ],
-      email: email,
+      email,
       images: [
-        { lang: languages[0], medium: ukCartImage },
-        { lang: languages[1], medium: enCartImage }
+        { lang: languages[0], value: { medium: ukCartImage } },
+        { lang: languages[1], value: { medium: enCartImage } }
       ],
       link: cartLink
     };
-    // dispatch(addContact({ id, newContact }));
+    dispatch(addContact(newContact));
   };
 
   if (loading) {
@@ -121,7 +123,7 @@ const ContactsAdd = () => {
 
             <Grid item xs={6}>
               <Paper className={classes.newsItemUpdate}>
-              <TextField
+                <TextField
                   id='phone'
                   className={classes.textField}
                   variant='outlined'

@@ -31,5 +31,10 @@ export const useStyles = makeStyles((theme) => ({
     '&.shrink': {
       transform: 'translate(32px, -3px) scale(0.75)'
     }
+  },
+  paginationContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '30px'
   }
 }));

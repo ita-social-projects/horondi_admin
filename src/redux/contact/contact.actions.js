@@ -1,4 +1,3 @@
-
 import {
   GET_CONTACTS,
   SET_CONTACTS,
@@ -12,7 +11,7 @@ import {
   SET_CONTACTS_CURRENT_PAGE,
   SET_CONTACTS_PER_PAGE,
   SET_CONTACTS_PAGES_COUNT
-} from './news.types';
+} from './contact.types';
 
 const setContactsCurrentPage = (payload) => ({
   type: SET_CONTACTS_CURRENT_PAGE,
@@ -58,7 +57,6 @@ const setContactsLoading = (loading) => ({
   type: SET_CONTACTS_LOADING,
   payload: loading
 });
-
 
 const setContact = (payload) => ({
   type: SET_CONTACT,

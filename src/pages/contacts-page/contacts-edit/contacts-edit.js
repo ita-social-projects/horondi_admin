@@ -11,11 +11,15 @@ import { useStyles } from './contacts-edit.style';
 import useContactHandlers from '../../../utils/use-contact-handlers';
 import { config } from '../../../configs';
 
+import {
+  getContact,
+  updateContact
+} from '../../../redux/contact/contact.actions';
 import LoadingBar from '../../../components/loading-bar';
 
 const { languages } = config;
 
-const ContactsEdit = ({ route }) => {
+const ContactsEdit = ({ match }) => {
   const dispatch = useDispatch();
   const { loading, contact } = useSelector(({ Contact }) => ({
     loading: Contact.contactsLoading,
@@ -50,6 +54,43 @@ const ContactsEdit = ({ route }) => {
     setCartLink
   } = useContactHandlers();
 
+  const { id } = match.params;
+
+  useEffect(() => {
+    dispatch(getContact(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    console.log(contact);
+    if (contact !== null) {
+      setPhone(contact.phoneNumber);
+
+      ukSetSchedule(contact.openHours[0].value);
+      enSetSchedule(contact.openHours[1].value);
+
+      ukSetAddress(contact.address[0].value);
+      enSetAddress(contact.address[1].value);
+
+      setEmail(contact.email);
+
+      ukSetCartImage(contact.images[0].value.medium);
+      enSetCartImage(contact.images[1].value.medium);
+
+      setCartLink(contact.link);
+    }
+  }, [
+    contact,
+    setPhone,
+    ukSetSchedule,
+    enSetSchedule,
+    ukSetAddress,
+    enSetAddress,
+    setEmail,
+    ukSetCartImage,
+    enSetCartImage,
+    setCartLink
+  ]);
+
   const contactSaveHandler = async (e) => {
     e.preventDefault();
 
@@ -63,17 +104,16 @@ const ContactsEdit = ({ route }) => {
         { lang: languages[0], value: ukAddress },
         { lang: languages[1], value: enAddress }
       ],
-      email: email,
+      email,
       images: [
-        { lang: languages[0], medium: ukCartImage },
-        { lang: languages[1], medium: enCartImage }
+        { lang: languages[0], value: { medium: ukCartImage } },
+        { lang: languages[1], value: { medium: enCartImage } }
       ],
       link: cartLink
     };
-    // dispatch(updateContact({ id, updatedContact }));
-  };
 
-  const setCartImage = (imageUrl) => {};
+    dispatch(updateContact({ id, updatedContact }));
+  };
 
   if (loading) {
     return <LoadingBar />;
@@ -138,7 +178,7 @@ const ContactsEdit = ({ route }) => {
 
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
-              <TextField
+                <TextField
                   id='phone'
                   className={classes.textField}
                   variant='outlined'
@@ -253,7 +293,7 @@ const ContactsEdit = ({ route }) => {
 };
 
 ContactsEdit.propTypes = {
-  route: PropTypes.shape({
+  match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
