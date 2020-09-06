@@ -3,17 +3,11 @@ import {
   setAllProducts,
   setProductsLoading,
   setAllFilterData,
-  setProduct,
-  setProductLoading,
   setProductsError
 } from './products.actions';
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 
-import {
-  GET_ALL_FILTERS,
-  GET_FILTRED_PRODUCTS,
-  GET_PRODUCT
-} from './products.types';
+import { GET_ALL_FILTERS, GET_FILTRED_PRODUCTS } from './products.types';
 import { getAllProducts, getAllFilters } from './products.operations';
 import {
   setSnackBarMessage,
