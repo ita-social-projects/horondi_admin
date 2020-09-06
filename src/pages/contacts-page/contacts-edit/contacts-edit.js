@@ -11,7 +11,6 @@ import * as Yup from 'yup';
 
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
-import useContactHandlers from '../../../utils/use-contact-handlers';
 import { config } from '../../../configs';
 import { useStyles } from './contacts-edit.style';
 
@@ -24,7 +23,6 @@ const { languages } = config;
 const {
   PHONE_NUMBER_LENGTH_MESSAGE,
   PHONE_NUMBER_TYPE_MESSAGE,
-  PHONE_NUMBER_FORMAT_MESSAGE,
   ENTER_PHONE_NUMBER_MESSAGE,
   INPUT_LENGTH_MESSAGE,
   ENTER_SCHEDULE_MESSAGE,
@@ -44,27 +42,6 @@ const ContactsEdit = ({ match }) => {
     contact: Contact.contact
   }));
   const classes = useStyles();
-
-  const {
-    phoneNumber,
-    ukSchedule,
-    enSchedule,
-    ukAddress,
-    enAddress,
-    email,
-    ukCartImage,
-    enCartImage,
-    cartLink,
-    setPhoneNumber,
-    ukSetSchedule,
-    enSetSchedule,
-    ukSetAddress,
-    enSetAddress,
-    setEmail,
-    ukSetCartImage,
-    enSetCartImage,
-    setCartLink
-  } = useContactHandlers();
 
   const [contactFormValues, setContactFormValues] = useState({
     phoneNumber: '',
@@ -87,7 +64,6 @@ const ContactsEdit = ({ match }) => {
   useEffect(() => {
     if (contact !== null) {
       setContactFormValues({
-        ...contactFormValues,
         phoneNumber: contact.phoneNumber,
         ukSchedule: contact.openHours[0].value,
         enSchedule: contact.openHours[1].value,
@@ -98,8 +74,6 @@ const ContactsEdit = ({ match }) => {
         enCartImage: contact.images[1].value.medium,
         cartLink: contact.link
       });
-
-      console.log('contactFormValues', contactFormValues, contact, 'contact');
     }
   }, [
     contact,

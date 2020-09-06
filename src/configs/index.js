@@ -171,7 +171,6 @@ export const config = {
     PHONE_NUMBER_LENGTH_MESSAGE:
       'Довжина номеру телефону повинна містити 12 символів',
     PHONE_NUMBER_TYPE_MESSAGE: 'Номер повинен містити лише числа',
-    PHONE_NUMBER_FORMAT_MESSAGE: 'Неправильний формат номеру',
     ENTER_PHONE_NUMBER_MESSAGE: 'Введіть номер',
     INPUT_LENGTH_MESSAGE: 'Довжина повинна містити не менше 10 символів',
     ENTER_SCHEDULE_MESSAGE: 'Введіть розклад',

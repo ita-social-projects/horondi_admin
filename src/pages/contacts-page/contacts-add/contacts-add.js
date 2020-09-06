@@ -17,7 +17,6 @@ const { languages } = config;
 const {
   PHONE_NUMBER_LENGTH_MESSAGE,
   PHONE_NUMBER_TYPE_MESSAGE,
-  PHONE_NUMBER_FORMAT_MESSAGE,
   ENTER_PHONE_NUMBER_MESSAGE,
   INPUT_LENGTH_MESSAGE,
   ENTER_SCHEDULE_MESSAGE,
@@ -35,7 +34,7 @@ const ContactsAdd = () => {
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.newsLoading);
 
-  const [contactFormValues, setcontactFormValues] = useState({
+  const [contactFormValues] = useState({
     phoneNumber: '',
     ukSchedule: '',
     enSchedule: '',
