@@ -5,5 +5,9 @@ export const productsTranslations = {
   SEARCH: 'Шукати',
   CLEAR_FILTERS: 'ОЧИСТИТИ ФІЛЬТРИ',
   ADD_PRODUCT: 'ДОДАТИ ПРОДУКТ',
-  COMPACT_TABLE: 'Компактна таблиця'
+  COMPACT_TABLE: 'Компактна таблиця',
+  CATEGORIES: 'КАТЕГОРІЇ',
+  MODELS: 'МОДЕЛІ',
+  PATTERNS: 'ГОБЕЛЕНИ',
+  COLORS: 'КОЛЬОРИ'
 };

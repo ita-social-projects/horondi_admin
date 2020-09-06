@@ -15,6 +15,10 @@ import ProductsFilterContainer from '../../../components/products-filters-contai
 import ProductsNavSort from '../products-nav-sort';
 import ProductsNavSearch from '../products-nav-search';
 
+import { productsTranslations } from '../../../translations/product.translations';
+
+const { CATEGORIES, PATTERNS, MODELS, COLORS } = productsTranslations;
+
 const ProductsNavFilters = () => {
   const styles = useStyles();
   const { filterData, filters } = useSelector(({ Products }) => ({
@@ -90,28 +94,28 @@ const ProductsNavFilters = () => {
 
   const filtersOptions = {
     categories: {
-      buttonName: 'КАТЕГОРІЇ',
+      buttonName: CATEGORIES,
       productFilter: categoryFilter,
       setFilter: setCategoryFilter,
       list: categories,
       labels: categoriesNames
     },
     models: {
-      buttonName: 'МОДЕЛІ',
+      buttonName: MODELS,
       productFilter: modelsFilter,
       setFilter: setModelsFilter,
       list: models,
       labels: modelNames
     },
     colors: {
-      buttonName: 'КОЛЬОРИ',
+      buttonName: COLORS,
       productFilter: colorsFilter,
       setFilter: setColorsFilter,
       list: colors,
       labels: colorsNames
     },
     patterns: {
-      buttonName: 'ГОБЕЛЕНИ',
+      buttonName: PATTERNS,
       productFilter: patternsFilter,
       setFilter: setPatternsFilter,
       list: patterns,
