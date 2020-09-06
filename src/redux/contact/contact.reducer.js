@@ -14,9 +14,9 @@ const initialState = {
   contactsLoading: false,
   contactsError: null,
   pagination: {
-    currentPage: 0,
+    contactsCurrentPage: 0,
     contactsPerPage: 6,
-    pagesCount: 1
+    contactPagesCount: 1
   }
 };
 
@@ -51,7 +51,7 @@ const contactsReducer = (state = initialState, action = {}) => {
       ...state,
       pagination: {
         ...state.pagination,
-        currentPage: action.payload - 1
+        contactsCurrentPage: action.payload - 1
       }
     };
 
@@ -69,7 +69,7 @@ const contactsReducer = (state = initialState, action = {}) => {
       ...state,
       pagination: {
         ...state.pagination,
-        pagesCount: action.payload
+        contactPagesCount: action.payload
       }
     };
   default:

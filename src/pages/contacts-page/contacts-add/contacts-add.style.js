@@ -31,5 +31,9 @@ export const useStyles = makeStyles((theme) => ({
     padding: 10,
     margin: '5px 0',
     width: '100%'
+  },
+  inputError: {
+    color: '#e60000',
+    margin: '0px 0px 10px 10px'
   }
 }));

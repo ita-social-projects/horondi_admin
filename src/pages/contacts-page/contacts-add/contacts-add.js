@@ -1,47 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useFormik } from 'formik';
+
+import * as Yup from 'yup';
+
 import { useStyles } from './contacts-add.style';
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
-import useContactHandlers from '../../../utils/use-contact-handlers';
 import { addContact } from '../../../redux/contact/contact.actions';
 
 const { languages } = config;
+const {
+  PHONE_NUMBER_LENGTH_MESSAGE,
+  PHONE_NUMBER_TYPE_MESSAGE,
+  PHONE_NUMBER_FORMAT_MESSAGE,
+  ENTER_PHONE_NUMBER_MESSAGE,
+  INPUT_LENGTH_MESSAGE,
+  ENTER_SCHEDULE_MESSAGE,
+  ENTER_ADDRESS_MESSAGE,
+  IMAGE_FORMAT_MESSAGE,
+  ENTER_LINK_MESSAGE
+} = config.contactErrorMessages;
+const {
+  INVALID_EMAIL_MESSAGE,
+  ENTER_EMAIL_MESSAGE
+} = config.loginErrorMessages;
 
 const ContactsAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loading = useSelector(({ News }) => News.newsLoading);
 
-  const {
-    phone,
+  const [contactFormValues, setcontactFormValues] = useState({
+    phoneNumber: '',
+    ukSchedule: '',
+    enSchedule: '',
+    ukAddress: '',
+    enAddress: '',
+    email: '',
+    ukCartImage: '',
+    enCartImage: '',
+    cartLink: ''
+  });
+
+  const contactSaveHandler = async ({
+    phoneNumber,
     ukSchedule,
     enSchedule,
     ukAddress,
     enAddress,
-    email,
     ukCartImage,
     enCartImage,
     cartLink,
-    setPhone,
-    ukSetSchedule,
-    enSetSchedule,
-    ukSetAddress,
-    enSetAddress,
-    setEmail,
-    ukSetCartImage,
-    enSetCartImage,
-    setCartLink
-  } = useContactHandlers();
-
-  const contactSaveHandler = async (e) => {
-    e.preventDefault();
-    console.log('[ADD CONTACT] openHours', ukSchedule, enSchedule);
+    email
+  }) => {
     const newContact = {
-      phoneNumber: phone,
+      phoneNumber,
       openHours: [
         { lang: languages[0], value: ukSchedule },
         { lang: languages[1], value: enSchedule }
@@ -60,13 +78,56 @@ const ContactsAdd = () => {
     dispatch(addContact(newContact));
   };
 
+  const formSchema = Yup.object().shape({
+    phoneNumber: Yup.number()
+      .min(12, PHONE_NUMBER_LENGTH_MESSAGE)
+      .typeError(PHONE_NUMBER_TYPE_MESSAGE)
+      .required(ENTER_PHONE_NUMBER_MESSAGE),
+    ukSchedule: Yup.string()
+      .min(10, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_SCHEDULE_MESSAGE),
+    enSchedule: Yup.string()
+      .min(10, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_SCHEDULE_MESSAGE),
+    ukAddress: Yup.string()
+      .min(8, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_ADDRESS_MESSAGE),
+    enAddress: Yup.string()
+      .min(8, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_ADDRESS_MESSAGE),
+    email: Yup.string()
+      .email(INVALID_EMAIL_MESSAGE)
+      .required(ENTER_EMAIL_MESSAGE),
+    ukCartImage: Yup.string()
+      .url(IMAGE_FORMAT_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_LINK_MESSAGE),
+    enCartImage: Yup.string()
+      .url(IMAGE_FORMAT_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_LINK_MESSAGE),
+    cartLink: Yup.string()
+      .url(IMAGE_FORMAT_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_LINK_MESSAGE)
+  });
+
+  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
+    initialValues: contactFormValues,
+    validationSchema: formSchema,
+    validateOnBlur: true,
+    onSubmit: (values) => {
+      contactSaveHandler(values);
+    }
+  });
+
   if (loading) {
     return <LoadingBar />;
   }
 
   return (
     <div className={classes.detailsContainer}>
-      <form className={classes.form} onSubmit={contactSaveHandler}>
+      <form className={classes.form} onSubmit={handleSubmit}>
         <FormControl className={classes.newsDetails}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
@@ -83,8 +144,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={ukCartImage}
-                  onChange={(e) => ukSetCartImage(e.target.value)}
+                  value={values.ukCartImage}
+                  onChange={handleChange}
+                  error={touched.ukCartImage && !!errors.ukCartImage}
+                  helperText={errors.ukCartImage}
                   required
                 />
                 <TextField
@@ -99,8 +162,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={enCartImage}
-                  onChange={(e) => enSetCartImage(e.target.value)}
+                  value={values.enCartImage}
+                  onChange={handleChange}
+                  error={touched.enCartImage && !!errors.enCartImage}
+                  helperText={errors.enCartImage}
                   required
                 />
                 <TextField
@@ -114,8 +179,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={cartLink}
-                  onChange={(e) => setCartLink(e.target.value)}
+                  value={values.cartLink}
+                  onChange={handleChange}
+                  error={touched.cartLink && !!errors.cartLink}
+                  helperText={errors.cartLink}
                   required
                 />
               </Paper>
@@ -124,7 +191,7 @@ const ContactsAdd = () => {
             <Grid item xs={6}>
               <Paper className={classes.newsItemUpdate}>
                 <TextField
-                  id='phone'
+                  id='phoneNumber'
                   className={classes.textField}
                   variant='outlined'
                   label='Контактний номер'
@@ -135,8 +202,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  value={values.phoneNumber}
+                  onChange={handleChange}
+                  error={touched.phoneNumber && !!errors.phoneNumber}
+                  helperText={errors.phoneNumber}
                   required
                 />
                 <TextField
@@ -151,8 +220,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={ukSchedule}
-                  onChange={(e) => ukSetSchedule(e.target.value)}
+                  value={values.ukSchedule}
+                  onChange={handleChange}
+                  error={touched.ukSchedule && !!errors.ukSchedule}
+                  helperText={errors.ukSchedule}
                   required
                 />
                 <TextField
@@ -167,8 +238,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={enSchedule}
-                  onChange={(e) => enSetSchedule(e.target.value)}
+                  value={values.enSchedule}
+                  onChange={handleChange}
+                  error={touched.enSchedule && !!errors.enSchedule}
+                  helperText={errors.enSchedule}
                   required
                 />
               </Paper>
@@ -187,8 +260,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={ukAddress}
-                  onChange={(e) => ukSetAddress(e.target.value)}
+                  value={values.ukAddress}
+                  onChange={handleChange}
+                  error={touched.ukAddress && !!errors.ukAddress}
+                  helperText={errors.ukAddress}
                   required
                 />
                 <TextField
@@ -203,8 +278,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={enAddress}
-                  onChange={(e) => enSetAddress(e.target.value)}
+                  value={values.enAddress}
+                  onChange={handleChange}
+                  error={touched.enAddress && !!errors.enAddress}
+                  helperText={errors.enAddress}
                   required
                 />
                 <TextField
@@ -218,8 +295,10 @@ const ContactsAdd = () => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={values.email}
+                  onChange={handleChange}
+                  error={touched.email && !!errors.email}
+                  helperText={errors.email}
                   required
                 />
               </Paper>

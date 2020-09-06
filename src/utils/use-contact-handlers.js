@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const useContactHandlers = () => {
-  const [phone, setPhone] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const [ukSchedule, ukSetSchedule] = useState('');
   const [enSchedule, enSetSchedule] = useState('');
@@ -17,7 +17,7 @@ const useContactHandlers = () => {
   const [cartLink, setCartLink] = useState('');
 
   return {
-    phone,
+    phoneNumber,
     ukSchedule,
     enSchedule,
     ukAddress,
@@ -26,7 +26,7 @@ const useContactHandlers = () => {
     ukCartImage,
     enCartImage,
     cartLink,
-    setPhone,
+    setPhoneNumber,
     ukSetSchedule,
     enSetSchedule,
     ukSetAddress,

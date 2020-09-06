@@ -20,10 +20,9 @@ import {
   setContactsCurrentPage,
   deleteContact
 } from '../../redux/contact/contact.actions';
-// import { deleteContact } from '../../redux/contact/contact.operations';
 
-const { REMOVE_MESSAGE } = config.messages;
-const { REMOVE_TITLE } = config.buttonTitles;
+const { REMOVE_CONTACT_MESSAGE } = config.messages;
+const { REMOVE_CONTACT_TITLE } = config.buttonTitles;
 
 const ContactsPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -59,9 +58,9 @@ const ContactsPage = () => {
 
     openSuccessSnackbar(
       removeContact,
-      REMOVE_TITLE,
-      REMOVE_MESSAGE,
-      REMOVE_TITLE
+      REMOVE_CONTACT_TITLE,
+      REMOVE_CONTACT_MESSAGE,
+      REMOVE_CONTACT_TITLE
     );
   };
 
@@ -75,8 +74,8 @@ const ContactsPage = () => {
     );
   }, [dispatch, contactsPerPage, contactsCurrentPage]);
 
-  const changePageHandler = (e, value) =>
-    dispatch(setContactsCurrentPage(value));
+  const changePageHandler = (e, pageIndex) =>
+    dispatch(setContactsCurrentPage(pageIndex));
 
   const contactItems =
     contacts !== undefined

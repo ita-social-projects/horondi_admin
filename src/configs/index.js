@@ -56,12 +56,14 @@ export const config = {
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
+    REMOVE_CONTACT_TITLE: 'Видалити контакт',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
     CREATE_CONTACT_TITLE: 'Додати контакти'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   formRegExp: {
@@ -76,6 +78,20 @@ export const config = {
     PASSWORD_MIN_LENGTH_MESSAGE: 'Пароль повинен містити не менше 8 символів',
     PASSWORD_LANG_MESSAGE: 'Використовуйте латиницю різних регістрів та цифри',
     ENTER_PASSWORD_MESSAGE: 'Введіть пароль'
+  },
+  contactErrorMessages: {
+    INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
+    ENTER_EMAIL_MESSAGE: 'Введіть email',
+    PHONE_NUMBER_LENGTH_MESSAGE:
+      'Довжина номеру телефону повинна становити 12 символів',
+    PHONE_NUMBER_TYPE_MESSAGE: 'Номер повинен містити лише числа',
+    PHONE_NUMBER_FORMAT_MESSAGE: 'Неправильний формат номеру',
+    ENTER_PHONE_NUMBER_MESSAGE: 'Введіть номер',
+    INPUT_LENGTH_MESSAGE: 'Довжина повинна становити не менше 10 символів',
+    ENTER_SCHEDULE_MESSAGE: 'Введіть розклад',
+    ENTER_ADDRESS_MESSAGE: 'Введіть адресу',
+    IMAGE_FORMAT_MESSAGE: 'Некоректний формат',
+    ENTER_LINK_MESSAGE: 'Введіть посилання'
   },
   paginationPayload: {
     skip: 0,
