@@ -85,10 +85,6 @@ const ProductsPage = () => {
     patternsFilter
   ]);
 
-  const productDeleteHandler = (id) => {
-    console.log(id);
-  };
-
   const productsItems = products
     ? products.map(
       (
@@ -104,7 +100,6 @@ const ProductsPage = () => {
           pattern={pattern[0].value}
           price={basePrice[0].value / 100}
           purchasedCount={purchasedCount}
-          deleteHandler={() => productDeleteHandler(_id)}
           editHandler={() => {
             dispatch(push(`/products/${_id}`));
           }}
