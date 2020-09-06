@@ -4,14 +4,10 @@ export const useStyles = makeStyles((theme) => ({
   newsItemAdd: {
     display: 'flex',
     flexDirection: 'column',
-    margin: theme.spacing(2),
-    paddingTop: 10
+    margin: '20px 0'
   },
   textfield: {
-    textTransform: 'uppercase',
-    padding: 10,
-    margin: '5px 0',
-    width: '100%'
+    margin: '10px 5px'
   },
   newsAdd: {
     display: 'flex',
@@ -26,10 +22,21 @@ export const useStyles = makeStyles((theme) => ({
     padding: 20,
     marginTop: 70
   },
-  inputLabel: {
-    fontSize: 12,
-    '&.shrink': {
-      transform: 'translate(32px, -3px) scale(0.75)'
+  tabs: {
+    backgroundColor: 'white',
+    '& span.MuiTab-wrapper': {
+      color: '#3F51B5'
+    },
+    '& span.MuiTabs-indicator': {
+      backgroundColor: '#3F51B5'
     }
+  },
+  controlsBlock: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  inputError: {
+    color: '#e60000',
+    padding: '0 5px'
   }
 }));
