@@ -4,9 +4,10 @@ import { getFromLocalStorage } from '../../services/local-storage.service';
 import { config } from '../../configs';
 
 const formError = (err) => err.message.replace('GraphQL error: ', '');
-const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+let token;
 
 const getAllUsers = async () => {
+  token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.query({
     query: gql`
       {
@@ -15,6 +16,7 @@ const getAllUsers = async () => {
           firstName
           lastName
           email
+          role
           phoneNumber
           banned
         }
@@ -34,6 +36,7 @@ const getAllUsers = async () => {
 };
 
 const getUserById = async (id) => {
+  token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client
     .query({
       variables: { id },
@@ -74,6 +77,7 @@ const getUserById = async (id) => {
 };
 
 const deleteUser = async (id) => {
+  token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client
     .mutate({
       variables: { id },
@@ -102,6 +106,7 @@ const deleteUser = async (id) => {
 };
 
 const switchUserStatus = async (id) => {
+  token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     variables: { id },
     mutation: gql`

@@ -19,6 +19,7 @@ import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import { config } from '../configs';
 import { history } from '../store/store';
 import UsersDetails from '../pages/users/users-details';
+import RegisterUser from '../pages/users/register-user';
 
 const { routes } = config.app;
 
@@ -56,6 +57,11 @@ const Routes = () => {
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToCategories} exact component={Categories} />
+        <Route
+          path={routes.pathToAddSpecialUser}
+          exact
+          component={RegisterUser}
+        />
         <Route
           path={routes.pathToAddCategory}
           exact

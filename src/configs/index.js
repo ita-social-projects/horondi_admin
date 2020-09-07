@@ -11,7 +11,8 @@ const routes = {
   pathToAddNews: '/newsadd',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
-  pathToEditCategory: '/add-category/:id'
+  pathToEditCategory: '/add-category/:id',
+  pathToAddSpecialUser: '/register'
 };
 
 export const config = {
@@ -20,7 +21,7 @@ export const config = {
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
-      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -47,13 +48,22 @@ export const config = {
       subcategories: []
     }
   },
+  userRoles: [{ role: 'admin', label: 'Адмін' }],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     categories: ['№', 'Категорія', 'Дії'],
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
-    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
+    users: [
+      'Аватар',
+      "Ім'я",
+      'Мобільний номер',
+      'Пошта',
+      'Роль',
+      'Статус',
+      'Дії'
+    ]
   },
   detailTitles: {
     users: {
@@ -93,7 +103,9 @@ export const config = {
   },
   errorMessages: {
     USER_NOT_FOUND: 'Користувач не знайдений!',
-    USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу'
+    USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу',
+    INVALID_PERMISSIONS: 'Недостатньо прав користувача',
+    WRONG_CREDENTIALS: 'Неправильно вказані вхідні дані'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
@@ -102,6 +114,8 @@ export const config = {
     REMOVE_TITLE: 'Видалити новину',
     REMOVE_USER_TITLE: 'Видалити користувача',
     SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
+    USER_INACTIVE_TITLE: 'Деактивувати',
+    USER_ACTIVE_TITLE: 'Активувати',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
     ADD_CATEGORY: 'Додати категорію',
@@ -112,6 +126,7 @@ export const config = {
     CANCEL: 'Відмінити',
     SAVE_CATEGORY: 'Зберегти категорію',
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
+    CREATE_SPECIAL_USER: 'Створити спецкористувача',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
     titleGenerator: (editMode, isMain) => {
@@ -130,11 +145,9 @@ export const config = {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
-    USER_UNACTIVE_TITLE: 'Деактивувати',
-    USER_ACTIVE_TITLE: 'Активувати',
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
-      'Ви впевнені,що хочете змінити статус користувача?',
+      'Ви впевнені,що хочете змінити статус користувача?'
   },
   formRegExp: {
     email:
@@ -146,7 +159,8 @@ export const config = {
     ENTER_EMAIL_MESSAGE: 'Введіть email',
     PASSWORD_MIN_LENGTH_MESSAGE: 'Пароль повинен містити не менше 8 символів',
     PASSWORD_LANG_MESSAGE: 'Використовуйте латиницю різних регістрів та цифри',
-    ENTER_PASSWORD_MESSAGE: 'Введіть пароль'
+    ENTER_PASSWORD_MESSAGE: 'Введіть пароль',
+    SELECT_ROLE_MESSAGE: 'Оберіть роль'
   },
   newsErrorMessages: {
     NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Typography } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 import { useStyles } from './users-page.styles';
 import { getUsers, deleteUser } from '../../../redux/users/users.actions';
 import TableContainerRow from '../../../components/table-container-row';
@@ -12,9 +12,13 @@ import LoadingBar from '../../../components/loading-bar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { formatPhoneNumber } from '../../../utils/format-phone-number';
+import { userRoleTranslations } from '../../../translations/user.translations';
+
+const { routes } = config.app;
+const pathToAddSpecialUserPage = routes.pathToAddSpecialUser;
 
 const tableHeaders = config.tableHeadRowTitles.users;
-const { REMOVE_USER_TITLE } = config.buttonTitles;
+const { REMOVE_USER_TITLE, CREATE_SPECIAL_USER } = config.buttonTitles;
 const { REMOVE_USER_MESSAGE } = config.messages;
 
 const UsersPage = () => {
@@ -54,6 +58,7 @@ const UsersPage = () => {
       name={`${userItem.firstName} ${userItem.lastName}`}
       mobile={formatPhoneNumber(userItem.phoneNumber)}
       email={userItem.email}
+      role={userRoleTranslations[userItem.role]}
       banned={userItem.banned ? 'Неактивний' : 'Активний'}
       deleteHandler={() => userDeleteHandler(userItem._id)}
       editHandler={() => dispatch(push(`/users/${userItem._id}`))}
@@ -66,6 +71,16 @@ const UsersPage = () => {
         <Typography variant='h1' className={styles.usersTitle}>
           Інформація про користувачів
         </Typography>
+        <div className={styles.buttonsPanel}>
+          <Button
+            id='add-user-admin'
+            onClick={() => dispatch(push(pathToAddSpecialUserPage))}
+            variant='contained'
+            color='primary'
+          >
+            {CREATE_SPECIAL_USER}
+          </Button>
+        </div>
       </div>
       <TableContainerGenerator
         id='usersTable'
