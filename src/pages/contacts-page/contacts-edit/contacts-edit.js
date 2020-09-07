@@ -191,7 +191,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.ukCartImage}
                   onChange={handleChange}
                   error={touched.ukCartImage && !!errors.ukCartImage}
-                  helperText={errors.ukCartImage}
+                  helperText={touched.ukCartImage && errors.ukCartImage}
                   required
                 />
                 <TextField
@@ -209,7 +209,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.enCartImage}
                   onChange={handleChange}
                   error={touched.enCartImage && !!errors.enCartImage}
-                  helperText={errors.enCartImage}
+                  helperText={touched.enCartImage && errors.enCartImage}
                   required
                 />
                 <TextField
@@ -226,7 +226,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.cartLink}
                   onChange={handleChange}
                   error={touched.cartLink && !!errors.cartLink}
-                  helperText={errors.cartLink}
+                  helperText={touched.cartLink && errors.cartLink}
                   required
                 />
               </Paper>
@@ -248,7 +248,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.phoneNumber}
                   onChange={handleChange}
                   error={touched.phoneNumber && !!errors.phoneNumber}
-                  helperText={errors.phoneNumber}
+                  helperText={touched.phoneNumber && errors.phoneNumber}
                   required
                 />
                 <TextField
@@ -266,7 +266,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.ukSchedule}
                   onChange={handleChange}
                   error={touched.ukSchedule && !!errors.ukSchedule}
-                  helperText={errors.ukSchedule}
+                  helperText={touched.ukSchedule && errors.ukSchedule}
                   required
                 />
                 <TextField
@@ -284,7 +284,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.enSchedule}
                   onChange={handleChange}
                   error={touched.enSchedule && !!errors.enSchedule}
-                  helperText={errors.enSchedule}
+                  helperText={touched.enSchedule && errors.enSchedule}
                   required
                 />
               </Paper>
@@ -306,7 +306,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.ukAddress}
                   onChange={handleChange}
                   error={touched.ukAddress && !!errors.ukAddress}
-                  helperText={errors.ukAddress}
+                  helperText={touched.ukAddress && errors.ukAddress}
                   required
                 />
                 <TextField
@@ -324,7 +324,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.enAddress}
                   onChange={handleChange}
                   error={touched.enAddress && !!errors.enAddress}
-                  helperText={errors.enAddress}
+                  helperText={touched.enAddress && errors.enAddress}
                   required
                 />
                 <TextField
@@ -341,7 +341,7 @@ const ContactsEdit = ({ match }) => {
                   value={values.email}
                   onChange={handleChange}
                   error={touched.email && !!errors.email}
-                  helperText={errors.email}
+                  helperText={touched.email && errors.email}
                   required
                 />
               </Paper>
