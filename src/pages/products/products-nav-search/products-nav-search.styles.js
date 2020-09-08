@@ -13,8 +13,5 @@ export const useStyles = makeStyles((theme) => ({
   },
   iconButton: {
     padding: 10
-  },
-  container: {
-    width: 421
   }
 }));

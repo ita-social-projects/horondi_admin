@@ -1,9 +1,7 @@
 import {
   SET_PRODUCT,
-  SET_CURRENT_PAGE,
   SET_ALL_PRODUCTS,
   SET_ALL_FILTER_DATA,
-  SET_PRODUCTS_PER_PAGE,
   SET_SORT_BY_PRICE,
   SET_SORT_BY_DATE,
   SET_SORT_BY_RATE,
@@ -15,7 +13,6 @@ import {
   SET_PATTERNS_FILTER,
   SET_MODELS_FILTER,
   SET_SEARCH,
-  SET_PAGES_COUNT,
   SET_PRODUCT_LOADING,
   SET_PRODUCT_TO_SEND,
   CLEAR_PRODUCT_TO_SEND,
@@ -25,20 +22,20 @@ import {
 export const initialState = {
   productLoading: false,
   loading: true,
-  currentPage: 0,
-  productsPerPage: 9,
-  sortByPrice: 0,
-  sortByRate: 0,
-  sortByPopularity: -1,
+  sorting: {
+    sortByPrice: 0,
+    sortByRate: 0,
+    sortByPopularity: -1
+  },
   filters: {
+    categoryFilter: [],
+    modelsFilter: [],
     colorsFilter: [],
     patternsFilter: [],
-    categoryFilter: [],
-    searchFilter: '',
-    modelsFilter: []
+    searchFilter: ''
   },
   filterData: [],
-  product: null,
+  selectedroduct: null,
   products: [],
   pagesCount: 1,
   productsError: null
@@ -64,16 +61,6 @@ const productsReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       filterData: action.payload
-    };
-  case SET_CURRENT_PAGE:
-    return {
-      ...state,
-      currentPage: action.payload - 1
-    };
-  case SET_PRODUCTS_PER_PAGE:
-    return {
-      ...state,
-      productsPerPage: action.payload
     };
   case SET_PATTERNS_FILTER:
     return {
@@ -126,32 +113,27 @@ const productsReducer = (state = initialState, action = {}) => {
   case SET_SORT_BY_PRICE:
     return {
       ...state,
-      ...setSort({ sortByPrice: action.payload })
+      sorting: { ...setSort({ sortByPrice: action.payload }) }
     };
   case SET_SORT_BY_DATE:
     return {
       ...state,
-      ...setSort({ sortByDate: action.payload })
+      sorting: { ...setSort({ sortByDate: action.payload }) }
     };
   case SET_SORT_BY_RATE:
     return {
       ...state,
-      ...setSort({ sortByRate: action.payload })
+      sorting: { ...setSort({ sortByRate: action.payload }) }
     };
   case SET_SORT_BY_POPULARITY:
     return {
       ...state,
-      ...setSort({ sortByPopularity: action.payload })
+      sorting: { ...setSort({ sortByPopularity: action.payload }) }
     };
   case SET_PRODUCTS_LOADING:
     return {
       ...state,
       loading: action.payload
-    };
-  case SET_PAGES_COUNT:
-    return {
-      ...state,
-      pagesCount: action.payload
     };
   case SET_PRODUCT:
     return {

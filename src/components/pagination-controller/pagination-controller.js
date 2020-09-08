@@ -12,15 +12,18 @@ import { setCurrentPage } from '../../redux/table/table.actions';
 const PaginationController = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const {
-    currentPage,
-    count,
-    rowsPerPage
-  } = useSelector(({ Table: { currentPage, count, rowsPerPage } }) => ({
-    currentPage,
-    count,
-    rowsPerPage
-  }));
+  const { currentPage, count, rowsPerPage } = useSelector(
+    ({
+      Table: {
+        count,
+        pagination: { currentPage, rowsPerPage }
+      }
+    }) => ({
+      currentPage,
+      count,
+      rowsPerPage
+    })
+  );
 
   const handleFirstPageButtonClick = () => {
     dispatch(setCurrentPage(0));
@@ -56,14 +59,14 @@ const PaginationController = () => {
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
-        disabled={currentPage >= count / rowsPerPage - 1}
+        disabled={Boolean(Math.ceil(currentPage >= count / rowsPerPage - 1))}
         aria-label='next page'
       >
         <KeyboardArrowRight />
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
-        disabled={currentPage >= count / rowsPerPage - 1}
+        disabled={Boolean(Math.ceil(currentPage >= count / rowsPerPage - 1))}
         aria-label='last page'
       >
         <LastPageIcon />

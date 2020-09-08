@@ -2,7 +2,7 @@ import React from 'react';
 import { TablePagination } from '@material-ui/core';
 
 import { useDispatch, useSelector } from 'react-redux';
-import PaginationController from '../pagination-controller';
+import PaginationController from '../../components/pagination-controller';
 import {
   setCurrentPage,
   setRowsPerPage
@@ -15,7 +15,12 @@ const { ROWS_PER_PAGE } = tableTranslations;
 const TablePaginator = () => {
   const dispatch = useDispatch();
   const { count, rowsPerPage, rowsPerPageOptions, currentPage } = useSelector(
-    ({ Table: { currentPage, count, rowsPerPage, rowsPerPageOptions } }) => ({
+    ({
+      Table: {
+        count,
+        pagination: { currentPage, rowsPerPage, rowsPerPageOptions }
+      }
+    }) => ({
       count,
       rowsPerPage,
       rowsPerPageOptions,

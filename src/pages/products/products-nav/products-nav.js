@@ -1,42 +1,29 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import { Button } from '@material-ui/core';
-import ProductsNavFilters from '../products-nav-filters';
 
-import { setTableDense } from '../../../redux/table/table.actions';
+import ProductsNavFilters from '../products-nav-filters';
+import ProductsNavClearFilters from '../products-nav-clear-filters/products-nav-clear-filters';
 
 import { productsTranslations } from '../../../translations/product.translations';
 
-const { ADD_PRODUCT, COMPACT_TABLE } = productsTranslations;
+const { ADD_PRODUCT } = productsTranslations;
 
-const ProductsNav = () => {
-  const dispatch = useDispatch();
-  const dense = useSelector(({ Table }) => Table.dense);
-
-  const handleDense = (e) => {
-    dispatch(setTableDense(e.target.checked));
-  };
-
-  return (
-    <Grid container spacing={2}>
+const ProductsNav = () => (
+  <Grid container direction='column' justify='center' spacing={2}>
+    <Grid container item spacing={2}>
       <Grid item>
         <Button variant='contained' color='primary'>
           {ADD_PRODUCT}
         </Button>
       </Grid>
-      <Grid item>
-        <FormControlLabel
-          control={<Switch checked={dense} onChange={handleDense} />}
-          label={COMPACT_TABLE}
-        />
-      </Grid>
-      <ProductsNavFilters />
     </Grid>
-  );
-};
+    <Grid container item spacing={2}>
+      <ProductsNavFilters />
+      <ProductsNavClearFilters />
+    </Grid>
+  </Grid>
+);
 
 export default ProductsNav;

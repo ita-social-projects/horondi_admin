@@ -59,6 +59,7 @@ export const config = {
       'Модель',
       'Гобелен',
       'Ціна(грн)',
+      'Рейтинг',
       'Кількість покупок',
       'Дії'
     ],
@@ -173,24 +174,26 @@ export const config = {
     limit: 5,
     newsPerPage: 6
   },
-  sortBySelectOptions: [
-    {
-      label: 'популярністю',
-      value: 'popularity'
-    },
-    {
-      label: 'від дорогих до дешевих',
-      value: 'sortDesc'
-    },
-    {
-      label: 'від дешевих до дорогих',
-      value: 'sortAsc'
-    },
-    {
-      label: 'рейтингом',
-      value: 'rate'
-    }
-  ],
+  product: {
+    sortBySelectOptions: [
+      {
+        label: 'популярністю',
+        value: 'popularity'
+      },
+      {
+        label: 'від дорогих до дешевих',
+        value: 'sortDesc'
+      },
+      {
+        label: 'від дешевих до дорогих',
+        value: 'sortAsc'
+      },
+      {
+        label: 'рейтингом',
+        value: 'rate'
+      }
+    ]
+  },
   popularity: 'popularity',
   rate: 'rate',
   sortAsc: 'sortAsc',

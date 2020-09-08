@@ -10,8 +10,8 @@ import {
   getAllFilters
 } from '../../../redux/products/products.actions';
 
-import TableContainerRow from '../../../components/table-container-row';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerRow from '../../../containers/table-container-row';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 import ProductsNav from '../products-nav';
 
@@ -39,12 +39,12 @@ const ProductsPage = () => {
       Products: {
         loading,
         products,
-        sortByRate,
-        sortByPrice,
         filters,
-        sortByPopularity
+        sorting: { sortByPopularity, sortByPrice, sortByRate }
       },
-      Table: { rowsPerPage, currentPage }
+      Table: {
+        pagination: { rowsPerPage, currentPage }
+      }
     }) => ({
       loading,
       products,
@@ -87,18 +87,25 @@ const ProductsPage = () => {
 
   const productsItems = products
     ? products.map(
-      (
-        { _id, name, category, basePrice, model, purchasedCount, pattern },
-        idx
-      ) => (
+      ({
+        _id,
+        name,
+        category,
+        basePrice,
+        model,
+        purchasedCount,
+        pattern,
+        rate
+      }) => (
         <TableContainerRow
-          key={idx}
+          key={_id}
           id={_id}
           name={name[0].value}
           category={category.name[0].value}
           model={model[0].value}
           pattern={pattern[0].value}
           price={basePrice[0].value / 100}
+          rate={rate}
           purchasedCount={purchasedCount}
           editHandler={() => {
             dispatch(push(`/products/${_id}`));

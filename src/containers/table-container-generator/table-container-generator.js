@@ -8,7 +8,7 @@ import TableContainerHead from '../table-container-head';
 
 import useStyles from './table-container-generator.styles';
 import { config } from '../../configs';
-import TablePaginator from '../table-pagination-container/table-pagination-container';
+import TablePaginator from '../table-pagination-container';
 
 const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
