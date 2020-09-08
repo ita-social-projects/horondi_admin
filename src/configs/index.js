@@ -15,7 +15,7 @@ const routes = {
   pathToEditCategory: '/add-category/:id',
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
-  pathToAddContact: '/contactadd'
+  pathToAddContact: '/add-contact'
 };
 
 export const config = {
@@ -175,7 +175,8 @@ export const config = {
     INPUT_LENGTH_MESSAGE: 'Довжина повинна містити не менше 10 символів',
     ENTER_SCHEDULE_MESSAGE: 'Введіть розклад',
     ENTER_ADDRESS_MESSAGE: 'Введіть адресу',
-    IMAGE_FORMAT_MESSAGE: 'Некоректний формат',
+    IMAGE_FORMAT_MESSAGE:
+      'Введіть коректний формат, наприклад: https://example.com/',
     ENTER_LINK_MESSAGE: 'Введіть посилання'
   },
   paginationPayload: {

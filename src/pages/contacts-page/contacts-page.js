@@ -77,25 +77,21 @@ const ContactsPage = () => {
   const changePageHandler = (e, pageIndex) =>
     dispatch(setContactsCurrentPage(pageIndex));
 
-  const contactItems =
-    contacts !== undefined
-      ? contacts.map((contact, index) => (
-        <TableContainerRow
-          key={index}
-          id={contact.id}
-          phone={contact.phoneNumber}
-          email={contact.email}
-          address={contact.address[0].value.replace(
-            formRegExp.unwrapHtml,
-            ' '
-          )}
-          deleteHandler={() => contactDeleteHandler(contact._id)}
-          editHandler={() => {
-            dispatch(push(`/contacts/${contact._id}`));
-          }}
-        />
-      ))
-      : null;
+  const contactItems = contacts
+    ? contacts.map((contact, index) => (
+      <TableContainerRow
+        key={index}
+        id={contact.id}
+        phone={contact.phoneNumber}
+        email={contact.email}
+        address={contact.address[0].value.replace(formRegExp.unwrapHtml, ' ')}
+        deleteHandler={() => contactDeleteHandler(contact._id)}
+        editHandler={() => {
+          dispatch(push(`/contacts/${contact._id}`));
+        }}
+      />
+    ))
+    : null;
 
   if (loading) {
     return <LoadingBar />;
