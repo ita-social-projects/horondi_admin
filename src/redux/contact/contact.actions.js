@@ -10,7 +10,10 @@ import {
   SET_CONTACTS_ERROR,
   SET_CONTACTS_CURRENT_PAGE,
   SET_CONTACTS_PER_PAGE,
-  SET_CONTACTS_PAGES_COUNT
+  SET_CONTACTS_PAGES_COUNT,
+  ADD_CONTACT_IN_STORE,
+  DELETE_CONTACT_IN_STORE,
+  UPDATE_CONTACT_IN_STORE
 } from './contact.types';
 
 const setContactsCurrentPage = (payload) => ({
@@ -53,6 +56,21 @@ const updateContact = (payload) => ({
   payload
 });
 
+const addContactInStore = (payload) => ({
+  type: ADD_CONTACT_IN_STORE,
+  payload
+});
+
+const deleteContactInStore = (id) => ({
+  type: DELETE_CONTACT_IN_STORE,
+  payload: id
+});
+
+const updateContactInStore = (id, updatedContact) => ({
+  type: UPDATE_CONTACT_IN_STORE,
+  payload: { id, updatedContact }
+});
+
 const setContactsLoading = (loading) => ({
   type: SET_CONTACTS_LOADING,
   payload: loading
@@ -85,5 +103,8 @@ export {
   setContactsError,
   setContactsPerPage,
   setContactsCurrentPage,
-  setContactsPagesCount
+  setContactsPagesCount,
+  addContactInStore,
+  deleteContactInStore,
+  updateContactInStore
 };

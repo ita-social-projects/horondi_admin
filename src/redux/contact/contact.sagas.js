@@ -14,7 +14,10 @@ import {
   setContact,
   setContactsError,
   setContactsCurrentPage,
-  setContactsPagesCount
+  setContactsPagesCount,
+  addContactInStore,
+  deleteContactInStore,
+  updateContactInStore
 } from './contact.actions';
 
 import {
@@ -76,11 +79,12 @@ function* handleAddContact({ payload }) {
   try {
     yield put(setContactsLoading(true));
     yield call(addContact, payload);
-    const contacts = yield call(getContacts, skip, limit);
-    yield put(
-      setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
-    );
-    yield put(setContacts(contacts.items));
+    yield put(addContactInStore(payload))
+    // const contacts = yield call(getContacts, skip, limit);
+    // yield put(
+    //   setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
+    // );
+    // yield put(setContacts(contacts.items));
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
@@ -94,13 +98,15 @@ function* handleAddContact({ payload }) {
 function* handleContactDelete({ payload }) {
   try {
     yield put(setContactsLoading(true));
+
     yield call(deleteContact, payload);
-    const contacts = yield call(getContacts, skip, limit);
-    yield put(
-      setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
-    );
+    yield put(deleteContactInStore(payload))
+    // const contacts = yield call(getContacts, skip, limit);
+    // yield put(
+    //   setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
+    // );
     yield put(setContactsCurrentPage(1));
-    yield put(setContacts(contacts.items));
+    // yield put(setContacts(contacts.items));
 
     yield put(setContactsLoading(false));
     yield put(setSnackBarSeverity('success'));
@@ -117,11 +123,12 @@ function* handleContactUpdate({ payload }) {
     yield put(setContactsLoading(true));
     yield call(updateContact, id, updatedContact);
 
-    const contacts = yield call(getContacts, skip, limit);
-    yield put(
-      setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
-    );
-    yield put(setContacts(contacts.items));
+    yield put(updateContactInStore(id, updatedContact));
+    // const contacts = yield call(getContacts, skip, limit);
+    // yield put(
+    //   setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
+    // );
+    // yield put(setContacts(contacts.items));
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
