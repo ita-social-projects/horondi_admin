@@ -1,34 +1,107 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-import { getFromLocalStorage } from '../../services/local-storage.service';
+import { getItems, setItems } from '../../utils/client';
 import { config } from '../../configs';
 
-const formError = (err) => err.message.replace('GraphQL error: ', '');
-let token;
+const getAllUsersQuery = `
+{
+  getAllUsers {
+    _id
+    firstName
+    lastName
+    email
+    role
+    phoneNumber
+    banned
+  }
+}
+`;
+
+const getUserByIdQuery = `
+query($id: ID!) {
+  getUserById(id: $id) {
+    ... on User {
+      firstName
+      lastName
+      email
+      address {
+        country
+        city
+        buildingNumber
+        appartment
+        street
+        zipcode
+      }
+      banned
+    }
+  }
+}
+`;
+
+const deleteUserMutation = `
+mutation($id: ID!) {
+  deleteUser(id: $id) {
+    firstName
+    lastName
+  }
+}
+`;
+
+const switchUserStatusMutation = `
+mutation($id: ID!) {
+  switchUserStatus(id: $id) {
+    ... on SuccessfulResponse {
+      isSuccess
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
+const registerAdminMutation = `
+mutation($user: SpecialUserRegisterInput!) {
+  registerAdmin(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
+const completeAdminRegisterMutation = `
+mutation($user: SpecialUserConfirmInput!,$token: String!){
+  completeAdminRegister(user: $user,token: $token) {
+    ... on SuccessfulResponse {
+    	isSuccess
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
+const validateTokenQuery = `
+query($token: String!){
+  validateToken(token: $token) {
+    ... on SuccessfulResponse {
+      isSuccess
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}`;
 
 const getAllUsers = async () => {
-  token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client.query({
-    query: gql`
-      {
-        getAllUsers {
-          _id
-          firstName
-          lastName
-          email
-          role
-          phoneNumber
-          banned
-        }
-      }
-    `,
-    context: {
-      headers: {
-        token
-      }
-    },
-    fetchPolicy: 'no-cache'
-  });
+  const result = await getItems(getAllUsersQuery);
 
   const { data } = result;
 
@@ -36,40 +109,7 @@ const getAllUsers = async () => {
 };
 
 const getUserById = async (id) => {
-  token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client
-    .query({
-      variables: { id },
-      query: gql`
-        query($id: ID!) {
-          getUserById(id: $id) {
-            ... on User {
-              firstName
-              lastName
-              email
-              address {
-                country
-                city
-                buildingNumber
-                appartment
-                street
-                zipcode
-              }
-              banned
-            }
-          }
-        }
-      `,
-      context: {
-        headers: {
-          token
-        }
-      },
-      fetchPolicy: 'no-cache'
-    })
-    .catch((err) => {
-      throw new Error(`Помилка: ${config.errorMessages[formError(err)]}`);
-    });
+  const result = await getItems(getUserByIdQuery, { id });
 
   const { data } = result;
 
@@ -77,28 +117,7 @@ const getUserById = async (id) => {
 };
 
 const deleteUser = async (id) => {
-  token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client
-    .mutate({
-      variables: { id },
-      mutation: gql`
-        mutation($id: ID!) {
-          deleteUser(id: $id) {
-            firstName
-            lastName
-          }
-        }
-      `,
-      context: {
-        headers: {
-          token
-        }
-      },
-      fetchPolicy: 'no-cache'
-    })
-    .catch((err) => {
-      throw new Error(`Помилка: ${config.errorMessages[formError(err)]}`);
-    });
+  const result = await setItems(deleteUserMutation, { id });
 
   const { data } = result;
 
@@ -106,29 +125,7 @@ const deleteUser = async (id) => {
 };
 
 const switchUserStatus = async (id) => {
-  token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client.mutate({
-    variables: { id },
-    mutation: gql`
-      mutation($id: ID!) {
-        switchUserStatus(id: $id) {
-          ... on SuccessfulResponse {
-            isSuccess
-          }
-          ... on Error {
-            message
-            statusCode
-          }
-        }
-      }
-    `,
-    context: {
-      headers: {
-        token
-      }
-    },
-    fetchPolicy: 'no-cache'
-  });
+  const result = await setItems(switchUserStatusMutation, { id });
 
   const { data } = result;
 
@@ -141,4 +138,54 @@ const switchUserStatus = async (id) => {
   return data.switchUserStatus;
 };
 
-export { getAllUsers, getUserById, deleteUser, switchUserStatus };
+const registerAdmin = async (user) => {
+  const result = await setItems(registerAdminMutation, { user });
+
+  const { data } = result;
+
+  if (data.registerAdmin.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.registerAdmin.message]}`
+    );
+  }
+
+  return data.registerAdmin;
+};
+
+const completeAdminRegister = async ({ user, token }) => {
+  const result = await setItems(completeAdminRegisterMutation, { user, token });
+
+  const { data } = result;
+
+  if (data.completeAdminRegister.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.completeAdminRegister.message]}`
+    );
+  }
+
+  return data.completeAdminRegister;
+};
+
+const validateToken = async (token) => {
+  const result = await getItems(validateTokenQuery, { token });
+
+  const { data } = result;
+
+  if (data.validateToken.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.validateToken.message]}`
+    );
+  }
+
+  return data.validateToken;
+};
+
+export {
+  getAllUsers,
+  getUserById,
+  deleteUser,
+  switchUserStatus,
+  registerAdmin,
+  completeAdminRegister,
+  validateToken
+};

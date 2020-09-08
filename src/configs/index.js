@@ -12,7 +12,8 @@ const routes = {
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id',
-  pathToAddSpecialUser: '/register'
+  pathToRegisterAdmin: '/register',
+  pathToConfirmAdmin: '/confirmation/:token'
 };
 
 export const config = {
@@ -94,8 +95,10 @@ export const config = {
   },
   statuses: {
     SUCCESS_ADD_STATUS: 'Успішно додано!',
+    SUCCESS_CREATION_STATUS: 'Успішно створено!',
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
+    SUCCESS_CONFIRMATION_STATUS: 'Успішно підтверджено реєстрацію!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
     USER_ACTIVE_STATUS: 'Активний(-a)',
     USER_INACTIVE_STATUS: 'Неактивний(-a)',
@@ -105,7 +108,10 @@ export const config = {
     USER_NOT_FOUND: 'Користувач не знайдений!',
     USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу',
     INVALID_PERMISSIONS: 'Недостатньо прав користувача',
-    WRONG_CREDENTIALS: 'Неправильно вказані вхідні дані'
+    WRONG_CREDENTIALS: 'Неправильно вказані вхідні дані',
+    INPUT_NOT_VALID: 'Неправильні ввідні дані',
+    USER_ALREADY_EXIST: 'Користувач з такими даними вже існує',
+    INVALID_INVITATIONAL_TOKEN: 'Неправильне посилання на створення користувача'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
@@ -158,8 +164,16 @@ export const config = {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
     ENTER_EMAIL_MESSAGE: 'Введіть email',
     PASSWORD_MIN_LENGTH_MESSAGE: 'Пароль повинен містити не менше 8 символів',
+    PASSWORD_MAX_LENGTH_MESSAGE: 'Пароль повинен містити не більше 20 символів',
     PASSWORD_LANG_MESSAGE: 'Використовуйте латиницю різних регістрів та цифри',
+    ENTER_FIRSTNAME_MESSAGE: "Введіть ім'я",
+    ENTER_LASTNAME_MESSAGE: 'Введіть прізвище',
     ENTER_PASSWORD_MESSAGE: 'Введіть пароль',
+    FIRSTNAME_MIN_LENGTH_MESSAGE: "Ім'я повинно містити не менше 2 символів",
+    LASTNAME_MIN_LENGTH_MESSAGE: 'Прізвище повинно містити не менше 2 символів',
+    FIRSTNAME_MAX_LENGTH_MESSAGE: "Ім'я повинно містити не більше 30 символів",
+    LASTNAME_MAX_LENGTH_MESSAGE:
+      'Прізвище повинно містити не більше 30 символів',
     SELECT_ROLE_MESSAGE: 'Оберіть роль'
   },
   newsErrorMessages: {

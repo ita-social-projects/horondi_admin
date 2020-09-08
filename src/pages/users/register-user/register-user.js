@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   TextField,
   Grid,
@@ -15,11 +16,18 @@ import { useFormik } from 'formik';
 import { useStyles } from './register-user.styles';
 import { config } from '../../../configs';
 import { SaveButton } from '../../../components/buttons';
+import { registerAdmin } from '../../../redux/users/users.actions';
+import LoadingBar from '../../../components/loading-bar';
 
 const { loginErrorMessages, userRoles: roles } = config;
 
 const RegisterUser = () => {
   const styles = useStyles();
+  const dispatch = useDispatch();
+
+  const { loading } = useSelector(({ Users }) => ({
+    loading: Users.userLoading
+  }));
 
   const formSchema = Yup.object().shape({
     email: Yup.string()
@@ -35,10 +43,14 @@ const RegisterUser = () => {
     },
     validationSchema: formSchema,
     validateOnBlur: true,
-    onSubmit: ({ email, role }) => {
-      console.log(email, role);
+    onSubmit: (data) => {
+      dispatch(registerAdmin(data));
     }
   });
+
+  if (loading) {
+    return <LoadingBar />;
+  }
 
   const rolesList = roles.map((item, idx) => (
     <MenuItem key={idx} id={item.role} data-cy={item.role} value={item.role}>

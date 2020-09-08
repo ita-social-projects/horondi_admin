@@ -28,7 +28,7 @@ const UsersDetails = (props) => {
   const dispatch = useDispatch();
 
   const { loading } = useSelector(({ Users }) => ({
-    loading: Users.usersLoading
+    loading: Users.userLoading
   }));
 
   const { id } = match.params;

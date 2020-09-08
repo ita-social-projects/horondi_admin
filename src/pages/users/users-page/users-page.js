@@ -15,7 +15,7 @@ import { formatPhoneNumber } from '../../../utils/format-phone-number';
 import { userRoleTranslations } from '../../../translations/user.translations';
 
 const { routes } = config.app;
-const pathToAddSpecialUserPage = routes.pathToAddSpecialUser;
+const pathToRegisterAdminPage = routes.pathToRegisterAdmin;
 
 const tableHeaders = config.tableHeadRowTitles.users;
 const { REMOVE_USER_TITLE, CREATE_SPECIAL_USER } = config.buttonTitles;
@@ -74,7 +74,7 @@ const UsersPage = () => {
         <div className={styles.buttonsPanel}>
           <Button
             id='add-user-admin'
-            onClick={() => dispatch(push(pathToAddSpecialUserPage))}
+            onClick={() => dispatch(push(pathToRegisterAdminPage))}
             variant='contained'
             color='primary'
           >
