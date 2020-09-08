@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { push } from 'connected-react-router';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
@@ -10,8 +11,10 @@ import ProductsNavFilters from '../products-nav-filters';
 import { setTableDense } from '../../../redux/table/table.actions';
 
 import { productsTranslations } from '../../../translations/product.translations';
+import { config } from '../../../configs';
 
 const { ADD_PRODUCT, COMPACT_TABLE } = productsTranslations;
+const { routes } = config.app;
 
 const ProductsNav = () => {
   const dispatch = useDispatch();
@@ -21,10 +24,18 @@ const ProductsNav = () => {
     dispatch(setTableDense(e.target.checked));
   };
 
+  const redirectToProductsAdd = () => {
+    dispatch(push(routes.pathToAddProduct));
+  };
+
   return (
     <Grid container spacing={2}>
       <Grid item>
-        <Button variant='contained' color='primary'>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={redirectToProductsAdd}
+        >
           {ADD_PRODUCT}
         </Button>
       </Grid>

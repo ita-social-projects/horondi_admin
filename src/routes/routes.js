@@ -14,6 +14,7 @@ import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
 import ProductsPage from '../pages/products/products-page';
+import ProductsAdd from '../pages/products/products-add';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import UsersDetails from '../pages/users/users-details';
@@ -28,19 +29,19 @@ const Routes = () => {
     isAuth: Auth.isAuth
   }));
 
-  if (!isAuth) {
-    return (
-      <ConnectedRouter history={history}>
-        <NavBar />
-        <Switch>
-          <Route path={routes.pathToLogin} exact component={LoginPage} />
-          <Route component={ErrorPage} />
-        </Switch>
-        <DialogWindow />
-        <SnackbarItem />
-      </ConnectedRouter>
-    );
-  }
+  // if (!isAuth) {
+  //   return (
+  //     <ConnectedRouter history={history}>
+  //       <NavBar />
+  //       <Switch>
+  //         <Route path={routes.pathToLogin} exact component={LoginPage} />
+  //         <Route component={ErrorPage} />
+  //       </Switch>
+  //       <DialogWindow />
+  //       <SnackbarItem />
+  //     </ConnectedRouter>
+  //   );
+  // }
 
   return (
     <ConnectedRouter history={history}>
@@ -57,6 +58,7 @@ const Routes = () => {
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
+        <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route
           path={routes.pathToAddCategory}

@@ -3,12 +3,21 @@ import {
   setAllProducts,
   setProductsLoading,
   setAllFilterData,
-  setProductsError
+  setProductsError,
+  setProductCategories
 } from './products.actions';
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 
-import { GET_ALL_FILTERS, GET_FILTRED_PRODUCTS } from './products.types';
-import { getAllProducts, getAllFilters } from './products.operations';
+import {
+  GET_ALL_FILTERS,
+  GET_FILTRED_PRODUCTS,
+  GET_PRODUCT_SPECIES
+} from './products.types';
+import {
+  getAllProducts,
+  getAllFilters,
+  getProductCategories
+} from './products.operations';
 import {
   setSnackBarMessage,
   setSnackBarSeverity,
@@ -47,6 +56,19 @@ export function* handleGetFilters() {
   }
 }
 
+export function* handleProductSpeciesLoad() {
+  try {
+    yield put(setProductsLoading(true));
+    const categories = yield call(getProductCategories);
+    const species = yield call(getAllFilters);
+    yield put(setProductCategories(categories));
+    yield put(setAllFilterData(species));
+    yield put(setProductsLoading(false));
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
 export function* handleProductsErrors(e) {
   yield put(setProductsLoading(false));
   yield put(setProductsError({ e }));
@@ -58,4 +80,5 @@ export function* handleProductsErrors(e) {
 export default function* productsSaga() {
   yield takeEvery(GET_ALL_FILTERS, handleGetFilters);
   yield takeEvery(GET_FILTRED_PRODUCTS, handleFilterLoad);
+  yield takeEvery(GET_PRODUCT_SPECIES, handleProductSpeciesLoad);
 }

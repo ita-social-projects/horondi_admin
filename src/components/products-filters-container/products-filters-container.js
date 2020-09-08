@@ -94,7 +94,10 @@ ProductsFilterContainer.propTypes = {
   labels: PropTypes.arrayOf(PropTypes.string).isRequired,
   productFilter: PropTypes.arrayOf(PropTypes.string).isRequired,
   setFilter: PropTypes.func.isRequired,
-  list: PropTypes.arrayOf(PropTypes.object).isRequired
+  list: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.arrayOf(PropTypes.array)
+  ]).isRequired
 };
 
 export default ProductsFilterContainer;

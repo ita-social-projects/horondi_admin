@@ -139,4 +139,23 @@ const getAllFilters = async () => {
   return result.data.getProducts.items;
 };
 
-export { getAllProducts, getAllFilters };
+const getProductCategories = async () => {
+  const result = await client.query({
+    query: gql`
+      query {
+        getAllCategories {
+          _id
+          name {
+            lang
+            value
+          }
+          subcategories
+          isMain
+        }
+      }
+    `
+  });
+  return result.data.getAllCategories;
+};
+
+export { getAllProducts, getAllFilters, getProductCategories };

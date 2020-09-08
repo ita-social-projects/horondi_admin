@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
@@ -16,15 +16,26 @@ import ProductsNavSort from '../products-nav-sort';
 import ProductsNavSearch from '../products-nav-search';
 
 import { productsTranslations } from '../../../translations/product.translations';
+import useProductHandler from '../../../utils/use-product-handler';
 
 const { CATEGORIES, PATTERNS, MODELS, COLORS } = productsTranslations;
 
 const ProductsNavFilters = () => {
   const styles = useStyles();
-  const { filterData, filters } = useSelector(({ Products }) => ({
-    filterData: Products.filterData,
+  const { filters } = useSelector(({ Products }) => ({
     filters: Products.filters
   }));
+
+  const {
+    colors,
+    colorsNames,
+    patterns,
+    patternsNames,
+    categories,
+    categoriesNames,
+    models,
+    modelNames
+  } = useProductHandler();
 
   const {
     categoryFilter,
@@ -32,65 +43,6 @@ const ProductsNavFilters = () => {
     patternsFilter,
     modelsFilter
   } = filters;
-
-  const categoriesNames = useMemo(
-    () => [
-      ...new Set(filterData.map(({ category }) => category.name[0].value))
-    ],
-    [filterData]
-  );
-
-  const categories = useMemo(
-    () =>
-      categoriesNames.map(
-        (category) =>
-          filterData.find(
-            ({ category: { name } }) => category === name[0].value
-          ).category
-      ),
-    [filterData, categoriesNames]
-  );
-
-  const colorsNames = useMemo(
-    () => [
-      ...new Set(filterData.map(({ colors }) => colors[0].simpleName[0].value))
-    ],
-    [filterData]
-  );
-
-  const colors = useMemo(
-    () =>
-      colorsNames.map((color) =>
-        filterData.find(({ colors }) => colors[0].simpleName[0].value === color)
-      ),
-    [filterData, colorsNames]
-  );
-
-  const patternsNames = useMemo(
-    () => [...new Set(filterData.map(({ pattern }) => pattern[0].value))],
-    [filterData]
-  );
-
-  const patterns = useMemo(
-    () =>
-      patternsNames.map((item) =>
-        filterData.find(({ pattern }) => pattern[0].value === item)
-      ),
-    [filterData, patternsNames]
-  );
-
-  const modelNames = useMemo(
-    () => [...new Set(filterData.map(({ model }) => model[0].value))],
-    [filterData]
-  );
-
-  const models = useMemo(
-    () =>
-      modelNames.map((item) =>
-        filterData.find(({ model }) => model[0].value === item)
-      ),
-    [filterData, modelNames]
-  );
 
   const filtersOptions = {
     categories: {

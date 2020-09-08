@@ -5,16 +5,28 @@ import PeopleIcon from '@material-ui/icons/People';
 
 const routes = {
   pathToLogin: '/',
-  pathToNews: '/',
+  pathToNews: '/f',
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
   pathToProducts: '/products',
+  pathToAddProduct: '/',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id'
 };
+
+const languageInput = [
+  {
+    lang: 'uk',
+    value: ''
+  },
+  {
+    lang: 'en',
+    value: ''
+  }
+];
 
 export const config = {
   app: {
@@ -195,5 +207,61 @@ export const config = {
   rate: 'rate',
   sortAsc: 'sortAsc',
   sortDesc: 'sortDesc',
-  submitKey: 'Enter'
+  submitKey: 'Enter',
+  productStepsLabels: [
+    'Введіть інформацію про продукт',
+    'Оберіть категорію, підкатегорію, модель, колір, гобелен та ціну продукту',
+    'Оберіть опційні параметри',
+    'Завантажте фото для продукту',
+    'Підтвердження створення продукту'
+  ],
+  currencyInput: [
+    {
+      value: '',
+      currency: 'UAH'
+    },
+    {
+      value: '',
+      currency: 'USD'
+    }
+  ],
+  selectedLanguages: {
+    uk: {
+      name: 'uk',
+      checked: false
+    },
+    en: {
+      name: 'en',
+      checked: false
+    }
+  },
+  productInfoInputs: {
+    name: languageInput,
+    mainMaterial: languageInput,
+    innerMaterial: languageInput,
+    closure: languageInput,
+    description: languageInput
+  },
+  productInfoLabels: [
+    { label: 'Назва', name: 'name' },
+    { label: 'Основний матеріал', name: 'mainMaterial' },
+    { label: 'Внутрішній матеріал', name: 'innerMaterial' },
+    { label: 'Замок', name: 'closure' },
+    { label: 'Опис', name: 'description' }
+  ],
+  productSpeciesSelects: {
+    category: '',
+    subcategory: '',
+    model: '',
+    color: '',
+    pattern: '',
+    basePrice: 0
+  },
+  productSelectsLabels: [
+    { label: 'Категорія', name: 'category' },
+    { label: 'Підкатегорія', name: 'subcategory' },
+    { label: 'Модель', name: 'model' },
+    { label: 'Колір', name: 'color' },
+    { label: 'Гобелен', name: 'pattern' }
+  ]
 };

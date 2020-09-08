@@ -19,8 +19,13 @@ import {
   SET_PRODUCT_LOADING,
   SET_PRODUCT_TO_SEND,
   CLEAR_PRODUCT_TO_SEND,
-  SET_PRODUCTS_ERROR
+  SET_PRODUCTS_ERROR,
+  SET_PRODUCT_CATEGORIES
 } from './products.types';
+
+import { config } from '../../configs';
+
+const { languageInput, currencyInput } = config;
 
 export const initialState = {
   productLoading: false,
@@ -41,7 +46,29 @@ export const initialState = {
   product: null,
   products: [],
   pagesCount: 1,
-  productsError: null
+  productsError: null,
+  productToSend: {
+    category: '',
+    subcategory: '',
+    model: '',
+    name: languageInput,
+    description: languageInput,
+    mainMaterial: languageInput,
+    innerMaterial: languageInput,
+    pattern: languageInput,
+    closure: languageInput,
+    strapLengthInCm: 0,
+    patternImages: '',
+    images: '',
+    colors: [],
+    basePrice: currencyInput,
+    available: false,
+    isHotItem: false,
+    options: []
+  },
+  productSpecies: {
+    categories: []
+  }
 };
 const setSort = ({
   sortByPrice = 0,
@@ -180,6 +207,11 @@ const productsReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       productsError: action.payload
+    };
+  case SET_PRODUCT_CATEGORIES:
+    return {
+      ...state,
+      productSpecies: { ...state.productSpecies, categories: action.payload }
     };
   default:
     return state;

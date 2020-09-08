@@ -22,7 +22,9 @@ import {
   SET_PRODUCT_LOADING,
   SET_PRODUCT_TO_SEND,
   CLEAR_PRODUCT_TO_SEND,
-  SET_PRODUCTS_ERROR
+  SET_PRODUCTS_ERROR,
+  GET_PRODUCT_SPECIES,
+  SET_PRODUCT_CATEGORIES
 } from './products.types';
 
 export const setProduct = (item) => ({
@@ -119,5 +121,12 @@ export const clearProductToSend = () => ({
 });
 export const setProductsError = (payload) => ({
   type: SET_PRODUCTS_ERROR,
+  payload
+});
+export const getProductSpecies = () => ({
+  type: GET_PRODUCT_SPECIES
+});
+export const setProductCategories = (payload) => ({
+  type: SET_PRODUCT_CATEGORIES,
   payload
 });
