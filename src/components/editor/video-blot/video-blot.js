@@ -29,4 +29,7 @@ class VideoBlot extends BlockEmbed {
   }
 }
 
+VideoBlot.blotName = 'video';
+VideoBlot.tagName = 'video';
+
 export default VideoBlot;

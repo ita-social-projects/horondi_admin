@@ -1,17 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import PropTypes from 'prop-types';
+import ImageIcon from '@material-ui/icons/Image';
 
+import ImageBlot from './image-blot';
+import VideoBlot from './video-blot';
 import 'react-quill/dist/quill.snow.css';
 
 Quill.debug('error');
+Quill.register(VideoBlot);
+Quill.register(ImageBlot);
 
 const Editor = ({ value, placeholder, onEditorChange }) => {
+  const reactQuillRef = useRef(null);
+  const inputOpenImageRef = useRef();
+
   const [content, setContent] = useState(value);
+  const [file, setFile] = useState(null);
 
   const handleChange = (html) => {
     setContent(html);
     onEditorChange(html);
+  };
+
+  const imageHandler = (e) => {
+    inputOpenImageRef.current.click();
+  };
+
+  useEffect(() => console.log(file), [file]);
+
+  const insertImage = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (
+      e.currentTarget &&
+      e.currentTarget.files &&
+      e.currentTarget.files.length > 0
+    ) {
+      const file = e.currentTarget.files[0];
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const quill = reactQuillRef.current.getEditor();
+        quill.focus();
+
+        const range = quill.getSelection();
+        const position = range ? range.index : 0;
+
+        quill.insertEmbed(position, 'image', {
+          src: reader.result,
+          alt: file.name
+        });
+        quill.setSelection(position + 1);
+
+        setFile({
+          ...file,
+          base64: reader.result
+        });
+      };
+    }
   };
 
   const modules = {
@@ -36,7 +85,8 @@ const Editor = ({ value, placeholder, onEditorChange }) => {
     'clean',
     'list',
     'align',
-    'color'
+    'color',
+    'insertImage'
   ];
 
   return (
@@ -59,7 +109,9 @@ const Editor = ({ value, placeholder, onEditorChange }) => {
         <button type='button' className='ql-strike' />
         <button type='button' className='ql-link' />
         <button type='button' className='ql-code-block' />
-        <button type='button' className='ql-image' />
+        <button type='button' onClick={imageHandler}>
+          <ImageIcon />
+        </button>
         <button type='button' className='ql-video' />
         <button type='button' className='ql-blockquote' />
         <button type='button' className='ql-clean' />
@@ -74,11 +126,19 @@ const Editor = ({ value, placeholder, onEditorChange }) => {
       </div>
       <ReactQuill
         theme='snow'
+        ref={reactQuillRef}
         onChange={handleChange}
         modules={modules}
         formats={formats}
         value={content}
         placeholder={placeholder}
+      />
+      <input
+        type='file'
+        accept='image/!*'
+        ref={inputOpenImageRef}
+        style={{ display: 'none' }}
+        onChange={insertImage}
       />
     </div>
   );
