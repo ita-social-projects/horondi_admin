@@ -74,9 +74,9 @@ const ContactsPage = () => {
     );
   }, [dispatch, contactsPerPage, contactsCurrentPage]);
 
-  const changePageHandler = (e, pageIndex) =>
+  const changePageHandler = (e, pageIndex) => {
     dispatch(setContactsCurrentPage(pageIndex));
-
+  };
   const contactItems = contacts
     ? contacts.map((contact, index) => (
       <TableContainerRow

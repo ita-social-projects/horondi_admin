@@ -259,8 +259,8 @@ ContactsForm.propTypes = {
     enCartImage: PropTypes.string.isRequired,
     cartLink: PropTypes.string.isRequired
   }).isRequired,
-  touched: PropTypes.objectOf(PropTypes.object).isRequired,
-  errors: PropTypes.objectOf(PropTypes.object).isRequired
+  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+  errors: PropTypes.objectOf(PropTypes.string).isRequired
 };
 
 export default ContactsForm;

@@ -183,5 +183,10 @@ export const config = {
     skip: 0,
     limit: 5,
     newsPerPage: 6
+  },
+  contactsPaginationPayload: {
+    skip: 0,
+    limit: 6,
+    contactsPerPage: 7
   }
 };

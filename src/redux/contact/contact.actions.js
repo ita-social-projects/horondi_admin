@@ -31,9 +31,9 @@ const setContactsPagesCount = (payload) => ({
   payload
 });
 
-const setContacts = (news) => ({
+const setContacts = (contacts) => ({
   type: SET_CONTACTS,
-  payload: news
+  payload: contacts
 });
 
 const getContacts = (payload) => ({
