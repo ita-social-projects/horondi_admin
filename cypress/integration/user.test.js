@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { config } from '../../src/configs';
+
 describe('User list and items test', () => {
   let firstName;
   let lastName;
@@ -46,6 +48,10 @@ describe('User list and items test', () => {
       .should('match', /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/gi);
     cy.get('@table')
       .eq(4)
+      .invoke('text')
+      .should('match', /(Користувач|Адмін|Суперадмін)/g);
+    cy.get('@table')
+      .eq(5)
       .invoke('text')
       .should('match', /(Активний|Неактивний)/g);
   });
@@ -97,5 +103,124 @@ describe('User list and items test', () => {
     cy.get('[data-cy=city]').should('have.text', city);
     cy.get('[data-cy=adress]').should('have.text', adress);
     cy.get('[data-cy=postCode]').should('have.text', postalCode);
+  });
+
+  it('Should show an error label when email or role are incorrect', () => {
+    cy.visit('/register');
+    cy.get('[data-cy=email]').type('Bob');
+    cy.get('[data-cy=submit-admin-register]').click();
+    cy.get('[data-cy=email-error-label]').should(
+      'have.text',
+      config.loginErrorMessages.INVALID_EMAIL_MESSAGE
+    );
+    cy.get('[data-cy=role-error-label]').should(
+      'have.text',
+      config.loginErrorMessages.SELECT_ROLE_MESSAGE
+    );
+  });
+
+  it('Should show an error caused by the lack of previlegies', () => {
+    cy.visit('/register');
+    cy.get('[data-cy=email]').type('admin3@gmail.com');
+    cy.get('[data-cy=role]').click();
+    cy.get('[data-cy=admin]').click();
+    cy.get('[data-cy=submit-admin-register]').click();
+    cy.wait(3000);
+    cy.get('[data-cy=snack-bar-message]').should(
+      'have.text',
+      'Помилка: Недостатньо прав користувача'
+    );
+  });
+});
+
+describe('Register and confirm admin', () => {
+  let firstName;
+  let lastName;
+  let password;
+  let email;
+  let role;
+  let token;
+
+  before(() => {
+    firstName = 'Bob';
+    lastName = 'Marley';
+    password = 'qwertY123';
+    role = 'admin';
+    email = 'admin2@gmail.com';
+  });
+
+  it('Register new admin', () => {
+    const query = `
+      mutation{
+        registerAdmin(user: {
+          email: "${email}",
+          role: "${role}"
+        }){
+          ... on User {
+            token
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+    cy.login(
+      Cypress.env('SUPERADMIN_LOGIN'),
+      Cypress.env('SUPERADMIN_PASSWORD')
+    ).then((adminToken) => {
+      cy.request({
+        url: Cypress.env('SERVER_URL'),
+        method: 'POST',
+        headers: {
+          token: adminToken
+        },
+        body: {
+          query
+        }
+      })
+        .then((res) => {
+          console.log(res.body);
+          return res.body.data.registerAdmin.token;
+        })
+        .then((newToken) => {
+          token = newToken;
+        });
+    });
+  });
+
+  it('Should open confirmation page', () => {
+    cy.visit(`/confirmation/${token}`);
+    cy.wait(3000);
+    cy.get('[data-cy=title]').should(
+      'have.text',
+      'Продовжити реєстрацію адміністратора'
+    );
+  });
+
+  it('Should confirm admin registration', () => {
+    cy.visit(`/confirmation/${token}`);
+    cy.wait(3000);
+    cy.get('[data-cy=firstName]').type(firstName);
+    cy.get('[data-cy=lastName]').type(lastName);
+    cy.get('[data-cy=password]').type(password);
+    cy.get('[data-cy=submit-admin-confirmation]').click();
+    cy.wait(3000);
+    cy.get('[data-cy=snack-bar-message]').should(
+      'have.text',
+      config.statuses.SUCCESS_CONFIRMATION_STATUS
+    );
+  });
+
+  it('Should login as an admin', () => {
+    cy.login(email, password);
+    cy.wait(3000);
+    cy.visit('/users');
+    cy.wait(3000);
+    cy.get('[data-cy=title]').should(
+      'have.text',
+      'Інформація про користувачів'
+    );
   });
 });
