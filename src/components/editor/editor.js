@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import PropTypes from 'prop-types';
 import ImageIcon from '@material-ui/icons/Image';
@@ -11,12 +11,17 @@ Quill.debug('error');
 Quill.register(VideoBlot);
 Quill.register(ImageBlot);
 
-const Editor = ({ value, placeholder, onEditorChange }) => {
+const Editor = ({
+  value,
+  placeholder,
+  onEditorChange,
+  files = [],
+  setFiles
+}) => {
   const reactQuillRef = useRef(null);
   const inputOpenImageRef = useRef();
 
   const [content, setContent] = useState(value);
-  const [file, setFile] = useState(null);
 
   const handleChange = (html) => {
     setContent(html);
@@ -26,8 +31,6 @@ const Editor = ({ value, placeholder, onEditorChange }) => {
   const imageHandler = (e) => {
     inputOpenImageRef.current.click();
   };
-
-  useEffect(() => console.log(file), [file]);
 
   const insertImage = (e) => {
     e.stopPropagation();
@@ -40,7 +43,7 @@ const Editor = ({ value, placeholder, onEditorChange }) => {
     ) {
       const file = e.currentTarget.files[0];
       const reader = new FileReader();
-
+      console.log(file);
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         const quill = reactQuillRef.current.getEditor();
@@ -54,12 +57,9 @@ const Editor = ({ value, placeholder, onEditorChange }) => {
           alt: file.name
         });
         quill.setSelection(position + 1);
-
-        setFile({
-          ...file,
-          base64: reader.result
-        });
       };
+
+      setFiles([...files, { ...file }]);
     }
   };
 
@@ -147,7 +147,9 @@ const Editor = ({ value, placeholder, onEditorChange }) => {
 Editor.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  onEditorChange: PropTypes.func.isRequired
+  onEditorChange: PropTypes.func.isRequired,
+  setFiles: PropTypes.func.isRequired,
+  files: PropTypes.arrayOf.isRequired
 };
 
 export default Editor;

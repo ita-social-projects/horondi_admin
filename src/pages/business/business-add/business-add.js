@@ -29,7 +29,9 @@ const NewsAdd = () => {
     ukSetText,
     enSetText,
     ukText,
-    enText
+    enText,
+    files,
+    setFiles
   } = useBusinessHandlers();
 
   useEffect(() => {
@@ -125,10 +127,9 @@ const NewsAdd = () => {
                 <Editor
                   value={ukText}
                   placeholder='Текст'
-                  onEditorChange={(value) => {
-                    console.log(value);
-                    ukSetText(value);
-                  }}
+                  onEditorChange={(value) => ukSetText(value)}
+                  files={files}
+                  setFiles={setFiles}
                 />
               </Paper>
             </TabPanel>
@@ -148,6 +149,7 @@ const NewsAdd = () => {
                   value={enText}
                   placeholder='Текст'
                   onEditorChange={(value) => enSetText(value)}
+                  setFiles={setFiles}
                 />
               </Paper>
             </TabPanel>

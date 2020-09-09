@@ -18,6 +18,8 @@ const useBusinessHandlers = () => {
   const [enTitle, enSetTitle] = useState('');
   const [enText, enSetText] = useState('');
 
+  const [files, setFiles] = useState([]);
+
   const [tabsValue, setTabsValue] = useState(0);
   const [checkboxes, setCheckboxes] = useState(checkboxStates);
   const [preferredLanguages, setPreferredLanguages] = useState([]);
@@ -90,7 +92,9 @@ const useBusinessHandlers = () => {
     handleTabsChange,
     handleCheckboxChange,
     languageCheckboxes,
-    createBusinessPage
+    createBusinessPage,
+    files,
+    setFiles
   };
 };
 

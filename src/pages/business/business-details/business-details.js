@@ -48,7 +48,9 @@ const BusinessPageDetails = ({ match }) => {
     enTitle,
     ukTitle,
     code,
-    setCode
+    setCode,
+    files,
+    setFiles
   } = useBusinessHandlers();
 
   useEffect(() => {
@@ -83,7 +85,8 @@ const BusinessPageDetails = ({ match }) => {
     ukSetTitle,
     enSetText,
     enSetTitle,
-    setPreferredLanguages
+    setPreferredLanguages,
+    setCode
   ]);
 
   useEffect(() => {
@@ -173,6 +176,8 @@ const BusinessPageDetails = ({ match }) => {
                     value={ukText}
                     placeholder='Текст'
                     onEditorChange={(value) => ukSetText(value)}
+                    files={files}
+                    setFiles={setFiles}
                   />
                 </Paper>
               </TabPanel>
