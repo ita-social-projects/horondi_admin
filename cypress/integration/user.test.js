@@ -2,7 +2,7 @@
 
 import { config } from '../../src/configs';
 
-describe.skip('User list and items test', () => {
+describe('User list and items test', () => {
   let firstName;
   let lastName;
   let country;
