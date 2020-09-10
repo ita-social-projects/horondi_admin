@@ -1,0 +1,113 @@
+import { takeEvery, call, put } from 'redux-saga/effects';
+
+import { config } from '../../configs';
+
+import {
+  getCommentsByType,
+  getCommentsByUser,
+  getCommentsByProduct,
+  deleteComment
+} from './comments.operations';
+
+import {
+  setComments,
+  setCommentsLoading,
+  setCommentError,
+  deleteCommentLocally
+} from './comments.actions';
+
+import {
+  GET_COMMENTS_BY_TYPE,
+  GET_USER_COMMENTS,
+  GET_PRODUCT_COMMENTS,
+  DELETE_COMMENT
+} from './comments.types';
+
+import {
+  setSnackBarSeverity,
+  setSnackBarStatus,
+  setSnackBarMessage
+} from '../snackbar/snackbar.actions';
+
+const { SUCCESS_DELETE_STATUS } = config.statuses;
+
+function* handleCommentsByTypeLoad({ payload }) {
+  console.log(payload);
+  try {
+    yield console.log(payload, '[From SAGA]');
+    yield put(setCommentsLoading(true));
+    const comments = yield call(
+      getCommentsByType,
+      payload.value,
+      payload.commentsType
+    );
+    yield console.log(comments);
+    yield put(setComments(comments));
+
+    yield put(setCommentsLoading(false));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+function* handleCommentsByUserLoad({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+
+    const comments = yield call(getCommentsByUser, payload.userEmail);
+    yield put(setComments(comments));
+
+    yield put(setCommentsLoading(false));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+function* handleCommentsByProductLoad({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+
+    const comments = yield call(getCommentsByProduct, payload.productId);
+    yield put(setComments(comments));
+
+    yield put(setCommentsLoading(false));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+function* handleCommentDelete({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+
+    yield call(deleteComment, payload);
+    yield put(deleteCommentLocally(payload));
+
+    yield put(setCommentsLoading(false));
+    yield call(handleSnackBarSuccess, SUCCESS_DELETE_STATUS);
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+function* handleCommentsError(error) {
+  yield put(setCommentsLoading(false));
+  yield put(setCommentError({ error }));
+
+  yield put(setSnackBarSeverity('error'));
+  yield put(setSnackBarMessage(error.message));
+  yield put(setSnackBarStatus(true));
+}
+
+function* handleSnackBarSuccess(status) {
+  yield put(setSnackBarSeverity('success'));
+  yield put(setSnackBarMessage(status));
+  yield put(setSnackBarStatus(true));
+}
+
+export default function* commentsSaga() {
+  yield takeEvery(GET_COMMENTS_BY_TYPE, handleCommentsByTypeLoad);
+  yield takeEvery(GET_USER_COMMENTS, handleCommentsByUserLoad);
+  yield takeEvery(GET_PRODUCT_COMMENTS, handleCommentsByProductLoad);
+  yield takeEvery(DELETE_COMMENT, handleCommentDelete);
+}

@@ -11,6 +11,8 @@ import { updateUserStatus } from '../../../redux/users/users.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import UserDetailsCard from './containers/user-details-card';
+import CommentsSection from '../../../components/comments-section/comments-section';
+import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
 
 const {
   USER_ACTIVE_TITLE,
@@ -40,6 +42,7 @@ const UsersDetails = (props) => {
     city,
     adress,
     postCode,
+    email,
     isBanned
   } = useUsersHandler(id);
 
@@ -82,6 +85,7 @@ const UsersDetails = (props) => {
           buttonHandler={() => userStatusHandler(id)}
         />
       </Grid>
+      <CommentsSection value={email} commentsType={GET_USER_COMMENTS} />
     </Grid>
   );
 };

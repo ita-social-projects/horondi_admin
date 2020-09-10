@@ -8,6 +8,7 @@ import DialogWindow from './dialog-window/dialog-window.reducer';
 import Auth from './auth/auth.reducer';
 import Categories from './categories/categories.reducer';
 import Users from './users/users.reducer';
+import Comments from './comments/comments.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = (history) =>
     Auth,
     Categories,
     Users,
+    Comments,
     router: connectRouter(history)
   });
 export default rootReducer;
