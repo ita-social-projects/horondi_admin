@@ -12,10 +12,10 @@ export const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2)
   },
   container: {
-    width: `100%`,
-    marginTop: 65,
+    width: '60%',
     position: 'static',
-    padding: 25
+    padding: 25,
+    paddingTop: 0
   },
   usersTitle: {
     fontSize: 24,

@@ -7,16 +7,13 @@ import {
   SET_COMMENTS_ERROR
 } from './comments.types';
 
-const getCommentsByType = (value, commentsType) => {
-  console.log('FROM ACTION', value, commentsType);
-  return {
-    type: GET_COMMENTS_BY_TYPE,
-    payload: {
-      value,
-      commentsType
-    }
-  };
-};
+const getCommentsByType = (value, commentsType) => ({
+  type: GET_COMMENTS_BY_TYPE,
+  payload: {
+    value,
+    commentsType
+  }
+});
 
 const setComments = (comments) => ({
   type: SET_COMMENTS,

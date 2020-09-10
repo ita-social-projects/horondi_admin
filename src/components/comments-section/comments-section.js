@@ -57,7 +57,7 @@ const CommentsSection = ({ value, commentsType }) => {
   }
 
   const commentsItems =
-    list.length >= 1
+    list && list.length >= 1
       ? list.map((commentItem) => (
         <TableContainerRow
           key={commentItem._id}

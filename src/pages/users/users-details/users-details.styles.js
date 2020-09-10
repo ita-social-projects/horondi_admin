@@ -2,10 +2,14 @@ import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles((theme) => ({
   detailsContainer: {
+    display: 'flex',
     width: '100%',
     marginTop: 70,
     margin: theme.spacing(2),
-    padding: 25
+    padding: 25,
+    '@media (max-width: 768px)': {
+      flexDirection: 'column'
+    }
   },
   userDetails: {
     width: '35%',

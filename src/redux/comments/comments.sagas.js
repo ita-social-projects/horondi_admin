@@ -32,16 +32,13 @@ import {
 const { SUCCESS_DELETE_STATUS } = config.statuses;
 
 function* handleCommentsByTypeLoad({ payload }) {
-  console.log(payload);
   try {
-    yield console.log(payload, '[From SAGA]');
     yield put(setCommentsLoading(true));
     const comments = yield call(
       getCommentsByType,
       payload.value,
       payload.commentsType
     );
-    yield console.log(comments);
     yield put(setComments(comments));
 
     yield put(setCommentsLoading(false));

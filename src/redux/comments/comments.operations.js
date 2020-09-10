@@ -10,7 +10,6 @@ const formError = (error) => error.message.replace('GraphQL error: ', '');
 const getCommentsByType = async (value, commentsType) => {
   try {
     if (commentsType === GET_USER_COMMENTS) {
-      console.log('FROM OPERATIONS', value, commentsType);
       return await getCommentsByUser(value);
     }
 
@@ -18,8 +17,6 @@ const getCommentsByType = async (value, commentsType) => {
       return await getCommentsByProduct(value);
     }
   } catch (error) {
-    console.log('FROM OPERATIONS', value, commentsType);
-
     throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
   }
 };
@@ -30,7 +27,7 @@ const getCommentsByUser = async (userEmail) => {
       variables: { userEmail },
       query: gql`
         query($userEmail: String!) {
-          getCommentsByUser(userEmail: $userEmail) {
+          getAllCommentsByUser(userEmail: $userEmail) {
             ... on Comment {
               text
               date
@@ -49,8 +46,7 @@ const getCommentsByUser = async (userEmail) => {
     });
 
   const { data } = result;
-
-  return data.getUserById;
+  return data.getAllCommentsByUser;
 };
 
 const getCommentsByProduct = async (id) => {
@@ -59,7 +55,7 @@ const getCommentsByProduct = async (id) => {
       variables: { id },
       query: gql`
         query($id: ID!) {
-          getCommentsByProduct(id: $id) {
+          getAllCommentsByProduct(id: $id) {
             ... on Comment {
               text
               date
@@ -79,7 +75,7 @@ const getCommentsByProduct = async (id) => {
 
   const { data } = result;
 
-  return data.getUserById;
+  return data.getAllCommentsByProduct;
 };
 
 const deleteComment = async (id) => {
