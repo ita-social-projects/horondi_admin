@@ -2,12 +2,7 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 
 import { config } from '../../configs';
 
-import {
-  getCommentsByType,
-  getCommentsByUser,
-  getCommentsByProduct,
-  deleteComment
-} from './comments.operations';
+import { getCommentsByType, deleteComment } from './comments.operations';
 
 import {
   setComments,
@@ -16,12 +11,7 @@ import {
   deleteCommentLocally
 } from './comments.actions';
 
-import {
-  GET_COMMENTS_BY_TYPE,
-  GET_USER_COMMENTS,
-  GET_PRODUCT_COMMENTS,
-  DELETE_COMMENT
-} from './comments.types';
+import { GET_COMMENTS_BY_TYPE, DELETE_COMMENT } from './comments.types';
 
 import {
   setSnackBarSeverity,
@@ -39,32 +29,6 @@ function* handleCommentsByTypeLoad({ payload }) {
       payload.value,
       payload.commentsType
     );
-    yield put(setComments(comments));
-
-    yield put(setCommentsLoading(false));
-  } catch (error) {
-    yield call(handleCommentsError, error);
-  }
-}
-
-function* handleCommentsByUserLoad({ payload }) {
-  try {
-    yield put(setCommentsLoading(true));
-
-    const comments = yield call(getCommentsByUser, payload.userEmail);
-    yield put(setComments(comments));
-
-    yield put(setCommentsLoading(false));
-  } catch (error) {
-    yield call(handleCommentsError, error);
-  }
-}
-
-function* handleCommentsByProductLoad({ payload }) {
-  try {
-    yield put(setCommentsLoading(true));
-
-    const comments = yield call(getCommentsByProduct, payload.productId);
     yield put(setComments(comments));
 
     yield put(setCommentsLoading(false));
@@ -105,7 +69,5 @@ function* handleSnackBarSuccess(status) {
 
 export default function* commentsSaga() {
   yield takeEvery(GET_COMMENTS_BY_TYPE, handleCommentsByTypeLoad);
-  yield takeEvery(GET_USER_COMMENTS, handleCommentsByUserLoad);
-  yield takeEvery(GET_PRODUCT_COMMENTS, handleCommentsByProductLoad);
   yield takeEvery(DELETE_COMMENT, handleCommentDelete);
 }
