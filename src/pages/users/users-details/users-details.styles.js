@@ -8,7 +8,8 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     padding: 25,
     '@media (max-width: 768px)': {
-      flexDirection: 'column'
+      flexDirection: 'column',
+      justifyContent: 'center'
     }
   },
   userDetails: {
@@ -25,6 +26,19 @@ export const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('xs')]: {
       width: '100%'
+    }
+  },
+  showComments: {
+    width: '60%',
+    padding: '15px',
+    paddingTop: '0',
+    '@media (max-width: 768px)': {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      margin: '0 5%',
+      width: 'auto',
+      paddingTop: '15px'
     }
   }
 }));

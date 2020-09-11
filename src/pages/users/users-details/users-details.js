@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
+
 import { withRouter } from 'react-router';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../utils/use-users-handlers';
@@ -17,7 +18,9 @@ import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
 const {
   USER_ACTIVE_TITLE,
   USER_UNACTIVE_TITLE,
-  SWITCH_USER_STATUS_TITLE
+  SWITCH_USER_STATUS_TITLE,
+  SHOW_COMMENTS_TITLE,
+  HIDE_COMMENTS_TITLE
 } = config.buttonTitles;
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
@@ -34,6 +37,8 @@ const UsersDetails = (props) => {
   }));
 
   const { id } = match.params;
+
+  const [showComments, setShowComments] = useState(false);
 
   const {
     firstName,
@@ -72,6 +77,8 @@ const UsersDetails = (props) => {
     );
   };
 
+  const showCommentsHandler = () => setShowComments(!showComments);
+
   return (
     <Grid className={styles.detailsContainer}>
       <Grid className={styles.userDetails}>
@@ -85,7 +92,18 @@ const UsersDetails = (props) => {
           buttonHandler={() => userStatusHandler(id)}
         />
       </Grid>
-      <CommentsSection value={email} commentsType={GET_USER_COMMENTS} />
+      <Grid className={styles.showComments}>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={showCommentsHandler}
+        >
+          {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
+        </Button>
+        {showComments ? (
+          <CommentsSection value={email} commentsType={GET_USER_COMMENTS} />
+        ) : null}
+      </Grid>
     </Grid>
   );
 };

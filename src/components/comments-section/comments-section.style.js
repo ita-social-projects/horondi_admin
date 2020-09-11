@@ -12,7 +12,6 @@ export const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2)
   },
   container: {
-    width: '60%',
     position: 'static',
     padding: 25,
     paddingTop: 0

@@ -116,6 +116,8 @@ export const config = {
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
     REMOVE_COMMENT_TITLE: 'Видалити коментар',
+    SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
+    HIDE_COMMENTS_TITLE: 'Приховати коментарі',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
@@ -137,7 +139,8 @@ export const config = {
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
-    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?'
+    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні'
   },
   formRegExp: {
     email:
