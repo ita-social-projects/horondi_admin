@@ -39,6 +39,9 @@ export const useStyles = makeStyles((theme) => ({
       margin: '0 5%',
       width: 'auto',
       paddingTop: '15px'
+    },
+    '@media (max-width: 320px)': {
+      margin: '0'
     }
   }
 }));

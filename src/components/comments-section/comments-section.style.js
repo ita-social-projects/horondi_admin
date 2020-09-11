@@ -14,7 +14,10 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     position: 'static',
     padding: 25,
-    paddingTop: 0
+    paddingTop: 0,
+    '@media (max-width: 768px)': {
+      padding: 0
+    }
   },
   usersTitle: {
     fontSize: 24,

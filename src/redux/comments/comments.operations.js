@@ -29,6 +29,7 @@ const getCommentsByUser = async (userEmail) => {
         query($userEmail: String!) {
           getAllCommentsByUser(userEmail: $userEmail) {
             ... on Comment {
+              _id
               text
               date
             }
@@ -57,6 +58,7 @@ const getCommentsByProduct = async (id) => {
         query($id: ID!) {
           getAllCommentsByProduct(id: $id) {
             ... on Comment {
+              _id
               text
               date
             }

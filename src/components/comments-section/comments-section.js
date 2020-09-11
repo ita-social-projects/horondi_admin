@@ -30,7 +30,7 @@ const CommentsSection = ({ value, commentsType }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getCommentsByType(value, commentsType);
+    dispatch(getCommentsByType(value, commentsType));
   }, [dispatch, value, commentsType]);
 
   const commentDeleteHandler = (id) => {
@@ -52,15 +52,23 @@ const CommentsSection = ({ value, commentsType }) => {
 
   const commentsItems =
     list && list.length >= 1
-      ? list.map((commentItem) => (
-        <TableContainerRow
-          key={commentItem._id}
-          id={commentItem._id}
-          date={commentItem.date}
-          text={commentItem.text}
-          deleteHandler={() => commentDeleteHandler(commentItem._id)}
-        />
-      ))
+      ? list.map((commentItem) => {
+        const createdAt = new Date(
+          parseInt(commentItem.date, 10)
+        ).toLocaleString();
+
+        return (
+          <TableContainerRow
+            key={commentItem._id}
+            id={commentItem._id}
+            date={createdAt}
+            text={commentItem.text}
+            showAvatar={false}
+            showEdit={false}
+            deleteHandler={() => commentDeleteHandler(commentItem._id)}
+          />
+        );
+      })
       : null;
 
   console.log(list);
