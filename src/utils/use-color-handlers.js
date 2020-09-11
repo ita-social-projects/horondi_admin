@@ -6,19 +6,18 @@ const { languages } = config;
 const useMaterialHandlers = () => {
   const [ukName, setUkName] = useState('');
   const [enName, setEnName] = useState('');
-  const [ukDescription, setUkDescription] = useState('');
-  const [enDescription, setEnDescription] = useState('');
+  const [ukSimpleName, setUkSimpleName] = useState('');
+  const [enSimpleName, setEnSimpleName] = useState('');
   const [available, setAvailable] = useState(false);
-  const [purpose, setPurpose] = useState('');
-  const [colors, setColors] = useState([]);
-  const [additionalPrice, setAdditionalPrice] = useState([]);
+  const [code, setCode] = useState('');
   const [tabsValue, setTabsValue] = useState(0);
+  const [colorImage, setColorImage] = useState('');
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
   };
-  const createMaterial = (values) => {
-    const newMaterial = {
+  const createColor = (values) => {
+    const newColor = {
       name: [
         {
           lang: languages[0],
@@ -30,22 +29,23 @@ const useMaterialHandlers = () => {
         }
       ],
 
-      description: [
+      simpleName: [
         {
           lang: languages[0],
-          value: values.ukDescription || null
+          value: values.ukSimpleName || null
         },
         {
           lang: languages[1],
-          value: values.enDescription || null
+          value: values.enSimpleName || null
         }
       ],
-      colors,
-      available,
-      purpose: values.purpose,
-      additionalPrice
+      images: {
+        medium: values.colorImage
+      },
+      code: +values.code,
+      available
     };
-    return newMaterial;
+    return newColor;
   };
 
   return {
@@ -53,22 +53,19 @@ const useMaterialHandlers = () => {
     setUkName,
     enName,
     setEnName,
-    ukDescription,
-    setUkDescription,
-    enDescription,
-    setEnDescription,
+    ukSimpleName,
+    setUkSimpleName,
+    enSimpleName,
+    setEnSimpleName,
     available,
     setAvailable,
-    purpose,
-    setPurpose,
-    additionalPrice,
-    setAdditionalPrice,
-    colors,
-    setColors,
-    createMaterial,
-    tabsValue,
+    createColor,
+    code,
+    setCode,
+    colorImage,
+    setColorImage,
     handleTabsChange,
-  
+    tabsValue
   };
 };
 

@@ -29,7 +29,7 @@ export const config = {
   },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    materials: ['Фото', 'Назва', 'Призначення', 'Доступний', 'Дії']
+    materials: ['Фото', 'Назва', 'Застосування', 'Доступний', 'Дії']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -57,8 +57,11 @@ export const config = {
     REMOVE_TITLE: 'Видалити новину',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
-    CREATE_MATERIAL_TITLE: 'Додати матеріал',
-    REMOVE_MATERIAL_TITLE: 'Видалити матеріал'
+    REMOVE_MATERIAL_TITLE: 'Видалити матеріал',
+    CREATE_MATERIAL_TITLE: 'Створити матеріал',
+    CREATE_COLOR_TITLE: 'Створити колір',
+    REMOVE_COLOR_TITLE: 'Видалити колір',
+    SAVE_MATERIAL: 'Зберегти матеріал'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
@@ -92,6 +95,11 @@ export const config = {
     MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
     VALIDATION_ERROR: 'Поле обовязкове'
   },
+  colorErrorMessages: {
+    MAX_LENGTH_MESSAGE: `Не більше 100000`,
+    MIN_LENGTH_MESSAGE: `Не менше 1 символа`,
+    VALIDATION_ERROR: 'Поле обовязкове'
+  },
   paginationPayload: {
     skip: 0,
     limit: 5,
@@ -101,5 +109,21 @@ export const config = {
     skip: 0,
     limit: 5,
     materialsPerPage: 6
+  },
+  labels: {
+    material: {
+      image: 'Фото матеріалу',
+      purpose: 'Застосування',
+      available: 'Доступний',
+      name: 'Назва матеріалу',
+      description: 'Опис матеріалу'
+    },
+    colors: {
+      image: 'Фото кольору',
+      name: 'Назва кольору',
+      simpleName: 'Проста назва кольору',
+      code: 'Код кольору',
+      available: 'Доступний'
+    }
   }
 };

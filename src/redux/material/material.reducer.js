@@ -6,7 +6,9 @@ import {
   SET_MATERIAL_LOADING,
   SET_MATERIAL_ERROR,
   SET_MATERIALS_PER_PAGE,
-  REMOVE_MATERIAL_FROM_STORE
+  REMOVE_MATERIAL_FROM_STORE,
+  SHOW_COLOR_DIALOG_WINDOW,
+  COLOR_DIALOG_DATA_TO_STORE
 } from './material.types';
 
 export const initialState = {
@@ -18,7 +20,9 @@ export const initialState = {
     currentPage: 0,
     materialsPerPage: 6,
     pagesCount: 1
-  }
+  },
+  showColorDialogWindow: false,
+  colors: []
 };
 
 const materialReducer = (state = initialState, action = {}) => {
@@ -73,6 +77,18 @@ const materialReducer = (state = initialState, action = {}) => {
         (material) => material._id !== action.payload
       );
       return { ...state, list: materials };
+
+    case COLOR_DIALOG_DATA_TO_STORE:
+      return {
+        ...state,
+        colors: [...state.colors, action.payload]
+      };
+    case SHOW_COLOR_DIALOG_WINDOW: {
+      return {
+        ...state,
+        showColorDialogWindow: action.payload
+      };
+    }
 
     default:
       return state;

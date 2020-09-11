@@ -8,21 +8,32 @@ import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import useMaterialHandlers from '../../../utils/use-material-handlers';
 import { useStyles } from './material-add.styles';
-import { addMaterial } from '../../../redux/material/material.actions';
+import {
+  addMaterial,
+  showColorDialogWindow
+} from '../../../redux/material/material.actions';
 import { config } from '../../../configs';
+import CheckboxOptions from '../../../components/checkbox-options';
+import CreateColor from '../create-color';
+import DialogWindowForComponent from '../../../components/dialog-window-for-component';
 
-const { languages } = config;
-const { materialErrorMessages } = config;
+const { languages, materialErrorMessages } = config;
 
 const MaterialAdd = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const loading = useSelector(({ Material }) => Material.materialLoading);
+
+  const { loading } = useSelector(({ Material }) => ({
+    loading: Material.materialLoading
+  }));
+
   const {
     purpose,
     createMaterial,
     tabsValue,
-    handleTabsChange
+    handleTabsChange,
+    available,
+    setAvailable
   } = useMaterialHandlers();
 
   const langValues = languages.map((lang) => ({
@@ -74,47 +85,58 @@ const MaterialAdd = () => {
   const TabPanels =
     languages.length > 0
       ? languages.map((lang, index) => (
-          <TabPanel key={index} value={tabsValue} index={index}>
-            <Paper className={styles.materialItemAdd}>
-              <TextField
-                data-cy={`${lang}Name`}
-                id={`${lang}Name`}
-                className={styles.textfield}
-                variant='outlined'
-                label='Назва'
-                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-                multiline
-                value={values[`${lang}Name`]}
-                onChange={handleChange}
-              />
-              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-              )}
-              <TextField
-                data-cy={`${lang}Description`}
-                id={`${lang}Description`}
-                className={styles.textfield}
-                variant='outlined'
-                label='Опис'
-                multiline
-                error={
-                  touched[`${lang}Description`] &&
+        <TabPanel key={index} value={tabsValue} index={index}>
+          <Paper className={styles.materialItemAdd}>
+            <TextField
+              data-cy={`${lang}Name`}
+              id={`${lang}Name`}
+              className={styles.textfield}
+              variant='outlined'
+              label={config.labels.material.name}
+              error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
+              multiline
+              value={values[`${lang}Name`]}
+              onChange={handleChange}
+            />
+            {touched[`${lang}Name`] && errors[`${lang}Name`] && (
+              <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+            )}
+            <TextField
+              data-cy={`${lang}Description`}
+              id={`${lang}Description`}
+              className={styles.textfield}
+              variant='outlined'
+              label={config.labels.material.description}
+              multiline
+              error={
+                touched[`${lang}Description`] &&
                   !!errors[`${lang}Description`]
-                }
-                value={values[`${lang}Description`]}
-                onChange={handleChange}
-              />
-              {touched[`${lang}Description`] &&
+              }
+              value={values[`${lang}Description`]}
+              onChange={handleChange}
+            />
+            {touched[`${lang}Description`] &&
                 errors[`${lang}Description`] && (
-                  <div className={styles.inputError}>
-                    {errors[`${lang}Description`]}
-                  </div>
-                )}
-            </Paper>
-          </TabPanel>
-        ))
+              <div className={styles.inputError}>
+                {errors[`${lang}Description`]}
+              </div>
+            )}
+          </Paper>
+        </TabPanel>
+      ))
       : null;
 
+  const checkboxes = [
+    {
+      id: 'available',
+      dataCy: 'available',
+      value: available,
+      checked: available,
+      color: 'primary',
+      label: config.labels.material.available,
+      handler: (e) => setAvailable(e.target.checked)
+    }
+  ];
   const languageTabs =
     languages.length > 0
       ? languages.map((lang, index) => <Tab label={lang} key={index} />)
@@ -124,17 +146,30 @@ const MaterialAdd = () => {
     return <LoadingBar />;
   }
 
+  const colorClickHandler = () => {
+    dispatch(showColorDialogWindow(true));
+  };
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
         <div className={styles.controlsBlock}>
-          {/* <div>{languageCheckboxes}</div> */}
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save'
-            type='submit'
-            title='Зберегти'
-          />
+          <CheckboxOptions options={checkboxes} />
+          <div>
+            <SaveButton
+              className={styles.saveButton}
+              data-cy='open-dialog'
+              type='button'
+              title={config.buttonTitles.CREATE_COLOR_TITLE}
+              onClickHandler={colorClickHandler}
+            />
+            <SaveButton
+              className={styles.saveButton}
+              data-cy='save'
+              type='submit'
+              title={config.buttonTitles.SAVE_MATERIAL}
+            />
+          </div>
         </div>
         <Grid item xs={12}>
           <Paper className={styles.materialItemAdd}>
@@ -143,7 +178,7 @@ const MaterialAdd = () => {
               id='photo'
               className={styles.textfield}
               variant='outlined'
-              label='Фото'
+              label={config.labels.material.image}
               value={values.Photo}
               onChange={handleChange}
               required
@@ -155,7 +190,7 @@ const MaterialAdd = () => {
               id='purpose'
               className={styles.textfield}
               variant='outlined'
-              label='Призначення'
+              label={config.labels.material.purpose}
               value={values.purpose}
               onChange={handleChange}
               error={touched.purpose && !!errors.purpose}
@@ -181,6 +216,12 @@ const MaterialAdd = () => {
           </div>
         ) : null}
       </form>
+      <DialogWindowForComponent
+        buttonType='submit'
+        buttonTitle='Закрити вікно'
+        dialogTitle='Створити колір'
+        component={<CreateColor />}
+      />
     </div>
   );
 };

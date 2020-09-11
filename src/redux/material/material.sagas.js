@@ -40,7 +40,7 @@ const {
 
 const { skip, limit, materialsPerPage } = config.materialPaginationPayload;
 
-function* handleMaterialsLoad({
+export function* handleMaterialsLoad({
   payload = {
     skip,
     limit,
@@ -62,7 +62,7 @@ function* handleMaterialsLoad({
   }
 }
 
-function* handleMaterialLoad({ payload }) {
+export function* handleMaterialLoad({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     const material = yield call(getMaterialById, payload);
@@ -100,7 +100,7 @@ function* handleMaterialDelete({ payload }) {
   }
 }
 
-function* handleMaterialUpdate({ payload }) {
+export function* handleMaterialUpdate({ payload }) {
   const { id, newMaterial } = payload;
   try {
     yield put(setMaterialLoading(true));

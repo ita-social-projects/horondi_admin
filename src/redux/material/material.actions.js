@@ -11,7 +11,9 @@ import {
   SET_MATERIALS_PAGES_COUNT,
   SET_MATERIALS_PER_PAGE,
   ADD_MATERIAL,
-  REMOVE_MATERIAL_FROM_STORE
+  REMOVE_MATERIAL_FROM_STORE,
+  COLOR_DIALOG_DATA_TO_STORE,
+  SHOW_COLOR_DIALOG_WINDOW
 } from './material.types';
 
 export const getMaterials = (payload) => ({
@@ -76,5 +78,15 @@ export const setMaterialError = (payload) => ({
 
 export const removeMaterialFromStore = (payload) => ({
   type: REMOVE_MATERIAL_FROM_STORE,
+  payload
+});
+
+export const setNewColorToStore = (payload) => ({
+  type: COLOR_DIALOG_DATA_TO_STORE,
+  payload
+});
+
+export const showColorDialogWindow = (payload) => ({
+  type: SHOW_COLOR_DIALOG_WINDOW,
   payload
 });

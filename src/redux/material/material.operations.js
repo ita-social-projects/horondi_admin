@@ -2,6 +2,9 @@ import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 
 import { materialTranslations } from '../../translations/material.translations';
+import { getFromLocalStorage } from '../../services/local-storage.service';
+
+const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
 export const getAllMaterials = async (skip, limit) => {
   const result = await client.query({
@@ -39,8 +42,7 @@ export const getAllMaterials = async (skip, limit) => {
     `
   });
   client.resetStore();
-  const { data } = result;
-  return data.getAllMaterials;
+  return result.data.getAllMaterials;
 };
 
 export const getMaterialById = async (id) => {
@@ -101,8 +103,9 @@ export const getMaterialById = async (id) => {
 };
 
 export const deleteMaterial = async (id) => {
-  console.log(id);
+
   const result = await client.mutate({
+    context: { headers: { token } },
     variables: { id },
     mutation: gql`
       mutation($id: ID!) {
@@ -136,7 +139,10 @@ export const deleteMaterial = async (id) => {
 };
 
 export const createMaterial = async (material) => {
+  console.log(token);
   const result = await client.mutate({
+    context: { headers: { token } },
+    variables: { material },
     mutation: gql`
       mutation($material: MaterialInput!) {
         addMaterial(material: $material) {
@@ -152,8 +158,7 @@ export const createMaterial = async (material) => {
         }
       }
     `,
-    fetchPolicy: 'no-cache',
-    variables: { material }
+    fetchPolicy: 'no-cache'
   });
   client.resetStore();
   const { data } = result;
@@ -171,6 +176,7 @@ export const createMaterial = async (material) => {
 
 export const updateMaterial = async (id, material) => {
   const result = await client.mutate({
+    context: { headers: { token } },
     variables: {
       id,
       material

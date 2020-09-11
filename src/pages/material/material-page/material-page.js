@@ -66,23 +66,23 @@ const MaterialPage = () => {
       REMOVE_MATERIAL_TITLE
     );
   };
- 
+
   const changeHandler = (e, value) => dispatch(setMaterialsCurrentPage(value));
   const materialItems =
     list !== undefined
       ? list.map((materialItem, index) => (
-        <TableContainerRow
-          key={index}
-          id={materialItem.id}
-          name={materialItem.name[0].value}
-          purpose={materialItem.purpose}
-          available={materialItem.available ? 'Так' : 'Ні'}
-          deleteHandler={() => materialDeleteHandler(materialItem._id)}
-          editHandler={() => {
-            dispatch(push(`/materials/${materialItem._id}`));
-          }}
-        />
-      ))
+          <TableContainerRow
+            key={index}
+            id={materialItem.id}
+            name={materialItem.name[0].value}
+            purpose={materialItem.purpose}
+            available={materialItem.available ? 'Так' : 'Ні'}
+            deleteHandler={() => materialDeleteHandler(materialItem._id)}
+            editHandler={() => {
+              dispatch(push(`/materials/${materialItem._id}`));
+            }}
+          />
+        ))
       : null;
 
   if (loading) {

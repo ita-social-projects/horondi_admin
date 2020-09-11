@@ -1,4 +1,5 @@
 export const materialToUpdateDeleteId = '88cb31bf8e5ea5af3014e342';
+export const fakeId = '11cb36bf1e5ea5af3014e312';
 export const material = {
   name: [
     {
@@ -751,4 +752,36 @@ export const materials = [
     ],
     purpose: 'main'
   }
+  
 ];
+
+export const newColor =    {
+  'code': 200,
+  'name': [
+    {
+      'lang': 'uk',
+      'value': 'Світло-коричневий'
+    },
+    {
+      'lang': 'en',
+      'value': 'Light-brown'
+    }
+  ],
+  'simpleName': [
+    {
+      'lang': 'uk',
+      'value': 'коричневий'
+    },
+    {
+      'lang': 'en',
+      'value': 'brown'
+    }
+  ],
+  'available': true,
+  'images': {
+    'large': 'large_light-brown',
+    'medium': 'medium_light-brown',
+    'small': 'small_light-brown',
+    'thumbnail': 'thumbnail_light-brown'
+  }
+}

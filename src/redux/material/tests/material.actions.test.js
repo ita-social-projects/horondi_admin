@@ -10,12 +10,16 @@ import {
   setMaterialsPerPage,
   addMaterial,
   updateMaterial,
-  deleteMaterial
+  deleteMaterial,
+  removeMaterialFromStore,
+  setNewColorToStore,
+  showColorDialogWindow
 } from '../material.actions';
 import {
   material,
   materials,
-  materialToUpdateDeleteId
+  materialToUpdateDeleteId,
+  newColor
 } from './material.variables';
 import {
   GET_MATERIALS,
@@ -29,7 +33,10 @@ import {
   SET_MATERIALS_PER_PAGE,
   ADD_MATERIAL,
   UPDATE_MATERIAL,
-  DELETE_MATERIAL
+  DELETE_MATERIAL,
+  REMOVE_MATERIAL_FROM_STORE,
+  COLOR_DIALOG_DATA_TO_STORE,
+  SHOW_COLOR_DIALOG_WINDOW
 } from '../material.types';
 
 describe('material actions tests', () => {
@@ -128,6 +135,24 @@ describe('material actions tests', () => {
     expect(deleteMaterial(materialToUpdateDeleteId)).toEqual({
       type: DELETE_MATERIAL,
       payload: materialToUpdateDeleteId
+    });
+  });
+  it('should remove material from store', () => {
+    expect(removeMaterialFromStore(materialToUpdateDeleteId)).toEqual({
+      type: REMOVE_MATERIAL_FROM_STORE,
+      payload: materialToUpdateDeleteId
+    });
+  });
+  it('should set show color dialog window to true', () => {
+    expect(showColorDialogWindow).toEqual({
+      type: SHOW_COLOR_DIALOG_WINDOW,
+      payload: true
+    });
+  });
+  it('should set new color to store', () => {
+    expect(setNewColorToStore(newColor)).toEqual({
+      type: COLOR_DIALOG_DATA_TO_STORE,
+      payload: newColor
     });
   });
 });
