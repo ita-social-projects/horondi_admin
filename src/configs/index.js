@@ -1,4 +1,4 @@
-import { ImportContacts, Palette } from '@material-ui/icons';
+import { ImportContacts, Palette, Category, People } from '@material-ui/icons';
 
 export const routes = {
   pathToLogin: '/',
@@ -7,7 +7,12 @@ export const routes = {
   pathToNewsDetails: '/news/:id',
   pathToPatternDetails: '/patterns/:id',
   pathToAddNews: '/news/add',
-  pathToAddPattern: '/patterns/add'
+  pathToAddPattern: '/patterns/add',
+  pathToUsers: '/users',
+  pathToUsersDetails: '/users/:id',
+  pathToCategories: '/categories',
+  pathToAddCategory: '/add-category',
+  pathToEditCategory: '/add-category/:id'
 };
 
 export const config = {
@@ -15,7 +20,9 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContacts],
-      ['Гобелени', routes.pathToPatterns, Palette]
+      ['Гобелени', routes.pathToPatterns, Palette],
+      ['Категорії', routes.pathToCategories, Category],
+      ['Користувачі', routes.pathToUsers, People]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -27,9 +34,44 @@ export const config = {
   buttonStyles: {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
+  templates: {
+    categoryTemplate: {
+      available: false,
+      code: '',
+      images: {
+        large: '',
+        medium: '',
+        small: '',
+        thumbnail: ''
+      },
+      isMain: false,
+      name: [],
+      subcategories: []
+    }
+  },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    patterns: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії']
+    patterns: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії'],
+    categories: ['№', 'Категорія', 'Дії'],
+    subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
+    categoryName: ['№', 'Мова', 'Назва', 'Дії'],
+    categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
+    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
+  },
+  detailTitles: {
+    users: {
+      avatar: { id: 'avatar' },
+      name: { id: 'name' },
+      status: { id: 'status' },
+      primarySection: [
+        { id: 'country', label: 'Країна' },
+        { id: 'city', label: 'Місто' }
+      ],
+      secondarySection: [
+        { id: 'adress', label: 'Адреса' },
+        { id: 'postCode', label: 'Поштовий індекс' }
+      ]
+    }
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -48,7 +90,13 @@ export const config = {
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
+    USER_ACTIVE_STATUS: 'Активний(-a)',
+    USER_INACTIVE_STATUS: 'Неактивний(-a)',
     LOGIN_PAGE_STATUS: 'Невірний логін або пароль'
+  },
+  errorMessages: {
+    USER_NOT_FOUND: 'Користувач не знайдений!',
+    USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
@@ -57,13 +105,42 @@ export const config = {
     CREATE_PATTERN_TITLE: 'Додати гобелен',
     REMOVE_TITLE: 'Видалити новину',
     PATTERN_REMOVE_TITLE: 'Видалити гобелен',
+    REMOVE_USER_TITLE: 'Видалити користувача',
+    SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
     CANCEL_TITLE: 'Відмінити',
-    LOGOUT_TITLE: 'Вихід'
+    LOGOUT_TITLE: 'Вихід',
+    ADD_CATEGORY: 'Додати категорію',
+    DELETE_CATEGORY: 'Видалити категорію',
+    ADD_SUBCATEGORY: 'Додати підкатегорію',
+    ADD_CATEGORY_IMAGE: 'Зберегти посилання',
+    ADD_CATEGORY_NAME: 'Додати назву',
+    CANCEL: 'Відмінити',
+    SAVE_CATEGORY: 'Зберегти категорію',
+    SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
+    CREATE_CATEGORY: 'Створити категорію',
+    CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    titleGenerator: (editMode, isMain) => {
+      const editModeMap = new Map([
+        [true, 'Зберегти'],
+        [false, 'Створити']
+      ]);
+      const isMainMap = new Map([
+        [true, 'категорію'],
+        [false, 'підкатегорію']
+      ]);
+      return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
+    }
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
     PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
-    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
+    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
+    USER_ACTIVE_TITLE: 'Активувати',
+    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
+    SWITCH_USER_STATUS_MESSAGE:
+      'Ви впевнені,що хочете змінити статус користувача?'
   },
   formRegExp: {
     email:
@@ -80,6 +157,13 @@ export const config = {
   patternErrorMessages: {
     PATTERN_VALIDATION_ERROR: 'Поле не може бути пустим',
     PATTERN_ERROR_MESSAGE: 'Мінімум 2 символи'
+  },
+  newsErrorMessages: {
+    NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
+    NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,
+    TITLE_MAX_LENGTH_MESSAGE:
+      'Заголовок повинен містити не більше 100 символів',
+    TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів'
   },
   paginationPayload: {
     skip: 0,
