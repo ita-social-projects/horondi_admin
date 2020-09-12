@@ -91,7 +91,8 @@ export const config = {
       image: 'Фото гобелена',
       material: 'Матеріал',
       available: 'Доступний',
-      handmade: 'Зроблений вручну'
+      handmade: 'Зроблений вручну',
+      avatarText: 'Фото'
     }
   }
 };

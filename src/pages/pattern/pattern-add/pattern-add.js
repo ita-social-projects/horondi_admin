@@ -1,5 +1,13 @@
 import React from 'react';
-import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
+import {
+  TextField,
+  Paper,
+  Grid,
+  Tabs,
+  Tab,
+  AppBar,
+  Avatar
+} from '@material-ui/core';
 
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,6 +33,7 @@ const PatternAdd = () => {
   const loading = useSelector(({ Pattern }) => Pattern.patternLoading);
   const {
     patternImage,
+    setPatternImage,
     material,
     available,
     setAvailable,
@@ -32,7 +41,9 @@ const PatternAdd = () => {
     setHandmade,
     tabsValue,
     handleTabsChange,
-    createPattern
+    createPattern,
+    upload,
+    setUpload
   } = usePatternHandlers();
 
   const langValues = languages.map((lang) => ({
@@ -63,14 +74,13 @@ const PatternAdd = () => {
   const formik = useFormik({
     initialValues: {
       ...formikValues,
-      patternImage,
       material
     },
     validationSchema: patternValidationSchema,
     validateOnBlur: true,
     onSubmit: (values) => {
       const pattern = createPattern(values);
-      dispatch(addPattern(pattern));
+      dispatch(addPattern({ pattern, upload }));
     }
   });
   const TabPanels =
@@ -153,6 +163,17 @@ const PatternAdd = () => {
     }
   ];
 
+  const handleImageLoad = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPatternImage(e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setUpload(e.target.files[0]);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <form onSubmit={formik.handleSubmit}>
@@ -171,15 +192,22 @@ const PatternAdd = () => {
           <div>
             <Grid item xs={12}>
               <Paper className={styles.patternItemAdd}>
-                <TextField
+                <label htmlFor='patternImage'>
+                  <Avatar
+                    className={styles.patternImage}
+                    variant='square'
+                    src={patternImage}
+                    alt='pattern'
+                  >
+                    {config.labels.pattern.avatarText}
+                  </Avatar>
+                </label>
+                <input
+                  className={styles.patternInputFile}
+                  type='file'
                   id='patternImage'
                   data-cy='patternImage'
-                  className={styles.textField}
-                  variant='outlined'
-                  label={config.labels.pattern.image}
-                  value={formik.values.patternImage}
-                  onChange={formik.handleChange}
-                  required
+                  onChange={handleImageLoad}
                 />
                 <TextField
                   id='material'

@@ -32,5 +32,11 @@ export const useStyles = makeStyles((theme) => ({
   inputError: {
     color: '#e60000',
     marginLeft: '5px'
-  }
+  },
+  patternImage: {
+    margin: '5px',
+    fontSize: '.7rem',
+    padding: '.2rem'
+  },
+  patternInputFile: { display: 'none' }
 }));

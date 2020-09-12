@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
-
+import { getFromLocalStorage } from '../../services/local-storage.service';
 import { patternTranslations } from '../../translations/pattern.translations';
 
+const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 export const getAllPatterns = async (skip, limit) => {
   const result = await client.query({
     variables: {
@@ -52,9 +53,6 @@ export const getPatternById = async (id) => {
             handmade
             available
             images {
-              large
-              medium
-              small
               thumbnail
             }
           }
@@ -82,6 +80,7 @@ export const getPatternById = async (id) => {
 export const deletePattern = async (id) => {
   const result = await client.mutate({
     variables: { id },
+    context: { headers: { token } },
     mutation: gql`
       mutation($id: ID!) {
         deletePattern(id: $id) {
@@ -117,11 +116,14 @@ export const deletePattern = async (id) => {
   return data.deletePattern;
 };
 
-export const createPattern = async (pattern) => {
+export const createPattern = async (payload) => {
   const result = await client.mutate({
+    context: { headers: { token } },
+    variables: payload,
+
     mutation: gql`
-      mutation($pattern: PatternInput!) {
-        addPattern(pattern: $pattern) {
+      mutation($pattern: PatternInput!, $upload: Upload!) {
+        addPattern(pattern: $pattern, upload: $upload) {
           ... on Pattern {
             _id
             name {
@@ -138,8 +140,7 @@ export const createPattern = async (pattern) => {
         }
       }
     `,
-    fetchPolicy: 'no-cache',
-    variables: { pattern }
+    fetchPolicy: 'no-cache'
   });
   client.resetStore();
   const { data } = result;
@@ -157,6 +158,7 @@ export const createPattern = async (pattern) => {
 
 export const updatePattern = async (id, pattern) => {
   const result = await client.mutate({
+    context: { headers: { token } },
     variables: {
       id,
       pattern

@@ -20,7 +20,7 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { routes } = config.app;
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { REMOVE_TITLE, PATTERN_REMOVE_TITLE } = config.buttonTitles;
+const { PATTERN_REMOVE_TITLE } = config.buttonTitles;
 
 const { CREATE_PATTERN_TITLE } = config.buttonTitles;
 const pathToPatternAddPage = routes.pathToAddPattern;
@@ -62,7 +62,7 @@ const PatternPage = () => {
     };
     openSuccessSnackbar(
       removePattern,
-      REMOVE_TITLE,
+      PATTERN_REMOVE_TITLE,
       PATTERN_REMOVE_MESSAGE,
       PATTERN_REMOVE_TITLE
     );
