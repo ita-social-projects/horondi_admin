@@ -71,8 +71,6 @@ const CommentsSection = ({ value, commentsType }) => {
       })
       : null;
 
-  console.log(list);
-
   return (
     <div className={styles.container}>
       <TableContainerGenerator

@@ -41,7 +41,6 @@ function* handleCommentDelete({ payload }) {
   try {
     yield put(setCommentsLoading(true));
 
-    yield console.log('FROM SAGA', payload);
     yield call(deleteComment, payload);
     yield put(deleteCommentLocally(payload));
 
