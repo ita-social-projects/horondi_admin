@@ -1,6 +1,7 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
+import SmsIcon from '@material-ui/icons/Sms';
 
 const routes = {
   pathToLogin: '/',
@@ -21,7 +22,8 @@ export const config = {
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
-      ['Користувачі', routes.pathToUsers, PeopleIcon]
+      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Останні коментарі', routes.pathToComments, SmsIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',

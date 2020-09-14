@@ -6,64 +6,106 @@ import { Typography } from '@material-ui/core/';
 import { Pagination } from '@material-ui/lab';
 
 import { useStyles } from './comments.style';
-import { config } from '../../../configs';
+import { config } from '../../configs';
 
-import {} from '../../../redux/comments.actions';
+import {
+  getRecentComments,
+  setCommentsCurrentPage,
+  deleteComment
+} from '../../redux/comments/comments.actions';
 
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import TableContainerRow from '../../../components/table-container-row';
-import TableContainerGenerator from '../../../components/table-container-generator';
-import LoadingBar from '../../../components/loading-bar';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import TableContainerRow from '../../components/table-container-row';
+import TableContainerGenerator from '../../components/table-container-generator';
+import LoadingBar from '../../components/loading-bar';
 
-const { routes } = config.app;
-const { REMOVE_MESSAGE } = config.messages;
-const { REMOVE_TITLE } = config.buttonTitles;
-
-const { CREATE_NEWS_TITLE } = config.buttonTitles;
-
-const pathToNewsAddPage = routes.pathToAddNews;
-const tableTitles = config.tableHeadRowTitles.news;
+const tableHeaders = config.tableHeadRowTitles.comments;
+const { REMOVE_COMMENT_TITLE } = config.buttonTitles;
+const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 
 const CommentsPage = () => {
   const classes = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading, pagesCount, currentPage, newsPerPage } = useSelector(
-    ({ News }) => ({
-      list: News.list,
-      loading: News.newsLoading,
-      pagesCount: News.pagination.pagesCount,
-      currentPage: News.pagination.currentPage,
-      newsPerPage: News.pagination.newsPerPage
-    })
-  );
+  const {
+    loading,
+    list,
+    pagesCount,
+    currentPage,
+    commentsPerPage
+  } = useSelector(({ Comments }) => ({
+    list: Comments.list,
+    loading: Comments.commentsLoading,
+    pagesCount: Comments.pagination.pagesCount,
+    currentPage: Comments.pagination.currentPage,
+    commentsPerPage: Comments.pagination.commentsPerPage
+  }));
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
-      getNews({
-        limit: newsPerPage,
-        skip: currentPage * newsPerPage,
-        newsPerPage
+      getRecentComments({
+        limit: commentsPerPage,
+        skip: currentPage * commentsPerPage,
+        commentsPerPage
       })
     );
-  }, [dispatch, newsPerPage, currentPage]);
+  }, [dispatch, commentsPerPage, currentPage]);
+
+  const commentDeleteHandler = (id) => {
+    const removeComment = () => {
+      dispatch(closeDialog());
+      dispatch(deleteComment(id));
+    };
+    openSuccessSnackbar(
+      removeComment,
+      REMOVE_COMMENT_TITLE,
+      REMOVE_COMMENT_MESSAGE,
+      REMOVE_COMMENT_TITLE
+    );
+  };
+
+  const changePageHandler = (e, value) =>
+    dispatch(setCommentsCurrentPage(value));
 
   if (loading) {
     return <LoadingBar />;
   }
 
+  const commentsItems =
+    list && list.length >= 1
+      ? list.map((commentItem) => {
+        const createdAt = new Date(
+          parseInt(commentItem.date, 10)
+        ).toLocaleString();
+
+        return (
+          <TableContainerRow
+            key={commentItem._id}
+            id={commentItem._id}
+            date={createdAt}
+            text={commentItem.text}
+            showAvatar={false}
+            showEdit={false}
+            deleteHandler={() => commentDeleteHandler(commentItem._id)}
+          />
+        );
+      })
+      : null;
+
   return (
     <div className={classes.container}>
       <div className={classes.tableNav}>
-        <Typography variant='h1' className={styles.usersTitle}></Typography>
+        <Typography variant='h1' className={classes.usersTitle}>
+          Останні коментарі
+        </Typography>
       </div>
       <div className={classes.tableContainer}>
         <TableContainerGenerator
-          id='newsTable'
-          tableTitles={tableTitles}
-          tableItems={newsItems}
+          id='commentsTable'
+          tableTitles={commentsItems ? tableHeaders : [NO_COMMENTS_MESSAGE]}
+          tableItems={commentsItems}
         />
       </div>
       <div className={classes.paginationDiv}>
@@ -72,7 +114,7 @@ const CommentsPage = () => {
           variant='outlined'
           shape='rounded'
           page={currentPage + 1}
-          onChange={changeHandler}
+          onChange={changePageHandler}
         />
       </div>
     </div>
