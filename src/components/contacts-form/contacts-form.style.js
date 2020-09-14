@@ -27,7 +27,9 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   textField: {
-    textTransform: 'uppercase',
+    '&:first-letter': {
+      textTransform: 'capitalize'
+    },
     padding: 10,
     margin: '5px 0',
     width: '100%'
