@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import PropTypes, { objectOf } from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   Paper,
   TextField,
@@ -20,11 +20,6 @@ import { config } from '../../configs';
 import { updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 
-export const IMAGE_LINK =
-  window.env && window.env.IMAGE_LINK
-    ? window.env.IMAGE_LINK
-    : process.env.IMAGE_LINK;
-
 const {
   PATTERN_VALIDATION_ERROR,
   PATTERN_ERROR_MESSAGE
@@ -35,15 +30,15 @@ const { languages } = config;
 const PatternForm = ({ pattern, id }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-
   const {
     tabsValue,
     handleTabsChange,
     createPattern,
     setUpload,
-    upload
+    upload,
+    patternImage,
+    setPatternImage
   } = usePatternHandlers();
-
   const languageTabs =
     languages.length > 0
       ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
@@ -118,6 +113,7 @@ const PatternForm = ({ pattern, id }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setFieldValue('patternImage', e.target.result);
+        setPatternImage(e.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
@@ -144,9 +140,12 @@ const PatternForm = ({ pattern, id }) => {
               <Avatar
                 className={styles.patternImage}
                 variant='square'
-                src={`${'https://horondi.blob.core.windows.net/horondi/images'}/${
-                  values.patternImage
-                }`}
+                src={
+                  patternImage ||
+                  `${'https://horondi.blob.core.windows.net/horondi/images'}/${
+                    values.patternImage
+                  }`
+                }
                 alt='pattern'
               >
                 {config.labels.pattern.avatarText}

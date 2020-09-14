@@ -35,8 +35,8 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: '5px'
   },
   patternImage: {
-    width: '10rem',
-    height: '10rem',
+    width: '5rem',
+    height: '5rem',
     margin: '5px',
     fontSize: '.7rem',
     padding: '.2rem'
