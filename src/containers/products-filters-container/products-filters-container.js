@@ -90,12 +90,16 @@ const ProductsFiltersContainer = ({
 
 ProductsFiltersContainer.propTypes = {
   buttonName: PropTypes.string.isRequired,
-  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  labels: PropTypes.arrayOf(PropTypes.string),
   productFilter: PropTypes.arrayOf(PropTypes.string).isRequired,
   list: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    PropTypes.oneOfType([PropTypes.object, PropTypes.string])
   ).isRequired,
   filterHandler: PropTypes.func.isRequired
+};
+
+ProductsFiltersContainer.defaultProps = {
+  labels: []
 };
 
 export default ProductsFiltersContainer;
