@@ -10,16 +10,30 @@ import {
   Avatar
 } from '@material-ui/core';
 
+import { useFormik } from 'formik';
+
+import * as Yup from 'yup';
+
+import { config } from '../../configs';
 import { SaveButton } from '../buttons';
 import { useStyles } from './contacts-form.style';
 
-const ContactsForm = ({
-  handleSubmit,
-  handleChange,
-  values,
-  touched,
-  errors
-}) => {
+const {
+  PHONE_NUMBER_LENGTH_MESSAGE,
+  PHONE_NUMBER_TYPE_MESSAGE,
+  ENTER_PHONE_NUMBER_MESSAGE,
+  INPUT_LENGTH_MESSAGE,
+  ENTER_SCHEDULE_MESSAGE,
+  ENTER_ADDRESS_MESSAGE,
+  IMAGE_FORMAT_MESSAGE,
+  ENTER_LINK_MESSAGE
+} = config.contactErrorMessages;
+const {
+  INVALID_EMAIL_MESSAGE,
+  ENTER_EMAIL_MESSAGE
+} = config.loginErrorMessages;
+
+const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
   const [ukMapImage, ukSetMapImage] = useState({
     name: '',
@@ -47,6 +61,41 @@ const ContactsForm = ({
       });
     }
   };
+
+  const formSchema = Yup.object().shape({
+    phoneNumber: Yup.number()
+      .min(12, PHONE_NUMBER_LENGTH_MESSAGE)
+      .typeError(PHONE_NUMBER_TYPE_MESSAGE)
+      .required(ENTER_PHONE_NUMBER_MESSAGE),
+    ukSchedule: Yup.string()
+      .min(10, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_SCHEDULE_MESSAGE),
+    enSchedule: Yup.string()
+      .min(10, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_SCHEDULE_MESSAGE),
+    ukAddress: Yup.string()
+      .min(8, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_ADDRESS_MESSAGE),
+    enAddress: Yup.string()
+      .min(8, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_ADDRESS_MESSAGE),
+    email: Yup.string()
+      .email(INVALID_EMAIL_MESSAGE)
+      .required(ENTER_EMAIL_MESSAGE),
+    cartLink: Yup.string()
+      .url(IMAGE_FORMAT_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
+      .required(ENTER_LINK_MESSAGE)
+  });
+
+  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
+    initialValues,
+    validationSchema: formSchema,
+    validateOnBlur: true,
+    onSubmit: (values) => {
+      contactSaveHandler(values);
+    }
+  });
 
   return (
     <div className={classes.detailsContainer}>
@@ -246,9 +295,8 @@ const ContactsForm = ({
 };
 
 ContactsForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  values: PropTypes.shape({
+  contactSaveHandler: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({
     phoneNumber: PropTypes.string.isRequired,
     ukSchedule: PropTypes.string.isRequired,
     enSchedule: PropTypes.string.isRequired,
@@ -258,9 +306,7 @@ ContactsForm.propTypes = {
     ukCartImage: PropTypes.string.isRequired,
     enCartImage: PropTypes.string.isRequired,
     cartLink: PropTypes.string.isRequired
-  }).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
-  errors: PropTypes.objectOf(PropTypes.string).isRequired
+  }).isRequired
 };
 
 export default ContactsForm;

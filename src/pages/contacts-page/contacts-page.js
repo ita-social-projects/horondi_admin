@@ -78,9 +78,9 @@ const ContactsPage = () => {
     dispatch(setContactsCurrentPage(pageIndex));
   };
   const contactItems = contacts
-    ? contacts.map((contact, index) => (
+    ? contacts.map((contact) => (
       <TableContainerRow
-        key={index}
+        key={contact.id}
         id={contact.id}
         phone={contact.phoneNumber}
         email={contact.email}
