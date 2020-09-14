@@ -98,10 +98,9 @@ function* handlePatternDelete({ payload }) {
 }
 
 function* handlePatternUpdate({ payload }) {
-  const { id, pattern } = payload;
   try {
     yield put(setPatternLoading(true));
-    yield call(updatePattern, id, pattern);
+    yield call(updatePattern, payload);
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));

@@ -5,14 +5,7 @@ const { languages } = config;
 
 const usePatternHandlers = () => {
   const [patternImage, setPatternImage] = useState('');
-  const [ukName, setUkName] = useState('');
-  const [enName, setEnName] = useState('');
-  const [material, setMaterial] = useState('');
-  const [available, setAvailable] = useState(false);
-  const [handmade, setHandmade] = useState(false);
   const [tabsValue, setTabsValue] = useState(0);
-  const [ukDescription, setUkDescription] = useState('');
-  const [enDescription, setEnDescription] = useState('');
   const [upload, setUpload] = useState(null);
 
   const handleTabsChange = (event, newValue) => {
@@ -43,11 +36,8 @@ const usePatternHandlers = () => {
         }
       ],
       material: values.material,
-      images: {
-        medium: values.patternImage
-      },
-      available,
-      handmade
+      available: values.available,
+      handmade: values.handmade
     };
     return newPattern;
   };
@@ -55,20 +45,6 @@ const usePatternHandlers = () => {
   return {
     patternImage,
     setPatternImage,
-    ukName,
-    setUkName,
-    ukDescription,
-    setUkDescription,
-    enDescription,
-    setEnDescription,
-    enName,
-    setEnName,
-    material,
-    setMaterial,
-    available,
-    setAvailable,
-    handmade,
-    setHandmade,
     tabsValue,
     setTabsValue,
     handleTabsChange,

@@ -1,28 +1,47 @@
-import React, from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
+import PropTypes, { objectOf } from 'prop-types';
+import {
+  Paper,
+  TextField,
+  Grid,
+  Tab,
+  AppBar,
+  Tabs,
+  Avatar
+} from '@material-ui/core';
+import * as Yup from 'yup';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
-
 import { config } from '../../configs';
 import { updatePattern } from '../../redux/pattern/pattern.actions';
+import CheckboxOptions from '../checkbox-options';
+
+export const IMAGE_LINK =
+  window.env && window.env.IMAGE_LINK
+    ? window.env.IMAGE_LINK
+    : process.env.IMAGE_LINK;
+
+const {
+  PATTERN_VALIDATION_ERROR,
+  PATTERN_ERROR_MESSAGE
+} = config.patternErrorMessages;
 
 const { languages } = config;
 
-const NewsForm = ({ pattern, id }) => {
-  const classes = useStyles();
+const PatternForm = ({ pattern, id }) => {
+  const styles = useStyles();
   const dispatch = useDispatch();
 
   const {
     tabsValue,
-
     handleTabsChange,
-
-    createPattern
+    createPattern,
+    setUpload,
+    upload
   } = usePatternHandlers();
 
   const languageTabs =
@@ -30,7 +49,33 @@ const NewsForm = ({ pattern, id }) => {
       ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
       : null;
 
-  const { values, handleSubmit, handleChange } = useFormik({
+  const patternValidationSchema = Yup.object().shape({
+    enDescription: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    enName: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    ukDescription: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    ukName: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE),
+    material: Yup.string()
+      .min(2, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE)
+  });
+
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
+    validationSchema: patternValidationSchema,
     initialValues: {
       patternImage: pattern.images.thumbnail || '',
       ukName: pattern.name[0].value || '',
@@ -38,54 +83,100 @@ const NewsForm = ({ pattern, id }) => {
       ukDescription: pattern.description[0].value || '',
       enDescription: pattern.description[1].value || '',
       material: pattern.material,
-      available: pattern.available || ''
+      available: pattern.available,
+      handmade: pattern.handmade
     },
     onSubmit: () => {
-      const newPattern = createPattern(values);
-      dispatch(updatePattern({ id, newPattern }));
+      const pattern = createPattern(values);
+      dispatch(updatePattern({ id, pattern, upload }));
     }
   });
+
+  const checkboxes = [
+    {
+      id: 'handmade',
+      dataCy: 'handmade',
+      value: values.handmade,
+      checked: values.handmade,
+      color: 'primary',
+      label: config.labels.pattern.handmade,
+      handler: (e) => setFieldValue('handmade', !values.handmade)
+    },
+    {
+      id: 'available',
+      dataCy: 'available',
+      value: values.available,
+      checked: values.available,
+      color: 'primary',
+      label: config.labels.pattern.available,
+      handler: (e) => setFieldValue('available', !values.available)
+    }
+  ];
+
+  const handleImageLoad = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFieldValue('patternImage', e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setUpload(e.target.files[0]);
+    }
+  };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className={classes.controlsBlock}>
-          <h2>hello</h2>
-          {/* <div>{languageCheckboxes}</div> */}
+        <div className={styles.controlsBlock}>
+          <div>
+            <CheckboxOptions options={checkboxes} />
+          </div>
           <SaveButton
-            className={classes.saveButton}
+            className={styles.saveButton}
             data-cy='save'
             type='submit'
             title='Зберегти'
           />
         </div>
         <Grid item xs={12}>
-          <Paper className={classes.newsItemUpdate}>
-            <TextField
-              data-cy='authorPhoto'
-              id='authorPhoto'
-              className={classes.textField}
-              variant='outlined'
-              label='Фото автора'
-              value={values.authorPhoto}
-              onChange={handleChange}
-              required
+          <Paper className={styles.patternItemUpdate}>
+            <label htmlFor='patternImage'>
+              <Avatar
+                className={styles.patternImage}
+                variant='square'
+                src={`${'https://horondi.blob.core.windows.net/horondi/images'}/${
+                  values.patternImage
+                }`}
+                alt='pattern'
+              >
+                {config.labels.pattern.avatarText}
+              </Avatar>
+            </label>
+            <input
+              className={styles.patternInputFile}
+              type='file'
+              id='patternImage'
+              data-cy='patternImage'
+              onChange={handleImageLoad}
             />
             <TextField
-              data-cy='newsImage'
-              id='newsImage'
-              className={classes.textField}
+              id='material'
+              data-cy='material'
+              className={styles.textField}
               variant='outlined'
-              label='Головне зображення'
-              value={values.newsImage}
+              label={config.labels.pattern.material}
+              value={values.material}
               onChange={handleChange}
-              required
+              error={touched.material && !!errors.material}
             />
+            {touched.material && errors.material && (
+              <div className={styles.inputError}>{errors.material}</div>
+            )}
           </Paper>
         </Grid>
         <AppBar position='static'>
           <Tabs
-            className={classes.tabs}
+            className={styles.tabs}
             value={tabsValue}
             onChange={handleTabsChange}
             aria-label='simple tabs example'
@@ -95,40 +186,41 @@ const NewsForm = ({ pattern, id }) => {
         </AppBar>
         {languages.map((lang, index) => (
           <TabPanel key={index} value={tabsValue} index={index}>
-            <Paper className={classes.newsItemUpdate}>
+            <Paper className={styles.patternItemUpdate}>
               <TextField
-                data-cy={`${lang}AuthorName`}
-                id={`${lang}AuthorName`}
-                className={classes.textField}
+                data-cy='Name'
+                id={`${lang}Name`}
+                className={styles.textField}
                 variant='outlined'
-                label={`Ім'я автора`}
+                label='Назва'
                 multiline
-                value={values[`${lang}AuthorName`]}
+                value={values[`${lang}Name`]}
                 onChange={handleChange}
-                required
+                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
               />
+              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
+                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+              )}
               <TextField
-                data-cy={`${lang}Title`}
-                id={`${lang}Title`}
-                className={classes.textField}
+                data-cy={`${lang}Description`}
+                id={`${lang}Description`}
+                className={styles.textField}
                 variant='outlined'
-                label='Заголовок'
+                label='Опис'
                 multiline
-                value={values[`${lang}Title`]}
+                value={values[`${lang}Description`]}
                 onChange={handleChange}
-                required
+                error={
+                  touched[`${lang}Description`] &&
+                  !!errors[`${lang}Description`]
+                }
               />
-              <TextField
-                data-cy={`${lang}Text`}
-                id={`${lang}Text`}
-                className={classes.textField}
-                variant='outlined'
-                label='Текст'
-                multiline
-                value={values[`${lang}Text`]}
-                onChange={handleChange}
-                required
-              />
+              {touched[`${lang}Description`] &&
+                errors[`${lang}Description`] && (
+                <div className={styles.inputError}>
+                  {errors[`${lang}Description`]}
+                </div>
+              )}
             </Paper>
           </TabPanel>
         ))}
@@ -137,24 +229,55 @@ const NewsForm = ({ pattern, id }) => {
   );
 };
 
-NewsForm.propTypes = {
-  id: PropTypes.string.isRequired,
+PatternForm.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.arrayOf().isRequired,
+  material: PropTypes.string,
   pattern: PropTypes.shape({
-    languages: PropTypes.arrayOf.isRequired,
-    author: PropTypes.shape({
-      name: PropTypes.arrayOf.isRequired,
-      image: PropTypes.shape({
-        small: PropTypes.string
-      }).isRequired
-    }),
-    title: PropTypes.arrayOf.isRequired,
-    text: PropTypes.arrayOf.isRequired,
-    images: PropTypes.shape({
-      primary: PropTypes.shape({
-        medium: PropTypes.string
-      }).isRequired
-    }).isRequired
-  }).isRequired
+    name: PropTypes.arrayOf().isRequired,
+    description: PropTypes.arrayOf().isRequired,
+    images: PropTypes.shape({ thumbnail: PropTypes.string }),
+    material: PropTypes.string.isRequired,
+    available: PropTypes.bool,
+    handmade: PropTypes.bool
+  }).isRequired,
+  values: PropTypes.shape({
+    patternImage: PropTypes.string,
+    material: PropTypes.string,
+    ukName: PropTypes.string,
+    enName: PropTypes.string,
+    ukDescription: PropTypes.string,
+    enDescription: PropTypes.string
+  }),
+  errors: PropTypes.shape({
+    patternImage: PropTypes.string,
+    material: PropTypes.string,
+    ukName: PropTypes.string,
+    enName: PropTypes.string,
+    ukDescription: PropTypes.string,
+    enDescription: PropTypes.string
+  }),
+  touched: PropTypes.shape({
+    patternImage: PropTypes.string,
+    material: PropTypes.string,
+    ukName: PropTypes.string,
+    enName: PropTypes.string,
+    ukDescription: PropTypes.string,
+    enDescription: PropTypes.string
+  }),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  })
+};
+PatternForm.defaultProps = {
+  id: '',
+  match: {},
+  values: {},
+  errors: {},
+  touched: {},
+  material: ''
 };
 
-export default NewsForm;
+export default PatternForm;

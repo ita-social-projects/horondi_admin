@@ -156,16 +156,14 @@ export const createPattern = async (payload) => {
   return data.addPattern;
 };
 
-export const updatePattern = async (id, pattern) => {
+export const updatePattern = async (payload) => {
+  const { id, pattern, upload } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: {
-      id,
-      pattern
-    },
+    variables: { id, pattern, upload },
     mutation: gql`
-      mutation($id: ID!, $pattern: PatternInput!) {
-        updatePattern(id: $id, pattern: $pattern) {
+      mutation($id: ID!, $pattern: PatternInput!, $upload: Upload) {
+        updatePattern(id: $id, pattern: $pattern, upload: $upload) {
           ... on Pattern {
             _id
             name {

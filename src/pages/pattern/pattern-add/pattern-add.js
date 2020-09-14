@@ -35,10 +35,6 @@ const PatternAdd = () => {
     patternImage,
     setPatternImage,
     material,
-    available,
-    setAvailable,
-    handmade,
-    setHandmade,
     tabsValue,
     handleTabsChange,
     createPattern,
@@ -71,10 +67,19 @@ const PatternAdd = () => {
   const formikValues =
     langValues !== null ? Object.assign(...langValues) : null;
 
-  const formik = useFormik({
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    setFieldValue,
+    handleSubmit
+  } = useFormik({
     initialValues: {
       ...formikValues,
-      material
+      material,
+      available: false,
+      handmade: false
     },
     validationSchema: patternValidationSchema,
     validateOnBlur: true,
@@ -93,39 +98,33 @@ const PatternAdd = () => {
               id={`${lang}Name`}
               className={styles.textField}
               variant='outlined'
-              label={`Назва ${lang}`}
+              label='Назва'
               multiline
-              value={formik.values[`${lang}Name`]}
-              onChange={formik.handleChange}
-              error={
-                formik.touched[`${lang}Name`] &&
-                  !!formik.errors[`${lang}Name`]
-              }
+              value={values[`${lang}Name`]}
+              onChange={handleChange}
+              error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
             />
-            {formik.touched[`${lang}Name`] &&
-                formik.errors[`${lang}Name`] && (
-              <div className={styles.inputError}>
-                {formik.errors[`${lang}Name`]}
-              </div>
+            {touched[`${lang}Name`] && errors[`${lang}Name`] && (
+              <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
             )}
             <TextField
               data-cy={`${lang}Description`}
               id={`${lang}Description`}
               className={styles.textField}
               variant='outlined'
-              label={`Опис ${lang}`}
+              label='Опис'
               multiline
-              value={formik.values[`${lang}Description`]}
-              onChange={formik.handleChange}
+              value={values[`${lang}Description`]}
+              onChange={handleChange}
               error={
-                formik.touched[`${lang}Description`] &&
-                  !!formik.errors[`${lang}Description`]
+                touched[`${lang}Description`] &&
+                  !!errors[`${lang}Description`]
               }
             />
-            {formik.touched[`${lang}Description`] &&
-                formik.errors[`${lang}Description`] && (
+            {touched[`${lang}Description`] &&
+                errors[`${lang}Description`] && (
               <div className={styles.inputError}>
-                {formik.errors[`${lang}Description`]}
+                {errors[`${lang}Description`]}
               </div>
             )}
           </Paper>
@@ -146,20 +145,20 @@ const PatternAdd = () => {
     {
       id: 'handmade',
       dataCy: 'handmade',
-      value: handmade,
-      checked: handmade,
+      value: values.handmade,
+      checked: values.handmade,
       color: 'primary',
       label: config.labels.pattern.handmade,
-      handler: (e) => setHandmade(e.target.checked)
+      handler: (e) => setFieldValue('handmade', !values.handmade)
     },
     {
       id: 'available',
       dataCy: 'available',
-      value: available,
-      checked: available,
+      value: values.available,
+      checked: values.available,
       color: 'primary',
       label: config.labels.pattern.available,
-      handler: (e) => setAvailable(e.target.checked)
+      handler: (e) => setFieldValue('available', !values.available)
     }
   ];
 
@@ -176,7 +175,7 @@ const PatternAdd = () => {
 
   return (
     <div className={styles.container}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className={styles.controlsBlock}>
           <div>
             <CheckboxOptions options={checkboxes} />
@@ -215,14 +214,12 @@ const PatternAdd = () => {
                   className={styles.textField}
                   variant='outlined'
                   label={config.labels.pattern.material}
-                  value={formik.values.material}
-                  onChange={formik.handleChange}
-                  error={formik.touched.material && !!formik.errors.material}
+                  value={values.material}
+                  onChange={handleChange}
+                  error={touched.material && !!errors.material}
                 />
-                {formik.touched.material && formik.errors.material && (
-                  <div className={styles.inputError}>
-                    {formik.errors.material}
-                  </div>
+                {touched.material && errors.material && (
+                  <div className={styles.inputError}>{errors.material}</div>
                 )}
               </Paper>
             </Grid>

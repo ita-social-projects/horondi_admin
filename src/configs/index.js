@@ -155,8 +155,8 @@ export const config = {
     ENTER_PASSWORD_MESSAGE: 'Введіть пароль'
   },
   patternErrorMessages: {
-    PATTERN_VALIDATION_ERROR: 'Поле не може бути пустим',
-    PATTERN_ERROR_MESSAGE: 'Мінімум 2 символи'
+    PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
+    PATTERN_ERROR_MESSAGE: 'Поле не може бути пустим'
   },
   newsErrorMessages: {
     NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
