@@ -14,14 +14,19 @@ const { ROWS_PER_PAGE } = tableTranslations;
 
 const TablePaginator = () => {
   const dispatch = useDispatch();
-  const { count, rowsPerPage, rowsPerPageOptions, currentPage } = useSelector(
+  const {
+    itemsCount,
+    rowsPerPage,
+    rowsPerPageOptions,
+    currentPage
+  } = useSelector(
     ({
       Table: {
-        count,
+        itemsCount,
         pagination: { currentPage, rowsPerPage, rowsPerPageOptions }
       }
     }) => ({
-      count,
+      itemsCount,
       rowsPerPage,
       rowsPerPageOptions,
       currentPage
@@ -44,7 +49,7 @@ const TablePaginator = () => {
     <TablePagination
       component='div'
       rowsPerPageOptions={rowsPerPageOptions}
-      count={count}
+      count={itemsCount}
       rowsPerPage={rowsPerPage}
       page={currentPage}
       SelectProps={{ native: true }}

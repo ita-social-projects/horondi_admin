@@ -22,7 +22,7 @@ const badgePosition = {
 
 const { CATEGORIES } = productsTranslations;
 
-const ProductsFilterContainer = ({
+const ProductsFiltersContainer = ({
   buttonName,
   labels,
   productFilter,
@@ -36,16 +36,18 @@ const ProductsFilterContainer = ({
 
   const { categoryFilter } = filters;
 
-  const formGroupOptions = list.map(({ _id }, idx) => (
-    <MenuItem key={labels[idx]} value={_id || labels[idx]}>
-      <Checkbox
-        checked={
-          !!productFilter.find((filter) => filter === (_id || labels[idx]))
-        }
-      />
-      <ListItemText primary={labels[idx]} />
-    </MenuItem>
-  ));
+  const formGroupOptions = list.map((item, idx) => {
+    const condition = item._id || item;
+
+    return (
+      <MenuItem key={condition} value={condition}>
+        <Checkbox
+          checked={!!productFilter.find((filter) => filter === condition)}
+        />
+        <ListItemText primary={labels ? labels[idx] : item} />
+      </MenuItem>
+    );
+  });
 
   const renderFilters = useMemo(
     () => (selected) =>
@@ -86,12 +88,14 @@ const ProductsFilterContainer = ({
   );
 };
 
-ProductsFilterContainer.propTypes = {
+ProductsFiltersContainer.propTypes = {
   buttonName: PropTypes.string.isRequired,
   labels: PropTypes.arrayOf(PropTypes.string).isRequired,
   productFilter: PropTypes.arrayOf(PropTypes.string).isRequired,
-  list: PropTypes.arrayOf(PropTypes.object).isRequired,
+  list: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  ).isRequired,
   filterHandler: PropTypes.func.isRequired
 };
 
-export default ProductsFilterContainer;
+export default ProductsFiltersContainer;

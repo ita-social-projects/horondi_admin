@@ -35,7 +35,7 @@ export const initialState = {
     searchFilter: ''
   },
   filterData: [],
-  selectedroduct: null,
+  selectedProduct: null,
   products: [],
   pagesCount: 1,
   productsError: null

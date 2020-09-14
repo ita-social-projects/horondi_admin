@@ -1,3 +1,3 @@
-import ProductsFilterContainer from './products-filters-container';
+import ProductsFiltersContainer from './products-filters-container';
 
-export default ProductsFilterContainer;
+export default ProductsFiltersContainer;

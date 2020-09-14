@@ -14,7 +14,7 @@ const initialState = {
     rowsPerPageOptions: [10, 20, 30],
     pagesCount: 1
   },
-  count: 0
+  itemsCount: 0
 };
 
 const tableState = (state = initialState, action = {}) => {
@@ -42,7 +42,7 @@ const tableState = (state = initialState, action = {}) => {
   case SET_ITEMS_COUNT:
     return {
       ...state,
-      count: action.payload
+      itemsCount: action.payload
     };
   default:
     return state;

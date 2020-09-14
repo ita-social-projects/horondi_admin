@@ -19,7 +19,7 @@ const ProductsNavClearFilters = () => {
   const dispatch = useDispatch();
   const filters = useSelector(({ Products }) => Products.filters);
 
-  const { isHotItemFilter } = filters;
+  const { isHotItemFilter, ...arrayFilters } = filters;
 
   const handleClearFilters = () => {
     dispatch(setColorsFilter([]));
@@ -33,7 +33,7 @@ const ProductsNavClearFilters = () => {
     <Button
       className={styles.clearButton}
       disabled={
-        Object.values(filters).every((filter) => !filter.length) &&
+        Object.values(arrayFilters).every((filter) => !filter.length) &&
         !isHotItemFilter
       }
       onClick={handleClearFilters}

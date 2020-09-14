@@ -20,7 +20,6 @@ const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
       <TableContainer className={classes.container} component={Paper}>
         <Table
           className={classes.table}
-          stickyHeader
           size={dense ? SMALL_SIZE : DEFAULT_SIZE}
         >
           <TableContainerHead titles={tableTitles} />

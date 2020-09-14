@@ -10,7 +10,7 @@ import {
   setModelsFilter,
   setPatternsFilter
 } from '../../../redux/products/products.actions';
-import ProductsFilterContainer from '../../../containers/products-filters-container';
+import ProductsFiltersContainer from '../../../containers/products-filters-container';
 
 import ProductsNavSort from '../products-nav-sort';
 import ProductsNavSearch from '../products-nav-search';
@@ -53,49 +53,21 @@ const ProductsNavFilters = () => {
     [filterData, categoriesNames]
   );
 
-  const colorsNames = useMemo(
+  const colors = useMemo(
     () => [
       ...new Set(filterData.map(({ colors }) => colors[0].simpleName[0].value))
     ],
     [filterData]
   );
 
-  const colors = useMemo(
-    () =>
-      colorsNames.map(
-        (color) =>
-          filterData.find(
-            ({ colors }) => colors[0].simpleName[0].value === color
-          ).colors
-      ),
-    [filterData, colorsNames]
-  );
-
-  const patternsNames = useMemo(
+  const patterns = useMemo(
     () => [...new Set(filterData.map(({ pattern }) => pattern[0].value))],
     [filterData]
   );
 
-  const patterns = useMemo(
-    () =>
-      patternsNames.map(
-        (item) =>
-          filterData.find(({ pattern }) => pattern[0].value === item).pattern
-      ),
-    [filterData, patternsNames]
-  );
-
-  const modelNames = useMemo(
+  const models = useMemo(
     () => [...new Set(filterData.map(({ model }) => model[0].value))],
     [filterData]
-  );
-
-  const models = useMemo(
-    () =>
-      modelNames.map(
-        (item) => filterData.find(({ model }) => model[0].value === item).model
-      ),
-    [filterData, modelNames]
   );
 
   const handleFilterChange = ({ target }, setFilter) => {
@@ -115,30 +87,27 @@ const ProductsNavFilters = () => {
       buttonName: MODELS,
       productFilter: modelsFilter,
       list: models,
-      labels: modelNames,
       filterHandler: (e) => handleFilterChange(e, setModelsFilter)
     },
     colors: {
       buttonName: COLORS,
       productFilter: colorsFilter,
       list: colors,
-      labels: colorsNames,
       filterHandler: (e) => handleFilterChange(e, setColorsFilter)
     },
     patterns: {
       buttonName: PATTERNS,
       productFilter: patternsFilter,
       list: patterns,
-      labels: patternsNames,
       filterHandler: (e) => handleFilterChange(e, setPatternsFilter)
     }
   };
 
   const filterButtons = Object.values(
     filtersOptions
-  ).map(({ buttonName, productFilter, list, labels, filterHandler }, idx) => (
-    <ProductsFilterContainer
-      key={labels[idx]}
+  ).map(({ buttonName, productFilter, list, labels, filterHandler }) => (
+    <ProductsFiltersContainer
+      key={buttonName}
       buttonName={buttonName}
       productFilter={productFilter}
       list={list}
