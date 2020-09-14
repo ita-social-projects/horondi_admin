@@ -108,10 +108,20 @@ const getAllFilters = async () => {
         getProducts {
           items {
             colors {
+              available
+              code
+              images {
+                medium
+                large
+                small
+                thumbnail
+              }
               name {
+                lang
                 value
               }
               simpleName {
+                lang
                 value
               }
             }
@@ -122,6 +132,7 @@ const getAllFilters = async () => {
               value
             }
             pattern {
+              lang
               value
             }
             category {
@@ -130,6 +141,18 @@ const getAllFilters = async () => {
                 value
               }
               isMain
+            }
+            options {
+              additions {
+                name {
+                  lang
+                  value
+                }
+                additionalPrice {
+                  value
+                  currency
+                }
+              }
             }
           }
         }
@@ -158,4 +181,148 @@ const getProductCategories = async () => {
   return result.data.getAllCategories;
 };
 
-export { getAllProducts, getAllFilters, getProductCategories };
+const getProductOptions = async () => {
+  const result = await client.query({
+    query: gql`
+      query {
+        getProductOptions {
+          sizes {
+            _id
+            name
+            heightInCm
+            widthInCm
+            depthInCm
+            volumeInLiters
+            additionalPrice {
+              value
+              currency
+            }
+          }
+          bottomMaterials {
+            _id
+            name {
+              lang
+              value
+            }
+            additionalPrice {
+              value
+              currency
+            }
+          }
+        }
+      }
+    `
+  });
+  return result.data.getProductOptions;
+};
+
+const getModelsByCategory = async (payload) => {
+  const result = await client.query({
+    query: gql`
+      query($id: ID!) {
+        getModelsByCategory(id: $id) {
+          _id
+          name {
+            lang
+            value
+          }
+        }
+      }
+    `,
+    variables: {
+      id: payload
+    }
+  });
+  await client.resetStore();
+  return result.data.getModelsByCategory;
+};
+
+const addProduct = async (payload) => {
+  const result = await client.mutate({
+    mutation: gql`
+      mutation($product: ProductInput!) {
+        addProduct(product: $product) {
+          ... on Product {
+            _id
+            purchasedCount
+            name {
+              lang
+              value
+            }
+            basePrice {
+              value
+            }
+            model {
+              value
+            }
+            rate
+            images {
+              primary {
+                large
+                medium
+                large
+                small
+              }
+            }
+            colors {
+              name {
+                lang
+                value
+              }
+              simpleName {
+                lang
+                value
+              }
+            }
+            pattern {
+              lang
+              value
+            }
+            category {
+              _id
+              name {
+                value
+              }
+              isMain
+            }
+            isHotItem
+          }
+        }
+      }
+    `,
+    variables: {
+      product: payload
+    }
+  });
+  await client.resetStore();
+  return result.data.addProduct;
+};
+
+const deleteProduct = async (payload) => {
+  const result = await client.mutate({
+    mutation: gql`
+      mutation($id: ID!) {
+        deleteProduct(id: $id) {
+          ... on Product {
+            _id
+          }
+        }
+      }
+    `,
+    variables: {
+      id: payload
+    }
+  });
+  await client.resetStore();
+  return result.data.deleteProduct._id;
+};
+
+export {
+  getAllProducts,
+  getAllFilters,
+  getProductCategories,
+  getProductOptions,
+  getModelsByCategory,
+  addProduct,
+  deleteProduct
+};

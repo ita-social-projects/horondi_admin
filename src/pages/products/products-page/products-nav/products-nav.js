@@ -6,12 +6,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import { Button } from '@material-ui/core';
-import ProductsNavFilters from '../products-nav-filters';
+import ProductsNavFilters from './products-nav-filters';
 
-import { setTableDense } from '../../../redux/table/table.actions';
+import { setTableDense } from '../../../../redux/table/table.actions';
 
-import { productsTranslations } from '../../../translations/product.translations';
-import { config } from '../../../configs';
+import { productsTranslations } from '../../../../translations/product.translations';
+import { config } from '../../../../configs';
 
 const { ADD_PRODUCT, COMPACT_TABLE } = productsTranslations;
 const { routes } = config.app;

@@ -7,24 +7,32 @@ import { useStyles } from './products-page.styles';
 
 import {
   getFiltredProducts,
-  getAllFilters
+  getAllFilters,
+  deleteProduct
 } from '../../../redux/products/products.actions';
 
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
-import ProductsNav from '../products-nav';
+import ProductsNav from './products-nav';
 
 import { config } from '../../../configs';
 import { productsTranslations } from '../../../translations/product.translations';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 
-const { PRODUCT_NOT_FOUND } = productsTranslations;
+const {
+  PRODUCT_NOT_FOUND,
+  DELETE_PRODUCT_MESSAGE,
+  DELETE_PRODUCT_TITLE,
+  DELETE_PRODUCT_BTN
+} = productsTranslations;
 const tableTitles = config.tableHeadRowTitles.products;
 
 const ProductsPage = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-
+  const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     loading,
     products,
@@ -85,6 +93,19 @@ const ProductsPage = () => {
     patternsFilter
   ]);
 
+  const handleProductDelete = (id) => {
+    const removeProduct = () => {
+      dispatch(closeDialog());
+      dispatch(deleteProduct(id));
+    };
+    openSuccessSnackbar(
+      removeProduct,
+      DELETE_PRODUCT_TITLE,
+      DELETE_PRODUCT_MESSAGE,
+      DELETE_PRODUCT_BTN
+    );
+  };
+
   const productsItems = products
     ? products.map(
       (
@@ -103,6 +124,7 @@ const ProductsPage = () => {
           editHandler={() => {
             dispatch(push(`/products/${_id}`));
           }}
+          deleteHandler={() => handleProductDelete(_id)}
         />
       )
     )

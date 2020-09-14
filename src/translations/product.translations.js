@@ -9,5 +9,8 @@ export const productsTranslations = {
   CATEGORIES: 'КАТЕГОРІЇ',
   MODELS: 'МОДЕЛІ',
   PATTERNS: 'ГОБЕЛЕНИ',
-  COLORS: 'КОЛЬОРИ'
+  COLORS: 'КОЛЬОРИ',
+  DELETE_PRODUCT_TITLE: 'Видалити продукт',
+  DELETE_PRODUCT_MESSAGE: 'Ви дійсно хочете видалити продукт?',
+  DELETE_PRODUCT_BTN: 'Видалити'
 };

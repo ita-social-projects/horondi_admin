@@ -17,10 +17,10 @@ import {
   setModelsFilter,
   setPatternsFilter,
   setSearchFilter
-} from '../../../redux/products/products.actions';
+} from '../../../../../redux/products/products.actions';
 
-import { productsTranslations } from '../../../translations/product.translations';
-import { config } from '../../../configs';
+import { productsTranslations } from '../../../../../translations/product.translations';
+import { config } from '../../../../../configs';
 
 const { submitKey } = config;
 const { CLEAR_FILTERS, SEARCH } = productsTranslations;

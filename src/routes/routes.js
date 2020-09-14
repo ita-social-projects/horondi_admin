@@ -14,7 +14,7 @@ import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
 import ProductsPage from '../pages/products/products-page';
-import ProductsAdd from '../pages/products/products-add';
+import ProductsAdd from '../pages/products/product-add';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import UsersDetails from '../pages/users/users-details';

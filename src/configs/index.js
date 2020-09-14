@@ -17,17 +17,6 @@ const routes = {
   pathToEditCategory: '/add-category/:id'
 };
 
-const languageInput = [
-  {
-    lang: 'uk',
-    value: ''
-  },
-  {
-    lang: 'en',
-    value: ''
-  }
-];
-
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
@@ -215,16 +204,6 @@ export const config = {
     'Завантажте фото для продукту',
     'Підтвердження створення продукту'
   ],
-  currencyInput: [
-    {
-      value: '',
-      currency: 'UAH'
-    },
-    {
-      value: '',
-      currency: 'USD'
-    }
-  ],
   selectedLanguages: {
     uk: {
       name: 'uk',
@@ -235,33 +214,49 @@ export const config = {
       checked: false
     }
   },
-  productInfoInputs: {
-    name: languageInput,
-    mainMaterial: languageInput,
-    innerMaterial: languageInput,
-    closure: languageInput,
-    description: languageInput
-  },
   productInfoLabels: [
-    { label: 'Назва', name: 'name' },
-    { label: 'Основний матеріал', name: 'mainMaterial' },
-    { label: 'Внутрішній матеріал', name: 'innerMaterial' },
-    { label: 'Замок', name: 'closure' },
-    { label: 'Опис', name: 'description' }
+    { label: 'Назва*', name: 'ProductName' },
+    { label: 'Основний матеріал*', name: 'MainMaterial' },
+    { label: 'Внутрішній матеріал*', name: 'InnerMaterial' },
+    { label: 'Замок*', name: 'Closure' },
+    { label: 'Опис*', name: 'Description' }
   ],
-  productSpeciesSelects: {
-    category: '',
-    subcategory: '',
-    model: '',
-    color: '',
-    pattern: '',
-    basePrice: 0
-  },
   productSelectsLabels: [
-    { label: 'Категорія', name: 'category' },
-    { label: 'Підкатегорія', name: 'subcategory' },
-    { label: 'Модель', name: 'model' },
-    { label: 'Колір', name: 'color' },
-    { label: 'Гобелен', name: 'pattern' }
+    { label: 'Категорія*', name: 'category', type: 'select' },
+    { label: 'Підкатегорія*', name: 'subcategory', type: 'select' },
+    { label: 'Модель*', name: 'model', type: 'select' },
+    { label: 'Колір*', name: 'colors', type: 'select' },
+    { label: 'Гобелен*', name: 'pattern', type: 'select' },
+    { label: 'Ціна(USD)', name: 'basePrice', type: 'number' },
+    { label: 'Довжина лямок(см)', name: 'strapLengthInCm', type: 'number' }
+  ],
+  productOptionsValues: {
+    sizes: [],
+    bottomMaterials: [],
+    additions: false
+  },
+  productImagesValues: {
+    primaryImage: '',
+    additionalImages: ''
+  },
+  productOptionsLabels: [
+    { label: 'Розміри', name: 'sizes' },
+    { label: 'Нижні матеріали', name: 'bottomMaterials' }
+  ],
+  productSizeCardsLabels: [
+    { label: 'Розмір', name: 'name' },
+    { label: `Об'єм(л)`, name: 'volumeInLiters' },
+    { label: 'Ширина(см)', name: 'widthInCm' },
+    { label: 'Висота(см)', name: 'heightInCm' },
+    { label: 'Глибина(см)', name: 'depthInCm' }
+  ],
+  productMaterialsLabels: [{ label: `Назва`, name: 'name' }],
+  productImagesLabels: [
+    { label: 'Головне фото', name: 'primaryImage' },
+    { label: 'Додаткові фото', name: 'additionalImages' }
+  ],
+  initialLanguageValues: [
+    { lang: 'uk', value: '' },
+    { lang: 'en', value: '' }
   ]
 };

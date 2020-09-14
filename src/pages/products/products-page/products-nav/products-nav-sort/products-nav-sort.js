@@ -7,11 +7,11 @@ import {
   setSortByPopularity,
   setSortByPrice,
   setSortByRate
-} from '../../../redux/products/products.actions';
+} from '../../../../../redux/products/products.actions';
 import { useStyles } from './products-nav-sort.styles';
 
-import { config } from '../../../configs';
-import { productsTranslations } from '../../../translations/product.translations';
+import { config } from '../../../../../configs';
+import { productsTranslations } from '../../../../../translations/product.translations';
 
 const { sortBySelectOptions, sortAsc, sortDesc, rate, popularity } = config;
 const { SORT } = productsTranslations;

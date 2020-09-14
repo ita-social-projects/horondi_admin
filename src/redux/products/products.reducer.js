@@ -1,3 +1,4 @@
+import { config } from '../../configs';
 import {
   SET_PRODUCT,
   SET_CURRENT_PAGE,
@@ -20,12 +21,12 @@ import {
   SET_PRODUCT_TO_SEND,
   CLEAR_PRODUCT_TO_SEND,
   SET_PRODUCTS_ERROR,
-  SET_PRODUCT_CATEGORIES
+  SET_PRODUCT_CATEGORIES,
+  SET_PRODUCT_OPTIONS,
+  SET_MODELS
 } from './products.types';
 
-import { config } from '../../configs';
-
-const { languageInput, currencyInput } = config;
+const { initialLanguageValues } = config;
 
 export const initialState = {
   productLoading: false,
@@ -48,26 +49,26 @@ export const initialState = {
   pagesCount: 1,
   productsError: null,
   productToSend: {
+    name: initialLanguageValues,
+    mainMaterial: initialLanguageValues,
+    innerMaterial: initialLanguageValues,
+    description: initialLanguageValues,
+    closure: initialLanguageValues,
     category: '',
     subcategory: '',
     model: '',
-    name: languageInput,
-    description: languageInput,
-    mainMaterial: languageInput,
-    innerMaterial: languageInput,
-    pattern: languageInput,
-    closure: languageInput,
-    strapLengthInCm: 0,
-    patternImages: '',
-    images: '',
-    colors: [],
-    basePrice: currencyInput,
-    available: false,
-    isHotItem: false,
-    options: []
+    colors: '',
+    pattern: '',
+    basePrice: 0,
+    strapLengthInCm: 0
   },
   productSpecies: {
-    categories: []
+    categories: [],
+    modelsForSelectedCategory: []
+  },
+  productOptions: {
+    sizes: [],
+    bottomMaterials: []
   }
 };
 const setSort = ({
@@ -211,7 +212,23 @@ const productsReducer = (state = initialState, action = {}) => {
   case SET_PRODUCT_CATEGORIES:
     return {
       ...state,
-      productSpecies: { ...state.productSpecies, categories: action.payload }
+      productSpecies: {
+        ...state.productSpecies,
+        categories: action.payload
+      }
+    };
+  case SET_PRODUCT_OPTIONS:
+    return {
+      ...state,
+      productOptions: action.payload
+    };
+  case SET_MODELS:
+    return {
+      ...state,
+      productSpecies: {
+        ...state.productSpecies,
+        modelsForSelectedCategory: action.payload
+      }
     };
   default:
     return state;
