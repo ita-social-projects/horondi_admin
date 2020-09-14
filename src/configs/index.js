@@ -21,7 +21,7 @@ export const config = {
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
-      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -55,6 +55,7 @@ export const config = {
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
     users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
+    comments: ['Дата', 'Текст', 'Дії']
   },
   detailTitles: {
     users: {
@@ -115,6 +116,9 @@ export const config = {
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    REMOVE_COMMENT_TITLE: 'Видалити коментар',
+    SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
+    HIDE_COMMENTS_TITLE: 'Приховати коментарі',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
@@ -136,6 +140,8 @@ export const config = {
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
+    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні'
   },
   formRegExp: {
     email:
