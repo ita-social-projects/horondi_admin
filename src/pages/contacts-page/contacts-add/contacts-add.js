@@ -54,7 +54,7 @@ const ContactsAdd = () => {
       ],
       link: cartLink
     };
-    console.log('FROM CONTACTS SAVE IN ADD PAGE');
+
     dispatch(addContact(newContact));
   };
 
