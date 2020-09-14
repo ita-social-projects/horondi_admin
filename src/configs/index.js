@@ -11,7 +11,8 @@ const routes = {
   pathToAddNews: '/newsadd',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
-  pathToEditCategory: '/add-category/:id'
+  pathToEditCategory: '/add-category/:id',
+  pathToComments: '/comments'
 };
 
 export const config = {

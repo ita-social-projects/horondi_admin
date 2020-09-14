@@ -15,6 +15,7 @@ import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
+import CommentsPage from '../pages/comments/comments'
 
 import { config } from '../configs';
 import { history } from '../store/store';
@@ -56,6 +57,7 @@ const Routes = () => {
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToCategories} exact component={Categories} />
+        <Route path={routes.pathToComments} exact component={CommentsPage}/>
         <Route
           path={routes.pathToAddCategory}
           exact
