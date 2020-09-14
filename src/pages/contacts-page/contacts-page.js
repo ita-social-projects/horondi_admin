@@ -4,12 +4,13 @@ import { push } from 'connected-react-router';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { config } from '../../configs';
 import LoadingBar from '../../components/loading-bar';
+import { formatPhoneNumber } from '../../utils/format-phone-number';
 import TableContainerGenerator from '../../components/table-container-generator';
 import TableContainerRow from '../../components/table-container-row';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -82,9 +83,10 @@ const ContactsPage = () => {
       <TableContainerRow
         key={contact.id}
         id={contact.id}
-        phone={contact.phoneNumber}
+        phone={formatPhoneNumber(contact.phoneNumber)}
         email={contact.email}
         address={contact.address[0].value.replace(formRegExp.unwrapHtml, ' ')}
+        showAvatar={false}
         deleteHandler={() => contactDeleteHandler(contact._id)}
         editHandler={() => {
           dispatch(push(`/contacts/${contact._id}`));
@@ -100,6 +102,9 @@ const ContactsPage = () => {
   return (
     <div className={classes.container}>
       <div className={classes.tableNav}>
+        <Typography variant='h1' className={classes.contactsTitle}>
+          Контактна інформація
+        </Typography>
         <Button
           id='add-contact'
           component={Link}

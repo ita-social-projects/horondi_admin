@@ -37,12 +37,18 @@ const DialogWindow = () => {
 
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
-      <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
+      <DialogTitle onClose={handleClose}>
+        <Typography variant='h4'>{dialogTitle}</Typography>
+      </DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
       <DialogActions>
-        <StandardButton title={CANCEL_TITLE} onClickHandler={handleClose} />
+        <StandardButton
+          variant='outlined'
+          title={CANCEL_TITLE}
+          onClickHandler={handleClose}
+        />
         <StandardButton
           title={buttonTitle}
           onClickHandler={onClickHandler}

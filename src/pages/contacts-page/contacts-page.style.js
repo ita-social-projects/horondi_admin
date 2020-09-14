@@ -36,5 +36,11 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: '30px'
+  },
+  contactsTitle: {
+    marginBottom: '10px',
+    fontSize: 24,
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold'
   }
 }));

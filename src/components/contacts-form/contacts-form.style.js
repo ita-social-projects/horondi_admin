@@ -43,8 +43,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   large: {
     marginLeft: '10px',
-    width: theme.spacing(7),
-    height: theme.spacing(7)
+    width: theme.spacing(6),
+    height: theme.spacing(6)
   },
   imageName: {
     fontSize: '.9rem',
@@ -57,5 +57,8 @@ export const useStyles = makeStyles((theme) => ({
   imageUpload: {
     marginLeft: '10px',
     color: 'rgba(0, 0, 0, 0.54)'
+  },
+  attachFile: {
+    marginRight: '5px'
   }
 }));

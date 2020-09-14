@@ -59,7 +59,7 @@ export const config = {
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
     users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
-    contacts: ['Аватар', 'Номер', 'Email', 'Адреса', 'Дії']
+    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії']
   },
   detailTitles: {
     users: {
@@ -149,7 +149,8 @@ export const config = {
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
-    unwrapHtml: /(<([^>]+)>)/gi
+    unwrapHtml: /(<([^>]+)>)/gi,
+    enAddressRegex: '^[A-Za-z0-9_|,| |/]+$'
   },
   loginErrorMessages: {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
@@ -174,7 +175,8 @@ export const config = {
     ENTER_PHONE_NUMBER_MESSAGE: 'Введіть номер',
     INPUT_LENGTH_MESSAGE: 'Довжина повинна містити не менше 10 символів',
     ENTER_SCHEDULE_MESSAGE: 'Введіть розклад',
-    ENTER_ADDRESS_MESSAGE: 'Введіть адресу',
+    ENTER_UK_ADDRESS_MESSAGE: 'Введіть адресу українською',
+    ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
     IMAGE_FORMAT_MESSAGE:
       'Введіть коректний формат, наприклад: https://example.com/',
     ENTER_LINK_MESSAGE: 'Введіть посилання'

@@ -10,6 +10,9 @@ import {
   Avatar
 } from '@material-ui/core';
 
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import ImageIcon from '@material-ui/icons/Image';
+
 import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
@@ -24,7 +27,8 @@ const {
   ENTER_PHONE_NUMBER_MESSAGE,
   INPUT_LENGTH_MESSAGE,
   ENTER_SCHEDULE_MESSAGE,
-  ENTER_ADDRESS_MESSAGE,
+  ENTER_UK_ADDRESS_MESSAGE,
+  ENTER_EN_ADDRESS_MESSAGE,
   IMAGE_FORMAT_MESSAGE,
   ENTER_LINK_MESSAGE
 } = config.contactErrorMessages;
@@ -32,6 +36,7 @@ const {
   INVALID_EMAIL_MESSAGE,
   ENTER_EMAIL_MESSAGE
 } = config.loginErrorMessages;
+const { enAddressRegex } = config.formRegExp;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
@@ -75,10 +80,11 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .required(ENTER_SCHEDULE_MESSAGE),
     ukAddress: Yup.string()
       .min(8, INPUT_LENGTH_MESSAGE)
-      .required(ENTER_ADDRESS_MESSAGE),
+      .required(ENTER_UK_ADDRESS_MESSAGE),
     enAddress: Yup.string()
       .min(8, INPUT_LENGTH_MESSAGE)
-      .required(ENTER_ADDRESS_MESSAGE),
+      .matches(enAddressRegex, ENTER_EN_ADDRESS_MESSAGE)
+      .required(ENTER_EN_ADDRESS_MESSAGE),
     email: Yup.string()
       .email(INVALID_EMAIL_MESSAGE)
       .required(ENTER_EMAIL_MESSAGE),
@@ -123,10 +129,13 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       color='primary'
                       component='span'
                     >
+                      <AttachFileIcon className={classes.attachFile} />
                       Завантажити
                     </Button>
                   </label>
-                  <Avatar src={ukMapImage.imageUrl} className={classes.large} />
+                  <Avatar src={ukMapImage.imageUrl} className={classes.large}>
+                    <ImageIcon />
+                  </Avatar>
                   <span className={classes.imageName}>{ukMapImage.name}</span>
                 </div>
                 <span className={classes.imageUpload}>
@@ -148,10 +157,13 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       color='primary'
                       component='span'
                     >
+                      <AttachFileIcon className={classes.attachFile} />
                       Завантажити
                     </Button>
                   </label>
-                  <Avatar src={enMapImage.imageUrl} className={classes.large} />
+                  <Avatar src={enMapImage.imageUrl} className={classes.large}>
+                    <ImageIcon />
+                  </Avatar>
                   <span className={classes.imageName}>{enMapImage.name}</span>
                 </div>
                 <TextField
