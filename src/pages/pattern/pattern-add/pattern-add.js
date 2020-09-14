@@ -134,7 +134,9 @@ const PatternAdd = () => {
 
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => <Tab label={lang} key={index} />)
+      ? languages.map((lang, index) => (
+        <Tab data-cy={lang} label={lang} key={index} />
+      ))
       : null;
 
   if (loading) {
