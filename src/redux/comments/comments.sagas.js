@@ -48,9 +48,9 @@ function* handleCommentsByTypeLoad({ payload }) {
 
 function* handleRecentCommentsLoad({
   payload = {
-    skip: 1,
-    limit: 1,
-    commentsPerPage: 1
+    skip: 0,
+    limit: 20,
+    commentsPerPage: 10
   }
 }) {
   try {

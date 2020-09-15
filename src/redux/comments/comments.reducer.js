@@ -15,7 +15,7 @@ const initialState = {
   commentsError: null,
   pagination: {
     currentPage: 0,
-    commentsPerPage: 10,
+    commentsPerPage: 20,
     pagesCount: 1
   }
 };
