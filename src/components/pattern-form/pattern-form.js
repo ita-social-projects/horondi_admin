@@ -228,18 +228,22 @@ const PatternForm = ({ pattern, id }) => {
   );
 };
 
+const valueShape = PropTypes.shape({
+  value: PropTypes.string
+});
 PatternForm.propTypes = {
   id: PropTypes.string,
-  name: PropTypes.arrayOf().isRequired,
-  material: PropTypes.string,
   pattern: PropTypes.shape({
-    name: PropTypes.arrayOf().isRequired,
-    description: PropTypes.arrayOf().isRequired,
-    images: PropTypes.shape({ thumbnail: PropTypes.string }),
-    material: PropTypes.string.isRequired,
+    _id: PropTypes.string,
     available: PropTypes.bool,
-    handmade: PropTypes.bool
-  }).isRequired,
+    description: PropTypes.arrayOf(valueShape),
+    handmade: PropTypes.bool,
+    images: PropTypes.shape({
+      thumbnail: PropTypes.string
+    }),
+    material: PropTypes.string,
+    name: PropTypes.arrayOf(valueShape)
+  }),
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
@@ -276,7 +280,31 @@ PatternForm.defaultProps = {
   values: {},
   errors: {},
   touched: {},
-  material: ''
+  pattern: {
+    _id: '',
+    name: [
+      {
+        value: ''
+      },
+      {
+        value: ''
+      }
+    ],
+    description: [
+      {
+        value: ''
+      },
+      {
+        value: ''
+      }
+    ],
+    images: {
+      thumbnail: ''
+    },
+    material: '',
+    available: false,
+    handmade: false
+  }
 };
 
 export default PatternForm;

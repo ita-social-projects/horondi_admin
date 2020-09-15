@@ -32,6 +32,9 @@ const PatternDetails = ({ match }) => {
   );
 };
 
+const valueShape = PropTypes.shape({
+  value: PropTypes.string
+});
 PatternDetails.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -39,7 +42,15 @@ PatternDetails.propTypes = {
     })
   }),
   pattern: PropTypes.shape({
-    name: PropTypes.arrayOf().isRequired
+    _id: PropTypes.string,
+    available: PropTypes.bool,
+    description: PropTypes.arrayOf(valueShape),
+    handmade: PropTypes.bool,
+    images: PropTypes.shape({
+      thumbnail: PropTypes.string
+    }),
+    material: PropTypes.string,
+    name: PropTypes.arrayOf(valueShape)
   })
 };
 
