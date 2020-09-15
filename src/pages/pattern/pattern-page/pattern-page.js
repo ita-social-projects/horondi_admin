@@ -74,11 +74,12 @@ const PatternPage = () => {
     list !== undefined
       ? list.map((patternItem, index) => (
         <TableContainerRow
+          image={patternItem.images.thumbnail}
           key={index}
           id={patternItem.id}
           name={patternItem.name[0].value}
           material={patternItem.material}
-          available={patternItem.available}
+          available={patternItem.available ? 'Так' : 'Ні'}
           deleteHandler={() => patternDeleteHandler(patternItem._id)}
           editHandler={() => {
             dispatch(push(`/patterns/${patternItem._id}`));

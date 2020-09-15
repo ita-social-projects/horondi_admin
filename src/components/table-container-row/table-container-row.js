@@ -9,6 +9,7 @@ import { config } from '../../configs';
 
 const TableContainerRow = ({
   id,
+  image,
   editHandler,
   showAvatar,
   deleteHandler,
@@ -31,8 +32,11 @@ const TableContainerRow = ({
     <TableRow key={id} hover>
       {showAvatar && (
         <TableCell>
-          <Avatar className={avatarSize}>
-            <ImageIcon fontSize={iconSize} />
+          <Avatar
+            className={avatarSize}
+            src={`https://horondi.blob.core.windows.net/horondi/images/${image}`}
+          >
+            <ImageIcon />
           </Avatar>
         </TableCell>
       )}
@@ -46,6 +50,7 @@ const TableContainerRow = ({
 };
 
 TableContainerRow.propTypes = {
+  image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
   id: PropTypes.string,
@@ -54,6 +59,7 @@ TableContainerRow.propTypes = {
 
 TableContainerRow.defaultProps = {
   id: '',
+  image: '',
   deleteHandler: () => {},
   editHandler: () => {},
   showAvatar: true
