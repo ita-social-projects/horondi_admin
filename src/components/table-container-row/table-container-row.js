@@ -7,7 +7,13 @@ import { DeleteButton, EditButton } from '../buttons';
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
 
-const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
+const TableContainerRow = ({
+  id,
+  editHandler,
+  showAvatar,
+  deleteHandler,
+  ...rest
+}) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.iconSizes;
   const classes = useStyles();
 
@@ -23,11 +29,13 @@ const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
 
   return (
     <TableRow key={id} hover>
-      <TableCell>
-        <Avatar className={avatarSize}>
-          <ImageIcon fontSize={iconSize} />
-        </Avatar>
-      </TableCell>
+      {showAvatar && (
+        <TableCell>
+          <Avatar className={avatarSize}>
+            <ImageIcon fontSize={iconSize} />
+          </Avatar>
+        </TableCell>
+      )}
       {tableCells}
       <TableCell>
         <EditButton
@@ -48,13 +56,15 @@ const TableContainerRow = ({ id, editHandler, deleteHandler, ...rest }) => {
 TableContainerRow.propTypes = {
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
-  id: PropTypes.string
+  id: PropTypes.string,
+  showAvatar: PropTypes.bool
 };
 
 TableContainerRow.defaultProps = {
   id: '',
   deleteHandler: () => {},
-  editHandler: () => {}
+  editHandler: () => {},
+  showAvatar: true
 };
 
 export default TableContainerRow;
