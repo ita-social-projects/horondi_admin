@@ -73,6 +73,7 @@ const MaterialPage = () => {
       ? list.map((materialItem, index) => (
           <TableContainerRow
             key={index}
+            showAvatar={false}
             id={materialItem.id}
             name={materialItem.name[0].value}
             purpose={materialItem.purpose}

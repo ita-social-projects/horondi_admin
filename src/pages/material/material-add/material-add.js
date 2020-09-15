@@ -174,18 +174,6 @@ const MaterialAdd = () => {
         <Grid item xs={12}>
           <Paper className={styles.materialItemAdd}>
             <TextField
-              data-cy='photo'
-              id='photo'
-              className={styles.textfield}
-              variant='outlined'
-              label={config.labels.material.image}
-              value={values.Photo}
-              onChange={handleChange}
-              required
-            />
-          </Paper>
-          <Paper className={styles.materialItemAdd}>
-            <TextField
               data-cy='purpose'
               id='purpose'
               className={styles.textfield}

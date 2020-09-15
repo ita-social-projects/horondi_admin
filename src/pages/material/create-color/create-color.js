@@ -2,7 +2,15 @@ import React from 'react';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Paper, TextField, AppBar, Tabs, Grid, Tab } from '@material-ui/core';
+import {
+  Paper,
+  TextField,
+  AppBar,
+  Tabs,
+  Grid,
+  Tab,
+  Avatar
+} from '@material-ui/core';
 import { config } from '../../../configs';
 import useColorHandlers from '../../../utils/use-color-handlers';
 import LoadingBar from '../../../components/loading-bar';
@@ -32,7 +40,8 @@ function CreateColor() {
     createColor,
     tabsValue,
     handleTabsChange,
-    colorImage
+    setUpload,
+
   } = useColorHandlers();
 
   const langValues = languages.map((lang) => ({
@@ -66,9 +75,6 @@ function CreateColor() {
     code: Yup.number()
       .min(1, 'мінінум 1')
       .max(1000000, colorErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(colorErrorMessages.VALIDATION_ERROR),
-    colorImage: Yup.string()
-      .min(2, colorErrorMessages.MIN_LENGTH_MESSAGE)
       .required(colorErrorMessages.VALIDATION_ERROR)
   });
 
@@ -78,15 +84,15 @@ function CreateColor() {
     initialValues: {
       ...formikValues,
       code,
-      colorImage
+      colorImage: ''
     },
-    onSubmit: () => {
+    onSubmit: (values) => {
       const color = createColor(values);
       dispatch(setNewColorToStore(color));
       dispatch(showColorDialogWindow(false));
     }
   });
-  console.log(values);
+
   const TabPanels =
     languages.length > 0
       ? languages.map((lang, index) => (
@@ -150,6 +156,17 @@ function CreateColor() {
     }
   ];
 
+  const handleImageLoad = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        handleChange(e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setUpload(e.target.files[0]);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
@@ -165,21 +182,21 @@ function CreateColor() {
           </div>
         </div>
         <Grid item xs={12}>
-          <Paper className={styles.materialItemAdd}>
-            <TextField
-              data-cy='colorImage'
-              id='colorImage'
-              className={styles.textfield}
-              variant='outlined'
-              label={config.labels.colors.image}
-              value={values.colorImage}
-              onChange={handleChange}
-              error={touched.colorImage && !!errors.colorImage}
+          <label htmlFor='patternImage'>
+            <Avatar
+              className={styles.patternImage}
+              variant='square'
+              src={values.patternImage}
+              alt='pattern'
             />
-            {touched.colorImage && errors.colorImage && (
-              <div className={styles.inputError}>{errors.colorImage}</div>
-            )}
-          </Paper>
+          </label>
+          <input
+            className={styles.patternInputFile}
+            type='file'
+            id='patternImage'
+            data-cy='patternImage'
+            onChange={handleImageLoad}
+          />
           <Paper className={styles.materialItemAdd}>
             <TextField
               data-cy='code'

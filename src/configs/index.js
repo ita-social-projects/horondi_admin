@@ -51,7 +51,7 @@ export const config = {
   },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    materials: ['Фото', 'Назва', 'Застосування', 'Доступний', 'Дії'],
+    materials: ['Назва', 'Застосування', 'Доступний', 'Дії'],
     categories: ['№', 'Категорія', 'Дії'],
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
@@ -193,7 +193,7 @@ export const config = {
       purpose: 'Застосування',
       available: 'Доступний',
       name: 'Назва матеріалу',
-      description: 'Опис матеріалу'
+      description: 'Опис матеріалу',
     },
     colors: {
       image: 'Фото кольору',
