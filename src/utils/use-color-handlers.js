@@ -44,7 +44,7 @@ const useMaterialHandlers = () => {
     setAvailable,
     createColor,
     handleTabsChange,
-    tabsValue,
+    tabsValue
   };
 };
 

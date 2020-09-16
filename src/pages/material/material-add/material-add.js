@@ -1,5 +1,13 @@
 import React from 'react';
-import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
+import {
+  TextField,
+  Paper,
+  Grid,
+  Tabs,
+  Tab,
+  AppBar,
+  Avatar
+} from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
@@ -34,7 +42,8 @@ const MaterialAdd = () => {
     handleTabsChange,
     available,
     setAvailable,
-    setColorImages
+    colorImagesToUpload,
+    setColorImagesToUpload
   } = useMaterialHandlers();
 
   const langValues = languages.map((lang) => ({
@@ -47,6 +56,7 @@ const MaterialAdd = () => {
     ukName: Yup.string()
       .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
       .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
+
       .required(materialErrorMessages.VALIDATION_ERROR),
 
     enName: Yup.string()
@@ -67,64 +77,75 @@ const MaterialAdd = () => {
     purpose: Yup.string()
       .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
       .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR)
+      .required(materialErrorMessages.VALIDATION_ERROR),
+    additionalPrice: Yup.number().required(
+      materialErrorMessages.VALIDATION_ERROR
+    )
   });
 
-  const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    setFieldValue
+  } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
     initialValues: {
       ...formikValues,
-      purpose
+      purpose,
+      additionalPrice: 0
     },
     onSubmit: () => {
       const material = createMaterial(values);
       dispatch(addMaterial(material));
     }
   });
-
+  setFieldValue('name', 'hello');
   const TabPanels =
     languages.length > 0
       ? languages.map((lang, index) => (
-        <TabPanel key={index} value={tabsValue} index={index}>
-          <Paper className={styles.materialItemAdd}>
-            <TextField
-              data-cy={`${lang}Name`}
-              id={`${lang}Name`}
-              className={styles.textfield}
-              variant='outlined'
-              label={config.labels.material.name}
-              error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-              multiline
-              value={values[`${lang}Name`]}
-              onChange={handleChange}
-            />
-            {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-              <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-            )}
-            <TextField
-              data-cy={`${lang}Description`}
-              id={`${lang}Description`}
-              className={styles.textfield}
-              variant='outlined'
-              label={config.labels.material.description}
-              multiline
-              error={
-                touched[`${lang}Description`] &&
+          <TabPanel key={index} value={tabsValue} index={index}>
+            <Paper className={styles.materialItemAdd}>
+              <TextField
+                data-cy={`${lang}Name`}
+                id={`${lang}Name`}
+                className={styles.textfield}
+                variant='outlined'
+                label={config.labels.material.name}
+                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
+                multiline
+                value={values[`${lang}Name`]}
+                onChange={handleChange}
+              />
+              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
+                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+              )}
+              <TextField
+                data-cy={`${lang}Description`}
+                id={`${lang}Description`}
+                className={styles.textfield}
+                variant='outlined'
+                label={config.labels.material.description}
+                multiline
+                error={
+                  touched[`${lang}Description`] &&
                   !!errors[`${lang}Description`]
-              }
-              value={values[`${lang}Description`]}
-              onChange={handleChange}
-            />
-            {touched[`${lang}Description`] &&
+                }
+                value={values[`${lang}Description`]}
+                onChange={handleChange}
+              />
+              {touched[`${lang}Description`] &&
                 errors[`${lang}Description`] && (
-                <div className={styles.inputError}>
-                {errors[`${lang}Description`]}
-              </div>
-            )}
-          </Paper>
-        </TabPanel>
-      ))
+                  <div className={styles.inputError}>
+                    {errors[`${lang}Description`]}
+                  </div>
+                )}
+            </Paper>
+          </TabPanel>
+        ))
       : null;
 
   const checkboxes = [
@@ -140,9 +161,8 @@ const MaterialAdd = () => {
   ];
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => <Tab label={lang} key={index} />)
+      ? languages.map((lang) => <Tab label={lang} key={lang} />)
       : null;
-
   if (loading) {
     return <LoadingBar />;
   }
@@ -174,6 +194,13 @@ const MaterialAdd = () => {
         </div>
         <Grid item xs={12}>
           <Paper className={styles.materialItemAdd}>
+            <div>
+              {colorImagesToUpload
+                ? colorImagesToUpload.map((image, index) => (
+                    <Avatar key={index} src={image} />
+                  ))
+                : null}
+            </div>
             <TextField
               data-cy='purpose'
               id='purpose'
@@ -186,6 +213,19 @@ const MaterialAdd = () => {
             />
             {touched.purpose && errors.purpose && (
               <div className={styles.inputError}>{errors.purpose}</div>
+            )}
+            <TextField
+              data-cy='additionalPrice'
+              id='additionalPrice'
+              className={styles.textfield}
+              variant='outlined'
+              label={config.labels.material.additionalPrice}
+              value={values.additionalPrice}
+              onChange={handleChange}
+              error={touched.additionalPrice && !!errors.additionalPrice}
+            />
+            {touched.additionalPrice && errors.additionalPrice && (
+              <div className={styles.inputError}>{errors.additionalPrice}</div>
             )}
           </Paper>
         </Grid>
@@ -209,7 +249,12 @@ const MaterialAdd = () => {
         buttonType='submit'
         buttonTitle='Закрити вікно'
         dialogTitle='Створити колір'
-        component={<CreateColor setColorImages={setColorImages} />}
+        component={
+          <CreateColor
+            images={colorImagesToUpload}
+            setImages={setColorImagesToUpload}
+          />
+        }
       />
     </div>
   );

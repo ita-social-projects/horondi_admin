@@ -1,4 +1,9 @@
-import { ImportContacts, Category, People } from '@material-ui/icons';
+import {
+  ImportContacts,
+  Category,
+  People,
+  LocalMall
+} from '@material-ui/icons';
 
 export const routes = {
   pathToLogin: '/',
@@ -20,7 +25,7 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContacts],
-      ['Матеріали', routes.pathToMaterials, ImportContacts],
+      ['Матеріали', routes.pathToMaterials, LocalMall],
       ['Категорії', routes.pathToCategories, Category],
       ['Користувачі', routes.pathToUsers, People]
     ],
@@ -194,6 +199,7 @@ export const config = {
       available: 'Доступний',
       name: 'Назва матеріалу',
       description: 'Опис матеріалу',
+      additionalPrice: 'Додаткова ціна'
     },
     colors: {
       image: 'Фото кольору',

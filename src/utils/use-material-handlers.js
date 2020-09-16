@@ -11,13 +11,13 @@ const useMaterialHandlers = () => {
   const [available, setAvailable] = useState(false);
   const [purpose, setPurpose] = useState('');
   const [colors, setColors] = useState([]);
-  const [additionalPrice, setAdditionalPrice] = useState([]);
   const [tabsValue, setTabsValue] = useState(0);
-  const [colorImagesToUpload,setColorImagesToUpload]=useState([])
-  console.log(colorImagesToUpload);
+  const [colorImagesToUpload, setColorImagesToUpload] = useState([]);
+
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
   };
+
   const createMaterial = (values) => {
     const newMaterial = {
       name: [
@@ -44,19 +44,10 @@ const useMaterialHandlers = () => {
       colors,
       available,
       purpose: values.purpose,
-      additionalPrice
+      additionalPrice: values.additionalPrice
     };
     return newMaterial;
   };
-  const setColorImages =(data)=>{
-    const filtered = [...colorImagesToUpload,data]
-    const set = [...new Set(filtered)]
-    const test = [4,'4',2,4,5,6,6]
-    console.log([...new Set(test)]);
-    console.log(filtered);
-    console.log('set',set);
-    setColorImagesToUpload([...colorImagesToUpload,data])
-  }
 
   return {
     ukName,
@@ -71,15 +62,13 @@ const useMaterialHandlers = () => {
     setAvailable,
     purpose,
     setPurpose,
-    additionalPrice,
-    setAdditionalPrice,
     colors,
     setColors,
     createMaterial,
     tabsValue,
     handleTabsChange,
     colorImagesToUpload,
-    setColorImages
+    setColorImagesToUpload
   };
 };
 
