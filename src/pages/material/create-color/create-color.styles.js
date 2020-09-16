@@ -38,5 +38,13 @@ export const useStyles = makeStyles((theme) => ({
   inputError: {
     color: '#e60000',
     padding: '0 5px'
-  }
+  },
+  colorImage: {
+    width: '5rem',
+    height: '5rem',
+    margin: '5px',
+    fontSize: '.7rem',
+    padding: '.2rem'
+  },
+  colorInputFile: { display: 'none' }
 }));

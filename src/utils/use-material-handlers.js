@@ -13,7 +13,8 @@ const useMaterialHandlers = () => {
   const [colors, setColors] = useState([]);
   const [additionalPrice, setAdditionalPrice] = useState([]);
   const [tabsValue, setTabsValue] = useState(0);
-
+  const [colorImagesToUpload,setColorImagesToUpload]=useState([])
+  console.log(colorImagesToUpload);
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
   };
@@ -47,6 +48,15 @@ const useMaterialHandlers = () => {
     };
     return newMaterial;
   };
+  const setColorImages =(data)=>{
+    const filtered = [...colorImagesToUpload,data]
+    const set = [...new Set(filtered)]
+    const test = [4,'4',2,4,5,6,6]
+    console.log([...new Set(test)]);
+    console.log(filtered);
+    console.log('set',set);
+    setColorImagesToUpload([...colorImagesToUpload,data])
+  }
 
   return {
     ukName,
@@ -68,7 +78,8 @@ const useMaterialHandlers = () => {
     createMaterial,
     tabsValue,
     handleTabsChange,
-  
+    colorImagesToUpload,
+    setColorImages
   };
 };
 

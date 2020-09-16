@@ -6,7 +6,6 @@ const { languages } = config;
 const useMaterialHandlers = () => {
   const [available, setAvailable] = useState(false);
   const [tabsValue, setTabsValue] = useState(0);
-  const [upload, setUpload] = useState('');
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
@@ -40,17 +39,12 @@ const useMaterialHandlers = () => {
     return newColor;
   };
 
-  const addNewColor = (value) => {
-    setUpload({ ...upload, value });
-  };
   return {
     available,
     setAvailable,
     createColor,
     handleTabsChange,
     tabsValue,
-    upload,
-    addNewColor
   };
 };
 

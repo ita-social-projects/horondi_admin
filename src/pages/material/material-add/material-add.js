@@ -33,7 +33,8 @@ const MaterialAdd = () => {
     tabsValue,
     handleTabsChange,
     available,
-    setAvailable
+    setAvailable,
+    setColorImages
   } = useMaterialHandlers();
 
   const langValues = languages.map((lang) => ({
@@ -117,7 +118,7 @@ const MaterialAdd = () => {
             />
             {touched[`${lang}Description`] &&
                 errors[`${lang}Description`] && (
-              <div className={styles.inputError}>
+                <div className={styles.inputError}>
                 {errors[`${lang}Description`]}
               </div>
             )}
@@ -208,7 +209,7 @@ const MaterialAdd = () => {
         buttonType='submit'
         buttonTitle='Закрити вікно'
         dialogTitle='Створити колір'
-        component={<CreateColor />}
+        component={<CreateColor setColorImages={setColorImages} />}
       />
     </div>
   );

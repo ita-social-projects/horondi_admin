@@ -25,7 +25,7 @@ import { SaveButton } from '../../../components/buttons';
 
 const { languages, materialErrorMessages, colorErrorMessages } = config;
 
-function CreateColor() {
+function CreateColor({setColorImages}) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -40,7 +40,7 @@ function CreateColor() {
     createColor,
     tabsValue,
     handleTabsChange,
-    setUpload,
+   
 
   } = useColorHandlers();
 
@@ -78,7 +78,7 @@ function CreateColor() {
       .required(colorErrorMessages.VALIDATION_ERROR)
   });
 
-  const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+  const { values, handleChange, handleSubmit, errors, touched, setFieldValue } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
     initialValues: {
@@ -87,8 +87,11 @@ function CreateColor() {
       colorImage: ''
     },
     onSubmit: (values) => {
-      const color = createColor(values);
+      const {imageToUpload,...rest} = values
+      
+      const color = createColor(rest);
       dispatch(setNewColorToStore(color));
+      setColorImages(imageToUpload)
       dispatch(showColorDialogWindow(false));
     }
   });
@@ -96,43 +99,43 @@ function CreateColor() {
   const TabPanels =
     languages.length > 0
       ? languages.map((lang, index) => (
-          <TabPanel key={lang} value={tabsValue} index={index}>
-            <Paper className={styles.materialItemAdd}>
-              <TextField
-                data-cy={`${lang}Name`}
-                id={`${lang}Name`}
-                className={styles.textfield}
-                variant='outlined'
-                label={config.labels.colors.name}
-                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-                multiline
-                value={values[`${lang}Name`]}
-                onChange={handleChange}
-              />
-              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-              )}
-              <TextField
-                data-cy={`${lang}SimpleName`}
-                id={`${lang}SimpleName`}
-                className={styles.textfield}
-                variant='outlined'
-                label={config.labels.colors.simpleName}
-                multiline
-                error={
-                  touched[`${lang}SimpleName`] && !!errors[`${lang}SimpleName`]
-                }
-                value={values[`${lang}SimpleName`]}
-                onChange={handleChange}
-              />
-              {touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`] && (
-                <div className={styles.inputError}>
-                  {errors[`${lang}SimpleName`]}
-                </div>
-              )}
-            </Paper>
-          </TabPanel>
-        ))
+        <TabPanel key={lang} value={tabsValue} index={index}>
+          <Paper className={styles.materialItemAdd}>
+            <TextField
+              data-cy={`${lang}Name`}
+              id={`${lang}Name`}
+              className={styles.textfield}
+              variant='outlined'
+              label={config.labels.colors.name}
+              error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
+              multiline
+              value={values[`${lang}Name`]}
+              onChange={handleChange}
+            />
+            {touched[`${lang}Name`] && errors[`${lang}Name`] && (
+              <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+            )}
+            <TextField
+              data-cy={`${lang}SimpleName`}
+              id={`${lang}SimpleName`}
+              className={styles.textfield}
+              variant='outlined'
+              label={config.labels.colors.simpleName}
+              multiline
+              error={
+                touched[`${lang}SimpleName`] && !!errors[`${lang}SimpleName`]
+              }
+              value={values[`${lang}SimpleName`]}
+              onChange={handleChange}
+            />
+            {touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`] && (
+              <div className={styles.inputError}>
+                {errors[`${lang}SimpleName`]}
+              </div>
+            )}
+          </Paper>
+        </TabPanel>
+      ))
       : null;
 
   if (loading) {
@@ -160,10 +163,10 @@ function CreateColor() {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        handleChange(e.target.result);
+        setFieldValue('image',e.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
-      setUpload(e.target.files[0]);
+      setFieldValue('imageToUpload',e.target.files[0]);
     }
   };
 
@@ -182,19 +185,19 @@ function CreateColor() {
           </div>
         </div>
         <Grid item xs={12}>
-          <label htmlFor='patternImage'>
+          <label htmlFor='image'>
             <Avatar
-              className={styles.patternImage}
+              className={styles.colorImage}
               variant='square'
-              src={values.patternImage}
-              alt='pattern'
+              src={values.image}
+              alt='color'
             />
           </label>
           <input
-            className={styles.patternInputFile}
+            className={styles.colorInputFile}
             type='file'
-            id='patternImage'
-            data-cy='patternImage'
+            id='image'
+            data-cy='colorImage'
             onChange={handleImageLoad}
           />
           <Paper className={styles.materialItemAdd}>

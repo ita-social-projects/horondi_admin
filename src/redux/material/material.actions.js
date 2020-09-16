@@ -13,7 +13,8 @@ import {
   ADD_MATERIAL,
   REMOVE_MATERIAL_FROM_STORE,
   COLOR_DIALOG_DATA_TO_STORE,
-  SHOW_COLOR_DIALOG_WINDOW
+  SHOW_COLOR_DIALOG_WINDOW,
+ 
 } from './material.types';
 
 export const getMaterials = (payload) => ({
@@ -90,3 +91,4 @@ export const showColorDialogWindow = (payload) => ({
   type: SHOW_COLOR_DIALOG_WINDOW,
   payload
 });
+
