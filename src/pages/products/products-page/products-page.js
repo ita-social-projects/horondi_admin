@@ -28,6 +28,7 @@ const {
   DELETE_PRODUCT_BTN
 } = productsTranslations;
 const tableTitles = config.tableHeadRowTitles.products;
+const { IMG_URL } = config
 
 const ProductsPage = () => {
   const styles = useStyles();
@@ -105,16 +106,17 @@ const ProductsPage = () => {
       DELETE_PRODUCT_BTN
     );
   };
-
+  console.log(products.length ? products[0].images.primary.small : null)
   const productsItems = products
     ? products.map(
       (
-        { _id, name, category, basePrice, model, purchasedCount, pattern },
+        { _id, name, category, basePrice, model, purchasedCount, pattern, images },
         idx
       ) => (
         <TableContainerRow
           key={idx}
           id={_id}
+          avatarSrc={`${IMG_URL}${images.primary.small}`}
           name={name[0].value}
           category={category.name[0].value}
           model={model[0].value}

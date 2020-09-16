@@ -11,6 +11,7 @@ const TableContainerRow = ({
   id,
   editHandler,
   showAvatar,
+  avatarSrc,
   deleteHandler,
   ...rest
 }) => {
@@ -31,9 +32,10 @@ const TableContainerRow = ({
     <TableRow key={id} hover>
       {showAvatar && (
         <TableCell>
-          <Avatar className={avatarSize}>
-            <ImageIcon fontSize={iconSize} />
-          </Avatar>
+          { <Avatar className={avatarSize} src={avatarSrc} alt='avatar'>
+                  <ImageIcon fontSize={iconSize} />
+                </Avatar>
+          }
         </TableCell>
       )}
       {tableCells}

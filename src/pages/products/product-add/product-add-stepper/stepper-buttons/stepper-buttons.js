@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import { config } from '../../../../../configs';
 import { useStyles } from './stepper-buttons.styles';
+import {productsTranslations} from "../../../../../translations/product.translations";
 
 const { productStepsLabels } = config;
+const { NEXT, CREATE_PRODUCT, BACK } = productsTranslations
 
 const StepperButtons = ({ handleNext, handleBack, activeStep, type }) => {
   const styles = useStyles();
@@ -16,7 +18,7 @@ const StepperButtons = ({ handleNext, handleBack, activeStep, type }) => {
         onClick={handleBack}
         className={styles.button}
       >
-        Назад
+          {BACK}
       </Button>
       <Button
         variant='contained'
@@ -26,15 +28,15 @@ const StepperButtons = ({ handleNext, handleBack, activeStep, type }) => {
         className={styles.button}
       >
         {activeStep === productStepsLabels.length - 1
-          ? 'Створити продукт'
-          : 'Далі'}
+          ? CREATE_PRODUCT
+          : NEXT}
       </Button>
     </div>
   );
 };
 
 StepperButtons.propTypes = {
-  activeStep: PropTypes.bool.isRequired,
+  activeStep: PropTypes.number.isRequired,
   handleNext: PropTypes.func,
   handleBack: PropTypes.func,
   type: PropTypes.string

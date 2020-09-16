@@ -13,8 +13,10 @@ import {
   setProductToSend,
   getModelsByCategory
 } from '../../../../redux/products/products.actions';
+import {productsTranslations} from "../../../../translations/product.translations";
 
 const { productSelectsLabels } = config;
+const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations
 
 const ProductAddSpecies = ({
   colors,
@@ -22,7 +24,11 @@ const ProductAddSpecies = ({
   models,
   activeStep,
   handleNext,
-  handleBack
+  handleBack,
+  getColorToSend,
+  getPatternToSend,
+  getModelToSend,
+  getSelectedCategory
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -36,13 +42,6 @@ const ProductAddSpecies = ({
   );
 
   const [shouldValidate, setShouldValidate] = useState(false);
-
-  const getColorToSend = (color) =>
-    colors.find((item) => item[0].simpleName[0].value === color);
-  const getPatternToSend = (pattern) =>
-    patterns.find((item) => pattern === item[0].value);
-  const getModelToSend = (model) =>
-    modelsForSelectedCategory.find(({ _id }) => _id === model)._id;
 
   const formikValues = {
     category: productToSend.category,
@@ -75,7 +74,7 @@ const ProductAddSpecies = ({
         ...values,
         colors: getColorToSend(colors),
         pattern: getPatternToSend(pattern),
-        model: getModelToSend(model)
+        model: getModelToSend(model)._id
       })
     );
     handleNext();
@@ -103,9 +102,9 @@ const ProductAddSpecies = ({
   const selectedCategory = useMemo(
     () =>
       values.category
-        ? categories.find(({ _id }) => values.category === _id)
+        ? getSelectedCategory(values.category)
         : null,
-    [categories, values.category]
+    [values.category, getSelectedCategory]
   );
 
   const categoriesOptions = useMemo(
@@ -200,7 +199,7 @@ const ProductAddSpecies = ({
             <InputLabel htmlFor={label}>{label}</InputLabel>
             <Select
               native
-              label={label}
+              label={`${label}*`}
               value={values[name]}
               error={touched[name] && !!errors[name]}
               onBlur={handleBlur}
@@ -228,7 +227,7 @@ const ProductAddSpecies = ({
         )
       )}
       <div className={styles.error}>
-        {!!Object.values(errors).length && "Усі поля обов'язкові"}
+        {!!Object.values(errors).length && ALL_FIELDS_ARE_REQUIRED}
       </div>
       <div className={styles.buttons}>
         <StepperButtons
@@ -246,7 +245,7 @@ ProductAddSpecies.propTypes = {
   colors: PropTypes.arrayOf(PropTypes.array).isRequired,
   patterns: PropTypes.arrayOf(PropTypes.array).isRequired,
   models: PropTypes.arrayOf(PropTypes.array).isRequired,
-  activeStep: PropTypes.bool.isRequired,
+  activeStep: PropTypes.number.isRequired,
   handleNext: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired
 };

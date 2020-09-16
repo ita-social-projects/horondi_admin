@@ -30,7 +30,7 @@ import {
   GET_MODELS_BY_CATEGORY,
   SET_MODELS,
   ADD_PRODUCT,
-  DELETE_PRODUCT
+  DELETE_PRODUCT, SET_FILES_TO_UPLOAD
 } from './products.types';
 
 export const setProduct = (item) => ({
@@ -188,3 +188,10 @@ export const deleteProduct = (payload) => ({
   type: DELETE_PRODUCT,
   payload
 });
+
+export const setFilesToUpload = (payload) => ({
+  type: SET_FILES_TO_UPLOAD,
+  payload
+})
+
+

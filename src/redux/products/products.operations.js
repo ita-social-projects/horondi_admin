@@ -141,6 +141,7 @@ const getAllFilters = async () => {
                 value
               }
               isMain
+              subcategories 
             }
             options {
               additions {
@@ -237,11 +238,11 @@ const getModelsByCategory = async (payload) => {
   return result.data.getModelsByCategory;
 };
 
-const addProduct = async (payload) => {
+const addProduct = async (state) => {
   const result = await client.mutate({
     mutation: gql`
-      mutation($product: ProductInput!) {
-        addProduct(product: $product) {
+      mutation($product: ProductInput!, $upload: Upload!) {
+        addProduct(product: $product, upload: $upload) {
           ... on Product {
             _id
             purchasedCount
@@ -291,7 +292,8 @@ const addProduct = async (payload) => {
       }
     `,
     variables: {
-      product: payload
+      product: state.productToSend,
+      upload: state.upload
     }
   });
   await client.resetStore();

@@ -20,8 +20,21 @@ import TabPanel from '../../../../components/tab-panel';
 import { config } from '../../../../configs';
 import { setProductToSend } from '../../../../redux/products/products.actions';
 import StepperButtons from '../product-add-stepper/stepper-buttons/stepper-buttons';
+import {productsTranslations} from "../../../../translations/product.translations";
 
 const { productInfoLabels, languages } = config;
+const {
+    REQUIRED_FIELD,
+    NAME_TOO_LONG_MESSAGE,
+    NAME_TOO_SHORT_MESSAGE,
+    MAIN_MATERIAL_TOO_LONG_MESSAGE,
+    MAIN_MATERIAL_TOO_SHORT_MESSAGE,
+    INNER_MATERIAL_TOO_LONG_MESSAGE,
+    INNER_MATERIAL_TOO_SHORT_MESSAGE,
+    CLOSURE_TOO_LONG_MESSAGE,
+    CLOSURE_TOO_SHORT_MESSAGE,
+    DESCRIPTION_TOO_SHORT_MESSAGE
+} = productsTranslations
 
 const ProductAddInfo = ({
   activeStep,
@@ -41,7 +54,7 @@ const ProductAddInfo = ({
   } = useSelector(({ Products }) => Products.productToSend);
 
   const [tabValue, setTabValue] = useState(0);
-  const [shouldValidate, setShoudlValidate] = useState(false);
+  const [shouldValidate, setShouldValidate] = useState(false);
 
   const checkedLanguages = useMemo(
     () => Object.values(preferedLanguages).filter(({ checked }) => checked),
@@ -82,25 +95,25 @@ const ProductAddInfo = ({
         checkedLanguages.length
           ? Object.assign(
             ...checkedLanguages.map(({ name }) => ({
-              [`${name}ProductName`]: Yup.string()
-                .min(2, 'Too Short!')
-                .max(100, 'Too Long!')
-                .required(`Обов'язкове поле`),
-              [`${name}MainMaterial`]: Yup.string()
-                .min(2, 'Too Short!')
-                .max(50, 'Too Long!')
-                .required(`Обов'язкове поле`),
-              [`${name}InnerMaterial`]: Yup.string()
-                .min(2, 'Too Short!')
-                .max(50, 'Too Long!')
-                .required(`Обов'язкове поле`),
-              [`${name}Closure`]: Yup.string()
-                .min(2, 'Too Short!')
-                .max(50, 'Too Long!')
-                .required(`Обов'язкове поле`),
-              [`${name}Description`]: Yup.string()
-                .min(10, 'Too Short!')
-                .required(`Обов'язкове поле`)
+              [`${name}${productInfoLabels[0].name}`]: Yup.string()
+                .min(6, NAME_TOO_SHORT_MESSAGE)
+                .max(50, NAME_TOO_LONG_MESSAGE)
+                .required(REQUIRED_FIELD),
+              [`${name}${productInfoLabels[1].name}`]: Yup.string()
+                .min(2, MAIN_MATERIAL_TOO_SHORT_MESSAGE)
+                .max(50, MAIN_MATERIAL_TOO_LONG_MESSAGE)
+                .required(REQUIRED_FIELD),
+              [`${name}${productInfoLabels[2].name}`]: Yup.string()
+                .min(2, INNER_MATERIAL_TOO_SHORT_MESSAGE)
+                .max(50, INNER_MATERIAL_TOO_LONG_MESSAGE)
+                .required(REQUIRED_FIELD),
+              [`${name}${productInfoLabels[3].name}`]: Yup.string()
+                .min(2, CLOSURE_TOO_SHORT_MESSAGE)
+                .max(50, CLOSURE_TOO_LONG_MESSAGE)
+                .required(REQUIRED_FIELD),
+              [`${name}${productInfoLabels[4].name}`]: Yup.string()
+                .min(10, DESCRIPTION_TOO_SHORT_MESSAGE)
+                .required(REQUIRED_FIELD)
             }))
           )
           : {}
@@ -160,7 +173,7 @@ const ProductAddInfo = ({
                     <TextField
                       className={styles.textfield}
                       id={name}
-                      label={label}
+                      label={`${label}*`}
                       error={meta.touched && !!meta.error}
                       helperText={meta.touched && meta.error}
                       variant='outlined'
@@ -175,7 +188,7 @@ const ProductAddInfo = ({
             <StepperButtons
               type='submit'
               activeStep={activeStep}
-              handleNext={() => setShoudlValidate(true)}
+              handleNext={() => setShouldValidate(true)}
             />
           ) : null}
         </Form>

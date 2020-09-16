@@ -7,7 +7,8 @@ import {
   setProductsError,
   setProductCategories,
   setProductOptions,
-  setModels
+  setModels,
+  clearProductToSend
 } from './products.actions';
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 
@@ -101,11 +102,13 @@ export function* handleModelsLoad({ payload }) {
   }
 }
 
-export function* handleProductAdd({ payload }) {
+export function* handleProductAdd() {
   try {
-    yield call(addProduct, payload);
+    const productState = yield select(({ Products }) => Products)
+    yield call(addProduct, productState);
     yield call(handleFilterLoad);
     yield put(push('/products'));
+    yield put(clearProductToSend())
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);

@@ -9,7 +9,6 @@ import ProductsStepper from './product-add-stepper/product-add-stepper';
 import {
   getProductSpecies,
   getProductOptions,
-  addProduct
 } from '../../../redux/products/products.actions';
 import ProductAddInfo from './product-add-info';
 import ProductAddSpecies from './product-add-species/product-add-species';
@@ -23,17 +22,22 @@ const ProductsAdd = () => {
   const {
     preferedLanguages,
     setPreferedLanguages,
-    productSpecies,
     colors,
     patterns,
     models,
     selectedOptions,
     setOptions,
     additions,
-    productImages,
-    setProductImages,
-    productToSend,
-    createProductInfo
+    createProductInfo,
+    options,
+    getModelToSend,
+    getPatternToSend,
+    getColorToSend,
+    getSelectedCategory,
+    additionalImages,
+    setAdditionalImages,
+    primaryImage,
+    setPrimaryImage
   } = useProductHandler();
 
   useEffect(() => {
@@ -49,10 +53,6 @@ const ProductsAdd = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleAddProduct = () => {
-    dispatch(addProduct(productToSend));
   };
 
   const productAddInfoStep = (
@@ -73,6 +73,10 @@ const ProductsAdd = () => {
       colors={colors}
       patterns={patterns}
       models={models}
+      getColorToSend={getColorToSend}
+      getModelToSend={getModelToSend}
+      getPatternToSend={getPatternToSend}
+      getSelectedCategory={getSelectedCategory}
     />
   );
 
@@ -84,23 +88,30 @@ const ProductsAdd = () => {
       activeStep={activeStep}
       handleNext={handleNext}
       handleBack={handleBack}
+      options={options}
     />
   );
 
   const productAddImagesStep = (
     <ProductAddImages
-      productImages={productImages}
-      setProductImages={setProductImages}
+      activeStep={activeStep}
+      handleNext={handleNext}
+      handleBack={handleBack}
+      primaryImage={primaryImage}
+      setPrimaryImage={setPrimaryImage}
+      additionalImages={additionalImages}
+      setAdditionalImages={setAdditionalImages}
     />
   );
 
   const productAddSubmitStep = (
     <ProductAddSubmit
       preferedLanguages={preferedLanguages}
-      productSpecies={productSpecies}
-      productImages={productImages}
       selectedOptions={selectedOptions}
       additions={additions}
+      activeStep={activeStep}
+      handleBack={handleBack}
+      getSelectedCategory={getSelectedCategory}
     />
   );
 
@@ -116,7 +127,6 @@ const ProductsAdd = () => {
     <Paper className={styles.container}>
       <ProductsStepper
         steps={steps}
-        handleAddProduct={handleAddProduct}
         activeStep={activeStep}
         handleNext={handleNext}
         handleBack={handleBack}

@@ -1,23 +1,24 @@
-import { useState, useMemo } from 'react';
+import {useState, useMemo, useCallback} from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../configs';
 
 const {
   selectedLanguages,
   productOptionsValues,
-  productImagesValues,
   languages
 } = config;
 
 const useProductHandler = () => {
-  const { filterData, productOptions } = useSelector(({ Products }) => ({
+  const { filterData, productOptions, modelsForSelectedCategory } = useSelector(({ Products }) => ({
     filterData: Products.filterData,
-    productOptions: Products.productOptions
+    productOptions: Products.productOptions,
+    modelsForSelectedCategory: Products.productSpecies.modelsForSelectedCategory
   }));
 
   const [preferedLanguages, setPreferedLanguages] = useState(selectedLanguages);
-  const [productImages, setProductImages] = useState(productImagesValues);
   const [selectedOptions, setOptions] = useState(productOptionsValues);
+  const [ primaryImage, setPrimaryImage ] = useState('')
+  const [ additionalImages, setAdditionalImages ] = useState([])
 
   const { bottomMaterials: materials, sizes } = productOptions;
 
@@ -148,39 +149,50 @@ const useProductHandler = () => {
     });
   }, [sizeOptions, materialsOptions, additions, selectedOptions.additions]);
 
+  const getColorToSend = (color) =>
+      colors.find((item) => item[0].simpleName[0].value === color);
+
+  const getPatternToSend = (pattern) =>
+      patterns.find((item) => pattern === item[0].value);
+
+  const getModelToSend = (model) =>
+      modelsForSelectedCategory.find(({ _id }) => _id === model);
+
   const createProductInfo = ({
-    ukProductName,
-    enProductName,
-    ukMainMaterial,
-    enMainMaterial,
-    ukInnerMaterial,
-    enInnerMaterial,
-    ukClosure,
-    enClosure,
-    ukDescription,
-    enDescription
+    ukname,
+    enname,
+    ukmainMaterial,
+    enmainMaterial,
+    ukinnerMaterial,
+    eninnerMaterial,
+    ukclosure,
+    enclosure,
+    ukdescription,
+    endescription
   }) => ({
     name: [
-      { lang: languages[0], value: ukProductName || null },
-      { lang: languages[1], value: enProductName || null }
+      { lang: languages[0], value: ukname },
+      { lang: languages[1], value: enname }
     ],
     mainMaterial: [
-      { lang: languages[0], value: ukMainMaterial || null },
-      { lang: languages[1], value: enMainMaterial || null }
+      { lang: languages[0], value: ukmainMaterial },
+      { lang: languages[1], value: enmainMaterial }
     ],
     innerMaterial: [
-      { lang: languages[0], value: ukInnerMaterial || null },
-      { lang: languages[1], value: enInnerMaterial || null }
+      { lang: languages[0], value: ukinnerMaterial },
+      { lang: languages[1], value: eninnerMaterial }
     ],
     closure: [
-      { lang: languages[0], value: ukClosure || null },
-      { lang: languages[1], value: enClosure || null }
+      { lang: languages[0], value: ukclosure },
+      { lang: languages[1], value: enclosure }
     ],
     description: [
-      { lang: languages[0], value: ukDescription || null },
-      { lang: languages[1], value: enDescription || null }
+      { lang: languages[0], value: ukdescription },
+      { lang: languages[1], value: endescription }
     ]
   });
+
+  const getSelectedCategory = useCallback((category) => categories.find(({ _id }) => category === _id), [categories])
 
   return {
     preferedLanguages,
@@ -196,9 +208,16 @@ const useProductHandler = () => {
     selectedOptions,
     setOptions,
     additions,
-    productImages,
-    setProductImages,
-    createProductInfo
+    options,
+    primaryImage,
+    setPrimaryImage,
+    additionalImages,
+    setAdditionalImages,
+    createProductInfo,
+    getColorToSend,
+    getModelToSend,
+    getPatternToSend,
+    getSelectedCategory
   };
 };
 
