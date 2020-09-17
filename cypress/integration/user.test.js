@@ -157,7 +157,7 @@ describe('Register and confirm admin', () => {
           role: "${role}"
         }){
           ... on User {
-            token
+            invitationalToken
           }
           ... on Error {
             message
@@ -180,10 +180,7 @@ describe('Register and confirm admin', () => {
           query
         }
       })
-        .then((res) => {
-          console.log(res.body);
-          return res.body.data.registerAdmin.token;
-        })
+        .then((res) => res.body.data.registerAdmin.invitationalToken)
         .then((newToken) => {
           token = newToken;
         });
