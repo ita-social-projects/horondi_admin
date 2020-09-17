@@ -80,9 +80,9 @@ const ContactsPage = () => {
   };
 
   const contactItems = contacts
-    ? contacts.map((contact) => (
+    ? contacts.map((contact, index) => (
       <TableContainerRow
-        key={contact.id}
+        key={`${contact.id}${index}`}
         id={contact.id}
         phone={formatPhoneNumber(contact.phoneNumber)}
         email={contact.email}

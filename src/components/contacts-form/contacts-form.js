@@ -324,8 +324,8 @@ ContactsForm.propTypes = {
     enSchedule: PropTypes.string.isRequired,
     ukAddress: PropTypes.string.isRequired,
     enAddress: PropTypes.string.isRequired,
-    ukCartImage: PropTypes.oneOf(null).isRequired,
-    enCartImage: PropTypes.oneOf(null).isRequired,
+    ukCartImage: PropTypes.oneOf([null]).isRequired,
+    enCartImage: PropTypes.oneOf([null]).isRequired,
     email: PropTypes.string.isRequired,
     cartLink: PropTypes.string.isRequired
   }).isRequired
