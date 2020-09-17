@@ -13,12 +13,12 @@ import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
+import ProductsPage from '../pages/products/products-page';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
-
+import UsersDetails from '../pages/users/users-details';
 import { config } from '../configs';
 import { history } from '../store/store';
-import UsersDetails from '../pages/users/users-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
 
@@ -62,6 +62,7 @@ const Routes = () => {
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route
           path={routes.pathToRegisterAdmin}

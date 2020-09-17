@@ -1,3 +1,3 @@
-import UserDetailsCard from './user-details-card'
+import UserDetailsCard from './user-details-card';
 
 export default UserDetailsCard;

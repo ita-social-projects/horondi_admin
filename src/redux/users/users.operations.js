@@ -60,7 +60,7 @@ mutation($id: ID!) {
 `;
 
 const registerAdminMutation = `
-mutation($user: SpecialUserRegisterInput!) {
+mutation($user: AdminRegisterInput!) {
   registerAdmin(user:$user){
     ... on User {
       email
@@ -74,7 +74,7 @@ mutation($user: SpecialUserRegisterInput!) {
 `;
 
 const completeAdminRegisterMutation = `
-mutation($user: SpecialUserConfirmInput!,$token: String!){
+mutation($user: AdminConfirmInput!,$token: String!){
   completeAdminRegister(user: $user,token: $token) {
     ... on SuccessfulResponse {
     	isSuccess
@@ -89,7 +89,7 @@ mutation($user: SpecialUserConfirmInput!,$token: String!){
 
 const validateTokenQuery = `
 query($token: String!){
-  validateToken(token: $token) {
+  validateConfirmationToken(token: $token) {
     ... on SuccessfulResponse {
       isSuccess
     }
@@ -143,6 +143,8 @@ const registerAdmin = async (user) => {
 
   const { data } = result;
 
+  console.log(data);
+
   if (data.registerAdmin.message) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.registerAdmin.message]}`
@@ -171,9 +173,9 @@ const validateToken = async (token) => {
 
   const { data } = result;
 
-  if (data.validateToken.message) {
+  if (data.validateConfirmationToken.message) {
     throw new Error(
-      `Помилка: ${config.errorMessages[data.validateToken.message]}`
+      `Помилка: ${config.errorMessages[data.validateConfirmationToken.message]}`
     );
   }
 
