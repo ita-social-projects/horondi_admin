@@ -3,7 +3,7 @@ import { config } from '../configs';
 
 const { languages } = config;
 
-const useMaterialHandlers = () => {
+const useColorHandlers = () => {
   const [available, setAvailable] = useState(false);
   const [tabsValue, setTabsValue] = useState(0);
 
@@ -48,4 +48,4 @@ const useMaterialHandlers = () => {
   };
 };
 
-export default useMaterialHandlers;
+export default useColorHandlers;

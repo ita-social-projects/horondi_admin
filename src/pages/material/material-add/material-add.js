@@ -43,7 +43,9 @@ const MaterialAdd = () => {
     available,
     setAvailable,
     colorImagesToUpload,
-    setColorImagesToUpload
+    setColorImagesToUpload,
+    colorImages,
+    addNewColorImages
   } = useMaterialHandlers();
 
   const langValues = languages.map((lang) => ({
@@ -83,14 +85,7 @@ const MaterialAdd = () => {
     )
   });
 
-  const {
-    values,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched,
-    setFieldValue
-  } = useFormik({
+  const { values, handleChange, handleSubmit, errors, touched } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
     initialValues: {
@@ -103,7 +98,7 @@ const MaterialAdd = () => {
       dispatch(addMaterial(material));
     }
   });
-  setFieldValue('name', 'hello');
+
   const TabPanels =
     languages.length > 0
       ? languages.map((lang, index) => (
@@ -194,13 +189,22 @@ const MaterialAdd = () => {
         </div>
         <Grid item xs={12}>
           <Paper className={styles.materialItemAdd}>
-            <div>
-              {colorImagesToUpload
-                ? colorImagesToUpload.map((image, index) => (
-                    <Avatar key={index} src={image} />
-                  ))
-                : null}
-            </div>
+           
+              <div>
+                {colorImagesToUpload
+                  ? Array.from(colorImagesToUpload).map((image, index) => (
+                      <Avatar variant='square' key={index} src={image} />
+                    ))
+                  : null}
+              </div>
+         
+              <div>
+                {colorImages
+                  ? colorImages.map((image, index) => (
+                      <Avatar variant='square' key={index} src={image} />
+                    ))
+                  : null}
+              </div>
             <TextField
               data-cy='purpose'
               id='purpose'
@@ -251,6 +255,7 @@ const MaterialAdd = () => {
         dialogTitle='Створити колір'
         component={
           <CreateColor
+            addNewColorImages={addNewColorImages}
             images={colorImagesToUpload}
             setImages={setColorImagesToUpload}
           />

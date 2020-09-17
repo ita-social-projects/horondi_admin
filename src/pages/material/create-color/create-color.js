@@ -26,7 +26,7 @@ import { SaveButton } from '../../../components/buttons';
 
 const { languages, materialErrorMessages, colorErrorMessages } = config;
 
-function CreateColor({ images, setImages }) {
+function CreateColor({ images, setImages, addNewColorImages }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -169,6 +169,7 @@ function CreateColor({ images, setImages }) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setFieldValue('image', e.target.result);
+        addNewColorImages(e.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       const imagesNames = images.map(({ name }) => name);
