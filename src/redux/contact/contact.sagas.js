@@ -116,10 +116,11 @@ function* handleContactDelete({ payload }) {
 }
 
 function* handleContactUpdate({ payload }) {
-  const { id, updatedContact } = payload;
+  const { id, updatedContact, upload } = payload;
+
   try {
     yield put(setContactsLoading(true));
-    yield call(updateContact, id, updatedContact);
+    yield call(updateContact, id, updatedContact, upload);
 
     yield put(updateContactInStore(id, updatedContact));
 

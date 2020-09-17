@@ -59,7 +59,7 @@ const getContactById = async (id) => {
             images {
               lang
               value {
-                medium
+                thumbnail
               }
             }
             link
@@ -143,6 +143,11 @@ const addContact = async (contact, upload) => {
               lang
               value
             }
+            images {
+              value {
+                thumbnail
+              }
+            }
             email
             link
           }
@@ -169,21 +174,24 @@ const addContact = async (contact, upload) => {
   return data.addContact;
 };
 
-const updateContact = async (id, contact) => {
+const updateContact = async (id, contact, upload) => {
   const result = await client.mutate({
     variables: {
       id,
-      contact
+      contact,
+      upload
     },
     context: { headers: { token } },
     mutation: gql`
-      mutation($id: ID!, $contact: contactInput!) {
-        updateContact(id: $id, contact: $contact) {
+      mutation($id: ID!, $contact: contactInput!, $upload: Upload!) {
+        updateContact(id: $id, contact: $contact, upload: $upload) {
           ... on Contact {
             address {
               lang
               value
             }
+            email
+            link
           }
           ... on Error {
             message
@@ -197,7 +205,6 @@ const updateContact = async (id, contact) => {
   });
   client.resetStore();
   const { data } = result;
-
   if (data.updateContact.message) {
     throw new Error(
       `${data.updateContact.statusCode} ${

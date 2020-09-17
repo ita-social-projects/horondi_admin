@@ -56,7 +56,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
         imageUrl: URL.createObjectURL(target.files[0])
       });
 
-      values.ukCartImage = target.files[0];
+      [values.ukCartImage] = target.files;
     }
   };
 
@@ -67,7 +67,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
         imageUrl: URL.createObjectURL(target.files[0])
       });
 
-      values.enCartImage = target.files[0];
+      [values.enCartImage] = target.files;
     }
   };
 
@@ -138,7 +138,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     </Button>
                   </label>
                   <Avatar
-                    src={ukMapImage.imageUrl || values.ukCartImage}
+                    src={ukMapImage.imageUrl || initialValues.ukCartImage}
                     className={classes.large}
                   >
                     <ImageIcon />
@@ -169,7 +169,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     </Button>
                   </label>
                   <Avatar
-                    src={enMapImage.imageUrl || values.enMapImage}
+                    src={enMapImage.imageUrl || initialValues.enCartImage}
                     className={classes.large}
                   >
                     <ImageIcon />
@@ -324,11 +324,25 @@ ContactsForm.propTypes = {
     enSchedule: PropTypes.string.isRequired,
     ukAddress: PropTypes.string.isRequired,
     enAddress: PropTypes.string.isRequired,
-    ukCartImage: PropTypes.oneOf([null]).isRequired,
-    enCartImage: PropTypes.oneOf([null]).isRequired,
+    ukCartImage: PropTypes.string,
+    enCartImage: PropTypes.string,
     email: PropTypes.string.isRequired,
     cartLink: PropTypes.string.isRequired
-  }).isRequired
+  })
+};
+
+ContactsForm.defaultProps = {
+  initialValues: {
+    phoneNumber: '',
+    ukSchedule: '',
+    enSchedule: '',
+    ukAddress: '',
+    enAddress: '',
+    ukCartImage: '',
+    enCartImage: '',
+    email: '',
+    cartLink: ''
+  }
 };
 
 export default ContactsForm;

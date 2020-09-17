@@ -37,9 +37,7 @@ const DialogWindow = () => {
 
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
-      <DialogTitle onClose={handleClose}>
-        <Typography variant='h4'>{dialogTitle}</Typography>
-      </DialogTitle>
+      <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
