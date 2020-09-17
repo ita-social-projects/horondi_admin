@@ -333,15 +333,8 @@ ContactsForm.propTypes = {
 
 ContactsForm.defaultProps = {
   initialValues: {
-    phoneNumber: '',
-    ukSchedule: '',
-    enSchedule: '',
-    ukAddress: '',
-    enAddress: '',
-    ukCartImage: '',
-    enCartImage: '',
-    email: '',
-    cartLink: ''
+    ukCartImage: null,
+    enCartImage: null
   }
 };
 
