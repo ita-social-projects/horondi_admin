@@ -126,11 +126,9 @@ const deleteContact = async (id) => {
 };
 
 const addContact = async (contact, upload) => {
-  // const {contact, upload} = payload;
-  console.log('FROM OPERATIONS', contact, upload);
   const result = await client.mutate({
     variables: { contact, upload },
-
+    context: { headers: { token } },
     mutation: gql`
       mutation($contact: contactInput!, $upload: Upload!) {
         addContact(contact: $contact, upload: $upload) {

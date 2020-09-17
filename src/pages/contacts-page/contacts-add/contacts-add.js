@@ -56,9 +56,10 @@ const ContactsAdd = () => {
     };
 
     const upload =
-      ukCartImage || enCartImage ? [ukCartImage, enCartImage] : null;
+      ukCartImage && enCartImage
+        ? [ukCartImage, enCartImage]
+        : [ukCartImage || enCartImage];
 
-    console.log('UPLOAD', upload);
     dispatch(addContact(newContact, upload));
   };
 

@@ -50,7 +50,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   });
 
   const ukSelectImageHandler = ({ target }) => {
-    console.log(values.ukCartImage);
     if (target.files && target.files[0]) {
       ukSetMapImage({
         name: target.files[0].name,
