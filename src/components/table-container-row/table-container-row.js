@@ -32,10 +32,7 @@ const TableContainerRow = ({
     <TableRow key={id} hover>
       {showAvatar && (
         <TableCell>
-          <Avatar
-            className={avatarSize}
-            src={`https://horondi.blob.core.windows.net/horondi/images/${image}`}
-          >
+          <Avatar className={avatarSize} src={image}>
             <ImageIcon />
           </Avatar>
         </TableCell>

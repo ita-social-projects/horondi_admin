@@ -178,5 +178,6 @@ export const config = {
       handmade: 'Зроблений вручну',
       avatarText: 'Фото'
     }
-  }
+  },
+  patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`
 };
