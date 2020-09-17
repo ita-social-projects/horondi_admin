@@ -125,7 +125,8 @@ export const config = {
     WRONG_CREDENTIALS: 'Неправильно вказані вхідні дані',
     INPUT_NOT_VALID: 'Неправильні ввідні дані',
     USER_ALREADY_EXIST: 'Користувач з такими даними вже існує',
-    INVALID_INVITATIONAL_TOKEN: 'Неправильне посилання на створення користувача'
+    INVALID_ADMIN_INVITATIONAL_TOKEN:
+      'Неправильне посилання на створення користувача'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
