@@ -8,8 +8,8 @@ import {
 } from '../../../redux/categories/categories.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
-import TableContainerRow from '../../../components/table-container-row';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerRow from '../../../containers/table-container-row';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './categories.styles';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';

@@ -4,8 +4,8 @@ import { push } from 'connected-react-router';
 import { Typography } from '@material-ui/core';
 import { useStyles } from './users-page.styles';
 import { getUsers, deleteUser } from '../../../redux/users/users.actions';
-import TableContainerRow from '../../../components/table-container-row';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerRow from '../../../containers/table-container-row';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import { config } from '../../../configs';
 import LoadingBar from '../../../components/loading-bar';
 
