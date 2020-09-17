@@ -11,8 +11,8 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { config } from '../../configs';
 import LoadingBar from '../../components/loading-bar';
 import { formatPhoneNumber } from '../../utils/format-phone-number';
-import TableContainerGenerator from '../../components/table-container-generator';
-import TableContainerRow from '../../components/table-container-row';
+import TableContainerGenerator from '../../containers/table-container-generator';
+import TableContainerRow from '../../containers/table-container-row';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { useStyles } from './contacts-page.style';
 
@@ -78,6 +78,7 @@ const ContactsPage = () => {
   const changePageHandler = (e, pageIndex) => {
     dispatch(setContactsCurrentPage(pageIndex));
   };
+
   const contactItems = contacts
     ? contacts.map((contact) => (
       <TableContainerRow

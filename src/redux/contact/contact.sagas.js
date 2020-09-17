@@ -77,9 +77,10 @@ function* handleContactLoad({ payload }) {
 
 function* handleAddContact({ payload }) {
   try {
+    console.log(payload.newContact, payload.upload);
     yield put(setContactsLoading(true));
-    yield call(addContact, payload);
-    yield put(addContactInStore(payload));
+    yield call(addContact, payload.newContact, payload.upload);
+    yield put(addContactInStore(payload.newContact));
     yield put(setContactsLoading(false));
 
     yield put(setSnackBarSeverity('success'));

@@ -21,8 +21,8 @@ const ContactsAdd = () => {
     ukAddress: '',
     enAddress: '',
     email: '',
-    ukCartImage: '',
-    enCartImage: '',
+    ukCartImage: null,
+    enCartImage: null,
     cartLink: ''
   });
 
@@ -49,13 +49,17 @@ const ContactsAdd = () => {
       ],
       email,
       images: [
-        { lang: languages[0], value: { medium: ukCartImage } },
-        { lang: languages[1], value: { medium: enCartImage } }
+        { lang: languages[0], value: { medium: '' } },
+        { lang: languages[1], value: { medium: '' } }
       ],
       link: cartLink
     };
 
-    dispatch(addContact(newContact));
+    const upload =
+      ukCartImage || enCartImage ? [ukCartImage, enCartImage] : null;
+
+    console.log('UPLOAD', upload);
+    dispatch(addContact(newContact, upload));
   };
 
   if (loading) {

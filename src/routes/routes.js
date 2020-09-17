@@ -13,15 +13,16 @@ import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
+import ProductsPage from '../pages/products/products-page';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
+import UsersDetails from '../pages/users/users-details';
 
 import { config } from '../configs';
 import { history } from '../store/store';
-import UsersDetails from '../pages/users/users-details';
 
 const { routes } = config.app;
 
@@ -65,6 +66,7 @@ const Routes = () => {
           component={ContactsEdit}
         />
         <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
+        <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route
           path={routes.pathToAddCategory}

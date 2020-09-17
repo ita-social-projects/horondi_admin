@@ -15,10 +15,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { push } from 'connected-react-router';
 import { useStyles } from './categories-add.styles';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import TabPanel from '../../../components/tab-panel';
 import { config } from '../../../configs';
-import TableContainerRow from '../../../components/table-container-row';
+import TableContainerRow from '../../../containers/table-container-row';
 import {
   getCategories,
   createCategory,
@@ -57,9 +57,8 @@ const CategoriesAdd = ({ id, editMode }) => {
         .sort((a, b) => {
           if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
             return 1;
-          } if (
-            a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()
-          ) {
+          }
+          if (a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()) {
             return -1;
           }
           return 0;

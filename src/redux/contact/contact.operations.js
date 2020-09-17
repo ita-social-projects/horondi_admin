@@ -2,6 +2,9 @@ import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 
 import { newsTranslations } from '../../translations/news.translations';
+import { getFromLocalStorage } from '../../services/local-storage.service';
+
+const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
 const getContacts = async (skip, limit) => {
   const result = await client.query({
@@ -86,6 +89,7 @@ const getContactById = async (id) => {
 const deleteContact = async (id) => {
   const result = await client.mutate({
     variables: { id },
+    context: { headers: { token } },
     mutation: gql`
       mutation($id: ID!) {
         deleteContact(id: $id) {
@@ -121,11 +125,15 @@ const deleteContact = async (id) => {
   return data.deleteContact;
 };
 
-const addContact = async (contact) => {
+const addContact = async (contact, upload) => {
+  // const {contact, upload} = payload;
+  console.log('FROM OPERATIONS', contact, upload);
   const result = await client.mutate({
+    variables: { contact, upload },
+
     mutation: gql`
-      mutation($contact: contactInput!) {
-        addContact(contact: $contact) {
+      mutation($contact: contactInput!, $upload: Upload!) {
+        addContact(contact: $contact, upload: $upload) {
           ... on Contact {
             _id
             phoneNumber
@@ -138,12 +146,6 @@ const addContact = async (contact) => {
               value
             }
             email
-            images {
-              lang
-              value {
-                medium
-              }
-            }
             link
           }
           ... on Error {
@@ -153,8 +155,7 @@ const addContact = async (contact) => {
         }
       }
     `,
-    fetchPolicy: 'no-cache',
-    variables: { contact }
+    fetchPolicy: 'no-cache'
   });
   client.resetStore();
   const { data } = result;
@@ -176,6 +177,7 @@ const updateContact = async (id, contact) => {
       id,
       contact
     },
+    context: { headers: { token } },
     mutation: gql`
       mutation($id: ID!, $contact: contactInput!) {
         updateContact(id: $id, contact: $contact) {

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { TableRow, TableCell, Avatar } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
-import { DeleteButton, EditButton } from '../buttons';
+import { DeleteButton, EditButton } from '../../components/buttons';
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
 

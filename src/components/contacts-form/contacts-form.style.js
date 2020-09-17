@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2)
   },
   inputLabel: {
-    fontSize: 12,
+    fontSize: 14,
     '&.shrink': {
       transform: 'translate(32px, -3px) scale(0.75)'
     }
@@ -57,6 +57,7 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   imageUpload: {
+    fontSize: 14,
     marginLeft: '10px',
     color: 'rgba(0, 0, 0, 0.54)'
   },

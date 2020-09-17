@@ -41,9 +41,12 @@ const getContacts = (payload) => ({
   payload
 });
 
-const addContact = (payload) => ({
+const addContact = (newContact, upload) => ({
   type: ADD_CONTACT,
-  payload
+  payload: {
+    newContact,
+    upload
+  }
 });
 
 const deleteContact = (payload) => ({

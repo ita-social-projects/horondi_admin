@@ -50,20 +50,25 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   });
 
   const ukSelectImageHandler = ({ target }) => {
-    if (target.files[0]) {
+    console.log(values.ukCartImage);
+    if (target.files && target.files[0]) {
       ukSetMapImage({
         name: target.files[0].name,
         imageUrl: URL.createObjectURL(target.files[0])
       });
+
+      values.ukCartImage = target.files[0];
     }
   };
 
   const enSelectImageHandler = ({ target }) => {
-    if (target.files[0]) {
+    if (target.files && target.files[0]) {
       enSetMapImage({
         name: target.files[0].name,
         imageUrl: URL.createObjectURL(target.files[0])
       });
+
+      values.enCartImage = target.files[0];
     }
   };
 
@@ -111,7 +116,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={12}>
               <Paper className={classes.contactItemUpdate}>
                 <span className={classes.imageUpload}>
-                  ЗОБРАЖЕННЯ КАРТИ (УКР.)
+                  Зображення карти (Укр.)
                 </span>
                 <div className={classes.imageUploadContainer}>
                   <label htmlFor='upload-photo'>
@@ -133,13 +138,16 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       Завантажити
                     </Button>
                   </label>
-                  <Avatar src={ukMapImage.imageUrl} className={classes.large}>
+                  <Avatar
+                    src={ukMapImage.imageUrl || values.ukCartImage}
+                    className={classes.large}
+                  >
                     <ImageIcon />
                   </Avatar>
                   <span className={classes.imageName}>{ukMapImage.name}</span>
                 </div>
                 <span className={classes.imageUpload}>
-                  ЗОБРАЖЕННЯ КАРТИ (АНГЛ.)
+                  Зображення карти (Англ.)
                 </span>
                 <div className={classes.imageUploadContainer}>
                   <label>
@@ -161,7 +169,10 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       Завантажити
                     </Button>
                   </label>
-                  <Avatar src={enMapImage.imageUrl} className={classes.large}>
+                  <Avatar
+                    src={enMapImage.imageUrl || values.enMapImage}
+                    className={classes.large}
+                  >
                     <ImageIcon />
                   </Avatar>
                   <span className={classes.imageName}>{enMapImage.name}</span>
@@ -314,9 +325,9 @@ ContactsForm.propTypes = {
     enSchedule: PropTypes.string.isRequired,
     ukAddress: PropTypes.string.isRequired,
     enAddress: PropTypes.string.isRequired,
+    ukCartImage: PropTypes.oneOf(null).isRequired,
+    enCartImage: PropTypes.oneOf(null).isRequired,
     email: PropTypes.string.isRequired,
-    ukCartImage: PropTypes.string.isRequired,
-    enCartImage: PropTypes.string.isRequired,
     cartLink: PropTypes.string.isRequired
   }).isRequired
 };
