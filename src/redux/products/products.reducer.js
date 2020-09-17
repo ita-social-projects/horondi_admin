@@ -1,6 +1,5 @@
 import {config} from '../../configs';
 import {
-    SET_PRODUCT,
     SET_CURRENT_PAGE,
     SET_ALL_PRODUCTS,
     SET_ALL_FILTER_DATA,
@@ -29,7 +28,6 @@ import {
 const {initialLanguageValues} = config;
 
 export const initialState = {
-    productLoading: false,
     loading: true,
     currentPage: 0,
     productsPerPage: 9,
@@ -57,11 +55,12 @@ export const initialState = {
         category: '',
         subcategory: '',
         model: '',
-        colors: '',
-        pattern: '',
+        colors: [],
+        pattern: [],
         basePrice: 0,
         strapLengthInCm: 0,
-        available: true
+        available: true,
+        options: []
     },
     upload: [],
     productSpecies: {
@@ -182,11 +181,6 @@ const productsReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 pagesCount: action.payload
-            };
-        case SET_PRODUCT:
-            return {
-                ...state,
-                product: action.payload
             };
         case SET_PRODUCT_LOADING:
             return {

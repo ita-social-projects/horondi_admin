@@ -1,5 +1,6 @@
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
 import {
   setAllProducts,
   setProductsLoading,
@@ -8,7 +9,7 @@ import {
   setProductCategories,
   setProductOptions,
   setModels,
-  clearProductToSend
+  clearProductToSend, setProductToSend
 } from './products.actions';
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 
@@ -19,8 +20,9 @@ import {
   GET_PRODUCT_OPTIONS,
   GET_MODELS_BY_CATEGORY,
   ADD_PRODUCT,
-  DELETE_PRODUCT
+  DELETE_PRODUCT, GET_PRODUCT
 } from './products.types';
+
 import {
   getAllProducts,
   getAllFilters,
@@ -28,7 +30,8 @@ import {
   getProductOptions,
   getModelsByCategory,
   addProduct,
-  deleteProduct
+  deleteProduct,
+  getProduct
 } from './products.operations';
 
 import { config } from '../../configs';
@@ -131,6 +134,18 @@ export function* handleProductDelete({ payload }) {
   }
 }
 
+export function* handleProductLoad({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
+    const product = yield call(getProduct, payload)
+    console.log(product)
+    yield put(setProductToSend(product))
+    yield put(setProductsLoading(false));
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
 export function* handleSuccessSnackbar(message) {
   yield put(setSnackBarSeverity('success'));
   yield put(setSnackBarMessage(message));
@@ -153,4 +168,5 @@ export default function* productsSaga() {
   yield takeEvery(GET_MODELS_BY_CATEGORY, handleModelsLoad);
   yield takeEvery(ADD_PRODUCT, handleProductAdd);
   yield takeEvery(DELETE_PRODUCT, handleProductDelete);
+  yield takeEvery(GET_PRODUCT, handleProductLoad)
 }

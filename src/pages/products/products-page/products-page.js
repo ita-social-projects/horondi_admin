@@ -106,7 +106,7 @@ const ProductsPage = () => {
       DELETE_PRODUCT_BTN
     );
   };
-  console.log(products.length ? products[0].images.primary.small : null)
+
   const productsItems = products
     ? products.map(
       (
@@ -124,7 +124,7 @@ const ProductsPage = () => {
           price={basePrice[0].value / 100}
           purchasedCount={purchasedCount}
           editHandler={() => {
-            dispatch(push(`/products/${_id}`));
+            dispatch(push(`/product/${_id}`));
           }}
           deleteHandler={() => handleProductDelete(_id)}
         />

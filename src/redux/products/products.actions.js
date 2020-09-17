@@ -1,5 +1,4 @@
 import {
-  SET_PRODUCT,
   GET_PRODUCT,
   SET_ALL_PRODUCTS,
   GET_ALL_FILTERS,
@@ -32,11 +31,6 @@ import {
   ADD_PRODUCT,
   DELETE_PRODUCT, SET_FILES_TO_UPLOAD
 } from './products.types';
-
-export const setProduct = (item) => ({
-  type: SET_PRODUCT,
-  payload: item
-});
 
 export const getProduct = (id) => ({
   type: GET_PRODUCT,

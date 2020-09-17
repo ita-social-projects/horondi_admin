@@ -14,7 +14,7 @@ import ProductAddInfo from './product-add-info';
 import ProductAddSpecies from './product-add-species/product-add-species';
 import ProductAddOptions from './product-add-options/product-add-options';
 import ProductAddImages from './product-add-images/product-add-images';
-import ProductAddSubmit from './product-add-submit';
+import ProductAddSubmit from "./product-add-submit";
 
 const ProductsAdd = () => {
   const styles = useStyles();
@@ -37,7 +37,8 @@ const ProductsAdd = () => {
     additionalImages,
     setAdditionalImages,
     primaryImage,
-    setPrimaryImage
+    setPrimaryImage,
+    checkedLanguages
   } = useProductHandler();
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const ProductsAdd = () => {
       createProductInfo={createProductInfo}
       handleNext={handleNext}
       activeStep={activeStep}
+      checkedLanguages={checkedLanguages}
     />
   );
 

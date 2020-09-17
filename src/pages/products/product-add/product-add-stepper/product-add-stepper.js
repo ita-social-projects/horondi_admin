@@ -7,10 +7,7 @@ import { config } from '../../../../configs';
 
 const { productStepsLabels } = config;
 
-export default function ProductsStepper({
-  steps,
-  activeStep
-}) {
+const ProductsStepper = ({ steps, activeStep }) => {
   const styles = useStyles();
 
   return (
@@ -33,3 +30,5 @@ ProductsStepper.propTypes = {
   steps: PropTypes.arrayOf(PropTypes.object).isRequired,
   activeStep: PropTypes.number.isRequired,
 };
+
+export default ProductsStepper

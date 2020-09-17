@@ -1,29 +1,21 @@
-import React, {useMemo} from 'react';
-import PropTypes from 'prop-types';
-import {useDispatch, useSelector} from 'react-redux';
+import useStyles from './product-options-container.styles'
+import {useDispatch, useSelector} from "react-redux";
 import {
-    FormControl,
-    MenuItem,
-    Grid,
     Badge,
-    Typography,
-    CardContent,
-    Button,
     Box,
-    InputLabel,
-    Select,
-    Input,
+    Button,
     Card,
     CardActions,
-    FormControlLabel,
-    Checkbox
-} from '@material-ui/core';
-import {useStyles} from './product-add-options.styles';
-
-import {config} from '../../../../configs';
-import {productsTranslations} from "../../../../translations/product.translations";
-import StepperButtons from '../product-add-stepper/stepper-buttons/stepper-buttons';
-import {setProductToSend} from "../../../../redux/products/products.actions";
+    CardContent, Checkbox,
+    FormControl, FormControlLabel,
+    Grid, Input, InputLabel,
+    MenuItem, Select,
+    Typography
+} from "@material-ui/core";
+import React, {useMemo} from "react";
+import PropTypes from "prop-types";
+import {config} from "../../configs";
+import {productsTranslations} from "../../translations/product.translations";
 
 const {
     productOptionsLabels,
@@ -39,13 +31,9 @@ const badgePosition = {
 };
 
 const ProductAddOptions = ({
-    selectedOptions,
-    setOptions,
-    additions,
-    activeStep,
-    handleNext,
-    handleBack,
-    options
+   selectedOptions,
+   setOptions,
+   additions
 }) => {
     const styles = useStyles();
     const dispatch = useDispatch()
@@ -72,11 +60,6 @@ const ProductAddOptions = ({
             ]
         });
     };
-
-    const handleOptionsSubmit = () => {
-        dispatch(setProductToSend({options}))
-        handleNext()
-    }
 
     const getCardItems = (items, option, labels) =>
         items
@@ -206,11 +189,6 @@ const ProductAddOptions = ({
                     }
                 />
             </Grid>
-            <StepperButtons
-                activeStep={activeStep}
-                handleNext={handleOptionsSubmit}
-                handleBack={handleBack}
-            />
         </div>
     );
 };

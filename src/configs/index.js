@@ -10,8 +10,9 @@ const routes = {
   pathToUsersDetails: '/users/:id',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
-  pathToProducts: '/products',
-  pathToAddProduct: '/',
+  pathToProducts: '/',
+  pathToAddProduct: '/add-product',
+  pathToEditProduct: '/product/:id',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id'

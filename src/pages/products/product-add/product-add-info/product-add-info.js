@@ -41,7 +41,8 @@ const ProductAddInfo = ({
   handleNext,
   preferedLanguages,
   setPreferedLanguages,
-  createProductInfo
+  createProductInfo,
+  checkedLanguages
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -55,11 +56,6 @@ const ProductAddInfo = ({
 
   const [tabValue, setTabValue] = useState(0);
   const [shouldValidate, setShouldValidate] = useState(false);
-
-  const checkedLanguages = useMemo(
-    () => Object.values(preferedLanguages).filter(({ checked }) => checked),
-    [preferedLanguages]
-  );
 
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;

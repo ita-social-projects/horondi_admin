@@ -319,6 +319,109 @@ const deleteProduct = async (payload) => {
   return result.data.deleteProduct._id;
 };
 
+const getProduct = async (payload) => {
+  console.log(payload)
+  const result = await client.query({
+    query: gql`
+      query($id: ID!) {
+        getProductById(id: $id) {
+          ... on Product {
+            _id
+            category {
+              _id
+              name {
+                lang
+                value
+              }
+            }
+            name {
+              lang
+              value
+            }
+            description {
+              lang
+              value
+            }
+            mainMaterial {
+              lang
+              value
+            }
+            innerMaterial {
+              lang
+              value
+            }
+            strapLengthInCm
+            images {
+              primary {
+                large
+              }
+              additional {
+                large
+              }
+            }
+            colors {
+              simpleName {
+                lang
+                value
+              }
+            }
+            pattern {
+              lang
+              value
+            }
+            closure {
+              lang
+              value
+            }
+            basePrice {
+              value
+              currency
+            }
+            options {
+              size {
+                name
+                heightInCm
+                widthInCm
+                depthInCm
+                volumeInLiters
+                available
+                additionalPrice {
+                  value
+                  currency
+                }
+              }
+              bottomMaterial {
+                name {
+                  lang
+                  value
+                }
+                additionalPrice {
+                  value
+                  currency
+                }
+              }
+              additions {
+                name {
+                  lang
+                  value
+                }
+                available
+                additionalPrice {
+                  value
+                  currency
+                }
+              }
+            }
+          }
+        }
+    }`,
+    variables: {
+      id: payload
+    }
+  });
+  return result.data.getProductById
+}
+
 export {
   getAllProducts,
   getAllFilters,
@@ -326,5 +429,6 @@ export {
   getProductOptions,
   getModelsByCategory,
   addProduct,
-  deleteProduct
+  deleteProduct,
+  getProduct
 };
