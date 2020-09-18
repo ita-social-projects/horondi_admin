@@ -145,6 +145,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     </Button>
                   </label>
                   <Avatar
+                    data-cy='ukCartImage'
                     src={ukMapImage.imageUrl || initialValues.ukCartImage}
                     className={classes.large}
                   >
@@ -176,6 +177,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     </Button>
                   </label>
                   <Avatar
+                    data-cy='enCartImage'
                     src={enMapImage.imageUrl || initialValues.enCartImage}
                     className={classes.large}
                   >
@@ -184,6 +186,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   <span className={classes.imageName}>{enMapImage.name}</span>
                 </div>
                 <TextField
+                  data-cy='mapLink'
                   id='cartLink'
                   className={classes.textField}
                   variant='outlined'
@@ -204,6 +207,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
+                  data-cy='phoneNumber'
                   id='phoneNumber'
                   className={classes.textField}
                   variant='outlined'
@@ -221,6 +225,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.phoneNumber && errors.phoneNumber}
                 />
                 <TextField
+                  data-cy='ukSchedule'
                   id='ukSchedule'
                   className={classes.textField}
                   variant='outlined'
@@ -238,6 +243,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.ukSchedule && errors.ukSchedule}
                 />
                 <TextField
+                  data-cy='enSchedule'
                   id='enSchedule'
                   className={classes.textField}
                   variant='outlined'
@@ -259,6 +265,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
+                  data-cy='ukAddress'
                   id='ukAddress'
                   className={classes.textField}
                   variant='outlined'
@@ -276,6 +283,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.ukAddress && errors.ukAddress}
                 />
                 <TextField
+                  data-cy='enAddress'
                   id='enAddress'
                   className={classes.textField}
                   variant='outlined'
@@ -293,6 +301,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.enAddress && errors.enAddress}
                 />
                 <TextField
+                  data-cy='email'
                   id='email'
                   className={classes.textField}
                   variant='outlined'
@@ -313,12 +322,13 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
           </Grid>
         </FormControl>
         <Button
-          id='contacts-back'
+          id='contactsBack'
           component={Link}
           to={pathToContactsPage}
           variant='outlined'
           color='primary'
           className={classes.returnButton}
+          data-cy='goBackButton'
         >
           {GO_BACK_TITLE}
         </Button>

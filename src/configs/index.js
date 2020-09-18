@@ -232,5 +232,5 @@ export const config = {
   sortAsc: 'sortAsc',
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
-  imagePrefix: `https://horondi.blob.core.windows.net/horondi/images/`
+  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
 };
