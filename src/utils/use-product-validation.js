@@ -1,8 +1,9 @@
 import * as Yup from 'yup';
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import {config} from "../configs";
 import {useSelector} from "react-redux";
 import {productsTranslations} from "../translations/product.translations";
+import {useFormik} from "formik";
 
 const { productInfoLabels, languages } = config
 
@@ -19,35 +20,54 @@ const {
     DESCRIPTION_TOO_SHORT_MESSAGE
 } = productsTranslations
 
-const useProductValidation = (checkedLanguages) => {
+const useProductValidation = (checkedLanguages, onSubmit, models) => {
+    const [shouldValidate, setShouldValidate] = useState(false)
+
     const {
         name,
         mainMaterial,
         innerMaterial,
         closure,
         description,
-        productToSend
-    } = useSelector(({ Products: { productToSend } }) => ({
-        productToSend,
+        category,
+        pattern,
+        subcategory,
+        colors,
+        model,
+        basePrice,
+        strapLengthInCm
+    } = useSelector(({ Products: { productToSend, productSpecies } }) => ({
         name: productToSend.name,
         mainMaterial: productToSend.mainMaterial,
         innerMaterial: productToSend.innerMaterial,
         closure: productToSend.closure,
-        description: productToSend.description
-    }));
-
-    const formikSpeciesValues = {
+        description: productToSend.description,
         category: productToSend.category,
-        pattern: productToSend.pattern.length
-            ? productToSend.pattern[0].value
-            : '',
-        colors: productToSend.colors.length
-            ? productToSend.colors[0].simpleName[0].value
-            : '',
         subcategory: productToSend.subcategory,
+        pattern: productToSend.pattern,
         model: productToSend.model,
         basePrice: productToSend.basePrice,
-        strapLengthInCm: productToSend.strapLengthInCm
+        strapLengthInCm: productToSend.strapLengthInCm,
+        colors: productToSend.colors
+    }));
+
+    const modelValue = models.find((item) =>
+        item[0].value === (model instanceof Object ? model[0].value : model))[0].value
+
+    const formikSpeciesValues = {
+        category: category instanceof Object ? category._id : category,
+        subcategory: subcategory instanceof Object ? subcategory._id : subcategory,
+        model: modelValue,
+        pattern: pattern.length
+            ? pattern[0].value
+            : '',
+        colors: colors.length
+            ? colors[0].simpleName[0].value
+            : '',
+        basePrice: basePrice.length
+            ? Math.round(basePrice[1].value / 100)
+            : basePrice,
+        strapLengthInCm: strapLengthInCm
     }
 
     const formikInfoValues = Object.assign(
@@ -71,15 +91,15 @@ const useProductValidation = (checkedLanguages) => {
                             .required(REQUIRED_FIELD),
                         [`${name}${productInfoLabels[1].name}`]: Yup.string()
                             .min(2, MAIN_MATERIAL_TOO_SHORT_MESSAGE)
-                            .max(50, MAIN_MATERIAL_TOO_LONG_MESSAGE)
+                            .max(150, MAIN_MATERIAL_TOO_LONG_MESSAGE)
                             .required(REQUIRED_FIELD),
                         [`${name}${productInfoLabels[2].name}`]: Yup.string()
                             .min(2, INNER_MATERIAL_TOO_SHORT_MESSAGE)
-                            .max(50, INNER_MATERIAL_TOO_LONG_MESSAGE)
+                            .max(150, INNER_MATERIAL_TOO_LONG_MESSAGE)
                             .required(REQUIRED_FIELD),
                         [`${name}${productInfoLabels[3].name}`]: Yup.string()
                             .min(2, CLOSURE_TOO_SHORT_MESSAGE)
-                            .max(50, CLOSURE_TOO_LONG_MESSAGE)
+                            .max(100, CLOSURE_TOO_LONG_MESSAGE)
                             .required(REQUIRED_FIELD),
                         [`${name}${productInfoLabels[4].name}`]: Yup.string()
                             .min(10, DESCRIPTION_TOO_SHORT_MESSAGE)
@@ -100,11 +120,24 @@ const useProductValidation = (checkedLanguages) => {
         strapLengthInCm: Yup.number().min(1).required()
     }
 
+    const yupSchema = Yup.object().shape({ ...yupInfoSchema, ...yupSpeciesSchema })
+    const formikValues = { ...formikInfoValues, ...formikSpeciesValues }
+
+    const { values, errors, touched, handleSubmit, handleChange, handleBlur, submitForm, setFieldValue} = useFormik({
+        initialValues: formikValues,
+        validationSchema: yupSchema,
+        onSubmit: onSubmit,
+        validateOnBlur: shouldValidate,
+        validateOnChange: shouldValidate
+    })
+
     return {
-        yupInfoSchema,
-        formikInfoValues,
-        yupSpeciesSchema,
-        formikSpeciesValues
+        shouldValidate,
+        setShouldValidate,
+        values,
+        errors, touched, handleSubmit, handleChange, handleBlur,
+        submitForm,
+        setFieldValue
     }
 }
 

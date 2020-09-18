@@ -138,7 +138,6 @@ export function* handleProductLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
     const product = yield call(getProduct, payload)
-    console.log(product)
     yield put(setProductToSend(product))
     yield put(setProductsLoading(false));
   } catch (e) {

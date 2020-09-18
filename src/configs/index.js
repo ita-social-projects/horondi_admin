@@ -252,5 +252,23 @@ export const config = {
     { lang: 'uk', value: '' },
     { lang: 'en', value: '' }
   ],
-  IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/'
+  IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
+  responsive: {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 1
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1
+    },
+    tablet: {
+      breakpoint: { max: 1146, min: 464 },
+      items: 1
+    },
+    mobile: {
+      breakpoint: { max: 810, min: 0 },
+      items: 1
+    }
+  }
 };

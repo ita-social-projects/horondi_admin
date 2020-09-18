@@ -1,8 +1,4 @@
-import React, { useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
 import {
     TextField,
@@ -24,13 +20,7 @@ const { productInfoLabels } = config;
 const ProductInfoContainer = ({
   preferedLanguages,
   setPreferedLanguages,
-  checkedLanguages,
-    touched,
-    errors,
-    handleBlur,
-    handleChange,
-    values,
-    variant
+  checkedLanguages, variant, values, errors, touched, handleChange, handleBlur, handleSubmit
 }) => {
     const styles = useStyles();
 
@@ -70,10 +60,10 @@ const ProductInfoContainer = ({
     ));
 
     return (
-        <div>
+        <form onSubmit={handleSubmit}>
             <Grid container alignItems='center' spacing={2}>
                 <Grid item>
-                    <Typography>Оберіть мови:</Typography>
+                    <Typography className={styles.title}>Оберіть мови:</Typography>
                 </Grid>
                 <Grid item>{langCheckboxes}</Grid>
             </Grid>
@@ -103,7 +93,7 @@ const ProductInfoContainer = ({
                     ))}
                 </TabPanel>
             ))}
-        </div>
+        </form>
     );
 
 };

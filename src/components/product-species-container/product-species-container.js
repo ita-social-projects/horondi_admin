@@ -1,13 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 import { FormControl, Select, InputLabel, TextField } from '@material-ui/core';
 import useStyles from './product-species-container.styles';
 
 import {productsTranslations} from "../../translations/product.translations";
 import {config} from "../../configs";
-import {getModelsByCategory} from "../../redux/products/products.actions";
 
 const { productSelectsLabels } = config;
 const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations
@@ -22,10 +20,11 @@ const ProductSpeciesContainer = ({
    touched,
    handleBlur,
    handleChange,
-   variant
+   handleSubmit,
+   variant,
+    setFieldValue
 }) => {
     const styles = useStyles();
-    const dispatch = useDispatch();
 
     const { categories, modelsForSelectedCategory } = useSelector(
         ({ Products: { productSpecies, productToSend } }) => ({
@@ -34,10 +33,6 @@ const ProductSpeciesContainer = ({
             productToSend
         })
     );
-
-    useEffect(() => {
-        if (values.category) dispatch(getModelsByCategory(values.category));
-    }, [values.category, dispatch]);
 
     const selectedCategory = useMemo(
         () =>
@@ -107,7 +102,7 @@ const ProductSpeciesContainer = ({
                     ? model.name[0].value
                     : model[0].value;
                 const value = modelsForSelectedCategory.length
-                    ? model._id
+                    ? model.name[0].value
                     : model[0].value;
 
                 return (
@@ -132,8 +127,16 @@ const ProductSpeciesContainer = ({
         return Object.keys(errors).filter(key => optionsNames.includes(key))
     }, [errors])
 
+    const handleSelectChange = (e) => {
+        handleChange(e)
+        if(e.target.name === 'category') {
+            setFieldValue('subcategory', '')
+            setFieldValue('model', '')
+        }
+    }
+
     return (
-        <div className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.container}>
             {productSelectsLabels.map(({ label, name, type }, idx) =>
                 type === 'select' ? (
                     <FormControl
@@ -142,18 +145,18 @@ const ProductSpeciesContainer = ({
                         key={label}
                     >
                         <InputLabel htmlFor={label}>{label}</InputLabel>
-                        <Select
-                            native
-                            label={`${label}*`}
-                            value={values[name]}
-                            error={touched[name] && !!errors[name]}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            name={name}
-                        >
-                            <option aria-label='None' value='' />
-                            {options[idx]}
-                        </Select>
+                            <Select
+                                name={name}
+                                native
+                                label={`${label}*`}
+                                error={touched[name] && !!errors[name]}
+                                value={values[name]}
+                                onChange={handleSelectChange}
+                                onBlur={handleBlur}
+                            >
+                                <option aria-label='None' value='' />
+                                {options[idx]}
+                            </Select>
                     </FormControl>
                 ) : (
                     <TextField
@@ -164,17 +167,17 @@ const ProductSpeciesContainer = ({
                         type={type}
                         name={name}
                         inputProps={{ min: 0 }}
+                        error={touched[name] && errors[name]}
                         value={values[name]}
-                        error={touched[name] && !!errors[name]}
-                        onBlur={handleBlur}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                     />
                 )
             )}
             <div className={styles.error}>
                 {!!speciesErrors.length && ALL_FIELDS_ARE_REQUIRED}
             </div>
-        </div>
+        </form>
     );
 };
 

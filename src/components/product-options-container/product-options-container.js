@@ -30,7 +30,7 @@ const badgePosition = {
     horizontal: 'left'
 };
 
-const ProductAddOptions = ({
+const ProductOptionsContainer = ({
    selectedOptions,
    setOptions,
    additions
@@ -193,7 +193,7 @@ const ProductAddOptions = ({
     );
 };
 
-ProductAddOptions.propTypes = {
+ProductOptionsContainer.propTypes = {
     selectedOptions: PropTypes.objectOf(PropTypes.oneOfType([
         PropTypes.array, PropTypes.bool
     ])).isRequired,
@@ -204,8 +204,8 @@ ProductAddOptions.propTypes = {
     handleBack: PropTypes.func.isRequired
 };
 
-ProductAddOptions.defaultProps = {
+ProductOptionsContainer.defaultProps = {
     additions: []
 }
 
-export default ProductAddOptions;
+export default ProductOptionsContainer;

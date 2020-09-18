@@ -4,6 +4,9 @@ const useStyles = makeStyles((theme) => ({
     textfield: {
         margin: theme.spacing(1),
         width: '100%'
+    },
+    title: {
+        fontWeight: 600
     }
 }));
 

@@ -10,4 +10,17 @@ export const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2.5),
         width: '100%'
     },
+    image: {
+        height: 360
+    },
+    carousel: {
+        margin: '5% auto',
+        width: 300,
+        '@media (max-width: 1150px)': {
+            width: 260,
+        }
+    },
+    title: {
+        fontWeight: '600'
+    }
 }));

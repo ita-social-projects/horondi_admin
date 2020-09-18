@@ -234,7 +234,6 @@ const getModelsByCategory = async (payload) => {
       id: payload
     }
   });
-  await client.resetStore();
   return result.data.getModelsByCategory;
 };
 
@@ -320,7 +319,6 @@ const deleteProduct = async (payload) => {
 };
 
 const getProduct = async (payload) => {
-  console.log(payload)
   const result = await client.query({
     query: gql`
       query($id: ID!) {
@@ -333,6 +331,12 @@ const getProduct = async (payload) => {
                 lang
                 value
               }
+            }
+            subcategory {
+              _id
+            }
+            model {
+              value
             }
             name {
               lang
@@ -395,6 +399,7 @@ const getProduct = async (payload) => {
                   lang
                   value
                 }
+                available
                 additionalPrice {
                   value
                   currency
@@ -417,7 +422,8 @@ const getProduct = async (payload) => {
     }`,
     variables: {
       id: payload
-    }
+    },
+    fetchPolicy: 'no-cache'
   });
   return result.data.getProductById
 }

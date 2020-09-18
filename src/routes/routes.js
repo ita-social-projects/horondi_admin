@@ -21,6 +21,7 @@ import UsersDetails from '../pages/users/users-details';
 
 import { config } from '../configs';
 import { history } from '../store/store';
+
 import ProductEdit from "../pages/products/product-edit";
 
 const { routes } = config.app;
