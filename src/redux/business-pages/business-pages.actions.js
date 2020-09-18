@@ -1,5 +1,5 @@
 import {
-  SET_LOADING,
+  SET_BUSINESS_PAGES_LOADING,
   SET_BUSINESS_PAGES,
   GET_ALL_BUSINESS_PAGES,
   SET_BUSINESS_PAGES_ERROR,
@@ -8,7 +8,7 @@ import {
   SET_CURRENT_BUSINESS_PAGE,
   GET_BUSINESS_PAGE_BY_ID,
   UPDATE_BUSINESS_PAGE
-} from './businessPages.types';
+} from './business-pages.types';
 
 const setBusinessPages = (businessPage) => ({
   type: SET_BUSINESS_PAGES,
@@ -26,7 +26,7 @@ const getBusinessPageById = (payload) => ({
 });
 
 const setLoading = (loading) => ({
-  type: SET_LOADING,
+  type: SET_BUSINESS_PAGES_LOADING,
   payload: loading
 });
 

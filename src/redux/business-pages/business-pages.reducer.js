@@ -1,14 +1,14 @@
 import {
   SET_BUSINESS_PAGES,
-  SET_LOADING,
+  SET_BUSINESS_PAGES_LOADING,
   SET_BUSINESS_PAGES_ERROR,
   SET_CURRENT_BUSINESS_PAGE
-} from './businessPages.types';
+} from './business-pages.types';
 
 const initialState = {
   list: [],
   currentPage: null,
-  loading: true,
+  loading: false,
   error: null
 };
 
@@ -19,7 +19,7 @@ const businessPagesReducer = (state = initialState, action = {}) => {
       ...state,
       list: action.payload
     };
-  case SET_LOADING:
+  case SET_BUSINESS_PAGES_LOADING:
     return {
       ...state,
       loading: action.payload

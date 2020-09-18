@@ -4,17 +4,17 @@ import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
-import { useStyles } from './business.styles';
+import { useStyles } from './business-page-list.styles';
 import { config } from '../../configs';
 import {
   getAllBusinessPages,
   deleteBusinessPage
-} from '../../redux/businessPages/businessPages.actions';
+} from '../../redux/business-pages/business-pages.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import TableContainerRow from '../../components/table-container-row';
-import TableContainerGenerator from '../../components/table-container-generator';
+import TableContainerRow from '../../containers/table-container-row';
+import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 
 const { routes } = config.app;
@@ -27,7 +27,7 @@ const {
 const { pathToAddBusinessPage } = routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
 
-const Business = () => {
+const BusinessPageList = () => {
   const classes = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ BusinessPages }) => ({
@@ -98,4 +98,4 @@ const Business = () => {
   );
 };
 
-export default Business;
+export default BusinessPageList;

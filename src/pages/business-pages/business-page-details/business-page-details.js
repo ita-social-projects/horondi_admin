@@ -1,13 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
+import {
+  Paper,
+  TextField,
+  Grid,
+  Tab,
+  AppBar,
+  Tabs,
+  FormControlLabel,
+  Checkbox
+} from '@material-ui/core';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 
 import useBusinessHandlers from '../../../utils/use-business-handlers';
 import Editor from '../../../components/editor';
-import { useStyles } from './business-details.styles';
+import { useStyles } from './business-page-details.styles';
 import { SaveButton } from '../../../components/buttons';
 import TabPanel from '../../../components/tab-panel';
 import LoadingBar from '../../../components/loading-bar';
@@ -15,7 +24,7 @@ import LoadingBar from '../../../components/loading-bar';
 import {
   getBusinessPageById,
   updateBusinessPage
-} from '../../../redux/businessPages/businessPages.actions';
+} from '../../../redux/business-pages/business-pages.actions';
 
 import { config } from '../../../configs';
 
@@ -36,7 +45,7 @@ const BusinessPageDetails = ({ match }) => {
     setCheckboxes,
     preferredLanguages,
     setPreferredLanguages,
-    languageCheckboxes,
+    languages,
     handleTabsChange,
     createBusinessPage,
     ukSetText,
@@ -50,7 +59,8 @@ const BusinessPageDetails = ({ match }) => {
     code,
     setCode,
     files,
-    setFiles
+    setFiles,
+    handleCheckboxChange
   } = useBusinessHandlers();
 
   useEffect(() => {
@@ -98,6 +108,21 @@ const BusinessPageDetails = ({ match }) => {
     });
     setPreferredLanguages(prefLanguages);
   }, [checkboxes, setPreferredLanguages]);
+
+  const languageCheckboxes = languages.map((lang) => (
+    <FormControlLabel
+      key={lang}
+      control={
+        <Checkbox
+          checked={checkboxes[lang]}
+          onChange={handleCheckboxChange}
+          name={lang}
+          color='primary'
+        />
+      }
+      label={lang}
+    />
+  ));
 
   const LanguageTabs =
     preferredLanguages.length > 0

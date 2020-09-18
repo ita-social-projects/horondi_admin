@@ -5,7 +5,7 @@ const BlockEmbed = Quill.import('blots/block/embed');
 class FileBlot extends BlockEmbed {
   static create(value) {
     const prefixTag = document.createElement('span');
-    prefixTag.innerText = '첨부파일 - ';
+    prefixTag.innerText = 'Attachments - ';
 
     const bTag = document.createElement('b');
     bTag.innerText = value;

@@ -1,5 +1,14 @@
 import React, { useEffect } from 'react';
-import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
+import {
+  TextField,
+  Paper,
+  Grid,
+  Tabs,
+  Tab,
+  AppBar,
+  FormControlLabel,
+  Checkbox
+} from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import Editor from '../../../components/editor';
@@ -7,14 +16,14 @@ import TabPanel from '../../../components/tab-panel';
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import useBusinessHandlers from '../../../utils/use-business-handlers';
-import { useStyles } from './business-add.styles';
+import { useStyles } from './business-page-add.styles';
 
-import { addBusinessPage } from '../../../redux/businessPages/businessPages.actions';
+import { addBusinessPage } from '../../../redux/business-pages/business-pages.actions';
 import { config } from '../../../configs';
 
 const { languages } = config;
 
-const NewsAdd = () => {
+const BusinessPageAdd = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const loading = useSelector(({ BusinessPages }) => BusinessPages.loading);
@@ -23,7 +32,7 @@ const NewsAdd = () => {
     checkboxes,
     preferredLanguages,
     setPreferredLanguages,
-    languageCheckboxes,
+    languages,
     handleTabsChange,
     createBusinessPage,
     ukSetText,
@@ -31,16 +40,16 @@ const NewsAdd = () => {
     ukText,
     enText,
     files,
-    setFiles
+    setFiles,
+    handleCheckboxChange
   } = useBusinessHandlers();
 
   useEffect(() => {
     const prefLanguages = [];
-    Object.keys(checkboxes).forEach((key) => {
-      if (checkboxes[key] === true) {
-        prefLanguages.push(key);
-      }
-    });
+    Object.keys(checkboxes).filter(
+      (key) => checkboxes[key] && prefLanguages.push(key)
+    );
+
     setPreferredLanguages(prefLanguages);
   }, [checkboxes, setPreferredLanguages]);
 
@@ -49,8 +58,7 @@ const NewsAdd = () => {
     [`${lang}Text`]: ''
   }));
 
-  const formikValues =
-    langValues !== null ? Object.assign(...langValues) : null;
+  const formikValues = Object.assign(...langValues);
 
   const formik = useFormik({
     initialValues: {
@@ -58,17 +66,29 @@ const NewsAdd = () => {
       code: ''
     },
     onSubmit: (values) => {
-      console.log('values', values);
       const page = createBusinessPage({ ...values, enText, ukText });
       dispatch(addBusinessPage(page));
     }
   });
 
-  const LanguageTabs =
+  const languageCheckboxes = languages.map((lang) => (
+    <FormControlLabel
+      key={lang}
+      control={
+        <Checkbox
+          checked={checkboxes[lang]}
+          onChange={handleCheckboxChange}
+          name={lang}
+          color='primary'
+        />
+      }
+      label={lang}
+    />
+  ));
+
+  const languageTabs =
     preferredLanguages.length > 0
-      ? preferredLanguages.map((lang, index) => (
-        <Tab label={lang} key={index} />
-      ))
+      ? preferredLanguages.map((lang) => <Tab label={lang} key={lang} />)
       : null;
 
   if (loading) {
@@ -109,7 +129,7 @@ const NewsAdd = () => {
                 onChange={handleTabsChange}
                 aria-label='simple tabs example'
               >
-                {LanguageTabs}
+                {languageTabs}
               </Tabs>
             </AppBar>
             <TabPanel value={tabsValue} index={0}>
@@ -160,4 +180,4 @@ const NewsAdd = () => {
   );
 };
 
-export default NewsAdd;
+export default BusinessPageAdd;

@@ -1,12 +1,13 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
+import { Business } from '@material-ui/icons';
 import {
   setBusinessPages,
   setLoading,
   setBusinessPagesError,
   setCurrentBusinessPage
-} from './businessPages.actions';
+} from './business-pages.actions';
 import {
   getAllBusinessPages,
   getBusinessPageById,
@@ -20,7 +21,7 @@ import {
   GET_ALL_BUSINESS_PAGES,
   GET_BUSINESS_PAGE_BY_ID,
   UPDATE_BUSINESS_PAGE
-} from './businessPages.types';
+} from './business-pages.types';
 
 import { config } from '../../configs';
 
@@ -66,9 +67,6 @@ function* handleAddBusinessPage({ payload }) {
     yield put(setLoading(true));
     yield call(createBusinessPage, payload);
 
-    const businessPages = yield call(getAllBusinessPages);
-    yield put(setBusinessPages(businessPages));
-
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
@@ -85,8 +83,12 @@ function* handleBusinessPageDelete({ payload }) {
     yield put(setLoading(true));
     yield call(deleteBusinessPage, payload);
 
-    const businessPages = yield call(getAllBusinessPages);
-    yield put(setBusinessPages(businessPages));
+    const businessPages = yield select(
+      ({ BusinessPages }) => BusinessPages.list
+    );
+    yield put(
+      setBusinessPages(businessPages.filter((page) => page._id !== payload))
+    );
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
@@ -103,9 +105,6 @@ function* handleBusinessPageUpdate({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(updateBusinessPage, id, newPage);
-
-    const businessPages = yield call(getAllBusinessPages);
-    yield put(setBusinessPages(businessPages));
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));

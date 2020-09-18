@@ -32,21 +32,6 @@ const useBusinessHandlers = () => {
     setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
   };
 
-  const languageCheckboxes = languages.map((lang, index) => (
-    <FormControlLabel
-      key={index}
-      control={
-        <Checkbox
-          checked={checkboxes[`${lang}`]}
-          onChange={handleCheckboxChange}
-          name={`${lang}`}
-          color='primary'
-        />
-      }
-      label={lang}
-    />
-  ));
-
   const createBusinessPage = (values) => ({
     code: values.code,
     title: [
@@ -91,7 +76,7 @@ const useBusinessHandlers = () => {
     setCheckboxes,
     handleTabsChange,
     handleCheckboxChange,
-    languageCheckboxes,
+    languages,
     createBusinessPage,
     files,
     setFiles

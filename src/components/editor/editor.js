@@ -43,7 +43,7 @@ const Editor = ({
     ) {
       const file = e.currentTarget.files[0];
       const reader = new FileReader();
-      console.log(file);
+
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         const quill = reactQuillRef.current.getEditor();
