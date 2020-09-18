@@ -6,6 +6,7 @@ import Table from './table/table.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
 import DialogWindow from './dialog-window/dialog-window.reducer';
 import Auth from './auth/auth.reducer';
+import Products from './products/products.reducer';
 import Categories from './categories/categories.reducer';
 import Users from './users/users.reducer';
 import Comments from './comments/comments.reducer';
@@ -18,6 +19,7 @@ const rootReducer = (history) =>
     Snackbar,
     DialogWindow,
     Auth,
+    Products,
     Categories,
     Users,
     Comments,

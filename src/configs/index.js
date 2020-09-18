@@ -1,4 +1,5 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 
@@ -9,6 +10,7 @@ const routes = {
   pathToUsersDetails: '/users/:id',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
+  pathToProducts: '/products',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id'
@@ -20,6 +22,7 @@ export const config = {
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
+      ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon]
     ],
     routes,
@@ -49,6 +52,17 @@ export const config = {
   },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    products: [
+      'Фото',
+      'Назва',
+      'Категорія',
+      'Модель',
+      'Гобелен',
+      'Ціна(грн)',
+      'Рейтинг',
+      'Кількість покупок',
+      'Дії'
+    ],
     categories: ['№', 'Категорія', 'Дії'],
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
@@ -165,5 +179,30 @@ export const config = {
     skip: 0,
     limit: 5,
     newsPerPage: 6
-  }
+  },
+  product: {
+    sortBySelectOptions: [
+      {
+        label: 'популярністю',
+        value: 'popularity'
+      },
+      {
+        label: 'від дорогих до дешевих',
+        value: 'sortDesc'
+      },
+      {
+        label: 'від дешевих до дорогих',
+        value: 'sortAsc'
+      },
+      {
+        label: 'рейтингом',
+        value: 'rate'
+      }
+    ]
+  },
+  popularity: 'popularity',
+  rate: 'rate',
+  sortAsc: 'sortAsc',
+  sortDesc: 'sortDesc',
+  submitKey: 'Enter'
 };
