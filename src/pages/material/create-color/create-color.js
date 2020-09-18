@@ -12,6 +12,7 @@ import {
   Avatar
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { Palette } from '@material-ui/icons';
 import { config } from '../../../configs';
 import useColorHandlers from '../../../utils/use-color-handlers';
 import LoadingBar from '../../../components/loading-bar';
@@ -93,10 +94,11 @@ function CreateColor({ images, setImages, addNewColorImages }) {
       colorImage: ''
     },
     onSubmit: (values) => {
-      const { image, ...rest } = values;
+      const { colorImage, ...rest } = values;
 
       const color = createColor(rest);
       dispatch(setNewColorToStore(color));
+      addNewColorImages(colorImage);
       dispatch(showColorDialogWindow(false));
     }
   });
@@ -168,8 +170,7 @@ function CreateColor({ images, setImages, addNewColorImages }) {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setFieldValue('image', e.target.result);
-        addNewColorImages(e.target.result);
+        setFieldValue('colorImage', e.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       const imagesNames = images.map(({ name }) => name);
@@ -195,20 +196,22 @@ function CreateColor({ images, setImages, addNewColorImages }) {
           </div>
         </div>
         <Grid item xs={12}>
-          <label htmlFor='image'>
+          <label htmlFor='colorImage'>
             <Avatar
               className={styles.colorImage}
-              variant='square'
-              src={values.image}
+              src={values.colorImage}
               alt='color'
-            />
+            >
+              <Palette />
+            </Avatar>
           </label>
           <input
             className={styles.colorInputFile}
             type='file'
-            id='image'
+            id='colorImage'
             data-cy='colorImage'
             onChange={handleImageLoad}
+            multiple={false}
           />
           <Paper className={styles.materialItemAdd}>
             <TextField

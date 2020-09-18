@@ -11,6 +11,7 @@ import {
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { Palette } from '@material-ui/icons';
 import TabPanel from '../../../components/tab-panel';
 import { SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
@@ -189,22 +190,23 @@ const MaterialAdd = () => {
         </div>
         <Grid item xs={12}>
           <Paper className={styles.materialItemAdd}>
-           
-              <div>
-                {colorImagesToUpload
-                  ? Array.from(colorImagesToUpload).map((image, index) => (
-                      <Avatar variant='square' key={index} src={image} />
-                    ))
-                  : null}
-              </div>
-         
-              <div>
-                {colorImages
-                  ? colorImages.map((image, index) => (
-                      <Avatar variant='square' key={index} src={image} />
-                    ))
-                  : null}
-              </div>
+            <div>
+              {colorImagesToUpload
+                ? Array.from(colorImagesToUpload).map((image, index) => (
+                    <Avatar variant='square' key={index} src={image}>
+                      <Palette />
+                    </Avatar>
+                  ))
+                : null}
+            </div>
+
+            <div>
+              {colorImages
+                ? colorImages.map((image, index) => (
+                    <Avatar variant='square' key={index} src={image} />
+                  ))
+                : null}
+            </div>
             <TextField
               data-cy='purpose'
               id='purpose'
