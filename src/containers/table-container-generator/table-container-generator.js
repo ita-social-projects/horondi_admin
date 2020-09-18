@@ -1,30 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TableContainer, Table, TableBody, Paper } from '@material-ui/core';
+import { Table, TableBody, Paper } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import TableContainer from '@material-ui/core/TableContainer';
 import TableContainerHead from '../table-container-head';
 
 import useStyles from './table-container-generator.styles';
 import { config } from '../../configs';
+import TablePaginator from '../table-pagination-container';
 
 const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
   const classes = useStyles();
-  const dense = useSelector((Table) => Table.dense);
+  const dense = useSelector(({ Table }) => Table.dense);
 
   return (
     <div>
       <TableContainer className={classes.container} component={Paper}>
         <Table
           className={classes.table}
-          stickyHeader
           size={dense ? SMALL_SIZE : DEFAULT_SIZE}
         >
           <TableContainerHead titles={tableTitles} />
           <TableBody id='table-body'>{tableItems}</TableBody>
         </Table>
       </TableContainer>
+      {pagination && <TablePaginator />}
     </div>
   );
 };

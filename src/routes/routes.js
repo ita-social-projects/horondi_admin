@@ -16,12 +16,13 @@ import Business from '../pages/business';
 import BusinessAdd from '../pages/business/business-add';
 import BusinessPageDetails from '../pages/business/business-details';
 import ErrorPage from '../pages/error-page';
+import ProductsPage from '../pages/products/products-page';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
+import UsersDetails from '../pages/users/users-details';
 
 import { config } from '../configs';
 import { history } from '../store/store';
-import UsersDetails from '../pages/users/users-details';
 
 const { routes } = config.app;
 
@@ -69,6 +70,7 @@ const Routes = () => {
           exact
           component={BusinessPageDetails}
         />
+        <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route
           path={routes.pathToAddCategory}

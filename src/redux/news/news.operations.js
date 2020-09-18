@@ -33,7 +33,6 @@ const getAllNews = async (skip, limit) => {
       }
     `
   });
-  client.resetStore();
   const { data } = result;
   return data.getAllNews;
 };
@@ -117,7 +116,7 @@ const deleteArticle = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.deleteNews.message) {
@@ -153,7 +152,7 @@ const createArticle = async (news) => {
     fetchPolicy: 'no-cache',
     variables: { news }
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.addNews.message) {
@@ -190,7 +189,7 @@ const updateArticle = async (id, news) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.updateNews.message) {

@@ -1,5 +1,6 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import InfoIcon from '@material-ui/icons/Info';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 
@@ -13,6 +14,7 @@ const routes = {
   pathToBusinessPageDetails: '/business-pages/:id',
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
+  pathToProducts: '/products',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id'
@@ -25,6 +27,7 @@ export const config = {
       ['Новини', routes.pathToNews, ImportContactsIcon],
       ['Бізнес сторінки', routes.pathToBusinessPages, InfoIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
+      ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon]
     ],
     routes,
@@ -55,6 +58,17 @@ export const config = {
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
+    products: [
+      'Фото',
+      'Назва',
+      'Категорія',
+      'Модель',
+      'Гобелен',
+      'Ціна(грн)',
+      'Рейтинг',
+      'Кількість покупок',
+      'Дії'
+    ],
     categories: ['№', 'Категорія', 'Дії'],
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
@@ -164,5 +178,30 @@ export const config = {
     skip: 0,
     limit: 5,
     newsPerPage: 6
-  }
+  },
+  product: {
+    sortBySelectOptions: [
+      {
+        label: 'популярністю',
+        value: 'popularity'
+      },
+      {
+        label: 'від дорогих до дешевих',
+        value: 'sortDesc'
+      },
+      {
+        label: 'від дешевих до дорогих',
+        value: 'sortAsc'
+      },
+      {
+        label: 'рейтингом',
+        value: 'rate'
+      }
+    ]
+  },
+  popularity: 'popularity',
+  rate: 'rate',
+  sortAsc: 'sortAsc',
+  sortDesc: 'sortDesc',
+  submitKey: 'Enter'
 };
