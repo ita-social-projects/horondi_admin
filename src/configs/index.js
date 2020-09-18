@@ -146,7 +146,8 @@ export const config = {
         [false, 'підкатегорію']
       ]);
       return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
-    }
+    },
+    GO_BACK_TITLE: 'Назад'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
@@ -188,7 +189,8 @@ export const config = {
     PHONE_NUMBER_TYPE_MESSAGE: 'Номер повинен містити лише числа',
     ENTER_PHONE_NUMBER_MESSAGE: 'Введіть номер',
     INPUT_LENGTH_MESSAGE: 'Довжина повинна містити не менше 10 символів',
-    ENTER_SCHEDULE_MESSAGE: 'Введіть розклад',
+    ENTER_UK_SCHEDULE_MESSAGE: 'Введіть розклад українською',
+    ENTER_EN_SCHEDULE_MESSAGE: 'Введіть розклад англійською',
     ENTER_UK_ADDRESS_MESSAGE: 'Введіть адресу українською',
     ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
     IMAGE_FORMAT_MESSAGE:

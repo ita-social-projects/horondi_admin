@@ -20,6 +20,10 @@ export const useStyles = makeStyles((theme) => ({
   saveButton: {
     margin: theme.spacing(2)
   },
+  returnButton: {
+    margin: theme.spacing(2),
+    marginRight: 0
+  },
   inputLabel: {
     fontSize: 14,
     '&.shrink': {

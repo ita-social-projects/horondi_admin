@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -26,7 +27,8 @@ const {
   PHONE_NUMBER_TYPE_MESSAGE,
   ENTER_PHONE_NUMBER_MESSAGE,
   INPUT_LENGTH_MESSAGE,
-  ENTER_SCHEDULE_MESSAGE,
+  ENTER_UK_SCHEDULE_MESSAGE,
+  ENTER_EN_SCHEDULE_MESSAGE,
   ENTER_UK_ADDRESS_MESSAGE,
   ENTER_EN_ADDRESS_MESSAGE,
   IMAGE_FORMAT_MESSAGE,
@@ -37,6 +39,11 @@ const {
   ENTER_EMAIL_MESSAGE
 } = config.loginErrorMessages;
 const { enAddressRegex } = config.formRegExp;
+
+const { GO_BACK_TITLE } = config.buttonTitles;
+
+const { routes } = config.app;
+const pathToContactsPage = routes.pathToContacts;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
@@ -78,10 +85,10 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .required(ENTER_PHONE_NUMBER_MESSAGE),
     ukSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
-      .required(ENTER_SCHEDULE_MESSAGE),
+      .required(ENTER_UK_SCHEDULE_MESSAGE),
     enSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
-      .required(ENTER_SCHEDULE_MESSAGE),
+      .required(ENTER_EN_SCHEDULE_MESSAGE),
     ukAddress: Yup.string()
       .min(8, INPUT_LENGTH_MESSAGE)
       .required(ENTER_UK_ADDRESS_MESSAGE),
@@ -129,7 +136,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     />
                     <Button
                       id='add-contact'
-                      variant='contained'
+                      variant='outlined'
                       color='primary'
                       component='span'
                     >
@@ -160,7 +167,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     />
                     <Button
                       id='add-contact'
-                      variant='contained'
+                      variant='outlined'
                       color='primary'
                       component='span'
                     >
@@ -305,6 +312,16 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
+        <Button
+          id='contacts-back'
+          component={Link}
+          to={pathToContactsPage}
+          variant='outlined'
+          color='primary'
+          className={classes.returnButton}
+        >
+          {GO_BACK_TITLE}
+        </Button>
         <SaveButton
           id='save'
           type='submit'
