@@ -20,7 +20,7 @@ const {
     DESCRIPTION_TOO_SHORT_MESSAGE
 } = productsTranslations
 
-const useProductValidation = (checkedLanguages, onSubmit, models) => {
+const useProductValidation = (checkedLanguages, onSubmit, formikSpeciesValues, product) => {
     const [shouldValidate, setShouldValidate] = useState(false)
 
     const {
@@ -29,46 +29,13 @@ const useProductValidation = (checkedLanguages, onSubmit, models) => {
         innerMaterial,
         closure,
         description,
-        category,
-        pattern,
-        subcategory,
-        colors,
-        model,
-        basePrice,
-        strapLengthInCm
-    } = useSelector(({ Products: { productToSend, productSpecies } }) => ({
-        name: productToSend.name,
-        mainMaterial: productToSend.mainMaterial,
-        innerMaterial: productToSend.innerMaterial,
-        closure: productToSend.closure,
-        description: productToSend.description,
-        category: productToSend.category,
-        subcategory: productToSend.subcategory,
-        pattern: productToSend.pattern,
-        model: productToSend.model,
-        basePrice: productToSend.basePrice,
-        strapLengthInCm: productToSend.strapLengthInCm,
-        colors: productToSend.colors
+    } = useSelector(({ Products }) => ({
+        name: Products[product].name,
+        mainMaterial: Products[product].mainMaterial,
+        innerMaterial: Products[product].innerMaterial,
+        closure: Products[product].closure,
+        description: Products[product].description,
     }));
-
-    const modelValue = models.find((item) =>
-        item[0].value === (model instanceof Object ? model[0].value : model))[0].value
-
-    const formikSpeciesValues = {
-        category: category instanceof Object ? category._id : category,
-        subcategory: subcategory instanceof Object ? subcategory._id : subcategory,
-        model: modelValue,
-        pattern: pattern.length
-            ? pattern[0].value
-            : '',
-        colors: colors.length
-            ? colors[0].simpleName[0].value
-            : '',
-        basePrice: basePrice.length
-            ? Math.round(basePrice[1].value / 100)
-            : basePrice,
-        strapLengthInCm: strapLengthInCm
-    }
 
     const formikInfoValues = Object.assign(
         ...languages.map((lang, idx) => ({

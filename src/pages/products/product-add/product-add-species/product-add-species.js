@@ -74,7 +74,7 @@ const ProductAddSpecies = ({
         ...values,
         colors: getColorToSend(colors),
         pattern: getPatternToSend(pattern),
-        model: getModelToSend(model)._id
+        model: getModelToSend(model)
       })
     );
     handleNext();
@@ -167,7 +167,7 @@ const ProductAddSpecies = ({
           ? model.name[0].value
           : model[0].value;
         const value = modelsForSelectedCategory.length
-          ? model._id
+          ? model.name[0].value
           : model[0].value;
 
         return (

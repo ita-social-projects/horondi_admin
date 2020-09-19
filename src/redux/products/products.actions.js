@@ -29,7 +29,7 @@ import {
   GET_MODELS_BY_CATEGORY,
   SET_MODELS,
   ADD_PRODUCT,
-  DELETE_PRODUCT, SET_FILES_TO_UPLOAD
+  DELETE_PRODUCT, SET_FILES_TO_UPLOAD, SET_PRODUCT, UPDATE_PRODUCT
 } from './products.types';
 
 export const getProduct = (id) => ({
@@ -185,6 +185,16 @@ export const deleteProduct = (payload) => ({
 
 export const setFilesToUpload = (payload) => ({
   type: SET_FILES_TO_UPLOAD,
+  payload
+})
+
+export const setProduct = (payload) => ({
+  type: SET_PRODUCT,
+  payload
+});
+
+export const updateProduct = (payload) => ({
+  type: UPDATE_PRODUCT,
   payload
 })
 

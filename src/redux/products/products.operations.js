@@ -96,7 +96,8 @@ const getAllProducts = async (productsState, tableState) => {
       category: productsState.filters.categoryFilter,
       purchasedCount: productsState.sortByPopularity || undefined,
       models: productsState.filters.modelsFilter
-    }
+    },
+    fetchPolicy: 'no-cache'
   });
   return result.data.getProducts;
 };
@@ -237,93 +238,8 @@ const getModelsByCategory = async (payload) => {
   return result.data.getModelsByCategory;
 };
 
-const addProduct = async (state) => {
-  const result = await client.mutate({
-    mutation: gql`
-      mutation($product: ProductInput!, $upload: Upload!) {
-        addProduct(product: $product, upload: $upload) {
-          ... on Product {
-            _id
-            purchasedCount
-            name {
-              lang
-              value
-            }
-            basePrice {
-              value
-            }
-            model {
-              value
-            }
-            rate
-            images {
-              primary {
-                large
-                medium
-                large
-                small
-              }
-            }
-            colors {
-              name {
-                lang
-                value
-              }
-              simpleName {
-                lang
-                value
-              }
-            }
-            pattern {
-              lang
-              value
-            }
-            category {
-              _id
-              name {
-                value
-              }
-              isMain
-            }
-            isHotItem
-          }
-        }
-      }
-    `,
-    variables: {
-      product: state.productToSend,
-      upload: state.upload
-    }
-  });
-  await client.resetStore();
-  return result.data.addProduct;
-};
-
-const deleteProduct = async (payload) => {
-  const result = await client.mutate({
-    mutation: gql`
-      mutation($id: ID!) {
-        deleteProduct(id: $id) {
-          ... on Product {
-            _id
-          }
-        }
-      }
-    `,
-    variables: {
-      id: payload
-    }
-  });
-  await client.resetStore();
-  return result.data.deleteProduct._id;
-};
-
-const getProduct = async (payload) => {
-  const result = await client.query({
-    query: gql`
-      query($id: ID!) {
-        getProductById(id: $id) {
-          ... on Product {
+const productQuery = `
+    ... on Product {
             _id
             category {
               _id
@@ -418,6 +334,54 @@ const getProduct = async (payload) => {
               }
             }
           }
+`
+
+
+const addProduct = async (state) => {
+  const result = await client.mutate({
+    mutation: gql`
+      mutation($product: ProductInput!, $upload: Upload!) {
+        addProduct(product: $product, upload: $upload) {
+          ... on Product {
+            _id
+          }
+        }
+      }
+    `,
+    variables: {
+      product: state.productToSend,
+      upload: state.upload
+    }
+  });
+  await client.resetStore();
+  return result.data.addProduct;
+};
+
+const deleteProduct = async (payload) => {
+  const result = await client.mutate({
+    mutation: gql`
+      mutation($id: ID!) {
+        deleteProduct(id: $id) {
+          ... on Product {
+            _id
+          }
+        }
+      }
+    `,
+    variables: {
+      id: payload
+    }
+  });
+  await client.resetStore();
+  return result.data.deleteProduct._id;
+};
+
+const getProduct = async (payload) => {
+  const result = await client.query({
+    query: gql`
+      query($id: ID!) {
+        getProductById(id: $id) {
+          ${productQuery}
         }
     }`,
     variables: {
@@ -428,6 +392,22 @@ const getProduct = async (payload) => {
   return result.data.getProductById
 }
 
+const updateProduct = async (payload) => {
+  const result = await client.mutate({
+    mutation: gql`
+      mutation($id: ID!, $product: ProductInput!) {
+        updateProduct(id: $id, product: $product) {
+            ${productQuery}
+        }
+      }`,
+    variables: {
+      id: payload.id,
+      product: payload.product
+    }
+  })
+  return result.data.updateProduct
+}
+
 export {
   getAllProducts,
   getAllFilters,
@@ -436,5 +416,6 @@ export {
   getModelsByCategory,
   addProduct,
   deleteProduct,
-  getProduct
+  getProduct,
+  updateProduct
 };

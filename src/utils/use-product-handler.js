@@ -1,4 +1,4 @@
-import {useState, useMemo, useCallback, useEffect} from 'react';
+import {useState, useMemo, useCallback} from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../configs';
 
@@ -13,83 +13,16 @@ const useProductHandler = () => {
     filterData,
     productOptions,
     modelsForSelectedCategory,
-    initialOptions,
-    productToSend
   } = useSelector(({ Products }) => ({
     filterData: Products.filterData,
     productOptions: Products.productOptions,
-    modelsForSelectedCategory: Products.productSpecies.modelsForSelectedCategory,
-    initialOptions: Products.productToSend.options,
-    productToSend: Products.productToSend
+    modelsForSelectedCategory: Products.productSpecies.modelsForSelectedCategory
   }));
-
-  useEffect(() => {
-    setPreferedLanguages({
-      ['uk']: {
-        name: 'uk',
-        checked: !!productToSend.name[0].value
-      },
-      ['en']: {
-        name: 'en',
-        checked: !!productToSend.name[1].value
-      }
-    })
-  }, [productToSend.name])
-
-  const uniqueSizes = useMemo(
-      () => [
-        ...new Set(
-            initialOptions.length
-                ? initialOptions.map(({ size: { available, name } }) => available && name)
-                : null
-        )
-      ],
-      [initialOptions]
-  );
-
-  const uniqueBottomMaterials = useMemo(
-      () => [
-        ...new Set(
-            initialOptions.length
-                ? initialOptions.map(({ bottomMaterial: item }) =>
-                    item && item.available ? item.name[0].value : null
-                )
-                : null
-        )
-      ],
-      [initialOptions]
-  );
-
-  const uniqueAdditions = useMemo(
-      () => [
-        ...new Set(
-            initialOptions.length
-                ? initialOptions
-                    .filter(({ additions }) => additions.length > 0)
-                    .map(
-                        ({ additions: [{ available, name }] }) =>
-                            available && name[0].value
-                    )
-                : null
-        )
-      ],
-      [initialOptions]
-  );
 
   const [preferedLanguages, setPreferedLanguages] = useState(selectedLanguages);
   const [selectedOptions, setOptions] = useState(productOptionsValues);
   const [ primaryImage, setPrimaryImage ] = useState('')
   const [ additionalImages, setAdditionalImages ] = useState([])
-
-  useEffect(() => {
-    if(initialOptions.length) {
-      setOptions({
-        sizes: uniqueSizes,
-        bottomMaterials: uniqueBottomMaterials,
-        additions: !!uniqueAdditions.length
-      })
-    }
-  }, [initialOptions])
 
   const { bottomMaterials: materials, sizes } = productOptions;
 
@@ -172,7 +105,7 @@ const useProductHandler = () => {
 
   const sizeOptions = useMemo(
     () =>
-      selectedOptions.sizes
+      selectedOptions.sizes.length
         ? selectedOptions.sizes.map(
           (size) => sizes.find(({ name }) => name === size)._id
         )
@@ -182,7 +115,7 @@ const useProductHandler = () => {
 
   const materialsOptions = useMemo(
     () =>
-      selectedOptions.bottomMaterials
+      selectedOptions.bottomMaterials.length
         ? selectedOptions.bottomMaterials.map(
           (item) => materials.find(({ name }) => item === name[0].value)._id
         )
@@ -232,7 +165,7 @@ const useProductHandler = () => {
       patterns.find((item) => pattern === item[0].value);
 
   const getModelToSend = (model) =>
-      modelsForSelectedCategory.find(({ _id }) => _id === model);
+      modelsForSelectedCategory.find(({ name }) => name[0].value === model)._id;
 
   const createProductInfo = ({
     ukname,

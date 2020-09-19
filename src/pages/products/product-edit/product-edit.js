@@ -1,19 +1,19 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {
-    clearProductToSend,
     getProduct,
     getProductOptions,
-    getProductSpecies
+    getProductSpecies, setProduct
 } from "../../../redux/products/products.actions";
 import ProductEditForm from "./product-edit-form";
 import LoadingBar from "../../../components/loading-bar";
+import {productModel} from "../../../redux/products/products.reducer";
 
 const ProductEdit = ({ match }) => {
     const { id } = match.params
     const dispatch = useDispatch()
-    const { productToSend, loading } = useSelector(({ Products }) => ({
-        productToSend: Products.productToSend,
+    const { product, loading } = useSelector(({ Products }) => ({
+        product: Products.product,
         loading: Products.loading
     }))
 
@@ -24,7 +24,7 @@ const ProductEdit = ({ match }) => {
         dispatch(getProduct(id))
 
         return () => {
-            dispatch(clearProductToSend())
+            dispatch(setProduct(productModel))
         }
     }, [id, dispatch])
 
@@ -34,7 +34,7 @@ const ProductEdit = ({ match }) => {
 
     return (
         <div>
-            {productToSend.name[0].value ? <ProductEditForm /> : <LoadingBar />}
+            {product.name[0].value ? <ProductEditForm /> : <LoadingBar />}
         </div>
     );
 };

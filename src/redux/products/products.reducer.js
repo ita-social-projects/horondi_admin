@@ -22,13 +22,31 @@ import {
     SET_PRODUCTS_ERROR,
     SET_PRODUCT_CATEGORIES,
     SET_PRODUCT_OPTIONS,
-    SET_MODELS, SET_FILES_TO_UPLOAD,
+    SET_MODELS, SET_FILES_TO_UPLOAD, SET_PRODUCT,
 } from './products.types';
 
 const {initialLanguageValues} = config;
 
+export const productModel = {
+    name: initialLanguageValues,
+    mainMaterial: initialLanguageValues,
+    innerMaterial: initialLanguageValues,
+    description: initialLanguageValues,
+    closure: initialLanguageValues,
+    category: '',
+    subcategory: '',
+    model: '',
+    colors: [],
+    pattern: [],
+    basePrice: 0,
+    strapLengthInCm: 0,
+    available: true,
+    options: []
+}
+
 export const initialState = {
-    loading: true,
+    loading: false,
+    productLoading: false,
     currentPage: 0,
     productsPerPage: 9,
     sortByPrice: 0,
@@ -42,26 +60,11 @@ export const initialState = {
         modelsFilter: []
     },
     filterData: [],
-    product: null,
+    product: productModel,
+    productToSend: productModel,
     products: [],
     pagesCount: 1,
     productsError: null,
-    productToSend: {
-        name: initialLanguageValues,
-        mainMaterial: initialLanguageValues,
-        innerMaterial: initialLanguageValues,
-        description: initialLanguageValues,
-        closure: initialLanguageValues,
-        category: '',
-        subcategory: '',
-        model: '',
-        colors: [],
-        pattern: [],
-        basePrice: 0,
-        strapLengthInCm: 0,
-        available: true,
-        options: []
-    },
     upload: [],
     productSpecies: {
         categories: [],
@@ -231,6 +234,11 @@ const productsReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 upload: action.payload
+            }
+        case SET_PRODUCT:
+            return {
+                ...state,
+                product: action.payload
             }
         default:
             return state;

@@ -1,5 +1,5 @@
 import useStyles from './product-options-container.styles'
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import {
     Badge,
     Box,
@@ -36,7 +36,6 @@ const ProductOptionsContainer = ({
    additions
 }) => {
     const styles = useStyles();
-    const dispatch = useDispatch()
     const productOptions = useSelector(({Products}) => Products.productOptions);
     const {sizes, bottomMaterials} = productOptions;
 
@@ -199,13 +198,16 @@ ProductOptionsContainer.propTypes = {
     ])).isRequired,
     setOptions: PropTypes.func.isRequired,
     additions: PropTypes.arrayOf(PropTypes.object),
-    activeStep: PropTypes.number.isRequired,
-    handleNext: PropTypes.func.isRequired,
-    handleBack: PropTypes.func.isRequired
+    activeStep: PropTypes.number,
+    handleNext: PropTypes.func,
+    handleBack: PropTypes.func
 };
 
 ProductOptionsContainer.defaultProps = {
-    additions: []
+    additions: [],
+    activeStep: 2,
+    handleNext: () => {},
+    handleBack: () => {}
 }
 
 export default ProductOptionsContainer;

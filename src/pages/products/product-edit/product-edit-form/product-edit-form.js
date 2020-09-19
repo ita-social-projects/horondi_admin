@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {Paper, Grid, Button, Typography, Box, Divider} from '@material-ui/core';
 import { useStyles } from "./product-edit-form.styles";
 import useProductHandler from "../../../../utils/use-product-handler";
 import ProductInfoContainer from "../../../../components/product-info-container/product-info-container";
 import {useDispatch, useSelector} from "react-redux";
-import {getModelsByCategory, setProductToSend} from "../../../../redux/products/products.actions";
+import {deleteProduct, getModelsByCategory, updateProduct} from "../../../../redux/products/products.actions";
 import useProductValidation from "../../../../utils/use-product-validation";
 import ProductSpeciesContainer from "../../../../components/product-species-container";
 import Carousel from 'react-multi-carousel'
@@ -13,18 +13,36 @@ import 'react-multi-carousel/lib/styles.css';
 import './product-edit-form.css';
 import LoadingBar from "../../../../components/loading-bar";
 import ProductOptionsContainer from "../../../../components/product-options-container";
+import {closeDialog} from "../../../../redux/dialog-window/dialog-window.actions";
+import useSuccessSnackbar from "../../../../utils/use-success-snackbar";
+import {productsTranslations} from "../../../../translations/product.translations";
 
 const { responsive, IMG_URL } = config
+const {
+    DELETE_PRODUCT_MESSAGE,
+    DELETE_PRODUCT_TITLE,
+    DELETE_PRODUCT_BTN
+} = productsTranslations;
 
 const ProductEditForm = () => {
     const styles = useStyles()
     const dispatch = useDispatch()
-    const { productToSend, modelsForSelectedCategory, productOptions } = useSelector(({ Products }) => ({
-        productToSend: Products.productToSend,
-        modelsForSelectedCategory: Products.productSpecies.modelsForSelectedCategory,
-        productOptions: Products.productOptions
+    const { product, modelsForSelectedCategory } = useSelector(({ Products }) => ({
+        product: Products.product,
+        modelsForSelectedCategory: Products.productSpecies.modelsForSelectedCategory
     }))
-    const { images } = productToSend
+
+    const formikSpeciesValues = {
+        category: product.category._id,
+        subcategory: product.subcategory._id,
+        model: product.model[0].value,
+        pattern: product.pattern[0].value,
+        colors:  product.colors[0].simpleName[0].value,
+        basePrice: Math.round(product.basePrice[1].value / 100),
+        strapLengthInCm: product.strapLengthInCm
+    }
+
+    const { openSuccessSnackbar } = useSuccessSnackbar();
 
     const {
         checkedLanguages,
@@ -44,17 +62,81 @@ const ProductEditForm = () => {
         additions
     } = useProductHandler()
 
+    const uniqueSizes = useMemo(
+        () => [
+            ...new Set(
+                product.options.filter(({ size }) => !!size).map(({ size: { name } }) => name)
+            )
+        ],
+        [product.options]
+    );
+
+    const uniqueBottomMaterials = useMemo(
+        () => [
+            ...new Set(
+                product.options
+                    .filter(({ bottomMaterial: item }) =>  item && item.available)
+                    .map(({ bottomMaterial: item }) => item.name[0].value)
+            )
+        ],
+        [product.options]
+    );
+
+    const uniqueAdditions = useMemo(
+        () => [
+            ...new Set(
+                product.options
+                .filter(({ additions }) => additions.length > 0)
+                .map(
+                    ({ additions: [{ available, name }] }) =>
+                        available && name[0].value
+                )
+            )
+        ],
+        [product.options]
+    );
+
+    useEffect(() => {
+        setPreferedLanguages({
+            uk: {
+                name: 'uk',
+                checked: !!product.name[0].value
+            },
+            en: {
+                name: 'en',
+                checked: !!product.name[1].value
+            }
+        })
+    }, [product.name, setPreferedLanguages])
+
+    useEffect(() => {
+        if(product.options.length) {
+            setOptions({
+                sizes: uniqueSizes,
+                bottomMaterials: uniqueBottomMaterials,
+                additions: !!uniqueAdditions.length
+            })
+        }
+    }, [product.options, setOptions, uniqueBottomMaterials, uniqueAdditions.length, uniqueSizes])
+
     const onSubmit = (values) => {
-        const { colors, pattern, model } = values;
+        const { colors, pattern, model, category, subcategory, basePrice, strapLengthInCm } = values;
         const productInfo = createProductInfo(values);
-        dispatch(setProductToSend({
-            ...productInfo,
-            ...values,
-            options,
-            colors: getColorToSend(colors),
-            pattern: getPatternToSend(pattern),
-            model: getModelToSend(model)._id
+        dispatch(updateProduct({
+            product: {
+                ...productInfo,
+                colors: getColorToSend(colors),
+                pattern: getPatternToSend(pattern),
+                model: getModelToSend(model),
+                options,
+                category,
+                subcategory,
+                basePrice,
+                strapLengthInCm
+            },
+            id: product._id
         }));
+        setShouldValidate(false)
     }
 
     const {
@@ -68,22 +150,31 @@ const ProductEditForm = () => {
         handleBlur,
         submitForm,
         setFieldValue
-    } = useProductValidation(checkedLanguages, onSubmit, models)
+    } = useProductValidation(checkedLanguages, onSubmit, formikSpeciesValues, 'product')
 
     useEffect(() => {
         if (values.category) dispatch(getModelsByCategory(values.category));
     }, [values.category, dispatch]);
 
-    const handleProductValidate = () => {
+    const handleProductValidate = async () => {
         setShouldValidate(true)
-        submitForm().then(res => console.log(res)).catch(e => console.log(e))
+        await submitForm()
     }
 
     const handleProductDelete = () => {
-        console.log('deleted')
+        const removeProduct = () => {
+            dispatch(closeDialog());
+            dispatch(deleteProduct({ id: product._id }));
+        };
+        openSuccessSnackbar(
+            removeProduct,
+            DELETE_PRODUCT_TITLE,
+            DELETE_PRODUCT_MESSAGE,
+            DELETE_PRODUCT_BTN
+        );
     }
 
-    const imagesToMap = images ? [images.primary.large, ...images.additional.map(({ large }) => large)] : []
+    const imagesToMap = product.images ? [product.images.primary.large, ...product.images.additional.map(({ large }) => large)] : []
 
     const imagesForCarousel = imagesToMap.map(image => (
         <div

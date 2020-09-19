@@ -97,7 +97,7 @@ const ProductsPage = () => {
   const handleProductDelete = (id) => {
     const removeProduct = () => {
       dispatch(closeDialog());
-      dispatch(deleteProduct(id));
+      dispatch(deleteProduct({ id, request: true }));
     };
     openSuccessSnackbar(
       removeProduct,
@@ -121,7 +121,7 @@ const ProductsPage = () => {
           category={category.name[0].value}
           model={model[0].value}
           pattern={pattern[0].value}
-          price={basePrice[0].value / 100}
+          price={Math.round(basePrice[0].value / 100)}
           purchasedCount={purchasedCount}
           editHandler={() => {
             dispatch(push(`/product/${_id}`));
