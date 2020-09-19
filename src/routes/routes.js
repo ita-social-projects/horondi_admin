@@ -16,6 +16,9 @@ import ErrorPage from '../pages/error-page';
 import ProductsPage from '../pages/products/products-page';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
+import ContactsPage from '../pages/contacts-page';
+import ContactsEdit from '../pages/contacts-page/contacts-edit';
+import ContactsAdd from '../pages/contacts-page/contacts-add';
 import UsersDetails from '../pages/users/users-details';
 
 import { config } from '../configs';
@@ -56,6 +59,13 @@ const Routes = () => {
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route path={routes.pathToContacts} exact component={ContactsPage} />
+        <Route
+          path={routes.pathToContactsEdit}
+          exact
+          component={ContactsEdit}
+        />
+        <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route
