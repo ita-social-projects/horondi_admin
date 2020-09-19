@@ -15,10 +15,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { push } from 'connected-react-router';
 import { useStyles } from './categories-add.styles';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import TabPanel from '../../../components/tab-panel';
 import { config } from '../../../configs';
-import TableContainerRow from '../../../components/table-container-row';
+import TableContainerRow from '../../../containers/table-container-row';
 import {
   getCategories,
   createCategory,

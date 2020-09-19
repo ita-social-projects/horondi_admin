@@ -1,15 +1,20 @@
-import { ImportContacts, Palette, Category, People } from '@material-ui/icons';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import CategoryIcon from '@material-ui/icons/Category';
+import PeopleIcon from '@material-ui/icons/People';
+import PaletteIcon from '@material-ui/icons/Palette';
 
 export const routes = {
   pathToLogin: '/',
   pathToNews: '/',
   pathToPatterns: '/patterns',
+  pathToAddNews: '/newsadd',
   pathToNewsDetails: '/news/:id',
   pathToPatternDetails: '/patterns/:id',
-  pathToAddNews: '/news/add',
   pathToAddPattern: '/patterns/add',
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
+  pathToProducts: '/products',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id'
@@ -19,10 +24,11 @@ export const config = {
   app: {
     title: 'Horondi Admin Portal',
     menuCategories: [
-      ['Новини', routes.pathToNews, ImportContacts],
-      ['Гобелени', routes.pathToPatterns, Palette],
-      ['Категорії', routes.pathToCategories, Category],
-      ['Користувачі', routes.pathToUsers, People]
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Категорії', routes.pathToCategories, CategoryIcon],
+      ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Гобелени', routes.pathToPatterns, PaletteIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -52,6 +58,17 @@ export const config = {
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     patterns: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії'],
+    products: [
+      'Фото',
+      'Назва',
+      'Категорія',
+      'Модель',
+      'Гобелен',
+      'Ціна(грн)',
+      'Рейтинг',
+      'Кількість покупок',
+      'Дії'
+    ],
     categories: ['№', 'Категорія', 'Дії'],
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
@@ -179,5 +196,31 @@ export const config = {
       avatarText: 'Фото'
     }
   },
-  patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`
+  patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
+  newsPerPage: 6,
+  product: {
+    sortBySelectOptions: [
+      {
+        label: 'популярністю',
+        value: 'popularity'
+      },
+      {
+        label: 'від дорогих до дешевих',
+        value: 'sortDesc'
+      },
+      {
+        label: 'від дешевих до дорогих',
+        value: 'sortAsc'
+      },
+      {
+        label: 'рейтингом',
+        value: 'rate'
+      }
+    ]
+  },
+  popularity: 'popularity',
+  rate: 'rate',
+  sortAsc: 'sortAsc',
+  sortDesc: 'sortDesc',
+  submitKey: 'Enter'
 };

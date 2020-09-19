@@ -13,6 +13,7 @@ import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
 import ErrorPage from '../pages/error-page';
+import ProductsPage from '../pages/products/products-page';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import PatternPage from '../pages/pattern/pattern-page';
@@ -64,6 +65,7 @@ const Routes = () => {
           exact
           component={PatternDetails}
         />
+        <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route
           path={routes.pathToAddCategory}

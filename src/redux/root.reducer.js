@@ -7,6 +7,7 @@ import Snackbar from './snackbar/snackbar.reducer';
 import DialogWindow from './dialog-window/dialog-window.reducer';
 import Auth from './auth/auth.reducer';
 import Pattern from './pattern/pattern.reducer';
+import Products from './products/products.reducer';
 import Categories from './categories/categories.reducer';
 import Users from './users/users.reducer';
 
@@ -20,6 +21,7 @@ const rootReducer = (history) =>
     Auth,
     router: connectRouter(history),
     Pattern,
+    Products,
     Categories,
     Users
   });
