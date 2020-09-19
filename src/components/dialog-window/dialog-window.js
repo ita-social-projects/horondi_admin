@@ -42,7 +42,11 @@ const DialogWindow = () => {
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
       <DialogActions>
-        <StandardButton title={CANCEL_TITLE} onClickHandler={handleClose} />
+        <StandardButton
+          variant='outlined'
+          title={CANCEL_TITLE}
+          onClickHandler={handleClose}
+        />
         <StandardButton
           title={buttonTitle}
           onClickHandler={onClickHandler}
