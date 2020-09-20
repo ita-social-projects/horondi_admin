@@ -2,17 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Paper,
-  TextField,
-  Grid,
-  Tab,
-  AppBar,
-  Tabs,
-  Avatar,
-  Button
-} from '@material-ui/core';
-import { AttachFile, Image } from '@material-ui/icons';
+import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
 import * as Yup from 'yup';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
@@ -124,9 +114,9 @@ const PatternForm = ({ pattern, id }) => {
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setFieldValue('patternImage', e.target.result);
-        setPatternImage(e.target.result);
+      reader.onload = (event) => {
+        setFieldValue('patternImage', event.target.result);
+        setPatternImage(event.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
