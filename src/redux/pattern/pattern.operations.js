@@ -3,7 +3,6 @@ import { client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { patternTranslations } from '../../translations/pattern.translations';
 
-const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 export const getAllPatterns = async (skip, limit) => {
   const result = await client.query({
     variables: {
@@ -78,6 +77,8 @@ export const getPatternById = async (id) => {
 };
 
 export const deletePattern = async (id) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   const result = await client.mutate({
     variables: { id },
     context: { headers: { token } },
@@ -117,13 +118,15 @@ export const deletePattern = async (id) => {
 };
 
 export const createPattern = async (payload) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   const result = await client.mutate({
     context: { headers: { token } },
     variables: payload,
 
     mutation: gql`
-      mutation($pattern: PatternInput!, $upload: Upload!) {
-        addPattern(pattern: $pattern, upload: $upload) {
+      mutation($pattern: PatternInput!, $image: Upload!) {
+        addPattern(pattern: $pattern, image: $image) {
           ... on Pattern {
             _id
             name {
@@ -157,13 +160,15 @@ export const createPattern = async (payload) => {
 };
 
 export const updatePattern = async (payload) => {
-  const { id, pattern, upload } = payload;
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
+  const { id, pattern, image } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: { id, pattern, upload },
+    variables: { id, pattern, image },
     mutation: gql`
-      mutation($id: ID!, $pattern: PatternInput!, $upload: Upload) {
-        updatePattern(id: $id, pattern: $pattern, upload: $upload) {
+      mutation($id: ID!, $pattern: PatternInput!, $image: Upload!) {
+        updatePattern(id: $id, pattern: $pattern, image: $image) {
           ... on Pattern {
             _id
             name {

@@ -83,7 +83,7 @@ const PatternForm = ({ pattern, id }) => {
     },
     onSubmit: () => {
       const pattern = createPattern(values);
-      dispatch(updatePattern({ id, pattern, upload }));
+      dispatch(updatePattern({ id, pattern, image: upload }));
     }
   });
 

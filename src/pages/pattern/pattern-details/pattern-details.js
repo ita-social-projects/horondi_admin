@@ -40,7 +40,7 @@ PatternDetails.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  }),
+  }).isRequired,
   pattern: PropTypes.shape({
     _id: PropTypes.string,
     available: PropTypes.bool,
@@ -55,7 +55,6 @@ PatternDetails.propTypes = {
 };
 
 PatternDetails.defaultProps = {
-  match: {},
   pattern: {}
 };
 

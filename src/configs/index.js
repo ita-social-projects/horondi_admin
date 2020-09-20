@@ -57,7 +57,7 @@ export const config = {
   },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    patterns: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії'],
+    patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
     products: [
       'Фото',
       'Назва',
@@ -160,6 +160,7 @@ export const config = {
       'Ви впевнені,що хочете змінити статус користувача?'
   },
   formRegExp: {
+    patternMaterial: '[a-zA-z]',
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
@@ -173,7 +174,7 @@ export const config = {
   },
   patternErrorMessages: {
     PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
-    PATTERN_ERROR_MESSAGE: 'Поле не може бути пустим'
+    PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім'
   },
   newsErrorMessages: {
     NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
@@ -190,7 +191,7 @@ export const config = {
   labels: {
     pattern: {
       image: 'Фото гобелена',
-      material: 'Матеріал',
+      material: 'Код матеріалу',
       available: 'Доступний',
       handmade: 'Зроблений вручну',
       avatarText: 'Фото'

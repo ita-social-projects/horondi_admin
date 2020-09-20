@@ -85,10 +85,10 @@ const PatternAdd = () => {
     validateOnBlur: true,
     onSubmit: (values) => {
       const pattern = createPattern(values);
-      dispatch(addPattern({ pattern, upload }));
+      dispatch(addPattern({ pattern, image: upload }));
     }
   });
-  const TabPanels =
+  const tabPanels =
     languages.length > 0
       ? languages.map((lang, index) => (
         <TabPanel key={index} value={tabsValue} index={index}>
@@ -182,12 +182,6 @@ const PatternAdd = () => {
           <div>
             <CheckboxOptions options={checkboxes} />
           </div>
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save'
-            type='submit'
-            title='Зберегти'
-          />
         </div>
         {languages.length > 0 ? (
           <div>
@@ -235,9 +229,15 @@ const PatternAdd = () => {
                 {languageTabs}
               </Tabs>
             </AppBar>
-            {TabPanels}
+            {tabPanels}
           </div>
         ) : null}
+        <SaveButton
+          className={styles.saveButton}
+          data-cy='save'
+          type='submit'
+          title='Зберегти'
+        />
       </form>
     </div>
   );

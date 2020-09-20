@@ -21,8 +21,8 @@ const TableContainerRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
-  const tableCells = Object.values(properties).map((property, index) => (
-    <TableCell key={index}>{`${property}`}</TableCell>
+  const tableCells = Object.values(properties).map((property) => (
+    <TableCell key={property}>{property}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;

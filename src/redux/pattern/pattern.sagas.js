@@ -39,13 +39,7 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handlePatternsLoad({
-  payload = {
-    skip: 1,
-    limit: 1,
-    patternsPerPage: 1
-  }
-}) {
+export function* handlePatternsLoad({ payload }) {
   try {
     yield put(setPatternLoading(true));
     const patterns = yield call(getAllPatterns, payload.skip, payload.limit);
