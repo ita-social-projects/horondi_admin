@@ -7,6 +7,7 @@ const usePatternHandlers = () => {
   const [patternImage, setPatternImage] = useState('');
   const [tabsValue, setTabsValue] = useState(0);
   const [upload, setUpload] = useState(null);
+  const [imageName, setImageName] = useState('');
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
@@ -50,7 +51,9 @@ const usePatternHandlers = () => {
     handleTabsChange,
     createPattern,
     upload,
-    setUpload
+    setUpload,
+    imageName,
+    setImageName
   };
 };
 

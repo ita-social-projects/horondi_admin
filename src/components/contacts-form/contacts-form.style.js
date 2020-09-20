@@ -1,40 +1,47 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  patternItemUpdate: {
+  contactItemUpdate: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '20px 0'
+    margin: theme.spacing(2),
+    paddingTop: 10
   },
-  patternDetails: {
+  contactDetails: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
+  detailsContainer: {
+    width: '100%',
+    padding: 20,
+    marginTop: 70
+  },
   saveButton: {
     margin: theme.spacing(2)
   },
-  textField: {
-    margin: '10px 5px'
+  returnButton: {
+    margin: theme.spacing(2),
+    marginRight: 0
   },
-  tabs: {
-    backgroundColor: 'white',
-    '& span.MuiTab-wrapper': {
-      color: '#3F51B5'
-    },
-    '& span.MuiTabs-indicator': {
-      backgroundColor: '#3F51B5'
+  inputLabel: {
+    fontSize: 14,
+    '&.shrink': {
+      transform: 'translate(32px, -3px) scale(0.75)'
     }
   },
-  controlsBlock: {
-    display: 'flex',
-    justifyContent: 'space-between'
+  textField: {
+    '&:first-letter': {
+      textTransform: 'capitalize'
+    },
+    padding: 10,
+    margin: '5px 0',
+    width: '100%'
   },
   inputError: {
     color: '#e60000',
-    marginLeft: '5px'
+    margin: '0px 0px 10px 10px'
   },
-
   imageUploadContainer: {
     display: 'flex',
     alignItems: 'center',

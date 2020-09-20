@@ -64,7 +64,7 @@ export function* handlePatternLoad({ payload }) {
   }
 }
 
-function* handleAddPattern({ payload }) {
+export function* handleAddPattern({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(createPattern, payload);
@@ -77,7 +77,7 @@ function* handleAddPattern({ payload }) {
   }
 }
 
-function* handlePatternDelete({ payload }) {
+export function* handlePatternDelete({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(deletePattern, payload);
@@ -91,7 +91,7 @@ function* handlePatternDelete({ payload }) {
   }
 }
 
-function* handlePatternUpdate({ payload }) {
+export function* handlePatternUpdate({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(updatePattern, payload);

@@ -1,12 +1,31 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import { handlePatternLoad, handlePatternsLoad } from '../pattern.sagas';
+import {
+  handlePatternLoad,
+  handlePatternsLoad,
+  handleAddPattern,
+  handlePatternDelete
+} from '../pattern.sagas';
 import { setPatterns, setPatternLoading, setPattern } from '../pattern.actions';
 
 import { patterns, patternId, pattern } from './pattern.variables';
-import { getPatternById, getAllPatterns } from '../pattern.operations';
+import {
+  getPatternById,
+  getAllPatterns,
+  createPattern,
+  deletePattern,
+  updatePattern
+} from '../pattern.operations';
 
 describe('pattern sagas test', () => {
+  it('should not throw error', () => {
+    expect(handleAddPattern).not.toThrow();
+    expect(getAllPatterns).not.toThrow();
+    expect(getPatternById).not.toThrow();
+    expect(createPattern).not.toThrow();
+    expect(updatePattern).not.toThrow();
+    expect(deletePattern).not.toThrow();
+  });
   it('#1 should receive all patterns and set to store', () => {
     const fakePatterns = {
       data: {

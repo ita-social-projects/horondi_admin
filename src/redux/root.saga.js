@@ -6,6 +6,7 @@ import patternSaga from './pattern/pattern.sagas';
 import productsSaga from './products/products.sagas';
 import categorySaga from './categories/categories.sagas';
 import usersSaga from './users/users.saga';
+import contactsSaga from './contact/contact.sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -17,6 +18,7 @@ export default function* rootSaga() {
     patternSaga(),
     productsSaga(),
     categorySaga(),
-    usersSaga()
+    usersSaga(),
+    contactsSaga()
   ]);
 }

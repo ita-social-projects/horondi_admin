@@ -1,4 +1,5 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
@@ -17,7 +18,10 @@ export const routes = {
   pathToProducts: '/products',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
-  pathToEditCategory: '/add-category/:id'
+  pathToEditCategory: '/add-category/:id',
+  pathToContacts: '/contacts',
+  pathToContactsEdit: '/contacts/:id',
+  pathToAddContact: '/add-contact'
 };
 
 export const config = {
@@ -25,6 +29,7 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon],
@@ -73,7 +78,8 @@ export const config = {
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
-    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
+    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
+    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії']
   },
   detailTitles: {
     users: {
@@ -122,6 +128,8 @@ export const config = {
     CREATE_PATTERN_TITLE: 'Додати гобелен',
     REMOVE_TITLE: 'Видалити новину',
     PATTERN_REMOVE_TITLE: 'Видалити гобелен',
+    CREATE_CONTACT_TITLE: 'Додати контакти',
+    REMOVE_CONTACT_TITLE: 'Видалити контакт',
     REMOVE_USER_TITLE: 'Видалити користувача',
     SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
     CANCEL_TITLE: 'Відмінити',
@@ -146,13 +154,15 @@ export const config = {
         [false, 'підкатегорію']
       ]);
       return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
-    }
+    },
+    GO_BACK_TITLE: 'Назад'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
     PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
     USER_UNACTIVE_TITLE: 'Деактивувати',
     USER_ACTIVE_TITLE: 'Активувати',
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
@@ -163,7 +173,9 @@ export const config = {
     patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
-    password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
+    password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
+    unwrapHtml: /(<([^>]+)>)/gi,
+    enAddressRegex: '^[A-Za-z0-9_|,| |./]+$'
   },
   loginErrorMessages: {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
@@ -184,6 +196,22 @@ export const config = {
       'Заголовок повинен містити не більше 100 символів',
     TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів'
   },
+  contactErrorMessages: {
+    INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
+    ENTER_EMAIL_MESSAGE: 'Введіть email',
+    PHONE_NUMBER_LENGTH_MESSAGE:
+      'Довжина номеру телефону повинна містити 12 символів',
+    PHONE_NUMBER_TYPE_MESSAGE: 'Номер повинен містити лише числа',
+    ENTER_PHONE_NUMBER_MESSAGE: 'Введіть номер',
+    INPUT_LENGTH_MESSAGE: 'Довжина повинна містити не менше 10 символів',
+    ENTER_UK_SCHEDULE_MESSAGE: 'Введіть розклад українською',
+    ENTER_EN_SCHEDULE_MESSAGE: 'Введіть розклад англійською',
+    ENTER_UK_ADDRESS_MESSAGE: 'Введіть адресу українською',
+    ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
+    IMAGE_FORMAT_MESSAGE:
+      'Введіть коректний формат, наприклад: https://example.com/',
+    ENTER_LINK_MESSAGE: 'Введіть посилання'
+  },
   paginationPayload: {
     skip: 0,
     limit: 5,
@@ -200,6 +228,11 @@ export const config = {
   },
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
   newsPerPage: 6,
+  contactsPaginationPayload: {
+    skip: 0,
+    limit: 6,
+    contactsPerPage: 7
+  },
   product: {
     sortBySelectOptions: [
       {
@@ -224,5 +257,6 @@ export const config = {
   rate: 'rate',
   sortAsc: 'sortAsc',
   sortDesc: 'sortDesc',
-  submitKey: 'Enter'
+  submitKey: 'Enter',
+  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
 };

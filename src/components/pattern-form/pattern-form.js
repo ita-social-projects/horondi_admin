@@ -9,8 +9,11 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Avatar
+  Avatar,
+  Button
 } from '@material-ui/core';
+import { AttachFile, Image } from '@material-ui/icons';
+
 import * as Yup from 'yup';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
@@ -38,7 +41,9 @@ const PatternForm = ({ pattern, id }) => {
     setUpload,
     upload,
     patternImage,
-    setPatternImage
+    setPatternImage,
+    imageName,
+    setImageName
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
@@ -127,6 +132,7 @@ const PatternForm = ({ pattern, id }) => {
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
+      setImageName(e.target.files[0].name);
     }
   };
 
@@ -137,28 +143,41 @@ const PatternForm = ({ pattern, id }) => {
 
         <Grid item xs={12}>
           <Paper className={styles.patternItemUpdate}>
-            <label htmlFor='patternImage'>
+            <span className={styles.imageUpload}>
+              {config.labels.pattern.avatarText}
+            </span>
+            <div className={styles.imageUploadContainer}>
+              <label htmlFor='upload-photo'>
+                <input
+                  style={{ display: 'none' }}
+                  accept='image/*'
+                  id='upload-photo'
+                  name='upload-photo'
+                  type='file'
+                  onChange={handleImageLoad}
+                />
+                <Button
+                  id='add-contact'
+                  variant='outlined'
+                  color='primary'
+                  component='span'
+                >
+                  <AttachFile className={styles.attachFile} />
+                  Завантажити
+                </Button>
+              </label>
               <Avatar
-                className={styles.patternImage}
-                variant='square'
+                data-cy='ukCartImage'
                 src={
                   patternImage ||
-                  `${'https://horondi.blob.core.windows.net/horondi/images'}/${
-                    values.patternImage
-                  }`
+                  `${config.patternImageLink}${values.patternImage}`
                 }
-                alt='pattern'
+                className={styles.large}
               >
-                {config.labels.pattern.avatarText}
+                <Image />
               </Avatar>
-            </label>
-            <input
-              className={styles.patternInputFile}
-              type='file'
-              id='patternImage'
-              data-cy='patternImage'
-              onChange={handleImageLoad}
-            />
+              <span className={styles.imageName}>{imageName}</span>
+            </div>
             <TextField
               id='material'
               data-cy='material'

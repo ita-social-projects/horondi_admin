@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
-
 import { useSelector } from 'react-redux';
 import UsersPage from '../pages/users/users-page';
 import NewsPage from '../pages/news/news-page';
@@ -17,9 +16,12 @@ import ProductsPage from '../pages/products/products-page';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import PatternPage from '../pages/pattern/pattern-page';
+import ContactsPage from '../pages/contacts-page';
+import ContactsEdit from '../pages/contacts-page/contacts-edit';
+import ContactsAdd from '../pages/contacts-page/contacts-add';
+import UsersDetails from '../pages/users/users-details';
 import { config } from '../configs';
 import { history } from '../store/store';
-import UsersDetails from '../pages/users/users-details';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 
@@ -65,6 +67,13 @@ const Routes = () => {
           exact
           component={PatternDetails}
         />
+        <Route path={routes.pathToContacts} exact component={ContactsPage} />
+        <Route
+          path={routes.pathToContactsEdit}
+          exact
+          component={ContactsEdit}
+        />
+        <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route
