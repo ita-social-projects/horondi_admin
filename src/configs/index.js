@@ -1,5 +1,5 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
-import InfoIcon from '@material-ui/icons/Info';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
@@ -29,7 +29,7 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Бізнес сторінки', routes.pathToBusinessPages, InfoIcon],
+      ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
       ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
