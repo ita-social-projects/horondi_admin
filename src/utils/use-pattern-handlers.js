@@ -6,7 +6,7 @@ const { languages } = config;
 const usePatternHandlers = () => {
   const [patternImage, setPatternImage] = useState('');
   const [tabsValue, setTabsValue] = useState(0);
-  const [upload, setUpload] = useState(null);
+  const [upload, setUpload] = useState({});
   const [imageName, setImageName] = useState('');
 
   const handleTabsChange = (event, newValue) => {

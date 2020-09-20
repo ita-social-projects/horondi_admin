@@ -13,7 +13,6 @@ import {
   Button
 } from '@material-ui/core';
 import { AttachFile, Image } from '@material-ui/icons';
-
 import * as Yup from 'yup';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
@@ -22,6 +21,7 @@ import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
+import ImageUploadContainer from '../../containers/image-upload-container';
 
 const {
   PATTERN_VALIDATION_ERROR,
@@ -41,9 +41,7 @@ const PatternForm = ({ pattern, id }) => {
     setUpload,
     upload,
     patternImage,
-    setPatternImage,
-    imageName,
-    setImageName
+    setPatternImage
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
@@ -132,7 +130,6 @@ const PatternForm = ({ pattern, id }) => {
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
-      setImageName(e.target.files[0].name);
     }
   };
 
@@ -146,38 +143,14 @@ const PatternForm = ({ pattern, id }) => {
             <span className={styles.imageUpload}>
               {config.labels.pattern.avatarText}
             </span>
-            <div className={styles.imageUploadContainer}>
-              <label htmlFor='upload-photo'>
-                <input
-                  style={{ display: 'none' }}
-                  accept='image/*'
-                  id='upload-photo'
-                  name='upload-photo'
-                  type='file'
-                  onChange={handleImageLoad}
-                />
-                <Button
-                  id='add-contact'
-                  variant='outlined'
-                  color='primary'
-                  component='span'
-                >
-                  <AttachFile className={styles.attachFile} />
-                  Завантажити
-                </Button>
-              </label>
-              <Avatar
-                data-cy='ukCartImage'
-                src={
-                  patternImage ||
-                  `${config.patternImageLink}${values.patternImage}`
-                }
-                className={styles.large}
-              >
-                <Image />
-              </Avatar>
-              <span className={styles.imageName}>{imageName}</span>
-            </div>
+            <ImageUploadContainer
+              handler={handleImageLoad}
+              srcForAvatar={
+                patternImage ||
+                `${config.patternImageLink}${values.patternImage}`
+              }
+              fileName={upload.name}
+            />
             <TextField
               id='material'
               data-cy='material'
