@@ -24,21 +24,21 @@ const useBusinessHandlers = () => {
     title: [
       {
         lang: languages[0],
-        value: values.ukTitle || null
+        value: values.ukTitle
       },
       {
         lang: languages[1],
-        value: values.enTitle || null
+        value: values.enTitle
       }
     ],
     text: [
       {
         lang: languages[0],
-        value: values.ukText || null
+        value: values.ukText
       },
       {
         lang: languages[1],
-        value: values.enText || null
+        value: values.enText
       }
     ],
     languages: [...languages]

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 
 import useBusinessHandlers from '../../../utils/use-business-handlers';
 import Editor from '../../../components/editor';
@@ -13,10 +14,12 @@ import LoadingBar from '../../../components/loading-bar';
 
 import {
   addBusinessPage,
+  getBusinessPageById,
   updateBusinessPage
 } from '../../../redux/business-pages/business-pages.actions';
+import { config } from '../../../configs';
 
-const BusinessPageForm = ({ editMode, id }) => {
+const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
   const { loading, businessPage } = useSelector(({ BusinessPages }) => ({
     loading: BusinessPages.loading,
@@ -45,52 +48,56 @@ const BusinessPageForm = ({ editMode, id }) => {
     languages
   } = useBusinessHandlers();
 
+  const { editorField } = config.formRegExp;
+
   useEffect(() => {
-    if (businessPage !== null) {
-      setCode(businessPage.code);
+    id && dispatch(getBusinessPageById(id));
+  }, [dispatch, id]);
 
-      ukSetText(businessPage.text[0].value || '');
-      ukSetTitle(businessPage.title[0].value || '');
+  useEffect(() => {
+    const isEditingReady = businessPage && editMode;
 
-      enSetText(businessPage.text[1].value || '');
-      enSetTitle(businessPage.title[1].value || '');
-    }
-  }, [
-    code,
-    businessPage,
-    ukSetText,
-    ukSetTitle,
-    enSetText,
-    enSetTitle,
-    setCode
-  ]);
+    setCode(isEditingReady ? businessPage.code : '');
+    ukSetTitle(isEditingReady ? businessPage.title[0].value : '');
+    ukSetText(isEditingReady ? businessPage.text[0].value : '');
+    enSetTitle(isEditingReady ? businessPage.title[1].value : '');
+    enSetText(isEditingReady ? businessPage.text[1].value : '');
+  }, [code, businessPage, ukSetText, ukSetTitle, enSetText, enSetTitle]);
 
-  const checkValidation = () => {
-    const requiredValidationArray = [code, ukTitle, enTitle, ukText, enText];
-    return requiredValidationArray.every((field) => field.trim());
+  const checkValidation = (values) => {
+    const requiredValidationArray = [...Object.values(values)];
+    const editorFields = [ukText, enText];
+
+    return (
+      requiredValidationArray.every((field) => field.trim()) &&
+      editorFields.every((field) => !editorField.test(field) || field)
+    );
   };
 
   const formik = useFormik({
     initialValues: {
       code,
-      ukText,
       ukTitle,
-      enTitle,
-      enText
+      enTitle
     },
     onSubmit: (values) => {
-      if (!checkValidation()) {
+      if (!checkValidation(values)) {
         setShouldValidate(true);
         return;
       }
 
       const page = createBusinessPage({ ...values, enText, ukText });
-
       editMode
         ? dispatch(updateBusinessPage({ id, page }))
         : dispatch(addBusinessPage(page));
     }
   });
+
+  useMemo(() => {
+    formik.values.code = code;
+    formik.values.ukTitle = ukTitle;
+    formik.values.enTitle = enTitle;
+  }, [code, ukTitle, enTitle]);
 
   const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
 
@@ -119,9 +126,12 @@ const BusinessPageForm = ({ editMode, id }) => {
                 label='Код сторінки'
                 value={formik.values.code}
                 onChange={formik.handleChange}
-                required
-                error={!code && shouldValidate}
-                helperText='Це поле є обов‘язковим'
+                error={!formik.values.code && shouldValidate}
+                helperText={
+                  !formik.values.code && shouldValidate
+                    ? 'Введіть унікальний ідентифікатор для сторінки'
+                    : ''
+                }
               />
             </Paper>
           </Grid>
@@ -136,7 +146,7 @@ const BusinessPageForm = ({ editMode, id }) => {
             </Tabs>
           </AppBar>
           <TabPanel value={tabsValue} index={0}>
-            <Paper className={classes.businessPageAdd}>
+            <Paper className={classes.businessPageForm}>
               <TextField
                 id='ukTitle'
                 className={classes.textField}
@@ -145,9 +155,12 @@ const BusinessPageForm = ({ editMode, id }) => {
                 multiline
                 value={formik.values.ukTitle}
                 onChange={formik.handleChange}
-                required
-                error={!ukTitle && shouldValidate}
-                helperText='Це поле є обов‘язковим'
+                error={!formik.values.ukTitle && shouldValidate}
+                helperText={
+                  !formik.values.ukTitle && shouldValidate
+                    ? 'Введіть заголовок'
+                    : ''
+                }
               />
               <Editor
                 value={ukText}
@@ -156,10 +169,15 @@ const BusinessPageForm = ({ editMode, id }) => {
                 files={files}
                 setFiles={setFiles}
               />
+              {(editorField.test(ukText) || !ukText) && shouldValidate && (
+                <div className={classes.errorMessage}>
+                  Введіть текст для сторінки
+                </div>
+              )}
             </Paper>
           </TabPanel>
           <TabPanel value={tabsValue} index={1}>
-            <Paper className={classes.businessPageAdd}>
+            <Paper className={classes.businessPageForm}>
               <TextField
                 id='enTitle'
                 className={classes.textField}
@@ -168,9 +186,12 @@ const BusinessPageForm = ({ editMode, id }) => {
                 multiline
                 value={formik.values.enTitle}
                 onChange={formik.handleChange}
-                required
-                error={!enTitle && shouldValidate}
-                helperText='Це поле є обов‘язковим'
+                error={!formik.values.enTitle && shouldValidate}
+                helperText={
+                  !formik.values.enTitle && shouldValidate
+                    ? 'Введіть заголовок'
+                    : ''
+                }
               />
               <Editor
                 value={enText}
@@ -178,6 +199,11 @@ const BusinessPageForm = ({ editMode, id }) => {
                 onEditorChange={(value) => enSetText(value)}
                 setFiles={setFiles}
               />
+              {(editorField.test(enText) || !enText) && shouldValidate && (
+                <div className={classes.errorMessage}>
+                  Введіть текст для сторінки
+                </div>
+              )}
             </Paper>
           </TabPanel>
         </div>
@@ -196,4 +222,4 @@ BusinessPageForm.defaultProps = {
   id: null
 };
 
-export default BusinessPageForm;
+export default withRouter(BusinessPageForm);

@@ -9,11 +9,6 @@ export const useStyles = makeStyles((theme) => ({
   textField: {
     margin: '10px 5px'
   },
-  newsAdd: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
   saveButton: {
     margin: '20px 0'
   },
@@ -28,5 +23,11 @@ export const useStyles = makeStyles((theme) => ({
   controlsBlock: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  errorMessage: {
+    color: 'red',
+    marginTop: 5,
+    marginLeft: 15,
+    fontSize: '.9em'
   }
 }));

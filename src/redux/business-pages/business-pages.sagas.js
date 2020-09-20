@@ -1,7 +1,6 @@
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { Business } from '@material-ui/icons';
 import {
   setBusinessPages,
   setLoading,
@@ -101,10 +100,10 @@ function* handleBusinessPageDelete({ payload }) {
 }
 
 function* handleBusinessPageUpdate({ payload }) {
-  const { id, newPage } = payload;
+  const { id, page } = payload;
   try {
     yield put(setLoading(true));
-    yield call(updateBusinessPage, id, newPage);
+    yield call(updateBusinessPage, id, page);
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
