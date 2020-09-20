@@ -49,26 +49,6 @@ const BusinessPageDetails = ({ match }) => {
     dispatch(getBusinessPageById(id));
   }, [dispatch, id]);
 
-  useEffect(() => {
-    if (businessPage !== null) {
-      setCode(businessPage.code);
-
-      ukSetText(businessPage.text[0].value || '');
-      ukSetTitle(businessPage.title[0].value || '');
-
-      enSetText(businessPage.text[1].value || '');
-      enSetTitle(businessPage.title[1].value || '');
-    }
-  }, [
-    code,
-    businessPage,
-    ukSetText,
-    ukSetTitle,
-    enSetText,
-    enSetTitle,
-    setCode
-  ]);
-
   const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
 
   if (loading) {

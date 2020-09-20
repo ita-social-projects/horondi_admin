@@ -1,3 +1,3 @@
-import NewsDetails from './business-page-details';
+import BusinessPageDetails from './business-page-details';
 
-export default NewsDetails;
+export default BusinessPageDetails;

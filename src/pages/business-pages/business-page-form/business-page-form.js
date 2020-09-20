@@ -1,51 +1,94 @@
-import React, { useState } from 'react';
-import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
-import { useFormik } from 'formik';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Editor from '../../../components/editor';
-import TabPanel from '../../../components/tab-panel';
-import { SaveButton } from '../../../components/buttons';
-import LoadingBar from '../../../components/loading-bar';
+import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
+import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
+
 import useBusinessHandlers from '../../../utils/use-business-handlers';
-import { useStyles } from './business-page-add.styles';
+import Editor from '../../../components/editor';
+import { useStyles } from './business-page-form.styles';
+import { SaveButton } from '../../../components/buttons';
+import TabPanel from '../../../components/tab-panel';
+import LoadingBar from '../../../components/loading-bar';
 
-import { addBusinessPage } from '../../../redux/business-pages/business-pages.actions';
+import {
+  addBusinessPage,
+  updateBusinessPage
+} from '../../../redux/business-pages/business-pages.actions';
 
-const BusinessPageAdd = () => {
-  const classes = useStyles();
+const BusinessPageForm = ({ editMode, id }) => {
   const dispatch = useDispatch();
-  const loading = useSelector(({ BusinessPages }) => BusinessPages.loading);
-  const [shouldValid, setShouldValid] = useState(false);
+  const { loading, businessPage } = useSelector(({ BusinessPages }) => ({
+    loading: BusinessPages.loading,
+    businessPage: BusinessPages.currentPage
+  }));
+  const [shouldValidate, setShouldValidate] = useState(false);
+
+  const classes = useStyles();
 
   const {
     tabsValue,
-    languages,
     handleTabsChange,
     createBusinessPage,
     ukSetText,
     enSetText,
+    ukSetTitle,
+    enSetTitle,
     ukText,
     enText,
+    enTitle,
+    ukTitle,
+    code,
+    setCode,
     files,
-    setFiles
+    setFiles,
+    languages
   } = useBusinessHandlers();
 
-  const langValues = languages.map((lang) => ({
-    [`${lang}Title`]: '',
-    [`${lang}Text`]: ''
-  }));
+  useEffect(() => {
+    if (businessPage !== null) {
+      setCode(businessPage.code);
 
-  const formikValues = Object.assign(...langValues);
+      ukSetText(businessPage.text[0].value || '');
+      ukSetTitle(businessPage.title[0].value || '');
+
+      enSetText(businessPage.text[1].value || '');
+      enSetTitle(businessPage.title[1].value || '');
+    }
+  }, [
+    code,
+    businessPage,
+    ukSetText,
+    ukSetTitle,
+    enSetText,
+    enSetTitle,
+    setCode
+  ]);
+
+  const checkValidation = () => {
+    const requiredValidationArray = [code, ukTitle, enTitle, ukText, enText];
+    return requiredValidationArray.every((field) => field.trim());
+  };
 
   const formik = useFormik({
     initialValues: {
-      ...formikValues,
-      code: ''
+      code,
+      ukText,
+      ukTitle,
+      enTitle,
+      enText
     },
     onSubmit: (values) => {
-      console.log(values);
+      if (!checkValidation()) {
+        setShouldValidate(true);
+        return;
+      }
+
       const page = createBusinessPage({ ...values, enText, ukText });
-      dispatch(addBusinessPage(page));
+
+      editMode
+        ? dispatch(updateBusinessPage({ id, page }))
+        : dispatch(addBusinessPage(page));
     }
   });
 
@@ -68,15 +111,17 @@ const BusinessPageAdd = () => {
         </div>
         <div>
           <Grid item xs={12}>
-            <Paper className={classes.businessPageAdd}>
+            <Paper className={classes.businessPageForm}>
               <TextField
                 id='code'
                 className={classes.textField}
                 variant='outlined'
                 label='Код сторінки'
-                value={formik.values.businessPageCode}
+                value={formik.values.code}
                 onChange={formik.handleChange}
                 required
+                error={!code && shouldValidate}
+                helperText='Це поле є обов‘язковим'
               />
             </Paper>
           </Grid>
@@ -101,6 +146,8 @@ const BusinessPageAdd = () => {
                 value={formik.values.ukTitle}
                 onChange={formik.handleChange}
                 required
+                error={!ukTitle && shouldValidate}
+                helperText='Це поле є обов‘язковим'
               />
               <Editor
                 value={ukText}
@@ -122,6 +169,8 @@ const BusinessPageAdd = () => {
                 value={formik.values.enTitle}
                 onChange={formik.handleChange}
                 required
+                error={!enTitle && shouldValidate}
+                helperText='Це поле є обов‘язковим'
               />
               <Editor
                 value={enText}
@@ -137,4 +186,14 @@ const BusinessPageAdd = () => {
   );
 };
 
-export default BusinessPageAdd;
+BusinessPageForm.propTypes = {
+  editMode: PropTypes.bool,
+  id: PropTypes.string
+};
+
+BusinessPageForm.defaultProps = {
+  editMode: false,
+  id: null
+};
+
+export default BusinessPageForm;
