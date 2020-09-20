@@ -17,12 +17,13 @@ import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
-import { updatePattern } from '../../redux/pattern/pattern.actions';
+import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 
 const {
   PATTERN_VALIDATION_ERROR,
-  PATTERN_ERROR_MESSAGE
+  PATTERN_ERROR_MESSAGE,
+  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
 } = config.patternErrorMessages;
 
 const { languages } = config;
@@ -59,6 +60,10 @@ const PatternForm = ({ pattern, id }) => {
       .required(PATTERN_ERROR_MESSAGE),
     material: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
+      .matches(
+        config.formRegExp.patternMaterial,
+        PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
+      )
       .required(PATTERN_ERROR_MESSAGE)
   });
 
@@ -77,13 +82,18 @@ const PatternForm = ({ pattern, id }) => {
       enName: pattern.name[1].value || '',
       ukDescription: pattern.description[0].value || '',
       enDescription: pattern.description[1].value || '',
-      material: pattern.material,
-      available: pattern.available,
-      handmade: pattern.handmade
+      material: pattern.material || '',
+      available: pattern.available || false,
+      handmade: pattern.handmade || false
     },
     onSubmit: () => {
-      const pattern = createPattern(values);
-      dispatch(updatePattern({ id, pattern, image: upload }));
+      const newPattern = createPattern(values);
+
+      if (pattern && pattern.material) {
+        dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+        return;
+      }
+      dispatch(addPattern({ pattern: newPattern, image: upload }));
     }
   });
 
@@ -123,17 +133,8 @@ const PatternForm = ({ pattern, id }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className={styles.controlsBlock}>
-          <div>
-            <CheckboxOptions options={checkboxes} />
-          </div>
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save'
-            type='submit'
-            title='Зберегти'
-          />
-        </div>
+        <CheckboxOptions options={checkboxes} />
+
         <Grid item xs={12}>
           <Paper className={styles.patternItemUpdate}>
             <label htmlFor='patternImage'>
@@ -223,6 +224,15 @@ const PatternForm = ({ pattern, id }) => {
             </Paper>
           </TabPanel>
         ))}
+        <div className={styles.controlsBlock}>
+          <div />
+          <SaveButton
+            className={styles.saveButton}
+            data-cy='save'
+            type='submit'
+            title='Зберегти'
+          />
+        </div>
       </form>
     </div>
   );

@@ -160,7 +160,7 @@ export const config = {
       'Ви впевнені,що хочете змінити статус користувача?'
   },
   formRegExp: {
-    patternMaterial: '[a-zA-z]',
+    patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
@@ -174,7 +174,8 @@ export const config = {
   },
   patternErrorMessages: {
     PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
-    PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім'
+    PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
+    PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
   },
   newsErrorMessages: {
     NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
