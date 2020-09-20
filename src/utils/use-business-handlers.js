@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { config } from '../configs';
 
 const { languages } = config;
 
 const useBusinessHandlers = () => {
-  const checkboxStates = languages.reduce(
-    (obj, lang) => ({ ...obj, [lang]: false }),
-    {}
-  );
-
   const [code, setCode] = useState('');
 
   const [ukTitle, ukSetTitle] = useState('');
@@ -19,17 +13,10 @@ const useBusinessHandlers = () => {
   const [enText, enSetText] = useState('');
 
   const [files, setFiles] = useState([]);
-
   const [tabsValue, setTabsValue] = useState(0);
-  const [checkboxes, setCheckboxes] = useState(checkboxStates);
-  const [preferredLanguages, setPreferredLanguages] = useState([]);
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
-  };
-
-  const handleCheckboxChange = (event) => {
-    setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
   };
 
   const createBusinessPage = (values) => ({
@@ -54,28 +41,23 @@ const useBusinessHandlers = () => {
         value: values.enText || null
       }
     ],
-    languages: preferredLanguages
+    languages: [...languages]
   });
 
   return {
-    checkboxes,
     code,
     ukText,
     ukTitle,
     enText,
     enTitle,
-    preferredLanguages,
     tabsValue,
     setCode,
     ukSetText,
     ukSetTitle,
     enSetText,
     enSetTitle,
-    setPreferredLanguages,
     setTabsValue,
-    setCheckboxes,
     handleTabsChange,
-    handleCheckboxChange,
     languages,
     createBusinessPage,
     files,
