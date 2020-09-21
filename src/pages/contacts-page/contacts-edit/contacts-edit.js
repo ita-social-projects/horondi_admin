@@ -101,12 +101,21 @@ const ContactsEdit = ({ match }) => {
       link: cartLink
     };
 
-    const upload =
-      ukCartImage && enCartImage
-        ? [ukCartImage, enCartImage]
-        : [ukCartImage || enCartImage];
+    const mapImages =
+      ukCartImage.name && enCartImage.name
+        ? [
+          {
+            lang: languages[0],
+            image: ukCartImage
+          },
+          {
+            lang: languages[1],
+            image: enCartImage
+          }
+        ]
+        : [];
 
-    dispatch(updateContact({ id, updatedContact, upload }));
+    dispatch(updateContact({ id, updatedContact, mapImages }));
   };
 
   if (loading) {

@@ -55,12 +55,29 @@ const ContactsAdd = () => {
       link: cartLink
     };
 
-    const upload =
+    const mapImages =
       ukCartImage && enCartImage
-        ? [ukCartImage, enCartImage]
-        : [ukCartImage || enCartImage];
+        ? [
+          {
+            lang: languages[0],
+            image: ukCartImage
+          },
+          {
+            lang: languages[1],
+            image: enCartImage
+          }
+        ]
+        : [
+          {
+            lang: languages[0],
+            image: ukCartImage
+          } || {
+            lang: languages[1],
+            image: enCartImage
+          }
+        ];
 
-    dispatch(addContact(newContact, upload));
+    dispatch(addContact(newContact, mapImages));
   };
 
   if (loading) {
