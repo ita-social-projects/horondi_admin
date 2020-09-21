@@ -48,15 +48,11 @@ const ContactsAdd = () => {
         { lang: languages[1], value: enAddress }
       ],
       email,
-      images: [
-        { lang: languages[0], value: { medium: '' } },
-        { lang: languages[1], value: { medium: '' } }
-      ],
       link: cartLink
     };
 
     const mapImages =
-      ukCartImage && enCartImage
+      !!ukCartImage && !!enCartImage
         ? [
           {
             lang: languages[0],
@@ -67,15 +63,7 @@ const ContactsAdd = () => {
             image: enCartImage
           }
         ]
-        : [
-          {
-            lang: languages[0],
-            image: ukCartImage
-          } || {
-            lang: languages[1],
-            image: enCartImage
-          }
-        ];
+        : [];
 
     dispatch(addContact(newContact, mapImages));
   };
