@@ -2,13 +2,22 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
+import {
+  Paper,
+  TextField,
+  Grid,
+  Tab,
+  AppBar,
+  Tabs,
+  Button
+} from '@material-ui/core';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
-import { config } from '../../configs';
+import { config, routes } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
@@ -206,15 +215,24 @@ const PatternForm = ({ pattern, id }) => {
             </Paper>
           </TabPanel>
         ))}
-        <div className={styles.controlsBlock}>
-          <div />
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save'
-            type='submit'
-            title='Зберегти'
-          />
-        </div>
+
+        <Button
+          id='contactsBack'
+          component={Link}
+          to={routes.pathToPatterns}
+          variant='outlined'
+          color='primary'
+          className={styles.returnButton}
+          data-cy='goBackButton'
+        >
+          {config.buttonTitles.GO_BACK_TITLE}
+        </Button>
+        <SaveButton
+          className={styles.saveButton}
+          data-cy='save'
+          type='submit'
+          title='Зберегти'
+        />
       </form>
     </div>
   );

@@ -14,6 +14,10 @@ export const useStyles = makeStyles((theme) => ({
   saveButton: {
     margin: theme.spacing(2)
   },
+  returnButton: {
+    margin: theme.spacing(2),
+    marginRight: 0
+  },
   textField: {
     margin: '10px 5px'
   },
