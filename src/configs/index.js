@@ -1,9 +1,9 @@
-import {
-  ImportContacts,
-  Category,
-  People,
-  LocalMall
-} from '@material-ui/icons';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import CategoryIcon from '@material-ui/icons/Category';
+import PeopleIcon from '@material-ui/icons/People';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 
 export const routes = {
   pathToLogin: '/',
@@ -15,19 +15,25 @@ export const routes = {
   pathToMaterials: '/materials',
   pathToAddMaterial: '/material/add',
   pathToMaterialDetails: '/materials/:id',
+  pathToProducts: '/products',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
-  pathToEditCategory: '/add-category/:id'
+  pathToEditCategory: '/add-category/:id',
+  pathToContacts: '/contacts',
+  pathToContactsEdit: '/contacts/:id',
+  pathToAddContact: '/add-contact'
 };
 
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
     menuCategories: [
-      ['Новини', routes.pathToNews, ImportContacts],
-      ['Матеріали', routes.pathToMaterials, LocalMall],
-      ['Категорії', routes.pathToCategories, Category],
-      ['Користувачі', routes.pathToUsers, People]
+      ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
+      ['Категорії', routes.pathToCategories, CategoryIcon],
+      ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Матеріали', routes.pathToMaterials, LocalMallIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -57,11 +63,23 @@ export const config = {
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     materials: ['Назва', 'Застосування', 'Доступний', 'Дії'],
+    products: [
+      'Фото',
+      'Назва',
+      'Категорія',
+      'Модель',
+      'Гобелен',
+      'Ціна(грн)',
+      'Рейтинг',
+      'Кількість покупок',
+      'Дії'
+    ],
     categories: ['№', 'Категорія', 'Дії'],
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
-    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії']
+    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
+    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії']
   },
   detailTitles: {
     users: {
@@ -108,6 +126,8 @@ export const config = {
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
+    CREATE_CONTACT_TITLE: 'Додати контакти',
+    REMOVE_CONTACT_TITLE: 'Видалити контакт',
     REMOVE_USER_TITLE: 'Видалити користувача',
     SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
     CANCEL_TITLE: 'Відмінити',
@@ -126,23 +146,25 @@ export const config = {
     SAVE_CATEGORY: 'Зберегти категорію',
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_CATEGORY: 'Створити категорію',
-    CREATE_SUBCATEGORY: 'Створити підкатегорію'
-  },
-  titleGenerator: (editMode, isMain) => {
-    const editModeMap = new Map([
-      [true, 'Зберегти'],
-      [false, 'Створити']
-    ]);
-    const isMainMap = new Map([
-      [true, 'категорію'],
-      [false, 'підкатегорію']
-    ]);
-    return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
+    CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    titleGenerator: (editMode, isMain) => {
+      const editModeMap = new Map([
+        [true, 'Зберегти'],
+        [false, 'Створити']
+      ]);
+      const isMainMap = new Map([
+        [true, 'категорію'],
+        [false, 'підкатегорію']
+      ]);
+      return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
+    },
+    GO_BACK_TITLE: 'Назад'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
     USER_UNACTIVE_TITLE: 'Деактивувати',
     USER_ACTIVE_TITLE: 'Активувати',
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
@@ -156,7 +178,10 @@ export const config = {
   formRegExp: {
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
-    password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$'
+    password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
+    unwrapHtml: /(<([^>]+)>)/gi,
+    enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
+    colorCode: /\d/
   },
   loginErrorMessages: {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
@@ -178,9 +203,27 @@ export const config = {
     VALIDATION_ERROR: 'Поле обовязкове'
   },
   colorErrorMessages: {
-    MAX_LENGTH_MESSAGE: `Не більше 100000`,
+    CODE_VALIDATION_ERROR: 'Тільки цифри',
+    MAX_CODE_LENGTH_MESSAGE: 'Не більше 10 символів',
+    MAX_LENGTH_MESSAGE: `Не більше 1000 символів`,
     MIN_LENGTH_MESSAGE: `Не менше 1 символа`,
     VALIDATION_ERROR: 'Поле обовязкове'
+  },
+  contactErrorMessages: {
+    INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
+    ENTER_EMAIL_MESSAGE: 'Введіть email',
+    PHONE_NUMBER_LENGTH_MESSAGE:
+      'Довжина номеру телефону повинна містити 12 символів',
+    PHONE_NUMBER_TYPE_MESSAGE: 'Номер повинен містити лише числа',
+    ENTER_PHONE_NUMBER_MESSAGE: 'Введіть номер',
+    INPUT_LENGTH_MESSAGE: 'Довжина повинна містити не менше 10 символів',
+    ENTER_UK_SCHEDULE_MESSAGE: 'Введіть розклад українською',
+    ENTER_EN_SCHEDULE_MESSAGE: 'Введіть розклад англійською',
+    ENTER_UK_ADDRESS_MESSAGE: 'Введіть адресу українською',
+    ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
+    IMAGE_FORMAT_MESSAGE:
+      'Введіть коректний формат, наприклад: https://example.com/',
+    ENTER_LINK_MESSAGE: 'Введіть посилання'
   },
   paginationPayload: {
     skip: 0,
@@ -208,5 +251,36 @@ export const config = {
       code: 'Код кольору',
       available: 'Доступний'
     }
-  }
+  },
+  contactsPaginationPayload: {
+    skip: 0,
+    limit: 6,
+    contactsPerPage: 7
+  },
+  product: {
+    sortBySelectOptions: [
+      {
+        label: 'популярністю',
+        value: 'popularity'
+      },
+      {
+        label: 'від дорогих до дешевих',
+        value: 'sortDesc'
+      },
+      {
+        label: 'від дешевих до дорогих',
+        value: 'sortAsc'
+      },
+      {
+        label: 'рейтингом',
+        value: 'rate'
+      }
+    ]
+  },
+  popularity: 'popularity',
+  rate: 'rate',
+  sortAsc: 'sortAsc',
+  sortDesc: 'sortDesc',
+  submitKey: 'Enter',
+  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
 };

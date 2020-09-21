@@ -170,25 +170,8 @@ const MaterialAdd = () => {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
-        <div className={styles.controlsBlock}>
-          <CheckboxOptions options={checkboxes} />
-          <div>
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='open-dialog'
-              type='button'
-              title={config.buttonTitles.CREATE_COLOR_TITLE}
-              onClickHandler={colorClickHandler}
-            />
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='save'
-              type='submit'
-              title={config.buttonTitles.SAVE_MATERIAL}
-            />
-          </div>
-        </div>
         <Grid item xs={12}>
+          <CheckboxOptions options={checkboxes} />
           <Paper className={styles.materialItemAdd}>
             <div>
               {colorImagesToUpload
@@ -198,9 +181,6 @@ const MaterialAdd = () => {
                     </Avatar>
                   ))
                 : null}
-            </div>
-
-            <div>
               {colorImages
                 ? colorImages.map((image, index) => (
                     <Avatar variant='square' key={index} src={image} />
@@ -250,6 +230,23 @@ const MaterialAdd = () => {
             {TabPanels}
           </div>
         ) : null}
+        <div className={styles.controlsBlock}>
+          <div>
+            <SaveButton
+              className={styles.saveButton}
+              data-cy='open-dialog'
+              type='button'
+              title={config.buttonTitles.CREATE_COLOR_TITLE}
+              onClickHandler={colorClickHandler}
+            />
+            <SaveButton
+              className={styles.saveButton}
+              data-cy='save'
+              type='submit'
+              title={config.buttonTitles.SAVE_MATERIAL}
+            />
+          </div>
+        </div>
       </form>
       <DialogWindowForComponent
         buttonType='submit'

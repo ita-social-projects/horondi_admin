@@ -1,7 +1,7 @@
 Cypress.Commands.add('login', (email, password) => {
   const query = `
         mutation{
-            loginAdmin(loginInput: { 
+            loginAdmin(loginInput: {
                 email: "${email}",
                 password: "${password}"
             }){
@@ -11,8 +11,8 @@ Cypress.Commands.add('login', (email, password) => {
     `;
 
   cy.request({
-    url: Cypress.env('SERVER_URL'),
     method: 'POST',
+    url: Cypress.env('SERVER_URL'),
     body: {
       query
     }

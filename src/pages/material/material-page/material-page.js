@@ -14,8 +14,8 @@ import {
 
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import TableContainerRow from '../../../components/table-container-row';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerRow from '../../../containers/table-container-row';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 
 const { routes } = config.app;

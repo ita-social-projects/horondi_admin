@@ -72,9 +72,13 @@ function CreateColor({ images, setImages, addNewColorImages }) {
       .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
       .required(materialErrorMessages.VALIDATION_ERROR),
 
-    code: Yup.number()
-      .min(1, 'мінінум 1')
-      .max(1000000, colorErrorMessages.MAX_LENGTH_MESSAGE)
+    code: Yup.string()
+      .min(1, colorErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(8, colorErrorMessages.MAX_CODE_LENGTH_MESSAGE)
+      .matches(
+        config.formRegExp.colorCode,
+        colorErrorMessages.CODE_VALIDATION_ERROR
+      )
       .required(colorErrorMessages.VALIDATION_ERROR)
   });
 
@@ -94,12 +98,13 @@ function CreateColor({ images, setImages, addNewColorImages }) {
       colorImage: ''
     },
     onSubmit: (values) => {
-      const { colorImage, ...rest } = values;
+      const { colorImage, image, ...rest } = values;
 
       const color = createColor(rest);
       dispatch(setNewColorToStore(color));
       addNewColorImages(colorImage);
       dispatch(showColorDialogWindow(false));
+      setImages(image);
     }
   });
 
@@ -177,7 +182,7 @@ function CreateColor({ images, setImages, addNewColorImages }) {
       const newImages = Array.from(e.target.files).filter(
         ({ name }) => !imagesNames.includes(name)
       );
-      setImages([...images, ...newImages]);
+      setFieldValue('image', [...images, ...newImages]);
     }
   };
 
@@ -251,7 +256,8 @@ function CreateColor({ images, setImages, addNewColorImages }) {
 
 CreateColor.propTypes = {
   images: PropTypes.arrayOf(PropTypes.any),
-  setImages: PropTypes.func.isRequired
+  setImages: PropTypes.func.isRequired,
+  addNewColorImages: PropTypes.func.isRequired
 };
 CreateColor.defaultProps = {
   images: []
