@@ -4,11 +4,12 @@ import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import useBusinessHandlers from '../../../utils/use-business-handlers';
 import Editor from '../../../components/editor';
 import { useStyles } from './business-page-form.styles';
-import { SaveButton } from '../../../components/buttons';
+import { SaveButton, StandardButton } from '../../../components/buttons';
 import TabPanel from '../../../components/tab-panel';
 import LoadingBar from '../../../components/loading-bar';
 
@@ -17,7 +18,7 @@ import {
   getBusinessPageById,
   updateBusinessPage
 } from '../../../redux/business-pages/business-pages.actions';
-import { config } from '../../../configs';
+import { config, routes } from '../../../configs';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -108,14 +109,6 @@ const BusinessPageForm = ({ id, editMode }) => {
   return (
     <div className={classes.container}>
       <form onSubmit={formik.handleSubmit}>
-        <div className={classes.controlsBlock}>
-          <SaveButton
-            className={classes.saveButton}
-            id='save'
-            type='submit'
-            title='Зберегти'
-          />
-        </div>
         <div>
           <Grid item xs={12}>
             <Paper className={classes.businessPageForm}>
@@ -206,6 +199,23 @@ const BusinessPageForm = ({ id, editMode }) => {
               )}
             </Paper>
           </TabPanel>
+        </div>
+        <div className={classes.controlsBlock}>
+          <Link to={routes.pathToBusinessPages}>
+            <StandardButton
+              className={classes.controlButton}
+              id='back'
+              title='Назад'
+              variant='outlined'
+              onClickHandler={() => {}}
+            />
+          </Link>
+          <SaveButton
+            className={classes.controlButton}
+            id='save'
+            type='submit'
+            title='Зберегти'
+          />
         </div>
       </form>
     </div>

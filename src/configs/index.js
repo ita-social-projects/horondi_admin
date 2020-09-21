@@ -5,7 +5,7 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 
-const routes = {
+export const routes = {
   pathToLogin: '/',
   pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
