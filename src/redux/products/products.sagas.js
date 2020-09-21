@@ -10,7 +10,7 @@ import {
   setProductOptions,
   setModels,
   clearProductToSend,
-  setProduct, setProductLoading
+  setProduct
 } from './products.actions';
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 
@@ -34,7 +34,8 @@ import {
   getModelsByCategory,
   addProduct,
   deleteProduct,
-  getProduct, updateProduct
+  getProduct,
+  updateProduct
 } from './products.operations';
 
 import { config } from '../../configs';
@@ -45,7 +46,11 @@ import {
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
 
-const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
+const {
+  SUCCESS_ADD_STATUS,
+  SUCCESS_DELETE_STATUS,
+  SUCCESS_UPDATE_STATUS
+} = config.statuses;
 
 export function* handleFilterLoad() {
   try {
@@ -111,13 +116,14 @@ export function* handleModelsLoad({ payload }) {
 export function* handleProductAdd() {
   try {
     yield put(setProductsLoading(true));
-    const productState = yield select(({ Products }) => Products)
+    const productState = yield select(({ Products }) => Products);
     const addedProduct = yield call(addProduct, productState);
     yield put(push(`/product/${addedProduct._id}`));
     yield call(handleFilterLoad);
-    yield put(clearProductToSend())
+    yield put(clearProductToSend());
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
   } catch (e) {
+    console.log({ e });
     yield call(handleProductsErrors, e);
   }
 }
@@ -125,10 +131,10 @@ export function* handleProductAdd() {
 export function* handleProductDelete({ payload }) {
   try {
     yield call(deleteProduct, payload.id);
-    if(payload.request) {
-      yield call(handleFilterLoad)
+    if (payload.request) {
+      yield call(handleFilterLoad);
     } else {
-      yield put(push('/'))
+      yield put(push('/'));
     }
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
@@ -136,11 +142,11 @@ export function* handleProductDelete({ payload }) {
   }
 }
 
-export function* handleProductUpdate ({ payload }) {
+export function* handleProductUpdate({ payload }) {
   try {
-    const productToUpdate = yield call(updateProduct, payload)
-    yield put(setProduct(productToUpdate))
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)
+    const productToUpdate = yield call(updateProduct, payload);
+    yield put(setProduct(productToUpdate));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -149,8 +155,8 @@ export function* handleProductUpdate ({ payload }) {
 export function* handleProductLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const product = yield call(getProduct, payload)
-    yield put(setProduct(product))
+    const product = yield call(getProduct, payload);
+    yield put(setProduct(product));
     yield put(setProductsLoading(false));
   } catch (e) {
     yield call(handleProductsErrors, e);
@@ -179,6 +185,6 @@ export default function* productsSaga() {
   yield takeEvery(GET_MODELS_BY_CATEGORY, handleModelsLoad);
   yield takeEvery(ADD_PRODUCT, handleProductAdd);
   yield takeEvery(DELETE_PRODUCT, handleProductDelete);
-  yield takeEvery(GET_PRODUCT, handleProductLoad)
-  yield takeEvery(UPDATE_PRODUCT, handleProductUpdate)
+  yield takeEvery(GET_PRODUCT, handleProductLoad);
+  yield takeEvery(UPDATE_PRODUCT, handleProductUpdate);
 }

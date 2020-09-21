@@ -142,7 +142,7 @@ const getAllFilters = async () => {
                 value
               }
               isMain
-              subcategories 
+              subcategories
             }
             options {
               additions {
@@ -334,8 +334,7 @@ const productQuery = `
               }
             }
           }
-`
-
+`;
 
 const addProduct = async (state) => {
   const result = await client.mutate({
@@ -389,8 +388,8 @@ const getProduct = async (payload) => {
     },
     fetchPolicy: 'no-cache'
   });
-  return result.data.getProductById
-}
+  return result.data.getProductById;
+};
 
 const updateProduct = async (payload) => {
   const result = await client.mutate({
@@ -404,9 +403,9 @@ const updateProduct = async (payload) => {
       id: payload.id,
       product: payload.product
     }
-  })
-  return result.data.updateProduct
-}
+  });
+  return result.data.updateProduct;
+};
 
 export {
   getAllProducts,

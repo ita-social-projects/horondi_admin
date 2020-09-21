@@ -1,42 +1,48 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import {
-    getProduct,
-    getProductOptions,
-    getProductSpecies, setProduct
-} from "../../../redux/products/products.actions";
-import ProductEditForm from "./product-edit-form";
-import LoadingBar from "../../../components/loading-bar";
-import {productModel} from "../../../redux/products/products.reducer";
+  getProduct,
+  getProductOptions,
+  getProductSpecies,
+  setProduct
+} from '../../../redux/products/products.actions';
 
-const ProductEdit = ({ match }) => {
-    const { id } = match.params
-    const dispatch = useDispatch()
-    const { product, loading } = useSelector(({ Products }) => ({
-        product: Products.product,
-        loading: Products.loading
-    }))
+import ProductEditForm from './product-edit-form';
+import LoadingBar from '../../../components/loading-bar';
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        dispatch(getProductSpecies());
-        dispatch(getProductOptions());
-        dispatch(getProduct(id))
+import { productModel } from '../../../redux/products/products.reducer';
 
-        return () => {
-            dispatch(setProduct(productModel))
-        }
-    }, [id, dispatch])
+const ProductEdit = ({ id }) => {
+  const dispatch = useDispatch();
+  const { product, loading } = useSelector(({ Products }) => ({
+    product: Products.product,
+    loading: Products.loading
+  }));
 
-    if(loading) {
-        return <LoadingBar />
-    }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(getProductSpecies());
+    dispatch(getProductOptions());
+    dispatch(getProduct(id));
 
-    return (
-        <div>
-            {product.name[0].value ? <ProductEditForm /> : <LoadingBar />}
-        </div>
-    );
+    return () => {
+      dispatch(setProduct(productModel));
+    };
+  }, [id, dispatch]);
+
+  if (loading) {
+    return <LoadingBar />;
+  }
+
+  return (
+    <div>{product.name[0].value ? <ProductEditForm /> : <LoadingBar />}</div>
+  );
+};
+
+ProductEdit.propTypes = {
+  id: PropTypes.string.isRequired
 };
 
 export default ProductEdit;

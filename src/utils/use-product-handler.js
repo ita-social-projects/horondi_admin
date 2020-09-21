@@ -1,34 +1,29 @@
-import {useState, useMemo, useCallback} from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../configs';
 
-const {
-  selectedLanguages,
-  productOptionsValues,
-  languages
-} = config;
+const { selectedLanguages, productOptionsValues, languages } = config;
 
 const useProductHandler = () => {
-  const {
-    filterData,
-    productOptions,
-    modelsForSelectedCategory,
-  } = useSelector(({ Products }) => ({
-    filterData: Products.filterData,
-    productOptions: Products.productOptions,
-    modelsForSelectedCategory: Products.productSpecies.modelsForSelectedCategory
-  }));
+  const { filterData, productOptions, modelsForSelectedCategory } = useSelector(
+    ({ Products }) => ({
+      filterData: Products.filterData,
+      productOptions: Products.productOptions,
+      modelsForSelectedCategory:
+        Products.productSpecies.modelsForSelectedCategory
+    })
+  );
 
   const [preferedLanguages, setPreferedLanguages] = useState(selectedLanguages);
   const [selectedOptions, setOptions] = useState(productOptionsValues);
-  const [ primaryImage, setPrimaryImage ] = useState('')
-  const [ additionalImages, setAdditionalImages ] = useState([])
+  const [primaryImage, setPrimaryImage] = useState('');
+  const [additionalImages, setAdditionalImages] = useState([]);
 
   const { bottomMaterials: materials, sizes } = productOptions;
 
   const checkedLanguages = useMemo(
-      () => Object.values(preferedLanguages).filter(({ checked }) => checked),
-      [preferedLanguages]
+    () => Object.values(preferedLanguages).filter(({ checked }) => checked),
+    [preferedLanguages]
   );
 
   const categoriesNames = useMemo(
@@ -132,7 +127,8 @@ const useProductHandler = () => {
       arr: materialsOptions,
       name: 'bottomMaterial'
     };
-    let objToMap; let objToAggregate;
+    let objToMap;
+    let objToAggregate;
 
     if (sizeOptions.length > materialsOptions.length) {
       objToMap = sizeObj;
@@ -159,13 +155,13 @@ const useProductHandler = () => {
   }, [sizeOptions, materialsOptions, additions, selectedOptions.additions]);
 
   const getColorToSend = (color) =>
-      colors.find((item) => item[0].simpleName[0].value === color);
+    colors.find((item) => item[0].simpleName[0].value === color);
 
   const getPatternToSend = (pattern) =>
-      patterns.find((item) => pattern === item[0].value);
+    patterns.find((item) => pattern === item[0].value);
 
   const getModelToSend = (model) =>
-      modelsForSelectedCategory.find(({ name }) => name[0].value === model)._id;
+    modelsForSelectedCategory.find(({ name }) => name[0].value === model);
 
   const createProductInfo = ({
     ukname,
@@ -201,7 +197,10 @@ const useProductHandler = () => {
     ]
   });
 
-  const getSelectedCategory = useCallback((category) => categories.find(({ _id }) => category === _id), [categories])
+  const getSelectedCategory = useCallback(
+    (category) => categories.find(({ _id }) => category === _id),
+    [categories]
+  );
 
   return {
     preferedLanguages,

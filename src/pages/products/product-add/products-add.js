@@ -8,13 +8,13 @@ import useProductHandler from '../../../utils/use-product-handler';
 import ProductsStepper from './product-add-stepper/product-add-stepper';
 import {
   getProductSpecies,
-  getProductOptions,
+  getProductOptions
 } from '../../../redux/products/products.actions';
 import ProductAddInfo from './product-add-info';
 import ProductAddSpecies from './product-add-species/product-add-species';
 import ProductAddOptions from './product-add-options/product-add-options';
 import ProductAddImages from './product-add-images/product-add-images';
-import ProductAddSubmit from "./product-add-submit";
+import ProductAddSubmit from './product-add-submit';
 
 const ProductsAdd = () => {
   const styles = useStyles();
@@ -108,12 +108,12 @@ const ProductsAdd = () => {
 
   const productAddSubmitStep = (
     <ProductAddSubmit
-      preferedLanguages={preferedLanguages}
       selectedOptions={selectedOptions}
       additions={additions}
       activeStep={activeStep}
       handleBack={handleBack}
       getSelectedCategory={getSelectedCategory}
+      checkedLanguages={checkedLanguages}
     />
   );
 

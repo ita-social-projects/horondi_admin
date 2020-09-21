@@ -22,7 +22,7 @@ import UsersDetails from '../pages/users/users-details';
 import { config } from '../configs';
 import { history } from '../store/store';
 
-import ProductEdit from "../pages/products/product-edit";
+import ProductEdit from '../pages/products/product-edit';
 
 const { routes } = config.app;
 
@@ -61,7 +61,11 @@ const Routes = () => {
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
-        <Route path={routes.pathToEditProduct} exact component={ProductEdit}/>
+        <Route
+          path={routes.pathToEditProduct}
+          exact
+          render={({ match }) => <ProductEdit id={match.params.id} />}
+        />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route
           path={routes.pathToAddCategory}
