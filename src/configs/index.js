@@ -1,4 +1,5 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
@@ -7,12 +8,15 @@ import PaletteIcon from '@material-ui/icons/Palette';
 
 export const routes = {
   pathToLogin: '/',
-  pathToNews: '/',
   pathToPatterns: '/patterns',
-  pathToAddNews: '/newsadd',
-  pathToNewsDetails: '/news/:id',
   pathToPatternDetails: '/patterns/:id',
   pathToAddPattern: '/patterns/add',
+  pathToNews: '/news',
+  pathToNewsDetails: '/news/:id',
+  pathToAddNews: '/newsadd',
+  pathToBusinessPages: '/business-pages',
+  pathToAddBusinessPage: '/business-page-add',
+  pathToBusinessPageDetails: '/business-pages/:id',
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
   pathToProducts: '/products',
@@ -29,6 +33,7 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
       ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
@@ -63,6 +68,7 @@ export const config = {
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
+    businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
       'Фото',
       'Назва',
@@ -128,6 +134,16 @@ export const config = {
     CREATE_PATTERN_TITLE: 'Додати гобелен',
     REMOVE_TITLE: 'Видалити новину',
     PATTERN_REMOVE_TITLE: 'Видалити гобелен',
+    REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
+    CANCEL_TITLE: 'Відмінити',
+    LOGOUT_TITLE: 'Вихід',
+    CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку',
+    GO_BACK_TITLE: 'Назад'
+  },
+  messages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     CREATE_CONTACT_TITLE: 'Додати контакти',
     REMOVE_CONTACT_TITLE: 'Видалити контакт',
     REMOVE_USER_TITLE: 'Видалити користувача',
@@ -144,6 +160,13 @@ export const config = {
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
+    USER_ACTIVE_TITLE: 'Активувати',
+    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
+    SWITCH_USER_STATUS_MESSAGE:
+      'Ви впевнені,що хочете змінити статус користувача?',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
@@ -154,20 +177,7 @@ export const config = {
         [false, 'підкатегорію']
       ]);
       return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
-    },
-    GO_BACK_TITLE: 'Назад'
-  },
-  messages: {
-    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
-    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
-    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
-    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
-    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
-    USER_UNACTIVE_TITLE: 'Деактивувати',
-    USER_ACTIVE_TITLE: 'Активувати',
-    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
-    SWITCH_USER_STATUS_MESSAGE:
-      'Ви впевнені,що хочете змінити статус користувача?'
+    }
   },
   formRegExp: {
     patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
@@ -175,7 +185,8 @@ export const config = {
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
     unwrapHtml: /(<([^>]+)>)/gi,
-    enAddressRegex: '^[A-Za-z0-9_|,| |./]+$'
+    enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
+    editorField: /^<p><br><\/p>$/
   },
   loginErrorMessages: {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',

@@ -11,6 +11,8 @@ import NavMenu from '../components/nav-menu';
 import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
+import Business from '../pages/business-pages';
+import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
 import ProductsPage from '../pages/products/products-page';
 import Categories from '../pages/categories/categories-page';
@@ -66,6 +68,19 @@ const Routes = () => {
           path={routes.pathToPatternDetails}
           exact
           component={PatternDetails}
+        />
+        <Route path={routes.pathToBusinessPages} exact component={Business} />
+        <Route
+          path={routes.pathToAddBusinessPage}
+          exact
+          component={BusinessPageForm}
+        />
+        <Route
+          path={routes.pathToBusinessPageDetails}
+          exact
+          render={({ match }) => (
+            <BusinessPageForm id={match.params.id} editMode />
+          )}
         />
         <Route path={routes.pathToContacts} exact component={ContactsPage} />
         <Route
