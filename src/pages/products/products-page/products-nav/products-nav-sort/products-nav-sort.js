@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Typography } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
+import { FormControl, MenuItem, Select, Typography } from '@material-ui/core';
 import {
   setSortByPopularity,
   setSortByPrice,
@@ -12,22 +11,34 @@ import { useStyles } from './products-nav-sort.styles';
 
 import { config } from '../../../../../configs';
 import { productsTranslations } from '../../../../../translations/product.translations';
+import { setCurrentPage } from '../../../../../redux/table/table.actions';
 
-const { sortBySelectOptions, sortAsc, sortDesc, rate, popularity } = config;
+const {
+  product: { sortBySelectOptions },
+  sortAsc,
+  sortDesc,
+  rate,
+  popularity
+} = config;
 const { SORT } = productsTranslations;
 
 const ProductsNavSort = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const selectOptions = sortBySelectOptions.map(({ label, value }, idx) => (
-    <option key={idx} value={value}>
+  const [selectedSort, setSelectedSort] = useState(
+    sortBySelectOptions[0].value
+  );
+
+  const selectOptions = sortBySelectOptions.map(({ label, value }) => (
+    <MenuItem key={label} value={value}>
       {label}
-    </option>
+    </MenuItem>
   ));
 
   const selectHandler = (e) => {
     const { value } = e.target;
-
+    setSelectedSort(value);
+    dispatch(setCurrentPage(0));
     switch (value) {
     case sortAsc:
       return dispatch(setSortByPrice(1));
@@ -44,15 +55,17 @@ const ProductsNavSort = () => {
   return (
     <div className={styles.sort}>
       <Typography>{SORT}</Typography>
-      <TextField
-        select
-        SelectProps={{ native: true }}
-        onChange={selectHandler}
-        variant='outlined'
-        className={styles.select}
-      >
-        {selectOptions}
-      </TextField>
+      <FormControl className={styles.formControl}>
+        <Select
+          labelId='checkbox-label'
+          id='checkbox'
+          value={selectedSort}
+          onChange={selectHandler}
+          defaultValue={0}
+        >
+          {selectOptions}
+        </Select>
+      </FormControl>
     </div>
   );
 };

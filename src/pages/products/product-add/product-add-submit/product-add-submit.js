@@ -17,11 +17,7 @@ import ProductAddDetail from '../product-add-detail';
 import StepperButtons from '../product-add-stepper/stepper-buttons';
 import { addProduct } from '../../../../redux/products/products.actions';
 
-const {
-  productInfoLabels,
-  productSelectsLabels,
-  productOptionsLabels
-} = config;
+const { infoLabels, selectsLabels, optionsLabels } = config.product;
 
 const ProductAddSubmit = ({
   selectedOptions,
@@ -87,13 +83,13 @@ const ProductAddSubmit = ({
     strapLengthInCm
   };
 
-  const species = productSelectsLabels.map(({ name, label }) => (
+  const species = selectsLabels.map(({ name, label }) => (
     <ProductAddDetail key={name} title={label} text={speciesNames[name]} />
   ));
 
   const tabPanels = checkedLanguages.map((checkedLang, idx) => (
     <TabPanel index={idx} value={tabValue} key={idx}>
-      {productInfoLabels.map(({ label, name }) => (
+      {infoLabels.map(({ label, name }) => (
         <ProductAddDetail
           key={name}
           title={label}
@@ -131,13 +127,13 @@ const ProductAddSubmit = ({
             {species}
             {selectedOptions.sizes.length ? (
               <ProductAddDetail
-                title={productOptionsLabels[0].label}
+                title={optionsLabels[0].label}
                 text={selectedOptions.sizes.sort().reverse().join(', ')}
               />
             ) : null}
             {selectedOptions.bottomMaterials.length ? (
               <ProductAddDetail
-                title={productOptionsLabels[1].label}
+                title={optionsLabels[1].label}
                 text={selectedOptions.bottomMaterials.join(', ')}
               />
             ) : null}

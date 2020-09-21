@@ -11,8 +11,8 @@ import {
   deleteProduct
 } from '../../../redux/products/products.actions';
 
-import TableContainerRow from '../../../components/table-container-row';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerRow from '../../../containers/table-container-row';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 import ProductsNav from './products-nav';
 
@@ -28,7 +28,7 @@ const {
   DELETE_PRODUCT_BTN
 } = productsTranslations;
 const tableTitles = config.tableHeadRowTitles.products;
-const { IMG_URL } = config
+const { imagePrefix } = config;
 
 const ProductsPage = () => {
   const styles = useStyles();
@@ -48,12 +48,12 @@ const ProductsPage = () => {
       Products: {
         loading,
         products,
-        sortByRate,
-        sortByPrice,
         filters,
-        sortByPopularity
+        sorting: { sortByPopularity, sortByPrice, sortByRate }
       },
-      Table: { rowsPerPage, currentPage }
+      Table: {
+        pagination: { rowsPerPage, currentPage }
+      }
     }) => ({
       loading,
       products,
@@ -107,25 +107,35 @@ const ProductsPage = () => {
     );
   };
 
+  const handleProductEdit = (id) => {
+    dispatch(push(`/product/${id}`));
+  };
+
   const productsItems = products
     ? products.map(
-      (
-        { _id, name, category, basePrice, model, purchasedCount, pattern, images },
-        idx
-      ) => (
+      ({
+        _id,
+        name,
+        category,
+        basePrice,
+        model,
+        purchasedCount,
+        pattern,
+        rate,
+        images
+      }) => (
         <TableContainerRow
-          key={idx}
+          key={_id}
           id={_id}
-          avatarSrc={`${IMG_URL}${images.primary.small}`}
+          avatarSrc={`${imagePrefix}${images.primary.small}`}
           name={name[0].value}
           category={category.name[0].value}
           model={model[0].value}
           pattern={pattern[0].value}
           price={Math.round(basePrice[0].value / 100)}
+          rate={rate.toFixed(2)}
           purchasedCount={purchasedCount}
-          editHandler={() => {
-            dispatch(push(`/product/${_id}`));
-          }}
+          editHandler={() => handleProductEdit(_id)}
           deleteHandler={() => handleProductDelete(_id)}
         />
       )

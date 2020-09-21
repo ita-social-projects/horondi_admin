@@ -10,7 +10,7 @@ import {
   setProductToSend
 } from '../../../../redux/products/products.actions';
 import StepperButtons from '../product-add-stepper/stepper-buttons/stepper-buttons';
-import ProductSpeciesContainer from '../../../../components/product-species-container';
+import ProductSpeciesContainer from '../../../../containers/product-species-container';
 
 const ProductAddSpecies = ({
   colors,

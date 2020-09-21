@@ -6,7 +6,10 @@ import { useSelector } from 'react-redux';
 import { config } from '../configs';
 import { productsTranslations } from '../translations/product.translations';
 
-const { productInfoLabels, languages } = config;
+const {
+  product: { infoLabels },
+  languages
+} = config;
 
 const {
   REQUIRED_FIELD,
@@ -46,11 +49,11 @@ const useProductValidation = (
   const formikInfoValues = checkedLanguages
     ? Object.assign(
       ...languages.map((lang, idx) => ({
-        [`${lang}${productInfoLabels[0].name}`]: name[idx].value,
-        [`${lang}${productInfoLabels[1].name}`]: mainMaterial[idx].value,
-        [`${lang}${productInfoLabels[2].name}`]: innerMaterial[idx].value,
-        [`${lang}${productInfoLabels[3].name}`]: closure[idx].value,
-        [`${lang}${productInfoLabels[4].name}`]: description[idx].value
+        [`${lang}${infoLabels[0].name}`]: name[idx].value,
+        [`${lang}${infoLabels[1].name}`]: mainMaterial[idx].value,
+        [`${lang}${infoLabels[2].name}`]: innerMaterial[idx].value,
+        [`${lang}${infoLabels[3].name}`]: closure[idx].value,
+        [`${lang}${infoLabels[4].name}`]: description[idx].value
       }))
     )
     : {};
@@ -60,23 +63,23 @@ const useProductValidation = (
       checkedLanguages.length
         ? Object.assign(
           ...checkedLanguages.map(({ name }) => ({
-            [`${name}${productInfoLabels[0].name}`]: Yup.string()
+            [`${name}${infoLabels[0].name}`]: Yup.string()
               .min(6, NAME_TOO_SHORT_MESSAGE)
               .max(50, NAME_TOO_LONG_MESSAGE)
               .required(REQUIRED_FIELD),
-            [`${name}${productInfoLabels[1].name}`]: Yup.string()
+            [`${name}${infoLabels[1].name}`]: Yup.string()
               .min(2, MAIN_MATERIAL_TOO_SHORT_MESSAGE)
               .max(150, MAIN_MATERIAL_TOO_LONG_MESSAGE)
               .required(REQUIRED_FIELD),
-            [`${name}${productInfoLabels[2].name}`]: Yup.string()
+            [`${name}${infoLabels[2].name}`]: Yup.string()
               .min(2, INNER_MATERIAL_TOO_SHORT_MESSAGE)
               .max(150, INNER_MATERIAL_TOO_LONG_MESSAGE)
               .required(REQUIRED_FIELD),
-            [`${name}${productInfoLabels[3].name}`]: Yup.string()
+            [`${name}${infoLabels[3].name}`]: Yup.string()
               .min(2, CLOSURE_TOO_SHORT_MESSAGE)
               .max(100, CLOSURE_TOO_LONG_MESSAGE)
               .required(REQUIRED_FIELD),
-            [`${name}${productInfoLabels[4].name}`]: Yup.string()
+            [`${name}${infoLabels[4].name}`]: Yup.string()
               .min(10, DESCRIPTION_TOO_SHORT_MESSAGE)
               .required(REQUIRED_FIELD)
           }))

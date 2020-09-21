@@ -17,9 +17,9 @@ import { useStyles } from './product-edit-form.styles';
 import 'react-multi-carousel/lib/styles.css';
 import './product-edit-form.css';
 
-import ProductInfoContainer from '../../../../components/product-info-container/product-info-container';
-import ProductSpeciesContainer from '../../../../components/product-species-container';
-import ProductOptionsContainer from '../../../../components/product-options-container';
+import ProductInfoContainer from '../../../../containers/product-info-container';
+import ProductSpeciesContainer from '../../../../containers/product-species-container';
+import ProductOptionsContainer from '../../../../containers/product-options-container';
 import LoadingBar from '../../../../components/loading-bar';
 
 import {
@@ -32,7 +32,10 @@ import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actio
 import { config } from '../../../../configs';
 import { productsTranslations } from '../../../../translations/product.translations';
 
-const { responsive, IMG_URL } = config;
+const {
+  product: { responsive },
+  imagePrefix
+} = config;
 const {
   DELETE_PRODUCT_MESSAGE,
   DELETE_PRODUCT_TITLE,
@@ -217,19 +220,23 @@ const ProductEditForm = () => {
     );
   };
 
-  const imagesToMap = product.images
-    ? [
-      product.images.primary.large,
-      ...product.images.additional.map(({ large }) => large)
-    ]
-    : [];
+  const imagesToMap = useMemo(
+    () =>
+      product.images
+        ? [
+          product.images.primary.large,
+          ...product.images.additional.map(({ large }) => large)
+        ]
+        : [],
+    [product.images, product.images.primary.large, product.images.additional]
+  );
 
   const imagesForCarousel = imagesToMap.map((image) => (
     <div
       key={image}
       className={styles.image}
       style={{
-        background: `url(${IMG_URL}${image}) no-repeat center`,
+        background: `url(${imagePrefix}${image}) no-repeat center`,
         backgroundSize: 'cover'
       }}
     />

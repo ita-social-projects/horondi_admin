@@ -5,7 +5,7 @@ import useProductValidation from '../../../../utils/use-product-validation';
 
 import { setProductToSend } from '../../../../redux/products/products.actions';
 import StepperButtons from '../product-add-stepper/stepper-buttons/stepper-buttons';
-import ProductInfoContainer from '../../../../components/product-info-container/product-info-container';
+import ProductInfoContainer from '../../../../containers/product-info-container';
 
 const ProductAddInfo = ({
   activeStep,

@@ -2,7 +2,11 @@ import { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../configs';
 
-const { selectedLanguages, productOptionsValues, languages } = config;
+const {
+  selectedLanguages,
+  languages,
+  product: { optionsValues }
+} = config;
 
 const useProductHandler = () => {
   const { filterData, productOptions, modelsForSelectedCategory } = useSelector(
@@ -15,7 +19,7 @@ const useProductHandler = () => {
   );
 
   const [preferedLanguages, setPreferedLanguages] = useState(selectedLanguages);
-  const [selectedOptions, setOptions] = useState(productOptionsValues);
+  const [selectedOptions, setOptions] = useState(optionsValues);
   const [primaryImage, setPrimaryImage] = useState('');
   const [additionalImages, setAdditionalImages] = useState([]);
 

@@ -9,7 +9,7 @@ import { useStyles } from './stepper-buttons.styles';
 import { config } from '../../../../../configs';
 import { productsTranslations } from '../../../../../translations/product.translations';
 
-const { productStepsLabels } = config;
+const { stepsLabels } = config.product;
 const { NEXT, CREATE_PRODUCT, BACK } = productsTranslations;
 
 const StepperButtons = ({ handleNext, handleBack, activeStep, type }) => {
@@ -35,7 +35,7 @@ const StepperButtons = ({ handleNext, handleBack, activeStep, type }) => {
           onClick={handleNext}
           className={styles.button}
         >
-          {activeStep === productStepsLabels.length - 1 ? CREATE_PRODUCT : NEXT}
+          {activeStep === stepsLabels.length - 1 ? CREATE_PRODUCT : NEXT}
         </Button>
       </Grid>
       <Grid item>

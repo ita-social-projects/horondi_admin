@@ -2,9 +2,7 @@ import {
   GET_PRODUCT,
   SET_ALL_PRODUCTS,
   GET_ALL_FILTERS,
-  SET_CURRENT_PAGE,
   SET_ALL_FILTER_DATA,
-  SET_PRODUCTS_PER_PAGE,
   SET_SORT_BY_PRICE,
   SET_SORT_BY_DATE,
   SET_SORT_BY_RATE,
@@ -17,7 +15,6 @@ import {
   SET_PATTERNS_FILTER,
   SET_MODELS_FILTER,
   SET_SEARCH,
-  SET_PAGES_COUNT,
   SET_PRODUCT_LOADING,
   SET_PRODUCT_TO_SEND,
   CLEAR_PRODUCT_TO_SEND,
@@ -29,7 +26,10 @@ import {
   GET_MODELS_BY_CATEGORY,
   SET_MODELS,
   ADD_PRODUCT,
-  DELETE_PRODUCT, SET_FILES_TO_UPLOAD, SET_PRODUCT, UPDATE_PRODUCT
+  DELETE_PRODUCT,
+  SET_FILES_TO_UPLOAD,
+  SET_PRODUCT,
+  UPDATE_PRODUCT
 } from './products.types';
 
 export const getProduct = (id) => ({
@@ -39,16 +39,6 @@ export const getProduct = (id) => ({
 
 export const setAllFilterData = (payload) => ({
   type: SET_ALL_FILTER_DATA,
-  payload
-});
-
-export const setCurrentPage = (payload) => ({
-  type: SET_CURRENT_PAGE,
-  payload
-});
-
-export const setProductsPerPage = (payload) => ({
-  type: SET_PRODUCTS_PER_PAGE,
   payload
 });
 
@@ -109,11 +99,6 @@ export const setModelsFilter = (payload) => ({
 
 export const setSearchFilter = (payload) => ({
   type: SET_SEARCH,
-  payload
-});
-
-export const setPagesCount = (payload) => ({
-  type: SET_PAGES_COUNT,
   payload
 });
 
@@ -186,7 +171,7 @@ export const deleteProduct = (payload) => ({
 export const setFilesToUpload = (payload) => ({
   type: SET_FILES_TO_UPLOAD,
   payload
-})
+});
 
 export const setProduct = (payload) => ({
   type: SET_PRODUCT,
@@ -196,6 +181,4 @@ export const setProduct = (payload) => ({
 export const updateProduct = (payload) => ({
   type: UPDATE_PRODUCT,
   payload
-})
-
-
+});

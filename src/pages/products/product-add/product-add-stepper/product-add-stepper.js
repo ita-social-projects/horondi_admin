@@ -5,7 +5,7 @@ import { Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
 import { useStyles } from './product-add-stepper.styles';
 import { config } from '../../../../configs';
 
-const { productStepsLabels } = config;
+const { stepsLabels } = config.product;
 
 const ProductsStepper = ({ steps, activeStep }) => {
   const styles = useStyles();
@@ -13,22 +13,20 @@ const ProductsStepper = ({ steps, activeStep }) => {
   return (
     <div className={styles.root}>
       <Stepper activeStep={activeStep} orientation='vertical'>
-        {productStepsLabels.map((label, index) => (
+        {stepsLabels.map((label, index) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
-            <StepContent>
-              {steps[index]}
-            </StepContent>
+            <StepContent>{steps[index]}</StepContent>
           </Step>
         ))}
       </Stepper>
     </div>
   );
-}
+};
 
 ProductsStepper.propTypes = {
   steps: PropTypes.arrayOf(PropTypes.object).isRequired,
-  activeStep: PropTypes.number.isRequired,
+  activeStep: PropTypes.number.isRequired
 };
 
-export default ProductsStepper
+export default ProductsStepper;

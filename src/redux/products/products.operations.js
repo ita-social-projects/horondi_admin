@@ -90,12 +90,14 @@ const getAllProducts = async (productsState, tableState) => {
       colors: productsState.filters.colorsFilter,
       patterns: productsState.filters.patternsFilter,
       price: productsState.filters.priceFilter,
-      skip: tableState.currentPage * tableState.rowsPerPage,
-      limit: tableState.rowsPerPage,
-      basePrice: productsState.sortByPrice || undefined,
       category: productsState.filters.categoryFilter,
-      purchasedCount: productsState.sortByPopularity || undefined,
-      models: productsState.filters.modelsFilter
+      models: productsState.filters.modelsFilter,
+      skip:
+        tableState.pagination.currentPage * tableState.pagination.rowsPerPage,
+      limit: tableState.pagination.rowsPerPage,
+      basePrice: productsState.sorting.sortByPrice || undefined,
+      rate: productsState.sorting.sortByRate || undefined,
+      purchasedCount: productsState.sorting.sortByPopularity || undefined
     },
     fetchPolicy: 'no-cache'
   });

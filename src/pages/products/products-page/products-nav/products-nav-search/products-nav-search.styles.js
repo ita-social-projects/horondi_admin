@@ -5,6 +5,9 @@ export const useStyles = makeStyles((theme) => ({
     height: '36px'
   },
   root: {
+    '&.MuiPaper-root': {
+      backgroundColor: 'inherit'
+    },
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
@@ -13,8 +16,5 @@ export const useStyles = makeStyles((theme) => ({
   },
   iconButton: {
     padding: 10
-  },
-  container: {
-    width: 421
   }
 }));

@@ -38,7 +38,7 @@ import {
   updateProduct
 } from './products.operations';
 
-import { config } from '../../configs';
+import { config, routes } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -123,7 +123,6 @@ export function* handleProductAdd() {
     yield put(clearProductToSend());
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
   } catch (e) {
-    console.log({ e });
     yield call(handleProductsErrors, e);
   }
 }
@@ -134,7 +133,7 @@ export function* handleProductDelete({ payload }) {
     if (payload.request) {
       yield call(handleFilterLoad);
     } else {
-      yield put(push('/'));
+      yield put(push(routes.pathToProducts));
     }
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
