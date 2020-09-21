@@ -1,16 +1,20 @@
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 
-const routes = {
+export const routes = {
   pathToLogin: '/',
-  pathToNews: '/',
-  pathToUsers: '/users',
-  pathToUsersDetails: '/users/:id',
+  pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
+  pathToBusinessPages: '/business-pages',
+  pathToAddBusinessPage: '/business-page-add',
+  pathToBusinessPageDetails: '/business-pages/:id',
+  pathToUsers: '/users',
+  pathToUsersDetails: '/users/:id',
   pathToProducts: '/products',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
@@ -25,6 +29,7 @@ export const config = {
     title: 'Horondi Admin Portal',
     menuCategories: [
       ['Новини', routes.pathToNews, ImportContactsIcon],
+      ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
       ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
@@ -57,6 +62,7 @@ export const config = {
   },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
       'Фото',
       'Назва',
@@ -120,6 +126,15 @@ export const config = {
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     REMOVE_TITLE: 'Видалити новину',
+    REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
+    CANCEL_TITLE: 'Відмінити',
+    LOGOUT_TITLE: 'Вихід',
+    CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку'
+  },
+  messages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     CREATE_CONTACT_TITLE: 'Додати контакти',
     REMOVE_CONTACT_TITLE: 'Видалити контакт',
     REMOVE_USER_TITLE: 'Видалити користувача',
@@ -149,23 +164,13 @@ export const config = {
     },
     GO_BACK_TITLE: 'Назад'
   },
-  messages: {
-    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
-    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
-    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
-    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
-    USER_UNACTIVE_TITLE: 'Деактивувати',
-    USER_ACTIVE_TITLE: 'Активувати',
-    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
-    SWITCH_USER_STATUS_MESSAGE:
-      'Ви впевнені,що хочете змінити статус користувача?'
-  },
   formRegExp: {
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
     unwrapHtml: /(<([^>]+)>)/gi,
-    enAddressRegex: '^[A-Za-z0-9_|,| |./]+$'
+    enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
+    editorField: /^<p><br><\/p>$/
   },
   loginErrorMessages: {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
