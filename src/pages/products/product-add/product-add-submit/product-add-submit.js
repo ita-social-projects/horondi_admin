@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, {useState, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {
   Tab,
@@ -89,16 +89,15 @@ const ProductAddSubmit = ({
 
   const tabPanels = checkedLanguages.map((checkedLang, idx) => (
     <TabPanel index={idx} value={tabValue} key={idx}>
-      {infoLabels.map(({ label, name }) => (
-        <ProductAddDetail
-          key={name}
-          title={label}
-          text={
-            productToSend[name].find(({ lang }) => lang === checkedLang.name)
-              .value
-          }
-        />
-      ))}
+      {infoLabels.map(({ label, name }) => {
+        const text = productToSend[name].find(({ lang }) => lang === checkedLang.name).value
+
+        return !!text ? <ProductAddDetail
+                  key={name}
+                  title={label}
+                  text={text}
+                /> : null
+      })}
     </TabPanel>
   ));
 

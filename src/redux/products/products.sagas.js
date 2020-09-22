@@ -10,7 +10,7 @@ import {
   setProductOptions,
   setModels,
   clearProductToSend,
-  setProduct
+  setProduct, setFilesToUpload
 } from './products.actions';
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 
@@ -23,7 +23,7 @@ import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   GET_PRODUCT,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT, DELETE_IMAGES
 } from './products.types';
 
 import {
@@ -35,7 +35,7 @@ import {
   addProduct,
   deleteProduct,
   getProduct,
-  updateProduct
+  updateProduct, deleteImages
 } from './products.operations';
 
 import { config, routes } from '../../configs';
@@ -121,6 +121,7 @@ export function* handleProductAdd() {
     yield put(push(`/product/${addedProduct._id}`));
     yield call(handleFilterLoad);
     yield put(clearProductToSend());
+    yield put(setFilesToUpload([]))
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
@@ -143,8 +144,10 @@ export function* handleProductDelete({ payload }) {
 
 export function* handleProductUpdate({ payload }) {
   try {
-    const productToUpdate = yield call(updateProduct, payload);
+    const upload = yield select(({ Products }) => Products.upload)
+    const productToUpdate = yield call(updateProduct, payload, upload);
     yield put(setProduct(productToUpdate));
+    yield put(setFilesToUpload([]))
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
@@ -176,6 +179,20 @@ export function* handleProductsErrors(e) {
   yield put(setSnackBarStatus(true));
 }
 
+export function* handleImagesDelete({ payload }) {
+  try {
+    const { images, selectedProduct } = yield select(({ Products }) => ({
+      images: Products.upload,
+      selectedProduct: Products.selectedProduct
+    }))
+    const newImages = yield call(deleteImages, payload, images)
+    yield put(setProduct({ ...selectedProduct, images: newImages }))
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
 export default function* productsSaga() {
   yield takeEvery(GET_ALL_FILTERS, handleGetFilters);
   yield takeEvery(GET_FILTRED_PRODUCTS, handleFilterLoad);
@@ -186,4 +203,5 @@ export default function* productsSaga() {
   yield takeEvery(DELETE_PRODUCT, handleProductDelete);
   yield takeEvery(GET_PRODUCT, handleProductLoad);
   yield takeEvery(UPDATE_PRODUCT, handleProductUpdate);
+  yield takeEvery(DELETE_IMAGES, handleImagesDelete)
 }

@@ -104,7 +104,6 @@ const ProductAddSpecies = ({
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
         setFieldValue={setFieldValue}
-        variant='outlined'
       />
       <div className={styles.buttons}>
         <StepperButtons

@@ -32,7 +32,8 @@ const ProductAddInfo = ({
     handleSubmit,
     handleChange,
     handleBlur,
-    submitForm
+    submitForm,
+    setFieldValue
   } = useProductValidation(checkedLanguages, onSubmit, '', 'productToSend');
 
   const handleInfoSubmit = async () => {
@@ -53,6 +54,7 @@ const ProductAddInfo = ({
         handleChange={handleChange}
         handleBlur={handleBlur}
         handleSubmit={handleSubmit}
+        setFieldValue={setFieldValue}
         variant='outlined'
       />
       {checkedLanguages.length ? (

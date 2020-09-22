@@ -17,7 +17,7 @@ import { productModel } from '../../../redux/products/products.reducer';
 const ProductEdit = ({ id }) => {
   const dispatch = useDispatch();
   const { product, loading } = useSelector(({ Products }) => ({
-    product: Products.product,
+    product: Products.selectedProduct,
     loading: Products.loading
   }));
 

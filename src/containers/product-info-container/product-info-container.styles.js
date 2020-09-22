@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     flexGrow: 1
+  },
+  editor: {
+    width: '100%'
   }
 }));
 

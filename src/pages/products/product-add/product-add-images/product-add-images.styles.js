@@ -4,9 +4,6 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     position: 'relative'
   },
-  input: {
-    display: 'none'
-  },
   error: {
     position: 'absolute',
     color: '#e53935',

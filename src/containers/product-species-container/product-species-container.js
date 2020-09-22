@@ -21,7 +21,6 @@ const ProductSpeciesContainer = ({
   handleBlur,
   handleChange,
   handleSubmit,
-  variant,
   setFieldValue,
   toggleFieldsChanged
 }) => {
@@ -136,18 +135,16 @@ const ProductSpeciesContainer = ({
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      {selectsLabels.map(({ label, name, type }, idx) =>
+      {selectsLabels.map(({ label, name, type, required }, idx) =>
         type === 'select' ? (
           <FormControl
-            variant={variant}
             className={styles.formControl}
             key={label}
           >
-            <InputLabel htmlFor={label}>{label}</InputLabel>
+            <InputLabel htmlFor={label}>{`${label}${required ? '*' : ''}`}</InputLabel>
             <Select
               name={name}
               native
-              label={`${label}*`}
               error={touched[name] && !!errors[name]}
               value={values[name]}
               onChange={handleSelectChange}
@@ -160,9 +157,8 @@ const ProductSpeciesContainer = ({
         ) : (
           <TextField
             className={styles.numberInputControl}
-            label={label}
+            label={`${label}${required ? '*' : ''}`}
             key={name}
-            variant={variant}
             type={type}
             name={name}
             inputProps={{ min: 0 }}
@@ -194,13 +190,11 @@ ProductSpeciesContainer.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   getSelectedCategory: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  toggleFieldsChanged: PropTypes.func,
-  variant: PropTypes.string
+  toggleFieldsChanged: PropTypes.func
 };
 
 ProductSpeciesContainer.defaultProps = {
   toggleFieldsChanged: () => {},
-  variant: 'standard'
 };
 
 export default ProductSpeciesContainer;

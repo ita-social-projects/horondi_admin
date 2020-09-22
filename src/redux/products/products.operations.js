@@ -393,21 +393,44 @@ const getProduct = async (payload) => {
   return result.data.getProductById;
 };
 
-const updateProduct = async (payload) => {
+const updateProduct = async (payload, upload) => {
   const result = await client.mutate({
     mutation: gql`
-      mutation($id: ID!, $product: ProductInput!) {
-        updateProduct(id: $id, product: $product) {
+      mutation($id: ID!, $product: ProductInput!, $upload: Upload) {
+        updateProduct(id: $id, product: $product, upload: $upload) {
             ${productQuery}
         }
       }`,
     variables: {
       id: payload.id,
-      product: payload.product
+      product: payload.product,
+      upload: upload.length ? upload : undefined
     }
   });
   return result.data.updateProduct;
 };
+
+const deleteImages = async (payload, images) => {
+  const result = await client.mutate({
+    mutation: gql`
+        mutation($id: ID!, $images: [String!]!) {
+          deleteImages(id: $id, images: $images) {
+            primary {
+              large
+            }
+            additional {
+              large
+            }
+          }
+        }
+    `,
+    variables: {
+      id: payload,
+      images
+    }
+  })
+  return result.data.deleteImages
+}
 
 export {
   getAllProducts,
@@ -418,5 +441,6 @@ export {
   addProduct,
   deleteProduct,
   getProduct,
-  updateProduct
+  updateProduct,
+  deleteImages
 };

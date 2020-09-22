@@ -148,8 +148,13 @@ Editor.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onEditorChange: PropTypes.func.isRequired,
-  setFiles: PropTypes.func.isRequired,
-  files: PropTypes.arrayOf.isRequired
+  setFiles: PropTypes.func,
+  files: PropTypes.array
 };
+
+Editor.defaultProps = {
+  setFiles: () => {},
+  files: []
+}
 
 export default Editor;

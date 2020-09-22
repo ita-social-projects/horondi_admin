@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Box, Button, Grid, Chip } from '@material-ui/core';
-import PublishIcon from '@material-ui/icons/Publish';
+import { Box, Grid, Chip } from '@material-ui/core';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { useStyles } from './product-add-images.styles';
 
+import UploadButtonContainer from "../../../../containers/upload-button-container";
 import StepperButtons from '../product-add-stepper/stepper-buttons';
 import { setFilesToUpload } from '../../../../redux/products/products.actions';
 
@@ -68,24 +68,12 @@ const ProductAddImages = ({
       <Box my={3}>
         <Grid container spacing={1}>
           <Grid item>
-            <input
-              accept='image/*'
-              className={styles.input}
-              id='upload-primary-image'
-              multiple={false}
-              type='file'
-              onChange={handlePrimaryImageLoad}
+            <UploadButtonContainer
+                buttonLabel={MAIN_PHOTO}
+                multiple={false}
+                startIcon={true}
+                onChangeHandler={handlePrimaryImageLoad}
             />
-            <label htmlFor='upload-primary-image'>
-              <Button
-                component='span'
-                variant='contained'
-                color='primary'
-                startIcon={<PublishIcon />}
-              >
-                {MAIN_PHOTO}
-              </Button>
-            </label>
           </Grid>
           <Grid item>
             {primaryImage ? (
@@ -102,24 +90,12 @@ const ProductAddImages = ({
       </Box>
       <div className={styles.chipContainer}>
         <div>
-          <input
-            accept='image/*'
-            className={styles.input}
-            id='upload-additional-image'
-            multiple
-            type='file'
-            onChange={handleAdditionalImagesLoad}
+          <UploadButtonContainer
+            buttonLabel={ADDITIONAL_PHOTOS}
+            multiple={true}
+            startIcon={true}
+            onChangeHandler={handleAdditionalImagesLoad}
           />
-          <label htmlFor='upload-additional-image'>
-            <Button
-              component='span'
-              variant='contained'
-              color='primary'
-              startIcon={<PublishIcon />}
-            >
-              {ADDITIONAL_PHOTOS}
-            </Button>
-          </label>
         </div>
         <div className={styles.chips}>
           {additionalImages.map(({ name }) => (

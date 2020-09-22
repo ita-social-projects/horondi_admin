@@ -241,20 +241,20 @@ export const config = {
       'Підтвердження створення продукту'
     ],
     infoLabels: [
-      { label: 'Назва', name: 'name' },
-      { label: 'Основний матеріал', name: 'mainMaterial' },
-      { label: 'Внутрішній матеріал', name: 'innerMaterial' },
-      { label: 'Замок', name: 'closure' },
-      { label: 'Опис', name: 'description' }
+      { label: 'Назва', name: 'name', required: true },
+      { label: 'Основний матеріал', name: 'mainMaterial', required: true },
+      { label: 'Внутрішній матеріал', name: 'innerMaterial', required: false },
+      { label: 'Замок', name: 'closure', required: false },
+      { label: 'Опис', name: 'description', required: false }
     ],
     selectsLabels: [
-      { label: 'Категорія ', name: 'category', type: 'select' },
-      { label: 'Підкатегорія ', name: 'subcategory', type: 'select' },
-      { label: 'Модель ', name: 'model', type: 'select' },
-      { label: 'Колір ', name: 'colors', type: 'select' },
-      { label: 'Гобелен ', name: 'pattern', type: 'select' },
-      { label: 'Ціна(USD) ', name: 'basePrice', type: 'number' },
-      { label: 'Довжина лямок(см) ', name: 'strapLengthInCm', type: 'number' }
+      { label: 'Категорія ', name: 'category', type: 'select', required: true },
+      { label: 'Підкатегорія ', name: 'subcategory', type: 'select', required: true },
+      { label: 'Модель ', name: 'model', type: 'select', required: true },
+      { label: 'Колір ', name: 'colors', type: 'select', required: true },
+      { label: 'Гобелен ', name: 'pattern', type: 'select', required: true },
+      { label: 'Ціна(USD) ', name: 'basePrice', type: 'number', required: true },
+      { label: 'Довжина лямок(см) ', name: 'strapLengthInCm', type: 'number', required: false }
     ],
     responsive: {
       superLargeDesktop: {

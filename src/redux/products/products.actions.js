@@ -29,7 +29,7 @@ import {
   DELETE_PRODUCT,
   SET_FILES_TO_UPLOAD,
   SET_PRODUCT,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT, DELETE_IMAGES
 } from './products.types';
 
 export const getProduct = (id) => ({
@@ -180,5 +180,10 @@ export const setProduct = (payload) => ({
 
 export const updateProduct = (payload) => ({
   type: UPDATE_PRODUCT,
+  payload
+});
+
+export const deleteImages = (payload) => ({
+  type: DELETE_IMAGES,
   payload
 });

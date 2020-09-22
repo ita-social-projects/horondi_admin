@@ -16,10 +16,12 @@ export const productsTranslations = {
   DELETE_PRODUCT_TITLE: 'Видалити продукт',
   DELETE_PRODUCT_MESSAGE: 'Ви дійсно хочете видалити продукт?',
   DELETE_PRODUCT_BTN: 'Видалити',
+  DELETE_IMAGE_TITLE: 'Видалити зображення',
+  DELETE_IMAGE_MESSAGE: 'Ви дійсно хочете видалити зображення?',
   MAIN_PHOTO: 'ГОЛОВНЕ ФОТО',
   ADDITIONAL_PHOTOS: 'ДОДАТКОВІ ФОТО',
   REQUIRED_PHOTOS: 'Фото для продукту є обов\'язковими',
-  ALL_FIELDS_ARE_REQUIRED: 'Усі поля обов\'язкові',
+  ALL_FIELDS_ARE_REQUIRED: 'Заповніть обов\'язкові поля',
   ADDITIONAL_PRICE: 'Додаткова ціна(грн)',
   REQUIRED_FIELD: 'Обов\'язкове поле',
   NAME_TOO_SHORT_MESSAGE: 'Назва продукту повинна містити не менше 6 символів',
@@ -29,6 +31,5 @@ export const productsTranslations = {
   INNER_MATERIAL_TOO_SHORT_MESSAGE: 'Назва внутрішнього матеріалу повинна містити не менше 2 символів',
   INNER_MATERIAL_TOO_LONG_MESSAGE: 'Назва внутрішнього матеріалу повинна містити не більше 50 символів',
   CLOSURE_TOO_SHORT_MESSAGE: 'Назва замка повинна містити не менше 2 символів',
-  CLOSURE_TOO_LONG_MESSAGE: 'Назва замка повинна містити не більше 50 символів',
-  DESCRIPTION_TOO_SHORT_MESSAGE: 'Опис продукту повинен містити не менше 10 символів'
+  CLOSURE_TOO_LONG_MESSAGE: 'Назва замка повинна містити не більше 50 символів'
 };

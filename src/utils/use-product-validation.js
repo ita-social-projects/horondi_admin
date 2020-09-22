@@ -20,8 +20,7 @@ const {
   INNER_MATERIAL_TOO_LONG_MESSAGE,
   INNER_MATERIAL_TOO_SHORT_MESSAGE,
   CLOSURE_TOO_LONG_MESSAGE,
-  CLOSURE_TOO_SHORT_MESSAGE,
-  DESCRIPTION_TOO_SHORT_MESSAGE
+  CLOSURE_TOO_SHORT_MESSAGE
 } = productsTranslations;
 
 const useProductValidation = (
@@ -51,8 +50,8 @@ const useProductValidation = (
       ...languages.map((lang, idx) => ({
         [`${lang}${infoLabels[0].name}`]: name[idx].value,
         [`${lang}${infoLabels[1].name}`]: mainMaterial[idx].value,
-        [`${lang}${infoLabels[2].name}`]: innerMaterial[idx].value,
-        [`${lang}${infoLabels[3].name}`]: closure[idx].value,
+        [`${lang}${infoLabels[2].name}`]: innerMaterial.length ? innerMaterial[idx].value : '',
+        [`${lang}${infoLabels[3].name}`]: closure.length ? closure[idx].value : '',
         [`${lang}${infoLabels[4].name}`]: description[idx].value
       }))
     )
@@ -73,15 +72,10 @@ const useProductValidation = (
               .required(REQUIRED_FIELD),
             [`${name}${infoLabels[2].name}`]: Yup.string()
               .min(2, INNER_MATERIAL_TOO_SHORT_MESSAGE)
-              .max(150, INNER_MATERIAL_TOO_LONG_MESSAGE)
-              .required(REQUIRED_FIELD),
+              .max(150, INNER_MATERIAL_TOO_LONG_MESSAGE),
             [`${name}${infoLabels[3].name}`]: Yup.string()
               .min(2, CLOSURE_TOO_SHORT_MESSAGE)
               .max(100, CLOSURE_TOO_LONG_MESSAGE)
-              .required(REQUIRED_FIELD),
-            [`${name}${infoLabels[4].name}`]: Yup.string()
-              .min(10, DESCRIPTION_TOO_SHORT_MESSAGE)
-              .required(REQUIRED_FIELD)
           }))
         )
         : {},
@@ -96,7 +90,7 @@ const useProductValidation = (
       colors: Yup.string().required(),
       model: Yup.string().required(),
       basePrice: Yup.number().min(1).required(),
-      strapLengthInCm: Yup.number().min(1).required()
+      strapLengthInCm: Yup.number()
     }
     : {};
 

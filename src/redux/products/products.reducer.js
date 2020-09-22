@@ -61,7 +61,7 @@ export const initialState = {
     modelsFilter: []
   },
   filterData: [],
-  product: productModel,
+  selectedProduct: productModel,
   productToSend: productModel,
   products: [],
   pagesCount: 1,
@@ -219,12 +219,12 @@ const productsReducer = (state = initialState, action = {}) => {
   case SET_FILES_TO_UPLOAD:
     return {
       ...state,
-      upload: action.payload
+      upload: [...state.upload, ...action.payload]
     };
   case SET_PRODUCT:
     return {
       ...state,
-      product: action.payload
+      selectedProduct: action.payload
     };
   default:
     return state;

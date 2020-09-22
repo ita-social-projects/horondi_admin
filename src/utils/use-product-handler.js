@@ -96,7 +96,9 @@ const useProductHandler = () => {
   const additions = useMemo(
     () =>
       filterData.length
-        ? filterData[1].options.find(({ additions }) => additions.length)
+        ? filterData
+              .find(({ options }) => options.find(({ additions }) => additions.length))
+              .options.find(({ additions }) => additions.length)
           .additions
         : null,
     [filterData]

@@ -4,14 +4,16 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
+  Paper,
   Tabs,
   Tab,
   Typography,
-  Grid
+  Grid,
+  Box
 } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 import useStyles from './product-info-container.styles';
 
+import Editor from "../../components/editor";
 import TabPanel from '../../components/tab-panel';
 import { config } from '../../configs';
 
@@ -28,7 +30,8 @@ const ProductInfoContainer = ({
   handleChange,
   handleBlur,
   handleSubmit,
-  toggleFieldsChanged
+  toggleFieldsChanged,
+  setFieldValue
 }) => {
   const styles = useStyles();
 
@@ -41,6 +44,9 @@ const ProductInfoContainer = ({
       [name]: { name, checked }
     });
     toggleFieldsChanged(true);
+    if(!checked) {
+      infoLabels.forEach(label => setFieldValue(`${name}${label.name}`, ''))
+    }
   };
 
   const handleTabsChange = (e, newValue) => {
@@ -73,6 +79,11 @@ const ProductInfoContainer = ({
     toggleFieldsChanged(true);
   };
 
+  const handleDescriptionChange = (value, lang) => {
+    setFieldValue(`${lang}description`, value)
+    toggleFieldsChanged(true);
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <Grid container alignItems='center' spacing={2}>
@@ -90,26 +101,35 @@ const ProductInfoContainer = ({
       ) : null}
       {checkedLanguages.map((lang, idx) => (
         <TabPanel index={idx} value={tabValue} key={idx}>
-          {infoLabels.map(({ label, name }) => (
-            <TextField
-              key={name}
-              name={`${lang.name}${name}`}
-              className={styles.textfield}
-              id={name}
-              label={`${label}*`}
-              error={
-                touched[`${lang.name}${name}`] &&
-                !!errors[`${lang.name}${name}`]
-              }
-              helperText={
-                touched[`${lang.name}${name}`] && errors[`${lang.name}${name}`]
-              }
-              value={values[`${lang.name}${name}`]}
-              onChange={handleInfoChange}
-              onBlur={handleBlur}
-              variant={variant}
-            />
-          ))}
+          {infoLabels.map(({ label, name, required }) => (
+            name === 'description'
+              ? <Box key={name} ml={1} my={2} className={styles.editor}>
+                  <Editor
+                      name={`${lang.name}${name}`}
+                      value={values[`${lang.name}${name}`]}
+                      onEditorChange={(value) => handleDescriptionChange(value, lang.name)}
+                      placeholder={label}
+                  />
+                </Box>
+              : <TextField
+                key={name}
+                name={`${lang.name}${name}`}
+                className={styles.textfield}
+                id={name}
+                label={`${label}${required ? '*' : ''}`}
+                error={
+                  touched[`${lang.name}${name}`] &&
+                  !!errors[`${lang.name}${name}`]
+                }
+                helperText={
+                  touched[`${lang.name}${name}`] && errors[`${lang.name}${name}`]
+                }
+                value={values[`${lang.name}${name}`]}
+                onChange={handleInfoChange}
+                onBlur={handleBlur}
+                variant={variant}
+              />
+            ))}
         </TabPanel>
       ))}
     </form>
@@ -128,8 +148,9 @@ ProductInfoContainer.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   preferedLanguages: PropTypes.objectOf(PropTypes.object),
+  setFieldValue: PropTypes.func.isRequired,
   variant: PropTypes.string,
-  toggleFieldsChanged: PropTypes.func
+  toggleFieldsChanged: PropTypes.func,
 };
 
 ProductInfoContainer.defaultProps = {
