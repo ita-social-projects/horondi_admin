@@ -49,8 +49,6 @@ const BusinessPageForm = ({ id, editMode }) => {
     languages
   } = useBusinessHandlers();
 
-  // useEffect(() => console.log(files), [files]);
-
   const { editorField } = config.formRegExp;
 
   useEffect(() => {
@@ -89,27 +87,24 @@ const BusinessPageForm = ({ id, editMode }) => {
         return;
       }
 
-      const uniqueFiles = files.filter((file, index) => {
-        const _file = JSON.stringify(file);
+      const uniqueFiles = files.filter((file, i) => {
+        const { name, size } = file;
         return (
-          index === files.findIndex((obj) => JSON.stringify(obj) === _file)
+          i === files.findIndex((obj) => obj.name === name && obj.size === size)
         );
       });
 
-      console.log('uniqueFiles', uniqueFiles);
-      const newUkText = ukText.replace(/src=".*?"/g, 'src=""');
-      const newEnText = enText.replace(/src=".*?"/g, 'src=""');
-      console.log('newUkText', newUkText);
-      console.log('newEnText', newEnText);
+      const newUkText = ukText.replace(/src="data:image.*?"/g, 'src=""');
+      const newEnText = enText.replace(/src="data:image.*?"/g, 'src=""');
+
       const page = createBusinessPage({
         ...values,
         ukText: newUkText,
         enText: newEnText
       });
-      console.log('page', page);
       editMode
         ? dispatch(updateBusinessPage({ id, page, files: uniqueFiles }))
-        : dispatch(addBusinessPage({ page, files }));
+        : dispatch(addBusinessPage({ page, files: uniqueFiles }));
     }
   });
 
