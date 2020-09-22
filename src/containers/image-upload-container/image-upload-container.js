@@ -4,7 +4,12 @@ import { AttachFile, Image } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useStyles } from './image-upload-container.styles';
 
-const ImageUploadContainer = ({ handler, srcForAvatar, fileName }) => {
+const ImageUploadContainer = ({
+  handler,
+  srcForAvatar,
+  fileName,
+  multiple = false
+}) => {
   const styles = useStyles();
   return (
     <div className={styles.imageUploadContainer}>
@@ -16,6 +21,7 @@ const ImageUploadContainer = ({ handler, srcForAvatar, fileName }) => {
           name='upload-photo'
           type='file'
           onChange={handler}
+          multiple={multiple}
         />
         <Button
           id='add-contact'
@@ -41,6 +47,7 @@ const ImageUploadContainer = ({ handler, srcForAvatar, fileName }) => {
 ImageUploadContainer.propTypes = {
   handler: PropTypes.func.isRequired,
   fileName: PropTypes.string.isRequired,
-  srcForAvatar: PropTypes.oneOfType([PropTypes.string]).isRequired
+  srcForAvatar: PropTypes.oneOfType([PropTypes.string]).isRequired,
+  multiple: PropTypes.bool.isRequired
 };
 export default ImageUploadContainer;
