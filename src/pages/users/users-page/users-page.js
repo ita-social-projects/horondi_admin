@@ -68,12 +68,13 @@ const UsersPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.tableNav}>
-        <Typography variant='h1' className={styles.usersTitle}>
+        <Typography variant='h1' className={styles.usersTitle} data-cy='title'>
           Інформація про користувачів
         </Typography>
         <div className={styles.buttonsPanel}>
           <Button
             id='add-user-admin'
+            data-cy='add-user-admin'
             onClick={() => dispatch(push(pathToRegisterAdminPage))}
             variant='contained'
             color='primary'

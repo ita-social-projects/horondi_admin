@@ -34,7 +34,11 @@ const SnackbarItem = () => {
       autoHideDuration={snackBarDuration}
       onClose={handleClose}
     >
-      <Alert onClose={handleClose} severity={snackBarSeverity}>
+      <Alert
+        onClose={handleClose}
+        severity={snackBarSeverity}
+        data-cy='snack-bar-message'
+      >
         {snackBarMessage}
       </Alert>
     </Snackbar>

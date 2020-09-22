@@ -71,7 +71,11 @@ const ConfirmUser = ({ match }) => {
   return (
     <Grid className={styles.detailsContainer}>
       <Grid className={styles.userDetails}>
-        <Typography variant='h2' className={styles.registrationTitle}>
+        <Typography
+          variant='h2'
+          data-cy='title'
+          className={styles.registrationTitle}
+        >
           Продовжити реєстрацію адміністратора
         </Typography>
         <form onSubmit={handleSubmit}>
@@ -86,12 +90,13 @@ const ConfirmUser = ({ match }) => {
                 id='firstName'
                 variant='outlined'
                 label="Ім'я"
+                data-cy='firstName'
                 name='firstName'
                 type='text'
                 onBlur={handleChange}
                 error={touched.firstName && !!errors.firstName}
               />
-              <FormHelperText>
+              <FormHelperText data-cy='firstName-error-label'>
                 {touched.firstName && errors.firstName}
               </FormHelperText>
             </FormControl>
@@ -106,11 +111,12 @@ const ConfirmUser = ({ match }) => {
                 variant='outlined'
                 label='Прізвище'
                 name='lastName'
+                data-cy='lastName'
                 type='text'
                 onBlur={handleChange}
                 error={touched.lastName && !!errors.lastName}
               />
-              <FormHelperText>
+              <FormHelperText data-cy='lastName-error-label'>
                 {touched.lastName && errors.lastName}
               </FormHelperText>
             </FormControl>
@@ -126,10 +132,11 @@ const ConfirmUser = ({ match }) => {
                 label='Пароль'
                 name='password'
                 type='password'
+                data-cy='password'
                 onBlur={handleChange}
                 error={touched.password && !!errors.password}
               />
-              <FormHelperText>
+              <FormHelperText data-cy='password-error-label'>
                 {touched.password && errors.password}
               </FormHelperText>
             </FormControl>
@@ -137,6 +144,7 @@ const ConfirmUser = ({ match }) => {
               <SaveButton
                 type='submit'
                 title='Створити'
+                data-cy='submit-admin-confirmation'
                 className={styles.saveButton}
               />
             </FormControl>
