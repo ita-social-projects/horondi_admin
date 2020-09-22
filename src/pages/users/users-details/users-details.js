@@ -14,7 +14,7 @@ import UserDetailsCard from './containers/user-details-card';
 
 const {
   USER_ACTIVE_TITLE,
-  USER_UNACTIVE_TITLE,
+  USER_INACTIVE_TITLE,
   SWITCH_USER_STATUS_TITLE
 } = config.buttonTitles;
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
@@ -28,7 +28,7 @@ const UsersDetails = (props) => {
   const dispatch = useDispatch();
 
   const { loading } = useSelector(({ Users }) => ({
-    loading: Users.usersLoading
+    loading: Users.userLoading
   }));
 
   const { id } = match.params;
@@ -54,7 +54,7 @@ const UsersDetails = (props) => {
   const secondaryData = { adress, postCode };
 
   const status = isBanned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS;
-  const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_UNACTIVE_TITLE;
+  const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_INACTIVE_TITLE;
 
   const userStatusHandler = (userId) => {
     const updateStatus = () => {
