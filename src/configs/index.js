@@ -23,6 +23,8 @@ export const routes = {
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id',
+  pathToRegisterAdmin: '/register',
+  pathToConfirmAdmin: '/confirmation/:token',
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact'
@@ -65,6 +67,7 @@ export const config = {
       subcategories: []
     }
   },
+  userRoles: [{ role: 'admin', label: 'Адмін' }],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
@@ -84,7 +87,15 @@ export const config = {
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
-    users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
+    users: [
+      'Аватар',
+      "Ім'я",
+      'Мобільний номер',
+      'Пошта',
+      'Роль',
+      'Статус',
+      'Дії'
+    ],
     contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії']
   },
   detailTitles: {
@@ -116,8 +127,10 @@ export const config = {
   },
   statuses: {
     SUCCESS_ADD_STATUS: 'Успішно додано!',
+    SUCCESS_CREATION_STATUS: 'Успішно створено!',
     SUCCESS_DELETE_STATUS: 'Успішно видалено!',
     SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
+    SUCCESS_CONFIRMATION_STATUS: 'Успішно підтверджено реєстрацію!',
     ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
     USER_ACTIVE_STATUS: 'Активний(-a)',
     USER_INACTIVE_STATUS: 'Неактивний(-a)',
@@ -125,7 +138,13 @@ export const config = {
   },
   errorMessages: {
     USER_NOT_FOUND: 'Користувач не знайдений!',
-    USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу'
+    USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу',
+    INVALID_PERMISSIONS: 'Недостатньо прав користувача',
+    WRONG_CREDENTIALS: 'Неправильно вказані вхідні дані',
+    INPUT_NOT_VALID: 'Неправильні ввідні дані',
+    USER_ALREADY_EXIST: 'Користувач з такими даними вже існує',
+    INVALID_ADMIN_INVITATIONAL_TOKEN:
+      'Неправильне посилання на створення користувача'
   },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
@@ -138,19 +157,14 @@ export const config = {
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
     CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку',
-    GO_BACK_TITLE: 'Назад'
-  },
-  messages: {
-    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
-    REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
-    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     CREATE_CONTACT_TITLE: 'Додати контакти',
     REMOVE_CONTACT_TITLE: 'Видалити контакт',
     REMOVE_USER_TITLE: 'Видалити користувача',
     SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
-    CANCEL_TITLE: 'Відмінити',
-    LOGOUT_TITLE: 'Вихід',
+    USER_INACTIVE_TITLE: 'Деактивувати',
+    USER_ACTIVE_TITLE: 'Активувати',
     ADD_CATEGORY: 'Додати категорію',
+    GO_BACK_TITLE: 'Назад',
     DELETE_CATEGORY: 'Видалити категорію',
     ADD_SUBCATEGORY: 'Додати підкатегорію',
     ADD_CATEGORY_IMAGE: 'Зберегти посилання',
@@ -158,12 +172,18 @@ export const config = {
     CANCEL: 'Відмінити',
     SAVE_CATEGORY: 'Зберегти категорію',
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
+    CREATE_SPECIAL_USER: 'Створити спецкористувача',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
     PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
     REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
-    USER_UNACTIVE_TITLE: 'Деактивувати',
-    USER_ACTIVE_TITLE: 'Активувати',
+    USER_UNACTIVE_TITLE: 'Деактивувати'
+  },
+  messages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
+    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
@@ -192,8 +212,17 @@ export const config = {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
     ENTER_EMAIL_MESSAGE: 'Введіть email',
     PASSWORD_MIN_LENGTH_MESSAGE: 'Пароль повинен містити не менше 8 символів',
+    PASSWORD_MAX_LENGTH_MESSAGE: 'Пароль повинен містити не більше 20 символів',
     PASSWORD_LANG_MESSAGE: 'Використовуйте латиницю різних регістрів та цифри',
-    ENTER_PASSWORD_MESSAGE: 'Введіть пароль'
+    ENTER_FIRSTNAME_MESSAGE: "Введіть ім'я",
+    ENTER_LASTNAME_MESSAGE: 'Введіть прізвище',
+    ENTER_PASSWORD_MESSAGE: 'Введіть пароль',
+    FIRSTNAME_MIN_LENGTH_MESSAGE: "Ім'я повинно містити не менше 2 символів",
+    LASTNAME_MIN_LENGTH_MESSAGE: 'Прізвище повинно містити не менше 2 символів',
+    FIRSTNAME_MAX_LENGTH_MESSAGE: "Ім'я повинно містити не більше 30 символів",
+    LASTNAME_MAX_LENGTH_MESSAGE:
+      'Прізвище повинно містити не більше 30 символів',
+    SELECT_ROLE_MESSAGE: 'Оберіть роль'
   },
   patternErrorMessages: {
     PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',

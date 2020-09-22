@@ -41,7 +41,6 @@ function* handleAdminCheckByToken() {
     if (!authToken) {
       yield put(setAuthLoading(false));
       yield put(setAuth(false));
-      yield put(push('/'));
       return;
     }
     yield call(getUserByToken, authToken);
