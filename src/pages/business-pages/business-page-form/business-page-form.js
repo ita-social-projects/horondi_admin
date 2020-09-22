@@ -49,6 +49,8 @@ const BusinessPageForm = ({ id, editMode }) => {
     languages
   } = useBusinessHandlers();
 
+  // useEffect(() => console.log(files), [files]);
+
   const { editorField } = config.formRegExp;
 
   useEffect(() => {
@@ -81,16 +83,33 @@ const BusinessPageForm = ({ id, editMode }) => {
       ukTitle,
       enTitle
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       if (!checkValidation(values)) {
         setShouldValidate(true);
         return;
       }
 
-      const page = createBusinessPage({ ...values, enText, ukText });
+      const uniqueFiles = files.filter((file, index) => {
+        const _file = JSON.stringify(file);
+        return (
+          index === files.findIndex((obj) => JSON.stringify(obj) === _file)
+        );
+      });
+
+      console.log('uniqueFiles', uniqueFiles);
+      const newUkText = ukText.replace(/src=".*?"/g, 'src=""');
+      const newEnText = enText.replace(/src=".*?"/g, 'src=""');
+      console.log('newUkText', newUkText);
+      console.log('newEnText', newEnText);
+      const page = createBusinessPage({
+        ...values,
+        ukText: newUkText,
+        enText: newEnText
+      });
+      console.log('page', page);
       editMode
-        ? dispatch(updateBusinessPage({ id, page }))
-        : dispatch(addBusinessPage(page));
+        ? dispatch(updateBusinessPage({ id, page, files: uniqueFiles }))
+        : dispatch(addBusinessPage({ page, files }));
     }
   });
 

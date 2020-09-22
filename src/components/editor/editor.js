@@ -41,7 +41,8 @@ const Editor = ({
       e.currentTarget.files &&
       e.currentTarget.files.length > 0
     ) {
-      const file = e.currentTarget.files[0];
+      const { files } = e.currentTarget;
+      const file = files[0];
       const reader = new FileReader();
 
       reader.readAsDataURL(file);
@@ -59,7 +60,7 @@ const Editor = ({
         quill.setSelection(position + 1);
       };
 
-      setFiles([...files, { ...file }]);
+      setFiles((prevFiles) => [...prevFiles, ...Array.from(files)]);
     }
   };
 

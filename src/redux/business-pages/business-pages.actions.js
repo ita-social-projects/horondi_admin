@@ -35,9 +35,9 @@ const setBusinessPagesError = (error) => ({
   payload: error
 });
 
-const addBusinessPage = (page) => ({
+const addBusinessPage = (payload) => ({
   type: ADD_BUSINESS_PAGE,
-  payload: page
+  payload
 });
 
 const deleteBusinessPage = (payload) => ({
