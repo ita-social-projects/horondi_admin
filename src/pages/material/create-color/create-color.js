@@ -27,7 +27,12 @@ import { SaveButton } from '../../../components/buttons';
 
 const { languages, materialErrorMessages, colorErrorMessages } = config;
 
-function CreateColor({ images, setImages, addNewColorImages }) {
+function CreateColor({
+  imagesToUpload,
+  setImagesToUpload,
+  colorImages,
+  addNewColorImages
+}) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -35,14 +40,7 @@ function CreateColor({ images, setImages, addNewColorImages }) {
     loading: Material.colorLoading
   }));
 
-  const {
-    setAvailable,
-    available,
-    code,
-    createColor,
-    tabsValue,
-    handleTabsChange
-  } = useColorHandlers();
+  const { createColor, tabsValue, handleTabsChange } = useColorHandlers();
 
   const langValues = languages.map((lang) => ({
     [`${lang}Name`]: '',
@@ -88,67 +86,64 @@ function CreateColor({ images, setImages, addNewColorImages }) {
     handleSubmit,
     errors,
     touched,
-    setFieldValue
+    setFieldValue,
+    setFieldError
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
     initialValues: {
       ...formikValues,
-      code,
-      colorImage: ''
+      code: '',
+      colorImage: '',
+      image: '',
+      available: false
     },
     onSubmit: (values) => {
       const { colorImage, image, ...rest } = values;
-
       const color = createColor(rest);
+      if (!colorImage || !image) {
+        return;
+      }
       dispatch(setNewColorToStore(color));
       addNewColorImages(colorImage);
       dispatch(showColorDialogWindow(false));
-      setImages(image);
+      setImagesToUpload(image);
     }
   });
-
-  const TabPanels =
-    languages.length > 0
-      ? languages.map((lang, index) => (
-          <TabPanel key={lang} value={tabsValue} index={index}>
-            <Paper className={styles.materialItemAdd}>
-              <TextField
-                data-cy={`${lang}Name`}
-                id={`${lang}Name`}
-                className={styles.textfield}
-                variant='outlined'
-                label={config.labels.colors.name}
-                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-                multiline
-                value={values[`${lang}Name`]}
-                onChange={handleChange}
-              />
-              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-              )}
-              <TextField
-                data-cy={`${lang}SimpleName`}
-                id={`${lang}SimpleName`}
-                className={styles.textfield}
-                variant='outlined'
-                label={config.labels.colors.simpleName}
-                multiline
-                error={
-                  touched[`${lang}SimpleName`] && !!errors[`${lang}SimpleName`]
-                }
-                value={values[`${lang}SimpleName`]}
-                onChange={handleChange}
-              />
-              {touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`] && (
-                <div className={styles.inputError}>
-                  {errors[`${lang}SimpleName`]}
-                </div>
-              )}
-            </Paper>
-          </TabPanel>
-        ))
-      : null;
+  const tabPanels = languages.map((lang, index) => (
+    <TabPanel key={lang} value={tabsValue} index={index}>
+      <Paper className={styles.materialItemAdd}>
+        <TextField
+          data-cy={`${lang}Name`}
+          id={`${lang}Name`}
+          className={styles.textfield}
+          variant='outlined'
+          label={config.labels.colors.name}
+          error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
+          multiline
+          value={values[`${lang}Name`]}
+          onChange={handleChange}
+        />
+        {touched[`${lang}Name`] && errors[`${lang}Name`] && (
+          <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+        )}
+        <TextField
+          data-cy={`${lang}SimpleName`}
+          id={`${lang}SimpleName`}
+          className={styles.textfield}
+          variant='outlined'
+          label={config.labels.colors.simpleName}
+          multiline
+          error={touched[`${lang}SimpleName`] && !!errors[`${lang}SimpleName`]}
+          value={values[`${lang}SimpleName`]}
+          onChange={handleChange}
+        />
+        {touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`] && (
+          <div className={styles.inputError}>{errors[`${lang}SimpleName`]}</div>
+        )}
+      </Paper>
+    </TabPanel>
+  ));
 
   if (loading) {
     return <LoadingBar />;
@@ -163,11 +158,11 @@ function CreateColor({ images, setImages, addNewColorImages }) {
     {
       id: 'available',
       dataCy: 'available',
-      value: available,
-      checked: available,
+      value: values.available,
+      checked: values.available,
       color: 'primary',
       label: config.labels.colors.available,
-      handler: (e) => setAvailable(e.target.checked)
+      handler: () => setFieldValue('available', !values.available)
     }
   ];
 
@@ -175,30 +170,25 @@ function CreateColor({ images, setImages, addNewColorImages }) {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setFieldValue('colorImage', e.target.result);
+        const filtered = [...colorImages].map((value) => value.toString());
+        if (!filtered.includes(e.target.result.toString())) {
+          setFieldValue('colorImage', e.target.result);
+        }
       };
       reader.readAsDataURL(e.target.files[0]);
-      const imagesNames = images.map(({ name }) => name);
+      const imagesNames = imagesToUpload.map(({ name }) => name);
       const newImages = Array.from(e.target.files).filter(
         ({ name }) => !imagesNames.includes(name)
       );
-      setFieldValue('image', [...images, ...newImages]);
+      setFieldValue('image', [...imagesToUpload, ...newImages]);
     }
   };
-
+  console.log(errors);
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
         <div className={styles.controlsBlock}>
           <CheckboxOptions options={checkboxes} />
-          <div>
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='open-dialog'
-              type='submit'
-              title={config.buttonTitles.CREATE_COLOR_TITLE}
-            />
-          </div>
         </div>
         <Grid item xs={12}>
           <label htmlFor='colorImage'>
@@ -234,32 +224,41 @@ function CreateColor({ images, setImages, addNewColorImages }) {
             )}
           </Paper>
         </Grid>
-        {languages.length > 0 ? (
-          <div>
-            <AppBar position='static'>
-              <Tabs
-                className={styles.tabs}
-                value={tabsValue}
-                onChange={handleTabsChange}
-                aria-label='tabs'
-              >
-                {languageTabs}
-              </Tabs>
-            </AppBar>
-            {TabPanels}
-          </div>
-        ) : null}
+
+        <div>
+          <AppBar position='static'>
+            <Tabs
+              className={styles.tabs}
+              value={tabsValue}
+              onChange={handleTabsChange}
+              aria-label='tabs'
+            >
+              {languageTabs}
+            </Tabs>
+          </AppBar>
+          {tabPanels}
+        </div>
+        <div>
+          <SaveButton
+            className={styles.saveButton}
+            data-cy='open-dialog'
+            type='submit'
+            title={config.buttonTitles.CREATE_COLOR_TITLE}
+          />
+        </div>
       </form>
     </div>
   );
 }
 
 CreateColor.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.any),
-  setImages: PropTypes.func.isRequired,
-  addNewColorImages: PropTypes.func.isRequired
+  imagesToUpload: PropTypes.arrayOf(PropTypes.any),
+  setImagesToUpload: PropTypes.func.isRequired,
+  addNewColorImages: PropTypes.func.isRequired,
+  colorImages: PropTypes.arrayOf(PropTypes.any)
 };
 CreateColor.defaultProps = {
-  images: []
+  imagesToUpload: [],
+  colorImages: []
 };
 export default CreateColor;

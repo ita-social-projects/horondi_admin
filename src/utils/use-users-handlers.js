@@ -27,12 +27,13 @@ const useUsersHandler = (id) => {
     if (user !== null) {
       setFirstName(user.firstName);
       setLastName(user.lastName);
-      setCountry(user.address.country);
-      setCity(user.address.city);
+      setCountry(user.address && user.address.country);
+      setCity(user.address && user.address.city);
       setAdress(
-        `${user.address.street}, ${user.address.buildingNumber}/${user.address.appartment}`
+        user.address &&
+          `${user.address.street}, ${user.address.buildingNumber}/${user.address.appartment}`
       );
-      setPostCode(user.address.zipcode);
+      setPostCode(user.address && user.address.zipcode);
       setBan(user.banned);
     }
   }, [

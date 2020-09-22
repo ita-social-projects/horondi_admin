@@ -174,7 +174,7 @@
         "ignoreNonDOM": true
       }
     ],
-    "react/jsx-indent": 1,
+    "react/jsx-indent": 0,
     "react/jsx-uses-vars": 2,
     "react/jsx-props-no-spreading": 0,
     "react/prop-types": 2,

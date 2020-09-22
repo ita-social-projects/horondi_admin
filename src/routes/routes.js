@@ -11,6 +11,8 @@ import NavMenu from '../components/nav-menu';
 import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
+import Business from '../pages/business-pages';
+import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
 import { config } from '../configs';
 import { history } from '../store/store';
@@ -23,6 +25,8 @@ import ProductsPage from '../pages/products/products-page';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
+import ConfirmUser from '../pages/users/confirm-user';
+import RegisterUser from '../pages/users/register-user';
 
 const { routes } = config.app;
 
@@ -36,6 +40,11 @@ const Routes = () => {
       <ConnectedRouter history={history}>
         <NavBar />
         <Switch>
+          <Route
+            path={routes.pathToConfirmAdmin}
+            exact
+            component={ConfirmUser}
+          />
           <Route path={routes.pathToLogin} exact component={LoginPage} />
           <Route component={ErrorPage} />
         </Switch>
@@ -61,6 +70,19 @@ const Routes = () => {
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToMaterials} exact component={MaterialPage} />
         <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
+        <Route path={routes.pathToBusinessPages} exact component={Business} />
+        <Route
+          path={routes.pathToAddBusinessPage}
+          exact
+          component={BusinessPageForm}
+        />
+        <Route
+          path={routes.pathToBusinessPageDetails}
+          exact
+          render={({ match }) => (
+            <BusinessPageForm id={match.params.id} editMode />
+          )}
+        />
         <Route path={routes.pathToContacts} exact component={ContactsPage} />
         <Route
           path={routes.pathToContactsEdit}
@@ -70,6 +92,11 @@ const Routes = () => {
         <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
+        <Route
+          path={routes.pathToRegisterAdmin}
+          exact
+          component={RegisterUser}
+        />
         <Route
           path={routes.pathToAddCategory}
           exact

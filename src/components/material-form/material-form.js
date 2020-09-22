@@ -7,12 +7,15 @@ import {
   Tabs,
   Tab,
   AppBar,
-  Avatar
+  Avatar,
+  Button
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { Palette } from '@material-ui/icons';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import TabPanel from '../tab-panel';
 import { SaveButton } from '../buttons';
 import LoadingBar from '../loading-bar';
@@ -22,7 +25,7 @@ import {
   addMaterial,
   showColorDialogWindow
 } from '../../redux/material/material.actions';
-import { config } from '../../configs';
+import { config, routes } from '../../configs';
 import CheckboxOptions from '../checkbox-options';
 import CreateColor from '../../pages/material/create-color';
 import DialogWindowForComponent from '../dialog-window-for-component';
@@ -41,7 +44,6 @@ function MaterialForm({ material, id }) {
     createMaterial,
     tabsValue,
     handleTabsChange,
-
     colorImagesToUpload,
     setColorImagesToUpload,
     colorImages,
@@ -79,14 +81,21 @@ function MaterialForm({ material, id }) {
     )
   });
 
-  const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    setFieldValue
+  } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
     initialValues: {
-      enName: material.enName || '',
-      ukName: material.ukName || '',
-      ukDescription: material.ukDescription || '',
-      enDescription: material.enDescription || '',
+      ukName: material.name[0].value || '',
+      enName: material.name[1].value || '',
+      ukDescription: material.description[0].value || '',
+      enDescription: material.description[1].value || '',
       purpose: material.purpose || '',
       available: material.available || false,
       additionalPrice: 0
@@ -99,45 +108,45 @@ function MaterialForm({ material, id }) {
   const tabPanels =
     languages.length > 0
       ? languages.map((lang, index) => (
-          <TabPanel key={lang} value={tabsValue} index={index}>
-            <Paper className={styles.materialItemAdd}>
-              <TextField
-                data-cy={`${lang}Name`}
-                id={`${lang}Name`}
-                className={styles.textfield}
-                variant='outlined'
-                label={config.labels.material.name}
-                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-                multiline
-                value={values[`${lang}Name`]}
-                onChange={handleChange}
-              />
-              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-              )}
-              <TextField
-                data-cy={`${lang}Description`}
-                id={`${lang}Description`}
-                className={styles.textfield}
-                variant='outlined'
-                label={config.labels.material.description}
-                multiline
-                error={
-                  touched[`${lang}Description`] &&
+        <TabPanel key={lang} value={tabsValue} index={index}>
+          <Paper className={styles.materialItemAdd}>
+            <TextField
+              data-cy={`${lang}Name`}
+              id={`${lang}Name`}
+              className={styles.textfield}
+              variant='outlined'
+              label={config.labels.material.name}
+              error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
+              multiline
+              value={values[`${lang}Name`]}
+              onChange={handleChange}
+            />
+            {touched[`${lang}Name`] && errors[`${lang}Name`] && (
+              <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+            )}
+            <TextField
+              data-cy={`${lang}Description`}
+              id={`${lang}Description`}
+              className={styles.textfield}
+              variant='outlined'
+              label={config.labels.material.description}
+              multiline
+              error={
+                touched[`${lang}Description`] &&
                   !!errors[`${lang}Description`]
-                }
-                value={values[`${lang}Description`]}
-                onChange={handleChange}
-              />
-              {touched[`${lang}Description`] &&
+              }
+              value={values[`${lang}Description`]}
+              onChange={handleChange}
+            />
+            {touched[`${lang}Description`] &&
                 errors[`${lang}Description`] && (
-                  <div className={styles.inputError}>
-                    {errors[`${lang}Description`]}
-                  </div>
-                )}
-            </Paper>
-          </TabPanel>
-        ))
+              <div className={styles.inputError}>
+                {errors[`${lang}Description`]}
+              </div>
+            )}
+          </Paper>
+        </TabPanel>
+      ))
       : null;
 
   const checkboxes = [
@@ -148,7 +157,7 @@ function MaterialForm({ material, id }) {
       checked: values.available,
       color: 'primary',
       label: config.labels.material.available,
-      handler: (e) => handleChange(e.target.checked)
+      handler: (e) => setFieldValue('available', !values.available)
     }
   ];
   const languageTabs =
@@ -172,16 +181,18 @@ function MaterialForm({ material, id }) {
             <div>
               {colorImagesToUpload
                 ? Array.from(colorImagesToUpload).map((image, index) => (
-                    <Avatar variant='square' key={index} src={image}>
-                      <Palette />
-                    </Avatar>
-                  ))
+                  <Avatar variant='square' key={index} src={image}>
+                    <Palette />
+                  </Avatar>
+                ))
                 : null}
-              {colorImages
-                ? colorImages.map((image, index) => (
+              <div className={styles.colorImages}>
+                {colorImages
+                  ? colorImages.map((image, index) => (
                     <Avatar variant='square' key={index} src={image} />
                   ))
-                : null}
+                  : null}
+              </div>
             </div>
             <TextField
               data-cy='purpose'
@@ -228,6 +239,17 @@ function MaterialForm({ material, id }) {
         ) : null}
         <div className={styles.controlsBlock}>
           <div>
+            <Button
+              id='go-back'
+              component={Link}
+              to={routes.pathToMaterials}
+              variant='outlined'
+              color='primary'
+              className={styles.returnButton}
+              data-cy='goBackButton'
+            >
+              {config.buttonTitles.GO_BACK_TITLE}
+            </Button>
             <SaveButton
               className={styles.saveButton}
               data-cy='open-dialog'
@@ -250,14 +272,92 @@ function MaterialForm({ material, id }) {
         dialogTitle='Створити колір'
         component={
           <CreateColor
+            colorImages={colorImages}
             addNewColorImages={addNewColorImages}
-            images={colorImagesToUpload}
-            setImages={setColorImagesToUpload}
+            imagesToUpload={colorImagesToUpload}
+            setImagesToUpload={setColorImagesToUpload}
           />
         }
       />
     </div>
   );
 }
+
+const valueShape = PropTypes.shape({
+  value: PropTypes.string
+});
+MaterialForm.propTypes = {
+  id: PropTypes.string,
+  material: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.arrayOf(valueShape),
+    description: PropTypes.arrayOf(valueShape),
+    images: PropTypes.shape({
+      thumbnail: PropTypes.string
+    }),
+    purpose: PropTypes.string,
+    available: PropTypes.bool
+  }),
+  values: PropTypes.shape({
+    available: PropTypes.bool,
+    purpose: PropTypes.string,
+    ukName: PropTypes.string,
+    enName: PropTypes.string,
+    ukDescription: PropTypes.string,
+    enDescription: PropTypes.string
+  }),
+  errors: PropTypes.shape({
+    available: PropTypes.bool,
+    purpose: PropTypes.string,
+    ukName: PropTypes.string,
+    enName: PropTypes.string,
+    ukDescription: PropTypes.string,
+    enDescription: PropTypes.string
+  }),
+  touched: PropTypes.shape({
+    available: PropTypes.bool,
+    purpose: PropTypes.string,
+    ukName: PropTypes.string,
+    enName: PropTypes.string,
+    ukDescription: PropTypes.string,
+    enDescription: PropTypes.string
+  }),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    })
+  })
+};
+MaterialForm.defaultProps = {
+  id: '',
+  match: {},
+  values: {},
+  errors: {},
+  touched: {},
+  material: {
+    _id: '',
+    name: [
+      {
+        value: ''
+      },
+      {
+        value: ''
+      }
+    ],
+    description: [
+      {
+        value: ''
+      },
+      {
+        value: ''
+      }
+    ],
+    images: {
+      thumbnail: ''
+    },
+    available: false,
+    purpose: ''
+  }
+};
 
 export default MaterialForm;
