@@ -32,6 +32,7 @@ import LoadingBar from '../../../components/loading-bar';
 import { omitTypename } from '../../../utils/omitTypeName';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import AddPhoto from '../../../images/add-photo.png'
 
 const CategoriesAdd = ({ id, editMode }) => {
   // HOOKS
@@ -101,8 +102,10 @@ const CategoriesAdd = ({ id, editMode }) => {
   }, [dispatch, id, categories]);
 
   useEffect(() => {
-    setImageSizes(newCategory.images);
-  }, [newCategory]);
+    if(newCategory.images.medium) {
+      setCategoryImageUrl(config.IMG_URL+newCategory.images.medium);
+    }
+  }, [newCategory.images.medium]);
 
   // GENERAL
   const [tabValue, setTabValue] = useState(0);
@@ -117,23 +120,19 @@ const CategoriesAdd = ({ id, editMode }) => {
   const [parentId, setParentId] = useState(parentCategory);
 
   // IMAGES
-  const [imageSizes, setImageSizes] = useState(newCategory.images);
-  const [selectedSize, setSelectedSize] = useState('');
-  const [selectedSizeUrl, setSelectedSizeUrl] = useState('');
+  const [categoryImageUrl, setCategoryImageUrl] = useState(null);
+  const [upload, setUpload] = useState(null);
 
   // VALIDATION
   const [shouldValidate, setShouldValidate] = useState(false);
   const [codeIsValid, setCodeIsValid] = useState(false);
   const [nameIsValid, setNameIsValid] = useState(false);
 
-  const fillMissingImageSizes = (sizes) => ({
-    ...sizes,
-    ...Object.fromEntries(
-      Object.keys(sizes)
-        .filter((key) => !sizes[key])
-        .map((size) => [size, 'path-to-photo.jpg'])
-    )
-  });
+  useEffect(()=> {
+    if(!editMode) {
+      setCategoryImageUrl(null)
+    }
+  },[editMode])
 
   useEffect(() => {
     if (newCategory.code) {
@@ -171,10 +170,7 @@ const CategoriesAdd = ({ id, editMode }) => {
       setParentId(null);
     }
     if (codeIsValid && nameIsValid) {
-      dispatch(
-        setCategory({ images: fillMissingImageSizes(newCategory.images) })
-      );
-      dispatch(createCategory({ category: newCategory, parentId }));
+      dispatch(createCategory({ category: newCategory, parentId, upload }));
     }
   };
 
@@ -183,7 +179,8 @@ const CategoriesAdd = ({ id, editMode }) => {
     dispatch(
       editCategory({
         category: omitTypename(newCategory, { deleteId: true }),
-        id
+        id,
+        upload
       })
     );
   };
@@ -245,25 +242,19 @@ const CategoriesAdd = ({ id, editMode }) => {
   };
 
   // IMAGE HANDLERS
-  const handleSizeSave = () => {
-    setImageSizes({
-      ...imageSizes,
-      [selectedSize]: selectedSizeUrl
-    });
-    dispatch(
-      setCategory({
-        images: { ...imageSizes, [selectedSize]: selectedSizeUrl }
-      })
-    );
-  };
+  const handleImageError = (e) => {
+    e.target.src = AddPhoto;
+  }
 
-  const handleUrlChange = (e) => {
-    setSelectedSizeUrl(e.target.value);
-  };
-
-  const handleSizeChange = (e) => {
-    setSelectedSize(e.target.value);
-    setSelectedSizeUrl(imageSizes[e.target.value]);
+  const handleImageLoad = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setCategoryImageUrl(e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setUpload(e.target.files[0]);
+    }
   };
 
   // PARENT CATEGORY HANDLERS
@@ -283,16 +274,11 @@ const CategoriesAdd = ({ id, editMode }) => {
         <TableContainerRow
           key={index}
           id={subcategory._id}
-          num={index + 1}
-          name={
-            subcategory.name.length
-              ? subcategory.name[0].value
-              : 'No name category'
-          }
+          image={subcategory.images.thumbnail || ''}
+          name={subcategory.name[0].value}
           available={subcategory.available ? 'Так' : 'Ні'}
           deleteHandler={() => categoryDeleteHandler(subcategory._id)}
           editHandler={() => dispatch(push(`/add-category/${subcategory._id}`))}
-          showAvatar={false}
         />
       ));
   }, [id, categories, dispatch, categoryDeleteHandler]);
@@ -355,6 +341,16 @@ const CategoriesAdd = ({ id, editMode }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      checked={newCategory.isMain}
+                      name='isMain'
+                      onChange={handleChange}
+                    />
+                  }
+                  label='Основна категорія'
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
                       checked={newCategory.available}
                       name='available'
                       onChange={handleChange}
@@ -363,16 +359,6 @@ const CategoriesAdd = ({ id, editMode }) => {
                   label={
                     isMain ? 'Категорія доступна' : 'Підкатегорія доступна'
                   }
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={newCategory.isMain}
-                      name='isMain'
-                      onChange={handleChange}
-                    />
-                  }
-                  label='Основна категорія'
                 />
               </Paper>
               <Paper className={classes.addFields}>
@@ -457,42 +443,27 @@ const CategoriesAdd = ({ id, editMode }) => {
                 </TabPanel>
                 <TabPanel value={tabValue} index={1}>
                   <div className={classes.addImageForm}>
-                    <FormControl
-                      variant='outlined'
-                      className={classes.imageSelect}
-                    >
-                      <Select
-                        native
-                        value={selectedSize}
-                        onChange={handleSizeChange}
-                        fullWidth
-                        inputProps={{ name: 'sizes' }}
-                      >
-                        <option value='' disabled>
-                          Оберіть розмір
-                        </option>
-                        <option value='large'>Large</option>
-                        <option value='medium'>Medium</option>
-                        <option value='small'>Small</option>
-                        <option value='thumbnail'>Thumbnail</option>
-                      </Select>
-                    </FormControl>
-                    <TextField
-                      variant='outlined'
-                      value={!selectedSizeUrl ? '' : selectedSizeUrl}
-                      className={classes.addNameInput}
-                      disabled={!selectedSize}
-                      onChange={handleUrlChange}
-                      placeholder='Посилання'
-                    />
-                    <Button
-                      variant='contained'
-                      color='primary'
-                      className={classes.addNameBtn}
-                      onClick={handleSizeSave}
-                    >
-                      {config.buttonTitles.ADD_CATEGORY_IMAGE}
-                    </Button>
+                    <div className={classes.imageContainer}>
+                      <img
+                        src={categoryImageUrl || AddPhoto}
+                        alt='profile-logo'
+                        className={classes.userImage}
+                        onError={handleImageError}
+                      />
+                      <input
+                        type='file'
+                        className={classes.photoUpload}
+                        id='photoUpload'
+                        onChange={handleImageLoad}
+                        multiple={false}
+                        accept='image/*'
+                      />
+                      <label htmlFor='photoUpload' className={classes.uploadLabel}>
+                        <Button component='span' className={classes.uploadBtn}>
+                          {config.buttonTitles.ADD_PHOTO_LABEL}
+                        </Button>
+                      </label>
+                    </div>
                   </div>
                 </TabPanel>
                 {!isMain && (

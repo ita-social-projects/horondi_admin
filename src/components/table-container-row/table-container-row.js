@@ -8,20 +8,21 @@ import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
 
 const TableContainerRow = ({
-  id,
-  editHandler,
-  showAvatar,
-  deleteHandler,
-  ...rest
-}) => {
+                             id,
+                             image,
+                             editHandler,
+                             showAvatar,
+                             deleteHandler,
+                             ...rest
+                           }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.iconSizes;
   const classes = useStyles();
 
   const dense = useSelector(({ Table }) => Table.dense);
 
-  const propetries = { ...rest };
-  const tableCells = Object.values(propetries).map((propetry, index) => (
-    <TableCell key={index}>{propetry}</TableCell>
+  const properties = { ...rest };
+  const tableCells = Object.values(properties).map((property, index) => (
+    <TableCell key={index}>{`${property}`}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
@@ -31,21 +32,25 @@ const TableContainerRow = ({
     <TableRow key={id} hover>
       {showAvatar && (
         <TableCell>
-          <Avatar className={avatarSize}>
-            <ImageIcon fontSize={iconSize} />
+          <Avatar
+            className={avatarSize}
+            src={image}
+          >
+            <ImageIcon/>
           </Avatar>
         </TableCell>
       )}
       {tableCells}
       <TableCell>
-        <EditButton size={iconSize} onClickHandler={editHandler} />
-        <DeleteButton size={iconSize} onClickHandler={deleteHandler} />
+        <EditButton size={iconSize} onClickHandler={editHandler}/>
+        <DeleteButton size={iconSize} onClickHandler={deleteHandler}/>
       </TableCell>
     </TableRow>
   );
 };
 
 TableContainerRow.propTypes = {
+  image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
   id: PropTypes.string,
@@ -54,8 +59,11 @@ TableContainerRow.propTypes = {
 
 TableContainerRow.defaultProps = {
   id: '',
-  deleteHandler: () => {},
-  editHandler: () => {},
+  image: '',
+  deleteHandler: () => {
+  },
+  editHandler: () => {
+  },
   showAvatar: true
 };
 

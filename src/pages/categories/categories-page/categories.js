@@ -16,7 +16,7 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 
 const Categories = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { tableHeadRowTitles, buttonTitles, app } = config;
+  const { tableHeadRowTitles, buttonTitles, app, IMG_URL } = config;
   const { routes } = app;
   const { ADD_CATEGORY } = buttonTitles;
   const { DELETE_CATEGORY_MESSAGE } = config.messages;
@@ -68,17 +68,18 @@ const Categories = () => {
         return 0;
       })
       .filter((category) => category.isMain)
-      .map((category, index) => (
-        <TableContainerRow
-          key={index}
-          id={category._id}
-          num={index + 1}
-          name={category.name.length ? category.name[0].value : ''}
-          deleteHandler={() => handleDeleteCategory(category._id)}
-          editHandler={() => dispatch(push(`/add-category/${category._id}`))}
-          showAvatar={false}
-        />
-      ))
+      .map((category, index) => {
+        return (
+          <TableContainerRow
+            key={index}
+            id={category._id}
+            image={category.images.thumbnail ? IMG_URL+category.images.thumbnail : ''}
+            name={category.name.length ? category.name[0].value : ''}
+            deleteHandler={() => handleDeleteCategory(category._id)}
+            editHandler={() => dispatch(push(`/add-category/${category._id}`))}
+          />
+        )
+      })
     : null;
 
   return (

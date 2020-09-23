@@ -49,8 +49,8 @@ export const config = {
   },
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
-    categories: ['№', 'Категорія', 'Дії'],
-    subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
+    categories: ['Зображення', 'Категорія', 'Дії'],
+    subcategories: ['Зображення', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
     users: ['Аватар', "Ім'я", 'Мобільний номер', 'Пошта', 'Статус', 'Дії'],
@@ -107,13 +107,14 @@ export const config = {
     ADD_CATEGORY: 'Додати категорію',
     DELETE_CATEGORY: 'Видалити категорію',
     ADD_SUBCATEGORY: 'Додати підкатегорію',
-    ADD_CATEGORY_IMAGE: 'Зберегти посилання',
+    ADD_CATEGORY_IMAGE: 'Додати зображення',
     ADD_CATEGORY_NAME: 'Додати назву',
     CANCEL: 'Відмінити',
     SAVE_CATEGORY: 'Зберегти категорію',
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    ADD_PHOTO_LABEL: '+',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
@@ -159,5 +160,6 @@ export const config = {
     skip: 0,
     limit: 5,
     newsPerPage: 6
-  }
+  },
+  IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
 };
