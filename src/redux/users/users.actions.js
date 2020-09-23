@@ -8,7 +8,10 @@ import {
   DELETE_USER,
   UPDATE_USER_STATUS,
   DELETE_USER_LOCALLY,
-  UPDATE_USER_LOCALLY
+  UPDATE_USER_LOCALLY,
+  REGISTER_ADMIN,
+  CONFIRM_ADMIN,
+  VALIDATE_TOKEN
 } from './users.types';
 
 const getUsers = () => ({ type: GET_USERS });
@@ -56,6 +59,22 @@ const deleteUserLocally = (id) => ({
   type: DELETE_USER_LOCALLY,
   payload: id
 });
+
+const registerAdmin = (user) => ({
+  type: REGISTER_ADMIN,
+  payload: user
+});
+
+const confirmAdmin = (data) => ({
+  type: CONFIRM_ADMIN,
+  payload: data
+});
+
+const validateToken = (token) => ({
+  type: VALIDATE_TOKEN,
+  payload: token
+});
+
 export {
   getUsers,
   setUsers,
@@ -66,5 +85,8 @@ export {
   setUserError,
   setUsersLoading,
   updateUserLocally,
-  deleteUserLocally
+  deleteUserLocally,
+  registerAdmin,
+  confirmAdmin,
+  validateToken
 };
