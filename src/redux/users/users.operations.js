@@ -103,8 +103,6 @@ query($token: String!){
 const getAllUsers = async (options = {}) => {
   const { filter } = options;
 
-  console.log(filter);
-
   const result = await getItems(getAllUsersQuery, { filter });
 
   const { data } = result;

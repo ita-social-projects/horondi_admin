@@ -80,11 +80,14 @@ const RegisterUser = () => {
                 variant='outlined'
                 label='Пошта'
                 name='email'
+                data-cy='email'
                 type='text'
                 onBlur={handleChange}
                 error={touched.email && !!errors.email}
               />
-              <FormHelperText>{touched.email && errors.email}</FormHelperText>
+              <FormHelperText data-cy='email-error-label'>
+                {touched.email && errors.email}
+              </FormHelperText>
             </FormControl>
             <FormControl
               className={styles.formControl}
@@ -100,16 +103,20 @@ const RegisterUser = () => {
                 value={values.role}
                 onChange={handleChange}
                 className={styles.formSelect}
+                data-cy='role'
                 error={touched.role && !!errors.role}
               >
                 {rolesList}
               </Select>
-              <FormHelperText>{touched.role && errors.role}</FormHelperText>
+              <FormHelperText data-cy='role-error-label'>
+                {touched.role && errors.role}
+              </FormHelperText>
             </FormControl>
             <FormControl className={styles.formControl}>
               <SaveButton
                 type='submit'
                 title='Створити'
+                data-cy='submit-admin-register'
                 className={styles.saveButton}
               />
             </FormControl>
