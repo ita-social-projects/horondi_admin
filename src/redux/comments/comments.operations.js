@@ -28,15 +28,9 @@ const getCommentsByUser = async (userEmail) => {
       query: gql`
         query($userEmail: String!) {
           getAllCommentsByUser(userEmail: $userEmail) {
-            ... on Comment {
-              _id
-              text
-              date
-            }
-            ... on Error {
-              message
-              statusCode
-            }
+            _id
+            text
+            date
           }
         }
       `,
