@@ -133,7 +133,6 @@ const deleteBusinessPage = async (id) => {
 };
 
 const updateBusinessPage = async ({ id, page, files }) => {
-  console.log('operations', files);
   const result = await client.mutate({
     variables: {
       id,
