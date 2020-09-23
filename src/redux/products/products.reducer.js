@@ -21,7 +21,7 @@ import {
   SET_PRODUCT_OPTIONS,
   SET_MODELS,
   SET_FILES_TO_UPLOAD,
-  SET_PRODUCT
+  SET_PRODUCT, CLEAR_FILES_TO_UPLOAD, SET_FILES_TO_DELETE, REMOVE_IMAGES_TO_UPLOAD, SET_PRIMARY_IMAGE_TO_UPLOAD
 } from './products.types';
 
 const { initialLanguageValues } = config;
@@ -66,7 +66,9 @@ export const initialState = {
   products: [],
   pagesCount: 1,
   productsError: null,
+  filesToDelete: [],
   upload: [],
+  primaryImageUpload: null,
   productSpecies: {
     categories: [],
     modelsForSelectedCategory: []
@@ -226,6 +228,27 @@ const productsReducer = (state = initialState, action = {}) => {
       ...state,
       selectedProduct: action.payload
     };
+    case CLEAR_FILES_TO_UPLOAD:
+      return {
+        ...state,
+        upload: []
+      }
+    case SET_FILES_TO_DELETE: {
+      return {...state,
+      filesToDelete: action.payload}
+    }
+    case REMOVE_IMAGES_TO_UPLOAD: {
+      return {
+        ...state,
+        upload: state.upload.filter(({ name }) => name !== action.payload)
+      }
+    }
+    case SET_PRIMARY_IMAGE_TO_UPLOAD: {
+      return {
+        ...state,
+        primaryImageUpload: action.payload
+      }
+    }
   default:
     return state;
   }

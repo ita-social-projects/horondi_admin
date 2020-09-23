@@ -29,7 +29,12 @@ import {
   DELETE_PRODUCT,
   SET_FILES_TO_UPLOAD,
   SET_PRODUCT,
-  UPDATE_PRODUCT, DELETE_IMAGES
+  UPDATE_PRODUCT,
+  DELETE_IMAGES,
+  CLEAR_FILES_TO_UPLOAD,
+  SET_FILES_TO_DELETE,
+  REMOVE_IMAGES_TO_UPLOAD,
+  SET_PRIMARY_IMAGE_TO_UPLOAD
 } from './products.types';
 
 export const getProduct = (id) => ({
@@ -187,3 +192,24 @@ export const deleteImages = (payload) => ({
   type: DELETE_IMAGES,
   payload
 });
+
+export const clearFilesToUpload = (payload) => ({
+  type: CLEAR_FILES_TO_UPLOAD,
+  payload
+});
+
+export const setFilesToDelete = (payload) => ({
+  type: SET_FILES_TO_DELETE,
+  payload
+});
+
+export const removeImagesToUpload = (payload) => ({
+  type: REMOVE_IMAGES_TO_UPLOAD,
+  payload
+});
+
+export const setPrimaryImageToUpload = (payload) => ({
+  type: SET_PRIMARY_IMAGE_TO_UPLOAD,
+  payload
+});
+

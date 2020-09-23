@@ -276,9 +276,15 @@ const productQuery = `
             images {
               primary {
                 large
+                medium
+                small
+                thumbnail
               }
               additional {
                 large
+                medium
+                small
+                thumbnail
               }
             }
             colors {
@@ -393,18 +399,19 @@ const getProduct = async (payload) => {
   return result.data.getProductById;
 };
 
-const updateProduct = async (payload, upload) => {
+const updateProduct = async (payload, upload, primaryImageUpload) => {
   const result = await client.mutate({
     mutation: gql`
-      mutation($id: ID!, $product: ProductInput!, $upload: Upload) {
-        updateProduct(id: $id, product: $product, upload: $upload) {
+      mutation($id: ID!, $product: ProductInput!, $upload: Upload, $primary: Upload) {
+        updateProduct(id: $id, product: $product, upload: $upload, primary: $primary) {
             ${productQuery}
         }
       }`,
     variables: {
       id: payload.id,
       product: payload.product,
-      upload: upload.length ? upload : undefined
+      upload: upload.length ? upload : undefined,
+      primary: primaryImageUpload || undefined
     }
   });
   return result.data.updateProduct;
@@ -417,9 +424,15 @@ const deleteImages = async (payload, images) => {
           deleteImages(id: $id, images: $images) {
             primary {
               large
+              medium
+              small
+              thumbnail
             }
             additional {
               large
+              medium
+              small
+              thumbnail
             }
           }
         }

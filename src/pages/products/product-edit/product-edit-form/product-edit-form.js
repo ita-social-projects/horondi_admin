@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Carousel from 'react-multi-carousel';
 import {
   Paper,
   Grid,
@@ -12,38 +11,27 @@ import {
 import useProductHandler from '../../../../utils/use-product-handler';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import useProductValidation from '../../../../utils/use-product-validation';
-
 import { useStyles } from './product-edit-form.styles';
-import 'react-multi-carousel/lib/styles.css';
-import './product-edit-form.css';
 
-import UploadButtonContainer from "../../../../containers/upload-button-container";
 import ProductInfoContainer from '../../../../containers/product-info-container';
 import ProductSpeciesContainer from '../../../../containers/product-species-container';
 import ProductOptionsContainer from '../../../../containers/product-options-container';
 import LoadingBar from '../../../../components/loading-bar';
 
 import {
-  deleteImages,
   deleteProduct,
   getModelsByCategory, setFilesToUpload,
   updateProduct
 } from '../../../../redux/products/products.actions';
 import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
 
-import { config } from '../../../../configs';
 import { productsTranslations } from '../../../../translations/product.translations';
+import ProductCarousel from "./product-carousel";
 
-const {
-  product: { responsive },
-  imagePrefix
-} = config;
 const {
   DELETE_PRODUCT_MESSAGE,
   DELETE_PRODUCT_TITLE,
   DELETE_PRODUCT_BTN,
-  DELETE_IMAGE_MESSAGE,
-  DELETE_IMAGE_TITLE
 } = productsTranslations;
 
 const ProductEditForm = () => {
@@ -58,7 +46,6 @@ const ProductEditForm = () => {
   );
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
-  const [productImages, setProductImages] = useState([])
 
   const formikSpeciesValues = {
     category: product.category._id,
@@ -154,20 +141,6 @@ const ProductEditForm = () => {
     uniqueSizes
   ]);
 
-  useEffect(() => {
-    if(product.images) {
-      const images = [
-        {url: product.images.primary.large, prefix: true},
-        ...product.images.additional.map(({ large }) => ({url: large, prefix: true}))
-      ]
-      setProductImages(images)
-    }
-
-    return () => {
-      dispatch(setFilesToUpload([]))
-    }
-  }, [product.images])
-
   const onSubmit = (values) => {
     const {
       colors,
@@ -239,79 +212,6 @@ const ProductEditForm = () => {
     );
   };
 
-  const handleMultipleFilesLoad = async (e)=> {
-    const { files } = e.target
-    if(files && files[0]) {
-      toggleFieldsChanged(true)
-      const imagesNames = productImages.map(({ url }) => url);
-      const newImages = Array.from(files).filter(({ name }) => !imagesNames.includes(name));
-      const results = await Promise.all(convertToBase64(newImages))
-      setProductImages((oldImages) => [...oldImages, ...results.map(image => ({ url: image, prefix: false }))])
-      dispatch(setFilesToUpload(newImages))
-    }
-  }
-
-  const convertToBase64 = (files) => (
-      files.map(file=> (new Promise(res=> {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = (e) => {
-            res(e.target.result);
-          };
-        })
-      ))
-  )
-
-  const handleImagesDeleting = (id, url) => {
-    const removeProduct = () => {
-      dispatch(closeDialog());
-      dispatch(setFilesToUpload([url]))
-      dispatch(deleteImages(id))
-    };
-    openSuccessSnackbar(
-        removeProduct,
-        DELETE_IMAGE_TITLE,
-        DELETE_IMAGE_MESSAGE,
-        DELETE_PRODUCT_BTN
-    );
-  }
-
-  const imagesForCarousel = productImages.map(({ prefix, url }) => (
-      <div key={url}>
-        <div
-            className={styles.image}
-            style={{
-              background: `url(${prefix ? imagePrefix : ''}${url}) no-repeat center`,
-              backgroundSize: 'cover'
-            }}
-        />
-        <Grid container justify='center' spacing={2}>
-          <Grid item>
-            <Box mt={1}>
-              <UploadButtonContainer
-                  className={styles.imageBtn}
-                  buttonLabel='НОВІ ФОТО'
-                  onChangeHandler={handleMultipleFilesLoad}
-                  startIcon={true}
-                  multiple={true}
-              />
-            </Box>
-          </Grid>
-          <Grid item>
-            <Box mt={1}>
-              <Button
-                  className={styles.imageBtn}
-                  variant='outlined'
-                  onClick={() => handleImagesDeleting(product._id, url)}
-              >
-                ВИДАЛИТИ
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-      </div>
-  ));
-
   return (
     <div className={styles.container}>
       {modelsForSelectedCategory.length ? (
@@ -340,13 +240,7 @@ const ProductEditForm = () => {
           </Grid>
           <Grid item xs={12} md={5} xl={3}>
             <Paper className={styles.paper}>
-              <Carousel
-                className={styles.carousel}
-                responsive={responsive}
-                swipeable={false}
-              >
-                {imagesForCarousel}
-              </Carousel>
+              <ProductCarousel toggleFieldsChanged={toggleFieldsChanged}/>
             </Paper>
           </Grid>
           <Grid item xs={12} md={7} xl={9}>

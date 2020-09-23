@@ -10,7 +10,7 @@ import {
   setProductOptions,
   setModels,
   clearProductToSend,
-  setProduct, setFilesToUpload
+  setProduct, setFilesToUpload, clearFilesToUpload, setFilesToDelete
 } from './products.actions';
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 
@@ -144,10 +144,15 @@ export function* handleProductDelete({ payload }) {
 
 export function* handleProductUpdate({ payload }) {
   try {
-    const upload = yield select(({ Products }) => Products.upload)
-    const productToUpdate = yield call(updateProduct, payload, upload);
+    yield put(setProductsLoading(true));
+    const { upload, primaryImageUpload } = yield select(({ Products }) => ({
+      upload: Products.upload,
+      primaryImageUpload: Products.primaryImageUpload
+    }))
+    const productToUpdate = yield call(updateProduct, payload, upload, primaryImageUpload);
     yield put(setProduct(productToUpdate));
-    yield put(setFilesToUpload([]))
+    yield put(clearFilesToUpload())
+    yield put(setProductsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
@@ -181,12 +186,15 @@ export function* handleProductsErrors(e) {
 
 export function* handleImagesDelete({ payload }) {
   try {
+    yield put(setProductsLoading(true));
     const { images, selectedProduct } = yield select(({ Products }) => ({
-      images: Products.upload,
+      images: Products.filesToDelete,
       selectedProduct: Products.selectedProduct
     }))
     const newImages = yield call(deleteImages, payload, images)
     yield put(setProduct({ ...selectedProduct, images: newImages }))
+    yield put(setFilesToDelete([]))
+    yield put(setProductsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
