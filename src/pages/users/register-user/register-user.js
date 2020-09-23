@@ -19,7 +19,7 @@ import { SaveButton } from '../../../components/buttons';
 import { registerAdmin } from '../../../redux/users/users.actions';
 import LoadingBar from '../../../components/loading-bar';
 
-const { loginErrorMessages, userRoles: roles } = config;
+const { loginErrorMessages, userRoles, allowedforRegistrationRoles } = config;
 
 const RegisterUser = () => {
   const styles = useStyles();
@@ -48,6 +48,9 @@ const RegisterUser = () => {
     }
   });
 
+  const roles = userRoles.filter((item) =>
+    allowedforRegistrationRoles.includes(item.role)
+  );
   if (loading) {
     return <LoadingBar />;
   }

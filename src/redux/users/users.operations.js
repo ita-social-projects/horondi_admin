@@ -2,8 +2,8 @@ import { getItems, setItems } from '../../utils/client';
 import { config } from '../../configs';
 
 const getAllUsersQuery = `
-{
-  getAllUsers {
+query($filter: UserFilterInput) {
+  getAllUsers(filter: $filter) {
     _id
     firstName
     lastName
@@ -100,8 +100,12 @@ query($token: String!){
   }
 }`;
 
-const getAllUsers = async () => {
-  const result = await getItems(getAllUsersQuery);
+const getAllUsers = async (options = {}) => {
+  const { filter } = options;
+
+  console.log(filter);
+
+  const result = await getItems(getAllUsersQuery, { filter });
 
   const { data } = result;
 

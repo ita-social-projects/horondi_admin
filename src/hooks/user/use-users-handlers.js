@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../redux/users/users.actions';
+import { getUser } from '../../redux/users/users.actions';
 
 const useUsersHandler = (id) => {
   const dispatch = useDispatch();

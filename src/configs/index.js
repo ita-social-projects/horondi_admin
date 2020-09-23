@@ -62,7 +62,12 @@ export const config = {
       subcategories: []
     }
   },
-  userRoles: [{ role: 'admin', label: 'Адмін' }],
+  userRoles: [
+    { role: 'user', label: 'Юзер' },
+    { role: 'admin', label: 'Адмін' },
+    { role: 'superadmin', label: 'Суперадмін' }
+  ],
+  allowedforRegistrationRoles: ['admin'],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
@@ -81,15 +86,18 @@ export const config = {
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
-    users: [
-      'Аватар',
-      "Ім'я",
-      'Мобільний номер',
-      'Пошта',
-      'Роль',
-      'Статус',
-      'Дії'
-    ],
+    users: {
+      userTab: [
+        'Аватар',
+        "Ім'я",
+        'Мобільний номер',
+        'Пошта',
+        'Роль',
+        'Статус',
+        'Дії'
+      ],
+      adminTab: ['Аватар', "Ім'я", 'Роль', 'Дії']
+    },
     contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії']
   },
   detailTitles: {
