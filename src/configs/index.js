@@ -181,10 +181,10 @@ export const config = {
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
-    NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
-    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
+    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
