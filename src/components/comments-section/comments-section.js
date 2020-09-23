@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import TableContainerRow from '../table-container-row';
-import TableContainerGenerator from '../table-container-generator';
+import TableContainerRow from '../../containers/table-container-row';
+import TableContainerGenerator from '../../containers/table-container-generator';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import LoadingBar from '../loading-bar';
