@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
+  clearFilesToUpload,
   getProduct,
   getProductOptions,
-  getProductSpecies,
+  getProductSpecies, setPrimaryImageToUpload,
   setProduct
 } from '../../../redux/products/products.actions';
 
@@ -29,6 +30,8 @@ const ProductEdit = ({ id }) => {
 
     return () => {
       dispatch(setProduct(productModel));
+      dispatch(clearFilesToUpload())
+      dispatch(setPrimaryImageToUpload([]))
     };
   }, [id, dispatch]);
 

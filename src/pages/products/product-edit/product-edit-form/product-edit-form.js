@@ -20,7 +20,7 @@ import LoadingBar from '../../../../components/loading-bar';
 
 import {
   deleteProduct,
-  getModelsByCategory, setFilesToUpload,
+  getModelsByCategory,
   updateProduct
 } from '../../../../redux/products/products.actions';
 import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
@@ -31,7 +31,7 @@ import ProductCarousel from "./product-carousel";
 const {
   DELETE_PRODUCT_MESSAGE,
   DELETE_PRODUCT_TITLE,
-  DELETE_PRODUCT_BTN,
+  DELETE_PRODUCT_BTN,SAVE, PRODUCT_SPECIFICATION, PRODUCT_OPTIONS
 } = productsTranslations;
 
 const ProductEditForm = () => {
@@ -225,7 +225,7 @@ const ProductEditForm = () => {
                 disabled={!isFieldsChanged}
                 onClick={handleProductValidate}
               >
-                Зберегти
+                {SAVE}
               </Button>
             </Grid>
             <Grid item>
@@ -234,7 +234,7 @@ const ProductEditForm = () => {
                 variant='outlined'
                 onClick={handleProductDelete}
               >
-                Видалити продукт
+                {DELETE_PRODUCT_TITLE}
               </Button>
             </Grid>
           </Grid>
@@ -265,7 +265,7 @@ const ProductEditForm = () => {
             <Paper className={styles.paper}>
               <Box mb={1}>
                 <Typography className={styles.title}>
-                  Специфікація продукту:
+                  {PRODUCT_SPECIFICATION}
                 </Typography>
               </Box>
               <ProductSpeciesContainer
@@ -287,7 +287,7 @@ const ProductEditForm = () => {
               </Box>
               <Box mt={3}>
                 <Typography className={styles.title}>
-                  Опційні параметри продукту:
+                  {PRODUCT_OPTIONS}
                 </Typography>
               </Box>
               <ProductOptionsContainer

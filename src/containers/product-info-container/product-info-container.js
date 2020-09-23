@@ -16,7 +16,9 @@ import useStyles from './product-info-container.styles';
 import Editor from "../../components/editor";
 import TabPanel from '../../components/tab-panel';
 import { config } from '../../configs';
+import {productsTranslations} from "../../translations/product.translations";
 
+const { SELECT_LANGUAGES } = productsTranslations
 const { infoLabels } = config.product;
 
 const ProductInfoContainer = ({
@@ -88,7 +90,7 @@ const ProductInfoContainer = ({
     <form onSubmit={handleSubmit}>
       <Grid container alignItems='center' spacing={2}>
         <Grid item>
-          <Typography className={styles.title}>Оберіть мови:</Typography>
+          <Typography className={styles.title}>{SELECT_LANGUAGES}</Typography>
         </Grid>
         <Grid item>{langCheckboxes}</Grid>
       </Grid>

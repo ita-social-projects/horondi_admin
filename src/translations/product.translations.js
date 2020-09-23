@@ -31,5 +31,11 @@ export const productsTranslations = {
   INNER_MATERIAL_TOO_SHORT_MESSAGE: 'Назва внутрішнього матеріалу повинна містити не менше 2 символів',
   INNER_MATERIAL_TOO_LONG_MESSAGE: 'Назва внутрішнього матеріалу повинна містити не більше 50 символів',
   CLOSURE_TOO_SHORT_MESSAGE: 'Назва замка повинна містити не менше 2 символів',
-  CLOSURE_TOO_LONG_MESSAGE: 'Назва замка повинна містити не більше 50 символів'
+  CLOSURE_TOO_LONG_MESSAGE: 'Назва замка повинна містити не більше 50 символів',
+  UPDATE_MAIN_PHOTO: 'ОНОВИТИ ГОЛОВНЕ ФОТО',
+  NEW_PHOTOS: 'НОВІ ФОТО',
+  SAVE: 'ЗБЕРЕГТИ',
+  PRODUCT_SPECIFICATION: 'Специфікація продукту:',
+  PRODUCT_OPTIONS: 'Опційні параметри продукту:',
+  SELECT_LANGUAGES: 'Оберіть мови:'
 };
