@@ -8,8 +8,8 @@ import {
 } from '../../../redux/categories/categories.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
-import TableContainerRow from '../../../components/table-container-row';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerRow from '../../../containers/table-container-row';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './categories.styles';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
@@ -68,18 +68,22 @@ const Categories = () => {
         return 0;
       })
       .filter((category) => category.isMain)
-      .map((category, index) => {
-        return (
-          <TableContainerRow
-            key={index}
-            id={category._id}
-            image={category.images.thumbnail ? IMG_URL+category.images.thumbnail : ''}
-            name={category.name.length ? category.name[0].value : ''}
-            deleteHandler={() => handleDeleteCategory(category._id)}
-            editHandler={() => dispatch(push(`/add-category/${category._id}`))}
-          />
-        )
-      })
+      .map((category, index) => (
+        <TableContainerRow
+          key={index}
+          id={category._id}
+          image={
+            category.images.thumbnail
+              ? IMG_URL + category.images.thumbnail
+              : ''
+          }
+          name={category.name.length ? category.name[0].value : ''}
+          deleteHandler={() => handleDeleteCategory(category._id)}
+          editHandler={() =>
+            dispatch(push(`/add-category/${category._id}`))
+          }
+        />
+      ))
     : null;
 
   return (

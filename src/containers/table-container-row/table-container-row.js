@@ -3,18 +3,18 @@ import { useSelector } from 'react-redux';
 import { TableRow, TableCell, Avatar } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
-import { DeleteButton, EditButton } from '../buttons';
+import { DeleteButton, EditButton } from '../../components/buttons';
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
 
 const TableContainerRow = ({
-                             id,
-                             image,
-                             editHandler,
-                             showAvatar,
-                             deleteHandler,
-                             ...rest
-                           }) => {
+  id,
+  image,
+  editHandler,
+  showAvatar,
+  deleteHandler,
+  ...rest
+}) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.iconSizes;
   const classes = useStyles();
 
@@ -32,18 +32,15 @@ const TableContainerRow = ({
     <TableRow key={id} hover>
       {showAvatar && (
         <TableCell>
-          <Avatar
-            className={avatarSize}
-            src={image}
-          >
-            <ImageIcon/>
+          <Avatar className={avatarSize} src={image}>
+            <ImageIcon />
           </Avatar>
         </TableCell>
       )}
       {tableCells}
       <TableCell>
-        <EditButton size={iconSize} onClickHandler={editHandler}/>
-        <DeleteButton size={iconSize} onClickHandler={deleteHandler}/>
+        <EditButton size={iconSize} onClickHandler={editHandler} />
+        <DeleteButton size={iconSize} onClickHandler={deleteHandler} />
       </TableCell>
     </TableRow>
   );
@@ -60,10 +57,8 @@ TableContainerRow.propTypes = {
 TableContainerRow.defaultProps = {
   id: '',
   image: '',
-  deleteHandler: () => {
-  },
-  editHandler: () => {
-  },
+  deleteHandler: () => {},
+  editHandler: () => {},
   showAvatar: true
 };
 

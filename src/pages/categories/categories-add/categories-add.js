@@ -15,10 +15,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { push } from 'connected-react-router';
 import { useStyles } from './categories-add.styles';
-import TableContainerGenerator from '../../../components/table-container-generator';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 import TabPanel from '../../../components/tab-panel';
 import { config } from '../../../configs';
-import TableContainerRow from '../../../components/table-container-row';
+import TableContainerRow from '../../../containers/table-container-row';
 import {
   getCategories,
   createCategory,
@@ -32,7 +32,7 @@ import LoadingBar from '../../../components/loading-bar';
 import { omitTypename } from '../../../utils/omitTypeName';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import AddPhoto from '../../../images/add-photo.png'
+import AddPhoto from '../../../images/add-photo.png';
 
 const CategoriesAdd = ({ id, editMode }) => {
   // HOOKS
@@ -59,7 +59,7 @@ const CategoriesAdd = ({ id, editMode }) => {
           if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
             return 1;
           }
-          else if (a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()) {
+          if (a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()) {
             return -1;
           }
           return 0;
@@ -102,8 +102,8 @@ const CategoriesAdd = ({ id, editMode }) => {
   }, [dispatch, id, categories]);
 
   useEffect(() => {
-    if(newCategory.images.medium) {
-      setCategoryImageUrl(config.IMG_URL+newCategory.images.medium);
+    if (newCategory.images.medium) {
+      setCategoryImageUrl(config.IMG_URL + newCategory.images.medium);
     }
   }, [newCategory.images.medium]);
 
@@ -128,11 +128,11 @@ const CategoriesAdd = ({ id, editMode }) => {
   const [codeIsValid, setCodeIsValid] = useState(false);
   const [nameIsValid, setNameIsValid] = useState(false);
 
-  useEffect(()=> {
-    if(!editMode) {
-      setCategoryImageUrl(null)
+  useEffect(() => {
+    if (!editMode) {
+      setCategoryImageUrl(null);
     }
-  },[editMode])
+  }, [editMode]);
 
   useEffect(() => {
     if (newCategory.code) {
@@ -244,7 +244,7 @@ const CategoriesAdd = ({ id, editMode }) => {
   // IMAGE HANDLERS
   const handleImageError = (e) => {
     e.target.src = AddPhoto;
-  }
+  };
 
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -458,7 +458,10 @@ const CategoriesAdd = ({ id, editMode }) => {
                         multiple={false}
                         accept='image/*'
                       />
-                      <label htmlFor='photoUpload' className={classes.uploadLabel}>
+                      <label
+                        htmlFor='photoUpload'
+                        className={classes.uploadLabel}
+                      >
                         <Button component='span' className={classes.uploadBtn}>
                           {config.buttonTitles.ADD_PHOTO_LABEL}
                         </Button>
