@@ -12,14 +12,21 @@ import NavMenu from '../components/nav-menu';
 import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
+import Business from '../pages/business-pages';
+import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
+import ProductsPage from '../pages/products/products-page';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
-import CommentsPage from '../pages/comments/comments'
-
+import ContactsPage from '../pages/contacts-page';
+import ContactsEdit from '../pages/contacts-page/contacts-edit';
+import ContactsAdd from '../pages/contacts-page/contacts-add';
+import UsersDetails from '../pages/users/users-details';
+import CommentsPage from '../pages/comments/comments';
 import { config } from '../configs';
 import { history } from '../store/store';
-import UsersDetails from '../pages/users/users-details';
+import RegisterUser from '../pages/users/register-user';
+import ConfirmUser from '../pages/users/confirm-user';
 
 const { routes } = config.app;
 
@@ -33,6 +40,11 @@ const Routes = () => {
       <ConnectedRouter history={history}>
         <NavBar />
         <Switch>
+          <Route
+            path={routes.pathToConfirmAdmin}
+            exact
+            component={ConfirmUser}
+          />
           <Route path={routes.pathToLogin} exact component={LoginPage} />
           <Route component={ErrorPage} />
         </Switch>
@@ -56,8 +68,34 @@ const Routes = () => {
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route path={routes.pathToBusinessPages} exact component={Business} />
+        <Route
+          path={routes.pathToAddBusinessPage}
+          exact
+          component={BusinessPageForm}
+        />
+        <Route
+          path={routes.pathToBusinessPageDetails}
+          exact
+          render={({ match }) => (
+            <BusinessPageForm id={match.params.id} editMode />
+          )}
+        />
+        <Route path={routes.pathToContacts} exact component={ContactsPage} />
+        <Route
+          path={routes.pathToContactsEdit}
+          exact
+          component={ContactsEdit}
+        />
+        <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
+        <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
-        <Route path={routes.pathToComments} exact component={CommentsPage}/>
+        <Route path={routes.pathToComments} exact component={CommentsPage} />
+        <Route
+          path={routes.pathToRegisterAdmin}
+          exact
+          component={RegisterUser}
+        />
         <Route
           path={routes.pathToAddCategory}
           exact
