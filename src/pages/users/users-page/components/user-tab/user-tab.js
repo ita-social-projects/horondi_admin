@@ -40,7 +40,7 @@ const UserTab = (props) => {
 };
 
 UserTab.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.element).isRequired,
+  list: PropTypes.arrayOf(PropTypes.object).isRequired,
   onDelete: PropTypes.func.isRequired
 };
 
