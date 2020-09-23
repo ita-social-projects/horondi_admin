@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   tableNav: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'space-between',
     margin: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
@@ -15,12 +15,11 @@ export const useStyles = makeStyles((theme) => ({
     width: `100%`,
     marginTop: 65,
     position: 'static',
-    padding: 25
+    padding: 20
   },
-  usersTitle: {
-    fontSize: 24,
-    color: theme.palette.text.disabled,
-    fontWeight: 'bold'
+  paginationDiv: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '30px'
   }
-  // buttonsPanel: {}
 }));
