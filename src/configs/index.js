@@ -176,6 +176,7 @@ export const config = {
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
