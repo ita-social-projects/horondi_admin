@@ -98,4 +98,18 @@ describe('User list and items test', () => {
     cy.get('[data-cy=adress]').should('have.text', adress);
     cy.get('[data-cy=postCode]').should('have.text', postalCode);
   });
+
+  it('Users tab must have only users', () => {
+    cy.visit(`/users`);
+    cy.wait(3000);
+    cy.get('@table').should('not.have.text', 'Адмін');
+    cy.get('@table').should('not.have.text', 'Супердмін');
+  });
+  it('Admins tab must have only admins and superadmins', () => {
+    cy.visit(`/users`);
+    cy.wait(3000);
+    cy.contains('Адміністратори').click();
+    cy.wait(3000);
+    cy.get('@table').should('not.have.text', 'Користувач');
+  });
 });
