@@ -29,8 +29,8 @@ const ContactsEdit = ({ match }) => {
     ukAddress: '',
     enAddress: '',
     email: '',
-    ukCartImage: '',
-    enCartImage: '',
+    ukCartImage: null,
+    enCartImage: null,
     cartLink: ''
   });
 
