@@ -1,6 +1,6 @@
 export const clearLocalStorage = () => {
   const horondi = {
-    HORONDI_AUTH_TOKEN: null,
+    HORONDI_AUTH_TOKEN: '',
     darkMode: null
   };
   localStorage.setItem('horondi', JSON.stringify(horondi));

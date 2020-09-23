@@ -17,7 +17,7 @@ import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
 
 const {
   USER_ACTIVE_TITLE,
-  USER_UNACTIVE_TITLE,
+  USER_INACTIVE_TITLE,
   SWITCH_USER_STATUS_TITLE,
   SHOW_COMMENTS_TITLE,
   HIDE_COMMENTS_TITLE
@@ -33,7 +33,7 @@ const UsersDetails = (props) => {
   const dispatch = useDispatch();
 
   const { loading } = useSelector(({ Users }) => ({
-    loading: Users.usersLoading
+    loading: Users.userLoading
   }));
 
   const { id } = match.params;
@@ -62,7 +62,7 @@ const UsersDetails = (props) => {
   const secondaryData = { adress, postCode };
 
   const status = isBanned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS;
-  const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_UNACTIVE_TITLE;
+  const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_INACTIVE_TITLE;
 
   const userStatusHandler = (userId) => {
     const updateStatus = () => {
