@@ -245,7 +245,8 @@ export const config = {
     MAX_CODE_LENGTH_MESSAGE: 'Не більше 10 символів',
     MAX_LENGTH_MESSAGE: `Не більше 1000 символів`,
     MIN_LENGTH_MESSAGE: `Не менше 1 символа`,
-    VALIDATION_ERROR: 'Поле обовязкове'
+    VALIDATION_ERROR: 'Поле обовязкове',
+    CODE_NOT_UNIQUE_ERROR: 'Такий код вже використовується'
   },
   contactErrorMessages: {
     INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',

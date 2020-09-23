@@ -13,7 +13,6 @@ import {
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { Palette } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TabPanel from '../tab-panel';
@@ -23,6 +22,7 @@ import useMaterialHandlers from '../../utils/use-material-handlers';
 import { useStyles } from './material-form.styles';
 import {
   addMaterial,
+  updateMaterial,
   showColorDialogWindow
 } from '../../redux/material/material.actions';
 import { config, routes } from '../../configs';
@@ -36,8 +36,9 @@ function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { loading } = useSelector(({ Material }) => ({
-    loading: Material.materialLoading
+  const { loading, colors } = useSelector(({ Material }) => ({
+    loading: Material.materialLoading,
+    colors: Material.colors
   }));
 
   const {
@@ -102,6 +103,15 @@ function MaterialForm({ material, id }) {
     },
     onSubmit: () => {
       const material = createMaterial(values);
+      if (material) {
+        dispatch(
+          updateMaterial({
+            id,
+            material: { ...material, colors },
+            images: colorImagesToUpload
+          })
+        );
+      }
       dispatch(addMaterial(material));
     }
   });
@@ -177,23 +187,16 @@ function MaterialForm({ material, id }) {
       <form onSubmit={handleSubmit}>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
-          <Paper className={styles.materialItemAdd}>
-            <div>
-              {colorImagesToUpload
-                ? Array.from(colorImagesToUpload).map((image, index) => (
-                  <Avatar variant='square' key={index} src={image}>
-                    <Palette />
-                  </Avatar>
+          <Paper className={styles.colorImages}>
+            <div className={styles.colorImages}>
+              {colorImages
+                ? colorImages.map((image, index) => (
+                  <Avatar key={index} src={image} />
                 ))
                 : null}
-              <div className={styles.colorImages}>
-                {colorImages
-                  ? colorImages.map((image, index) => (
-                    <Avatar variant='square' key={index} src={image} />
-                  ))
-                  : null}
-              </div>
             </div>
+          </Paper>
+          <Paper className={styles.materialItemAdd}>
             <TextField
               data-cy='purpose'
               id='purpose'

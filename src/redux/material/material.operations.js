@@ -4,8 +4,6 @@ import { client } from '../../utils/client';
 import { materialTranslations } from '../../translations/material.translations';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 
-const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
 export const getAllMaterials = async (skip, limit) => {
   const result = await client.query({
     variables: {
@@ -103,6 +101,7 @@ export const getMaterialById = async (id) => {
 };
 
 export const deleteMaterial = async (id) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
   const result = await client.mutate({
     context: { headers: { token } },
@@ -138,14 +137,14 @@ export const deleteMaterial = async (id) => {
   return data.deleteMaterial;
 };
 
-export const createMaterial = async (material) => {
-  console.log(token);
+export const createMaterial = async (material, images) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: { material },
+    variables: { material, images },
     mutation: gql`
-      mutation($material: MaterialInput!) {
-        addMaterial(material: $material) {
+      mutation($material: MaterialInput!, $images: Upload) {
+        addMaterial(material: $material, images: $images) {
           ... on Material {
             name {
               value
@@ -174,16 +173,19 @@ export const createMaterial = async (material) => {
   return data.addMaterial;
 };
 
-export const updateMaterial = async (id, material) => {
+export const updateMaterial = async (id, material, images) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   const result = await client.mutate({
     context: { headers: { token } },
     variables: {
       id,
-      material
+      material,
+      images
     },
     mutation: gql`
-      mutation($id: ID!, $material: MaterialInput!) {
-        updateMaterial(id: $id, material: $material) {
+      mutation($id: ID!, $material: MaterialInput!,images:Upload) {
+        updateMaterial(id: $id, material: $material,images:$images) {
           ... on Material {
             name {
               value

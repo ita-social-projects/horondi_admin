@@ -40,7 +40,7 @@ function CreateColor({
     loading: Material.colorLoading,
     colors: Material.colors
   }));
-  console.log(colors);
+
   const { createColor, tabsValue, handleTabsChange } = useColorHandlers();
 
   const langValues = languages.map((lang) => ({
@@ -87,7 +87,8 @@ function CreateColor({
     handleSubmit,
     errors,
     touched,
-    setFieldValue
+    setFieldValue,
+    setFieldError
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
@@ -101,7 +102,13 @@ function CreateColor({
     onSubmit: (values) => {
       const { colorImage, image, ...rest } = values;
       const color = createColor(rest);
+
+      const foundCode = colors.map((item) => item.code);
       if (!colorImage || !image) {
+        return;
+      }
+      if (foundCode.includes(+rest.code)) {
+        setFieldError('code', config.colorErrorMessages.CODE_NOT_UNIQUE_ERROR);
         return;
       }
       dispatch(setNewColorToStore(color));
@@ -110,6 +117,7 @@ function CreateColor({
       setImagesToUpload(image);
     }
   });
+
   const tabPanels = languages.map((lang, index) => (
     <TabPanel key={lang} value={tabsValue} index={index}>
       <Paper className={styles.materialItemAdd}>
@@ -183,7 +191,7 @@ function CreateColor({
       setFieldValue('image', [...imagesToUpload, ...newImages]);
     }
   };
-  console.log(errors);
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
@@ -250,15 +258,16 @@ function CreateColor({
     </div>
   );
 }
-
 CreateColor.propTypes = {
-  imagesToUpload: PropTypes.arrayOf(PropTypes.any),
-  setImagesToUpload: PropTypes.func.isRequired,
-  addNewColorImages: PropTypes.func.isRequired,
-  colorImages: PropTypes.arrayOf(PropTypes.any)
+  imagesToUpload: PropTypes.arrayOf(),
+  setImagesToUpload: PropTypes.func,
+  colorImages: PropTypes.arrayOf(),
+  addNewColorImages: PropTypes.func
 };
 CreateColor.defaultProps = {
   imagesToUpload: [],
-  colorImages: []
+  colorImages: [],
+  setImagesToUpload: () => {},
+  addNewColorImages: () => {}
 };
 export default CreateColor;
