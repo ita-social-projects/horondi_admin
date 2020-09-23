@@ -36,10 +36,11 @@ function CreateColor({
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { loading } = useSelector(({ Material }) => ({
-    loading: Material.colorLoading
+  const { loading, colors } = useSelector(({ Material }) => ({
+    loading: Material.colorLoading,
+    colors: Material.colors
   }));
-
+  console.log(colors);
   const { createColor, tabsValue, handleTabsChange } = useColorHandlers();
 
   const langValues = languages.map((lang) => ({
@@ -86,8 +87,7 @@ function CreateColor({
     handleSubmit,
     errors,
     touched,
-    setFieldValue,
-    setFieldError
+    setFieldValue
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
