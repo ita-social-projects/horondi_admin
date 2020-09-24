@@ -78,7 +78,7 @@ function* handleContactLoad({ payload }) {
 function* handleAddContact({ payload }) {
   try {
     yield put(setContactsLoading(true));
-    yield call(addContact, payload.newContact, payload.upload);
+    yield call(addContact, payload.newContact, payload.mapImages);
     yield put(addContactInStore(payload.newContact));
     yield put(setContactsLoading(false));
 
@@ -116,11 +116,11 @@ function* handleContactDelete({ payload }) {
 }
 
 function* handleContactUpdate({ payload }) {
-  const { id, updatedContact, upload } = payload;
+  const { id, updatedContact, mapImages } = payload;
 
   try {
     yield put(setContactsLoading(true));
-    yield call(updateContact, id, updatedContact, upload);
+    yield call(updateContact, id, updatedContact, mapImages);
 
     yield put(updateContactInStore(id, updatedContact));
 

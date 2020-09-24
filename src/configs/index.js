@@ -92,7 +92,8 @@ export const config = {
       'Статус',
       'Дії'
     ],
-    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії']
+    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
+    comments: ['Дата', 'Текст', 'Дії']
   },
   detailTitles: {
     users: {
@@ -168,7 +169,10 @@ export const config = {
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
     CREATE_CATEGORY: 'Створити категорію',
-    CREATE_SUBCATEGORY: 'Створити підкатегорію'
+    CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    REMOVE_COMMENT_TITLE: 'Видалити коментар',
+    SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
+    HIDE_COMMENTS_TITLE: 'Приховати коментарі'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
@@ -178,6 +182,9 @@ export const config = {
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
+    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
@@ -282,12 +289,27 @@ export const config = {
     ],
     selectsLabels: [
       { label: 'Категорія ', name: 'category', type: 'select', required: true },
-      { label: 'Підкатегорія ', name: 'subcategory', type: 'select', required: true },
+      {
+        label: 'Підкатегорія ',
+        name: 'subcategory',
+        type: 'select',
+        required: true
+      },
       { label: 'Модель ', name: 'model', type: 'select', required: true },
       { label: 'Колір ', name: 'colors', type: 'select', required: true },
       { label: 'Гобелен ', name: 'pattern', type: 'select', required: true },
-      { label: 'Ціна(USD) ', name: 'basePrice', type: 'number', required: true },
-      { label: 'Довжина лямок(см) ', name: 'strapLengthInCm', type: 'number', required: false }
+      {
+        label: 'Ціна(USD) ',
+        name: 'basePrice',
+        type: 'number',
+        required: true
+      },
+      {
+        label: 'Довжина лямок(см) ',
+        name: 'strapLengthInCm',
+        type: 'number',
+        required: false
+      }
     ],
     responsive: {
       superLargeDesktop: {
