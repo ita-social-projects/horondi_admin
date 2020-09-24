@@ -17,5 +17,5 @@ ReactDOM.render(
 );
 
 if (window.Cypress) {
-  window.store = configureStore;
+  window.store = store;
 }

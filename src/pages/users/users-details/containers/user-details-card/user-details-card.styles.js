@@ -11,5 +11,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   detailTitle: {
     fontWeight: 'bold'
-  }
+  },
+  detailSubtitle: {}
 }));
