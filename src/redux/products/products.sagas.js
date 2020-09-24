@@ -17,8 +17,6 @@ import { setItemsCount, setPagesCount } from '../table/table.actions';
 import {
   GET_ALL_FILTERS,
   GET_FILTRED_PRODUCTS,
-  GET_PRODUCT_SPECIES,
-  GET_PRODUCT_OPTIONS,
   GET_MODELS_BY_CATEGORY,
   ADD_PRODUCT,
   DELETE_PRODUCT,
@@ -162,6 +160,8 @@ export function* handleProductUpdate({ payload }) {
 export function* handleProductLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
+    yield call(handleProductOptionsLoad)
+    yield call(handleProductSpeciesLoad)
     const product = yield call(getProduct, payload);
     yield put(setProduct(product));
     yield put(setProductsLoading(false));
@@ -204,8 +204,6 @@ export function* handleImagesDelete({ payload }) {
 export default function* productsSaga() {
   yield takeEvery(GET_ALL_FILTERS, handleGetFilters);
   yield takeEvery(GET_FILTRED_PRODUCTS, handleFilterLoad);
-  yield takeEvery(GET_PRODUCT_SPECIES, handleProductSpeciesLoad);
-  yield takeEvery(GET_PRODUCT_OPTIONS, handleProductOptionsLoad);
   yield takeEvery(GET_MODELS_BY_CATEGORY, handleModelsLoad);
   yield takeEvery(ADD_PRODUCT, handleProductAdd);
   yield takeEvery(DELETE_PRODUCT, handleProductDelete);

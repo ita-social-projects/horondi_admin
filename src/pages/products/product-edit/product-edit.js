@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import {
   clearFilesToUpload,
   getProduct,
-  getProductOptions,
-  getProductSpecies, setPrimaryImageToUpload,
+  setPrimaryImageToUpload,
   setProduct
 } from '../../../redux/products/products.actions';
 
@@ -17,15 +16,15 @@ import { productModel } from '../../../redux/products/products.reducer';
 
 const ProductEdit = ({ id }) => {
   const dispatch = useDispatch();
-  const { product, loading } = useSelector(({ Products }) => ({
+  const { product, loading, productOptions, categories } = useSelector(({ Products }) => ({
     product: Products.selectedProduct,
-    loading: Products.loading
+    loading: Products.loading,
+    productOptions: Products.productOptions,
+    categories: Products.productSpecies.categories
   }));
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(getProductSpecies());
-    dispatch(getProductOptions());
     dispatch(getProduct(id));
 
     return () => {
@@ -40,7 +39,12 @@ const ProductEdit = ({ id }) => {
   }
 
   return (
-    <div>{product.name[0].value ? <ProductEditForm /> : <LoadingBar />}</div>
+    <div>
+      {product.name[0].value && productOptions.sizes.length && categories.length
+        ? <ProductEditForm />
+        : <LoadingBar />
+      }
+    </div>
   );
 };
 

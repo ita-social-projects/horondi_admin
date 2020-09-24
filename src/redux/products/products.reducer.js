@@ -13,7 +13,6 @@ import {
   SET_PATTERNS_FILTER,
   SET_MODELS_FILTER,
   SET_SEARCH,
-  SET_PRODUCT_LOADING,
   SET_PRODUCT_TO_SEND,
   CLEAR_PRODUCT_TO_SEND,
   SET_PRODUCTS_ERROR,
@@ -21,7 +20,11 @@ import {
   SET_PRODUCT_OPTIONS,
   SET_MODELS,
   SET_FILES_TO_UPLOAD,
-  SET_PRODUCT, CLEAR_FILES_TO_UPLOAD, SET_FILES_TO_DELETE, REMOVE_IMAGES_TO_UPLOAD, SET_PRIMARY_IMAGE_TO_UPLOAD
+  SET_PRODUCT,
+  CLEAR_FILES_TO_UPLOAD,
+  SET_FILES_TO_DELETE,
+  REMOVE_IMAGES_TO_UPLOAD,
+  SET_PRIMARY_IMAGE_TO_UPLOAD
 } from './products.types';
 
 const { initialLanguageValues } = config;
@@ -44,8 +47,7 @@ export const productModel = {
 };
 
 export const initialState = {
-  loading: false,
-  productLoading: false,
+  loading: true,
   currentPage: 0,
   productsPerPage: 9,
   sorting: {
@@ -172,11 +174,6 @@ const productsReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       loading: action.payload
-    };
-  case SET_PRODUCT_LOADING:
-    return {
-      ...state,
-      productLoading: action.payload
     };
   case SET_PRODUCT_TO_SEND:
     return {

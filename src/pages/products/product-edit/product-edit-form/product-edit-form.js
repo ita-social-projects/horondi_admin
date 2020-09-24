@@ -16,7 +16,6 @@ import { useStyles } from './product-edit-form.styles';
 import ProductInfoContainer from '../../../../containers/product-info-container';
 import ProductSpeciesContainer from '../../../../containers/product-species-container';
 import ProductOptionsContainer from '../../../../containers/product-options-container';
-import LoadingBar from '../../../../components/loading-bar';
 
 import {
   deleteProduct,
@@ -37,13 +36,7 @@ const {
 const ProductEditForm = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { product, modelsForSelectedCategory } = useSelector(
-    ({ Products }) => ({
-      product: Products.selectedProduct,
-      modelsForSelectedCategory:
-        Products.productSpecies.modelsForSelectedCategory
-    })
-  );
+  const  product = useSelector(({ Products }) => Products.selectedProduct);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
@@ -214,7 +207,6 @@ const ProductEditForm = () => {
 
   return (
     <div className={styles.container}>
-      {modelsForSelectedCategory.length ? (
         <Grid container justify='center' spacing={3}>
           <Grid item xs={12} container spacing={2}>
             <Grid item>
@@ -299,9 +291,6 @@ const ProductEditForm = () => {
             </Paper>
           </Grid>
         </Grid>
-      ) : (
-        <LoadingBar />
-      )}
     </div>
   );
 };

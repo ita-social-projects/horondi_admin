@@ -98,13 +98,9 @@ const ProductSpeciesContainer = ({
           ? model.name[0].value
           : model[0].value;
 
-        const name = modelsForSelectedCategory.length
-          ? model.name[0].value
-          : model[0].value;
-
         return (
           <option value={value} key={value}>
-            {name}
+            {value}
           </option>
         );
       }),
@@ -125,13 +121,17 @@ const ProductSpeciesContainer = ({
   }, [errors]);
 
   const handleSelectChange = (e) => {
-    handleChange(e);
     if (e.target.name === 'category') {
       setFieldValue('subcategory', '');
       setFieldValue('model', '');
     }
-    toggleFieldsChanged(true);
+    handleSpeciesChange(e)
   };
+
+  const handleSpeciesChange = (e) => {
+    handleChange(e);
+    toggleFieldsChanged(true);
+  }
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
@@ -164,7 +164,7 @@ const ProductSpeciesContainer = ({
             inputProps={{ min: 0 }}
             error={touched[name] && !!errors[name]}
             value={values[name]}
-            onChange={handleChange}
+            onChange={handleSpeciesChange}
             onBlur={handleBlur}
           />
         )
