@@ -12,6 +12,7 @@ import BusinessPages from './business-pages/business-pages.reducer';
 import Products from './products/products.reducer';
 import Categories from './categories/categories.reducer';
 import Users from './users/users.reducer';
+import Comments from './comments/comments.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
@@ -27,6 +28,7 @@ const rootReducer = (history) =>
     BusinessPages,
     Products,
     Categories,
-    Users
+    Users,
+    Comments
   });
 export default rootReducer;

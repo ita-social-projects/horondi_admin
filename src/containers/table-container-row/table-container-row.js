@@ -11,6 +11,8 @@ const TableContainerRow = ({
   id,
   editHandler,
   showAvatar,
+  showEdit,
+  showDelete,
   deleteHandler,
   ...rest
 }) => {
@@ -38,16 +40,12 @@ const TableContainerRow = ({
       )}
       {tableCells}
       <TableCell>
-        <EditButton
-          data-cy='edit-button'
-          size={iconSize}
-          onClickHandler={editHandler}
-        />
-        <DeleteButton
-          data-cy='delete-button'
-          size={iconSize}
-          onClickHandler={deleteHandler}
-        />
+        {showEdit && (
+          <EditButton size={iconSize} onClickHandler={editHandler} />
+        )}
+        {showDelete && (
+          <DeleteButton size={iconSize} onClickHandler={deleteHandler} />
+        )}
       </TableCell>
     </TableRow>
   );
@@ -57,14 +55,18 @@ TableContainerRow.propTypes = {
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
   id: PropTypes.string,
-  showAvatar: PropTypes.bool
+  showAvatar: PropTypes.bool,
+  showEdit: PropTypes.bool,
+  showDelete: PropTypes.bool
 };
 
 TableContainerRow.defaultProps = {
   id: '',
   deleteHandler: () => {},
   editHandler: () => {},
-  showAvatar: true
+  showAvatar: true,
+  showEdit: true,
+  showDelete: true
 };
 
 export default TableContainerRow;
