@@ -10,7 +10,10 @@ import {
   setProductOptions,
   setModels,
   clearProductToSend,
-  setProduct, setFilesToUpload, clearFilesToUpload, setFilesToDelete
+  setProduct,
+  setFilesToUpload,
+  clearFilesToUpload,
+  setFilesToDelete
 } from './products.actions';
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 
@@ -21,7 +24,10 @@ import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   GET_PRODUCT,
-  UPDATE_PRODUCT, DELETE_IMAGES
+  UPDATE_PRODUCT,
+  DELETE_IMAGES,
+  GET_PRODUCT_OPTIONS,
+  GET_PRODUCT_SPECIES
 } from './products.types';
 
 import {
@@ -33,7 +39,8 @@ import {
   addProduct,
   deleteProduct,
   getProduct,
-  updateProduct, deleteImages
+  updateProduct,
+  deleteImages
 } from './products.operations';
 
 import { config, routes } from '../../configs';
@@ -119,7 +126,8 @@ export function* handleProductAdd() {
     yield put(push(`/product/${addedProduct._id}`));
     yield call(handleFilterLoad);
     yield put(clearProductToSend());
-    yield put(setFilesToUpload([]))
+    yield put(setFilesToUpload([]));
+    yield put(setProductsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
@@ -146,10 +154,15 @@ export function* handleProductUpdate({ payload }) {
     const { upload, primaryImageUpload } = yield select(({ Products }) => ({
       upload: Products.upload,
       primaryImageUpload: Products.primaryImageUpload
-    }))
-    const productToUpdate = yield call(updateProduct, payload, upload, primaryImageUpload);
+    }));
+    const productToUpdate = yield call(
+      updateProduct,
+      payload,
+      upload,
+      primaryImageUpload
+    );
     yield put(setProduct(productToUpdate));
-    yield put(clearFilesToUpload())
+    yield put(clearFilesToUpload());
     yield put(setProductsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
@@ -160,8 +173,8 @@ export function* handleProductUpdate({ payload }) {
 export function* handleProductLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    yield call(handleProductOptionsLoad)
-    yield call(handleProductSpeciesLoad)
+    yield call(handleProductOptionsLoad);
+    yield call(handleProductSpeciesLoad);
     const product = yield call(getProduct, payload);
     yield put(setProduct(product));
     yield put(setProductsLoading(false));
@@ -190,10 +203,10 @@ export function* handleImagesDelete({ payload }) {
     const { images, selectedProduct } = yield select(({ Products }) => ({
       images: Products.filesToDelete,
       selectedProduct: Products.selectedProduct
-    }))
-    const newImages = yield call(deleteImages, payload, images)
-    yield put(setProduct({ ...selectedProduct, images: newImages }))
-    yield put(setFilesToDelete([]))
+    }));
+    const newImages = yield call(deleteImages, payload, images);
+    yield put(setProduct({ ...selectedProduct, images: newImages }));
+    yield put(setFilesToDelete([]));
     yield put(setProductsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
@@ -209,5 +222,7 @@ export default function* productsSaga() {
   yield takeEvery(DELETE_PRODUCT, handleProductDelete);
   yield takeEvery(GET_PRODUCT, handleProductLoad);
   yield takeEvery(UPDATE_PRODUCT, handleProductUpdate);
-  yield takeEvery(DELETE_IMAGES, handleImagesDelete)
+  yield takeEvery(DELETE_IMAGES, handleImagesDelete);
+  yield takeEvery(GET_PRODUCT_OPTIONS, handleProductOptionsLoad);
+  yield takeEvery(GET_PRODUCT_SPECIES, handleProductSpeciesLoad);
 }

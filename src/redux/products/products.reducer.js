@@ -35,9 +35,9 @@ export const productModel = {
   innerMaterial: initialLanguageValues,
   description: initialLanguageValues,
   closure: initialLanguageValues,
+  model: initialLanguageValues,
   category: '',
   subcategory: '',
-  model: '',
   colors: [],
   pattern: [],
   basePrice: 0,
@@ -47,7 +47,7 @@ export const productModel = {
 };
 
 export const initialState = {
-  loading: true,
+  loading: false,
   currentPage: 0,
   productsPerPage: 9,
   sorting: {
@@ -225,27 +225,26 @@ const productsReducer = (state = initialState, action = {}) => {
       ...state,
       selectedProduct: action.payload
     };
-    case CLEAR_FILES_TO_UPLOAD:
-      return {
-        ...state,
-        upload: []
-      }
-    case SET_FILES_TO_DELETE: {
-      return {...state,
-      filesToDelete: action.payload}
-    }
-    case REMOVE_IMAGES_TO_UPLOAD: {
-      return {
-        ...state,
-        upload: state.upload.filter(({ name }) => name !== action.payload)
-      }
-    }
-    case SET_PRIMARY_IMAGE_TO_UPLOAD: {
-      return {
-        ...state,
-        primaryImageUpload: action.payload
-      }
-    }
+  case CLEAR_FILES_TO_UPLOAD:
+    return {
+      ...state,
+      upload: []
+    };
+  case SET_FILES_TO_DELETE: {
+    return { ...state, filesToDelete: action.payload };
+  }
+  case REMOVE_IMAGES_TO_UPLOAD: {
+    return {
+      ...state,
+      upload: state.upload.filter(({ name }) => name !== action.payload)
+    };
+  }
+  case SET_PRIMARY_IMAGE_TO_UPLOAD: {
+    return {
+      ...state,
+      primaryImageUpload: action.payload
+    };
+  }
   default:
     return state;
   }
