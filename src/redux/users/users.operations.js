@@ -143,8 +143,6 @@ const registerAdmin = async (user) => {
 
   const { data } = result;
 
-  console.log(data);
-
   if (data.registerAdmin.message) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.registerAdmin.message]}`

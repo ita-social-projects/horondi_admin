@@ -73,7 +73,7 @@ export function* handleMaterialLoad({ payload }) {
   }
 }
 
-function* handleAddMatterial({ payload }) {
+function* handleAddMaterial({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     yield call(createMaterial, payload);
@@ -126,6 +126,6 @@ export default function* newsSaga() {
   yield takeEvery(GET_MATERIALS, handleMaterialsLoad);
   yield takeEvery(DELETE_MATERIAL, handleMaterialDelete);
   yield takeEvery(GET_MATERIAL, handleMaterialLoad);
-  yield takeEvery(ADD_MATERIAL, handleAddMatterial);
+  yield takeEvery(ADD_MATERIAL, handleAddMaterial);
   yield takeEvery(UPDATE_MATERIAL, handleMaterialUpdate);
 }

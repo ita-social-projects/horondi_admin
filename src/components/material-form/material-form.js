@@ -55,7 +55,6 @@ function MaterialForm({ material, id }) {
     ukName: Yup.string()
       .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
       .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-
       .required(materialErrorMessages.VALIDATION_ERROR),
 
     enName: Yup.string()
@@ -77,6 +76,7 @@ function MaterialForm({ material, id }) {
       .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
       .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
       .required(materialErrorMessages.VALIDATION_ERROR),
+
     additionalPrice: Yup.number().required(
       materialErrorMessages.VALIDATION_ERROR
     )
@@ -101,63 +101,65 @@ function MaterialForm({ material, id }) {
       available: material.available || false,
       additionalPrice: 0
     },
-    onSubmit: () => {
-      const material = createMaterial(values);
-      if (material) {
+    onSubmit: (values) => {
+      const newMaterial = createMaterial(values);
+
+      if (material.purpose) {
         dispatch(
           updateMaterial({
             id,
-            material: { ...material, colors },
+            material: { ...newMaterial, colors },
             images: colorImagesToUpload
           })
         );
       }
-      dispatch(addMaterial(material));
+      dispatch(
+        addMaterial({
+          material: { ...newMaterial, colors },
+          images: colorImagesToUpload
+        })
+      );
     }
   });
-  const tabPanels =
-    languages.length > 0
-      ? languages.map((lang, index) => (
-        <TabPanel key={lang} value={tabsValue} index={index}>
-          <Paper className={styles.materialItemAdd}>
-            <TextField
-              data-cy={`${lang}Name`}
-              id={`${lang}Name`}
-              className={styles.textfield}
-              variant='outlined'
-              label={config.labels.material.name}
-              error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-              multiline
-              value={values[`${lang}Name`]}
-              onChange={handleChange}
-            />
-            {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-              <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-            )}
-            <TextField
-              data-cy={`${lang}Description`}
-              id={`${lang}Description`}
-              className={styles.textfield}
-              variant='outlined'
-              label={config.labels.material.description}
-              multiline
-              error={
-                touched[`${lang}Description`] &&
-                  !!errors[`${lang}Description`]
-              }
-              value={values[`${lang}Description`]}
-              onChange={handleChange}
-            />
-            {touched[`${lang}Description`] &&
-                errors[`${lang}Description`] && (
-              <div className={styles.inputError}>
-                {errors[`${lang}Description`]}
-              </div>
-            )}
-          </Paper>
-        </TabPanel>
-      ))
-      : null;
+
+  const tabPanels = languages.map((lang, index) => (
+    <TabPanel key={lang} value={tabsValue} index={index}>
+      <Paper className={styles.materialItemAdd}>
+        <TextField
+          data-cy={`${lang}Name`}
+          id={`${lang}Name`}
+          className={styles.textfield}
+          variant='outlined'
+          label={config.labels.material.name}
+          error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
+          multiline
+          value={values[`${lang}Name`]}
+          onChange={handleChange}
+        />
+        {touched[`${lang}Name`] && errors[`${lang}Name`] && (
+          <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+        )}
+        <TextField
+          data-cy={`${lang}Description`}
+          id={`${lang}Description`}
+          className={styles.textfield}
+          variant='outlined'
+          label={config.labels.material.description}
+          multiline
+          error={
+            touched[`${lang}Description`] && !!errors[`${lang}Description`]
+          }
+          value={values[`${lang}Description`]}
+          onChange={handleChange}
+        />
+        {touched[`${lang}Description`] && errors[`${lang}Description`] && (
+          <div className={styles.inputError}>
+            {errors[`${lang}Description`]}
+          </div>
+        )}
+      </Paper>
+    </TabPanel>
+  ));
 
   const checkboxes = [
     {
@@ -170,10 +172,8 @@ function MaterialForm({ material, id }) {
       handler: (e) => setFieldValue('available', !values.available)
     }
   ];
-  const languageTabs =
-    languages.length > 0
-      ? languages.map((lang) => <Tab label={lang} key={lang} />)
-      : null;
+  const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
+
   if (loading) {
     return <LoadingBar />;
   }
@@ -187,15 +187,13 @@ function MaterialForm({ material, id }) {
       <form onSubmit={handleSubmit}>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
-          <Paper className={styles.colorImages}>
-            <div className={styles.colorImages}>
-              {colorImages
-                ? colorImages.map((image, index) => (
-                  <Avatar key={index} src={image} />
-                ))
-                : null}
-            </div>
-          </Paper>
+          <div className={styles.colorImages}>
+            {colorImages
+              ? colorImages.map((image, index) => (
+                <Avatar key={index} src={image} />
+              ))
+              : null}
+          </div>
           <Paper className={styles.materialItemAdd}>
             <TextField
               data-cy='purpose'

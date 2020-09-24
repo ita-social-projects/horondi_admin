@@ -14,6 +14,7 @@ const useMaterialHandlers = () => {
   const [tabsValue, setTabsValue] = useState(0);
   const [colorImagesToUpload, setColorImagesToUpload] = useState([]);
   const [colorImages, setColorImages] = useState([]);
+
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
   };
@@ -72,7 +73,8 @@ const useMaterialHandlers = () => {
     colorImagesToUpload,
     setColorImagesToUpload,
     colorImages,
-    addNewColorImages
+    addNewColorImages,
+    setTabsValue
   };
 };
 

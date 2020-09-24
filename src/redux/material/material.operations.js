@@ -137,18 +137,18 @@ export const deleteMaterial = async (id) => {
   return data.deleteMaterial;
 };
 
-export const createMaterial = async (material, images) => {
+export const createMaterial = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: { material, images },
+    variables: payload,
+
     mutation: gql`
       mutation($material: MaterialInput!, $images: Upload) {
         addMaterial(material: $material, images: $images) {
           ... on Material {
-            name {
-              value
-            }
+            _id
           }
           ... on Error {
             message

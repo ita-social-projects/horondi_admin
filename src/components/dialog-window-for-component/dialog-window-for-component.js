@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { config } from '../../configs';
 import { StandardButton } from '../buttons';
 import { showColorDialogWindow } from '../../redux/material/material.actions';
+import { useStyles } from './dialog-window-for-component.style';
 
 const { ACCEPT_BUTTON_STYLE } = config.buttonStyles;
 
@@ -23,7 +24,7 @@ const DialogWindowForComponent = ({
     isOpen: Material.showColorDialogWindow
   }));
   const dispatch = useDispatch();
-
+  const styles = useStyles();
   const handleClose = () => {
     dispatch(showColorDialogWindow(false));
   };
@@ -36,8 +37,8 @@ const DialogWindowForComponent = ({
       open={isOpen}
     >
       <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
-      <DialogContent dividers>
-        <div>{component}</div>
+      <DialogContent className={styles.dialogComponent} dividers>
+        {component}
       </DialogContent>
       <DialogActions style={{ justifyContent: 'center' }}>
         <StandardButton

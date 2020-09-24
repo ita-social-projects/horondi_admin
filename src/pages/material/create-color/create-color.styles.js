@@ -4,10 +4,10 @@ export const useStyles = makeStyles((theme) => ({
   materialItemAdd: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '20px 0'
+    margin: '0 0 20px !important'
   },
   textfield: {
-    margin: '10px 5px'
+    margin: '10px 5px !important'
   },
   materialAdd: {
     display: 'flex',
@@ -40,5 +40,9 @@ export const useStyles = makeStyles((theme) => ({
     padding: '0 5px'
   },
 
-  colorInputFile: { display: 'none' }
+  colorInputFile: { display: 'none' },
+  colorImage: {
+    fontSize: '.7rem',
+    padding: '.2rem important'
+  }
 }));
