@@ -95,8 +95,8 @@ const CommentsPage = () => {
       : null;
 
   return (
-    <div className={classes.container}>
-      <div className={classes.tableNav}>
+    <div className={classes.content}>
+      <div className={classes.tableNavigation}>
         <Typography variant='h1' className={classes.usersTitle}>
           Останні коментарі
         </Typography>
@@ -108,7 +108,7 @@ const CommentsPage = () => {
           tableItems={userComments}
         />
       </div>
-      <div className={classes.paginationDiv}>
+      <div className={classes.pagination}>
         <Pagination
           count={pagesCount}
           variant='outlined'

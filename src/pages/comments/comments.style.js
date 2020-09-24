@@ -4,20 +4,20 @@ export const useStyles = makeStyles((theme) => ({
   table: {
     textTransform: 'capitalize'
   },
-  tableNav: {
+  tableNavigation: {
     display: 'flex',
     justifyContent: 'space-between',
     margin: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
   },
-  container: {
+  content: {
     width: `100%`,
     marginTop: 65,
     position: 'static',
     padding: 20
   },
-  paginationDiv: {
+  pagination: {
     display: 'flex',
     justifyContent: 'center',
     marginTop: '30px'
