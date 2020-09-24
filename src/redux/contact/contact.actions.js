@@ -41,11 +41,11 @@ const getContacts = (payload) => ({
   payload
 });
 
-const addContact = (newContact, upload) => ({
+const addContact = (newContact, mapImages) => ({
   type: ADD_CONTACT,
   payload: {
     newContact,
-    upload
+    mapImages
   }
 });
 

@@ -96,7 +96,8 @@ export const config = {
       'Статус',
       'Дії'
     ],
-    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії']
+    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
+    comments: ['Дата', 'Текст', 'Дії']
   },
   detailTitles: {
     users: {
@@ -177,7 +178,10 @@ export const config = {
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
     PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
     REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
-    USER_UNACTIVE_TITLE: 'Деактивувати'
+    USER_UNACTIVE_TITLE: 'Деактивувати',
+    REMOVE_COMMENT_TITLE: 'Видалити коментар',
+    SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
+    HIDE_COMMENTS_TITLE: 'Приховати коментарі'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
@@ -187,6 +191,9 @@ export const config = {
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
+    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
