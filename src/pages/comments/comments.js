@@ -73,22 +73,22 @@ const CommentsPage = () => {
     return <LoadingBar />;
   }
 
-  const commentsItems =
+  const userComments =
     list && list.length >= 1
-      ? list.map((commentItem) => {
+      ? list.map((comment) => {
         const createdAt = new Date(
-          parseInt(commentItem.date, 10)
+          parseInt(comment.date, 10)
         ).toLocaleString();
 
         return (
           <TableContainerRow
-            key={commentItem._id}
-            id={commentItem._id}
-            date={createdAt}
-            text={commentItem.text}
-            showAvatar={false}
+            key={comment._id}
+            id={comment._id}
             showEdit={false}
-            deleteHandler={() => commentDeleteHandler(commentItem._id)}
+            showAvatar={false}
+            date={createdAt}
+            text={comment.text}
+            deleteHandler={() => commentDeleteHandler(comment._id)}
           />
         );
       })
@@ -104,8 +104,8 @@ const CommentsPage = () => {
       <div className={classes.tableContainer}>
         <TableContainerGenerator
           id='commentsTable'
-          tableTitles={commentsItems ? tableHeaders : [NO_COMMENTS_MESSAGE]}
-          tableItems={commentsItems}
+          tableTitles={userComments ? tableHeaders : [NO_COMMENTS_MESSAGE]}
+          tableItems={userComments}
         />
       </div>
       <div className={classes.paginationDiv}>
