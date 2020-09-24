@@ -40,9 +40,10 @@ const ProductEdit = ({ id }) => {
 
   return (
     <div>
-      {product.name[0].value && productOptions.sizes.length && categories.length
-        ? <ProductEditForm />
-        : <LoadingBar />
+      {
+        product.name[0].value && productOptions.sizes.length && categories.length
+          ? <ProductEditForm />
+          : <LoadingBar />
       }
     </div>
   );
