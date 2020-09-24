@@ -180,6 +180,7 @@ export const config = {
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
     REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
     NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
     titleGenerator: (editMode, isMain) => {
