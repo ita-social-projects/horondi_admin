@@ -9,7 +9,7 @@ import {
   REMOVE_MATERIAL_FROM_STORE,
   SHOW_COLOR_DIALOG_WINDOW,
   COLOR_DIALOG_DATA_TO_STORE,
- 
+  CLEAR_COLORS
 } from './material.types';
 
 export const initialState = {
@@ -90,6 +90,11 @@ const materialReducer = (state = initialState, action = {}) => {
       showColorDialogWindow: action.payload
     };
   }
+  case CLEAR_COLORS:
+    return {
+      ...state,
+      colors: []
+    };
 
   default:
     return state;

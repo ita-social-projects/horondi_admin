@@ -351,8 +351,8 @@ ContactsForm.propTypes = {
     enSchedule: PropTypes.string.isRequired,
     ukAddress: PropTypes.string.isRequired,
     enAddress: PropTypes.string.isRequired,
-    ukCartImage: PropTypes.string,
-    enCartImage: PropTypes.string,
+    ukCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    enCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     email: PropTypes.string.isRequired,
     cartLink: PropTypes.string.isRequired
   })

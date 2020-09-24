@@ -6,7 +6,8 @@ import {
   setMaterialError,
   setMaterialsPagesCount,
   setMaterialLoading,
-  removeMaterialFromStore
+  removeMaterialFromStore,
+  clearColors
 } from './material.actions';
 import {
   getAllMaterials,
@@ -77,6 +78,7 @@ function* handleAddMaterial({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     yield call(createMaterial, payload);
+    yield put(clearColors());
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
