@@ -99,8 +99,8 @@ function CreateColor({
       image: '',
       available: false
     },
-    onSubmit: (values) => {
-      const { colorImage, image, ...rest } = values;
+    onSubmit: (data) => {
+      const { colorImage, image, ...rest } = data;
       const color = createColor(rest);
 
       const foundCode = colors.map((item) => item.code);

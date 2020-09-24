@@ -101,8 +101,8 @@ function MaterialForm({ material, id }) {
       available: material.available || false,
       additionalPrice: 0
     },
-    onSubmit: (values) => {
-      const newMaterial = createMaterial(values);
+    onSubmit: (data) => {
+      const newMaterial = createMaterial(data);
 
       if (material.purpose) {
         dispatch(

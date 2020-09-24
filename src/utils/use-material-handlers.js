@@ -45,7 +45,7 @@ const useMaterialHandlers = () => {
       colors,
       available,
       purpose: values.purpose,
-      additionalPrice: values.additionalPrice
+      additionalPrice: +values.additionalPrice
     };
     return newMaterial;
   };
