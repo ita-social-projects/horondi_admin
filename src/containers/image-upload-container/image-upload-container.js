@@ -24,7 +24,7 @@ const ImageUploadContainer = ({
           multiple={multiple}
         />
         <Button
-          id='add-contact'
+          data-cy='add-photo'
           variant='outlined'
           color='primary'
           component='span'

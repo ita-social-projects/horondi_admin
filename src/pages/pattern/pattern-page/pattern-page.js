@@ -72,14 +72,14 @@ const PatternPage = () => {
 
   const patternItems =
     list !== undefined
-      ? list.map((patternItem, index) => (
+      ? list.map((patternItem) => (
         <TableContainerRow
           image={
             patternItem.images.thumbnail
               ? `${config.patternImageLink}${patternItem.images.thumbnail}`
               : ''
           }
-          key={index}
+          key={patternItem._id}
           id={patternItem.id}
           name={patternItem.name[0].value}
           material={patternItem.material}

@@ -44,7 +44,9 @@ const PatternForm = ({ pattern, id }) => {
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
+      ? languages.map((lang, index) => (
+        <Tab label={lang} data-cy={lang} key={lang} />
+      ))
       : null;
 
   const patternValidationSchema = Yup.object().shape({
@@ -151,8 +153,8 @@ const PatternForm = ({ pattern, id }) => {
               fileName={upload.name}
             />
             <TextField
-              id='material'
               data-cy='material'
+              id='material'
               className={styles.textField}
               variant='outlined'
               label={config.labels.pattern.material}
@@ -179,7 +181,7 @@ const PatternForm = ({ pattern, id }) => {
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.patternItemUpdate}>
               <TextField
-                data-cy='Name'
+                data-cy={`${lang}Name`}
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'

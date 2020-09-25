@@ -1,16 +1,13 @@
 import 'cypress-file-upload';
+import { config } from '../../src/configs';
 
-const email = 'admin@gmail.com';
-const password = 'qwertY123';
 describe('pattern tests', () => {
-  beforeEach(() => {
-    cy.visit('/');
-    cy.viewport(1280, 720);
-    cy.get('[data-cy=email]').type(email);
-    cy.get('[data-cy=password]').type(password);
-    cy.get('[data-cy=login]').click();
-    cy.wait(2000);
+  before(() => {
+    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
+    cy.visit('/patterns');
+    cy.wait(3000);
   });
+
   it('should be visible and contain values', () => {
     cy.visit('/patterns');
     cy.viewport(1280, 720);
@@ -22,57 +19,81 @@ describe('pattern tests', () => {
       .its('list')
       .should('not.to.be', null);
   });
-  //   cy.get('[data-cy=add-pattern] .MuiButton-label').should('be.visible');
-  //   cy.get('[data-cy=Фото]').contains('Фото');
-  //   cy.get('[data-cy=Назва]').contains('Назва');
-  //   cy.get('[data-cy=Матеріал]').contains('Матеріал');
-  //   cy.get('[data-cy=Доступний]').contains('Доступний');
-  //   cy.get('[data-cy=Дії]').contains('Дії');
-  //   cy.get('.MuiPagination-ul > :nth-child(3) > .MuiButtonBase-root').click();
-  //   cy.window()
-  //     .its('store')
-  //     .invoke('getState')
-  //     .its('Pattern')
-  //     .its('pagination')
-  //     .its('currentPage')
-  //     .should('be.equal', 1);
-  // });
+  it('should be visible', () => {
+    cy.get('[data-cy=add-pattern] .MuiButton-label').should('be.visible');
+    cy.get('[data-cy=Фото]').contains(config.tableHeadRowTitles.patterns[0]);
+    cy.get('[data-cy=Назва]').contains(config.tableHeadRowTitles.patterns[1]);
+    cy.get('[data-cy="Код матеріалу"]').contains(
+      config.tableHeadRowTitles.patterns[2]
+    );
+    cy.get('[data-cy=Доступний]').contains(
+      config.tableHeadRowTitles.patterns[3]
+    );
+    cy.get('[data-cy=Дії]').contains(config.tableHeadRowTitles.patterns[4]);
+    cy.get('.MuiPagination-ul > :nth-child(3) > .MuiButtonBase-root').click();
+    cy.window()
+      .its('store')
+      .invoke('getState')
+      .its('Pattern')
+      .its('pagination')
+      .its('currentPage')
+      .should('be.equal', 1);
 
-  // cy.get(
-  //   '.MuiGrid-direction-xs-column > :nth-child(1) > .MuiGrid-root > .MuiButtonBase-root'
-  // ).click();
-  // cy.get('[data-cy=handmade]').should('be.visible');
-  // cy.get('[data-cy=available]').should('be.visible');
-  // cy.get('[data-cy=save]').should('be.visible');
-  // cy.get('[for="patternImage"]').should('be.visible');
-  // cy.get('[data-cy=material').should('be.visible');
-  // cy.get('[data-cy=ukName]').should('be.visible');
-  // cy.get('[data-cy=ukDescription]').should('be.visible');
-  // cy.get('[data-cy=uk]').should('be.visible');
-  // cy.get('[data-cy=en]').should('be.visible');
-  // cy.get('[data-cy=handmade]').should('contain', 'Зроблений вручну');
-  // cy.get('[data-cy=available]').should('contain', 'Доступний');
-  // cy.get('[data-cy=save]').should('contain', 'Зберегти');
-  // cy.get('[data-cy=material').should('contain', 'Матеріал');
-  // cy.get('[data-cy=uk]').should('contain', 'uk');
-  // cy.get('[data-cy=en]').should('contain', 'en');
-  // cy.get('[data-cy=ukName]').should('contain', 'Назва');
-  // cy.get('[data-cy=ukDescription]').should('contain', 'Опис');
+    cy.get('[data-cy=add-pattern]').click();
+    cy.get('[data-cy=handmade]').should('be.visible');
+    cy.get('[data-cy=available]').should('be.visible');
+    cy.get('[data-cy=goBackButton]').should('be.visible');
+    cy.get('[data-cy=save]').should('be.visible');
+    cy.get('[data-cy=patternImage]').should('be.visible');
+    cy.get('[data-cy=add-photo]').should('be.visible');
+    cy.get('[data-cy=material').should('be.visible');
+    cy.get('[data-cy=ukName]').should('be.visible');
+    cy.get('[data-cy=ukDescription]').should('be.visible');
+    cy.get('[data-cy=uk]').should('be.visible');
+    cy.get('[data-cy=en]').should('be.visible');
+  });
+  it('should contain', () => {
+    cy.get('[data-cy=handmade]').should(
+      'contain',
+      config.labels.pattern.handmade
+    );
+    cy.get('[data-cy=available]').should(
+      'contain',
+      config.labels.pattern.available
+    );
+    cy.get('[data-cy=goBackButton]').should('contain', 'Назад');
+    cy.get('[data-cy=save]').should('contain', 'Зберегти');
+    cy.get('[data-cy=material').should(
+      'contain',
+      config.labels.pattern.material
+    );
+    cy.get('[data-cy=uk]').should('contain', 'uk');
+    cy.get('[data-cy=en]').should('contain', 'en');
+    cy.get('[data-cy=ukName]').should(
+      'contain',
+      config.tableHeadRowTitles.patterns[1]
+    );
+    cy.get('[data-cy=ukDescription]').should('contain', 'Опис');
+  });
 
-  // cy.get('[data-cy=handmade]').click();
-  // cy.get('[data-cy=material').type('test material');
-  // cy.get('[data-cy=ukName]').type('cypress test');
-  // cy.get('[data-cy=ukDescription]').type('cypress test');
-  // cy.get('[data-cy=en]').click();
-  // cy.get('[data-cy=enName]').type('cypress test');
-  // cy.get('[data-cy=enDescription]').type('cypress test');
-  // cy.fixture('HORONDI.png').then((fileContent) => {
-  //   cy.get('input[type="file"]').attachFile({
-  //     fileContent: fileContent.toString(),
-  //     fileName: 'HORONDI.png',
-  //     mimeType: 'image/png',
-  //     filePath: '../fixtures'
-  //   });
-  // });
-  // cy.get('[data-cy=save]').click();
+  it('should add new pattern', () => {
+    cy.get('[data-cy=handmade]').click();
+    cy.get('[data-cy=material').type(111);
+    cy.get('[data-cy=ukName]').type('cypress test');
+    cy.get('[data-cy=ukDescription]').type('cypress test');
+    cy.get('[data-cy=en]').click();
+    cy.get('[data-cy=enName]').type('cypress test');
+    cy.get('[data-cy=enDescription]').type('cypress test');
+    cy.fixture('HORONDI.png').then((fileContent) => {
+      cy.get('input[type="file"]').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: 'HORONDI.png',
+        mimeType: 'image/png',
+        filePath: '../fixtures'
+      });
+    });
+    cy.get('[data-cy=save]').click();
+  });
+
+  it('should edit pattern', () => {});
 });
