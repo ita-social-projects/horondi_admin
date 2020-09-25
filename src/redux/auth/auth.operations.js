@@ -22,23 +22,29 @@ export const getUserByToken = async (token) => {
     query: gql`
       query {
         getUserByToken {
-          email
-          firstName
-          lastName
-          phoneNumber
-          purchasedProducts
-          role
-          orders
-          wishlist
-          credentials {
-            source
+          ... on User {
+            email
+            firstName
+            lastName
+            phoneNumber
+            purchasedProducts
+            role
+            orders
+            wishlist
+            credentials {
+              source
+            }
+            address {
+              country
+              city
+              street
+              appartment
+              buildingNumber
+            }
           }
-          address {
-            country
-            city
-            street
-            appartment
-            buildingNumber
+          ... on Error {
+            message
+            statusCode
           }
         }
       }
@@ -50,6 +56,6 @@ export const getUserByToken = async (token) => {
     }
   });
   const { data } = result;
-
+  console.log(data);
   return data.getUserByToken;
 };
