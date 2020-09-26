@@ -163,7 +163,9 @@ const PatternForm = ({ pattern, id }) => {
               error={touched.material && !!errors.material}
             />
             {touched.material && errors.material && (
-              <div className={styles.inputError}>{errors.material}</div>
+              <div data-cy='material-error' className={styles.inputError}>
+                {errors.material}
+              </div>
             )}
           </Paper>
         </Grid>
@@ -192,7 +194,12 @@ const PatternForm = ({ pattern, id }) => {
                 error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
               />
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+                <div
+                  data-cy={`${lang}Name-error`}
+                  className={styles.inputError}
+                >
+                  {errors[`${lang}Name`]}
+                </div>
               )}
               <TextField
                 data-cy={`${lang}Description`}
@@ -208,9 +215,11 @@ const PatternForm = ({ pattern, id }) => {
                   !!errors[`${lang}Description`]
                 }
               />
-              {touched[`${lang}Description`] &&
-                errors[`${lang}Description`] && (
-                <div className={styles.inputError}>
+              {touched[`${lang}Description`] && errors[`${lang}Description`] && (
+                <div
+                  data-cy={`${lang}Description-error`}
+                  className={styles.inputError}
+                >
                   {errors[`${lang}Description`]}
                 </div>
               )}

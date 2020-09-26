@@ -56,6 +56,5 @@ export const getUserByToken = async (token) => {
     }
   });
   const { data } = result;
-  console.log(data);
   return data.getUserByToken;
 };
