@@ -1,16 +1,10 @@
 import 'cypress-file-upload';
 
 describe('pattern tests', () => {
-  const email = 'admin@gmail.com';
-  const password = 'qwertY123';
-
   beforeEach(() => {
-    cy.visit('/');
-    cy.viewport(1280, 720);
-    cy.get('[data-cy=email]').type(email);
-    cy.get('[data-cy=password]').type(password);
-    cy.get('[data-cy=login]').click();
-    cy.wait(2000);
+    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
+    cy.visit('/products');
+    cy.wait(3000);
   });
   it('should be visible and contain values', () => {
     cy.visit('/patterns');
