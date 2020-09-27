@@ -9,7 +9,8 @@ import {
   setNewColorToStore,
   setMaterial,
   removeMaterialFromStore,
-  showColorDialogWindow
+  showColorDialogWindow,
+  clearColors
 } from '../material.actions';
 import {
   materials,
@@ -104,6 +105,12 @@ describe('material reducer tests', () => {
     expect(materialReducer(initialState, showColorDialogWindow(true))).toEqual({
       ...initialState,
       showColorDialogWindow: true
+    });
+  });
+  it('remove colors from the store', () => {
+    expect(materialReducer(initialState, clearColors())).toEqual({
+      ...initialState,
+      colors: []
     });
   });
 });

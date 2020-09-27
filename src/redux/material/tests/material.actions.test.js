@@ -13,7 +13,8 @@ import {
   deleteMaterial,
   removeMaterialFromStore,
   setNewColorToStore,
-  showColorDialogWindow
+  showColorDialogWindow,
+  clearColors
 } from '../material.actions';
 import {
   material,
@@ -36,7 +37,8 @@ import {
   DELETE_MATERIAL,
   REMOVE_MATERIAL_FROM_STORE,
   COLOR_DIALOG_DATA_TO_STORE,
-  SHOW_COLOR_DIALOG_WINDOW
+  SHOW_COLOR_DIALOG_WINDOW,
+  CLEAR_COLORS
 } from '../material.types';
 
 describe('material actions tests', () => {
@@ -144,7 +146,7 @@ describe('material actions tests', () => {
     });
   });
   it('should set show color dialog window to true', () => {
-    expect(showColorDialogWindow).toEqual({
+    expect(showColorDialogWindow(true)).toEqual({
       type: SHOW_COLOR_DIALOG_WINDOW,
       payload: true
     });
@@ -153,6 +155,11 @@ describe('material actions tests', () => {
     expect(setNewColorToStore(newColor)).toEqual({
       type: COLOR_DIALOG_DATA_TO_STORE,
       payload: newColor
+    });
+  });
+  it('should remove colors from store', () => {
+    expect(clearColors()).toEqual({
+      type: CLEAR_COLORS
     });
   });
 });

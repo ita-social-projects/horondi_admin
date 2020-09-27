@@ -88,7 +88,7 @@ function* handleAddMaterial({ payload }) {
   }
 }
 
-function* handleMaterialDelete({ payload }) {
+export function* handleMaterialDelete({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     yield call(deleteMaterial, payload);
