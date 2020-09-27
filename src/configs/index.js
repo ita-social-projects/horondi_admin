@@ -176,14 +176,13 @@ export const config = {
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
-    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
-    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
     USER_UNACTIVE_TITLE: 'Деактивувати',
     REMOVE_COMMENT_TITLE: 'Видалити коментар',
     SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
     HIDE_COMMENTS_TITLE: 'Приховати коментарі'
   },
   messages: {
+    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
     REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
@@ -305,5 +304,9 @@ export const config = {
   sortAsc: 'sortAsc',
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
-  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
+  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  patternTitles: {
+    mainPageTitle: 'Iнформація про гобелени',
+    createPageTitle: 'Створити матеріал'
+  }
 };

@@ -132,5 +132,16 @@ describe('pattern tests', () => {
       });
     });
     cy.get('[data-cy=save]').click();
+    cy.wait(6000);
+  });
+
+  it('should be visible', () => {
+    cy.get('[data-cy=goBackButton]').click();
+    cy.wait(3000);
+    cy.get('.MuiPagination-ul > :last-child').click();
+    cy.get(
+      ':nth-child(4) > :nth-child(5) > .MuiIconButton-colorSecondary'
+    ).click();
+    cy.wait(3000);
   });
 });

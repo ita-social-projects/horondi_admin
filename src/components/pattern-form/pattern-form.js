@@ -150,7 +150,7 @@ const PatternForm = ({ pattern, id }) => {
                 patternImage ||
                 `${config.patternImageLink}${values.patternImage}`
               }
-              fileName={upload.name}
+              fileName={upload.name || pattern.images.thumbnail}
             />
             <TextField
               data-cy='material'

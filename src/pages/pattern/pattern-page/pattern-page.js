@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './pattern-page.styles';
 import { config } from '../../../configs';
@@ -98,6 +98,9 @@ const PatternPage = () => {
 
   return (
     <div className={styles.container}>
+      <Typography variant='h1' className={styles.patternTitle}>
+        {config.patternTitles.mainPageTitle}
+      </Typography>
       <div className={styles.tableNav}>
         <Button
           data-cy='add-pattern'
