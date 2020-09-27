@@ -119,7 +119,11 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     validationSchema: formSchema,
     validateOnBlur: true,
     onSubmit: (values) => {
-      if (values.ukCartImage && values.enCartImage) {
+      if (
+        values.ukCartImage &&
+        values.enCartImage &&
+        typeof values.ukCartImage === typeof values.enCartImage
+      ) {
         contactSaveHandler(values);
       } else {
         dispatch(setSnackBarSeverity('error'));
