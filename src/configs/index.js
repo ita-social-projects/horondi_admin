@@ -193,6 +193,7 @@ export const config = {
       'Ви впевнені,що хочете змінити статус користувача?',
     REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
     REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    REMOVE_MATERIAL_MESSAGE: 'Ви впевнені,що хочете видалити цей матеріал?',
     NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
@@ -328,5 +329,9 @@ export const config = {
   sortAsc: 'sortAsc',
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
-  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
+  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  materialTitles: {
+    mainPageTitle: 'Iнформація про матеріали',
+    createPageTitle: 'Створити матеріал'
+  }
 };
