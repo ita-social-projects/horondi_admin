@@ -14,11 +14,11 @@ export const material = {
   description: [
     {
       lang: 'uk',
-      value: 'Тканина Кордура'
+      value: 'test'
     },
     {
       lang: 'en',
-      value: 'Cordura fabric'
+      value: 'test'
     }
   ],
   available: true,
@@ -66,11 +66,11 @@ export const materials = [
     description: [
       {
         lang: 'uk',
-        value: 'Натуральна шкіра'
+        value: 'test'
       },
       {
         lang: 'en',
-        value: 'Genuine leather'
+        value: 'test'
       }
     ],
     available: true,
@@ -752,36 +752,35 @@ export const materials = [
     ],
     purpose: 'main'
   }
-  
 ];
 
-export const newColor =    {
-  'code': 200,
-  'name': [
+export const newColor = {
+  code: 200,
+  name: [
     {
-      'lang': 'uk',
-      'value': 'Світло-коричневий'
+      lang: 'uk',
+      value: 'Світло-коричневий'
     },
     {
-      'lang': 'en',
-      'value': 'Light-brown'
+      lang: 'en',
+      value: 'Light-brown'
     }
   ],
-  'simpleName': [
+  simpleName: [
     {
-      'lang': 'uk',
-      'value': 'коричневий'
+      lang: 'uk',
+      value: 'коричневий'
     },
     {
-      'lang': 'en',
-      'value': 'brown'
+      lang: 'en',
+      value: 'brown'
     }
   ],
-  'available': true,
-  'images': {
-    'large': 'large_light-brown',
-    'medium': 'medium_light-brown',
-    'small': 'small_light-brown',
-    'thumbnail': 'thumbnail_light-brown'
+  available: true,
+  images: {
+    large: 'large_light-brown',
+    medium: 'medium_light-brown',
+    small: 'small_light-brown',
+    thumbnail: 'thumbnail_light-brown'
   }
-}
+};

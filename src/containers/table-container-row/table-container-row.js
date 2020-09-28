@@ -9,6 +9,7 @@ import { config } from '../../configs';
 
 const TableContainerRow = ({
   id,
+  image,
   editHandler,
   showAvatar,
   showEdit,
@@ -22,8 +23,8 @@ const TableContainerRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
-  const tableCells = Object.values(properties).map((property, index) => (
-    <TableCell key={index}>{property}</TableCell>
+  const tableCells = Object.values(properties).map((property) => (
+    <TableCell key={property}>{property}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
@@ -33,8 +34,8 @@ const TableContainerRow = ({
     <TableRow key={id} hover>
       {showAvatar && (
         <TableCell>
-          <Avatar className={avatarSize}>
-            <ImageIcon fontSize={iconSize} />
+          <Avatar className={avatarSize} src={image}>
+            <ImageIcon />
           </Avatar>
         </TableCell>
       )}
@@ -52,6 +53,7 @@ const TableContainerRow = ({
 };
 
 TableContainerRow.propTypes = {
+  image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
   id: PropTypes.string,
@@ -62,6 +64,7 @@ TableContainerRow.propTypes = {
 
 TableContainerRow.defaultProps = {
   id: '',
+  image: '',
   deleteHandler: () => {},
   editHandler: () => {},
   showAvatar: true,

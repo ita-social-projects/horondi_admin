@@ -17,6 +17,7 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
+import { materialTranslations } from '../../../translations/material.translations';
 
 const { routes } = config.app;
 const { REMOVE_MESSAGE } = config.materialMessages;
@@ -68,23 +69,26 @@ const MaterialPage = () => {
   };
 
   const changeHandler = (e, value) => dispatch(setMaterialsCurrentPage(value));
-  const materialItems =
-    list !== undefined
-      ? list.map((materialItem, index) => (
-        <TableContainerRow
-          key={index}
-          showAvatar={false}
-          id={materialItem.id}
-          name={materialItem.name[0].value}
-          purpose={materialItem.purpose}
-          available={materialItem.available ? 'Так' : 'Ні'}
-          deleteHandler={() => materialDeleteHandler(materialItem._id)}
-          editHandler={() => {
-            dispatch(push(`/materials/${materialItem._id}`));
-          }}
-        />
-      ))
-      : null;
+  const materialItems = list.length
+    ? list.map((materialItem) => (
+      <TableContainerRow
+        key={materialItem.id}
+        showAvatar={false}
+        id={materialItem.id}
+        name={materialItem.name[0].value}
+        purpose={materialItem.purpose}
+        available={
+          materialItem.available
+            ? materialTranslations.YES
+            : materialTranslations.NO
+        }
+        deleteHandler={() => materialDeleteHandler(materialItem._id)}
+        editHandler={() => {
+          dispatch(push(`/materials/${materialItem._id}`));
+        }}
+      />
+    ))
+    : null;
 
   if (loading) {
     return <LoadingBar />;

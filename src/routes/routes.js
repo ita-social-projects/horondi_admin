@@ -25,8 +25,11 @@ import ProductsPage from '../pages/products/products-page';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
-import ConfirmUser from '../pages/users/confirm-user';
+import PatternPage from '../pages/pattern/pattern-page';
+import PatternAdd from '../pages/pattern/pattern-add';
+import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
+import ConfirmUser from '../pages/users/confirm-user';
 
 const { routes } = config.app;
 
@@ -66,10 +69,17 @@ const Routes = () => {
           component={UsersDetails}
         />
         <Route path={routes.pathToNews} exact component={NewsPage} />
+        <Route path={routes.pathToPatterns} exact component={PatternPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+        <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToMaterials} exact component={MaterialPage} />
         <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
+        <Route
+          path={routes.pathToPatternDetails}
+          exact
+          component={PatternDetails}
+        />
         <Route path={routes.pathToBusinessPages} exact component={Business} />
         <Route
           path={routes.pathToAddBusinessPage}

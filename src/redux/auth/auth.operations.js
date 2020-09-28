@@ -43,11 +43,11 @@ export const getUserByToken = async (token) => {
             }
           }
           ... on Error {
-            statusCode
             message
+            statusCode
           }
         }
-
+      }
     `,
     context: {
       headers: {

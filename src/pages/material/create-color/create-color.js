@@ -159,7 +159,7 @@ function CreateColor({
 
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => <Tab label={lang} key={index} />)
+      ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
       : null;
 
   const checkboxes = [

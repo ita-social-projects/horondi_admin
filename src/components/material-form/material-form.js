@@ -269,8 +269,8 @@ function MaterialForm({ material, id }) {
       </form>
       <DialogWindowForComponent
         buttonType='submit'
-        buttonTitle='Закрити вікно'
-        dialogTitle='Створити колір'
+        buttonTitle={config.buttonTitles.CLOSE_DIALOG_TITLE}
+        dialogTitle={config.colorTitles.createColorTitle}
         component={
           <CreateColor
             colorImages={colorImages}

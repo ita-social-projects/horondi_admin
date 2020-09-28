@@ -5,9 +5,14 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import PaletteIcon from '@material-ui/icons/Palette';
+import { CLOSE_DIALOG } from '../redux/dialog-window/dialog-window.types';
 
 export const routes = {
   pathToLogin: '/',
+  pathToPatterns: '/patterns',
+  pathToPatternDetails: '/patterns/:id',
+  pathToAddPattern: '/patterns/add',
   pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
@@ -40,7 +45,8 @@ export const config = {
       ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon],
-      ['Матеріали', routes.pathToMaterials, LocalMallIcon]
+      ['Матеріали', routes.pathToMaterials, LocalMallIcon],
+      ['Гобелени', routes.pathToPatterns, PaletteIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -71,6 +77,7 @@ export const config = {
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     materials: ['Назва', 'Застосування', 'Доступний', 'Дії'],
+    patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
       'Фото',
@@ -151,7 +158,9 @@ export const config = {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
+    CREATE_PATTERN_TITLE: 'Додати гобелен',
     REMOVE_TITLE: 'Видалити новину',
+    PATTERN_REMOVE_TITLE: 'Видалити гобелен',
     REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
@@ -179,9 +188,13 @@ export const config = {
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
     REMOVE_COMMENT_TITLE: 'Видалити коментар',
     SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
-    HIDE_COMMENTS_TITLE: 'Приховати коментарі'
+    HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+    CLOSE_DIALOG_TITLE: 'Закрити вікно'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
@@ -212,6 +225,7 @@ export const config = {
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?'
   },
   formRegExp: {
+    patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
@@ -235,6 +249,11 @@ export const config = {
     LASTNAME_MAX_LENGTH_MESSAGE:
       'Прізвище повинно містити не більше 30 символів',
     SELECT_ROLE_MESSAGE: 'Оберіть роль'
+  },
+  patternErrorMessages: {
+    PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
+    PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
+    PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
   },
   newsErrorMessages: {
     NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
@@ -275,7 +294,7 @@ export const config = {
   paginationPayload: {
     skip: 0,
     limit: 5,
-    newsPerPage: 6
+    countPerPage: 6
   },
   materialPaginationPayload: {
     skip: 0,
@@ -283,6 +302,13 @@ export const config = {
     materialsPerPage: 6
   },
   labels: {
+    pattern: {
+      image: 'Фото гобелена',
+      material: 'Код матеріалу',
+      available: 'Доступний',
+      handmade: 'Зроблений вручну',
+      avatarText: 'Фото'
+    },
     material: {
       image: 'Фото матеріалу',
       purpose: 'Застосування',
@@ -299,6 +325,8 @@ export const config = {
       available: 'Доступний'
     }
   },
+  patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
+  newsPerPage: 6,
   contactsPaginationPayload: {
     skip: 0,
     limit: 6,
@@ -333,5 +361,8 @@ export const config = {
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
     createPageTitle: 'Створити матеріал'
+  },
+  colorTitles: {
+    createColorTitle: 'Створити колор'
   }
 };

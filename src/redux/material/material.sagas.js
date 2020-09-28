@@ -79,9 +79,7 @@ function* handleAddMaterial({ payload }) {
     yield put(setMaterialLoading(true));
     yield call(createMaterial, payload);
     yield put(clearColors());
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar(SUCCESS_ADD_STATUS));
     yield put(push(routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
@@ -94,9 +92,7 @@ export function* handleMaterialDelete({ payload }) {
     yield call(deleteMaterial, payload);
     yield put(setMaterialLoading(false));
     yield put(removeMaterialFromStore(payload));
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar(SUCCESS_DELETE_STATUS));
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -107,13 +103,16 @@ export function* handleMaterialUpdate({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     yield call(updateMaterial, id, newMaterial);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar(SUCCESS_UPDATE_STATUS));
     yield put(push(routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
   }
+}
+function* handleSuccessSnackbar(status) {
+  yield put(setSnackBarSeverity('success'));
+  yield put(setSnackBarMessage(status));
+  yield put(setSnackBarStatus(true));
 }
 
 function* handleMaterialError(e) {

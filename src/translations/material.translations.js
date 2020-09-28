@@ -1,4 +1,6 @@
 export const materialTranslations = {
   MATERIAL_NOT_FOUND: 'Матеріал не знайдений!',
-  MATERIAL_ALREADY_EXIST: 'Такий матеріал вже існує!'
+  MATERIAL_ALREADY_EXIST: 'Такий матеріал вже існує!',
+  YES: 'так',
+  NO: 'ні'
 };
