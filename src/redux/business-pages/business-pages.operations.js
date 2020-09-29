@@ -63,11 +63,11 @@ const getBusinessPageById = async (id) => {
   return data.getBusinessTextById;
 };
 
-const createBusinessPage = async (businessText) => {
+const createBusinessPage = async ({ page, files }) => {
   const result = await client.mutate({
     mutation: gql`
-      mutation($businessText: BusinessTextInput!) {
-        addBusinessText(businessText: $businessText) {
+      mutation($businessText: BusinessTextInput!, $files: [Upload]!) {
+        addBusinessText(businessText: $businessText, files: $files) {
           ... on BusinessText {
             _id
           }
@@ -79,7 +79,10 @@ const createBusinessPage = async (businessText) => {
       }
     `,
     fetchPolicy: 'no-cache',
-    variables: { businessText }
+    variables: {
+      businessText: page,
+      files
+    }
   });
   client.resetStore();
   const { data } = result;
@@ -129,15 +132,20 @@ const deleteBusinessPage = async (id) => {
   return data.deleteBusinessText;
 };
 
-const updateBusinessPage = async (id, businessText) => {
+const updateBusinessPage = async ({ id, page, files }) => {
   const result = await client.mutate({
     variables: {
       id,
-      businessText
+      businessText: page,
+      files
     },
     mutation: gql`
-      mutation($id: ID!, $businessText: BusinessTextInput!) {
-        updateBusinessText(id: $id, businessText: $businessText) {
+      mutation($id: ID!, $businessText: BusinessTextInput!, $files: [Upload]!) {
+        updateBusinessText(
+          id: $id
+          businessText: $businessText
+          files: $files
+        ) {
           ... on BusinessText {
             _id
             title {

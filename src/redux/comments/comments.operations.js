@@ -74,6 +74,35 @@ const getCommentsByProduct = async (id) => {
   return data.getAllCommentsByProduct;
 };
 
+const getRecentComments = async (skip, limit) => {
+  const result = await client
+    .query({
+      variables: {
+        skip,
+        limit
+      },
+      query: gql`
+        query($skip: Int, $limit: Int) {
+          getAllRecentComments(skip: $skip, limit: $limit) {
+            items {
+              _id
+              text
+              date
+            }
+            count
+          }
+        }
+      `,
+      fetchPolicy: 'no-cache'
+    })
+    .catch((error) => {
+      throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+    });
+
+  const { data } = result;
+  return data.getAllRecentComments;
+};
+
 const deleteComment = async (id) => {
   const result = await client
     .mutate({
@@ -108,5 +137,6 @@ export {
   getCommentsByType,
   getCommentsByUser,
   getCommentsByProduct,
+  getRecentComments,
   deleteComment
 };

@@ -19,6 +19,7 @@ const routes = {
   pathToConfirmAdmin: '/confirmation/:token',
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
-  pathToAddContact: '/add-contact'
+  pathToAddContact: '/add-contact',
+  pathToComments: '/comments'
 };
 export default routes;
