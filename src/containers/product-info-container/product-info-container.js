@@ -13,12 +13,12 @@ import {
 } from '@material-ui/core';
 import useStyles from './product-info-container.styles';
 
-import Editor from "../../components/editor";
+import Editor from '../../components/editor';
 import TabPanel from '../../components/tab-panel';
 import { config } from '../../configs';
-import {productsTranslations} from "../../translations/product.translations";
+import { productsTranslations } from '../../translations/product.translations';
 
-const { SELECT_LANGUAGES } = productsTranslations
+const { SELECT_LANGUAGES } = productsTranslations;
 const { infoLabels } = config.product;
 
 const ProductInfoContainer = ({
@@ -46,8 +46,8 @@ const ProductInfoContainer = ({
       [name]: { name, checked }
     });
     toggleFieldsChanged(true);
-    if(!checked) {
-      infoLabels.forEach(label => setFieldValue(`${name}${label.name}`, ''))
+    if (!checked) {
+      infoLabels.forEach((label) => setFieldValue(`${name}${label.name}`, ''));
     }
   };
 
@@ -57,9 +57,9 @@ const ProductInfoContainer = ({
 
   const langCheckboxes = Object.values(
     preferedLanguages
-  ).map(({ name, checked }, idx) => (
+  ).map(({ name, checked }) => (
     <FormControlLabel
-      key={idx}
+      key={name}
       control={
         <Checkbox
           checked={checked}
@@ -72,8 +72,8 @@ const ProductInfoContainer = ({
     />
   ));
 
-  const languageTabs = checkedLanguages.map(({ name }, idx) => (
-    <Tab label={name} key={idx} />
+  const languageTabs = checkedLanguages.map(({ name }) => (
+    <Tab label={name} key={name} />
   ));
 
   const handleInfoChange = (e) => {
@@ -82,9 +82,9 @@ const ProductInfoContainer = ({
   };
 
   const handleDescriptionChange = (value, lang) => {
-    setFieldValue(`${lang}description`, value)
+    setFieldValue(`${lang}description`, value);
     toggleFieldsChanged(true);
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -102,18 +102,21 @@ const ProductInfoContainer = ({
         </Paper>
       ) : null}
       {checkedLanguages.map((lang, idx) => (
-        <TabPanel index={idx} value={tabValue} key={idx}>
-          {infoLabels.map(({ label, name, required }) => (
-            name === 'description'
-              ? <Box key={name} ml={1} my={2} className={styles.editor}>
-                  <Editor
-                      name={`${lang.name}${name}`}
-                      value={values[`${lang.name}${name}`]}
-                      onEditorChange={(value) => handleDescriptionChange(value, lang.name)}
-                      placeholder={label}
-                  />
-                </Box>
-              : <TextField
+        <TabPanel index={idx} value={tabValue} key={lang.name}>
+          {infoLabels.map(({ label, name, required }) =>
+            name === 'description' ? (
+              <Box key={label} ml={1} my={2} className={styles.editor}>
+                <Editor
+                  name={`${lang.name}${name}`}
+                  value={values[`${lang.name}${name}`]}
+                  onEditorChange={(value) =>
+                    handleDescriptionChange(value, lang.name)
+                  }
+                  placeholder={label}
+                />
+              </Box>
+            ) : (
+              <TextField
                 key={name}
                 name={`${lang.name}${name}`}
                 className={styles.textfield}
@@ -124,14 +127,16 @@ const ProductInfoContainer = ({
                   !!errors[`${lang.name}${name}`]
                 }
                 helperText={
-                  touched[`${lang.name}${name}`] && errors[`${lang.name}${name}`]
+                  touched[`${lang.name}${name}`] &&
+                  errors[`${lang.name}${name}`]
                 }
                 value={values[`${lang.name}${name}`]}
                 onChange={handleInfoChange}
                 onBlur={handleBlur}
                 variant={variant}
               />
-            ))}
+            )
+          )}
         </TabPanel>
       ))}
     </form>
@@ -152,7 +157,7 @@ ProductInfoContainer.propTypes = {
   preferedLanguages: PropTypes.objectOf(PropTypes.object),
   setFieldValue: PropTypes.func.isRequired,
   variant: PropTypes.string,
-  toggleFieldsChanged: PropTypes.func,
+  toggleFieldsChanged: PropTypes.func
 };
 
 ProductInfoContainer.defaultProps = {

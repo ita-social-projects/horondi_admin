@@ -104,19 +104,21 @@ const ProductOptionsContainer = ({
     </MenuItem>
   );
 
+  const sortSizes = (a, b) => {
+    if (a.name > b.name) {
+      return -1;
+    }
+    if (b.name > a.name) {
+      return 1;
+    }
+    return 0;
+  };
+
   const sizesOptions = useMemo(
     () =>
       sizes
         .slice()
-        .sort((a, b) => {
-          if (a.name > b.name) {
-            return -1;
-          }
-          if (b.name > a.name) {
-            return 1;
-          }
-          return 0;
-        })
+        .sort(sortSizes)
         .map(({ name, _id }) => getOptions(name, _id)),
     [sizes]
   );
