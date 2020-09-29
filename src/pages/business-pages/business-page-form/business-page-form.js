@@ -63,7 +63,16 @@ const BusinessPageForm = ({ id, editMode }) => {
     ukSetText(isEditingReady ? businessPage.text[0].value : '');
     enSetTitle(isEditingReady ? businessPage.title[1].value : '');
     enSetText(isEditingReady ? businessPage.text[1].value : '');
-  }, [code, businessPage, ukSetText, ukSetTitle, enSetText, enSetTitle]);
+  }, [
+    code,
+    setCode,
+    editMode,
+    businessPage,
+    ukSetText,
+    ukSetTitle,
+    enSetText,
+    enSetTitle
+  ]);
 
   const checkValidation = (values) => {
     const requiredValidationArray = [...Object.values(values)];

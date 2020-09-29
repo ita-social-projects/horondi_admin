@@ -4,9 +4,13 @@ import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
+import PaletteIcon from '@material-ui/icons/Palette';
 
 export const routes = {
   pathToLogin: '/',
+  pathToPatterns: '/patterns',
+  pathToPatternDetails: '/patterns/:id',
+  pathToAddPattern: '/patterns/add',
   pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
@@ -35,7 +39,8 @@ export const config = {
       ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
       ['Категорії', routes.pathToCategories, CategoryIcon],
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
-      ['Користувачі', routes.pathToUsers, PeopleIcon]
+      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Гобелени', routes.pathToPatterns, PaletteIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -65,6 +70,7 @@ export const config = {
   userRoles: [{ role: 'admin', label: 'Адмін' }],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
       'Фото',
@@ -90,7 +96,8 @@ export const config = {
       'Статус',
       'Дії'
     ],
-    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії']
+    contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
+    comments: ['Дата', 'Текст', 'Дії']
   },
   detailTitles: {
     users: {
@@ -144,7 +151,9 @@ export const config = {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
+    CREATE_PATTERN_TITLE: 'Додати гобелен',
     REMOVE_TITLE: 'Видалити новину',
+    PATTERN_REMOVE_TITLE: 'Видалити гобелен',
     REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
@@ -166,7 +175,13 @@ export const config = {
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
     CREATE_CATEGORY: 'Створити категорію',
-    CREATE_SUBCATEGORY: 'Створити підкатегорію'
+    CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
+    REMOVE_COMMENT_TITLE: 'Видалити коментар',
+    SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
+    HIDE_COMMENTS_TITLE: 'Приховати коментарі'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
@@ -176,6 +191,9 @@ export const config = {
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
+    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
@@ -189,6 +207,7 @@ export const config = {
     }
   },
   formRegExp: {
+    patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
@@ -211,6 +230,11 @@ export const config = {
     LASTNAME_MAX_LENGTH_MESSAGE:
       'Прізвище повинно містити не більше 30 символів',
     SELECT_ROLE_MESSAGE: 'Оберіть роль'
+  },
+  patternErrorMessages: {
+    PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
+    PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
+    PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
   },
   newsErrorMessages: {
     NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
@@ -238,8 +262,19 @@ export const config = {
   paginationPayload: {
     skip: 0,
     limit: 5,
-    newsPerPage: 6
+    countPerPage: 6
   },
+  labels: {
+    pattern: {
+      image: 'Фото гобелена',
+      material: 'Код матеріалу',
+      available: 'Доступний',
+      handmade: 'Зроблений вручну',
+      avatarText: 'Фото'
+    }
+  },
+  patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
+  newsPerPage: 6,
   contactsPaginationPayload: {
     skip: 0,
     limit: 6,
