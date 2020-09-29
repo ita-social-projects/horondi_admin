@@ -100,10 +100,9 @@ function* handleBusinessPageDelete({ payload }) {
 }
 
 function* handleBusinessPageUpdate({ payload }) {
-  const { id, page } = payload;
   try {
     yield put(setLoading(true));
-    yield call(updateBusinessPage, id, page);
+    yield call(updateBusinessPage, payload);
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
