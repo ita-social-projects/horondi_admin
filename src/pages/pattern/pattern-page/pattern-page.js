@@ -76,7 +76,7 @@ const PatternPage = () => {
         <TableContainerRow
           image={
             patternItem.images.thumbnail
-              ? `${config.patternImageLink}${patternItem.images.thumbnail}`
+              ? `${config.imagePrefix}${patternItem.images.thumbnail}`
               : ''
           }
           key={index}

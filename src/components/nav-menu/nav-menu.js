@@ -18,7 +18,7 @@ import { useStyles } from './nav-menu.styles';
 import { config } from '../../configs';
 import { setSideMenuStatus } from '../../redux/theme/theme.actions';
 
-const { menuCategories } = config.app;
+const { menuCategories } = config;
 
 const DRAWER_TEMPORARY = 'temporary';
 const DRAWER_PERMANENT = 'permanent';

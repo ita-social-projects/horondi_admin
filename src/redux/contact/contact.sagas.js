@@ -42,7 +42,11 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const { skip, limit, contactsPerPage } = config.contactsPaginationPayload;
+const {
+  skip,
+  limit,
+  contactsPerPage
+} = config.pagination.contactsPaginationPayload;
 
 function* handleContactsLoad({
   payload = {

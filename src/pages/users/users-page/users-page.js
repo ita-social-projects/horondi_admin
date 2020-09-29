@@ -14,8 +14,7 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { formatPhoneNumber } from '../../../utils/format-phone-number';
 import { userRoleTranslations } from '../../../translations/user.translations';
 
-const { routes } = config.app;
-const pathToRegisterAdminPage = routes.pathToRegisterAdmin;
+const pathToRegisterAdminPage = config.routes.pathToRegisterAdmin;
 
 const tableHeaders = config.tableHeadRowTitles.users;
 const { REMOVE_USER_TITLE, CREATE_SPECIAL_USER } = config.buttonTitles;
