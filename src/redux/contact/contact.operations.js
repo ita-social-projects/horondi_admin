@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 
-import { newsTranslations } from '../../translations/news.translations';
+import { contactTranslations } from '../../translations/contact.translations';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 
 const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
@@ -78,7 +78,7 @@ const getContactById = async (id) => {
   if (data.getContactById.message) {
     throw new Error(
       `${data.getContactById.statusCode} ${
-        newsTranslations[data.getContactById.message]
+        contactTranslations[data.getContactById.message]
       }`
     );
   }
@@ -117,7 +117,7 @@ const deleteContact = async (id) => {
   if (data.deleteContact.message) {
     throw new Error(
       `${data.deleteContact.statusCode} ${
-        newsTranslations[data.deleteContact.message]
+        contactTranslations[data.deleteContact.message]
       }`
     );
   }
@@ -166,7 +166,7 @@ const addContact = async (contact, mapImages) => {
   if (data.addContact.message) {
     throw new Error(
       `${data.addContact.statusCode} ${
-        newsTranslations[data.addContact.message]
+        contactTranslations[data.addContact.message]
       }`
     );
   }
@@ -208,7 +208,7 @@ const updateContact = async (id, contact, mapImages) => {
   if (data.updateContact.message) {
     throw new Error(
       `${data.updateContact.statusCode} ${
-        newsTranslations[data.updateContact.message]
+        contactTranslations[data.updateContact.message]
       }`
     );
   }

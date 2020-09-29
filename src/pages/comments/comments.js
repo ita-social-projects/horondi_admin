@@ -19,10 +19,12 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
+import { commentsTranslations } from '../../translations/comments.translations';
 
 const tableHeaders = config.tableHeadRowTitles.comments;
 const { REMOVE_COMMENT_TITLE } = config.buttonTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
+const { RECENT_COMMENTS } = commentsTranslations;
 
 const CommentsPage = () => {
   const classes = useStyles();
@@ -98,7 +100,7 @@ const CommentsPage = () => {
     <div className={classes.content}>
       <div className={classes.tableNavigation}>
         <Typography variant='h1' className={classes.usersTitle}>
-          Останні коментарі
+          {RECENT_COMMENTS}
         </Typography>
       </div>
       <div className={classes.tableContainer}>
