@@ -22,6 +22,7 @@ import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
 import UsersDetails from '../pages/users/users-details';
+import CommentsPage from '../pages/comments/comments';
 import { config } from '../configs';
 import { history } from '../store/store';
 import PatternAdd from '../pages/pattern/pattern-add';
@@ -98,6 +99,7 @@ const Routes = () => {
         <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
+        <Route path={routes.pathToComments} exact component={CommentsPage} />
         <Route
           path={routes.pathToRegisterAdmin}
           exact

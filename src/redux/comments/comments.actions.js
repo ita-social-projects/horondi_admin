@@ -1,10 +1,14 @@
 import {
   GET_COMMENTS_BY_TYPE,
+  GET_RECENT_COMMENTS,
   SET_COMMENTS,
   DELETE_COMMENT,
   DELETE_COMMENT_LOCALLY,
   SET_COMMENTS_LOADING,
-  SET_COMMENTS_ERROR
+  SET_COMMENTS_ERROR,
+  SET_COMMENTS_CURRENT_PAGE,
+  SET_COMMENTS_PER_PAGE,
+  SET_COMMENTS_PAGES_COUNT
 } from './comments.types';
 
 const getCommentsByType = (value, commentsType) => ({
@@ -13,6 +17,11 @@ const getCommentsByType = (value, commentsType) => ({
     value,
     commentsType
   }
+});
+
+const getRecentComments = (payload) => ({
+  type: GET_RECENT_COMMENTS,
+  payload
 });
 
 const setComments = (comments) => ({
@@ -40,11 +49,30 @@ const setCommentError = (error) => ({
   payload: error
 });
 
+const setCommentsCurrentPage = (payload) => ({
+  type: SET_COMMENTS_CURRENT_PAGE,
+  payload
+});
+
+const setCommentsPerPage = (payload) => ({
+  type: SET_COMMENTS_PER_PAGE,
+  payload
+});
+
+const setCommentsPagesCount = (payload) => ({
+  type: SET_COMMENTS_PAGES_COUNT,
+  payload
+});
+
 export {
   getCommentsByType,
+  getRecentComments,
   setComments,
   setCommentsLoading,
   deleteComment,
   deleteCommentLocally,
-  setCommentError
+  setCommentError,
+  setCommentsCurrentPage,
+  setCommentsPerPage,
+  setCommentsPagesCount
 };
