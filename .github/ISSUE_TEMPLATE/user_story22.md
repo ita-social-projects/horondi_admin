@@ -58,7 +58,7 @@ SO THAT I can make superior quality recordings if needed, or I can save space on
 **LQ** – Low quality (.wav)
 
 And **WHEN** I made my choice 
-**THEN** system saves it, and takes me back on start screen and the icon at the bottom right corner changes, based on which format I choose (**SQ, HQ, LQ**)
+**THEN** system saves it, and takes me back on start screen and the icon at the bottom right corner changes, based on which format I choose (SQ, HQ, LQ)
  
 
  
