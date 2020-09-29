@@ -41,7 +41,8 @@ const Editor = ({
       e.currentTarget.files &&
       e.currentTarget.files.length > 0
     ) {
-      const file = e.currentTarget.files[0];
+      const { files } = e.currentTarget;
+      const file = files[0];
       const reader = new FileReader();
 
       reader.readAsDataURL(file);
@@ -149,12 +150,18 @@ Editor.propTypes = {
   placeholder: PropTypes.string.isRequired,
   onEditorChange: PropTypes.func.isRequired,
   setFiles: PropTypes.func,
-  files: PropTypes.array
+  files: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      size: PropTypes.number,
+      type: PropTypes.string
+    })
+  )
 };
 
 Editor.defaultProps = {
   setFiles: () => {},
   files: []
-}
+};
 
 export default Editor;

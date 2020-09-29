@@ -4,9 +4,14 @@ import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
+import SmsIcon from '@material-ui/icons/Sms';
+import PaletteIcon from '@material-ui/icons/Palette';
 
 export const routes = {
   pathToLogin: '/',
+  pathToPatterns: '/patterns',
+  pathToPatternDetails: '/patterns/:id',
+  pathToAddPattern: '/patterns/add',
   pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
@@ -25,7 +30,8 @@ export const routes = {
   pathToConfirmAdmin: '/confirmation/:token',
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
-  pathToAddContact: '/add-contact'
+  pathToAddContact: '/add-contact',
+  pathToComments: '/comments'
 };
 
 export const config = {
@@ -37,7 +43,10 @@ export const config = {
       ['Користувачі', routes.pathToUsers, PeopleIcon],
       ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
       ['Новини', routes.pathToNews, ImportContactsIcon],
-      ['Контакти', routes.pathToContacts, ImportLocationOnIcon]
+      ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
+      ['Користувачі', routes.pathToUsers, PeopleIcon],
+      ['Останні коментарі', routes.pathToComments, SmsIcon],
+      ['Гобелени', routes.pathToPatterns, PaletteIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -67,6 +76,7 @@ export const config = {
   userRoles: [{ role: 'admin', label: 'Адмін' }],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
       'Фото',
@@ -147,7 +157,9 @@ export const config = {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
+    CREATE_PATTERN_TITLE: 'Додати гобелен',
     REMOVE_TITLE: 'Видалити новину',
+    PATTERN_REMOVE_TITLE: 'Видалити гобелен',
     REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
@@ -170,6 +182,9 @@ export const config = {
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
+    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
+    USER_UNACTIVE_TITLE: 'Деактивувати',
     REMOVE_COMMENT_TITLE: 'Видалити коментар',
     SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
     HIDE_COMMENTS_TITLE: 'Приховати коментарі'
@@ -198,6 +213,7 @@ export const config = {
     }
   },
   formRegExp: {
+    patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
     email:
       '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
@@ -221,6 +237,11 @@ export const config = {
       'Прізвище повинно містити не більше 30 символів',
     SELECT_ROLE_MESSAGE: 'Оберіть роль'
   },
+  patternErrorMessages: {
+    PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
+    PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
+    PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+  },
   newsErrorMessages: {
     NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
     NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,
@@ -242,13 +263,25 @@ export const config = {
     ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
     IMAGE_FORMAT_MESSAGE:
       'Введіть коректний формат, наприклад: https://example.com/',
-    ENTER_LINK_MESSAGE: 'Введіть посилання'
+    ENTER_LINK_MESSAGE: 'Введіть посилання',
+    SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт'
   },
   paginationPayload: {
     skip: 0,
     limit: 5,
-    newsPerPage: 6
+    countPerPage: 6
   },
+  labels: {
+    pattern: {
+      image: 'Фото гобелена',
+      material: 'Код матеріалу',
+      available: 'Доступний',
+      handmade: 'Зроблений вручну',
+      avatarText: 'Фото'
+    }
+  },
+  patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
+  newsPerPage: 6,
   contactsPaginationPayload: {
     skip: 0,
     limit: 6,

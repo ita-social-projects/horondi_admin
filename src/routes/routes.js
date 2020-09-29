@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
-
 import { useSelector } from 'react-redux';
 import UsersPage from '../pages/users/users-page';
 import NewsPage from '../pages/news/news-page';
@@ -19,12 +18,16 @@ import ProductsPage from '../pages/products/products-page';
 import ProductsAdd from '../pages/products/product-add';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
+import PatternPage from '../pages/pattern/pattern-page';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
 import UsersDetails from '../pages/users/users-details';
+import CommentsPage from '../pages/comments/comments';
 import { config } from '../configs';
 import { history } from '../store/store';
+import PatternAdd from '../pages/pattern/pattern-add';
+import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
 
@@ -37,24 +40,24 @@ const Routes = () => {
     isAuth: Auth.isAuth
   }));
 
-  // if (!isAuth) {
-  //   return (
-  //     <ConnectedRouter history={history}>
-  //       <NavBar />
-  //       <Switch>
-  //         <Route
-  //           path={routes.pathToConfirmAdmin}
-  //           exact
-  //           component={ConfirmUser}
-  //         />
-  //         <Route path={routes.pathToLogin} exact component={LoginPage} />
-  //         <Route component={ErrorPage} />
-  //       </Switch>
-  //       <DialogWindow />
-  //       <SnackbarItem />
-  //     </ConnectedRouter>
-  //   );
-  // }
+  if (!isAuth) {
+    return (
+      <ConnectedRouter history={history}>
+        <NavBar />
+        <Switch>
+          <Route
+            path={routes.pathToConfirmAdmin}
+            exact
+            component={ConfirmUser}
+          />
+          <Route path={routes.pathToLogin} exact component={LoginPage} />
+          <Route component={ErrorPage} />
+        </Switch>
+        <DialogWindow />
+        <SnackbarItem />
+      </ConnectedRouter>
+    );
+  }
 
   return (
     <ConnectedRouter history={history}>
@@ -68,8 +71,15 @@ const Routes = () => {
           component={UsersDetails}
         />
         <Route path={routes.pathToNews} exact component={NewsPage} />
+        <Route path={routes.pathToPatterns} exact component={PatternPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+        <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route
+          path={routes.pathToPatternDetails}
+          exact
+          component={PatternDetails}
+        />
         <Route path={routes.pathToBusinessPages} exact component={Business} />
         <Route
           path={routes.pathToAddBusinessPage}
@@ -98,6 +108,7 @@ const Routes = () => {
           render={({ match }) => <ProductEdit id={match.params.id} />}
         />
         <Route path={routes.pathToCategories} exact component={Categories} />
+        <Route path={routes.pathToComments} exact component={CommentsPage} />
         <Route
           path={routes.pathToRegisterAdmin}
           exact

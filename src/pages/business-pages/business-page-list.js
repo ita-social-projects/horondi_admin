@@ -87,9 +87,9 @@ const BusinessPageList = () => {
           {CREATE_BUSINESS_PAGE}
         </Button>
       </div>
-      <div className={classes.tableContainer}>
+      <div>
         <TableContainerGenerator
-          id='newsTable'
+          id='businessPageTable'
           tableTitles={tableTitles}
           tableItems={pages}
         />

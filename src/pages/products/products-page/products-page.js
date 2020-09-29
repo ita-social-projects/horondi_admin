@@ -127,7 +127,7 @@ const ProductsPage = () => {
         <TableContainerRow
           key={_id}
           id={_id}
-          avatarSrc={`${imagePrefix}${images.primary.small}`}
+          image={`${imagePrefix}${images.primary.small}`}
           name={name[0].value}
           category={category.name[0].value}
           model={model[0].value}

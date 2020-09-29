@@ -9,9 +9,9 @@ import { config } from '../../configs';
 
 const TableContainerRow = ({
   id,
+  image,
   editHandler,
   showAvatar,
-  avatarSrc,
   showEdit,
   showDelete,
   deleteHandler,
@@ -22,9 +22,9 @@ const TableContainerRow = ({
 
   const dense = useSelector(({ Table }) => Table.dense);
 
-  const propetries = { ...rest };
-  const tableCells = Object.values(propetries).map((propetry, index) => (
-    <TableCell key={index}>{propetry}</TableCell>
+  const properties = { ...rest };
+  const tableCells = Object.values(properties).map((property) => (
+    <TableCell key={property}>{property}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
@@ -34,8 +34,8 @@ const TableContainerRow = ({
     <TableRow key={id} hover>
       {showAvatar && (
         <TableCell>
-          <Avatar className={avatarSize} src={avatarSrc} alt='avatar'>
-            <ImageIcon fontSize={iconSize} />
+          <Avatar className={avatarSize} src={image}>
+            <ImageIcon />
           </Avatar>
         </TableCell>
       )}
@@ -53,21 +53,21 @@ const TableContainerRow = ({
 };
 
 TableContainerRow.propTypes = {
+  image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
   id: PropTypes.string,
   showAvatar: PropTypes.bool,
-  avatarSrc: PropTypes.string,
   showEdit: PropTypes.bool,
   showDelete: PropTypes.bool
 };
 
 TableContainerRow.defaultProps = {
   id: '',
+  image: '',
   deleteHandler: () => {},
   editHandler: () => {},
   showAvatar: true,
-  avatarSrc: '',
   showEdit: true,
   showDelete: true
 };
