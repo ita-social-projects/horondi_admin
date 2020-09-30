@@ -60,7 +60,7 @@ const Editor = ({
         quill.setSelection(position + 1);
       };
 
-      setFiles([...files, { ...file }]);
+      setFiles((prevFiles) => [...prevFiles, ...Array.from(files)]);
     }
   };
 
