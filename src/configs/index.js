@@ -6,6 +6,7 @@ import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 import SmsIcon from '@material-ui/icons/Sms';
 import PaletteIcon from '@material-ui/icons/Palette';
+import StyleIcon from '@material-ui/icons/Style';
 
 export const routes = {
   pathToLogin: '/',
@@ -29,7 +30,10 @@ export const routes = {
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact',
-  pathToComments: '/comments'
+  pathToComments: '/comments',
+  pathToModels: '/models',
+  pathToModelDetails: '/models/:id',
+  pathToAddModel: '/models/add'
 };
 
 export const config = {
@@ -43,7 +47,8 @@ export const config = {
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon],
       ['Останні коментарі', routes.pathToComments, SmsIcon],
-      ['Гобелени', routes.pathToPatterns, PaletteIcon]
+      ['Гобелени', routes.pathToPatterns, PaletteIcon],
+      ['Моделі', routes.pathToModels, StyleIcon]
     ],
     routes,
     serverUrl: 'http://localhost:5000/',
@@ -100,7 +105,8 @@ export const config = {
       'Дії'
     ],
     contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
-    comments: ['Дата', 'Текст', 'Дії']
+    comments: ['Дата', 'Текст', 'Дії'],
+    models: ['Фото', 'Назва', 'Категорія', 'Доступна', 'Пріорітет']
   },
   detailTitles: {
     users: {
@@ -278,6 +284,7 @@ export const config = {
     }
   },
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
+  imageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
   newsPerPage: 6,
   contactsPaginationPayload: {
     skip: 0,

@@ -29,6 +29,9 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+import ModelPage from '../pages/model/model-page';
+import ModelAdd from '../pages/model/model-add';
+import ModelDetails from '../pages/model/model-details';
 
 const { routes } = config.app;
 
@@ -69,6 +72,7 @@ const Routes = () => {
         />
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToPatterns} exact component={PatternPage} />
+        <Route path={routes.pathToModels} exact component={ModelPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
