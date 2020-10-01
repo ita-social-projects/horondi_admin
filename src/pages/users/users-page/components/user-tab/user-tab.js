@@ -8,34 +8,33 @@ import { userRoleTranslations } from '../../../../../translations/user.translati
 import { formatPhoneNumber } from '../../../../../utils/format-phone-number';
 import { config } from '../../../../../configs';
 
-const tableHeaders = config.tableHeadRowTitles.users.userTab;
+const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
+const tableTitles = config.tableHeadRowTitles.users.userTab;
 
 const UserTab = (props) => {
   const { list, onDelete } = props;
   const dispatch = useDispatch();
 
-  const usersItems = list.map((userItem, index) => (
+  const usersItems = list.map((userItem) => (
     <TableContainerRow
-      key={index}
+      key={userItem._id}
       id={userItem._id}
       name={`${userItem.firstName} ${userItem.lastName}`}
       mobile={formatPhoneNumber(userItem.phoneNumber)}
       email={userItem.email}
       role={userRoleTranslations[userItem.role]}
-      banned={userItem.banned ? 'Неактивний' : 'Активний'}
+      banned={userItem.banned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS}
       deleteHandler={() => onDelete(userItem._id)}
       editHandler={() => dispatch(push(`/users/${userItem._id}`))}
     />
   ));
 
   return (
-    <>
-      <TableContainerGenerator
-        id='usersTable'
-        tableTitles={tableHeaders}
-        tableItems={usersItems}
-      />
-    </>
+    <TableContainerGenerator
+      id='usersTable'
+      tableTitles={tableTitles}
+      tableItems={usersItems}
+    />
   );
 };
 

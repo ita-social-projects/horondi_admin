@@ -14,6 +14,7 @@ import useUsersFiltering from '../../../hooks/user/use-users-filtering';
 
 const { REMOVE_USER_TITLE } = config.buttonTitles;
 const { REMOVE_USER_MESSAGE } = config.messages;
+const userTabNames = config.tabNames.users;
 
 const UsersPage = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -48,6 +49,8 @@ const UsersPage = () => {
     return <LoadingBar />;
   }
 
+  const userTabs = userTabNames.map((name) => <Tab key={name} label={name} />);
+
   return (
     <div className={styles.container}>
       <AppBar position='static' color='primary'>
@@ -57,8 +60,7 @@ const UsersPage = () => {
           className={styles.tabs}
           variant='fullWidth'
         >
-          <Tab label='Користувачі' />
-          <Tab label='Адміністратори' />
+          {userTabs}
         </Tabs>
       </AppBar>
       <TabPanel value={tabValue} index={0}>

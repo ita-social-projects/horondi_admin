@@ -52,7 +52,6 @@ function* handleUsersLoad({ payload }) {
     yield put(setUsers(users));
     yield put(setUsersLoading(false));
   } catch (err) {
-    console.log(err);
     yield call(handleUsersError, err);
   }
 }

@@ -11,17 +11,10 @@ const useUsersFiltering = (tabNumber) => {
   const dispatch = useDispatch();
 
   const handleTabChange = (tab) => {
-    if (!tab) {
-      setFilter((prevFilter) => ({
-        ...prevFilter,
-        roles: [user]
-      }));
-    } else {
-      setFilter((prevFilter) => ({
-        ...prevFilter,
-        roles: [...other]
-      }));
-    }
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      roles: tab ? [...other] : [user]
+    }));
   };
 
   useEffect(() => {

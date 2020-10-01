@@ -21,14 +21,15 @@ const AdminTab = (props) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const adminItems = list.map((userItem, index) => (
+  const adminItems = list.map((userItem) => (
     <TableContainerRow
-      key={index}
+      key={userItem._id}
       id={userItem._id}
       name={`${userItem.firstName} ${userItem.lastName}`}
+      email={userItem.email}
       role={userRoleTranslations[userItem.role]}
       deleteHandler={() => onDelete(userItem._id)}
-      editHandler={() => {}}
+      showEdit={false}
     />
   ));
 
@@ -47,7 +48,7 @@ const AdminTab = (props) => {
         </div>
       </div>
       <TableContainerGenerator
-        id='usersTable'
+        id='adminsTable'
         tableTitles={tableHeaders}
         tableItems={adminItems}
       />
