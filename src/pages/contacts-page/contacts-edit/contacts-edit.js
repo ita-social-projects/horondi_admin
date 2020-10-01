@@ -29,8 +29,8 @@ const ContactsEdit = ({ match }) => {
     ukAddress: '',
     enAddress: '',
     email: '',
-    ukCartImage: '',
-    enCartImage: '',
+    ukCartImage: null,
+    enCartImage: null,
     cartLink: ''
   });
 
@@ -49,12 +49,14 @@ const ContactsEdit = ({ match }) => {
         ukAddress: contact.address[0].value,
         enAddress: contact.address[1].value,
         email: contact.email,
-        ukCartImage: contact.images[0].value.thumbnail
-          ? `${config.imagePrefix}${contact.images[0].value.thumbnail}`
-          : '',
-        enCartImage: contact.images[1].value.thumbnail
-          ? `${config.imagePrefix}${contact.images[1].value.thumbnail}`
-          : '',
+        ukCartImage:
+          contact.images.length && contact.images[0].value.thumbnail
+            ? `${config.imagePrefix}${contact.images[0].value.thumbnail}`
+            : '',
+        enCartImage:
+          contact.images.length && contact.images[1].value.thumbnail
+            ? `${config.imagePrefix}${contact.images[1].value.thumbnail}`
+            : '',
         cartLink: contact.link
       });
     }
@@ -94,19 +96,24 @@ const ContactsEdit = ({ match }) => {
         { lang: languages[1], value: enAddress }
       ],
       email,
-      images: [
-        { lang: languages[0], value: { thumbnail: '' } },
-        { lang: languages[1], value: { thumbnail: '' } }
-      ],
       link: cartLink
     };
 
-    const upload =
-      ukCartImage && enCartImage
-        ? [ukCartImage, enCartImage]
-        : [ukCartImage || enCartImage];
+    const mapImages =
+      ukCartImage.name && enCartImage.name
+        ? [
+          {
+            lang: languages[0],
+            image: ukCartImage
+          },
+          {
+            lang: languages[1],
+            image: enCartImage
+          }
+        ]
+        : [];
 
-    dispatch(updateContact({ id, updatedContact, upload }));
+    dispatch(updateContact({ id, updatedContact, mapImages }));
   };
 
   if (loading) {

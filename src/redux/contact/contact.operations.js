@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 
-import { newsTranslations } from '../../translations/news.translations';
+import { contactTranslations } from '../../translations/contact.translations';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 
 const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
@@ -78,7 +78,7 @@ const getContactById = async (id) => {
   if (data.getContactById.message) {
     throw new Error(
       `${data.getContactById.statusCode} ${
-        newsTranslations[data.getContactById.message]
+        contactTranslations[data.getContactById.message]
       }`
     );
   }
@@ -117,7 +117,7 @@ const deleteContact = async (id) => {
   if (data.deleteContact.message) {
     throw new Error(
       `${data.deleteContact.statusCode} ${
-        newsTranslations[data.deleteContact.message]
+        contactTranslations[data.deleteContact.message]
       }`
     );
   }
@@ -125,13 +125,13 @@ const deleteContact = async (id) => {
   return data.deleteContact;
 };
 
-const addContact = async (contact, upload) => {
+const addContact = async (contact, mapImages) => {
   const result = await client.mutate({
-    variables: { contact, upload },
+    variables: { contact, mapImages },
     context: { headers: { token } },
     mutation: gql`
-      mutation($contact: contactInput!, $upload: Upload!) {
-        addContact(contact: $contact, upload: $upload) {
+      mutation($contact: contactInput!, $mapImages: [MapImage]!) {
+        addContact(contact: $contact, mapImages: $mapImages) {
           ... on Contact {
             _id
             phoneNumber
@@ -166,7 +166,7 @@ const addContact = async (contact, upload) => {
   if (data.addContact.message) {
     throw new Error(
       `${data.addContact.statusCode} ${
-        newsTranslations[data.addContact.message]
+        contactTranslations[data.addContact.message]
       }`
     );
   }
@@ -174,17 +174,17 @@ const addContact = async (contact, upload) => {
   return data.addContact;
 };
 
-const updateContact = async (id, contact, upload) => {
+const updateContact = async (id, contact, mapImages) => {
   const result = await client.mutate({
     variables: {
       id,
       contact,
-      upload
+      mapImages
     },
     context: { headers: { token } },
     mutation: gql`
-      mutation($id: ID!, $contact: contactInput!, $upload: Upload!) {
-        updateContact(id: $id, contact: $contact, upload: $upload) {
+      mutation($id: ID!, $contact: contactInput!, $mapImages: [MapImage]!) {
+        updateContact(id: $id, contact: $contact, mapImages: $mapImages) {
           ... on Contact {
             address {
               lang
@@ -208,7 +208,7 @@ const updateContact = async (id, contact, upload) => {
   if (data.updateContact.message) {
     throw new Error(
       `${data.updateContact.statusCode} ${
-        newsTranslations[data.updateContact.message]
+        contactTranslations[data.updateContact.message]
       }`
     );
   }

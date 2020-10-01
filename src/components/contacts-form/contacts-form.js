@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { useDispatch } from 'react-redux';
+
 import {
   FormControl,
   Paper,
@@ -20,6 +22,11 @@ import * as Yup from 'yup';
 
 import { config } from '../../configs';
 import { SaveButton } from '../buttons';
+import {
+  setSnackBarSeverity,
+  setSnackBarStatus,
+  setSnackBarMessage
+} from '../../redux/snackbar/snackbar.actions';
 import { useStyles } from './contacts-form.style';
 
 const {
@@ -32,7 +39,8 @@ const {
   ENTER_UK_ADDRESS_MESSAGE,
   ENTER_EN_ADDRESS_MESSAGE,
   IMAGE_FORMAT_MESSAGE,
-  ENTER_LINK_MESSAGE
+  ENTER_LINK_MESSAGE,
+  SELECT_IMAGES_MESSAGE
 } = config.contactErrorMessages;
 const {
   INVALID_EMAIL_MESSAGE,
@@ -47,6 +55,7 @@ const pathToContactsPage = routes.pathToContacts;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [ukMapImage, ukSetMapImage] = useState({
     name: '',
     imageUrl: ''
@@ -110,7 +119,17 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     validationSchema: formSchema,
     validateOnBlur: true,
     onSubmit: (values) => {
-      contactSaveHandler(values);
+      if (
+        values.ukCartImage &&
+        values.enCartImage &&
+        typeof values.ukCartImage === typeof values.enCartImage
+      ) {
+        contactSaveHandler(values);
+      } else {
+        dispatch(setSnackBarSeverity('error'));
+        dispatch(setSnackBarMessage(SELECT_IMAGES_MESSAGE));
+        dispatch(setSnackBarStatus(true));
+      }
     }
   });
 
@@ -351,8 +370,8 @@ ContactsForm.propTypes = {
     enSchedule: PropTypes.string.isRequired,
     ukAddress: PropTypes.string.isRequired,
     enAddress: PropTypes.string.isRequired,
-    ukCartImage: PropTypes.string,
-    enCartImage: PropTypes.string,
+    ukCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    enCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     email: PropTypes.string.isRequired,
     cartLink: PropTypes.string.isRequired
   })

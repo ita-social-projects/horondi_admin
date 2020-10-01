@@ -17,7 +17,7 @@ const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
 
   return (
     <div>
-      <TableContainer className={classes.container} component={Paper}>
+      <TableContainer component={Paper}>
         <Table
           className={classes.table}
           size={dense ? SMALL_SIZE : DEFAULT_SIZE}

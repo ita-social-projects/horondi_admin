@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /.pnp
+/coverage
 .pnp.js
 
 # testing
@@ -19,6 +20,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+package-lock.json
 *.env.json
 
 npm-debug.log*
