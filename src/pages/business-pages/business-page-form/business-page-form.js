@@ -90,16 +90,30 @@ const BusinessPageForm = ({ id, editMode }) => {
       ukTitle,
       enTitle
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       if (!checkValidation(values)) {
         setShouldValidate(true);
         return;
       }
 
-      const page = createBusinessPage({ ...values, enText, ukText });
+      const uniqueFiles = files.filter((file, i) => {
+        const { name, size } = file;
+        return (
+          i === files.findIndex((obj) => obj.name === name && obj.size === size)
+        );
+      });
+
+      const newUkText = ukText.replace(/src="data:image.*?"/g, 'src=""');
+      const newEnText = enText.replace(/src="data:image.*?"/g, 'src=""');
+
+      const page = createBusinessPage({
+        ...values,
+        ukText: newUkText,
+        enText: newEnText
+      });
       editMode
-        ? dispatch(updateBusinessPage({ id, page }))
-        : dispatch(addBusinessPage(page));
+        ? dispatch(updateBusinessPage({ id, page, files: uniqueFiles }))
+        : dispatch(addBusinessPage({ page, files: uniqueFiles }));
     }
   });
 

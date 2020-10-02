@@ -1,22 +1,22 @@
 export const clearLocalStorage = () => {
-  const horondi = {
+  const horondiAdmin = {
     HORONDI_AUTH_TOKEN: '',
     darkMode: null
   };
-  localStorage.setItem('horondi', JSON.stringify(horondi));
+  localStorage.setItem('horondiAdmin', JSON.stringify(horondiAdmin));
 };
 
-if (!localStorage.getItem('horondi')) {
+if (!localStorage.getItem('horondiAdmin')) {
   clearLocalStorage();
 }
 
 export const getFromLocalStorage = (name) => {
-  const localObject = JSON.parse(localStorage.getItem('horondi'));
+  const localObject = JSON.parse(localStorage.getItem('horondiAdmin'));
   return localObject[name];
 };
 
 export const setToLocalStorage = (name, item) => {
-  const localObject = JSON.parse(localStorage.getItem('horondi'));
+  const localObject = JSON.parse(localStorage.getItem('horondiAdmin'));
   localObject[name] = item;
-  localStorage.setItem('horondi', JSON.stringify(localObject));
+  localStorage.setItem('horondiAdmin', JSON.stringify(localObject));
 };

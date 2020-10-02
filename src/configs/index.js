@@ -5,6 +5,7 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import SmsIcon from '@material-ui/icons/Sms';
 import PaletteIcon from '@material-ui/icons/Palette';
 
 export const routes = {
@@ -31,7 +32,8 @@ export const routes = {
   pathToConfirmAdmin: '/confirmation/:token',
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
-  pathToAddContact: '/add-contact'
+  pathToAddContact: '/add-contact',
+  pathToComments: '/comments'
 };
 
 export const config = {
@@ -45,6 +47,7 @@ export const config = {
       ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
       ['Користувачі', routes.pathToUsers, PeopleIcon],
       ['Матеріали', routes.pathToMaterials, LocalMallIcon],
+      ['Останні коментарі', routes.pathToComments, SmsIcon],
       ['Гобелени', routes.pathToPatterns, PaletteIcon]
     ],
     routes,
@@ -73,7 +76,12 @@ export const config = {
       subcategories: []
     }
   },
-  userRoles: [{ role: 'admin', label: 'Адмін' }],
+  userRoles: [
+    { role: 'user', label: 'Юзер' },
+    { role: 'admin', label: 'Адмін' },
+    { role: 'superadmin', label: 'Суперадмін' }
+  ],
+  allowedforRegistrationRoles: ['admin'],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     materials: ['Назва', 'Застосування', 'Доступний', 'Дії'],
@@ -94,17 +102,23 @@ export const config = {
     subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
-    users: [
-      'Аватар',
-      "Ім'я",
-      'Мобільний номер',
-      'Пошта',
-      'Роль',
-      'Статус',
-      'Дії'
-    ],
+    users: {
+      userTab: [
+        'Аватар',
+        "Ім'я",
+        'Мобільний номер',
+        'Пошта',
+        'Роль',
+        'Статус',
+        'Дії'
+      ],
+      adminTab: ['Аватар', "Ім'я", 'Пошта', 'Роль', 'Дії']
+    },
     contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
     comments: ['Дата', 'Текст', 'Дії']
+  },
+  tabNames: {
+    users: ['Користувачі', 'Адміністратори']
   },
   detailTitles: {
     users: {
@@ -206,6 +220,7 @@ export const config = {
       'Ви впевнені,що хочете змінити статус користувача?',
     REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
     REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
     REMOVE_MATERIAL_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?',
     NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
     titleGenerator: (editMode, isMain) => {
@@ -289,7 +304,8 @@ export const config = {
     ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
     IMAGE_FORMAT_MESSAGE:
       'Введіть коректний формат, наприклад: https://example.com/',
-    ENTER_LINK_MESSAGE: 'Введіть посилання'
+    ENTER_LINK_MESSAGE: 'Введіть посилання',
+    SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт'
   },
   paginationPayload: {
     skip: 0,

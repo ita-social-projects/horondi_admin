@@ -2,16 +2,25 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 
 import { config } from '../../configs';
 
-import { getCommentsByType, deleteComment } from './comments.operations';
+import {
+  getCommentsByType,
+  getRecentComments,
+  deleteComment
+} from './comments.operations';
 
 import {
   setComments,
   setCommentsLoading,
   setCommentError,
+  setCommentsPagesCount,
   deleteCommentLocally
 } from './comments.actions';
 
-import { GET_COMMENTS_BY_TYPE, DELETE_COMMENT } from './comments.types';
+import {
+  GET_COMMENTS_BY_TYPE,
+  GET_RECENT_COMMENTS,
+  DELETE_COMMENT
+} from './comments.types';
 
 import {
   setSnackBarSeverity,
@@ -30,6 +39,28 @@ function* handleCommentsByTypeLoad({ payload }) {
       payload.commentsType
     );
     yield put(setComments(comments));
+
+    yield put(setCommentsLoading(false));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+function* handleRecentCommentsLoad({
+  payload = {
+    skip: 0,
+    limit: 20,
+    commentsPerPage: 10
+  }
+}) {
+  try {
+    yield put(setCommentsLoading(true));
+
+    const comments = yield call(getRecentComments, payload.skip, payload.limit);
+    yield put(
+      setCommentsPagesCount(Math.ceil(comments.count / payload.commentsPerPage))
+    );
+    yield put(setComments(comments.items));
 
     yield put(setCommentsLoading(false));
   } catch (error) {
@@ -68,5 +99,6 @@ function* handleSnackBarSuccess(status) {
 
 export default function* commentsSaga() {
   yield takeEvery(GET_COMMENTS_BY_TYPE, handleCommentsByTypeLoad);
+  yield takeEvery(GET_RECENT_COMMENTS, handleRecentCommentsLoad);
   yield takeEvery(DELETE_COMMENT, handleCommentDelete);
 }
