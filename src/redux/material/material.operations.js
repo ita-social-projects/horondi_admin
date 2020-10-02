@@ -3,6 +3,7 @@ import { client } from '../../utils/client';
 
 import { materialTranslations } from '../../translations/material.translations';
 import { getFromLocalStorage } from '../../services/local-storage.service';
+import { config } from '../../configs';
 
 export const getAllMaterials = async (skip, limit) => {
   const result = await client.query({
@@ -101,7 +102,7 @@ export const getMaterialById = async (id) => {
 };
 
 export const deleteMaterial = async (id) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+  const token = getFromLocalStorage(config.tokenName);
 
   const result = await client.mutate({
     context: { headers: { token } },
@@ -138,7 +139,7 @@ export const deleteMaterial = async (id) => {
 };
 
 export const createMaterial = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+  const token = getFromLocalStorage(config.tokenName);
 
   const result = await client.mutate({
     context: { headers: { token } },
@@ -174,7 +175,7 @@ export const createMaterial = async (payload) => {
 };
 
 export const updateMaterial = async (id, material, images) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+  const token = getFromLocalStorage(config.tokenName);
 
   const result = await client.mutate({
     context: { headers: { token } },

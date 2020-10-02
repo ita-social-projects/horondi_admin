@@ -6,7 +6,6 @@ import CategoryIcon from '@material-ui/icons/Category';
 import PeopleIcon from '@material-ui/icons/People';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import PaletteIcon from '@material-ui/icons/Palette';
-import { CLOSE_DIALOG } from '../redux/dialog-window/dialog-window.types';
 
 export const routes = {
   pathToLogin: '/',
@@ -58,6 +57,7 @@ export const config = {
   buttonStyles: {
     ACCEPT_BUTTON_STYLE: 'secondary'
   },
+  tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {
       available: false,
@@ -201,12 +201,12 @@ export const config = {
     REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
-    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
+    REMOVE_USER_MESSAGE: 'Ви впевнені, що хочете видалити цього користувача?',
     SWITCH_USER_STATUS_MESSAGE:
       'Ви впевнені,що хочете змінити статус користувача?',
-    REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
     REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
-    REMOVE_MATERIAL_MESSAGE: 'Ви впевнені,що хочете видалити цей матеріал?',
+    REMOVE_MATERIAL_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?',
     NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
@@ -363,6 +363,6 @@ export const config = {
     createPageTitle: 'Створити матеріал'
   },
   colorTitles: {
-    createColorTitle: 'Створити колор'
+    createColorTitle: 'Створити колір'
   }
 };
