@@ -27,7 +27,6 @@ const buttonTitles = {
   CREATE_SPECIAL_USER: 'Створити спецкористувача',
   CREATE_CATEGORY: 'Створити категорію',
   CREATE_SUBCATEGORY: 'Створити підкатегорію',
-  PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
   USER_UNACTIVE_TITLE: 'Деактивувати',
   REMOVE_COMMENT_TITLE: 'Видалити коментар',

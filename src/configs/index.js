@@ -44,7 +44,15 @@ export const config = {
       subcategories: []
     }
   },
-  userRoles: [{ role: 'admin', label: 'Адмін' }],
+  userRoles: [
+    { role: 'user', label: 'Юзер' },
+    { role: 'admin', label: 'Адмін' },
+    { role: 'superadmin', label: 'Суперадмін' }
+  ],
+  allowedforRegistrationRoles: ['admin'],
+  tabNames: {
+    users: ['Користувачі', 'Адміністратори']
+  },
   tableSizes: {
     SMALL_SIZE: 'small',
     DEFAULT_SIZE: 'medium'
