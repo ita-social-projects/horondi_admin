@@ -45,10 +45,10 @@ const {
   SUCCESS_CONFIRMATION_STATUS
 } = config.statuses;
 
-function* handleUsersLoad() {
+function* handleUsersLoad({ payload }) {
   try {
     yield put(setUsersLoading(true));
-    const users = yield call(getAllUsers, null);
+    const users = yield call(getAllUsers, payload);
     yield put(setUsers(users));
     yield put(setUsersLoading(false));
   } catch (err) {

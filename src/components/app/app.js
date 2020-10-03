@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
-
 import Routes from '../../routes';
 import { theme } from './app-theme/app.theme';
 import { useStyles } from './app.styles';
@@ -19,6 +18,7 @@ const App = () => {
   const themeValue = theme(themeMode);
   const classes = useStyles();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(checkUserByToken(token));
   }, [dispatch]);
