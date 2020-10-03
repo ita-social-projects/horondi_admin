@@ -44,9 +44,7 @@ const PatternForm = ({ pattern, id }) => {
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => (
-        <Tab label={lang} data-cy={lang} key={lang} />
-      ))
+      ? languages.map((lang) => <Tab label={lang} data-cy={lang} key={lang} />)
       : null;
 
   const patternValidationSchema = Yup.object().shape({

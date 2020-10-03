@@ -47,7 +47,7 @@ function* handleAdminCheckByToken() {
     yield put(setAuth(true));
     yield put(setAuthLoading(false));
   } catch (error) {
-    console.log(error);
+    console.error(error);
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
     clearLocalStorage(null);
