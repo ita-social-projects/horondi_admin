@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`delete button tests should click 1`] = `ReactWrapper {}`;
