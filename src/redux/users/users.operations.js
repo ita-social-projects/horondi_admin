@@ -39,8 +39,14 @@ query($id: ID!) {
 const deleteUserMutation = `
 mutation($id: ID!) {
   deleteUser(id: $id) {
+   ... on User {
     firstName
     lastName
+    }
+    ... on Error {
+    message
+    statusCode
+    }
   }
 }
 `;
@@ -122,6 +128,12 @@ const deleteUser = async (id) => {
   const result = await setItems(deleteUserMutation, { id });
 
   const { data } = result;
+
+  if (data.deleteUser.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.deleteUser.message]}`
+    );
+  }
 
   return data.deleteUser;
 };
