@@ -16,7 +16,6 @@
     "axios": "^0.19.2",
     "connected-react-router": "^6.8.0",
     "cors": "^2.8.5",
-    "create-components-react": "^2.1.4",
     "formik": "^2.1.5",
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
@@ -75,7 +74,12 @@
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-syntax-jsx": "^7.10.4",
     "@babel/preset-env": "^7.10.2",
+    "@babel/preset-flow": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
     "babel-eslint": "^10.1.0",
     "cypress": "^5.0.0",
     "cypress-file-upload": "^4.1.1",
@@ -116,5 +120,20 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "jest": {
+    "verbose": true,
+    "clearMocks": true,
+    "collectCoverage": true,
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./__mocks__/fileMock.js",
+      "\\.(css|scss)$": "identity-obj-proxy"
+    }
   }
 }

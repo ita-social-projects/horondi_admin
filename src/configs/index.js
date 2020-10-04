@@ -169,6 +169,7 @@ export const config = {
     REMOVE_TITLE: 'Видалити новину',
     PATTERN_REMOVE_TITLE: 'Видалити гобелен',
     REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
+    SAVE_TITLE: 'Зберегти',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
     CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку',
@@ -324,4 +325,8 @@ export const config = {
     mainPageTitle: 'Iнформація про гобелени',
     createPageTitle: 'Створити матеріал'
   }
+};
+export const inputTypes = {
+  button: 'button',
+  submit: 'submit'
 };
