@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/styles';
 export const useStyles = makeStyles((theme) => ({
   detailsContainer: {
     width: '95%',
-    marginTop: 70,
     margin: theme.spacing(2),
     padding: 25
   },

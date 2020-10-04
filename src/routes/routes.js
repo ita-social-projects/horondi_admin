@@ -27,7 +27,6 @@ import { config } from '../configs';
 import { history } from '../store/store';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
-import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
 
 const { routes } = config.app;
@@ -100,11 +99,6 @@ const Routes = () => {
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route path={routes.pathToComments} exact component={CommentsPage} />
-        <Route
-          path={routes.pathToRegisterAdmin}
-          exact
-          component={RegisterUser}
-        />
         <Route
           path={routes.pathToAddCategory}
           exact

@@ -161,6 +161,9 @@ export const config = {
     INVALID_ADMIN_INVITATIONAL_TOKEN:
       'Неправильне посилання на створення користувача'
   },
+  dialogFormTitles: {
+    REGISTER_ADMIN: 'Створити спецкористувача'
+  },
   buttonTitles: {
     DELETE_TITLE: 'Видалити',
     EDIT_TITLE: 'Редагувати',
@@ -286,6 +289,10 @@ export const config = {
       available: 'Доступний',
       handmade: 'Зроблений вручну',
       avatarText: 'Фото'
+    },
+    user: {
+      unknownAdmin: 'Невідомий адміністратор',
+      unknownUser: 'Невідомий користувач'
     }
   },
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
