@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { TableHead, TableRow, TableCell } from '@material-ui/core';
 
 const TableContainerHead = ({ titles }) => {
-  const headRow = titles.map((title, index) => (
-    <TableCell key={index}>{title}</TableCell>
+  const headRow = titles.map((title) => (
+    <TableCell data-cy={title} key={title}>
+      {title}
+    </TableCell>
   ));
 
   return (

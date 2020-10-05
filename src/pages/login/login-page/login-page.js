@@ -84,6 +84,7 @@ const LoginPage = () => {
           required
           fullWidth
           id='email'
+          data-cy='email'
           label='Email'
           value={values.email}
           error={touched.email && !!errors.email}
@@ -109,6 +110,7 @@ const LoginPage = () => {
             value={values.password}
             error={touched.password && !!errors.password}
             name='password'
+            data-cy='password'
             required
             onChange={handleChange}
             endAdornment={
@@ -133,6 +135,7 @@ const LoginPage = () => {
           <div className={classes.inputError}>{errors.password}</div>
         )}
         <Button
+          data-cy='login'
           type='submit'
           variant='contained'
           color='primary'

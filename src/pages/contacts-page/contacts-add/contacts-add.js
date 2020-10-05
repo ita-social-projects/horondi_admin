@@ -48,19 +48,24 @@ const ContactsAdd = () => {
         { lang: languages[1], value: enAddress }
       ],
       email,
-      images: [
-        { lang: languages[0], value: { medium: '' } },
-        { lang: languages[1], value: { medium: '' } }
-      ],
       link: cartLink
     };
 
-    const upload =
-      ukCartImage && enCartImage
-        ? [ukCartImage, enCartImage]
-        : [ukCartImage || enCartImage];
+    const mapImages =
+      !!ukCartImage && !!enCartImage
+        ? [
+          {
+            lang: languages[0],
+            image: ukCartImage
+          },
+          {
+            lang: languages[1],
+            image: enCartImage
+          }
+        ]
+        : [];
 
-    dispatch(addContact(newContact, upload));
+    dispatch(addContact(newContact, mapImages));
   };
 
   if (loading) {

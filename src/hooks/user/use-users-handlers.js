@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../redux/users/users.actions';
+import { getUser } from '../../redux/users/users.actions';
 
 const useUsersHandler = (id) => {
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ const useUsersHandler = (id) => {
   const [city, setCity] = useState('');
   const [adress, setAdress] = useState('');
   const [postCode, setPostCode] = useState('');
+  const [email, SetEmail] = useState('');
 
   const [isBanned, setBan] = useState('');
 
@@ -34,6 +35,7 @@ const useUsersHandler = (id) => {
           `${user.address.street}, ${user.address.buildingNumber}/${user.address.appartment}`
       );
       setPostCode(user.address && user.address.zipcode);
+      SetEmail(user.email);
       setBan(user.banned);
     }
   }, [
@@ -44,6 +46,7 @@ const useUsersHandler = (id) => {
     setCity,
     setAdress,
     setPostCode,
+    SetEmail,
     setBan
   ]);
 
@@ -54,6 +57,7 @@ const useUsersHandler = (id) => {
     city,
     adress,
     postCode,
+    email,
     isBanned
   };
 };

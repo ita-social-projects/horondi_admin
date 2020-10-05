@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { config } from '../configs';
 
 const { languages } = config;
