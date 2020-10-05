@@ -68,9 +68,9 @@ const Categories = () => {
         return 0;
       })
       .filter((category) => category.isMain)
-      .map((category, index) => (
+      .map((category) => (
         <TableContainerRow
-          key={index}
+          key={category._id}
           id={category._id}
           image={
             category.images.thumbnail
@@ -79,9 +79,7 @@ const Categories = () => {
           }
           name={category.name.length ? category.name[0].value : ''}
           deleteHandler={() => handleDeleteCategory(category._id)}
-          editHandler={() =>
-            dispatch(push(`/add-category/${category._id}`))
-          }
+          editHandler={() => dispatch(push(`/add-category/${category._id}`))}
         />
       ))
     : null;

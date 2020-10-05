@@ -33,6 +33,7 @@ import { omitTypename } from '../../../utils/omitTypeName';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import AddPhoto from '../../../images/add-photo.png';
+import { categoryTranslations } from '../../../translations/category.translations';
 
 const CategoriesAdd = ({ id, editMode }) => {
   // HOOKS
@@ -270,9 +271,9 @@ const CategoriesAdd = ({ id, editMode }) => {
         (subcategory) =>
           mainCategory && mainCategory.subcategories.includes(subcategory._id)
       )
-      .map((subcategory, index) => (
+      .map((subcategory) => (
         <TableContainerRow
-          key={index}
+          key={subcategory._id}
           id={subcategory._id}
           image={subcategory.images.thumbnail || ''}
           name={subcategory.name[0].value}
@@ -357,7 +358,9 @@ const CategoriesAdd = ({ id, editMode }) => {
                     />
                   }
                   label={
-                    isMain ? 'Категорія доступна' : 'Підкатегорія доступна'
+                    isMain
+                      ? categoryTranslations.CATEGORY_IS_AVAILABLE
+                      : categoryTranslations.SUBCATEGORY_IS_AVAILABLE
                   }
                 />
               </Paper>
