@@ -78,6 +78,8 @@ export const config = {
   allowedforRegistrationRoles: ['admin'],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    categories: ['Зображення', 'Категорія', 'Дії'],
+    subcategories: ['Зображення', 'Підкатегорія', 'Доступна', 'Дії'],
     patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
@@ -91,8 +93,6 @@ export const config = {
       'Кількість покупок',
       'Дії'
     ],
-    categories: ['№', 'Категорія', 'Дії'],
-    subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
     users: {
@@ -182,12 +182,13 @@ export const config = {
     GO_BACK_TITLE: 'Назад',
     DELETE_CATEGORY: 'Видалити категорію',
     ADD_SUBCATEGORY: 'Додати підкатегорію',
-    ADD_CATEGORY_IMAGE: 'Зберегти посилання',
+    ADD_CATEGORY_IMAGE: 'Додати зображення',
     ADD_CATEGORY_NAME: 'Додати назву',
     CANCEL: 'Відмінити',
     SAVE_CATEGORY: 'Зберегти категорію',
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
+    ADD_PHOTO_LABEL: '+',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
     PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
@@ -288,6 +289,7 @@ export const config = {
       avatarText: 'Фото'
     }
   },
+  IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
   newsPerPage: 6,
   contactsPaginationPayload: {
