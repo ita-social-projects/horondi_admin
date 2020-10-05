@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import { setProductToSend } from '../../../../redux/products/products.actions';
-import StepperButtons from '../product-add-stepper/stepper-buttons/stepper-buttons';
+import StepperControlButtons from '../product-add-stepper/stepper-control-buttons/stepper-control-buttons';
 import ProductOptionsContainer from '../../../../containers/product-options-container';
 
 const ProductAddOptions = ({
@@ -29,7 +29,7 @@ const ProductAddOptions = ({
         selectedOptions={selectedOptions}
         additions={additions}
       />
-      <StepperButtons
+      <StepperControlButtons
         activeStep={activeStep}
         handleNext={handleOptionsSubmit}
         handleBack={handleBack}

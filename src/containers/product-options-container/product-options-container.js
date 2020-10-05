@@ -53,6 +53,7 @@ const ProductOptionsContainer = ({
   };
 
   const handleDeleteOption = (option, name) => {
+    toggleFieldsChanged(true);
     const currentOption = selectedOptions[option];
     const sizeToRemove = currentOption.indexOf(name);
     setOptions({

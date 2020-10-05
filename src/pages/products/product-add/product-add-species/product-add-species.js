@@ -9,7 +9,7 @@ import {
   getModelsByCategory,
   setProductToSend
 } from '../../../../redux/products/products.actions';
-import StepperButtons from '../product-add-stepper/stepper-buttons/stepper-buttons';
+import StepperControlButtons from '../product-add-stepper/stepper-control-buttons/stepper-control-buttons';
 import ProductSpeciesContainer from '../../../../containers/product-species-container';
 
 const ProductAddSpecies = ({
@@ -19,7 +19,7 @@ const ProductAddSpecies = ({
   activeStep,
   handleNext,
   handleBack,
-  getColorToSend,
+  getColorsToSend,
   getPatternToSend,
   getModelToSend,
   getSelectedCategory
@@ -39,7 +39,7 @@ const ProductAddSpecies = ({
     dispatch(
       setProductToSend({
         ...values,
-        colors: getColorToSend(colors),
+        colors: getColorsToSend(colors),
         pattern: getPatternToSend(pattern),
         model: getModelToSend(model)._id
       })
@@ -106,7 +106,7 @@ const ProductAddSpecies = ({
         setFieldValue={setFieldValue}
       />
       <div className={styles.buttons}>
-        <StepperButtons
+        <StepperControlButtons
           activeStep={activeStep}
           handleBack={handleBack}
           handleNext={handleSpeciesSubmit}
@@ -123,7 +123,7 @@ ProductAddSpecies.propTypes = {
   activeStep: PropTypes.number.isRequired,
   handleNext: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
-  getColorToSend: PropTypes.func.isRequired,
+  getColorsToSend: PropTypes.func.isRequired,
   getPatternToSend: PropTypes.func.isRequired,
   getModelToSend: PropTypes.func.isRequired,
   getSelectedCategory: PropTypes.func.isRequired

@@ -14,7 +14,7 @@ import TabPanel from '../../../../components/tab-panel';
 import { config } from '../../../../configs';
 import { useStyles } from './product-add-submit.styles';
 import ProductAddDetail from '../product-add-detail';
-import StepperButtons from '../product-add-stepper/stepper-buttons';
+import StepperButtons from '../product-add-stepper/stepper-control-buttons';
 import { addProduct } from '../../../../redux/products/products.actions';
 
 const { infoLabels, selectsLabels, optionsLabels } = config.product;
@@ -88,7 +88,7 @@ const ProductAddSubmit = ({
   ));
 
   const tabPanels = checkedLanguages.map((checkedLang, idx) => (
-    <TabPanel index={idx} value={tabValue} key={idx}>
+    <TabPanel index={idx} value={tabValue} key={checkedLang.name}>
       {infoLabels.map(({ label, name }) => {
         const text = productToSend[name].find(
           ({ lang }) => lang === checkedLang.name
@@ -101,8 +101,8 @@ const ProductAddSubmit = ({
     </TabPanel>
   ));
 
-  const languageTabs = checkedLanguages.map(({ name }, idx) => (
-    <Tab label={name} key={idx} />
+  const languageTabs = checkedLanguages.map(({ name }) => (
+    <Tab label={name} key={`${name}-tab`} />
   ));
 
   return (
@@ -157,11 +157,31 @@ ProductAddSubmit.propTypes = {
   selectedOptions: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.bool])
   ).isRequired,
-  checkedLanguages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  checkedLanguages: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      checked: PropTypes.bool
+    })
+  ).isRequired,
   getSelectedCategory: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
   activeStep: PropTypes.number.isRequired,
-  additions: PropTypes.arrayOf(PropTypes.object)
+  additions: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.arrayOf(
+        PropTypes.shape({
+          lang: PropTypes.string,
+          value: PropTypes.string
+        })
+      ),
+      additionalPrice: PropTypes.arrayOf(
+        PropTypes.shape({
+          currency: PropTypes.string,
+          value: PropTypes.number
+        })
+      )
+    })
+  )
 };
 
 ProductAddSubmit.defaultProps = {

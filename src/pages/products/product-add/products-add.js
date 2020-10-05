@@ -4,16 +4,16 @@ import { useDispatch } from 'react-redux';
 import { Paper } from '@material-ui/core';
 import { useStyles } from './products-add.styles';
 
-import useProductHandler from '../../../utils/use-product-handler';
+import useProductHandlers from '../../../utils/use-product-handlers';
 import ProductsStepper from './product-add-stepper/product-add-stepper';
 import {
   getProductSpecies,
   getProductOptions
 } from '../../../redux/products/products.actions';
 import ProductAddInfo from './product-add-info';
-import ProductAddSpecies from './product-add-species/product-add-species';
-import ProductAddOptions from './product-add-options/product-add-options';
-import ProductAddImages from './product-add-images/product-add-images';
+import ProductAddSpecies from './product-add-species';
+import ProductAddOptions from './product-add-options';
+import ProductAddImages from './product-add-images';
 import ProductAddSubmit from './product-add-submit';
 
 const ProductsAdd = () => {
@@ -32,14 +32,14 @@ const ProductsAdd = () => {
     options,
     getModelToSend,
     getPatternToSend,
-    getColorToSend,
+    getColorsToSend,
     getSelectedCategory,
     additionalImages,
     setAdditionalImages,
     primaryImage,
     setPrimaryImage,
     checkedLanguages
-  } = useProductHandler();
+  } = useProductHandlers();
 
   useEffect(() => {
     dispatch(getProductSpecies());
@@ -75,7 +75,7 @@ const ProductsAdd = () => {
       colors={colors}
       patterns={patterns}
       models={models}
-      getColorToSend={getColorToSend}
+      getColorsToSend={getColorsToSend}
       getModelToSend={getModelToSend}
       getPatternToSend={getPatternToSend}
       getSelectedCategory={getSelectedCategory}

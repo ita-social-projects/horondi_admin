@@ -8,7 +8,7 @@ const {
   product: { optionsValues }
 } = config;
 
-const useProductHandler = () => {
+const useProductHandlers = () => {
   const { filterData, productOptions, modelsForSelectedCategory } = useSelector(
     ({ Products }) => ({
       filterData: Products.filterData,
@@ -97,40 +97,37 @@ const useProductHandler = () => {
     () =>
       filterData.length
         ? filterData
-              .find(({ options }) => options.find(({ additions }) => additions.length))
-              .options.find(({ additions }) => additions.length)
-          .additions
+          .find(({ options }) =>
+            options.find(({ additions }) => additions.length)
+          )
+          .options.find(({ additions }) => additions.length).additions
         : null,
     [filterData]
   );
 
   const sizeOptions = useMemo(
     () =>
-      selectedOptions.sizes.length
-        ? selectedOptions.sizes.map(
-          (size) => sizes.find(({ name }) => name === size)._id
-        )
-        : [],
+      selectedOptions.sizes.map((size) =>
+        sizes.find(({ name }) => name === size)
+      ),
     [selectedOptions.sizes, sizes]
   );
 
   const materialsOptions = useMemo(
     () =>
-      selectedOptions.bottomMaterials.length
-        ? selectedOptions.bottomMaterials.map(
-          (item) => materials.find(({ name }) => item === name[0].value)._id
-        )
-        : [],
+      selectedOptions.bottomMaterials.map((item) =>
+        materials.find(({ name }) => item === name[0].value)
+      ),
     [selectedOptions.bottomMaterials, materials]
   );
 
   const options = useMemo(() => {
     const sizeObj = {
-      arr: sizeOptions,
+      items: sizeOptions,
       name: 'size'
     };
     const materialsObj = {
-      arr: materialsOptions,
+      items: materialsOptions,
       name: 'bottomMaterial'
     };
     let objToMap;
@@ -144,23 +141,23 @@ const useProductHandler = () => {
       objToAggregate = sizeObj;
     }
 
-    return objToMap.arr.map((item, idx) => {
+    return objToMap.items.map((item, idx) => {
       const { name: mappedName } = objToMap;
       const { name: aggregatedName } = objToAggregate;
-      const aggregatedItem = objToAggregate.arr[idx]
-        ? { [aggregatedName]: objToAggregate.arr[idx] }
+      const aggregatedItem = objToAggregate.items[idx]
+        ? { [aggregatedName]: objToAggregate.items[idx]._id }
         : {};
       const additionsToSend = selectedOptions.additions ? { additions } : [];
 
       return {
-        [mappedName]: item,
+        [mappedName]: !!item && item._id,
         ...aggregatedItem,
         ...additionsToSend
       };
     });
   }, [sizeOptions, materialsOptions, additions, selectedOptions.additions]);
 
-  const getColorToSend = (color) =>
+  const getColorsToSend = (color) =>
     colors.find((item) => item[0].simpleName[0].value === color);
 
   const getPatternToSend = (pattern) =>
@@ -169,37 +166,26 @@ const useProductHandler = () => {
   const getModelToSend = (model) =>
     modelsForSelectedCategory.find(({ name }) => name[0].value === model);
 
-  const createProductInfo = ({
-    ukname,
-    enname,
-    ukmainMaterial,
-    enmainMaterial,
-    ukinnerMaterial,
-    eninnerMaterial,
-    ukclosure,
-    enclosure,
-    ukdescription,
-    endescription
-  }) => ({
+  const createProductInfo = (values) => ({
     name: [
-      { lang: languages[0], value: ukname },
-      { lang: languages[1], value: enname }
+      { lang: languages[0], value: values['uk-name'] },
+      { lang: languages[1], value: values['en-name'] }
     ],
     mainMaterial: [
-      { lang: languages[0], value: ukmainMaterial },
-      { lang: languages[1], value: enmainMaterial }
+      { lang: languages[0], value: values['uk-mainMaterial'] },
+      { lang: languages[1], value: values['en-mainMaterial'] }
     ],
     innerMaterial: [
-      { lang: languages[0], value: ukinnerMaterial },
-      { lang: languages[1], value: eninnerMaterial }
+      { lang: languages[0], value: values['uk-innerMaterial'] },
+      { lang: languages[1], value: values['en-innerMaterial'] }
     ],
     closure: [
-      { lang: languages[0], value: ukclosure },
-      { lang: languages[1], value: enclosure }
+      { lang: languages[0], value: values['uk-closure'] },
+      { lang: languages[1], value: values['en-closure'] }
     ],
     description: [
-      { lang: languages[0], value: ukdescription },
-      { lang: languages[1], value: endescription }
+      { lang: languages[0], value: values['uk-description'] },
+      { lang: languages[1], value: values['en-description'] }
     ]
   });
 
@@ -228,7 +214,7 @@ const useProductHandler = () => {
     additionalImages,
     setAdditionalImages,
     createProductInfo,
-    getColorToSend,
+    getColorsToSend,
     getModelToSend,
     getPatternToSend,
     getSelectedCategory,
@@ -236,4 +222,4 @@ const useProductHandler = () => {
   };
 };
 
-export default useProductHandler;
+export default useProductHandlers;

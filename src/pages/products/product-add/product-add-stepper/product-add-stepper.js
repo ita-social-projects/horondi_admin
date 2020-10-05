@@ -25,7 +25,7 @@ const ProductsStepper = ({ steps, activeStep }) => {
 };
 
 ProductsStepper.propTypes = {
-  steps: PropTypes.arrayOf(PropTypes.object).isRequired,
+  steps: PropTypes.arrayOf(PropTypes.node).isRequired,
   activeStep: PropTypes.number.isRequired
 };
 

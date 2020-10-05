@@ -6,8 +6,8 @@ import { Box, Grid, Chip } from '@material-ui/core';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { useStyles } from './product-add-images.styles';
 
-import UploadButtonContainer from "../../../../containers/upload-button-container";
-import StepperButtons from '../product-add-stepper/stepper-buttons';
+import UploadButtonContainer from '../../../../containers/upload-button-container';
+import StepperButtons from '../product-add-stepper/stepper-control-buttons';
 import { setFilesToUpload } from '../../../../redux/products/products.actions';
 
 import { productsTranslations } from '../../../../translations/product.translations';
@@ -69,10 +69,10 @@ const ProductAddImages = ({
         <Grid container spacing={1}>
           <Grid item>
             <UploadButtonContainer
-                buttonLabel={MAIN_PHOTO}
-                multiple={false}
-                startIcon={true}
-                onChangeHandler={handlePrimaryImageLoad}
+              buttonLabel={MAIN_PHOTO}
+              multiple={false}
+              startIcon
+              onChangeHandler={handlePrimaryImageLoad}
             />
           </Grid>
           <Grid item>
@@ -92,8 +92,8 @@ const ProductAddImages = ({
         <div>
           <UploadButtonContainer
             buttonLabel={ADDITIONAL_PHOTOS}
-            multiple={true}
-            startIcon={true}
+            multiple
+            startIcon
             onChangeHandler={handleAdditionalImagesLoad}
           />
         </div>

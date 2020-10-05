@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Box, Button, Grid } from '@material-ui/core';
-import { useStyles } from './stepper-buttons.styles';
+import { useStyles } from './stepper-control-buttons.styles';
 
 import { config } from '../../../../../configs';
 import { productsTranslations } from '../../../../../translations/product.translations';
@@ -12,7 +12,12 @@ import { productsTranslations } from '../../../../../translations/product.transl
 const { stepsLabels } = config.product;
 const { NEXT, CREATE_PRODUCT, BACK } = productsTranslations;
 
-const StepperButtons = ({ handleNext, handleBack, activeStep, type }) => {
+const StepperControlButtons = ({
+  handleNext,
+  handleBack,
+  activeStep,
+  type
+}) => {
   const styles = useStyles();
   const loading = useSelector(({ Products }) => Products.loading);
 
@@ -49,17 +54,17 @@ const StepperButtons = ({ handleNext, handleBack, activeStep, type }) => {
   );
 };
 
-StepperButtons.propTypes = {
+StepperControlButtons.propTypes = {
   activeStep: PropTypes.number.isRequired,
   handleNext: PropTypes.func,
   handleBack: PropTypes.func,
   type: PropTypes.string
 };
 
-StepperButtons.defaultProps = {
+StepperControlButtons.defaultProps = {
   handleNext: () => {},
   handleBack: () => {},
   type: null
 };
 
-export default StepperButtons;
+export default StepperControlButtons;

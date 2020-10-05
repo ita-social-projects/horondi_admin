@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import useProductValidation from '../../../../utils/use-product-validation';
 
 import { setProductToSend } from '../../../../redux/products/products.actions';
-import StepperButtons from '../product-add-stepper/stepper-buttons/stepper-buttons';
+import StepperControlButtons from '../product-add-stepper/stepper-control-buttons/stepper-control-buttons';
 import ProductInfoContainer from '../../../../containers/product-info-container';
 
 const ProductAddInfo = ({
@@ -58,7 +58,10 @@ const ProductAddInfo = ({
         variant='outlined'
       />
       {checkedLanguages.length ? (
-        <StepperButtons activeStep={activeStep} handleNext={handleInfoSubmit} />
+        <StepperControlButtons
+          activeStep={activeStep}
+          handleNext={handleInfoSubmit}
+        />
       ) : null}
     </div>
   );

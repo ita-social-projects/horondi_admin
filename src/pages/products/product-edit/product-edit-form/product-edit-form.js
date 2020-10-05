@@ -8,7 +8,7 @@ import {
   Box,
   Divider
 } from '@material-ui/core';
-import useProductHandler from '../../../../utils/use-product-handler';
+import useProductHandlers from '../../../../utils/use-product-handlers';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import useProductValidation from '../../../../utils/use-product-validation';
 import { useStyles } from './product-edit-form.styles';
@@ -25,18 +25,21 @@ import {
 import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
 
 import { productsTranslations } from '../../../../translations/product.translations';
-import ProductCarousel from "./product-carousel";
+import ProductCarousel from './product-carousel';
 
 const {
   DELETE_PRODUCT_MESSAGE,
   DELETE_PRODUCT_TITLE,
-  DELETE_PRODUCT_BTN,SAVE, PRODUCT_SPECIFICATION, PRODUCT_OPTIONS
+  DELETE_PRODUCT_BTN,
+  SAVE,
+  PRODUCT_SPECIFICATION,
+  PRODUCT_OPTIONS
 } = productsTranslations;
 
 const ProductEditForm = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const  product = useSelector(({ Products }) => Products.selectedProduct);
+  const product = useSelector(({ Products }) => Products.selectedProduct);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
@@ -57,7 +60,7 @@ const ProductEditForm = () => {
     preferedLanguages,
     setPreferedLanguages,
     createProductInfo,
-    getColorToSend,
+    getColorsToSend,
     getPatternToSend,
     getModelToSend,
     colors,
@@ -68,7 +71,7 @@ const ProductEditForm = () => {
     setOptions,
     selectedOptions,
     additions
-  } = useProductHandler();
+  } = useProductHandlers();
 
   const uniqueSizes = useMemo(
     () => [
@@ -149,7 +152,7 @@ const ProductEditForm = () => {
       updateProduct({
         product: {
           ...productInfo,
-          colors: getColorToSend(colors),
+          colors: getColorsToSend(colors),
           pattern: getPatternToSend(pattern),
           model: getModelToSend(model)._id,
           options,
@@ -207,90 +210,90 @@ const ProductEditForm = () => {
 
   return (
     <div className={styles.container}>
-        <Grid container justify='center' spacing={3}>
-          <Grid item xs={12} container spacing={2}>
-            <Grid item>
-              <Button
-                type='submit'
-                variant='contained'
-                color='primary'
-                disabled={!isFieldsChanged}
-                onClick={handleProductValidate}
-              >
-                {SAVE}
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                type='button'
-                variant='outlined'
-                onClick={handleProductDelete}
-              >
-                {DELETE_PRODUCT_TITLE}
-              </Button>
-            </Grid>
+      <Grid container justify='center' spacing={3}>
+        <Grid item xs={12} container spacing={2}>
+          <Grid item>
+            <Button
+              type='submit'
+              variant='contained'
+              color='primary'
+              disabled={!isFieldsChanged}
+              onClick={handleProductValidate}
+            >
+              {SAVE}
+            </Button>
           </Grid>
-          <Grid item xs={12} md={5} xl={3}>
-            <Paper className={styles.paper}>
-              <ProductCarousel toggleFieldsChanged={toggleFieldsChanged}/>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={7} xl={9}>
-            <Paper className={styles.paper}>
-              <ProductInfoContainer
-                preferedLanguages={preferedLanguages}
-                setPreferedLanguages={setPreferedLanguages}
-                checkedLanguages={checkedLanguages}
-                shouldValidate={shouldValidate}
-                values={values}
-                errors={errors}
-                touched={touched}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                handleSubmit={handleSubmit}
-                toggleFieldsChanged={toggleFieldsChanged}
-                setFieldValue={setFieldValue}
-              />
-            </Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <Paper className={styles.paper}>
-              <Box mb={1}>
-                <Typography className={styles.title}>
-                  {PRODUCT_SPECIFICATION}
-                </Typography>
-              </Box>
-              <ProductSpeciesContainer
-                models={models}
-                patterns={patterns}
-                colors={colors}
-                getSelectedCategory={getSelectedCategory}
-                values={values}
-                errors={errors}
-                touched={touched}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                handleSubmit={handleSubmit}
-                setFieldValue={setFieldValue}
-                toggleFieldsChanged={toggleFieldsChanged}
-              />
-              <Box mt={3}>
-                <Divider />
-              </Box>
-              <Box mt={3}>
-                <Typography className={styles.title}>
-                  {PRODUCT_OPTIONS}
-                </Typography>
-              </Box>
-              <ProductOptionsContainer
-                setOptions={setOptions}
-                selectedOptions={selectedOptions}
-                additions={additions}
-                toggleFieldsChanged={toggleFieldsChanged}
-              />
-            </Paper>
+          <Grid item>
+            <Button
+              type='button'
+              variant='outlined'
+              onClick={handleProductDelete}
+            >
+              {DELETE_PRODUCT_TITLE}
+            </Button>
           </Grid>
         </Grid>
+        <Grid item xs={12} md={5} xl={3}>
+          <Paper className={styles.paper}>
+            <ProductCarousel toggleFieldsChanged={toggleFieldsChanged} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={7} xl={9}>
+          <Paper className={styles.paper}>
+            <ProductInfoContainer
+              preferedLanguages={preferedLanguages}
+              setPreferedLanguages={setPreferedLanguages}
+              checkedLanguages={checkedLanguages}
+              shouldValidate={shouldValidate}
+              values={values}
+              errors={errors}
+              touched={touched}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              handleSubmit={handleSubmit}
+              toggleFieldsChanged={toggleFieldsChanged}
+              setFieldValue={setFieldValue}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={styles.paper}>
+            <Box mb={1}>
+              <Typography className={styles.title}>
+                {PRODUCT_SPECIFICATION}
+              </Typography>
+            </Box>
+            <ProductSpeciesContainer
+              models={models}
+              patterns={patterns}
+              colors={colors}
+              getSelectedCategory={getSelectedCategory}
+              values={values}
+              errors={errors}
+              touched={touched}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              handleSubmit={handleSubmit}
+              setFieldValue={setFieldValue}
+              toggleFieldsChanged={toggleFieldsChanged}
+            />
+            <Box mt={3}>
+              <Divider />
+            </Box>
+            <Box mt={3}>
+              <Typography className={styles.title}>
+                {PRODUCT_OPTIONS}
+              </Typography>
+            </Box>
+            <ProductOptionsContainer
+              setOptions={setOptions}
+              selectedOptions={selectedOptions}
+              additions={additions}
+              toggleFieldsChanged={toggleFieldsChanged}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
     </div>
   );
 };

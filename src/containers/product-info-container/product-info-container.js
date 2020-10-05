@@ -82,7 +82,7 @@ const ProductInfoContainer = ({
   };
 
   const handleDescriptionChange = (value, lang) => {
-    setFieldValue(`${lang}description`, value);
+    setFieldValue(`${lang}-description`, value);
     toggleFieldsChanged(true);
   };
 
@@ -107,8 +107,8 @@ const ProductInfoContainer = ({
             name === 'description' ? (
               <Box key={label} ml={1} my={2} className={styles.editor}>
                 <Editor
-                  name={`${lang.name}${name}`}
-                  value={values[`${lang.name}${name}`]}
+                  name={`${lang.name}-${name}`}
+                  value={values[`${lang.name}-${name}`]}
                   onEditorChange={(value) =>
                     handleDescriptionChange(value, lang.name)
                   }
@@ -118,19 +118,19 @@ const ProductInfoContainer = ({
             ) : (
               <TextField
                 key={name}
-                name={`${lang.name}${name}`}
+                name={`${lang.name}-${name}`}
                 className={styles.textfield}
                 id={name}
                 label={`${label}${required ? '*' : ''}`}
                 error={
-                  touched[`${lang.name}${name}`] &&
-                  !!errors[`${lang.name}${name}`]
+                  touched[`${lang.name}-${name}`] &&
+                  !!errors[`${lang.name}-${name}`]
                 }
                 helperText={
-                  touched[`${lang.name}${name}`] &&
-                  errors[`${lang.name}${name}`]
+                  touched[`${lang.name}-${name}`] &&
+                  errors[`${lang.name}-${name}`]
                 }
-                value={values[`${lang.name}${name}`]}
+                value={values[`${lang.name}-${name}`]}
                 onChange={handleInfoChange}
                 onBlur={handleBlur}
                 variant={variant}
