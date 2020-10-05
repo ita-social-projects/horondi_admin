@@ -15,7 +15,6 @@ describe('nav bar tests', () => {
     </Provider>
   );
   it('should exist', () => {
-    screen.debug();
     expect(wrapper.getByText(config.app.title)).toBeDefined();
     expect(wrapper.getByText(config.app.title)).not.toBeNull();
   });
