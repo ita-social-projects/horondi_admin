@@ -50,7 +50,8 @@ const AdminTab = (props) => {
       <div className={styles.tableNav}>
         <div className={styles.buttonsPanel}>
           <Button
-            id='add-user-admin'
+            id='add-user-admin-button'
+            data-cy='add-user-admin-button'
             onClick={handleRegisterDialogOpen}
             variant='contained'
             color='primary'
@@ -65,6 +66,7 @@ const AdminTab = (props) => {
         tableItems={adminItems}
       />
       <RegisterDialog
+        data-cy='register-dialog'
         isOpen={isRegisterDialogOpen}
         handleClose={handleRegisterDialogClose}
         title={REGISTER_ADMIN}

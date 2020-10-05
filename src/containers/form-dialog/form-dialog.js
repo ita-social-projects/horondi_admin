@@ -5,12 +5,17 @@ import DialogTitle from './components/dialog-title';
 import DialogContent from './components/dialog-content';
 
 const FormDialog = (props) => {
-  const { isOpen, handleClose, children, title, id } = props;
+  const { isOpen, handleClose, children, title, ...other } = props;
 
   return (
-    <Dialog open={isOpen} onClose={handleClose} aria-labelledby={id}>
-      <DialogTitle id={id}>{title}</DialogTitle>
-      <DialogContent>{children}</DialogContent>
+    <Dialog
+      open={isOpen}
+      onClose={handleClose}
+      data-cy='form-dialog-window'
+      {...other}
+    >
+      <DialogTitle data-cy='form-dialog-title'>{title}</DialogTitle>
+      <DialogContent data-cy='form-dialog-content'>{children}</DialogContent>
     </Dialog>
   );
 };
@@ -19,8 +24,7 @@ FormDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
-  title: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired
 };
 
 export default FormDialog;

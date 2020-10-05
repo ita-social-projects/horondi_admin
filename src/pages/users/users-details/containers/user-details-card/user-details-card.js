@@ -77,7 +77,12 @@ const UserDetailsCard = ({
             {secondarySection}
           </Grid>
           <Grid item xs={12}>
-            <Button variant='contained' color='primary' onClick={buttonHandler}>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={buttonHandler}
+              data-cy='change-user-status-button'
+            >
               {buttonStatus}
             </Button>
           </Grid>
