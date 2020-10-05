@@ -25,7 +25,7 @@ describe('User list and items test', () => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
     cy.visit('/users');
     cy.wait(3000);
-    cy.get('.MuiTableCell-root.MuiTableCell-body').as('table');
+    cy.get('#table-body').as('table');
   });
 
   it('Should find a page title', () => {
@@ -33,36 +33,38 @@ describe('User list and items test', () => {
   });
 
   it('User list row should have all types of necessary information about the user', () => {
-    cy.get('@table').eq(0).find('svg');
-    cy.get('@table')
+    cy.get('@table').children().eq(0).children().as('row');
+    cy.get('@row').eq(0).find('svg');
+    cy.get('@row')
       .eq(1)
       .invoke('text')
       .should('match', /[а-яА-Я]{2,}/g);
-    cy.get('@table')
+    cy.get('@row')
       .eq(2)
       .invoke('text')
       .should('match', /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g);
-    cy.get('@table')
+    cy.get('@row')
       .eq(3)
       .invoke('text')
       .should('match', /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/gi);
-    cy.get('@table')
+    cy.get('@row')
       .eq(4)
       .invoke('text')
       .should('match', /(Користувач|Адмін|Суперадмін)/g);
-    cy.get('@table')
+    cy.get('@row')
       .eq(5)
       .invoke('text')
       .should('match', /(Активний|Неактивний)/g);
   });
 
   it('Information about the user in the list and the details page should be equal', () => {
-    cy.get('@table')
+    cy.get('@table').children().eq(0).children().as('row');
+    cy.get('@row')
       .eq(1)
       .then(($elem) => {
         const textList = $elem.text();
 
-        cy.get('@table')
+        cy.get('@row')
           .get("button[aria-label='Редагувати']:first")
           .scrollIntoView()
           .click({ force: true })
@@ -259,6 +261,6 @@ describe('Register and confirm admin', () => {
     cy.wait(3000);
     cy.visit('/users');
     cy.wait(3000);
-    cy.get('.MuiTableCell-root.MuiTableCell-body').should('be.visible');
+    cy.get('#table-body').should('be.visible');
   });
 });
