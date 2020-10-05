@@ -70,9 +70,9 @@ export const useStyles = makeStyles((theme) => ({
     display: 'inline-block'
   },
   imageContainer: {
-    width: 300,
-    height: 300,
-    position: 'relative',
+    width: 100,
+    height: 100,
+    position: 'relative'
   },
   photoUpload: {
     display: 'none'
@@ -80,7 +80,7 @@ export const useStyles = makeStyles((theme) => ({
   userImage: {
     height: '100%',
     width: '100%',
-    borderRadius: 5,
+    borderRadius: 5
   },
   uploadLabel: {
     height: '100%',
@@ -98,16 +98,17 @@ export const useStyles = makeStyles((theme) => ({
     '& > span': {
       fontSize: 100,
       color: 'white',
-      textShadow: '-3px -3px 0 #3f51b5,3px -3px 0 #3f51b5,-3px 3px 0 #3f51b5,3px 3px 0 #3f51b5'
+      textShadow:
+        '-3px -3px 0 #3f51b5,3px -3px 0 #3f51b5,-3px 3px 0 #3f51b5,3px 3px 0 #3f51b5'
     },
     '&:hover': {
       opacity: 1,
       transition: 'all 1s ease'
-    },
+    }
   },
   uploadBtn: {
     width: '100%',
     height: '100%',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   }
 }));

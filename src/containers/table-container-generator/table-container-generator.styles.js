@@ -5,7 +5,7 @@ const useStyles = makeStyles(() => ({
     textTransform: 'capitalize'
   },
   container: {
-    minHeight: '78vh'
+    // minHeight: '78vh'
   }
 }));
 

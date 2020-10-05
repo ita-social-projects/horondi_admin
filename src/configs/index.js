@@ -166,16 +166,7 @@ export const config = {
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
-    ADD_PHOTO_LABEL: '+'
-  },
-  messages: {
-    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
-    REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
-    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
-    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
-    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
-    SWITCH_USER_STATUS_MESSAGE:
-      'Ви впевнені,що хочете змінити статус користувача?',
+    ADD_PHOTO_LABEL: '+',
     titleGenerator: (editMode, isMain) => {
       const editModeMap = new Map([
         [true, 'Зберегти'],
@@ -187,6 +178,15 @@ export const config = {
       ]);
       return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
     }
+  },
+  messages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
+    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
+    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
+    SWITCH_USER_STATUS_MESSAGE:
+      'Ви впевнені,що хочете змінити статус користувача?'
   },
   formRegExp: {
     email:
