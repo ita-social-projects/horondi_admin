@@ -218,7 +218,6 @@ function CreateColor({
           />
           <Paper className={styles.materialItemAdd}>
             <TextField
-              t
               data-cy='code'
               id='code'
               className={styles.textfield}

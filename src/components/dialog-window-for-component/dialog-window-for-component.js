@@ -11,6 +11,7 @@ import { config } from '../../configs';
 import { StandardButton } from '../buttons';
 import { showColorDialogWindow } from '../../redux/material/material.actions';
 import { useStyles } from './dialog-window-for-component.style';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
 const { ACCEPT_BUTTON_STYLE } = config.buttonStyles;
 
@@ -36,18 +37,22 @@ const DialogWindowForComponent = ({
       onClose={handleClose}
       open={isOpen}
     >
-      <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
+          {dialogTitle}
+        </DialogTitle>
+        <span
+          title={closeDialog}
+          className={styles.closeButton}
+          onClick={handleClose}
+        >
+          &#215;
+        </span>
+      </div>
       <DialogContent className={styles.dialogComponent} dividers>
         {component}
       </DialogContent>
-      <DialogActions style={{ justifyContent: 'center' }}>
-        <StandardButton
-          type={buttonType}
-          title={buttonTitle}
-          onClickHandler={handleClose}
-          color={ACCEPT_BUTTON_STYLE}
-        />
-      </DialogActions>
+      <DialogActions style={{ justifyContent: 'center' }} />
     </Dialog>
   );
 };
