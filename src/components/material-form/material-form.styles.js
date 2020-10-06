@@ -1,13 +1,30 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
+  materialForm: {
+    '& div': {
+      '& div': {
+        '& div': {
+          paddingLeft: 0,
+          paddingRight: 0,
+          marginLeft: '0 !important',
+          marginRight: '0 !important'
+        }
+      }
+    }
+  },
   materialItemAdd: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
   },
-  textfield: {
-    margin: '10px 5px'
+  textField: {
+    margin: '10px !important',
+    '& div': {
+      '& textarea': {
+        paddingLeft: '1rem !important'
+      }
+    }
   },
   materialAdd: {
     display: 'flex',
@@ -28,6 +45,8 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 70
   },
   tabs: {
+    paddingLeft: 0,
+    paddingRight: 0,
     backgroundColor: 'white',
     '& span.MuiTab-wrapper': {
       color: '#3F51B5'
@@ -46,5 +65,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   colorImages: {
     display: 'flex'
+  },
+  errorTab: {
+    backgroundColor: 'red'
   }
 }));

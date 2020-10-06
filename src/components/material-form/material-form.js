@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   TextField,
-  Paper,
   Grid,
   Tabs,
   Tab,
@@ -29,6 +28,11 @@ import { config, routes } from '../../configs';
 import CheckboxOptions from '../checkbox-options';
 import CreateColor from '../../pages/material/create-color';
 import DialogWindowForComponent from '../dialog-window-for-component';
+import {
+  setSnackBarSeverity,
+  setSnackBarStatus,
+  setSnackBarMessage
+} from '../../redux/snackbar/snackbar.actions';
 
 const { languages, materialErrorMessages } = config;
 
@@ -98,12 +102,18 @@ function MaterialForm({ material, id }) {
       ukDescription: material.description[0].value || '',
       enDescription: material.description[1].value || '',
       purpose: material.purpose || '',
-      available: material.available || false,
+      available: material.available || true,
       additionalPrice: 0
     },
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
-
+      console.log(!colors.length);
+      if (!colors.length) {
+        dispatch(setSnackBarSeverity('error'));
+        dispatch(setSnackBarMessage(config.errorMessages.NO_COLORS));
+        dispatch(setSnackBarStatus(true));
+        return;
+      }
       if (material.purpose) {
         dispatch(
           updateMaterial({
@@ -128,7 +138,7 @@ function MaterialForm({ material, id }) {
         <TextField
           data-cy={`${lang}Name`}
           id={`${lang}Name`}
-          className={styles.textfield}
+          className={styles.textField}
           variant='outlined'
           label={config.labels.material.name}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
@@ -142,7 +152,7 @@ function MaterialForm({ material, id }) {
         <TextField
           data-cy={`${lang}Description`}
           id={`${lang}Description`}
-          className={styles.textfield}
+          className={styles.textField}
           variant='outlined'
           label={config.labels.material.description}
           multiline
@@ -172,6 +182,7 @@ function MaterialForm({ material, id }) {
       handler: (e) => setFieldValue('available', !values.available)
     }
   ];
+
   const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
 
   if (loading) {
@@ -184,7 +195,7 @@ function MaterialForm({ material, id }) {
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit}>
+      <form className={styles.materialForm} onSubmit={handleSubmit}>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <div className={styles.colorImages}>
@@ -198,7 +209,7 @@ function MaterialForm({ material, id }) {
             <TextField
               data-cy='purpose'
               id='purpose'
-              className={styles.textfield}
+              className={styles.textField}
               variant='outlined'
               label={config.labels.material.purpose}
               value={values.purpose}
@@ -211,7 +222,7 @@ function MaterialForm({ material, id }) {
             <TextField
               data-cy='additionalPrice'
               id='additionalPrice'
-              className={styles.textfield}
+              className={styles.textField}
               variant='outlined'
               label={config.labels.material.additionalPrice}
               value={values.additionalPrice}
@@ -330,6 +341,7 @@ MaterialForm.propTypes = {
     })
   })
 };
+
 MaterialForm.defaultProps = {
   id: '',
   match: {},

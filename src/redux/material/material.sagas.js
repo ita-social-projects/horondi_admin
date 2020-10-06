@@ -79,7 +79,7 @@ function* handleAddMaterial({ payload }) {
     yield put(setMaterialLoading(true));
     yield call(createMaterial, payload);
     yield put(clearColors());
-    yield call(handleSuccessSnackbar(SUCCESS_ADD_STATUS));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
@@ -92,7 +92,7 @@ export function* handleMaterialDelete({ payload }) {
     yield call(deleteMaterial, payload);
     yield put(setMaterialLoading(false));
     yield put(removeMaterialFromStore(payload));
-    yield call(handleSuccessSnackbar(SUCCESS_DELETE_STATUS));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -103,7 +103,7 @@ export function* handleMaterialUpdate({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     yield call(updateMaterial, id, newMaterial);
-    yield call(handleSuccessSnackbar(SUCCESS_UPDATE_STATUS));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);

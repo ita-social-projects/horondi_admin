@@ -2,17 +2,8 @@ import React from 'react';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import {
-  Paper,
-  TextField,
-  AppBar,
-  Tabs,
-  Grid,
-  Tab,
-  Avatar
-} from '@material-ui/core';
+import { Paper, TextField, AppBar, Tabs, Grid, Tab } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { Palette } from '@material-ui/icons';
 import { config } from '../../../configs';
 import useColorHandlers from '../../../utils/use-color-handlers';
 import LoadingBar from '../../../components/loading-bar';
@@ -24,6 +15,7 @@ import { useStyles } from './create-color.styles';
 import TabPanel from '../../../components/tab-panel';
 import CheckboxOptions from '../../../components/checkbox-options';
 import { SaveButton } from '../../../components/buttons';
+import ImageUploadContainer from '../../../containers/image-upload-container';
 
 const { languages, materialErrorMessages, colorErrorMessages } = config;
 
@@ -97,7 +89,7 @@ function CreateColor({
       code: '',
       colorImage: '',
       image: '',
-      available: false
+      available: true
     },
     onSubmit: (data) => {
       const { colorImage, image, ...rest } = data;
@@ -199,22 +191,11 @@ function CreateColor({
           <CheckboxOptions options={checkboxes} />
         </div>
         <Grid item xs={12}>
-          <label htmlFor='colorImage'>
-            <Avatar
-              className={styles.colorImage}
-              src={values.colorImage}
-              alt='color'
-            >
-              <Palette />
-            </Avatar>
-          </label>
-          <input
-            className={styles.colorInputFile}
-            type='file'
-            id='colorImage'
-            data-cy='colorImage'
-            onChange={handleImageLoad}
+          <ImageUploadContainer
+            srcForAvatar={values.colorImage || values.image}
+            handler={handleImageLoad}
             multiple={false}
+            fileName={values.image.name || ''}
           />
           <Paper className={styles.materialItemAdd}>
             <TextField

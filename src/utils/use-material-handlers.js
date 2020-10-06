@@ -4,16 +4,10 @@ import { config } from '../configs';
 const { languages } = config;
 
 const useMaterialHandlers = () => {
-  const [ukName, setUkName] = useState('');
-  const [enName, setEnName] = useState('');
-  const [ukDescription, setUkDescription] = useState('');
-  const [enDescription, setEnDescription] = useState('');
-  const [available, setAvailable] = useState(false);
-  const [purpose, setPurpose] = useState('');
-  const [colors, setColors] = useState([]);
   const [tabsValue, setTabsValue] = useState(0);
   const [colorImagesToUpload, setColorImagesToUpload] = useState([]);
   const [colorImages, setColorImages] = useState([]);
+  const [colors, setColors] = useState([]);
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
@@ -43,7 +37,7 @@ const useMaterialHandlers = () => {
         }
       ],
       colors,
-      available,
+      available: values.available,
       purpose: values.purpose,
       additionalPrice: +values.additionalPrice
     };
@@ -53,20 +47,6 @@ const useMaterialHandlers = () => {
     setColorImages([...colorImages, data]);
   };
   return {
-    ukName,
-    setUkName,
-    enName,
-    setEnName,
-    ukDescription,
-    setUkDescription,
-    enDescription,
-    setEnDescription,
-    available,
-    setAvailable,
-    purpose,
-    setPurpose,
-    colors,
-    setColors,
     createMaterial,
     tabsValue,
     handleTabsChange,
@@ -74,7 +54,8 @@ const useMaterialHandlers = () => {
     setColorImagesToUpload,
     colorImages,
     addNewColorImages,
-    setTabsValue
+    setTabsValue,
+    setColors
   };
 };
 

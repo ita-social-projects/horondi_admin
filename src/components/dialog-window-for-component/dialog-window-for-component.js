@@ -7,20 +7,10 @@ import {
 } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { config } from '../../configs';
-import { StandardButton } from '../buttons';
 import { showColorDialogWindow } from '../../redux/material/material.actions';
 import { useStyles } from './dialog-window-for-component.style';
-import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
-const { ACCEPT_BUTTON_STYLE } = config.buttonStyles;
-
-const DialogWindowForComponent = ({
-  dialogTitle,
-  buttonTitle,
-  component,
-  buttonType
-}) => {
+const DialogWindowForComponent = ({ dialogTitle, buttonTitle, component }) => {
   const { isOpen } = useSelector(({ Material }) => ({
     isOpen: Material.showColorDialogWindow
   }));
@@ -42,7 +32,7 @@ const DialogWindowForComponent = ({
           {dialogTitle}
         </DialogTitle>
         <span
-          title={closeDialog}
+          title={buttonTitle}
           className={styles.closeButton}
           onClick={handleClose}
         >
@@ -59,8 +49,7 @@ const DialogWindowForComponent = ({
 DialogWindowForComponent.propTypes = {
   dialogTitle: PropTypes.string.isRequired,
   buttonTitle: PropTypes.string.isRequired,
-  component: PropTypes.shape({}).isRequired,
-  buttonType: PropTypes.string.isRequired
+  component: PropTypes.shape({}).isRequired
 };
 
 export default DialogWindowForComponent;

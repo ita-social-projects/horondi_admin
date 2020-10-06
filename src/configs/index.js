@@ -165,6 +165,7 @@ export const config = {
     WRONG_CREDENTIALS: 'Неправильно вказані вхідні дані',
     INPUT_NOT_VALID: 'Неправильні ввідні дані',
     USER_ALREADY_EXIST: 'Користувач з такими даними вже існує',
+    NO_COLORS: 'Потрібно створити колір',
     INVALID_ADMIN_INVITATIONAL_TOKEN:
       'Неправильне посилання на створення користувача'
   },
