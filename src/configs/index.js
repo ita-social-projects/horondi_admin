@@ -75,9 +75,16 @@ export const config = {
       subcategories: []
     }
   },
-  userRoles: [{ role: 'admin', label: 'Адмін' }],
+  userRoles: [
+    { role: 'user', label: 'Юзер' },
+    { role: 'admin', label: 'Адмін' },
+    { role: 'superadmin', label: 'Суперадмін' }
+  ],
+  allowedforRegistrationRoles: ['admin'],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    categories: ['Зображення', 'Категорія', 'Дії'],
+    subcategories: ['Зображення', 'Підкатегорія', 'Доступна', 'Дії'],
     patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
@@ -91,22 +98,26 @@ export const config = {
       'Кількість покупок',
       'Дії'
     ],
-    categories: ['№', 'Категорія', 'Дії'],
-    subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
-    users: [
-      'Аватар',
-      "Ім'я",
-      'Мобільний номер',
-      'Пошта',
-      'Роль',
-      'Статус',
-      'Дії'
-    ],
+    users: {
+      userTab: [
+        'Аватар',
+        "Ім'я",
+        'Мобільний номер',
+        'Пошта',
+        'Роль',
+        'Статус',
+        'Дії'
+      ],
+      adminTab: ['Аватар', "Ім'я", 'Пошта', 'Роль', 'Дії']
+    },
     contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
     comments: ['Дата', 'Текст', 'Дії'],
     models: ['Фото', 'Назва', 'Категорія', 'Доступна', 'Пріорітет']
+  },
+  tabNames: {
+    users: ['Користувачі', 'Адміністратори']
   },
   detailTitles: {
     users: {
@@ -179,12 +190,13 @@ export const config = {
     GO_BACK_TITLE: 'Назад',
     DELETE_CATEGORY: 'Видалити категорію',
     ADD_SUBCATEGORY: 'Додати підкатегорію',
-    ADD_CATEGORY_IMAGE: 'Зберегти посилання',
+    ADD_CATEGORY_IMAGE: 'Додати зображення',
     ADD_CATEGORY_NAME: 'Додати назву',
     CANCEL: 'Відмінити',
     SAVE_CATEGORY: 'Зберегти категорію',
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
+    ADD_PHOTO_LABEL: '+',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
     PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
@@ -217,6 +229,18 @@ export const config = {
       ]);
       return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
     }
+  },
+  messages: {
+    REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+    REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
+    LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
+    DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
+    REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
+    SWITCH_USER_STATUS_MESSAGE:
+      'Ви впевнені,що хочете змінити статус користувача?',
+    REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
+    REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні'
   },
   formRegExp: {
     patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
@@ -299,6 +323,7 @@ export const config = {
       priority: 'Пріорітет'
     }
   },
+  IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
   imageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
   newsPerPage: 6,

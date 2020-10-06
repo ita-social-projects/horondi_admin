@@ -105,6 +105,21 @@ describe('User list and items test', () => {
     cy.get('[data-cy=postCode]').should('have.text', postalCode);
   });
 
+  it('Users tab must have only users', () => {
+    cy.visit(`/users`);
+    cy.wait(3000);
+    cy.get('@table').should('not.have.text', 'Адмін');
+    cy.get('@table').should('not.have.text', 'Супердмін');
+  });
+
+  it('Admins tab must have only admins and superadmins', () => {
+    cy.visit(`/users`);
+    cy.wait(3000);
+    cy.contains('Адміністратори').click();
+    cy.wait(3000);
+    cy.get('@table').should('not.have.text', 'Користувач');
+  });
+
   it('Should show an error label when email or role are incorrect', () => {
     cy.visit('/register');
     cy.get('[data-cy=email]').type('Bob');
