@@ -247,7 +247,7 @@ export const config = {
     password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
     unwrapHtml: /(<([^>]+)>)/gi,
     enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
-    colorCode: /\d/,
+    onlyPositiveDigits: /^\d+$/,
     editorField: /^<p><br><\/p>$/
   },
   loginErrorMessages: {
@@ -281,7 +281,8 @@ export const config = {
   materialErrorMessages: {
     MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
     MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
-    VALIDATION_ERROR: 'Поле обовязкове'
+    VALIDATION_ERROR: 'Поле обовязкове',
+    PRICE_VALIDATION_ERROR: 'Тільки цифри'
   },
   colorErrorMessages: {
     CODE_VALIDATION_ERROR: 'Тільки цифри',

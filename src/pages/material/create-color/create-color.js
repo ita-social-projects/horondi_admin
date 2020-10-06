@@ -67,7 +67,7 @@ function CreateColor({
       .min(1, colorErrorMessages.MIN_LENGTH_MESSAGE)
       .max(8, colorErrorMessages.MAX_CODE_LENGTH_MESSAGE)
       .matches(
-        config.formRegExp.colorCode,
+        config.formRegExp.onlyPositiveDigits,
         colorErrorMessages.CODE_VALIDATION_ERROR
       )
       .required(colorErrorMessages.VALIDATION_ERROR)

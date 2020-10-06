@@ -48,6 +48,11 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: 0,
     paddingRight: 0,
     backgroundColor: 'white',
+    '& button': {
+      '& span:before': {
+        backgroundColor: 'red'
+      }
+    },
     '& span.MuiTab-wrapper': {
       color: '#3F51B5'
     },
@@ -67,6 +72,9 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   errorTab: {
-    backgroundColor: 'red'
+    backgroundColor: '#e60000',
+    '& span': {
+      color: 'white !important'
+    }
   }
 }));

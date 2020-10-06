@@ -81,9 +81,12 @@ function MaterialForm({ material, id }) {
       .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
       .required(materialErrorMessages.VALIDATION_ERROR),
 
-    additionalPrice: Yup.number().required(
-      materialErrorMessages.VALIDATION_ERROR
-    )
+    additionalPrice: Yup.string()
+      .matches(
+        config.formRegExp.onlyPositiveDigits,
+        materialErrorMessages.PRICE_VALIDATION_ERROR
+      )
+      .required(materialErrorMessages.VALIDATION_ERROR)
   });
 
   const {
@@ -183,7 +186,18 @@ function MaterialForm({ material, id }) {
     }
   ];
 
-  const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
+  const languageTabs = languages.map((lang) => (
+    <Tab
+      className={
+        (touched[`${lang}Description`] && errors[`${lang}Description`]) ||
+        (touched[`${lang}Name`] && errors[`${lang}Name`])
+          ? styles.errorTab
+          : styles.tabs
+      }
+      label={lang}
+      key={lang}
+    />
+  ));
 
   if (loading) {
     return <LoadingBar />;
@@ -299,6 +313,7 @@ function MaterialForm({ material, id }) {
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
+
 MaterialForm.propTypes = {
   id: PropTypes.string,
   material: PropTypes.shape({
