@@ -12,7 +12,7 @@ describe('delete button tests', () => {
     <EditButton size='small' onClickHandler={mockCallBack} />
   );
 
-  it('should exist and have value', () => {
+  it('should exist and have title', () => {
     const component = wrapper.getByTitle(EDIT_TITLE);
     expect(component).toMatchSnapshot();
     expect(component).toBeDefined();

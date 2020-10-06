@@ -195,7 +195,18 @@ export const config = {
     USER_UNACTIVE_TITLE: 'Деактивувати',
     REMOVE_COMMENT_TITLE: 'Видалити коментар',
     SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
-    HIDE_COMMENTS_TITLE: 'Приховати коментарі'
+    HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+    titleGenerator: (editMode, isMain) => {
+      const editModeMap = new Map([
+        [true, 'Зберегти'],
+        [false, 'Створити']
+      ]);
+      const isMainMap = new Map([
+        [true, 'категорію'],
+        [false, 'підкатегорію']
+      ]);
+      return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
+    }
   },
   messages: {
     PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
@@ -208,18 +219,7 @@ export const config = {
       'Ви впевнені,що хочете змінити статус користувача?',
     REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
     REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
-    NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
-    titleGenerator: (editMode, isMain) => {
-      const editModeMap = new Map([
-        [true, 'Зберегти'],
-        [false, 'Створити']
-      ]);
-      const isMainMap = new Map([
-        [true, 'категорію'],
-        [false, 'підкатегорію']
-      ]);
-      return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
-    }
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні'
   },
   formRegExp: {
     patternMaterial: '^[A-Za-z0-9]*$',

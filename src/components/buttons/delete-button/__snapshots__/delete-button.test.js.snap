@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`delete button tests should exist and have value 1`] = `
+exports[`delete button tests should exist and have title 1`] = `
 <button
   aria-label="Видалити"
   class="MuiButtonBase-root MuiIconButton-root"
