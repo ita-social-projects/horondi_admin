@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Paper,
@@ -9,65 +9,79 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button
+  Button,
+  Select,
+  FormControl,
+  InputLabel
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import usePatternHandlers from '../../utils/use-pattern-handlers';
+import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config, routes } from '../../configs';
-import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
+import { addModel, updateModel } from '../../redux/model/model.actions';
+import { getCategories } from '../../redux/categories/categories.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
 
 const {
-  PATTERN_VALIDATION_ERROR,
-  PATTERN_ERROR_MESSAGE,
-  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
-} = config.patternErrorMessages;
+  MODEL_VALIDATION_ERROR,
+  MODEL_ERROR_MESSAGE,
+  MODEL_ERROR_ENGLISH_AND_DIGITS_ONLY
+} = config.modelErrorMessages;
 
 const { languages } = config;
 
-const PatternForm = ({ pattern, id }) => {
+const ModelForm = ({ model, id }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
     tabsValue,
     handleTabsChange,
-    createPattern,
+    createModel,
     setUpload,
     upload,
-    patternImage,
-    setPatternImage
-  } = usePatternHandlers();
+    modelImage,
+    setModelImage
+  } = useModelHandlers();
   const languageTabs =
     languages.length > 0
       ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
       : null;
 
-  const patternValidationSchema = Yup.object().shape({
+  const modelValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
+      .min(2, MODEL_VALIDATION_ERROR)
+      .required(MODEL_ERROR_MESSAGE),
     enName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
+      .min(2, MODEL_VALIDATION_ERROR)
+      .required(MODEL_ERROR_MESSAGE),
     ukDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
+      .min(2, MODEL_VALIDATION_ERROR)
+      .required(MODEL_ERROR_MESSAGE),
     ukName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
-    material: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .matches(
-        config.formRegExp.patternMaterial,
-        PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
-      )
-      .required(PATTERN_ERROR_MESSAGE)
+      .min(2, MODEL_VALIDATION_ERROR)
+      .required(MODEL_ERROR_MESSAGE),
+    priority: Yup.number(),
+    category: Yup.string()
   });
+
+  const { categories } = useSelector(({ Categories }) => ({
+    categories: Categories.categories.filter((category) => category.isMain)
+  }));
+
+  const [category, setCategory] = useState(model.category._id || '');
+
+  const handleCategory = (event) => {
+    values.category = event.target.value;
+    setCategory(event.target.value);
+  };
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
 
   const {
     values,
@@ -77,46 +91,36 @@ const PatternForm = ({ pattern, id }) => {
     errors,
     setFieldValue
   } = useFormik({
-    validationSchema: patternValidationSchema,
+    validationSchema: modelValidationSchema,
     initialValues: {
-      patternImage: pattern.images.thumbnail || '',
-      ukName: pattern.name[0].value || '',
-      enName: pattern.name[1].value || '',
-      ukDescription: pattern.description[0].value || '',
-      enDescription: pattern.description[1].value || '',
-      material: pattern.material || '',
-      available: pattern.available || false,
-      handmade: pattern.handmade || false
+      modelImage: model.images ? model.images.thumbnail : '',
+      ukName: model.name[0].value || '',
+      enName: model.name[1].value || '',
+      ukDescription: model.description[0].value || '',
+      enDescription: model.description[1].value || '',
+      priority: model.priority || 1,
+      category: category || '',
+      show: model.show || false
     },
     onSubmit: () => {
-      const newPattern = createPattern(values);
-
-      if (pattern && pattern.material) {
-        dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+      const newModel = createModel(values);
+      if (model && model.category) {
+        dispatch(updateModel({ id, model: newModel, image: upload }));
         return;
       }
-      dispatch(addPattern({ pattern: newPattern, image: upload }));
+      dispatch(addModel({ model: newModel, image: upload }));
     }
   });
 
   const checkboxes = [
     {
-      id: 'handmade',
-      dataCy: 'handmade',
-      value: values.handmade,
-      checked: values.handmade,
+      id: 'show',
+      dataCy: 'show',
+      value: values.show,
+      checked: values.show,
       color: 'primary',
-      label: config.labels.pattern.handmade,
-      handler: (e) => setFieldValue('handmade', !values.handmade)
-    },
-    {
-      id: 'available',
-      dataCy: 'available',
-      value: values.available,
-      checked: values.available,
-      color: 'primary',
-      label: config.labels.pattern.available,
-      handler: (e) => setFieldValue('available', !values.available)
+      label: config.labels.model.show,
+      handler: (e) => setFieldValue('show', !values.show)
     }
   ];
 
@@ -124,8 +128,8 @@ const PatternForm = ({ pattern, id }) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFieldValue('patternImage', event.target.result);
-        setPatternImage(event.target.result);
+        setFieldValue('modelImage', event.target.result);
+        setModelImage(event.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
@@ -138,30 +142,57 @@ const PatternForm = ({ pattern, id }) => {
         <CheckboxOptions options={checkboxes} />
 
         <Grid item xs={12}>
-          <Paper className={styles.patternItemUpdate}>
+          <Paper className={styles.modelItemUpdate}>
             <span className={styles.imageUpload}>
-              {config.labels.pattern.avatarText}
+              {config.labels.model.avatarText}
             </span>
             <ImageUploadContainer
               handler={handleImageLoad}
               srcForAvatar={
-                patternImage ||
-                `${config.patternImageLink}${values.patternImage}`
+                modelImage || `${config.imageLink}${values.modelImage}`
               }
-              fileName={upload.name}
+              fileName={upload && upload.name}
             />
+            <FormControl variant='outlined' className={styles.textField}>
+              <InputLabel htmlFor='outlined-age-native-simple'>
+                {config.labels.model.category}
+              </InputLabel>
+              <Select
+                data-cy='category'
+                native
+                value={category}
+                onChange={handleCategory}
+                label={config.labels.model.category}
+                inputProps={{
+                  name: 'age',
+                  id: 'outlined-age-native-simple'
+                }}
+              >
+                <option value='' />
+                {categories.map((category) => (
+                  <option value={category._id} key={category._id}>
+                    {category.code}
+                  </option>
+                ))}
+              </Select>
+              {touched.category && errors.category && (
+                <div className={styles.inputError}>{errors.category}</div>
+              )}
+            </FormControl>
+
             <TextField
-              id='material'
-              data-cy='material'
+              id='priority'
+              type='number'
+              data-cy='priority'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.pattern.material}
-              value={values.material}
+              label={config.labels.model.priority}
+              value={values.priority}
               onChange={handleChange}
-              error={touched.material && !!errors.material}
+              error={touched.priority && !!errors.priority}
             />
-            {touched.material && errors.material && (
-              <div className={styles.inputError}>{errors.material}</div>
+            {touched.priority && errors.priority && (
+              <div className={styles.inputError}>{errors.priority}</div>
             )}
           </Paper>
         </Grid>
@@ -177,7 +208,7 @@ const PatternForm = ({ pattern, id }) => {
         </AppBar>
         {languages.map((lang, index) => (
           <TabPanel key={index} value={tabsValue} index={index}>
-            <Paper className={styles.patternItemUpdate}>
+            <Paper className={styles.modelItemUpdate}>
               <TextField
                 data-cy='Name'
                 id={`${lang}Name`}
@@ -219,7 +250,7 @@ const PatternForm = ({ pattern, id }) => {
         <Button
           id='contactsBack'
           component={Link}
-          to={routes.pathToPatterns}
+          to={routes.pathToModels}
           variant='outlined'
           color='primary'
           className={styles.returnButton}
@@ -241,42 +272,45 @@ const PatternForm = ({ pattern, id }) => {
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
-PatternForm.propTypes = {
+ModelForm.propTypes = {
   id: PropTypes.string,
-  pattern: PropTypes.shape({
+  model: PropTypes.shape({
     _id: PropTypes.string,
-    available: PropTypes.bool,
     description: PropTypes.arrayOf(valueShape),
-    handmade: PropTypes.bool,
+    show: PropTypes.bool,
+    priority: PropTypes.number,
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
-    material: PropTypes.string,
+    category: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
   }),
   values: PropTypes.shape({
-    patternImage: PropTypes.string,
-    material: PropTypes.string,
+    modelImage: PropTypes.string,
+    category: PropTypes.string,
     ukName: PropTypes.string,
     enName: PropTypes.string,
     ukDescription: PropTypes.string,
-    enDescription: PropTypes.string
+    enDescription: PropTypes.string,
+    priority: PropTypes.number
   }),
   errors: PropTypes.shape({
-    patternImage: PropTypes.string,
-    material: PropTypes.string,
+    modelImage: PropTypes.string,
+    category: PropTypes.string,
     ukName: PropTypes.string,
     enName: PropTypes.string,
     ukDescription: PropTypes.string,
-    enDescription: PropTypes.string
+    enDescription: PropTypes.string,
+    priority: PropTypes.number
   }),
   touched: PropTypes.shape({
-    patternImage: PropTypes.string,
-    material: PropTypes.string,
+    modelImage: PropTypes.string,
+    category: PropTypes.string,
     ukName: PropTypes.string,
     enName: PropTypes.string,
     ukDescription: PropTypes.string,
-    enDescription: PropTypes.string
+    enDescription: PropTypes.string,
+    priority: PropTypes.number
   }),
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -284,13 +318,13 @@ PatternForm.propTypes = {
     })
   })
 };
-PatternForm.defaultProps = {
+ModelForm.defaultProps = {
   id: '',
   match: {},
   values: {},
   errors: {},
   touched: {},
-  pattern: {
+  model: {
     _id: '',
     name: [
       {
@@ -311,10 +345,10 @@ PatternForm.defaultProps = {
     images: {
       thumbnail: ''
     },
-    material: '',
-    available: false,
-    handmade: false
+    category: '',
+    show: false,
+    priority: 1
   }
 };
 
-export default PatternForm;
+export default ModelForm;

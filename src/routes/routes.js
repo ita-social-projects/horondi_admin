@@ -101,6 +101,12 @@ const Routes = () => {
           component={ContactsEdit}
         />
         <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
+        <Route path={routes.pathToAddModel} exact component={ModelAdd} />
+        <Route
+          path={routes.pathToModelDetails}
+          exact
+          component={ModelDetails}
+        />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route path={routes.pathToComments} exact component={CommentsPage} />

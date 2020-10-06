@@ -161,7 +161,9 @@ export const config = {
     EDIT_TITLE: 'Редагувати',
     CREATE_NEWS_TITLE: 'Додати новину',
     CREATE_PATTERN_TITLE: 'Додати гобелен',
+    CREATE_MODEL_TITLE: 'Додати модель',
     REMOVE_TITLE: 'Видалити новину',
+    MODEL_REMOVE_TITLE: 'Видалити модель',
     PATTERN_REMOVE_TITLE: 'Видалити гобелен',
     REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
     CANCEL_TITLE: 'Відмінити',
@@ -195,6 +197,7 @@ export const config = {
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
     REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
+    MODEL_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю модель?',
     LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
     DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
     REMOVE_USER_MESSAGE: 'Ви впевнені,що хочете видалити цього користувача?',
@@ -245,6 +248,11 @@ export const config = {
     PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
     PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
   },
+  modelErrorMessages: {
+    MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',
+    MODEL_ERROR_MESSAGE: 'Поле не може бути порожнім',
+    MODEL_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+  },
   newsErrorMessages: {
     NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
     NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,
@@ -281,6 +289,14 @@ export const config = {
       available: 'Доступний',
       handmade: 'Зроблений вручну',
       avatarText: 'Фото'
+    },
+    model: {
+      image: 'Фото гобелена',
+      category: 'Категорія',
+      available: 'Доступний',
+      show: 'Показати',
+      avatarText: 'Фото',
+      priority: 'Пріорітет'
     }
   },
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,

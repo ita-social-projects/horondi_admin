@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  patternItemAdd: {
+  modelItemAdd: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme) => ({
   textField: {
     margin: '10px 5px'
   },
-  patternAdd: {
+  modelAdd: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
@@ -34,12 +34,12 @@ export const useStyles = makeStyles((theme) => ({
     color: '#e60000',
     marginLeft: '5px'
   },
-  patternImage: {
+  modelImage: {
     width: '5rem',
     height: '5rem',
     margin: '5px',
     fontSize: '.7rem',
     padding: '.2rem'
   },
-  patternInputFile: { display: 'none' }
+  modelInputFile: { display: 'none' }
 }));

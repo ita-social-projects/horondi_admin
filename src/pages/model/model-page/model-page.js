@@ -19,10 +19,10 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import LoadingBar from '../../../components/loading-bar';
 
 const { routes } = config.app;
-const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { PATTERN_REMOVE_TITLE } = config.buttonTitles;
+const { MODEL_REMOVE_MESSAGE } = config.messages;
+const { MODEL_REMOVE_TITLE } = config.buttonTitles;
 
-const { CREATE_PATTERN_TITLE } = config.buttonTitles;
+const { CREATE_MODEL_TITLE } = config.buttonTitles;
 const pathToModelAddPage = routes.pathToAddModel;
 const tableTitles = config.tableHeadRowTitles.models;
 
@@ -58,9 +58,9 @@ const ModelPage = () => {
     };
     openSuccessSnackbar(
       removeModel,
-      PATTERN_REMOVE_TITLE,
-      PATTERN_REMOVE_MESSAGE,
-      PATTERN_REMOVE_TITLE
+      MODEL_REMOVE_TITLE,
+      MODEL_REMOVE_MESSAGE,
+      MODEL_REMOVE_TITLE
     );
   };
 
@@ -71,15 +71,15 @@ const ModelPage = () => {
       ? list.map((modelItem, index) => (
         <TableContainerRow
           image={
-            modelItem.images.thumbnail
+            modelItem.images
               ? `${config.imageLink}${modelItem.images.thumbnail}`
               : ''
           }
           key={index}
-          id={modelItem.id}
+          id={modelItem._id}
           name={modelItem.name[0].value}
           category={modelItem.category.name[0].value}
-          available={modelItem.available ? 'Так' : 'Ні'}
+          show={modelItem.show ? 'Так' : 'Ні'}
           priority={modelItem.priority}
           deleteHandler={() => modelDeleteHandler(modelItem._id)}
           editHandler={() => {
@@ -103,7 +103,7 @@ const ModelPage = () => {
           variant='contained'
           color='primary'
         >
-          {CREATE_PATTERN_TITLE}
+          {CREATE_MODEL_TITLE}
         </Button>
       </div>
       <div className={styles.tableContainer}>

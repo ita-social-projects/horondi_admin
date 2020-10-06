@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
-import { patternTranslations } from '../../translations/pattern.translations';
+import { modelTranslations } from '../../translations/model.translations';
 
 export const getAllModels = async (skip, limit) => {
   const result = await client.query({
@@ -31,12 +31,6 @@ export const getAllModels = async (skip, limit) => {
               thumbnail
             }
             priority
-            subcategory {
-              name {
-                value
-                lang
-              }
-            }
             show
             description {
               value
@@ -62,16 +56,27 @@ export const getModelById = async (id) => {
           ... on Model {
             _id
             name {
+              lang
               value
             }
+            category {
+              _id
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
             description {
               value
-            }
-            material
-            handmade
-            available
-            images {
-              thumbnail
+              lang
             }
           }
           ... on Error {
@@ -87,7 +92,7 @@ export const getModelById = async (id) => {
   if (data.getModelById.message) {
     throw new Error(
       `${data.getModelById.statusCode} ${
-        patternTranslations[data.getModelById.message]
+        modelTranslations[data.getModelById.message]
       }`
     );
   }
@@ -110,8 +115,24 @@ export const deleteModel = async (id) => {
               lang
               value
             }
-            material
-            available
+            category {
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
+            description {
+              value
+              lang
+            }
           }
           ... on Error {
             message
@@ -128,7 +149,7 @@ export const deleteModel = async (id) => {
   if (data.deleteModel.message) {
     throw new Error(
       `${data.deleteModel.statusCode} ${
-        patternTranslations[data.deleteModel.message]
+        modelTranslations[data.deleteModel.message]
       }`
     );
   }
@@ -144,16 +165,32 @@ export const createModel = async (payload) => {
     variables: payload,
 
     mutation: gql`
-      mutation($pattern: ModelInput!, $image: Upload!) {
-        addModel(pattern: $pattern, image: $image) {
+      mutation($model: ModelInput!, $image: Upload) {
+        addModel(model: $model, upload: $image) {
           ... on Model {
             _id
             name {
               lang
               value
             }
-            material
-            available
+            category {
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
+            description {
+              value
+              lang
+            }
           }
           ... on Error {
             message
@@ -169,9 +206,7 @@ export const createModel = async (payload) => {
 
   if (data.addModel.message) {
     throw new Error(
-      `${data.addModel.statusCode} ${
-        patternTranslations[data.addModel.message]
-      }`
+      `${data.addModel.statusCode} ${modelTranslations[data.addModel.message]}`
     );
   }
 
@@ -180,22 +215,38 @@ export const createModel = async (payload) => {
 
 export const updateModel = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const { id, pattern, image } = payload;
+  console.log(payload);
+  const { id, model, image } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: { id, pattern, image },
+    variables: { id, model, image },
     mutation: gql`
-      mutation($id: ID!, $pattern: ModelInput!, $image: Upload!) {
-        updateModel(id: $id, pattern: $pattern, image: $image) {
+      mutation($id: ID!, $model: ModelInput!, $image: Upload) {
+        updateModel(id: $id, model: $model, upload: $image) {
           ... on Model {
             _id
             name {
               lang
               value
             }
-            material
-            available
+            category {
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
+            description {
+              value
+              lang
+            }
           }
           ... on Error {
             message
@@ -208,11 +259,10 @@ export const updateModel = async (payload) => {
   });
   client.resetStore();
   const { data } = result;
-
   if (data.updateModel.message) {
     throw new Error(
       `${data.updateModel.statusCode} ${
-        patternTranslations[data.updateModel.message]
+        modelTranslations[data.updateModel.message]
       }`
     );
   }
