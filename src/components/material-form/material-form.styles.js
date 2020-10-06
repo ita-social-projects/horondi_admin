@@ -15,6 +15,11 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around'
   },
   saveButton: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    marginLeft: '.5rem'
+  },
+  returnButton: {
     margin: theme.spacing(2)
   },
   container: {

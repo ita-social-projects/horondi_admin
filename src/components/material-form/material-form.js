@@ -124,7 +124,7 @@ function MaterialForm({ material, id }) {
 
   const tabPanels = languages.map((lang, index) => (
     <TabPanel key={lang} value={tabsValue} index={index}>
-      <Paper className={styles.materialItemAdd}>
+      <div className={styles.materialItemAdd}>
         <TextField
           data-cy={`${lang}Name`}
           id={`${lang}Name`}
@@ -157,7 +157,7 @@ function MaterialForm({ material, id }) {
             {errors[`${lang}Description`]}
           </div>
         )}
-      </Paper>
+      </div>
     </TabPanel>
   ));
 
@@ -194,7 +194,7 @@ function MaterialForm({ material, id }) {
               ))
               : null}
           </div>
-          <Paper className={styles.materialItemAdd}>
+          <div className={styles.materialItemAdd}>
             <TextField
               data-cy='purpose'
               id='purpose'
@@ -221,7 +221,7 @@ function MaterialForm({ material, id }) {
             {touched.additionalPrice && errors.additionalPrice && (
               <div className={styles.inputError}>{errors.additionalPrice}</div>
             )}
-          </Paper>
+          </div>
         </Grid>
         {languages.length > 0 ? (
           <div>
@@ -255,6 +255,7 @@ function MaterialForm({ material, id }) {
               className={styles.saveButton}
               data-cy='open-dialog'
               type='button'
+              color='secondary'
               title={config.buttonTitles.CREATE_COLOR_TITLE}
               onClickHandler={colorClickHandler}
             />

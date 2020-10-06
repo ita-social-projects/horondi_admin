@@ -91,11 +91,7 @@ export const getMaterialById = async (id) => {
   const { data } = result;
 
   if (data.getMaterialById.message) {
-    throw new Error(
-      `${data.getMaterialById.statusCode} ${
-        materialTranslations[data.getMaterialById.message]
-      }`
-    );
+    throw new Error(`${materialTranslations[data.getMaterialById.message]}`);
   }
 
   return data.getMaterialById;
@@ -128,11 +124,7 @@ export const deleteMaterial = async (id) => {
   const { data } = result;
 
   if (data.deleteMaterial.message) {
-    throw new Error(
-      `${data.deleteMaterial.statusCode} ${
-        materialTranslations[data.deleteMaterial.message]
-      }`
-    );
+    throw new Error(`${materialTranslations[data.deleteMaterial.message]}`);
   }
 
   return data.deleteMaterial;
@@ -164,11 +156,7 @@ export const createMaterial = async (payload) => {
   const { data } = result;
 
   if (data.addMaterial.message) {
-    throw new Error(
-      `${data.addMaterial.statusCode} ${
-        materialTranslations[data.addMaterial.message]
-      }`
-    );
+    throw new Error(`${materialTranslations[data.addMaterial.message]}`);
   }
 
   return data.addMaterial;
@@ -205,11 +193,7 @@ export const updateMaterial = async (id, material, images) => {
   const { data } = result;
 
   if (data.updateMaterial.message) {
-    throw new Error(
-      `${data.updateMaterial.statusCode} ${
-        materialTranslations[data.updateMaterial.message]
-      }`
-    );
+    throw new Error(`${materialTranslations[data.updateMaterial.message]}`);
   }
 
   return data.updateMaterial;

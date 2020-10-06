@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../configs';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton } from '../buttons';
+import { useStyles } from './dialog-window.styles';
 
 const { CANCEL_TITLE } = config.buttonTitles;
 const { ACCEPT_BUTTON_STYLE } = config.buttonStyles;
@@ -28,7 +29,7 @@ const DialogWindow = () => {
     buttonTitle: dialogWindow.buttonTitle,
     onClickHandler: dialogWindow.onClickHandler
   }));
-
+  const styles = useStyles();
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -37,7 +38,9 @@ const DialogWindow = () => {
 
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
-      <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
+      <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
+        {dialogTitle}
+      </DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>

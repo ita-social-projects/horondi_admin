@@ -159,7 +159,7 @@ function CreateColor({
 
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
+      ? languages.map((lang) => <Tab label={lang} key={lang} />)
       : null;
 
   const checkboxes = [
@@ -218,6 +218,7 @@ function CreateColor({
           />
           <Paper className={styles.materialItemAdd}>
             <TextField
+              t
               data-cy='code'
               id='code'
               className={styles.textfield}
