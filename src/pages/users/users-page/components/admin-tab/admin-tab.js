@@ -13,6 +13,7 @@ const tableHeaders = config.tableHeadRowTitles.users.adminTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
 const { REGISTER_ADMIN } = config.dialogFormTitles;
 const { unknownAdmin } = config.labels.user;
+const { forbiddenRolesFromDeleting } = config;
 
 const AdminTab = (props) => {
   const { list, onDelete } = props;
@@ -42,6 +43,7 @@ const AdminTab = (props) => {
       role={userRoleTranslations[userItem.role]}
       deleteHandler={() => onDelete(userItem._id)}
       showEdit={false}
+      showDelete={!forbiddenRolesFromDeleting.includes(userItem.role)}
     />
   ));
 

@@ -162,6 +162,7 @@ export const config = {
       'Неправильне посилання на створення користувача',
     SUPER_ADMIN_IS_IMMUTABLE: 'Суперадміністратор не може бути видалений'
   },
+  forbiddenRolesFromDeleting: ['superadmin'],
   dialogFormTitles: {
     REGISTER_ADMIN: 'Створити спецкористувача'
   },
