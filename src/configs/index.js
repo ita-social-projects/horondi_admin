@@ -160,7 +160,7 @@ export const config = {
     USER_ALREADY_EXIST: 'Користувач з такими даними вже існує',
     INVALID_ADMIN_INVITATIONAL_TOKEN:
       'Неправильне посилання на створення користувача',
-    SUPERADMIN_IS_IMMUTABLE: 'Суперадміністратор не може бути видалений'
+    SUPER_ADMIN_IS_IMMUTABLE: 'Суперадміністратор не може бути видалений'
   },
   dialogFormTitles: {
     REGISTER_ADMIN: 'Створити спецкористувача'
