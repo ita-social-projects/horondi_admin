@@ -2,7 +2,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { Paper, TextField, AppBar, Tabs, Grid, Tab } from '@material-ui/core';
+import { TextField, AppBar, Tabs, Grid, Tab } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { config } from '../../../configs';
 import useColorHandlers from '../../../utils/use-color-handlers';
@@ -112,7 +112,7 @@ function CreateColor({
 
   const tabPanels = languages.map((lang, index) => (
     <TabPanel key={lang} value={tabsValue} index={index}>
-      <Paper className={styles.materialItemAdd}>
+      <div className={styles.materialItemAdd}>
         <TextField
           data-cy={`${lang}Name`}
           id={`${lang}Name`}
@@ -141,7 +141,7 @@ function CreateColor({
         {touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`] && (
           <div className={styles.inputError}>{errors[`${lang}SimpleName`]}</div>
         )}
-      </Paper>
+      </div>
     </TabPanel>
   ));
 
@@ -151,7 +151,18 @@ function CreateColor({
 
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang) => <Tab label={lang} key={lang} />)
+      ? languages.map((lang) => (
+        <Tab
+          className={
+            (touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`]) ||
+              (touched[`${lang}Name`] && errors[`${lang}Name`])
+              ? styles.errorTab
+              : styles.tabs
+          }
+          label={lang}
+          key={lang}
+        />
+      ))
       : null;
 
   const checkboxes = [
@@ -186,7 +197,7 @@ function CreateColor({
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit}>
+      <form className={styles.colorForm} onSubmit={handleSubmit}>
         <div className={styles.controlsBlock}>
           <CheckboxOptions options={checkboxes} />
         </div>
@@ -197,7 +208,7 @@ function CreateColor({
             multiple={false}
             fileName={values.image.name || ''}
           />
-          <Paper className={styles.materialItemAdd}>
+          <div className={styles.materialItemAdd}>
             <TextField
               data-cy='code'
               id='code'
@@ -211,7 +222,7 @@ function CreateColor({
             {touched.code && errors.code && (
               <div className={styles.inputError}>{errors.code}</div>
             )}
-          </Paper>
+          </div>
         </Grid>
 
         <div>

@@ -3,7 +3,8 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
+  Tooltip
 } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -31,13 +32,11 @@ const DialogWindowForComponent = ({ dialogTitle, buttonTitle, component }) => {
         <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
           {dialogTitle}
         </DialogTitle>
-        <span
-          title={buttonTitle}
-          className={styles.closeButton}
-          onClick={handleClose}
-        >
-          &#215;
-        </span>
+        <Tooltip title={buttonTitle} placement='bottom'>
+          <span className={styles.closeButton} onClick={handleClose}>
+            &#215;
+          </span>
+        </Tooltip>
       </div>
       <DialogContent className={styles.dialogComponent} dividers>
         {component}

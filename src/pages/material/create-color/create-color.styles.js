@@ -1,6 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
+  colorForm: {
+    '& div': {
+      '& div': {
+        '& div': {
+          paddingLeft: 0,
+          paddingRight: 0,
+          marginLeft: '0 !important',
+          marginRight: '0 !important',
+          marginBottom: '0 !important',
+          '& textarea': {
+            paddingLeft: '1rem !important'
+          }
+        }
+      }
+    }
+  },
   materialItemAdd: {
     display: 'flex',
     flexDirection: 'column',
@@ -39,10 +55,10 @@ export const useStyles = makeStyles((theme) => ({
     color: '#e60000',
     padding: '0 5px'
   },
-
-  colorInputFile: { display: 'none' },
-  colorImage: {
-    fontSize: '.7rem',
-    padding: '.2rem important'
+  errorTab: {
+    backgroundColor: '#e60000',
+    '& span': {
+      color: 'white !important'
+    }
   }
 }));
