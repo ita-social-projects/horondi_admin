@@ -164,6 +164,7 @@ export const config = {
     CREATE_MODEL_TITLE: 'Додати модель',
     REMOVE_TITLE: 'Видалити новину',
     MODEL_REMOVE_TITLE: 'Видалити модель',
+    MODEL_SAVE_TITLE: 'Зберегти',
     PATTERN_REMOVE_TITLE: 'Видалити гобелен',
     REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
     CANCEL_TITLE: 'Відмінити',
@@ -291,16 +292,20 @@ export const config = {
       avatarText: 'Фото'
     },
     model: {
-      image: 'Фото гобелена',
+      name: 'Назва',
+      description: 'Опис',
+      image: 'Фото моделі',
       category: 'Категорія',
       available: 'Доступний',
       show: 'Показати',
       avatarText: 'Фото',
-      priority: 'Пріорітет'
+      priority: 'Пріорітет',
+      showEnable: 'Так',
+      showDisable: 'Ні'
     }
   },
+  IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
-  imageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
   newsPerPage: 6,
   contactsPaginationPayload: {
     skip: 0,

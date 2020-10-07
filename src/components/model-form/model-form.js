@@ -149,12 +149,12 @@ const ModelForm = ({ model, id }) => {
             <ImageUploadContainer
               handler={handleImageLoad}
               srcForAvatar={
-                modelImage || `${config.imageLink}${values.modelImage}`
+                modelImage || `${config.IMG_URL}${values.modelImage}`
               }
               fileName={upload && upload.name}
             />
             <FormControl variant='outlined' className={styles.textField}>
-              <InputLabel htmlFor='outlined-age-native-simple'>
+              <InputLabel htmlFor='category-select'>
                 {config.labels.model.category}
               </InputLabel>
               <Select
@@ -164,8 +164,8 @@ const ModelForm = ({ model, id }) => {
                 onChange={handleCategory}
                 label={config.labels.model.category}
                 inputProps={{
-                  name: 'age',
-                  id: 'outlined-age-native-simple'
+                  name: 'category',
+                  id: 'category-select'
                 }}
               >
                 <option value='' />
@@ -207,14 +207,14 @@ const ModelForm = ({ model, id }) => {
           </Tabs>
         </AppBar>
         {languages.map((lang, index) => (
-          <TabPanel key={index} value={tabsValue} index={index}>
+          <TabPanel key={lang} value={tabsValue} index={index}>
             <Paper className={styles.modelItemUpdate}>
               <TextField
                 data-cy='Name'
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label='Назва'
+                label={config.labels.model.name}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -228,7 +228,7 @@ const ModelForm = ({ model, id }) => {
                 id={`${lang}Description`}
                 className={styles.textField}
                 variant='outlined'
-                label='Опис'
+                label={config.labels.model.description}
                 multiline
                 value={values[`${lang}Description`]}
                 onChange={handleChange}
@@ -262,7 +262,7 @@ const ModelForm = ({ model, id }) => {
           className={styles.saveButton}
           data-cy='save'
           type='submit'
-          title='Зберегти'
+          title={config.buttonTitles.MODEL_SAVE_TITLE}
         />
       </form>
     </div>

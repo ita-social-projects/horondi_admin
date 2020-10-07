@@ -72,14 +72,18 @@ const ModelPage = () => {
         <TableContainerRow
           image={
             modelItem.images
-              ? `${config.imageLink}${modelItem.images.thumbnail}`
+              ? `${config.IMG_URL}${modelItem.images.thumbnail}`
               : ''
           }
-          key={index}
+          key={modelItem._id}
           id={modelItem._id}
           name={modelItem.name[0].value}
           category={modelItem.category.name[0].value}
-          show={modelItem.show ? 'Так' : 'Ні'}
+          show={
+            modelItem.show
+              ? config.labels.model.showEnable
+              : config.labels.model.showDisable
+          }
           priority={modelItem.priority}
           deleteHandler={() => modelDeleteHandler(modelItem._id)}
           editHandler={() => {

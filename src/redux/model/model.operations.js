@@ -111,28 +111,6 @@ export const deleteModel = async (id) => {
         deleteModel(id: $id) {
           ... on Model {
             _id
-            name {
-              lang
-              value
-            }
-            category {
-              name {
-                value
-                lang
-              }
-            }
-            images {
-              large
-              medium
-              small
-              thumbnail
-            }
-            priority
-            show
-            description {
-              value
-              lang
-            }
           }
           ... on Error {
             message
