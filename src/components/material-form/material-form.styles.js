@@ -50,7 +50,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     '& button': {
       '& span:before': {
-        backgroundColor: 'red'
+        backgroundColor: 'red !important'
       }
     },
     '& span.MuiTab-wrapper': {

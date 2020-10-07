@@ -282,7 +282,7 @@ export const config = {
     MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
     MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
     VALIDATION_ERROR: 'Поле обовязкове',
-    PRICE_VALIDATION_ERROR: 'Тільки цифри'
+    PRICE_VALIDATION_ERROR: 'Тільки цифри. Число має бути більше нуля'
   },
   colorErrorMessages: {
     CODE_VALIDATION_ERROR: 'Тільки цифри',
