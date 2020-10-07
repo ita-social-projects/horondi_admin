@@ -110,7 +110,7 @@ describe('Contacts reducer tests', () => {
     });
   });
 
-  it('Should set numbre of contacts per page', () => {
+  it('Should set number of contacts per page', () => {
     expect(
       contactsReducer(initialState, setContactsPerPage(contactsPerPage))
     ).toEqual({

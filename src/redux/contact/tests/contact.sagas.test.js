@@ -12,9 +12,7 @@ import {
   setContactsLoading,
   setContact,
   setContactsError,
-  setContactsCurrentPage,
   setContactsPagesCount,
-  addContactInStore,
   deleteContactInStore,
   updateContactInStore
 } from '../contact.actions';
@@ -45,6 +43,7 @@ describe('Contact sagas tests', () => {
     expect(getContactById).not.toThrow();
     expect(addContact).not.toThrow();
     expect(updateContact).not.toThrow();
+    expect(setContactsError).not.toThrow();
   });
 
   it('Should receive all contacts and set them to store', () => {
