@@ -14,7 +14,10 @@ import {
   VALIDATE_TOKEN
 } from './users.types';
 
-const getUsers = () => ({ type: GET_USERS });
+const getUsers = (options) => ({
+  type: GET_USERS,
+  payload: options
+});
 
 const setUsers = (users) => ({
   type: SET_USERS,
