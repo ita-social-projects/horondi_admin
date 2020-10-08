@@ -23,7 +23,10 @@ import {
   recentCommentsMock,
   commentsByUserMock,
   commentDeleteMock,
-  initialState
+  initialState,
+  commentsByProductMock,
+  productId,
+  userId
 } from './comments.variables';
 
 import {
@@ -51,11 +54,21 @@ describe('Comments sagas tests', () => {
       .run();
   });
 
-  it('Should receive comments by type and set to store', () => {
-    expectSaga(handleCommentsByTypeLoad, comment, GET_USER_COMMENTS)
+  it('Should receive comments by user and set to store', () => {
+    expectSaga(handleCommentsByTypeLoad, userId, GET_USER_COMMENTS)
       .provide([[matchers.call.fn(getCommentsByType), commentsByUserMock]])
       .put(setCommentsLoading(true))
       .put(setComments(commentsByUserMock))
+      .put(setCommentsPagesCount(commentsPagesCount - 1))
+      .put(setCommentsLoading(false))
+      .run();
+  });
+
+  it('Should receive comments by product and set to store', () => {
+    expectSaga(handleCommentsByTypeLoad, productId, GET_PRODUCT_COMMENTS)
+      .provide([[matchers.call.fn(getCommentsByType), commentsByProductMock]])
+      .put(setCommentsLoading(true))
+      .put(setComments(commentsByProductMock))
       .put(setCommentsPagesCount(commentsPagesCount - 1))
       .put(setCommentsLoading(false))
       .run();

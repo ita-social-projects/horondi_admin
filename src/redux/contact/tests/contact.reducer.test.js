@@ -67,8 +67,8 @@ describe('Contacts reducer tests', () => {
       contactsReducer(initialState, updateContactInStore(contact))
     ).toEqual({
       ...initialState,
-      contacts: initialState.contacts.map((contact) =>
-        contact._id === contactId ? updatedContact : contact
+      contacts: initialState.contacts.map((el) =>
+        el._id === contactId ? updatedContact : el
       )
     });
   });
@@ -78,9 +78,7 @@ describe('Contacts reducer tests', () => {
       contactsReducer(initialState, deleteContactInStore(contactId))
     ).toEqual({
       ...initialState,
-      contacts: initialState.contacts.filter(
-        (contact) => contact._id !== contactId
-      )
+      contacts: initialState.contacts.filter((el) => el._id !== contactId)
     });
   });
 

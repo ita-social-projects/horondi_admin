@@ -4,7 +4,6 @@ import {
   handleContactsLoad,
   handleContactLoad,
   handleAddContact,
-  handleContactUpdate,
   handleContactDelete
 } from '../contact.sagas';
 import {
@@ -13,16 +12,12 @@ import {
   setContact,
   setContactsError,
   setContactsPagesCount,
-  deleteContactInStore,
-  updateContactInStore
+  deleteContactInStore
 } from '../contact.actions';
 
 import {
-  contact,
-  mapImages,
   contactsPagesCount,
   contactId,
-  contactUpdateMock,
   allContactsMock,
   contactByIdMock,
   contactDeleteIdMock,

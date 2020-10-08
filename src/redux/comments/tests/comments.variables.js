@@ -1,5 +1,6 @@
 export const productId = '264677d549443a6816da3d09';
 export const commentId = '564677d549443a6816da3d09';
+export const userId = '964612d549443a6816da3d09';
 export const commentsCurrentPage = 1;
 export const commentsPerPage = 1;
 export const commentsPagesCount = 1;
@@ -28,6 +29,14 @@ export const commentsType = 'FromUser';
 export const commentsByUserMock = {
   data: {
     getAllCommentsByUser: {
+      comment
+    }
+  }
+};
+
+export const commentsByProductMock = {
+  data: {
+    getAllCommentsByProduct: {
       comment
     }
   }
