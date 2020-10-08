@@ -17,7 +17,6 @@ import {
 import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from '../comments.types';
 
 import {
-  comment,
   commentId,
   commentsPagesCount,
   recentCommentsMock,
