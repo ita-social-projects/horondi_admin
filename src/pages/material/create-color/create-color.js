@@ -228,6 +228,8 @@ function CreateColor({
         <div>
           <AppBar position='static'>
             <Tabs
+              indicatorColor='primary'
+              textColor='primary'
               className={styles.tabs}
               value={tabsValue}
               onChange={handleTabsChange}

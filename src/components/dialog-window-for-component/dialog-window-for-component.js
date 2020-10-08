@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   Tooltip
-} from '@material-ui/core/';
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { showColorDialogWindow } from '../../redux/material/material.actions';
