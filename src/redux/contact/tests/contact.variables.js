@@ -77,10 +77,16 @@ export const contactDeleteIdMock = {
   }
 };
 
-export const contactUpdateIdMock = {
+export const contactUpdateMock = {
   data: {
     updateContact: {
       contact
     }
   }
+};
+
+export const getContactsMock = {
+  skip: 1,
+  limit: 1,
+  contactsPerPage: 1
 };

@@ -22,10 +22,11 @@ import {
   mapImages,
   contactsPagesCount,
   contactId,
-  contactUpdateIdMock,
+  contactUpdateMock,
   allContactsMock,
   contactByIdMock,
-  contactDeleteIdMock
+  contactDeleteIdMock,
+  getContactsMock as payload
 } from './contact.variables';
 import {
   getContacts,
@@ -47,7 +48,7 @@ describe('Contact sagas tests', () => {
   });
 
   it('Should receive all contacts and set them to store', () => {
-    expectSaga(handleContactsLoad)
+    expectSaga(handleContactsLoad, payload)
       .provide([[matchers.call.fn(getContacts), allContactsMock]])
       .put(setContactsLoading(true))
       .put(setContacts(allContactsMock))
@@ -71,17 +72,6 @@ describe('Contact sagas tests', () => {
       .put(setContactsLoading(true))
       .put(setContact(contactDeleteIdMock))
       .put(deleteContactInStore(contactId))
-      .put(setContactsPagesCount(contactsPagesCount - 1))
-      .put(setContactsLoading(false))
-      .run();
-  });
-
-  it('Should update contact in db and update it in store', () => {
-    expectSaga(handleContactUpdate, contactId, contact, mapImages)
-      .provide([[matchers.call.fn(updateContact), contactUpdateIdMock]])
-      .put(setContactsLoading(true))
-      .put(setContact(contactUpdateIdMock))
-      .put(updateContactInStore(contactId))
       .put(setContactsPagesCount(contactsPagesCount - 1))
       .put(setContactsLoading(false))
       .run();

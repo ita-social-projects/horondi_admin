@@ -19,13 +19,11 @@ import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from '../comments.types';
 import {
   comment,
   commentId,
-  initialState,
-  commentsCurrentPage,
-  commentsPerPage,
   commentsPagesCount,
   recentCommentsMock,
   commentsByUserMock,
-  commentDeleteMock
+  commentDeleteMock,
+  initialState
 } from './comments.variables';
 
 import {
@@ -45,7 +43,7 @@ describe('Comments sagas tests', () => {
   });
 
   it('Should receive all comments and set them to store', () => {
-    expectSaga(handleRecentCommentsLoad)
+    expectSaga(handleRecentCommentsLoad, initialState.pagination)
       .provide([[matchers.call.fn(getRecentComments), recentCommentsMock]])
       .put(setCommentsLoading(true))
       .put(setComments(recentCommentsMock))
