@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
-import { useStyles } from './product-add-stepper.styles';
-import { config } from '../../../../configs';
+import { useStyles } from './customized-stepper.styles';
+import { config } from '../../configs';
 
 const { stepsLabels } = config.product;
 
-const ProductsStepper = ({ steps, activeStep }) => {
+const CustomizedStepper = ({ steps, activeStep }) => {
   const styles = useStyles();
 
   return (
@@ -24,9 +24,9 @@ const ProductsStepper = ({ steps, activeStep }) => {
   );
 };
 
-ProductsStepper.propTypes = {
+CustomizedStepper.propTypes = {
   steps: PropTypes.arrayOf(PropTypes.node).isRequired,
   activeStep: PropTypes.number.isRequired
 };
 
-export default ProductsStepper;
+export default CustomizedStepper;

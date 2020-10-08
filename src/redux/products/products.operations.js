@@ -420,30 +420,30 @@ const updateProduct = async (payload, upload, primaryImageUpload) => {
 const deleteImages = async (payload, images) => {
   const result = await client.mutate({
     mutation: gql`
-        mutation($id: ID!, $images: [String!]!) {
-          deleteImages(id: $id, images: $images) {
-            primary {
-              large
-              medium
-              small
-              thumbnail
-            }
-            additional {
-              large
-              medium
-              small
-              thumbnail
-            }
+      mutation($id: ID!, $images: [String!]!) {
+        deleteImages(id: $id, images: $images) {
+          primary {
+            large
+            medium
+            small
+            thumbnail
+          }
+          additional {
+            large
+            medium
+            small
+            thumbnail
           }
         }
+      }
     `,
     variables: {
       id: payload,
       images
     }
-  })
-  return result.data.deleteImages
-}
+  });
+  return result.data.deleteImages;
+};
 
 export {
   getAllProducts,

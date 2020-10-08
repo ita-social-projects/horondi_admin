@@ -44,7 +44,6 @@ export const config = {
       ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
       ['Новини', routes.pathToNews, ImportContactsIcon],
       ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
-      ['Користувачі', routes.pathToUsers, PeopleIcon],
       ['Останні коментарі', routes.pathToComments, SmsIcon],
       ['Гобелени', routes.pathToPatterns, PaletteIcon]
     ],
@@ -320,6 +319,7 @@ export const config = {
     stepsLabels: [
       'Введіть інформацію про продукт',
       'Оберіть категорію, підкатегорію, модель, колір, гобелен та ціну продукту',
+      'Вкажіть ціну продукту',
       'Оберіть опційні параметри',
       'Завантажте фото для продукту',
       'Підтвердження створення продукту'
@@ -329,6 +329,7 @@ export const config = {
       { label: 'Основний матеріал', name: 'mainMaterial', required: true },
       { label: 'Внутрішній матеріал', name: 'innerMaterial', required: false },
       { label: 'Замок', name: 'closure', required: false },
+      { label: 'Довжина лямок(см)', name: 'strapLengthInCm', required: false },
       { label: 'Опис', name: 'description', required: false }
     ],
     selectsLabels: [
@@ -341,19 +342,7 @@ export const config = {
       },
       { label: 'Модель ', name: 'model', type: 'select', required: true },
       { label: 'Колір ', name: 'colors', type: 'select', required: true },
-      { label: 'Гобелен ', name: 'pattern', type: 'select', required: true },
-      {
-        label: 'Ціна(USD) ',
-        name: 'basePrice',
-        type: 'number',
-        required: true
-      },
-      {
-        label: 'Довжина лямок(см) ',
-        name: 'strapLengthInCm',
-        type: 'number',
-        required: false
-      }
+      { label: 'Гобелен ', name: 'pattern', type: 'select', required: true }
     ],
     responsive: {
       superLargeDesktop: {
@@ -389,6 +378,10 @@ export const config = {
       sizes: [],
       bottomMaterials: [],
       additions: false
+    },
+    priceLabel: {
+      label: 'Ціна(USD) ',
+      name: 'basePrice'
     }
   },
   popularity: 'popularity',
@@ -410,5 +403,7 @@ export const config = {
     { lang: 'uk', value: '' },
     { lang: 'en', value: '' }
   ],
-  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
+  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  STRAP_LENGTH_IN_CM: 'strapLengthInCm',
+  BASE_PRICE: 'basePrice'
 };

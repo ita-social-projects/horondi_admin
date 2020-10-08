@@ -1,20 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import useProductValidation from '../../../../utils/use-product-validation';
+import useProductValidation from '../../../../hooks/product/use-product-validation';
 
 import { setProductToSend } from '../../../../redux/products/products.actions';
-import StepperControlButtons from '../product-add-stepper/stepper-control-buttons/stepper-control-buttons';
+import StepperControlButtons from '../../../../components/stepper-control-buttons/stepper-control-buttons';
 import ProductInfoContainer from '../../../../containers/product-info-container';
 
-const ProductAddInfo = ({
-  activeStep,
-  handleNext,
-  preferedLanguages,
-  setPreferedLanguages,
-  createProductInfo,
-  checkedLanguages
-}) => {
+const ProductAddInfo = ({ activeStep, handleNext, createProductInfo }) => {
   const dispatch = useDispatch();
 
   const onSubmit = (values) => {
@@ -25,28 +18,19 @@ const ProductAddInfo = ({
 
   const {
     shouldValidate,
-    setShouldValidate,
     values,
     errors,
     touched,
     handleSubmit,
     handleChange,
     handleBlur,
-    submitForm,
-    setFieldValue
-  } = useProductValidation(checkedLanguages, onSubmit, '', 'productToSend');
-
-  const handleInfoSubmit = async () => {
-    setShouldValidate(true);
-    await submitForm();
-  };
+    setFieldValue,
+    handleValuesSubmit
+  } = useProductValidation({}, onSubmit, '', 'productToSend');
 
   return (
     <div>
       <ProductInfoContainer
-        preferedLanguages={preferedLanguages}
-        setPreferedLanguages={setPreferedLanguages}
-        checkedLanguages={checkedLanguages}
         shouldValidate={shouldValidate}
         values={values}
         errors={errors}
@@ -57,20 +41,15 @@ const ProductAddInfo = ({
         setFieldValue={setFieldValue}
         variant='outlined'
       />
-      {checkedLanguages.length ? (
-        <StepperControlButtons
-          activeStep={activeStep}
-          handleNext={handleInfoSubmit}
-        />
-      ) : null}
+      <StepperControlButtons
+        activeStep={activeStep}
+        handleNext={handleValuesSubmit}
+      />
     </div>
   );
 };
 
 ProductAddInfo.propTypes = {
-  preferedLanguages: PropTypes.objectOf(PropTypes.object).isRequired,
-  checkedLanguages: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setPreferedLanguages: PropTypes.func.isRequired,
   handleNext: PropTypes.func.isRequired,
   activeStep: PropTypes.number.isRequired,
   createProductInfo: PropTypes.func.isRequired

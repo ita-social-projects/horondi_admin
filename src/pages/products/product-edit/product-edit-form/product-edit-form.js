@@ -6,11 +6,14 @@ import {
   Button,
   Typography,
   Box,
-  Divider
+  Divider,
+  useMediaQuery,
+  useTheme
 } from '@material-ui/core';
-import useProductHandlers from '../../../../utils/use-product-handlers';
+import TextField from '@material-ui/core/TextField';
+import useProductHandlers from '../../../../hooks/product/use-product-handlers';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
-import useProductValidation from '../../../../utils/use-product-validation';
+import useProductValidation from '../../../../hooks/product/use-product-validation';
 import { useStyles } from './product-edit-form.styles';
 
 import ProductInfoContainer from '../../../../containers/product-info-container';
@@ -26,6 +29,10 @@ import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actio
 
 import { productsTranslations } from '../../../../translations/product.translations';
 import ProductCarousel from './product-carousel';
+import DeleteButton from '../../../../components/buttons/delete-button';
+import { config } from '../../../../configs';
+
+const { priceLabel } = config.product;
 
 const {
   DELETE_PRODUCT_MESSAGE,
@@ -33,13 +40,18 @@ const {
   DELETE_PRODUCT_BTN,
   SAVE,
   PRODUCT_SPECIFICATION,
-  PRODUCT_OPTIONS
+  PRODUCT_OPTIONS,
+  PRODUCT_PRICE
 } = productsTranslations;
 
 const ProductEditForm = () => {
   const styles = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
   const product = useSelector(({ Products }) => Products.selectedProduct);
+
+  const size = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
@@ -48,17 +60,16 @@ const ProductEditForm = () => {
     subcategory: product.subcategory._id,
     model: product.model[0].value,
     pattern: product.pattern[0].value,
-    colors: product.colors[0].simpleName[0].value,
-    basePrice: Math.round(product.basePrice[1].value / 100),
-    strapLengthInCm: product.strapLengthInCm
+    colors: product.colors[0].simpleName[0].value
+  };
+
+  const formikPriceValue = {
+    basePrice: Math.round(product.basePrice[1].value / 100)
   };
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const {
-    checkedLanguages,
-    preferedLanguages,
-    setPreferedLanguages,
     createProductInfo,
     getColorsToSend,
     getPatternToSend,
@@ -109,19 +120,6 @@ const ProductEditForm = () => {
   );
 
   useEffect(() => {
-    setPreferedLanguages({
-      uk: {
-        name: 'uk',
-        checked: !!product.name[0].value
-      },
-      en: {
-        name: 'en',
-        checked: !!product.name[1].value
-      }
-    });
-  }, [product.name, setPreferedLanguages]);
-
-  useEffect(() => {
     if (product.options.length) {
       setOptions({
         sizes: uniqueSizes,
@@ -138,15 +136,8 @@ const ProductEditForm = () => {
   ]);
 
   const onSubmit = (values) => {
-    const {
-      colors,
-      pattern,
-      model,
-      category,
-      subcategory,
-      basePrice,
-      strapLengthInCm
-    } = values;
+    const { colors, pattern, model, category, subcategory, basePrice } = values;
+
     const productInfo = createProductInfo(values);
     dispatch(
       updateProduct({
@@ -158,8 +149,7 @@ const ProductEditForm = () => {
           options,
           category,
           subcategory,
-          basePrice,
-          strapLengthInCm
+          basePrice
         },
         id: product._id
       })
@@ -180,10 +170,11 @@ const ProductEditForm = () => {
     submitForm,
     setFieldValue
   } = useProductValidation(
-    checkedLanguages,
+    {},
     onSubmit,
     formikSpeciesValues,
-    'selectedProduct'
+    'selectedProduct',
+    formikPriceValue
   );
 
   useEffect(() => {
@@ -210,10 +201,11 @@ const ProductEditForm = () => {
 
   return (
     <div className={styles.container}>
-      <Grid container justify='center' spacing={3}>
-        <Grid item xs={12} container spacing={2}>
-          <Grid item>
+      <div className={styles.buttonContainer}>
+        <Grid container spacing={2} className={styles.fixedButtons}>
+          <Grid item className={styles.button}>
             <Button
+              size={size}
               type='submit'
               variant='contained'
               color='primary'
@@ -223,16 +215,18 @@ const ProductEditForm = () => {
               {SAVE}
             </Button>
           </Grid>
-          <Grid item>
-            <Button
-              type='button'
+          <Grid item className={styles.button}>
+            <DeleteButton
+              size={size}
               variant='outlined'
               onClick={handleProductDelete}
             >
               {DELETE_PRODUCT_TITLE}
-            </Button>
+            </DeleteButton>
           </Grid>
         </Grid>
+      </div>
+      <Grid container justify='center' spacing={3}>
         <Grid item xs={12} md={5} xl={3}>
           <Paper className={styles.paper}>
             <ProductCarousel toggleFieldsChanged={toggleFieldsChanged} />
@@ -241,9 +235,6 @@ const ProductEditForm = () => {
         <Grid item xs={12} md={7} xl={9}>
           <Paper className={styles.paper}>
             <ProductInfoContainer
-              preferedLanguages={preferedLanguages}
-              setPreferedLanguages={setPreferedLanguages}
-              checkedLanguages={checkedLanguages}
               shouldValidate={shouldValidate}
               values={values}
               errors={errors}
@@ -277,6 +268,25 @@ const ProductEditForm = () => {
               setFieldValue={setFieldValue}
               toggleFieldsChanged={toggleFieldsChanged}
             />
+            <Box mt={3}>
+              <Divider />
+            </Box>
+            <Box mt={2}>
+              <Typography className={styles.title}>{PRODUCT_PRICE}</Typography>
+            </Box>
+            <Box mt={3} ml={1}>
+              <TextField
+                className={styles.input}
+                label={`${priceLabel.label}*`}
+                type='number'
+                name={priceLabel.name}
+                inputProps={{ min: 0 }}
+                error={touched[priceLabel.name] && !!errors[priceLabel.name]}
+                value={values[priceLabel.name]}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Box>
             <Box mt={3}>
               <Divider />
             </Box>

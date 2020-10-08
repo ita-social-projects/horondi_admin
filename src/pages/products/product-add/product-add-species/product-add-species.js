@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import useProductValidation from '../../../../utils/use-product-validation';
+import useProductValidation from '../../../../hooks/product/use-product-validation';
 
 import { useStyles } from './product-add-species.styles';
 
@@ -9,7 +9,7 @@ import {
   getModelsByCategory,
   setProductToSend
 } from '../../../../redux/products/products.actions';
-import StepperControlButtons from '../product-add-stepper/stepper-control-buttons/stepper-control-buttons';
+import StepperControlButtons from '../../../../components/stepper-control-buttons/stepper-control-buttons';
 import ProductSpeciesContainer from '../../../../containers/product-species-container';
 
 const ProductAddSpecies = ({
@@ -49,10 +49,10 @@ const ProductAddSpecies = ({
 
   const selectedModel = useMemo(
     () =>
-      productToSend.model.length && !(productToSend.model instanceof Object)
+      productToSend.model
         ? modelsForSelectedCategory.find(
           ({ _id }) => _id === productToSend.model
-        ).name[0].value
+        )
         : '',
     [productToSend.model, modelsForSelectedCategory]
   );
@@ -64,26 +64,18 @@ const ProductAddSpecies = ({
       ? productToSend.colors[0].simpleName[0].value
       : '',
     subcategory: productToSend.subcategory,
-    model: selectedModel,
-    basePrice: productToSend.basePrice,
-    strapLengthInCm: productToSend.strapLengthInCm
-  };
-
-  const handleSpeciesSubmit = async () => {
-    setShouldValidate(true);
-    await submitForm();
+    model: selectedModel ? selectedModel.name[0].value : ''
   };
 
   const {
-    setShouldValidate,
     values,
     errors,
     touched,
     handleSubmit,
     handleChange,
     handleBlur,
-    submitForm,
-    setFieldValue
+    setFieldValue,
+    handleValuesSubmit
   } = useProductValidation('', onSubmit, formikSpeciesValues, 'productToSend');
 
   useEffect(() => {
@@ -109,7 +101,7 @@ const ProductAddSpecies = ({
         <StepperControlButtons
           activeStep={activeStep}
           handleBack={handleBack}
-          handleNext={handleSpeciesSubmit}
+          handleNext={handleValuesSubmit}
         />
       </div>
     </div>

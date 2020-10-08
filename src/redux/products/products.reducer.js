@@ -64,7 +64,10 @@ export const initialState = {
   },
   filterData: [],
   selectedProduct: productModel,
-  productToSend: productModel,
+  productToSend: {
+    ...productModel,
+    model: ''
+  },
   products: [],
   pagesCount: 1,
   productsError: null,

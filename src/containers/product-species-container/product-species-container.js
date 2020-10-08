@@ -1,7 +1,13 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { FormControl, Select, InputLabel, TextField } from '@material-ui/core';
+import {
+  FormControl,
+  Select,
+  InputLabel,
+  TextField,
+  MenuItem
+} from '@material-ui/core';
 import useStyles from './product-species-container.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
@@ -43,9 +49,9 @@ const ProductSpeciesContainer = ({
       categories
         .filter(({ isMain }) => isMain)
         .map(({ name, _id }) => (
-          <option value={_id} key={_id}>
+          <MenuItem value={_id} key={_id}>
             {name[0].value}
-          </option>
+          </MenuItem>
         )),
     [categories]
   );
@@ -61,9 +67,9 @@ const ProductSpeciesContainer = ({
               : true)
         )
         .map(({ _id, name }) => (
-          <option value={_id} key={_id}>
+          <MenuItem value={_id} key={_id}>
             {name[0].value}
-          </option>
+          </MenuItem>
         )),
     [categories, selectedCategory]
   );
@@ -71,9 +77,9 @@ const ProductSpeciesContainer = ({
   const colorsOptions = useMemo(
     () =>
       colors.map(([{ simpleName }]) => (
-        <option value={simpleName[0].value} key={simpleName[1].value}>
+        <MenuItem value={simpleName[0].value} key={simpleName[1].value}>
           {simpleName[0].value}
-        </option>
+        </MenuItem>
       )),
     [colors]
   );
@@ -81,9 +87,9 @@ const ProductSpeciesContainer = ({
   const patternsOptions = useMemo(
     () =>
       patterns.map((pattern) => (
-        <option value={pattern[0].value} key={pattern[1].value}>
+        <MenuItem value={pattern[0].value} key={pattern[1].value}>
           {pattern[0].value}
-        </option>
+        </MenuItem>
       )),
     [patterns]
   );
@@ -99,9 +105,9 @@ const ProductSpeciesContainer = ({
           : model[0].value;
 
         return (
-          <option value={value} key={value}>
+          <MenuItem value={value} key={value}>
             {value}
-          </option>
+          </MenuItem>
         );
       }),
     [modelsForSelectedCategory, models]
@@ -125,32 +131,29 @@ const ProductSpeciesContainer = ({
       setFieldValue('subcategory', '');
       setFieldValue('model', '');
     }
-    handleSpeciesChange(e)
+    handleSpeciesChange(e);
   };
 
   const handleSpeciesChange = (e) => {
     handleChange(e);
     toggleFieldsChanged(true);
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
       {selectsLabels.map(({ label, name, type, required }, idx) =>
         type === 'select' ? (
-          <FormControl
-            className={styles.formControl}
-            key={label}
-          >
-            <InputLabel htmlFor={label}>{`${label}${required ? '*' : ''}`}</InputLabel>
+          <FormControl className={styles.formControl} key={label}>
+            <InputLabel htmlFor={label}>{`${label}${
+              required ? '*' : ''
+            }`}</InputLabel>
             <Select
               name={name}
-              native
               error={touched[name] && !!errors[name]}
               value={values[name]}
               onChange={handleSelectChange}
               onBlur={handleBlur}
             >
-              <option aria-label='None' value='' />
               {options[idx]}
             </Select>
           </FormControl>
@@ -194,7 +197,7 @@ ProductSpeciesContainer.propTypes = {
 };
 
 ProductSpeciesContainer.defaultProps = {
-  toggleFieldsChanged: () => {},
+  toggleFieldsChanged: () => {}
 };
 
 export default ProductSpeciesContainer;

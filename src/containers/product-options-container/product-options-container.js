@@ -2,20 +2,21 @@ import { useSelector } from 'react-redux';
 import {
   Badge,
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   Checkbox,
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   Input,
   InputLabel,
   MenuItem,
   Select,
-  Typography
+  Typography,
+  Tooltip
 } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import useStyles from './product-options-container.styles';
@@ -86,14 +87,19 @@ const ProductOptionsContainer = ({
           <Grid item key={item.name}>
             <Card>
               <CardContent>
+                <Grid container justify='flex-end'>
+                  <Tooltip title={DELETE_PRODUCT_BTN} placement='top'>
+                    <IconButton
+                      className={styles.removeIcon}
+                      onClick={() => handleDeleteOption(option, item.name)}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
                 {cardContent}
                 {priceDetail}
               </CardContent>
-              <CardActions>
-                <Button onClick={() => handleDeleteOption(option, item.name)}>
-                  {DELETE_PRODUCT_BTN}
-                </Button>
-              </CardActions>
             </Card>
           </Grid>
         );
@@ -191,11 +197,18 @@ const ProductOptionsContainer = ({
             />
           }
           label={
-            additions && additions.length
-              ? `${additions[0].name[0].value}(${
-                additions[0].additionalPrice[0].value / 100
-              } грн)`
-              : null
+            additions && additions.length ? (
+              <>
+                {additions[0].name[0].value}
+                <span>
+                  (
+                  <span className={styles.additionalPrice}>
+                    +{additions[0].additionalPrice[0].value / 100} грн
+                  </span>
+                  )
+                </span>
+              </>
+            ) : null
           }
         />
       </Grid>

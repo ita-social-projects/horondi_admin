@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Paper,
-  Tabs,
-  Tab,
-  Typography,
-  Grid,
-  Box
-} from '@material-ui/core';
+import { TextField, Paper, Tabs, Tab, Box } from '@material-ui/core';
 import useStyles from './product-info-container.styles';
 
 import Editor from '../../components/editor';
@@ -18,13 +8,15 @@ import TabPanel from '../../components/tab-panel';
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
-const { SELECT_LANGUAGES } = productsTranslations;
-const { infoLabels } = config.product;
+const {
+  product: { infoLabels },
+  STRAP_LENGTH_IN_CM,
+  languages
+} = config;
+
+const { CORRECT_DATA_ERROR } = productsTranslations;
 
 const ProductInfoContainer = ({
-  preferedLanguages,
-  setPreferedLanguages,
-  checkedLanguages,
   variant,
   values,
   errors,
@@ -39,42 +31,11 @@ const ProductInfoContainer = ({
 
   const [tabValue, setTabValue] = useState(0);
 
-  const handleCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    setPreferedLanguages({
-      ...preferedLanguages,
-      [name]: { name, checked }
-    });
-    toggleFieldsChanged(true);
-    if (!checked) {
-      infoLabels.forEach((label) => setFieldValue(`${name}${label.name}`, ''));
-    }
-  };
-
   const handleTabsChange = (e, newValue) => {
     setTabValue(newValue);
   };
 
-  const langCheckboxes = Object.values(
-    preferedLanguages
-  ).map(({ name, checked }) => (
-    <FormControlLabel
-      key={name}
-      control={
-        <Checkbox
-          checked={checked}
-          onChange={handleCheckboxChange}
-          name={name}
-          color='primary'
-        />
-      }
-      label={name}
-    />
-  ));
-
-  const languageTabs = checkedLanguages.map(({ name }) => (
-    <Tab label={name} key={name} />
-  ));
+  const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
 
   const handleInfoChange = (e) => {
     handleChange(e);
@@ -87,30 +48,22 @@ const ProductInfoContainer = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Grid container alignItems='center' spacing={2}>
-        <Grid item>
-          <Typography className={styles.title}>{SELECT_LANGUAGES}</Typography>
-        </Grid>
-        <Grid item>{langCheckboxes}</Grid>
-      </Grid>
-      {languageTabs.length ? (
-        <Paper className={styles.paper}>
-          <Tabs onChange={handleTabsChange} value={tabValue} aria-label='tabs'>
-            {languageTabs}
-          </Tabs>
-        </Paper>
-      ) : null}
-      {checkedLanguages.map((lang, idx) => (
-        <TabPanel index={idx} value={tabValue} key={lang.name}>
+    <form onSubmit={handleSubmit} className={styles.container}>
+      <Paper className={styles.paper}>
+        <Tabs onChange={handleTabsChange} value={tabValue} aria-label='tabs'>
+          {languageTabs}
+        </Tabs>
+      </Paper>
+      {languages.map((lang, idx) => (
+        <TabPanel index={idx} value={tabValue} key={`${lang}-tab`}>
           {infoLabels.map(({ label, name, required }) =>
             name === 'description' ? (
               <Box key={label} ml={1} my={2} className={styles.editor}>
                 <Editor
-                  name={`${lang.name}-${name}`}
-                  value={values[`${lang.name}-${name}`]}
+                  name={`${lang}-${name}`}
+                  value={values[`${lang}-${name}`]}
                   onEditorChange={(value) =>
-                    handleDescriptionChange(value, lang.name)
+                    handleDescriptionChange(value, lang)
                   }
                   placeholder={label}
                 />
@@ -118,34 +71,39 @@ const ProductInfoContainer = ({
             ) : (
               <TextField
                 key={name}
-                name={`${lang.name}-${name}`}
+                name={name === STRAP_LENGTH_IN_CM ? name : `${lang}-${name}`}
                 className={styles.textfield}
                 id={name}
                 label={`${label}${required ? '*' : ''}`}
                 error={
-                  touched[`${lang.name}-${name}`] &&
-                  !!errors[`${lang.name}-${name}`]
+                  touched[`${lang}-${name}`] && !!errors[`${lang}-${name}`]
                 }
                 helperText={
-                  touched[`${lang.name}-${name}`] &&
-                  errors[`${lang.name}-${name}`]
+                  touched[`${lang}-${name}`] && errors[`${lang}-${name}`]
                 }
-                value={values[`${lang.name}-${name}`]}
+                value={
+                  name === STRAP_LENGTH_IN_CM
+                    ? values[name]
+                    : values[`${lang}-${name}`]
+                }
                 onChange={handleInfoChange}
                 onBlur={handleBlur}
                 variant={variant}
+                inputProps={name === STRAP_LENGTH_IN_CM ? { min: 0 } : {}}
+                type={name === STRAP_LENGTH_IN_CM ? 'number' : 'string'}
               />
             )
           )}
         </TabPanel>
       ))}
+      <div className={styles.error}>
+        {!!Object.keys(errors).length && CORRECT_DATA_ERROR}
+      </div>
     </form>
   );
 };
 
 ProductInfoContainer.propTypes = {
-  setPreferedLanguages: PropTypes.func.isRequired,
-  checkedLanguages: PropTypes.arrayOf(PropTypes.object).isRequired,
   values: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ).isRequired,
@@ -154,14 +112,12 @@ ProductInfoContainer.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  preferedLanguages: PropTypes.objectOf(PropTypes.object),
   setFieldValue: PropTypes.func.isRequired,
   variant: PropTypes.string,
   toggleFieldsChanged: PropTypes.func
 };
 
 ProductInfoContainer.defaultProps = {
-  preferedLanguages: {},
   toggleFieldsChanged: () => {},
   variant: 'standard'
 };

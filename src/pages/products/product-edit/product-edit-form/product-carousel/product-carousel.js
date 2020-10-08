@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from 'react-multi-carousel';
 import {
@@ -11,13 +11,14 @@ import {
   setPrimaryImageToUpload
 } from '../../../../../redux/products/products.actions';
 import { closeDialog } from '../../../../../redux/dialog-window/dialog-window.actions';
-import UploadButtonContainer from '../../../../../containers/upload-button-container';
+import UploadButton from '../../../../../components/buttons/upload-button';
 import { config } from '../../../../../configs';
 import { productsTranslations } from '../../../../../translations/product.translations';
 import useSuccessSnackbar from '../../../../../utils/use-success-snackbar';
 import { useStyles } from './product-carousel.styles';
 import 'react-multi-carousel/lib/styles.css';
 import './product-carousel.css';
+import DeleteButton from '../../../../../components/buttons/delete-button';
 
 const {
   imagePrefix,
@@ -162,13 +163,12 @@ const ProductCarousel = ({ toggleFieldsChanged }) => {
               }}
             >
               <Box mt={1}>
-                <UploadButtonContainer
+                <UploadButton
                   className={styles.imageBtn}
                   buttonLabel={idx === 0 ? UPDATE_MAIN_PHOTO : NEW_PHOTOS}
                   onChangeHandler={
                     idx === 0 ? handlePrimaryImageLoad : handleMultipleFilesLoad
                   }
-                  startIcon
                   multiple={idx !== 0}
                 />
               </Box>
@@ -176,16 +176,17 @@ const ProductCarousel = ({ toggleFieldsChanged }) => {
             {(idx !== 0 && !prefix) ||
             (idx !== 0 && product.images.additional.length > 1) ? (
                 <Grid item>
-                <Box mt={1}>
-                    <Button
+                  <Box mt={1}>
+                    <DeleteButton
                       className={styles.imageBtn}
-                      variant='outlined'
-                      onClick={() => handleImagesDeleting(product._id, url, prefix, name)}
+                      onClick={() =>
+                        handleImagesDeleting(product._id, url, prefix, name)
+                      }
                     >
-                    {DELETE_PRODUCT_BTN}
-                  </Button>
+                      {DELETE_PRODUCT_BTN}
+                    </DeleteButton>
                   </Box>
-              </Grid>
+                </Grid>
               ) : null}
           </Grid>
         </div>

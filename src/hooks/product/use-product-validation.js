@@ -3,8 +3,8 @@ import { useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import { config } from '../configs';
-import { productsTranslations } from '../translations/product.translations';
+import { config } from '../../configs';
+import { productsTranslations } from '../../translations/product.translations';
 
 const {
   product: { infoLabels },
@@ -27,7 +27,8 @@ const useProductValidation = (
   checkedLanguages,
   onSubmit,
   formikSpeciesValues,
-  product
+  product,
+  formikPriceValue
 ) => {
   const [shouldValidate, setShouldValidate] = useState(false);
 
@@ -36,12 +37,14 @@ const useProductValidation = (
     mainMaterial,
     innerMaterial,
     closure,
-    description
+    description,
+    strapLengthInCm
   } = useSelector(({ Products }) => ({
     name: Products[product].name,
     mainMaterial: Products[product].mainMaterial,
     innerMaterial: Products[product].innerMaterial,
     closure: Products[product].closure,
+    strapLengthInCm: Products[product].strapLengthInCm,
     description: Products[product].description
   }));
 
@@ -56,31 +59,33 @@ const useProductValidation = (
         [`${lang}-${infoLabels[3].name}`]: closure.length
           ? closure[idx].value
           : '',
-        [`${lang}-${infoLabels[4].name}`]: description[idx].value
+        [`${infoLabels[4].name}`]: strapLengthInCm,
+        [`${lang}-${infoLabels[5].name}`]: description[idx].value
       }))
     )
     : {};
 
   const yupInfoSchema = useMemo(
     () =>
-      checkedLanguages.length
+      checkedLanguages
         ? Object.assign(
-          ...checkedLanguages.map(({ name }) => ({
-            [`${name}-${infoLabels[0].name}`]: Yup.string()
+          ...languages.map((lang) => ({
+            [`${lang}-${infoLabels[0].name}`]: Yup.string()
               .min(6, NAME_TOO_SHORT_MESSAGE)
               .max(50, NAME_TOO_LONG_MESSAGE)
               .required(REQUIRED_FIELD),
-            [`${name}-${infoLabels[1].name}`]: Yup.string()
+            [`${lang}-${infoLabels[1].name}`]: Yup.string()
               .min(2, MAIN_MATERIAL_TOO_SHORT_MESSAGE)
               .max(150, MAIN_MATERIAL_TOO_LONG_MESSAGE)
               .required(REQUIRED_FIELD),
-            [`${name}-${infoLabels[2].name}`]: Yup.string()
+            [`${lang}-${infoLabels[2].name}`]: Yup.string()
               .min(2, INNER_MATERIAL_TOO_SHORT_MESSAGE)
               .max(150, INNER_MATERIAL_TOO_LONG_MESSAGE),
-            [`${name}-${infoLabels[3].name}`]: Yup.string()
+            [`${lang}-${infoLabels[3].name}`]: Yup.string()
               .min(2, CLOSURE_TOO_SHORT_MESSAGE)
               .max(100, CLOSURE_TOO_LONG_MESSAGE)
-          }))
+          })),
+          { strapLengthInCm: Yup.number() }
         )
         : {},
     [checkedLanguages]
@@ -92,17 +97,25 @@ const useProductValidation = (
       subcategory: Yup.string().required(),
       pattern: Yup.string().required(),
       colors: Yup.string().required(),
-      model: Yup.string().required(),
-      basePrice: Yup.number().min(1).required(),
-      strapLengthInCm: Yup.number()
+      model: Yup.string().required()
     }
+    : {};
+
+  const yupPriceSchema = formikPriceValue
+    ? { basePrice: Yup.number().min(1, REQUIRED_FIELD).required() }
     : {};
 
   const yupSchema = Yup.object().shape({
     ...yupInfoSchema,
-    ...yupSpeciesSchema
+    ...yupSpeciesSchema,
+    ...yupPriceSchema
   });
-  const formikValues = { ...formikInfoValues, ...formikSpeciesValues };
+
+  const formikValues = {
+    ...formikInfoValues,
+    ...formikSpeciesValues,
+    ...formikPriceValue
+  };
 
   const {
     values,
@@ -121,6 +134,11 @@ const useProductValidation = (
     validateOnChange: shouldValidate
   });
 
+  const handleValuesSubmit = async () => {
+    setShouldValidate(true);
+    await submitForm();
+  };
+
   return {
     shouldValidate,
     setShouldValidate,
@@ -131,7 +149,8 @@ const useProductValidation = (
     handleChange,
     handleBlur,
     submitForm,
-    setFieldValue
+    setFieldValue,
+    handleValuesSubmit
   };
 };
 

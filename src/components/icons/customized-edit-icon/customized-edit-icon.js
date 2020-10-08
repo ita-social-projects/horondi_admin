@@ -7,7 +7,7 @@ import { config } from '../../../configs';
 
 const { EDIT_TITLE } = config.buttonTitles;
 
-const EditButton = (props) => {
+const CustomizedEditIcon = (props) => {
   const { onClickHandler, size } = props;
 
   return (
@@ -23,9 +23,9 @@ const EditButton = (props) => {
   );
 };
 
-EditButton.propTypes = {
+CustomizedEditIcon.propTypes = {
   onClickHandler: PropTypes.func.isRequired,
   size: PropTypes.string.isRequired
 };
 
-export default EditButton;
+export default CustomizedEditIcon;

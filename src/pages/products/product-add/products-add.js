@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { Paper } from '@material-ui/core';
 import { useStyles } from './products-add.styles';
 
-import useProductHandlers from '../../../utils/use-product-handlers';
-import ProductsStepper from './product-add-stepper/product-add-stepper';
+import useProductHandlers from '../../../hooks/product/use-product-handlers';
+import CustomizedStepper from '../../../components/customized-stepper/customized-stepper';
 import {
   getProductSpecies,
   getProductOptions
@@ -15,13 +15,12 @@ import ProductAddSpecies from './product-add-species';
 import ProductAddOptions from './product-add-options';
 import ProductAddImages from './product-add-images';
 import ProductAddSubmit from './product-add-submit';
+import ProductAddPrice from './product-add-price';
 
 const ProductsAdd = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
-    preferedLanguages,
-    setPreferedLanguages,
     colors,
     patterns,
     models,
@@ -37,8 +36,7 @@ const ProductsAdd = () => {
     additionalImages,
     setAdditionalImages,
     primaryImage,
-    setPrimaryImage,
-    checkedLanguages
+    setPrimaryImage
   } = useProductHandlers();
 
   useEffect(() => {
@@ -58,12 +56,9 @@ const ProductsAdd = () => {
 
   const productAddInfoStep = (
     <ProductAddInfo
-      preferedLanguages={preferedLanguages}
-      setPreferedLanguages={setPreferedLanguages}
       createProductInfo={createProductInfo}
       handleNext={handleNext}
       activeStep={activeStep}
-      checkedLanguages={checkedLanguages}
     />
   );
 
@@ -79,6 +74,14 @@ const ProductsAdd = () => {
       getModelToSend={getModelToSend}
       getPatternToSend={getPatternToSend}
       getSelectedCategory={getSelectedCategory}
+    />
+  );
+
+  const productAddPriceStep = (
+    <ProductAddPrice
+      handleBack={handleBack}
+      handleNext={handleNext}
+      activeStep={activeStep}
     />
   );
 
@@ -113,13 +116,13 @@ const ProductsAdd = () => {
       activeStep={activeStep}
       handleBack={handleBack}
       getSelectedCategory={getSelectedCategory}
-      checkedLanguages={checkedLanguages}
     />
   );
 
   const steps = [
     productAddInfoStep,
     productAddSpeciesStep,
+    productAddPriceStep,
     productAddOptionsStep,
     productAddImagesStep,
     productAddSubmitStep
@@ -127,12 +130,7 @@ const ProductsAdd = () => {
 
   return (
     <Paper className={styles.container}>
-      <ProductsStepper
-        steps={steps}
-        activeStep={activeStep}
-        handleNext={handleNext}
-        handleBack={handleBack}
-      />
+      <CustomizedStepper steps={steps} activeStep={activeStep} />
     </Paper>
   );
 };

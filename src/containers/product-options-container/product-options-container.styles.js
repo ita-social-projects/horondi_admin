@@ -10,6 +10,12 @@ const useStyles = makeStyles((theme) => ({
   },
   gridContainer: {
     marginTop: theme.spacing(2)
+  },
+  additionalPrice: {
+    fontWeight: 600
+  },
+  removeIcon: {
+    color: theme.textColor
   }
 }));
 

@@ -1,9 +1,8 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { config } from '../configs';
+import { config } from '../../configs';
 
 const {
-  selectedLanguages,
   languages,
   product: { optionsValues }
 } = config;
@@ -18,17 +17,11 @@ const useProductHandlers = () => {
     })
   );
 
-  const [preferedLanguages, setPreferedLanguages] = useState(selectedLanguages);
   const [selectedOptions, setOptions] = useState(optionsValues);
   const [primaryImage, setPrimaryImage] = useState('');
   const [additionalImages, setAdditionalImages] = useState([]);
 
   const { bottomMaterials: materials, sizes } = productOptions;
-
-  const checkedLanguages = useMemo(
-    () => Object.values(preferedLanguages).filter(({ checked }) => checked),
-    [preferedLanguages]
-  );
 
   const categoriesNames = useMemo(
     () => [
@@ -186,7 +179,10 @@ const useProductHandlers = () => {
     description: [
       { lang: languages[0], value: values['uk-description'] },
       { lang: languages[1], value: values['en-description'] }
-    ]
+    ],
+    strapLengthInCm: values.strapLengthInCm
+      ? values.strapLengthInCm
+      : Number(values.strapLengthInCm)
   });
 
   const getSelectedCategory = useCallback(
@@ -195,8 +191,6 @@ const useProductHandlers = () => {
   );
 
   return {
-    preferedLanguages,
-    setPreferedLanguages,
     models,
     modelNames,
     colors,
@@ -217,8 +211,7 @@ const useProductHandlers = () => {
     getColorsToSend,
     getModelToSend,
     getPatternToSend,
-    getSelectedCategory,
-    checkedLanguages
+    getSelectedCategory
   };
 };
 

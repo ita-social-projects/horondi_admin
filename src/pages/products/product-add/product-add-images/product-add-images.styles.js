@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   error: {
     position: 'absolute',
-    color: '#e53935',
+    color: theme.palette.error.main,
     left: theme.spacing(1),
     bottom: 39
   },

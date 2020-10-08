@@ -13,19 +13,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import TabPanel from '../../../../components/tab-panel';
 import { config } from '../../../../configs';
 import { useStyles } from './product-add-submit.styles';
-import ProductAddDetail from '../product-add-detail';
-import StepperButtons from '../product-add-stepper/stepper-control-buttons';
+import Detail from '../../../../components/detail';
+import StepperButtons from '../../../../components/stepper-control-buttons';
 import { addProduct } from '../../../../redux/products/products.actions';
 
-const { infoLabels, selectsLabels, optionsLabels } = config.product;
+const {
+  product: { infoLabels, selectsLabels, optionsLabels, priceLabel },
+  languages
+} = config;
 
 const ProductAddSubmit = ({
   selectedOptions,
   additions,
   activeStep,
   handleBack,
-  getSelectedCategory,
-  checkedLanguages
+  getSelectedCategory
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -43,7 +45,6 @@ const ProductAddSubmit = ({
     colors,
     pattern,
     basePrice,
-    strapLengthInCm,
     category,
     subcategory
   } = productToSend;
@@ -78,66 +79,57 @@ const ProductAddSubmit = ({
     subcategory: selectedSubCategory.name[0].value,
     model: selectedModel.name[0].value,
     colors: colors[0].simpleName[0].value,
-    pattern: pattern[0].value,
-    basePrice,
-    strapLengthInCm
+    pattern: pattern[0].value
   };
 
   const species = selectsLabels.map(({ name, label }) => (
-    <ProductAddDetail key={name} title={label} text={speciesNames[name]} />
+    <Detail key={name} title={label} text={speciesNames[name]} />
   ));
 
-  const tabPanels = checkedLanguages.map((checkedLang, idx) => (
-    <TabPanel index={idx} value={tabValue} key={checkedLang.name}>
+  const tabPanels = languages.map((lang, idx) => (
+    <TabPanel index={idx} value={tabValue} key={lang}>
       {infoLabels.map(({ label, name }) => {
-        const text = productToSend[name].find(
-          ({ lang }) => lang === checkedLang.name
-        ).value;
+        const text = productToSend[name].length
+          ? productToSend[name].find((product) => product.lang === lang).value
+          : productToSend[name];
 
-        return text ? (
-          <ProductAddDetail key={name} title={label} text={text} />
-        ) : null;
+        return text ? <Detail key={name} title={label} text={text} /> : null;
       })}
     </TabPanel>
   ));
 
-  const languageTabs = checkedLanguages.map(({ name }) => (
-    <Tab label={name} key={`${name}-tab`} />
+  const languageTabs = languages.map((lang) => (
+    <Tab label={lang} key={`${lang}-tab`} />
   ));
 
   return (
     <div>
       <Card>
-        {languageTabs.length ? (
-          <AppBar position='static'>
-            <Tabs
-              onChange={handleTabsChange}
-              value={tabValue}
-              aria-label='tabs'
-            >
-              {languageTabs}
-            </Tabs>
-          </AppBar>
-        ) : null}
+        <AppBar position='static'>
+          <Tabs onChange={handleTabsChange} value={tabValue} aria-label='tabs'>
+            {languageTabs}
+          </Tabs>
+        </AppBar>
         <CardContent>
           {tabPanels}
           <Divider />
           <div className={styles.cardContent}>
             {species}
+            {<Detail title={priceLabel.label} text={basePrice} />}
             {selectedOptions.sizes.length ? (
-              <ProductAddDetail
+              <Detail
                 title={optionsLabels[0].label}
                 text={selectedOptions.sizes.sort().reverse().join(', ')}
               />
             ) : null}
             {selectedOptions.bottomMaterials.length ? (
-              <ProductAddDetail
+              <Detail
                 title={optionsLabels[1].label}
                 text={selectedOptions.bottomMaterials.join(', ')}
               />
             ) : null}
             {selectedOptions.additions ? (
-              <ProductAddDetail title={additions[0].name[0].value} text='так' />
+              <Detail title={additions[0].name[0].value} text='так' />
             ) : null}
           </div>
         </CardContent>
@@ -156,12 +148,6 @@ const ProductAddSubmit = ({
 ProductAddSubmit.propTypes = {
   selectedOptions: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.bool])
-  ).isRequired,
-  checkedLanguages: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      checked: PropTypes.bool
-    })
   ).isRequired,
   getSelectedCategory: PropTypes.func.isRequired,
   handleBack: PropTypes.func.isRequired,
