@@ -30,7 +30,7 @@ export const businessPages = [
     ]
   },
   {
-    _id: 'fdc7529135f2c050c877a67a',
+    _id: '0c3c7954dd35de268bed4fe8',
     code: 'privacy-policy-test',
     title: [{ value: 'Умови конфіденційності' }, { value: 'Privacy policy' }],
     text: [
