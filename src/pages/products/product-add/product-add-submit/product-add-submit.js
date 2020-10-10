@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Tab,
   Tabs,
-  AppBar,
+  Paper,
   Card,
   CardContent,
   Divider,
@@ -105,11 +105,11 @@ const ProductAddSubmit = ({
   return (
     <div>
       <Card>
-        <AppBar position='static'>
+        <Paper>
           <Tabs onChange={handleTabsChange} value={tabValue} aria-label='tabs'>
             {languageTabs}
           </Tabs>
-        </AppBar>
+        </Paper>
         <CardContent>
           {tabPanels}
           <Divider />
