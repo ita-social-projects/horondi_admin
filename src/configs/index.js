@@ -326,10 +326,22 @@ export const config = {
     ],
     infoLabels: [
       { label: 'Назва', name: 'name', required: true },
-      { label: 'Основний матеріал', name: 'mainMaterial', required: true },
-      { label: 'Внутрішній матеріал', name: 'innerMaterial', required: false },
+      {
+        label: 'Основний матеріал',
+        name: 'mainMaterial',
+        required: true
+      },
+      {
+        label: 'Внутрішній матеріал',
+        name: 'innerMaterial',
+        required: false
+      },
       { label: 'Замок', name: 'closure', required: false },
-      { label: 'Довжина лямок(см)', name: 'strapLengthInCm', required: false },
+      {
+        label: 'Довжина лямок(см)',
+        name: 'strapLengthInCm',
+        required: false
+      },
       { label: 'Опис', name: 'description', required: false }
     ],
     selectsLabels: [

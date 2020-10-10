@@ -7,7 +7,7 @@ import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
 const {
-  product: { infoLabels },
+  product: { infoLabels, selectsLabels },
   languages
 } = config;
 
@@ -92,13 +92,9 @@ const useProductValidation = (
   );
 
   const yupSpeciesSchema = formikSpeciesValues
-    ? {
-      category: Yup.string().required(),
-      subcategory: Yup.string().required(),
-      pattern: Yup.string().required(),
-      colors: Yup.string().required(),
-      model: Yup.string().required()
-    }
+    ? Object.fromEntries(
+      selectsLabels.map(({ name }) => [name, Yup.string().required()])
+    )
     : {};
 
   const yupPriceSchema = formikPriceValue

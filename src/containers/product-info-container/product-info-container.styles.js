@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
     left: theme.spacing(1),
     bottom: 0.5
+  },
+  errorTab: {
+    backgroundColor: theme.palette.error.main
   }
 }));
 

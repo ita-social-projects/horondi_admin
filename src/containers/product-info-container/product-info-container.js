@@ -35,7 +35,20 @@ const ProductInfoContainer = ({
     setTabValue(newValue);
   };
 
-  const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
+  const languageTabs = languages.map((lang) => {
+    const errorsKeys = Object.keys(errors);
+    const tabErrors = infoLabels.filter(({ name }) =>
+      errorsKeys.includes(`${lang}-${name}`)
+    );
+
+    return (
+      <Tab
+        className={tabErrors.length ? styles.errorTab : ''}
+        label={lang}
+        key={lang}
+      />
+    );
+  });
 
   const handleInfoChange = (e) => {
     handleChange(e);
