@@ -99,7 +99,7 @@ const ProductAddSubmit = ({
   ));
 
   const languageTabs = languages.map((lang) => (
-    <Tab label={lang} key={`${lang}-tab`} />
+    <Tab label={lang} key={`${lang}`} />
   ));
 
   return (
