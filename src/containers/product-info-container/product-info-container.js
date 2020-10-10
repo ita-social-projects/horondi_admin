@@ -62,7 +62,7 @@ const ProductInfoContainer = ({
   };
 
   const inputsList = languages.map((lang, idx) => (
-    <TabPanel index={idx} value={tabValue} key={`${lang}-tab`}>
+    <TabPanel index={idx} value={tabValue} key={`${lang}`}>
       {infoLabels.map(({ label, name, required }) => {
         const inputLangName = `${lang}-${name}`;
         const inputError = touched[inputLangName] && errors[inputLangName];
