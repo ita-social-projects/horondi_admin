@@ -116,21 +116,21 @@ const ProductAddSubmit = ({
           <div className={styles.cardContent}>
             {species}
             {<Detail title={priceLabel.label} text={basePrice} />}
-            {selectedOptions.sizes.length ? (
+            {!!selectedOptions.sizes.length && (
               <Detail
                 title={optionsLabels[0].label}
                 text={selectedOptions.sizes.sort().reverse().join(', ')}
               />
-            ) : null}
-            {selectedOptions.bottomMaterials.length ? (
+            )}
+            {!!selectedOptions.bottomMaterials.length && (
               <Detail
                 title={optionsLabels[1].label}
                 text={selectedOptions.bottomMaterials.join(', ')}
               />
-            ) : null}
-            {selectedOptions.additions ? (
+            )}
+            {!!selectedOptions.additions && (
               <Detail title={additions[0].name[0].value} text='так' />
-            ) : null}
+            )}
           </div>
         </CardContent>
       </Card>
