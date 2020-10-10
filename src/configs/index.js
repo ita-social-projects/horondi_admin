@@ -401,21 +401,10 @@ export const config = {
   sortAsc: 'sortAsc',
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
-  selectedLanguages: {
-    uk: {
-      name: 'uk',
-      checked: false
-    },
-    en: {
-      name: 'en',
-      checked: false
-    }
-  },
   initialLanguageValues: [
     { lang: 'uk', value: '' },
     { lang: 'en', value: '' }
   ],
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
-  STRAP_LENGTH_IN_CM: 'strapLengthInCm',
-  BASE_PRICE: 'basePrice'
+  UAH: 'грн'
 };

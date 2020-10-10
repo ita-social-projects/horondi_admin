@@ -105,9 +105,9 @@ const ProductAddImages = ({
           ))}
         </div>
       </div>
-      {shouldValidate && (!primaryImage || !additionalImages.length) ? (
+      {shouldValidate && (!primaryImage || !additionalImages.length) && (
         <div className={styles.error}>{REQUIRED_PHOTOS}</div>
-      ) : null}
+      )}
       <StepperButtons
         activeStep={activeStep}
         handleBack={handleBack}

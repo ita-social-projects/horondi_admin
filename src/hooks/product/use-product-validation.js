@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 
@@ -24,7 +24,7 @@ const {
 } = productsTranslations;
 
 const useProductValidation = (
-  checkedLanguages,
+  formikInfo,
   onSubmit,
   formikSpeciesValues,
   product,
@@ -48,7 +48,7 @@ const useProductValidation = (
     description: Products[product].description
   }));
 
-  const formikInfoValues = checkedLanguages
+  const formikInfoValues = formikInfo
     ? Object.assign(
       ...languages.map((lang, idx) => ({
         [`${lang}-${infoLabels[0].name}`]: name[idx].value,
@@ -65,31 +65,27 @@ const useProductValidation = (
     )
     : {};
 
-  const yupInfoSchema = useMemo(
-    () =>
-      checkedLanguages
-        ? Object.assign(
-          ...languages.map((lang) => ({
-            [`${lang}-${infoLabels[0].name}`]: Yup.string()
-              .min(6, NAME_TOO_SHORT_MESSAGE)
-              .max(50, NAME_TOO_LONG_MESSAGE)
-              .required(REQUIRED_FIELD),
-            [`${lang}-${infoLabels[1].name}`]: Yup.string()
-              .min(2, MAIN_MATERIAL_TOO_SHORT_MESSAGE)
-              .max(150, MAIN_MATERIAL_TOO_LONG_MESSAGE)
-              .required(REQUIRED_FIELD),
-            [`${lang}-${infoLabels[2].name}`]: Yup.string()
-              .min(2, INNER_MATERIAL_TOO_SHORT_MESSAGE)
-              .max(150, INNER_MATERIAL_TOO_LONG_MESSAGE),
-            [`${lang}-${infoLabels[3].name}`]: Yup.string()
-              .min(2, CLOSURE_TOO_SHORT_MESSAGE)
-              .max(100, CLOSURE_TOO_LONG_MESSAGE)
-          })),
-          { strapLengthInCm: Yup.number() }
-        )
-        : {},
-    [checkedLanguages]
-  );
+  const yupInfoSchema = formikInfo
+    ? Object.assign(
+      ...languages.map((lang) => ({
+        [`${lang}-${infoLabels[0].name}`]: Yup.string()
+          .min(6, NAME_TOO_SHORT_MESSAGE)
+          .max(50, NAME_TOO_LONG_MESSAGE)
+          .required(REQUIRED_FIELD),
+        [`${lang}-${infoLabels[1].name}`]: Yup.string()
+          .min(2, MAIN_MATERIAL_TOO_SHORT_MESSAGE)
+          .max(150, MAIN_MATERIAL_TOO_LONG_MESSAGE)
+          .required(REQUIRED_FIELD),
+        [`${lang}-${infoLabels[2].name}`]: Yup.string()
+          .min(2, INNER_MATERIAL_TOO_SHORT_MESSAGE)
+          .max(150, INNER_MATERIAL_TOO_LONG_MESSAGE),
+        [`${lang}-${infoLabels[3].name}`]: Yup.string()
+          .min(2, CLOSURE_TOO_SHORT_MESSAGE)
+          .max(100, CLOSURE_TOO_LONG_MESSAGE)
+      })),
+      { strapLengthInCm: Yup.number() }
+    )
+    : {};
 
   const yupSpeciesSchema = formikSpeciesValues
     ? Object.fromEntries(

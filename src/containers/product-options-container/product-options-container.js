@@ -1,4 +1,7 @@
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+
 import {
   Badge,
   Box,
@@ -17,13 +20,15 @@ import {
   Tooltip
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import useStyles from './product-options-container.styles';
+
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
-const { optionsLabels, sizeCardsLabels, materialsLabels } = config.product;
+const {
+  product: { optionsLabels, sizeCardsLabels, materialsLabels },
+  UAH
+} = config;
 
 const { DELETE_PRODUCT_BTN, ADDITIONAL_PRICE } = productsTranslations;
 
@@ -156,7 +161,7 @@ const ProductOptionsContainer = ({
     <div>
       {optionsLabels.map(({ label, name }, idx) => (
         <div key={name}>
-          {selectedOptions[name].length ? <Box mt={2.5} /> : null}
+          {!!selectedOptions[name].length && <Box mt={2.5} />}
           <Grid container className={styles.select}>
             <Grid item>
               <Badge
@@ -197,18 +202,19 @@ const ProductOptionsContainer = ({
             />
           }
           label={
-            additions && additions.length ? (
-              <>
+            !!(additions && additions.length) && (
+              <div>
                 {additions[0].name[0].value}
                 <span>
                   (
                   <span className={styles.additionalPrice}>
-                    +{additions[0].additionalPrice[0].value / 100} грн
+                    +{additions[0].additionalPrice[0].value / 100}
+                    {` ${UAH}`}
                   </span>
                   )
                 </span>
-              </>
-            ) : null
+              </div>
+            )
           }
         />
       </Grid>

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { TextField, Paper, Tabs, Tab, Box } from '@material-ui/core';
 import useStyles from './product-info-container.styles';
 
 import Editor from '../../components/editor';
 import TabPanel from '../../components/tab-panel';
+
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
 const {
   product: { infoLabels },
-  STRAP_LENGTH_IN_CM,
   languages
 } = config;
 
@@ -56,9 +57,46 @@ const ProductInfoContainer = ({
   };
 
   const handleDescriptionChange = (value, lang) => {
-    setFieldValue(`${lang}-description`, value);
+    setFieldValue(`${lang}-${infoLabels[5].name}`, value);
     toggleFieldsChanged(true);
   };
+
+  const inputsList = languages.map((lang, idx) => (
+    <TabPanel index={idx} value={tabValue} key={`${lang}-tab`}>
+      {infoLabels.map(({ label, name, required }) => {
+        const inputLangName = `${lang}-${name}`;
+        const inputError = touched[inputLangName] && errors[inputLangName];
+        const isStrapLengthInput = !!(name === infoLabels[4].name);
+
+        return name === infoLabels[5].name ? (
+          <Box key={label} ml={1} my={2} className={styles.editor}>
+            <Editor
+              name={inputLangName}
+              value={values[inputLangName]}
+              onEditorChange={(value) => handleDescriptionChange(value, lang)}
+              placeholder={label}
+            />
+          </Box>
+        ) : (
+          <TextField
+            id={name}
+            key={name}
+            className={styles.textField}
+            variant={variant}
+            type={isStrapLengthInput ? 'number' : 'string'}
+            name={isStrapLengthInput ? name : inputLangName}
+            inputProps={isStrapLengthInput ? { min: 0 } : {}}
+            value={isStrapLengthInput ? values[name] : values[inputLangName]}
+            onChange={handleInfoChange}
+            onBlur={handleBlur}
+            label={`${label}${required ? '*' : ''}`}
+            error={!!inputError}
+            helperText={inputError}
+          />
+        );
+      })}
+    </TabPanel>
+  ));
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
@@ -67,48 +105,7 @@ const ProductInfoContainer = ({
           {languageTabs}
         </Tabs>
       </Paper>
-      {languages.map((lang, idx) => (
-        <TabPanel index={idx} value={tabValue} key={`${lang}-tab`}>
-          {infoLabels.map(({ label, name, required }) =>
-            name === 'description' ? (
-              <Box key={label} ml={1} my={2} className={styles.editor}>
-                <Editor
-                  name={`${lang}-${name}`}
-                  value={values[`${lang}-${name}`]}
-                  onEditorChange={(value) =>
-                    handleDescriptionChange(value, lang)
-                  }
-                  placeholder={label}
-                />
-              </Box>
-            ) : (
-              <TextField
-                key={name}
-                name={name === STRAP_LENGTH_IN_CM ? name : `${lang}-${name}`}
-                className={styles.textfield}
-                id={name}
-                label={`${label}${required ? '*' : ''}`}
-                error={
-                  touched[`${lang}-${name}`] && !!errors[`${lang}-${name}`]
-                }
-                helperText={
-                  touched[`${lang}-${name}`] && errors[`${lang}-${name}`]
-                }
-                value={
-                  name === STRAP_LENGTH_IN_CM
-                    ? values[name]
-                    : values[`${lang}-${name}`]
-                }
-                onChange={handleInfoChange}
-                onBlur={handleBlur}
-                variant={variant}
-                inputProps={name === STRAP_LENGTH_IN_CM ? { min: 0 } : {}}
-                type={name === STRAP_LENGTH_IN_CM ? 'number' : 'string'}
-              />
-            )
-          )}
-        </TabPanel>
-      ))}
+      {inputsList}
       <div className={styles.error}>
         {!!Object.keys(errors).length && CORRECT_DATA_ERROR}
       </div>

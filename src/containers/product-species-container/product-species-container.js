@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+
 import {
   FormControl,
   Select,
@@ -127,9 +128,9 @@ const ProductSpeciesContainer = ({
   }, [errors]);
 
   const handleSelectChange = (e) => {
-    if (e.target.name === 'category') {
-      setFieldValue('subcategory', '');
-      setFieldValue('model', '');
+    if (e.target.name === selectsLabels[0].name) {
+      setFieldValue(selectsLabels[1].name, '');
+      setFieldValue(selectsLabels[2].name, '');
     }
     handleSpeciesChange(e);
   };
