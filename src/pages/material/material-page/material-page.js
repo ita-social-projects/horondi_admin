@@ -20,7 +20,7 @@ import LoadingBar from '../../../components/loading-bar';
 import { materialTranslations } from '../../../translations/material.translations';
 
 const { routes } = config.app;
-const { REMOVE_MESSAGE } = config.materialMessages;
+const { REMOVE_MESSAGE } = config.messages;
 const { REMOVE_MATERIAL_TITLE, CREATE_MATERIAL_TITLE } = config.buttonTitles;
 
 const pathToMaterialAddPage = routes.pathToAddMaterial;
@@ -79,7 +79,7 @@ const MaterialPage = () => {
   const materialItems = list.length
     ? list.map((materialItem) => (
       <TableContainerRow
-        key={materialItem.id}
+        key={materialItem._id}
         showAvatar={false}
         id={materialItem.id}
         name={materialItem.name[0].value}

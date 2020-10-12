@@ -36,7 +36,7 @@ import {
 
 const { languages, materialErrorMessages } = config;
 
-function MaterialForm({ material, id }) {
+function MaterialForm({ edit, material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -117,7 +117,7 @@ function MaterialForm({ material, id }) {
         dispatch(setSnackBarStatus(true));
         return;
       }
-      if (material && material.purpose) {
+      if (edit) {
         dispatch(
           updateMaterial({
             id,
@@ -317,6 +317,7 @@ const valueShape = PropTypes.shape({
 
 MaterialForm.propTypes = {
   id: PropTypes.string,
+  edit: PropTypes.bool,
   material: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.arrayOf(valueShape),
@@ -360,6 +361,7 @@ MaterialForm.propTypes = {
 
 MaterialForm.defaultProps = {
   id: '',
+  edit: false,
   match: {},
   values: {},
   errors: {},
