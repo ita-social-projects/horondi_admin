@@ -117,7 +117,7 @@ function MaterialForm({ material, id }) {
         dispatch(setSnackBarStatus(true));
         return;
       }
-      if (material.purpose) {
+      if (material && material.purpose) {
         dispatch(
           updateMaterial({
             id,
@@ -311,7 +311,6 @@ function MaterialForm({ material, id }) {
     </div>
   );
 }
-
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });

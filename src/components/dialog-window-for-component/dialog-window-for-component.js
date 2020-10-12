@@ -48,7 +48,7 @@ const DialogWindowForComponent = ({ dialogTitle, buttonTitle, component }) => {
 DialogWindowForComponent.propTypes = {
   dialogTitle: PropTypes.string.isRequired,
   buttonTitle: PropTypes.string.isRequired,
-  component: PropTypes.shape({}).isRequired
+  component: PropTypes.element.isRequired
 };
 
 export default DialogWindowForComponent;
