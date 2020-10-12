@@ -55,6 +55,6 @@ export const getUserByToken = async (token) => {
       }
     }
   });
-  const { data } = result;
-  return data.getUserByToken;
+
+  return result.data.getUserByToken;
 };

@@ -20,12 +20,8 @@ const DeleteButton = (props) => {
 };
 
 DeleteButton.propTypes = {
-  onClickHandler: PropTypes.func,
+  onClickHandler: PropTypes.func.isRequired,
   size: PropTypes.string.isRequired
-};
-
-DeleteButton.defaultProps = {
-  onClickHandler: () => {}
 };
 
 export default DeleteButton;

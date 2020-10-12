@@ -78,6 +78,8 @@ export const config = {
   allowedforRegistrationRoles: ['admin'],
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
+    categories: ['Зображення', 'Категорія', 'Дії'],
+    subcategories: ['Зображення', 'Підкатегорія', 'Доступна', 'Дії'],
     patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
@@ -91,8 +93,6 @@ export const config = {
       'Кількість покупок',
       'Дії'
     ],
-    categories: ['№', 'Категорія', 'Дії'],
-    subcategories: ['№', 'Підкатегорія', 'Доступна', 'Дії'],
     categoryName: ['№', 'Мова', 'Назва', 'Дії'],
     categoryImages: ['№', 'Розмір', 'Посилання', 'Дії'],
     users: {
@@ -169,6 +169,7 @@ export const config = {
     REMOVE_TITLE: 'Видалити новину',
     PATTERN_REMOVE_TITLE: 'Видалити гобелен',
     REMOVE_BUSINESS_PAGE_TITLE: 'Видалити сторінку',
+    SAVE_TITLE: 'Зберегти',
     CANCEL_TITLE: 'Відмінити',
     LOGOUT_TITLE: 'Вихід',
     CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку',
@@ -182,18 +183,30 @@ export const config = {
     GO_BACK_TITLE: 'Назад',
     DELETE_CATEGORY: 'Видалити категорію',
     ADD_SUBCATEGORY: 'Додати підкатегорію',
-    ADD_CATEGORY_IMAGE: 'Зберегти посилання',
+    ADD_CATEGORY_IMAGE: 'Додати зображення',
     ADD_CATEGORY_NAME: 'Додати назву',
     CANCEL: 'Відмінити',
     SAVE_CATEGORY: 'Зберегти категорію',
     SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
     CREATE_SPECIAL_USER: 'Створити спецкористувача',
+    ADD_PHOTO_LABEL: '+',
     CREATE_CATEGORY: 'Створити категорію',
     CREATE_SUBCATEGORY: 'Створити підкатегорію',
     USER_UNACTIVE_TITLE: 'Деактивувати',
     REMOVE_COMMENT_TITLE: 'Видалити коментар',
     SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
-    HIDE_COMMENTS_TITLE: 'Приховати коментарі'
+    HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+    titleGenerator: (editMode, isMain) => {
+      const editModeMap = new Map([
+        [true, 'Зберегти'],
+        [false, 'Створити']
+      ]);
+      const isMainMap = new Map([
+        [true, 'категорію'],
+        [false, 'підкатегорію']
+      ]);
+      return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
+    }
   },
   messages: {
     PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
@@ -206,18 +219,7 @@ export const config = {
       'Ви впевнені,що хочете змінити статус користувача?',
     REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
     REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
-    NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
-    titleGenerator: (editMode, isMain) => {
-      const editModeMap = new Map([
-        [true, 'Зберегти'],
-        [false, 'Створити']
-      ]);
-      const isMainMap = new Map([
-        [true, 'категорію'],
-        [false, 'підкатегорію']
-      ]);
-      return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
-    }
+    NO_COMMENTS_MESSAGE: 'Коментарі відсутні'
   },
   formRegExp: {
     patternMaterial: '^[A-Za-z0-9]*$',
@@ -287,6 +289,7 @@ export const config = {
       avatarText: 'Фото'
     }
   },
+  IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   patternImageLink: `https://horondi.blob.core.windows.net/horondi/images/`,
   newsPerPage: 6,
   contactsPaginationPayload: {
@@ -324,4 +327,8 @@ export const config = {
     mainPageTitle: 'Iнформація про гобелени',
     createPageTitle: 'Створити матеріал'
   }
+};
+export const inputTypes = {
+  button: 'button',
+  submit: 'submit'
 };

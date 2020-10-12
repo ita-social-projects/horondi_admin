@@ -1,19 +1,19 @@
 import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import DeleteButton from './delete-button';
-import { config } from '../../../configs';
+import StandardButton from './standard-button';
+import { config, inputTypes } from '../../../configs';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const { DELETE_TITLE } = config.buttonTitles;
+const { SAVE_TITLE } = config.buttonTitles;
 
-describe('delete button tests', () => {
+describe('standard button tests', () => {
   const size = 'small';
-  const id = '5f62f5386d3d7c14710c0111';
-  const mockCallBack = jest.fn(() => id);
+  const title = SAVE_TITLE;
+  const mockCallBack = jest.fn();
   const component = mount(
-    <DeleteButton size={size} onClickHandler={mockCallBack} />
+    <StandardButton size={size} title={title} onClickHandler={mockCallBack} />
   );
 
   it('should click', () => {
@@ -24,12 +24,11 @@ describe('delete button tests', () => {
   });
   it('should exist and have value', () => {
     expect(component.exists());
-    expect(component.find('button').prop('aria-label')).toEqual(DELETE_TITLE);
-    expect(component.find('button').prop('title')).toEqual(DELETE_TITLE);
+    expect(component.prop('title')).toEqual(SAVE_TITLE);
     expect(component.prop('onClickHandler')).toEqual(mockCallBack);
   });
   it('should have type', () => {
-    expect(component.find('button').type()).toEqual('button');
+    expect(component.find(inputTypes.button).type()).toEqual(inputTypes.button);
   });
   it('should have props', () => {
     expect(component.props().size).toBeDefined();
@@ -38,7 +37,7 @@ describe('delete button tests', () => {
     expect(component.props().onClickHandler).toBeTruthy();
   });
   it('should have default props', () => {
-    expect(DeleteButton.propTypes.size).toBeDefined();
-    expect(DeleteButton.propTypes.onClickHandler).toBeDefined();
+    expect(StandardButton.propTypes.title).toBeDefined();
+    expect(StandardButton.propTypes.onClickHandler).toBeDefined();
   });
 });

@@ -28,6 +28,8 @@ const {
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
 } = config.patternErrorMessages;
 
+const { SAVE_TITLE } = config.buttonTitles;
+
 const { languages } = config;
 
 const PatternForm = ({ pattern, id }) => {
@@ -240,7 +242,7 @@ const PatternForm = ({ pattern, id }) => {
           className={styles.saveButton}
           data-cy='save'
           type='submit'
-          title='Зберегти'
+          title={SAVE_TITLE}
         />
       </form>
     </div>

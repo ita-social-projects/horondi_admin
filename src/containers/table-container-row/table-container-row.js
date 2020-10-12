@@ -23,6 +23,7 @@ const TableContainerRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
+
   const tableCells = Object.values(properties).map((property) => (
     <TableCell key={property}>{property}</TableCell>
   ));
