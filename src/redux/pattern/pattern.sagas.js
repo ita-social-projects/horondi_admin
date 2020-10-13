@@ -25,7 +25,7 @@ import {
   GET_PATTERN
 } from './pattern.types';
 
-import { config, routes } from '../../configs';
+import { config } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -71,7 +71,7 @@ export function* handleAddPattern({ payload }) {
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
-    yield put(push(routes.pathToPatterns));
+    yield put(push(config.routes.pathToPatterns));
   } catch (error) {
     yield call(handlePatternError, error);
   }
@@ -98,7 +98,7 @@ export function* handlePatternUpdate({ payload }) {
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));
-    yield put(push(routes.pathToPatterns));
+    yield put(push(config.routes.pathToPatterns));
   } catch (error) {
     yield call(handlePatternError, error);
   }

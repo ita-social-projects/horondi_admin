@@ -32,7 +32,7 @@ import ProductCarousel from './product-carousel';
 import DeleteButton from '../../../../components/buttons/delete-button';
 import { config } from '../../../../configs';
 
-const { priceLabel } = config.product;
+const { priceLabel } = config.labels.product;
 
 const {
   DELETE_PRODUCT_MESSAGE,
@@ -146,6 +146,7 @@ const ProductEditForm = () => {
           colors: getColorsToSend(colors),
           pattern: getPatternToSend(pattern),
           model: getModelToSend(model)._id,
+          images: product.images,
           options,
           category,
           subcategory,

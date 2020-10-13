@@ -5,7 +5,7 @@ import { Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
 import { useStyles } from './customized-stepper.styles';
 import { config } from '../../configs';
 
-const { stepsLabels } = config.product;
+const { stepsLabels } = config.labels.product;
 
 const CustomizedStepper = ({ steps, activeStep }) => {
   const styles = useStyles();

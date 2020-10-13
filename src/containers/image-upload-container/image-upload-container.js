@@ -24,7 +24,7 @@ const ImageUploadContainer = ({
           multiple={multiple}
         />
         <Button
-          id='add-contact'
+          data-cy='add-photo'
           variant='outlined'
           color='primary'
           component='span'
@@ -46,8 +46,12 @@ const ImageUploadContainer = ({
 };
 ImageUploadContainer.propTypes = {
   handler: PropTypes.func.isRequired,
-  fileName: PropTypes.string.isRequired,
+  fileName: PropTypes.string,
   srcForAvatar: PropTypes.oneOfType([PropTypes.string]).isRequired,
-  multiple: PropTypes.bool.isRequired
+  multiple: PropTypes.bool
+};
+ImageUploadContainer.defaultProps = {
+  multiple: false,
+  fileName: ''
 };
 export default ImageUploadContainer;

@@ -8,7 +8,7 @@ import ProductsNavFilters from './products-nav-filters';
 import ProductsNavClearFilters from './products-nav-clear-filters/products-nav-clear-filters';
 
 import { productsTranslations } from '../../../../translations/product.translations';
-import { routes } from '../../../../configs';
+import routes from '../../../../configs/routes';
 
 const { ADD_PRODUCT } = productsTranslations;
 

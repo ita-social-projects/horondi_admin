@@ -5,7 +5,9 @@ import useProductSpecies from './use-product-species';
 
 const {
   languages,
-  product: { optionsValues }
+  labels: {
+    product: { optionsValues }
+  }
 } = config;
 
 const useProductHandlers = () => {

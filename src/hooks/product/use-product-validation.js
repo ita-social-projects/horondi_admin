@@ -7,7 +7,9 @@ import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
 const {
-  product: { infoLabels, selectsLabels },
+  labels: {
+    product: { infoLabels, selectsLabels }
+  },
   languages
 } = config;
 

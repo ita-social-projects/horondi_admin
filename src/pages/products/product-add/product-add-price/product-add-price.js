@@ -10,7 +10,7 @@ import { setProductToSend } from '../../../../redux/products/products.actions';
 
 const {
   priceLabel: { name, label }
-} = config.product;
+} = config.labels.product;
 
 const ProductAddPrice = ({ activeStep, handleBack, handleNext }) => {
   const dispatch = useDispatch();

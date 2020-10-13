@@ -36,20 +36,19 @@ const ProductEdit = ({ id }) => {
     };
   }, [id, dispatch]);
 
-  if (loading) {
+  if (
+    loading ||
+    !product.name ||
+    !product.name[0].value ||
+    !productOptions.sizes.length ||
+    !categories.length
+  ) {
     return <LoadingBar />;
   }
 
   return (
     <div>
-      {product.name &&
-      product.name[0].value &&
-      productOptions.sizes.length &&
-      categories.length ? (
-          <ProductEditForm />
-        ) : (
-          <LoadingBar />
-        )}
+      <ProductEditForm />
     </div>
   );
 };

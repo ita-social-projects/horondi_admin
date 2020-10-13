@@ -11,7 +11,9 @@ import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
 const {
-  product: { infoLabels },
+  labels: {
+    product: { infoLabels }
+  },
   languages
 } = config;
 

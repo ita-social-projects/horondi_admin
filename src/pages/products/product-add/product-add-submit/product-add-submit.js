@@ -18,7 +18,9 @@ import StepperButtons from '../../../../components/stepper-control-buttons';
 import { addProduct } from '../../../../redux/products/products.actions';
 
 const {
-  product: { infoLabels, selectsLabels, optionsLabels, priceLabel },
+  labels: {
+    product: { infoLabels, selectsLabels, optionsLabels, priceLabel }
+  },
   languages
 } = config;
 
@@ -75,11 +77,11 @@ const ProductAddSubmit = ({
   );
 
   const speciesNames = {
-    category: selectedCategory.name[0].value,
-    subcategory: selectedSubCategory.name[0].value,
-    model: selectedModel.name[0].value,
-    colors: colors[0].simpleName[0].value,
-    pattern: pattern[0].value
+    category: selectedCategory ? selectedCategory.name[0].value : '',
+    subcategory: selectedSubCategory ? selectedSubCategory.name[0].value : '',
+    model: selectedModel ? selectedModel.name[0].value : '',
+    colors: colors.length ? colors[0].simpleName[0].value : '',
+    pattern: pattern.length ? pattern[0].value : ''
   };
 
   const species = selectsLabels.map(({ name, label }) => (

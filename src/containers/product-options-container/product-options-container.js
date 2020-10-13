@@ -26,7 +26,9 @@ import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
 const {
-  product: { optionsLabels, sizeCardsLabels, materialsLabels },
+  labels: {
+    product: { optionsLabels, sizeCardsLabels, materialsLabels }
+  },
   UAH
 } = config;
 

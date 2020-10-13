@@ -43,7 +43,8 @@ import {
   deleteImages
 } from './products.operations';
 
-import { config, routes } from '../../configs';
+import { config } from '../../configs';
+import routes from '../../configs/routes';
 
 import {
   setSnackBarSeverity,
@@ -123,11 +124,10 @@ export function* handleProductAdd() {
     yield put(setProductsLoading(true));
     const productState = yield select(({ Products }) => Products);
     const addedProduct = yield call(addProduct, productState);
-    yield put(push(`/product/${addedProduct._id}`));
     yield call(handleFilterLoad);
     yield put(clearProductToSend());
     yield put(setFilesToUpload([]));
-    yield put(setProductsLoading(false));
+    yield put(push(`/product/${addedProduct._id}`));
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);

@@ -14,7 +14,7 @@ import useStyles from './product-species-container.styles';
 import { productsTranslations } from '../../translations/product.translations';
 import { config } from '../../configs';
 
-const { selectsLabels } = config.product;
+const { selectsLabels } = config.labels.product;
 const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations;
 
 const ProductSpeciesContainer = ({

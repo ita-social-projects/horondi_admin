@@ -9,7 +9,7 @@ import { useStyles } from './stepper-control-buttons.styles';
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
-const { stepsLabels } = config.product;
+const { stepsLabels } = config.labels.product;
 const { NEXT, CREATE_PRODUCT, BACK } = productsTranslations;
 
 const StepperControlButtons = ({
