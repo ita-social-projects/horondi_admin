@@ -15,6 +15,7 @@ import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
 import * as pagination from './pagination';
+import titles from './titles';
 
 export const config = {
   app: {
@@ -117,5 +118,6 @@ export const config = {
   tableHeadRowTitles,
   formRegExp,
   labels,
-  pagination
+  pagination,
+  titles
 };

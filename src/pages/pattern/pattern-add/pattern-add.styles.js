@@ -41,5 +41,11 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '.7rem',
     padding: '.2rem'
   },
-  patternInputFile: { display: 'none' }
+  patternInputFile: { display: 'none' },
+  patternTitle: {
+    marginBottom: '10px',
+    fontSize: 24,
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold'
+  }
 }));
