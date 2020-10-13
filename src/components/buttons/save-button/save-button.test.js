@@ -12,15 +12,23 @@ describe('save button tests', () => {
   const size = 'small';
   const title = SAVE_TITLE;
   const type = inputTypes.button;
-  const mockCallBack = jest.fn();
-  const component = mount(
-    <SaveButton
-      size={size}
-      title={title}
-      type={type}
-      onClickHandler={mockCallBack}
-    />
-  );
+  const mockCallBack = jest.fn(() => {});
+  let component;
+
+  beforeEach(() => {
+    component = mount(
+      <SaveButton
+        size={size}
+        title={title}
+        type={type}
+        onClickHandler={mockCallBack}
+      />
+    );
+  });
+
+  afterEach(() => {
+    component.unmount();
+  });
 
   it('should click', () => {
     expect(component).toMatchSnapshot();
@@ -43,10 +51,16 @@ describe('save button tests', () => {
     expect(component.props().onClickHandler).toBeDefined();
     expect(component.props().onClickHandler).toBeTruthy();
   });
-  it('should have default props', () => {
+  it('should have propTypes', () => {
     expect(SaveButton.propTypes.title).toBeDefined();
     expect(SaveButton.propTypes.size).toBeDefined();
     expect(SaveButton.propTypes.type).toBeDefined();
     expect(SaveButton.propTypes.onClickHandler).toBeDefined();
+  });
+  it('should have default props', () => {
+    expect(SaveButton.defaultProps.size).toBeDefined();
+    expect(SaveButton.defaultProps.size).toEqual(size);
+    expect(SaveButton.defaultProps.onClickHandler).toBeDefined();
+    expect(SaveButton.defaultProps.onClickHandler()).toEqual(mockCallBack());
   });
 });

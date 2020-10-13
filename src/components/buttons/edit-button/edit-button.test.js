@@ -12,10 +12,14 @@ describe('edit button tests', () => {
   const size = 'small';
   const mockCallBack = jest.fn();
 
-  const component = mount(
-    <EditButton size={size} onClickHandler={mockCallBack} />
-  );
+  let component;
 
+  beforeEach(() => {
+    component = mount(<EditButton size={size} onClickHandler={mockCallBack} />);
+  });
+  afterEach(() => {
+    component.unmount();
+  });
   it('should click', () => {
     expect(component).toMatchSnapshot();
     expect(mockCallBack.mock.calls.length).toBe(0);
