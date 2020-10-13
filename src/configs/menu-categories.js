@@ -9,13 +9,13 @@ import SmsIcon from '@material-ui/icons/Sms';
 import routes from './routes';
 
 const menuCategories = [
-  ['Новини', routes.pathToNews, ImportContactsIcon],
-  ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
-  ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
-  ['Категорії', routes.pathToCategories, CategoryIcon],
   ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
+  ['Категорії', routes.pathToCategories, CategoryIcon],
   ['Користувачі', routes.pathToUsers, PeopleIcon],
+  ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
   ['Останні коментарі', routes.pathToComments, SmsIcon],
-  ['Гобелени', routes.pathToPatterns, PaletteIcon]
+  ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
+  ['Гобелени', routes.pathToPatterns, PaletteIcon],
+  ['Новини', routes.pathToNews, ImportContactsIcon]
 ];
 export default menuCategories;

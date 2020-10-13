@@ -49,5 +49,6 @@ export const contactErrorMessages = {
   ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
   IMAGE_FORMAT_MESSAGE:
     'Введіть коректний формат, наприклад: https://example.com/',
-  ENTER_LINK_MESSAGE: 'Введіть посилання'
+  ENTER_LINK_MESSAGE: 'Введіть посилання',
+  SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт'
 };

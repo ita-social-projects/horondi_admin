@@ -27,11 +27,12 @@ const buttonTitles = {
   CREATE_SPECIAL_USER: 'Створити спецкористувача',
   CREATE_CATEGORY: 'Створити категорію',
   CREATE_SUBCATEGORY: 'Створити підкатегорію',
-  REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
   USER_UNACTIVE_TITLE: 'Деактивувати',
   REMOVE_COMMENT_TITLE: 'Видалити коментар',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+  ADD_PHOTO_LABEL: '+',
+
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([
       [true, 'Зберегти'],

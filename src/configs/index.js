@@ -65,6 +65,18 @@ export const config = {
     DARK_THEME: 'dark',
     LIGHT_THEME: 'light'
   },
+  paginationPayload: {
+    skip: 0,
+    limit: 5,
+    countPerPage: 6
+  },
+  IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
+  newsPerPage: 6,
+  contactsPaginationPayload: {
+    skip: 0,
+    limit: 6,
+    contactsPerPage: 7
+  },
   product: {
     sortBySelectOptions: [
       {
