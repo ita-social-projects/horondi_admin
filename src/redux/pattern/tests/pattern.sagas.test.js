@@ -4,7 +4,6 @@ import {
   handlePatternLoad,
   handlePatternsLoad,
   handleAddPattern,
-  handlePatternUpdate,
   handlePatternDelete
 } from '../pattern.sagas';
 import { setPatterns, setPatternLoading, setPattern } from '../pattern.actions';
