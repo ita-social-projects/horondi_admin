@@ -66,7 +66,6 @@ export const getMaterialById = async (id) => {
             colors {
               available
               code
-
               images {
                 thumbnail
                 small
@@ -74,6 +73,10 @@ export const getMaterialById = async (id) => {
                 large
               }
               simpleName {
+                lang
+                value
+              }
+              name {
                 lang
                 value
               }
@@ -138,7 +141,7 @@ export const createMaterial = async (payload) => {
     variables: payload,
 
     mutation: gql`
-      mutation($material: MaterialInput!, $images: Upload) {
+      mutation($material: MaterialInput!, $images: Upload!) {
         addMaterial(material: $material, images: $images) {
           ... on Material {
             _id
@@ -153,6 +156,7 @@ export const createMaterial = async (payload) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
+  console.log(result);
   const { data } = result;
 
   if (data.addMaterial.message) {
@@ -173,11 +177,17 @@ export const updateMaterial = async (id, material, images) => {
       images
     },
     mutation: gql`
-      mutation($id: ID!, $material: MaterialInput!,images:Upload) {
-        updateMaterial(id: $id, material: $material,images:$images) {
+      mutation($id: ID!, $material: MaterialInput!, $images: Upload) {
+        updateMaterial(id: $id, material: $material, images: $images) {
           ... on Material {
             name {
               value
+            }
+            additionalPrice {
+              value
+            }
+            colors {
+              code
             }
           }
           ... on Error {
@@ -190,6 +200,7 @@ export const updateMaterial = async (id, material, images) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
+  console.log(result);
   const { data } = result;
 
   if (data.updateMaterial.message) {

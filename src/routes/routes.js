@@ -31,6 +31,8 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+import MaterialDetails from '../pages/material/material-details/material-details';
+import MaterialColorPalette from '../pages/material/material-color-palette';
 
 const { routes } = config.app;
 
@@ -75,6 +77,16 @@ const Routes = () => {
         <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+        <Route
+          path={routes.pathToMaterialsDetails}
+          exact
+          component={MaterialDetails}
+        />
+        <Route
+          path={routes.pathToMaterialsColorPalette}
+          exact
+          component={MaterialColorPalette}
+        />
         <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
         <Route
           path={routes.pathToPatternDetails}

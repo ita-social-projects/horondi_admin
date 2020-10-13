@@ -83,6 +83,7 @@ function* handleAddMaterial({ payload }) {
     yield put(push(routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
+    console.log(error);
   }
 }
 
@@ -99,16 +100,18 @@ export function* handleMaterialDelete({ payload }) {
 }
 
 export function* handleMaterialUpdate({ payload }) {
-  const { id, newMaterial } = payload;
+  const { id, material, images } = payload;
   try {
     yield put(setMaterialLoading(true));
-    yield call(updateMaterial, id, newMaterial);
+    yield call(updateMaterial, id, material, images);
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
+    console.log(error);
   }
 }
+
 function* handleSuccessSnackbar(status) {
   yield put(setSnackBarSeverity('success'));
   yield put(setSnackBarMessage(status));

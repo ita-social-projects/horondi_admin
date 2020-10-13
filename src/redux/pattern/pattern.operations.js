@@ -188,6 +188,7 @@ export const updatePattern = async (payload) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
+  console.log(data);
   const { data } = result;
 
   if (data.updatePattern.message) {

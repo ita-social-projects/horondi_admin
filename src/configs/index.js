@@ -17,6 +17,8 @@ export const routes = {
   pathToNewsDetails: '/news/:id',
   pathToAddNews: '/newsadd',
   pathToMaterials: '/materials',
+  pathToMaterialsDetails: '/materials/:id',
+  pathToMaterialsColorPalette: '/materials/:id/colors',
   pathToAddMaterial: '/material/add',
   pathToMaterialDetails: '/materials/:id',
   pathToBusinessPages: '/business-pages',
@@ -85,6 +87,13 @@ export const config = {
   tableHeadRowTitles: {
     news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
     materials: ['Назва', 'Застосування', 'Доступний', 'Дії'],
+    materialsColors: [
+      'Фото',
+      'Повна назва',
+      'Коротка назва',
+      'Доступний',
+      'Дії'
+    ],
     patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
     businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
     products: [
@@ -209,7 +218,8 @@ export const config = {
     REMOVE_COMMENT_TITLE: 'Видалити коментар',
     SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
     HIDE_COMMENTS_TITLE: 'Приховати коментарі',
-    CLOSE_DIALOG_TITLE: 'Закрити вікно'
+    CLOSE_DIALOG_TITLE: 'Закрити вікно',
+    GO_TO_MATERIAL_COLOR_PALLET: 'Редагувати палітру'
   },
   messages: {
     REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
@@ -379,6 +389,9 @@ export const config = {
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
     createPageTitle: 'Створити матеріал'
+  },
+  materialColorPaletteTitle: {
+    mainPageTitle: 'Iнформація про палітру кольорів'
   },
   colorTitles: {
     createColorTitle: 'Створити колір'

@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 import TabPanel from '../tab-panel';
 import { SaveButton } from '../buttons';
 import LoadingBar from '../loading-bar';
@@ -88,7 +89,7 @@ function MaterialForm({ material, id }) {
       )
       .required(materialErrorMessages.VALIDATION_ERROR)
   });
-
+  console.log(material);
   const {
     values,
     handleChange,
@@ -106,25 +107,25 @@ function MaterialForm({ material, id }) {
       enDescription: material.description[1].value || '',
       purpose: material.purpose || '',
       available: material.available || true,
-      additionalPrice: 0
+      additionalPrice: +material.additionalPrice[1].value / 100 || 0
     },
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
       console.log(!colors.length);
-      if (!colors.length) {
+      if (!colors.length && !id) {
         dispatch(setSnackBarSeverity('error'));
         dispatch(setSnackBarMessage(config.errorMessages.NO_COLORS));
         dispatch(setSnackBarStatus(true));
         return;
       }
-      if (material.purpose) {
+      if (id) {
         dispatch(
           updateMaterial({
             id,
-            material: { ...newMaterial, colors },
-            images: colorImagesToUpload
+            material: { ...newMaterial }
           })
         );
+        return;
       }
       dispatch(
         addMaterial({
@@ -206,6 +207,31 @@ function MaterialForm({ material, id }) {
   const colorClickHandler = () => {
     dispatch(showColorDialogWindow(true));
   };
+  const colorPaletteClickHandler = () => {
+    dispatch(push(`/materials/${id}/colors`));
+  };
+
+  const materialColorPaletteButton = id ? (
+    <SaveButton
+      className={styles.colorPaletteButton}
+      data-cy='go-to-color-palette'
+      type='button'
+      color='secondary'
+      title={config.buttonTitles.GO_TO_MATERIAL_COLOR_PALLET}
+      onClickHandler={colorPaletteClickHandler}
+    />
+  ) : null;
+
+  const createColorButton = !id ? (
+    <SaveButton
+      className={styles.saveButton}
+      data-cy='open-dialog'
+      type='button'
+      color='secondary'
+      title={config.buttonTitles.CREATE_COLOR_TITLE}
+      onClickHandler={colorClickHandler}
+    />
+  ) : null;
 
   return (
     <div className={styles.container}>
@@ -252,6 +278,8 @@ function MaterialForm({ material, id }) {
           <div>
             <AppBar position='static'>
               <Tabs
+                indicatorColor='primary'
+                textColor='primary'
                 className={styles.tabs}
                 value={tabsValue}
                 onChange={handleTabsChange}
@@ -276,20 +304,14 @@ function MaterialForm({ material, id }) {
             >
               {config.buttonTitles.GO_BACK_TITLE}
             </Button>
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='open-dialog'
-              type='button'
-              color='secondary'
-              title={config.buttonTitles.CREATE_COLOR_TITLE}
-              onClickHandler={colorClickHandler}
-            />
+            {createColorButton}
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
               type='submit'
               title={config.buttonTitles.SAVE_MATERIAL}
             />
+            {materialColorPaletteButton}
           </div>
         </div>
       </form>
@@ -320,12 +342,16 @@ MaterialForm.propTypes = {
     _id: PropTypes.string,
     name: PropTypes.arrayOf(valueShape),
     description: PropTypes.arrayOf(valueShape),
+    colors: PropTypes.arrayOf(valueShape),
+    simpleName: PropTypes.arrayOf(valueShape),
+    additionalPrice: PropTypes.arrayOf(valueShape),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
     purpose: PropTypes.string,
     available: PropTypes.bool
   }),
+
   values: PropTypes.shape({
     available: PropTypes.bool,
     purpose: PropTypes.string,
@@ -385,7 +411,15 @@ MaterialForm.defaultProps = {
       thumbnail: ''
     },
     available: false,
-    purpose: ''
+    purpose: '',
+    additionalPrice: [
+      {
+        value: 0
+      },
+      {
+        value: 0
+      }
+    ]
   }
 };
 

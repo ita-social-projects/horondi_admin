@@ -36,6 +36,11 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     marginLeft: '.5rem'
   },
+  colorPaletteButton: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    marginLeft: '.5rem'
+  },
   returnButton: {
     margin: theme.spacing(2)
   },

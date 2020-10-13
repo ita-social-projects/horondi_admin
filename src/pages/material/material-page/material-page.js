@@ -55,7 +55,7 @@ const MaterialPage = () => {
       })
     );
   }, [dispatch, materialsPerPage, currentPage]);
-  console.log(currentPage);
+
   useEffect(() => {
     if (!list.length && currentPage > 0) {
       console.log(!list.length && currentPage > 0);
