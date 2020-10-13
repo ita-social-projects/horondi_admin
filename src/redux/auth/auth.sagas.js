@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 import { setAuth, setAuthError, setAuthLoading } from './auth.actions';
 import { loginAdmin, getUserByToken } from './auth.operations';
 import { LOGIN_USER, CHECK_USER_BY_TOKEN, LOGOUT_USER } from './auth.types';
-import { config } from '../../configs';
+import { statuses } from '../../configs';
 import {
   setToLocalStorage,
   getFromLocalStorage,
@@ -15,7 +15,7 @@ import {
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
 
-const { LOGIN_PAGE_STATUS } = config.statuses;
+const { LOGIN_PAGE_STATUS } = statuses;
 
 function* handleAdminLoad({ payload }) {
   try {
@@ -47,6 +47,7 @@ function* handleAdminCheckByToken() {
     yield put(setAuth(true));
     yield put(setAuthLoading(false));
   } catch (error) {
+    console.error(error);
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
     clearLocalStorage(null);

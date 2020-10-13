@@ -24,9 +24,7 @@ import * as Yup from 'yup';
 import { useStyles } from './login-page.styles';
 import { loginUser } from '../../../redux/auth/auth.actions';
 import LoadingBar from '../../../components/loading-bar';
-import { config } from '../../../configs';
-
-const { formRegExp, loginErrorMessages } = config;
+import { loginErrorMessages, formRegExp } from '../../../configs';
 
 const LoginPage = () => {
   const classes = useStyles();

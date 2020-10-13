@@ -15,10 +15,8 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useStyles } from './nav-menu.styles';
 
-import { config } from '../../configs';
+import { menuCategories } from '../../configs';
 import { setSideMenuStatus } from '../../redux/theme/theme.actions';
-
-const { menuCategories } = config.app;
 
 const DRAWER_TEMPORARY = 'temporary';
 const DRAWER_PERMANENT = 'permanent';

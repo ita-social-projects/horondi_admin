@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { TextField, AppBar, Tabs, Grid, Tab } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { config } from '../../../configs';
 import useColorHandlers from '../../../utils/use-color-handlers';
 import LoadingBar from '../../../components/loading-bar';
 import {
@@ -16,8 +15,16 @@ import TabPanel from '../../../components/tab-panel';
 import CheckboxOptions from '../../../components/checkbox-options';
 import { SaveButton } from '../../../components/buttons';
 import ImageUploadContainer from '../../../containers/image-upload-container';
+import {
+  labels,
+  config,
+  formRegExp,
+  buttonTitles,
+  colorErrorMessages,
+  materialErrorMessages
+} from '../../../configs';
 
-const { languages, materialErrorMessages, colorErrorMessages } = config;
+const { languages } = config;
 
 function CreateColor({
   imagesToUpload,
@@ -67,7 +74,7 @@ function CreateColor({
       .min(1, colorErrorMessages.MIN_LENGTH_MESSAGE)
       .max(8, colorErrorMessages.MAX_CODE_LENGTH_MESSAGE)
       .matches(
-        config.formRegExp.onlyPositiveDigits,
+        formRegExp.onlyPositiveDigits,
         colorErrorMessages.CODE_VALIDATION_ERROR
       )
       .required(colorErrorMessages.VALIDATION_ERROR)
@@ -100,7 +107,7 @@ function CreateColor({
         return;
       }
       if (foundCodes.includes(+rest.code)) {
-        setFieldError('code', config.colorErrorMessages.CODE_NOT_UNIQUE_ERROR);
+        setFieldError('code', colorErrorMessages.CODE_NOT_UNIQUE_ERROR);
         return;
       }
       dispatch(setNewColorToStore(color));
@@ -118,7 +125,7 @@ function CreateColor({
           id={`${lang}Name`}
           className={styles.textfield}
           variant='outlined'
-          label={config.labels.colors.name}
+          label={labels.colors.name}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
           multiline
           value={values[`${lang}Name`]}
@@ -132,7 +139,7 @@ function CreateColor({
           id={`${lang}SimpleName`}
           className={styles.textfield}
           variant='outlined'
-          label={config.labels.colors.simpleName}
+          label={labels.colors.simpleName}
           multiline
           error={touched[`${lang}SimpleName`] && !!errors[`${lang}SimpleName`]}
           value={values[`${lang}SimpleName`]}
@@ -172,13 +179,13 @@ function CreateColor({
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.colors.available,
+      label: labels.colors.available,
       handler: () => setFieldValue('available', !values.available)
     }
   ];
 
-  const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (evt) => {
+    if (evt.target.files && evt.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
         const filtered = [...colorImages].map((value) => value.toString());
@@ -186,9 +193,9 @@ function CreateColor({
           setFieldValue('colorImage', e.target.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(evt.target.files[0]);
       const imagesNames = imagesToUpload.map(({ name }) => name);
-      const newImages = Array.from(e.target.files).filter(
+      const newImages = Array.from(evt.target.files).filter(
         ({ name }) => !imagesNames.includes(name)
       );
       setFieldValue('image', [...imagesToUpload, ...newImages]);
@@ -214,7 +221,7 @@ function CreateColor({
               id='code'
               className={styles.textfield}
               variant='outlined'
-              label={config.labels.colors.code}
+              label={labels.colors.code}
               value={values.code}
               onChange={handleChange}
               error={touched.code && !!errors.code}
@@ -245,7 +252,7 @@ function CreateColor({
             className={styles.saveButton}
             data-cy='open-dialog'
             type='submit'
-            title={config.buttonTitles.CREATE_COLOR_TITLE}
+            title={buttonTitles.CREATE_COLOR_TITLE}
           />
         </div>
       </form>

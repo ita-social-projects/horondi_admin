@@ -22,7 +22,7 @@ import {
   UPDATE_BUSINESS_PAGE
 } from './business-pages.types';
 
-import { config } from '../../configs';
+import { statuses, routes } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -34,14 +34,13 @@ const {
   SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
-} = config.statuses;
+} = statuses;
 
 export function* handleBusinessPagesLoad() {
   try {
     yield put(setLoading(true));
     const businessPages = yield call(getAllBusinessPages);
     yield put(setBusinessPages(businessPages));
-
     yield put(setLoading(false));
   } catch (error) {
     yield call(handleBusinessPageError, error);
@@ -51,10 +50,8 @@ export function* handleBusinessPagesLoad() {
 function* handleCurrentBusinessPageLoad({ payload }) {
   try {
     yield put(setLoading(true));
-
     const businessPage = yield call(getBusinessPageById, payload);
     yield put(setCurrentBusinessPage(businessPage));
-
     yield put(setLoading(false));
   } catch (error) {
     yield call(handleBusinessPageError, error);
@@ -65,13 +62,11 @@ function* handleAddBusinessPage({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(createBusinessPage, payload);
-
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
-
     yield put(setLoading(false));
-    yield put(push('/business-pages'));
+    yield put(push(routes.pathToBusinessPages));
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
@@ -88,11 +83,9 @@ function* handleBusinessPageDelete({ payload }) {
     yield put(
       setBusinessPages(businessPages.filter((page) => page._id !== payload))
     );
-
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
     yield put(setSnackBarStatus(true));
-
     yield put(setLoading(false));
   } catch (error) {
     yield call(handleBusinessPageError, error);
@@ -103,13 +96,11 @@ function* handleBusinessPageUpdate({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(updateBusinessPage, payload);
-
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));
-
     yield put(setLoading(false));
-    yield put(push('/business-pages'));
+    yield put(push(routes.pathToBusinessPages));
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }

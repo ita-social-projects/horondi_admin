@@ -17,7 +17,14 @@ import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
-import { config, routes } from '../../configs';
+import {
+  patternErrorMessages,
+  config,
+  labels,
+  routes,
+  formRegExp,
+  buttonTitles
+} from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
@@ -26,7 +33,7 @@ const {
   PATTERN_VALIDATION_ERROR,
   PATTERN_ERROR_MESSAGE,
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
-} = config.patternErrorMessages;
+} = patternErrorMessages;
 
 const { languages } = config;
 
@@ -44,7 +51,7 @@ const PatternForm = ({ pattern, id }) => {
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
+      ? languages.map((lang) => <Tab label={lang} data-cy={lang} key={lang} />)
       : null;
 
   const patternValidationSchema = Yup.object().shape({
@@ -63,7 +70,7 @@ const PatternForm = ({ pattern, id }) => {
     material: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(
-        config.formRegExp.patternMaterial,
+        formRegExp.patternMaterial,
         PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
       )
       .required(PATTERN_ERROR_MESSAGE)
@@ -106,7 +113,7 @@ const PatternForm = ({ pattern, id }) => {
       value: values.handmade,
       checked: values.handmade,
       color: 'primary',
-      label: config.labels.pattern.handmade,
+      label: labels.pattern.handmade,
       handler: (e) => setFieldValue('handmade', !values.handmade)
     },
     {
@@ -115,7 +122,7 @@ const PatternForm = ({ pattern, id }) => {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.pattern.available,
+      label: labels.pattern.available,
       handler: (e) => setFieldValue('available', !values.available)
     }
   ];
@@ -140,7 +147,7 @@ const PatternForm = ({ pattern, id }) => {
         <Grid item xs={12}>
           <Paper className={styles.patternItemUpdate}>
             <span className={styles.imageUpload}>
-              {config.labels.pattern.avatarText}
+              {labels.pattern.avatarText}
             </span>
             <ImageUploadContainer
               handler={handleImageLoad}
@@ -148,20 +155,22 @@ const PatternForm = ({ pattern, id }) => {
                 patternImage ||
                 `${config.patternImageLink}${values.patternImage}`
               }
-              fileName={upload.name}
+              fileName={upload.name || pattern.images.thumbnail}
             />
             <TextField
-              id='material'
               data-cy='material'
+              id='material'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.pattern.material}
+              label={labels.pattern.material}
               value={values.material}
               onChange={handleChange}
               error={touched.material && !!errors.material}
             />
             {touched.material && errors.material && (
-              <div className={styles.inputError}>{errors.material}</div>
+              <div data-cy='material-error' className={styles.inputError}>
+                {errors.material}
+              </div>
             )}
           </Paper>
         </Grid>
@@ -179,7 +188,7 @@ const PatternForm = ({ pattern, id }) => {
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.patternItemUpdate}>
               <TextField
-                data-cy='Name'
+                data-cy={`${lang}Name`}
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
@@ -190,7 +199,12 @@ const PatternForm = ({ pattern, id }) => {
                 error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
               />
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+                <div
+                  data-cy={`${lang}Name-error`}
+                  className={styles.inputError}
+                >
+                  {errors[`${lang}Name`]}
+                </div>
               )}
               <TextField
                 data-cy={`${lang}Description`}
@@ -206,9 +220,11 @@ const PatternForm = ({ pattern, id }) => {
                   !!errors[`${lang}Description`]
                 }
               />
-              {touched[`${lang}Description`] &&
-                errors[`${lang}Description`] && (
-                <div className={styles.inputError}>
+              {touched[`${lang}Description`] && errors[`${lang}Description`] && (
+                <div
+                  data-cy={`${lang}Description-error`}
+                  className={styles.inputError}
+                >
                   {errors[`${lang}Description`]}
                 </div>
               )}
@@ -225,7 +241,7 @@ const PatternForm = ({ pattern, id }) => {
           className={styles.returnButton}
           data-cy='goBackButton'
         >
-          {config.buttonTitles.GO_BACK_TITLE}
+          {buttonTitles.GO_BACK_TITLE}
         </Button>
         <SaveButton
           className={styles.saveButton}

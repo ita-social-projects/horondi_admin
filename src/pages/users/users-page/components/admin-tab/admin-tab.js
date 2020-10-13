@@ -7,14 +7,16 @@ import { useStyles } from './admin-tab.styles';
 import TableContainerGenerator from '../../../../../containers/table-container-generator';
 import TableContainerRow from '../../../../../containers/table-container-row';
 import { userRoleTranslations } from '../../../../../translations/user.translations';
-import { config } from '../../../../../configs';
-
-const { routes } = config.app;
+import {
+  routes,
+  buttonTitles,
+  tableHeadRowTitles
+} from '../../../../../configs';
 
 const pathToRegisterAdminPage = routes.pathToRegisterAdmin;
 
-const tableHeaders = config.tableHeadRowTitles.users.adminTab;
-const { CREATE_SPECIAL_USER } = config.buttonTitles;
+const tableHeaders = tableHeadRowTitles.users.adminTab;
+const { CREATE_SPECIAL_USER } = buttonTitles;
 
 const AdminTab = (props) => {
   const { list, onDelete } = props;

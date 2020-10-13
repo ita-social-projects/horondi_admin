@@ -9,10 +9,9 @@ import LoadingBar from '../../../components/loading-bar';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 import { useStyles } from './news-add.styles';
 import { addArticle } from '../../../redux/news/news.actions';
-import { config } from '../../../configs';
+import { config, newsErrorMessages } from '../../../configs';
 
 const { languages } = config;
-const { newsErrorMessages } = config;
 
 const NewsAdd = () => {
   const classes = useStyles();

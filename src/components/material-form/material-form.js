@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   TextField,
   Grid,
@@ -24,7 +23,16 @@ import {
   updateMaterial,
   showColorDialogWindow
 } from '../../redux/material/material.actions';
-import { config, routes } from '../../configs';
+import {
+  config,
+  titles,
+  labels,
+  routes,
+  formRegExp,
+  buttonTitles,
+  errorMessages,
+  materialErrorMessages
+} from '../../configs';
 import CheckboxOptions from '../checkbox-options';
 import CreateColor from '../../pages/material/create-color';
 import DialogWindowWrapper from '../dialog-window-wrapper';
@@ -34,7 +42,7 @@ import {
   setSnackBarMessage
 } from '../../redux/snackbar/snackbar.actions';
 
-const { languages, materialErrorMessages } = config;
+const { languages } = config;
 
 function MaterialForm({ edit, material, id }) {
   const styles = useStyles();
@@ -83,7 +91,7 @@ function MaterialForm({ edit, material, id }) {
 
     additionalPrice: Yup.string()
       .matches(
-        config.formRegExp.onlyPositiveDigits,
+        formRegExp.onlyPositiveDigits,
         materialErrorMessages.PRICE_VALIDATION_ERROR
       )
       .required(materialErrorMessages.VALIDATION_ERROR)
@@ -113,7 +121,7 @@ function MaterialForm({ edit, material, id }) {
       console.log(!colors.length);
       if (!colors.length) {
         dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(config.errorMessages.NO_COLORS));
+        dispatch(setSnackBarMessage(errorMessages.NO_COLORS));
         dispatch(setSnackBarStatus(true));
         return;
       }
@@ -143,7 +151,7 @@ function MaterialForm({ edit, material, id }) {
           id={`${lang}Name`}
           className={styles.textField}
           variant='outlined'
-          label={config.labels.material.name}
+          label={labels.material.name}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
           multiline
           value={values[`${lang}Name`]}
@@ -157,7 +165,7 @@ function MaterialForm({ edit, material, id }) {
           id={`${lang}Description`}
           className={styles.textField}
           variant='outlined'
-          label={config.labels.material.description}
+          label={labels.material.description}
           multiline
           error={
             touched[`${lang}Description`] && !!errors[`${lang}Description`]
@@ -181,7 +189,7 @@ function MaterialForm({ edit, material, id }) {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.material.available,
+      label: labels.material.available,
       handler: (e) => setFieldValue('available', !values.available)
     }
   ];
@@ -225,7 +233,7 @@ function MaterialForm({ edit, material, id }) {
               id='purpose'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.purpose}
+              label={labels.material.purpose}
               value={values.purpose}
               onChange={handleChange}
               error={touched.purpose && !!errors.purpose}
@@ -238,7 +246,7 @@ function MaterialForm({ edit, material, id }) {
               id='additionalPrice'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.additionalPrice}
+              label={labels.material.additionalPrice}
               value={values.additionalPrice}
               onChange={handleChange}
               error={touched.additionalPrice && !!errors.additionalPrice}
@@ -276,29 +284,29 @@ function MaterialForm({ edit, material, id }) {
               className={styles.returnButton}
               data-cy='goBackButton'
             >
-              {config.buttonTitles.GO_BACK_TITLE}
+              {buttonTitles.GO_BACK_TITLE}
             </Button>
             <SaveButton
               className={styles.saveButton}
               data-cy='open-dialog'
               type='button'
               color='secondary'
-              title={config.buttonTitles.CREATE_COLOR_TITLE}
+              title={buttonTitles.CREATE_COLOR_TITLE}
               onClickHandler={colorClickHandler}
             />
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
               type='submit'
-              title={config.buttonTitles.SAVE_MATERIAL}
+              title={buttonTitles.SAVE_MATERIAL}
             />
           </div>
         </div>
       </form>
       <DialogWindowWrapper
         buttonType='submit'
-        buttonTitle={config.buttonTitles.CLOSE_DIALOG_TITLE}
-        dialogTitle={config.colorTitles.createColorTitle}
+        buttonTitle={buttonTitles.CLOSE_DIALOG_TITLE}
+        dialogTitle={titles.colorTitles.createColorTitle}
         component={
           <CreateColor
             colorImages={colorImages}

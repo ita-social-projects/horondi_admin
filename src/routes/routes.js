@@ -14,7 +14,7 @@ import LoginPage from '../pages/login/login-page';
 import Business from '../pages/business-pages';
 import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
-import { config } from '../configs';
+import { routes } from '../configs';
 import { history } from '../store/store';
 import MaterialPage from '../pages/material/material-page';
 import MaterialAdd from '../pages/material/material-add';
@@ -31,8 +31,6 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
-
-const { routes } = config.app;
 
 const Routes = () => {
   const { isAuth } = useSelector(({ Auth }) => ({

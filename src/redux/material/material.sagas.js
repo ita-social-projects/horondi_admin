@@ -25,7 +25,7 @@ import {
   UPDATE_MATERIAL
 } from './material.types';
 
-import { config, routes } from '../../configs';
+import { statuses, materialPaginationPayload, routes } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -37,9 +37,9 @@ const {
   SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
-} = config.statuses;
+} = statuses;
 
-const { skip, limit, materialsPerPage } = config.materialPaginationPayload;
+const { skip, limit, materialsPerPage } = materialPaginationPayload;
 
 export function* handleMaterialsLoad({
   payload = {

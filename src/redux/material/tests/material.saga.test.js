@@ -25,7 +25,6 @@ import {
   getMaterialById,
   updateMaterial
 } from '../material.operations';
-import { setSnackBarMessage } from '../../snackbar/snackbar.actions';
 
 const materialId = materialToUpdateDeleteId;
 

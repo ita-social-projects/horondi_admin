@@ -6,10 +6,10 @@ import TableContainerGenerator from '../../../../../containers/table-container-g
 import TableContainerRow from '../../../../../containers/table-container-row';
 import { userRoleTranslations } from '../../../../../translations/user.translations';
 import { formatPhoneNumber } from '../../../../../utils/format-phone-number';
-import { config } from '../../../../../configs';
+import { statuses, tableHeadRowTitles } from '../../../../../configs';
 
-const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
-const tableTitles = config.tableHeadRowTitles.users.userTab;
+const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = statuses;
+const tableTitles = tableHeadRowTitles.users.userTab;
 
 const UserTab = (props) => {
   const { list, onDelete } = props;

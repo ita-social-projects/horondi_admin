@@ -3,9 +3,9 @@ import React from 'react';
 import { Tooltip, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PropTypes from 'prop-types';
-import { config } from '../../../configs';
+import { buttonTitles } from '../../../configs';
 
-const { DELETE_TITLE } = config.buttonTitles;
+const { DELETE_TITLE } = buttonTitles;
 
 const DeleteButton = (props) => {
   const { onClickHandler, size } = props;

@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { config } from '../../configs';
+import { statuses } from '../../configs';
 
 import {
   getCommentsByType,
@@ -28,7 +28,7 @@ import {
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
 
-const { SUCCESS_DELETE_STATUS } = config.statuses;
+const { SUCCESS_DELETE_STATUS } = statuses;
 
 function* handleCommentsByTypeLoad({ payload }) {
   try {

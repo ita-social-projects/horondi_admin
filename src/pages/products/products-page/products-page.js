@@ -15,11 +15,11 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import LoadingBar from '../../../components/loading-bar';
 import ProductsNav from '../products-nav';
 
-import { config } from '../../../configs';
+import { tableHeadRowTitles } from '../../../configs';
 import { productsTranslations } from '../../../translations/product.translations';
 
 const { PRODUCT_NOT_FOUND } = productsTranslations;
-const tableTitles = config.tableHeadRowTitles.products;
+const tableTitles = tableHeadRowTitles.products;
 
 const ProductsPage = () => {
   const styles = useStyles();

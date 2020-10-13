@@ -25,7 +25,7 @@ import {
   GET_ARTICLE
 } from './news.types';
 
-import { config } from '../../configs';
+import { statuses, newsPaginationPayload } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -37,9 +37,9 @@ const {
   SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
-} = config.statuses;
+} = statuses;
 
-const { skip, limit, newsPerPage } = config.paginationPayload;
+const { skip, limit, newsPerPage } = newsPaginationPayload;
 
 function* handleNewsLoad({
   payload = {

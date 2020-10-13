@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { config } from '../../configs';
+import { statuses } from '../../configs';
 
 import {
   getAllUsers,
@@ -43,7 +43,7 @@ const {
   SUCCESS_UPDATE_STATUS,
   SUCCESS_CREATION_STATUS,
   SUCCESS_CONFIRMATION_STATUS
-} = config.statuses;
+} = statuses;
 
 function* handleUsersLoad({ payload }) {
   try {

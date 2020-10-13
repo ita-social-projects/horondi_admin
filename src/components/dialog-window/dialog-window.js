@@ -7,12 +7,12 @@ import {
   Typography
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { config } from '../../configs';
+import { buttonTitles, config } from '../../configs';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton, DangerButton } from '../buttons';
 import { useStyles } from './dialog-window.styles';
 
-const { CANCEL_TITLE } = config.buttonTitles;
+const { CANCEL_TITLE } = buttonTitles;
 const { ACCEPT_BUTTON_STYLE } = config.buttonStyles;
 
 const DialogWindow = () => {

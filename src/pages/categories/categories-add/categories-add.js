@@ -17,7 +17,6 @@ import { push } from 'connected-react-router';
 import { useStyles } from './categories-add.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TabPanel from '../../../components/tab-panel';
-import { config } from '../../../configs';
 import TableContainerRow from '../../../containers/table-container-row';
 import {
   getCategories,
@@ -34,7 +33,15 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import AddPhoto from '../../../images/add-photo.png';
 import { categoryTranslations } from '../../../translations/category.translations';
+import {
+  config,
+  messages,
+  buttonTitles,
+  tableHeadRowTitles
+} from '../../../configs';
 
+const { DELETE_CATEGORY_MESSAGE } = messages;
+const { DELETE_CATEGORY } = buttonTitles;
 const CategoriesAdd = ({ id, editMode }) => {
   // HOOKS
   const dispatch = useDispatch();
@@ -48,8 +55,6 @@ const CategoriesAdd = ({ id, editMode }) => {
 
   const { isMain } = newCategory;
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { DELETE_CATEGORY_MESSAGE } = config.messages;
-  const { DELETE_CATEGORY } = config.buttonTitles;
 
   // MAIN CATEGORIES []
   const mainCategories = useMemo(
@@ -110,7 +115,6 @@ const CategoriesAdd = ({ id, editMode }) => {
 
   // GENERAL
   const [tabValue, setTabValue] = useState(0);
-  const { tableHeadRowTitles, buttonTitles } = config;
 
   // NAMES
   const nameModel = { lang: '', value: '' };
@@ -418,7 +422,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                           onClick={handleAddName}
                           fullWidth
                         >
-                          {config.buttonTitles.ADD_CATEGORY_NAME}
+                          {buttonTitles.ADD_CATEGORY_NAME}
                         </Button>
                         {showAddNameForm ? (
                           <>
@@ -430,7 +434,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                               onClick={hideAddNameForm}
                               fullWidth
                             >
-                              {config.buttonTitles.CANCEL}
+                              {buttonTitles.CANCEL}
                             </Button>
                           </>
                         ) : null}
@@ -466,7 +470,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                         className={classes.uploadLabel}
                       >
                         <Button component='span' className={classes.uploadBtn}>
-                          {config.buttonTitles.ADD_PHOTO_LABEL}
+                          {buttonTitles.ADD_PHOTO_LABEL}
                         </Button>
                       </label>
                     </div>

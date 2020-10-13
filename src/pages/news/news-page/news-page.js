@@ -5,7 +5,12 @@ import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './news-page.styles';
-import { config } from '../../../configs';
+import {
+  messages,
+  buttonTitles,
+  routes,
+  tableHeadRowTitles
+} from '../../../configs';
 import {
   getNews,
   deleteArticle,
@@ -18,14 +23,13 @@ import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 
-const { routes } = config.app;
-const { REMOVE_MESSAGE } = config.messages;
-const { REMOVE_TITLE } = config.buttonTitles;
+const { REMOVE_MESSAGE } = messages;
+const { REMOVE_TITLE } = buttonTitles;
 
-const { CREATE_NEWS_TITLE } = config.buttonTitles;
+const { CREATE_NEWS_TITLE } = buttonTitles;
 
 const pathToNewsAddPage = routes.pathToAddNews;
-const tableTitles = config.tableHeadRowTitles.news;
+const tableTitles = tableHeadRowTitles.news;
 
 const NewsPage = () => {
   const classes = useStyles();

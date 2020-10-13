@@ -4,7 +4,7 @@ import { AppBar, Tabs, Tab } from '@material-ui/core';
 import { useStyles } from './users-page.styles';
 import { deleteUser } from '../../../redux/users/users.actions';
 import TabPanel from './components/tab-panel';
-import { config } from '../../../configs';
+import { config, buttonTitles, messages } from '../../../configs';
 import LoadingBar from '../../../components/loading-bar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
@@ -12,8 +12,8 @@ import AdminTab from './components/admin-tab';
 import UserTab from './components/user-tab';
 import useUsersFiltering from '../../../hooks/user/use-users-filtering';
 
-const { REMOVE_USER_TITLE } = config.buttonTitles;
-const { REMOVE_USER_MESSAGE } = config.messages;
+const { REMOVE_USER_TITLE } = buttonTitles;
+const { REMOVE_USER_MESSAGE } = messages;
 const userTabNames = config.tabNames.users;
 
 const UsersPage = () => {

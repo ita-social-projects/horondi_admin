@@ -25,7 +25,7 @@ import {
   GET_PATTERN
 } from './pattern.types';
 
-import { config, routes } from '../../configs';
+import { routes, statuses } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -37,7 +37,7 @@ const {
   SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
-} = config.statuses;
+} = statuses;
 
 export function* handlePatternsLoad({ payload }) {
   try {

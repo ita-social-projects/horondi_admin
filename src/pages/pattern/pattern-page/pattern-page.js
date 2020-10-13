@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './pattern-page.styles';
-import { config } from '../../../configs';
 import {
   getPatterns,
   deletePattern,
@@ -17,14 +16,21 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
+import {
+  messages,
+  buttonTitles,
+  routes,
+  config,
+  titles,
+  tableHeadRowTitles
+} from '../../../configs';
 
-const { routes } = config.app;
-const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { PATTERN_REMOVE_TITLE } = config.buttonTitles;
+const { PATTERN_REMOVE_MESSAGE } = messages;
+const { PATTERN_REMOVE_TITLE } = buttonTitles;
 
-const { CREATE_PATTERN_TITLE } = config.buttonTitles;
+const { CREATE_PATTERN_TITLE } = buttonTitles;
 const pathToPatternAddPage = routes.pathToAddPattern;
-const tableTitles = config.tableHeadRowTitles.patterns;
+const tableTitles = tableHeadRowTitles.patterns;
 
 const PatternPage = () => {
   const styles = useStyles();
@@ -72,14 +78,14 @@ const PatternPage = () => {
 
   const patternItems =
     list !== undefined
-      ? list.map((patternItem, index) => (
+      ? list.map((patternItem) => (
         <TableContainerRow
           image={
             patternItem.images.thumbnail
-              ? `${config.patternImageLink}${patternItem.images.thumbnail}`
+              ? `${config.imagePrefix}${patternItem.images.thumbnail}`
               : ''
           }
-          key={index}
+          key={patternItem._id}
           id={patternItem.id}
           name={patternItem.name[0].value}
           material={patternItem.material}
@@ -98,6 +104,9 @@ const PatternPage = () => {
 
   return (
     <div className={styles.container}>
+      <Typography variant='h1' className={styles.patternTitle}>
+        {titles.patternTitles.mainPageTitle}
+      </Typography>
       <div className={styles.tableNav}>
         <Button
           data-cy='add-pattern'

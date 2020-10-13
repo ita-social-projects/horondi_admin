@@ -5,7 +5,13 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './material-page.styles';
-import { config } from '../../../configs';
+import {
+  messages,
+  buttonTitles,
+  routes,
+  tableHeadRowTitles,
+  titles
+} from '../../../configs';
 import {
   getMaterials,
   deleteMaterial,
@@ -19,12 +25,11 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import LoadingBar from '../../../components/loading-bar';
 import { materialTranslations } from '../../../translations/material.translations';
 
-const { routes } = config.app;
-const { REMOVE_MESSAGE } = config.messages;
-const { REMOVE_MATERIAL_TITLE, CREATE_MATERIAL_TITLE } = config.buttonTitles;
+const { REMOVE_MATERIAL_MESSAGE } = messages;
+const { REMOVE_MATERIAL_TITLE, CREATE_MATERIAL_TITLE } = buttonTitles;
 
 const pathToMaterialAddPage = routes.pathToAddMaterial;
-const tableTitles = config.tableHeadRowTitles.materials;
+const tableTitles = tableHeadRowTitles.materials;
 
 const MaterialPage = () => {
   const styles = useStyles();
@@ -69,7 +74,7 @@ const MaterialPage = () => {
     openSuccessSnackbar(
       removeMaterial,
       REMOVE_MATERIAL_TITLE,
-      REMOVE_MESSAGE,
+      REMOVE_MATERIAL_MESSAGE,
       REMOVE_MATERIAL_TITLE,
       'danger'
     );
@@ -104,7 +109,7 @@ const MaterialPage = () => {
   return (
     <div className={styles.container}>
       <Typography variant='h1' className={styles.materialTitle}>
-        {config.materialTitles.mainPageTitle}
+        {titles.materialTitles.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
         <Button
