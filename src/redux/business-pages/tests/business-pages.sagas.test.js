@@ -5,7 +5,6 @@ import {
   handleCurrentBusinessPageLoad,
   handleAddBusinessPage,
   handleBusinessPageUpdate,
-  handleBusinessPageError,
   handleBusinessPageDelete
 } from '../business-pages.sagas';
 import {
@@ -32,15 +31,15 @@ import {
   updateBusinessPage
 } from '../business-pages.operations';
 
-describe('pattern sagas test', () => {
-  it('should not throw error', () => {
+describe('business pages sagas test', () => {
+  it('#1 should not throw error', () => {
     expect(getAllBusinessPages).not.toThrow();
     expect(createBusinessPage).not.toThrow();
     expect(deleteBusinessPage).not.toThrow();
     expect(updateBusinessPage).not.toThrow();
     expect(getBusinessPageById).not.toThrow();
   });
-  it('#1 should receive all business pages and set to store', () => {
+  it('#2 should receive all business pages and set to store', () => {
     expectSaga(handleBusinessPagesLoad)
       .provide([[matchers.call.fn(getAllBusinessPages), fakePages]])
       .put(setLoading(true))
@@ -48,7 +47,7 @@ describe('pattern sagas test', () => {
       .put(setLoading(false))
       .run();
   });
-  it('#2 should receive one page and set to store', () => {
+  it('#3 should receive one page and set to store', () => {
     expectSaga(handleCurrentBusinessPageLoad, businessPageId)
       .provide([[matchers.call.fn(getBusinessPageById()), fakeBusinessPage]])
       .put(setLoading(true))
@@ -57,7 +56,7 @@ describe('pattern sagas test', () => {
       .run();
   });
 
-  it('#3 Should delete business page and remove it from store', () => {
+  it('#4 Should delete business page and remove it from store', () => {
     expectSaga(handleBusinessPageDelete, businessPageId)
       .provide([
         [matchers.call.fn(deleteBusinessPage()), businessPageToDeleteMock]
@@ -68,7 +67,7 @@ describe('pattern sagas test', () => {
       .run();
   });
 
-  it('#4 Should to add business page and set it to store', () => {
+  it('#5 Should to add business page and set it to store', () => {
     expectSaga(handleAddBusinessPage, businessPage)
       .provide([[matchers.call.fn(addBusinessPage()), businessPage]])
       .put(setLoading(true))
@@ -77,7 +76,7 @@ describe('pattern sagas test', () => {
       .run();
   });
 
-  it('#5 Should to update business page', () => {
+  it('#6 Should to update business page', () => {
     expectSaga(handleBusinessPageUpdate, businessPageToUpdate)
       .provide([[matchers.call.fn(updateBusinessPage()), businessPageToUpdate]])
       .put(setLoading(true))
