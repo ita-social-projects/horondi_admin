@@ -411,7 +411,7 @@ const updateProduct = async (payload, upload, primaryImageUpload) => {
       id: payload.id,
       product: payload.product,
       upload: !!upload.length && upload,
-      primary: primaryImageUpload && primaryImageUpload
+      primary: primaryImageUpload || undefined
     }
   });
   return result.data.updateProduct;
