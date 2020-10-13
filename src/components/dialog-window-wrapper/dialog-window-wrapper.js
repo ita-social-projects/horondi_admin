@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { showColorDialogWindow } from '../../redux/material/material.actions';
-import { useStyles } from './dialog-window-for-component.style';
+import { useStyles } from './dialog-window-wrapper.style';
 
 const DialogWindowForComponent = ({ dialogTitle, buttonTitle, component }) => {
   const { isOpen } = useSelector(({ Material }) => ({

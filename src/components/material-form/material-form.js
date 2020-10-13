@@ -27,7 +27,7 @@ import {
 import { config, routes } from '../../configs';
 import CheckboxOptions from '../checkbox-options';
 import CreateColor from '../../pages/material/create-color';
-import DialogWindowForComponent from '../dialog-window-for-component';
+import DialogWindowWrapper from '../dialog-window-wrapper';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -295,7 +295,7 @@ function MaterialForm({ edit, material, id }) {
           </div>
         </div>
       </form>
-      <DialogWindowForComponent
+      <DialogWindowWrapper
         buttonType='submit'
         buttonTitle={config.buttonTitles.CLOSE_DIALOG_TITLE}
         dialogTitle={config.colorTitles.createColorTitle}
