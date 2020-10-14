@@ -10,7 +10,8 @@ import {
   SET_EMAIL_QUESTIONS_ERROR,
   SET_EMAIL_QUESTIONS_PENDING_COUNT,
   GET_EMAIL_QUESTIONS_PENDING_COUNT,
-  SET_EMAIL_QUESTIONS_COUNT
+  SET_EMAIL_QUESTIONS_PAGES_COUNT,
+  SET_EMAIL_QUESTION_CURRENT_PAGE
 } from './email-questions.types';
 
 const setAllEmailQuestion = (questionsList) => ({
@@ -58,9 +59,14 @@ const answerToEmailQuestion = (payload) => ({
   payload
 });
 
-const setEmailQuestionsCount = (count) => ({
-  type: SET_EMAIL_QUESTIONS_COUNT,
+const setEmailQuestionsPagesCount = (count) => ({
+  type: SET_EMAIL_QUESTIONS_PAGES_COUNT,
   payload: count
+});
+
+const setEmailQuestionsCurrentPage = (pageNumber) => ({
+  type: SET_EMAIL_QUESTION_CURRENT_PAGE,
+  payload: pageNumber
 });
 
 const getEmailQuestionsPendingCount = () => ({
@@ -84,5 +90,6 @@ export {
   answerToEmailQuestion,
   setEmailQuestionsPendingCount,
   getEmailQuestionsPendingCount,
-  setEmailQuestionsCount
+  setEmailQuestionsCurrentPage,
+  setEmailQuestionsPagesCount
 };

@@ -6,7 +6,7 @@ import {
   setEmailQuestionLoading,
   setEmailQuestionsError,
   setCurrentEmailQuestion,
-  setEmailQuestionsCount,
+  setEmailQuestionsPagesCount,
   setEmailQuestionsPendingCount
 } from './email-questions.actions';
 import {
@@ -41,7 +41,7 @@ export function* handleEmailQuestionsLoad({ payload }) {
     yield put(setEmailQuestionLoading(true));
     const response = yield call(getAllEmailQuestions, payload);
 
-    yield put(setEmailQuestionsCount(response.count));
+    yield put(setEmailQuestionsPagesCount(Math.ceil(response.count / 10)));
     yield put(setAllEmailQuestion(response.questions));
     yield call(handlePendingEmailQuestionsCount);
 
