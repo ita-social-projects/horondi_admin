@@ -20,6 +20,8 @@ const routes = {
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact',
-  pathToComments: '/comments'
+  pathToComments: '/comments',
+  pathToEmailQuestions: '/email-questions',
+  pathToEmailAnswer: '/email-answer/:id'
 };
 export default routes;

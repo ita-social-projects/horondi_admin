@@ -4,6 +4,7 @@ import {
   Drawer,
   Divider,
   List,
+  Badge,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -50,6 +51,9 @@ const NavMenu = ({ width }) => {
           <PathIcon />
         </ListItemIcon>
         <ListItemText primary={pathTitle} />
+        {pathTitle === 'Запитання & Відповіді' && (
+          <Badge badgeContent={4} color='error' />
+        )}
       </ListItem>
     );
   });

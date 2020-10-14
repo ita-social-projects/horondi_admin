@@ -30,6 +30,7 @@ const tableHeadRowTitles = {
     adminTab: ['Аватар', "Ім'я", 'Пошта', 'Роль', 'Дії']
   },
   contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
-  comments: ['Дата', 'Текст', 'Дії']
+  comments: ['Дата', 'Текст', 'Дії'],
+  emailQuestions: ['Користувач', 'Email', 'Q/A', 'Дата', 'Дії']
 };
 export default tableHeadRowTitles;
