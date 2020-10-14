@@ -6,6 +6,7 @@ export const loginAdmin = async (loginInput) => {
     mutation: gql`
       mutation($loginInput: LoginInput!) {
         loginAdmin(loginInput: $loginInput) {
+          _id
           token
         }
       }
@@ -23,28 +24,7 @@ export const getUserByToken = async (token) => {
       query {
         getUserByToken {
           ... on User {
-            email
-            firstName
-            lastName
-            phoneNumber
-            purchasedProducts
-            role
-            orders
-            wishlist
-            credentials {
-              source
-            }
-            address {
-              country
-              city
-              street
-              appartment
-              buildingNumber
-            }
-          }
-          ... on Error {
-            message
-            statusCode
+            _id
           }
         }
       }
@@ -56,5 +36,6 @@ export const getUserByToken = async (token) => {
     }
   });
   const { data } = result;
+  console.log('result', result);
   return data.getUserByToken;
 };
