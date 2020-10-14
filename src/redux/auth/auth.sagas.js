@@ -51,7 +51,7 @@ function* handleAdminCheckByToken() {
     }
     const admin = yield call(getUserByToken, authToken);
     yield put(setAuth(true));
-    yield put(setAdminId(admin._id || '5f7ae3a9467a9a3f505c906d'));
+    yield put(setAdminId(admin._id));
     yield put(setAuthLoading(false));
   } catch (error) {
     console.error(error);

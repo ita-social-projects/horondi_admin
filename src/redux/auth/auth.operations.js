@@ -25,6 +25,7 @@ export const getUserByToken = async (token) => {
         getUserByToken {
           ... on User {
             _id
+            email
           }
         }
       }
@@ -33,9 +34,9 @@ export const getUserByToken = async (token) => {
       headers: {
         token
       }
-    }
+    },
+    fetchPolicy: 'no-cache'
   });
   const { data } = result;
-  console.log('result', result);
   return data.getUserByToken;
 };
