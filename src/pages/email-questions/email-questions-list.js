@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Pagination } from '@material-ui/lab';
-import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
 import { useStyles } from './email-questions-list.styles';
@@ -19,7 +18,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import getTime from '../../utils/getTime';
-import { setPatternsCurrentPage } from '../../redux/pattern/pattern.actions';
+import EmailQuestionsFilter from './email-question-filter';
 
 const { emailQuestionStatuses } = config;
 const { routes } = config.app;
@@ -56,7 +55,7 @@ const EmailQuestionsList = () => {
         skip: currentPage * questionsPerPage
       })
     );
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage, filter]);
 
   const questionDeleteHandler = (id, e) => {
     e.stopPropagation();
@@ -74,6 +73,20 @@ const EmailQuestionsList = () => {
 
   const changePaginationHandler = (e, value) =>
     dispatch(setEmailQuestionsCurrentPage(value));
+
+  const filterChangeHandler = (id) => {
+    if (id === 'ALL') {
+      setFilter([]);
+      return;
+    }
+
+    const possibleFilter = filter.find((item) => item === id);
+    if (possibleFilter) {
+      setFilter(filter.filter((item) => item !== id));
+    } else {
+      setFilter([...filter, id]);
+    }
+  };
 
   const questions =
     list !== undefined
@@ -114,15 +127,10 @@ const EmailQuestionsList = () => {
         <Typography variant='h1' className={styles.contactsTitle}>
           Запитання & Відповіді
         </Typography>
-        {/*  <Button
-          id='add-business-page'
-          component={Link}
-          to={pathToAddBusinessPage}
-          variant='contained'
-          color='primary'
-        >
-          {CREATE_BUSINESS_PAGE}
-        </Button> */}
+        <EmailQuestionsFilter
+          filterItems={filter}
+          changeHandler={filterChangeHandler}
+        />
       </div>
       <div>
         <TableContainerGenerator
