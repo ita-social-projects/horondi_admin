@@ -212,7 +212,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   label='Google maps посилання'
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -234,7 +233,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -252,7 +250,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -270,7 +267,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -292,7 +288,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -310,7 +305,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -327,7 +321,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   label='Email'
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
