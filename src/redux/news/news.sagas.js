@@ -32,6 +32,7 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+import routes from '../../configs/routes';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -41,7 +42,7 @@ const {
 
 const { skip, limit, newsPerPage } = config.pagination.newsPaginationPayload;
 
-function* handleNewsLoad({
+export function* handleNewsLoad({
   payload = {
     skip: 1,
     limit: 1,
@@ -59,7 +60,7 @@ function* handleNewsLoad({
   }
 }
 
-function* handleArticleLoad({ payload }) {
+export function* handleArticleLoad({ payload }) {
   try {
     yield put(setNewsLoading(true));
     const newsArticle = yield call(getArticleById, payload);
@@ -70,23 +71,20 @@ function* handleArticleLoad({ payload }) {
   }
 }
 
-function* handleAddNews({ payload }) {
+export function* handleAddNews({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(createArticle, payload);
-    const news = yield call(getAllNews, skip, limit);
-    yield put(setPagesCount(Math.ceil(news.count / newsPerPage)));
-    yield put(setNews(news.items));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
-    yield put(push('/'));
+    yield put(push(routes.pathToNews));
   } catch (error) {
     yield call(handleNewsError, error);
   }
 }
 
-function* handleNewsDelete({ payload }) {
+export function* handleNewsDelete({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(deleteArticle, payload);
@@ -103,7 +101,7 @@ function* handleNewsDelete({ payload }) {
   }
 }
 
-function* handleNewsUpdate({ payload }) {
+export function* handleNewsUpdate({ payload }) {
   const { id, newArticle } = payload;
   try {
     yield put(setNewsLoading(true));
@@ -120,7 +118,7 @@ function* handleNewsUpdate({ payload }) {
   }
 }
 
-function* handleNewsError(e) {
+export function* handleNewsError(e) {
   yield put(setNewsLoading(false));
   yield put(setNewsError({ e }));
   yield put(setSnackBarSeverity('error'));

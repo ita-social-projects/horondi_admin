@@ -2,29 +2,29 @@ import {
   GET_NEWS,
   SET_NEWS,
   SET_NEWS_LOADING,
-  DELETE_ARTICLE,
-  ADD_ARTICLE,
   GET_ARTICLE,
   SET_ARTICLE,
-  UPDATE_ARTICLE,
   SET_NEWS_ERROR,
   SET_CURRENT_PAGE,
   SET_NEWS_PER_PAGE,
-  SET_PAGES_COUNT
+  SET_PAGES_COUNT,
+  ADD_ARTICLE,
+  UPDATE_ARTICLE,
+  DELETE_ARTICLE
 } from '../news.types';
 import {
   getArticle,
   getNews,
-  setCurrentPage,
-  setPagesCount,
   setArticle,
   setNews,
+  setCurrentPage,
+  setPagesCount,
   setNewsError,
   setNewsLoading,
   setNewsPerPage,
+  addArticle,
   updateArticle,
-  deleteArticle,
-  addArticle
+  deleteArticle
 } from '../news.actions';
 import { newsId, article, news, skip, limit } from './news.variables';
 

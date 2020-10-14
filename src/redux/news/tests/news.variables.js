@@ -6,7 +6,6 @@ export const newsPerPage = 5;
 export const currentPage = 2;
 
 export const article = {
-  _id: '5f62f5386d311114710c0111',
   title: [
     {
       value: 'тестова новина'

@@ -2,10 +2,12 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import CheckboxOptions from './checkbox-options';
-import { config, inputTypes } from '../../configs';
+import { config } from '../../configs';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const mockCallBack = jest.fn((name) => ({ [name]: true }));
-Enzyme.configure({ adapter: new Adapter() });
+
 const options = [
   {
     id: 'handmade',
@@ -29,12 +31,31 @@ const options = [
 
 describe('checkbox-options tests', () => {
   const component = mount(<CheckboxOptions options={options} />);
-  console.log(component);
-  it('should click', () => {
+
+  it('test checkboxes attributes', () => {
     expect(component).toMatchSnapshot();
-    expect(mockCallBack.mock.calls.length).toBe(0);
-    const checkbox = component.get({ type: 'checkbox' });
-    console.log(checkbox);
-    expect(mockCallBack.mock.calls.length).toBe(1);
+    const checkbox = component.find('input[type="checkbox"]');
+
+    expect(checkbox).toMatchSnapshot();
+    expect(checkbox.length).toBe(2);
+    expect(checkbox.at(0).props().checked).toEqual(true);
+    expect(checkbox.at(0).props().checked).toBeDefined();
+    expect(checkbox.at(0).props().checked).not.toBeNull();
+    expect(checkbox.at(0).props().checked).toEqual(options[0].checked);
+    expect(checkbox.at(0).props().value).toBeDefined();
+    expect(checkbox.at(0).props().value).not.toBeNull();
+    expect(checkbox.at(0).props().value).toEqual(options[0].checked);
+
+    expect(checkbox.at(1).props().checked).toBeDefined();
+    expect(checkbox.at(1).props().checked).not.toBeNull();
+    expect(checkbox.at(1).props().checked).toEqual(options[1].checked);
+    expect(checkbox.at(1).props().value).toBeDefined();
+    expect(checkbox.at(1).props().value).not.toBeNull();
+    expect(checkbox.at(1).props().value).toEqual(options[1].checked);
+  });
+
+  it('should have props', () => {
+    expect(CheckboxOptions.propTypes.options).toMatchSnapshot();
+    expect(CheckboxOptions.propTypes.options).toBeDefined();
   });
 });
