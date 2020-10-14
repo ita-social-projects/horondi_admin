@@ -23,9 +23,10 @@ import {
   setNewsLoading,
   setNewsPerPage,
   updateArticle,
-  deleteArticle
+  deleteArticle,
+  addArticle
 } from '../news.actions';
-import { newsId } from './news.variables';
+import { newsId, article, news, skip, limit } from './news.variables';
 
 describe('news actions tests', () => {
   it('should set current page to 5', () => {
@@ -49,10 +50,48 @@ describe('news actions tests', () => {
       payload: true
     });
   });
-  it('should get news ', () => {
-    expect(setNewsError(true)).toEqual({
-      type: SET_NEWS_ERROR,
-      payload: true
+  it('should add article ', () => {
+    expect(addArticle(article)).toEqual({
+      type: ADD_ARTICLE,
+      payload: article
+    });
+  });
+  it('should set article ', () => {
+    expect(setArticle(article)).toEqual({
+      type: SET_ARTICLE,
+      payload: article
+    });
+  });
+  it('should get article ', () => {
+    expect(getArticle(newsId)).toEqual({
+      type: GET_ARTICLE,
+      payload: newsId
+    });
+  });
+  it('should update article ', () => {
+    expect(
+      updateArticle({ id: newsId, article: { ...article, show: false } })
+    ).toEqual({
+      type: UPDATE_ARTICLE,
+      payload: { id: newsId, article: { ...article, show: false } }
+    });
+  });
+  it('should delete article ', () => {
+    expect(deleteArticle(newsId)).toEqual({
+      type: DELETE_ARTICLE,
+      payload: newsId
+    });
+  });
+  it('should get news', () => {
+    expect(getNews({ skip, limit })).toEqual({
+      type: GET_NEWS,
+      payload: { skip, limit }
+    });
+  });
+  it('should set news', () => {
+    expect(setNews(news)).toEqual({
+      type: SET_NEWS,
+      payload: news
     });
   });
 });
