@@ -32,7 +32,6 @@ import {
   setNewsLoading,
   setNews,
   setPagesCount,
-  setNewsError,
   setArticle
 } from '../news.actions';
 import {
@@ -47,12 +46,12 @@ import { config } from '../../../configs';
 
 describe('news sagas tests', () => {
   it('Should not throw error during execution', () => {
-    expect(handleAddNews).not.toThrow();
-    expect(handleArticleLoad).not.toThrow();
-    expect(handleNewsUpdate).not.toThrow();
-    expect(handleNewsLoad).not.toThrow();
-    expect(handleNewsError).not.toThrow();
-    expect(handleNewsDelete).not.toThrow();
+    expect(getAllNews).not.toThrow();
+    expect(getArticleById).not.toThrow();
+    expect(createArticle).not.toThrow();
+    expect(updateArticle).not.toThrow();
+    expect(deleteArticle).not.toThrow();
+    expect(deleteArticle).not.toBeNull();
   });
   it('Should receive all news and set them to store', () => {
     expectSaga(handleNewsLoad, GET_NEWS)

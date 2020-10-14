@@ -88,10 +88,7 @@ export function* handleNewsDelete({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(deleteArticle, payload);
-    const news = yield call(getAllNews, skip, limit);
-    yield put(setPagesCount(Math.ceil(news.count / newsPerPage)));
     yield put(setCurrentPage(1));
-    yield put(setNews(news.items));
     yield put(setNewsLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
@@ -106,13 +103,10 @@ export function* handleNewsUpdate({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(updateArticle, id, newArticle);
-    const news = yield call(getAllNews, skip, limit);
-    yield put(setPagesCount(Math.ceil(news.count / newsPerPage)));
-    yield put(setNews(news.items));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));
-    yield put(push('/'));
+    yield put(push(config.routes.pathToNews));
   } catch (error) {
     yield call(handleNewsError, error);
   }
