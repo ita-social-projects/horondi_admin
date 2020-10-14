@@ -76,7 +76,7 @@ const PatternPage = () => {
         <TableContainerRow
           image={
             patternItem.images.thumbnail
-              ? `${config.patternImageLink}${patternItem.images.thumbnail}`
+              ? `${config.imagePrefix}${patternItem.images.thumbnail}`
               : ''
           }
           key={patternItem._id}
@@ -99,7 +99,7 @@ const PatternPage = () => {
   return (
     <div className={styles.container}>
       <Typography variant='h1' className={styles.patternTitle}>
-        {config.patternTitles.mainPageTitle}
+        {config.titles.patternTitles.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
         <Button

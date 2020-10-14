@@ -17,7 +17,7 @@ import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
-import { config, routes } from '../../configs';
+import { config } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
@@ -230,7 +230,7 @@ const PatternForm = ({ pattern, id }) => {
         <Button
           id='contactsBack'
           component={Link}
-          to={routes.pathToPatterns}
+          to={config.routes.pathToPatterns}
           variant='outlined'
           color='primary'
           className={styles.returnButton}
