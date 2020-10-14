@@ -7,7 +7,8 @@ import {
   ANSWER_TO_EMAIL_QUESTION,
   DELETE_EMAIL_QUESTION,
   SET_EMAIL_QUESTIONS_LOADING,
-  SET_EMAIL_QUESTIONS_ERROR
+  SET_EMAIL_QUESTIONS_ERROR,
+  SET_EMAIL_QUESTIONS_COUNT
 } from './email-questions.types';
 
 const setAllEmailQuestion = (questionsList) => ({
@@ -55,6 +56,11 @@ const answerToEmailQuestion = (payload) => ({
   payload
 });
 
+const setEmailQuestionsCount = (count) => ({
+  type: SET_EMAIL_QUESTIONS_COUNT,
+  payload: count
+});
+
 export {
   setAllEmailQuestion,
   getAllEmailQuestions,
@@ -64,5 +70,6 @@ export {
   setEmailQuestionsError,
   makeEmailQuestionSpam,
   deleteEmailQuestion,
-  answerToEmailQuestion
+  answerToEmailQuestion,
+  setEmailQuestionsCount
 };
