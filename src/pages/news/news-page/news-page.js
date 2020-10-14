@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
+// import { Pagination } from '@material-ui/lab';
 import { useStyles } from './news-page.styles';
 import { config } from '../../../configs';
 import {
@@ -17,6 +17,8 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import TableContainerRow from '../../../components/table-container-row';
 import TableContainerGenerator from '../../../components/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
+
+import CustomPagination from '../../../components/custom-pagination';
 
 const { routes } = config.app;
 const { REMOVE_MESSAGE } = config.messages;
@@ -60,7 +62,7 @@ const NewsPage = () => {
     openSuccessSnackbar(removeNews, REMOVE_TITLE, REMOVE_MESSAGE, REMOVE_TITLE);
   };
 
-  const changeHandler = (e, value) => dispatch(setCurrentPage(value));
+  // const changeHandler = (e, value) => dispatch(setCurrentPage(value));
 
   const newsItems =
     list !== undefined
@@ -110,13 +112,20 @@ const NewsPage = () => {
           tableItems={newsItems}
         />
       </div>
-      <div className={classes.paginationDiv}>
+      {/*<div className={classes.paginationDiv}>
         <Pagination
           count={pagesCount}
           variant='outlined'
           shape='rounded'
           page={currentPage + 1}
           onChange={changeHandler}
+        />
+      </div>*/}
+      <div className={classes.paginationDiv}>
+        <CustomPagination 
+          count={pagesCount}
+          page={currentPage + 1}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </div>
