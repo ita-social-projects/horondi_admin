@@ -32,6 +32,7 @@ const buttonTitles = {
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
   ADD_PHOTO_LABEL: '+',
+  REMOVE_EMAIL_QUESTION: 'Видалити запитання?',
 
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([

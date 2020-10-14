@@ -5,7 +5,7 @@ const getAllEmailQuestions = async ({ filter, skip }) => {
   const result = await client.query({
     variables: {
       filter: {
-        emailQuestionsStatus: filter
+        emailQuestionStatus: filter.length ? filter : null
       },
       skip
     },
@@ -32,6 +32,19 @@ const getAllEmailQuestions = async ({ filter, skip }) => {
 
   const { data } = result;
   return data.getAllEmailQuestions;
+};
+
+const getPendingEmailQuestionsCount = async () => {
+  const result = await client.query({
+    query: gql`
+      query {
+        getPendingEmailQuestionsCount
+      }
+    `
+  });
+
+  const { data } = result;
+  return data.getPendingEmailQuestionsCount;
 };
 
 const getEmailQuestionById = async (id) => {
@@ -217,5 +230,6 @@ export {
   getEmailQuestionById,
   deleteEmailQuestion,
   makeEmailQuestionSpam,
-  answerEmailQuestion
+  answerEmailQuestion,
+  getPendingEmailQuestionsCount
 };

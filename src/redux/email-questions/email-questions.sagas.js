@@ -6,20 +6,23 @@ import {
   setEmailQuestionLoading,
   setEmailQuestionsError,
   setCurrentEmailQuestion,
-  setEmailQuestionsCount
+  setEmailQuestionsCount,
+  setEmailQuestionsPendingCount
 } from './email-questions.actions';
 import {
   getAllEmailQuestions,
   getEmailQuestionById,
   makeEmailQuestionSpam,
   answerEmailQuestion,
-  deleteEmailQuestion
+  deleteEmailQuestion,
+  getPendingEmailQuestionsCount
 } from './email-questions.operations';
 import {
   GET_ALL_EMAIL_QUESTIONS,
   GET_EMAIL_QUESTION_BY_ID,
   DELETE_EMAIL_QUESTION,
   MAKE_EMAIL_QUESTION_SPAM,
+  GET_EMAIL_QUESTIONS_PENDING_COUNT,
   ANSWER_TO_EMAIL_QUESTION
 } from './email-questions.types';
 
@@ -38,10 +41,20 @@ export function* handleEmailQuestionsLoad({ payload }) {
     yield put(setEmailQuestionLoading(true));
     const response = yield call(getAllEmailQuestions, payload);
 
-    yield put(setAllEmailQuestion(response.questions));
     yield put(setEmailQuestionsCount(response.count));
+    yield put(setAllEmailQuestion(response.questions));
+    yield call(handlePendingEmailQuestionsCount);
 
     yield put(setEmailQuestionLoading(false));
+  } catch (error) {
+    yield call(handleEmailQuestionError, error);
+  }
+}
+
+export function* handlePendingEmailQuestionsCount() {
+  try {
+    const count = yield call(getPendingEmailQuestionsCount);
+    yield put(setEmailQuestionsPendingCount(count));
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
@@ -128,4 +141,8 @@ export default function* emailQuestionSaga() {
   yield takeEvery(DELETE_EMAIL_QUESTION, handleEmailQuestionDelete);
   yield takeEvery(MAKE_EMAIL_QUESTION_SPAM, handleMakeEmailQuestionSpam);
   yield takeEvery(ANSWER_TO_EMAIL_QUESTION, handleAnswerEmailQuestion);
+  yield takeEvery(
+    GET_EMAIL_QUESTIONS_PENDING_COUNT,
+    handlePendingEmailQuestionsCount
+  );
 }

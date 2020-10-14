@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { TableRow, TableCell, Avatar } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
+import ReactHtmlParser from 'react-html-parser';
+
 import { DeleteButton, EditButton } from '../../components/buttons';
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
@@ -15,6 +17,7 @@ const TableContainerRow = ({
   showEdit,
   showDelete,
   deleteHandler,
+  clickHandler,
   ...rest
 }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.iconSizes;
@@ -25,14 +28,14 @@ const TableContainerRow = ({
   const properties = { ...rest };
 
   const tableCells = Object.values(properties).map((property) => (
-    <TableCell key={property}>{property}</TableCell>
+    <TableCell key={property}>{ReactHtmlParser(property)}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
   const avatarSize = dense ? classes.small : classes.medium;
 
   return (
-    <TableRow key={id} hover>
+    <TableRow key={id} hover onClick={clickHandler}>
       {showAvatar && (
         <TableCell>
           <Avatar className={avatarSize} src={image}>
@@ -57,6 +60,7 @@ TableContainerRow.propTypes = {
   image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
+  clickHandler: PropTypes.func,
   id: PropTypes.string,
   showAvatar: PropTypes.bool,
   showEdit: PropTypes.bool,
@@ -68,6 +72,7 @@ TableContainerRow.defaultProps = {
   image: '',
   deleteHandler: () => {},
   editHandler: () => {},
+  clickHandler: () => {},
   showAvatar: true,
   showEdit: true,
   showDelete: true

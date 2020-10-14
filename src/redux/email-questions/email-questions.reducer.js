@@ -3,12 +3,14 @@ import {
   SET_EMAIL_QUESTIONS_LOADING,
   SET_EMAIL_QUESTIONS_ERROR,
   SET_CURRENT_EMAIL_QUESTION,
-  SET_EMAIL_QUESTIONS_COUNT
+  SET_EMAIL_QUESTIONS_COUNT,
+  SET_EMAIL_QUESTIONS_PENDING_COUNT
 } from './email-questions.types';
 
 export const initialState = {
   list: [],
-  questionCount: 0,
+  questionsCount: 0,
+  pendingCount: 0,
   currentQuestion: null,
   loading: false,
   error: null
@@ -39,7 +41,12 @@ const emailQuestionsReducer = (state = initialState, action = {}) => {
   case SET_EMAIL_QUESTIONS_COUNT:
     return {
       ...state,
-      questionCount: action.payload
+      questionsCount: action.payload
+    };
+  case SET_EMAIL_QUESTIONS_PENDING_COUNT:
+    return {
+      ...state,
+      pendingCount: action.payload
     };
   default:
     return state;

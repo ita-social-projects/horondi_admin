@@ -8,6 +8,8 @@ import {
   DELETE_EMAIL_QUESTION,
   SET_EMAIL_QUESTIONS_LOADING,
   SET_EMAIL_QUESTIONS_ERROR,
+  SET_EMAIL_QUESTIONS_PENDING_COUNT,
+  GET_EMAIL_QUESTIONS_PENDING_COUNT,
   SET_EMAIL_QUESTIONS_COUNT
 } from './email-questions.types';
 
@@ -61,6 +63,15 @@ const setEmailQuestionsCount = (count) => ({
   payload: count
 });
 
+const getEmailQuestionsPendingCount = () => ({
+  type: GET_EMAIL_QUESTIONS_PENDING_COUNT
+});
+
+const setEmailQuestionsPendingCount = (count) => ({
+  type: SET_EMAIL_QUESTIONS_PENDING_COUNT,
+  payload: count
+});
+
 export {
   setAllEmailQuestion,
   getAllEmailQuestions,
@@ -71,5 +82,7 @@ export {
   makeEmailQuestionSpam,
   deleteEmailQuestion,
   answerToEmailQuestion,
+  setEmailQuestionsPendingCount,
+  getEmailQuestionsPendingCount,
   setEmailQuestionsCount
 };

@@ -29,6 +29,7 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+import EmailQuestionsList from '../pages/email-questions';
 
 const { routes } = config.app;
 
@@ -116,6 +117,11 @@ const Routes = () => {
           render={({ match }) => (
             <CategoriesAdd id={match.params.id} editMode />
           )}
+        />
+        <Route
+          path={routes.pathToEmailQuestions}
+          exact
+          component={EmailQuestionsList}
         />
         <Route component={ErrorPage} />
       </Switch>

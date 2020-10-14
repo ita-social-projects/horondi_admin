@@ -98,6 +98,11 @@ export const config = {
       }
     ]
   },
+  emailQuestionStatuses: {
+    PENDING: 'Очікує відповіді',
+    SPAM: 'Спам',
+    ANSWERED: 'Відповідь надано'
+  },
   popularity: 'popularity',
   rate: 'rate',
   sortAsc: 'sortAsc',

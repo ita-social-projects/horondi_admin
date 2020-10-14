@@ -31,6 +31,6 @@ const tableHeadRowTitles = {
   },
   contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
   comments: ['Дата', 'Текст', 'Дії'],
-  emailQuestions: ['Користувач', 'Email', 'Q/A', 'Дата', 'Дії']
+  emailQuestions: ['Користувач', 'Email', 'Q/A', 'Дата', 'Статус', 'Дії']
 };
 export default tableHeadRowTitles;

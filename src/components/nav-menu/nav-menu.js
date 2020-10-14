@@ -29,8 +29,12 @@ const NavMenu = ({ width }) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-
-  const sideMenuStatus = useSelector(({ Theme }) => Theme.sideMenuStatus);
+  const { sideMenuStatus, pendingQuestionsCount } = useSelector(
+    ({ Theme, EmailQuestions }) => ({
+      sideMenuStatus: Theme.sideMenuStatus,
+      pendingQuestionsCount: EmailQuestions.pendingCount
+    })
+  );
 
   const menuItems = menuCategories.map((category) => {
     const pathTitle = category[0];
@@ -52,7 +56,7 @@ const NavMenu = ({ width }) => {
         </ListItemIcon>
         <ListItemText primary={pathTitle} />
         {pathTitle === 'Запитання & Відповіді' && (
-          <Badge badgeContent={4} color='error' />
+          <Badge badgeContent={pendingQuestionsCount} color='error' />
         )}
       </ListItem>
     );
