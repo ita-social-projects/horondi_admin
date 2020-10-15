@@ -201,7 +201,7 @@ Command `npm run generate` is used to run [graphql code generator](https://graph
 
 #### Step 3
 
-- 🔃 Create a new pull request using <a href="https://github.com/ita-social-projects/horondi_client_fe/compare/" target="_blank">github.com/ita-social-projects/horondi_client_fe</a>.
+- 🔃 Create a new pull request using <a href="https://github.com/ita-social-projects/horondi_admin/compare/" target="_blank">github.com/ita-social-projects/horondi_admin</a>.
 
 ### Issue flow
 
@@ -259,9 +259,6 @@ Command `npm run generate` is used to run [graphql code generator](https://graph
 ## Support
 
 ---
-
-More details you can find on official site
-https://developers.facebook.com/docs/messenger-platform/discovery/facebook-chat-plugin/
 
 #### License
 
