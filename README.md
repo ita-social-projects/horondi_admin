@@ -43,7 +43,7 @@ HORONDI project is an e-commerce online shop that provides hand-made backpacks, 
 
 ### Clone
 
-- Clone this repo to your local machine using `https://github.com/ita-social-projects/horondi_client_admin.git`
+- Clone this repo to your local machine using `https://github.com/ita-social-projects/horondi_admin.git`
 
 ### Setup
 
