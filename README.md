@@ -12,7 +12,7 @@ HORONDI project is an e-commerce online shop that provides hand-made backpacks, 
 
 - [Installation](#installation)
   - [Required to install](#Required-to-install)
-  - [Environment](https://github.com/ita-social-projects/horondi_client_admin/blob/master/environment%20valiables.md)
+  - [Environment](https://github.com/ita-social-projects/horondi_admin/blob/master/environment%20valiables.md)
   - [Clone](#Clone)
   - [Setup](#Setup)
   - [How to run local](#How-to-run-local)
