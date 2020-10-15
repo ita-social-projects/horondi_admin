@@ -14,13 +14,13 @@ import {
   getEmailQuestionById,
   makeEmailQuestionsSpam,
   answerEmailQuestion,
-  deleteEmailQuestion,
+  deleteEmailQuestions,
   getPendingEmailQuestionsCount
 } from './email-questions.operations';
 import {
   GET_ALL_EMAIL_QUESTIONS,
   GET_EMAIL_QUESTION_BY_ID,
-  DELETE_EMAIL_QUESTION,
+  DELETE_EMAIL_QUESTIONS,
   MOVE_EMAIL_QUESTIONS_TO_SPAM,
   GET_EMAIL_QUESTIONS_PENDING_COUNT,
   ANSWER_TO_EMAIL_QUESTION
@@ -76,7 +76,19 @@ export function* handleCurrentEmailQuestionLoad({ payload }) {
 export function* handleMoveEmailQuestionsToSpam({ payload }) {
   try {
     yield put(setEmailQuestionLoading(true));
-    yield call(makeEmailQuestionsSpam, payload);
+    const updatedQuestions = yield call(makeEmailQuestionsSpam, payload);
+
+    const emailQuestions = yield select(
+      ({ EmailQuestions }) => EmailQuestions.list
+    );
+    const newQuestionsToStore = emailQuestions.map((item) => {
+      const spammedQuestion = updatedQuestions.find(
+        (val) => val._id === item._id
+      );
+      return spammedQuestion || item;
+    });
+
+    yield put(setAllEmailQuestion(newQuestionsToStore));
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
@@ -105,16 +117,20 @@ export function* handleAnswerEmailQuestion({ payload }) {
   }
 }
 
-export function* handleEmailQuestionDelete({ payload }) {
+export function* handleEmailQuestionsDelete({ payload }) {
   try {
     yield put(setEmailQuestionLoading(true));
-    yield call(deleteEmailQuestion, payload);
+    yield call(deleteEmailQuestions, payload);
 
     const emailQuestions = yield select(
       ({ EmailQuestions }) => EmailQuestions.list
     );
     yield put(
-      setAllEmailQuestion(emailQuestions.filter((item) => item._id !== payload))
+      setAllEmailQuestion(
+        emailQuestions.filter(
+          (item) => !payload.find((val) => val === item._id)
+        )
+      )
     );
 
     yield put(setSnackBarSeverity('success'));
@@ -138,7 +154,7 @@ export function* handleEmailQuestionError(e) {
 export default function* emailQuestionSaga() {
   yield takeEvery(GET_ALL_EMAIL_QUESTIONS, handleEmailQuestionsLoad);
   yield takeEvery(GET_EMAIL_QUESTION_BY_ID, handleCurrentEmailQuestionLoad);
-  yield takeEvery(DELETE_EMAIL_QUESTION, handleEmailQuestionDelete);
+  yield takeEvery(DELETE_EMAIL_QUESTIONS, handleEmailQuestionsDelete);
   yield takeEvery(MOVE_EMAIL_QUESTIONS_TO_SPAM, handleMoveEmailQuestionsToSpam);
   yield takeEvery(ANSWER_TO_EMAIL_QUESTION, handleAnswerEmailQuestion);
   yield takeEvery(

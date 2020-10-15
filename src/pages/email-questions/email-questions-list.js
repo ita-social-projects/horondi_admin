@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Pagination } from '@material-ui/lab';
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import { useStyles } from './email-questions-list.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
   setEmailQuestionsCurrentPage,
-  deleteEmailQuestion,
-  moveEmailQuestionsToSpam
+  deleteEmailQuestions
 } from '../../redux/email-questions/email-questions.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
@@ -20,15 +19,12 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import getTime from '../../utils/getTime';
 import EmailQuestionsFilter from './email-question-filter';
+import EmailQuestionsOperationsButtons from './operations-buttons';
 
 const { emailQuestionStatuses } = config;
 const { routes } = config.app;
-const {
-  EMAIL_QUESTION_REMOVE_MESSAGE,
-  EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE
-} = config.messages;
+const { EMAIL_QUESTION_REMOVE_MESSAGE } = config.messages;
 
-const { pathToEmailAnswer } = routes;
 const tableTitles = config.tableHeadRowTitles.emailQuestions;
 
 const EmailQuestionsList = () => {
@@ -39,21 +35,19 @@ const EmailQuestionsList = () => {
     loading,
     pagesCount,
     currentPage,
-    questionsPerPage,
-    adminId
-  } = useSelector(({ EmailQuestions, Auth }) => ({
+    questionsPerPage
+  } = useSelector(({ EmailQuestions }) => ({
     list: EmailQuestions.list,
     loading: EmailQuestions.loading,
     pagesCount: EmailQuestions.pagination.pagesCount,
     currentPage: EmailQuestions.pagination.currentPage,
-    questionsPerPage: EmailQuestions.pagination.questionsPerPage,
-    adminId: Auth.adminId
+    questionsPerPage: EmailQuestions.pagination.questionsPerPage
   }));
 
   const dispatch = useDispatch();
 
   const [filter, setFilter] = useState([]);
-  const [questionsToSpam, setQuestionsToSpam] = useState([]);
+  const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   useEffect(() => {
     dispatch(
@@ -68,7 +62,7 @@ const EmailQuestionsList = () => {
     e.stopPropagation();
     const removeBusinessPage = () => {
       dispatch(closeDialog());
-      dispatch(deleteEmailQuestion(id));
+      dispatch(deleteEmailQuestions([id]));
     };
     openSuccessSnackbar(
       removeBusinessPage,
@@ -98,26 +92,12 @@ const EmailQuestionsList = () => {
   const checkboxChangeHandler = (e, id) => {
     e.stopPropagation();
 
-    const possibleQuestion = questionsToSpam.find((item) => item === id);
+    const possibleQuestion = questionsToOperate.find((item) => item === id);
     if (possibleQuestion) {
-      setQuestionsToSpam(questionsToSpam.filter((item) => item !== id));
+      setQuestionsToOperate(questionsToOperate.filter((item) => item !== id));
     } else {
-      setQuestionsToSpam([...questionsToSpam, id]);
+      setQuestionsToOperate([...questionsToOperate, id]);
     }
-  };
-
-  const makeQuestionsAsSpam = () => {
-    const moveToSpam = () => {
-      dispatch(closeDialog());
-      dispatch(moveEmailQuestionsToSpam({ questionsToSpam, adminId }));
-    };
-    openSuccessSnackbar(
-      moveToSpam,
-      EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE,
-      '',
-      'У СПАМ'
-    );
-    console.log('questionsToSpam', questionsToSpam);
   };
 
   const questions =
@@ -158,7 +138,7 @@ const EmailQuestionsList = () => {
   return (
     <div className={styles.container}>
       <div className={styles.tableNav}>
-        <Typography variant='h1' className={styles.contactsTitle}>
+        <Typography variant='h1' className={styles.title}>
           Запитання & Відповіді
         </Typography>
         <div className={styles.operations}>
@@ -166,22 +146,22 @@ const EmailQuestionsList = () => {
             filterItems={filter}
             changeHandler={filterChangeHandler}
           />
-          <Button
-            className={styles.spamBtn}
-            variant='contained'
-            onClick={makeQuestionsAsSpam}
-            disabled={!questionsToSpam.length}
-          >
-            Перемістити у СПАМ
-          </Button>
+          <EmailQuestionsOperationsButtons
+            questionsToOperate={questionsToOperate}
+            setQuestionsToOperate={setQuestionsToOperate}
+          />
         </div>
       </div>
       <div>
-        <TableContainerGenerator
-          id='businessPageTable'
-          tableTitles={tableTitles}
-          tableItems={questions}
-        />
+        {questions.length ? (
+          <TableContainerGenerator
+            id='businessPageTable'
+            tableTitles={tableTitles}
+            tableItems={questions}
+          />
+        ) : (
+          <h3 className={styles.emptyList}>Список порожній</h3>
+        )}
       </div>
       <div className={styles.paginationDiv}>
         <Pagination

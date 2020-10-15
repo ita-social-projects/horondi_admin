@@ -93,19 +93,13 @@ const getEmailQuestionById = async (id) => {
   return data.getBusinessTextById;
 };
 
-const deleteEmailQuestion = async (id) => {
+const deleteEmailQuestions = async (questionsToDelete) => {
   const result = await client.mutate({
-    variables: { id },
+    variables: { questionsToDelete },
     mutation: gql`
-      mutation($id: ID!) {
-        deleteEmailQuestion(id: $id) {
-          ... on EmailQuestion {
-            _id
-          }
-          ... on Error {
-            message
-            statusCode
-          }
+      mutation($questionsToDelete: [String]) {
+        deleteEmailQuestions(questionsToDelete: $questionsToDelete) {
+          _id
         }
       }
     `,
@@ -115,13 +109,13 @@ const deleteEmailQuestion = async (id) => {
   client.resetStore();
   const { data } = result;
 
-  if (data.deleteEmailQuestion.message) {
+  if (data.deleteEmailQuestions.message) {
     throw new Error(
-      `${data.deleteEmailQuestion.statusCode} ${data.deleteEmailQuestion.message}`
+      `${data.deleteEmailQuestions.statusCode} ${data.deleteEmailQuestions.message}`
     );
   }
 
-  return data.deleteEmailQuestion;
+  return data.deleteEmailQuestions;
 };
 
 const answerEmailQuestion = async ({ questionId, adminId, text }) => {
@@ -211,7 +205,6 @@ const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
     fetchPolicy: 'no-cache'
   });
 
-  client.resetStore();
   const { data } = result;
 
   if (data.makeEmailQuestionsSpam.message) {
@@ -226,7 +219,7 @@ const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
 export {
   getAllEmailQuestions,
   getEmailQuestionById,
-  deleteEmailQuestion,
+  deleteEmailQuestions,
   makeEmailQuestionsSpam,
   answerEmailQuestion,
   getPendingEmailQuestionsCount

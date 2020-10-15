@@ -27,8 +27,10 @@ function* handleAdminLoad({ payload }) {
     yield put(setAuthLoading(true));
     const admin = yield call(loginAdmin, payload);
     setToLocalStorage('HORONDI_AUTH_TOKEN', admin.token);
-    yield put(setAuth(true));
+
     yield put(setAdminId(admin._id));
+    yield put(setAuth(true));
+
     yield put(push('/products'));
     yield put(setAuthLoading(false));
   } catch (error) {
@@ -50,8 +52,9 @@ function* handleAdminCheckByToken() {
       return;
     }
     const admin = yield call(getUserByToken, authToken);
-    yield put(setAuth(true));
     yield put(setAdminId(admin._id));
+    yield put(setAuth(true));
+
     yield put(setAuthLoading(false));
   } catch (error) {
     console.error(error);

@@ -14,9 +14,6 @@ export const useStyles = makeStyles((theme) => ({
   operations: {
     display: 'flex'
   },
-  spamBtn: {
-    marginLeft: '10px'
-  },
   container: {
     width: `100%`,
     marginTop: 65,
@@ -28,10 +25,14 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     marginTop: '30px'
   },
-  contactsTitle: {
+  title: {
     marginBottom: '10px',
     fontSize: 24,
     color: theme.palette.text.disabled,
     fontWeight: 'bold'
+  },
+  emptyList: {
+    textAlign: 'center',
+    margin: '50px 0'
   }
 }));
