@@ -79,11 +79,6 @@ export const config = {
   },
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
-  contactsPaginationPayload: {
-    skip: 0,
-    limit: 6,
-    contactsPerPage: 7
-  },
   product: {
     sortBySelectOptions: [
       {
@@ -102,16 +97,43 @@ export const config = {
         label: 'рейтингом',
         value: 'rate'
       }
-    ]
+    ],
+    responsive: {
+      superLargeDesktop: {
+        breakpoint: { max: 4000, min: 3000 },
+        items: 1
+      },
+      desktop: {
+        breakpoint: { max: 3000, min: 1024 },
+        items: 1
+      },
+      tablet: {
+        breakpoint: { max: 1146, min: 464 },
+        items: 1
+      },
+      mobile: {
+        breakpoint: { max: 810, min: 0 },
+        items: 1
+      }
+    }
   },
   popularity: 'popularity',
   rate: 'rate',
   sortAsc: 'sortAsc',
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
-  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/'
-};
-export {
+  imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  initialLanguageValues: [
+    {
+      lang: 'uk',
+      value: ''
+    },
+    {
+      lang: 'en',
+      value: ''
+    }
+  ],
+  UAH: 'грн',
   buttonTitles,
   detailTitles,
   messages,

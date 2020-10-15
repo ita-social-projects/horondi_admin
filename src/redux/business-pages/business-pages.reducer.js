@@ -5,7 +5,7 @@ import {
   SET_CURRENT_BUSINESS_PAGE
 } from './business-pages.types';
 
-const initialState = {
+export const initialState = {
   list: [],
   currentPage: null,
   loading: false,

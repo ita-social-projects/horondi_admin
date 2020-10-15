@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { statuses } from '../../configs';
+import { config } from '../../configs';
 
 import {
   getCommentsByType,
@@ -28,9 +28,9 @@ import {
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
 
-const { SUCCESS_DELETE_STATUS } = statuses;
+const { SUCCESS_DELETE_STATUS } = config.statuses;
 
-function* handleCommentsByTypeLoad({ payload }) {
+export function* handleCommentsByTypeLoad({ payload }) {
   try {
     yield put(setCommentsLoading(true));
     const comments = yield call(
@@ -46,7 +46,7 @@ function* handleCommentsByTypeLoad({ payload }) {
   }
 }
 
-function* handleRecentCommentsLoad({
+export function* handleRecentCommentsLoad({
   payload = {
     skip: 0,
     limit: 20,
@@ -68,7 +68,7 @@ function* handleRecentCommentsLoad({
   }
 }
 
-function* handleCommentDelete({ payload }) {
+export function* handleCommentDelete({ payload }) {
   try {
     yield put(setCommentsLoading(true));
 
@@ -82,7 +82,7 @@ function* handleCommentDelete({ payload }) {
   }
 }
 
-function* handleCommentsError(error) {
+export function* handleCommentsError(error) {
   yield put(setCommentsLoading(false));
   yield put(setCommentError({ error }));
 
@@ -91,7 +91,7 @@ function* handleCommentsError(error) {
   yield put(setSnackBarStatus(true));
 }
 
-function* handleSnackBarSuccess(status) {
+export function* handleSnackBarSuccess(status) {
   yield put(setSnackBarSeverity('success'));
   yield put(setSnackBarMessage(status));
   yield put(setSnackBarStatus(true));

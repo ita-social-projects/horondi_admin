@@ -25,7 +25,7 @@ import {
   UPDATE_MATERIAL
 } from './material.types';
 
-import { statuses, materialPaginationPayload, routes } from '../../configs';
+import { config } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -37,9 +37,9 @@ const {
   SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
-} = statuses;
+} = config.statuses;
 
-const { skip, limit, materialsPerPage } = materialPaginationPayload;
+const { skip, limit, materialsPerPage } = config.materialPaginationPayload;
 
 export function* handleMaterialsLoad({
   payload = {
@@ -80,7 +80,7 @@ function* handleAddMaterial({ payload }) {
     yield call(createMaterial, payload);
     yield put(clearColors());
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(routes.pathToMaterials));
+    yield put(push(config.routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -104,7 +104,7 @@ export function* handleMaterialUpdate({ payload }) {
     yield put(setMaterialLoading(true));
     yield call(updateMaterial, id, newMaterial);
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(routes.pathToMaterials));
+    yield put(push(config.routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
   }

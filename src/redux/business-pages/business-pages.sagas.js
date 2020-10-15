@@ -22,7 +22,7 @@ import {
   UPDATE_BUSINESS_PAGE
 } from './business-pages.types';
 
-import { statuses, routes } from '../../configs';
+import { config } from '../../configs';
 
 import {
   setSnackBarSeverity,
@@ -34,7 +34,9 @@ const {
   SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
-} = statuses;
+} = config.statuses;
+
+const { routes } = config.routes;
 
 export function* handleBusinessPagesLoad() {
   try {
@@ -47,7 +49,7 @@ export function* handleBusinessPagesLoad() {
   }
 }
 
-function* handleCurrentBusinessPageLoad({ payload }) {
+export function* handleCurrentBusinessPageLoad({ payload }) {
   try {
     yield put(setLoading(true));
     const businessPage = yield call(getBusinessPageById, payload);
@@ -58,7 +60,7 @@ function* handleCurrentBusinessPageLoad({ payload }) {
   }
 }
 
-function* handleAddBusinessPage({ payload }) {
+export function* handleAddBusinessPage({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(createBusinessPage, payload);
@@ -72,7 +74,7 @@ function* handleAddBusinessPage({ payload }) {
   }
 }
 
-function* handleBusinessPageDelete({ payload }) {
+export function* handleBusinessPageDelete({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(deleteBusinessPage, payload);
@@ -92,7 +94,7 @@ function* handleBusinessPageDelete({ payload }) {
   }
 }
 
-function* handleBusinessPageUpdate({ payload }) {
+export function* handleBusinessPageUpdate({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(updateBusinessPage, payload);
