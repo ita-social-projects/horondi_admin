@@ -29,7 +29,7 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
-import Orders from '../pages/orders-page/orders-page';
+import Orders from '../pages/orders/orders-page/orders-page';
 
 const { routes } = config.app;
 
