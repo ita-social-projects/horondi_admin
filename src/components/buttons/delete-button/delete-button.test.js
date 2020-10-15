@@ -23,17 +23,9 @@ describe('delete button tests', () => {
     component.unmount();
   });
 
-  it('should click', () => {
+  it('should exist', () => {
     expect(component).toMatchSnapshot();
-    expect(mockCallBack.mock.calls.length).toBe(0);
-    component.find('button').simulate('click');
-    expect(mockCallBack.mock.calls.length).toBe(1);
-  });
-  it('should exist and have value', () => {
     expect(component.exists());
-    expect(component.find('button').prop('aria-label')).toEqual(DELETE_TITLE);
-    expect(component.find('button').prop('title')).toEqual(DELETE_TITLE);
-    expect(component.prop('onClickHandler')).toEqual(mockCallBack);
   });
   it('should have type', () => {
     expect(component.find('button').type()).toEqual('button');

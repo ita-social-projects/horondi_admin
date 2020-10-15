@@ -1,5 +1,5 @@
+import { config } from '../../configs';
 import {
-  SET_PRODUCT,
   SET_ALL_PRODUCTS,
   SET_ALL_FILTER_DATA,
   SET_SORT_BY_PRICE,
@@ -13,32 +13,75 @@ import {
   SET_PATTERNS_FILTER,
   SET_MODELS_FILTER,
   SET_SEARCH,
-  SET_PRODUCT_LOADING,
   SET_PRODUCT_TO_SEND,
   CLEAR_PRODUCT_TO_SEND,
-  SET_PRODUCTS_ERROR
+  SET_PRODUCTS_ERROR,
+  SET_PRODUCT_CATEGORIES,
+  SET_PRODUCT_OPTIONS,
+  SET_MODELS,
+  SET_FILES_TO_UPLOAD,
+  SET_PRODUCT,
+  CLEAR_FILES_TO_UPLOAD,
+  SET_FILES_TO_DELETE,
+  REMOVE_IMAGES_TO_UPLOAD,
+  SET_PRIMARY_IMAGE_TO_UPLOAD
 } from './products.types';
 
+const { initialLanguageValues } = config;
+
+export const productModel = {
+  name: initialLanguageValues,
+  mainMaterial: initialLanguageValues,
+  innerMaterial: initialLanguageValues,
+  description: initialLanguageValues,
+  closure: initialLanguageValues,
+  model: initialLanguageValues,
+  category: '',
+  subcategory: '',
+  colors: [],
+  pattern: [],
+  basePrice: 0,
+  strapLengthInCm: 0,
+  available: true,
+  options: []
+};
+
 export const initialState = {
-  productLoading: false,
-  loading: true,
+  loading: false,
+  currentPage: 0,
+  productsPerPage: 9,
   sorting: {
     sortByPrice: 0,
     sortByRate: 0,
     sortByPopularity: -1
   },
   filters: {
-    categoryFilter: [],
-    modelsFilter: [],
     colorsFilter: [],
     patternsFilter: [],
-    searchFilter: ''
+    categoryFilter: [],
+    searchFilter: '',
+    modelsFilter: []
   },
   filterData: [],
-  selectedProduct: null,
+  selectedProduct: productModel,
+  productToSend: {
+    ...productModel,
+    model: ''
+  },
   products: [],
   pagesCount: 1,
-  productsError: null
+  productsError: null,
+  filesToDelete: [],
+  upload: [],
+  primaryImageUpload: null,
+  productSpecies: {
+    categories: [],
+    modelsForSelectedCategory: []
+  },
+  productOptions: {
+    sizes: [],
+    bottomMaterials: []
+  }
 };
 const setSort = ({
   sortByPrice = 0,
@@ -135,16 +178,6 @@ const productsReducer = (state = initialState, action = {}) => {
       ...state,
       loading: action.payload
     };
-  case SET_PRODUCT:
-    return {
-      ...state,
-      product: action.payload
-    };
-  case SET_PRODUCT_LOADING:
-    return {
-      ...state,
-      productLoading: action.payload
-    };
   case SET_PRODUCT_TO_SEND:
     return {
       ...state,
@@ -156,6 +189,7 @@ const productsReducer = (state = initialState, action = {}) => {
   case CLEAR_PRODUCT_TO_SEND:
     return {
       ...state,
+      upload: [],
       productToSend: initialState.productToSend
     };
   case SET_PRODUCTS_ERROR:
@@ -163,6 +197,57 @@ const productsReducer = (state = initialState, action = {}) => {
       ...state,
       productsError: action.payload
     };
+  case SET_PRODUCT_CATEGORIES:
+    return {
+      ...state,
+      productSpecies: {
+        ...state.productSpecies,
+        categories: action.payload
+      }
+    };
+  case SET_PRODUCT_OPTIONS:
+    return {
+      ...state,
+      productOptions: action.payload
+    };
+  case SET_MODELS:
+    return {
+      ...state,
+      productSpecies: {
+        ...state.productSpecies,
+        modelsForSelectedCategory: action.payload
+      }
+    };
+  case SET_FILES_TO_UPLOAD:
+    return {
+      ...state,
+      upload: [...state.upload, ...action.payload]
+    };
+  case SET_PRODUCT:
+    return {
+      ...state,
+      selectedProduct: action.payload
+    };
+  case CLEAR_FILES_TO_UPLOAD:
+    return {
+      ...state,
+      upload: []
+    };
+  case SET_FILES_TO_DELETE: {
+    return { ...state, filesToDelete: action.payload };
+  }
+  case REMOVE_IMAGES_TO_UPLOAD: {
+    return {
+      ...state,
+      upload: state.upload.filter(({ name }) => name !== action.payload)
+    };
+  }
+  case SET_PRIMARY_IMAGE_TO_UPLOAD: {
+    return {
+      ...state,
+      primaryImageUpload: action.payload
+    };
+  }
   default:
     return state;
   }
