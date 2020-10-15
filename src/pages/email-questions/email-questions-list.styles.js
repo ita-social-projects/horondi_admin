@@ -11,6 +11,12 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
   },
+  operations: {
+    display: 'flex'
+  },
+  spamBtn: {
+    marginLeft: '10px'
+  },
   container: {
     width: `100%`,
     marginTop: 65,

@@ -10,6 +10,9 @@ const messages = {
   REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
-  EMAIL_QUESTION_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити це запитання?'
+  EMAIL_QUESTION_REMOVE_MESSAGE:
+    'Ви впевнені, що хочете видалити це запитання?',
+  EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE:
+    'Ви впевнені, що хочете перемістити вибрані запитання у СПАМ?'
 };
 export default messages;

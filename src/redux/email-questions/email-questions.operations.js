@@ -177,59 +177,57 @@ const answerEmailQuestion = async ({ questionId, adminId, text }) => {
   return data.makeEmailQuestionSpam;
 };
 
-const makeEmailQuestionSpam = async ({ questionId, adminId }) => {
+const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
   const result = await client.mutate({
     variables: {
-      questionId,
+      questionsToSpam,
       adminId
     },
     mutation: gql`
-      mutation($questionId: ID!, $adminId: ID!) {
-        makeEmailQuestionSpam(questionId: $questionId, adminId: $adminId) {
-          ... on EmailQuestion {
-            _id
-            senderName
-            email
+      mutation($questionsToSpam: [String], $adminId: ID!) {
+        makeEmailQuestionsSpam(
+          questionsToSpam: $questionsToSpam
+          adminId: $adminId
+        ) {
+          _id
+          senderName
+          email
+          text
+          date
+          status
+          answer {
+            admin {
+              _id
+              email
+              firstName
+              lastName
+            }
             text
             date
-            status
-            answer {
-              admin {
-                _id
-                email
-                firstName
-                lastName
-              }
-              text
-              date
-            }
-          }
-          ... on Error {
-            message
-            statusCode
           }
         }
       }
     `,
     fetchPolicy: 'no-cache'
   });
+
   client.resetStore();
   const { data } = result;
 
-  if (data.makeEmailQuestionSpam.message) {
+  if (data.makeEmailQuestionsSpam.message) {
     throw new Error(
-      `${data.makeEmailQuestionSpam.statusCode} ${data.makeEmailQuestionSpam.message}`
+      `${data.makeEmailQuestionsSpam.statusCode} ${data.makeEmailQuestionsSpam.message}`
     );
   }
 
-  return data.makeEmailQuestionSpam;
+  return data.makeEmailQuestionsSpam;
 };
 
 export {
   getAllEmailQuestions,
   getEmailQuestionById,
   deleteEmailQuestion,
-  makeEmailQuestionSpam,
+  makeEmailQuestionsSpam,
   answerEmailQuestion,
   getPendingEmailQuestionsCount
 };

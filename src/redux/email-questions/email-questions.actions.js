@@ -3,7 +3,7 @@ import {
   SET_ALL_EMAIL_QUESTIONS,
   GET_EMAIL_QUESTION_BY_ID,
   SET_CURRENT_EMAIL_QUESTION,
-  MAKE_EMAIL_QUESTION_SPAM,
+  MOVE_EMAIL_QUESTIONS_TO_SPAM,
   ANSWER_TO_EMAIL_QUESTION,
   DELETE_EMAIL_QUESTION,
   SET_EMAIL_QUESTIONS_LOADING,
@@ -44,9 +44,9 @@ const setEmailQuestionsError = (error) => ({
   payload: error
 });
 
-const makeEmailQuestionSpam = (id) => ({
-  type: MAKE_EMAIL_QUESTION_SPAM,
-  payload: id
+const moveEmailQuestionsToSpam = (data) => ({
+  type: MOVE_EMAIL_QUESTIONS_TO_SPAM,
+  payload: data
 });
 
 const deleteEmailQuestion = (id) => ({
@@ -85,7 +85,7 @@ export {
   setCurrentEmailQuestion,
   setEmailQuestionLoading,
   setEmailQuestionsError,
-  makeEmailQuestionSpam,
+  moveEmailQuestionsToSpam,
   deleteEmailQuestion,
   answerToEmailQuestion,
   setEmailQuestionsPendingCount,

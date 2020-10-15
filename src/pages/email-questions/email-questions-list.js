@@ -9,7 +9,8 @@ import { config } from '../../configs';
 import {
   getAllEmailQuestions,
   setEmailQuestionsCurrentPage,
-  deleteEmailQuestion
+  deleteEmailQuestion,
+  moveEmailQuestionsToSpam
 } from '../../redux/email-questions/email-questions.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
@@ -22,7 +23,10 @@ import EmailQuestionsFilter from './email-question-filter';
 
 const { emailQuestionStatuses } = config;
 const { routes } = config.app;
-const { EMAIL_QUESTION_REMOVE_MESSAGE } = config.messages;
+const {
+  EMAIL_QUESTION_REMOVE_MESSAGE,
+  EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE
+} = config.messages;
 
 const { pathToEmailAnswer } = routes;
 const tableTitles = config.tableHeadRowTitles.emailQuestions;
@@ -35,18 +39,21 @@ const EmailQuestionsList = () => {
     loading,
     pagesCount,
     currentPage,
-    questionsPerPage
-  } = useSelector(({ EmailQuestions }) => ({
+    questionsPerPage,
+    adminId
+  } = useSelector(({ EmailQuestions, Auth }) => ({
     list: EmailQuestions.list,
     loading: EmailQuestions.loading,
     pagesCount: EmailQuestions.pagination.pagesCount,
     currentPage: EmailQuestions.pagination.currentPage,
-    questionsPerPage: EmailQuestions.pagination.questionsPerPage
+    questionsPerPage: EmailQuestions.pagination.questionsPerPage,
+    adminId: Auth.adminId
   }));
 
   const dispatch = useDispatch();
 
   const [filter, setFilter] = useState([]);
+  const [questionsToSpam, setQuestionsToSpam] = useState([]);
 
   useEffect(() => {
     dispatch(
@@ -88,6 +95,31 @@ const EmailQuestionsList = () => {
     }
   };
 
+  const checkboxChangeHandler = (e, id) => {
+    e.stopPropagation();
+
+    const possibleQuestion = questionsToSpam.find((item) => item === id);
+    if (possibleQuestion) {
+      setQuestionsToSpam(questionsToSpam.filter((item) => item !== id));
+    } else {
+      setQuestionsToSpam([...questionsToSpam, id]);
+    }
+  };
+
+  const makeQuestionsAsSpam = () => {
+    const moveToSpam = () => {
+      dispatch(closeDialog());
+      dispatch(moveEmailQuestionsToSpam({ questionsToSpam, adminId }));
+    };
+    openSuccessSnackbar(
+      moveToSpam,
+      EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE,
+      '',
+      'У СПАМ'
+    );
+    console.log('questionsToSpam', questionsToSpam);
+  };
+
   const questions =
     list !== undefined
       ? list.map((question) => {
@@ -108,6 +140,8 @@ const EmailQuestionsList = () => {
             status={emailQuestionStatuses[question.status]}
             showAvatar={false}
             showEdit={false}
+            showCheckbox
+            checkboxChangeHandler={checkboxChangeHandler}
             deleteHandler={(e) => questionDeleteHandler(question._id, e)}
             clickHandler={() =>
               dispatch(push(`/email-answer/${question._id}`))
@@ -127,10 +161,20 @@ const EmailQuestionsList = () => {
         <Typography variant='h1' className={styles.contactsTitle}>
           Запитання & Відповіді
         </Typography>
-        <EmailQuestionsFilter
-          filterItems={filter}
-          changeHandler={filterChangeHandler}
-        />
+        <div className={styles.operations}>
+          <EmailQuestionsFilter
+            filterItems={filter}
+            changeHandler={filterChangeHandler}
+          />
+          <Button
+            className={styles.spamBtn}
+            variant='contained'
+            onClick={makeQuestionsAsSpam}
+            disabled={!questionsToSpam.length}
+          >
+            Перемістити у СПАМ
+          </Button>
+        </div>
       </div>
       <div>
         <TableContainerGenerator

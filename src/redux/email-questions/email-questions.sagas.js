@@ -12,7 +12,7 @@ import {
 import {
   getAllEmailQuestions,
   getEmailQuestionById,
-  makeEmailQuestionSpam,
+  makeEmailQuestionsSpam,
   answerEmailQuestion,
   deleteEmailQuestion,
   getPendingEmailQuestionsCount
@@ -21,7 +21,7 @@ import {
   GET_ALL_EMAIL_QUESTIONS,
   GET_EMAIL_QUESTION_BY_ID,
   DELETE_EMAIL_QUESTION,
-  MAKE_EMAIL_QUESTION_SPAM,
+  MOVE_EMAIL_QUESTIONS_TO_SPAM,
   GET_EMAIL_QUESTIONS_PENDING_COUNT,
   ANSWER_TO_EMAIL_QUESTION
 } from './email-questions.types';
@@ -73,10 +73,10 @@ export function* handleCurrentEmailQuestionLoad({ payload }) {
   }
 }
 
-export function* handleMakeEmailQuestionSpam({ payload }) {
+export function* handleMoveEmailQuestionsToSpam({ payload }) {
   try {
     yield put(setEmailQuestionLoading(true));
-    yield call(makeEmailQuestionSpam, payload);
+    yield call(makeEmailQuestionsSpam, payload);
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
@@ -139,7 +139,7 @@ export default function* emailQuestionSaga() {
   yield takeEvery(GET_ALL_EMAIL_QUESTIONS, handleEmailQuestionsLoad);
   yield takeEvery(GET_EMAIL_QUESTION_BY_ID, handleCurrentEmailQuestionLoad);
   yield takeEvery(DELETE_EMAIL_QUESTION, handleEmailQuestionDelete);
-  yield takeEvery(MAKE_EMAIL_QUESTION_SPAM, handleMakeEmailQuestionSpam);
+  yield takeEvery(MOVE_EMAIL_QUESTIONS_TO_SPAM, handleMoveEmailQuestionsToSpam);
   yield takeEvery(ANSWER_TO_EMAIL_QUESTION, handleAnswerEmailQuestion);
   yield takeEvery(
     GET_EMAIL_QUESTIONS_PENDING_COUNT,
