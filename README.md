@@ -4,15 +4,15 @@
 
 HORONDI project is an e-commerce online shop that provides hand-made backpacks, bags, purses and other accessories.
 
-[![GitHub issues](https://img.shields.io/github/issues/ita-social-projects/horondi_client_fe)](https://github.com/ita-social-projects/horondi_client_fe/issues)
-[![Pending Pull-Requests](https://img.shields.io/github/issues-pr/ita-social-projects/horondi_client_fe?style=flat-square)](https://github.com/ita-social-projects/Horondi_client_fe/pulls)
-[![GitHub license](https://img.shields.io/github/license/ita-social-projects/horondi_client_fe)](https://github.com/ita-social-projects/horondi_client_fe/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/ita-social-projects/horondi_client_admin)](https://github.com/ita-social-projects/horondi_client_admin/issues)
+[![Pending Pull-Requests](https://img.shields.io/github/issues-pr/ita-social-projects/horondi_client_admin?style=flat-square)](https://github.com/ita-social-projects/Horondi_client_admin/pulls)
+[![GitHub license](https://img.shields.io/github/license/ita-social-projects/horondi_client_fe)](https://github.com/ita-social-projects/horondi_client_admin/blob/master/LICENSE)
 
 ---
 
 - [Installation](#installation)
   - [Required to install](#Required-to-install)
-  - [Environment](https://github.com/ita-social-projects/horondi_client_fe/blob/master/environment%20valiables.md)
+  - [Environment](https://github.com/ita-social-projects/horondi_client_admin/blob/master/environment%20valiables.md)
   - [Clone](#Clone)
   - [Setup](#Setup)
   - [How to run local](#How-to-run-local)
@@ -43,7 +43,7 @@ HORONDI project is an e-commerce online shop that provides hand-made backpacks, 
 
 ### Clone
 
-- Clone this repo to your local machine using `https://github.com/ita-social-projects/horondi_client_fe.git`
+- Clone this repo to your local machine using `https://github.com/ita-social-projects/horondi_client_admin.git`
 
 ### Setup
 
