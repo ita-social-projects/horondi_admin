@@ -15,6 +15,8 @@ const messages = {
   EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE:
     'Ви впевнені, що хочете перемістити вибрані запитання у СПАМ?',
   EMAIL_QUESTIONS_MOVE_TO_DELETE_MESSAGE:
-    'Ви впевнені, що хочете видалити всі вибрані запитання?'
+    'Ви впевнені, що хочете видалити всі вибрані запитання?',
+  EMAIL_QUESTION_SPAM_DETAILS:
+    'Відповідь не доступна для запитань відзначених як "СПАМ"'
 };
 export default messages;

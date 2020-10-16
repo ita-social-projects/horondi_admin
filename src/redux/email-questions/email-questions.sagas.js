@@ -43,7 +43,6 @@ export function* handleEmailQuestionsLoad({ payload }) {
 
     yield put(setEmailQuestionsPagesCount(Math.ceil(response.count / 10)));
     yield put(setAllEmailQuestion(response.questions));
-    yield call(handlePendingEmailQuestionsCount);
 
     yield put(setEmailQuestionLoading(false));
   } catch (error) {
@@ -76,11 +75,9 @@ export function* handleCurrentEmailQuestionLoad({ payload }) {
 export function* handleMoveEmailQuestionsToSpam({ payload }) {
   try {
     yield put(setEmailQuestionLoading(true));
-    const updatedQuestions = yield call(makeEmailQuestionsSpam, payload);
 
-    const emailQuestions = yield select(
-      ({ EmailQuestions }) => EmailQuestions.list
-    );
+    const updatedQuestions = yield call(makeEmailQuestionsSpam, payload);
+    const emailQuestions = yield call(handleGettingQuestionFromStore);
     const newQuestionsToStore = emailQuestions.map((item) => {
       const spammedQuestion = updatedQuestions.find(
         (val) => val._id === item._id
@@ -88,11 +85,8 @@ export function* handleMoveEmailQuestionsToSpam({ payload }) {
       return spammedQuestion || item;
     });
 
+    yield call(handleSuccessSnackBar, SUCCESS_UPDATE_STATUS);
     yield put(setAllEmailQuestion(newQuestionsToStore));
-
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
 
     yield put(setEmailQuestionLoading(false));
     yield put(push('/email-questions'));
@@ -104,11 +98,23 @@ export function* handleMoveEmailQuestionsToSpam({ payload }) {
 export function* handleAnswerEmailQuestion({ payload }) {
   try {
     yield put(setEmailQuestionLoading(true));
-    yield call(answerEmailQuestion, payload);
+    const answeredQuestion = yield call(answerEmailQuestion, payload);
 
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    const emailQuestions = yield call(handleGettingQuestionFromStore);
+    yield call(handleSuccessSnackBar, SUCCESS_UPDATE_STATUS);
+
+    yield put(
+      setAllEmailQuestion(
+        emailQuestions.map((item) => {
+          if (item._id === answeredQuestion._id) {
+            return answeredQuestion;
+          }
+          return item;
+        })
+      )
+    );
+
+    yield call(handleReloadingPendingQuestionsCount, emailQuestions);
 
     yield put(setEmailQuestionLoading(false));
     yield put(push('/email-questions'));
@@ -122,9 +128,7 @@ export function* handleEmailQuestionsDelete({ payload }) {
     yield put(setEmailQuestionLoading(true));
     yield call(deleteEmailQuestions, payload);
 
-    const emailQuestions = yield select(
-      ({ EmailQuestions }) => EmailQuestions.list
-    );
+    const emailQuestions = yield call(handleGettingQuestionFromStore);
     yield put(
       setAllEmailQuestion(
         emailQuestions.filter(
@@ -133,14 +137,20 @@ export function* handleEmailQuestionsDelete({ payload }) {
       )
     );
 
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
-
+    yield call(handleSuccessSnackBar, SUCCESS_DELETE_STATUS);
     yield put(setEmailQuestionLoading(false));
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
+}
+
+export function* handleReloadingPendingQuestionsCount(list) {
+  const count = list.filter((item) => item.status === 'PENDING').length;
+  yield put(setEmailQuestionsPendingCount(count - 1));
+}
+
+export function* handleGettingQuestionFromStore() {
+  return yield select(({ EmailQuestions }) => EmailQuestions.list);
 }
 
 export function* handleEmailQuestionError(e) {
@@ -148,6 +158,12 @@ export function* handleEmailQuestionError(e) {
   yield put(setEmailQuestionsError({ e }));
   yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(e.message));
+  yield put(setSnackBarStatus(true));
+}
+
+export function* handleSuccessSnackBar(message) {
+  yield put(setSnackBarSeverity('success'));
+  yield put(setSnackBarMessage(message));
   yield put(setSnackBarStatus(true));
 }
 

@@ -9,7 +9,8 @@ import { config } from '../../configs';
 import {
   getAllEmailQuestions,
   setEmailQuestionsCurrentPage,
-  deleteEmailQuestions
+  deleteEmailQuestions,
+  setEmailQuestionLoading
 } from '../../redux/email-questions/email-questions.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
@@ -22,8 +23,10 @@ import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
 
 const { emailQuestionStatuses } = config;
-const { routes } = config.app;
-const { EMAIL_QUESTION_REMOVE_MESSAGE } = config.messages;
+const {
+  EMAIL_QUESTION_REMOVE_MESSAGE,
+  EMAIL_QUESTION_SPAM_DETAILS
+} = config.messages;
 
 const tableTitles = config.tableHeadRowTitles.emailQuestions;
 
@@ -60,12 +63,12 @@ const EmailQuestionsList = () => {
 
   const questionDeleteHandler = (id, e) => {
     e.stopPropagation();
-    const removeBusinessPage = () => {
+    const removeQuestion = () => {
       dispatch(closeDialog());
       dispatch(deleteEmailQuestions([id]));
     };
     openSuccessSnackbar(
-      removeBusinessPage,
+      removeQuestion,
       EMAIL_QUESTION_REMOVE_MESSAGE,
       '',
       'Видалити запитання'
@@ -74,6 +77,23 @@ const EmailQuestionsList = () => {
 
   const changePaginationHandler = (e, value) =>
     dispatch(setEmailQuestionsCurrentPage(value));
+
+  const questionClickHandler = (id, status) => {
+    if (status === 'SPAM') {
+      const handler = () => dispatch(closeDialog());
+
+      openSuccessSnackbar(
+        handler,
+        'ПОМИЛКА',
+        EMAIL_QUESTION_SPAM_DETAILS,
+        'Зрозуміло',
+        false
+      );
+    } else {
+      dispatch(setEmailQuestionLoading(true));
+      dispatch(push(`/email-answer/${id}`));
+    }
+  };
 
   const filterChangeHandler = (id) => {
     if (id === 'ALL') {
@@ -124,7 +144,7 @@ const EmailQuestionsList = () => {
             checkboxChangeHandler={checkboxChangeHandler}
             deleteHandler={(e) => questionDeleteHandler(question._id, e)}
             clickHandler={() =>
-              dispatch(push(`/email-answer/${question._id}`))
+              questionClickHandler(question._id, question.status)
             }
           />
         );
@@ -152,10 +172,9 @@ const EmailQuestionsList = () => {
           />
         </div>
       </div>
-      <div>
+      <div className={styles.tableList}>
         {questions.length ? (
           <TableContainerGenerator
-            id='businessPageTable'
             tableTitles={tableTitles}
             tableItems={questions}
           />

@@ -20,12 +20,14 @@ const DialogWindow = () => {
     dialogTitle,
     dialogContent,
     buttonTitle,
+    showCancelButton,
     onClickHandler
   } = useSelector(({ DialogWindow: dialogWindow }) => ({
     isOpen: dialogWindow.isOpen,
     dialogTitle: dialogWindow.dialogTitle,
     dialogContent: dialogWindow.dialogContent,
     buttonTitle: dialogWindow.buttonTitle,
+    showCancelButton: dialogWindow.showCancelButton,
     onClickHandler: dialogWindow.onClickHandler
   }));
 
@@ -42,11 +44,13 @@ const DialogWindow = () => {
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
       <DialogActions>
-        <StandardButton
-          variant='outlined'
-          title={CANCEL_TITLE}
-          onClickHandler={handleClose}
-        />
+        {showCancelButton && (
+          <StandardButton
+            variant='outlined'
+            title={CANCEL_TITLE}
+            onClickHandler={handleClose}
+          />
+        )}
         <StandardButton
           title={buttonTitle}
           onClickHandler={onClickHandler}

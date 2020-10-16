@@ -22,6 +22,6 @@ const routes = {
   pathToAddContact: '/add-contact',
   pathToComments: '/comments',
   pathToEmailQuestions: '/email-questions',
-  pathToEmailAnswer: '/email-answer/:id'
+  pathToEmailQuestionDetails: '/email-answer/:id'
 };
 export default routes;

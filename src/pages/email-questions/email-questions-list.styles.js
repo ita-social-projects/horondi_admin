@@ -20,6 +20,11 @@ export const useStyles = makeStyles((theme) => ({
     position: 'static',
     padding: 20
   },
+  tableList: {
+    '& tbody': {
+      cursor: 'pointer'
+    }
+  },
   paginationDiv: {
     display: 'flex',
     justifyContent: 'center',

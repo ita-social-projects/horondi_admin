@@ -30,6 +30,7 @@ import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
 import EmailQuestionsList from '../pages/email-questions';
+import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
 
 const { routes } = config.app;
 
@@ -122,6 +123,11 @@ const Routes = () => {
           path={routes.pathToEmailQuestions}
           exact
           component={EmailQuestionsList}
+        />
+        <Route
+          path={routes.pathToEmailQuestionDetails}
+          exact
+          render={({ match }) => <EmailQuestionsDetails id={match.params.id} />}
         />
         <Route component={ErrorPage} />
       </Switch>

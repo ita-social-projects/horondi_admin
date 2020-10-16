@@ -5,6 +5,6 @@ const formRegExp = {
   password: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
   unwrapHtml: /(<([^>]+)>)/gi,
   enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
-  editorField: /^<p><br><\/p>$/
+  editorField: /^<p><br><\/p>|<p><\/p>$/
 };
 export default formRegExp;

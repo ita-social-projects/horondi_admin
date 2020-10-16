@@ -149,7 +149,7 @@ Editor.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onEditorChange: PropTypes.func.isRequired,
-  setFiles: PropTypes.func.isRequired,
+  setFiles: PropTypes.func,
   files: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -160,7 +160,8 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
-  files: []
+  files: [],
+  setFiles: () => {}
 };
 
 export default Editor;

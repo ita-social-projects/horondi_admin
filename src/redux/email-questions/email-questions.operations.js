@@ -90,7 +90,7 @@ const getEmailQuestionById = async (id) => {
     );
   }
 
-  return data.getBusinessTextById;
+  return data.getEmailQuestionById;
 };
 
 const deleteEmailQuestions = async (questionsToDelete) => {
@@ -106,15 +106,7 @@ const deleteEmailQuestions = async (questionsToDelete) => {
     fetchPolicy: 'no-cache'
   });
 
-  client.resetStore();
   const { data } = result;
-
-  if (data.deleteEmailQuestions.message) {
-    throw new Error(
-      `${data.deleteEmailQuestions.statusCode} ${data.deleteEmailQuestions.message}`
-    );
-  }
-
   return data.deleteEmailQuestions;
 };
 
@@ -126,7 +118,7 @@ const answerEmailQuestion = async ({ questionId, adminId, text }) => {
       text
     },
     mutation: gql`
-      mutation($questionId: ID!, $adminId: ID!, $text: String) {
+      mutation($questionId: ID!, $adminId: ID!, $text: String!) {
         answerEmailQuestion(
           questionId: $questionId
           adminId: $adminId
@@ -168,7 +160,7 @@ const answerEmailQuestion = async ({ questionId, adminId, text }) => {
     );
   }
 
-  return data.makeEmailQuestionSpam;
+  return data.answerEmailQuestion;
 };
 
 const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
@@ -206,13 +198,6 @@ const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
   });
 
   const { data } = result;
-
-  if (data.makeEmailQuestionsSpam.message) {
-    throw new Error(
-      `${data.makeEmailQuestionsSpam.statusCode} ${data.makeEmailQuestionsSpam.message}`
-    );
-  }
-
   return data.makeEmailQuestionsSpam;
 };
 
