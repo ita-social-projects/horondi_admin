@@ -52,21 +52,21 @@ function* handleAdminCheckByToken() {
       return;
     }
     const admin = yield call(getUserByToken, authToken);
+
     yield put(setAdminId(admin._id));
     yield put(setAuth(true));
-
     yield put(setAuthLoading(false));
   } catch (error) {
     console.error(error);
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
-    clearLocalStorage(null);
+    setToLocalStorage('HORONDI_AUTH_TOKEN', null);
     yield put(push('/'));
   }
 }
 
 function* handleAdminLogout() {
-  clearLocalStorage(null);
+  setToLocalStorage('HORONDI_AUTH_TOKEN', null);
   yield put(setAuth(false));
   yield put(push('/'));
 }

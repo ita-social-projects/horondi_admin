@@ -38,5 +38,10 @@ export const getUserByToken = async (token) => {
     fetchPolicy: 'no-cache'
   });
   const { data } = result;
+
+  // костилі, чекають фікс на беку
+  if (data.getUserByToken.statusCode === 401) {
+    throw new Error('USER_NOT_AUTHORIZED');
+  }
   return data.getUserByToken;
 };
