@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStyles } from './pattern-add.styles';
 import PatternForm from '../../../components/pattern-form';
-import { titles } from '../../../configs';
+import { config } from '../../../configs';
 
 const PatternAdd = () => {
   const styles = useStyles();
@@ -9,7 +9,7 @@ const PatternAdd = () => {
   return (
     <div className={styles.container}>
       <span className={styles.patternTitle}>
-        {titles.patternTitles.createPageTitle}
+        {config.titles.patternTitles.createPageTitle}
       </span>
       <PatternForm />
     </div>

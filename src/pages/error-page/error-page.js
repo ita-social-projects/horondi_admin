@@ -1,8 +1,8 @@
 import React from 'react';
 import { useStyles } from './error-page.styles';
-import { statuses } from '../../configs';
+import { config } from '../../configs';
 
-const { ERROR_PAGE_STATUS } = statuses;
+const { ERROR_PAGE_STATUS } = config.statuses;
 
 const ErrorPage = () => {
   const classes = useStyles();

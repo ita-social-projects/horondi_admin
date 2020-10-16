@@ -33,15 +33,10 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import AddPhoto from '../../../images/add-photo.png';
 import { categoryTranslations } from '../../../translations/category.translations';
-import {
-  config,
-  messages,
-  buttonTitles,
-  tableHeadRowTitles
-} from '../../../configs';
+import { config } from '../../../configs';
 
-const { DELETE_CATEGORY_MESSAGE } = messages;
-const { DELETE_CATEGORY } = buttonTitles;
+const { DELETE_CATEGORY_MESSAGE } = config.messages;
+const { DELETE_CATEGORY } = config.buttonTitles;
 const CategoriesAdd = ({ id, editMode }) => {
   // HOOKS
   const dispatch = useDispatch();
@@ -203,7 +198,7 @@ const CategoriesAdd = ({ id, editMode }) => {
         DELETE_CATEGORY
       );
     },
-    [DELETE_CATEGORY, DELETE_CATEGORY_MESSAGE, dispatch, openSuccessSnackbar]
+    [dispatch, openSuccessSnackbar]
   );
 
   // NAME HANDLERS
@@ -422,7 +417,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                           onClick={handleAddName}
                           fullWidth
                         >
-                          {buttonTitles.ADD_CATEGORY_NAME}
+                          {config.buttonTitles.ADD_CATEGORY_NAME}
                         </Button>
                         {showAddNameForm ? (
                           <>
@@ -434,7 +429,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                               onClick={hideAddNameForm}
                               fullWidth
                             >
-                              {buttonTitles.CANCEL}
+                              {config.buttonTitles.CANCEL}
                             </Button>
                           </>
                         ) : null}
@@ -442,7 +437,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                     </form>
                     {categoryNameList.length ? (
                       <TableContainerGenerator
-                        tableTitles={tableHeadRowTitles.categoryName}
+                        tableTitles={config.tableHeadRowTitles.categoryName}
                         tableItems={categoryNameList}
                       />
                     ) : null}
@@ -470,7 +465,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                         className={classes.uploadLabel}
                       >
                         <Button component='span' className={classes.uploadBtn}>
-                          {buttonTitles.ADD_PHOTO_LABEL}
+                          {config.buttonTitles.ADD_PHOTO_LABEL}
                         </Button>
                       </label>
                     </div>
@@ -508,7 +503,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                   <TabPanel value={tabValue} index={2}>
                     <div>
                       <TableContainerGenerator
-                        tableTitles={tableHeadRowTitles.subcategories}
+                        tableTitles={config.tableHeadRowTitles.subcategories}
                         tableItems={subcategoryList}
                       />
                     </div>
@@ -524,7 +519,7 @@ const CategoriesAdd = ({ id, editMode }) => {
           className={classes.saveBtn}
           onClick={editMode ? handleCategoryEdit : handleCategorySave}
         >
-          {buttonTitles.titleGenerator(editMode, isMain)}
+          {config.buttonTitles.titleGenerator(editMode, isMain)}
         </Button>
       </div>
     </div>

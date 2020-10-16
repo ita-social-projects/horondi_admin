@@ -16,21 +16,13 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
-import {
-  messages,
-  buttonTitles,
-  routes,
-  config,
-  titles,
-  tableHeadRowTitles
-} from '../../../configs';
+import { config } from '../../../configs';
 
-const { PATTERN_REMOVE_MESSAGE } = messages;
-const { PATTERN_REMOVE_TITLE } = buttonTitles;
+const { PATTERN_REMOVE_MESSAGE } = config.messages;
+const { CREATE_PATTERN_TITLE, PATTERN_REMOVE_TITLE } = config.buttonTitles;
 
-const { CREATE_PATTERN_TITLE } = buttonTitles;
-const pathToPatternAddPage = routes.pathToAddPattern;
-const tableTitles = tableHeadRowTitles.patterns;
+const pathToPatternAddPage = config.routes.pathToAddPattern;
+const tableTitles = config.tableHeadRowTitles.patterns;
 
 const PatternPage = () => {
   const styles = useStyles();
@@ -105,7 +97,7 @@ const PatternPage = () => {
   return (
     <div className={styles.container}>
       <Typography variant='h1' className={styles.patternTitle}>
-        {titles.patternTitles.mainPageTitle}
+        {config.titles.patternTitles.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
         <Button

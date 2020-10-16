@@ -5,12 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
 import { useStyles } from './business-page-list.styles';
-import {
-  routes,
-  messages,
-  buttonTitles,
-  tableHeadRowTitles
-} from '../../configs';
+import { config } from '../../configs';
 import {
   getAllBusinessPages,
   deleteBusinessPage
@@ -22,11 +17,14 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 
-const { REMOVE_BUSINESS_PAGE } = messages;
-const { REMOVE_BUSINESS_PAGE_TITLE, CREATE_BUSINESS_PAGE } = buttonTitles;
+const { REMOVE_BUSINESS_PAGE } = config.messages;
+const {
+  REMOVE_BUSINESS_PAGE_TITLE,
+  CREATE_BUSINESS_PAGE
+} = config.buttonTitles;
 
-const { pathToAddBusinessPage } = routes;
-const tableTitles = tableHeadRowTitles.businessPages;
+const { pathToAddBusinessPage } = config.routes;
+const tableTitles = config.tableHeadRowTitles.businessPages;
 
 const BusinessPageList = () => {
   const classes = useStyles();

@@ -18,7 +18,7 @@ import {
   getBusinessPageById,
   updateBusinessPage
 } from '../../../redux/business-pages/business-pages.actions';
-import { formRegExp, routes } from '../../../configs';
+import { config } from '../../../configs';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const BusinessPageForm = ({ id, editMode }) => {
     languages
   } = useBusinessHandlers();
 
-  const { editorField } = formRegExp;
+  const { editorField } = config.formRegExp;
 
   useEffect(() => {
     id && dispatch(getBusinessPageById(id));
@@ -224,7 +224,7 @@ const BusinessPageForm = ({ id, editMode }) => {
           </TabPanel>
         </div>
         <div className={classes.controlsBlock}>
-          <Link to={routes.pathToBusinessPages}>
+          <Link to={config.routes.pathToBusinessPages}>
             <StandardButton
               className={classes.controlButton}
               id='back'

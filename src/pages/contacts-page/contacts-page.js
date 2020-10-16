@@ -14,13 +14,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import TableContainerRow from '../../containers/table-container-row';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { useStyles } from './contacts-page.style';
-import {
-  messages,
-  buttonTitles,
-  routes,
-  formRegExp,
-  tableHeadRowTitles
-} from '../../configs';
+import { config } from '../../configs';
 
 import {
   getContacts,
@@ -28,8 +22,11 @@ import {
   deleteContact
 } from '../../redux/contact/contact.actions';
 
-const { REMOVE_CONTACT_MESSAGE } = messages;
-const { REMOVE_CONTACT_TITLE } = buttonTitles;
+const { REMOVE_CONTACT_MESSAGE } = config.messages;
+const { CREATE_CONTACT_TITLE, REMOVE_CONTACT_TITLE } = config.buttonTitles;
+
+const pathToAddContactPage = config.routes.pathToAddContact;
+const tableTitles = config.tableHeadRowTitles.contacts;
 
 const ContactsPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -47,11 +44,6 @@ const ContactsPage = () => {
     contactsCurrentPage: Contact.pagination.contactsCurrentPage,
     contactsPerPage: Contact.pagination.contactsPerPage
   }));
-
-  const { CREATE_CONTACT_TITLE } = buttonTitles;
-
-  const pathToAddContactPage = routes.pathToAddContact;
-  const tableTitles = tableHeadRowTitles.contacts;
 
   const dispatch = useDispatch();
 
@@ -90,7 +82,10 @@ const ContactsPage = () => {
         id={contact.id}
         phone={formatPhoneNumber(contact.phoneNumber)}
         email={contact.email}
-        address={contact.address[0].value.replace(formRegExp.unwrapHtml, ' ')}
+        address={contact.address[0].value.replace(
+          config.formRegExp.unwrapHtml,
+          ' '
+        )}
         showAvatar={false}
         deleteHandler={() => contactDeleteHandler(contact._id)}
         editHandler={() => {

@@ -10,7 +10,7 @@ import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import { useStyles } from './nav-bar.styles';
 
-import { config, buttonTitles, messages } from '../../configs';
+import { config } from '../../configs';
 
 import {
   setThemeMode,
@@ -23,8 +23,8 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 
 const { title } = config.app;
-const { LOGOUT_TITLE } = buttonTitles;
-const { LOGOUT_MESSAGE } = messages;
+const { LOGOUT_TITLE } = config.buttonTitles;
+const { LOGOUT_MESSAGE } = config.messages;
 
 const NavBar = () => {
   const classes = useStyles();

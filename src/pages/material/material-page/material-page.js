@@ -5,13 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './material-page.styles';
-import {
-  messages,
-  buttonTitles,
-  routes,
-  tableHeadRowTitles,
-  titles
-} from '../../../configs';
+import { config } from '../../../configs';
 import {
   getMaterials,
   deleteMaterial,
@@ -25,11 +19,11 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import LoadingBar from '../../../components/loading-bar';
 import { materialTranslations } from '../../../translations/material.translations';
 
-const { REMOVE_MATERIAL_MESSAGE } = messages;
-const { REMOVE_MATERIAL_TITLE, CREATE_MATERIAL_TITLE } = buttonTitles;
+const { REMOVE_MATERIAL_MESSAGE } = config.messages;
+const { REMOVE_MATERIAL_TITLE, CREATE_MATERIAL_TITLE } = config.buttonTitles;
 
-const pathToMaterialAddPage = routes.pathToAddMaterial;
-const tableTitles = tableHeadRowTitles.materials;
+const pathToMaterialAddPage = config.routes.pathToAddMaterial;
+const tableTitles = config.tableHeadRowTitles.materials;
 
 const MaterialPage = () => {
   const styles = useStyles();
@@ -109,7 +103,7 @@ const MaterialPage = () => {
   return (
     <div className={styles.container}>
       <Typography variant='h1' className={styles.materialTitle}>
-        {titles.materialTitles.mainPageTitle}
+        {config.titles.materialTitles.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
         <Button

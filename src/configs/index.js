@@ -32,9 +32,6 @@ export const config = {
     rowsPerPageOptions: [10, 25, 50, 100]
   },
   languages: ['uk', 'en'],
-  buttonStyles: {
-    ACCEPT_BUTTON_STYLE: 'secondary'
-  },
   tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {

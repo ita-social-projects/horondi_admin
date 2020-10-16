@@ -10,9 +10,9 @@ import {
 import PropTypes from 'prop-types';
 import InfoItem from './containers/info-item';
 import { useStyles } from './user-details-card.styles';
-import { detailTitles } from '../../../../../configs';
+import { config } from '../../../../../configs';
 
-const userTitles = detailTitles.users;
+const userTitles = config.detailTitles.users;
 
 const UserDetailsCard = ({
   avatar,

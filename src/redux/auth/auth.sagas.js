@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 import { setAuth, setAuthError, setAuthLoading } from './auth.actions';
 import { loginAdmin, getUserByToken } from './auth.operations';
 import { LOGIN_USER, CHECK_USER_BY_TOKEN, LOGOUT_USER } from './auth.types';
-import { statuses } from '../../configs';
+import { config } from '../../configs';
 import {
   setToLocalStorage,
   getFromLocalStorage,
@@ -15,7 +15,7 @@ import {
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
 
-const { LOGIN_PAGE_STATUS } = statuses;
+const { LOGIN_PAGE_STATUS } = config.statuses;
 
 function* handleAdminLoad({ payload }) {
   try {

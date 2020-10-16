@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useStyles } from './nav-menu.styles';
 
-import { menuCategories } from '../../configs';
+import { config } from '../../configs';
 import { setSideMenuStatus } from '../../redux/theme/theme.actions';
 
 const DRAWER_TEMPORARY = 'temporary';
@@ -29,7 +29,7 @@ const NavMenu = ({ width }) => {
 
   const sideMenuStatus = useSelector(({ Theme }) => Theme.sideMenuStatus);
 
-  const menuItems = menuCategories.map((category) => {
+  const menuItems = config.menuCategories.map((category) => {
     const pathTitle = category[0];
     const pathTo = category[1];
     const PathIcon = category[2];

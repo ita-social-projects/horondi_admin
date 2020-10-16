@@ -20,13 +20,7 @@ import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
 
-import {
-  loginErrorMessages,
-  contactErrorMessages,
-  buttonTitles,
-  formRegExp,
-  routes
-} from '../../configs';
+import { config } from '../../configs';
 import { SaveButton } from '../buttons';
 import {
   setSnackBarSeverity,
@@ -47,15 +41,18 @@ const {
   IMAGE_FORMAT_MESSAGE,
   ENTER_LINK_MESSAGE,
   SELECT_IMAGES_MESSAGE
-} = contactErrorMessages;
+} = config.contactErrorMessages;
 
-const { INVALID_EMAIL_MESSAGE, ENTER_EMAIL_MESSAGE } = loginErrorMessages;
+const {
+  INVALID_EMAIL_MESSAGE,
+  ENTER_EMAIL_MESSAGE
+} = config.loginErrorMessages;
 
-const { enAddressRegex } = formRegExp;
+const { enAddressRegex } = config.formRegExp;
 
-const { GO_BACK_TITLE } = buttonTitles;
+const { GO_BACK_TITLE } = config.buttonTitles;
 
-const pathToContactsPage = routes.pathToContacts;
+const pathToContactsPage = config.routes.pathToContacts;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();

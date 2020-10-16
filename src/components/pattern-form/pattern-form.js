@@ -17,14 +17,7 @@ import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
-import {
-  patternErrorMessages,
-  config,
-  labels,
-  routes,
-  formRegExp,
-  buttonTitles
-} from '../../configs';
+import { config } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
@@ -33,7 +26,7 @@ const {
   PATTERN_VALIDATION_ERROR,
   PATTERN_ERROR_MESSAGE,
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
-} = patternErrorMessages;
+} = config.patternErrorMessages;
 
 const { languages } = config;
 
@@ -70,7 +63,7 @@ const PatternForm = ({ pattern, id }) => {
     material: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(
-        formRegExp.patternMaterial,
+        config.formRegExp.patternMaterial,
         PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
       )
       .required(PATTERN_ERROR_MESSAGE)
@@ -113,7 +106,7 @@ const PatternForm = ({ pattern, id }) => {
       value: values.handmade,
       checked: values.handmade,
       color: 'primary',
-      label: labels.pattern.handmade,
+      label: config.labels.pattern.handmade,
       handler: (e) => setFieldValue('handmade', !values.handmade)
     },
     {
@@ -122,7 +115,7 @@ const PatternForm = ({ pattern, id }) => {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: labels.pattern.available,
+      label: config.labels.pattern.available,
       handler: (e) => setFieldValue('available', !values.available)
     }
   ];
@@ -147,7 +140,7 @@ const PatternForm = ({ pattern, id }) => {
         <Grid item xs={12}>
           <Paper className={styles.patternItemUpdate}>
             <span className={styles.imageUpload}>
-              {labels.pattern.avatarText}
+              {config.labels.pattern.avatarText}
             </span>
             <ImageUploadContainer
               handler={handleImageLoad}
@@ -162,7 +155,7 @@ const PatternForm = ({ pattern, id }) => {
               id='material'
               className={styles.textField}
               variant='outlined'
-              label={labels.pattern.material}
+              label={config.labels.pattern.material}
               value={values.material}
               onChange={handleChange}
               error={touched.material && !!errors.material}
@@ -235,13 +228,13 @@ const PatternForm = ({ pattern, id }) => {
         <Button
           id='contactsBack'
           component={Link}
-          to={routes.pathToPatterns}
+          to={config.routes.pathToPatterns}
           variant='outlined'
           color='primary'
           className={styles.returnButton}
           data-cy='goBackButton'
         >
-          {buttonTitles.GO_BACK_TITLE}
+          {config.buttonTitles.GO_BACK_TITLE}
         </Button>
         <SaveButton
           className={styles.saveButton}

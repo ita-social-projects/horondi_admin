@@ -7,13 +7,7 @@ import {
   deleteCategory
 } from '../../../redux/categories/categories.actions';
 import LoadingBar from '../../../components/loading-bar';
-import {
-  buttonTitles,
-  config,
-  routes,
-  messages,
-  tableHeadRowTitles
-} from '../../../configs';
+import { config } from '../../../configs';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './categories.styles';
@@ -23,9 +17,8 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 const Categories = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { IMG_URL } = config;
-  const { ADD_CATEGORY } = buttonTitles;
-  const { DELETE_CATEGORY_MESSAGE } = messages;
-  const { DELETE_CATEGORY } = buttonTitles;
+  const { ADD_CATEGORY, DELETE_CATEGORY } = config.buttonTitles;
+  const { DELETE_CATEGORY_MESSAGE } = config.messages;
 
   const dispatch = useDispatch();
 
@@ -48,7 +41,7 @@ const Categories = () => {
   };
 
   const handleAddCategory = () => {
-    dispatch(push(routes.pathToAddCategory));
+    dispatch(push(config.routes.pathToAddCategory));
   };
 
   useEffect(() => {
@@ -98,7 +91,7 @@ const Categories = () => {
       </div>
       <div className='classes.tableContainer'>
         <TableContainerGenerator
-          tableTitles={tableHeadRowTitles.categories}
+          tableTitles={config.tableHeadRowTitles.categories}
           tableItems={categoriesList}
         />
       </div>

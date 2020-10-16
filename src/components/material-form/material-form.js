@@ -23,16 +23,7 @@ import {
   updateMaterial,
   showColorDialogWindow
 } from '../../redux/material/material.actions';
-import {
-  config,
-  titles,
-  labels,
-  routes,
-  formRegExp,
-  buttonTitles,
-  errorMessages,
-  materialErrorMessages
-} from '../../configs';
+import { config } from '../../configs';
 import CheckboxOptions from '../checkbox-options';
 import CreateColor from '../../pages/material/create-color';
 import DialogWindowWrapper from '../dialog-window-wrapper';
@@ -43,7 +34,12 @@ import {
 } from '../../redux/snackbar/snackbar.actions';
 
 const { languages } = config;
-
+const {
+  VALIDATION_ERROR,
+  MIN_LENGTH_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  PRICE_VALIDATION_ERROR
+} = config.materialErrorMessages;
 function MaterialForm({ edit, material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -65,36 +61,33 @@ function MaterialForm({ edit, material, id }) {
 
   const formSchema = Yup.object().shape({
     ukName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     enName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     ukDescription: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     enDescription: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     purpose: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     additionalPrice: Yup.string()
-      .matches(
-        formRegExp.onlyPositiveDigits,
-        materialErrorMessages.PRICE_VALIDATION_ERROR
-      )
-      .required(materialErrorMessages.VALIDATION_ERROR)
+      .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
+      .required(VALIDATION_ERROR)
   });
 
   const {
@@ -121,7 +114,7 @@ function MaterialForm({ edit, material, id }) {
       console.log(!colors.length);
       if (!colors.length) {
         dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(errorMessages.NO_COLORS));
+        dispatch(setSnackBarMessage(config.errorMessages.NO_COLORS));
         dispatch(setSnackBarStatus(true));
         return;
       }
@@ -151,7 +144,7 @@ function MaterialForm({ edit, material, id }) {
           id={`${lang}Name`}
           className={styles.textField}
           variant='outlined'
-          label={labels.material.name}
+          label={config.labels.material.name}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
           multiline
           value={values[`${lang}Name`]}
@@ -165,7 +158,7 @@ function MaterialForm({ edit, material, id }) {
           id={`${lang}Description`}
           className={styles.textField}
           variant='outlined'
-          label={labels.material.description}
+          label={config.labels.material.description}
           multiline
           error={
             touched[`${lang}Description`] && !!errors[`${lang}Description`]
@@ -189,7 +182,7 @@ function MaterialForm({ edit, material, id }) {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: labels.material.available,
+      label: config.labels.material.available,
       handler: (e) => setFieldValue('available', !values.available)
     }
   ];
@@ -233,7 +226,7 @@ function MaterialForm({ edit, material, id }) {
               id='purpose'
               className={styles.textField}
               variant='outlined'
-              label={labels.material.purpose}
+              label={config.labels.material.purpose}
               value={values.purpose}
               onChange={handleChange}
               error={touched.purpose && !!errors.purpose}
@@ -246,7 +239,7 @@ function MaterialForm({ edit, material, id }) {
               id='additionalPrice'
               className={styles.textField}
               variant='outlined'
-              label={labels.material.additionalPrice}
+              label={config.labels.material.additionalPrice}
               value={values.additionalPrice}
               onChange={handleChange}
               error={touched.additionalPrice && !!errors.additionalPrice}
@@ -278,35 +271,35 @@ function MaterialForm({ edit, material, id }) {
             <Button
               id='go-back'
               component={Link}
-              to={routes.pathToMaterials}
+              to={config.routes.pathToMaterials}
               variant='outlined'
               color='primary'
               className={styles.returnButton}
               data-cy='goBackButton'
             >
-              {buttonTitles.GO_BACK_TITLE}
+              {config.buttonTitles.GO_BACK_TITLE}
             </Button>
             <SaveButton
               className={styles.saveButton}
               data-cy='open-dialog'
               type='button'
               color='secondary'
-              title={buttonTitles.CREATE_COLOR_TITLE}
+              title={config.buttonTitles.CREATE_COLOR_TITLE}
               onClickHandler={colorClickHandler}
             />
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
               type='submit'
-              title={buttonTitles.SAVE_MATERIAL}
+              title={config.buttonTitles.SAVE_MATERIAL}
             />
           </div>
         </div>
       </form>
       <DialogWindowWrapper
         buttonType='submit'
-        buttonTitle={buttonTitles.CLOSE_DIALOG_TITLE}
-        dialogTitle={titles.colorTitles.createColorTitle}
+        buttonTitle={config.buttonTitles.CLOSE_DIALOG_TITLE}
+        dialogTitle={config.titles.colorTitles.createColorTitle}
         component={
           <CreateColor
             colorImages={colorImages}

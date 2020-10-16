@@ -15,14 +15,7 @@ import TabPanel from '../../../components/tab-panel';
 import CheckboxOptions from '../../../components/checkbox-options';
 import { SaveButton } from '../../../components/buttons';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import {
-  labels,
-  config,
-  formRegExp,
-  buttonTitles,
-  colorErrorMessages,
-  materialErrorMessages
-} from '../../../configs';
+import { config } from '../../../configs';
 
 const { languages } = config;
 
@@ -51,33 +44,33 @@ function CreateColor({
 
   const formSchema = Yup.object().shape({
     ukName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
+      .required(config.materialErrorMessages.VALIDATION_ERROR),
 
     enName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
+      .required(config.materialErrorMessages.VALIDATION_ERROR),
 
     ukSimpleName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
+      .required(config.materialErrorMessages.VALIDATION_ERROR),
 
     enSimpleName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
+      .required(config.materialErrorMessages.VALIDATION_ERROR),
 
     code: Yup.string()
-      .min(1, colorErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(8, colorErrorMessages.MAX_CODE_LENGTH_MESSAGE)
+      .min(1, config.colorErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(8, config.colorErrorMessages.MAX_CODE_LENGTH_MESSAGE)
       .matches(
-        formRegExp.onlyPositiveDigits,
-        colorErrorMessages.CODE_VALIDATION_ERROR
+        config.formRegExp.onlyPositiveDigits,
+        config.colorErrorMessages.CODE_VALIDATION_ERROR
       )
-      .required(colorErrorMessages.VALIDATION_ERROR)
+      .required(config.colorErrorMessages.VALIDATION_ERROR)
   });
 
   const {
@@ -107,7 +100,7 @@ function CreateColor({
         return;
       }
       if (foundCodes.includes(+rest.code)) {
-        setFieldError('code', colorErrorMessages.CODE_NOT_UNIQUE_ERROR);
+        setFieldError('code', config.colorErrorMessages.CODE_NOT_UNIQUE_ERROR);
         return;
       }
       dispatch(setNewColorToStore(color));
@@ -125,7 +118,7 @@ function CreateColor({
           id={`${lang}Name`}
           className={styles.textfield}
           variant='outlined'
-          label={labels.colors.name}
+          label={config.labels.colors.name}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
           multiline
           value={values[`${lang}Name`]}
@@ -139,7 +132,7 @@ function CreateColor({
           id={`${lang}SimpleName`}
           className={styles.textfield}
           variant='outlined'
-          label={labels.colors.simpleName}
+          label={config.labels.colors.simpleName}
           multiline
           error={touched[`${lang}SimpleName`] && !!errors[`${lang}SimpleName`]}
           value={values[`${lang}SimpleName`]}
@@ -179,7 +172,7 @@ function CreateColor({
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: labels.colors.available,
+      label: config.labels.colors.available,
       handler: () => setFieldValue('available', !values.available)
     }
   ];
@@ -221,7 +214,7 @@ function CreateColor({
               id='code'
               className={styles.textfield}
               variant='outlined'
-              label={labels.colors.code}
+              label={config.labels.colors.code}
               value={values.code}
               onChange={handleChange}
               error={touched.code && !!errors.code}
@@ -252,7 +245,7 @@ function CreateColor({
             className={styles.saveButton}
             data-cy='open-dialog'
             type='submit'
-            title={buttonTitles.CREATE_COLOR_TITLE}
+            title={config.buttonTitles.CREATE_COLOR_TITLE}
           />
         </div>
       </form>

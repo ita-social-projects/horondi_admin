@@ -8,7 +8,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import LoadingBar from '../loading-bar';
-import { tableHeadRowTitles, buttonTitles, messages } from '../../configs';
+import { config } from '../../configs';
 
 import {
   getCommentsByType,
@@ -16,9 +16,9 @@ import {
 } from '../../redux/comments/comments.actions';
 import { useStyles } from './comments-section.style';
 
-const tableHeaders = tableHeadRowTitles.comments;
-const { REMOVE_COMMENT_TITLE } = buttonTitles;
-const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = messages;
+const tableHeaders = config.tableHeadRowTitles.comments;
+const { REMOVE_COMMENT_TITLE } = config.buttonTitles;
+const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 
 const CommentsSection = ({ value, commentsType }) => {
   const styles = useStyles();

@@ -6,7 +6,8 @@ export const errorMessages = {
   INPUT_NOT_VALID: 'Неправильні ввідні дані',
   USER_ALREADY_EXIST: 'Користувач з такими даними вже існує',
   INVALID_ADMIN_INVITATIONAL_TOKEN:
-    'Неправильне посилання на створення користувача'
+    'Неправильне посилання на створення користувача',
+  NO_COLORS: 'Створіть колір'
 };
 
 export const loginErrorMessages = {

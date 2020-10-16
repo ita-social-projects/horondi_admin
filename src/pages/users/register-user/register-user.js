@@ -14,12 +14,12 @@ import {
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useStyles } from './register-user.styles';
-import { config, loginErrorMessages } from '../../../configs';
+import { config } from '../../../configs';
 import { SaveButton } from '../../../components/buttons';
 import { registerAdmin } from '../../../redux/users/users.actions';
 import LoadingBar from '../../../components/loading-bar';
 
-const { userRoles, allowedforRegistrationRoles } = config;
+const { userRoles, allowedforRegistrationRoles, loginErrorMessages } = config;
 
 const RegisterUser = () => {
   const styles = useStyles();

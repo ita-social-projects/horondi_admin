@@ -7,13 +7,13 @@ import {
   Typography
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { buttonTitles, config } from '../../configs';
+import { config } from '../../configs';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
-import { StandardButton, DangerButton } from '../buttons';
+import { StandardButton } from '../buttons';
 import { useStyles } from './dialog-window.styles';
+import DeleteButton from '../buttons/delete-button';
 
-const { CANCEL_TITLE } = buttonTitles;
-const { ACCEPT_BUTTON_STYLE } = config.buttonStyles;
+const { CANCEL_TITLE } = config.buttonTitles;
 
 const DialogWindow = () => {
   const {
@@ -21,15 +21,13 @@ const DialogWindow = () => {
     dialogTitle,
     dialogContent,
     buttonTitle,
-    onClickHandler,
-    buttonStyle
+    onClickHandler
   } = useSelector(({ DialogWindow: dialogWindow }) => ({
     isOpen: dialogWindow.isOpen,
     dialogTitle: dialogWindow.dialogTitle,
     dialogContent: dialogWindow.dialogContent,
     buttonTitle: dialogWindow.buttonTitle,
-    onClickHandler: dialogWindow.onClickHandler,
-    buttonStyle: dialogWindow.buttonStyle
+    onClickHandler: dialogWindow.onClickHandler
   }));
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -51,15 +49,7 @@ const DialogWindow = () => {
           title={CANCEL_TITLE}
           onClickHandler={handleClose}
         />
-        {buttonStyle === 'danger' ? (
-          <DangerButton title={buttonTitle} onClickHandler={onClickHandler} />
-        ) : (
-          <StandardButton
-            title={buttonTitle}
-            onClickHandler={onClickHandler}
-            color={ACCEPT_BUTTON_STYLE}
-          />
-        )}
+        <DeleteButton onClick={onClickHandler}>{buttonTitle}</DeleteButton>
       </DialogActions>
     </Dialog>
   );
