@@ -4,12 +4,14 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import PaletteIcon from '@material-ui/icons/Palette';
 import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import SmsIcon from '@material-ui/icons/Sms';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import routes from './routes';
 
 const menuCategories = [
-  ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
+  ['Статистика', routes.pathToStatistic, BarChartIcon],
+  ['Продукти', routes.pathToProducts, ShoppingCart],
   ['Категорії', routes.pathToCategories, CategoryIcon],
   ['Користувачі', routes.pathToUsers, PeopleIcon],
   ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],

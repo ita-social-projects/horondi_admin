@@ -32,30 +32,31 @@ import ConfirmUser from '../pages/users/confirm-user';
 
 import ProductEdit from '../pages/products/product-edit';
 import routes from '../configs/routes';
+import StatisticPage from '../pages/statistic';
 
 const Routes = () => {
   const { isAuth } = useSelector(({ Auth }) => ({
     isAuth: Auth.isAuth
   }));
 
-  if (!isAuth) {
-    return (
-      <ConnectedRouter history={history}>
-        <NavBar />
-        <Switch>
-          <Route
-            path={routes.pathToConfirmAdmin}
-            exact
-            component={ConfirmUser}
-          />
-          <Route path={routes.pathToLogin} exact component={LoginPage} />
-          <Route component={ErrorPage} />
-        </Switch>
-        <DialogWindow />
-        <SnackbarItem />
-      </ConnectedRouter>
-    );
-  }
+  // if (!isAuth) {
+  //   return (
+  //     <ConnectedRouter history={history}>
+  //       <NavBar />
+  //       <Switch>
+  //         <Route
+  //           path={routes.pathToConfirmAdmin}
+  //           exact
+  //           component={ConfirmUser}
+  //         />
+  //         <Route path={routes.pathToLogin} exact component={LoginPage} />
+  //         <Route component={ErrorPage} />
+  //       </Switch>
+  //       <DialogWindow />
+  //       <SnackbarItem />
+  //     </ConnectedRouter>
+  //   );
+  // }
 
   return (
     <ConnectedRouter history={history}>
@@ -124,6 +125,7 @@ const Routes = () => {
             <CategoriesAdd id={match.params.id} editMode />
           )}
         />
+        <Route path={routes.pathToStatistic} exact component={StatisticPage} />
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />
