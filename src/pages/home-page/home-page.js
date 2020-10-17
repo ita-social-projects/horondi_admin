@@ -35,29 +35,9 @@ const HomePageEdit = () => {
     dispatch(getHomePageData());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   setImageUrl(() => [
-  //     ...prev,
-  //     {
-  //       [photos._id]: {
-  //         file: target.files[0],
-  //         preview: URL.createObjectURL(target.files[0])
-  //       }
-  //     }
-  //   ])
-  // }, []);
-
-  // setImageUrl(() =>
-  //   photos.map((el) => ({ file: null, preview: el.images.small }))
-  // );
   const photoUpdateHandler = ({ target }, id) => {
     if (target.files && target.files[0]) {
       setImageUrl((prev) => {
-        // const reaploadedImage = prev.find((el) =>
-        //   el.hasOwnProperty(target.name)
-        // );
-        // const updatedImageInx = prev.indexOf(reaploadedImage);
-
         const uploadedImage = {
           id,
           file: target.files[0],

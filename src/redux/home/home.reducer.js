@@ -21,12 +21,6 @@ const homePageReducer = (state = initialState, action = {}) => {
       photos: action.payload
     };
 
-  // case ADD_HOME_PAGE_DATA_IN_STORE:
-  //   return {
-  //     ...state,
-  //     photos: [...state.photos, action.payload]
-  //   };
-
   case UPDATE_HOME_PAGE_DATA_IN_STORE:
     return {
       ...state,
@@ -36,12 +30,6 @@ const homePageReducer = (state = initialState, action = {}) => {
           : photo
       )
     };
-
-  // case DELETE_HOME_PAGE_DATA_IN_STORE:
-  //   return {
-  //     ...state,
-  //     photos: state.photos.filter((photo) => photo._id !== action.payload)
-  //   };
 
   case SET_HOME_PAGE_DATA_LOADING:
     return {
