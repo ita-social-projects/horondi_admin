@@ -15,8 +15,10 @@ import {
 } from '../../../redux/email-questions/email-questions.actions';
 import { config } from '../../../configs';
 import getTime from '../../../utils/getTime';
+import { emailQuestionsErrorMessages } from '../../../configs/error-messages';
+import buttonTitles from '../../../configs/button-titles';
 
-const { emailQuestionStatuses } = config;
+const { labels, titles, detailTitles, routes } = config;
 
 const EmailQuestionDetails = ({ id }) => {
   const dispatch = useDispatch();
@@ -39,7 +41,7 @@ const EmailQuestionDetails = ({ id }) => {
       dispatch(
         answerToEmailQuestion({ questionId: id, adminId, text: answerValue })
       );
-      dispatch(push(config.routes.pathToEmailQuestions));
+      dispatch(push(routes.pathToEmailQuestions));
     } else {
       setShouldValidate(true);
     }
@@ -49,11 +51,26 @@ const EmailQuestionDetails = ({ id }) => {
     () =>
       question
         ? [
-          { title: 'Дата запитання:', value: getTime(question.date) },
-          { title: 'Статус:', value: emailQuestionStatuses[question.status] },
-          { title: 'Відправник:', value: question.senderName },
-          { title: 'Email:', value: question.email },
-          { title: 'Запитання:', value: question.text }
+          {
+            title: detailTitles.emailQuestions.customer.date,
+            value: getTime(question.date)
+          },
+          {
+            title: detailTitles.emailQuestions.customer.status,
+            value: labels.emailQuestionsLabels.ua[question.status]
+          },
+          {
+            title: detailTitles.emailQuestions.customer.sender,
+            value: question.senderName
+          },
+          {
+            title: detailTitles.emailQuestions.customer.email,
+            value: question.email
+          },
+          {
+            title: detailTitles.emailQuestions.customer.question,
+            value: question.text
+          }
         ]
         : [],
     [question]
@@ -63,12 +80,18 @@ const EmailQuestionDetails = ({ id }) => {
     () =>
       question && question.answer
         ? [
-          { title: 'Дата відповіді:', value: getTime(question.answer.date) },
           {
-            title: 'Адмін:',
+            title: detailTitles.emailQuestions.admin.date,
+            value: getTime(question.answer.date)
+          },
+          {
+            title: detailTitles.emailQuestions.admin.admin,
             value: `${question.answer.admin.firstName} ${question.answer.admin.lastName}`
           },
-          { title: 'Відповідь:', value: question.answer.text }
+          {
+            title: detailTitles.emailQuestions.admin.answer,
+            value: question.answer.text
+          }
         ]
         : [],
     [question]
@@ -76,6 +99,9 @@ const EmailQuestionDetails = ({ id }) => {
 
   return (
     <div className={styles.container}>
+      <Typography variant='h2' className={styles.title}>
+        {titles.emailQuestionsTitles.detailPageTitle}
+      </Typography>
       {question ? (
         <>
           <div className={styles.data}>
@@ -93,12 +119,12 @@ const EmailQuestionDetails = ({ id }) => {
                 </Typography>
               ))}
 
-              {question.status === 'PENDING' && (
+              {question.status === labels.emailQuestionsLabels.en.PENDING && (
                 <TextField
                   id='filled-full-width'
                   label='Label'
                   style={{ margin: 8 }}
-                  placeholder='Відповідь ...'
+                  placeholder={labels.emailQuestionsLabels.placeholder}
                   fullWidth
                   multiline
                   rows={10}
@@ -112,7 +138,7 @@ const EmailQuestionDetails = ({ id }) => {
                   error={!answerValue && shouldValidate}
                   helperText={
                     !answerValue && shouldValidate
-                      ? 'Введіть текст для відповіді'
+                      ? emailQuestionsErrorMessages.ANSWER_INPUT_MESSAGE
                       : ''
                   }
                 />
@@ -129,12 +155,12 @@ const EmailQuestionDetails = ({ id }) => {
                 onClickHandler={() => {}}
               />
             </Link>
-            {question.status === 'PENDING' && (
+            {question.status === labels.emailQuestionsLabels.en.PENDING && (
               <SaveButton
                 className={styles.controlButton}
                 id='save'
                 type='submit'
-                title='Відповісти'
+                title={buttonTitles.ANSWER}
                 onClickHandler={onAnsweringQuestion}
               />
             )}

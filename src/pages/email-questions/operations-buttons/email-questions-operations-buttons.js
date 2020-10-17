@@ -11,6 +11,7 @@ import {
   deleteEmailQuestions
 } from '../../../redux/email-questions/email-questions.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import buttonTitles from '../../../configs/button-titles';
 
 const {
   EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE,
@@ -41,7 +42,7 @@ const EmailQuestionsOperationsButtons = ({
       moveToSpam,
       EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE,
       '',
-      'У СПАМ'
+      buttonTitles.TO_SPAM
     );
   };
 
@@ -55,7 +56,7 @@ const EmailQuestionsOperationsButtons = ({
       deleteQuestions,
       EMAIL_QUESTIONS_MOVE_TO_DELETE_MESSAGE,
       '',
-      'Видалити'
+      buttonTitles.DELETE_TITLE
     );
   };
 
@@ -67,7 +68,7 @@ const EmailQuestionsOperationsButtons = ({
         onClick={moveQuestionsToSpam}
         disabled={!questionsToOperate.length}
       >
-        Перемістити у СПАМ
+        {buttonTitles.MOVE_ALL_TO_SPAM}
       </Button>
       <Button
         className={styles.spamBtn}
@@ -75,7 +76,7 @@ const EmailQuestionsOperationsButtons = ({
         onClick={deleteMany}
         disabled={!questionsToOperate.length}
       >
-        Видалити вибрані
+        {buttonTitles.DELETE_SELECTED}
       </Button>
     </>
   );

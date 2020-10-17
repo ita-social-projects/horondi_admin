@@ -19,7 +19,7 @@ import { useStyles } from './nav-menu.styles';
 import { config } from '../../configs';
 import { setSideMenuStatus } from '../../redux/theme/theme.actions';
 
-const { menuCategories } = config;
+const { menuCategories, titles } = config;
 
 const DRAWER_TEMPORARY = 'temporary';
 const DRAWER_PERMANENT = 'permanent';
@@ -55,7 +55,7 @@ const NavMenu = ({ width }) => {
           <PathIcon />
         </ListItemIcon>
         <ListItemText primary={pathTitle} />
-        {pathTitle === 'Запитання & Відповіді' && (
+        {pathTitle === titles.emailQuestionsTitles.mainPageTitle && (
           <Badge badgeContent={pendingQuestionsCount} color='error' />
         )}
       </ListItem>

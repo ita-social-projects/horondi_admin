@@ -23,7 +23,7 @@ export const config = {
     title: 'Horondi Admin Portal',
     routes,
     serverUrl: 'http://localhost:5000/',
-    drawerWidth: 220,
+    drawerWidth: 230,
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
@@ -116,11 +116,6 @@ export const config = {
         items: 1
       }
     }
-  },
-  emailQuestionStatuses: {
-    PENDING: 'Очікує відповіді',
-    SPAM: 'Спам',
-    ANSWERED: 'Відповідь надано'
   },
   popularity: 'popularity',
   rate: 'rate',

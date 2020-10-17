@@ -51,7 +51,16 @@ const DialogWindow = () => {
             onClickHandler={handleClose}
           />
         )}
-        <DeleteButton onClick={onClickHandler}>{buttonTitle}</DeleteButton>
+        {!showCancelButton && (
+          <StandardButton
+            variant='contained'
+            title={buttonTitle}
+            onClickHandler={onClickHandler}
+          />
+        )}
+        {showCancelButton && (
+          <DeleteButton onClick={onClickHandler}>{buttonTitle}</DeleteButton>
+        )}
       </DialogActions>
     </Dialog>
   );

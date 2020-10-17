@@ -11,6 +11,20 @@ const detailTitles = {
       { id: 'adress', label: 'Адреса' },
       { id: 'postCode', label: 'Поштовий індекс' }
     ]
+  },
+  emailQuestions: {
+    customer: {
+      date: 'Дата запитання:',
+      status: 'Статус:',
+      sender: 'Відправник:',
+      email: 'Email:',
+      question: 'Запитання:'
+    },
+    admin: {
+      date: 'Дата відповіді:',
+      admin: 'Адмін:',
+      answer: 'Відповідь:'
+    }
   }
 };
 

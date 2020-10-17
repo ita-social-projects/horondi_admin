@@ -57,3 +57,7 @@ export const contactErrorMessages = {
   ENTER_LINK_MESSAGE: 'Введіть посилання',
   SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт'
 };
+
+export const emailQuestionsErrorMessages = {
+  ANSWER_INPUT_MESSAGE: 'Введіть текст для відповіді'
+};

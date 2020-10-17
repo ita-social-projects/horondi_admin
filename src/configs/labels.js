@@ -98,6 +98,19 @@ const labels = {
       label: 'Ціна(USD) ',
       name: 'basePrice'
     }
+  },
+  emailQuestionsLabels: {
+    en: {
+      PENDING: 'PENDING',
+      SPAM: 'SPAM',
+      ANSWERED: 'ANSWERED'
+    },
+    ua: {
+      PENDING: 'Очікує відповіді',
+      SPAM: 'Спам',
+      ANSWERED: 'Відповідь надано'
+    },
+    placeholder: 'Відповідь ...'
   }
 };
 export default labels;

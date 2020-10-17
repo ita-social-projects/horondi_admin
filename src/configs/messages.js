@@ -18,6 +18,8 @@ const messages = {
     'Ви впевнені, що хочете видалити всі вибрані запитання?',
   EMAIL_QUESTION_SPAM_DETAILS:
     'Відповідь не доступна для запитань відзначених як "СПАМ"',
-  MODEL_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю модель?'
+  MODEL_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю модель?',
+  ERROR: 'ПОМИЛКА',
+  EMPTY_LIST: 'Список порожній'
 };
 export default messages;

@@ -60,5 +60,11 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 5,
     marginLeft: 15,
     fontSize: '.9em'
+  },
+  title: {
+    marginBottom: '10px',
+    fontSize: 24,
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold'
   }
 }));

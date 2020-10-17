@@ -37,7 +37,12 @@ const buttonTitles = {
   REMOVE_COMMENT_TITLE: 'Видалити коментар',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
-  REMOVE_EMAIL_QUESTION: 'Видалити запитання?',
+  REMOVE_EMAIL_QUESTION: 'Видалити запитання',
+  UNDERSTAND: 'Зрозуміло',
+  ANSWER: 'Відповісти',
+  TO_SPAM: 'У СПАМ',
+  DELETE_SELECTED: 'Видалити вибрані',
+  MOVE_ALL_TO_SPAM: 'Перемістити у СПАМ',
 
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([

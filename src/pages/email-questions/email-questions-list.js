@@ -22,13 +22,10 @@ import getTime from '../../utils/getTime';
 import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
 
-const { emailQuestionStatuses } = config;
-const {
-  EMAIL_QUESTION_REMOVE_MESSAGE,
-  EMAIL_QUESTION_SPAM_DETAILS
-} = config.messages;
+const { labels, titles, messages, tableHeadRowTitles, buttonTitles } = config;
+const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
 
-const tableTitles = config.tableHeadRowTitles.emailQuestions;
+const tableTitles = tableHeadRowTitles.emailQuestions;
 
 const EmailQuestionsList = () => {
   const styles = useStyles();
@@ -71,7 +68,7 @@ const EmailQuestionsList = () => {
       removeQuestion,
       EMAIL_QUESTION_REMOVE_MESSAGE,
       '',
-      'Видалити запитання'
+      buttonTitles.REMOVE_EMAIL_QUESTION
     );
   };
 
@@ -79,14 +76,14 @@ const EmailQuestionsList = () => {
     dispatch(setEmailQuestionsCurrentPage(value));
 
   const questionClickHandler = (id, status) => {
-    if (status === 'SPAM') {
+    if (status === labels.emailQuestionsLabels.en.SPAM) {
       const handler = () => dispatch(closeDialog());
 
       openSuccessSnackbar(
         handler,
-        'ПОМИЛКА',
+        messages.ERROR,
         EMAIL_QUESTION_SPAM_DETAILS,
-        'Зрозуміло',
+        buttonTitles.UNDERSTAND,
         false
       );
     } else {
@@ -96,7 +93,7 @@ const EmailQuestionsList = () => {
   };
 
   const filterChangeHandler = (id) => {
-    if (id === 'ALL') {
+    if (id === 'all') {
       setFilter([]);
       return;
     }
@@ -137,7 +134,7 @@ const EmailQuestionsList = () => {
             email={question.email}
             qA={questionToShow + answerToShow}
             date={getTime(question.date)}
-            status={emailQuestionStatuses[question.status]}
+            status={labels.emailQuestionsLabels.ua[question.status]}
             showAvatar={false}
             showEdit={false}
             showCheckbox
@@ -159,7 +156,7 @@ const EmailQuestionsList = () => {
     <div className={styles.container}>
       <div className={styles.tableNav}>
         <Typography variant='h1' className={styles.title}>
-          Запитання & Відповіді
+          {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
         <div className={styles.operations}>
           <EmailQuestionsFilter
@@ -179,7 +176,7 @@ const EmailQuestionsList = () => {
             tableItems={questions}
           />
         ) : (
-          <h3 className={styles.emptyList}>Список порожній</h3>
+          <h3 className={styles.emptyList}>{messages.EMPTY_LIST}</h3>
         )}
       </div>
       <div className={styles.paginationDiv}>
