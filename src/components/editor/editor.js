@@ -160,8 +160,8 @@ Editor.propTypes = {
 };
 
 Editor.defaultProps = {
-  files: [],
-  setFiles: () => {}
+  setFiles: () => {},
+  files: []
 };
 
 export default Editor;

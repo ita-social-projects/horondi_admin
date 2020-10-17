@@ -9,7 +9,8 @@ import {
   loginErrorMessages,
   contactErrorMessages,
   patternErrorMessages,
-  newsErrorMessages
+  newsErrorMessages,
+  modelErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -96,7 +97,25 @@ export const config = {
         label: 'рейтингом',
         value: 'rate'
       }
-    ]
+    ],
+    responsive: {
+      superLargeDesktop: {
+        breakpoint: { max: 4000, min: 3000 },
+        items: 1
+      },
+      desktop: {
+        breakpoint: { max: 3000, min: 1024 },
+        items: 1
+      },
+      tablet: {
+        breakpoint: { max: 1146, min: 464 },
+        items: 1
+      },
+      mobile: {
+        breakpoint: { max: 810, min: 0 },
+        items: 1
+      }
+    }
   },
   emailQuestionStatuses: {
     PENDING: 'Очікує відповіді',
@@ -109,11 +128,23 @@ export const config = {
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  initialLanguageValues: [
+    {
+      lang: 'uk',
+      value: ''
+    },
+    {
+      lang: 'en',
+      value: ''
+    }
+  ],
+  UAH: 'грн',
   buttonTitles,
   detailTitles,
   errorMessages,
   loginErrorMessages,
   contactErrorMessages,
+  modelErrorMessages,
   patternErrorMessages,
   newsErrorMessages,
   messages,

@@ -17,6 +17,7 @@ const messages = {
   EMAIL_QUESTIONS_MOVE_TO_DELETE_MESSAGE:
     'Ви впевнені, що хочете видалити всі вибрані запитання?',
   EMAIL_QUESTION_SPAM_DETAILS:
-    'Відповідь не доступна для запитань відзначених як "СПАМ"'
+    'Відповідь не доступна для запитань відзначених як "СПАМ"',
+  MODEL_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю модель?'
 };
 export default messages;
