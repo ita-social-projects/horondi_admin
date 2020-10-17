@@ -1,9 +1,9 @@
 import {
   SET_HOME_PAGE_DATA,
   SET_HOME_PAGE_DATA_LOADING,
-  ADD_HOME_PAGE_DATA_IN_STORE,
+  // ADD_HOME_PAGE_DATA_IN_STORE,
   UPDATE_HOME_PAGE_DATA_IN_STORE,
-  DELETE_HOME_PAGE_DATA_IN_STORE,
+  // DELETE_HOME_PAGE_DATA_IN_STORE,
   SET_HOME_PAGE_DATA_ERROR
 } from './home.types';
 
@@ -13,7 +13,7 @@ const initialState = {
   homePageError: null
 };
 
-const homePage = (state = initialState, action = {}) => {
+const homePageReducer = (state = initialState, action = {}) => {
   switch (action.type) {
   case SET_HOME_PAGE_DATA:
     return {
@@ -21,11 +21,11 @@ const homePage = (state = initialState, action = {}) => {
       photos: action.payload
     };
 
-  case ADD_HOME_PAGE_DATA_IN_STORE:
-    return {
-      ...state,
-      photos: [...state.photos, action.payload]
-    };
+  // case ADD_HOME_PAGE_DATA_IN_STORE:
+  //   return {
+  //     ...state,
+  //     photos: [...state.photos, action.payload]
+  //   };
 
   case UPDATE_HOME_PAGE_DATA_IN_STORE:
     return {
@@ -37,11 +37,11 @@ const homePage = (state = initialState, action = {}) => {
       )
     };
 
-  case DELETE_HOME_PAGE_DATA_IN_STORE:
-    return {
-      ...state,
-      photos: state.photos.filter((photo) => photo._id !== action.payload)
-    };
+  // case DELETE_HOME_PAGE_DATA_IN_STORE:
+  //   return {
+  //     ...state,
+  //     photos: state.photos.filter((photo) => photo._id !== action.payload)
+  //   };
 
   case SET_HOME_PAGE_DATA_LOADING:
     return {
@@ -60,4 +60,4 @@ const homePage = (state = initialState, action = {}) => {
   }
 };
 
-export default homePage;
+export default homePageReducer;

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Button, Typography } from '@material-ui/core';
+import { Avatar, Button, Typography, Grid, Paper } from '@material-ui/core';
+import ImageIcon from '@material-ui/icons/Image';
 
 import { config } from '../../configs';
 import titles from '../../configs/titles';
@@ -10,40 +11,126 @@ import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import { getHomePageData } from '../../redux/home/home.actions';
+import {
+  getHomePageData,
+  updateHomePageData
+} from '../../redux/home/home.actions';
 import { useStyles } from './home-page.styles';
 
 const { homePageEdit } = titles;
 const tableTitles = config.tableHeadRowTitles.homePageEdit;
+const { SAVE_TITLE } = config.buttonTitles;
 
 const HomePageEdit = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  // const { loading, photos } = useSelector(
-  //   ({ HomePage: { loading, photos } }) => ({
-  //     loading, photos
-  //   })
-  // );
-  const loading = null;
-  const photos = null;
-  // useEffect(() => {
-  //   dispatch(getHomePageData());
-  // }, [dispatch]);
+  const { loading, photos } = useSelector(({ HomePage }) => ({
+    loading: HomePage.homePageLoading,
+    photos: HomePage.photos
+  }));
 
-  const photoUpdateHandler = () => {};
-  const photoDeleteHandler = () => {};
+  const [image, setImageUrl] = useState({});
+
+  useEffect(() => {
+    dispatch(getHomePageData());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   setImageUrl(() => [
+  //     ...prev,
+  //     {
+  //       [photos._id]: {
+  //         file: target.files[0],
+  //         preview: URL.createObjectURL(target.files[0])
+  //       }
+  //     }
+  //   ])
+  // }, []);
+
+  // setImageUrl(() =>
+  //   photos.map((el) => ({ file: null, preview: el.images.small }))
+  // );
+  const photoUpdateHandler = ({ target }, id) => {
+    if (target.files && target.files[0]) {
+      setImageUrl((prev) => {
+        // const reaploadedImage = prev.find((el) =>
+        //   el.hasOwnProperty(target.name)
+        // );
+        // const updatedImageInx = prev.indexOf(reaploadedImage);
+
+        const uploadedImage = {
+          id,
+          file: target.files[0],
+          preview: URL.createObjectURL(target.files[0])
+        };
+
+        if (Object.keys(prev).find((el) => el === target.name)) {
+          prev[target.name] = uploadedImage;
+          return prev;
+        } else
+          return {
+            ...prev,
+            [target.name]: uploadedImage
+          };
+      });
+    }
+  };
+
+  const validateChanges = () => {
+    return true;
+  };
+
+  const updateHomePageLooksHandler = () => {
+    if (image) {
+      let uploadIds = [];
+      let upload = [];
+
+      for (const key in image) {
+        uploadIds.push(image[key].id);
+        upload.push(image[key].file);
+      }
+
+      if (validateChanges()) {
+        dispatch(updateHomePageData({ uploadIds, upload }));
+      }
+    }
+  };
 
   const photosItems =
     photos && photos.length
       ? photos.map((photo, index) => (
-        <TableContainerRow
-          key={`${photo.id}-${index}`}
-          id={photo.id}
-          showAvatar
-          editHandler={() => photoUpdateHandler(photo._id)}
-          deleteHandler={() => photoDeleteHandler(photo._id)}
-        />
-      ))
+          <Grid
+            item
+            xs={3}
+            key={photo._id}
+            container
+            direction='row'
+            justify='center'
+            alignItems='center'
+          >
+            <label>
+              <input
+                style={{ display: 'none' }}
+                accept='image/*'
+                id='upload-photo'
+                name={`upload-photo-${photo._id}`}
+                type='file'
+                onChange={(e) => photoUpdateHandler(e, photo._id)}
+              />
+              <Avatar
+                variant='square'
+                className={classes.avatar}
+                src={
+                  (image[`upload-photo-${photo._id}`] &&
+                    image[`upload-photo-${photo._id}`].preview) ||
+                  photo.images.small
+                }
+              >
+                <ImageIcon className={classes.avatar} />
+              </Avatar>
+            </label>
+          </Grid>
+        ))
       : null;
 
   if (loading) {
@@ -56,22 +143,21 @@ const HomePageEdit = () => {
         <Typography variant='h1' className={classes.contactsTitle}>
           {homePageEdit.mainPageTitle}
         </Typography>
-        {/* <Button
-          id='add-contact'
-          component={Link}
-          to={pathToAddContactPage}
+      </div>
+      <div className={classes.tableContainer}>
+        <Paper className={classes.paper}>
+          <Grid container spacing={2}>
+            {photosItems}
+          </Grid>
+        </Paper>
+        <Button
+          id='update-looksimages'
+          onClick={updateHomePageLooksHandler}
           variant='contained'
           color='primary'
         >
-          {CREATE_CONTACT_TITLE}
-        </Button> */}
-      </div>
-      <div className={classes.tableContainer}>
-        <TableContainerGenerator
-          id='contactTable'
-          tableTitles={tableTitles}
-          tableItems={photosItems}
-        />
+          {SAVE_TITLE}
+        </Button>
       </div>
     </div>
   );

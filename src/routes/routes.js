@@ -38,24 +38,24 @@ const Routes = () => {
     isAuth: Auth.isAuth
   }));
 
-  if (!isAuth) {
-    return (
-      <ConnectedRouter history={history}>
-        <NavBar />
-        <Switch>
-          <Route
-            path={routes.pathToConfirmAdmin}
-            exact
-            component={ConfirmUser}
-          />
-          <Route path={routes.pathToLogin} exact component={LoginPage} />
-          <Route component={ErrorPage} />
-        </Switch>
-        <DialogWindow />
-        <SnackbarItem />
-      </ConnectedRouter>
-    );
-  }
+  // if (!isAuth) {
+  //   return (
+  //     <ConnectedRouter history={history}>
+  //       <NavBar />
+  //       <Switch>
+  //         <Route
+  //           path={routes.pathToConfirmAdmin}
+  //           exact
+  //           component={ConfirmUser}
+  //         />
+  //         <Route path={routes.pathToLogin} exact component={LoginPage} />
+  //         <Route component={ErrorPage} />
+  //       </Switch>
+  //       <DialogWindow />
+  //       <SnackbarItem />
+  //     </ConnectedRouter>
+  //   );
+  // }
 
   return (
     <ConnectedRouter history={history}>

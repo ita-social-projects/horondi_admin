@@ -5,7 +5,8 @@ const titles = {
   },
 
   homePageEdit: {
-    mainPageTitle: 'Стиль Горонді'
+    mainPageTitle: 'Головна сторінка',
+    ourLooksImages: 'Стиль Горонді'
   }
 };
 

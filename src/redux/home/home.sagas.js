@@ -3,25 +3,25 @@ import { push } from 'connected-react-router';
 
 import {
   getHomePageLooksImages,
-  addHomePageLooksImages,
+  // addHomePageLooksImages,
   updateHomePageLooksImage,
-  deleteHomePageLooksImage
+  // deleteHomePageLooksImage
 } from './home.operations';
 
 import {
   setHomePageData,
   setHomePageDataLoading,
-  addHomePageDataInStore,
+  // addHomePageDataInStore,
   updateHomePageImagesInStore,
-  deleteHomePageImagesInStore,
+  // deleteHomePageImagesInStore,
   setHomePageDataError
 } from './home.actions';
 
 import {
   GET_HOME_PAGE_DATA,
-  ADD_HOME_PAGE_DATA,
+  // ADD_HOME_PAGE_DATA,
   UPDATE_HOME_PAGE_DATA,
-  DELETE_HOME_PAGE_DATA
+  // DELETE_HOME_PAGE_DATA
 } from './home.types';
 
 import {
@@ -33,8 +33,8 @@ import {
 import { config } from '../../configs';
 
 const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
+  // SUCCESS_ADD_STATUS,
+  // SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
@@ -50,30 +50,30 @@ export function* handleHomePageImagesLoad() {
   }
 }
 
-export function* handleHomePageImagesAdd({ payload }) {
-  try {
-    yield put(setHomePageDataLoading(true));
-    yield call(addHomePageLooksImages, payload.newImages);
-    yield put(addHomePageDataInStore(payload.newImages));
-    yield put(setHomePageDataLoading(false));
+// export function* handleHomePageImagesAdd({ payload }) {
+//   try {
+//     yield put(setHomePageDataLoading(true));
+//     yield call(addHomePageLooksImages, payload.newImages);
+//     yield put(addHomePageDataInStore(payload.newImages));
+//     yield put(setHomePageDataLoading(false));
 
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
-    yield put(push('/home-page-edit'));
-  } catch (error) {
-    yield call(handleHomePageError, error);
-  }
-}
+//     yield put(setSnackBarSeverity('success'));
+//     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
+//     yield put(setSnackBarStatus(true));
+//     yield put(push('/home-page-edit'));
+//   } catch (error) {
+//     yield call(handleHomePageError, error);
+//   }
+// }
 
 export function* handleHomePageImagesUpdate({ payload }) {
-  const { id, updatedImages } = payload;
+  const { uploadIds, upload } = payload;
 
   try {
     yield put(setHomePageDataLoading(true));
 
-    yield call(updateHomePageLooksImage, id, updatedImages);
-    yield put(updateHomePageImagesInStore(id, updatedImages));
+    yield call(updateHomePageLooksImage, uploadIds, upload);
+    yield put(updateHomePageImagesInStore(uploadIds, upload));
 
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
@@ -84,24 +84,24 @@ export function* handleHomePageImagesUpdate({ payload }) {
   }
 }
 
-export function* handleHomePageImagesDelete({ payload }) {
-  try {
-    yield put(setHomePageDataLoading(true));
+// export function* handleHomePageImagesDelete({ payload }) {
+//   try {
+//     yield put(setHomePageDataLoading(true));
 
-    yield call(deleteHomePageLooksImage, payload);
-    yield put(deleteHomePageImagesInStore(payload));
-    const homePageImages = yield call(getHomePageLooksImages);
-    yield put(setHomePageData(homePageImages));
+//     yield call(deleteHomePageLooksImage, payload);
+//     yield put(deleteHomePageImagesInStore(payload));
+//     const homePageImages = yield call(getHomePageLooksImages);
+//     yield put(setHomePageData(homePageImages));
 
-    yield put(setHomePageDataLoading(false));
+//     yield put(setHomePageDataLoading(false));
 
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
-  } catch (error) {
-    yield call(handleHomePageError, error);
-  }
-}
+//     yield put(setSnackBarSeverity('success'));
+//     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
+//     yield put(setSnackBarStatus(true));
+//   } catch (error) {
+//     yield call(handleHomePageError, error);
+//   }
+// }
 
 export function* handleHomePageError(e) {
   yield put(setHomePageDataLoading(false));
@@ -113,7 +113,7 @@ export function* handleHomePageError(e) {
 
 export default function* homePageSaga() {
   yield takeEvery(GET_HOME_PAGE_DATA, handleHomePageImagesLoad);
-  yield takeEvery(ADD_HOME_PAGE_DATA, handleHomePageImagesAdd);
+  // yield takeEvery(ADD_HOME_PAGE_DATA, handleHomePageImagesAdd);
   yield takeEvery(UPDATE_HOME_PAGE_DATA, handleHomePageImagesUpdate);
-  yield takeEvery(DELETE_HOME_PAGE_DATA, handleHomePageImagesDelete);
+  // yield takeEvery(DELETE_HOME_PAGE_DATA, handleHomePageImagesDelete);
 }

@@ -10,58 +10,64 @@ const getHomePageLooksImages = async () => {
   const result = await client.query({
     query: gql`
       query {
-        getAllImages {
-          small
+        getHomePageLooksImages {
+          _id
+          images {
+            small
+          }
         }
       }
     `
   });
   client.resetStore();
 
-  const { getAllImages } = result.data;
-  return getAllImages;
+  const { getHomePageLooksImages } = result.data;
+  return getHomePageLooksImages;
 };
 
-const addHomePageLooksImages = async (newImages) => {
-  const result = await client.mutate({
-    variables: { newImages },
-    context: { headers: { token } },
-    mutation: gql`
-      mutation($newImages: Upload!) {
-        addImage(newImages: $newImages) {
-          _id
-          small
-        }
-      }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
+// const addHomePageLooksImages = async (newImages) => {
+//   const result = await client.mutate({
+//     variables: { newImages },
+//     context: { headers: { token } },
+//     mutation: gql`
+//       mutation($newImages: Upload!) {
+//         addImage(newImages: $newImages) {
+//           _id
+//           small
+//         }
+//       }
+//     `,
+//     fetchPolicy: 'no-cache'
+//   });
+//   client.resetStore();
 
-  const { data } = result;
+//   const { data } = result;
 
-  if (data.addImage.message) {
-    throw new Error(
-      `${data.addImage.statusCode} ${
-        homePageEditTranslations[data.addImage.message]
-      }`
-    );
-  }
+//   if (data.addImage.message) {
+//     throw new Error(
+//       `${data.addImage.statusCode} ${
+//         homePageEditTranslations[data.addImage.message]
+//       }`
+//     );
+//   }
 
-  return data.addImage;
-};
+//   return data.addImage;
+// };
 
 const updateHomePageLooksImage = async (id, updatedImage) => {
-  const result = await client.query({
+  console.log('FROM OPERATIONS', id, updatedImage);
+  const result = await client.mutate({
     variables: {
       id,
       updatedImage
     },
     context: { headers: { token } },
     mutation: gql`
-      mutation($id: ID!, $updatedImage: Upload!) {
-        updateImage(id: $id, updatedImage: $updatedImage) {
-          small
+      mutation($id: [ID!], $updatedImage: Upload) {
+        updateHomePageLooksImage(id: $id, images: $updatedImage) {
+          images {
+            small
+          }
         }
       }
     `,
@@ -71,48 +77,48 @@ const updateHomePageLooksImage = async (id, updatedImage) => {
 
   const { data } = result;
 
-  if (data.updateImage.message) {
+  if (data.updateHomePageLooksImage.message) {
     throw new Error(
-      `${data.updateImage.statusCode} ${
-        homePageEditTranslations[data.updateImage.message]
+      `${data.updateHomePageLooksImage.statusCode} ${
+        homePageEditTranslations[data.updateHomePageLooksImage.message]
       }`
     );
   }
 
-  return data.updateImage;
+  return data.updateHomePageLooksImage;
 };
 
-const deleteHomePageLooksImage = async (id) => {
-  const result = await client.mutate({
-    variables: { id },
-    context: { headers: { token } },
-    mutation: gql`
-      mutation($id: ID!) {
-        deleteHomePageLooksImage(id: $id) {
-          _id
-        }
-      }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
+// const deleteHomePageLooksImage = async (id) => {
+//   const result = await client.mutate({
+//     variables: { id },
+//     context: { headers: { token } },
+//     mutation: gql`
+//       mutation($id: ID!) {
+//         deleteHomePageLooksImage(id: $id) {
+//           _id
+//         }
+//       }
+//     `,
+//     fetchPolicy: 'no-cache'
+//   });
+//   client.resetStore();
 
-  const { data } = result;
+//   const { data } = result;
 
-  if (data.deleteHomePageLooksImage.message) {
-    throw new Error(
-      `${data.deleteHomePageLooksImage.statusCode} ${
-        homePageEditTranslations[data.deleteHomePageLooksImage.message]
-      }`
-    );
-  }
+//   if (data.deleteHomePageLooksImage.message) {
+//     throw new Error(
+//       `${data.deleteHomePageLooksImage.statusCode} ${
+//         homePageEditTranslations[data.deleteHomePageLooksImage.message]
+//       }`
+//     );
+//   }
 
-  return data.deleteHomePageLooksImage;
-};
+//   return data.deleteHomePageLooksImage;
+// };
 
 export {
   getHomePageLooksImages,
-  addHomePageLooksImages,
-  updateHomePageLooksImage,
-  deleteHomePageLooksImage
+  // addHomePageLooksImages,
+  updateHomePageLooksImage
+  // deleteHomePageLooksImage
 };
