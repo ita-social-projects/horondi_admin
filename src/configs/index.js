@@ -133,17 +133,25 @@ export const config = {
       value: ''
     }
   ],
-  initialCategoriesStatsData: {
-    data: [],
-    labels: [],
-    relations: []
+  doughnut: {
+    colors: [
+      colors.indigo[400],
+      colors.red[600],
+      colors.green[600],
+      colors.grey[500]
+    ],
+    initialValues: {
+      names: [],
+      counts: [],
+      relations: []
+    }
   },
-  doughnutColors: [
-    colors.indigo[400],
-    colors.red[600],
-    colors.green[500],
-    colors.grey[400]
-  ],
+  bar: {
+    initialValues: {
+      names: [],
+      counts: []
+    }
+  },
   UAH: 'грн',
   buttonTitles,
   detailTitles,

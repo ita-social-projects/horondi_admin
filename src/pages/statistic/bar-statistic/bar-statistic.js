@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Bar } from 'react-chartjs-2';
 import {
   Box,
@@ -18,7 +20,7 @@ const {
   mainStatisticLabel
 } = config.titles.statisticTitles;
 
-const BarStatistic = () => {
+const BarStatistic = ({ onChangeBar, selectedValue }) => {
   const theme = useTheme();
 
   const data = {
@@ -26,7 +28,9 @@ const BarStatistic = () => {
       {
         backgroundColor: theme.palette.secondary.main,
         data: [18, 5, 19, 27, 29, 19, 20],
-        label: mainStatisticLabel
+        label: mainStatisticLabel,
+        maxBarThickness: 20,
+        categoryPercentage: 0.5
       }
     ],
     labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
@@ -42,8 +46,6 @@ const BarStatistic = () => {
     scales: {
       xAxes: [
         {
-          maxBarThickness: 20,
-          categoryPercentage: 0.5,
           ticks: {
             fontColor: theme.palette.text.secondary
           },
@@ -85,21 +87,19 @@ const BarStatistic = () => {
     }
   };
 
+  const barList = mainStatisticOptions.map((option) => (
+    <MenuItem key={option} value={option}>
+      {option}
+    </MenuItem>
+  ));
+
   return (
     <Card>
       <CardHeader
         title={
           <FormControl>
-            <Select value={mainStatisticOptions[0]}>
-              <MenuItem value={mainStatisticOptions[0]}>
-                {mainStatisticOptions[0]}
-              </MenuItem>
-              <MenuItem value={mainStatisticOptions[1]}>
-                {mainStatisticOptions[1]}
-              </MenuItem>
-              <MenuItem value={mainStatisticOptions[2]}>
-                {mainStatisticOptions[2]}
-              </MenuItem>
+            <Select onChange={onChangeBar} value={selectedValue}>
+              {barList}
             </Select>
           </FormControl>
         }
@@ -113,6 +113,11 @@ const BarStatistic = () => {
       <Divider />
     </Card>
   );
+};
+
+BarStatistic.propTypes = {
+  onChangeBar: PropTypes.func.isRequired,
+  selectedValue: PropTypes.string.isRequired
 };
 
 export default BarStatistic;

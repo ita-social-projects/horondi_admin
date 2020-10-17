@@ -1,17 +1,13 @@
 import { getItems } from '../../utils/client';
 
-const getSalesByCategory = async () => {
+const getPopularCategories = async () => {
   const res = await getItems(`
 	query {
 		getPopularCategories {
 			...on PopularCategories {
-				categories {
-					name 
-					stats {
-						purchasedCount
-						relation
-					}
-				}
+				names
+				counts
+				relations
 			}
 			...on Error {
 				statusCode
@@ -20,7 +16,7 @@ const getSalesByCategory = async () => {
 		}
 	}
  `);
-  return res.data.getPopularCategories;
+  return res;
 };
 
-export { getSalesByCategory };
+export { getPopularCategories };

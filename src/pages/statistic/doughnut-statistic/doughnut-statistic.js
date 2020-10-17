@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Doughnut } from 'react-chartjs-2';
 import {
@@ -12,25 +13,34 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core';
+import LegendsList from './legends-list/legends-list';
 import useDoughnutData from '../../../hooks/stats/useDoughnutData';
 import useStyles from './doughnut-statistic.styles';
 
 import { config } from '../../../configs';
+import { statsErrorMessages } from '../../../configs/error-messages';
 
-const { doughnutColors } = config;
+const { select } = config.labels.doughnut;
+const { NO_STATS } = statsErrorMessages;
 
-const DoughnutStatistic = () => {
+const DoughnutStatistic = ({ selectedValue, onChangeDoughnut }) => {
   const styles = useStyles();
-  const { mainData, options, doughnutOptions } = useDoughnutData();
+
+  const { mainData, options, relations, names } = useDoughnutData();
+
+  const doughnutList = select.map(({ label, value }) => (
+    <MenuItem key={value} value={value}>
+      {label}
+    </MenuItem>
+  ));
 
   return (
     <Card className={styles.root}>
       <CardHeader
         title={
           <FormControl>
-            <Select value={7}>
-              <MenuItem value={7}>Статуси замовлень</MenuItem>
-              <MenuItem value={14}>Популярні категорії</MenuItem>
+            <Select onChange={onChangeDoughnut} value={selectedValue}>
+              {doughnutList}
             </Select>
           </FormControl>
         }
@@ -38,23 +48,29 @@ const DoughnutStatistic = () => {
       <Divider />
       <CardContent>
         <Box height={300} position='relative'>
-          <Doughnut data={mainData} options={options} />
-        </Box>
-        <Box display='flex' justifyContent='center' mt={2}>
-          {doughnutOptions.relations.map((relation, idx) => (
-            <Box key={relation} p={1} textAlign='center'>
-              <Typography color='textPrimary' variant='body1'>
-                {doughnutOptions.labels[idx]}
-              </Typography>
-              <Typography style={{ color: doughnutColors[idx] }} variant='h2'>
-                {relation}%
-              </Typography>
+          {mainData.datasets[0].data.length ? (
+            <Doughnut data={mainData} options={options} />
+          ) : (
+            <Box
+              height='100%'
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+              textAlign='center'
+            >
+              <Typography variant='h3'>{NO_STATS}</Typography>
             </Box>
-          ))}
+          )}
         </Box>
+        <LegendsList options={relations} labels={names} />
       </CardContent>
     </Card>
   );
+};
+
+DoughnutStatistic.propTypes = {
+  selectedValue: PropTypes.string.isRequired,
+  onChangeDoughnut: PropTypes.func.isRequired
 };
 
 export default DoughnutStatistic;

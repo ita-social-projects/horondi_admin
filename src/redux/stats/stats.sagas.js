@@ -1,8 +1,8 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
 
-import { GET_SALES_BY_CATEGORY } from './stats.types';
-import { setDoughnutData, setStatsLoading } from './stats.actions';
-import { getSalesByCategory } from './stats.operations';
+import { GET_POPULAR_CATEGORIES } from './stats.types';
+import { setPopularCategories, setStatsLoading } from './stats.actions';
+import { getPopularCategories } from './stats.operations';
 
 import {
   setSnackBarMessage,
@@ -10,18 +10,22 @@ import {
   setSnackBarStatus
 } from '../snackbar/snackbar.actions';
 
-function* handleSalesByCategoryLoad() {
+function* handlePopularCategoriesLoad() {
   try {
     yield put(setStatsLoading(true));
-    const sales = yield call(getSalesByCategory);
-    yield put(setDoughnutData(sales.categories));
-    yield put(setStatsLoading(false));
+    const categories = yield call(getPopularCategories);
+    if (categories.message) {
+      throw new Error(categories.message);
+    } else {
+      yield put(setPopularCategories(categories.data.getPopularCategories));
+      yield put(setStatsLoading(false));
+    }
   } catch (e) {
     handleStatsErrors(e);
   }
 }
 
-export function* handleStatsErrors(e) {
+function* handleStatsErrors(e) {
   yield put(setStatsLoading(false));
   yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(e.message));
@@ -29,5 +33,5 @@ export function* handleStatsErrors(e) {
 }
 
 export default function* statsSaga() {
-  yield takeEvery(GET_SALES_BY_CATEGORY, handleSalesByCategoryLoad);
+  yield takeEvery(GET_POPULAR_CATEGORIES, handlePopularCategoriesLoad);
 }

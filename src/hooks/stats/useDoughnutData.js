@@ -1,43 +1,27 @@
 import { useSelector } from 'react-redux';
 import { useTheme } from '@material-ui/core';
-import { useEffect, useState } from 'react';
 import { config } from '../../configs';
 
-const { doughnutColors, initialCategoriesStatsData } = config;
+const { colors } = config.doughnut;
 
 const useDoughnutData = () => {
   const theme = useTheme();
-  const doughnutData = useSelector(({ Stats }) => Stats.doughnutData);
+  const doughnutData = useSelector(({ Stats }) => Stats.doughnut);
 
-  const [doughnutOptions, setDoughnutOptions] = useState(
-    initialCategoriesStatsData
-  );
-
-  useEffect(() => {
-    if (doughnutData.length) {
-      doughnutData.map(({ name, stats }) =>
-        setDoughnutOptions(({ data, labels, relations }) => ({
-          data: [...data, stats.purchasedCount],
-          labels: [...labels, name],
-          relations: [...relations, stats.relation]
-        }))
-      );
-    }
-  }, [doughnutData]);
-
-  const { data, labels } = doughnutOptions;
+  const { selectedValue } = doughnutData;
+  const { counts, names, relations } = doughnutData[selectedValue];
 
   const mainData = {
     datasets: [
       {
-        data,
-        backgroundColor: doughnutColors,
+        data: counts,
+        backgroundColor: colors,
         borderWidth: 8,
         borderColor: theme.palette.background.paper,
         hoverBorderColor: theme.palette.background.paper
       }
     ],
-    labels
+    labels: names
   };
 
   const options = {
@@ -58,7 +42,7 @@ const useDoughnutData = () => {
     }
   };
 
-  return { mainData, options, doughnutOptions };
+  return { mainData, options, relations, names };
 };
 
 export default useDoughnutData;

@@ -1,35 +1,54 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { MenuItem, FormControl, Select, Grid, Box } from '@material-ui/core';
+import {
+  MenuItem,
+  FormControl,
+  Select,
+  Grid,
+  Box,
+  Tooltip
+} from '@material-ui/core';
 import DateRangeOutlinedIcon from '@material-ui/icons/DateRangeOutlined';
-import { useSelector } from 'react-redux';
 import { config } from '../../../configs';
 
-const { dateMenuOptions } = config.titles.statisticTitles;
+const {
+  labels: { doughnut },
+  titles: { statisticTitles }
+} = config;
 
-const DateMenu = () => {
-  const date = useSelector(({ Stats }) => Stats.date);
+const DateMenu = ({ dateValue, onChangeDate }) => {
+  const dateList = doughnut.dateMenuOptions.map(({ label, value }) => (
+    <MenuItem key={label} value={value}>
+      {label}
+    </MenuItem>
+  ));
 
   return (
     <div>
       <Grid container spacing={1}>
         <Grid item>
           <Box mt={0.8}>
-            <DateRangeOutlinedIcon />
+            <Tooltip placement='left' title={statisticTitles.dateSortTitle}>
+              <DateRangeOutlinedIcon />
+            </Tooltip>
           </Box>
         </Grid>
         <Grid item>
           <FormControl>
-            <Select value={date}>
-              <MenuItem value={7}>{dateMenuOptions[0]}</MenuItem>
-              <MenuItem value={14}>{dateMenuOptions[1]}</MenuItem>
-              <MenuItem value={30}>{dateMenuOptions[2]}</MenuItem>
+            <Select onChange={onChangeDate} value={dateValue}>
+              {dateList}
             </Select>
           </FormControl>
         </Grid>
       </Grid>
     </div>
   );
+};
+
+DateMenu.propTypes = {
+  dateValue: PropTypes.number.isRequired,
+  onChangeDate: PropTypes.func.isRequired
 };
 
 export default DateMenu;
