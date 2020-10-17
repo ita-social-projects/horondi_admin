@@ -9,7 +9,8 @@ import {
   loginErrorMessages,
   contactErrorMessages,
   patternErrorMessages,
-  newsErrorMessages
+  newsErrorMessages,
+  modelErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -138,6 +139,7 @@ export const config = {
   errorMessages,
   loginErrorMessages,
   contactErrorMessages,
+  modelErrorMessages,
   patternErrorMessages,
   newsErrorMessages,
   messages,

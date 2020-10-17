@@ -212,4 +212,3 @@ export const setPrimaryImageToUpload = (payload) => ({
   type: SET_PRIMARY_IMAGE_TO_UPLOAD,
   payload
 });
-

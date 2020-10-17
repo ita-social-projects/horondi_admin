@@ -22,6 +22,9 @@ const routes = {
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact',
-  pathToComments: '/comments'
+  pathToComments: '/comments',
+  pathToModels: '/models',
+  pathToModelDetails: '/models/:id',
+  pathToAddModel: '/models/add'
 };
 export default routes;

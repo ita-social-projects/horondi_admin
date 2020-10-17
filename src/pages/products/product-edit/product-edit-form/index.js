@@ -1,3 +1,3 @@
-import ProductEditForm from "./product-edit-form";
+import ProductEditForm from './product-edit-form';
 
-export default ProductEditForm
+export default ProductEditForm;

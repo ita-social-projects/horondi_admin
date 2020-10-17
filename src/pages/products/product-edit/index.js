@@ -1,3 +1,3 @@
-import ProductEdit from "./product-edit";
+import ProductEdit from './product-edit';
 
-export default ProductEdit
+export default ProductEdit;

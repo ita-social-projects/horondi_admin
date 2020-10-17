@@ -9,6 +9,7 @@ const messages = {
   REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
   REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
-  PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?'
+  PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
+  MODEL_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю модель?'
 };
 export default messages;

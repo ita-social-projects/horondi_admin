@@ -1,3 +1,3 @@
-import ProductCarousel from "./product-carousel";
+import ProductCarousel from './product-carousel';
 
-export default ProductCarousel
+export default ProductCarousel;

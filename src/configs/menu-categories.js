@@ -6,6 +6,7 @@ import PaletteIcon from '@material-ui/icons/Palette';
 import PeopleIcon from '@material-ui/icons/People';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import SmsIcon from '@material-ui/icons/Sms';
+import StyleIcon from '@material-ui/icons/Style';
 import routes from './routes';
 
 const menuCategories = [
@@ -16,6 +17,7 @@ const menuCategories = [
   ['Останні коментарі', routes.pathToComments, SmsIcon],
   ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
   ['Гобелени', routes.pathToPatterns, PaletteIcon],
-  ['Новини', routes.pathToNews, ImportContactsIcon]
+  ['Новини', routes.pathToNews, ImportContactsIcon],
+  ['Моделі', routes.pathToModels, StyleIcon]
 ];
 export default menuCategories;
