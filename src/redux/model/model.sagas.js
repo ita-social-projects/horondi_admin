@@ -25,13 +25,15 @@ import {
   GET_MODEL
 } from './model.types';
 
-import { config, routes } from '../../configs';
+import { config } from '../../configs';
 
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+
+const { routes } = config;
 
 const {
   SUCCESS_ADD_STATUS,

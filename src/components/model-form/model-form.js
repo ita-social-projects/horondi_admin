@@ -20,7 +20,7 @@ import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
-import { config, routes } from '../../configs';
+import { config } from '../../configs';
 import { addModel, updateModel } from '../../redux/model/model.actions';
 import { getCategories } from '../../redux/categories/categories.actions';
 import CheckboxOptions from '../checkbox-options';
@@ -28,9 +28,10 @@ import ImageUploadContainer from '../../containers/image-upload-container';
 
 const {
   MODEL_VALIDATION_ERROR,
-  MODEL_ERROR_MESSAGE,
-  MODEL_ERROR_ENGLISH_AND_DIGITS_ONLY
+  MODEL_ERROR_MESSAGE
 } = config.modelErrorMessages;
+
+const { routes } = config;
 
 const { languages } = config;
 
@@ -69,7 +70,7 @@ const ModelForm = ({ model, id }) => {
   });
 
   const { categories } = useSelector(({ Categories }) => ({
-    categories: Categories.categories.filter((category) => category.isMain)
+    categories: Categories.categories.filter((result) => result.isMain)
   }));
 
   const [category, setCategory] = useState(model.category._id || '');
@@ -169,9 +170,9 @@ const ModelForm = ({ model, id }) => {
                 }}
               >
                 <option value='' />
-                {categories.map((category) => (
-                  <option value={category._id} key={category._id}>
-                    {category.code}
+                {categories.map((cat) => (
+                  <option value={cat._id} key={cat._id}>
+                    {cat.code}
                   </option>
                 ))}
               </Select>
