@@ -60,8 +60,10 @@ const BusinessPageList = () => {
         <TableContainerRow
           key={index}
           id={page._id}
+          index={index + 1}
           code={page.code}
           title={page.title[0].value}
+          showAvatar={false}
           deleteHandler={() => pageDeleteHandler(page._id)}
           editHandler={() => {
             dispatch(push(`/business-pages/${page._id}`));
