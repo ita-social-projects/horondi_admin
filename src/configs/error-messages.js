@@ -35,6 +35,11 @@ export const newsErrorMessages = {
   TITLE_MAX_LENGTH_MESSAGE: 'Заголовок повинен містити не більше 100 символів',
   TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів'
 };
+export const modelErrorMessages = {
+  MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',
+  MODEL_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  MODEL_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+};
 export const contactErrorMessages = {
   INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
   ENTER_EMAIL_MESSAGE: 'Введіть email',

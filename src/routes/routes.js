@@ -29,6 +29,9 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+import ModelPage from '../pages/model/model-page';
+import ModelAdd from '../pages/model/model-add';
+import ModelDetails from '../pages/model/model-details';
 
 import ProductEdit from '../pages/products/product-edit';
 import routes from '../configs/routes';
@@ -39,24 +42,24 @@ const Routes = () => {
     isAuth: Auth.isAuth
   }));
 
-  // if (!isAuth) {
-  //   return (
-  //     <ConnectedRouter history={history}>
-  //       <NavBar />
-  //       <Switch>
-  //         <Route
-  //           path={routes.pathToConfirmAdmin}
-  //           exact
-  //           component={ConfirmUser}
-  //         />
-  //         <Route path={routes.pathToLogin} exact component={LoginPage} />
-  //         <Route component={ErrorPage} />
-  //       </Switch>
-  //       <DialogWindow />
-  //       <SnackbarItem />
-  //     </ConnectedRouter>
-  //   );
-  // }
+  if (!isAuth) {
+    return (
+      <ConnectedRouter history={history}>
+        <NavBar />
+        <Switch>
+          <Route
+            path={routes.pathToConfirmAdmin}
+            exact
+            component={ConfirmUser}
+          />
+          <Route path={routes.pathToLogin} exact component={LoginPage} />
+          <Route component={ErrorPage} />
+        </Switch>
+        <DialogWindow />
+        <SnackbarItem />
+      </ConnectedRouter>
+    );
+  }
 
   return (
     <ConnectedRouter history={history}>
@@ -71,6 +74,7 @@ const Routes = () => {
         />
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToPatterns} exact component={PatternPage} />
+        <Route path={routes.pathToModels} exact component={ModelPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
@@ -99,6 +103,12 @@ const Routes = () => {
           component={ContactsEdit}
         />
         <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
+        <Route path={routes.pathToAddModel} exact component={ModelAdd} />
+        <Route
+          path={routes.pathToModelDetails}
+          exact
+          component={ModelDetails}
+        />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
         <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
         <Route
