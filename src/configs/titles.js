@@ -5,12 +5,6 @@ const titles = {
   },
   statisticTitles: {
     mainPageTitle: 'Статистика',
-    mainStatisticOptions: [
-      'Останні замовлення',
-      'Популярні продукти',
-      'Динаміка реєстрації користувачів'
-    ],
-    mainStatisticLabel: 'Цей день',
     dateSortTitle: 'Сортувати за датою'
   }
 };

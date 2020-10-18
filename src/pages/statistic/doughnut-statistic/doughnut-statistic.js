@@ -13,12 +13,14 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core';
-import LegendsList from './legends-list/legends-list';
-import useDoughnutData from '../../../hooks/stats/useDoughnutData';
+import useDoughnutData from '../../../hooks/stats/use-doughnut-data';
 import useStyles from './doughnut-statistic.styles';
+
+import LegendsList from './legends-list/legends-list';
 
 import { config } from '../../../configs';
 import { statsErrorMessages } from '../../../configs/error-messages';
+import StatisticError from '../statistic-error';
 
 const { select } = config.labels.doughnut;
 const { NO_STATS } = statsErrorMessages;
@@ -51,15 +53,7 @@ const DoughnutStatistic = ({ selectedValue, onChangeDoughnut }) => {
           {mainData.datasets[0].data.length ? (
             <Doughnut data={mainData} options={options} />
           ) : (
-            <Box
-              height='100%'
-              display='flex'
-              alignItems='center'
-              justifyContent='center'
-              textAlign='center'
-            >
-              <Typography variant='h3'>{NO_STATS}</Typography>
-            </Box>
+            <StatisticError />
           )}
         </Box>
         <LegendsList options={relations} labels={names} />

@@ -9,7 +9,7 @@ import DateMenu from './date-menu';
 import LoadingBar from '../../components/loading-bar';
 
 import {
-  getPopularCategories,
+  getIniitalStats,
   setBarValue,
   setDateValue,
   setDoughnutValue
@@ -34,7 +34,7 @@ const StatisticPage = () => {
 
   useEffect(() => {
     if (!categories.counts.length) {
-      dispatch(getPopularCategories());
+      dispatch(getIniitalStats());
     }
   }, [dispatch, categories.counts.length]);
 

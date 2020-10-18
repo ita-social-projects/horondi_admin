@@ -117,6 +117,18 @@ const labels = {
       { label: 'За 14 Днів', value: 14 },
       { label: 'За 30 Днів', value: 30 }
     ]
+  },
+  bar: {
+    select: [
+      { label: 'Популярні продукти', value: 'products' },
+      { label: 'Останні замовлення', value: 'orders' },
+      { label: 'Динаміка реєстрації користувачів', value: 'users' }
+    ],
+    descriptions: {
+      users: 'Цей день',
+      orders: 'Цей день',
+      products: 'Кількість покупок'
+    }
   }
 };
 export default labels;

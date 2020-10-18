@@ -1,10 +1,11 @@
 import {
-  GET_POPULAR_CATEGORIES,
   SET_STATS_LOADING,
   SET_POPULAR_CATEGORIES,
   SET_DOUGHNUT_VALUE,
   SET_DATE_VALUE,
-  SET_BAR_VALUE
+  SET_BAR_VALUE,
+  SET_POPULAR_PRODUCTS,
+  GET_INITIAL_STATS
 } from './stats.types';
 
 const setPopularCategories = (data) => ({
@@ -15,11 +16,6 @@ const setPopularCategories = (data) => ({
 const setStatsLoading = (loading) => ({
   type: SET_STATS_LOADING,
   payload: loading
-});
-
-const getPopularCategories = (categories) => ({
-  type: GET_POPULAR_CATEGORIES,
-  payload: categories
 });
 
 const setDoughnutValue = (value) => ({
@@ -37,11 +33,21 @@ const setBarValue = (value) => ({
   payload: value
 });
 
+const setPopularProducts = (products) => ({
+  type: SET_POPULAR_PRODUCTS,
+  payload: products
+});
+
+const getIniitalStats = () => ({
+  type: GET_INITIAL_STATS
+});
+
 export {
   setPopularCategories,
   setStatsLoading,
-  getPopularCategories,
   setDoughnutValue,
   setDateValue,
-  setBarValue
+  setBarValue,
+  setPopularProducts,
+  getIniitalStats
 };

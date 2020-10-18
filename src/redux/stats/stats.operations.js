@@ -4,19 +4,25 @@ const getPopularCategories = async () => {
   const res = await getItems(`
 	query {
 		getPopularCategories {
-			...on PopularCategories {
-				names
-				counts
-				relations
-			}
-			...on Error {
-				statusCode
-				message
-			}
+			names
+			counts
+			relations
 		}
 	}
  `);
-  return res;
+  return res.data.getPopularCategories;
 };
 
-export { getPopularCategories };
+const getPopularProducts = async () => {
+  const res = await getItems(`
+		query {
+			getPopularProducts{
+				labels
+				counts
+			}
+		}	
+	`);
+  return res.data.getPopularProducts;
+};
+
+export { getPopularCategories, getPopularProducts };

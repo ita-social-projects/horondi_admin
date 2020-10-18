@@ -1,8 +1,14 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
 
-import { GET_POPULAR_CATEGORIES } from './stats.types';
-import { setPopularCategories, setStatsLoading } from './stats.actions';
-import { getPopularCategories } from './stats.operations';
+import { GET_INITIAL_STATS } from './stats.types';
+
+import {
+  setPopularCategories,
+  setPopularProducts,
+  setStatsLoading
+} from './stats.actions';
+
+import { getPopularCategories, getPopularProducts } from './stats.operations';
 
 import {
   setSnackBarMessage,
@@ -10,16 +16,14 @@ import {
   setSnackBarStatus
 } from '../snackbar/snackbar.actions';
 
-function* handlePopularCategoriesLoad() {
+function* handleInitialStatsLoad() {
   try {
     yield put(setStatsLoading(true));
     const categories = yield call(getPopularCategories);
-    if (categories.message) {
-      throw new Error(categories.message);
-    } else {
-      yield put(setPopularCategories(categories.data.getPopularCategories));
-      yield put(setStatsLoading(false));
-    }
+    const products = yield call(getPopularProducts);
+    yield put(setPopularCategories(categories));
+    yield put(setPopularProducts(products));
+    yield put(setStatsLoading(false));
   } catch (e) {
     handleStatsErrors(e);
   }
@@ -33,5 +37,5 @@ function* handleStatsErrors(e) {
 }
 
 export default function* statsSaga() {
-  yield takeEvery(GET_POPULAR_CATEGORIES, handlePopularCategoriesLoad);
+  yield takeEvery(GET_INITIAL_STATS, handleInitialStatsLoad);
 }

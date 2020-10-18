@@ -135,10 +135,10 @@ export const config = {
   ],
   doughnut: {
     colors: [
-      colors.indigo[400],
-      colors.red[600],
-      colors.green[600],
-      colors.grey[500]
+      colors.green[500],
+      colors.red[700],
+      colors.amber[600],
+      colors.indigo[500]
     ],
     initialValues: {
       names: [],
@@ -148,7 +148,7 @@ export const config = {
   },
   bar: {
     initialValues: {
-      names: [],
+      labels: [],
       counts: []
     }
   },

@@ -4,10 +4,11 @@ import {
   SET_STATS_LOADING,
   SET_DOUGHNUT_VALUE,
   SET_DATE_VALUE,
-  SET_BAR_VALUE
+  SET_BAR_VALUE,
+  SET_POPULAR_PRODUCTS
 } from './stats.types';
 
-const { labels, doughnut, titles, bar } = config;
+const { labels, doughnut, bar } = config;
 
 const initialState = {
   loading: false,
@@ -20,7 +21,7 @@ const initialState = {
     products: bar.initialValues,
     orders: bar.initialValues,
     users: bar.initialValues,
-    selectedValue: titles.statisticTitles.mainStatisticOptions[0]
+    selectedValue: labels.bar.select[0].value
   },
   date: 7
 };
@@ -63,6 +64,15 @@ const statsReducer = (state = initialState, action = {}) => {
       bar: {
         ...state.bar,
         selectedValue: action.payload
+      }
+    };
+  }
+  case SET_POPULAR_PRODUCTS: {
+    return {
+      ...state,
+      bar: {
+        ...state.bar,
+        products: action.payload
       }
     };
   }
