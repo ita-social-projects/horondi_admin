@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   Tooltip
-} from '@material-ui/core/';
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { showColorDialogWindow } from '../../redux/material/material.actions';
@@ -48,7 +48,7 @@ const DialogWindowForComponent = ({ dialogTitle, buttonTitle, component }) => {
 DialogWindowForComponent.propTypes = {
   dialogTitle: PropTypes.string.isRequired,
   buttonTitle: PropTypes.string.isRequired,
-  component: PropTypes.shape({}).isRequired
+  component: PropTypes.element.isRequired
 };
 
 export default DialogWindowForComponent;

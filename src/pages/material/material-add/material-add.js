@@ -6,7 +6,7 @@ const MaterialAdd = () => {
   const styles = useStyles();
   return (
     <div className={styles.container}>
-      <MaterialForm />
+      <MaterialForm edit={false} />
     </div>
   );
 };

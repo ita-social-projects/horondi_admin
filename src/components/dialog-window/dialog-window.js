@@ -5,11 +5,11 @@ import {
   DialogContent,
   DialogTitle,
   Typography
-} from '@material-ui/core/';
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../configs';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
-import { StandardButton } from '../buttons';
+import { StandardButton, DangerButton } from '../buttons';
 import { useStyles } from './dialog-window.styles';
 
 const { CANCEL_TITLE } = config.buttonTitles;
@@ -21,13 +21,15 @@ const DialogWindow = () => {
     dialogTitle,
     dialogContent,
     buttonTitle,
-    onClickHandler
+    onClickHandler,
+    buttonStyle
   } = useSelector(({ DialogWindow: dialogWindow }) => ({
     isOpen: dialogWindow.isOpen,
     dialogTitle: dialogWindow.dialogTitle,
     dialogContent: dialogWindow.dialogContent,
     buttonTitle: dialogWindow.buttonTitle,
-    onClickHandler: dialogWindow.onClickHandler
+    onClickHandler: dialogWindow.onClickHandler,
+    buttonStyle: dialogWindow.buttonStyle
   }));
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -35,7 +37,6 @@ const DialogWindow = () => {
   const handleClose = () => {
     dispatch(closeDialog());
   };
-
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
       <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
@@ -50,11 +51,15 @@ const DialogWindow = () => {
           title={CANCEL_TITLE}
           onClickHandler={handleClose}
         />
-        <StandardButton
-          title={buttonTitle}
-          onClickHandler={onClickHandler}
-          color={ACCEPT_BUTTON_STYLE}
-        />
+        {buttonStyle === 'danger' ? (
+          <DangerButton title={buttonTitle} onClickHandler={onClickHandler} />
+        ) : (
+          <StandardButton
+            title={buttonTitle}
+            onClickHandler={onClickHandler}
+            color={ACCEPT_BUTTON_STYLE}
+          />
+        )}
       </DialogActions>
     </Dialog>
   );

@@ -95,11 +95,11 @@ function CreateColor({
       const { colorImage, image, ...rest } = data;
       const color = createColor(rest);
 
-      const foundCode = colors.map((item) => item.code);
+      const foundCodes = colors.map((item) => item.code);
       if (!colorImage || !image) {
         return;
       }
-      if (foundCode.includes(+rest.code)) {
+      if (foundCodes.includes(+rest.code)) {
         setFieldError('code', config.colorErrorMessages.CODE_NOT_UNIQUE_ERROR);
         return;
       }
@@ -228,6 +228,8 @@ function CreateColor({
         <div>
           <AppBar position='static'>
             <Tabs
+              indicatorColor='primary'
+              textColor='primary'
               className={styles.tabs}
               value={tabsValue}
               onChange={handleTabsChange}

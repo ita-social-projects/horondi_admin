@@ -52,11 +52,11 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between'
   },
   inputError: {
-    color: '#e60000',
+    color: theme.palette.error.main,
     padding: '0 5px'
   },
   errorTab: {
-    backgroundColor: '#e60000',
+    backgroundColor: theme.palette.error.main,
     '& span': {
       color: 'white !important'
     }

@@ -58,8 +58,8 @@ export const getAllCategories = () => {
 
 export const createCategory = (data) => {
   const query = `
-        mutation addCategory($category: CategoryInput!, $parentId: ID) {
-    addCategory(category: $category, parentId: $parentId) {
+        mutation addCategory($category: CategoryInput!, $parentId: ID, $upload: Upload) {
+    addCategory(category: $category, parentId: $parentId, upload: $upload) {
       ... on Category {
         _id
         code
@@ -76,8 +76,8 @@ export const createCategory = (data) => {
 
 export const updateCategoryById = (data) => {
   const query = `
-    mutation updateCategory($id: ID!, $category: CategoryInput!){
-      updateCategory(id: $id, category: $category) {
+    mutation updateCategory($id: ID!, $category: CategoryInput!, $upload: Upload){
+      updateCategory(id: $id, category: $category, upload: $upload) {
         ... on Category {
           _id
           code

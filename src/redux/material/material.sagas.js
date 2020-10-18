@@ -126,7 +126,7 @@ function* handleMaterialError(e) {
   yield put(setSnackBarStatus(true));
 }
 
-export default function* newsSaga() {
+export default function* materialSaga() {
   yield takeEvery(GET_MATERIALS, handleMaterialsLoad);
   yield takeEvery(DELETE_MATERIAL, handleMaterialDelete);
   yield takeEvery(GET_MATERIAL, handleMaterialLoad);
