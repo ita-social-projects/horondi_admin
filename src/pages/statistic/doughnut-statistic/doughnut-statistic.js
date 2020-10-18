@@ -8,7 +8,6 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Typography,
   FormControl,
   Select,
   MenuItem
@@ -23,7 +22,6 @@ import { statsErrorMessages } from '../../../configs/error-messages';
 import StatisticError from '../statistic-error';
 
 const { select } = config.labels.doughnut;
-const { NO_STATS } = statsErrorMessages;
 
 const DoughnutStatistic = ({ selectedValue, onChangeDoughnut }) => {
   const styles = useStyles();
