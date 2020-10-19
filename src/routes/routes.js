@@ -37,6 +37,7 @@ import ModelDetails from '../pages/model/model-details';
 
 import ProductEdit from '../pages/products/product-edit';
 import routes from '../configs/routes';
+import StatisticPage from '../pages/statistic';
 
 const Routes = () => {
   const { isAuth } = useSelector(({ Auth }) => ({
@@ -146,6 +147,7 @@ const Routes = () => {
           exact
           render={({ match }) => <EmailQuestionsDetails id={match.params.id} />}
         />
+        <Route path={routes.pathToStatistic} exact component={StatisticPage} />
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />

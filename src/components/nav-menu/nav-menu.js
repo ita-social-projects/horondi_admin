@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   Drawer,
   Divider,
@@ -27,7 +27,6 @@ const TEMPORARY_WIDTHS = ['sm', 'xs'];
 
 const NavMenu = ({ width }) => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
@@ -43,13 +42,12 @@ const NavMenu = ({ width }) => {
 
     return (
       <ListItem
-        onClick={() => {
-          dispatch(setSideMenuStatus(!sideMenuStatus));
-        }}
+        onClick={() => dispatch(setSideMenuStatus(!sideMenuStatus))}
         button
         key={pathTitle}
-        component={Link}
+        component={NavLink}
         to={pathTo}
+        activeClassName={classes.selectedCategory}
       >
         <ListItemIcon>
           <PathIcon />

@@ -61,3 +61,7 @@ export const contactErrorMessages = {
 export const emailQuestionsErrorMessages = {
   ANSWER_INPUT_MESSAGE: 'Введіть текст для відповіді'
 };
+
+export const statsErrorMessages = {
+  NO_STATS: 'Статистика для вибраного значення відсутня'
+};

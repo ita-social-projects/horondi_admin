@@ -30,8 +30,7 @@ function* handleAdminLoad({ payload }) {
 
     yield put(setAdminId(admin._id));
     yield put(setAuth(true));
-
-    yield put(push('/products'));
+    yield put(push('/stats'));
     yield put(setAuthLoading(false));
   } catch (error) {
     yield put(setAuthLoading(false));

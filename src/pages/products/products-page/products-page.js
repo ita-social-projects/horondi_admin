@@ -126,7 +126,6 @@ const ProductsPage = () => {
       }) => (
         <TableContainerRow
           key={_id}
-          id={_id}
           image={`${imagePrefix}${images.primary.small}`}
           name={name[0].value}
           category={category.name[0].value}

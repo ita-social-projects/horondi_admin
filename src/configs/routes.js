@@ -25,6 +25,7 @@ const routes = {
   pathToComments: '/comments',
   pathToEmailQuestions: '/email-questions',
   pathToEmailQuestionDetails: '/email-answer/:id',
+  pathToStatistic: '/stats',
   pathToModels: '/models',
   pathToModelDetails: '/models/:id',
   pathToAddModel: '/models/add'

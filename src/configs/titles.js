@@ -6,6 +6,10 @@ const titles = {
   emailQuestionsTitles: {
     mainPageTitle: 'Запитання покупців',
     detailPageTitle: 'Деталі запитання'
+  },
+  statisticTitles: {
+    mainPageTitle: 'Статистика',
+    dateSortTitle: 'Сортувати за датою'
   }
 };
 export default titles;
