@@ -1,8 +1,13 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '@material-ui/core';
 import { config } from '../../configs';
 
-const { colors } = config.doughnut;
+const {
+  doughnut: { colors },
+  titles: { statisticTitles },
+  labels: { doughnut }
+} = config;
 
 const useDoughnutData = () => {
   const theme = useTheme();
@@ -10,6 +15,14 @@ const useDoughnutData = () => {
 
   const { selectedValue } = doughnutData;
   const { counts, names, relations } = doughnutData[selectedValue];
+
+  const labels = useMemo(
+    () =>
+      selectedValue === doughnut.select[1].value
+        ? names.map((label) => statisticTitles.statuses[label])
+        : names,
+    [names, selectedValue]
+  );
 
   const mainData = {
     datasets: [
@@ -21,7 +34,7 @@ const useDoughnutData = () => {
         hoverBorderColor: theme.palette.background.paper
       }
     ],
-    labels: names
+    labels
   };
 
   const options = {
@@ -42,7 +55,7 @@ const useDoughnutData = () => {
     }
   };
 
-  return { mainData, options, relations, names };
+  return { mainData, options, relations, labels };
 };
 
 export default useDoughnutData;

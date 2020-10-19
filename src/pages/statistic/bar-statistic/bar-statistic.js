@@ -15,10 +15,11 @@ import {
 import useBarData from '../../../hooks/stats/use-bar-data';
 import { config } from '../../../configs';
 import StatisticError from '../statistic-error';
+import LoadingBar from '../../../components/loading-bar';
 
 const { select } = config.labels.bar;
 
-const BarStatistic = ({ onChangeBar, selectedValue }) => {
+const BarStatistic = ({ onChangeBar, selectedValue, updating }) => {
   const { mainData, options } = useBarData();
 
   const barList = select.map(({ label, value }) => (
@@ -41,8 +42,10 @@ const BarStatistic = ({ onChangeBar, selectedValue }) => {
       <Divider />
       <CardContent>
         <Box height={400} position='relative'>
-          {mainData.datasets[0].data.length ? (
-            <Bar data={mainData} options={options} />
+          {updating ? (
+            <LoadingBar />
+          ) : mainData.datasets[0].data.length ? (
+            <Bar data={mainData} options={options} redraw />
           ) : (
             <StatisticError />
           )}
@@ -55,7 +58,8 @@ const BarStatistic = ({ onChangeBar, selectedValue }) => {
 
 BarStatistic.propTypes = {
   onChangeBar: PropTypes.func.isRequired,
-  selectedValue: PropTypes.string.isRequired
+  selectedValue: PropTypes.string.isRequired,
+  updating: PropTypes.bool.isRequired
 };
 
 export default BarStatistic;
