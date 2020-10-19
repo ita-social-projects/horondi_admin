@@ -12,10 +12,12 @@ function* handleOrderLoad({payload}) {
   try {
     yield setOrderLoading(true)
     const order = yield call(getOrderById,payload)
-    console.log(order.data.getOrderById);
+    if(order.errors) {
+      throw new Error(order.errors[0].message)
+    }
     yield put(setOrder(order.data.getOrderById))
   } catch (e) {
-    yield put(setOrderError())
+    yield put(setOrderError(e))
   } finally {
     yield setOrderLoading(false)
   }

@@ -2,15 +2,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   orderContainer: {
+    width: '100%',
     padding:'84px 20px 0px'
   },
-  tabs: {
-    backgroundColor: '#3F51B5',
-    '& span.MuiTab-wrapper': {
-      color: 'white'
-    },
-    '& span.MuiTabs-indicator': {
-      backgroundColor: 'white'
-    }
+  saveBtn: {
+    marginTop: 20
   },
+  general: {
+    display: 'flex',
+    flexDirection: 'column'
+  }
 }));
