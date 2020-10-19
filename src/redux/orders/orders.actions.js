@@ -1,7 +1,8 @@
 import {
-  GET_ORDER,
   SET_ORDER,
-  ADD_ORDER,
+  GET_ORDER,
+  GET_ORDER_LIST,
+  SET_ORDER_LIST,
   UPDATE_ORDER,
   SET_ORDER_LOADING,
   SET_ORDER_ERROR,
@@ -17,6 +18,16 @@ const getOrder = (payload) => ({
 
 const setOrder = (payload) => ({
   type: SET_ORDER,
+  payload
+});
+
+const getOrderList = (payload) => ({
+  type: GET_ORDER_LIST,
+  payload
+});
+
+const setOrderList = (payload) => ({
+  type: SET_ORDER_LIST,
   payload
 });
 
@@ -53,10 +64,12 @@ const setOrdersPagesCount = (payload) => ({
 export {
   getOrder,
   setOrder,
+  getOrderList,
+  setOrderList,
   updateOrder,
   setOrderLoading,
   setOrderError,
-  setOrdersPagesCount,
   setOrdersPerPage,
-  setOrdersCurrentPage
+  setOrdersCurrentPage,
+  setOrdersPagesCount
 };

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useStyles } from './orders-page.styles';
-import { getOrder } from '../../../redux/orders/orders.actions';
+import { getOrderList } from '../../../redux/orders/orders.actions';
 
 const OrdersPage = () => {
   const styles = useStyles();
@@ -10,7 +10,7 @@ const OrdersPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
-      getOrder({
+      getOrderList({
         limit: 10,
         skip: 2
       })
