@@ -12,6 +12,8 @@ const routes = {
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
   pathToProducts: '/products',
+  pathToAddProduct: '/add-product',
+  pathToEditProduct: '/product/:id',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id',
@@ -21,6 +23,9 @@ const routes = {
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact',
   pathToComments: '/comments',
-  pathToOrders: '/orders'
+  pathToOrders: '/orders',
+  pathToModels: '/models',
+  pathToModelDetails: '/models/:id',
+  pathToAddModel: '/models/add'
 };
 export default routes;

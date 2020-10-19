@@ -48,7 +48,7 @@ const {
   contactsPerPage
 } = config.pagination.contactsPaginationPayload;
 
-function* handleContactsLoad({
+export function* handleContactsLoad({
   payload = {
     skip: 1,
     limit: 1,
@@ -68,7 +68,7 @@ function* handleContactsLoad({
   }
 }
 
-function* handleContactLoad({ payload }) {
+export function* handleContactLoad({ payload }) {
   try {
     yield put(setContactsLoading(true));
     const contact = yield call(getContactById, payload);
@@ -79,7 +79,7 @@ function* handleContactLoad({ payload }) {
   }
 }
 
-function* handleAddContact({ payload }) {
+export function* handleAddContact({ payload }) {
   try {
     yield put(setContactsLoading(true));
     yield call(addContact, payload.newContact, payload.mapImages);
@@ -95,7 +95,7 @@ function* handleAddContact({ payload }) {
   }
 }
 
-function* handleContactDelete({ payload }) {
+export function* handleContactDelete({ payload }) {
   try {
     yield put(setContactsLoading(true));
 
@@ -119,7 +119,7 @@ function* handleContactDelete({ payload }) {
   }
 }
 
-function* handleContactUpdate({ payload }) {
+export function* handleContactUpdate({ payload }) {
   const { id, updatedContact, mapImages } = payload;
 
   try {
@@ -137,7 +137,7 @@ function* handleContactUpdate({ payload }) {
   }
 }
 
-function* handleContactsError(e) {
+export function* handleContactsError(e) {
   yield put(setContactsLoading(false));
   yield put(setContactsError({ e }));
   yield put(setSnackBarSeverity('error'));

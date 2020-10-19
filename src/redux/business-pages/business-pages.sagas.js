@@ -48,7 +48,7 @@ export function* handleBusinessPagesLoad() {
   }
 }
 
-function* handleCurrentBusinessPageLoad({ payload }) {
+export function* handleCurrentBusinessPageLoad({ payload }) {
   try {
     yield put(setLoading(true));
 
@@ -61,7 +61,7 @@ function* handleCurrentBusinessPageLoad({ payload }) {
   }
 }
 
-function* handleAddBusinessPage({ payload }) {
+export function* handleAddBusinessPage({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(createBusinessPage, payload);
@@ -77,7 +77,7 @@ function* handleAddBusinessPage({ payload }) {
   }
 }
 
-function* handleBusinessPageDelete({ payload }) {
+export function* handleBusinessPageDelete({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(deleteBusinessPage, payload);
@@ -99,7 +99,7 @@ function* handleBusinessPageDelete({ payload }) {
   }
 }
 
-function* handleBusinessPageUpdate({ payload }) {
+export function* handleBusinessPageUpdate({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(updateBusinessPage, payload);
