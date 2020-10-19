@@ -150,7 +150,7 @@ const EmailQuestionDetails = ({ id }) => {
               <StandardButton
                 className={styles.controlButton}
                 id='back'
-                title='Назад'
+                title={buttonTitles.GO_BACK_TITLE}
                 variant='outlined'
                 onClickHandler={() => {}}
               />

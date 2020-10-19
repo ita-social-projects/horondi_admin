@@ -58,7 +58,7 @@ const BusinessPageList = () => {
     list !== undefined
       ? list.map((page, index) => (
         <TableContainerRow
-          key={index}
+          key={page._id}
           id={page._id}
           index={index + 1}
           code={page.code}
