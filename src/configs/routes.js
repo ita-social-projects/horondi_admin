@@ -25,6 +25,9 @@ const routes = {
   pathToComments: '/comments',
   pathToMaterials: '/materials',
   pathToAddMaterial: '/material/add',
-  pathToMaterialDetails: '/materials/:id'
+  pathToMaterialDetails: '/materials/:id',
+  pathToModels: '/models',
+  pathToModelDetails: '/models/:id',
+  pathToAddModel: '/models/add'
 };
 export default routes;

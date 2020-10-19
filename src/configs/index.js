@@ -11,7 +11,8 @@ import {
   patternErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
-  errorMessages
+  errorMessages,
+  modelErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -150,5 +151,6 @@ export const config = {
   errorMessages,
   newsPaginationPayload,
   contactsPaginationPayload,
-  materialPaginationPayload
+  materialPaginationPayload,
+  modelErrorMessages
 };

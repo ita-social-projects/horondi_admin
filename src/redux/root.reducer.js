@@ -14,6 +14,7 @@ import Products from './products/products.reducer';
 import Categories from './categories/categories.reducer';
 import Users from './users/users.reducer';
 import Comments from './comments/comments.reducer';
+import Model from './model/model.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
@@ -31,6 +32,7 @@ const rootReducer = (history) =>
     Products,
     Categories,
     Users,
-    Comments
+    Comments,
+    Model
   });
 export default rootReducer;

@@ -1,4 +1,16 @@
 const labels = {
+  model: {
+    name: 'Назва',
+    description: 'Опис',
+    image: 'Фото моделі',
+    category: 'Категорія',
+    available: 'Доступний',
+    show: 'Показати',
+    avatarText: 'Фото',
+    priority: 'Пріорітет',
+    showEnable: 'Так',
+    showDisable: 'Ні'
+  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Код матеріалу',
