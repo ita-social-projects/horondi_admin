@@ -2,6 +2,14 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import {
+  getAllOrders
+} from './orders.operations';
+
+import {
+  GET_ORDER
+} from './orders.types';
+
+import {
   setOrder,
   setOrderError,
   setOrderLoading,
@@ -10,18 +18,12 @@ import {
 
 import { setSnackBarMessage, setSnackBarSeverity, setSnackBarStatus } from '../snackbar/snackbar.actions';
 
-function* handleOrdersLoad({
-  payload = {
-    skip: 1,
-    limit: 1,
-    newsPerPage: 1
-  }
-}) {
+function* handleOrdersLoad() {
   try {
     yield put(setOrderLoading(true));
-    const orders = yield call(getAllOrders, payload.skip, payload.limit);
-    yield put(setOrdersPagesCount(Math.ceil(orders.count / orders.newsPerPage)));
-    yield put(setOrder(orders.items));
+    const orders = yield call(getAllOrders);
+    // yield put(setOrdersPagesCount(Math.ceil(orders.count / orders.newsPerPage)));
+    yield put(setOrder(orders));
     yield put(setOrderLoading(false));
   } catch (error) {
     yield call(handleOrdersError, error);
@@ -34,4 +36,8 @@ function* handleOrdersError(e) {
   yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(e.message));
   yield put(setSnackBarStatus(true));
+}
+
+export default function* ordersSaga() {
+  yield takeEvery(GET_ORDER, handleOrdersLoad);
 }

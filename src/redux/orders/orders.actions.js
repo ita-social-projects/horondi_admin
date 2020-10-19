@@ -1,7 +1,6 @@
 import {
   GET_ORDER,
   SET_ORDER,
-  DELETE_ORDER,
   ADD_ORDER,
   UPDATE_ORDER,
   SET_ORDER_LOADING,
@@ -9,7 +8,6 @@ import {
   SET_ORDERS_PER_PAGE,
   SET_ORDERS_CURRENT_PAGE,
   SET_ORDERS_PAGES_COUNT,
-  DELETE_ORDER_FROM_STORE
 } from './orders.types';
 
 const getOrder = (payload) => ({
@@ -19,11 +17,6 @@ const getOrder = (payload) => ({
 
 const setOrder = (payload) => ({
   type: SET_ORDER,
-  payload
-});
-
-const deleteOrder = (payload) => ({
-  type: DELETE_ORDER,
   payload
 });
 
@@ -57,20 +50,13 @@ const setOrdersPagesCount = (payload) => ({
   payload
 });
 
-const deleteOrderFromStore = (id) => ({
-  type: DELETE_ORDER_FROM_STORE,
-  payload: id
-});
-
 export {
   getOrder,
   setOrder,
-  deleteOrder,
   updateOrder,
   setOrderLoading,
   setOrderError,
   setOrdersPagesCount,
   setOrdersPerPage,
-  setOrdersCurrentPage,
-  deleteOrderFromStore
+  setOrdersCurrentPage
 };
