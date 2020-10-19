@@ -44,22 +44,21 @@ const DialogWindow = () => {
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
       <DialogActions>
-        {showCancelButton && (
-          <StandardButton
-            variant='outlined'
-            title={CANCEL_TITLE}
-            onClickHandler={handleClose}
-          />
-        )}
-        {!showCancelButton && (
+        {showCancelButton ? (
+          <>
+            <StandardButton
+              variant='outlined'
+              title={CANCEL_TITLE}
+              onClickHandler={handleClose}
+            />
+            <DeleteButton onClick={onClickHandler}>{buttonTitle}</DeleteButton>
+          </>
+        ) : (
           <StandardButton
             variant='contained'
             title={buttonTitle}
             onClickHandler={onClickHandler}
           />
-        )}
-        {showCancelButton && (
-          <DeleteButton onClick={onClickHandler}>{buttonTitle}</DeleteButton>
         )}
       </DialogActions>
     </Dialog>
