@@ -57,3 +57,7 @@ export const contactErrorMessages = {
   ENTER_LINK_MESSAGE: 'Введіть посилання',
   SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт'
 };
+
+export const statsErrorMessages = {
+  NO_STATS: 'Статистика для вибраного значення відсутня'
+};

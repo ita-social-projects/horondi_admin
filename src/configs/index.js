@@ -1,3 +1,4 @@
+import { colors } from '@material-ui/core';
 import routes from './routes';
 import menuCategories from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
@@ -133,6 +134,25 @@ export const config = {
       value: ''
     }
   ],
+  doughnut: {
+    colors: [
+      colors.green[500],
+      colors.red[700],
+      colors.amber[600],
+      colors.indigo[500]
+    ],
+    initialValues: {
+      names: [],
+      counts: [],
+      relations: []
+    }
+  },
+  bar: {
+    initialValues: {
+      labels: [],
+      counts: []
+    }
+  },
   UAH: 'грн',
   buttonTitles,
   detailTitles,

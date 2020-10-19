@@ -35,6 +35,7 @@ import ModelDetails from '../pages/model/model-details';
 
 import ProductEdit from '../pages/products/product-edit';
 import routes from '../configs/routes';
+import StatisticPage from '../pages/statistic';
 
 const Routes = () => {
   const { isAuth } = useSelector(({ Auth }) => ({
@@ -134,6 +135,7 @@ const Routes = () => {
             <CategoriesAdd id={match.params.id} editMode />
           )}
         />
+        <Route path={routes.pathToStatistic} exact component={StatisticPage} />
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />
