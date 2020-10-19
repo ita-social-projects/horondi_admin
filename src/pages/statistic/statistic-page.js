@@ -67,16 +67,16 @@ const StatisticPage = () => {
     dispatch(setDateValue(newDate));
     if (doughnutValue === doughnut.select[1].value) {
       dispatch(getAllOrdersStats());
-      fetchedDoughnutStats.current.push(doughnutValue);
     }
     if (barValue === bar.select[1].value) {
       dispatch(getPaidOrdersStats());
-      fetchedBarStats.current.push(barValue);
     }
+    fetchedDoughnutStats.current.push(doughnutValue);
+    fetchedBarStats.current.push(barValue);
   };
 
   const handleDoughnutValueChange = (e) => {
-    const {value} = e.target;
+    const { value } = e.target;
     const { select } = doughnut;
     const isFetched = fetchedDoughnutStats.current.includes(value);
     if (value === select[1].value && !isFetched) {
@@ -86,8 +86,8 @@ const StatisticPage = () => {
     dispatch(setDoughnutValue(value));
   };
 
-  const handleBarDataChange = (e) => {
-    const {value} = e.target;
+  const handleBarValueChange = (e) => {
+    const { value } = e.target;
     const { select } = bar;
     const isFetched = fetchedBarStats.current.includes(value);
     if (value === select[1].value && !isFetched) {
@@ -112,7 +112,7 @@ const StatisticPage = () => {
           <Grid item lg={8} md={12} xl={9} xs={12}>
             <BarStatistic
               updating={updatingBar}
-              onChangeBar={handleBarDataChange}
+              onChangeBar={handleBarValueChange}
               selectedValue={barValue}
             />
           </Grid>
