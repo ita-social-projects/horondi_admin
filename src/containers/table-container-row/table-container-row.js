@@ -3,7 +3,10 @@ import { useSelector } from 'react-redux';
 import { TableRow, TableCell, Avatar } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
-import { DeleteButton, EditButton } from '../../components/buttons';
+import {
+  CustomizedEditIcon,
+  CustomizedDeleteIcon
+} from '../../components/icons';
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
 
@@ -43,10 +46,13 @@ const TableContainerRow = ({
       {tableCells}
       <TableCell>
         {showEdit && (
-          <EditButton size={iconSize} onClickHandler={editHandler} />
+          <CustomizedEditIcon size={iconSize} onClickHandler={editHandler} />
         )}
         {showDelete && (
-          <DeleteButton size={iconSize} onClickHandler={deleteHandler} />
+          <CustomizedDeleteIcon
+            size={iconSize}
+            onClickHandler={deleteHandler}
+          />
         )}
       </TableCell>
     </TableRow>
