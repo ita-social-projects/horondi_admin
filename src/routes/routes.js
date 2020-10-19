@@ -30,6 +30,7 @@ import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
 import Orders from '../pages/orders/orders-page/orders-page';
+import OrderItem from '../pages/order-item';
 
 const { routes } = config.app;
 
@@ -119,6 +120,13 @@ const Routes = () => {
           )}
         />
         <Route path={routes.pathToOrders} exact component={Orders} />
+        <Route
+          path={routes.pathToOrderItem}
+          exact
+          render={({ match }) => (
+            <OrderItem id={match.params.id} />
+          )}
+        />
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />

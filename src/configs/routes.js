@@ -21,6 +21,7 @@ const routes = {
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact',
   pathToComments: '/comments',
-  pathToOrders: '/orders'
+  pathToOrders: '/orders',
+  pathToOrderItem: '/orders/:id',
 };
 export default routes;
