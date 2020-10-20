@@ -1,25 +1,32 @@
 import { gql } from '@apollo/client';
 import { client, getItems } from '../../utils/client';
 
-const getAllOrders = async () => {
+const getAllOrders = async (skip, limit) => {
   const result = await client.query({
     query: gql`
-        query {
-        getAllOrders {
-          _id
-          status    
-          dateOfCreation
-          totalItemsPrice {
-            currency
-            value
+      query getPaginatedOrders($limit: Int, $skip: Int) {
+        getAllOrders(limit: $limit, skip: $skip) {
+          items {
+            _id
+            status
+            dateOfCreation
+            totalItemsPrice {
+              currency
+              value
+            }
+            totalPriceToPay {
+              currency
+              value
+            }
           }
-          totalPriceToPay {
-            currency
-            value
-          }
+          count
         }
       }
-    `
+    `,
+    variables: {
+      skip,
+      limit
+    }
   });
   const { data } = result;
   return data.getAllOrders;
@@ -91,7 +98,4 @@ const getOrderById = (id) => {
   return getItems(query, { id });
 };
 
-export {
-  getAllOrders,
-  getOrderById
-};
+export { getAllOrders, getOrderById };

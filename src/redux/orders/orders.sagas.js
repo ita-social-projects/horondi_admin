@@ -1,28 +1,31 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import {
-  getAllOrders,
-  getOrderById
-} from './orders.operations';
+import { getAllOrders, getOrderById } from './orders.operations';
 
-import {
-  GET_ORDER_LIST,
-  GET_ORDER
-} from './orders.types';
+import { GET_ORDER_LIST, GET_ORDER } from './orders.types';
 
 import {
   setOrderList,
   setOrderError,
   setOrder,
-  setOrderLoading,
+  setOrderLoading
 } from './orders.actions';
 
-import { setSnackBarMessage, setSnackBarSeverity, setSnackBarStatus } from '../snackbar/snackbar.actions';
+import { setItemsCount, setPagesCount } from '../table/table.actions';
+import {
+  setSnackBarMessage,
+  setSnackBarSeverity,
+  setSnackBarStatus
+} from '../snackbar/snackbar.actions';
 
-function* handleOrdersListLoad() {
+function* handleOrdersListLoad({ payload }) {
   try {
     yield put(setOrderLoading(true));
-    const orders = yield call(getAllOrders);
+    const orders = yield call(getAllOrders, payload.skip, payload.limit);
+    yield put(
+      setPagesCount(Math.ceil(orders.pagesCount / orders.orderPerPage))
+    );
+    yield put(setItemsCount(orders.count));
     yield put(setOrderList(orders));
     yield put(setOrderLoading(false));
   } catch (error) {
@@ -30,10 +33,10 @@ function* handleOrdersListLoad() {
   }
 }
 
-function* handleOrderLoad({payload}) {
+function* handleOrderLoad({ payload }) {
   try {
     yield setOrderLoading(true);
-    const order = yield call(getOrderById,payload);
+    const order = yield call(getOrderById, payload);
     yield put(setOrder(order.data.getOrderById));
   } catch (e) {
     yield put(setOrderError());

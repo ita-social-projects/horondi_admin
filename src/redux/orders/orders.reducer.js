@@ -9,12 +9,7 @@ const initialState = {
   list: [],
   selectedOrder: null,
   orderLoading: false,
-  orderError: null,
-  pagination: {
-    currentPage: 0,
-    orderPerPage: 6,
-    pagesCount: 1
-  }
+  orderError: null
 };
 
 const ordersReducer = (state = initialState, action = {}) => {

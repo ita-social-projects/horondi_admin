@@ -3,12 +3,8 @@ import {
   GET_ORDER,
   GET_ORDER_LIST,
   SET_ORDER_LIST,
-  UPDATE_ORDER,
   SET_ORDER_LOADING,
-  SET_ORDER_ERROR,
-  SET_ORDERS_PER_PAGE,
-  SET_ORDERS_CURRENT_PAGE,
-  SET_ORDERS_PAGES_COUNT,
+  SET_ORDER_ERROR
 } from './orders.types';
 
 const getOrder = (payload) => ({
@@ -31,11 +27,6 @@ const setOrderList = (payload) => ({
   payload
 });
 
-const updateOrder = (payload) => ({
-  type: UPDATE_ORDER,
-  payload
-});
-
 const setOrderLoading = (loading) => ({
   type: SET_ORDER_LOADING,
   payload: loading
@@ -46,30 +37,11 @@ const setOrderError = (error) => ({
   payload: error
 });
 
-const setOrdersPerPage = (payload) => ({
-  type: SET_ORDERS_PER_PAGE,
-  payload
-});
-
-const setOrdersCurrentPage = (payload) => ({
-  type: SET_ORDERS_CURRENT_PAGE,
-  payload
-});
-
-const setOrdersPagesCount = (payload) => ({
-  type: SET_ORDERS_PAGES_COUNT,
-  payload
-});
-
 export {
   getOrder,
   setOrder,
   getOrderList,
   setOrderList,
-  updateOrder,
   setOrderLoading,
-  setOrderError,
-  setOrdersPerPage,
-  setOrdersCurrentPage,
-  setOrdersPagesCount
+  setOrderError
 };

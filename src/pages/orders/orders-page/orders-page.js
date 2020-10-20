@@ -6,65 +6,68 @@ import { getOrderList } from '../../../redux/orders/orders.actions';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
-
+import StandardButton from '../../../components/buttons/standard-button/standard-button';
 import { config } from '../../../configs';
-// import { productsTranslations } from '../../../translations/product.translations';
 
-// const { ORDERS_NOT_FOUND } = productsTranslations;
 const tableTitles = config.tableHeadRowTitles.orders;
 
 const OrdersPage = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { list, orderLoading, orderError } = useSelector(
-    ({ Orders }) => ({
-      list: Orders.list,
-      orderLoading: Orders.orderLoading,
-      orderError: Orders.orderError
-    })
-  );
+  const { orderLoading, orders, count } = useSelector(({ Orders }) => ({
+    orderLoading: Orders.orderLoading,
+    orders: Orders.list.items,
+    count: Orders.list.count
+  }));
+
+  const { currentPage, rowsPerPage } = useSelector(({ Table }) => ({
+    currentPage: Table.pagination.currentPage,
+    rowsPerPage: Table.pagination.rowsPerPage
+  }));
 
   useEffect(() => {
     dispatch(
       getOrderList({
-        limit: 10,
-        skip: 10
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage
       })
     );
-  }, [dispatch]);
+  }, [dispatch, rowsPerPage, currentPage]);
 
-  const orderItems = list ? list.map(
-    ({
-      _id,
-      status,
-      dateOfCreation,
-      totalItemsPrice,
-      totalPriceToPay
-    }) => (
-      <TableContainerRow 
-        key = {_id}
-        id = {_id}
-        status = {status}
-        date = {dateOfCreation}
-        totalPrice = {totalItemsPrice}
-        deliveryPrice = {totalPriceToPay - totalItemsPrice}
+  const orderItems = orders
+    ? orders.map((order) => (
+      <TableContainerRow
+        key={order._id}
+        image={order._id}
+        date={order.dateOfCreation}
+        totalPrice={order.totalItemsPrice[0].value}
+        deliveryPrice={
+          order.totalPriceToPay[0].value - order.totalItemsPrice[0].value
+        }
+        status={order.status}
+        button={<StandardButton title='Details' />}
+        showDelete={false}
+        showEdit={false}
       />
-    )
-  ) : null;
+    ))
+    : null;
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div>23 orders</div>
-        <div>Filter by</div>
+        <div className={styles.orderCount}>{count} orders</div>
+        <div className={styles.filterBy}>Filter by</div>
       </div>
-      {orderLoading ? <LoadingBar /> : <TableContainerGenerator
-        pagination
-        tableTitles={tableTitles}
-        tableItems={orderItems}
-      />}
-      <h3>OrdersPage</h3>
+      {orderLoading ? (
+        <LoadingBar />
+      ) : (
+        <TableContainerGenerator
+          pagination
+          tableTitles={tableTitles}
+          tableItems={orderItems}
+        />
+      )}
     </div>
   );
 };

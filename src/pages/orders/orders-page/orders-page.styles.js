@@ -9,6 +9,14 @@ export const useStyles = makeStyles((theme) => ({
   },
   header: {
     display: 'flex',
-    justifyContent: 'space-around'
+    justifyContent: 'space-between',
+    marginBottom: '20px'
+  },
+  orderCount: {
+    marginBottom: '20px',
+    fontSize: 16
+  },
+  filterBy: {
+    fontSize: 16
   }
 }));
