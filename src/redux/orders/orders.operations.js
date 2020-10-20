@@ -6,95 +6,9 @@ const getAllOrders = async () => {
     query: gql`
         query {
         getAllOrders {
-          status
-          user {
-            firstName
-            lastName
-            patronymicName
-            email
-            phoneNumber
-          }
+          _id
+          status    
           dateOfCreation
-          lastUpdatedDate
-          userComment
-          completed
-          adminComment
-          cancellationReason
-          delivery {
-            sentOn
-            sentBy
-            byCourier
-            courierOffice
-            invoiceNumber
-            cost {
-              currency
-              value
-            }
-          }
-          address {
-            country
-            region
-            city
-            zipcode
-            street
-            buildingNumber
-            appartment
-          }
-          items {
-            category {
-              lang
-              value
-            }
-            subcategory {
-              lang
-              value
-            }
-            model {
-              lang
-              value
-            }
-            name {
-              lang
-              value
-            }
-            colors {
-              lang
-              value
-            }
-            pattern {
-              lang
-              value
-            }
-            closure {
-              lang
-              value
-            }
-            closureColor
-            size {
-              heightInCm
-              widthInCm
-              depthInCm
-              volumeInLiters
-              weightInKg
-            }
-            bottomMaterial {
-              lang
-              value
-            }
-            bottomColor {
-              lang
-              value
-            }
-            additions {
-              lang
-              value
-            }
-            actualPrice {
-              currency
-              value
-            }
-            quantity
-          }
           totalItemsPrice {
             currency
             value
@@ -102,9 +16,7 @@ const getAllOrders = async () => {
           totalPriceToPay {
             currency
             value
-          },
-          paymentMethod,
-          isPaid
+          }
         }
       }
     `
