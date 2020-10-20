@@ -13,7 +13,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 import useDoughnutData from '../../../hooks/stats/use-doughnut-data';
-import useStyles from './doughnut-statistic.styles';
+import useStyles from './statistic-doughnut.styles';
 
 import LegendsList from './legends-list/legends-list';
 import StatisticError from '../statistic-error';
@@ -23,7 +23,7 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { select } = config.labels.doughnut;
 
-const DoughnutStatistic = ({ selectedValue, onChangeDoughnut, updating }) => {
+const StatisticDoughnut = ({ selectedValue, onChangeDoughnut, updating }) => {
   const styles = useStyles();
 
   const { mainData, options, relations, labels } = useDoughnutData();
@@ -66,10 +66,10 @@ const DoughnutStatistic = ({ selectedValue, onChangeDoughnut, updating }) => {
   );
 };
 
-DoughnutStatistic.propTypes = {
+StatisticDoughnut.propTypes = {
   selectedValue: PropTypes.string.isRequired,
   onChangeDoughnut: PropTypes.func.isRequired,
   updating: PropTypes.bool.isRequired
 };
 
-export default DoughnutStatistic;
+export default StatisticDoughnut;

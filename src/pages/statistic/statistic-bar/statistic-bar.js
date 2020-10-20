@@ -19,7 +19,7 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { select } = config.labels.bar;
 
-const BarStatistic = ({ onChangeBar, selectedValue, updating }) => {
+const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
   const { mainData, options } = useBarData();
 
   const barList = select.map(({ label, value }) => (
@@ -56,10 +56,10 @@ const BarStatistic = ({ onChangeBar, selectedValue, updating }) => {
   );
 };
 
-BarStatistic.propTypes = {
+StatisticBar.propTypes = {
   onChangeBar: PropTypes.func.isRequired,
   selectedValue: PropTypes.string.isRequired,
   updating: PropTypes.bool.isRequired
 };
 
-export default BarStatistic;
+export default StatisticBar;

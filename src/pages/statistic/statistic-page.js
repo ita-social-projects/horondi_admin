@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Container, Grid, Box, Typography } from '@material-ui/core';
 
-import BarStatistic from './bar-statistic';
-import DoughnutStatistic from './doughnut-statistic';
+import StatisticBar from './statistic-bar';
+import StatisticDoughnut from './statistic-doughnut';
 import DateMenu from './date-menu';
 import LoadingBar from '../../components/loading-bar';
 
@@ -110,14 +110,14 @@ const StatisticPage = () => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item lg={8} md={12} xl={9} xs={12}>
-            <BarStatistic
+            <StatisticBar
               updating={updatingBar}
               onChangeBar={handleBarValueChange}
               selectedValue={barValue}
             />
           </Grid>
           <Grid item lg={4} md={6} xl={3} xs={12}>
-            <DoughnutStatistic
+            <StatisticDoughnut
               updating={updatingDoughnut}
               onChangeDoughnut={handleDoughnutValueChange}
               selectedValue={doughnutValue}
