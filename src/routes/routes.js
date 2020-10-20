@@ -15,6 +15,7 @@ import Business from '../pages/business-pages';
 import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
 import ProductsPage from '../pages/products/products-page';
+import ProductsAdd from '../pages/products/product-add';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import PatternPage from '../pages/pattern/pattern-page';
@@ -23,13 +24,17 @@ import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
 import UsersDetails from '../pages/users/users-details';
 import CommentsPage from '../pages/comments/comments';
-import { config } from '../configs';
 import { history } from '../store/store';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import ConfirmUser from '../pages/users/confirm-user';
+import ModelPage from '../pages/model/model-page';
+import ModelAdd from '../pages/model/model-add';
+import ModelDetails from '../pages/model/model-details';
 
-const { routes } = config.app;
+import ProductEdit from '../pages/products/product-edit';
+import routes from '../configs/routes';
+import StatisticPage from '../pages/statistic';
 
 const Routes = () => {
   const { isAuth } = useSelector(({ Auth }) => ({
@@ -68,6 +73,7 @@ const Routes = () => {
         />
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToPatterns} exact component={PatternPage} />
+        <Route path={routes.pathToModels} exact component={ModelPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
@@ -96,7 +102,19 @@ const Routes = () => {
           component={ContactsEdit}
         />
         <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
+        <Route path={routes.pathToAddModel} exact component={ModelAdd} />
+        <Route
+          path={routes.pathToModelDetails}
+          exact
+          component={ModelDetails}
+        />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
+        <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
+        <Route
+          path={routes.pathToEditProduct}
+          exact
+          render={({ match }) => <ProductEdit id={match.params.id} />}
+        />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route path={routes.pathToComments} exact component={CommentsPage} />
         <Route
@@ -111,6 +129,7 @@ const Routes = () => {
             <CategoriesAdd id={match.params.id} editMode />
           )}
         />
+        <Route path={routes.pathToStatistic} exact component={StatisticPage} />
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />

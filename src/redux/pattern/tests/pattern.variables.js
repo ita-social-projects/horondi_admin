@@ -27,6 +27,7 @@ export const pattern = {
 };
 export const patternId = '0c3c7929dd85de268bed4fe8';
 export const patternToRemoveId = '0c3c7929dd85de268bed4fe8';
+export const patternDoesNotExistId = '11111129dd85de268bed4fe8';
 export const patterns = [
   {
     _id: '0c3c7929dd85de268bed4fe8',

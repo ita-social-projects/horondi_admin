@@ -9,6 +9,8 @@ import categorySaga from './categories/categories.sagas';
 import usersSaga from './users/users.saga';
 import commentsSaga from './comments/comments.sagas';
 import contactsSaga from './contact/contact.sagas';
+import statsSaga from './stats/stats.sagas';
+import modelSaga from './model/model.sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -21,6 +23,8 @@ export default function* rootSaga() {
     businessPagesSaga(),
     productsSaga(),
     contactsSaga(),
-    commentsSaga()
+    commentsSaga(),
+    statsSaga(),
+    modelSaga()
   ]);
 }
