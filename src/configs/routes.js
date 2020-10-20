@@ -26,6 +26,7 @@ const routes = {
   pathToMaterials: '/materials',
   pathToAddMaterial: '/material/add',
   pathToMaterialDetails: '/materials/:id',
+  pathToStatistic: '/stats',
   pathToModels: '/models',
   pathToModelDetails: '/models/:id',
   pathToAddModel: '/models/add'

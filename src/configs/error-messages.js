@@ -74,3 +74,6 @@ export const colorErrorMessages = {
   VALIDATION_ERROR: 'Поле обовязкове',
   CODE_NOT_UNIQUE_ERROR: 'Такий код вже використовується'
 };
+export const statsErrorMessages = {
+  NO_STATS: 'Статистика для вибраного значення відсутня'
+};

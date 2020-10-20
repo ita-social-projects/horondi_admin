@@ -9,6 +9,10 @@ const titles = {
   },
   colorTitles: {
     createColorTitle: 'Створити колір'
+  },
+  statisticTitles: {
+    mainPageTitle: 'Статистика',
+    dateSortTitle: 'Сортувати за датою'
   }
 };
 export default titles;
