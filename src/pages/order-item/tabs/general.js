@@ -1,11 +1,12 @@
 import React from 'react';
-import {Field} from 'formik'
+import {Field, useFormikContext} from 'formik'
 import { Select, MenuItem, TextField } from '@material-ui/core';
 import { useStyles } from '../order-item.styles'
+import moment from 'moment';
 
 const General = ({data,handleChange}) => {
   const classes = useStyles()
-  const {_id,status,dateOfCreation,lastUpdatedDate,cancellationReason,isPaid,paymentMethod} = data
+  const {_id,status,dateOfCreation,lastUpdatedDate,isPaid,paymentMethod} = data
 
   const statusOptions = [
     {label:'Статус замовлення',value:''},
@@ -35,6 +36,7 @@ const General = ({data,handleChange}) => {
   console.log(data);
   return (
     <div className={classes.general}>
+      <p>ID: {_id}</p>
       <Select name='status' value={status} onChange={handleChange} variant='outlined'>
         {statusOptionElements}
       </Select>
@@ -47,9 +49,12 @@ const General = ({data,handleChange}) => {
         rows={5}
         variant={'outlined'}
         label={'Причина скасування'}
-        onChange={handleChange}
       />
-      <p></p>
+      <p>Дата створення: {moment.unix(dateOfCreation/1000).format(' DD/MM/YYYY z HH:mm')}</p>
+      <p>Дата оновлення: {moment.unix(lastUpdatedDate/1000).format(' DD/MM/YYYY z HH:mm')}</p>
+
+      Checkbox
+
     </div>
   );
 };
