@@ -1,6 +1,15 @@
 /// <reference types="cypress" />
 
 import { config } from '../../src/configs';
+import formRegExp from '../../src/configs/form-regexp';
+
+const {
+  email: emailRegex,
+  userName: userNameRegex,
+  userRoles: userRolesRegex,
+  userStatuses: userStatusesRegex,
+  mobileNumber: mobileNumberRegex
+} = formRegExp;
 
 describe('User list and items test', () => {
   let firstName;
@@ -35,26 +44,11 @@ describe('User list and items test', () => {
   it('User list row should have all types of necessary information about the user', () => {
     cy.get('@table').children().eq(0).children().as('row');
     cy.get('@row').eq(0).find('svg');
-    cy.get('@row')
-      .eq(1)
-      .invoke('text')
-      .should('match', /[а-яА-Я]{2,}/g);
-    cy.get('@row')
-      .eq(2)
-      .invoke('text')
-      .should('match', /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g);
-    cy.get('@row')
-      .eq(3)
-      .invoke('text')
-      .should('match', /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/gi);
-    cy.get('@row')
-      .eq(4)
-      .invoke('text')
-      .should('match', /(Користувач|Адмін|Суперадмін)/g);
-    cy.get('@row')
-      .eq(5)
-      .invoke('text')
-      .should('match', /(Активний|Неактивний)/g);
+    cy.get('@row').eq(1).invoke('text').should('match', userNameRegex);
+    cy.get('@row').eq(2).invoke('text').should('match', mobileNumberRegex);
+    cy.get('@row').eq(3).invoke('text').should('match', emailRegex);
+    cy.get('@row').eq(4).invoke('text').should('match', userRolesRegex);
+    cy.get('@row').eq(5).invoke('text').should('match', userStatusesRegex);
   });
 
   it('Information about the user in the list and the details page should be equal', () => {
