@@ -22,6 +22,9 @@ function* handleOrdersListLoad({ payload }) {
   try {
     yield put(setOrderLoading(true));
     const orders = yield call(getAllOrders, payload.skip, payload.limit);
+    if (orders.errors) {
+      throw new Error(orders.errors[0].message);
+    }
     yield put(
       setPagesCount(Math.ceil(orders.pagesCount / orders.orderPerPage))
     );

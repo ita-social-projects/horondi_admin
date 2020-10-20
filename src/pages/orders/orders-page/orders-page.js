@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import moment from 'moment';
+import { push } from 'connected-react-router';
 import { useStyles } from './orders-page.styles';
 import { getOrderList } from '../../../redux/orders/orders.actions';
 import LoadingBar from '../../../components/loading-bar';
@@ -35,23 +37,29 @@ const OrdersPage = () => {
     );
   }, [dispatch, rowsPerPage, currentPage]);
 
-  const orderItems = orders
-    ? orders.map((order) => (
+  const orderItems =
+    orders &&
+    orders.map((order) => (
       <TableContainerRow
         key={order._id}
-        image={order._id}
-        date={order.dateOfCreation}
-        totalPrice={order.totalItemsPrice[0].value}
-        deliveryPrice={
+        orderId={order._id}
+        date={moment.unix(order.dateOfCreation / 1000).format(' DD/MM/YYYY ')}
+        totalPrice={`${order.totalItemsPrice[0].value} ₴`}
+        deliveryPrice={`${
           order.totalPriceToPay[0].value - order.totalItemsPrice[0].value
-        }
+        } ₴`}
         status={order.status}
-        button={<StandardButton title='Details' />}
+        button={
+          <StandardButton
+            title='Details'
+            onClickHandler={() => dispatch(push(`/orders/${order._id}`))}
+          />
+        }
         showDelete={false}
         showEdit={false}
+        showAvatar={false}
       />
-    ))
-    : null;
+    ));
 
   return (
     <div className={styles.container}>
