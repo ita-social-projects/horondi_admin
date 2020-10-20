@@ -18,7 +18,8 @@ import {
 import { useStyles } from './home-page.styles';
 
 const { homePageEdit } = titles;
-const tableTitles = config.tableHeadRowTitles.homePageEdit;
+// const tableTitles = config.tableHeadRowTitles.homePageEdit;
+const { IMG_URL } = config;
 const { SAVE_TITLE } = config.buttonTitles;
 
 const HomePageEdit = () => {
@@ -44,9 +45,8 @@ const HomePageEdit = () => {
           preview: URL.createObjectURL(target.files[0])
         };
 
-        if (Object.keys(prev).find((el) => el === target.name)) {
-          prev[target.name] = uploadedImage;
-          return prev;
+        if (!!Object.keys(prev).find((el) => el === target.name)) {
+          return { ...prev,  [target.name]: { ...uploadedImage }};
         } else
           return {
             ...prev,
@@ -78,7 +78,7 @@ const HomePageEdit = () => {
 
   const photosItems =
     photos && photos.length
-      ? photos.map((photo, index) => (
+      ? photos.map((photo) => (
           <Grid
             item
             xs={3}
@@ -103,7 +103,7 @@ const HomePageEdit = () => {
                 src={
                   (image[`upload-photo-${photo._id}`] &&
                     image[`upload-photo-${photo._id}`].preview) ||
-                  photo.images.small
+                  `${IMG_URL}${photo.images.small}`
                 }
               >
                 <ImageIcon className={classes.avatar} />
