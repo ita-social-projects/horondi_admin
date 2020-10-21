@@ -40,11 +40,13 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleNewsLoad({
+const { skip, limit, newsPerPage } = config.newsPaginationPayload;
+
+function* handleNewsLoad({
   payload = {
-    skip: 1,
-    limit: 1,
-    newsPerPage: 1
+    skip,
+    limit,
+    newsPerPage
   }
 }) {
   try {

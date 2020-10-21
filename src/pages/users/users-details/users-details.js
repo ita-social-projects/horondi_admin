@@ -7,13 +7,13 @@ import { withRouter } from 'react-router';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../hooks/user/use-users-handlers';
 import LoadingBar from '../../../components/loading-bar';
-import { config } from '../../../configs';
 import { updateUserStatus } from '../../../redux/users/users.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import UserDetailsCard from './containers/user-details-card';
 import CommentsSection from '../../../components/comments-section/comments-section';
 import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
+import { config } from '../../../configs';
 
 const {
   USER_ACTIVE_TITLE,
@@ -22,6 +22,7 @@ const {
   SHOW_COMMENTS_TITLE,
   HIDE_COMMENTS_TITLE
 } = config.buttonTitles;
+
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
 

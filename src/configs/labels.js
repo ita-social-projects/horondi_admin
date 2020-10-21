@@ -1,10 +1,37 @@
 const labels = {
+  model: {
+    name: 'Назва',
+    description: 'Опис',
+    image: 'Фото моделі',
+    category: 'Категорія',
+    available: 'Доступний',
+    show: 'Показати',
+    avatarText: 'Фото',
+    priority: 'Пріорітет',
+    showEnable: 'Так',
+    showDisable: 'Ні'
+  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Код матеріалу',
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото'
+  },
+  material: {
+    image: 'Фото матеріалу',
+    purpose: 'Застосування',
+    available: 'Доступний',
+    name: 'Назва матеріалу',
+    description: 'Опис матеріалу',
+    additionalPrice: 'Додаткова ціна'
+  },
+  colors: {
+    image: 'Фото кольору',
+    name: 'Назва кольору',
+    simpleName: 'Проста назва кольору',
+    code: 'Код кольору',
+    available: 'Доступний'
   },
   product: {
     sortBySelectOptions: [
@@ -54,16 +81,36 @@ const labels = {
       { label: 'Опис', name: 'description', required: false }
     ],
     selectsLabels: [
-      { label: 'Категорія ', name: 'category', type: 'select', required: true },
+      {
+        label: 'Категорія ',
+        name: 'category',
+        type: 'select',
+        required: true
+      },
       {
         label: 'Підкатегорія ',
         name: 'subcategory',
         type: 'select',
         required: true
       },
-      { label: 'Модель ', name: 'model', type: 'select', required: true },
-      { label: 'Колір ', name: 'colors', type: 'select', required: true },
-      { label: 'Гобелен ', name: 'pattern', type: 'select', required: true }
+      {
+        label: 'Модель ',
+        name: 'model',
+        type: 'select',
+        required: true
+      },
+      {
+        label: 'Колір ',
+        name: 'colors',
+        type: 'select',
+        required: true
+      },
+      {
+        label: 'Гобелен ',
+        name: 'pattern',
+        type: 'select',
+        required: true
+      }
     ],
     optionsLabels: [
       { label: 'Розміри', name: 'sizes' },
@@ -85,6 +132,29 @@ const labels = {
     priceLabel: {
       label: 'Ціна(USD) ',
       name: 'basePrice'
+    }
+  },
+  doughnut: {
+    select: [
+      { label: 'Популярні категорії', value: 'categories' },
+      { label: 'Статуси замовлень', value: 'orders' }
+    ],
+    dateMenuOptions: [
+      { label: 'За 7 Днів', value: 7 },
+      { label: 'За 14 Днів', value: 14 },
+      { label: 'За 30 Днів', value: 30 }
+    ]
+  },
+  bar: {
+    select: [
+      { label: 'Популярні продукти', value: 'products' },
+      { label: 'Останні замовлення', value: 'orders' },
+      { label: 'Динаміка реєстрації користувачів', value: 'users' }
+    ],
+    descriptions: {
+      users: 'Цей день',
+      orders: 'Цей день',
+      products: 'Кількість покупок'
     }
   }
 };
