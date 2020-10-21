@@ -5,11 +5,12 @@ import {
   DialogContent,
   DialogTitle,
   Typography
-} from '@material-ui/core/';
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../configs';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton } from '../buttons';
+import { useStyles } from './dialog-window.styles';
 import DeleteButton from '../buttons/delete-button';
 
 const { CANCEL_TITLE } = config.buttonTitles;
@@ -28,16 +29,17 @@ const DialogWindow = () => {
     buttonTitle: dialogWindow.buttonTitle,
     onClickHandler: dialogWindow.onClickHandler
   }));
-
+  const styles = useStyles();
   const dispatch = useDispatch();
 
   const handleClose = () => {
     dispatch(closeDialog());
   };
-
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
-      <DialogTitle onClose={handleClose}>{dialogTitle}</DialogTitle>
+      <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
+        {dialogTitle}
+      </DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>

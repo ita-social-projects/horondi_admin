@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './pattern-page.styles';
-import { config } from '../../../configs';
 import {
   getPatterns,
   deletePattern,
@@ -17,13 +16,12 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
+import { config } from '../../../configs';
 
-const { routes } = config.app;
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { PATTERN_REMOVE_TITLE } = config.buttonTitles;
+const { CREATE_PATTERN_TITLE, PATTERN_REMOVE_TITLE } = config.buttonTitles;
 
-const { CREATE_PATTERN_TITLE } = config.buttonTitles;
-const pathToPatternAddPage = routes.pathToAddPattern;
+const pathToPatternAddPage = config.routes.pathToAddPattern;
 const tableTitles = config.tableHeadRowTitles.patterns;
 
 const PatternPage = () => {
