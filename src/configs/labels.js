@@ -133,7 +133,7 @@ const labels = {
   bar: {
     select: [
       { label: 'Популярні продукти', value: 'products' },
-      { label: 'Успішно продані замовлення', value: 'orders' },
+      { label: 'Виконані замовлення', value: 'orders' },
       { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
     descriptions: {
