@@ -153,11 +153,11 @@ describe('Register and confirm admin', () => {
   it('Should show an error label when email or role are incorrect', () => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
     cy.visit(`/users`);
-    cy.wait(3000);
+    cy.wait(4000);
     cy.contains('Адміністратори').click();
-    cy.wait(3000);
+    cy.wait(4000);
     cy.get('[data-cy=add-user-admin-button]').click();
-    cy.wait(3000);
+    cy.wait(4000);
     cy.get('[data-cy=email]').type('Bob');
     cy.get('[data-cy=submit-admin-register]').click();
     cy.get('[data-cy=email-error-label]').should(
