@@ -17,7 +17,6 @@ import { push } from 'connected-react-router';
 import { useStyles } from './categories-add.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TabPanel from '../../../components/tab-panel';
-import { config } from '../../../configs';
 import TableContainerRow from '../../../containers/table-container-row';
 import {
   getCategories,
@@ -34,7 +33,10 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import AddPhoto from '../../../images/add-photo.png';
 import { categoryTranslations } from '../../../translations/category.translations';
+import { config } from '../../../configs';
 
+const { DELETE_CATEGORY_MESSAGE } = config.messages;
+const { DELETE_CATEGORY } = config.buttonTitles;
 const CategoriesAdd = ({ id, editMode }) => {
   // HOOKS
   const dispatch = useDispatch();
@@ -48,8 +50,6 @@ const CategoriesAdd = ({ id, editMode }) => {
 
   const { isMain } = newCategory;
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { DELETE_CATEGORY_MESSAGE } = config.messages;
-  const { DELETE_CATEGORY } = config.buttonTitles;
 
   // MAIN CATEGORIES []
   const mainCategories = useMemo(
@@ -110,7 +110,6 @@ const CategoriesAdd = ({ id, editMode }) => {
 
   // GENERAL
   const [tabValue, setTabValue] = useState(0);
-  const { tableHeadRowTitles, buttonTitles } = config;
 
   // NAMES
   const nameModel = { lang: '', value: '' };
@@ -199,7 +198,7 @@ const CategoriesAdd = ({ id, editMode }) => {
         DELETE_CATEGORY
       );
     },
-    [DELETE_CATEGORY, DELETE_CATEGORY_MESSAGE, dispatch, openSuccessSnackbar]
+    [dispatch, openSuccessSnackbar]
   );
 
   // NAME HANDLERS
@@ -438,7 +437,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                     </form>
                     {categoryNameList.length ? (
                       <TableContainerGenerator
-                        tableTitles={tableHeadRowTitles.categoryName}
+                        tableTitles={config.tableHeadRowTitles.categoryName}
                         tableItems={categoryNameList}
                       />
                     ) : null}
@@ -504,7 +503,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                   <TabPanel value={tabValue} index={2}>
                     <div>
                       <TableContainerGenerator
-                        tableTitles={tableHeadRowTitles.subcategories}
+                        tableTitles={config.tableHeadRowTitles.subcategories}
                         tableItems={subcategoryList}
                       />
                     </div>
@@ -520,7 +519,7 @@ const CategoriesAdd = ({ id, editMode }) => {
           className={classes.saveBtn}
           onClick={editMode ? handleCategoryEdit : handleCategorySave}
         >
-          {buttonTitles.titleGenerator(editMode, isMain)}
+          {config.buttonTitles.titleGenerator(editMode, isMain)}
         </Button>
       </div>
     </div>

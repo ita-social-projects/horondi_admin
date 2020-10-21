@@ -37,6 +37,11 @@ const buttonTitles = {
   REMOVE_COMMENT_TITLE: 'Видалити коментар',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+  REMOVE_MATERIAL_TITLE: 'Видалити матеріал',
+  CREATE_MATERIAL_TITLE: 'Створити матеріал',
+  CREATE_COLOR_TITLE: 'Створити колір',
+  REMOVE_COLOR_TITLE: 'Видалити колір',
+  SAVE_MATERIAL: 'Зберегти матеріал',
 
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([

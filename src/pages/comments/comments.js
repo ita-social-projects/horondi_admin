@@ -6,7 +6,6 @@ import { Typography } from '@material-ui/core/';
 import { Pagination } from '@material-ui/lab';
 
 import { useStyles } from './comments.style';
-import { config } from '../../configs';
 
 import {
   getRecentComments,
@@ -20,6 +19,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import { commentsTranslations } from '../../translations/comments.translations';
+import { config } from '../../configs';
 
 const tableHeaders = config.tableHeadRowTitles.comments;
 const { REMOVE_COMMENT_TITLE } = config.buttonTitles;

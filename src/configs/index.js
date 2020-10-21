@@ -6,32 +6,35 @@ import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
 import statuses from './statuses';
 import {
-  errorMessages,
   loginErrorMessages,
+  colorErrorMessages,
   contactErrorMessages,
   patternErrorMessages,
+  materialErrorMessages,
   newsErrorMessages,
+  errorMessages,
   modelErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
-import * as pagination from './pagination';
+import {
+  newsPaginationPayload,
+  contactsPaginationPayload,
+  materialPaginationPayload
+} from './pagination';
 import titles from './titles';
 
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
   languages: ['uk', 'en'],
-  buttonStyles: {
-    ACCEPT_BUTTON_STYLE: 'secondary'
-  },
+  tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {
       available: false,
@@ -75,11 +78,6 @@ export const config = {
   },
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
-  contactsPaginationPayload: {
-    skip: 0,
-    limit: 6,
-    contactsPerPage: 7
-  },
   product: {
     sortBySelectOptions: [
       {
@@ -156,12 +154,6 @@ export const config = {
   UAH: 'грн',
   buttonTitles,
   detailTitles,
-  errorMessages,
-  loginErrorMessages,
-  contactErrorMessages,
-  modelErrorMessages,
-  patternErrorMessages,
-  newsErrorMessages,
   messages,
   menuCategories,
   routes,
@@ -169,6 +161,16 @@ export const config = {
   tableHeadRowTitles,
   formRegExp,
   labels,
-  pagination,
-  titles
+  titles,
+  loginErrorMessages,
+  colorErrorMessages,
+  contactErrorMessages,
+  patternErrorMessages,
+  materialErrorMessages,
+  newsErrorMessages,
+  errorMessages,
+  newsPaginationPayload,
+  contactsPaginationPayload,
+  materialPaginationPayload,
+  modelErrorMessages
 };
