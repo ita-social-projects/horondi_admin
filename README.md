@@ -189,7 +189,7 @@ You're encouraged to contribute to our project if you've found any issues or mis
 
 Before sending any pull request, please discuss requirements/changes to be implemented using an existing issue or by creating a new one. All pull requests should be done into `development` branch.
 
-There are three GitHub projects: [horondi_admin](https://github.com/ita-social-projects/horondi_admin) for frontend part, [horondi_client_be](https://github.com/ita-social-projects/horondi_client_be) for backend part and [horondi_admin](https://github.com/ita-social-projects/horondi_admin). Every project has it's own issues.
+There are three GitHub projects: [horondi_client_fe](https://github.com/ita-social-projects/horondi_client_fe) for frontend part, [horondi_client_be](https://github.com/ita-social-projects/horondi_client_be) for backend part and [horondi_admin](https://github.com/ita-social-projects/horondi_admin). Every project has it's own issues.
 
 Every pull request should be linked to an issue. So if you make changes on frontend, backend or admin parts you should create an issue with a link to corresponding requirement (story, task or epic).
 
@@ -234,35 +234,11 @@ Only the release should merge into the main branch!!!
 
 #### Step 2
 
-when creating [!issue](https://github.com/ita-social-projects/horondi_admin/issues/new/choose) you should add name of the issue, description, choose assignee, label, project. If issue is a `User Story` you should link it with corresponding tasks, and corresponding tasks should be linked to issue.
+when creating [issue](https://github.com/ita-social-projects/horondi_admin/issues/new/choose) you should add name of the issue, description, choose assignee, label, project. If issue is a `User Story` you should link it with corresponding tasks, and corresponding tasks should be linked to issue.
 
 #### Step 3
 
 if issue is in work it should be placed in proper column on dashboard according to its status.
-
----
-
-### Chat.
-
-For run Facebook chat on your site you need two variables - FACEBOOK_PAGE_ID and FACEBOOK_APP_ID and write them
-in 'src -> containers -> chat -> chat.js' file.
-
-1. FACEBOOK_PAGE_ID.
-   You can find your page ID in menu under your avatar, button 'about' or 'more -> about'.
-   Then scroll to the down and find your Page ID.
-
-2. FACEBOOK_APP_ID
-   Go to https://developers.facebook.com/apps/ and choose 'Add a New App -> Manage Business Integration'.
-   Fills the forms and press 'Create App ID'. You can find your App ID at the top of page.
-
-3. After that you may go to left bar, and find 'Messenger -> Settings' and add your Facebook Business page ID in section
-   'Access Tokens'.
-
-4. Now go to your Facebook Business page -> Settings(Left bar) -> Advanced Messaging and find section 'Whitelisted
-   Domains'. Here you must add your domain to white list and save.
-
-More details you can find on official site
-https://developers.facebook.com/docs/messenger-platform/discovery/facebook-chat-plugin/
 
 ---
 
