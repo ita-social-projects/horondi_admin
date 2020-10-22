@@ -273,3 +273,4 @@ export const getAllOrders = async (skip, limit) => {
   const { data } = result;
   return data.getAllOrders;
 };
+
