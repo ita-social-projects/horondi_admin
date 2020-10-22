@@ -10,11 +10,13 @@ import LoadingBar from '../../components/loading-bar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import orders from '../../configs/orders';
+import buttonTitles from '../../configs/button-titles';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const {buttonTitle,dialogTitle,dialogContent} = orders
+  const {SAVE_ORDER} = buttonTitles
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { selectedOrder, orderLoading } = useSelector(
@@ -45,166 +47,8 @@ const OrderItem = ({ id }) => {
     }
   }
 
-  const mockupData = {
-    status: 'PRODUCED',
-    dateOfCreation:"1593943756186",
-    lastUpdatedDate:"1594375756186",
-    cancellationReason:"",
-    isPaid: true,
-    paymentMethod: 'CASH',
-    user: {
-      firstName:"Ерік",
-      lastName:"Арутюнянц",
-      patronymicName:"Іванович",
-      email:"ve6r4jmgn8@ukr.net",
-      phoneNumber:"380991115359"
-    },
-    adminComment:"",
-    userComment:"Хотілось би отримати не пізніше тижня",
-    items: [
-      {
-        "category": [{
-          "lang": "uk",
-          "value": "Рюкзаки"
-        }, {
-          "lang": "en",
-          "value": "Backpacks"
-        }],
-        "subcategory": [{
-          "lang": "uk",
-          "value": "Рюкзаки"
-        }, {
-          "lang": "en",
-          "value": "Backpacks"
-        }],
-        "model": [{
-          "lang": "uk",
-          "value": "Ролтоп"
-        }, {
-          "lang": "en",
-          "value": "Rolltop"
-        }],
-        "name": [{
-          "lang": "uk",
-          "value": "Ролтоп жовтий 2"
-        }, {
-          "lang": "en",
-          "value": "Rolltop Yellow 2"
-        }],
-        "colors": [
-          [{
-            "lang": "uk",
-            "value": "Золотий"
-          }, {
-            "lang": "en",
-            "value": "Golden"
-          }]
-        ],
-        "pattern": [{
-          "lang": "uk",
-          "value": "Олені"
-        }, {
-          "lang": "en",
-          "value": "Deers"
-        }],
-        "closure": [{
-          "lang": "uk",
-          "value": "Фастекс (пластикова защіпка)"
-        }, {
-          "lang": "en",
-          "value": "Plastic closure"
-        }],
-        "closureColor": "black",
-        "size": {
-          "heightInCm": 40,
-          "widthInCm": 28,
-          "depthInCm": 14,
-          "volumeInLiters": 19,
-          "weightInKg": 0.8
-        },
-        "bottomMaterial": [{
-          "lang": "uk",
-          "value": "Тканина Кордура"
-        }, {
-          "lang": "en",
-          "value": "Cordura fabric"
-        }],
-        "bottomColor": [{
-          "lang": "uk",
-          "value": "чорний"
-        }, {
-          "lang": "en",
-          "value": "black"
-        }],
-        "additions": [
-          [{
-            "lang": "uk",
-            "value": "Кишеня"
-          }, {
-            "lang": "en",
-            "value": "Pocket"
-          }]
-        ],
-        "actualPrice": [{
-          "currency": "UAH",
-          "value": 155000
-        }, {
-          "currency": "USD",
-          "value": 5590
-        }],
-        "quantity": 2
-      }
-    ],
-    delivery: {
-      sentOn: '1594116556186',
-      sentBy: 'Nova Poshta',
-      invoiceNumber: '1746185',
-      courierOffice: 10,
-      byCourier: true,
-      cost: [
-        {
-          'currency': 'UAH',
-          'value': 5000
-        },
-        {
-          'currency': 'USD',
-          'value': 180
-        }
-      ]
-    },
-    address: {
-      country: 'Україна',
-      region: 'Львівська область',
-      city: 'Золочів',
-      zipcode: '84386',
-      street: 'Вулиця Святослава Хороброго',
-      buildingNumber: '257',
-      appartment: '43'
-    },
-    totalItemsPrice:[
-      {
-        currency:"UAH",
-        value:155000
-      },
-      {
-        currency:"USD",
-        value:5590
-      }
-    ],
-    totalPriceToPay:[
-      {
-        currency:"UAH",
-        value:160000
-      },
-      {
-        currency:"USD",
-        value:5770
-      }
-    ],
-  }
-
   const {handleChange,values, handleSubmit, setFieldValue, dirty, initialValues, resetForm} = useFormik({
-    initialValues: mockupData,
+    initialValues: {},
     onSubmit: handleFormSubmit
   })
 
@@ -252,7 +96,7 @@ const OrderItem = ({ id }) => {
         color='primary'
         className={classes.saveBtn}
       >
-        Зберегти замовлення
+        {SAVE_ORDER}
       </Button>}
     </form>
   );

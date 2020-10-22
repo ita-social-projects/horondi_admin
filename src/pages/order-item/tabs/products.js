@@ -47,7 +47,7 @@ const Products = ({data,setFieldValue}) => {
               <label htmlFor={item}>
                 <b>{orderProduct[item]+':'}</b>
               </label>
-              <span id={item}>{selectedItem[item][0].value}</span>
+              <span id={item}>{selectedItem[item].length ? selectedItem[item][0].value : 'Не вказано'}</span>
             </div>
           ))}
         </div>
