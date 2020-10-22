@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Avatar, Button, Typography, Grid, Paper } from '@material-ui/core';
+import { Avatar, Typography, Grid, Paper } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
+import BackupIcon from '@material-ui/icons/Backup';
 
 import { config } from '../../configs';
 import titles from '../../configs/titles';
 import LoadingBar from '../../components/loading-bar';
-import TableContainerGenerator from '../../containers/table-container-generator';
-import TableContainerRow from '../../containers/table-container-row';
-import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import {
   getHomePageData,
   updateHomePageData
@@ -18,9 +16,7 @@ import {
 import { useStyles } from './home-page.styles';
 
 const { homePageEdit } = titles;
-// const tableTitles = config.tableHeadRowTitles.homePageEdit;
 const { IMG_URL } = config;
-const { SAVE_TITLE } = config.buttonTitles;
 
 const HomePageEdit = () => {
   const dispatch = useDispatch();
@@ -36,81 +32,68 @@ const HomePageEdit = () => {
     dispatch(getHomePageData());
   }, [dispatch]);
 
+  const updateHomePageLooksHandler = ({ id, upload }) =>
+    dispatch(updateHomePageData({ id, upload }));
+
   const photoUpdateHandler = ({ target }, id) => {
     if (target.files && target.files[0]) {
+      const uploadedImage = {
+        id,
+        upload: target.files[0],
+        preview: URL.createObjectURL(target.files[0])
+      };
+
       setImageUrl((prev) => {
-        const uploadedImage = {
-          id,
-          file: target.files[0],
-          preview: URL.createObjectURL(target.files[0])
+        if (Object.keys(prev).find((el) => el === target.name)) {
+          return { ...prev, [target.name]: { ...uploadedImage } };
+        } return {
+          ...prev,
+          [target.name]: uploadedImage
         };
-
-        if (!!Object.keys(prev).find((el) => el === target.name)) {
-          return { ...prev,  [target.name]: { ...uploadedImage }};
-        } else
-          return {
-            ...prev,
-            [target.name]: uploadedImage
-          };
       });
-    }
-  };
 
-  const validateChanges = () => {
-    return true;
-  };
-
-  const updateHomePageLooksHandler = () => {
-    if (image) {
-      let uploadIds = [];
-      let upload = [];
-
-      for (const key in image) {
-        uploadIds.push(image[key].id);
-        upload.push(image[key].file);
-      }
-
-      if (validateChanges()) {
-        dispatch(updateHomePageData({ uploadIds, upload }));
-      }
+      updateHomePageLooksHandler(uploadedImage);
     }
   };
 
   const photosItems =
     photos && photos.length
       ? photos.map((photo) => (
-          <Grid
-            item
-            xs={3}
-            key={photo._id}
-            container
-            direction='row'
-            justify='center'
-            alignItems='center'
-          >
-            <label>
-              <input
-                style={{ display: 'none' }}
-                accept='image/*'
-                id='upload-photo'
-                name={`upload-photo-${photo._id}`}
-                type='file'
-                onChange={(e) => photoUpdateHandler(e, photo._id)}
-              />
-              <Avatar
-                variant='square'
-                className={classes.avatar}
-                src={
-                  (image[`upload-photo-${photo._id}`] &&
+        <Grid
+          item
+          xs={3}
+          key={photo._id}
+          container
+          direction='row'
+          justify='center'
+          alignItems='center'
+        >
+          <label className={classes.uploadContainer}>
+            <input
+              style={{ display: 'none' }}
+              accept='image/*'
+              id='upload-photo'
+              name={`upload-photo-${photo._id}`}
+              type='file'
+              onChange={(e) => photoUpdateHandler(e, photo._id)}
+            />
+            <Avatar
+              variant='square'
+              className={classes.avatar}
+              src={
+                (image[`upload-photo-${photo._id}`] &&
                     image[`upload-photo-${photo._id}`].preview) ||
                   `${IMG_URL}${photo.images.small}`
-                }
-              >
-                <ImageIcon className={classes.avatar} />
-              </Avatar>
-            </label>
-          </Grid>
-        ))
+              }
+            >
+              <ImageIcon className={classes.avatarBright} />
+            </Avatar>
+            <div className={classes.overlay}>
+              <BackupIcon className={classes.uploadIcon} />
+            </div>
+          </label>
+        </Grid>
+      ))
       : null;
 
   if (loading) {
@@ -120,7 +103,7 @@ const HomePageEdit = () => {
   return (
     <div className={classes.container}>
       <div className={classes.tableNav}>
-        <Typography variant='h1' className={classes.contactsTitle}>
+        <Typography variant='h1' className={classes.title}>
           {homePageEdit.mainPageTitle}
         </Typography>
       </div>
@@ -130,14 +113,6 @@ const HomePageEdit = () => {
             {photosItems}
           </Grid>
         </Paper>
-        <Button
-          id='update-looksimages'
-          onClick={updateHomePageLooksHandler}
-          variant='contained'
-          color='primary'
-        >
-          {SAVE_TITLE}
-        </Button>
       </div>
     </div>
   );

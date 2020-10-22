@@ -25,17 +25,16 @@ const getHomePageLooksImages = async () => {
   return getHomePageLooksImages;
 };
 
-const updateHomePageLooksImage = async (id, updatedImage) => {
-  console.log('FROM OPERATIONS', id, updatedImage);
+const updateHomePageLooksImage = async (id, upload) => {
   const result = await client.mutate({
     variables: {
       id,
-      updatedImage
+      upload
     },
     context: { headers: { token } },
     mutation: gql`
-      mutation($id: [ID!], $updatedImage: Upload) {
-        updateHomePageLooksImage(id: $id, images: $updatedImage) {
+      mutation($id: ID!, $upload: Upload) {
+        updateHomePageLooksImage(id: $id, images: $upload) {
           images {
             small
           }
@@ -59,8 +58,4 @@ const updateHomePageLooksImage = async (id, updatedImage) => {
   return data.updateHomePageLooksImage;
 };
 
-
-export {
-  getHomePageLooksImages,
-  updateHomePageLooksImage,
-};
+export { getHomePageLooksImages, updateHomePageLooksImage };

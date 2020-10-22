@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 
 import {
   getHomePageLooksImages,
-  updateHomePageLooksImage,
+  updateHomePageLooksImage
 } from './home.operations';
 
 import {
@@ -13,10 +13,7 @@ import {
   setHomePageDataError
 } from './home.actions';
 
-import {
-  GET_HOME_PAGE_DATA,
-  UPDATE_HOME_PAGE_DATA,
-} from './home.types';
+import { GET_HOME_PAGE_DATA, UPDATE_HOME_PAGE_DATA } from './home.types';
 
 import {
   setSnackBarSeverity,
@@ -26,9 +23,7 @@ import {
 
 import { config } from '../../configs';
 
-const {
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_UPDATE_STATUS } = config.statuses;
 
 export function* handleHomePageImagesLoad() {
   try {
@@ -43,14 +38,15 @@ export function* handleHomePageImagesLoad() {
 }
 
 export function* handleHomePageImagesUpdate({ payload }) {
-  const { uploadIds, upload } = payload;
+  const { id, upload } = payload;
 
   try {
     yield put(setHomePageDataLoading(true));
 
-    yield call(updateHomePageLooksImage, uploadIds, upload);
-    yield put(updateHomePageImagesInStore(uploadIds, upload));
+    yield call(updateHomePageLooksImage, id, upload);
+    yield put(updateHomePageImagesInStore(id, upload));
 
+    yield put(setHomePageDataLoading(false));
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));

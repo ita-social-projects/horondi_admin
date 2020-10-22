@@ -9,7 +9,8 @@ import {
   loginErrorMessages,
   contactErrorMessages,
   patternErrorMessages,
-  newsErrorMessages
+  newsErrorMessages,
+  homePageEditErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -111,6 +112,7 @@ export const config = {
   contactErrorMessages,
   patternErrorMessages,
   newsErrorMessages,
+  homePageEditErrorMessages,
   messages,
   menuCategories,
   routes,
