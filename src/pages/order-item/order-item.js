@@ -9,10 +9,12 @@ import { useFormik } from 'formik';
 import LoadingBar from '../../components/loading-bar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import orders from '../../configs/orders';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const {buttonTitle,dialogTitle,dialogContent} = orders
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { selectedOrder, orderLoading } = useSelector(
@@ -34,9 +36,9 @@ const OrderItem = ({ id }) => {
       };
       openSuccessSnackbar(
         updateOrderSnackbar,
-        'Замовлення',
-        'Зміна статусу "Замовлення створено" чи "Замовлення підтверджено" на інші унеможливить подальше редагування деталей замовлення. Ви дійсно хочете продовжити?',
-        'Продовжити'
+        dialogTitle,
+        dialogContent,
+        buttonTitle
       );
     } else {
       dispatch(updateOrder({id,order}))
