@@ -1,4 +1,7 @@
 const labels = {
+  user: {
+    unknownAdmin: 'Невідомий адмін'
+  },
   model: {
     name: 'Назва',
     description: 'Опис',
