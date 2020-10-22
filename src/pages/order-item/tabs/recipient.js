@@ -1,9 +1,33 @@
 import React from 'react';
+import {useStyles} from '../order-item.styles';
+import { TextField } from '@material-ui/core';
+import labels from '../../../configs/labels';
 
-const Recipient = () => {
+const Recipient = ({data,handleChange}) => {
+  const {user,userComment} = data
+  const {orderRecipient} = labels
+  const classes = useStyles()
   return (
-    <div>
-      Recipient
+    <div className={classes.recipient}>
+      {Object.keys(user).map(item=> (
+        <TextField
+          name={`user.${item}`}
+          label={orderRecipient[item]||''}
+          key={item}
+          variant='outlined'
+          onChange={handleChange}
+          value={user[item]||''}
+        />
+      ))}
+      <TextField
+        name='userComment'
+        label='Коментар'
+        onChange={handleChange}
+        variant='outlined'
+        value={userComment||''}
+        multiline
+        rows={4}
+      />
     </div>
   );
 };

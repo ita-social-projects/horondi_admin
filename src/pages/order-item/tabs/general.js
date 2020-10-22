@@ -1,29 +1,13 @@
 import React from 'react';
-import {Field, useFormikContext} from 'formik'
-import { Select, MenuItem, TextField } from '@material-ui/core';
+import { Select, MenuItem, TextField, Checkbox } from '@material-ui/core';
 import { useStyles } from '../order-item.styles'
 import moment from 'moment';
+import orders from '../../../configs/orders'
 
 const General = ({data,handleChange}) => {
   const classes = useStyles()
-  const {_id,status,dateOfCreation,lastUpdatedDate,isPaid,paymentMethod} = data
-
-  const statusOptions = [
-    {label:'Статус замовлення',value:''},
-    {label:'Замовлення створено',value:'CREATED'},
-    {label:'Замовлення підтвердженно',value:'CONFIRMED'},
-    {label:'Замовлення виготовлено',value:'PRODUCED'},
-    {label:'Замовлення скасовано',value:'CANCELLED'},
-    {label:'Повернення коштів',value:'REFUNDED'},
-    {label:'Замовлення відправлено',value:'SENT'},
-    {label:'Замовлення доставлено',value:'DELIVERED'},
-  ]
-
-  const paymentOptions = [
-    {label:'Спосіб оплати',value:''},
-    {label:'Картка',value:'CARD'},
-    {label:'Готівка',value:'CASH'},
-  ]
+  const {_id,status,dateOfCreation,lastUpdatedDate,isPaid,paymentMethod,adminComment,cancellationReason} = data
+  const {statusOptions,paymentOptions} = orders
 
   const statusOptionElements = statusOptions.map(({ label, value }, index) => (
     <MenuItem key={label} value={value} disabled={index === 0}>{label}</MenuItem>
@@ -33,28 +17,46 @@ const General = ({data,handleChange}) => {
     <MenuItem key={label} value={value} disabled={index === 0}>{label}</MenuItem>
   ))
 
-  console.log(data);
   return (
     <div className={classes.general}>
-      <p>ID: {_id}</p>
-      <Select name='status' value={status} onChange={handleChange} variant='outlined'>
-        {statusOptionElements}
-      </Select>
-      <Select name='paymentMethod' value={paymentMethod} onChange={handleChange} variant='outlined'>
-        {paymentOptionsElements}
-      </Select>
+      <p className={classes.idContainer}><b>ID: </b>{_id}</p>
+      <div>
+        <label htmlFor="status">Статус замовлення:</label>
+        <Select fullWidth id='status' name='status' value={status} onChange={handleChange} variant='outlined' defaultValue={statusOptions[0].value}>
+          {statusOptionElements}
+        </Select>
+      </div>
+      <div>
+        <label htmlFor="paymentMethod">Метод оплати:</label>
+        <Select fullWidth id='paymentMethod' name='paymentMethod' value={paymentMethod} onChange={handleChange} variant='outlined' defaultValue={paymentOptions[0].value}>
+          {paymentOptionsElements}
+        </Select>
+      </div>
+      <div className={classes.isPaid}>
+        <label htmlFor="paymentMethod">Оплачено:</label>
+        <Checkbox checked={isPaid} name='isPaid' onChange={handleChange}/>
+      </div>
       <TextField
         name='cancellationReason'
-        multiline = {true}
-        rows={5}
+        multiline
         variant={'outlined'}
         label={'Причина скасування'}
+        value={cancellationReason}
+        onChange={handleChange}
       />
-      <p>Дата створення: {moment.unix(dateOfCreation/1000).format(' DD/MM/YYYY z HH:mm')}</p>
-      <p>Дата оновлення: {moment.unix(lastUpdatedDate/1000).format(' DD/MM/YYYY z HH:mm')}</p>
-
-      Checkbox
-
+      <div className={classes.dateContainer}>
+        <p>Дата створення: {moment.unix(dateOfCreation / 1000).format(' DD/MM/YYYY z HH:mm')}</p>
+        <p>Дата оновлення: {moment.unix(lastUpdatedDate / 1000).format(' DD/MM/YYYY z HH:mm')}</p>
+      </div>
+      <TextField
+        label='Залишити коментар'
+        name='adminComment'
+        value={adminComment}
+        variant={'outlined'}
+        multiline
+        rows={5}
+        onChange={handleChange}
+      />
     </div>
   );
 };

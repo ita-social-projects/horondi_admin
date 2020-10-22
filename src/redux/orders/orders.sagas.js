@@ -1,16 +1,15 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
-import {GET_ORDER} from './orders.types'
+import {GET_ORDER,UPDATE_ORDER} from './orders.types'
 import {
   setOrder,
   setOrderError,
   setOrderLoading,
 } from './orders.actions';
-import { getOrderById } from './orders.operations'
+import { getOrderById, updateOrder } from './orders.operations'
 
 function* handleOrderLoad({payload}) {
   try {
-    yield setOrderLoading(true)
+    yield put(setOrderLoading(true))
     const order = yield call(getOrderById,payload)
     if(order.errors) {
       throw new Error(order.errors[0].message)
@@ -19,10 +18,26 @@ function* handleOrderLoad({payload}) {
   } catch (e) {
     yield put(setOrderError(e))
   } finally {
-    yield setOrderLoading(false)
+    yield put(setOrderLoading(false))
+  }
+}
+
+function* handleOrderUpdate({payload}) {
+  try {
+    yield put(setOrderLoading(true))
+    const order = yield call(updateOrder,payload)
+    if(order.errors) {
+      throw new Error(order.errors[0].message)
+    }
+    yield put(setOrder(order.data.updateOrder))
+  } catch (e) {
+    yield put(setOrderError(e))
+  } finally {
+    yield put(setOrderLoading(false))
   }
 }
 
 export default function* ordersSaga() {
   yield takeEvery(GET_ORDER, handleOrderLoad);
+  yield takeEvery(UPDATE_ORDER, handleOrderUpdate);
 }

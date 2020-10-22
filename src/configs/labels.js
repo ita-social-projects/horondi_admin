@@ -98,6 +98,33 @@ const labels = {
       label: 'Ціна(USD) ',
       name: 'basePrice'
     }
+  },
+  orderProduct: {
+    category:'Категорія',
+    subcategory:'Підкатегорія',
+    model:'Модель',
+    name:'Назва',
+    pattern:'Гобелен',
+    closure:'Матеріал замку',
+    bottomMaterial:'Матеріал дна',
+    bottomColor:'Колір дна',
+    actualPrice:'Ціна',
+  },
+  orderRecipient: {
+    firstName: 'Ім\'я',
+    lastName: 'Прізвище',
+    patronymicName: 'По-батькові',
+    email:'e-mail',
+    phoneNumber:'Номер телефону'
+  },
+  deliveryDetails: {
+    country:'Країна',
+    region:'Область',
+    city:'Місто',
+    zipcode:'Поштовий індекс',
+    street:'Вулиця',
+    buildingNumber:'Номер будинку',
+    appartment:'Номер квартири',
   }
 };
 export default labels;
