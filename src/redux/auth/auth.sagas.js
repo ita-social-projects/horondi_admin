@@ -17,7 +17,7 @@ import {
 
 const { LOGIN_PAGE_STATUS } = config.statuses;
 
-function* handleAdminLoad({ payload }) {
+export function* handleAdminLoad({ payload }) {
   try {
     yield put(setAuthLoading(true));
     const admin = yield call(loginAdmin, payload);
@@ -34,7 +34,7 @@ function* handleAdminLoad({ payload }) {
   }
 }
 
-function* handleAdminCheckByToken() {
+export function* handleAdminCheckByToken() {
   try {
     const authToken = getFromLocalStorage('HORONDI_AUTH_TOKEN');
     yield put(setAuthLoading(true));
@@ -50,13 +50,13 @@ function* handleAdminCheckByToken() {
     console.error(error);
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
-    clearLocalStorage(null);
+    clearLocalStorage();
     yield put(push('/'));
   }
 }
 
-function* handleAdminLogout() {
-  clearLocalStorage(null);
+export function* handleAdminLogout() {
+  clearLocalStorage();
   yield put(setAuth(false));
   yield put(push('/'));
 }

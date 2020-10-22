@@ -1,8 +1,8 @@
 import { SHOW_DIALOG, CLOSE_DIALOG } from './dialog-window.types';
 
-const showDialog = (dialogOptions) => ({
+const showDialog = (payload) => ({
   type: SHOW_DIALOG,
-  payload: dialogOptions
+  payload
 });
 
 const closeDialog = () => ({

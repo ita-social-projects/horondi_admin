@@ -40,8 +40,7 @@ const getCommentsByUser = async (userEmail) => {
       throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
     });
 
-  const { data } = result;
-  return data.getAllCommentsByUser;
+  return result.data.getAllCommentsByUser;
 };
 
 const getCommentsByProduct = async (id) => {
@@ -69,9 +68,7 @@ const getCommentsByProduct = async (id) => {
       throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
     });
 
-  const { data } = result;
-
-  return data.getAllCommentsByProduct;
+  return result.data.getAllCommentsByProduct;
 };
 
 const getRecentComments = async (skip, limit) => {
@@ -99,8 +96,7 @@ const getRecentComments = async (skip, limit) => {
       throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
     });
 
-  const { data } = result;
-  return data.getAllRecentComments;
+  return result.data.getAllRecentComments;
 };
 
 const deleteComment = async (id) => {
@@ -128,9 +124,8 @@ const deleteComment = async (id) => {
     });
 
   client.resetStore();
-  const { data } = result;
 
-  return data.deleteComment;
+  return result.data.deleteComment;
 };
 
 export {
