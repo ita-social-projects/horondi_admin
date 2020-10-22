@@ -126,8 +126,8 @@ describe('Register and confirm admin', () => {
   let lastName;
   let password;
   let email;
-  let role;
   let token;
+  let role;
 
   before(() => {
     firstName = 'Bob';
