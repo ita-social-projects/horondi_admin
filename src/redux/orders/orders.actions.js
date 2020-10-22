@@ -1,5 +1,4 @@
 import {
-  GET_ORDER,
   SET_ORDER,
   UPDATE_ORDER,
   SET_ORDER_LOADING,
@@ -7,6 +6,9 @@ import {
   SET_ORDERS_PER_PAGE,
   SET_ORDERS_CURRENT_PAGE,
   SET_ORDERS_PAGES_COUNT,
+  GET_ORDER,
+  GET_ORDER_LIST,
+  SET_ORDER_LIST,
 } from './orders.types';
 
 const getOrder = (payload) => ({
@@ -19,8 +21,17 @@ const setOrder = (payload) => ({
   payload
 });
 
-const updateOrder = (payload) => ({
+const updateOrder = () => ({
   type: UPDATE_ORDER,
+})
+
+const getOrderList = (payload) => ({
+  type: GET_ORDER_LIST,
+  payload
+});
+
+const setOrderList = (payload) => ({
+  type: SET_ORDER_LIST,
   payload
 });
 
@@ -58,4 +69,6 @@ export {
   setOrdersPagesCount,
   setOrdersPerPage,
   setOrdersCurrentPage,
+  getOrderList,
+  setOrderList
 };

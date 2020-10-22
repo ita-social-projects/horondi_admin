@@ -1,10 +1,11 @@
-import {SET_ORDER, SET_ORDER_LOADING, SET_ORDER_ERROR} from './orders.types'
+import {SET_ORDER, SET_ORDER_LOADING, SET_ORDER_ERROR, SET_ORDER_LIST} from './orders.types'
 
 const initialState = {
+  list: [],
   selectedOrder: null,
   orderLoading: false,
-  orderError: null,
-}
+  orderError: null
+};
 
 const ordersReducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -22,6 +23,11 @@ const ordersReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         orderError: action.payload
+      };
+    case SET_ORDER_LIST:
+      return {
+        ...state,
+        list: action.payload
       };
     default:
       return state

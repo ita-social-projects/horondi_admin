@@ -1,4 +1,5 @@
-import {getItems,setItems} from '../../utils/client'
+import {getItems, setItems, client} from '../../utils/client'
+import { gql } from '@apollo/client';
 
 export const getOrderById = (id) => {
   const query = `
@@ -241,3 +242,34 @@ export const updateOrder = (data)=> {
   `
   return setItems(query,data)
 }
+
+export const getAllOrders = async (skip, limit) => {
+  const result = await client.query({
+    query: gql`
+      query getPaginatedOrders($limit: Int, $skip: Int) {
+        getAllOrders(limit: $limit, skip: $skip) {
+          items {
+            _id
+            status
+            dateOfCreation
+            totalItemsPrice {
+              currency
+              value
+            }
+            totalPriceToPay {
+              currency
+              value
+            }
+          }
+          count
+        }
+      }
+    `,
+    variables: {
+      skip,
+      limit
+    }
+  });
+  const { data } = result;
+  return data.getAllOrders;
+};

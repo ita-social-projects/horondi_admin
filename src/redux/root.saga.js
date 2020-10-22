@@ -24,7 +24,7 @@ export default function* rootSaga() {
     productsSaga(),
     contactsSaga(),
     commentsSaga(),
-    ordersSaga(),
-    modelSaga()
+    modelSaga(),
+    ordersSaga()
   ]);
 }
