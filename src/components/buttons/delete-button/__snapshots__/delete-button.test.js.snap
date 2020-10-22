@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`delete button tests should click 1`] = `ReactWrapper {}`;
+
+exports[`delete button tests should exist 1`] = `ReactWrapper {}`;

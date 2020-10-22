@@ -174,3 +174,7 @@ export const config = {
   materialPaginationPayload,
   modelErrorMessages
 };
+export const inputTypes = {
+  button: 'button',
+  submit: 'submit'
+};
