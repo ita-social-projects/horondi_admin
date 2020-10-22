@@ -19,7 +19,7 @@ import { SaveButton } from '../../../components/buttons';
 import { registerAdmin } from '../../../redux/users/users.actions';
 import LoadingBar from '../../../components/loading-bar';
 
-const { loginErrorMessages, userRoles, allowedforRegistrationRoles } = config;
+const { userRoles, allowedforRegistrationRoles, loginErrorMessages } = config;
 
 const RegisterUser = () => {
   const styles = useStyles();

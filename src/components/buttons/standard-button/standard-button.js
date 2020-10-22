@@ -2,9 +2,10 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-const StandardButton = ({ onClickHandler, title, ...props }) => (
+const StandardButton = ({ onClickHandler, title, type, color, ...props }) => (
   <Button
-    color='primary'
+    type={type}
+    color={color}
     variant='contained'
     onClick={onClickHandler}
     {...props}
@@ -15,7 +16,13 @@ const StandardButton = ({ onClickHandler, title, ...props }) => (
 
 StandardButton.propTypes = {
   onClickHandler: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  color: PropTypes.string,
+  type: PropTypes.string
+};
+StandardButton.defaultProps = {
+  color: 'primary',
+  type: 'button'
 };
 
 export default StandardButton;

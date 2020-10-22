@@ -17,14 +17,13 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 
-const { routes } = config.app;
 const { REMOVE_BUSINESS_PAGE } = config.messages;
 const {
   REMOVE_BUSINESS_PAGE_TITLE,
   CREATE_BUSINESS_PAGE
 } = config.buttonTitles;
 
-const { pathToAddBusinessPage } = routes;
+const { pathToAddBusinessPage } = config.routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
 
 const BusinessPageList = () => {

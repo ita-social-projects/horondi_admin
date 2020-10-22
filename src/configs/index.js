@@ -1,3 +1,4 @@
+import { colors } from '@material-ui/core';
 import routes from './routes';
 import menuCategories from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
@@ -5,32 +6,35 @@ import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
 import statuses from './statuses';
 import {
-  errorMessages,
   loginErrorMessages,
+  colorErrorMessages,
   contactErrorMessages,
   patternErrorMessages,
+  materialErrorMessages,
   newsErrorMessages,
-  homePageEditErrorMessages
+  errorMessages,
+  modelErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
-import * as pagination from './pagination';
+import {
+  newsPaginationPayload,
+  contactsPaginationPayload,
+  materialPaginationPayload
+} from './pagination';
 import titles from './titles';
 
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
-    routes,
     serverUrl: 'http://localhost:5000/',
     drawerWidth: 220,
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
   languages: ['uk', 'en'],
-  buttonStyles: {
-    ACCEPT_BUTTON_STYLE: 'secondary'
-  },
+  tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {
       available: false,
@@ -74,11 +78,6 @@ export const config = {
   },
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
-  contactsPaginationPayload: {
-    skip: 0,
-    limit: 6,
-    contactsPerPage: 7
-  },
   product: {
     sortBySelectOptions: [
       {
@@ -97,7 +96,25 @@ export const config = {
         label: 'рейтингом',
         value: 'rate'
       }
-    ]
+    ],
+    responsive: {
+      superLargeDesktop: {
+        breakpoint: { max: 4000, min: 3000 },
+        items: 1
+      },
+      desktop: {
+        breakpoint: { max: 3000, min: 1024 },
+        items: 1
+      },
+      tablet: {
+        breakpoint: { max: 1146, min: 464 },
+        items: 1
+      },
+      mobile: {
+        breakpoint: { max: 810, min: 0 },
+        items: 1
+      }
+    }
   },
   popularity: 'popularity',
   rate: 'rate',
@@ -105,14 +122,38 @@ export const config = {
   sortDesc: 'sortDesc',
   submitKey: 'Enter',
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
+  initialLanguageValues: [
+    {
+      lang: 'uk',
+      value: ''
+    },
+    {
+      lang: 'en',
+      value: ''
+    }
+  ],
+  doughnut: {
+    colors: [
+      colors.green[500],
+      colors.red[700],
+      colors.amber[600],
+      colors.indigo[500]
+    ],
+    initialValues: {
+      names: [],
+      counts: [],
+      relations: []
+    }
+  },
+  bar: {
+    initialValues: {
+      labels: [],
+      counts: []
+    }
+  },
+  UAH: 'грн',
   buttonTitles,
   detailTitles,
-  errorMessages,
-  loginErrorMessages,
-  contactErrorMessages,
-  patternErrorMessages,
-  newsErrorMessages,
-  homePageEditErrorMessages,
   messages,
   menuCategories,
   routes,
@@ -120,6 +161,20 @@ export const config = {
   tableHeadRowTitles,
   formRegExp,
   labels,
-  pagination,
-  titles
+  titles,
+  loginErrorMessages,
+  colorErrorMessages,
+  contactErrorMessages,
+  patternErrorMessages,
+  materialErrorMessages,
+  newsErrorMessages,
+  errorMessages,
+  newsPaginationPayload,
+  contactsPaginationPayload,
+  materialPaginationPayload,
+  modelErrorMessages
+};
+export const inputTypes = {
+  button: 'button',
+  submit: 'submit'
 };

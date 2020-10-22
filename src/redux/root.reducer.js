@@ -7,6 +7,7 @@ import Table from './table/table.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
 import DialogWindow from './dialog-window/dialog-window.reducer';
 import Auth from './auth/auth.reducer';
+import Material from './material/material.reducer';
 import Pattern from './pattern/pattern.reducer';
 import BusinessPages from './business-pages/business-pages.reducer';
 import Products from './products/products.reducer';
@@ -14,6 +15,8 @@ import Categories from './categories/categories.reducer';
 import Users from './users/users.reducer';
 import Comments from './comments/comments.reducer';
 import HomePage from './home/home.reducer';
+import Stats from './stats/stats.reducer';
+import Model from './model/model.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
@@ -25,12 +28,15 @@ const rootReducer = (history) =>
     DialogWindow,
     Auth,
     router: connectRouter(history),
+    Material,
     Pattern,
     BusinessPages,
     Products,
     Categories,
     Users,
     Comments,
-    HomePage
+    HomePage,
+    Stats,
+    Model
   });
 export default rootReducer;

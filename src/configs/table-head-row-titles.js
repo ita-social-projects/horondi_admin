@@ -3,6 +3,7 @@ const tableHeadRowTitles = {
   categories: ['Зображення', 'Категорія', 'Дії'],
   subcategories: ['Зображення', 'Підкатегорія', 'Доступна', 'Дії'],
   patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
+  materials: ['Назва', 'Застосування', 'Доступний', 'Дії'],
   businessPages: ['Аватар', 'Код', 'Заголовок', 'Дії'],
   products: [
     'Фото',
@@ -29,8 +30,9 @@ const tableHeadRowTitles = {
     ],
     adminTab: ['Аватар', "Ім'я", 'Пошта', 'Роль', 'Дії']
   },
+
   contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
   comments: ['Дата', 'Текст', 'Дії'],
-  homePageEdit: ['Фото']
+  models: ['Фото', 'Назва', 'Категорія', 'Доступна', 'Пріорітет']
 };
 export default tableHeadRowTitles;

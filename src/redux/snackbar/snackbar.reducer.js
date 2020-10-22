@@ -4,7 +4,7 @@ import {
   SET_SNACKBAR_STATUS
 } from './snackbar.types';
 
-const initialState = {
+export const initialState = {
   snackBarStatus: false,
   snackBarSeverity: '',
   snackBarMessage: ''
