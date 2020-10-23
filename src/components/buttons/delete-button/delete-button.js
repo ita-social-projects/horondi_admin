@@ -17,6 +17,8 @@ const DeleteButton = ({ children, ...props }) => {
 };
 
 DeleteButton.propTypes = {
+  onClickHandler: PropTypes.func.isRequired,
+  size: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired
 };
 

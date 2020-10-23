@@ -34,7 +34,7 @@ const EmailQuestionDetails = ({ id }) => {
 
   useEffect(() => {
     dispatch(getEmailQuestionById(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const onAnsweringQuestion = () => {
     if (answerValue) {

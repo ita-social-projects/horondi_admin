@@ -18,7 +18,7 @@ import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 
-const { routes } = config.app;
+const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;
 const { MODEL_REMOVE_TITLE } = config.buttonTitles;
 

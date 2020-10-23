@@ -19,7 +19,7 @@ import { useStyles } from './nav-menu.styles';
 import { config } from '../../configs';
 import { setSideMenuStatus } from '../../redux/theme/theme.actions';
 
-const { menuCategories, titles } = config;
+const { titles } = config;
 
 const DRAWER_TEMPORARY = 'temporary';
 const DRAWER_PERMANENT = 'permanent';
@@ -35,7 +35,7 @@ const NavMenu = ({ width }) => {
     })
   );
 
-  const menuItems = menuCategories.map((category) => {
+  const menuItems = config.menuCategories.map((category) => {
     const pathTitle = category[0];
     const pathTo = category[1];
     const PathIcon = category[2];

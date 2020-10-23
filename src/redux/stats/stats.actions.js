@@ -5,7 +5,13 @@ import {
   SET_DATE_VALUE,
   SET_BAR_VALUE,
   SET_POPULAR_PRODUCTS,
-  GET_INITIAL_STATS
+  GET_INITIAL_STATS,
+  GET_ALL_ORDERS_STATS,
+  SET_ALL_ORDERS_STATS,
+  GET_PAID_ORDERS_STATS,
+  SET_PAID_ORDERS_STATS,
+  SET_UPDATING_BAR_DATA,
+  SET_UPDATING_DOGHNUT_DATA
 } from './stats.types';
 
 const setPopularCategories = (data) => ({
@@ -42,6 +48,34 @@ const getIniitalStats = () => ({
   type: GET_INITIAL_STATS
 });
 
+const getAllOrdersStats = () => ({
+  type: GET_ALL_ORDERS_STATS
+});
+
+const setAllOrdersStats = (orders) => ({
+  type: SET_ALL_ORDERS_STATS,
+  payload: orders
+});
+
+const getPaidOrdersStats = () => ({
+  type: GET_PAID_ORDERS_STATS
+});
+
+const setPaidOrdersStats = (orders) => ({
+  type: SET_PAID_ORDERS_STATS,
+  payload: orders
+});
+
+const setUpdatingBarData = (updating) => ({
+  type: SET_UPDATING_BAR_DATA,
+  payload: updating
+});
+
+const setUpdatingDoughnutData = (updating) => ({
+  type: SET_UPDATING_DOGHNUT_DATA,
+  payload: updating
+});
+
 export {
   setPopularCategories,
   setStatsLoading,
@@ -49,5 +83,11 @@ export {
   setDateValue,
   setBarValue,
   setPopularProducts,
-  getIniitalStats
+  getIniitalStats,
+  getAllOrdersStats,
+  setAllOrdersStats,
+  getPaidOrdersStats,
+  setPaidOrdersStats,
+  setUpdatingBarData,
+  setUpdatingDoughnutData
 };

@@ -36,8 +36,8 @@ describe('Comments actions tests', () => {
     expect(getCommentsByType(comment, commentsType)).toEqual({
       type: GET_COMMENTS_BY_TYPE,
       payload: {
-        comment,
-        commentsType
+        commentsType,
+        value: comment
       }
     });
   });

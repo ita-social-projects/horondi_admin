@@ -11,8 +11,7 @@ import { LOGIN_USER, CHECK_USER_BY_TOKEN, LOGOUT_USER } from './auth.types';
 import { config } from '../../configs';
 import {
   setToLocalStorage,
-  getFromLocalStorage,
-  clearLocalStorage
+  getFromLocalStorage
 } from '../../services/local-storage.service';
 import {
   setSnackBarSeverity,
@@ -22,7 +21,7 @@ import {
 
 const { LOGIN_PAGE_STATUS } = config.statuses;
 
-function* handleAdminLoad({ payload }) {
+export function* handleAdminLoad({ payload }) {
   try {
     yield put(setAuthLoading(true));
     const admin = yield call(loginAdmin, payload);
@@ -41,7 +40,7 @@ function* handleAdminLoad({ payload }) {
   }
 }
 
-function* handleAdminCheckByToken() {
+export function* handleAdminCheckByToken() {
   try {
     const authToken = getFromLocalStorage('HORONDI_AUTH_TOKEN');
     yield put(setAuthLoading(true));
@@ -64,7 +63,7 @@ function* handleAdminCheckByToken() {
   }
 }
 
-function* handleAdminLogout() {
+export function* handleAdminLogout() {
   setToLocalStorage('HORONDI_AUTH_TOKEN', null);
   yield put(setAuth(false));
   yield put(push('/'));

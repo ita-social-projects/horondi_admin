@@ -1,4 +1,7 @@
 const labels = {
+  user: {
+    unknownAdmin: 'Невідомий адмін'
+  },
   model: {
     name: 'Назва',
     description: 'Опис',
@@ -17,6 +20,21 @@ const labels = {
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото'
+  },
+  material: {
+    image: 'Фото матеріалу',
+    purpose: 'Застосування',
+    available: 'Доступний',
+    name: 'Назва матеріалу',
+    description: 'Опис матеріалу',
+    additionalPrice: 'Додаткова ціна'
+  },
+  colors: {
+    image: 'Фото кольору',
+    name: 'Назва кольору',
+    simpleName: 'Проста назва кольору',
+    code: 'Код кольору',
+    available: 'Доступний'
   },
   product: {
     sortBySelectOptions: [
@@ -135,7 +153,7 @@ const labels = {
   doughnut: {
     select: [
       { label: 'Популярні категорії', value: 'categories' },
-      { label: 'Статуси замовлень', value: 'orders' }
+      { label: 'Останні замовлення', value: 'orders' }
     ],
     dateMenuOptions: [
       { label: 'За 7 Днів', value: 7 },
@@ -146,8 +164,8 @@ const labels = {
   bar: {
     select: [
       { label: 'Популярні продукти', value: 'products' },
-      { label: 'Останні замовлення', value: 'orders' },
-      { label: 'Динаміка реєстрації користувачів', value: 'users' }
+      { label: 'Виконані замовлення', value: 'orders' },
+      { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
     descriptions: {
       users: 'Цей день',

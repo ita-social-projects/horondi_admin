@@ -6,7 +6,7 @@ import {
   LOGOUT_USER
 } from './auth.types';
 
-const initialState = {
+export const initialState = {
   isAuth: null,
   adminId: null,
   error: null,

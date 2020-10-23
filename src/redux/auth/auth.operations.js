@@ -13,9 +13,8 @@ export const loginAdmin = async (loginInput) => {
     `,
     variables: { loginInput }
   });
-  const { data } = result;
 
-  return data.loginAdmin;
+  return result.data.loginAdmin;
 };
 
 export const getUserByToken = async (token) => {

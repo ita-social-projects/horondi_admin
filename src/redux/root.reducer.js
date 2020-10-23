@@ -7,6 +7,7 @@ import Table from './table/table.reducer';
 import Snackbar from './snackbar/snackbar.reducer';
 import DialogWindow from './dialog-window/dialog-window.reducer';
 import Auth from './auth/auth.reducer';
+import Material from './material/material.reducer';
 import Pattern from './pattern/pattern.reducer';
 import BusinessPages from './business-pages/business-pages.reducer';
 import Products from './products/products.reducer';
@@ -27,6 +28,7 @@ const rootReducer = (history) =>
     DialogWindow,
     Auth,
     router: connectRouter(history),
+    Material,
     Pattern,
     BusinessPages,
     Products,

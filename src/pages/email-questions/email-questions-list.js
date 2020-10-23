@@ -56,7 +56,7 @@ const EmailQuestionsList = () => {
         skip: currentPage * questionsPerPage
       })
     );
-  }, [dispatch, currentPage, filter]);
+  }, [dispatch, currentPage, filter, questionsPerPage]);
 
   const questionDeleteHandler = (id, e) => {
     e.stopPropagation();

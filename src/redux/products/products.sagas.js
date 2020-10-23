@@ -44,7 +44,6 @@ import {
 } from './products.operations';
 
 import { config } from '../../configs';
-import routes from '../../configs/routes';
 
 import {
   setSnackBarSeverity,
@@ -57,6 +56,8 @@ const {
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
+
+const { routes } = config;
 
 export function* handleFilterLoad() {
   try {

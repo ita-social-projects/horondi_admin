@@ -43,6 +43,11 @@ const buttonTitles = {
   TO_SPAM: 'У СПАМ',
   DELETE_SELECTED: 'Видалити вибрані',
   MOVE_ALL_TO_SPAM: 'Перемістити у СПАМ',
+  REMOVE_MATERIAL_TITLE: 'Видалити матеріал',
+  CREATE_MATERIAL_TITLE: 'Створити матеріал',
+  CREATE_COLOR_TITLE: 'Створити колір',
+  REMOVE_COLOR_TITLE: 'Видалити колір',
+  SAVE_MATERIAL: 'Зберегти матеріал',
 
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([
