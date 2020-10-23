@@ -26,8 +26,8 @@ const useUsersHandler = (id) => {
 
   useEffect(() => {
     if (user !== null) {
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
+      setFirstName(user.firstName || '');
+      setLastName(user.lastName || '');
       setCountry(user.address && user.address.country);
       setCity(user.address && user.address.city);
       setAdress(

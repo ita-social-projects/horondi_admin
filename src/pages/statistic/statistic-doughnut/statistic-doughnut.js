@@ -13,20 +13,20 @@ import {
   MenuItem
 } from '@material-ui/core';
 import useDoughnutData from '../../../hooks/stats/use-doughnut-data';
-import useStyles from './doughnut-statistic.styles';
+import useStyles from './statistic-doughnut.styles';
 
 import LegendsList from './legends-list/legends-list';
+import StatisticError from '../statistic-error';
 
 import { config } from '../../../configs';
-import { statsErrorMessages } from '../../../configs/error-messages';
-import StatisticError from '../statistic-error';
+import LoadingBar from '../../../components/loading-bar';
 
 const { select } = config.labels.doughnut;
 
-const DoughnutStatistic = ({ selectedValue, onChangeDoughnut }) => {
+const StatisticDoughnut = ({ selectedValue, onChangeDoughnut, updating }) => {
   const styles = useStyles();
 
-  const { mainData, options, relations, names } = useDoughnutData();
+  const { mainData, options, relations, labels } = useDoughnutData();
 
   const doughnutList = select.map(({ label, value }) => (
     <MenuItem key={value} value={value}>
@@ -47,22 +47,29 @@ const DoughnutStatistic = ({ selectedValue, onChangeDoughnut }) => {
       />
       <Divider />
       <CardContent>
-        <Box height={300} position='relative'>
-          {mainData.datasets[0].data.length ? (
-            <Doughnut data={mainData} options={options} />
-          ) : (
-            <StatisticError />
-          )}
-        </Box>
-        <LegendsList options={relations} labels={names} />
+        {updating ? (
+          <LoadingBar />
+        ) : (
+          <>
+            <Box height={300} position='relative'>
+              {mainData.datasets[0].data.length ? (
+                <Doughnut redraw data={mainData} options={options} />
+              ) : (
+                <StatisticError />
+              )}
+            </Box>
+            <LegendsList options={relations} labels={labels} />
+          </>
+        )}
       </CardContent>
     </Card>
   );
 };
 
-DoughnutStatistic.propTypes = {
+StatisticDoughnut.propTypes = {
   selectedValue: PropTypes.string.isRequired,
-  onChangeDoughnut: PropTypes.func.isRequired
+  onChangeDoughnut: PropTypes.func.isRequired,
+  updating: PropTypes.bool.isRequired
 };
 
-export default DoughnutStatistic;
+export default StatisticDoughnut;
