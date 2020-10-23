@@ -4,12 +4,18 @@ import {
   LOGOUT_USER,
   SET_AUTH_ERROR,
   SET_AUTH_LOADING,
+  SET_ADMIN_ID,
   CHECK_USER_BY_TOKEN
 } from './auth.types';
 
 const setAuth = (admin) => ({
   type: SET_AUTH,
   payload: admin
+});
+
+const setAdminId = (id) => ({
+  type: SET_ADMIN_ID,
+  payload: id
 });
 
 const loginUser = (payload) => ({
@@ -42,5 +48,6 @@ export {
   setAuthError,
   setAuthLoading,
   logoutUser,
+  setAdminId,
   checkUserByToken
 };

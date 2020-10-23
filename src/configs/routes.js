@@ -23,6 +23,8 @@ const routes = {
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact',
   pathToComments: '/comments',
+  pathToEmailQuestions: '/email-questions',
+  pathToEmailQuestionDetails: '/email-answer/:id',
   pathToMaterials: '/materials',
   pathToAddMaterial: '/material/add',
   pathToMaterialDetails: '/materials/:id',

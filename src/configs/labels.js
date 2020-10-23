@@ -137,6 +137,19 @@ const labels = {
       name: 'basePrice'
     }
   },
+  emailQuestionsLabels: {
+    en: {
+      PENDING: 'PENDING',
+      SPAM: 'SPAM',
+      ANSWERED: 'ANSWERED'
+    },
+    ua: {
+      PENDING: 'Очікує відповіді',
+      SPAM: 'Спам',
+      ANSWERED: 'Відповідь надано'
+    },
+    placeholder: 'Відповідь ...'
+  },
   doughnut: {
     select: [
       { label: 'Популярні категорії', value: 'categories' },
