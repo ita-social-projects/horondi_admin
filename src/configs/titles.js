@@ -20,7 +20,12 @@ const titles = {
 
   statisticTitles: {
     mainPageTitle: 'Статистика',
-    dateSortTitle: 'Сортувати за датою'
+    dateSortTitle: 'Сортувати за датою',
+    statuses: {
+      DELIVERED: 'Відправлені',
+      CANCELLED: 'Відхилені',
+      CREATED: 'Створені'
+    }
   }
 };
 

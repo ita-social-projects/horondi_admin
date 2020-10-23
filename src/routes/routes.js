@@ -30,7 +30,6 @@ import PatternPage from '../pages/pattern/pattern-page';
 import CommentsPage from '../pages/comments/comments';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
-import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
 import HomePageEdit from '../pages/home-page';
 import ModelPage from '../pages/model/model-page';
@@ -130,11 +129,6 @@ const Routes = () => {
           path={routes.pathToHomePageEdit}
           exact
           component={HomePageEdit}
-        />
-        <Route
-          path={routes.pathToRegisterAdmin}
-          exact
-          component={RegisterUser}
         />
         <Route
           path={routes.pathToAddCategory}

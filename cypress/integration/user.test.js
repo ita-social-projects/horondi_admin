@@ -1,6 +1,15 @@
 /// <reference types="cypress" />
 
 import { config } from '../../src/configs';
+import formRegExp from '../../src/configs/form-regexp';
+
+const {
+  email: emailRegex,
+  userName: userNameRegex,
+  userRoles: userRolesRegex,
+  userStatuses: userStatusesRegex,
+  mobileNumber: mobileNumberRegex
+} = formRegExp;
 
 describe('User list and items test', () => {
   let firstName;
@@ -12,59 +21,47 @@ describe('User list and items test', () => {
   let id;
 
   before(() => {
-    firstName = 'Богдана';
-    lastName = 'Гаращенко';
+    firstName = 'Димитрій';
+    lastName = 'Айдзава';
     country = 'Україна';
-    city = 'Докучаєвськ';
-    adress = 'Вулиця Володимира Шульгина, 53/34';
-    postalCode = '61886';
-    id = '9c031d62a3c4909b216e1d86';
+    city = 'Нова Одеса';
+    adress = "Куп'янський провулок, 190/135";
+    postalCode = '26725';
+    id = '4b2f84529047da089ff00aec';
   });
 
   beforeEach(() => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
     cy.visit('/users');
     cy.wait(3000);
-    cy.get('.MuiTableCell-root.MuiTableCell-body').as('table');
+    cy.get('#table-body').as('table');
   });
 
   it('Should find a page title', () => {
-    cy.contains('Інформація про користувачів');
+    cy.get('@table').should('be.visible');
   });
 
   it('User list row should have all types of necessary information about the user', () => {
-    cy.get('@table').eq(0).find('svg');
-    cy.get('@table')
-      .eq(1)
-      .invoke('text')
-      .should('match', /[а-яА-Я]{2,}/g);
-    cy.get('@table')
-      .eq(2)
-      .invoke('text')
-      .should('match', /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{2}$/g);
-    cy.get('@table')
-      .eq(3)
-      .invoke('text')
-      .should('match', /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/gi);
-    cy.get('@table')
-      .eq(4)
-      .invoke('text')
-      .should('match', /(Користувач|Адмін|Суперадмін)/g);
-    cy.get('@table')
-      .eq(5)
-      .invoke('text')
-      .should('match', /(Активний|Неактивний)/g);
+    cy.get('@table').children().eq(0).children().as('row');
+    cy.get('@row').eq(0).find('svg');
+    cy.get('@row').eq(1).invoke('text').should('match', userNameRegex);
+    cy.get('@row').eq(2).invoke('text').should('match', mobileNumberRegex);
+    cy.get('@row').eq(3).invoke('text').should('match', emailRegex);
+    cy.get('@row').eq(4).invoke('text').should('match', userRolesRegex);
+    cy.get('@row').eq(5).invoke('text').should('match', userStatusesRegex);
   });
 
   it('Information about the user in the list and the details page should be equal', () => {
-    cy.get('@table')
+    cy.get('@table').children().eq(0).children().as('row');
+    cy.get('@row')
       .eq(1)
       .then(($elem) => {
         const textList = $elem.text();
 
-        cy.get('@table')
+        cy.get('@row')
           .get("button[aria-label='Редагувати']:first")
-          .click()
+          .scrollIntoView()
+          .click({ force: true })
           .wait(2000)
           .get('[data-cy=name]')
           .invoke('text')
@@ -74,7 +71,7 @@ describe('User list and items test', () => {
   it('When user changes status, page and user information should be updated', () => {
     cy.visit(`/users/${id}`).wait(2000);
 
-    cy.get('button:last')
+    cy.get('[data-cy=change-user-status-button]')
       .should('have.text', 'Деактивувати')
       .click()
       .wait(600)
@@ -82,11 +79,14 @@ describe('User list and items test', () => {
       .click()
       .wait(2000);
 
-    cy.get('button:last').should('have.text', 'Активувати');
+    cy.get('[data-cy=change-user-status-button]').should(
+      'have.text',
+      'Активувати'
+    );
 
     cy.get('[data-cy=status]').should('have.text', 'Неактивний(-a)');
 
-    cy.get('button:last')
+    cy.get('[data-cy=change-user-status-button]')
       .should('have.text', 'Активувати')
       .click()
       .wait(600)
@@ -119,9 +119,45 @@ describe('User list and items test', () => {
     cy.wait(3000);
     cy.get('@table').should('not.have.text', 'Користувач');
   });
+});
+
+describe('Register and confirm admin', () => {
+  let firstName;
+  let lastName;
+  let password;
+  let email;
+  let token;
+  let role;
+
+  before(() => {
+    firstName = 'Bob';
+    lastName = 'Marley';
+    password = 'qwertY123';
+    role = 'admin';
+    email = 'admin3@gmail.com';
+  });
+
+  it('Should show an dialog window with admin registration', () => {
+    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
+    cy.visit(`/users`);
+    cy.wait(3000);
+    cy.contains('Адміністратори').click();
+    cy.wait(3000);
+    cy.get('[data-cy=add-user-admin-button]').click();
+    cy.wait(3000);
+    cy.get('[data-cy=register-dialog]').should('be.visible');
+    cy.get('[data-cy=form-dialog-title]').should('be.visible');
+    cy.get('[data-cy=form-dialog-content]').should('be.visible');
+  });
 
   it('Should show an error label when email or role are incorrect', () => {
-    cy.visit('/register');
+    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
+    cy.visit(`/users`);
+    cy.wait(4000);
+    cy.contains('Адміністратори').click();
+    cy.wait(4000);
+    cy.get('[data-cy=add-user-admin-button]').click();
+    cy.wait(4000);
     cy.get('[data-cy=email]').type('Bob');
     cy.get('[data-cy=submit-admin-register]').click();
     cy.get('[data-cy=email-error-label]').should(
@@ -135,7 +171,13 @@ describe('User list and items test', () => {
   });
 
   it('Should show an error caused by the lack of previlegies', () => {
-    cy.visit('/register');
+    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
+    cy.visit(`/users`);
+    cy.wait(3000);
+    cy.contains('Адміністратори').click();
+    cy.wait(3000);
+    cy.get('[data-cy=add-user-admin-button]').click();
+    cy.wait(3000);
     cy.get('[data-cy=email]').type('admin3@gmail.com');
     cy.get('[data-cy=role]').click();
     cy.get('[data-cy=admin]').click();
@@ -145,23 +187,6 @@ describe('User list and items test', () => {
       'have.text',
       'Помилка: Недостатньо прав користувача'
     );
-  });
-});
-
-describe('Register and confirm admin', () => {
-  let firstName;
-  let lastName;
-  let password;
-  let email;
-  let role;
-  let token;
-
-  before(() => {
-    firstName = 'Bob';
-    lastName = 'Marley';
-    password = 'qwertY123';
-    role = 'admin';
-    email = 'admin2@gmail.com';
   });
 
   it('Register new admin', () => {
@@ -230,9 +255,6 @@ describe('Register and confirm admin', () => {
     cy.wait(3000);
     cy.visit('/users');
     cy.wait(3000);
-    cy.get('[data-cy=title]').should(
-      'have.text',
-      'Інформація про користувачів'
-    );
+    cy.get('#table-body').should('be.visible');
   });
 });

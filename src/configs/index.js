@@ -71,6 +71,10 @@ export const config = {
     DARK_THEME: 'dark',
     LIGHT_THEME: 'light'
   },
+  forbiddenRolesFromDeleting: ['superadmin'],
+  dialogFormTitles: {
+    REGISTER_ADMIN: 'Створити спецкористувача'
+  },
   paginationPayload: {
     skip: 0,
     limit: 5,
