@@ -5,7 +5,8 @@ import {
   SET_DATE_VALUE,
   SET_BAR_VALUE,
   SET_POPULAR_PRODUCTS,
-  GET_INITIAL_STATS
+  GET_INITIAL_STATS,
+  SET_USERS_STATS_BY_DAYS
 } from './stats.types';
 
 const setPopularCategories = (data) => ({
@@ -30,6 +31,11 @@ const setDateValue = (value) => ({
 
 const setBarValue = (value) => ({
   type: SET_BAR_VALUE,
+  payload: value
+});
+
+const setUsersByDays = (value) => ({
+  type: SET_USERS_STATS_BY_DAYS,
   payload: value
 });
 

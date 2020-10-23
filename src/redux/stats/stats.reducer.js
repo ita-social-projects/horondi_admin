@@ -5,7 +5,8 @@ import {
   SET_DOUGHNUT_VALUE,
   SET_DATE_VALUE,
   SET_BAR_VALUE,
-  SET_POPULAR_PRODUCTS
+  SET_POPULAR_PRODUCTS,
+  SET_USERS_STATS_BY_DAYS
 } from './stats.types';
 
 const { labels, doughnut, bar } = config;
@@ -40,6 +41,15 @@ const statsReducer = (state = initialState, action = {}) => {
       doughnut: {
         ...state.doughnut,
         categories: action.payload
+      }
+    };
+  }
+  case SET_USERS_STATS_BY_DAYS: {
+    return {
+      ...state,
+      doughnut: {
+        ...state.doughnut,
+        users: action.payload
       }
     };
   }

@@ -78,6 +78,10 @@ export const config = {
   },
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
+  users: {
+    counts: [],
+    labels: []
+  },
   product: {
     sortBySelectOptions: [
       {
