@@ -95,5 +95,6 @@ export {
   getPaidOrdersStats,
   setPaidOrdersStats,
   setUpdatingBarData,
-  setUpdatingDoughnutData
+  setUpdatingDoughnutData,
+  setUsersByDays
 };
