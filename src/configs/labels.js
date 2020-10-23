@@ -145,7 +145,9 @@ const labels = {
     dateMenuOptions: [
       { label: 'За 7 Днів', value: 7 },
       { label: 'За 14 Днів', value: 14 },
-      { label: 'За 30 Днів', value: 30 }
+      { label: 'За місяць', value: 30 },
+      { label: 'За 3 місяці', value: 90 },
+      { label: 'За рік', value: 365 }
     ]
   },
   bar: {

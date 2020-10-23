@@ -14,7 +14,8 @@ import {
   setBarValue,
   setDateValue,
   setDoughnutValue,
-  getPaidOrdersStats
+  getPaidOrdersStats,
+  getUsersByDays
 } from '../../redux/stats/stats.actions';
 
 import { config } from '../../configs';
@@ -71,6 +72,9 @@ const StatisticPage = () => {
     if (barValue === bar.select[1].value) {
       dispatch(getPaidOrdersStats());
     }
+    if (barValue === bar.select[2].value) {
+      dispatch(getUsersByDays());
+    }
     fetchedDoughnutStats.current.push(doughnutValue);
     fetchedBarStats.current.push(barValue);
   };
@@ -92,6 +96,10 @@ const StatisticPage = () => {
     const isFetched = fetchedBarStats.current.includes(value);
     if (value === select[1].value && !isFetched) {
       dispatch(getPaidOrdersStats());
+      fetchedBarStats.current.push(value);
+    }
+    if (value === select[2].value && !isFetched) {
+      dispatch(getUsersByDays());
       fetchedBarStats.current.push(value);
     }
     dispatch(setBarValue(value));

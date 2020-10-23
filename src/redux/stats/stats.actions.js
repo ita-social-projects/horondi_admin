@@ -6,13 +6,14 @@ import {
   SET_BAR_VALUE,
   SET_POPULAR_PRODUCTS,
   GET_INITIAL_STATS,
-  SET_USERS_STATS_BY_DAYS,
+  SET_USERS_STATS,
   GET_ALL_ORDERS_STATS,
   SET_ALL_ORDERS_STATS,
   GET_PAID_ORDERS_STATS,
   SET_PAID_ORDERS_STATS,
   SET_UPDATING_BAR_DATA,
-  SET_UPDATING_DOGHNUT_DATA
+  SET_UPDATING_DOGHNUT_DATA,
+  GET_USERS_STATS
 } from './stats.types';
 
 const setPopularCategories = (data) => ({
@@ -40,9 +41,9 @@ const setBarValue = (value) => ({
   payload: value
 });
 
-const setUsersByDays = (value) => ({
-  type: SET_USERS_STATS_BY_DAYS,
-  payload: value
+const setUsersByDays = (users) => ({
+  type: SET_USERS_STATS,
+  payload: users
 });
 
 const setPopularProducts = (products) => ({
@@ -52,6 +53,10 @@ const setPopularProducts = (products) => ({
 
 const getIniitalStats = () => ({
   type: GET_INITIAL_STATS
+});
+
+const getUsersByDays = () => ({
+  type: GET_USERS_STATS
 });
 
 const getAllOrdersStats = () => ({
@@ -96,5 +101,6 @@ export {
   setPaidOrdersStats,
   setUpdatingBarData,
   setUpdatingDoughnutData,
-  setUsersByDays
+  setUsersByDays,
+  getUsersByDays
 };
