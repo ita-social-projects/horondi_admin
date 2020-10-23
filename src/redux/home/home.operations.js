@@ -19,6 +19,8 @@ const getHomePageLooksImages = async () => {
       }
     `
   });
+
+  client.stop();
   client.resetStore();
 
   const { getHomePageLooksImages } = result.data;

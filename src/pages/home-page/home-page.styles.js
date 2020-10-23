@@ -96,6 +96,10 @@ export const useStyles = makeStyles((theme) => ({
   uploadIcon: {
     width: theme.spacing(15),
     height: theme.spacing(15),
-    opacity: '.9'
+    opacity: '.9',
+    '@media (max-width: 768px)': {
+      width: theme.spacing(4),
+      height: theme.spacing(4)
+    }
   }
 }));
