@@ -6,7 +6,7 @@ import {
   SET_ITEMS_COUNT
 } from './table.types';
 
-const initialState = {
+export const initialState = {
   dense: false,
   pagination: {
     currentPage: 0,

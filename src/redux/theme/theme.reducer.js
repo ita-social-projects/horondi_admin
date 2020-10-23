@@ -3,7 +3,7 @@ import { getFromLocalStorage } from '../../services/local-storage.service';
 
 const darkModeStatus = getFromLocalStorage('darkMode');
 
-const initialState = {
+export const initialState = {
   darkMode: darkModeStatus,
   sideMenuStatus: false
 };

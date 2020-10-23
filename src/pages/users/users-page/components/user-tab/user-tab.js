@@ -10,6 +10,7 @@ import { config } from '../../../../../configs';
 
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const tableTitles = config.tableHeadRowTitles.users.userTab;
+const { unknownUser } = config.labels.user;
 
 const UserTab = (props) => {
   const { list, onDelete } = props;
@@ -19,9 +20,13 @@ const UserTab = (props) => {
     <TableContainerRow
       key={userItem._id}
       id={userItem._id}
-      name={`${userItem.firstName} ${userItem.lastName}`}
-      mobile={formatPhoneNumber(userItem.phoneNumber)}
-      email={userItem.email}
+      name={
+        userItem.firstName || userItem.lastName
+          ? `${userItem.firstName || ''} ${userItem.lastName || ''}`
+          : unknownUser
+      }
+      mobile={formatPhoneNumber(userItem.phoneNumber) || ''}
+      email={userItem.email || ''}
       role={userRoleTranslations[userItem.role]}
       banned={userItem.banned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS}
       deleteHandler={() => onDelete(userItem._id)}

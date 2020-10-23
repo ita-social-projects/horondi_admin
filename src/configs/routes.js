@@ -12,6 +12,8 @@ const routes = {
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
   pathToProducts: '/products',
+  pathToAddProduct: '/add-product',
+  pathToEditProduct: '/product/:id',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
   pathToEditCategory: '/add-category/:id',
@@ -20,7 +22,14 @@ const routes = {
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact',
+  pathToOrders: '/orders',
   pathToComments: '/comments',
-  pathToOrders: '/orders'
+  pathToMaterials: '/materials',
+  pathToAddMaterial: '/material/add',
+  pathToMaterialDetails: '/materials/:id',
+  pathToStatistic: '/stats',
+  pathToModels: '/models',
+  pathToModelDetails: '/models/:id',
+  pathToAddModel: '/models/add'
 };
 export default routes;

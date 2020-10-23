@@ -4,19 +4,26 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import PaletteIcon from '@material-ui/icons/Palette';
 import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import SmsIcon from '@material-ui/icons/Sms';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import BarChartIcon from '@material-ui/icons/BarChart';
+import StyleIcon from '@material-ui/icons/Style';
 import routes from './routes';
 
 const menuCategories = [
-  ['Продукти', routes.pathToProducts, ShoppingBasketIcon],
+  ['Статистика', routes.pathToStatistic, BarChartIcon],
+  ['Продукти', routes.pathToProducts, ShoppingCart],
   ['Категорії', routes.pathToCategories, CategoryIcon],
   ['Користувачі', routes.pathToUsers, PeopleIcon],
   ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
   ['Останні коментарі', routes.pathToComments, SmsIcon],
   ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
   ['Гобелени', routes.pathToPatterns, PaletteIcon],
+  ['Матеріали', routes.pathToMaterials, LocalMallIcon],
+  ['Новини', routes.pathToNews, ImportContactsIcon],
+  ['Моделі', routes.pathToModels, StyleIcon]
   ['Новини', routes.pathToNews, ImportContactsIcon],
   ['Замовлення', routes.pathToOrders, ListAltIcon]
 ];

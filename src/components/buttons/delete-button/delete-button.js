@@ -1,31 +1,25 @@
 import React from 'react';
-
-import { Tooltip, IconButton } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
 import PropTypes from 'prop-types';
-import { config } from '../../../configs';
+import { Button } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { useStyles } from './delete-button.styles';
 
-const { DELETE_TITLE } = config.buttonTitles;
-
-const DeleteButton = (props) => {
-  const { onClickHandler, size } = props;
+const DeleteButton = ({ children, ...props }) => {
+  const styles = useStyles();
 
   return (
-    <Tooltip title={DELETE_TITLE}>
-      <IconButton aria-label={DELETE_TITLE} onClick={onClickHandler}>
-        <DeleteIcon fontSize={size} color='error' />
-      </IconButton>
-    </Tooltip>
+    <div className={styles.button}>
+      <Button variant='outlined' startIcon={<DeleteIcon />} {...props}>
+        {children}
+      </Button>
+    </div>
   );
 };
 
 DeleteButton.propTypes = {
-  onClickHandler: PropTypes.func,
-  size: PropTypes.string.isRequired
-};
-
-DeleteButton.defaultProps = {
-  onClickHandler: () => {}
+  onClickHandler: PropTypes.func.isRequired,
+  size: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default DeleteButton;
