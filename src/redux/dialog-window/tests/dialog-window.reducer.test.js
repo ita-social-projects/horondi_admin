@@ -1,6 +1,5 @@
 import dialogWindowReducer, { initialState } from '../dialog-window.reducer';
 import { closeDialog, showDialog } from '../dialog-window.actions';
-import { SHOW_DIALOG, CLOSE_DIALOG } from '../dialog-window.types';
 
 describe('dialog window reducer tests', () => {
   it('should return default state', () => {

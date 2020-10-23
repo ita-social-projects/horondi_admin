@@ -1,29 +1,21 @@
 import {
   GET_CATEGORIES,
-  SET_CATEGORIES,
   SET_CATEGORIES_ERROR,
   SET_CATEGORIES_LOADING,
   GET_CATEGORY,
   DELETE_CATEGORY,
-  CREATE_CATEGORY,
   SET_CATEGORY,
-  EDIT_CATEGORY,
-  GET_SUBCATEGORIES,
   RESET_NEW_CATEGORY
 } from '../categories.types';
 
 import {
   getCategories,
   getCategory,
-  getSubcategories,
-  setCategories,
   setCategoriesError,
   setCategoriesLoading,
   setCategory,
-  createCategory,
   deleteCategory,
-  resetNewCategory,
-  editCategory
+  resetNewCategory
 } from '../categories.actions';
 
 import { categoryId, category } from './category.variables';

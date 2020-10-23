@@ -4,6 +4,7 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import PaletteIcon from '@material-ui/icons/Palette';
 import PeopleIcon from '@material-ui/icons/People';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import SmsIcon from '@material-ui/icons/Sms';
 import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
@@ -23,6 +24,7 @@ const menuCategories = [
   ['Гобелени', routes.pathToPatterns, PaletteIcon],
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
   ['Новини', routes.pathToNews, ImportContactsIcon],
+  ['Запитання покупців', routes.pathToEmailQuestions, LiveHelpIcon],
   ['Моделі', routes.pathToModels, StyleIcon],
   ['Головна сторінка', routes.pathToHomePageEdit, ImageRoundedIcon]
 ];

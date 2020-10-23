@@ -9,6 +9,11 @@ const titles = {
     ourLooksImages: 'Стиль Горонді'
   },
 
+  emailQuestionsTitles: {
+    mainPageTitle: 'Запитання покупців',
+    detailPageTitle: 'Деталі запитання'
+  },
+
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
     createPageTitle: 'Створити матеріал'

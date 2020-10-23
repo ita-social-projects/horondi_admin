@@ -13,6 +13,7 @@ import contactsSaga from './contact/contact.sagas';
 import homePageSaga from './home/home.sagas';
 import statsSaga from './stats/stats.sagas';
 import modelSaga from './model/model.sagas';
+import emailQuestionSaga from './email-questions/email-questions.sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -28,6 +29,7 @@ export default function* rootSaga() {
     contactsSaga(),
     commentsSaga(),
     homePageSaga(),
+    emailQuestionSaga(),
     statsSaga(),
     modelSaga()
   ]);

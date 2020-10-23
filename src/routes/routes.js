@@ -32,6 +32,8 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import ConfirmUser from '../pages/users/confirm-user';
 import HomePageEdit from '../pages/home-page';
+import EmailQuestionsList from '../pages/email-questions';
+import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
 import ModelPage from '../pages/model/model-page';
 import ModelAdd from '../pages/model/model-add';
 import ModelDetails from '../pages/model/model-details';
@@ -141,6 +143,16 @@ const Routes = () => {
           render={({ match }) => (
             <CategoriesAdd id={match.params.id} editMode />
           )}
+        />
+        <Route
+          path={routes.pathToEmailQuestions}
+          exact
+          component={EmailQuestionsList}
+        />
+        <Route
+          path={routes.pathToEmailQuestionDetails}
+          exact
+          render={({ match }) => <EmailQuestionsDetails id={match.params.id} />}
         />
         <Route path={routes.pathToStatistic} exact component={StatisticPage} />
         <Route component={ErrorPage} />
