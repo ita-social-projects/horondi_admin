@@ -73,9 +73,7 @@ const getCommentsByProduct = async ({ id, skip, limit }) => {
       throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
     });
 
-  const { data } = result;
-  console.log(data);
-  return data.getAllCommentsByProduct;
+  return result.data.getAllCommentsByProduct;
 };
 
 const getRecentComments = async (skip, limit) => {
