@@ -44,22 +44,26 @@ const getCommentsByUser = async (userEmail) => {
   return data.getAllCommentsByUser;
 };
 
-const getCommentsByProduct = async (id) => {
+const getCommentsByProduct = async ({ id, skip, limit }) => {
   const result = await client
     .query({
-      variables: { id },
+      variables: { productId: id, skip, limit },
       query: gql`
-        query($id: ID!) {
-          getAllCommentsByProduct(id: $id) {
-            ... on Comment {
+        query($productId: ID!, $skip: Int, $limit: Int) {
+          getAllCommentsByProduct(
+            productId: $productId
+            skip: $skip
+            limit: $limit
+          ) {
+            items {
               _id
               text
               date
+              user {
+                name
+              }
             }
-            ... on Error {
-              message
-              statusCode
-            }
+            count
           }
         }
       `,
@@ -70,7 +74,7 @@ const getCommentsByProduct = async (id) => {
     });
 
   const { data } = result;
-
+  console.log(data);
   return data.getAllCommentsByProduct;
 };
 
@@ -88,6 +92,9 @@ const getRecentComments = async (skip, limit) => {
               _id
               text
               date
+              user {
+                name
+              }
             }
             count
           }
