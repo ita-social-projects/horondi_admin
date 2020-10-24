@@ -11,12 +11,11 @@ import {
   UPDATE_USER_LOCALLY,
   REGISTER_ADMIN,
   CONFIRM_ADMIN,
-  VALIDATE_TOKEN
+  VALIDATE_TOKEN, SET_FILTER, SET_SORT, SET_TAB
 } from './users.types';
 
-const getUsers = (options) => ({
-  type: GET_USERS,
-  payload: options
+const getUsers = () => ({
+  type: GET_USERS
 });
 
 const setUsers = (users) => ({
@@ -78,6 +77,21 @@ const validateToken = (token) => ({
   payload: token
 });
 
+const setFilter = (filter) => ({
+  type: SET_FILTER,
+  payload: filter
+});
+
+const setSort = (sort) => ({
+  type: SET_SORT,
+  payload: sort
+});
+
+const setTab = (tab) => ({
+  type: SET_TAB,
+  payload: tab
+});
+
 export {
   getUsers,
   setUsers,
@@ -91,5 +105,8 @@ export {
   deleteUserLocally,
   registerAdmin,
   confirmAdmin,
-  validateToken
+  validateToken,
+  setTab,
+  setFilter,
+  setSort
 };

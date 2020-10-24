@@ -11,3 +11,6 @@ export const SET_USERS_ERROR = 'SET_USERS_ERROR';
 export const REGISTER_ADMIN = 'REGISTER_ADMIN';
 export const CONFIRM_ADMIN = 'CONFIRM_ADMIN';
 export const VALIDATE_TOKEN = 'VALIDATE_TOKEN';
+export const SET_FILTER = 'SET_FILTER';
+export const SET_TAB = 'SET_TAB';
+export const SET_SORT = 'SET_SORT';

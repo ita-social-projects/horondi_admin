@@ -24,6 +24,7 @@ import {
   materialPaginationPayload
 } from './pagination';
 import titles from './titles';
+import { sort } from './sort';
 
 export const config = {
   app: {
@@ -176,7 +177,8 @@ export const config = {
   newsPaginationPayload,
   contactsPaginationPayload,
   materialPaginationPayload,
-  modelErrorMessages
+  modelErrorMessages,
+  sort
 };
 export const inputTypes = {
   button: 'button',

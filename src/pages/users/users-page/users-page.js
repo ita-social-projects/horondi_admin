@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 import { useStyles } from './users-page.styles';
-import { deleteUser } from '../../../redux/users/users.actions';
+import { deleteUser, getUsers } from '../../../redux/users/users.actions';
 import TabPanel from '../../../components/tab-panel';
 import { config } from '../../../configs';
 import LoadingBar from '../../../components/loading-bar';
@@ -10,21 +10,25 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import AdminTab from './components/admin-tab';
 import UserTab from './components/user-tab';
-import useUsersFiltering from '../../../hooks/user/use-users-filtering';
+import useUsersTabs from '../../../hooks/user/use-users-tabs';
 
 const { REMOVE_USER_TITLE } = config.buttonTitles;
 const { REMOVE_USER_MESSAGE } = config.messages;
 const userTabNames = config.tabNames.users;
 
 const UsersPage = () => {
-  const [tabValue, setTabValue] = useState(0);
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { loading, list } = useSelector(({ Users }) => ({
+  const { list,filters,sort } = useSelector(({ Users }) => ({
     list: Users.list,
-    loading: Users.userLoading
+    filters: Users.filters,
+    sort: Users.sort
   }));
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUsers());
+  },[dispatch,filters,sort]);
 
   const userDeleteHandler = (id) => {
     const removeUser = () => {
@@ -39,15 +43,7 @@ const UsersPage = () => {
     );
   };
 
-  useUsersFiltering(tabValue);
-
-  const handleTabChange = (event, nextValue) => {
-    setTabValue(nextValue);
-  };
-
-  if (loading) {
-    return <LoadingBar />;
-  }
+  const {tab,handleTabChange} = useUsersTabs();
 
   const userTabs = userTabNames.map((name) => <Tab key={name} label={name} />);
 
@@ -55,18 +51,18 @@ const UsersPage = () => {
     <div className={styles.container}>
       <AppBar position='static' color='primary'>
         <Tabs
-          value={tabValue}
-          onChange={handleTabChange}
+          value={tab}
+          onChange={(_,nextTab) => handleTabChange(nextTab)}
           className={styles.tabs}
           variant='fullWidth'
         >
           {userTabs}
         </Tabs>
       </AppBar>
-      <TabPanel value={tabValue} index={0}>
+      <TabPanel value={tab} index={0}>
         <UserTab list={list} onDelete={userDeleteHandler} />
       </TabPanel>
-      <TabPanel value={tabValue} index={1}>
+      <TabPanel value={tab} index={1}>
         <AdminTab list={list} onDelete={userDeleteHandler} />
       </TabPanel>
     </div>
