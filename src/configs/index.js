@@ -146,7 +146,8 @@ export const config = {
     initialValues: {
       names: [],
       counts: [],
-      relations: []
+      relations: [],
+      total: null
     }
   },
   bar: {

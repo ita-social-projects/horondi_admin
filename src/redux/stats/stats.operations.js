@@ -19,6 +19,7 @@ const getPopularProducts = async () => {
 			getPopularProducts{
 				labels
 				counts
+				total
 			}
 		}	
 	`);
@@ -32,6 +33,7 @@ const getUsersByDays = async (days) => {
 			getUsersForStatistic(filter: {days: $days}) {
 				counts
 				labels
+				total
 			}
 		}
 	`,
@@ -63,6 +65,7 @@ const getPaidOrdersStats = async (date) => {
 			getPaidOrdersStatistic(date: $date) {
 				labels
 				counts
+				total
 			}
 		}
 	`,

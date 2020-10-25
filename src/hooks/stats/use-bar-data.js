@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { useTheme } from '@material-ui/core';
 import { config } from '../../configs';
 
-const { descriptions } = config.labels.bar;
-
+const { descriptions, message } = config.labels.bar;
+console.log(config.labels);
 const useBarData = () => {
   const theme = useTheme();
   const barData = useSelector(({ Stats }) => Stats.bar);
@@ -18,7 +18,9 @@ const useBarData = () => {
         data: counts,
         label: descriptions[selectedValue],
         maxBarThickness: 17,
-        categoryPercentage: 0.5
+        categoryPercentage: 0.5,
+        total: barData[selectedValue].total,
+        message: message[selectedValue]
       }
     ],
     labels

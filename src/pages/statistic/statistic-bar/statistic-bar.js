@@ -10,7 +10,8 @@ import {
   Divider,
   Select,
   MenuItem,
-  FormControl
+  FormControl,
+  Typography
 } from '@material-ui/core';
 import useBarData from '../../../hooks/stats/use-bar-data';
 import { config } from '../../../configs';
@@ -52,6 +53,13 @@ const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
         </Box>
       </CardContent>
       <Divider />
+      {mainData ? (
+        <Typography variant='body1'>
+          {mainData.datasets[0].message + mainData.datasets[0].total}
+        </Typography>
+      ) : (
+        ''
+      )}
     </Card>
   );
 };
