@@ -9,8 +9,6 @@ import {
 
 import {
   setAllOrdersStats,
-  setBarValue,
-  setDoughnutValue,
   setPaidOrdersStats,
   setPopularCategories,
   setPopularProducts,
@@ -33,9 +31,6 @@ import {
   setSnackBarSeverity,
   setSnackBarStatus
 } from '../snackbar/snackbar.actions';
-import { config } from '../../configs';
-
-const { bar } = config.labels;
 
 function* handleInitialStatsLoad() {
   try {
