@@ -5,6 +5,7 @@ export const initialState = {
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
+  showCancelButton: true,
   onClickHandler: () => {}
 };
 

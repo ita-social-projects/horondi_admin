@@ -30,7 +30,7 @@ export const config = {
   app: {
     title: 'Horondi Admin Portal',
     serverUrl: 'http://localhost:5000/',
-    drawerWidth: 220,
+    drawerWidth: 230,
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },

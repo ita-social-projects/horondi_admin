@@ -42,7 +42,7 @@ const {
 
 const { skip, limit, newsPerPage } = config.newsPaginationPayload;
 
-function* handleNewsLoad({
+export function* handleNewsLoad({
   payload = {
     skip,
     limit,

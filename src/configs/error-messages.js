@@ -59,6 +59,10 @@ export const contactErrorMessages = {
   SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт'
 };
 
+export const emailQuestionsErrorMessages = {
+  ANSWER_INPUT_MESSAGE: 'Введіть текст для відповіді'
+};
+
 export const materialErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,

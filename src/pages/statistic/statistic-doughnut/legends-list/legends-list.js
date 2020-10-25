@@ -23,8 +23,8 @@ const LegendsList = ({ options, labels }) => (
 );
 
 LegendsList.propTypes = {
-  labels: PropTypes.arrayOf([PropTypes.string]),
-  options: PropTypes.arrayOf([PropTypes.number])
+  labels: PropTypes.arrayOf(PropTypes.string),
+  options: PropTypes.arrayOf(PropTypes.number)
 };
 
 LegendsList.defaultProps = {

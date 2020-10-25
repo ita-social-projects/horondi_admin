@@ -139,10 +139,23 @@ const labels = {
       name: 'basePrice'
     }
   },
+  emailQuestionsLabels: {
+    en: {
+      PENDING: 'PENDING',
+      SPAM: 'SPAM',
+      ANSWERED: 'ANSWERED'
+    },
+    ua: {
+      PENDING: 'Очікує відповіді',
+      SPAM: 'Спам',
+      ANSWERED: 'Відповідь надано'
+    },
+    placeholder: 'Відповідь ...'
+  },
   doughnut: {
     select: [
       { label: 'Популярні категорії', value: 'categories' },
-      { label: 'Статуси замовлень', value: 'orders' }
+      { label: 'Останні замовлення', value: 'orders' }
     ],
     dateMenuOptions: [
       { label: 'За 7 Днів', value: 7 },
@@ -153,8 +166,8 @@ const labels = {
   bar: {
     select: [
       { label: 'Популярні продукти', value: 'products' },
-      { label: 'Останні замовлення', value: 'orders' },
-      { label: 'Динаміка реєстрації користувачів', value: 'users' }
+      { label: 'Виконані замовлення', value: 'orders' },
+      { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
     descriptions: {
       users: 'Цей день',

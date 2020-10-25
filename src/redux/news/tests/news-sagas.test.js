@@ -3,23 +3,9 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import {
   handleAddNews,
   handleArticleLoad,
-  handleNewsDelete,
-  handleNewsError,
-  handleNewsLoad,
-  handleNewsUpdate
+  handleNewsLoad
 } from '../news.sagas';
-import {
-  GET_NEWS,
-  SET_NEWS_LOADING,
-  SET_NEWS_ERROR,
-  SET_CURRENT_PAGE,
-  SET_NEWS_PER_PAGE,
-  SET_PAGES_COUNT,
-  ADD_ARTICLE,
-  UPDATE_ARTICLE,
-  DELETE_ARTICLE,
-  GET_ARTICLE
-} from '../news.types';
+import { GET_NEWS, GET_ARTICLE } from '../news.types';
 import {
   getAllNews,
   getArticleById,
