@@ -11,7 +11,11 @@ import {
   UPDATE_USER_LOCALLY,
   REGISTER_ADMIN,
   CONFIRM_ADMIN,
-  VALIDATE_TOKEN, SET_FILTER, SET_SORT, SET_TAB
+  VALIDATE_TOKEN,
+  SET_FILTER,
+  SET_SORT,
+  SET_TAB,
+  CLEAR_FILTERS
 } from './users.types';
 
 const getUsers = () => ({
@@ -82,6 +86,10 @@ const setFilter = (filter) => ({
   payload: filter
 });
 
+const clearFilters = () => ({
+  type: CLEAR_FILTERS
+});
+
 const setSort = (sort) => ({
   type: SET_SORT,
   payload: sort
@@ -108,5 +116,6 @@ export {
   validateToken,
   setTab,
   setFilter,
-  setSort
+  setSort,
+  clearFilters
 };

@@ -19,16 +19,25 @@ const userTabNames = config.tabNames.users;
 const UsersPage = () => {
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list,filters,sort } = useSelector(({ Users }) => ({
-    list: Users.list,
-    filters: Users.filters,
-    sort: Users.sort
-  }));
+  const { list, filters, sort, currentPage, rowsPerPage } = useSelector(
+    ({
+      Users: { list, filters, sort },
+      Table: {
+        pagination: { currentPage, rowsPerPage }
+      }
+    }) => ({
+      list,
+      filters,
+      sort,
+      currentPage,
+      rowsPerPage
+    })
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUsers());
-  },[dispatch,filters,sort]);
+  }, [dispatch, filters, sort, currentPage, rowsPerPage]);
 
   const userDeleteHandler = (id) => {
     const removeUser = () => {
@@ -43,7 +52,7 @@ const UsersPage = () => {
     );
   };
 
-  const {tab,handleTabChange} = useUsersTabs();
+  const { tab, handleTabChange } = useUsersTabs();
 
   const userTabs = userTabNames.map((name) => <Tab key={name} label={name} />);
 
@@ -52,7 +61,7 @@ const UsersPage = () => {
       <AppBar position='static' color='primary'>
         <Tabs
           value={tab}
-          onChange={(_,nextTab) => handleTabChange(nextTab)}
+          onChange={(_, nextTab) => handleTabChange(nextTab)}
           className={styles.tabs}
           variant='fullWidth'
         >

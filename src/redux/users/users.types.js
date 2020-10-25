@@ -14,3 +14,4 @@ export const VALIDATE_TOKEN = 'VALIDATE_TOKEN';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_TAB = 'SET_TAB';
 export const SET_SORT = 'SET_SORT';
+export const CLEAR_FILTERS = 'CLEAR_FILTERS';

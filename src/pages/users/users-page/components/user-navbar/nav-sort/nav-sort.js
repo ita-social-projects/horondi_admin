@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { FormControl, MenuItem, Select, Typography } from '@material-ui/core';
 import useUsersFiltering from '../../../../../../hooks/user/use-users-filtering';
 import { useStyles } from './nav-sort.styles';
-import {config} from '../../../../../../configs';
+import { config } from '../../../../../../configs';
 import { userLabelsTranslations } from '../../../../../../translations/user.translations';
-import { sort } from '../../../../../../configs/sort';
 
 const NavSort = () => {
   const sortOptions = config.sort.users;
-  const [sortValue,setSortValue] = useState(sortOptions[0].value);
+  const [sortValue, setSortValue] = useState(sortOptions[0].value);
   const styles = useStyles();
-  const {setSorting} = useUsersFiltering();
+  const { setSorting } = useUsersFiltering();
 
-  const selectOptions = sortOptions.map(({label,value}) => (
+  const selectOptions = sortOptions.map(({ label, value }) => (
     <MenuItem key={label} value={value}>
       {label}
     </MenuItem>
@@ -24,7 +23,7 @@ const NavSort = () => {
 
     if (result) {
       setSortValue(result.value);
-      setSorting(result.key,result.type);
+      setSorting(result.key, result.type);
     }
   };
 

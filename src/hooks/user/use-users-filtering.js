@@ -1,39 +1,61 @@
 import { useDispatch } from 'react-redux';
-import { setFilter, setSort } from '../../redux/users/users.actions';
+import {
+  clearFilters,
+  setFilter,
+  setSort
+} from '../../redux/users/users.actions';
+import { setCurrentPage } from '../../redux/table/table.actions';
 
 const useUsersFiltering = () => {
   const dispatch = useDispatch();
 
   const setRolesFilter = (roles) => {
-    dispatch(setFilter({
-      roles
-    }));
+    dispatch(
+      setFilter({
+        roles
+      })
+    );
   };
 
   const setStatusFilter = (statuses) => {
-    dispatch(setFilter({
-      banned: statuses.map((item) => !!item)
-    }));
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setFilter({
+        banned: statuses.map((item) => !!item)
+      })
+    );
   };
 
   const setSearchFilter = (search) => {
-    dispatch(setFilter({
-      search
-    }));
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setFilter({
+        search
+      })
+    );
   };
 
-  const setSorting = (key,type = 'asc') => {
-    dispatch(setSort({
-      [key]: type === 'desc' ? -1 : 1
-    }))
+  const clearAllFilters = () => {
+    dispatch(setCurrentPage(0));
+    dispatch(clearFilters());
+  };
+
+  const setSorting = (key, type = 'asc') => {
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setSort({
+        [key]: type === 'desc' ? -1 : 1
+      })
+    );
   };
 
   return {
     setSorting,
     setRolesFilter,
     setSearchFilter,
-    setStatusFilter
-  }
+    setStatusFilter,
+    clearAllFilters
+  };
 };
 
 export default useUsersFiltering;
