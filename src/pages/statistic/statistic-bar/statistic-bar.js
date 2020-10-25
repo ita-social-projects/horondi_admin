@@ -54,9 +54,11 @@ const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
       </CardContent>
       <Divider />
       {mainData ? (
-        <Typography variant='body1'>
-          {mainData.datasets[0].message + mainData.datasets[0].total}
-        </Typography>
+        <Box p={2}>
+          <Typography variant='body1'>
+            {mainData.datasets[0].message + mainData.datasets[0].total}
+          </Typography>
+        </Box>
       ) : (
         ''
       )}
