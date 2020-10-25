@@ -6,6 +6,7 @@ import {
   SET_DATE_VALUE,
   SET_BAR_VALUE,
   SET_POPULAR_PRODUCTS,
+  SET_USERS_STATS,
   SET_ALL_ORDERS_STATS,
   SET_PAID_ORDERS_STATS,
   SET_UPDATING_BAR_DATA,
@@ -46,6 +47,15 @@ const statsReducer = (state = initialState, action = {}) => {
       doughnut: {
         ...state.doughnut,
         categories: action.payload
+      }
+    };
+  }
+  case SET_USERS_STATS: {
+    return {
+      ...state,
+      bar: {
+        ...state.bar,
+        users: action.payload
       }
     };
   }
