@@ -3,7 +3,7 @@ import { useTheme } from '@material-ui/core';
 import { config } from '../../configs';
 
 const { descriptions, message } = config.labels.bar;
-console.log(config.labels);
+
 const useBarData = () => {
   const theme = useTheme();
   const barData = useSelector(({ Stats }) => Stats.bar);
