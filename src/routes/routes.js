@@ -28,12 +28,12 @@ import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
 import PatternPage from '../pages/pattern/pattern-page';
 import CommentsPage from '../pages/comments/comments';
-import { config } from '../configs';
-import { history } from '../store/store';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+import EmailQuestionsList from '../pages/email-questions';
+import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
 import ModelPage from '../pages/model/model-page';
 import ModelAdd from '../pages/model/model-add';
 import ModelDetails from '../pages/model/model-details';
@@ -144,6 +144,16 @@ const Routes = () => {
           render={({ match }) => (
             <CategoriesAdd id={match.params.id} editMode />
           )}
+        />
+        <Route
+          path={routes.pathToEmailQuestions}
+          exact
+          component={EmailQuestionsList}
+        />
+        <Route
+          path={routes.pathToEmailQuestionDetails}
+          exact
+          render={({ match }) => <EmailQuestionsDetails id={match.params.id} />}
         />
         <Route path={routes.pathToStatistic} exact component={StatisticPage} />
         <Route path={routes.pathToOrders} exact component={Orders} />

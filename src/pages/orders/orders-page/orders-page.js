@@ -8,7 +8,7 @@ import { getOrderList } from '../../../redux/orders/orders.actions';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
-import StandardButton from '../../../components/buttons/standard-button/standard-button';
+import StandardButton from '../../../components/buttons/standard-button';
 import { config } from '../../../configs';
 
 const tableTitles = config.tableHeadRowTitles.orders;

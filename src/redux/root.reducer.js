@@ -14,6 +14,7 @@ import Products from './products/products.reducer';
 import Categories from './categories/categories.reducer';
 import Users from './users/users.reducer';
 import Comments from './comments/comments.reducer';
+import EmailQuestions from './email-questions/email-questions.reducer';
 import Stats from './stats/stats.reducer';
 import Model from './model/model.reducer';
 import Orders from './orders/orders.reducer';
@@ -34,8 +35,10 @@ const rootReducer = (history) =>
     Products,
     Categories,
     Users,
+    EmailQuestions,
     Comments,
     Stats,
+    Model,
     Orders
   });
 export default rootReducer;

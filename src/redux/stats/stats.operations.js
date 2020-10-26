@@ -25,4 +25,56 @@ const getPopularProducts = async () => {
   return res.data.getPopularProducts;
 };
 
-export { getPopularCategories, getPopularProducts };
+const getUsersByDays = async (days) => {
+  const res = await getItems(
+    `
+		query ($days: Int!) {
+			getUsersForStatistic(filter: {days: $days}) {
+				counts
+				labels
+			}
+		}
+	`,
+    { days }
+  );
+  return res.data.getUsersForStatistic;
+};
+
+const getOrdersStats = async (date) => {
+  const res = await getItems(
+    `
+		query($date: Int!) {
+			getOrdersStatistic(date: $date) {
+				names
+				counts
+				relations
+			}
+		}
+	`,
+    { date }
+  );
+  return res.data.getOrdersStatistic;
+};
+
+const getPaidOrdersStats = async (date) => {
+  const res = await getItems(
+    `
+		query($date: Int!) {
+			getPaidOrdersStatistic(date: $date) {
+				labels
+				counts
+			}
+		}
+	`,
+    { date }
+  );
+  return res.data.getPaidOrdersStatistic;
+};
+
+export {
+  getPopularCategories,
+  getPopularProducts,
+  getOrdersStats,
+  getPaidOrdersStats,
+  getUsersByDays
+};

@@ -5,7 +5,12 @@ import {
   SET_DOUGHNUT_VALUE,
   SET_DATE_VALUE,
   SET_BAR_VALUE,
-  SET_POPULAR_PRODUCTS
+  SET_POPULAR_PRODUCTS,
+  SET_USERS_STATS,
+  SET_ALL_ORDERS_STATS,
+  SET_PAID_ORDERS_STATS,
+  SET_UPDATING_BAR_DATA,
+  SET_UPDATING_DOGHNUT_DATA
 } from './stats.types';
 
 const { labels, doughnut, bar } = config;
@@ -15,13 +20,15 @@ const initialState = {
   doughnut: {
     categories: doughnut.initialValues,
     orders: doughnut.initialValues,
-    selectedValue: labels.doughnut.select[0].value
+    selectedValue: labels.doughnut.select[0].value,
+    updatingData: false
   },
   bar: {
     products: bar.initialValues,
     orders: bar.initialValues,
     users: bar.initialValues,
-    selectedValue: labels.bar.select[0].value
+    selectedValue: labels.bar.select[0].value,
+    updatingData: false
   },
   date: 7
 };
@@ -40,6 +47,15 @@ const statsReducer = (state = initialState, action = {}) => {
       doughnut: {
         ...state.doughnut,
         categories: action.payload
+      }
+    };
+  }
+  case SET_USERS_STATS: {
+    return {
+      ...state,
+      bar: {
+        ...state.bar,
+        users: action.payload
       }
     };
   }
@@ -73,6 +89,42 @@ const statsReducer = (state = initialState, action = {}) => {
       bar: {
         ...state.bar,
         products: action.payload
+      }
+    };
+  }
+  case SET_ALL_ORDERS_STATS: {
+    return {
+      ...state,
+      doughnut: {
+        ...state.doughnut,
+        orders: action.payload
+      }
+    };
+  }
+  case SET_PAID_ORDERS_STATS: {
+    return {
+      ...state,
+      bar: {
+        ...state.bar,
+        orders: action.payload
+      }
+    };
+  }
+  case SET_UPDATING_BAR_DATA: {
+    return {
+      ...state,
+      bar: {
+        ...state.bar,
+        updatingData: action.payload
+      }
+    };
+  }
+  case SET_UPDATING_DOGHNUT_DATA: {
+    return {
+      ...state,
+      doughnut: {
+        ...state.doughnut,
+        updatingData: action.payload
       }
     };
   }

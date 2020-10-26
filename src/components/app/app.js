@@ -7,6 +7,7 @@ import { theme } from './app-theme/app.theme';
 import { useStyles } from './app.styles';
 import { config } from '../../configs';
 import { checkUserByToken } from '../../redux/auth/auth.actions';
+import { getEmailQuestionsPendingCount } from '../../redux/email-questions/email-questions.actions';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 
 const { DARK_THEME, LIGHT_THEME } = config.theme;
@@ -21,6 +22,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(checkUserByToken(token));
+    dispatch(getEmailQuestionsPendingCount());
   }, [dispatch]);
 
   return (

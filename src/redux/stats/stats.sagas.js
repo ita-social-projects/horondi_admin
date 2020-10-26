@@ -1,14 +1,30 @@
-import { call, takeEvery, put } from 'redux-saga/effects';
-
-import { GET_INITIAL_STATS } from './stats.types';
+import { call, takeEvery, put, select } from 'redux-saga/effects';
 
 import {
+  GET_INITIAL_STATS,
+  GET_ALL_ORDERS_STATS,
+  GET_PAID_ORDERS_STATS,
+  GET_USERS_STATS
+} from './stats.types';
+
+import {
+  setAllOrdersStats,
+  setPaidOrdersStats,
   setPopularCategories,
   setPopularProducts,
-  setStatsLoading
+  setStatsLoading,
+  setUpdatingBarData,
+  setUpdatingDoughnutData,
+  setUsersByDays
 } from './stats.actions';
 
-import { getPopularCategories, getPopularProducts } from './stats.operations';
+import {
+  getPopularCategories,
+  getPopularProducts,
+  getOrdersStats,
+  getPaidOrdersStats,
+  getUsersByDays
+} from './stats.operations';
 
 import {
   setSnackBarMessage,
@@ -29,6 +45,42 @@ function* handleInitialStatsLoad() {
   }
 }
 
+function* handleOrdersStatisticLoad() {
+  try {
+    yield put(setUpdatingDoughnutData(true));
+    const date = yield select(({ Stats }) => Stats.date);
+    const orders = yield call(getOrdersStats, date);
+    yield put(setAllOrdersStats(orders));
+    yield put(setUpdatingDoughnutData(false));
+  } catch (e) {
+    handleStatsErrors(e);
+  }
+}
+
+function* handlePaidOrdersLoad() {
+  try {
+    yield put(setUpdatingBarData(true));
+    const date = yield select(({ Stats }) => Stats.date);
+    const orders = yield call(getPaidOrdersStats, date);
+    yield put(setPaidOrdersStats(orders));
+    yield put(setUpdatingBarData(false));
+  } catch (e) {
+    handleStatsErrors(e);
+  }
+}
+
+function* handleUsersStatisticLoad() {
+  try {
+    yield put(setUpdatingBarData(true));
+    const date = yield select(({ Stats }) => Stats.date);
+    const users = yield call(getUsersByDays, date);
+    yield put(setUsersByDays(users));
+    yield put(setUpdatingBarData(false));
+  } catch (e) {
+    handleStatsErrors(e);
+  }
+}
+
 function* handleStatsErrors(e) {
   yield put(setStatsLoading(false));
   yield put(setSnackBarSeverity('error'));
@@ -38,4 +90,7 @@ function* handleStatsErrors(e) {
 
 export default function* statsSaga() {
   yield takeEvery(GET_INITIAL_STATS, handleInitialStatsLoad);
+  yield takeEvery(GET_ALL_ORDERS_STATS, handleOrdersStatisticLoad);
+  yield takeEvery(GET_PAID_ORDERS_STATS, handlePaidOrdersLoad);
+  yield takeEvery(GET_USERS_STATS, handleUsersStatisticLoad);
 }
