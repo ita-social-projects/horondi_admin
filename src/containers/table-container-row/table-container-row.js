@@ -32,10 +32,8 @@ const TableContainerRow = ({
 
   const properties = { ...rest };
 
-  const tableCells = Object.values(properties).map((property) => (
-    <TableCell variant='body' key={property}>
-      {ReactHtmlParser(property)}
-    </TableCell>
+  const tableCells = Object.keys(properties).map((property) => (
+    <TableCell key={property}>{properties[property]}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
