@@ -11,6 +11,8 @@ import TableContainerRow from '../../../containers/table-container-row';
 import StandardButton from '../../../components/buttons/standard-button';
 import { config } from '../../../configs';
 
+const { ORDER_DETAILS } = config.buttonTitles;
+const { orderTitles } = config.titles;
 const tableTitles = config.tableHeadRowTitles.orders;
 
 const OrdersPage = () => {
@@ -51,7 +53,7 @@ const OrdersPage = () => {
         status={order.status}
         button={
           <StandardButton
-            title='Details'
+            title={ORDER_DETAILS}
             onClickHandler={() => dispatch(push(`/orders/${order._id}`))}
           />
         }
@@ -64,8 +66,10 @@ const OrdersPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.orderCount}>{count} orders</div>
-        <div className={styles.filterBy}>Filter by</div>
+        <div className={styles.orderCount}>
+          {count} {orderTitles.orders}
+        </div>
+        <div className={styles.filterBy}>{orderTitles.filterBy}</div>
       </div>
       {orderLoading ? (
         <LoadingBar />
