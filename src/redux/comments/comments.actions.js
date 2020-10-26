@@ -8,7 +8,8 @@ import {
   SET_COMMENTS_ERROR,
   SET_COMMENTS_CURRENT_PAGE,
   SET_COMMENTS_PER_PAGE,
-  SET_COMMENTS_PAGES_COUNT
+  SET_COMMENTS_PAGES_COUNT,
+  GET_COMMENTS_BY_PRODUCTS
 } from './comments.types';
 
 const getCommentsByType = (value, commentsType) => ({
@@ -64,6 +65,11 @@ const setCommentsPagesCount = (payload) => ({
   payload
 });
 
+const getCommentsByProduct = (payload) => ({
+  type: GET_COMMENTS_BY_PRODUCTS,
+  payload
+});
+
 export {
   getCommentsByType,
   getRecentComments,
@@ -74,5 +80,6 @@ export {
   setCommentError,
   setCommentsCurrentPage,
   setCommentsPerPage,
-  setCommentsPagesCount
+  setCommentsPagesCount,
+  getCommentsByProduct
 };
