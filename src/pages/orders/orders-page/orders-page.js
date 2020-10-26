@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import { useStyles } from './orders-page.styles';
 import { getOrderList } from '../../../redux/orders/orders.actions';
@@ -14,6 +15,28 @@ import { config } from '../../../configs';
 const { ORDER_DETAILS } = config.buttonTitles;
 const { orderTitles } = config.titles;
 const tableTitles = config.tableHeadRowTitles.orders;
+
+const Status = ({ status }) => {
+  const styles = useStyles();
+  let color;
+  switch (status) {
+  case 'CANCELLED' || 'REFUNDED': {
+    color = styles.redStatus;
+    break;
+  }
+  case 'DELIVERED': {
+    color = styles.greenStatus;
+    break;
+  }
+  default:
+    color = styles.blueStatus;
+  }
+  return <div className={color}>{status}</div>;
+};
+
+Status.propTypes = {
+  status: PropTypes.string.isRequired
+};
 
 const OrdersPage = () => {
   const styles = useStyles();
@@ -45,12 +68,12 @@ const OrdersPage = () => {
       <TableContainerRow
         key={order._id}
         orderId={order._id}
-        date={moment.unix(order.dateOfCreation / 1000).format(' DD/MM/YYYY ')}
+        date={moment.unix(order.dateOfCreation / 1000).format(' DD.MM.YYYY ')}
         totalPrice={`${order.totalItemsPrice[0].value} ₴`}
         deliveryPrice={`${
           order.totalPriceToPay[0].value - order.totalItemsPrice[0].value
         } ₴`}
-        status={order.status}
+        status={<Status status={order.status} />}
         button={
           <StandardButton
             title={ORDER_DETAILS}

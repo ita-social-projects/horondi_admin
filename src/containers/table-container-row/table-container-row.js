@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { TableRow, TableCell, Avatar, Checkbox } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
-import ReactHtmlParser from 'react-html-parser';
 
 import {
   CustomizedEditIcon,
