@@ -1,4 +1,5 @@
 import { colors } from '@material-ui/core';
+import theme from './theme';
 
 const white = '#FFFFFF';
 const black = '#000000';
@@ -6,6 +7,8 @@ const black = '#000000';
 export const paletteGenerator = (colorScheme) => ({
   black,
   white,
+  textColor: theme[colorScheme].textColor,
+  bodyColor: theme[colorScheme].bodyColor,
   primary: {
     contrastText: white,
     dark: colors.indigo[900],

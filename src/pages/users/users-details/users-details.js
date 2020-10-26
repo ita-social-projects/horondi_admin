@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
+
 import { withRouter } from 'react-router';
 import { useStyles } from './users-details.styles';
-import useUsersHandler from '../../../utils/use-users-handlers';
+import useUsersHandler from '../../../hooks/user/use-users-handlers';
 import LoadingBar from '../../../components/loading-bar';
-import { config } from '../../../configs';
 import { updateUserStatus } from '../../../redux/users/users.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import UserDetailsCard from './containers/user-details-card';
+import CommentsSection from '../../../components/comments-section/comments-section';
+import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
+import { config } from '../../../configs';
 
 const {
   USER_ACTIVE_TITLE,
-  USER_UNACTIVE_TITLE,
-  SWITCH_USER_STATUS_TITLE
+  USER_INACTIVE_TITLE,
+  SWITCH_USER_STATUS_TITLE,
+  SHOW_COMMENTS_TITLE,
+  HIDE_COMMENTS_TITLE
 } = config.buttonTitles;
+
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
 
@@ -28,10 +34,12 @@ const UsersDetails = (props) => {
   const dispatch = useDispatch();
 
   const { loading } = useSelector(({ Users }) => ({
-    loading: Users.usersLoading
+    loading: Users.userLoading
   }));
 
   const { id } = match.params;
+
+  const [showComments, setShowComments] = useState(false);
 
   const {
     firstName,
@@ -40,6 +48,7 @@ const UsersDetails = (props) => {
     city,
     adress,
     postCode,
+    email,
     isBanned
   } = useUsersHandler(id);
 
@@ -54,7 +63,7 @@ const UsersDetails = (props) => {
   const secondaryData = { adress, postCode };
 
   const status = isBanned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS;
-  const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_UNACTIVE_TITLE;
+  const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_INACTIVE_TITLE;
 
   const userStatusHandler = (userId) => {
     const updateStatus = () => {
@@ -69,6 +78,8 @@ const UsersDetails = (props) => {
     );
   };
 
+  const showCommentsHandler = () => setShowComments(!showComments);
+
   return (
     <Grid className={styles.detailsContainer}>
       <Grid className={styles.userDetails}>
@@ -81,6 +92,18 @@ const UsersDetails = (props) => {
           buttonStatus={buttonStatus}
           buttonHandler={() => userStatusHandler(id)}
         />
+      </Grid>
+      <Grid className={styles.showComments}>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={showCommentsHandler}
+        >
+          {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
+        </Button>
+        {showComments ? (
+          <CommentsSection value={email} commentsType={GET_USER_COMMENTS} />
+        ) : null}
       </Grid>
     </Grid>
   );

@@ -26,8 +26,13 @@ import { loginUser } from '../../../redux/auth/auth.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
-const { formRegExp, loginErrorMessages } = config;
-
+const {
+  ENTER_EMAIL_MESSAGE,
+  ENTER_PASSWORD_MESSAGE,
+  PASSWORD_LANG_MESSAGE,
+  INVALID_EMAIL_MESSAGE,
+  PASSWORD_MIN_LENGTH_MESSAGE
+} = config.loginErrorMessages;
 const LoginPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -43,12 +48,12 @@ const LoginPage = () => {
 
   const formSchema = Yup.object().shape({
     email: Yup.string()
-      .email(loginErrorMessages.INVALID_EMAIL_MESSAGE)
-      .required(loginErrorMessages.ENTER_EMAIL_MESSAGE),
+      .email(INVALID_EMAIL_MESSAGE)
+      .required(ENTER_EMAIL_MESSAGE),
     password: Yup.string()
-      .min(8, loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE)
-      .matches(formRegExp.password, loginErrorMessages.PASSWORD_LANG_MESSAGE)
-      .required(loginErrorMessages.ENTER_PASSWORD_MESSAGE)
+      .min(8, PASSWORD_MIN_LENGTH_MESSAGE)
+      .matches(config.formRegExp.password, PASSWORD_LANG_MESSAGE)
+      .required(ENTER_PASSWORD_MESSAGE)
   });
 
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
@@ -84,6 +89,7 @@ const LoginPage = () => {
           required
           fullWidth
           id='email'
+          data-cy='email'
           label='Email'
           value={values.email}
           error={touched.email && !!errors.email}
@@ -109,6 +115,7 @@ const LoginPage = () => {
             value={values.password}
             error={touched.password && !!errors.password}
             name='password'
+            data-cy='password'
             required
             onChange={handleChange}
             endAdornment={
@@ -133,6 +140,7 @@ const LoginPage = () => {
           <div className={classes.inputError}>{errors.password}</div>
         )}
         <Button
+          data-cy='login'
           type='submit'
           variant='contained'
           color='primary'

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-
 import App from './components/app';
 import configureStore from './store/store';
 
@@ -17,5 +16,5 @@ ReactDOM.render(
 );
 
 if (window.Cypress) {
-  window.store = configureStore;
+  window.store = store;
 }
