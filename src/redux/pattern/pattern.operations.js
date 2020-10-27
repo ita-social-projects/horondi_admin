@@ -64,16 +64,16 @@ export const getPatternById = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  const { data } = result;
-  if (data.getPatternById.message) {
+
+  if (result.data.getPatternById.message) {
     throw new Error(
-      `${data.getPatternById.statusCode} ${
-        patternTranslations[data.getPatternById.message]
+      `${result.data.getPatternById.statusCode} ${
+        patternTranslations[result.data.getPatternById.message]
       }`
     );
   }
 
-  return data.getPatternById;
+  return result.data.getPatternById;
 };
 
 export const deletePattern = async (id) => {
@@ -104,17 +104,16 @@ export const deletePattern = async (id) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
-  const { data } = result;
 
-  if (data.deletePattern.message) {
+  if (result.data.deletePattern.message) {
     throw new Error(
-      `${data.deletePattern.statusCode} ${
-        patternTranslations[data.deletePattern.message]
+      `${result.data.deletePattern.statusCode} ${
+        patternTranslations[result.data.deletePattern.message]
       }`
     );
   }
 
-  return data.deletePattern;
+  return result.data.deletePattern;
 };
 
 export const createPattern = async (payload) => {
@@ -146,26 +145,24 @@ export const createPattern = async (payload) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
-  const { data } = result;
 
-  if (data.addPattern.message) {
+  if (result.data.addPattern.message) {
     throw new Error(
-      `${data.addPattern.statusCode} ${
-        patternTranslations[data.addPattern.message]
+      `${result.data.addPattern.statusCode} ${
+        patternTranslations[result.data.addPattern.message]
       }`
     );
   }
 
-  return data.addPattern;
+  return result.data.addPattern;
 };
 
 export const updatePattern = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
-  const { id, pattern, image } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: { id, pattern, image },
+    variables: payload,
     mutation: gql`
       mutation($id: ID!, $pattern: PatternInput!, $image: Upload!) {
         updatePattern(id: $id, pattern: $pattern, image: $image) {
@@ -188,16 +185,14 @@ export const updatePattern = async (payload) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
-  console.log(data);
-  const { data } = result;
 
-  if (data.updatePattern.message) {
+  if (result.data.updatePattern.message) {
     throw new Error(
-      `${data.updatePattern.statusCode} ${
-        patternTranslations[data.updatePattern.message]
+      `${result.data.updatePattern.statusCode} ${
+        patternTranslations[result.data.updatePattern.message]
       }`
     );
   }
 
-  return data.updatePattern;
+  return result.data.updatePattern;
 };

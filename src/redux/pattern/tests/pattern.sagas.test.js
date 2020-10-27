@@ -8,7 +8,12 @@ import {
 } from '../pattern.sagas';
 import { setPatterns, setPatternLoading, setPattern } from '../pattern.actions';
 
-import { patterns, patternId, pattern } from './pattern.variables';
+import {
+  patterns,
+  patternId,
+  pattern,
+  patternDoesNotExistId
+} from './pattern.variables';
 import {
   getPatternById,
   getAllPatterns,
@@ -54,6 +59,28 @@ describe('pattern sagas test', () => {
       .put(setPatternLoading(true))
       .put(setPattern(fakePattern))
       .put(setPatternLoading(false))
+      .run();
+  });
+  it('should delete pattern', () => {
+    const fakePattern = {
+      data: {
+        deletePattern: {
+          ...pattern
+        }
+      }
+    };
+    expectSaga(handlePatternDelete, patternId)
+      .provide([[matchers.call.fn(getPatternById), fakePattern]])
+      .run();
+  });
+  it('should should receive error', () => {
+    expectSaga(handlePatternDelete, patternDoesNotExistId)
+      .provide([
+        [
+          matchers.call.fn(getPatternById),
+          { statusCode: 404, message: 'PATTERN_NOT_FOUND' }
+        ]
+      ])
       .run();
   });
 });

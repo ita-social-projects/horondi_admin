@@ -8,13 +8,13 @@ import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
-import { config } from '../../configs';
 import LoadingBar from '../../components/loading-bar';
 import { formatPhoneNumber } from '../../utils/format-phone-number';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { useStyles } from './contacts-page.style';
+import { config } from '../../configs';
 
 import {
   getContacts,
@@ -23,7 +23,10 @@ import {
 } from '../../redux/contact/contact.actions';
 
 const { REMOVE_CONTACT_MESSAGE } = config.messages;
-const { REMOVE_CONTACT_TITLE } = config.buttonTitles;
+const { CREATE_CONTACT_TITLE, REMOVE_CONTACT_TITLE } = config.buttonTitles;
+
+const pathToAddContactPage = config.routes.pathToAddContact;
+const tableTitles = config.tableHeadRowTitles.contacts;
 
 const ContactsPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -41,13 +44,6 @@ const ContactsPage = () => {
     contactsCurrentPage: Contact.pagination.contactsCurrentPage,
     contactsPerPage: Contact.pagination.contactsPerPage
   }));
-  const { routes } = config.app;
-  const { formRegExp } = config;
-
-  const { CREATE_CONTACT_TITLE } = config.buttonTitles;
-
-  const pathToAddContactPage = routes.pathToAddContact;
-  const tableTitles = config.tableHeadRowTitles.contacts;
 
   const dispatch = useDispatch();
 
@@ -86,7 +82,10 @@ const ContactsPage = () => {
         id={contact.id}
         phone={formatPhoneNumber(contact.phoneNumber)}
         email={contact.email}
-        address={contact.address[0].value.replace(formRegExp.unwrapHtml, ' ')}
+        address={contact.address[0].value.replace(
+          config.formRegExp.unwrapHtml,
+          ' '
+        )}
         showAvatar={false}
         deleteHandler={() => contactDeleteHandler(contact._id)}
         editHandler={() => {

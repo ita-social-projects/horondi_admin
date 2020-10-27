@@ -9,9 +9,7 @@ import TableContainerRow from '../../../../../containers/table-container-row';
 import { userRoleTranslations } from '../../../../../translations/user.translations';
 import { config } from '../../../../../configs';
 
-const { routes } = config.app;
-
-const pathToRegisterAdminPage = routes.pathToRegisterAdmin;
+const pathToRegisterAdminPage = config.routes.pathToRegisterAdmin;
 
 const tableHeaders = config.tableHeadRowTitles.users.adminTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;

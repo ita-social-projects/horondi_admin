@@ -17,7 +17,7 @@ import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
-import { config, routes } from '../../configs';
+import { config } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
@@ -44,7 +44,7 @@ const PatternForm = ({ pattern, id }) => {
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang, index) => <Tab label={lang} key={lang} />)
+      ? languages.map((lang) => <Tab label={lang} data-cy={lang} key={lang} />)
       : null;
 
   const patternValidationSchema = Yup.object().shape({
@@ -148,11 +148,11 @@ const PatternForm = ({ pattern, id }) => {
                 patternImage ||
                 `${config.patternImageLink}${values.patternImage}`
               }
-              fileName={upload.name}
+              fileName={upload.name || pattern.images.thumbnail}
             />
             <TextField
-              id='material'
               data-cy='material'
+              id='material'
               className={styles.textField}
               variant='outlined'
               label={config.labels.pattern.material}
@@ -161,7 +161,9 @@ const PatternForm = ({ pattern, id }) => {
               error={touched.material && !!errors.material}
             />
             {touched.material && errors.material && (
-              <div className={styles.inputError}>{errors.material}</div>
+              <div data-cy='material-error' className={styles.inputError}>
+                {errors.material}
+              </div>
             )}
           </Paper>
         </Grid>
@@ -179,7 +181,7 @@ const PatternForm = ({ pattern, id }) => {
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.patternItemUpdate}>
               <TextField
-                data-cy='Name'
+                data-cy={`${lang}Name`}
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
@@ -190,7 +192,12 @@ const PatternForm = ({ pattern, id }) => {
                 error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
               />
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
+                <div
+                  data-cy={`${lang}Name-error`}
+                  className={styles.inputError}
+                >
+                  {errors[`${lang}Name`]}
+                </div>
               )}
               <TextField
                 data-cy={`${lang}Description`}
@@ -206,9 +213,11 @@ const PatternForm = ({ pattern, id }) => {
                   !!errors[`${lang}Description`]
                 }
               />
-              {touched[`${lang}Description`] &&
-                errors[`${lang}Description`] && (
-                <div className={styles.inputError}>
+              {touched[`${lang}Description`] && errors[`${lang}Description`] && (
+                <div
+                  data-cy={`${lang}Description-error`}
+                  className={styles.inputError}
+                >
                   {errors[`${lang}Description`]}
                 </div>
               )}
@@ -219,7 +228,7 @@ const PatternForm = ({ pattern, id }) => {
         <Button
           id='contactsBack'
           component={Link}
-          to={routes.pathToPatterns}
+          to={config.routes.pathToPatterns}
           variant='outlined'
           color='primary'
           className={styles.returnButton}

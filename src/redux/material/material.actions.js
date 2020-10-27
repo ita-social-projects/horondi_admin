@@ -14,7 +14,14 @@ import {
   REMOVE_MATERIAL_FROM_STORE,
   COLOR_DIALOG_DATA_TO_STORE,
   SHOW_COLOR_DIALOG_WINDOW,
-  CLEAR_COLORS
+  CLEAR_COLORS,
+  SET_MATERIALS_COLORS,
+  GET_MATERIALS_COLORS,
+  GET_MATERIALS_COLOR,
+  SET_MATERIALS_COLOR,
+  ADD_MATERIAL_COLOR,
+  SET_EDIT_MATERIAL_ID,
+  DELETE_MATERIAL_COLOR
 } from './material.types';
 
 export const getMaterials = (payload) => ({
@@ -62,6 +69,11 @@ export const addMaterial = (payload) => ({
   payload
 });
 
+export const addMaterialColor = (payload) => ({
+  type: ADD_MATERIAL_COLOR,
+  payload
+});
+
 export const setMaterialLoading = (payload) => ({
   type: SET_MATERIAL_LOADING,
   payload
@@ -93,4 +105,29 @@ export const showColorDialogWindow = (payload) => ({
 });
 export const clearColors = () => ({
   type: CLEAR_COLORS
+});
+export const getMaterialColors = (payload) => ({
+  type: GET_MATERIALS_COLORS,
+  payload
+});
+export const setMaterialColors = (payload) => ({
+  type: SET_MATERIALS_COLORS,
+  payload
+});
+export const getMaterialColor = (payload) => ({
+  type: GET_MATERIALS_COLOR,
+  payload
+});
+export const setMaterialColor = (payload) => ({
+  type: SET_MATERIALS_COLOR,
+  payload
+});
+export const setEditMaterialId = (payload) => ({
+  type: SET_EDIT_MATERIAL_ID,
+  payload
+});
+
+export const removeMaterialColor = (payload) => ({
+  type: DELETE_MATERIAL_COLOR,
+  payload
 });

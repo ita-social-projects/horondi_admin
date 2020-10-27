@@ -15,9 +15,8 @@ const setBusinessPages = (businessPage) => ({
   payload: businessPage
 });
 
-const getAllBusinessPages = (payload) => ({
-  type: GET_ALL_BUSINESS_PAGES,
-  payload
+const getAllBusinessPages = () => ({
+  type: GET_ALL_BUSINESS_PAGES
 });
 
 const getBusinessPageById = (payload) => ({

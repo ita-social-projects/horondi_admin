@@ -100,6 +100,86 @@ export const getMaterialById = async (id) => {
   return data.getMaterialById;
 };
 
+export const getMaterialColorsById = async (id) => {
+  const result = await client.query({
+    variables: { id },
+    query: gql`
+      query($id: ID!) {
+        getMaterialById(id: $id) {
+          ... on Material {
+            colors {
+              available
+              code
+              images {
+                thumbnail
+                small
+                medium
+                large
+              }
+              simpleName {
+                lang
+                value
+              }
+              name {
+                lang
+                value
+              }
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  const { data } = result;
+
+  if (data.getMaterialById.message) {
+    throw new Error(`${materialTranslations[data.getMaterialById.message]}`);
+  }
+  return data.getMaterialById;
+};
+
+export const getMaterialColorByCode = async (code) => {
+  const result = await client.query({
+    variables: { code },
+    query: gql`
+      query($code: Int) {
+        getMaterialColorByCode(code: $code) {
+          available
+          code
+          images {
+            thumbnail
+            small
+            medium
+            large
+          }
+          simpleName {
+            lang
+            value
+          }
+          name {
+            lang
+            value
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  const { data } = result;
+
+  if (data.getMaterialColorByCode.message) {
+    throw new Error(
+      `${materialTranslations[data.getMaterialColorByCode.message]}`
+    );
+  }
+  return data.getMaterialColorByCode;
+};
+
 export const deleteMaterial = async (id) => {
   const token = getFromLocalStorage(config.tokenName);
 
@@ -166,9 +246,62 @@ export const createMaterial = async (payload) => {
   return data.addMaterial;
 };
 
-export const updateMaterial = async (id, material, images) => {
+export const createMaterialColor = async (payload) => {
   const token = getFromLocalStorage(config.tokenName);
 
+  const result = await client.mutate({
+    context: { headers: { token } },
+    variables: payload,
+
+    mutation: gql`
+      mutation($id: ID, $color: ColorInputTest, $image: Upload) {
+        addMaterialColor(id: $id, color: $color, image: $image) {
+          ... on Color {
+            code
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+  const { data } = result;
+  return data.createMaterialColor;
+};
+
+export const deleteMaterialColor = async (payload) => {
+  const token = getFromLocalStorage(config.tokenName);
+
+  const result = await client.mutate({
+    context: { headers: { token } },
+    variables: payload,
+
+    mutation: gql`
+      mutation($id: ID, $code: Int) {
+        deleteMaterialColor(id: $id, code: $code) {
+          ... on Material {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+  const { data } = result;
+  return data.deleteMaterialColor;
+};
+
+export const updateMaterial = async (id, material, images) => {
+  const token = getFromLocalStorage(config.tokenName);
   const result = await client.mutate({
     context: { headers: { token } },
     variables: {

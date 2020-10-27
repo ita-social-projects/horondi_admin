@@ -23,20 +23,27 @@ import { useStyles } from './material-form.styles';
 import {
   addMaterial,
   updateMaterial,
-  showColorDialogWindow
+  showColorDialogWindow,
+  setMaterialColor,
+  setEditMaterialId
 } from '../../redux/material/material.actions';
-import { config, routes } from '../../configs';
+import { config } from '../../configs';
 import CheckboxOptions from '../checkbox-options';
 import CreateColor from '../../pages/material/create-color';
-import DialogWindowForComponent from '../dialog-window-for-component';
+import DialogWindowWrapper from '../dialog-window-wrapper';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
   setSnackBarMessage
 } from '../../redux/snackbar/snackbar.actions';
 
-const { languages, materialErrorMessages } = config;
-
+const { languages } = config;
+const {
+  VALIDATION_ERROR,
+  MIN_LENGTH_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  PRICE_VALIDATION_ERROR
+} = config.materialErrorMessages;
 function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -58,38 +65,35 @@ function MaterialForm({ material, id }) {
 
   const formSchema = Yup.object().shape({
     ukName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     enName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     ukDescription: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     enDescription: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     purpose: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(100, MAX_LENGTH_MESSAGE)
+      .required(VALIDATION_ERROR),
 
     additionalPrice: Yup.string()
-      .matches(
-        config.formRegExp.onlyPositiveDigits,
-        materialErrorMessages.PRICE_VALIDATION_ERROR
-      )
-      .required(materialErrorMessages.VALIDATION_ERROR)
+      .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
+      .required(VALIDATION_ERROR)
   });
-  console.log(material);
+
   const {
     values,
     handleChange,
@@ -183,7 +187,7 @@ function MaterialForm({ material, id }) {
       checked: values.available,
       color: 'primary',
       label: config.labels.material.available,
-      handler: (e) => setFieldValue('available', !values.available)
+      handler: () => setFieldValue('available', !values.available)
     }
   ];
 
@@ -206,6 +210,8 @@ function MaterialForm({ material, id }) {
 
   const colorClickHandler = () => {
     dispatch(showColorDialogWindow(true));
+    dispatch(setMaterialColor(''));
+    dispatch(setEditMaterialId(id));
   };
   const colorPaletteClickHandler = () => {
     dispatch(push(`/materials/${id}/colors`));
@@ -296,7 +302,7 @@ function MaterialForm({ material, id }) {
             <Button
               id='go-back'
               component={Link}
-              to={routes.pathToMaterials}
+              to={config.routes.pathToMaterials}
               variant='outlined'
               color='primary'
               className={styles.returnButton}
@@ -315,10 +321,10 @@ function MaterialForm({ material, id }) {
           </div>
         </div>
       </form>
-      <DialogWindowForComponent
+      <DialogWindowWrapper
         buttonType='submit'
         buttonTitle={config.buttonTitles.CLOSE_DIALOG_TITLE}
-        dialogTitle={config.colorTitles.createColorTitle}
+        dialogTitle={config.titles.colorTitles.createColorTitle}
         component={
           <CreateColor
             colorImages={colorImages}
@@ -331,7 +337,6 @@ function MaterialForm({ material, id }) {
     </div>
   );
 }
-
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
@@ -351,7 +356,6 @@ MaterialForm.propTypes = {
     purpose: PropTypes.string,
     available: PropTypes.bool
   }),
-
   values: PropTypes.shape({
     available: PropTypes.bool,
     purpose: PropTypes.string,

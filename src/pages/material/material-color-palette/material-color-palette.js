@@ -1,52 +1,91 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import TableContainerRow from '../../../containers/table-container-row';
 import LoadingBar from '../../../components/loading-bar';
 import { materialTranslations } from '../../../translations/material.translations';
-import { config, routes } from '../../../configs';
+import { config } from '../../../configs';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './material-color-palette-style';
 import { SaveButton } from '../../../components/buttons';
 import {
-  getMaterial,
+  getMaterialColor,
+  getMaterialColors,
+  removeMaterialColor,
+  setEditMaterialId,
   showColorDialogWindow
 } from '../../../redux/material/material.actions';
+import CreateColor from '../create-color';
+import DialogWindowWrapper from '../../../components/dialog-window-wrapper';
+import useMaterialHandlers from '../../../utils/use-material-handlers';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 
-const tableTitles = config.tableHeadRowTitles.materialsColors;
-
+const tableTitles = config.tableHeadRowTitles.materialColors;
+const { REMOVE_MATERIAL_COLOR_MESSAGE } = config.messages;
+const { REMOVE_COLOR_TITLE } = config.buttonTitles;
 const MaterialColorPalette = ({ match }) => {
   const { id } = match.params;
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { material, loading } = useSelector(({ Material }) => ({
-    material: Material.material,
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+  const { colors, loading } = useSelector(({ Material }) => ({
+    colors: Material.materialColors,
     loading: Material.materialLoading
   }));
+  const {
+    colorImagesToUpload,
+    setColorImagesToUpload,
+    colorImages,
+    addNewColorImages
+  } = useMaterialHandlers();
 
   useEffect(() => {
-    dispatch(getMaterial(id));
+    dispatch(getMaterialColors(id));
   }, [dispatch, id]);
 
-  const colorDeleteHandler = null;
-  const colorClickHandler = () => {
+  const colorDeleteHandler = (id, code) => {
+    const removeColor = () => {
+      dispatch(closeDialog());
+      dispatch(
+        removeMaterialColor({
+          id,
+          code
+        })
+      );
+    };
+
+    openSuccessSnackbar(
+      removeColor,
+      REMOVE_COLOR_TITLE,
+      REMOVE_MATERIAL_COLOR_MESSAGE,
+      REMOVE_COLOR_TITLE,
+      'danger'
+    );
+  };
+  const colorEditHandler = (code) => {
+    dispatch(getMaterialColor(code));
     dispatch(showColorDialogWindow(true));
   };
-  const colorPaletteClickHandler = () => {
-    console.log(material._id);
-    dispatch(push(`/material/${id}`));
+  const colorClickHandler = () => {
+    dispatch(showColorDialogWindow(true));
+    dispatch(setEditMaterialId(id));
   };
-  const materialColorItems = material.colors.length
-    ? material.colors.map((colorItem) => (
+  const colorPaletteClickHandler = () => {
+    dispatch(push(`/materials/${id}`));
+  };
+  const materialColorItems = colors
+    ? colors.colors.map((colorItem) => (
       <TableContainerRow
         key={colorItem.code}
         showAvatar
+        showEdit={false}
         image={
           colorItem.images.thumbnail
-            ? `${config.patternImageLink}${colorItem.images.thumbnail}`
+            ? `${config.IMG_URL}${colorItem.images.thumbnail}`
             : ''
         }
         id={colorItem.code}
@@ -57,9 +96,9 @@ const MaterialColorPalette = ({ match }) => {
             ? materialTranslations.YES
             : materialTranslations.NO
         }
-        deleteHandler={() => colorDeleteHandler(colorItem._id)}
+        deleteHandler={() => colorDeleteHandler(id, colorItem.code)}
         editHandler={() => {
-          dispatch(push(`/materials/${colorItem._id}`));
+          colorEditHandler(colorItem.code);
         }}
       />
     ))
@@ -70,19 +109,17 @@ const MaterialColorPalette = ({ match }) => {
   return (
     <div className={styles.container}>
       <Typography variant='h1' className={styles.materialTitle}>
-        {config.materialColorPaletteTitle.mainPageTitle}
+        {config.titles.materialColorPaletteTitle.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
-        <Button
-          id='go-back'
-          onClickHandler={colorPaletteClickHandler}
-          variant='outlined'
-          color='primary'
+        <SaveButton
           className={styles.returnButton}
-          data-cy='goBackButton'
-        >
-          {config.buttonTitles.GO_BACK_TITLE}
-        </Button>
+          data-cy='go-to-material'
+          type='button'
+          color='secondary'
+          title={config.buttonTitles.GO_BACK_TITLE}
+          onClickHandler={colorPaletteClickHandler}
+        />
         <SaveButton
           className={styles.saveButton}
           data-cy='open-dialog'
@@ -92,12 +129,26 @@ const MaterialColorPalette = ({ match }) => {
           onClickHandler={colorClickHandler}
         />
       </div>
-      <div className={styles.tableContainer}>
+      <div>
         <TableContainerGenerator
           tableTitles={tableTitles}
           tableItems={materialColorItems}
         />
       </div>
+      <DialogWindowWrapper
+        buttonType='submit'
+        buttonTitle={config.buttonTitles.CLOSE_DIALOG_TITLE}
+        dialogTitle={config.titles.colorTitles.createColorTitle}
+        component={
+          <CreateColor
+            colorImages={colorImages}
+            addNewColorImages={addNewColorImages}
+            imagesToUpload={colorImagesToUpload}
+            setImagesToUpload={setColorImagesToUpload}
+            id={id}
+          />
+        }
+      />
     </div>
   );
 };
@@ -110,8 +161,6 @@ MaterialColorPalette.propTypes = {
   }).isRequired,
   material: PropTypes.shape({
     _id: PropTypes.string,
-    // name: PropTypes.arrayOf(valueShape),
-    // description: PropTypes.arrayOf(valueShape),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),

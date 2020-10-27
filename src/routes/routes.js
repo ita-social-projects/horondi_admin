@@ -18,10 +18,11 @@ import { config } from '../configs';
 import { history } from '../store/store';
 import MaterialPage from '../pages/material/material-page';
 import MaterialAdd from '../pages/material/material-add';
+import ProductsPage from '../pages/products/products-page';
+import ProductsAdd from '../pages/products/product-add';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
 import UsersDetails from '../pages/users/users-details';
-import ProductsPage from '../pages/products/products-page';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
@@ -31,10 +32,11 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+import ProductEdit from '../pages/products/product-edit';
 import MaterialDetails from '../pages/material/material-details/material-details';
 import MaterialColorPalette from '../pages/material/material-color-palette';
 
-const { routes } = config.app;
+const { routes } = config;
 
 const Routes = () => {
   const { isAuth } = useSelector(({ Auth }) => ({
@@ -78,7 +80,7 @@ const Routes = () => {
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToMaterials} exact component={MaterialPage} />
         <Route
-          path={routes.pathToMaterialsDetails}
+          path={routes.pathToMaterialDetails}
           exact
           component={MaterialDetails}
         />
@@ -114,6 +116,12 @@ const Routes = () => {
         />
         <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
         <Route path={routes.pathToProducts} exact component={ProductsPage} />
+        <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
+        <Route
+          path={routes.pathToEditProduct}
+          exact
+          render={({ match }) => <ProductEdit id={match.params.id} />}
+        />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route path={routes.pathToComments} exact component={CommentsPage} />
         <Route

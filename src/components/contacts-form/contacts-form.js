@@ -42,16 +42,17 @@ const {
   ENTER_LINK_MESSAGE,
   SELECT_IMAGES_MESSAGE
 } = config.contactErrorMessages;
+
 const {
   INVALID_EMAIL_MESSAGE,
   ENTER_EMAIL_MESSAGE
 } = config.loginErrorMessages;
+
 const { enAddressRegex } = config.formRegExp;
 
 const { GO_BACK_TITLE } = config.buttonTitles;
 
-const { routes } = config.app;
-const pathToContactsPage = routes.pathToContacts;
+const pathToContactsPage = config.routes.pathToContacts;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();

@@ -19,11 +19,10 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import LoadingBar from '../../../components/loading-bar';
 import { materialTranslations } from '../../../translations/material.translations';
 
-const { routes } = config.app;
-const { REMOVE_MESSAGE } = config.messages;
+const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { REMOVE_MATERIAL_TITLE, CREATE_MATERIAL_TITLE } = config.buttonTitles;
 
-const pathToMaterialAddPage = routes.pathToAddMaterial;
+const pathToMaterialAddPage = config.routes.pathToAddMaterial;
 const tableTitles = config.tableHeadRowTitles.materials;
 
 const MaterialPage = () => {
@@ -69,7 +68,7 @@ const MaterialPage = () => {
     openSuccessSnackbar(
       removeMaterial,
       REMOVE_MATERIAL_TITLE,
-      REMOVE_MESSAGE,
+      REMOVE_MATERIAL_MESSAGE,
       REMOVE_MATERIAL_TITLE,
       'danger'
     );
@@ -104,7 +103,7 @@ const MaterialPage = () => {
   return (
     <div className={styles.container}>
       <Typography variant='h1' className={styles.materialTitle}>
-        {config.materialTitles.mainPageTitle}
+        {config.titles.materialTitles.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
         <Button
@@ -117,7 +116,7 @@ const MaterialPage = () => {
           {CREATE_MATERIAL_TITLE}
         </Button>
       </div>
-      <div className={styles.tableContainer}>
+      <div>
         <TableContainerGenerator
           tableTitles={tableTitles}
           tableItems={materialItems}

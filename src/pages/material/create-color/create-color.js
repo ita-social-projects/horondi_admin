@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { TextField, AppBar, Tabs, Grid, Tab } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { config } from '../../../configs';
 import useColorHandlers from '../../../utils/use-color-handlers';
 import LoadingBar from '../../../components/loading-bar';
 import {
+  addMaterialColor,
   setNewColorToStore,
   showColorDialogWindow
 } from '../../../redux/material/material.actions';
@@ -16,8 +16,9 @@ import TabPanel from '../../../components/tab-panel';
 import CheckboxOptions from '../../../components/checkbox-options';
 import { SaveButton } from '../../../components/buttons';
 import ImageUploadContainer from '../../../containers/image-upload-container';
+import { config } from '../../../configs';
 
-const { languages, materialErrorMessages, colorErrorMessages } = config;
+const { languages } = config;
 
 function CreateColor({
   imagesToUpload,
@@ -27,10 +28,10 @@ function CreateColor({
 }) {
   const styles = useStyles();
   const dispatch = useDispatch();
-
-  const { loading, colors } = useSelector(({ Material }) => ({
-    loading: Material.colorLoading,
-    colors: Material.colors
+  const { loading, colors, editMaterialId } = useSelector(({ Material }) => ({
+    loading: Material.materialLoading,
+    colors: Material.colors,
+    editMaterialId: Material.editMaterialId
   }));
 
   const { createColor, tabsValue, handleTabsChange } = useColorHandlers();
@@ -44,33 +45,33 @@ function CreateColor({
 
   const formSchema = Yup.object().shape({
     ukName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
+      .required(config.materialErrorMessages.VALIDATION_ERROR),
 
     enName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
+      .required(config.materialErrorMessages.VALIDATION_ERROR),
 
     ukSimpleName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
+      .required(config.materialErrorMessages.VALIDATION_ERROR),
 
     enSimpleName: Yup.string()
-      .min(2, materialErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(100, materialErrorMessages.MAX_LENGTH_MESSAGE)
-      .required(materialErrorMessages.VALIDATION_ERROR),
+      .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
+      .required(config.materialErrorMessages.VALIDATION_ERROR),
 
     code: Yup.string()
-      .min(1, colorErrorMessages.MIN_LENGTH_MESSAGE)
-      .max(8, colorErrorMessages.MAX_CODE_LENGTH_MESSAGE)
+      .min(1, config.colorErrorMessages.MIN_LENGTH_MESSAGE)
+      .max(8, config.colorErrorMessages.MAX_CODE_LENGTH_MESSAGE)
       .matches(
         config.formRegExp.onlyPositiveDigits,
-        colorErrorMessages.CODE_VALIDATION_ERROR
+        config.colorErrorMessages.CODE_VALIDATION_ERROR
       )
-      .required(colorErrorMessages.VALIDATION_ERROR)
+      .required(config.colorErrorMessages.VALIDATION_ERROR)
   });
 
   const {
@@ -107,6 +108,16 @@ function CreateColor({
       addNewColorImages(colorImage);
       dispatch(showColorDialogWindow(false));
       setImagesToUpload(image);
+
+      if (editMaterialId) {
+        dispatch(
+          addMaterialColor({
+            id: editMaterialId,
+            color,
+            image
+          })
+        );
+      }
     }
   });
 
@@ -177,8 +188,8 @@ function CreateColor({
     }
   ];
 
-  const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (evt) => {
+    if (evt.target.files && evt.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
         const filtered = [...colorImages].map((value) => value.toString());
@@ -186,9 +197,9 @@ function CreateColor({
           setFieldValue('colorImage', e.target.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(evt.target.files[0]);
       const imagesNames = imagesToUpload.map(({ name }) => name);
-      const newImages = Array.from(e.target.files).filter(
+      const newImages = Array.from(evt.target.files).filter(
         ({ name }) => !imagesNames.includes(name)
       );
       setFieldValue('image', [...imagesToUpload, ...newImages]);
@@ -252,6 +263,7 @@ function CreateColor({
     </div>
   );
 }
+
 CreateColor.propTypes = {
   imagesToUpload: PropTypes.arrayOf(),
   setImagesToUpload: PropTypes.func,

@@ -7,12 +7,13 @@ import {
   FormControl,
   InputLabel,
   Select,
-  Input
+  Input,
+  MenuItem,
+  Checkbox,
+  Badge
 } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
-import Checkbox from '@material-ui/core/Checkbox';
-import Badge from '@material-ui/core/Badge';
 import { useStyles } from './products-filters-container.styles';
+
 import { productsTranslations } from '../../translations/product.translations';
 
 const badgePosition = {
@@ -44,7 +45,7 @@ const ProductsFiltersContainer = ({
         <Checkbox
           checked={!!productFilter.find((filter) => filter === condition)}
         />
-        <ListItemText primary={labels ? labels[idx] : item} />
+        <ListItemText primary={labels.length ? labels[idx] : item} />
       </MenuItem>
     );
   });
