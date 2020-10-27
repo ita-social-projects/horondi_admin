@@ -254,7 +254,7 @@ export const createMaterialColor = async (payload) => {
     variables: payload,
 
     mutation: gql`
-      mutation($id: ID, $color: MaterialColorInput, $image: Upload) {
+      mutation($id: ID!, $color: MaterialColorInput, $image: Upload) {
         addMaterialColor(id: $id, color: $color, image: $image) {
           ... on Color {
             code
@@ -281,7 +281,7 @@ export const deleteMaterialColor = async (payload) => {
     variables: payload,
 
     mutation: gql`
-      mutation($id: ID, $code: Int) {
+      mutation($id: ID!, $code: Int) {
         deleteMaterialColor(id: $id, code: $code) {
           ... on Material {
             _id
@@ -333,7 +333,6 @@ export const updateMaterial = async (id, material, images) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
-  console.log(result);
   const { data } = result;
 
   if (data.updateMaterial.message) {

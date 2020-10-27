@@ -116,7 +116,8 @@ const MaterialColorPalette = ({ match }) => {
           className={styles.returnButton}
           data-cy='go-to-material'
           type='button'
-          color='secondary'
+          color='primary'
+          variant='outlined'
           title={config.buttonTitles.GO_BACK_TITLE}
           onClickHandler={colorPaletteClickHandler}
         />

@@ -6,8 +6,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   tableNav: {
     display: 'flex',
-    justifyContent: 'space-between',
-    margin: theme.spacing(1),
+    justifyContent: 'flex-start',
+    margin: theme.spacing(2),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
   },
@@ -27,5 +27,9 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 24,
     color: theme.palette.text.disabled,
     fontWeight: 'bold'
+  },
+  returnButton: {
+    marginRight: '20px',
+    padding: '5px'
   }
 }));

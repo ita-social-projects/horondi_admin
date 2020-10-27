@@ -110,12 +110,11 @@ function MaterialForm({ material, id }) {
       ukDescription: material.description[0].value || '',
       enDescription: material.description[1].value || '',
       purpose: material.purpose || '',
-      available: material.available || true,
+      available: material.available || false,
       additionalPrice: +material.additionalPrice[1].value / 100 || 0
     },
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
-      console.log(!colors.length);
       if (!colors.length && !id) {
         dispatch(setSnackBarSeverity('error'));
         dispatch(setSnackBarMessage(config.errorMessages.NO_COLORS));
