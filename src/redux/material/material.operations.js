@@ -254,7 +254,7 @@ export const createMaterialColor = async (payload) => {
     variables: payload,
 
     mutation: gql`
-      mutation($id: ID, $color: ColorInputTest, $image: Upload) {
+      mutation($id: ID, $color: MaterialColorInput, $image: Upload) {
         addMaterialColor(id: $id, color: $color, image: $image) {
           ... on Color {
             code
