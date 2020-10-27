@@ -10,6 +10,7 @@ import SmsIcon from '@material-ui/icons/Sms';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import StyleIcon from '@material-ui/icons/Style';
+import LinkIcon from '@material-ui/icons/Link';
 import routes from './routes';
 
 const menuCategories = [
@@ -24,6 +25,7 @@ const menuCategories = [
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
   ['Новини', routes.pathToNews, ImportContactsIcon],
   ['Запитання покупців', routes.pathToEmailQuestions, LiveHelpIcon],
-  ['Моделі', routes.pathToModels, StyleIcon]
+  ['Моделі', routes.pathToModels, StyleIcon],
+  ['Посилання', routes.pathToHeaders, LinkIcon]
 ];
 export default menuCategories;

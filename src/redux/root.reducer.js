@@ -17,6 +17,7 @@ import Comments from './comments/comments.reducer';
 import EmailQuestions from './email-questions/email-questions.reducer';
 import Stats from './stats/stats.reducer';
 import Model from './model/model.reducer';
+import Header from './header/header.reducer';
 
 const rootReducer = (history) =>
   combineReducers({
@@ -37,6 +38,7 @@ const rootReducer = (history) =>
     EmailQuestions,
     Comments,
     Stats,
-    Model
+    Model,
+    Header
   });
 export default rootReducer;

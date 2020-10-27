@@ -13,7 +13,8 @@ import {
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
-  modelErrorMessages
+  modelErrorMessages,
+  headerErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -176,7 +177,8 @@ export const config = {
   newsPaginationPayload,
   contactsPaginationPayload,
   materialPaginationPayload,
-  modelErrorMessages
+  modelErrorMessages,
+  headerErrorMessages
 };
 export const inputTypes = {
   button: 'button',

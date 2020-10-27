@@ -36,6 +36,9 @@ import EmailQuestionsDetails from '../pages/email-questions/email-question-detai
 import ModelPage from '../pages/model/model-page';
 import ModelAdd from '../pages/model/model-add';
 import ModelDetails from '../pages/model/model-details';
+import HeaderPage from '../pages/header/header-page';
+import HeaderAdd from '../pages/header/header-add';
+import HeaderDetails from '../pages/header/header-details';
 
 import ProductEdit from '../pages/products/product-edit';
 
@@ -81,9 +84,16 @@ const Routes = () => {
         <Route path={routes.pathToNews} exact component={NewsPage} />
         <Route path={routes.pathToPatterns} exact component={PatternPage} />
         <Route path={routes.pathToModels} exact component={ModelPage} />
+        <Route path={routes.pathToHeaders} exact component={HeaderPage} />
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+        <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
         <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route
+          path={routes.pathToHeaderDetails}
+          exact
+          component={HeaderDetails}
+        />
         <Route path={routes.pathToMaterials} exact component={MaterialPage} />
         <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
         <Route
