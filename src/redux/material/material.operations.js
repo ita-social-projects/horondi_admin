@@ -236,7 +236,6 @@ export const createMaterial = async (payload) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
-  console.log(result);
   const { data } = result;
 
   if (data.addMaterial.message) {
