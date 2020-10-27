@@ -115,7 +115,6 @@ function* handleAddMaterial({ payload }) {
     yield put(push(config.routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
-    console.log(error);
   }
 }
 function* handleAddMaterialColor({ payload }) {
@@ -128,7 +127,6 @@ function* handleAddMaterialColor({ payload }) {
     yield put(getMaterialColors(payload.id));
   } catch (error) {
     yield call(handleMaterialError, error);
-    console.log(error);
   }
 }
 
@@ -165,7 +163,6 @@ export function* handleMaterialUpdate({ payload }) {
     yield put(push(config.routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
-    console.log(error);
   }
 }
 

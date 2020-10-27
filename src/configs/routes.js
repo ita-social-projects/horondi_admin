@@ -23,9 +23,15 @@ const routes = {
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/add-contact',
   pathToComments: '/comments',
+  pathToEmailQuestions: '/email-questions',
+  pathToEmailQuestionDetails: '/email-answer/:id',
   pathToMaterials: '/materials',
   pathToAddMaterial: '/material/add',
   pathToMaterialDetails: '/materials/:id',
-  pathToMaterialsColorPalette: '/materials/:id/colors'
+  pathToMaterialsColorPalette: '/materials/:id/colors',
+  pathToStatistic: '/stats',
+  pathToModels: '/models',
+  pathToModelDetails: '/models/:id',
+  pathToAddModel: '/models/add'
 };
 export default routes;
