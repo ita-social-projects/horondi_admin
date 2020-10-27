@@ -31,6 +31,7 @@ import CommentsPage from '../pages/comments/comments';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import ConfirmUser from '../pages/users/confirm-user';
+import HomePageEdit from '../pages/home-page';
 import EmailQuestionsList from '../pages/email-questions';
 import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
 import ModelPage from '../pages/model/model-page';
@@ -126,6 +127,11 @@ const Routes = () => {
         />
         <Route path={routes.pathToCategories} exact component={Categories} />
         <Route path={routes.pathToComments} exact component={CommentsPage} />
+        <Route
+          path={routes.pathToHomePageEdit}
+          exact
+          component={HomePageEdit}
+        />
         <Route
           path={routes.pathToAddCategory}
           exact

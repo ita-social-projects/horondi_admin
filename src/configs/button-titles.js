@@ -37,6 +37,7 @@ const buttonTitles = {
   REMOVE_COMMENT_TITLE: 'Видалити коментар',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+  SAVE_TITLE: 'Зберегти',
   REMOVE_EMAIL_QUESTION: 'Видалити запитання',
   UNDERSTAND: 'Зрозуміло',
   ANSWER: 'Відповісти',
