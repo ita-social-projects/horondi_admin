@@ -3,7 +3,7 @@ import {
   GET_HOME_PAGE_DATA,
   SET_HOME_PAGE_DATA_LOADING,
   UPDATE_HOME_PAGE_DATA,
-  UPDATE_HOME_PAGE_DATA_IN_STORE,
+  UPDATE_HOME_PAGE_DATA_LOCALLY,
   SET_HOME_PAGE_DATA_ERROR
 } from './home.types';
 
@@ -23,7 +23,7 @@ const updateHomePageData = (payload) => ({
 });
 
 const updateHomePageImagesInStore = (id, updatedImages) => ({
-  type: UPDATE_HOME_PAGE_DATA_IN_STORE,
+  type: UPDATE_HOME_PAGE_DATA_LOCALLY,
   payload: { id, updatedImages }
 });
 

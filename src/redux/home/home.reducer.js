@@ -1,7 +1,7 @@
 import {
   SET_HOME_PAGE_DATA,
   SET_HOME_PAGE_DATA_LOADING,
-  UPDATE_HOME_PAGE_DATA_IN_STORE,
+  UPDATE_HOME_PAGE_DATA_LOCALLY,
   SET_HOME_PAGE_DATA_ERROR
 } from './home.types';
 
@@ -19,7 +19,7 @@ const homePageReducer = (state = initialState, action = {}) => {
       photos: action.payload
     };
 
-  case UPDATE_HOME_PAGE_DATA_IN_STORE:
+  case UPDATE_HOME_PAGE_DATA_LOCALLY:
     return {
       ...state,
       photos: state.photos.map((photo) =>
