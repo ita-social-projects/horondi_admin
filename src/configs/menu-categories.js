@@ -4,6 +4,7 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import PaletteIcon from '@material-ui/icons/Palette';
 import PeopleIcon from '@material-ui/icons/People';
+import ListAltIcon from '@material-ui/icons/ListAlt';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import SmsIcon from '@material-ui/icons/Sms';
@@ -26,6 +27,7 @@ const menuCategories = [
   ['Новини', routes.pathToNews, ImportContactsIcon],
   ['Запитання покупців', routes.pathToEmailQuestions, LiveHelpIcon],
   ['Моделі', routes.pathToModels, StyleIcon],
+  ['Замовлення', routes.pathToOrders, ListAltIcon]
   ['Головна сторінка', routes.pathToHomePageEdit, ImageRoundedIcon]
 ];
 export default menuCategories;

@@ -51,6 +51,7 @@ const buttonTitles = {
   SAVE_MATERIAL: 'Зберегти матеріал',
   GO_TO_MATERIAL_COLOR_PALLET: 'Редагувати палітру',
   CLOSE_DIALOG_TITLE: 'Закрити вікно',
+  ORDER_DETAILS: 'Деталі',
   USER_STATUS_TITLE: 'Статус',
   CLEAR_FILTERS: 'Очистити фільтри',
   titleGenerator: (editMode, isMain) => {

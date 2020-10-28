@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { TableRow, TableCell, Avatar, Checkbox } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
-import ReactHtmlParser from 'react-html-parser';
 
 import {
   CustomizedEditIcon,
@@ -32,10 +31,8 @@ const TableContainerRow = ({
 
   const properties = { ...rest };
 
-  const tableCells = Object.values(properties).map((property) => (
-    <TableCell variant='body' key={property}>
-      {ReactHtmlParser(property)}
-    </TableCell>
+  const tableCells = Object.keys(properties).map((property) => (
+    <TableCell key={property}>{properties[property]}</TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
