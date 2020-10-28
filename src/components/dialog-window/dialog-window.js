@@ -53,7 +53,9 @@ const DialogWindow = () => {
               title={CANCEL_TITLE}
               onClickHandler={handleClose}
             />
-            <DeleteButton onClick={onClickHandler}>{buttonTitle}</DeleteButton>
+            <DeleteButton onClickHandler={onClickHandler}>
+              {buttonTitle}
+            </DeleteButton>
           </>
         ) : (
           <StandardButton
