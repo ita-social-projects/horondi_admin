@@ -27,7 +27,7 @@ const menuCategories = [
   ['Новини', routes.pathToNews, ImportContactsIcon],
   ['Запитання покупців', routes.pathToEmailQuestions, LiveHelpIcon],
   ['Моделі', routes.pathToModels, StyleIcon],
-  ['Замовлення', routes.pathToOrders, ListAltIcon]
+  ['Замовлення', routes.pathToOrders, ListAltIcon],
   ['Головна сторінка', routes.pathToHomePageEdit, ImageRoundedIcon]
 ];
 export default menuCategories;
