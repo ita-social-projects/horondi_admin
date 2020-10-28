@@ -49,7 +49,8 @@ const buttonTitles = {
   CREATE_COLOR_TITLE: 'Створити колір',
   REMOVE_COLOR_TITLE: 'Видалити колір',
   SAVE_MATERIAL: 'Зберегти матеріал',
-
+  USER_STATUS_TITLE: 'Статус',
+  CLEAR_FILTERS: 'Очистити фільтри',
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([
       [true, 'Зберегти'],

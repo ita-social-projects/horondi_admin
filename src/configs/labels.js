@@ -1,4 +1,6 @@
 const labels = {
+  sort: 'Сортувати за',
+  search: 'Шукати',
   user: {
     unknownAdmin: 'Невідомий адмін'
   },
