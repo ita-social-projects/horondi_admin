@@ -36,7 +36,7 @@ CheckboxOptions.propTypes = {
   )
 };
 CheckboxOptions.defaultProps = {
-  options: {}
+  options: []
 };
 
 export default CheckboxOptions;

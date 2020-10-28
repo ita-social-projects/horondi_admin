@@ -7,7 +7,8 @@ import {
   Tab,
   AppBar,
   Avatar,
-  Button
+  Button,
+  Paper
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -141,7 +142,7 @@ function MaterialForm({ material, id }) {
 
   const tabPanels = languages.map((lang, index) => (
     <TabPanel key={lang} value={tabsValue} index={index}>
-      <div className={styles.materialItemAdd}>
+      <Paper className={styles.materialItemAdd}>
         <TextField
           data-cy={`${lang}Name`}
           id={`${lang}Name`}
@@ -174,7 +175,7 @@ function MaterialForm({ material, id }) {
             {errors[`${lang}Description`]}
           </div>
         )}
-      </div>
+      </Paper>
     </TabPanel>
   ));
 
@@ -250,7 +251,7 @@ function MaterialForm({ material, id }) {
               ))
               : null}
           </div>
-          <div className={styles.materialItemAdd}>
+          <Paper className={styles.materialItemAdd}>
             <TextField
               data-cy='purpose'
               id='purpose'
@@ -277,7 +278,7 @@ function MaterialForm({ material, id }) {
             {touched.additionalPrice && errors.additionalPrice && (
               <div className={styles.inputError}>{errors.additionalPrice}</div>
             )}
-          </div>
+          </Paper>
         </Grid>
         {languages.length > 0 ? (
           <div>

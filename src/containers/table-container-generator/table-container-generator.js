@@ -16,7 +16,7 @@ const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
   const dense = useSelector(({ Table }) => Table.dense);
 
   return (
-    <div>
+    <>
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -27,7 +27,7 @@ const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
         </Table>
       </TableContainer>
       {pagination && <TablePaginator />}
-    </div>
+    </>
   );
 };
 

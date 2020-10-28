@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   Drawer,
   Divider,
   List,
+  Badge,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -18,16 +19,21 @@ import { useStyles } from './nav-menu.styles';
 import { config } from '../../configs';
 import { setSideMenuStatus } from '../../redux/theme/theme.actions';
 
+const { titles } = config;
+
 const DRAWER_TEMPORARY = 'temporary';
 const DRAWER_PERMANENT = 'permanent';
 const TEMPORARY_WIDTHS = ['sm', 'xs'];
 
 const NavMenu = ({ width }) => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
-
-  const sideMenuStatus = useSelector(({ Theme }) => Theme.sideMenuStatus);
+  const { sideMenuStatus, pendingQuestionsCount } = useSelector(
+    ({ Theme, EmailQuestions }) => ({
+      sideMenuStatus: Theme.sideMenuStatus,
+      pendingQuestionsCount: EmailQuestions.pendingCount
+    })
+  );
 
   const menuItems = config.menuCategories.map((category) => {
     const pathTitle = category[0];
@@ -36,18 +42,20 @@ const NavMenu = ({ width }) => {
 
     return (
       <ListItem
-        onClick={() => {
-          dispatch(setSideMenuStatus(!sideMenuStatus));
-        }}
+        onClick={() => dispatch(setSideMenuStatus(!sideMenuStatus))}
         button
         key={pathTitle}
-        component={Link}
+        component={NavLink}
         to={pathTo}
+        activeClassName={classes.selectedCategory}
       >
         <ListItemIcon>
           <PathIcon />
         </ListItemIcon>
         <ListItemText primary={pathTitle} />
+        {pathTitle === titles.emailQuestionsTitles.mainPageTitle && (
+          <Badge badgeContent={pendingQuestionsCount} color='error' />
+        )}
       </ListItem>
     );
   });

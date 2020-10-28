@@ -5,7 +5,7 @@ import { TableHead, TableRow, TableCell } from '@material-ui/core';
 
 const TableContainerHead = ({ titles }) => {
   const headRow = titles.map((title) => (
-    <TableCell data-cy={title} key={title}>
+    <TableCell variant='head' data-cy={title} key={title}>
       {title}
     </TableCell>
   ));

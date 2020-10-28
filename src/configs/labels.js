@@ -1,4 +1,21 @@
 const labels = {
+  sort: 'Сортувати за',
+  search: 'Шукати',
+  user: {
+    unknownAdmin: 'Невідомий адмін'
+  },
+  model: {
+    name: 'Назва',
+    description: 'Опис',
+    image: 'Фото моделі',
+    category: 'Категорія',
+    available: 'Доступний',
+    show: 'Показати',
+    avatarText: 'Фото',
+    priority: 'Пріорітет',
+    showEnable: 'Так',
+    showDisable: 'Ні'
+  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Код матеріалу',
@@ -69,16 +86,36 @@ const labels = {
       { label: 'Опис', name: 'description', required: false }
     ],
     selectsLabels: [
-      { label: 'Категорія ', name: 'category', type: 'select', required: true },
+      {
+        label: 'Категорія ',
+        name: 'category',
+        type: 'select',
+        required: true
+      },
       {
         label: 'Підкатегорія ',
         name: 'subcategory',
         type: 'select',
         required: true
       },
-      { label: 'Модель ', name: 'model', type: 'select', required: true },
-      { label: 'Колір ', name: 'colors', type: 'select', required: true },
-      { label: 'Гобелен ', name: 'pattern', type: 'select', required: true }
+      {
+        label: 'Модель ',
+        name: 'model',
+        type: 'select',
+        required: true
+      },
+      {
+        label: 'Колір ',
+        name: 'colors',
+        type: 'select',
+        required: true
+      },
+      {
+        label: 'Гобелен ',
+        name: 'pattern',
+        type: 'select',
+        required: true
+      }
     ],
     optionsLabels: [
       { label: 'Розміри', name: 'sizes' },
@@ -100,6 +137,49 @@ const labels = {
     priceLabel: {
       label: 'Ціна(USD) ',
       name: 'basePrice'
+    }
+  },
+  emailQuestionsLabels: {
+    en: {
+      PENDING: 'PENDING',
+      SPAM: 'SPAM',
+      ANSWERED: 'ANSWERED'
+    },
+    ua: {
+      PENDING: 'Очікує відповіді',
+      SPAM: 'Спам',
+      ANSWERED: 'Відповідь надано'
+    },
+    placeholder: 'Відповідь ...'
+  },
+  doughnut: {
+    select: [
+      { label: 'Популярні категорії', value: 'categories' },
+      { label: 'Останні замовлення', value: 'orders' }
+    ],
+    dateMenuOptions: [
+      { label: 'За 7 Днів', value: 7 },
+      { label: 'За 14 Днів', value: 14 },
+      { label: 'За місяць', value: 30 },
+      { label: 'За 3 місяці', value: 90 },
+      { label: 'За рік', value: 365 }
+    ]
+  },
+  bar: {
+    select: [
+      { label: 'Популярні продукти', value: 'products' },
+      { label: 'Виконані замовлення', value: 'orders' },
+      { label: 'Останні зареєстровані користувачі', value: 'users' }
+    ],
+    descriptions: {
+      users: 'Цей день',
+      orders: 'Цей день',
+      products: 'Кількість покупок'
+    },
+    message: {
+      users: 'Кількість користувачів за цей час: ',
+      orders: 'Кількість замовлень за цей час: ',
+      products: 'Кількість продуктів за цей час: '
     }
   }
 };

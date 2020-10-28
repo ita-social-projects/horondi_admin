@@ -10,7 +10,6 @@ const messages = {
   REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
-  REMOVE_MATERIAL_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?',
   REMOVE_MATERIAL_COLOR_MESSAGE: 'Ви впевнені, що хочете видалити цей колір?',
   EMAIL_QUESTION_REMOVE_MESSAGE:
     'Ви впевнені, що хочете видалити це запитання?',
@@ -22,6 +21,7 @@ const messages = {
     'Відповідь не доступна для запитань відзначених як "СПАМ"',
   MODEL_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю модель?',
   ERROR: 'ПОМИЛКА',
-  EMPTY_LIST: 'Список порожній'
+  EMPTY_LIST: 'Список порожній',
+  REMOVE_MATERIAL_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?'
 };
 export default messages;

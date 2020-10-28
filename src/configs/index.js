@@ -1,3 +1,4 @@
+import { colors } from '@material-ui/core';
 import routes from './routes';
 import menuCategories from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
@@ -11,7 +12,8 @@ import {
   patternErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
-  errorMessages
+  errorMessages,
+  modelErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -22,12 +24,13 @@ import {
   materialPaginationPayload
 } from './pagination';
 import titles from './titles';
+import { sort } from './sort';
 
 export const config = {
   app: {
     title: 'Horondi Admin Portal',
     serverUrl: 'http://localhost:5000/',
-    drawerWidth: 220,
+    drawerWidth: 230,
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
@@ -68,6 +71,10 @@ export const config = {
   theme: {
     DARK_THEME: 'dark',
     LIGHT_THEME: 'light'
+  },
+  forbiddenRolesFromDeleting: ['superadmin'],
+  dialogFormTitles: {
+    REGISTER_ADMIN: 'Створити спецкористувача'
   },
   paginationPayload: {
     skip: 0,
@@ -130,6 +137,26 @@ export const config = {
       value: ''
     }
   ],
+  doughnut: {
+    colors: [
+      colors.green[500],
+      colors.red[700],
+      colors.amber[600],
+      colors.indigo[500]
+    ],
+    initialValues: {
+      names: [],
+      counts: [],
+      relations: [],
+      total: null
+    }
+  },
+  bar: {
+    initialValues: {
+      labels: [],
+      counts: []
+    }
+  },
   UAH: 'грн',
   buttonTitles,
   detailTitles,
@@ -150,5 +177,11 @@ export const config = {
   errorMessages,
   newsPaginationPayload,
   contactsPaginationPayload,
-  materialPaginationPayload
+  materialPaginationPayload,
+  modelErrorMessages,
+  sort
+};
+export const inputTypes = {
+  button: 'button',
+  submit: 'submit'
 };

@@ -2,8 +2,17 @@ import { getItems, setItems } from '../../utils/client';
 import { config } from '../../configs';
 
 const getAllUsersQuery = `
-query($filter: UserFilterInput) {
-  getAllUsers(filter: $filter) {
+query(
+  $filter: UserFilterInput
+  $pagination: Pagination
+  $sort: UserSortInput
+) {
+  getAllUsers(
+  filter: $filter
+  pagination: $pagination
+  sort: $sort
+  ) {
+  items {
     _id
     firstName
     lastName
@@ -11,6 +20,8 @@ query($filter: UserFilterInput) {
     role
     phoneNumber
     banned
+    }
+    count
   }
 }
 `;
@@ -39,8 +50,14 @@ query($id: ID!) {
 const deleteUserMutation = `
 mutation($id: ID!) {
   deleteUser(id: $id) {
+   ... on User {
     firstName
     lastName
+    }
+    ... on Error {
+    message
+    statusCode
+    }
   }
 }
 `;
@@ -100,10 +117,17 @@ query($token: String!){
   }
 }`;
 
-const getAllUsers = async (options = {}) => {
-  const { filter } = options;
+const getAllUsers = async (userState,tableState) => {
+  const options = {
+    filter: userState.filters,
+    pagination: {
+      skip: tableState.pagination.currentPage * tableState.pagination.rowsPerPage,
+      limit: tableState.pagination.rowsPerPage
+    },
+    sort: userState.sort
+  };
 
-  const result = await getItems(getAllUsersQuery, { filter });
+  const result = await getItems(getAllUsersQuery, options);
 
   const { data } = result;
 
@@ -122,6 +146,12 @@ const deleteUser = async (id) => {
   const result = await setItems(deleteUserMutation, { id });
 
   const { data } = result;
+
+  if (data.deleteUser.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.deleteUser.message]}`
+    );
+  }
 
   return data.deleteUser;
 };

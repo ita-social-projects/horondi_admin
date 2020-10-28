@@ -3,6 +3,10 @@ const titles = {
     mainPageTitle: 'Iнформація про гобелени',
     createPageTitle: 'Створити гобелен'
   },
+  homePageEdit: {
+    mainPageTitle: 'Головна сторінка',
+    ourLooksImages: 'Стиль Горонді'
+  },
   emailQuestionsTitles: {
     mainPageTitle: 'Запитання покупців',
     detailPageTitle: 'Деталі запитання'
@@ -14,7 +18,6 @@ const titles = {
   colorTitles: {
     createColorTitle: 'Створити колір'
   },
-
   materialColorPaletteTitle: {
     mainPageTitle: 'Iнформація про палітру кольорів'
   },

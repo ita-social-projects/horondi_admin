@@ -2,10 +2,9 @@ import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles((theme) => ({
   detailsContainer: {
-    width: '95%',
-    marginTop: 70,
-    margin: theme.spacing(2),
-    padding: 25
+    width: '100%',
+    margin: theme.spacing(1),
+    padding: 15
   },
   userInputPanel: {
     width: '90%',
@@ -17,7 +16,7 @@ export const useStyles = makeStyles((theme) => ({
     minWidth: 120
   },
   formSelect: {
-    width: 150
+    width: 120
   },
   registrationTitle: {
     margin: '10px 0'

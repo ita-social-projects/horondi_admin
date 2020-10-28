@@ -6,9 +6,7 @@ export const useStyles = makeStyles((theme) => ({
       '& div': {
         '& div': {
           paddingLeft: 0,
-          paddingRight: 0,
-          marginLeft: '0 !important',
-          marginRight: '0 !important'
+          paddingRight: 0
         }
       }
     }
@@ -16,13 +14,13 @@ export const useStyles = makeStyles((theme) => ({
   materialItemAdd: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '20px 0'
+    margin: '20px 0 !important'
   },
   textField: {
     margin: '10px !important',
     '& div': {
       '& textarea': {
-        paddingLeft: '1rem !important'
+        padding: '0 1rem !important'
       }
     }
   },

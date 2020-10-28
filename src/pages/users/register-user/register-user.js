@@ -8,11 +8,11 @@ import {
   InputLabel,
   FormControl,
   Paper,
-  Typography,
   FormHelperText
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
 import { useStyles } from './register-user.styles';
 import { config } from '../../../configs';
 import { SaveButton } from '../../../components/buttons';
@@ -21,7 +21,7 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { userRoles, allowedforRegistrationRoles, loginErrorMessages } = config;
 
-const RegisterUser = () => {
+const RegisterUser = ({ handleClose }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -64,9 +64,6 @@ const RegisterUser = () => {
   return (
     <Grid className={styles.detailsContainer}>
       <Grid className={styles.userDetails}>
-        <Typography variant='h2' className={styles.registrationTitle}>
-          Створити спецкористувача
-        </Typography>
         <form onSubmit={handleSubmit}>
           <Paper className={styles.userInputPanel}>
             <FormControl
@@ -125,6 +122,10 @@ const RegisterUser = () => {
       </Grid>
     </Grid>
   );
+};
+
+RegisterUser.propTypes = {
+  handleClose: PropTypes.func.isRequired
 };
 
 export default RegisterUser;
