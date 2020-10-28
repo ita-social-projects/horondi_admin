@@ -10,7 +10,8 @@ import {
   clearColors,
   setMaterialColors,
   setMaterialColor,
-  getMaterialColors
+  getMaterialColors,
+  removeMaterialColorFromStore
 } from './material.actions';
 // eslint-disable-next-line import/no-cycle
 import {
@@ -148,7 +149,7 @@ export function* handleMaterialColorDelete({ payload }) {
     yield call(deleteMaterialColor, payload);
     yield put(setMaterialLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    yield put(getMaterialColors(payload.id));
+    yield put(removeMaterialColorFromStore(payload.code));
   } catch (error) {
     yield call(handleMaterialError, error);
   }

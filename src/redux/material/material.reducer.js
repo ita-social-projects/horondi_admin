@@ -12,7 +12,8 @@ import {
   CLEAR_COLORS,
   SET_MATERIALS_COLORS,
   SET_MATERIALS_COLOR,
-  SET_EDIT_MATERIAL_ID
+  SET_EDIT_MATERIAL_ID,
+  REMOVE_MATERIAL_COLOR_FROM_STORE
 } from './material.types';
 
 export const initialState = {
@@ -116,6 +117,11 @@ const materialReducer = (state = initialState, action = {}) => {
       ...state,
       editMaterialId: action.payload
     };
+  case REMOVE_MATERIAL_COLOR_FROM_STORE:
+    const materialColorList = state.materialColors.colors.filter(
+      (color) => color.code !== action.payload
+    );
+    return { ...state, materialColors: { colors: materialColorList } };
   default:
     return state;
   }

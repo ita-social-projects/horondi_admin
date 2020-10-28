@@ -21,7 +21,8 @@ import {
   SET_MATERIALS_COLOR,
   ADD_MATERIAL_COLOR,
   SET_EDIT_MATERIAL_ID,
-  DELETE_MATERIAL_COLOR
+  DELETE_MATERIAL_COLOR,
+  REMOVE_MATERIAL_COLOR_FROM_STORE
 } from './material.types';
 
 export const getMaterials = (payload) => ({
@@ -129,5 +130,9 @@ export const setEditMaterialId = (payload) => ({
 
 export const removeMaterialColor = (payload) => ({
   type: DELETE_MATERIAL_COLOR,
+  payload
+});
+export const removeMaterialColorFromStore = (payload) => ({
+  type: REMOVE_MATERIAL_COLOR_FROM_STORE,
   payload
 });

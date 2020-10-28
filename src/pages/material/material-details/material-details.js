@@ -58,4 +58,4 @@ MaterialDetails.defaultProps = {
   material: {}
 };
 
-export default withRouter(MaterialDetails);
+export default MaterialDetails;
