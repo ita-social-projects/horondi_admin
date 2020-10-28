@@ -31,6 +31,10 @@ const titles = {
       CANCELLED: 'Відхилені',
       CREATED: 'Створені'
     }
+  },
+  orderTitles: {
+    filterBy: 'Фільтрувати',
+    orders: 'замовлень'
   }
 };
 
