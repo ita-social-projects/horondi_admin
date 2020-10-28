@@ -1,30 +1,11 @@
 import {
-  GET_NEWS,
-  SET_NEWS,
-  SET_NEWS_LOADING,
-  DELETE_ARTICLE,
-  ADD_ARTICLE,
-  GET_ARTICLE,
-  SET_ARTICLE,
-  UPDATE_ARTICLE,
-  SET_NEWS_ERROR,
-  SET_CURRENT_PAGE,
-  SET_NEWS_PER_PAGE,
-  SET_PAGES_COUNT
-} from '../news.types';
-import {
-  getArticle,
-  getNews,
   setCurrentPage,
   setPagesCount,
   setArticle,
   setNews,
   setNewsError,
   setNewsLoading,
-  setNewsPerPage,
-  updateArticle,
-  deleteArticle,
-  addArticle
+  setNewsPerPage
 } from '../news.actions';
 import {
   currentPage,

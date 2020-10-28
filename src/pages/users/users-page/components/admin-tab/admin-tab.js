@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { useStyles } from './admin-tab.styles';
 import TableContainerGenerator from '../../../../../containers/table-container-generator';
 import TableContainerRow from '../../../../../containers/table-container-row';
 import { userRoleTranslations } from '../../../../../translations/user.translations';
 import { config } from '../../../../../configs';
 import RegisterDialog from '../register-dialog';
-import useFormDialog from '../../../../../hooks/form-dialog/useFormDialog';
+import useFormDialog from '../../../../../hooks/form-dialog/use-form-dialog';
+import LoadingBar from '../../../../../components/loading-bar';
 
 const tableHeaders = config.tableHeadRowTitles.users.adminTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
@@ -17,6 +19,7 @@ const { forbiddenRolesFromDeleting } = config;
 
 const AdminTab = (props) => {
   const { list, onDelete } = props;
+  const userLoading = useSelector(({Users}) => Users.userLoading);
 
   const {
     isRegisterDialogOpen,
@@ -62,11 +65,15 @@ const AdminTab = (props) => {
           </Button>
         </div>
       </div>
-      <TableContainerGenerator
-        id='adminsTable'
-        tableTitles={tableHeaders}
-        tableItems={adminItems}
-      />
+      {userLoading
+        ? <LoadingBar />
+        : <TableContainerGenerator
+          pagination
+          id='adminsTable'
+          tableTitles={tableHeaders}
+          tableItems={adminItems}
+        />
+      }
       <RegisterDialog
         data-cy='register-dialog'
         isOpen={isRegisterDialogOpen}

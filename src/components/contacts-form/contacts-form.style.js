@@ -24,19 +24,11 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     marginRight: 0
   },
-  inputLabel: {
-    fontSize: 14,
-    '&.shrink': {
-      transform: 'translate(32px, -3px) scale(0.75)'
-    }
-  },
   textField: {
     '&:first-letter': {
       textTransform: 'capitalize'
     },
-    padding: 10,
-    margin: '5px 0',
-    width: '100%'
+    margin: '10px',
   },
   inputError: {
     color: '#e60000',

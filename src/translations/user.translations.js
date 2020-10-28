@@ -3,3 +3,7 @@ export const userRoleTranslations = {
   admin: 'Адмін',
   user: 'Користувач'
 };
+
+export const userLabelsTranslations = {
+  sort: 'Сортувати'
+};
