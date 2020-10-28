@@ -11,13 +11,7 @@ Quill.debug('error');
 Quill.register(VideoBlot);
 Quill.register(ImageBlot);
 
-const Editor = ({
-  value,
-  placeholder,
-  onEditorChange,
-  files = [],
-  setFiles
-}) => {
+const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
   const reactQuillRef = useRef(null);
   const inputOpenImageRef = useRef();
 
@@ -28,7 +22,7 @@ const Editor = ({
     onEditorChange(html);
   };
 
-  const imageHandler = (e) => {
+  const imageHandler = () => {
     inputOpenImageRef.current.click();
   };
 
@@ -67,6 +61,9 @@ const Editor = ({
   const modules = {
     toolbar: {
       container: '#toolbar'
+    },
+    clipboard: {
+      matchVisual: false
     }
   };
 
@@ -149,19 +146,11 @@ Editor.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onEditorChange: PropTypes.func.isRequired,
-  setFiles: PropTypes.func,
-  files: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      size: PropTypes.number,
-      type: PropTypes.string
-    })
-  )
+  setFiles: PropTypes.func
 };
 
 Editor.defaultProps = {
-  setFiles: () => {},
-  files: []
+  setFiles: () => {}
 };
 
 export default Editor;

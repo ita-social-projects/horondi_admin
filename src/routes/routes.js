@@ -32,6 +32,7 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+import HomePageEdit from '../pages/home-page';
 import EmailQuestionsList from '../pages/email-questions';
 import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
 import ModelPage from '../pages/model/model-page';
@@ -132,6 +133,11 @@ const Routes = () => {
           path={routes.pathToRegisterAdmin}
           exact
           component={RegisterUser}
+        />
+        <Route
+          path={routes.pathToHomePageEdit}
+          exact
+          component={HomePageEdit}
         />
         <Route
           path={routes.pathToAddCategory}
