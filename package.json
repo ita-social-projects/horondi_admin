@@ -17,7 +17,7 @@
     "connected-react-router": "^6.8.0",
     "cors": "^2.8.5",
     "create-components-react": "^2.1.4",
-    "formik": "^2.1.5",
+    "formik": "^2.2.1",
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
     "history": "^4.10.1",

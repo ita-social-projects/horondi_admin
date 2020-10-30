@@ -45,7 +45,7 @@ export const useStyles = makeStyles((theme) => ({
     display:'flex',
     justifyContent:'space-between',
     alignItems:'center',
-    marginBottom:10
+    marginBottom:14
   },
   dateContainer: {
     display:'flex',
@@ -61,5 +61,11 @@ export const useStyles = makeStyles((theme) => ({
   deliveryDetails: {
     display:'grid',
     gridGap:10
+  },
+  renderList: {
+    margin: '6px 0px',
+    '& > li': {
+      marginBottom: '5px'
+    }
   }
 }));

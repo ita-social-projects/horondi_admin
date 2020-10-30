@@ -8,7 +8,7 @@ import tableHeadRowTitles from '../../../configs/table-head-row-titles';
 
 const Products = ({data,setFieldValue}) => {
   const classes = useStyles()
-  const {orderProduct} = labels
+  const {orderProduct, sizeValues} = labels
   const {items} = data
   const {orderProductTitles} = tableHeadRowTitles
   const initialItem = {additions:[],colors:[],size:{},closureColor:'',quantity:0}
@@ -28,6 +28,22 @@ const Products = ({data,setFieldValue}) => {
         editHandler={() => setSelectedItem(product)}
       />
     ))
+
+  const renderList = (items, label) => {
+    if (!items.length) return null;
+    return (
+      <div>
+        <label htmlFor={label}><b>{label}:</b></label>
+        <ul id={label} className={classes.renderList}>
+          {items.map(item => (
+            <li key={item[0].value}>{item[0].value}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  const sizes = Object.entries(sizeValues).map(([key,value])=>[{value:`${value}: ${size[key]}`}])
 
   return (
     <div className={classes.products}>
@@ -50,6 +66,15 @@ const Products = ({data,setFieldValue}) => {
               <span id={item}>{selectedItem[item].length ? selectedItem[item][0].value : 'Не вказано'}</span>
             </div>
           ))}
+          <div className={classes.productField}>
+            <label htmlFor='closureColor'>
+              <b>Колір замка:</b>
+            </label>
+            <span id='closureColor'>{closureColor || 'Не вказано'}</span>
+          </div>
+          {renderList(additions,'Додатки')}
+          {renderList(colors,'Кольори')}
+          {renderList(sizes,'Розмір')}
         </div>
       </Modal>
     </div>

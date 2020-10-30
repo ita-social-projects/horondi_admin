@@ -122,10 +122,10 @@ export const getOrderById = (id) => {
   return getItems(query, { id });
 };
 
-export const updateOrder = (data)=> {
+export const updateOrder = (order)=> {
   const query = `
-    mutation updateOrder($id: ID!, $order:OrderInput!){
-  updateOrder(id:$id,order:$order) {
+    mutation updateOrder($order:OrderInput!){
+  updateOrder(order:$order) {
   ...on Order {
       _id
       status
@@ -240,7 +240,7 @@ export const updateOrder = (data)=> {
   }
 }
   `
-  return setItems(query,data)
+  return setItems(query, { order })
 }
 
 export const getAllOrders = async (skip, limit) => {

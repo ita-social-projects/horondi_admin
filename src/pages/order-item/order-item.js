@@ -34,22 +34,23 @@ const OrderItem = ({ id }) => {
     if(order.status!==initialValues.status&&!['CREATED','CONFIRMED'].includes(order.status)) {
       const updateOrderSnackbar = () => {
         dispatch(closeDialog());
-        dispatch(updateOrder({id,order}))
+        dispatch(updateOrder(order))
       };
       openSuccessSnackbar(
         updateOrderSnackbar,
         dialogTitle,
         dialogContent,
-        buttonTitle
+        buttonTitle,
+        false
       );
     } else {
-      dispatch(updateOrder({id,order}))
+      dispatch(updateOrder(order))
     }
   }
 
   const {handleChange,values, handleSubmit, setFieldValue, dirty, initialValues, resetForm} = useFormik({
     initialValues: {},
-    onSubmit: handleFormSubmit
+    onSubmit: handleFormSubmit,
   })
 
   useEffect(() => {
@@ -59,10 +60,12 @@ const OrderItem = ({ id }) => {
   }, [dispatch,id]);
 
   useEffect(()=> {
-    resetForm({ values: selectedOrder });
+    if(selectedOrder) {
+      resetForm({ values: selectedOrder });
+    }
   },[selectedOrder,resetForm])
 
-  const formikHandleChange = ['CREATED','CONFIRMED'].includes(initialValues.status) ? handleChange : ()=> {}
+  const formikHandleChange = ['CREATED','CONFIRMED'].includes(selectedOrder && selectedOrder.status) ? handleChange : ()=> {}
 
   if(orderLoading) {
     return <LoadingBar />

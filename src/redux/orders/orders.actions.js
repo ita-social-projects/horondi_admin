@@ -21,8 +21,9 @@ const setOrder = (payload) => ({
   payload
 });
 
-const updateOrder = () => ({
+const updateOrder = (payload) => ({
   type: UPDATE_ORDER,
+  payload
 })
 
 const getOrderList = (payload) => ({
