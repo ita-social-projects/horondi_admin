@@ -140,80 +140,80 @@ const labels = {
     }
   },
   orderProduct: {
-    category:'Категорія',
-    subcategory:'Підкатегорія',
-    model:'Модель',
-    name:'Назва',
-    pattern:'Гобелен',
-    closure:'Матеріал замку',
-    bottomMaterial:'Матеріал дна',
-    bottomColor:'Колір дна',
-    actualPrice:'Ціна',
+    category: 'Категорія',
+    subcategory: 'Підкатегорія',
+    model: 'Модель',
+    name: 'Назва',
+    pattern: 'Гобелен',
+    closure: 'Матеріал замку',
+    bottomMaterial: 'Матеріал дна',
+    bottomColor: 'Колір дна',
+    actualPrice: 'Ціна'
   },
   orderRecipient: {
     firstName: 'Ім\'я',
     lastName: 'Прізвище',
     patronymicName: 'По-батькові',
-    email:'e-mail',
-    phoneNumber:'Номер телефону'
+    email: 'e-mail',
+    phoneNumber: 'Номер телефону'
   },
   deliveryDetails: {
-    country:'Країна',
-    region:'Область',
-    city:'Місто',
-    zipcode:'Поштовий індекс',
-    street:'Вулиця',
-    buildingNumber:'Номер будинку',
-    appartment:'Номер квартири',
+    country: 'Країна',
+    region: 'Область',
+    city: 'Місто',
+    zipcode: 'Поштовий індекс',
+    street: 'Вулиця',
+    buildingNumber: 'Номер будинку',
+    appartment: 'Номер квартири'
   },
   sizeValues: {
     heightInCm: 'Висота (см.)',
     widthInCm: 'Ширина (см.)',
     depthInCm: 'Глибина (см.)',
     volumeInLiters: 'Об\'єм (л.)',
-    weightInKg: 'Вага (кг.)',
-    emailQuestionsLabels: {
-      en: {
-        PENDING: 'PENDING',
-        SPAM: 'SPAM',
-        ANSWERED: 'ANSWERED'
-      },
-      ua: {
-        PENDING: 'Очікує відповіді',
-        SPAM: 'Спам',
-        ANSWERED: 'Відповідь надано'
-      },
-      placeholder: 'Відповідь ...'
+    weightInKg: 'Вага (кг.)'
+  },
+  emailQuestionsLabels: {
+    en: {
+      PENDING: 'PENDING',
+      SPAM: 'SPAM',
+      ANSWERED: 'ANSWERED'
     },
-    doughnut: {
-      select: [
-        { label: 'Популярні категорії', value: 'categories' },
-        { label: 'Останні замовлення', value: 'orders' }
-      ],
-      dateMenuOptions: [
-        { label: 'За 7 Днів', value: 7 },
-        { label: 'За 14 Днів', value: 14 },
-        { label: 'За місяць', value: 30 },
-        { label: 'За 3 місяці', value: 90 },
-        { label: 'За рік', value: 365 }
-      ]
+    ua: {
+      PENDING: 'Очікує відповіді',
+      SPAM: 'Спам',
+      ANSWERED: 'Відповідь надано'
     },
-    bar: {
-      select: [
-        { label: 'Популярні продукти', value: 'products' },
-        { label: 'Виконані замовлення', value: 'orders' },
-        { label: 'Останні зареєстровані користувачі', value: 'users' }
-      ],
-      descriptions: {
-        users: 'Цей день',
-        orders: 'Цей день',
-        products: 'Кількість покупок'
-      },
-      message: {
-        users: 'Кількість користувачів за цей час: ',
-        orders: 'Кількість замовлень за цей час: ',
-        products: 'Кількість продуктів за цей час: '
-      }
+    placeholder: 'Відповідь ...'
+  },
+  doughnut: {
+    select: [
+      { label: 'Популярні категорії', value: 'categories' },
+      { label: 'Останні замовлення', value: 'orders' }
+    ],
+    dateMenuOptions: [
+      { label: 'За 7 Днів', value: 7 },
+      { label: 'За 14 Днів', value: 14 },
+      { label: 'За місяць', value: 30 },
+      { label: 'За 3 місяці', value: 90 },
+      { label: 'За рік', value: 365 }
+    ]
+  },
+  bar: {
+    select: [
+      { label: 'Популярні продукти', value: 'products' },
+      { label: 'Виконані замовлення', value: 'orders' },
+      { label: 'Останні зареєстровані користувачі', value: 'users' }
+    ],
+    descriptions: {
+      users: 'Цей день',
+      orders: 'Цей день',
+      products: 'Кількість покупок'
+    },
+    message: {
+      users: 'Кількість користувачів за цей час: ',
+      orders: 'Кількість замовлень за цей час: ',
+      products: 'Кількість продуктів за цей час: '
     }
   }
 };

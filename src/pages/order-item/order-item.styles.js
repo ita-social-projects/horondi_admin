@@ -63,7 +63,7 @@ export const useStyles = makeStyles((theme) => ({
     gridGap:10
   },
   renderList: {
-    margin: '6px 0px',
+    margin: '9px 0px',
     '& > li': {
       marginBottom: '5px'
     }

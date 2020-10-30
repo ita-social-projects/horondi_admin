@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 import { useStyles } from './users-page.styles';
 import { deleteUser, getUsers } from '../../../redux/users/users.actions';
 import TabPanel from '../../../components/tab-panel';
 import { config } from '../../../configs';
-import LoadingBar from '../../../components/loading-bar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import AdminTab from './components/admin-tab';
