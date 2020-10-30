@@ -33,8 +33,8 @@ const getAllNews = async (skip, limit) => {
       }
     `
   });
-  const { data } = result;
-  return data.getAllNews;
+
+  return result.data.getAllNews;
 };
 
 const getArticleById = async (id) => {
@@ -81,17 +81,16 @@ const getArticleById = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  const { data } = result;
 
-  if (data.getNewsById.message) {
+  if (result.data.getNewsById.message) {
     throw new Error(
-      `${data.getNewsById.statusCode} ${
-        newsTranslations[data.getNewsById.message]
+      `${result.data.getNewsById.statusCode} ${
+        newsTranslations[result.data.getNewsById.message]
       }`
     );
   }
 
-  return data.getNewsById;
+  return result.data.getNewsById;
 };
 
 const deleteArticle = async (id) => {
@@ -117,17 +116,16 @@ const deleteArticle = async (id) => {
     fetchPolicy: 'no-cache'
   });
   await client.resetStore();
-  const { data } = result;
 
-  if (data.deleteNews.message) {
+  if (result.data.deleteNews.message) {
     throw new Error(
-      `${data.deleteNews.statusCode} ${
-        newsTranslations[data.deleteNews.message]
+      `${result.data.deleteNews.statusCode} ${
+        newsTranslations[result.data.deleteNews.message]
       }`
     );
   }
 
-  return data.deleteNews;
+  return result.data.deleteNews;
 };
 
 const createArticle = async (news) => {
@@ -153,15 +151,16 @@ const createArticle = async (news) => {
     variables: { news }
   });
   await client.resetStore();
-  const { data } = result;
 
-  if (data.addNews.message) {
+  if (result.data.addNews.message) {
     throw new Error(
-      `${data.addNews.statusCode} ${newsTranslations[data.addNews.message]}`
+      `${result.data.addNews.statusCode} ${
+        newsTranslations[result.data.addNews.message]
+      }`
     );
   }
 
-  return data.addNews;
+  return result.data.addNews;
 };
 
 const updateArticle = async (id, news) => {
@@ -190,17 +189,16 @@ const updateArticle = async (id, news) => {
     fetchPolicy: 'no-cache'
   });
   await client.resetStore();
-  const { data } = result;
 
-  if (data.updateNews.message) {
+  if (result.data.updateNews.message) {
     throw new Error(
-      `${data.updateNews.statusCode} ${
-        newsTranslations[data.updateNews.message]
+      `${result.data.updateNews.statusCode} ${
+        newsTranslations[result.data.updateNews.message]
       }`
     );
   }
 
-  return data.updateNews;
+  return result.data.updateNews;
 };
 
 export {

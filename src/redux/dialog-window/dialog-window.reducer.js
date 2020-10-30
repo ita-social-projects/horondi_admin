@@ -1,12 +1,13 @@
 import { CLOSE_DIALOG, SHOW_DIALOG } from './dialog-window.types';
 
-const initialState = {
+export const initialState = {
   isOpen: false,
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
-  onClickHandler: () => {},
-  showIcon: true
+  showIcon: true,
+  showCancelButton: true,
+  onClickHandler: () => {}
 };
 
 const dialogWindowReducer = (state = initialState, action = {}) => {

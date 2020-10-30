@@ -16,11 +16,9 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 
 const Categories = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { tableHeadRowTitles, buttonTitles, app, IMG_URL } = config;
-  const { routes } = app;
-  const { ADD_CATEGORY } = buttonTitles;
+  const { IMG_URL } = config;
+  const { ADD_CATEGORY, DELETE_CATEGORY } = config.buttonTitles;
   const { DELETE_CATEGORY_MESSAGE } = config.messages;
-  const { DELETE_CATEGORY } = config.buttonTitles;
 
   const dispatch = useDispatch();
 
@@ -43,7 +41,7 @@ const Categories = () => {
   };
 
   const handleAddCategory = () => {
-    dispatch(push(routes.pathToAddCategory));
+    dispatch(push(config.routes.pathToAddCategory));
   };
 
   useEffect(() => {
@@ -93,7 +91,7 @@ const Categories = () => {
       </div>
       <div className='classes.tableContainer'>
         <TableContainerGenerator
-          tableTitles={tableHeadRowTitles.categories}
+          tableTitles={config.tableHeadRowTitles.categories}
           tableItems={categoriesList}
         />
       </div>

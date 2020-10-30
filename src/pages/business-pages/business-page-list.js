@@ -17,14 +17,13 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 
-const { routes } = config.app;
 const { REMOVE_BUSINESS_PAGE } = config.messages;
 const {
   REMOVE_BUSINESS_PAGE_TITLE,
   CREATE_BUSINESS_PAGE
 } = config.buttonTitles;
 
-const { pathToAddBusinessPage } = routes;
+const { pathToAddBusinessPage } = config.routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
 
 const BusinessPageList = () => {
@@ -58,10 +57,12 @@ const BusinessPageList = () => {
     list !== undefined
       ? list.map((page, index) => (
         <TableContainerRow
-          key={index}
+          key={page._id}
           id={page._id}
+          index={index + 1}
           code={page.code}
           title={page.title[0].value}
+          showAvatar={false}
           deleteHandler={() => pageDeleteHandler(page._id)}
           editHandler={() => {
             dispatch(push(`/business-pages/${page._id}`));

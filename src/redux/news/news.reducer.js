@@ -8,7 +8,7 @@ import {
   SET_PAGES_COUNT
 } from './news.types';
 
-const initialState = {
+export const initialState = {
   list: [],
   newsArticle: null,
   newsLoading: false,

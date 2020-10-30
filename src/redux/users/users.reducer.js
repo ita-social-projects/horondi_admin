@@ -4,12 +4,28 @@ import {
   SET_USERS_LOADING,
   SET_USERS_ERROR,
   UPDATE_USER_LOCALLY,
-  DELETE_USER_LOCALLY
+  DELETE_USER_LOCALLY,
+  SET_TAB,
+  SET_FILTER,
+  SET_SORT,
+  CLEAR_FILTERS
 } from './users.types';
+
+const initialFilters = {
+  roles: ['user'],
+  banned: [],
+  search: ''
+};
 
 const initialState = {
   list: [],
+  sort: {
+    name: 1
+  },
+  filters: initialFilters,
+  tab: 0,
   user: null,
+  usersCount: null,
   userLoading: false,
   userError: null
 };
@@ -45,6 +61,31 @@ const usersReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       list: state.list.filter((item) => item._id !== action.payload)
+    };
+  case SET_TAB:
+    return {
+      ...state,
+      tab: action.payload
+    };
+  case SET_FILTER:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    };
+  case SET_SORT:
+    return {
+      ...state,
+      sort: {
+        ...action.payload
+      }
+    };
+  case CLEAR_FILTERS:
+    return {
+      ...state,
+      filters: initialFilters
     };
   default:
     return state;

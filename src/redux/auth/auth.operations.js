@@ -6,15 +6,15 @@ export const loginAdmin = async (loginInput) => {
     mutation: gql`
       mutation($loginInput: LoginInput!) {
         loginAdmin(loginInput: $loginInput) {
+          _id
           token
         }
       }
     `,
     variables: { loginInput }
   });
-  const { data } = result;
 
-  return data.loginAdmin;
+  return result.data.loginAdmin;
 };
 
 export const getUserByToken = async (token) => {
@@ -23,28 +23,8 @@ export const getUserByToken = async (token) => {
       query {
         getUserByToken {
           ... on User {
+            _id
             email
-            firstName
-            lastName
-            phoneNumber
-            purchasedProducts
-            role
-            orders
-            wishlist
-            credentials {
-              source
-            }
-            address {
-              country
-              city
-              street
-              appartment
-              buildingNumber
-            }
-          }
-          ... on Error {
-            message
-            statusCode
           }
         }
       }
@@ -53,8 +33,14 @@ export const getUserByToken = async (token) => {
       headers: {
         token
       }
-    }
+    },
+    fetchPolicy: 'no-cache'
   });
   const { data } = result;
+
+  // костилі, чекають фікс на беку
+  if (data.getUserByToken.statusCode === 401) {
+    throw new Error('USER_NOT_AUTHORIZED');
+  }
   return data.getUserByToken;
 };

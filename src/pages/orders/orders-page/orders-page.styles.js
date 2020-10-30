@@ -18,5 +18,17 @@ export const useStyles = makeStyles((theme) => ({
   },
   filterBy: {
     fontSize: 16
+  },
+  redStatus: {
+    fontWeight: 'bold',
+    color: 'red'
+  },
+  blueStatus: {
+    fontWeight: 'bold',
+    color: 'blue'
+  },
+  greenStatus: {
+    fontWeight: 'bold',
+    color: 'green'
   }
 }));

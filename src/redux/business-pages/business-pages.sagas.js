@@ -36,12 +36,13 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
+const { routes } = config;
+
 export function* handleBusinessPagesLoad() {
   try {
     yield put(setLoading(true));
     const businessPages = yield call(getAllBusinessPages);
     yield put(setBusinessPages(businessPages));
-
     yield put(setLoading(false));
   } catch (error) {
     yield call(handleBusinessPageError, error);
@@ -51,10 +52,8 @@ export function* handleBusinessPagesLoad() {
 export function* handleCurrentBusinessPageLoad({ payload }) {
   try {
     yield put(setLoading(true));
-
     const businessPage = yield call(getBusinessPageById, payload);
     yield put(setCurrentBusinessPage(businessPage));
-
     yield put(setLoading(false));
   } catch (error) {
     yield call(handleBusinessPageError, error);
@@ -65,13 +64,11 @@ export function* handleAddBusinessPage({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(createBusinessPage, payload);
-
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
     yield put(setSnackBarStatus(true));
-
     yield put(setLoading(false));
-    yield put(push('/business-pages'));
+    yield put(push(routes.pathToBusinessPages));
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
@@ -88,11 +85,9 @@ export function* handleBusinessPageDelete({ payload }) {
     yield put(
       setBusinessPages(businessPages.filter((page) => page._id !== payload))
     );
-
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
     yield put(setSnackBarStatus(true));
-
     yield put(setLoading(false));
   } catch (error) {
     yield call(handleBusinessPageError, error);
@@ -103,13 +98,11 @@ export function* handleBusinessPageUpdate({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(updateBusinessPage, payload);
-
     yield put(setSnackBarSeverity('success'));
     yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
     yield put(setSnackBarStatus(true));
-
     yield put(setLoading(false));
-    yield put(push('/business-pages'));
+    yield put(push(routes.pathToBusinessPages));
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }

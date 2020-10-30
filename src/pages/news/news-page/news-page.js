@@ -18,13 +18,10 @@ import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 
-const { routes } = config.app;
 const { REMOVE_MESSAGE } = config.messages;
-const { REMOVE_TITLE } = config.buttonTitles;
+const { REMOVE_TITLE, CREATE_NEWS_TITLE } = config.buttonTitles;
 
-const { CREATE_NEWS_TITLE } = config.buttonTitles;
-
-const pathToNewsAddPage = routes.pathToAddNews;
+const pathToNewsAddPage = config.routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;
 
 const NewsPage = () => {

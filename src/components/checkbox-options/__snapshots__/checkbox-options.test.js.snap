@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`checkbox-options tests should have props 1`] = `[Function]`;
+
+exports[`checkbox-options tests test checkboxes attributes 1`] = `ReactWrapper {}`;
+
+exports[`checkbox-options tests test checkboxes attributes 2`] = `ReactWrapper {}`;

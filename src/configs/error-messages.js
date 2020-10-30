@@ -6,7 +6,8 @@ export const errorMessages = {
   INPUT_NOT_VALID: 'Неправильні ввідні дані',
   USER_ALREADY_EXIST: 'Користувач з такими даними вже існує',
   INVALID_ADMIN_INVITATIONAL_TOKEN:
-    'Неправильне посилання на створення користувача'
+    'Неправильне посилання на створення користувача',
+  NO_COLORS: 'Створіть колір'
 };
 
 export const loginErrorMessages = {
@@ -56,4 +57,27 @@ export const contactErrorMessages = {
     'Введіть коректний формат, наприклад: https://example.com/',
   ENTER_LINK_MESSAGE: 'Введіть посилання',
   SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт'
+};
+
+export const emailQuestionsErrorMessages = {
+  ANSWER_INPUT_MESSAGE: 'Введіть текст для відповіді'
+};
+
+export const materialErrorMessages = {
+  MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
+  MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
+  VALIDATION_ERROR: 'Поле обовязкове',
+  PRICE_VALIDATION_ERROR: 'Тільки цифри. Число має бути більше нуля'
+};
+
+export const colorErrorMessages = {
+  CODE_VALIDATION_ERROR: 'Тільки цифри',
+  MAX_CODE_LENGTH_MESSAGE: 'Не більше 10 символів',
+  MAX_LENGTH_MESSAGE: `Не більше 1000 символів`,
+  MIN_LENGTH_MESSAGE: `Не менше 1 символа`,
+  VALIDATION_ERROR: 'Поле обовязкове',
+  CODE_NOT_UNIQUE_ERROR: 'Такий код вже використовується'
+};
+export const statsErrorMessages = {
+  NO_STATS: 'Статистика для вибраного значення відсутня'
 };

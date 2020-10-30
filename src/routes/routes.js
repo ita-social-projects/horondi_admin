@@ -14,29 +14,36 @@ import LoginPage from '../pages/login/login-page';
 import Business from '../pages/business-pages';
 import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
+import { config } from '../configs';
+import { history } from '../store/store';
+import MaterialPage from '../pages/material/material-page';
+import MaterialAdd from '../pages/material/material-add';
 import ProductsPage from '../pages/products/products-page';
 import ProductsAdd from '../pages/products/product-add';
 import Categories from '../pages/categories/categories-page';
 import CategoriesAdd from '../pages/categories/categories-add/categories-add';
-import PatternPage from '../pages/pattern/pattern-page';
+import UsersDetails from '../pages/users/users-details';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
-import UsersDetails from '../pages/users/users-details';
+import PatternPage from '../pages/pattern/pattern-page';
 import CommentsPage from '../pages/comments/comments';
-import { history } from '../store/store';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
 import Orders from '../pages/orders/orders-page/orders-page';
 import OrderItem from '../pages/order-item';
+import HomePageEdit from '../pages/home-page';
+import EmailQuestionsList from '../pages/email-questions';
+import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
 import ModelPage from '../pages/model/model-page';
 import ModelAdd from '../pages/model/model-add';
 import ModelDetails from '../pages/model/model-details';
-
 import ProductEdit from '../pages/products/product-edit';
-import routes from '../configs/routes';
+import StatisticPage from '../pages/statistic';
+
+const { routes } = config;
 
 const Routes = () => {
   const { isAuth } = useSelector(({ Auth }) => ({
@@ -79,6 +86,8 @@ const Routes = () => {
         <Route path={routes.pathToAddNews} exact component={NewsAdd} />
         <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
+        <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+        <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
         <Route
           path={routes.pathToPatternDetails}
           exact
@@ -125,6 +134,11 @@ const Routes = () => {
           component={RegisterUser}
         />
         <Route
+          path={routes.pathToHomePageEdit}
+          exact
+          component={HomePageEdit}
+        />
+        <Route
           path={routes.pathToAddCategory}
           exact
           component={CategoriesAdd}
@@ -136,6 +150,17 @@ const Routes = () => {
             <CategoriesAdd id={match.params.id} editMode />
           )}
         />
+        <Route
+          path={routes.pathToEmailQuestions}
+          exact
+          component={EmailQuestionsList}
+        />
+        <Route
+          path={routes.pathToEmailQuestionDetails}
+          exact
+          render={({ match }) => <EmailQuestionsDetails id={match.params.id} />}
+        />
+        <Route path={routes.pathToStatistic} exact component={StatisticPage} />
         <Route path={routes.pathToOrders} exact component={Orders} />
         <Route
           path={routes.pathToOrderItem}

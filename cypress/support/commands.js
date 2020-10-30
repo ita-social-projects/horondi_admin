@@ -20,7 +20,7 @@ Cypress.Commands.add('login', (email, password) => {
     .then((res) => res.body.data.loginAdmin.token)
     .then((token) => {
       const data = { HORONDI_AUTH_TOKEN: token };
-      window.localStorage.setItem('horondi', JSON.stringify(data));
+      window.localStorage.setItem('horondiAdmin', JSON.stringify(data));
       return token;
     });
 });
