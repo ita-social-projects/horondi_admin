@@ -154,7 +154,7 @@ const labels = {
   },
   doughnut: {
     select: [
-      { label: 'Популярні категорії', value: 'categories' },
+      { label: 'Популярні категорії за весь час', value: 'categories' },
       { label: 'Останні замовлення', value: 'orders' }
     ],
     dateMenuOptions: [
@@ -167,7 +167,7 @@ const labels = {
   },
   bar: {
     select: [
-      { label: 'Популярні продукти', value: 'products' },
+      { label: 'Популярні продукти за весь час', value: 'products' },
       { label: 'Виконані замовлення', value: 'orders' },
       { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
