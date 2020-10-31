@@ -139,7 +139,6 @@ export const createHeader = async (payload) => {
 
 export const updateHeader = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  console.log(payload);
   const { id, header, image } = payload;
   const result = await client.mutate({
     context: { headers: { token } },

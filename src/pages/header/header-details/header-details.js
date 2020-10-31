@@ -32,25 +32,12 @@ const HeaderDetails = ({ match }) => {
   );
 };
 
-const valueShape = PropTypes.shape({
-  value: PropTypes.string
-});
 HeaderDetails.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  }).isRequired,
-  header: PropTypes.shape({
-    _id: PropTypes.string,
-    priority: PropTypes.number,
-    link: PropTypes.string,
-    name: PropTypes.arrayOf(valueShape)
-  })
-};
-
-HeaderDetails.defaultProps = {
-  header: {}
+  }).isRequired
 };
 
 export default withRouter(HeaderDetails);

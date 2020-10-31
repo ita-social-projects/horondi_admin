@@ -1,29 +1,61 @@
-import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getUsers } from '../../redux/users/users.actions';
-import { config } from '../../configs';
+import {
+  clearFilters,
+  setFilter,
+  setSort
+} from '../../redux/users/users.actions';
+import { setCurrentPage } from '../../redux/table/table.actions';
 
-const { userRoles } = config;
-const [user, ...other] = userRoles.map((item) => item.role);
-
-const useUsersFiltering = (tabNumber) => {
-  const [filter, setFilter] = useState({});
+const useUsersFiltering = () => {
   const dispatch = useDispatch();
 
-  const handleTabChange = (tab) => {
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      roles: tab ? [...other] : [user]
-    }));
+  const setRolesFilter = (roles) => {
+    dispatch(
+      setFilter({
+        roles
+      })
+    );
   };
 
-  useEffect(() => {
-    handleTabChange(tabNumber);
-  }, [tabNumber, dispatch]);
+  const setStatusFilter = (statuses) => {
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setFilter({
+        banned: statuses.map((item) => !!item)
+      })
+    );
+  };
 
-  useEffect(() => {
-    dispatch(getUsers({ filter }));
-  }, [filter, dispatch]);
+  const setSearchFilter = (search) => {
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setFilter({
+        search
+      })
+    );
+  };
+
+  const clearAllFilters = () => {
+    dispatch(setCurrentPage(0));
+    dispatch(clearFilters());
+  };
+
+  const setSorting = (key, type = 'asc') => {
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setSort({
+        [key]: type === 'desc' ? -1 : 1
+      })
+    );
+  };
+
+  return {
+    setSorting,
+    setRolesFilter,
+    setSearchFilter,
+    setStatusFilter,
+    clearAllFilters
+  };
 };
 
 export default useUsersFiltering;

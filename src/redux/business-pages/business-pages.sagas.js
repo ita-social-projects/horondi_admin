@@ -36,7 +36,7 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const { routes } = config.routes;
+const { routes } = config;
 
 export function* handleBusinessPagesLoad() {
   try {

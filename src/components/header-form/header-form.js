@@ -98,10 +98,10 @@ const HeaderForm = ({ header, id }) => {
               value={values.priority}
               onChange={handleChange}
               error={touched.priority && !!errors.priority}
+              helperText={
+                touched.priority && errors.priority ? errors.priority : ''
+              }
             />
-            {touched.priority && errors.priority && (
-              <div className={styles.inputError}>{errors.priority}</div>
-            )}
           </Paper>
         </Grid>
         <AppBar position='static'>

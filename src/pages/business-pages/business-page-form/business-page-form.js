@@ -182,7 +182,6 @@ const BusinessPageForm = ({ id, editMode }) => {
                 value={ukText}
                 placeholder='Текст'
                 onEditorChange={(value) => ukSetText(value)}
-                files={files}
                 setFiles={setFiles}
               />
               {(editorField.test(ukText) || !ukText) && shouldValidate && (

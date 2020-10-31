@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { config } from '../../configs';
@@ -37,6 +37,7 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+import { setItemsCount, setPagesCount } from '../table/table.actions';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -45,11 +46,17 @@ const {
   SUCCESS_CONFIRMATION_STATUS
 } = config.statuses;
 
-function* handleUsersLoad({ payload }) {
+function* handleUsersLoad() {
   try {
     yield put(setUsersLoading(true));
-    const users = yield call(getAllUsers, payload);
-    yield put(setUsers(users));
+    const { usersState, tableState } = yield select(({ Users, Table }) => ({
+      usersState: Users,
+      tableState: Table
+    }));
+    const result = yield call(getAllUsers, usersState, tableState);
+    yield put(setPagesCount(Math.ceil(result.count / tableState.rowsPerPage)));
+    yield put(setItemsCount(result.count));
+    yield put(setUsers(result.items));
     yield put(setUsersLoading(false));
   } catch (err) {
     yield call(handleUsersError, err);

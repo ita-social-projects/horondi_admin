@@ -37,6 +37,7 @@ const buttonTitles = {
   REMOVE_COMMENT_TITLE: 'Видалити коментар',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+  SAVE_TITLE: 'Зберегти',
   REMOVE_EMAIL_QUESTION: 'Видалити запитання',
   UNDERSTAND: 'Зрозуміло',
   ANSWER: 'Відповісти',
@@ -51,7 +52,9 @@ const buttonTitles = {
   CREATE_HEADER_TITLE: 'Створити посилання',
   HEADER_SAVE_TITLE: 'Зберегти посилання',
   HEADER_REMOVE_TITLE: 'Видалити посилання',
-
+  ORDER_DETAILS: 'Деталі',
+  USER_STATUS_TITLE: 'Статус',
+  CLEAR_FILTERS: 'Очистити фільтри',
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([
       [true, 'Зберегти'],
