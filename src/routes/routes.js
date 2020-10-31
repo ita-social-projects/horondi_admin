@@ -38,10 +38,10 @@ import EmailQuestionsDetails from '../pages/email-questions/email-question-detai
 import ModelPage from '../pages/model/model-page';
 import ModelAdd from '../pages/model/model-add';
 import ModelDetails from '../pages/model/model-details';
-
 import ProductEdit from '../pages/products/product-edit';
+import MaterialDetails from '../pages/material/material-details/material-details';
+import MaterialColorPalette from '../pages/material/material-color-palette';
 import Orders from '../pages/orders/orders-page/orders-page';
-
 import StatisticPage from '../pages/statistic';
 
 const { routes } = config;
@@ -88,6 +88,16 @@ const Routes = () => {
         <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
         <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
         <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+        <Route
+          path={routes.pathToMaterialDetails}
+          exact
+          component={MaterialDetails}
+        />
+        <Route
+          path={routes.pathToMaterialsColorPalette}
+          exact
+          component={MaterialColorPalette}
+        />
         <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
         <Route
           path={routes.pathToPatternDetails}

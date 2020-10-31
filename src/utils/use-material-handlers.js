@@ -36,11 +36,13 @@ const useMaterialHandlers = () => {
           value: values.enDescription || null
         }
       ],
-      colors,
       available: values.available,
       purpose: values.purpose,
       additionalPrice: +values.additionalPrice
     };
+    if (colors.length) {
+      newMaterial.colors = colors;
+    }
     return newMaterial;
   };
   const addNewColorImages = (data) => {

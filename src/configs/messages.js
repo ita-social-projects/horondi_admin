@@ -10,6 +10,7 @@ const messages = {
   REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
+  REMOVE_MATERIAL_COLOR_MESSAGE: 'Ви впевнені, що хочете видалити цей колір?',
   EMAIL_QUESTION_REMOVE_MESSAGE:
     'Ви впевнені, що хочете видалити це запитання?',
   EMAIL_QUESTIONS_MOVE_TO_SPAM_MESSAGE:

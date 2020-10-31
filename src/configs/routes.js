@@ -30,6 +30,7 @@ const routes = {
   pathToMaterials: '/materials',
   pathToAddMaterial: '/material/add',
   pathToMaterialDetails: '/materials/:id',
+  pathToMaterialsColorPalette: '/materials/:id/colors',
   pathToStatistic: '/stats',
   pathToModels: '/models',
   pathToModelDetails: '/models/:id',
