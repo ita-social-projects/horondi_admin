@@ -1,46 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { MenuItem, Select } from '@material-ui/core';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
+import Typography from '@material-ui/core/Typography';
+
 import { useStyles } from './orders-page.styles';
 import { getOrderList } from '../../../redux/orders/orders.actions';
+import Status from './Status/Status';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
 import StandardButton from '../../../components/buttons/standard-button';
+
 import { config } from '../../../configs';
-
-const { ORDER_DETAILS } = config.buttonTitles;
-const { orderTitles } = config.titles;
-const tableTitles = config.tableHeadRowTitles.orders;
-
-const Status = ({ status }) => {
-  const styles = useStyles();
-  let color;
-  switch (status) {
-  case 'CANCELLED' || 'REFUNDED': {
-    color = styles.redStatus;
-    break;
-  }
-  case 'DELIVERED': {
-    color = styles.greenStatus;
-    break;
-  }
-  default:
-    color = styles.blueStatus;
-  }
-  return <div className={color}>{status}</div>;
-};
-
-Status.propTypes = {
-  status: PropTypes.string.isRequired
-};
 
 const OrdersPage = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
+
+  const [status, setStatus] = useState('All');
+
+  const statusList = config.labels.orders.select.map(({ label, value }) => (
+    <MenuItem key={value} value={value}>
+      {label}
+    </MenuItem>
+  ));
 
   const { orderLoading, orders, count } = useSelector(({ Orders }) => ({
     orderLoading: Orders.orderLoading,
@@ -57,10 +42,13 @@ const OrdersPage = () => {
     dispatch(
       getOrderList({
         limit: rowsPerPage,
-        skip: currentPage * rowsPerPage
+        skip: currentPage * rowsPerPage,
+        filter: {
+          orderStatus: status === 'All' ? '' : status
+        }
       })
     );
-  }, [dispatch, rowsPerPage, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage, status]);
 
   const orderItems =
     orders &&
@@ -76,7 +64,7 @@ const OrdersPage = () => {
         status={<Status status={order.status} />}
         button={
           <StandardButton
-            title={ORDER_DETAILS}
+            title={config.buttonTitles.ORDER_DETAILS}
             onClickHandler={() => dispatch(push(`/orders/${order._id}`))}
           />
         }
@@ -90,18 +78,27 @@ const OrdersPage = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.orderCount}>
-          {count} {orderTitles.orders}
+          {count} {config.titles.orderTitles.orders}
         </div>
-        <div className={styles.filterBy}>{orderTitles.filterBy}</div>
+        <div className={styles.filterBy}>
+          {config.titles.orderTitles.filterBy}
+          <Select value={status} onChange={(e) => setStatus(e.target.value)}>
+            {statusList}
+          </Select>
+        </div>
       </div>
       {orderLoading ? (
         <LoadingBar />
-      ) : (
+      ) : orders && orders.length ? (
         <TableContainerGenerator
           pagination
-          tableTitles={tableTitles}
+          tableTitles={config.tableHeadRowTitles.orders}
           tableItems={orderItems}
         />
+      ) : (
+        <Typography variant='h1' className={styles.ordersDisabledTitle}>
+          {config.titles.orderTitles.ORDER_NOT_FOUND}
+        </Typography>
       )}
     </div>
   );

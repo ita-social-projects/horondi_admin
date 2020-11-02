@@ -181,6 +181,18 @@ const labels = {
       orders: 'Кількість замовлень за цей час: ',
       products: 'Кількість продуктів за цей час: '
     }
+  },
+  orders: {
+    select: [
+      { label: 'Створені', value: 'CREATED' },
+      { label: 'Виконані', value: 'CONFIRMED' },
+      { label: 'Оброблені', value: 'PRODUCED' },
+      { label: 'Скасовані', value: 'CANCELLED' },
+      { label: 'Повернені', value: 'REFUNDED' },
+      { label: 'Надіслані', value: 'SENT' },
+      { label: 'Доставлені', value: 'DELIVERED' },
+      { label: 'Всі', value: 'All' }
+    ]
   }
 };
 export default labels;

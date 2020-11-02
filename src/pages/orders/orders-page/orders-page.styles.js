@@ -5,7 +5,8 @@ export const useStyles = makeStyles((theme) => ({
     width: `100%`,
     marginTop: 65,
     position: 'static',
-    padding: 20
+    padding: 20,
+    textAlign: 'center'
   },
   header: {
     display: 'flex',
@@ -17,18 +18,16 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 16
   },
   filterBy: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '20%',
     fontSize: 16
   },
-  redStatus: {
+  ordersDisabledTitle: {
+    fontSize: '1.5rem',
     fontWeight: 'bold',
-    color: 'red'
-  },
-  blueStatus: {
-    fontWeight: 'bold',
-    color: 'blue'
-  },
-  greenStatus: {
-    fontWeight: 'bold',
-    color: 'green'
+    color: theme.palette.text.disabled,
+    margin: 'auto'
   }
 }));

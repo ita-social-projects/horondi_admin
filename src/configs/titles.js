@@ -34,7 +34,8 @@ const titles = {
   },
   orderTitles: {
     filterBy: 'Фільтрувати',
-    orders: 'замовлень'
+    orders: 'замовлень',
+    ORDER_NOT_FOUND: 'Замовлень за заданим фільтром не знайдено'
   }
 };
 
