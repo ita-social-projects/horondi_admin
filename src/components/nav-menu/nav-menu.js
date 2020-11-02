@@ -18,6 +18,7 @@ import { useStyles } from './nav-menu.styles';
 
 import { config } from '../../configs';
 import { setSideMenuStatus } from '../../redux/theme/theme.actions';
+import { resetPagination } from '../../redux/table/table.actions';
 
 const { titles } = config;
 
@@ -42,7 +43,10 @@ const NavMenu = ({ width }) => {
 
     return (
       <ListItem
-        onClick={() => dispatch(setSideMenuStatus(!sideMenuStatus))}
+        onClick={() => {
+          dispatch(setSideMenuStatus(!sideMenuStatus));
+          dispatch(resetPagination());
+        }}
         button
         key={pathTitle}
         component={NavLink}
