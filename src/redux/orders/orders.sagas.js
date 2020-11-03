@@ -18,7 +18,7 @@ import {
   setSnackBarStatus
 } from '../snackbar/snackbar.actions';
 
-function* handleOrdersListLoad({ payload }) {
+export function* handleOrdersListLoad({ payload }) {
   try {
     yield put(setOrderLoading(true));
     const orders = yield call(getAllOrders, payload.skip, payload.limit);
@@ -36,7 +36,7 @@ function* handleOrdersListLoad({ payload }) {
   }
 }
 
-function* handleOrderLoad({ payload }) {
+export function* handleOrderLoad({ payload }) {
   try {
     yield setOrderLoading(true);
     const order = yield call(getOrderById, payload);
@@ -48,7 +48,7 @@ function* handleOrderLoad({ payload }) {
   }
 }
 
-function* handleOrdersError(e) {
+export function* handleOrdersError(e) {
   yield put(setOrderLoading(false));
   yield put(setOrderError({ e }));
   yield put(setSnackBarSeverity('error'));

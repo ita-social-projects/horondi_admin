@@ -23,8 +23,8 @@ const getHomePageLooksImages = async () => {
   client.stop();
   client.resetStore();
 
-  const { getHomePageLooksImages } = result.data;
-  return getHomePageLooksImages;
+  const { data } = result;
+  return data.getHomePageLooksImages;
 };
 
 const updateHomePageLooksImage = async (id, upload) => {

@@ -28,7 +28,7 @@ const tableTitles = config.tableHeadRowTitles.materialColors;
 const { REMOVE_MATERIAL_COLOR_MESSAGE } = config.messages;
 const { REMOVE_COLOR_TITLE } = config.buttonTitles;
 const MaterialColorPalette = ({ match }) => {
-  const { id } = match.params;
+  const materialId = match.params.id;
   const styles = useStyles();
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -44,8 +44,8 @@ const MaterialColorPalette = ({ match }) => {
   } = useMaterialHandlers();
 
   useEffect(() => {
-    dispatch(getMaterialColors(id));
-  }, [dispatch, id]);
+    dispatch(getMaterialColors(materialId));
+  }, [dispatch, materialId]);
 
   const colorDeleteHandler = (id, code) => {
     const removeColor = () => {
@@ -72,10 +72,10 @@ const MaterialColorPalette = ({ match }) => {
   };
   const colorClickHandler = () => {
     dispatch(showColorDialogWindow(true));
-    dispatch(setEditMaterialId(id));
+    dispatch(setEditMaterialId(materialId));
   };
   const colorPaletteClickHandler = () => {
-    dispatch(push(`/materials/${id}`));
+    dispatch(push(`/materials/${materialId}`));
   };
   const materialColorItems = colors
     ? colors.colors.map((colorItem) => (
@@ -96,7 +96,7 @@ const MaterialColorPalette = ({ match }) => {
             ? materialTranslations.YES
             : materialTranslations.NO
         }
-        deleteHandler={() => colorDeleteHandler(id, colorItem.code)}
+        deleteHandler={() => colorDeleteHandler(materialId, colorItem.code)}
         editHandler={() => {
           colorEditHandler(colorItem.code);
         }}
@@ -146,7 +146,7 @@ const MaterialColorPalette = ({ match }) => {
             addNewColorImages={addNewColorImages}
             imagesToUpload={colorImagesToUpload}
             setImagesToUpload={setColorImagesToUpload}
-            id={id}
+            id={materialId}
           />
         }
       />
