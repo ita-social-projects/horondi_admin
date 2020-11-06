@@ -5,7 +5,7 @@ import {
   SET_ORDER_ERROR
 } from './orders.types';
 
-const initialState = {
+export const initialState = {
   list: [],
   selectedOrder: null,
   orderLoading: false,

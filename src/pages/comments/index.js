@@ -1,3 +1,3 @@
-import CommentsPage from './comments';
+import Comments from './comments';
 
-export default CommentsPage;
+export default Comments;
