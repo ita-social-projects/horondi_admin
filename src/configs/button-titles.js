@@ -52,6 +52,8 @@ const buttonTitles = {
   CREATE_HEADER_TITLE: 'Створити посилання',
   HEADER_SAVE_TITLE: 'Зберегти посилання',
   HEADER_REMOVE_TITLE: 'Видалити посилання',
+  GO_TO_MATERIAL_COLOR_PALLET: 'Редагувати палітру',
+  CLOSE_DIALOG_TITLE: 'Закрити вікно',
   ORDER_DETAILS: 'Деталі',
   USER_STATUS_TITLE: 'Статус',
   CLEAR_FILTERS: 'Очистити фільтри',

@@ -34,7 +34,7 @@ const useColorHandlers = () => {
         }
       ],
       code: +values.code,
-      available
+      available: values.available
     };
     return newColor;
   };

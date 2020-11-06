@@ -11,7 +11,7 @@ import NavMenu from '../components/nav-menu';
 import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login/login-page';
-import Business from '../pages/business-pages';
+import BusinessPageList from '../pages/business-pages';
 import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
 import { config } from '../configs';
@@ -27,12 +27,12 @@ import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
 import PatternPage from '../pages/pattern/pattern-page';
-import CommentsPage from '../pages/comments/comments';
+import Comments from '../pages/comments/comments';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
-import HomePageEdit from '../pages/home-page';
+import HomePage from '../pages/home-page';
 import EmailQuestionsList from '../pages/email-questions';
 import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
 import ModelPage from '../pages/model/model-page';
@@ -41,10 +41,10 @@ import ModelDetails from '../pages/model/model-details';
 import HeaderPage from '../pages/header/header-page';
 import HeaderAdd from '../pages/header/header-add';
 import HeaderDetails from '../pages/header/header-details';
-
 import ProductEdit from '../pages/products/product-edit';
+import MaterialDetails from '../pages/material/material-details/material-details';
+import MaterialColorPalette from '../pages/material/material-color-palette';
 import Orders from '../pages/orders/orders-page/orders-page';
-
 import StatisticPage from '../pages/statistic';
 
 const { routes } = config;
@@ -98,13 +98,27 @@ const Routes = () => {
           component={HeaderDetails}
         />
         <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+        <Route
+          path={routes.pathToMaterialDetails}
+          exact
+          component={MaterialDetails}
+        />
+        <Route
+          path={routes.pathToMaterialsColorPalette}
+          exact
+          component={MaterialColorPalette}
+        />
         <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
         <Route
           path={routes.pathToPatternDetails}
           exact
           component={PatternDetails}
         />
-        <Route path={routes.pathToBusinessPages} exact component={Business} />
+        <Route
+          path={routes.pathToBusinessPages}
+          exact
+          component={BusinessPageList}
+        />
         <Route
           path={routes.pathToAddBusinessPage}
           exact
@@ -138,17 +152,13 @@ const Routes = () => {
           render={({ match }) => <ProductEdit id={match.params.id} />}
         />
         <Route path={routes.pathToCategories} exact component={Categories} />
-        <Route path={routes.pathToComments} exact component={CommentsPage} />
+        <Route path={routes.pathToComments} exact component={Comments} />
         <Route
           path={routes.pathToRegisterAdmin}
           exact
           component={RegisterUser}
         />
-        <Route
-          path={routes.pathToHomePageEdit}
-          exact
-          component={HomePageEdit}
-        />
+        <Route path={routes.pathToHomePageEdit} exact component={HomePage} />
         <Route
           path={routes.pathToAddCategory}
           exact

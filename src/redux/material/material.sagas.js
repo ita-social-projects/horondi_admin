@@ -7,14 +7,23 @@ import {
   setMaterialsPagesCount,
   setMaterialLoading,
   removeMaterialFromStore,
-  clearColors
+  clearColors,
+  setMaterialColors,
+  setMaterialColor,
+  getMaterialColors,
+  removeMaterialColorFromStore
 } from './material.actions';
+// eslint-disable-next-line import/no-cycle
 import {
   getAllMaterials,
   getMaterialById,
   createMaterial,
   updateMaterial,
-  deleteMaterial
+  deleteMaterial,
+  getMaterialColorsById,
+  getMaterialColorByCode,
+  createMaterialColor,
+  deleteMaterialColor
 } from './material.operations';
 
 import {
@@ -22,7 +31,11 @@ import {
   GET_MATERIALS,
   DELETE_MATERIAL,
   ADD_MATERIAL,
-  UPDATE_MATERIAL
+  UPDATE_MATERIAL,
+  GET_MATERIALS_COLORS,
+  GET_MATERIALS_COLOR,
+  ADD_MATERIAL_COLOR,
+  DELETE_MATERIAL_COLOR
 } from './material.types';
 
 import { config } from '../../configs';
@@ -74,6 +87,26 @@ export function* handleMaterialLoad({ payload }) {
   }
 }
 
+export function* handleMaterialColorsLoad({ payload }) {
+  try {
+    yield put(setMaterialLoading(true));
+    const colors = yield call(getMaterialColorsById, payload);
+    yield put(setMaterialColors(colors));
+    yield put(setMaterialLoading(false));
+  } catch (error) {
+    yield call(handleMaterialError, error);
+  }
+}
+export function* handleMaterialColorLoad({ payload }) {
+  try {
+    yield put(setMaterialLoading(true));
+    const color = yield call(getMaterialColorByCode, payload);
+    yield put(setMaterialColor(color));
+    yield put(setMaterialLoading(false));
+  } catch (error) {
+    yield call(handleMaterialError, error);
+  }
+}
 function* handleAddMaterial({ payload }) {
   try {
     yield put(setMaterialLoading(true));
@@ -81,6 +114,18 @@ function* handleAddMaterial({ payload }) {
     yield put(clearColors());
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(config.routes.pathToMaterials));
+  } catch (error) {
+    yield call(handleMaterialError, error);
+  }
+}
+function* handleAddMaterialColor({ payload }) {
+  try {
+    yield put(setMaterialLoading(true));
+    yield call(createMaterialColor, payload);
+    yield put(clearColors());
+    yield put(setMaterialLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+    yield put(getMaterialColors(payload.id));
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -98,17 +143,30 @@ export function* handleMaterialDelete({ payload }) {
   }
 }
 
-export function* handleMaterialUpdate({ payload }) {
-  const { id, newMaterial } = payload;
+export function* handleMaterialColorDelete({ payload }) {
   try {
     yield put(setMaterialLoading(true));
-    yield call(updateMaterial, id, newMaterial);
+    yield call(deleteMaterialColor, payload);
+    yield put(setMaterialLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    yield put(removeMaterialColorFromStore(payload.code));
+  } catch (error) {
+    yield call(handleMaterialError, error);
+  }
+}
+
+export function* handleMaterialUpdate({ payload }) {
+  const { id, material, images } = payload;
+  try {
+    yield put(setMaterialLoading(true));
+    yield call(updateMaterial, id, material, images);
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToMaterials));
   } catch (error) {
     yield call(handleMaterialError, error);
   }
 }
+
 function* handleSuccessSnackbar(status) {
   yield put(setSnackBarSeverity('success'));
   yield put(setSnackBarMessage(status));
@@ -128,5 +186,9 @@ export default function* materialSaga() {
   yield takeEvery(DELETE_MATERIAL, handleMaterialDelete);
   yield takeEvery(GET_MATERIAL, handleMaterialLoad);
   yield takeEvery(ADD_MATERIAL, handleAddMaterial);
+  yield takeEvery(ADD_MATERIAL_COLOR, handleAddMaterialColor);
   yield takeEvery(UPDATE_MATERIAL, handleMaterialUpdate);
+  yield takeEvery(GET_MATERIALS_COLORS, handleMaterialColorsLoad);
+  yield takeEvery(GET_MATERIALS_COLOR, handleMaterialColorLoad);
+  yield takeEvery(DELETE_MATERIAL_COLOR, handleMaterialColorDelete);
 }

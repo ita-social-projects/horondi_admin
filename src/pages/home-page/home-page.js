@@ -18,7 +18,7 @@ import { useStyles } from './home-page.styles';
 const { homePageEdit } = titles;
 const { IMG_URL } = config;
 
-const HomePageEdit = () => {
+const HomePage = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { loading, photos } = useSelector(({ HomePage }) => ({
@@ -119,4 +119,4 @@ const HomePageEdit = () => {
   );
 };
 
-export default HomePageEdit;
+export default HomePage;

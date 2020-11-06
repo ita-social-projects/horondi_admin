@@ -1,3 +1,3 @@
-import HomePageEdit from './home-page';
+import HomePage from './home-page';
 
-export default HomePageEdit;
+export default HomePage;

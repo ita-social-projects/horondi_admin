@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   TextField,
   Grid,
@@ -14,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 import TabPanel from '../tab-panel';
 import { SaveButton } from '../buttons';
 import LoadingBar from '../loading-bar';
@@ -22,7 +24,9 @@ import { useStyles } from './material-form.styles';
 import {
   addMaterial,
   updateMaterial,
-  showColorDialogWindow
+  showColorDialogWindow,
+  setMaterialColor,
+  setEditMaterialId
 } from '../../redux/material/material.actions';
 import { config } from '../../configs';
 import CheckboxOptions from '../checkbox-options';
@@ -41,7 +45,7 @@ const {
   MAX_LENGTH_MESSAGE,
   PRICE_VALIDATION_ERROR
 } = config.materialErrorMessages;
-function MaterialForm({ edit, material, id }) {
+function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -107,26 +111,25 @@ function MaterialForm({ edit, material, id }) {
       ukDescription: material.description[0].value || '',
       enDescription: material.description[1].value || '',
       purpose: material.purpose || '',
-      available: material.available || true,
-      additionalPrice: 0
+      available: material.available || false,
+      additionalPrice: +material.additionalPrice[1].value / 100 || 0
     },
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
-      console.log(!colors.length);
-      if (!colors.length) {
+      if (!colors.length && !id) {
         dispatch(setSnackBarSeverity('error'));
         dispatch(setSnackBarMessage(config.errorMessages.NO_COLORS));
         dispatch(setSnackBarStatus(true));
         return;
       }
-      if (edit) {
+      if (id) {
         dispatch(
           updateMaterial({
             id,
-            material: { ...newMaterial, colors },
-            images: colorImagesToUpload
+            material: { ...newMaterial }
           })
         );
+        return;
       }
       dispatch(
         addMaterial({
@@ -184,7 +187,7 @@ function MaterialForm({ edit, material, id }) {
       checked: values.available,
       color: 'primary',
       label: config.labels.material.available,
-      handler: (e) => setFieldValue('available', !values.available)
+      handler: () => setFieldValue('available', !values.available)
     }
   ];
 
@@ -207,7 +210,34 @@ function MaterialForm({ edit, material, id }) {
 
   const colorClickHandler = () => {
     dispatch(showColorDialogWindow(true));
+    dispatch(setMaterialColor(''));
+    dispatch(setEditMaterialId(id));
   };
+  const colorPaletteClickHandler = () => {
+    dispatch(push(`/materials/${id}/colors`));
+  };
+
+  const materialColorPaletteButton = id ? (
+    <SaveButton
+      className={styles.colorPaletteButton}
+      data-cy='go-to-color-palette'
+      type='button'
+      color='secondary'
+      title={config.buttonTitles.GO_TO_MATERIAL_COLOR_PALLET}
+      onClickHandler={colorPaletteClickHandler}
+    />
+  ) : null;
+
+  const createColorButton = !id ? (
+    <SaveButton
+      className={styles.saveButton}
+      data-cy='open-dialog'
+      type='button'
+      color='secondary'
+      title={config.buttonTitles.CREATE_COLOR_TITLE}
+      onClickHandler={colorClickHandler}
+    />
+  ) : null;
 
   return (
     <div className={styles.container}>
@@ -280,20 +310,14 @@ function MaterialForm({ edit, material, id }) {
             >
               {config.buttonTitles.GO_BACK_TITLE}
             </Button>
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='open-dialog'
-              type='button'
-              color='secondary'
-              title={config.buttonTitles.CREATE_COLOR_TITLE}
-              onClickHandler={colorClickHandler}
-            />
+            {createColorButton}
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
               type='submit'
               title={config.buttonTitles.SAVE_MATERIAL}
             />
+            {materialColorPaletteButton}
           </div>
         </div>
       </form>
@@ -319,11 +343,13 @@ const valueShape = PropTypes.shape({
 
 MaterialForm.propTypes = {
   id: PropTypes.string,
-  edit: PropTypes.bool,
   material: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.arrayOf(valueShape),
     description: PropTypes.arrayOf(valueShape),
+    colors: PropTypes.arrayOf(valueShape),
+    simpleName: PropTypes.arrayOf(valueShape),
+    additionalPrice: PropTypes.arrayOf(valueShape),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
@@ -363,7 +389,6 @@ MaterialForm.propTypes = {
 
 MaterialForm.defaultProps = {
   id: '',
-  edit: false,
   match: {},
   values: {},
   errors: {},
@@ -390,7 +415,15 @@ MaterialForm.defaultProps = {
       thumbnail: ''
     },
     available: false,
-    purpose: ''
+    purpose: '',
+    additionalPrice: [
+      {
+        value: 0
+      },
+      {
+        value: 0
+      }
+    ]
   }
 };
 

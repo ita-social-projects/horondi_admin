@@ -13,10 +13,10 @@ const useUsersTabs = () => {
   }));
   const { setRolesFilter, clearAllFilters } = useUsersFiltering();
 
-  const handleTabChange = (tab) => {
-    dispatch(setTab(tab));
+  const handleTabChange = (currentTab) => {
+    dispatch(setTab(currentTab));
     clearAllFilters();
-    setRolesFilter(tab ? [...other] : [user]);
+    setRolesFilter(currentTab ? [...other] : [user]);
   };
 
   return {
