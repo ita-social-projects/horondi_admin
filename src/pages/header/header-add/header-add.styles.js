@@ -34,12 +34,5 @@ export const useStyles = makeStyles((theme) => ({
     color: '#e60000',
     marginLeft: '5px'
   },
-  headerImage: {
-    width: '5rem',
-    height: '5rem',
-    margin: '5px',
-    fontSize: '.7rem',
-    padding: '.2rem'
-  },
   headerInputFile: { display: 'none' }
 }));
