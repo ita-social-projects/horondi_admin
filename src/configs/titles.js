@@ -1,4 +1,7 @@
 const titles = {
+  categoriesTitles: {
+    deleteTitle: 'Видалити категорію'
+  },
   patternTitles: {
     mainPageTitle: 'Iнформація про гобелени',
     createPageTitle: 'Створити гобелен'

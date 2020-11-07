@@ -16,6 +16,9 @@ const labels = {
     showEnable: 'Так',
     showDisable: 'Ні'
   },
+  categories: {
+    switchCategory: "Категорія, на яку замінити пов'язані товари"
+  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Код матеріалу',
