@@ -8,7 +8,8 @@ import tableHeadRowTitles from '../../../configs/table-head-row-titles';
 
 const Products = ({data,setFieldValue}) => {
   const classes = useStyles()
-  const {orderProduct, sizeValues} = labels
+  const {orderProduct, sizeValues,productsLabels} = labels
+  const {additionsLabel,colorsLabel,notListed,sizeLabel} = productsLabels
   const {items} = data
   const {orderProductTitles} = tableHeadRowTitles
   const initialItem = {additions:[],colors:[],size:{},closureColor:'',quantity:0}
@@ -63,18 +64,18 @@ const Products = ({data,setFieldValue}) => {
               <label htmlFor={item}>
                 <b>{orderProduct[item]+':'}</b>
               </label>
-              <span id={item}>{selectedItem[item].length ? selectedItem[item][0].value : 'Не вказано'}</span>
+              <span id={item}>{selectedItem[item].length ? selectedItem[item][0].value : notListed}</span>
             </div>
           ))}
           <div className={classes.productField}>
             <label htmlFor='closureColor'>
               <b>Колір замка:</b>
             </label>
-            <span id='closureColor'>{closureColor || 'Не вказано'}</span>
+            <span id='closureColor'>{closureColor || notListed}</span>
           </div>
-          {renderList(additions,'Додатки')}
-          {renderList(colors,'Кольори')}
-          {renderList(sizes,'Розмір')}
+          {renderList(additions,additionsLabel)}
+          {renderList(colors,colorsLabel)}
+          {renderList(sizes,sizeLabel)}
         </div>
       </Modal>
     </div>

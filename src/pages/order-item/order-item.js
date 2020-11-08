@@ -11,10 +11,13 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
+import labels from '../../configs/labels'
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const {orderTabs} = labels
+  const {delivery,general,products,receiver} = orderTabs
   const {buttonTitle,dialogTitle,dialogContent} = orders
   const {SAVE_ORDER} = buttonTitles
   const [tabValue, setTabValue] = useState(0);
@@ -75,10 +78,10 @@ const OrderItem = ({ id }) => {
     <form onSubmit={handleSubmit} className={classes.orderContainer}>
       <Paper>
         <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab value={0} label="Загальне"/>
-          <Tab value={1} label="Отримувач"/>
-          <Tab value={2} label="Продукти"/>
-          <Tab value={3} label="Доставка"/>
+          <Tab value={0} label={general}/>
+          <Tab value={1} label={receiver}/>
+          <Tab value={2} label={products}/>
+          <Tab value={3} label={delivery}/>
         </Tabs>
         <TabPanel value={tabValue} index={0}>
           <General data={values} handleChange={formikHandleChange}/>

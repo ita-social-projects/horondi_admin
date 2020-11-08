@@ -21,7 +21,7 @@ const Recipient = ({data,handleChange}) => {
       ))}
       <TextField
         name='userComment'
-        label='Коментар'
+        label={orderRecipient['commentary']}
         onChange={handleChange}
         variant='outlined'
         value={userComment||''}

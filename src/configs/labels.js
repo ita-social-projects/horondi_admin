@@ -155,7 +155,8 @@ const labels = {
     lastName: 'Прізвище',
     patronymicName: 'По-батькові',
     email: 'e-mail',
-    phoneNumber: 'Номер телефону'
+    phoneNumber: 'Номер телефону',
+    commentary: 'Коментар'
   },
   deliveryDetails: {
     country: 'Країна',
@@ -215,6 +216,35 @@ const labels = {
       orders: 'Кількість замовлень за цей час: ',
       products: 'Кількість продуктів за цей час: '
     }
-  }
+  },
+  orderTabs: {
+    general: 'Загальне',
+    receiver: 'Отримувач',
+    products: 'Продукти',
+    delivery: 'Доставка',
+  },
+  deliveryLabels: {
+    deliveryMethodLabel: 'Спосіб доставки',
+    byCourierLabel: 'Доставка кур\'єром:',
+    invoiceNumberLabel: 'Номер накладної',
+    warehouseNumberLabel: 'Номер відділення: ',
+    sentAtLabel: 'Відправлено о:',
+    deliveryCostLabel: 'Вартість доставки'
+  },
+  generalLabels: {
+    deliveryStatusLabel: 'Статус замовлення:',
+    paymentMethodLabel: 'Метод оплати:',
+    isPaidLabel: 'Оплачено:',
+    cancellationReasonLabel: 'Причина скасування',
+    creationDateLabel: 'Дата створення:',
+    updateDateLabel: 'Дата оновлення:',
+    adminCommentLabel: 'Залишити коментар'
+  },
+  productsLabels: {
+    notListed: 'Не вказано',
+    additionsLabel: 'Додатки',
+    colorsLabel: 'Кольори',
+    sizeLabel: 'Розмір',
+  },
 };
 export default labels;
