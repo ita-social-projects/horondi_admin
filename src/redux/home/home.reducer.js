@@ -5,7 +5,7 @@ import {
   SET_HOME_PAGE_DATA_ERROR
 } from './home.types';
 
-const initialState = {
+export const initialState = {
   photos: [],
   homePageLoading: false,
   homePageError: null

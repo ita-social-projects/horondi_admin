@@ -19,17 +19,12 @@ const UsersPage = () => {
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, filters, sort, currentPage, rowsPerPage } = useSelector(
-    ({
-      Users: { list, filters, sort },
-      Table: {
-        pagination: { currentPage, rowsPerPage }
-      }
-    }) => ({
-      list,
-      filters,
-      sort,
-      currentPage,
-      rowsPerPage
+    ({ Users, Table: { pagination } }) => ({
+      list: Users.list,
+      filters: Users.filters,
+      sort: Users.sort,
+      currentPage: pagination.currentPage,
+      rowsPerPage: pagination.rowsPerPage
     })
   );
   const dispatch = useDispatch();

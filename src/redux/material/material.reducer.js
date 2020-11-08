@@ -9,7 +9,11 @@ import {
   REMOVE_MATERIAL_FROM_STORE,
   SHOW_COLOR_DIALOG_WINDOW,
   COLOR_DIALOG_DATA_TO_STORE,
-  CLEAR_COLORS
+  CLEAR_COLORS,
+  SET_MATERIALS_COLORS,
+  SET_MATERIALS_COLOR,
+  SET_EDIT_MATERIAL_ID,
+  REMOVE_MATERIAL_COLOR_FROM_STORE
 } from './material.types';
 
 export const initialState = {
@@ -23,7 +27,10 @@ export const initialState = {
     pagesCount: 1
   },
   showColorDialogWindow: false,
-  colors: []
+  colors: [],
+  materialColors: null,
+  materialColor: null,
+  editMaterialId: ''
 };
 
 const materialReducer = (state = initialState, action = {}) => {
@@ -95,7 +102,26 @@ const materialReducer = (state = initialState, action = {}) => {
       ...state,
       colors: []
     };
-
+  case SET_MATERIALS_COLORS:
+    return {
+      ...state,
+      materialColors: action.payload
+    };
+  case SET_MATERIALS_COLOR:
+    return {
+      ...state,
+      materialColor: action.payload
+    };
+  case SET_EDIT_MATERIAL_ID:
+    return {
+      ...state,
+      editMaterialId: action.payload
+    };
+  case REMOVE_MATERIAL_COLOR_FROM_STORE:
+    const materialColorList = state.materialColors.colors.filter(
+      (color) => color.code !== action.payload
+    );
+    return { ...state, materialColors: { colors: materialColorList } };
   default:
     return state;
   }

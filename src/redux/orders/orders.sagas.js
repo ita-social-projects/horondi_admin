@@ -46,7 +46,7 @@ function* handleOrderUpdate({ payload }) {
   }
 }
 
-function* handleOrdersListLoad({ payload }) {
+export function* handleOrdersListLoad({ payload }) {
   try {
     yield put(setOrderLoading(true));
     const orders = yield call(getAllOrders, payload.skip, payload.limit);
@@ -64,7 +64,7 @@ function* handleOrdersListLoad({ payload }) {
   }
 }
 
-function* handleOrdersError(e) {
+export function* handleOrdersError(e) {
   yield put(setOrderLoading(false));
   yield put(setOrderError({ e }));
   yield put(setSnackBarSeverity('error'));

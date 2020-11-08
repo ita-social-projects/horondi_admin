@@ -34,6 +34,11 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     marginLeft: '.5rem'
   },
+  colorPaletteButton: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    marginLeft: '.5rem'
+  },
   returnButton: {
     margin: theme.spacing(2)
   },
@@ -46,6 +51,11 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: 0,
     paddingRight: 0,
     backgroundColor: 'white',
+    '& button': {
+      '& span:before': {
+        backgroundColor: 'red !important'
+      }
+    },
     '& span.MuiTab-wrapper': {
       color: '#3F51B5'
     },

@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import useColorHandlers from '../../../utils/use-color-handlers';
 import LoadingBar from '../../../components/loading-bar';
 import {
+  addMaterialColor,
   setNewColorToStore,
   showColorDialogWindow
 } from '../../../redux/material/material.actions';
@@ -27,10 +28,10 @@ function CreateColor({
 }) {
   const styles = useStyles();
   const dispatch = useDispatch();
-
-  const { loading, colors } = useSelector(({ Material }) => ({
-    loading: Material.colorLoading,
-    colors: Material.colors
+  const { loading, colors, editMaterialId } = useSelector(({ Material }) => ({
+    loading: Material.materialLoading,
+    colors: Material.colors,
+    editMaterialId: Material.editMaterialId
   }));
 
   const { createColor, tabsValue, handleTabsChange } = useColorHandlers();
@@ -107,6 +108,16 @@ function CreateColor({
       addNewColorImages(colorImage);
       dispatch(showColorDialogWindow(false));
       setImagesToUpload(image);
+
+      if (editMaterialId) {
+        dispatch(
+          addMaterialColor({
+            id: editMaterialId,
+            color,
+            image
+          })
+        );
+      }
     }
   });
 
@@ -252,6 +263,7 @@ function CreateColor({
     </div>
   );
 }
+
 CreateColor.propTypes = {
   imagesToUpload: PropTypes.arrayOf(),
   setImagesToUpload: PropTypes.func,

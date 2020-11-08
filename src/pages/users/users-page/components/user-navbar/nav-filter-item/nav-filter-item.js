@@ -30,17 +30,16 @@ const NavFilterItem = ({
   const formGroupOptions = filterList.map((item, idx) => (
     <MenuItem key={item} value={item}>
       <Checkbox
-        checked={(filterValues.findIndex((filter) => filter === item) !== -1)}
+        checked={filterValues.findIndex((filter) => filter === item) !== -1}
       />
       <ListItemText primary={filterLabels.length ? filterLabels[idx] : item} />
     </MenuItem>
   ));
 
-  const renderFilters = useMemo(
-    () => (selected) =>
-      selected.join(', '),
-    [filterList, buttonName]
-  );
+  const renderFilters = useMemo(() => (selected) => selected.join(', '), [
+    filterList,
+    buttonName
+  ]);
 
   return (
     <div className={styles.container}>
@@ -79,7 +78,7 @@ NavFilterItem.propTypes = {
 };
 
 NavFilterItem.defaultProps = {
-  labels: []
+  filterLabels: []
 };
 
 export default NavFilterItem;

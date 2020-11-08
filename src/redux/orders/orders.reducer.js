@@ -1,6 +1,6 @@
 import {SET_ORDER, SET_ORDER_LOADING, SET_ORDER_ERROR, SET_ORDER_LIST} from './orders.types'
 
-const initialState = {
+export const initialState = {
   list: [],
   selectedOrder: null,
   orderLoading: false,
