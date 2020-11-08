@@ -61,7 +61,6 @@ const HeaderForm = ({ header, id }) => {
     },
     onSubmit: () => {
       const newHeader = createHeader(values);
-      console.log(!!header._id);
       if (header._id) {
         dispatch(updateHeader({ id, header: newHeader }));
         return;
