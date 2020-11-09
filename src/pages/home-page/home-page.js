@@ -46,7 +46,8 @@ const HomePageEdit = () => {
       setImageUrl((prev) => {
         if (Object.keys(prev).find((el) => el === target.name)) {
           return { ...prev, [target.name]: { ...uploadedImage } };
-        } return {
+        }
+        return {
           ...prev,
           [target.name]: uploadedImage
         };
@@ -58,7 +59,7 @@ const HomePageEdit = () => {
 
   const photosItems =
     photos && photos.length
-      ? photos.map((photo) => (
+      ? photos.map((photo, i) => (
         <Grid
           item
           xs={3}
@@ -67,6 +68,7 @@ const HomePageEdit = () => {
           direction='row'
           justify='center'
           alignItems='center'
+          data-cy={`${photo._id}-${i}`}
         >
           <label className={classes.uploadContainer}>
             <input
@@ -74,12 +76,14 @@ const HomePageEdit = () => {
               accept='image/*'
               id='upload-photo'
               name={`upload-photo-${photo._id}`}
+              data-cy={`upload-photo-${i}`}
               type='file'
               onChange={(e) => photoUpdateHandler(e, photo._id)}
             />
             <Avatar
               variant='square'
               className={classes.avatar}
+              data-cy={`photo-${i}`}
               src={
                 (image[`upload-photo-${photo._id}`] &&
                     image[`upload-photo-${photo._id}`].preview) ||
@@ -103,7 +107,11 @@ const HomePageEdit = () => {
   return (
     <div className={classes.container}>
       <div className={classes.tableNav}>
-        <Typography variant='h1' className={classes.title}>
+        <Typography
+          data-cy='homepage-title'
+          variant='h1'
+          className={classes.title}
+        >
           {homePageEdit.mainPageTitle}
         </Typography>
       </div>
