@@ -10,8 +10,9 @@ import { useStyles } from './comments.style';
 import {
   getRecentComments,
   setCommentsCurrentPage,
-  deleteComment
-  , getCommentsByProduct } from '../../redux/comments/comments.actions';
+  deleteComment,
+  getCommentsByProduct
+} from '../../redux/comments/comments.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -26,7 +27,7 @@ const { REMOVE_COMMENT_TITLE } = config.buttonTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 const { RECENT_COMMENTS } = commentsTranslations;
 
-const CommentsPage = ({ productId }) => {
+const Comments = ({ productId }) => {
   const classes = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
@@ -130,8 +131,8 @@ const CommentsPage = ({ productId }) => {
   );
 };
 
-CommentsPage.propTypes = {
+Comments.propTypes = {
   productId: PropTypes.number.isRequired
 };
 
-export default CommentsPage;
+export default Comments;
