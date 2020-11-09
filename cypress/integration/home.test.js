@@ -1,5 +1,4 @@
 import 'cypress-file-upload';
-import { config } from '../../src/configs';
 
 describe('Homepage tests', () => {
   before(() => {
