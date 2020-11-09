@@ -1,12 +1,5 @@
 {
   "baseUrl": "http://localhost:3000",
   "viewportHeight": 1080,
-  "viewportWidth": 1920,
-  "env": {
-    "SERVER_URL": "http://localhost:5000/graphql",
-    "ADMIN_LOGIN": "admin2@gmail.com",
-    "ADMIN_PASSWORD": "qwertY123",
-    "SUPERADMIN_LOGIN": "superadmin@gmail.com",
-    "SUPERADMIN_PASSWORD": "qwertY123"
-}
+  "viewportWidth": 1920
 }
