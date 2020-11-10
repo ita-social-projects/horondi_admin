@@ -21,7 +21,7 @@ const SlideDetails = ({ match }) =>{
     dispatch(getAvailableSlides())
   }, [dispatch]);
 
-  const slideOrder = availableSlides.filter(slide=>slide.show===true).length + 1
+  const slideOrder = availableSlides.filter(slideItem=>slideItem.show===true).length + 1
 
   if (loading) {
     return <LoadingBar />;

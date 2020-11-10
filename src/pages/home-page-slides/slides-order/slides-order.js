@@ -10,7 +10,10 @@ import { useStyles } from './slides-order.styles';
 import { config } from '../../../configs';
 import { SaveButton } from '../../../components/buttons';
 import { slidesTranslations } from '../../../translations/home-page-slides.translations';
-import { addSlideToStore, updateSlidesOrder } from '../../../redux/home-page-slides/home-page-slides.actions';
+import {
+  setSlides,
+  updateSlidesOrder
+} from '../../../redux/home-page-slides/home-page-slides.actions';
 
 const SlidesOrder = (props) => {
   const styles = useStyles();
@@ -68,16 +71,16 @@ const SlidesOrder = (props) => {
     list.forEach(el=>{
 
       if(el.title==='available'){
-        el.items.map((el,index) => {
-          const {order,show,...rest} = el
-          availableArray.push({id:el._id,slide:{order:+index+1, show:true, ...rest}})
+        el.items.map((availableSlide,index) => {
+          const {order,show,...rest} = availableSlide
+          availableArray.push({id:availableSlide._id,slide:{order:+index+1, show:true, ...rest}})
           return {order,show}
         });
       }
       if(el.title==='nonAvailable'){
-        el.items.map((el) => {
-          const {order,show,...rest} = el
-          nonAvailableArray.push({id:el._id,slide:{order:0, show:false, ...rest}})
+        el.items.map((nonAvailableSlide) => {
+          const {order,show,...rest} = nonAvailableSlide
+          nonAvailableArray.push({id:nonAvailableSlide._id,slide:{order:0, show:false, ...rest}})
           return {order,show}
         });
       }
@@ -86,7 +89,7 @@ const SlidesOrder = (props) => {
     newSlideItems.forEach(item=>dispatch(updateSlidesOrder({id:item.id, slide:{order:item.slide.order, show:item.slide.show}})))
     const arrayToStore = []
     newSlideItems.forEach(el=>arrayToStore.push(el.slide))
-    dispatch(addSlideToStore(arrayToStore))
+    dispatch(setSlides(arrayToStore))
     setDraggable(false)
   }
   const dnbContainer = drugAndDropList.length

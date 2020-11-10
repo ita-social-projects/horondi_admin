@@ -98,11 +98,6 @@ export const removeSlideFromStore = (payload) => ({
   payload
 });
 
-export const addSlideToStore = (payload) => ({
-  type: ADD_SLIDE_TO_STORE,
-  payload
-});
-
 export const updateSlidesOrder = (payload) => ({
   type: UPDATE_SLIDES_ORDER,
   payload

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './slide-add.styles';
 import HomePageSlideForm from '../../../components/home-page-slide-form';
-import { getAvailableSlides, getSlide } from '../../../redux/home-page-slides/home-page-slides.actions';
+import { getAvailableSlides} from '../../../redux/home-page-slides/home-page-slides.actions';
 import LoadingBar from '../../../components/loading-bar';
 
 const SlideAdd = () =>{

@@ -88,12 +88,6 @@ const slideReducer = (state = initialState, action = {}) => {
       return el;
     });
     return { ...state, list: slides, drugAndDropList:drugAndDropSlides };
-
-  case ADD_SLIDE_TO_STORE:
-    return {
-      ...state,
-      list: action.payload
-    };
   default:
     return state;
   }
