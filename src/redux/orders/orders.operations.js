@@ -243,11 +243,11 @@ export const updateOrder = (order)=> {
   return setItems(query, { order })
 }
 
-export const getAllOrders = async (skip, limit) => {
+const getAllOrders = async (skip, limit, filter) => {
   const result = await client.query({
     query: gql`
-      query getPaginatedOrders($limit: Int, $skip: Int) {
-        getAllOrders(limit: $limit, skip: $skip) {
+      query($limit: Int, $skip: Int, $filter: FilterInput) {
+        getAllOrders(limit: $limit, skip: $skip, filter: $filter) {
           items {
             _id
             status
@@ -267,7 +267,10 @@ export const getAllOrders = async (skip, limit) => {
     `,
     variables: {
       skip,
-      limit
+      limit,
+      filter: {
+        orderStatus: filter.length ? filter : null
+      }
     }
   });
   const { data } = result;
