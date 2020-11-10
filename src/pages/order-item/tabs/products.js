@@ -30,13 +30,13 @@ const Products = ({data,setFieldValue}) => {
       />
     ))
 
-  const renderList = (items, label) => {
-    if (!items.length) return null;
+  const renderList = (renderItems, label) => {
+    if (!renderItems.length) return null;
     return (
       <div>
         <label htmlFor={label}><b>{label}:</b></label>
         <ul id={label} className={classes.renderList}>
-          {items.map(item => (
+          {renderItems.map(item => (
             <li key={item[0].value}>{item[0].value}</li>
           ))}
         </ul>

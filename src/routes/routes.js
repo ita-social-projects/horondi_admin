@@ -33,7 +33,6 @@ import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
 import OrderItem from '../pages/order-item';
-import HomePageEdit from '../pages/home-page';
 import HomePage from '../pages/home-page';
 import EmailQuestionsList from '../pages/email-questions';
 import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
