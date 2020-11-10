@@ -103,6 +103,8 @@ export const useStyles = makeStyles((theme) => ({
       },
       '& p': {
         fontSize:'24px',
+        padding: theme.spacing(1),
+        lineHeight: '30px',
       },
     },
 

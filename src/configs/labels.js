@@ -182,12 +182,25 @@ const labels = {
       products: 'Кількість продуктів за цей час: '
     }
   },
+  orders: {
+    select: [
+      { label: 'Створені', value: 'CREATED' },
+      { label: 'Виконані', value: 'CONFIRMED' },
+      { label: 'Оброблені', value: 'PRODUCED' },
+      { label: 'Скасовані', value: 'CANCELLED' },
+      { label: 'Повернені', value: 'REFUNDED' },
+      { label: 'Надіслані', value: 'SENT' },
+      { label: 'Доставлені', value: 'DELIVERED' },
+      { label: 'Всі', value: 'All' }
+    ]
+  },
   homePageSlide: {
     image: 'Фото слайду',
     title: 'Заголовок слайду',
     show: 'Доступний',
     description: 'Опис слайду',
     link: 'Посилання для переходу'
-  },
+  }
+
 };
 export default labels;

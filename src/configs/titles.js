@@ -32,6 +32,7 @@ const titles = {
   },
   orderTitles: {
     filterBy: 'Фільтрувати',
+    ORDER_NOT_FOUND: 'Замовлень за заданим фільтром не знайдено',
     orders: 'замовлень'
   },
   homePageSliderTitle: {
