@@ -22,6 +22,7 @@ const messages = {
   MODEL_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю модель?',
   ERROR: 'ПОМИЛКА',
   EMPTY_LIST: 'Список порожній',
-  REMOVE_MATERIAL_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?'
+  REMOVE_MATERIAL_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?',
+  REMOVE_SLIDE_MESSAGE: 'Ви впевнені, що хочете видалити цей слайд?'
 };
 export default messages;

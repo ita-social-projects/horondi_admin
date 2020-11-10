@@ -13,7 +13,7 @@ import {
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
-  modelErrorMessages
+  modelErrorMessages, homePageSlideErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -179,6 +179,7 @@ export const config = {
   contactsPaginationPayload,
   materialPaginationPayload,
   modelErrorMessages,
+  homePageSlideErrorMessages,
   sort
 };
 export const inputTypes = {

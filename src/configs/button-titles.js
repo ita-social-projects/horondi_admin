@@ -54,6 +54,11 @@ const buttonTitles = {
   ORDER_DETAILS: 'Деталі',
   USER_STATUS_TITLE: 'Статус',
   CLEAR_FILTERS: 'Очистити фільтри',
+  CREATE_SLIDE_TITLE:'Створити слайд',
+  DELETE_SLIDE_TITLE:'Видалити слайд',
+  OPEN_SLIDE_EDIT:'Вімкнути редагування',
+  SAVE_SLIDE_ORDER:'Зберегти зміни',
+
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([
       [true, 'Зберегти'],

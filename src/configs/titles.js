@@ -33,6 +33,14 @@ const titles = {
   orderTitles: {
     filterBy: 'Фільтрувати',
     orders: 'замовлень'
+  },
+  homePageSliderTitle: {
+    mainPageTitle: 'Слайди на головній сторінці',
+    slideOrderTitle:'Порядок слайдів',
+    discoverMoreTitle:'Дізнатись більше',
+    slideTitle:'Заголовок слайду не вибрано',
+    slideDescription:'Опис слайду не вибрано',
+    preview:'Попередній перегляд',
   }
 };
 

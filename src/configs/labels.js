@@ -181,6 +181,13 @@ const labels = {
       orders: 'Кількість замовлень за цей час: ',
       products: 'Кількість продуктів за цей час: '
     }
-  }
+  },
+  homePageSlide: {
+    image: 'Фото слайду',
+    title: 'Заголовок слайду',
+    show: 'Доступний',
+    description: 'Опис слайду',
+    link: 'Посилання для переходу'
+  },
 };
 export default labels;

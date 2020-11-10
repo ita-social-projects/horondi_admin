@@ -43,7 +43,8 @@ const tableHeadRowTitles = {
     'Статус',
     ''
   ],
-  models: ['Фото', 'Назва', 'Категорія', 'Доступна', 'Пріорітет']
+  models: ['Фото', 'Назва', 'Категорія', 'Доступна', 'Пріорітет'],
+  homePageSlides: ['Порядок','Назва', 'Опис', 'Доступний', 'Дії']
 };
 
 export default tableHeadRowTitles;

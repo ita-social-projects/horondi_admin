@@ -81,3 +81,8 @@ export const colorErrorMessages = {
 export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'
 };
+export const homePageSlideErrorMessages = {
+  SLIDE_VALIDATION_ERROR: 'Мінімум 2 символи',
+  SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+};

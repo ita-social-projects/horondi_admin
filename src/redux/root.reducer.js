@@ -19,6 +19,7 @@ import EmailQuestions from './email-questions/email-questions.reducer';
 import Stats from './stats/stats.reducer';
 import Model from './model/model.reducer';
 import Orders from './orders/orders.reducer';
+import Slides from './home-page-slides/home-page-slides.reducer'
 
 const rootReducer = (history) =>
   combineReducers({
@@ -41,6 +42,7 @@ const rootReducer = (history) =>
     HomePage,
     Stats,
     Model,
-    Orders
+    Orders,
+    Slides
   });
 export default rootReducer;
