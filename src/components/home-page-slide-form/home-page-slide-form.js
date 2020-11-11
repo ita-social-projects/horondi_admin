@@ -101,6 +101,7 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
       dispatch(addSlide({ slide: newSlide, upload }));
     }
   });
+  console.log(values, slide)
   const checkboxes = [
     {
       id: 'show',
@@ -112,6 +113,19 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
       handler: () => setFieldValue('show', !values.show)
     }
   ];
+  const tabPanelField = (language, textField)=>(
+    <TextField
+      data-cy={`${language}${textField}`}
+      id={`${language}${textField}`}
+      className={styles.textField}
+      variant='outlined'
+      label={config.labels.homePageSlide.title}
+      multiline
+      value={values[`${language}${textField}`]}
+      onChange={handleChange}
+      error={touched[`${language}${textField}`] && !!errors[`${language}${textField}`]}
+    /> )
+
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -152,7 +166,7 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
               error={touched.link && !!errors.link}
             />
             {touched.link && errors.link && (
-              <div data-cy='material-error' className={styles.inputError}>
+              <div data-cy='slide-error' className={styles.inputError}>
                 {errors.link}
               </div>
             )}
@@ -169,19 +183,9 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
           </Tabs>
         </AppBar>
         {languages.map((lang, index) => (
-          <TabPanel key={`${lang}-${index}`} value={tabsValue} index={index}>
+          <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.slideItemUpdate}>
-              <TextField
-                data-cy={`${lang}Title`}
-                id={`${lang}Title`}
-                className={styles.textField}
-                variant='outlined'
-                label={config.labels.homePageSlide.title}
-                multiline
-                value={values[`${lang}Title`]}
-                onChange={handleChange}
-                error={touched[`${lang}Title`] && !!errors[`${lang}Title`]}
-              />
+              {tabPanelField(lang, 'Title')}
               {touched[`${lang}Title`] && errors[`${lang}Title`] && (
                 <div
                   data-cy={`${lang}Title-error`}
@@ -190,20 +194,7 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
                   {errors[`${lang}Name`]}
                 </div>
               )}
-              <TextField
-                data-cy={`${lang}Description`}
-                id={`${lang}Description`}
-                className={styles.textField}
-                variant='outlined'
-                label={config.labels.homePageSlide.description}
-                multiline
-                value={values[`${lang}Description`]}
-                onChange={handleChange}
-                error={
-                  touched[`${lang}Description`] &&
-                  !!errors[`${lang}Description`]
-                }
-              />
+              {tabPanelField(lang, 'Description')}
               {touched[`${lang}Description`] && errors[`${lang}Description`] && (
                 <div
                   data-cy={`${lang}Description-error`}

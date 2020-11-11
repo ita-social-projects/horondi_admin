@@ -36,6 +36,7 @@ export const getAllSlides = async (skip, limit) => {
         }
     `
   });
+  client.resetStore();
   return result.data.getAllSlides;
 };
 

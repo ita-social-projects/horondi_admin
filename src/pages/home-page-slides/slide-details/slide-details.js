@@ -19,7 +19,7 @@ const SlideDetails = ({ match }) =>{
   useEffect(() => {
     dispatch(getSlide(id));
     dispatch(getAvailableSlides())
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   const slideOrder = availableSlides.filter(slideItem=>slideItem.show).length + 1
 
