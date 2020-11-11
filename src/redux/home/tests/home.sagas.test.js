@@ -22,7 +22,7 @@ import {
   looksImageUpdateMock,
   looksImagesMock,
   updatedImages,
-  id as _id,
+  _id,
   images,
   error
 } from './home.variables';

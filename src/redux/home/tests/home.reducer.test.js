@@ -10,7 +10,7 @@ import {
   updatedImages as updatedPhotos,
   loading,
   error,
-  id as _id,
+  _id,
   invalidId,
   initialState
 } from './home.variables';
