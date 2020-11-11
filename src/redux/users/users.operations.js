@@ -117,11 +117,12 @@ query($token: String!){
   }
 }`;
 
-const getAllUsers = async (userState,tableState) => {
+const getAllUsers = async (userState, tableState) => {
   const options = {
     filter: userState.filters,
     pagination: {
-      skip: tableState.pagination.currentPage * tableState.pagination.rowsPerPage,
+      skip:
+        tableState.pagination.currentPage * tableState.pagination.rowsPerPage,
       limit: tableState.pagination.rowsPerPage
     },
     sort: userState.sort

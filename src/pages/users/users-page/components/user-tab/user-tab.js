@@ -16,7 +16,7 @@ const { unknownUser } = config.labels.user;
 
 const UserTab = (props) => {
   const { list, onDelete } = props;
-  const userLoading = useSelector(({Users}) => Users.userLoading);
+  const userLoading = useSelector(({ Users }) => Users.userLoading);
   const dispatch = useDispatch();
 
   const usersItems = list.map((userItem) => (
@@ -41,15 +41,16 @@ const UserTab = (props) => {
     <>
       <UserNavbar />
       <div>
-        {userLoading
-          ? <LoadingBar />
-          : <TableContainerGenerator
+        {userLoading ? (
+          <LoadingBar />
+        ) : (
+          <TableContainerGenerator
             pagination
             id='usersTable'
             tableTitles={tableTitles}
             tableItems={usersItems}
           />
-        }
+        )}
       </div>
     </>
   );

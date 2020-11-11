@@ -19,7 +19,7 @@ const { forbiddenRolesFromDeleting } = config;
 
 const AdminTab = (props) => {
   const { list, onDelete } = props;
-  const userLoading = useSelector(({Users}) => Users.userLoading);
+  const userLoading = useSelector(({ Users }) => Users.userLoading);
 
   const {
     isRegisterDialogOpen,
@@ -65,15 +65,16 @@ const AdminTab = (props) => {
           </Button>
         </div>
       </div>
-      {userLoading
-        ? <LoadingBar />
-        : <TableContainerGenerator
+      {userLoading ? (
+        <LoadingBar />
+      ) : (
+        <TableContainerGenerator
           pagination
           id='adminsTable'
           tableTitles={tableHeaders}
           tableItems={adminItems}
         />
-      }
+      )}
       <RegisterDialog
         data-cy='register-dialog'
         isOpen={isRegisterDialogOpen}
