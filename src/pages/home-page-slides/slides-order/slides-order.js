@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 import {Typography } from '@material-ui/core';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './slides-order.styles';
 import { config } from '../../../configs';
 import { SaveButton } from '../../../components/buttons';
@@ -26,6 +26,13 @@ const SlidesOrder = (props) => {
   const {discoverMoreTitle,
     slideOrderTitle, discoverMoreSymbol} = config.titles.homePageSliderTitle;
   const {OPEN_SLIDE_EDIT,SAVE_SLIDE_ORDER} = config.buttonTitles
+
+  const {
+    slidesPerPage,
+  } = useSelector(({ Slides }) => ({
+    slidesPerPage: Slides.pagination.slidesPerPage,
+  }));
+
   const dragItem = useRef();
   const dragItemNode = useRef();
 
@@ -57,7 +64,7 @@ const SlidesOrder = (props) => {
   };
 
   const getStyles = (item) => {
-    if (dragItem.current.groupIndex === item.groupIndex && dragItem.current.itemI === item.itemIndex) {
+    if (dragItem.current.groupIndex === item.groupIndex && dragItem.current.itemIndex === item.itemIndex) {
       return `${styles.dndItem} ${styles.current}`;
     }
     return styles.dndItem;
@@ -84,6 +91,7 @@ const SlidesOrder = (props) => {
     const newSlideItems = [...available, ...nonAvailable]
     newSlideItems.forEach(item=>dispatch(updateSlidesOrder({id:item.id, slide:{order:item.slide.order, show:item.slide.show}})))
     const arrayToStore = newSlideItems.map(el=>el.slide)
+    arrayToStore.length = slidesPerPage
     dispatch(setSlides(arrayToStore))
     setDraggable(false)
   }
@@ -91,7 +99,7 @@ const SlidesOrder = (props) => {
     ? list.map((group, groupIndex) => (
       <Card key={group.title}
         elevation={2}
-        onDragEnter={dragging && !group.items.length ? (e) => handleDragEnter(e, { group, itemI: 0 }) : null}
+        onDragEnter={dragging && !group.items.length ? (e) => handleDragEnter(e, { groupIndex, itemIndex: 0 }) : null}
         className={styles.dndGroup}
       >
         <Typography variant='h1' className={styles.slideTitle}>
