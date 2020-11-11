@@ -3,7 +3,8 @@ import {
   SET_CURRENT_PAGE,
   SET_ROWS_PER_PAGE,
   SET_PAGES_COUNT,
-  SET_ITEMS_COUNT
+  SET_ITEMS_COUNT,
+  RESET_PAGINATION
 } from './table.types';
 
 export const initialState = {
@@ -44,6 +45,8 @@ const tableState = (state = initialState, action = {}) => {
       ...state,
       itemsCount: action.payload
     };
+  case RESET_PAGINATION:
+    return initialState;
   default:
     return state;
   }
