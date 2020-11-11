@@ -20,10 +20,11 @@ import ordersSaga, {
   handleOrdersError
 } from '../orders.sagas';
 import {
-  getOrderListFakeDataSaga,
+  getFakeOrderList,
   fakeIdOrder,
   fakeOrders,
-  getOrdersFakeError
+  fakeError,
+  fakeId
 } from './orders.variables';
 
 describe('order sagas tests', () => {
@@ -35,7 +36,7 @@ describe('order sagas tests', () => {
   });
 
   it('should handle order list load', () => {
-    expectSaga(handleOrdersListLoad, getOrderListFakeDataSaga)
+    expectSaga(handleOrdersListLoad, getFakeOrderList)
       .provide([[matchers.call.fn(getOrderList), fakeOrders]])
       .put(setOrderLoading(true))
       .put(
@@ -50,7 +51,7 @@ describe('order sagas tests', () => {
   });
 
   it('should handle order load', () => {
-    expectSaga(handleOrderLoad)
+    expectSaga(handleOrderLoad, fakeId)
       .provide([[matchers.call.fn(getOrderById), fakeIdOrder]])
       .put(setOrderLoading(true))
       .put(setOrder(fakeIdOrder.data.getOrderById))
@@ -59,11 +60,11 @@ describe('order sagas tests', () => {
   });
 
   it('should handle orders error', () => {
-    expectSaga(handleOrdersError, getOrdersFakeError)
+    expectSaga(handleOrdersError, fakeError)
       .put(setOrderLoading(false))
-      .put(setOrderError({ getOrdersFakeError }))
+      .put(setOrderError({ fakeError }))
       .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(getOrdersFakeError.message))
+      .put(setSnackBarMessage(fakeError.message))
       .put(setSnackBarStatus(true))
       .run();
   });

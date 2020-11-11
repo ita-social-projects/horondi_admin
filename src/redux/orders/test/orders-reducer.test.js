@@ -8,7 +8,7 @@ import {
 
 describe('orders reducer tests', () => {
   it('should return default state', () => {
-    expect(ordersReducer()).toEqual(initialState);
+    expect(ordersReducer(initialState)).toEqual(initialState);
   });
 
   it('should set order list', () => {

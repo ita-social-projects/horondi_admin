@@ -1,34 +1,4 @@
-export const operationsAllOrdersLimit = 5;
-export const operationsAllOrdersSkip = 0;
-export const operationsAllOrdersFilter = {
-  orderStatus: ['DELIVERED']
-};
-
-export const expectedResultOperationsAllOrders = {
-  data: {
-    getAllOrders: {
-      ...setOrderListFakeData
-    }
-  }
-};
-
-export const getOrderListFakeData = {
-  limit: 5,
-  skip: 0,
-  filter: {
-    orderStatus: 'DELIVERED'
-  }
-};
-
-export const getOrderListFakeDataSaga = {
-  limit: 5,
-  skip: 0,
-  filter: {
-    orderStatus: 'DELIVERED'
-  }
-};
-
-export const setOrderListFakeData = {
+export const fakeOrderList = {
   items: [
     {
       _id: '29c7214c0bd65f0807caf95b',
@@ -81,10 +51,70 @@ export const setOrderListFakeData = {
       ]
     },
     {
-      _id: 'd30c9fd30b31356c4a4f3910',
+      _id: '53407c59890642fdeb5e86e0',
       status: 'DELIVERED',
-      dateOfCreation: '1602943280234',
+      dateOfCreation: '1603914198703',
       totalItemsPrice: [
+        {
+          currency: 'UAH',
+          value: 145000
+        },
+        {
+          currency: 'USD',
+          value: 5229
+        }
+      ],
+      totalPriceToPay: [
+        {
+          currency: 'UAH',
+          value: 150000
+        },
+        {
+          currency: 'USD',
+          value: 5409
+        }
+      ]
+    },
+    {
+      _id: '3b5317143d468b1e5560a80c',
+      status: 'DELIVERED',
+      dateOfCreation: '1603814854142',
+      totalItemsPrice: [
+        {
+          currency: 'UAH',
+          value: 50000
+        },
+        {
+          currency: 'USD',
+          value: 1803
+        }
+      ],
+      totalPriceToPay: [
+        {
+          currency: 'UAH',
+          value: 55000
+        },
+        {
+          currency: 'USD',
+          value: 1983
+        }
+      ]
+    },
+    {
+      _id: '29faced3722c5801322fe3a4',
+      status: 'DELIVERED',
+      dateOfCreation: '1603595559611',
+      totalItemsPrice: [
+        {
+          currency: 'UAH',
+          value: 275000
+        },
+        {
+          currency: 'USD',
+          value: 9917
+        }
+      ],
+      totalPriceToPay: [
         {
           currency: 'UAH',
           value: 280000
@@ -93,32 +123,26 @@ export const setOrderListFakeData = {
           currency: 'USD',
           value: 10097
         }
-      ],
-      totalPriceToPay: [
-        {
-          currency: 'UAH',
-          value: 285000
-        },
-        {
-          currency: 'USD',
-          value: 10278
-        }
       ]
     }
   ],
   count: 941
 };
 
-export const fakeOrders = {
-  data: {
-    getAllOrders: {
-      ...setOrderListFakeData
-    }
+export const getFakeOrderList = {
+  limit: 5,
+  skip: 0,
+  filter: {
+    orderStatus: 'DELIVERED'
   }
 };
 
-export const getOrdersFakeError = {
-  message: 'ORDERS_NOT_FOUND'
+export const fakeOrders = {
+  data: {
+    getAllOrders: {
+      ...fakeOrderList
+    }
+  }
 };
 
 export const fakeId = '29c7214c0bd65f0807caf95b';
@@ -215,4 +239,8 @@ export const fakeIdOrder = {
       paymentMethod: 'CARD'
     }
   }
+};
+
+export const fakeError = {
+  message: 'ORDERS_NOT_FOUND'
 };
