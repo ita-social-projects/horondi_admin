@@ -18,6 +18,7 @@ import HomePage from './home/home.reducer';
 import EmailQuestions from './email-questions/email-questions.reducer';
 import Stats from './stats/stats.reducer';
 import Model from './model/model.reducer';
+import Header from './header/header.reducer';
 import Orders from './orders/orders.reducer';
 
 const rootReducer = (history) =>
@@ -41,6 +42,7 @@ const rootReducer = (history) =>
     HomePage,
     Stats,
     Model,
+    Header,
     Orders
   });
 export default rootReducer;

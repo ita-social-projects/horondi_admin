@@ -34,6 +34,9 @@ const routes = {
   pathToStatistic: '/stats',
   pathToModels: '/models',
   pathToModelDetails: '/models/:id',
-  pathToAddModel: '/models/add'
+  pathToAddModel: '/models/add',
+  pathToHeaders: '/headers',
+  pathToAddHeader: '/headers/add',
+  pathToHeaderDetails: '/headers/:id'
 };
 export default routes;

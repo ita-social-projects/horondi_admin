@@ -25,7 +25,7 @@ const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
 
   const barData = useSelector(({ Stats }) => Stats.bar);
 
-  const {total} = barData[selectedValue];
+  const { total } = barData[selectedValue];
 
   const barList = select.map(({ label, value }) => (
     <MenuItem key={value} value={value}>

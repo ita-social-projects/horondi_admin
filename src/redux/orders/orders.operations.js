@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
 import { client, getItems } from '../../utils/client';
 
-const getAllOrders = async (skip, limit) => {
+const getAllOrders = async (skip, limit, filter) => {
   const result = await client.query({
     query: gql`
-      query getPaginatedOrders($limit: Int, $skip: Int) {
-        getAllOrders(limit: $limit, skip: $skip) {
+      query($limit: Int, $skip: Int, $filter: FilterInput) {
+        getAllOrders(limit: $limit, skip: $skip, filter: $filter) {
           items {
             _id
             status
@@ -25,7 +25,10 @@ const getAllOrders = async (skip, limit) => {
     `,
     variables: {
       skip,
-      limit
+      limit,
+      filter: {
+        orderStatus: filter.length ? filter : null
+      }
     }
   });
   const { data } = result;

@@ -12,6 +12,7 @@ import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import StyleIcon from '@material-ui/icons/Style';
+import LinkIcon from '@material-ui/icons/Link';
 import routes from './routes';
 
 const menuCategories = [
@@ -27,6 +28,7 @@ const menuCategories = [
   ['Новини', routes.pathToNews, ImportContactsIcon],
   ['Запитання покупців', routes.pathToEmailQuestions, LiveHelpIcon],
   ['Моделі', routes.pathToModels, StyleIcon],
+  ['Посилання', routes.pathToHeaders, LinkIcon],
   ['Замовлення', routes.pathToOrders, ListAltIcon],
   ['Головна сторінка', routes.pathToHomePageEdit, ImageRoundedIcon]
 ];

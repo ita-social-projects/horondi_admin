@@ -21,7 +21,12 @@ import {
 export function* handleOrdersListLoad({ payload }) {
   try {
     yield put(setOrderLoading(true));
-    const orders = yield call(getAllOrders, payload.skip, payload.limit);
+    const orders = yield call(
+      getAllOrders,
+      payload.skip,
+      payload.limit,
+      payload.filter.orderStatus
+    );
     if (orders.errors) {
       throw new Error(orders.errors[0].message);
     }
