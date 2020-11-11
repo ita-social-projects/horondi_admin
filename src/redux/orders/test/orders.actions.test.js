@@ -2,7 +2,9 @@ import {
   GET_ORDER,
   SET_ORDER,
   SET_ORDER_LOADING,
-  SET_ORDER_ERROR
+  SET_ORDER_ERROR,
+  GET_ORDER_LIST,
+  SET_ORDER_LIST
 } from '../orders.types';
 
 import {
@@ -13,12 +15,7 @@ import {
   setOrderLoading,
   setOrderError
 } from '../orders.actions';
-import {
-  expectedResultActionsGetOrderList,
-  expectedResultActionsSetOrderList,
-  getOrderListFakeData,
-  setOrderListFakeData
-} from './orders.variables';
+import { getOrderListFakeData, setOrderListFakeData } from './orders.variables';
 
 describe('orders actions', () => {
   it('should create an action to get order', () => {
@@ -34,15 +31,19 @@ describe('orders actions', () => {
   });
 
   it('should create an action to get order list', () => {
-    expect(getOrderList(getOrderListFakeData)).toEqual(
-      expectedResultActionsGetOrderList
-    );
+    expect(getOrderList(getOrderListFakeData)).toEqual({
+      type: GET_ORDER_LIST,
+      payload: {
+        ...getOrderListFakeData
+      }
+    });
   });
 
   it('should create an action to set order list', () => {
-    expect(setOrderList(setOrderListFakeData)).toEqual(
-      expectedResultActionsSetOrderList
-    );
+    expect(setOrderList(setOrderListFakeData)).toEqual({
+      type: SET_ORDER_LIST,
+      payload: { ...setOrderListFakeData }
+    });
   });
 
   it('should create an action to set order loading', () => {
