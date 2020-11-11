@@ -3,12 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   formContainer: {
     width: '100%',
-    padding: 20,
+    padding: '20px',
   },
   slideItemUpdate: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '20px 0'
+    margin: '20px 0px'
   },
   patternDetails: {
     display: 'flex',
@@ -68,11 +68,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   attachFile: {
     marginRight: '5px'
-  },
-  slideItemAdd: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '20px 0 !important'
   },
   square:{
     position:'absolute',

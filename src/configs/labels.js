@@ -16,6 +16,11 @@ const labels = {
     showEnable: 'Так',
     showDisable: 'Ні'
   },
+  header: {
+    name: 'Назва',
+    link: 'Посилання',
+    priority: 'Пріорітет'
+  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Код матеріалу',

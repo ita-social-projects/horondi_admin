@@ -1,13 +1,11 @@
 import {
-  ADD_SLIDE_TO_STORE,
   REMOVE_SLIDE_FROM_STORE,
   SET_AVAILABLE_SLIDES, SET_SLIDE,
   SET_SLIDE_ERROR,
   SET_SLIDE_LOADING,
   SET_SLIDES,
-  SET_SLIDES_CURRENT_PAGE, SET_SLIDES_DRUG_AND_DROP_LIST, SET_SLIDES_PAGES_COUNT,
+  SET_SLIDES_CURRENT_PAGE, SET_DRUG_AND_DROP_SLIDES, SET_SLIDES_PAGES_COUNT,
   SET_SLIDES_PER_PAGE
-// eslint-disable-next-line import/named
 } from './home-page-slides.types';
 
 export const initialState = {
@@ -32,7 +30,7 @@ const slideReducer = (state = initialState, action = {}) => {
       ...state,
       list: action.payload
     };
-  case SET_SLIDES_DRUG_AND_DROP_LIST:
+  case SET_DRUG_AND_DROP_SLIDES:
     return {
       ...state,
       drugAndDropList: action.payload

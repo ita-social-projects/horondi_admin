@@ -30,6 +30,11 @@ export const patternErrorMessages = {
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
+export const headerErrorMessages = {
+  HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
+  HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+};
 export const newsErrorMessages = {
   NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
   NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,

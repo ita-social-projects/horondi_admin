@@ -28,7 +28,7 @@ export const useStyles = makeStyles((theme) => ({
     '&:first-letter': {
       textTransform: 'capitalize'
     },
-    margin: '10px',
+    margin: '10px'
   },
   inputError: {
     color: '#e60000',

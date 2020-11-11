@@ -1,6 +1,5 @@
 import {
   ADD_SLIDE,
-  ADD_SLIDE_TO_STORE,
   DELETE_SLIDE,
   GET_AVAILABLE_SLIDES,
   GET_SLIDE,
@@ -12,7 +11,7 @@ import {
   SET_SLIDE_LOADING,
   SET_SLIDES,
   SET_SLIDES_CURRENT_PAGE,
-  SET_SLIDES_DRUG_AND_DROP_LIST,
+  SET_DRUG_AND_DROP_SLIDES,
   SET_SLIDES_PAGES_COUNT,
   SET_SLIDES_PER_PAGE,
   UPDATE_SLIDE, UPDATE_SLIDES_ORDER
@@ -54,7 +53,7 @@ export const setSlideError = (payload) => ({
 });
 
 export const setSlidesDrugAndDropList = (payload) => ({
-  type: SET_SLIDES_DRUG_AND_DROP_LIST,
+  type: SET_DRUG_AND_DROP_SLIDES,
   payload
 });
 

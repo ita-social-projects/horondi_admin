@@ -39,6 +39,7 @@ const titles = {
     mainPageTitle: 'Слайди на головній сторінці',
     slideOrderTitle:'Порядок слайдів',
     discoverMoreTitle:'Дізнатись більше',
+    discoverMoreSymbol:'→',
     slideTitle:'Заголовок слайду не вибрано',
     slideDescription:'Опис слайду не вибрано',
     preview:'Попередній перегляд',

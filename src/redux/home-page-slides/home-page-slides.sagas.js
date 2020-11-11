@@ -51,8 +51,8 @@ export function* handleAvailableSlides() {
     yield put(setAvailableSlides(availableSlides.items));
     yield put(setSlidesDrugAndDropList(
       [
-        { title: 'available', items: availableSlides.items.filter(el => el.show === true) },
-        { title: 'nonAvailable', items: availableSlides.items.filter(el => el.show === false) }
+        { title: 'available', items: availableSlides.items.filter(el => el.show) },
+        { title: 'nonAvailable', items: availableSlides.items.filter(el => !el.show) }
       ]
     ));
     yield put(setSlideLoading(false));

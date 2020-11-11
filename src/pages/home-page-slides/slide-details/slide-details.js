@@ -19,16 +19,16 @@ const SlideDetails = ({ match }) =>{
   useEffect(() => {
     dispatch(getSlide(id));
     dispatch(getAvailableSlides())
-  }, [dispatch]);
+  }, [dispatch,id]);
 
-  const slideOrder = availableSlides.filter(slideItem=>slideItem.show===true).length + 1
+  const slideOrder = availableSlides.filter(slideItem=>slideItem.show).length + 1
 
   if (loading) {
     return <LoadingBar />;
   }
   return(
     <div className={styles.container}>
-      {slide !== null ? <HomePageSlideForm slide={slide} id={id} slideOrder={slideOrder} />: null}
+      {slide? <HomePageSlideForm slide={slide} id={id} slideOrder={slideOrder} />: null}
     </div>
   )
 }

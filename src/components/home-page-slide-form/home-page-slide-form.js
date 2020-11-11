@@ -25,7 +25,7 @@ const {preview}=config.titles.homePageSliderTitle
 const HomePageSlideForm=({ slide, id, slideOrder }) =>{
   const styles = useStyles();
   const dispatch = useDispatch();
-  const {discoverMoreTitle} = config.titles.homePageSliderTitle;
+  const {discoverMoreTitle,discoverMoreSymbol} = config.titles.homePageSliderTitle;
   const {
     slideImage,
     setSlideImage,
@@ -169,8 +169,8 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
           </Tabs>
         </AppBar>
         {languages.map((lang, index) => (
-          <TabPanel key={index} value={tabsValue} index={index}>
-            <Paper className={styles.slideItemAdd}>
+          <TabPanel key={`${lang}-${index}`} value={tabsValue} index={index}>
+            <Paper className={styles.slideItemUpdate}>
               <TextField
                 data-cy={`${lang}Title`}
                 id={`${lang}Title`}
@@ -256,7 +256,7 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
             <p>{values.ukDescription}</p>
           </div>
           <p className={styles.discoverMore}> {discoverMoreTitle}
-            <span>&#8594;</span></p>
+            <span>{discoverMoreSymbol}</span></p>
         </div>
       </Paper>
     </div>

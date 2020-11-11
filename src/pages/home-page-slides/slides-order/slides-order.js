@@ -24,7 +24,7 @@ const SlidesOrder = (props) => {
   const [draggable, setDraggable] = useState(false);
   const { IMG_URL } = config;
   const {discoverMoreTitle,
-    slideOrderTitle} = config.titles.homePageSliderTitle;
+    slideOrderTitle, discoverMoreSymbol} = config.titles.homePageSliderTitle;
   const {OPEN_SLIDE_EDIT,SAVE_SLIDE_ORDER} = config.buttonTitles
   const dragItem = useRef();
   const dragItemNode = useRef();
@@ -33,18 +33,16 @@ const SlidesOrder = (props) => {
     dragItemNode.current = e.target;
     dragItemNode.current.addEventListener('dragend', handleDragEnd);
     dragItem.current = item;
-    setTimeout(() => {
-      setDragging(true);
-    }, 100);
+    setDragging(true);
   };
 
   const handleDragEnter = (e, targetItem) => {
     if (dragItemNode.current !== e.target) {
       setList(oldList => {
         const newList = JSON.parse(JSON.stringify(oldList));
-        newList[targetItem.grpI].items
-          .splice(targetItem.itemI, 0, newList[dragItem.current.grpI]
-            .items.splice(dragItem.current.itemI, 1)[0]);
+        newList[targetItem.groupIndex].items
+          .splice(targetItem.itemIndex, 0, newList[dragItem.current.groupIndex]
+            .items.splice(dragItem.current.itemIndex, 1)[0]);
         dragItem.current = targetItem;
         return newList;
       });
@@ -59,62 +57,59 @@ const SlidesOrder = (props) => {
   };
 
   const getStyles = (item) => {
-    if (dragItem.current.grpI === item.grpI && dragItem.current.itemI === item.itemI) {
+    if (dragItem.current.groupIndex === item.groupIndex && dragItem.current.itemI === item.itemIndex) {
       return `${styles.dndItem} ${styles.current}`;
     }
     return styles.dndItem;
   };
   const changeHandler = () => setDraggable(true);
   const saveHandler = ()=>{
-    const availableArray = []
-    const nonAvailableArray = []
+    const available = []
+    const nonAvailable = []
     list.forEach(el=>{
 
       if(el.title==='available'){
-        el.items.map((availableSlide,index) => {
+        el.items.forEach((availableSlide,index) => {
           const {order,show,...rest} = availableSlide
-          availableArray.push({id:availableSlide._id,slide:{order:+index+1, show:true, ...rest}})
-          return {order,show}
+          available.push({id:availableSlide._id,slide:{order:+index+1, show:true, ...rest}})
         });
       }
       if(el.title==='nonAvailable'){
-        el.items.map((nonAvailableSlide) => {
+        el.items.forEach((nonAvailableSlide) => {
           const {order,show,...rest} = nonAvailableSlide
-          nonAvailableArray.push({id:nonAvailableSlide._id,slide:{order:0, show:false, ...rest}})
-          return {order,show}
+          nonAvailable.push({id:nonAvailableSlide._id,slide:{order:0, show:false, ...rest}})
         });
       }
     });
-    const newSlideItems = availableArray.concat(nonAvailableArray)
+    const newSlideItems = [...available, ...nonAvailable]
     newSlideItems.forEach(item=>dispatch(updateSlidesOrder({id:item.id, slide:{order:item.slide.order, show:item.slide.show}})))
-    const arrayToStore = []
-    newSlideItems.forEach(el=>arrayToStore.push(el.slide))
+    const arrayToStore = newSlideItems.map(el=>el.slide)
     dispatch(setSlides(arrayToStore))
     setDraggable(false)
   }
-  const dnbContainer = drugAndDropList.length
-    ? list.map((grp, grpI) => (
-      <Card key={grp.title}
+  const drugAndDropContainer = drugAndDropList.length
+    ? list.map((group, groupIndex) => (
+      <Card key={group.title}
         elevation={2}
-        onDragEnter={dragging && !grp.items.length ? (e) => handleDragEnter(e, { grpI, itemI: 0 }) : null}
+        onDragEnter={dragging && !group.items.length ? (e) => handleDragEnter(e, { group, itemI: 0 }) : null}
         className={styles.dndGroup}
       >
         <Typography variant='h1' className={styles.slideTitle}>
           {
-            grp.title ==='available'
+            group.title ==='available'
               ? slidesTranslations.available
               : slidesTranslations.nonAvailable
           }
         </Typography>
-        {grp.items.map((item, itemI) => (
+        {group.items.map((item, itemIndex) => (
           <Paper
             draggable={draggable}
             elevation={5}
-            onDragStart={(e) => handlerDragStart(e, { grpI, itemI })}
+            onDragStart={(e) => handlerDragStart(e, { groupIndex, itemIndex })}
             onDragEnter={dragging ? (e) => {
-              handleDragEnter(e, { grpI, itemI });
+              handleDragEnter(e, { groupIndex, itemIndex });
             } : null}
-            className={dragging ? getStyles({ grpI, itemI }) : styles.dndItem}
+            className={dragging ? getStyles({ groupIndex, itemIndex }) : styles.dndItem}
             key={item._id}
           >
             <Avatar variant='square'
@@ -132,7 +127,7 @@ const SlidesOrder = (props) => {
                 <p>{item.description[0].value}</p>
               </div>
               <p className={styles.discoverMore}> {discoverMoreTitle}
-                <span>&#8594;</span></p>
+                <span>{discoverMoreSymbol}</span></p>
             </div>
           </Paper>
         ))}
@@ -164,7 +159,7 @@ const SlidesOrder = (props) => {
             />
           </div>
           <div className={styles.dndContainer}>
-            {dnbContainer}
+            {drugAndDropContainer}
           </div>
         </div>
       </div>
