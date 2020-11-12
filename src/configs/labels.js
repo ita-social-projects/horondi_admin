@@ -19,6 +19,11 @@ const labels = {
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари"
   },
+  header: {
+    name: 'Назва',
+    link: 'Посилання',
+    priority: 'Пріорітет'
+  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Код матеріалу',
@@ -157,7 +162,7 @@ const labels = {
   },
   doughnut: {
     select: [
-      { label: 'Популярні категорії', value: 'categories' },
+      { label: 'Популярні категорії за весь час', value: 'categories' },
       { label: 'Останні замовлення', value: 'orders' }
     ],
     dateMenuOptions: [
@@ -170,7 +175,7 @@ const labels = {
   },
   bar: {
     select: [
-      { label: 'Популярні продукти', value: 'products' },
+      { label: 'Популярні продукти за весь час', value: 'products' },
       { label: 'Виконані замовлення', value: 'orders' },
       { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
@@ -184,6 +189,18 @@ const labels = {
       orders: 'Кількість замовлень за цей час: ',
       products: 'Кількість продуктів за цей час: '
     }
+  },
+  orders: {
+    select: [
+      { label: 'Створені', value: 'CREATED' },
+      { label: 'Виконані', value: 'CONFIRMED' },
+      { label: 'Оброблені', value: 'PRODUCED' },
+      { label: 'Скасовані', value: 'CANCELLED' },
+      { label: 'Повернені', value: 'REFUNDED' },
+      { label: 'Надіслані', value: 'SENT' },
+      { label: 'Доставлені', value: 'DELIVERED' },
+      { label: 'Всі', value: 'All' }
+    ]
   }
 };
 export default labels;

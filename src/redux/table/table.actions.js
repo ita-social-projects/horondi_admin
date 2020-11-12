@@ -3,7 +3,8 @@ import {
   SET_CURRENT_PAGE,
   SET_PAGES_COUNT,
   SET_ROWS_PER_PAGE,
-  SET_ITEMS_COUNT
+  SET_ITEMS_COUNT,
+  RESET_PAGINATION
 } from './table.types';
 
 export const setTableDense = (newTableDense) => ({
@@ -28,5 +29,10 @@ export const setPagesCount = (payload) => ({
 
 export const setItemsCount = (payload) => ({
   type: SET_ITEMS_COUNT,
+  payload
+});
+
+export const resetPagination = (payload) => ({
+  type: RESET_PAGINATION,
   payload
 });
