@@ -106,6 +106,7 @@ const SlidesPage = () => {
       </Typography>
       <div className={styles.tableNav}>
         <Button
+          className={styles.createButton}
           data-cy='add-button'
           component={Link}
           to={pathToAddHomePageSlide}
@@ -123,6 +124,7 @@ const SlidesPage = () => {
       </div>
       <div className={styles.paginationDiv}>
         <Pagination
+          className={styles.pagination}
           count={pagesCount}
           variant='outlined'
           shape='rounded'

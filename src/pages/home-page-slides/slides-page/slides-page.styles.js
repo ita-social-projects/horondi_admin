@@ -16,10 +16,26 @@ export const useStyles = makeStyles((theme) => ({
       fontSize:theme.spacing(2),
     }
   },
+  createButton:{
+    '@media (max-width: 576px)': {
+      zoom:'80%'
+    },
+    '@media (max-width: 375px)': {
+      zoom:'65%'
+    },
+  },
   paginationDiv:{
     display: 'flex',
     justifyContent: 'center',
     margin: theme.spacing(2),
+  },
+  pagination:{
+    '@media (max-width: 576px)': {
+      zoom:'80%'
+    },
+    '@media (max-width: 375px)': {
+      zoom:'65%'
+    },
   },
   tableNav: {
     margin: theme.spacing(1),
@@ -32,4 +48,5 @@ export const useStyles = makeStyles((theme) => ({
       zoom:'70%'
     },
   }
+
 }));

@@ -159,6 +159,7 @@ const SlidesOrder = (props) => {
         <div>
           <div>
             <SaveButton
+              className={styles.saveButton}
               color='secondary'
               data-cy='save'
               title={draggable ? CANCEL_SLIDE_ORDER  : OPEN_SLIDE_EDIT}

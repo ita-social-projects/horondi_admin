@@ -27,6 +27,10 @@ export const useStyles = makeStyles((theme) => ({
     position:'relative',
     '@media (max-width: 768px)': {
       margin: '20px 0px',
+      padding: theme.spacing(1),
+      height: '100%',
+      minHeight:'200px',
+      overflowY: 'hidden',
     },
     '@media (max-width: 430px)': {
       width: '100%',
@@ -102,9 +106,12 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   saveButton:{
-    marginLeft: theme.spacing(1),
-    '@media (max-width: 424px)': {
-      margin: '10px 10px 10px 0px',
+    marginRight: theme.spacing(1),
+    '@media (max-width: 576px)': {
+      zoom:'80%'
+    },
+    '@media (max-width: 375px)': {
+      zoom:'65%'
     },
   }
 }));

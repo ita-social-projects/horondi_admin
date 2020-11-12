@@ -213,13 +213,13 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
           to={config.routes.pathToHomePageSlides}
           variant='outlined'
           color='primary'
-          className={styles.returnButton}
+          className={styles.formButton}
           data-cy='goBackButton'
         >
           {config.buttonTitles.GO_BACK_TITLE}
         </Button>
         <SaveButton
-          className={styles.saveButton}
+          className={styles.formButton}
           data-cy='save'
           type='submit'
           title={config.buttonTitles.CREATE_SLIDE_TITLE}

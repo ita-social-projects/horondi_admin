@@ -10,17 +10,14 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     margin: '20px 0px'
   },
-  saveButton: {
-    margin: theme.spacing(2),
-    '@media (max-width: 768px)': {
-      margin: theme.spacing(1),
-    },
-  },
-  returnButton: {
+  formButton: {
     margin: theme.spacing(2),
     marginRight: 0,
     '@media (max-width: 768px)': {
       margin: theme.spacing(1),
+    },
+    '@media (max-width: 576px)': {
+      zoom:'80%'
     },
   },
   textField: {
