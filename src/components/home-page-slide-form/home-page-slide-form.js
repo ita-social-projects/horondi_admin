@@ -242,9 +242,9 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
           <ImageIcon className={styles.slideIcon} />
         </Avatar>
         <div className={styles.slideContent}>
-          <div>
-            <h3>{values.ukTitle}</h3>
-            <p>{values.ukDescription}</p>
+          <div className={styles.mainContent}>
+            <h3 className={styles.mainContentTitle}>{values.ukTitle}</h3>
+            <p className={styles.mainContentDescription}>{values.ukDescription}</p>
           </div>
           <p className={styles.discoverMore}> {discoverMoreTitle}
             <span>{discoverMoreSymbol}</span></p>

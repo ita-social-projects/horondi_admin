@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,7 @@ import SlidesOrder from '../slides-order';
 const { REMOVE_SLIDE_MESSAGE } = config.messages;
 const { DELETE_SLIDE_TITLE, CREATE_SLIDE_TITLE } = config.buttonTitles;
 const tableTitles = config.tableHeadRowTitles.homePageSlides;
-const {mainPageTitle,slideTitle,slideDescription}=config.titles.homePageSliderTitle
+const {mainPageTitle,slideTitle}=config.titles.homePageSliderTitle
 const {pathToAddHomePageSlide} = config.routes
 
 const SlidesPage = () => {
@@ -71,7 +71,6 @@ const SlidesPage = () => {
       'danger'
     );
   };
-
   const slidesItems = list.length
     ? list.map((slidesItem) => (
       <TableContainerRow
@@ -80,7 +79,8 @@ const SlidesPage = () => {
         id={slidesItem.id}
         index={slidesItem.order}
         name={slidesItem.title[0].value||slideTitle}
-        purpose={slidesItem.description[0].value||slideDescription}
+
+        // purpose={slidesItem.description[0].value||slideDescription}
         available={
           slidesItem.show
             ? slidesTranslations.YES
@@ -115,7 +115,7 @@ const SlidesPage = () => {
           {CREATE_SLIDE_TITLE}
         </Button>
       </div>
-      <div>
+      <div className={styles.tableContainer}>
         <TableContainerGenerator
           tableTitles={tableTitles}
           tableItems={slidesItems}

@@ -11,7 +11,10 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     fontSize: 24,
     color: theme.palette.text.disabled,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    '@media (max-width: 375px)': {
+      fontSize:theme.spacing(2),
+    }
   },
   paginationDiv:{
     display: 'flex',
@@ -21,4 +24,12 @@ export const useStyles = makeStyles((theme) => ({
   tableNav: {
     margin: theme.spacing(1),
   },
+  tableContainer:{
+    '@media (max-width: 576px)': {
+      zoom:'80%'
+    },
+    '@media (max-width: 375px)': {
+      zoom:'70%'
+    },
+  }
 }));

@@ -13,15 +13,24 @@ export const useStyles = makeStyles((theme) => ({
     width: `100%`,
     flexDirection: 'row',
     justifyContent: 'center',
+    '@media (max-width: 768px)': {
+      flexDirection: 'column',
+      alignItems:'center'
+    },
   },
   dndGroup: {
     margin: '20px',
     height: '400px',
     overflowY: 'scroll',
-    minHeight: '400px',
     width: '350px',
     padding: theme.spacing(2),
     position:'relative',
+    '@media (max-width: 768px)': {
+      margin: '20px 0px',
+    },
+    '@media (max-width: 430px)': {
+      width: '100%',
+    },
   },
   dndItem: {
     marginBottom: theme.spacing(1),
@@ -29,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
     position:'relative',
     justifyContent:'center',
     alignItems:'center',
-    height:'150px',
+    height: theme.spacing(20),
   },
   current:{
     backgroundColor:'gray',
@@ -41,15 +50,18 @@ export const useStyles = makeStyles((theme) => ({
   },
   square:{
     position:'absolute',
-    height:'80%',
-    width:'80%',
+    width: theme.spacing(30),
+    height: theme.spacing(15),
     backgroundColor:'gray',
+    '@media (max-width: 375px)': {
+      width: theme.spacing(25),
+    },
   },
   slideContent:{
     paddingTop: theme.spacing(2),
     position:'absolute',
-    height:'80%',
-    width:'80%',
+    width: theme.spacing(30),
+    height: theme.spacing(15),
     color: 'white',
     display:'flex',
     alignItems:'center',
@@ -66,16 +78,20 @@ export const useStyles = makeStyles((theme) => ({
         margin:'0px'
       },
       '& p': {
-        fontSize:'11px',
+        fontSize:'10px',
+        wordWrap: 'initial',
       },
     },
 
   },
   slideTitle: {
-    marginBottom: theme.spacing(1),
-    fontSize: 24,
+    marginBottom: '10px',
+    fontSize:theme.spacing(3),
     color: theme.palette.text.disabled,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    '@media (max-width: 375px)': {
+      fontSize:theme.spacing(2),
+    }
   },
   discoverMore:{
     position:'absolute',
@@ -87,5 +103,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   saveButton:{
     marginLeft: theme.spacing(1),
+    '@media (max-width: 424px)': {
+      margin: '10px 10px 10px 0px',
+    },
   }
 }));

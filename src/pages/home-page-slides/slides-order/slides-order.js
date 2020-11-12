@@ -25,7 +25,7 @@ const SlidesOrder = (props) => {
   const { IMG_URL } = config;
   const {discoverMoreTitle,
     slideOrderTitle, discoverMoreSymbol} = config.titles.homePageSliderTitle;
-  const {OPEN_SLIDE_EDIT,SAVE_SLIDE_ORDER} = config.buttonTitles
+  const {OPEN_SLIDE_EDIT,SAVE_SLIDE_ORDER,CANCEL_SLIDE_ORDER} = config.buttonTitles
 
   const {
     slidesPerPage,
@@ -69,7 +69,15 @@ const SlidesOrder = (props) => {
     }
     return styles.dndItem;
   };
-  const changeHandler = () => setDraggable(true);
+  const changeHandler = () =>{
+    if(draggable){
+      setDraggable(false)
+      setList(drugAndDropList)
+      return
+    }
+    setDraggable(true)
+  }
+
   const saveHandler = ()=>{
     const available = []
     const nonAvailable = []
@@ -153,7 +161,7 @@ const SlidesOrder = (props) => {
             <SaveButton
               color='secondary'
               data-cy='save'
-              title={OPEN_SLIDE_EDIT}
+              title={draggable ? CANCEL_SLIDE_ORDER  : OPEN_SLIDE_EDIT}
               onClickHandler={changeHandler}
               type='button'
             />

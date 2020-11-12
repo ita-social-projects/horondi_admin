@@ -59,8 +59,9 @@ const buttonTitles = {
   CLEAR_FILTERS: 'Очистити фільтри',
   CREATE_SLIDE_TITLE:'Створити слайд',
   DELETE_SLIDE_TITLE:'Видалити слайд',
-  OPEN_SLIDE_EDIT:'Вімкнути редагування',
+  OPEN_SLIDE_EDIT:'Увімкнути редагування',
   SAVE_SLIDE_ORDER:'Зберегти зміни',
+  CANCEL_SLIDE_ORDER:'Скасувати зміни',
 
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([
