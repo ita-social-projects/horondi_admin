@@ -27,29 +27,24 @@ export function* handleOrdersListLoad({ payload }) {
       payload.limit,
       payload.filter.orderStatus
     );
-    if (orders.errors) {
-      throw new Error(orders.errors[0].message);
-    }
-    yield put(
-      setPagesCount(Math.ceil(orders.pagesCount / orders.orderPerPage))
-    );
     yield put(setItemsCount(orders.count));
     yield put(setOrderList(orders));
-    yield put(setOrderLoading(false));
   } catch (error) {
     yield call(handleOrdersError, error);
+  } finally {
+    yield put(setOrderLoading(false));
   }
 }
 
 export function* handleOrderLoad({ payload }) {
   try {
-    yield setOrderLoading(true);
+    yield put(setOrderLoading(true));
     const order = yield call(getOrderById, payload);
     yield put(setOrder(order.data.getOrderById));
   } catch (e) {
     yield put(setOrderError());
   } finally {
-    yield setOrderLoading(false);
+    yield put(setOrderLoading(false));
   }
 }
 
