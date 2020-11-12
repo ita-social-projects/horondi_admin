@@ -14,7 +14,8 @@ import {
   newsErrorMessages,
   errorMessages,
   modelErrorMessages,
-  headerErrorMessages
+  headerErrorMessages,
+  homePageSlideErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -181,6 +182,7 @@ export const config = {
   materialPaginationPayload,
   modelErrorMessages,
   headerErrorMessages,
+  homePageSlideErrorMessages,
   sort
 };
 export const inputTypes = {

@@ -198,6 +198,14 @@ const labels = {
       { label: 'Доставлені', value: 'DELIVERED' },
       { label: 'Всі', value: 'All' }
     ]
+  },
+  homePageSlide: {
+    image: 'Фото слайду',
+    title: 'Заголовок слайду',
+    show: 'Доступний',
+    description: 'Опис слайду',
+    link: 'Посилання для переходу'
   }
+
 };
 export default labels;

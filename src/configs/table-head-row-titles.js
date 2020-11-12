@@ -43,7 +43,8 @@ const tableHeadRowTitles = {
     'Вартість доставки',
     'Статус',
     ''
-  ]
+  ],
+  homePageSlides: ['Порядок','Назва','Доступний', 'Дії']
 };
 
 export default tableHeadRowTitles;
