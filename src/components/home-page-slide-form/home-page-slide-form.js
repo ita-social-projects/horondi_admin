@@ -183,7 +183,7 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
           </Tabs>
         </AppBar>
         {languages.map((lang, index) => (
-          <TabPanel key={index} value={tabsValue} index={index}>
+          <TabPanel key={`${lang}${index}`} value={tabsValue} index={index}>
             <Paper className={styles.slideItemUpdate}>
               {tabPanelField(lang, 'Title')}
               {touched[`${lang}Title`] && errors[`${lang}Title`] && (
