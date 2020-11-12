@@ -147,6 +147,41 @@ const labels = {
       name: 'basePrice'
     }
   },
+  orderProduct: {
+    category: 'Категорія',
+    subcategory: 'Підкатегорія',
+    model: 'Модель',
+    name: 'Назва',
+    pattern: 'Гобелен',
+    closure: 'Матеріал замку',
+    bottomMaterial: 'Матеріал дна',
+    bottomColor: 'Колір дна',
+    actualPrice: 'Ціна'
+  },
+  orderRecipient: {
+    firstName: "Ім'я",
+    lastName: 'Прізвище',
+    patronymicName: 'По-батькові',
+    email: 'e-mail',
+    phoneNumber: 'Номер телефону',
+    commentary: 'Коментар'
+  },
+  deliveryDetails: {
+    country: 'Країна',
+    region: 'Область',
+    city: 'Місто',
+    zipcode: 'Поштовий індекс',
+    street: 'Вулиця',
+    buildingNumber: 'Номер будинку',
+    appartment: 'Номер квартири'
+  },
+  sizeValues: {
+    heightInCm: 'Висота (см.)',
+    widthInCm: 'Ширина (см.)',
+    depthInCm: 'Глибина (см.)',
+    volumeInLiters: "Об'єм (л.)",
+    weightInKg: 'Вага (кг.)'
+  },
   emailQuestionsLabels: {
     en: {
       PENDING: 'PENDING',
@@ -190,6 +225,35 @@ const labels = {
       products: 'Кількість продуктів за цей час: '
     }
   },
+  orderTabs: {
+    general: 'Загальне',
+    receiver: 'Отримувач',
+    products: 'Продукти',
+    delivery: 'Доставка'
+  },
+  deliveryLabels: {
+    deliveryMethodLabel: 'Спосіб доставки',
+    byCourierLabel: "Доставка кур'єром:",
+    invoiceNumberLabel: 'Номер накладної',
+    warehouseNumberLabel: 'Номер відділення: ',
+    sentAtLabel: 'Відправлено о:',
+    deliveryCostLabel: 'Вартість доставки'
+  },
+  generalLabels: {
+    deliveryStatusLabel: 'Статус замовлення:',
+    paymentMethodLabel: 'Метод оплати:',
+    isPaidLabel: 'Оплачено:',
+    cancellationReasonLabel: 'Причина скасування',
+    creationDateLabel: 'Дата створення:',
+    updateDateLabel: 'Дата оновлення:',
+    adminCommentLabel: 'Залишити коментар'
+  },
+  productsLabels: {
+    notListed: 'Не вказано',
+    additionsLabel: 'Додатки',
+    colorsLabel: 'Кольори',
+    sizeLabel: 'Розмір'
+  },
   orders: {
     select: [
       { label: 'Створені', value: 'CREATED' },
@@ -201,6 +265,13 @@ const labels = {
       { label: 'Доставлені', value: 'DELIVERED' },
       { label: 'Всі', value: 'All' }
     ]
+  },
+  homePageSlide: {
+    image: 'Фото слайду',
+    title: 'Заголовок слайду',
+    show: 'Доступний',
+    description: 'Опис слайду',
+    link: 'Посилання для переходу'
   }
 };
 export default labels;

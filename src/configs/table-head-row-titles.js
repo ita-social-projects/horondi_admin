@@ -32,6 +32,7 @@ const tableHeadRowTitles = {
     adminTab: ['Аватар', "Ім'я", 'Пошта', 'Роль', 'Дії']
   },
   contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
+  orderProductTitles: ['№', 'Назва', 'Кількість', 'Ціна', 'Деталі'],
   comments: ['Дата', 'Користувач', 'Текст', 'Дії'],
   emailQuestions: ['#', 'Користувач', 'Email', 'Q/A', 'Дата', 'Статус', 'Дії'],
   models: ['Фото', 'Назва', 'Категорія', 'Доступна', 'Пріорітет'],
@@ -43,7 +44,8 @@ const tableHeadRowTitles = {
     'Вартість доставки',
     'Статус',
     ''
-  ]
+  ],
+  homePageSlides: ['Порядок', 'Назва', 'Доступний', 'Дії']
 };
 
 export default tableHeadRowTitles;
