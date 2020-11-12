@@ -12,9 +12,8 @@ const setHomePageData = (payload) => ({
   payload
 });
 
-const getHomePageData = (payload) => ({
-  type: GET_HOME_PAGE_DATA,
-  payload
+const getHomePageData = () => ({
+  type: GET_HOME_PAGE_DATA
 });
 
 const updateHomePageData = (payload) => ({

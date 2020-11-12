@@ -21,6 +21,7 @@ const DialogWindow = () => {
     dialogTitle,
     dialogContent,
     buttonTitle,
+    showIcon,
     showCancelButton,
     onClickHandler
   } = useSelector(({ DialogWindow: dialogWindow }) => ({
@@ -28,6 +29,7 @@ const DialogWindow = () => {
     dialogTitle: dialogWindow.dialogTitle,
     dialogContent: dialogWindow.dialogContent,
     buttonTitle: dialogWindow.buttonTitle,
+    showIcon: dialogWindow.showIcon,
     showCancelButton: dialogWindow.showCancelButton,
     onClickHandler: dialogWindow.onClickHandler
   }));
@@ -53,7 +55,7 @@ const DialogWindow = () => {
               title={CANCEL_TITLE}
               onClickHandler={handleClose}
             />
-            <DeleteButton onClickHandler={onClickHandler}>
+            <DeleteButton onClickHandler={onClickHandler} showIcon={showIcon}>
               {buttonTitle}
             </DeleteButton>
           </>

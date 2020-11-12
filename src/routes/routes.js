@@ -32,6 +32,7 @@ import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
 import ConfirmUser from '../pages/users/confirm-user';
+import OrderItem from '../pages/order-item';
 import HomePage from '../pages/home-page';
 import EmailQuestionsList from '../pages/email-questions';
 import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
@@ -46,6 +47,9 @@ import MaterialDetails from '../pages/material/material-details/material-details
 import MaterialColorPalette from '../pages/material/material-color-palette';
 import Orders from '../pages/orders/orders-page/orders-page';
 import StatisticPage from '../pages/statistic';
+import SlidesPage from '../pages/home-page-slides/slides-page';
+import SlideAdd from '../pages/home-page-slides/slide-add';
+import SlideDetails from '../pages/home-page-slides/slide-details';
 
 const { routes } = config;
 
@@ -183,6 +187,26 @@ const Routes = () => {
         />
         <Route path={routes.pathToStatistic} exact component={StatisticPage} />
         <Route path={routes.pathToOrders} exact component={Orders} />
+        <Route
+          path={routes.pathToOrderItem}
+          exact
+          render={({ match }) => <OrderItem id={match.params.id} />}
+        />
+        <Route
+          path={routes.pathToHomePageSlides}
+          exact
+          component={SlidesPage}
+        />
+        <Route
+          path={routes.pathToAddHomePageSlide}
+          exact
+          component={SlideAdd}
+        />
+        <Route
+          path={routes.pathToHomePageSlideDetail}
+          exact
+          component={SlideDetails}
+        />
         <Route component={ErrorPage} />
       </Switch>
       <DialogWindow />

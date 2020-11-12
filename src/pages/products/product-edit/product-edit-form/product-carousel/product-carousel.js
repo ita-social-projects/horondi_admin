@@ -48,7 +48,6 @@ const ProductCarousel = ({ toggleFieldsChanged }) => {
           prefix: true
         }))
       ];
-      console.log(images);
       setProductImages(images);
     }
   }, [product.images, dispatch]);
