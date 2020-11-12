@@ -14,7 +14,8 @@ import {
   SET_DRUG_AND_DROP_SLIDES,
   SET_SLIDES_PAGES_COUNT,
   SET_SLIDES_PER_PAGE,
-  UPDATE_SLIDE, UPDATE_SLIDES_ORDER
+  UPDATE_SLIDE,
+  UPDATE_SLIDES_ORDER
 } from './home-page-slides.types';
 
 export const setSlides = (payload) => ({

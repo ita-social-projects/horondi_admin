@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -23,8 +23,8 @@ import SlidesOrder from '../slides-order';
 const { REMOVE_SLIDE_MESSAGE } = config.messages;
 const { DELETE_SLIDE_TITLE, CREATE_SLIDE_TITLE } = config.buttonTitles;
 const tableTitles = config.tableHeadRowTitles.homePageSlides;
-const {mainPageTitle,slideTitle}=config.titles.homePageSliderTitle
-const {pathToAddHomePageSlide} = config.routes
+const { mainPageTitle, slideTitle } = config.titles.homePageSliderTitle;
+const { pathToAddHomePageSlide } = config.routes;
 
 const SlidesPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -36,19 +36,19 @@ const SlidesPage = () => {
     pagesCount,
     currentPage,
     slidesPerPage,
-    drugAndDropList,
+    drugAndDropList
   } = useSelector(({ Slides }) => ({
     list: Slides.list,
     loading: Slides.slideLoading,
     pagesCount: Slides.pagination.pagesCount,
     currentPage: Slides.pagination.currentPage,
     slidesPerPage: Slides.pagination.slidesPerPage,
-    drugAndDropList:Slides.drugAndDropList,
-    editStatus:Slides.editStatus
+    drugAndDropList: Slides.drugAndDropList,
+    editStatus: Slides.editStatus
   }));
 
   useEffect(() => {
-    dispatch(getAvailableSlides())
+    dispatch(getAvailableSlides());
     dispatch(
       getSlides({
         limit: slidesPerPage,
@@ -78,13 +78,10 @@ const SlidesPage = () => {
         showAvatar={false}
         id={slidesItem.id}
         index={slidesItem.order}
-        name={slidesItem.title[0].value||slideTitle}
-
-        // purpose={slidesItem.description[0].value||slideDescription}
+        name={slidesItem.title[0].value || slideTitle}
+          // purpose={slidesItem.description[0].value||slideDescription}
         available={
-          slidesItem.show
-            ? slidesTranslations.YES
-            : slidesTranslations.NO
+          slidesItem.show ? slidesTranslations.YES : slidesTranslations.NO
         }
         deleteHandler={() => slideDeleteHandler(slidesItem._id)}
         editHandler={() => {

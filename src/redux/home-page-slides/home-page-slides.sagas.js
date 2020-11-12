@@ -6,23 +6,31 @@ import {
   setSlide,
   setSlideError,
   setSlideLoading,
-  setSlides, setSlidesDrugAndDropList, setSlidesPagesCount
+  setSlides,
+  setSlidesDrugAndDropList,
+  setSlidesPagesCount
 } from './home-page-slides.actions';
 import {
-  createSlide, deleteSlide,
+  createSlide,
+  deleteSlide,
   getAllAvailableSlides,
   getAllSlides,
   getSlideById,
   updateSlide
 } from './home-page-slides.operations';
-import { setSnackBarMessage, setSnackBarSeverity, setSnackBarStatus } from '../snackbar/snackbar.actions';
+import {
+  setSnackBarMessage,
+  setSnackBarSeverity,
+  setSnackBarStatus
+} from '../snackbar/snackbar.actions';
 import {
   ADD_SLIDE,
   DELETE_SLIDE,
   GET_AVAILABLE_SLIDES,
   GET_SLIDE,
   GET_SLIDES,
-  UPDATE_SLIDE, UPDATE_SLIDES_ORDER
+  UPDATE_SLIDE,
+  UPDATE_SLIDES_ORDER
 } from './home-page-slides.types';
 import { config } from '../../configs';
 
@@ -36,7 +44,9 @@ export function* handleSlidesLoad({ payload }) {
   try {
     yield put(setSlideLoading(true));
     const slides = yield call(getAllSlides, payload.skip, payload.limit);
-    yield put(setSlidesPagesCount(Math.ceil(slides.count / payload.slidesPerPage)));
+    yield put(
+      setSlidesPagesCount(Math.ceil(slides.count / payload.slidesPerPage))
+    );
     yield put(setSlides(slides.items));
     yield put(setSlideLoading(false));
   } catch (error) {
@@ -49,12 +59,18 @@ export function* handleAvailableSlides() {
     yield put(setSlideLoading(true));
     const availableSlides = yield call(getAllAvailableSlides);
     yield put(setAvailableSlides(availableSlides.items));
-    yield put(setSlidesDrugAndDropList(
-      [
-        { title: 'available', items: availableSlides.items.filter(el => el.show) },
-        { title: 'nonAvailable', items: availableSlides.items.filter(el => !el.show) }
-      ]
-    ));
+    yield put(
+      setSlidesDrugAndDropList([
+        {
+          title: 'available',
+          items: availableSlides.items.filter((el) => el.show)
+        },
+        {
+          title: 'nonAvailable',
+          items: availableSlides.items.filter((el) => !el.show)
+        }
+      ])
+    );
     yield put(setSlideLoading(false));
   } catch (error) {
     yield call(handleSlideError, error);

@@ -1,17 +1,20 @@
 import {
   REMOVE_SLIDE_FROM_STORE,
-  SET_AVAILABLE_SLIDES, SET_SLIDE,
+  SET_AVAILABLE_SLIDES,
+  SET_SLIDE,
   SET_SLIDE_ERROR,
   SET_SLIDE_LOADING,
   SET_SLIDES,
-  SET_SLIDES_CURRENT_PAGE, SET_DRUG_AND_DROP_SLIDES, SET_SLIDES_PAGES_COUNT,
+  SET_SLIDES_CURRENT_PAGE,
+  SET_DRUG_AND_DROP_SLIDES,
+  SET_SLIDES_PAGES_COUNT,
   SET_SLIDES_PER_PAGE
 } from './home-page-slides.types';
 
 export const initialState = {
   list: [],
-  drugAndDropList:[],
-  availableSlides:[],
+  drugAndDropList: [],
+  availableSlides: [],
   slide: null,
   slideLoading: false,
   slideError: null,
@@ -20,7 +23,7 @@ export const initialState = {
     slidesPerPage: 4,
     pagesCount: 1
   },
-  editStatus:false
+  editStatus: false
 };
 
 const slideReducer = (state = initialState, action = {}) => {
@@ -81,11 +84,11 @@ const slideReducer = (state = initialState, action = {}) => {
     };
   case REMOVE_SLIDE_FROM_STORE:
     const slides = state.list.filter((slide) => slide._id !== action.payload);
-    const drugAndDropSlides = state.drugAndDropList.map(el=>{
-      el.items = el.items.filter(slide => slide._id !== action.payload);
+    const drugAndDropSlides = state.drugAndDropList.map((el) => {
+      el.items = el.items.filter((slide) => slide._id !== action.payload);
       return el;
     });
-    return { ...state, list: slides, drugAndDropList:drugAndDropSlides };
+    return { ...state, list: slides, drugAndDropList: drugAndDropSlides };
   default:
     return state;
   }

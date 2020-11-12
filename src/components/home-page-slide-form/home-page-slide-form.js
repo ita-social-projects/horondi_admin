@@ -1,6 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { AppBar, Button, Grid, Paper, Tab, Tabs, TextField, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  Button,
+  Grid,
+  Paper,
+  Tab,
+  Tabs,
+  TextField,
+  Typography
+} from '@material-ui/core';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
@@ -14,18 +23,22 @@ import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
 import TabPanel from '../tab-panel';
 import { SaveButton } from '../buttons';
-import { addSlide, updateSlide } from '../../redux/home-page-slides/home-page-slides.actions';
+import {
+  addSlide,
+  updateSlide
+} from '../../redux/home-page-slides/home-page-slides.actions';
 
 const { languages } = config;
 
-const {
-  SLIDE_VALIDATION_ERROR,
-} = config.homePageSlideErrorMessages;
-const {preview}=config.titles.homePageSliderTitle
-const HomePageSlideForm=({ slide, id, slideOrder }) =>{
+const { SLIDE_VALIDATION_ERROR } = config.homePageSlideErrorMessages;
+const { preview } = config.titles.homePageSliderTitle;
+const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const {discoverMoreTitle,discoverMoreSymbol} = config.titles.homePageSliderTitle;
+  const {
+    discoverMoreTitle,
+    discoverMoreSymbol
+  } = config.titles.homePageSliderTitle;
   const {
     slideImage,
     setSlideImage,
@@ -33,7 +46,7 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
     handleTabsChange,
     createSlide,
     upload,
-    setUpload,
+    setUpload
   } = useHomePageSlideHandlers();
 
   const languageTabs =
@@ -42,16 +55,11 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
       : null;
 
   const slideValidationSchema = Yup.object().shape({
-    enDescription: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR),
-    enTitle: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR),
-    ukDescription: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR),
-    ukTitle: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR),
-    link: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR)
+    enDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
+    enTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
+    ukDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
+    ukTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
+    link: Yup.string().min(2, SLIDE_VALIDATION_ERROR)
   });
 
   const {
@@ -71,37 +79,37 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
       enDescription: slide.description[1].value || '',
       link: slide.link || '',
       show: slide.show || false,
-      order:slide.order||slideOrder
+      order: slide.order || slideOrder
     },
 
     onSubmit: () => {
-      (()=>{
-        if(values.show&&slide.show){
-          values.order = slide.order
-          return
+      (() => {
+        if (values.show && slide.show) {
+          values.order = slide.order;
+          return;
         }
-        if(values.show){
-          values.order = slideOrder
-          return
+        if (values.show) {
+          values.order = slideOrder;
+          return;
         }
-        if(!values.show){
-          values.order = 0
+        if (!values.show) {
+          values.order = 0;
         }
-      })()
+      })();
       const newSlide = createSlide(values);
 
-      if(id&&upload.name){
-        dispatch(updateSlide({id,slide:newSlide,upload}))
-        return
+      if (id && upload.name) {
+        dispatch(updateSlide({ id, slide: newSlide, upload }));
+        return;
       }
-      if(id){
-        dispatch(updateSlide({id,slide:newSlide}))
-        return
+      if (id) {
+        dispatch(updateSlide({ id, slide: newSlide }));
+        return;
       }
       dispatch(addSlide({ slide: newSlide, upload }));
     }
   });
-  console.log(values, slide)
+  console.log(values, slide);
   const checkboxes = [
     {
       id: 'show',
@@ -113,7 +121,7 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
       handler: () => setFieldValue('show', !values.show)
     }
   ];
-  const tabPanelField = (language, textField)=>(
+  const tabPanelField = (language, textField) => (
     <TextField
       data-cy={`${language}${textField}`}
       id={`${language}${textField}`}
@@ -123,8 +131,12 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
       multiline
       value={values[`${language}${textField}`]}
       onChange={handleChange}
-      error={touched[`${language}${textField}`] && !!errors[`${language}${textField}`]}
-    /> )
+      error={
+        touched[`${language}${textField}`] &&
+        !!errors[`${language}${textField}`]
+      }
+    />
+  );
 
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -151,7 +163,7 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
             <ImageUploadContainer
               handler={handleImageLoad}
               srcForAvatar={
-                slideImage ||`${config.IMG_URL}${slide.images.large}`
+                slideImage || `${config.IMG_URL}${slide.images.large}`
               }
               fileName={upload.name || slide.images.large}
             />
@@ -228,15 +240,11 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
       <Typography variant='h1' className={styles.slideTitle}>
         {preview}
       </Typography>
-      <Paper
-        elevation={5}
-        className={styles.slideWrapper}
-      >
-        <Avatar variant='square'
+      <Paper elevation={5} className={styles.slideWrapper}>
+        <Avatar
+          variant='square'
           className={styles.square}
-          src={
-            slideImage ||`${config.IMG_URL}${slide.images.large}`
-          }
+          src={slideImage || `${config.IMG_URL}${slide.images.large}`}
           color='primary'
         >
           <ImageIcon className={styles.slideIcon} />
@@ -244,22 +252,27 @@ const HomePageSlideForm=({ slide, id, slideOrder }) =>{
         <div className={styles.slideContent}>
           <div className={styles.mainContent}>
             <h3 className={styles.mainContentTitle}>{values.ukTitle}</h3>
-            <p className={styles.mainContentDescription}>{values.ukDescription}</p>
+            <p className={styles.mainContentDescription}>
+              {values.ukDescription}
+            </p>
           </div>
-          <p className={styles.discoverMore}> {discoverMoreTitle}
-            <span>{discoverMoreSymbol}</span></p>
+          <p className={styles.discoverMore}>
+            {' '}
+            {discoverMoreTitle}
+            <span>{discoverMoreSymbol}</span>
+          </p>
         </div>
       </Paper>
     </div>
   );
-}
+};
 
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
 HomePageSlideForm.propTypes = {
   id: PropTypes.string,
-  slideOrder:PropTypes.number,
+  slideOrder: PropTypes.number,
   slide: PropTypes.shape({
     _id: PropTypes.string,
     show: PropTypes.bool,
@@ -303,7 +316,7 @@ HomePageSlideForm.propTypes = {
 };
 HomePageSlideForm.defaultProps = {
   id: '',
-  slideOrder:0,
+  slideOrder: 0,
   match: {},
   values: {},
   errors: {},

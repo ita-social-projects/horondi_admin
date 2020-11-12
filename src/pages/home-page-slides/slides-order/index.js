@@ -1,3 +1,3 @@
 import SlidesOrder from './slides-order';
 
-export default SlidesOrder
+export default SlidesOrder;

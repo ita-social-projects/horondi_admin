@@ -13,40 +13,39 @@ export const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.disabled,
     fontWeight: 'bold',
     '@media (max-width: 375px)': {
-      fontSize:theme.spacing(2),
+      fontSize: theme.spacing(2)
     }
   },
-  createButton:{
+  createButton: {
     '@media (max-width: 576px)': {
-      zoom:'80%'
+      zoom: '80%'
     },
     '@media (max-width: 375px)': {
-      zoom:'65%'
-    },
+      zoom: '65%'
+    }
   },
-  paginationDiv:{
+  paginationDiv: {
     display: 'flex',
     justifyContent: 'center',
-    margin: theme.spacing(2),
+    margin: theme.spacing(2)
   },
-  pagination:{
+  pagination: {
     '@media (max-width: 576px)': {
-      zoom:'80%'
+      zoom: '80%'
     },
     '@media (max-width: 375px)': {
-      zoom:'65%'
-    },
+      zoom: '65%'
+    }
   },
   tableNav: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
-  tableContainer:{
+  tableContainer: {
     '@media (max-width: 576px)': {
-      zoom:'80%'
+      zoom: '80%'
     },
     '@media (max-width: 375px)': {
-      zoom:'70%'
-    },
+      zoom: '70%'
+    }
   }
-
 }));
