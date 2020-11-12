@@ -16,6 +16,11 @@ const labels = {
     showEnable: 'Так',
     showDisable: 'Ні'
   },
+  header: {
+    name: 'Назва',
+    link: 'Посилання',
+    priority: 'Пріорітет'
+  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Код матеріалу',
@@ -151,7 +156,7 @@ const labels = {
     actualPrice: 'Ціна'
   },
   orderRecipient: {
-    firstName: 'Ім\'я',
+    firstName: "Ім'я",
     lastName: 'Прізвище',
     patronymicName: 'По-батькові',
     email: 'e-mail',
@@ -171,7 +176,7 @@ const labels = {
     heightInCm: 'Висота (см.)',
     widthInCm: 'Ширина (см.)',
     depthInCm: 'Глибина (см.)',
-    volumeInLiters: 'Об\'єм (л.)',
+    volumeInLiters: "Об'єм (л.)",
     weightInKg: 'Вага (кг.)'
   },
   emailQuestionsLabels: {
@@ -189,7 +194,7 @@ const labels = {
   },
   doughnut: {
     select: [
-      { label: 'Популярні категорії', value: 'categories' },
+      { label: 'Популярні категорії за весь час', value: 'categories' },
       { label: 'Останні замовлення', value: 'orders' }
     ],
     dateMenuOptions: [
@@ -202,7 +207,7 @@ const labels = {
   },
   bar: {
     select: [
-      { label: 'Популярні продукти', value: 'products' },
+      { label: 'Популярні продукти за весь час', value: 'products' },
       { label: 'Виконані замовлення', value: 'orders' },
       { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
@@ -221,11 +226,11 @@ const labels = {
     general: 'Загальне',
     receiver: 'Отримувач',
     products: 'Продукти',
-    delivery: 'Доставка',
+    delivery: 'Доставка'
   },
   deliveryLabels: {
     deliveryMethodLabel: 'Спосіб доставки',
-    byCourierLabel: 'Доставка кур\'єром:',
+    byCourierLabel: "Доставка кур'єром:",
     invoiceNumberLabel: 'Номер накладної',
     warehouseNumberLabel: 'Номер відділення: ',
     sentAtLabel: 'Відправлено о:',
@@ -244,7 +249,7 @@ const labels = {
     notListed: 'Не вказано',
     additionsLabel: 'Додатки',
     colorsLabel: 'Кольори',
-    sizeLabel: 'Розмір',
+    sizeLabel: 'Розмір'
   },
   orders: {
     select: [
@@ -257,6 +262,13 @@ const labels = {
       { label: 'Доставлені', value: 'DELIVERED' },
       { label: 'Всі', value: 'All' }
     ]
+  },
+  homePageSlide: {
+    image: 'Фото слайду',
+    title: 'Заголовок слайду',
+    show: 'Доступний',
+    description: 'Опис слайду',
+    link: 'Посилання для переходу'
   }
 };
 export default labels;

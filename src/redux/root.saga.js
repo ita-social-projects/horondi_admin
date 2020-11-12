@@ -15,6 +15,8 @@ import modelSaga from './model/model.sagas';
 import homePageSaga from './home/home.sagas';
 import statsSaga from './stats/stats.sagas';
 import emailQuestionSaga from './email-questions/email-questions.sagas';
+import headerSaga from './header/header.sagas';
+import homePageSlideSaga from './home-page-slides/home-page-slides.sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -33,6 +35,8 @@ export default function* rootSaga() {
     emailQuestionSaga(),
     statsSaga(),
     modelSaga(),
-    ordersSaga()
+    headerSaga(),
+    ordersSaga(),
+    homePageSlideSaga()
   ]);
 }

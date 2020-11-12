@@ -35,6 +35,12 @@ const routes = {
   pathToStatistic: '/stats',
   pathToModels: '/models',
   pathToModelDetails: '/models/:id',
-  pathToAddModel: '/models/add'
+  pathToAddModel: '/models/add',
+  pathToHeaders: '/headers',
+  pathToAddHeader: '/headers/add',
+  pathToHeaderDetails: '/headers/:id',
+  pathToHomePageSlides: '/home-page-slides',
+  pathToAddHomePageSlide: '/home-page-slides/add',
+  pathToHomePageSlideDetail: '/home-page-slides/:id'
 };
 export default routes;

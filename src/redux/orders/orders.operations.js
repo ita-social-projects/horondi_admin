@@ -1,5 +1,5 @@
-import {getItems, setItems, client} from '../../utils/client'
 import { gql } from '@apollo/client';
+import { getItems, setItems, client } from '../../utils/client';
 
 export const getOrderById = (id) => {
   const query = `
@@ -122,7 +122,7 @@ export const getOrderById = (id) => {
   return getItems(query, { id });
 };
 
-export const updateOrder = (order)=> {
+export const updateOrder = (order) => {
   const query = `
     mutation updateOrder($order:OrderInput!){
   updateOrder(order:$order) {
@@ -239,11 +239,11 @@ export const updateOrder = (order)=> {
     }
   }
 }
-  `
-  return setItems(query, { order })
-}
+  `;
+  return setItems(query, { order });
+};
 
-const getAllOrders = async (skip, limit, filter) => {
+export const getAllOrders = async (skip, limit, filter) => {
   const result = await client.query({
     query: gql`
       query($limit: Int, $skip: Int, $filter: FilterInput) {
@@ -276,4 +276,3 @@ const getAllOrders = async (skip, limit, filter) => {
   const { data } = result;
   return data.getAllOrders;
 };
-
