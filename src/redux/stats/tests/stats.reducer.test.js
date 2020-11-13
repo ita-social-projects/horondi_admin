@@ -34,7 +34,7 @@ describe('stats reducer tests', () => {
     expect(statsReducer(initialState)).toEqual(initialState);
   });
 
-  it('it should set popular categories to store', () => {
+  it('should set popular categories to store', () => {
     expect(
       statsReducer(initialState, setPopularCategories(popularCategories))
     ).toEqual({
@@ -46,14 +46,14 @@ describe('stats reducer tests', () => {
     });
   });
 
-  it('it should set stats loading', () => {
+  it('should set stats loading', () => {
     expect(statsReducer(initialState, setStatsLoading(statsLoading))).toEqual({
       ...initialState,
       loading: statsLoading
     });
   });
 
-  it('it should set doughnut value', () => {
+  it('should set doughnut value', () => {
     expect(statsReducer(initialState, setDoughnutValue(doughnutValue))).toEqual(
       {
         ...initialState,
@@ -65,14 +65,14 @@ describe('stats reducer tests', () => {
     );
   });
 
-  it('it should set date value', () => {
+  it('should set date value', () => {
     expect(statsReducer(initialState, setDateValue(dateValue))).toEqual({
       ...initialState,
       date: dateValue
     });
   });
 
-  it('it should set bar value', () => {
+  it('should set bar value', () => {
     expect(statsReducer(initialState, setBarValue(barValue))).toEqual({
       ...initialState,
       bar: {
@@ -82,7 +82,7 @@ describe('stats reducer tests', () => {
     });
   });
 
-  it('it should set popular products', () => {
+  it('should set popular products', () => {
     expect(
       statsReducer(initialState, setPopularProducts(popularProducts))
     ).toEqual({
@@ -94,7 +94,7 @@ describe('stats reducer tests', () => {
     });
   });
 
-  it('it should set all orders stats', () => {
+  it('should set all orders stats', () => {
     expect(
       statsReducer(initialState, setAllOrdersStats(allOrdersStatsSet))
     ).toEqual({
@@ -106,7 +106,7 @@ describe('stats reducer tests', () => {
     });
   });
 
-  it('it should set paid orders stats', () => {
+  it('should set paid orders stats', () => {
     expect(
       statsReducer(initialState, setPaidOrdersStats(paidOrdersStatsSet))
     ).toEqual({
@@ -118,7 +118,7 @@ describe('stats reducer tests', () => {
     });
   });
 
-  it('it should set updating bar data', () => {
+  it('should set updating bar data', () => {
     expect(
       statsReducer(initialState, setUpdatingBarData(updatingBarData))
     ).toEqual({
@@ -130,8 +130,7 @@ describe('stats reducer tests', () => {
     });
   });
 
-  it('it should set updating doughnut data', () => {
-    console.log('hello');
+  it('should set updating doughnut data', () => {
     expect(
       statsReducer(initialState, setUpdatingDoughnutData(updatingDoughnutData))
     ).toEqual({
@@ -143,7 +142,7 @@ describe('stats reducer tests', () => {
     });
   });
 
-  it('it should set users stats', () => {
+  it('should set users stats', () => {
     expect(statsReducer(initialState, setUsersByDays(usersByDaysSet))).toEqual({
       ...initialState,
       bar: {
