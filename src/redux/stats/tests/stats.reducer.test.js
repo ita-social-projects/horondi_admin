@@ -131,6 +131,7 @@ describe('stats reducer tests', () => {
   });
 
   it('it should set updating doughnut data', () => {
+    console.log('hello');
     expect(
       statsReducer(initialState, setUpdatingDoughnutData(updatingDoughnutData))
     ).toEqual({
