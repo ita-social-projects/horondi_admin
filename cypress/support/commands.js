@@ -24,3 +24,21 @@ Cypress.Commands.add('login', (email, password) => {
       return token;
     });
 });
+
+Cypress.Commands.add('stubRequest', (route, callback) => {
+  cy.route2(
+    {
+      method: 'POST',
+      url: Cypress.env('SERVER_URL')
+    },
+    (req) => {
+      const body = JSON.parse(req.body);
+      if (
+        (body.query && body.query.includes(route)) ||
+        (body.mutation && body.mutation.includes(route))
+      ) {
+        callback(req, body);
+      }
+    }
+  );
+});

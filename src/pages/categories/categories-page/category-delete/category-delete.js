@@ -56,7 +56,12 @@ const CategoryDelete = () => {
   const categoriesOptionList = categories
     .filter((item) => item.isMain && item._id !== deleteId)
     .map((item, idx) => (
-      <MenuItem key={idx} id={item.code} data-cy={item.code} value={item._id}>
+      <MenuItem
+        key={item.code}
+        id={item.code}
+        data-cy={`category-delete-option-${idx}`}
+        value={item._id}
+      >
         {item.name[0].value}
       </MenuItem>
     ));
@@ -65,10 +70,11 @@ const CategoryDelete = () => {
     <Grid className={styles.detailsContainer}>
       <Grid className={styles.deletePanel}>
         <FormControl className={styles.formControl}>
-          <InputLabel id='category-label'>
+          <InputLabel id='category-label' data-cy='category-delete-label'>
             {categoryLabels.switchCategory}
           </InputLabel>
           <Select
+            data-cy='category-select'
             labelId='category-label'
             id='category'
             name='category'
@@ -76,7 +82,6 @@ const CategoryDelete = () => {
             onBlur={handleChange}
             onChange={handleChange}
             className={styles.formSelect}
-            data-cy='category'
           >
             {categoriesOptionList}
           </Select>
@@ -85,7 +90,7 @@ const CategoryDelete = () => {
           <SaveButton
             onClick={handleDeleteCategory}
             title={DELETE_CATEGORY}
-            data-cy='submit-category-delete'
+            data-cy='category-delete-submit'
             className={styles.saveButton}
             disabled={!switchId}
           />

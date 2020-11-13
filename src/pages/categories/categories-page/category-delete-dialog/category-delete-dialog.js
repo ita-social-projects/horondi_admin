@@ -23,6 +23,7 @@ const CategoryDeleteDialog = () => {
 
   return (
     <FormDialog
+      data-cy='category-delete-dialog'
       title={categoriesTitles.deleteTitle}
       isOpen={isOpen}
       handleClose={handleClose}
