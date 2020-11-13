@@ -15,7 +15,7 @@ import {
 
 const { labels, doughnut, bar } = config;
 
-const initialState = {
+export const initialState = {
   loading: false,
   doughnut: {
     categories: doughnut.initialValues,
