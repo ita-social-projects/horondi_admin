@@ -32,7 +32,6 @@ describe('Category tests', () => {
     }).as('deleteCategory');
 
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
-    cy.viewport(1280, 720);
     cy.visit('/categories');
   });
 
