@@ -4,40 +4,31 @@ import { Button } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import {
   getCategories,
-  deleteCategory
+  setCategoryDeleteId,
+  toggleCategoryDeleteDialog
 } from '../../../redux/categories/categories.actions';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './categories.styles';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import CategoryDeleteDialog from './category-delete-dialog';
 
 const Categories = () => {
-  const { openSuccessSnackbar } = useSuccessSnackbar();
   const { IMG_URL } = config;
-  const { ADD_CATEGORY, DELETE_CATEGORY } = config.buttonTitles;
-  const { DELETE_CATEGORY_MESSAGE } = config.messages;
+  const { ADD_CATEGORY } = config.buttonTitles;
 
   const dispatch = useDispatch();
 
   const { categories, categoriesLoading } = useSelector(({ Categories }) => ({
     categories: Categories.categories,
-    categoriesLoading: Categories.categoriesLoading
+    categoriesLoading: Categories.categoriesLoading,
+    isDeleteDialogOpen: Categories.isDeleteDialogOpen
   }));
 
   const handleDeleteCategory = (id) => {
-    const removeCategory = () => {
-      dispatch(closeDialog());
-      dispatch(deleteCategory({ id }));
-    };
-    openSuccessSnackbar(
-      removeCategory,
-      DELETE_CATEGORY,
-      DELETE_CATEGORY_MESSAGE,
-      DELETE_CATEGORY
-    );
+    dispatch(setCategoryDeleteId(id));
+    dispatch(toggleCategoryDeleteDialog());
   };
 
   const handleAddCategory = () => {
@@ -95,6 +86,7 @@ const Categories = () => {
           tableItems={categoriesList}
         />
       </div>
+      <CategoryDeleteDialog />
     </div>
   );
 };

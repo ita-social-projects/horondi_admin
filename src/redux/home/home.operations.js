@@ -37,8 +37,14 @@ const updateHomePageLooksImage = async (id, upload) => {
     mutation: gql`
       mutation($id: ID!, $upload: Upload) {
         updateHomePageLooksImage(id: $id, images: $upload) {
-          images {
-            small
+          ... on HomePageImages {
+            images {
+              small
+            }
+          }
+          ... on Error {
+            statusCode
+            message
           }
         }
       }

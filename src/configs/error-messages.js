@@ -30,6 +30,11 @@ export const patternErrorMessages = {
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
+export const headerErrorMessages = {
+  HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
+  HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+};
 export const newsErrorMessages = {
   NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
   NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,
@@ -80,4 +85,9 @@ export const colorErrorMessages = {
 };
 export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'
+};
+export const homePageSlideErrorMessages = {
+  SLIDE_VALIDATION_ERROR: 'Мінімум 2 символи',
+  SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };

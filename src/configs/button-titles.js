@@ -37,6 +37,7 @@ const buttonTitles = {
   REMOVE_COMMENT_TITLE: 'Видалити коментар',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+  SAVE_ORDER: 'Зберегти замовлення',
   SAVE_TITLE: 'Зберегти',
   REMOVE_EMAIL_QUESTION: 'Видалити запитання',
   UNDERSTAND: 'Зрозуміло',
@@ -49,11 +50,20 @@ const buttonTitles = {
   CREATE_COLOR_TITLE: 'Створити колір',
   REMOVE_COLOR_TITLE: 'Видалити колір',
   SAVE_MATERIAL: 'Зберегти матеріал',
+  CREATE_HEADER_TITLE: 'Створити посилання',
+  HEADER_SAVE_TITLE: 'Зберегти посилання',
+  HEADER_REMOVE_TITLE: 'Видалити посилання',
   GO_TO_MATERIAL_COLOR_PALLET: 'Редагувати палітру',
   CLOSE_DIALOG_TITLE: 'Закрити вікно',
   ORDER_DETAILS: 'Деталі',
   USER_STATUS_TITLE: 'Статус',
   CLEAR_FILTERS: 'Очистити фільтри',
+  CREATE_SLIDE_TITLE: 'Створити слайд',
+  DELETE_SLIDE_TITLE: 'Видалити слайд',
+  OPEN_SLIDE_EDIT: 'Увімкнути редагування',
+  SAVE_SLIDE_ORDER: 'Зберегти зміни',
+  CANCEL_SLIDE_ORDER: 'Скасувати зміни',
+
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([
       [true, 'Зберегти'],

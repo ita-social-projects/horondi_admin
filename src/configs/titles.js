@@ -1,4 +1,7 @@
 const titles = {
+  categoriesTitles: {
+    deleteTitle: 'Видалити категорію'
+  },
   patternTitles: {
     mainPageTitle: 'Iнформація про гобелени',
     createPageTitle: 'Створити гобелен'
@@ -32,7 +35,17 @@ const titles = {
   },
   orderTitles: {
     filterBy: 'Фільтрувати',
+    ORDER_NOT_FOUND: 'Замовлень за заданим фільтром не знайдено',
     orders: 'замовлень'
+  },
+  homePageSliderTitle: {
+    mainPageTitle: 'Слайди на головній сторінці',
+    slideOrderTitle: 'Порядок слайдів',
+    discoverMoreTitle: 'Дізнатись більше',
+    discoverMoreSymbol: '→',
+    slideTitle: 'Заголовок слайду не вибрано',
+    slideDescription: 'Опис слайду не вибрано',
+    preview: 'Попередній перегляд'
   }
 };
 

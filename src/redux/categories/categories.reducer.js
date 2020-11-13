@@ -3,7 +3,10 @@ import {
   SET_CATEGORIES_LOADING,
   SET_CATEGORIES_ERROR,
   SET_CATEGORY,
-  RESET_NEW_CATEGORY
+  RESET_NEW_CATEGORY,
+  TOGGLE_CATEGORY_DELETE_DIALOG,
+  SET_CATEGORY_DELETE_ID,
+  SET_CATEGORY_SWITCH_ID
 } from './categories.types';
 import { config } from '../../configs';
 
@@ -11,7 +14,10 @@ const initialState = {
   categories: [],
   categoriesLoading: false,
   categoriesError: null,
-  newCategory: config.templates.categoryTemplate
+  newCategory: config.templates.categoryTemplate,
+  isDeleteDialogOpen: false,
+  deleteId: null,
+  switchId: null
 };
 
 const categoriesReducer = (state = initialState, action = {}) => {
@@ -46,6 +52,21 @@ const categoriesReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       newCategory: initialState.newCategory
+    };
+  case TOGGLE_CATEGORY_DELETE_DIALOG:
+    return {
+      ...state,
+      isDeleteDialogOpen: !state.isDeleteDialogOpen
+    };
+  case SET_CATEGORY_DELETE_ID:
+    return {
+      ...state,
+      deleteId: action.payload
+    };
+  case SET_CATEGORY_SWITCH_ID:
+    return {
+      ...state,
+      switchId: action.payload
     };
   default:
     return state;

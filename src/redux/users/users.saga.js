@@ -1,4 +1,4 @@
-import { takeEvery, call, put,select } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { config } from '../../configs';
@@ -49,16 +49,12 @@ const {
 function* handleUsersLoad() {
   try {
     yield put(setUsersLoading(true));
-    const { usersState, tableState } = yield select(
-      ({ Users, Table }) => ({
-        usersState: Users,
-        tableState: Table
-      })
-    );
-    const result = yield call(getAllUsers, usersState,tableState);
-    yield put(
-      setPagesCount(Math.ceil(result.count / tableState.rowsPerPage))
-    );
+    const { usersState, tableState } = yield select(({ Users, Table }) => ({
+      usersState: Users,
+      tableState: Table
+    }));
+    const result = yield call(getAllUsers, usersState, tableState);
+    yield put(setPagesCount(Math.ceil(result.count / tableState.rowsPerPage)));
     yield put(setItemsCount(result.count));
     yield put(setUsers(result.items));
     yield put(setUsersLoading(false));

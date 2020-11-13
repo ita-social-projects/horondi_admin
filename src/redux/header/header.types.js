@@ -1,0 +1,10 @@
+export const SET_HEADERS = 'SET_HEADERS';
+export const GET_HEADERS = 'GET_HEADERS';
+export const DELETE_HEADER = 'DELETE_HEADER';
+export const ADD_HEADER = 'ADD_HEADER';
+export const GET_HEADER = 'GET_HEADER';
+export const SET_HEADER = 'SET_HEADER';
+export const SET_HEADER_LOADING = 'SET_HEADER_LOADING';
+export const UPDATE_HEADER = 'UPDATE_HEADER';
+export const SET_HEADER_ERROR = 'SET_HEADER_ERROR';
+export const REMOVE_HEADER_FROM_STORE = 'REMOVE_HEADER_FROM_STORE';
