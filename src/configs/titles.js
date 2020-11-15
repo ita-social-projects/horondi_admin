@@ -1,7 +1,14 @@
 const titles = {
+  categoriesTitles: {
+    deleteTitle: 'Видалити категорію'
+  },
   patternTitles: {
     mainPageTitle: 'Iнформація про гобелени',
     createPageTitle: 'Створити гобелен'
+  },
+  homePageEdit: {
+    mainPageTitle: 'Головна сторінка',
+    ourLooksImages: 'Стиль Горонді'
   },
   emailQuestionsTitles: {
     mainPageTitle: 'Запитання покупців',
@@ -14,6 +21,9 @@ const titles = {
   colorTitles: {
     createColorTitle: 'Створити колір'
   },
+  materialColorPaletteTitle: {
+    mainPageTitle: 'Iнформація про палітру кольорів'
+  },
   statisticTitles: {
     mainPageTitle: 'Статистика',
     dateSortTitle: 'Сортувати за датою',
@@ -22,6 +32,20 @@ const titles = {
       CANCELLED: 'Відхилені',
       CREATED: 'Створені'
     }
+  },
+  orderTitles: {
+    filterBy: 'Фільтрувати',
+    ORDER_NOT_FOUND: 'Замовлень за заданим фільтром не знайдено',
+    orders: 'замовлень'
+  },
+  homePageSliderTitle: {
+    mainPageTitle: 'Слайди на головній сторінці',
+    slideOrderTitle: 'Порядок слайдів',
+    discoverMoreTitle: 'Дізнатись більше',
+    discoverMoreSymbol: '→',
+    slideTitle: 'Заголовок слайду не вибрано',
+    slideDescription: 'Опис слайду не вибрано',
+    preview: 'Попередній перегляд'
   }
 };
 

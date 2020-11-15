@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import TableContainerGenerator from '../../../../../containers/table-container-generator';
 import TableContainerRow from '../../../../../containers/table-container-row';
 import { userRoleTranslations } from '../../../../../translations/user.translations';
 import { formatPhoneNumber } from '../../../../../utils/format-phone-number';
 import { config } from '../../../../../configs';
+import UserNavbar from '../user-navbar';
+import LoadingBar from '../../../../../components/loading-bar';
 
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const tableTitles = config.tableHeadRowTitles.users.userTab;
@@ -14,6 +16,7 @@ const { unknownUser } = config.labels.user;
 
 const UserTab = (props) => {
   const { list, onDelete } = props;
+  const userLoading = useSelector(({ Users }) => Users.userLoading);
   const dispatch = useDispatch();
 
   const usersItems = list.map((userItem) => (
@@ -35,11 +38,21 @@ const UserTab = (props) => {
   ));
 
   return (
-    <TableContainerGenerator
-      id='usersTable'
-      tableTitles={tableTitles}
-      tableItems={usersItems}
-    />
+    <>
+      <UserNavbar />
+      <div>
+        {userLoading ? (
+          <LoadingBar />
+        ) : (
+          <TableContainerGenerator
+            pagination
+            id='usersTable'
+            tableTitles={tableTitles}
+            tableItems={usersItems}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

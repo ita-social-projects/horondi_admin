@@ -193,7 +193,6 @@ export const createModel = async (payload) => {
 
 export const updateModel = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  console.log(payload);
   const { id, model, image } = payload;
   const result = await client.mutate({
     context: { headers: { token } },

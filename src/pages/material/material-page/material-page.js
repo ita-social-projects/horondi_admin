@@ -116,7 +116,7 @@ const MaterialPage = () => {
           {CREATE_MATERIAL_TITLE}
         </Button>
       </div>
-      <div className={styles.tableContainer}>
+      <div>
         <TableContainerGenerator
           tableTitles={tableTitles}
           tableItems={materialItems}

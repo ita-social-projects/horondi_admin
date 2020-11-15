@@ -4,12 +4,16 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 import PaletteIcon from '@material-ui/icons/Palette';
 import PeopleIcon from '@material-ui/icons/People';
+import ListAltIcon from '@material-ui/icons/ListAlt';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import SmsIcon from '@material-ui/icons/Sms';
+import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import StyleIcon from '@material-ui/icons/Style';
+import LinkIcon from '@material-ui/icons/Link';
+import FilterIcon from '@material-ui/icons/Filter';
 import routes from './routes';
 
 const menuCategories = [
@@ -24,6 +28,10 @@ const menuCategories = [
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
   ['Новини', routes.pathToNews, ImportContactsIcon],
   ['Запитання покупців', routes.pathToEmailQuestions, LiveHelpIcon],
-  ['Моделі', routes.pathToModels, StyleIcon]
+  ['Моделі', routes.pathToModels, StyleIcon],
+  ['Посилання', routes.pathToHeaders, LinkIcon],
+  ['Замовлення', routes.pathToOrders, ListAltIcon],
+  ['Головна сторінка', routes.pathToHomePageEdit, ImageRoundedIcon],
+  ['Слайдер головна сторінка', routes.pathToHomePageSlides, FilterIcon]
 ];
 export default menuCategories;

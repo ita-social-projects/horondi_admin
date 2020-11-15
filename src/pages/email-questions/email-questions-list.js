@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Pagination } from '@material-ui/lab';
 import { Typography } from '@material-ui/core';
+import ReactHtmlParser from 'react-html-parser';
 
 import { useStyles } from './email-questions-list.styles';
 import { config } from '../../configs';
@@ -132,7 +133,7 @@ const EmailQuestionsList = () => {
             id={question._id}
             senderName={question.senderName}
             email={question.email}
-            qA={questionToShow + answerToShow}
+            qA={ReactHtmlParser(questionToShow + answerToShow)}
             date={getTime(question.date)}
             status={labels.emailQuestionsLabels.ua[question.status]}
             showAvatar={false}

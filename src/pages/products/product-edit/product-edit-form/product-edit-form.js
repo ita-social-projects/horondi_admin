@@ -31,6 +31,7 @@ import { productsTranslations } from '../../../../translations/product.translati
 import ProductCarousel from './product-carousel';
 import DeleteButton from '../../../../components/buttons/delete-button';
 import { config } from '../../../../configs';
+import CommentsPage from '../../../comments';
 
 const { priceLabel } = config.labels.product;
 
@@ -51,7 +52,7 @@ const ProductEditForm = () => {
   const dispatch = useDispatch();
   const product = useSelector(({ Products }) => Products.selectedProduct);
 
-  const size = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
+  const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
@@ -74,14 +75,14 @@ const ProductEditForm = () => {
     getColorsToSend,
     getPatternToSend,
     getModelToSend,
-    colors,
+    colors: productColors,
     patterns,
     models,
     options,
     getSelectedCategory,
     setOptions,
     selectedOptions,
-    additions
+    additions: productAdditions
   } = useProductHandlers();
 
   const uniqueSizes = useMemo(
@@ -135,10 +136,17 @@ const ProductEditForm = () => {
     uniqueSizes
   ]);
 
-  const onSubmit = (values) => {
-    const { colors, pattern, model, category, subcategory, basePrice } = values;
+  const onSubmit = (formValues) => {
+    const {
+      colors,
+      pattern,
+      model,
+      category,
+      subcategory,
+      basePrice
+    } = formValues;
 
-    const productInfo = createProductInfo(values);
+    const productInfo = createProductInfo(formValues);
     dispatch(
       updateProduct({
         product: {
@@ -206,7 +214,7 @@ const ProductEditForm = () => {
         <Grid container spacing={2} className={styles.fixedButtons}>
           <Grid item className={styles.button}>
             <Button
-              size={size}
+              size={buttonSize}
               type='submit'
               variant='contained'
               color='primary'
@@ -218,9 +226,9 @@ const ProductEditForm = () => {
           </Grid>
           <Grid item className={styles.button}>
             <DeleteButton
-              size={size}
+              size={buttonSize}
               variant='outlined'
-              onClick={handleProductDelete}
+              onClickHandler={handleProductDelete}
             >
               {DELETE_PRODUCT_TITLE}
             </DeleteButton>
@@ -258,7 +266,7 @@ const ProductEditForm = () => {
             <ProductSpeciesContainer
               models={models}
               patterns={patterns}
-              colors={colors}
+              colors={productColors}
               getSelectedCategory={getSelectedCategory}
               values={values}
               errors={errors}
@@ -299,11 +307,12 @@ const ProductEditForm = () => {
             <ProductOptionsContainer
               setOptions={setOptions}
               selectedOptions={selectedOptions}
-              additions={additions}
+              additions={productAdditions}
               toggleFieldsChanged={toggleFieldsChanged}
             />
           </Paper>
         </Grid>
+        <CommentsPage productId={product._id} />
       </Grid>
     </div>
   );

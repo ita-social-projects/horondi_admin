@@ -1,4 +1,6 @@
 const labels = {
+  sort: 'Сортувати за',
+  search: 'Шукати',
   user: {
     unknownAdmin: 'Невідомий адмін'
   },
@@ -13,6 +15,14 @@ const labels = {
     priority: 'Пріорітет',
     showEnable: 'Так',
     showDisable: 'Ні'
+  },
+  categories: {
+    switchCategory: "Категорія, на яку замінити пов'язані товари"
+  },
+  header: {
+    name: 'Назва',
+    link: 'Посилання',
+    priority: 'Пріорітет'
   },
   pattern: {
     image: 'Фото гобелена',
@@ -137,6 +147,41 @@ const labels = {
       name: 'basePrice'
     }
   },
+  orderProduct: {
+    category: 'Категорія',
+    subcategory: 'Підкатегорія',
+    model: 'Модель',
+    name: 'Назва',
+    pattern: 'Гобелен',
+    closure: 'Матеріал замку',
+    bottomMaterial: 'Матеріал дна',
+    bottomColor: 'Колір дна',
+    actualPrice: 'Ціна'
+  },
+  orderRecipient: {
+    firstName: "Ім'я",
+    lastName: 'Прізвище',
+    patronymicName: 'По-батькові',
+    email: 'e-mail',
+    phoneNumber: 'Номер телефону',
+    commentary: 'Коментар'
+  },
+  deliveryDetails: {
+    country: 'Країна',
+    region: 'Область',
+    city: 'Місто',
+    zipcode: 'Поштовий індекс',
+    street: 'Вулиця',
+    buildingNumber: 'Номер будинку',
+    appartment: 'Номер квартири'
+  },
+  sizeValues: {
+    heightInCm: 'Висота (см.)',
+    widthInCm: 'Ширина (см.)',
+    depthInCm: 'Глибина (см.)',
+    volumeInLiters: "Об'єм (л.)",
+    weightInKg: 'Вага (кг.)'
+  },
   emailQuestionsLabels: {
     en: {
       PENDING: 'PENDING',
@@ -152,7 +197,7 @@ const labels = {
   },
   doughnut: {
     select: [
-      { label: 'Популярні категорії', value: 'categories' },
+      { label: 'Популярні категорії за весь час', value: 'categories' },
       { label: 'Останні замовлення', value: 'orders' }
     ],
     dateMenuOptions: [
@@ -165,7 +210,7 @@ const labels = {
   },
   bar: {
     select: [
-      { label: 'Популярні продукти', value: 'products' },
+      { label: 'Популярні продукти за весь час', value: 'products' },
       { label: 'Виконані замовлення', value: 'orders' },
       { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
@@ -173,7 +218,60 @@ const labels = {
       users: 'Цей день',
       orders: 'Цей день',
       products: 'Кількість покупок'
+    },
+    message: {
+      users: 'Кількість користувачів за цей час: ',
+      orders: 'Кількість замовлень за цей час: ',
+      products: 'Кількість продуктів за цей час: '
     }
+  },
+  orderTabs: {
+    general: 'Загальне',
+    receiver: 'Отримувач',
+    products: 'Продукти',
+    delivery: 'Доставка'
+  },
+  deliveryLabels: {
+    deliveryMethodLabel: 'Спосіб доставки',
+    byCourierLabel: "Доставка кур'єром:",
+    invoiceNumberLabel: 'Номер накладної',
+    warehouseNumberLabel: 'Номер відділення: ',
+    sentAtLabel: 'Відправлено о:',
+    deliveryCostLabel: 'Вартість доставки'
+  },
+  generalLabels: {
+    deliveryStatusLabel: 'Статус замовлення:',
+    paymentMethodLabel: 'Метод оплати:',
+    isPaidLabel: 'Оплачено:',
+    cancellationReasonLabel: 'Причина скасування',
+    creationDateLabel: 'Дата створення:',
+    updateDateLabel: 'Дата оновлення:',
+    adminCommentLabel: 'Залишити коментар'
+  },
+  productsLabels: {
+    notListed: 'Не вказано',
+    additionsLabel: 'Додатки',
+    colorsLabel: 'Кольори',
+    sizeLabel: 'Розмір'
+  },
+  orders: {
+    select: [
+      { label: 'Створені', value: 'CREATED' },
+      { label: 'Виконані', value: 'CONFIRMED' },
+      { label: 'Оброблені', value: 'PRODUCED' },
+      { label: 'Скасовані', value: 'CANCELLED' },
+      { label: 'Повернені', value: 'REFUNDED' },
+      { label: 'Надіслані', value: 'SENT' },
+      { label: 'Доставлені', value: 'DELIVERED' },
+      { label: 'Всі', value: 'All' }
+    ]
+  },
+  homePageSlide: {
+    image: 'Фото слайду',
+    title: 'Заголовок слайду',
+    show: 'Доступний',
+    description: 'Опис слайду',
+    link: 'Посилання для переходу'
   }
 };
 export default labels;

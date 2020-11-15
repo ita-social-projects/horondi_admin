@@ -119,13 +119,13 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     initialValues,
     validationSchema: formSchema,
     validateOnBlur: true,
-    onSubmit: (values) => {
+    onSubmit: (formValues) => {
       if (
-        values.ukCartImage &&
-        values.enCartImage &&
-        typeof values.ukCartImage === typeof values.enCartImage
+        formValues.ukCartImage &&
+        formValues.enCartImage &&
+        typeof formValues.ukCartImage === typeof formValues.enCartImage
       ) {
-        contactSaveHandler(values);
+        contactSaveHandler(formValues);
       } else {
         dispatch(setSnackBarSeverity('error'));
         dispatch(setSnackBarMessage(SELECT_IMAGES_MESSAGE));
@@ -213,7 +213,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   label='Google maps посилання'
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -235,7 +234,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -253,7 +251,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -271,7 +268,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -293,7 +289,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -311,7 +306,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   multiline
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}
@@ -328,7 +322,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   label='Email'
                   InputLabelProps={{
                     classes: {
-                      root: classes.inputLabel,
                       shrink: 'shrink'
                     }
                   }}

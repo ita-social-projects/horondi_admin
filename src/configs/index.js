@@ -13,7 +13,9 @@ import {
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
-  modelErrorMessages
+  modelErrorMessages,
+  headerErrorMessages,
+  homePageSlideErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -24,6 +26,7 @@ import {
   materialPaginationPayload
 } from './pagination';
 import titles from './titles';
+import { sort } from './sort';
 
 export const config = {
   app: {
@@ -146,7 +149,8 @@ export const config = {
     initialValues: {
       names: [],
       counts: [],
-      relations: []
+      relations: [],
+      total: null
     }
   },
   bar: {
@@ -176,7 +180,10 @@ export const config = {
   newsPaginationPayload,
   contactsPaginationPayload,
   materialPaginationPayload,
-  modelErrorMessages
+  modelErrorMessages,
+  headerErrorMessages,
+  homePageSlideErrorMessages,
+  sort
 };
 export const inputTypes = {
   button: 'button',
