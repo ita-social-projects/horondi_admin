@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Badge,
-  Button,
-  ButtonGroup,
   FormControl,
   Input,
   InputLabel,
@@ -22,18 +20,19 @@ const EmailQuestionsFilter = ({ filterItems, filterChangeHandler }) => {
   const styles = useStyles();
 
   const handleSelected = (selected) => {
-    if (selected.includes('ALL')) {
-      console.log(selected);
-
+    if (selected.length === 1) {
       return emailQuestionsLabels.ua[selected[0]];
     }
-    return selected.map((item) => emailQuestionsLabels.ua[item]).join(', ');
+    return selected
+      .slice(1)
+      .map((item) => emailQuestionsLabels.ua[item])
+      .join(', ');
   };
 
   return (
     <div className={styles.container}>
       <Badge
-        badgeContent={filterItems.length}
+        badgeContent={filterItems.length - 1}
         color='error'
         anchorOrigin={badgePosition}
       >

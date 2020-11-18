@@ -53,7 +53,7 @@ const EmailQuestionsList = () => {
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
-        filter: filter.includes('ALL') ? [] : filter,
+        filter: filter.slice(1),
         skip: currentPage * questionsPerPage
       })
     );
@@ -95,7 +95,7 @@ const EmailQuestionsList = () => {
 
   const filterChangeHandler = (id) => {
     if (id === 'ALL') {
-      setFilter(['ALL']);
+      setFilter([id]);
       return;
     }
 

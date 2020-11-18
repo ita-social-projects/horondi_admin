@@ -31,7 +31,7 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: '30px'
   },
   title: {
-    marginBottom: '10px',
+    marginBottom: '22px',
     fontSize: 24,
     color: theme.palette.text.disabled,
     fontWeight: 'bold'
