@@ -1,33 +1,25 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { formStyles } from '../../configs/styles';
 
-export const useStyles = makeStyles((theme) => ({
-  newsItemUpdate: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '20px 0'
-  },
-  newsDetails: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  saveButton: {
-    margin: theme.spacing(2)
-  },
-  textField: {
-    margin: '10px 5px'
-  },
-  tabs: {
-    backgroundColor: 'white',
-    '& span.MuiTab-wrapper': {
-      color: '#3F51B5'
+export const useStyles = makeStyles((theme) => {
+  const {
+    DETAILS_STYLES,
+    SAVE_BUTTON_STYLES,
+    TABS_STYLES,
+    CONTROLS_BLOCK_STYLES,
+    ITEM_UPDATE_STYLE,
+    TEXT_FIELD_STYLES
+  } = formStyles(theme);
+  return {
+    newsItemUpdate: {
+      ...ITEM_UPDATE_STYLE
     },
-    '& span.MuiTabs-indicator': {
-      backgroundColor: '#3F51B5'
-    }
-  },
-  controlsBlock: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  }
-}));
+    newsDetails: {
+      ...DETAILS_STYLES
+    },
+    ...TEXT_FIELD_STYLES,
+    ...TABS_STYLES,
+    ...CONTROLS_BLOCK_STYLES,
+    ...SAVE_BUTTON_STYLES
+  };
+});
