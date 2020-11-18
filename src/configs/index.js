@@ -189,3 +189,8 @@ export const inputTypes = {
   button: 'button',
   submit: 'submit'
 };
+
+export const badgePosition = {
+  vertical: 'top',
+  horizontal: 'left'
+};

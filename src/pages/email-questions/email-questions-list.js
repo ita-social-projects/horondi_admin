@@ -47,13 +47,13 @@ const EmailQuestionsList = () => {
 
   const dispatch = useDispatch();
 
-  const [filter, setFilter] = useState([]);
+  const [filter, setFilter] = useState(['ALL']);
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
-        filter,
+        filter: filter.includes('ALL') ? [] : filter,
         skip: currentPage * questionsPerPage
       })
     );
@@ -94,8 +94,8 @@ const EmailQuestionsList = () => {
   };
 
   const filterChangeHandler = (id) => {
-    if (id === 'all') {
-      setFilter([]);
+    if (id === 'ALL') {
+      setFilter(['ALL']);
       return;
     }
 
@@ -134,7 +134,7 @@ const EmailQuestionsList = () => {
             senderName={question.senderName}
             email={question.email}
             qA={ReactHtmlParser(questionToShow + answerToShow)}
-            date={getTime(question.date)}
+            date={ReactHtmlParser(getTime(question.date, true))}
             status={labels.emailQuestionsLabels.ua[question.status]}
             showAvatar={false}
             showEdit={false}
@@ -162,7 +162,7 @@ const EmailQuestionsList = () => {
         <div className={styles.operations}>
           <EmailQuestionsFilter
             filterItems={filter}
-            changeHandler={filterChangeHandler}
+            filterChangeHandler={filterChangeHandler}
           />
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
