@@ -325,7 +325,7 @@ const CategoriesAdd = ({ id, editMode }) => {
             <Grid item className={classes.wrapper}>
               <Paper className={classes.addFields}>
                 <TextField
-                  label={isMain ? 'Код категорії' : 'Код підкатегорії'}
+                  label='Код категорії'
                   variant='outlined'
                   name='code'
                   required
@@ -338,7 +338,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                   value={newCategory.code}
                   onChange={handleChange}
                 />
-                <FormControlLabel
+                {/* <FormControlLabel
                   control={
                     <Checkbox
                       checked={newCategory.isMain}
@@ -346,8 +346,8 @@ const CategoriesAdd = ({ id, editMode }) => {
                       onChange={handleChange}
                     />
                   }
-                  label='Основна категорія'
-                />
+                  label='Основна категорія' */}
+                {/* />
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -361,7 +361,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                       ? categoryTranslations.CATEGORY_IS_AVAILABLE
                       : categoryTranslations.SUBCATEGORY_IS_AVAILABLE
                   }
-                />
+                /> */}
               </Paper>
               <Paper className={classes.addFields}>
                 <Tabs
@@ -374,8 +374,8 @@ const CategoriesAdd = ({ id, editMode }) => {
                 >
                   <Tab label='Назва' />
                   <Tab label='Зображення' />
-                  {!isMain && <Tab label='Батьківська категорія' />}
-                  {isMain && editMode && <Tab label='Підкатегорії' />}
+                  {/* {!isMain && <Tab label='Батьківська категорія' />}
+                  {isMain && editMode && <Tab label='Підкатегорії' />} */}
                 </Tabs>
                 <TabPanel value={tabValue} index={0}>
                   <div>
@@ -479,7 +479,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                           variant='outlined'
                           className={classes.imageSelect}
                         >
-                          <Select
+                          {/* <Select
                             native
                             fullWidth
                             value={!parentId ? '' : parentId}
@@ -493,7 +493,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                                 {category.name[0].value}
                               </option>
                             ))}
-                          </Select>
+                          </Select> */}
                         </FormControl>
                       </div>
                     </div>
@@ -519,7 +519,7 @@ const CategoriesAdd = ({ id, editMode }) => {
           className={classes.saveBtn}
           onClick={editMode ? handleCategoryEdit : handleCategorySave}
         >
-          {config.buttonTitles.titleGenerator(editMode, isMain)}
+          {config.buttonTitles.titleGenerator(editMode, !isMain)}
         </Button>
       </div>
     </div>
