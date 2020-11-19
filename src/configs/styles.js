@@ -78,12 +78,12 @@ const formStyles = (theme) => ({
     }
   },
 
-  ITEM_UPDATE_STYLE: {
+  ITEM_UPDATE_STYLES: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
   },
-  IMAGE_NAME_STYLE: {
+  IMAGE_NAME_STYLES: {
     imageName: {
       fontSize: '.9rem',
       marginLeft: '10px',

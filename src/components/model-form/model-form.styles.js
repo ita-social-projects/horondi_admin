@@ -12,21 +12,21 @@ export const useStyles = makeStyles((theme) => {
     LARGE_STYLES,
     ATTACH_FILE_STYLES,
     IMAGE_UPLOAD_STYLES,
-    ITEM_UPDATE_STYLE,
+    ITEM_UPDATE_STYLES,
     INPUT_ERROR_STYLES,
     IMAGE_UPLOAD_CONTAINER_STYLES,
-    IMAGE_NAME_STYLE
+    IMAGE_NAME_STYLES
   } = formStyles(theme);
   return {
     modelItemUpdate: {
-      ...ITEM_UPDATE_STYLE
+      ...ITEM_UPDATE_STYLES
     },
     modelDetails: {
       ...DETAILS_STYLES
     },
     ...INPUT_ERROR_STYLES,
     ...IMAGE_UPLOAD_CONTAINER_STYLES,
-    ...IMAGE_NAME_STYLE,
+    ...IMAGE_NAME_STYLES,
     ...IMAGE_UPLOAD_STYLES,
     ...ATTACH_FILE_STYLES,
     ...LARGE_STYLES,

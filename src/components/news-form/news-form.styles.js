@@ -7,12 +7,12 @@ export const useStyles = makeStyles((theme) => {
     SAVE_BUTTON_STYLES,
     TABS_STYLES,
     CONTROLS_BLOCK_STYLES,
-    ITEM_UPDATE_STYLE,
+    ITEM_UPDATE_STYLES,
     TEXT_FIELD_STYLES
   } = formStyles(theme);
   return {
     newsItemUpdate: {
-      ...ITEM_UPDATE_STYLE
+      ...ITEM_UPDATE_STYLES
     },
     newsDetails: {
       ...DETAILS_STYLES

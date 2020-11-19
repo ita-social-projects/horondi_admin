@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => {
     LARGE_STYLES,
     CONTROLS_BLOCK_STYLES,
     TABS_STYLES,
-    ITEM_UPDATE_STYLE,
+    ITEM_UPDATE_STYLES,
     DETAILS_STYLES,
     SAVE_BUTTON_STYLES,
     RETURN_BUTTON_STYLES,
@@ -15,7 +15,7 @@ export const useStyles = makeStyles((theme) => {
   } = formStyles(theme);
   return {
     headerItemUpdate: {
-      ...ITEM_UPDATE_STYLE
+      ...ITEM_UPDATE_STYLES
     },
     headerDetails: {
       ...DETAILS_STYLES

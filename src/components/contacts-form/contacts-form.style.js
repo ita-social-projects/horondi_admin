@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme) => {
     SAVE_BUTTON_STYLES,
     DETAILS_STYLES,
     INPUT_ERROR_STYLES,
-    IMAGE_NAME_STYLE
+    IMAGE_NAME_STYLES
   } = formStyles(theme);
   return {
     contactItemUpdate: {
@@ -39,7 +39,7 @@ export const useStyles = makeStyles((theme) => {
     ...INPUT_ERROR_STYLES,
     ...IMAGE_UPLOAD_CONTAINER_STYLES,
     ...LARGE_STYLES,
-    ...IMAGE_NAME_STYLE,
+    ...IMAGE_NAME_STYLES,
     ...IMAGE_UPLOAD_STYLES,
     ...ATTACH_FILE_STYLES
   };
