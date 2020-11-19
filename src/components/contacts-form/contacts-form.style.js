@@ -3,15 +3,15 @@ import { formStyles } from '../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
-    ATTACH_FILE_STYLES,
-    IMAGE_UPLOAD_STYLES,
-    IMAGE_UPLOAD_CONTAINER_STYLES,
-    LARGE_STYLES,
-    RETURN_BUTTON_STYLES,
-    SAVE_BUTTON_STYLES,
-    DETAILS_STYLES,
-    INPUT_ERROR_STYLES,
-    IMAGE_NAME_STYLES
+    attachFile,
+    imageUpload,
+    imageUploadContainer,
+    large,
+    returnButton,
+    saveButton,
+    details,
+    inputError,
+    imageName
   } = formStyles(theme);
   return {
     contactItemUpdate: {
@@ -32,15 +32,15 @@ export const useStyles = makeStyles((theme) => {
       marginTop: 70
     },
     contactDetails: {
-      ...DETAILS_STYLES
+      ...details
     },
-    ...SAVE_BUTTON_STYLES,
-    ...RETURN_BUTTON_STYLES,
-    ...INPUT_ERROR_STYLES,
-    ...IMAGE_UPLOAD_CONTAINER_STYLES,
-    ...LARGE_STYLES,
-    ...IMAGE_NAME_STYLES,
-    ...IMAGE_UPLOAD_STYLES,
-    ...ATTACH_FILE_STYLES
+    saveButton,
+    returnButton,
+    inputError,
+    imageUploadContainer,
+    large,
+    imageName,
+    imageUpload,
+    attachFile
   };
 });

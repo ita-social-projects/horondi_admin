@@ -3,23 +3,23 @@ import { formStyles } from '../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
-    DETAILS_STYLES,
-    SAVE_BUTTON_STYLES,
-    TABS_STYLES,
-    CONTROLS_BLOCK_STYLES,
-    ITEM_UPDATE_STYLES,
-    TEXT_FIELD_STYLES
+    details,
+    saveButton,
+    tabs,
+    controlsBlock,
+    itemUpdate,
+    textField
   } = formStyles(theme);
   return {
     newsItemUpdate: {
-      ...ITEM_UPDATE_STYLES
+      ...itemUpdate
     },
     newsDetails: {
-      ...DETAILS_STYLES
+      ...details
     },
-    ...TEXT_FIELD_STYLES,
-    ...TABS_STYLES,
-    ...CONTROLS_BLOCK_STYLES,
-    ...SAVE_BUTTON_STYLES
+    textField,
+    tabs,
+    controlsBlock,
+    saveButton
   };
 });

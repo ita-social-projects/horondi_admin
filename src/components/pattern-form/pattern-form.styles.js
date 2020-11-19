@@ -3,37 +3,37 @@ import { formStyles } from '../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
-    DETAILS_STYLES,
-    INPUT_ERROR_STYLES,
-    IMAGE_NAME_STYLES,
-    SAVE_BUTTON_STYLES,
-    IMAGE_UPLOAD_CONTAINER_STYLES,
-    TABS_STYLES,
-    CONTROLS_BLOCK_STYLES,
-    ATTACH_FILE_STYLES,
-    LARGE_STYLES,
-    RETURN_BUTTON_STYLES,
-    IMAGE_UPLOAD_STYLES,
-    TEXT_FIELD_STYLES,
-    ITEM_UPDATE_STYLES
+    details,
+    inputError,
+    imageName,
+    saveButton,
+    imageUploadContainer,
+    tabs,
+    controlsBlock,
+    attachFile,
+    large,
+    returnButton,
+    imageUpload,
+    textField,
+    itemUpdate
   } = formStyles(theme);
   return {
     patternItemUpdate: {
-      ...ITEM_UPDATE_STYLES
+      ...itemUpdate
     },
     patternDetails: {
-      ...DETAILS_STYLES
+      ...details
     },
-    ...IMAGE_NAME_STYLES,
-    ...INPUT_ERROR_STYLES,
-    ...IMAGE_UPLOAD_CONTAINER_STYLES,
-    ...TEXT_FIELD_STYLES,
-    ...IMAGE_UPLOAD_STYLES,
-    ...SAVE_BUTTON_STYLES,
-    ...RETURN_BUTTON_STYLES,
-    ...ATTACH_FILE_STYLES,
-    ...LARGE_STYLES,
-    ...TABS_STYLES,
-    ...CONTROLS_BLOCK_STYLES
+    imageName,
+    inputError,
+    imageUploadContainer,
+    textField,
+    imageUpload,
+    saveButton,
+    returnButton,
+    attachFile,
+    large,
+    tabs,
+    controlsBlock
   };
 });

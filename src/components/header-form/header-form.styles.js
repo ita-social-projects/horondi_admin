@@ -3,29 +3,29 @@ import { formStyles } from '../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
-    LARGE_STYLES,
-    CONTROLS_BLOCK_STYLES,
-    TABS_STYLES,
-    ITEM_UPDATE_STYLES,
-    DETAILS_STYLES,
-    SAVE_BUTTON_STYLES,
-    RETURN_BUTTON_STYLES,
-    TEXT_FIELD_STYLES,
-    INPUT_ERROR_STYLES
+    large,
+    controlsBlock,
+    tabs,
+    itemUpdate,
+    details,
+    saveButton,
+    returnButton,
+    textField,
+    inputError
   } = formStyles(theme);
   return {
     headerItemUpdate: {
-      ...ITEM_UPDATE_STYLES
+      ...itemUpdate
     },
     headerDetails: {
-      ...DETAILS_STYLES
+      ...details
     },
-    ...SAVE_BUTTON_STYLES,
-    ...RETURN_BUTTON_STYLES,
-    ...LARGE_STYLES,
-    ...CONTROLS_BLOCK_STYLES,
-    ...TABS_STYLES,
-    ...TEXT_FIELD_STYLES,
-    ...INPUT_ERROR_STYLES
+    saveButton,
+    returnButton,
+    large,
+    controlsBlock,
+    tabs,
+    textField,
+    inputError
   };
 });
