@@ -37,7 +37,6 @@ export const productModel = {
   closure: initialLanguageValues,
   model: initialLanguageValues,
   category: '',
-  subcategory: '',
   colors: [],
   pattern: [],
   basePrice: 0,

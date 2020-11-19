@@ -144,7 +144,6 @@ const getAllFilters = async () => {
                 value
               }
               isMain
-              subcategories
             }
             options {
               additions {
@@ -176,7 +175,6 @@ const getProductCategories = async () => {
             lang
             value
           }
-          subcategories
           isMain
         }
       }
@@ -249,10 +247,7 @@ const productQuery = `
                 lang
                 value
               }
-            }
-            subcategory {
-              _id
-            }
+            } 
             model {
               value
             }
