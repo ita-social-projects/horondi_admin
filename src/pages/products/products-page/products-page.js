@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import Typography from '@material-ui/core/Typography';
-import { useStyles } from './products-page.styles';
 
 import {
   getFiltredProducts,
@@ -32,7 +31,8 @@ const tableTitles = config.tableHeadRowTitles.products;
 const { imagePrefix } = config;
 
 const ProductsPage = () => {
-  const styles = useStyles();
+  const common = useCommonStyles();
+
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
@@ -143,7 +143,7 @@ const ProductsPage = () => {
     : null;
 
   return (
-    <div className={styles.container}>
+    <div className={common.container}>
       <ProductsNav />
       {loading ? (
         <LoadingBar />
@@ -154,7 +154,7 @@ const ProductsPage = () => {
           tableItems={productsItems}
         />
       ) : (
-        <Typography variant='h1' className={styles.productsTitle}>
+        <Typography variant='h1' className={common.materialTitle}>
           {PRODUCT_NOT_FOUND}
         </Typography>
       )}
