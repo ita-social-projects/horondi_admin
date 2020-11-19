@@ -35,10 +35,12 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   addNameInput: {
-    margin: '8px 0'
+    margin: '8px 0',
+    width: '300px'
   },
   addNameBtn: {
-    marginBottom: '8px'
+    marginBottom: '8px',
+    width: '300px'
   },
   imageSelect: {
     display: 'flex',

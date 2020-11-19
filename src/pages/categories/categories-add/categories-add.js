@@ -374,15 +374,15 @@ const CategoriesAdd = ({ id, editMode }) => {
                 >
                   <Tab label='Назва' />
                   <Tab label='Зображення' />
-                  {/* {!isMain && <Tab label='Батьківська категорія' />}
-                  {isMain && editMode && <Tab label='Підкатегорії' />} */}
+                  {/* {/* {!isMain && <Tab label='Батьківська категорія' />} */}
+                  {isMain && editMode && <Tab label='Підкатегорії' />}
                 </Tabs>
                 <TabPanel value={tabValue} index={0}>
                   <div>
                     <form autoComplete='on' className={classes.addNameForm}>
                       {showAddNameForm ? (
                         <>
-                          <TextField
+                          {/* <TextField
                             label='Мова'
                             variant='outlined'
                             name='lang'
@@ -391,17 +391,33 @@ const CategoriesAdd = ({ id, editMode }) => {
                             className={classes.addNameInput}
                             onChange={handleNameChange}
                             fullWidth
-                          />
+                          /> */}
                           <TextField
-                            label='Назва'
+                            label='Назва(Ukr)'
                             variant='outlined'
                             name='value'
-                            error={!nameIsValid && shouldValidate}
-                            helperText={
-                              !nameIsValid && shouldValidate
-                                ? "Ім'я повинно містити як мінімум 2 значення"
-                                : ''
-                            }
+                            // error={!nameIsValid && shouldValidate}
+                            // helperText={
+                            //   !nameIsValid && shouldValidate
+                            //     ? "Ім'я повинно містити як мінімум 2 значення"
+                            //     : ''
+                            // }
+                            value={newName.value}
+                            className={classes.addNameInput}
+                            onChange={handleNameChange}
+                            fullWidth
+                          />
+
+                          <TextField
+                            label='Назва(En)'
+                            variant='outlined'
+                            name='value'
+                            // error={!nameIsValid && shouldValidate}
+                            // helperText={
+                            //   !nameIsValid && shouldValidate
+                            //     ? "Ім'я повинно містити 2 значення(Ukr & En)"
+                            //     : ''
+                            // }
                             value={newName.value}
                             className={classes.addNameInput}
                             onChange={handleNameChange}
@@ -410,7 +426,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                         </>
                       ) : null}
                       <div className={classes.addNameBtnGroup}>
-                        <Button
+                        {/* <Button
                           variant='contained'
                           color='primary'
                           className={classes.addNameBtn}
@@ -418,7 +434,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                           fullWidth
                         >
                           {config.buttonTitles.ADD_CATEGORY_NAME}
-                        </Button>
+                        </Button> */}
                         {showAddNameForm ? (
                           <>
                             <div className={classes.divider} />
@@ -499,7 +515,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                     </div>
                   </TabPanel>
                 )}
-                {isMain && editMode && (
+                {/* {isMain && editMode && (
                   <TabPanel value={tabValue} index={2}>
                     <div>
                       <TableContainerGenerator
@@ -508,7 +524,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                       />
                     </div>
                   </TabPanel>
-                )}
+                )} */}
               </Paper>
             </Grid>
           </Grid>
