@@ -19,6 +19,7 @@ import {
 } from '../../redux/stats/stats.actions';
 
 import { config } from '../../configs';
+import { useCommonStyles } from '../common';
 
 const {
   titles: {
@@ -28,7 +29,9 @@ const {
 } = config;
 
 const StatisticPage = () => {
+  const common = useCommonStyles();
   const dispatch = useDispatch();
+
   const fetchedDoughnutStats = useRef([]);
   const fetchedBarStats = useRef([]);
 
@@ -110,7 +113,9 @@ const StatisticPage = () => {
       <Box mt={11}>
         <Grid container spacing={2} justify='space-between'>
           <Grid item>
-            <Typography variant='h3'>{mainPageTitle}</Typography>
+            <Typography variant='h1' className={common.materialTitle}>
+              {mainPageTitle}
+            </Typography>
           </Grid>
           <Grid item>
             <DateMenu onChangeDate={handleDateChange} dateValue={date} />

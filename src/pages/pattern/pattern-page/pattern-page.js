@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './pattern-page.styles';
+import { useCommonStyles } from '../../common';
 import {
   getPatterns,
   deletePattern,
@@ -26,7 +27,10 @@ const tableTitles = config.tableHeadRowTitles.patterns;
 
 const PatternPage = () => {
   const styles = useStyles();
+  const common = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
+
   const {
     list,
     loading,
@@ -95,11 +99,11 @@ const PatternPage = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <Typography variant='h1' className={styles.patternTitle}>
-        {config.titles.patternTitles.mainPageTitle}
-      </Typography>
-      <div className={styles.tableNav}>
+    <div className={common.container}>
+      <div className={common.adminHeader}>
+        <Typography variant='h1' className={common.materialTitle}>
+          {config.titles.patternTitles.mainPageTitle}
+        </Typography>
         <Button
           data-cy='add-pattern'
           component={Link}
@@ -110,13 +114,11 @@ const PatternPage = () => {
           {CREATE_PATTERN_TITLE}
         </Button>
       </div>
-      <div className={styles.tableContainer}>
-        <TableContainerGenerator
-          data-cy='patternTable'
-          tableTitles={tableTitles}
-          tableItems={patternItems}
-        />
-      </div>
+      <TableContainerGenerator
+        data-cy='patternTable'
+        tableTitles={tableTitles}
+        tableItems={patternItems}
+      />
       <div className={styles.paginationDiv}>
         <Pagination
           count={pagesCount}

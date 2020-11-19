@@ -20,6 +20,7 @@ import { config } from '../../../configs';
 import { productsTranslations } from '../../../translations/product.translations';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import { useCommonStyles } from '../../common';
 
 const {
   PRODUCT_NOT_FOUND,
@@ -143,9 +144,7 @@ const ProductsPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.tableNav}>
-        <ProductsNav />
-      </div>
+      <ProductsNav />
       {loading ? (
         <LoadingBar />
       ) : products.length ? (

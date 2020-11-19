@@ -6,6 +6,7 @@ import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
 
 import { useStyles } from './email-questions-list.styles';
+import { useCommonStyles } from '../common';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
@@ -30,6 +31,8 @@ const tableTitles = tableHeadRowTitles.emailQuestions;
 
 const EmailQuestionsList = () => {
   const styles = useStyles();
+  const common = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     list,
@@ -154,21 +157,21 @@ const EmailQuestionsList = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.tableNav}>
-        <Typography variant='h1' className={styles.title}>
+    <div className={common.container}>
+      <div className={common.adminHeader}>
+        <Typography variant='h1' className={common.materialTitle}>
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
-        <div className={styles.operations}>
-          <EmailQuestionsFilter
-            filterItems={filter}
-            changeHandler={filterChangeHandler}
-          />
-          <EmailQuestionsOperationsButtons
-            questionsToOperate={questionsToOperate}
-            setQuestionsToOperate={setQuestionsToOperate}
-          />
-        </div>
+      </div>
+      <div className={styles.operations}>
+        <EmailQuestionsFilter
+          filterItems={filter}
+          changeHandler={filterChangeHandler}
+        />
+        <EmailQuestionsOperationsButtons
+          questionsToOperate={questionsToOperate}
+          setQuestionsToOperate={setQuestionsToOperate}
+        />
       </div>
       <div className={styles.tableList}>
         {questions.length ? (
@@ -177,10 +180,12 @@ const EmailQuestionsList = () => {
             tableItems={questions}
           />
         ) : (
-          <h3 className={styles.emptyList}>{messages.EMPTY_LIST}</h3>
+          <Typography variant='h1' className={common.materialTitle}>
+            {messages.EMPTY_LIST}
+          </Typography>
         )}
       </div>
-      <div className={styles.paginationDiv}>
+      <div className={common.pagination}>
         <Pagination
           count={pagesCount}
           variant='outlined'

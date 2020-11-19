@@ -53,7 +53,7 @@ const AdminTab = (props) => {
   return (
     <>
       <div className={styles.tableNav}>
-        <div className={styles.buttonsPanel}>
+        <div className={styles.button}>
           <Button
             id='add-user-admin-button'
             data-cy='add-user-admin-button'

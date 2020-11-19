@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import { useStyles } from './header-page.styles';
+import { Button, Typography } from '@material-ui/core';
+import { useCommonStyles } from '../../common';
 import { config } from '../../../configs';
 import { getHeaders, deleteHeader } from '../../../redux/header/header.actions';
 
@@ -22,7 +22,8 @@ const pathToHeaderAddPage = routes.pathToAddHeader;
 const tableTitles = config.tableHeadRowTitles.headers;
 
 const HeaderPage = () => {
-  const styles = useStyles();
+  const common = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ Header }) => ({
     list: Header.list,
@@ -71,8 +72,11 @@ const HeaderPage = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.tableNav}>
+    <div className={common.container}>
+      <div className={common.adminHeader}>
+        <Typography variant='h1' className={common.materialTitle}>
+          {config.titles.headerPageTitles.mainPageTitle}
+        </Typography>
         <Button
           data-cy='add-header'
           component={Link}
@@ -83,13 +87,11 @@ const HeaderPage = () => {
           {CREATE_HEADER_TITLE}
         </Button>
       </div>
-      <div className={styles.tableContainer}>
-        <TableContainerGenerator
-          data-cy='headerTable'
-          tableTitles={tableTitles}
-          tableItems={headerItems}
-        />
-      </div>
+      <TableContainerGenerator
+        data-cy='headerTable'
+        tableTitles={tableTitles}
+        tableItems={headerItems}
+      />
     </div>
   );
 };
