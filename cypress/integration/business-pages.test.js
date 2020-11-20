@@ -66,10 +66,13 @@ describe('Business pages test ', () => {
     cy.get('[data-cy=page-header-ua]').type(ukHeader);
     cy.get('.ql-editor.ql-blank').type(ukText);
     cy.get('[data-cy=en]').click();
+
     cy.get('[data-cy=page-header-en]').type(enHeader);
     cy.get('.ql-editor.ql-blank').type(enText);
     cy.get('[data-cy=save-btn]').click();
+
     cy.wait(2000);
+
     cy.get('.MuiAlert-message').should('be.visible');
     cy.get('.MuiAlert-message').contains('Успішно додано!');
   });
@@ -83,7 +86,7 @@ describe('Business pages test ', () => {
     cy.get('[data-cy=page-header-en]').type(enHeader);
     cy.get('.ql-editor.ql-blank').type(enText);
     cy.get('[data-cy=save-btn]').click();
-    cy.wait(2000);
+    cy.wait(3000);
     cy.get('.MuiAlert-message').should('be.visible');
     cy.get('.MuiAlert-message').contains('400 Така сторінка вже існує!');
   });
