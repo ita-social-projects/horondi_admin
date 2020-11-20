@@ -3,14 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useStyles } from './slide-details.styles';
 import HomePageSlideForm from '../../../components/home-page-slide-form';
-import { getAvailableSlides, getSlide } from '../../../redux/home-page-slides/home-page-slides.actions';
+import {
+  getAvailableSlides,
+  getSlide
+} from '../../../redux/home-page-slides/home-page-slides.actions';
 import LoadingBar from '../../../components/loading-bar';
 
-const SlideDetails = ({ match }) =>{
+const SlideDetails = ({ match }) => {
   const { id } = match.params;
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { loading, slide,availableSlides } = useSelector(({ Slides }) => ({
+  const { loading, slide, availableSlides } = useSelector(({ Slides }) => ({
     loading: Slides.slideLoading,
     slide: Slides.slide,
     availableSlides: Slides.availableSlides
@@ -18,20 +21,23 @@ const SlideDetails = ({ match }) =>{
 
   useEffect(() => {
     dispatch(getSlide(id));
-    dispatch(getAvailableSlides())
+    dispatch(getAvailableSlides());
   }, [dispatch, id]);
 
-  const slideOrder = availableSlides.filter(slideItem=>slideItem.show).length + 1
+  const slideOrder =
+    availableSlides.filter((slideItem) => slideItem.show).length + 1;
 
   if (loading) {
     return <LoadingBar />;
   }
-  return(
+  return (
     <div className={styles.container}>
-      {slide? <HomePageSlideForm slide={slide} id={id} slideOrder={slideOrder} />: null}
+      {slide ? (
+        <HomePageSlideForm slide={slide} id={id} slideOrder={slideOrder} />
+      ) : null}
     </div>
-  )
-}
+  );
+};
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
@@ -59,4 +65,4 @@ SlideDetails.defaultProps = {
   slide: {}
 };
 
-export default SlideDetails
+export default SlideDetails;

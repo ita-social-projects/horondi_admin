@@ -24,6 +24,7 @@ const routes = {
   pathToAddContact: '/add-contact',
   pathToOrders: '/orders',
   pathToComments: '/comments',
+  pathToOrderItem: '/orders/:id',
   pathToHomePageEdit: '/home-page-edit',
   pathToEmailQuestions: '/email-questions',
   pathToEmailQuestionDetails: '/email-answer/:id',
@@ -40,6 +41,6 @@ const routes = {
   pathToHeaderDetails: '/headers/:id',
   pathToHomePageSlides: '/home-page-slides',
   pathToAddHomePageSlide: '/home-page-slides/add',
-  pathToHomePageSlideDetail: '/home-page-slides/:id',
+  pathToHomePageSlideDetail: '/home-page-slides/:id'
 };
 export default routes;

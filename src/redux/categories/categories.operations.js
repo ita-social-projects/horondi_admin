@@ -93,10 +93,13 @@ export const updateCategoryById = (data) => {
   return setItems(query, data);
 };
 
-export const deleteCategoryById = (data) => {
+export const deleteCategoryById = (deleteId, switchId) => {
   const query = `
-        mutation deleteCategory($id: ID!){
-      deleteCategory(id: $id) {
+        mutation deleteCategory($deleteId: ID!, $switchId: ID!){
+      deleteCategory(
+      deleteId: $deleteId
+      switchId: $switchId
+      ) {
         ... on Category {
           _id
           code
@@ -108,7 +111,7 @@ export const deleteCategoryById = (data) => {
       }
     }
   `;
-  return setItems(query, data);
+  return setItems(query, { deleteId, switchId });
 };
 
 export const getSubcategories = (data) => {

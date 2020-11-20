@@ -66,6 +66,10 @@ const ModelPage = () => {
 
   const changeHandler = (e, value) => dispatch(setModelsCurrentPage(value));
 
+  if (loading) {
+    return <LoadingBar />;
+  }
+
   const modelItems =
     list !== undefined
       ? list.map((modelItem, index) => (
@@ -92,10 +96,6 @@ const ModelPage = () => {
         />
       ))
       : null;
-
-  if (loading) {
-    return <LoadingBar />;
-  }
 
   return (
     <div className={styles.container}>

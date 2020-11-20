@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
-import {Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './slides-order.styles';
 import { config } from '../../../configs';
@@ -23,14 +23,19 @@ const SlidesOrder = (props) => {
   const [dragging, setDragging] = useState(false);
   const [draggable, setDraggable] = useState(false);
   const { IMG_URL } = config;
-  const {discoverMoreTitle,
-    slideOrderTitle, discoverMoreSymbol} = config.titles.homePageSliderTitle;
-  const {OPEN_SLIDE_EDIT,SAVE_SLIDE_ORDER,CANCEL_SLIDE_ORDER} = config.buttonTitles
-
   const {
-    slidesPerPage,
-  } = useSelector(({ Slides }) => ({
-    slidesPerPage: Slides.pagination.slidesPerPage,
+    discoverMoreTitle,
+    slideOrderTitle,
+    discoverMoreSymbol
+  } = config.titles.homePageSliderTitle;
+  const {
+    OPEN_SLIDE_EDIT,
+    SAVE_SLIDE_ORDER,
+    CANCEL_SLIDE_ORDER
+  } = config.buttonTitles;
+
+  const { slidesPerPage } = useSelector(({ Slides }) => ({
+    slidesPerPage: Slides.pagination.slidesPerPage
   }));
 
   const dragItem = useRef();
@@ -45,11 +50,16 @@ const SlidesOrder = (props) => {
 
   const handleDragEnter = (e, targetItem) => {
     if (dragItemNode.current !== e.target) {
-      setList(oldList => {
+      setList((oldList) => {
         const newList = JSON.parse(JSON.stringify(oldList));
-        newList[targetItem.groupIndex].items
-          .splice(targetItem.itemIndex, 0, newList[dragItem.current.groupIndex]
-            .items.splice(dragItem.current.itemIndex, 1)[0]);
+        newList[targetItem.groupIndex].items.splice(
+          targetItem.itemIndex,
+          0,
+          newList[dragItem.current.groupIndex].items.splice(
+            dragItem.current.itemIndex,
+            1
+          )[0]
+        );
         dragItem.current = targetItem;
         return newList;
       });
@@ -64,75 +74,100 @@ const SlidesOrder = (props) => {
   };
 
   const getStyles = (item) => {
-    if (dragItem.current.groupIndex === item.groupIndex && dragItem.current.itemIndex === item.itemIndex) {
+    if (
+      dragItem.current.groupIndex === item.groupIndex &&
+      dragItem.current.itemIndex === item.itemIndex
+    ) {
       return `${styles.dndItem} ${styles.current}`;
     }
     return styles.dndItem;
   };
-  const changeHandler = () =>{
-    if(draggable){
-      setDraggable(false)
-      setList(drugAndDropList)
-      return
+  const changeHandler = () => {
+    if (draggable) {
+      setDraggable(false);
+      setList(drugAndDropList);
+      return;
     }
-    setDraggable(true)
-  }
+    setDraggable(true);
+  };
 
-  const saveHandler = ()=>{
-    const available = []
-    const nonAvailable = []
-    list.forEach(el=>{
-
-      if(el.title==='available'){
-        el.items.forEach((availableSlide,index) => {
-          const {order,show,...rest} = availableSlide
-          available.push({id:availableSlide._id,slide:{order:+index+1, show:true, ...rest}})
+  const saveHandler = () => {
+    const available = [];
+    const nonAvailable = [];
+    list.forEach((el) => {
+      if (el.title === 'available') {
+        el.items.forEach((availableSlide, index) => {
+          const { order, show, ...rest } = availableSlide;
+          available.push({
+            id: availableSlide._id,
+            slide: { order: +index + 1, show: true, ...rest }
+          });
         });
       }
-      if(el.title==='nonAvailable'){
+      if (el.title === 'nonAvailable') {
         el.items.forEach((nonAvailableSlide) => {
-          const {order,show,...rest} = nonAvailableSlide
-          nonAvailable.push({id:nonAvailableSlide._id,slide:{order:0, show:false, ...rest}})
+          const { order, show, ...rest } = nonAvailableSlide;
+          nonAvailable.push({
+            id: nonAvailableSlide._id,
+            slide: { order: 0, show: false, ...rest }
+          });
         });
       }
     });
-    const newSlideItems = [...available, ...nonAvailable]
-    newSlideItems.forEach(item=>dispatch(updateSlidesOrder({id:item.id, slide:{order:item.slide.order, show:item.slide.show}})))
-    const arrayToStore = newSlideItems.map(el=>el.slide)
-    arrayToStore.length = slidesPerPage
-    dispatch(setSlides(arrayToStore))
-    setDraggable(false)
-  }
+    const newSlideItems = [...available, ...nonAvailable];
+    newSlideItems.forEach((item) =>
+      dispatch(
+        updateSlidesOrder({
+          id: item.id,
+          slide: { order: item.slide.order, show: item.slide.show }
+        })
+      )
+    );
+    const arrayToStore = newSlideItems.map((el) => el.slide);
+    arrayToStore.length = slidesPerPage;
+    dispatch(setSlides(arrayToStore));
+    setDraggable(false);
+  };
   const drugAndDropContainer = drugAndDropList.length
     ? list.map((group, groupIndex) => (
-      <Card key={group.title}
+      <Card
+        key={group.title}
         elevation={2}
-        onDragEnter={dragging && !group.items.length ? (e) => handleDragEnter(e, { groupIndex, itemIndex: 0 }) : null}
+        onDragEnter={
+          dragging && !group.items.length
+            ? (e) => handleDragEnter(e, { groupIndex, itemIndex: 0 })
+            : null
+        }
         className={styles.dndGroup}
       >
         <Typography variant='h1' className={styles.slideTitle}>
-          {
-            group.title ==='available'
-              ? slidesTranslations.available
-              : slidesTranslations.nonAvailable
-          }
+          {group.title === 'available'
+            ? slidesTranslations.available
+            : slidesTranslations.nonAvailable}
         </Typography>
         {group.items.map((item, itemIndex) => (
           <Paper
             draggable={draggable}
             elevation={5}
-            onDragStart={(e) => handlerDragStart(e, { groupIndex, itemIndex })}
-            onDragEnter={dragging ? (e) => {
-              handleDragEnter(e, { groupIndex, itemIndex });
-            } : null}
-            className={dragging ? getStyles({ groupIndex, itemIndex }) : styles.dndItem}
+            onDragStart={(e) =>
+              handlerDragStart(e, { groupIndex, itemIndex })
+            }
+            onDragEnter={
+              dragging
+                ? (e) => {
+                  handleDragEnter(e, { groupIndex, itemIndex });
+                }
+                : null
+            }
+            className={
+              dragging ? getStyles({ groupIndex, itemIndex }) : styles.dndItem
+            }
             key={item._id}
           >
-            <Avatar variant='square'
+            <Avatar
+              variant='square'
               className={styles.square}
-              src={
-                `${IMG_URL}${item.images.small}`
-              }
+              src={`${IMG_URL}${item.images.small}`}
               color='primary'
             >
               <ImageIcon />
@@ -142,8 +177,11 @@ const SlidesOrder = (props) => {
                 <h3>{item.title[0].value}</h3>
                 <p>{item.description[0].value}</p>
               </div>
-              <p className={styles.discoverMore}> {discoverMoreTitle}
-                <span>{discoverMoreSymbol}</span></p>
+              <p className={styles.discoverMore}>
+                {' '}
+                {discoverMoreTitle}
+                <span>{discoverMoreSymbol}</span>
+              </p>
             </div>
           </Paper>
         ))}
@@ -162,7 +200,7 @@ const SlidesOrder = (props) => {
               className={styles.saveButton}
               color='secondary'
               data-cy='save'
-              title={draggable ? CANCEL_SLIDE_ORDER  : OPEN_SLIDE_EDIT}
+              title={draggable ? CANCEL_SLIDE_ORDER : OPEN_SLIDE_EDIT}
               onClickHandler={changeHandler}
               type='button'
             />
@@ -175,13 +213,10 @@ const SlidesOrder = (props) => {
               type='button'
             />
           </div>
-          <div className={styles.dndContainer}>
-            {drugAndDropContainer}
-          </div>
+          <div className={styles.dndContainer}>{drugAndDropContainer}</div>
         </div>
       </div>
     </Paper>
-
   );
 };
 

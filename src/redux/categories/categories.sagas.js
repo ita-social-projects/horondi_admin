@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import {
   GET_CATEGORIES,
@@ -22,6 +22,18 @@ import {
   deleteCategoryById,
   getSubcategories
 } from './categories.operations';
+import {
+  setSnackBarMessage,
+  setSnackBarSeverity,
+  setSnackBarStatus
+} from '../snackbar/snackbar.actions';
+import { config } from '../../configs';
+
+const {
+  SUCCESS_DELETE_STATUS,
+  SUCCESS_UPDATE_STATUS,
+  SUCCESS_CREATION_STATUS
+} = config.statuses;
 
 function* handleCategoriesLoad() {
   try {
@@ -49,6 +61,7 @@ function* handleCreateCategory({ payload }) {
     yield put(setCategoriesLoading(true));
     yield call(createCategory, payload);
     yield put(push('/categories'));
+    yield call(handleSnackBarSuccess, SUCCESS_CREATION_STATUS);
   } catch (e) {
     yield setCategoriesError(e);
   }
@@ -60,20 +73,24 @@ function* handleEditCategory({ payload }) {
     yield call(updateCategoryById, payload);
     yield put(setCategoriesLoading(false));
     yield put(push('/categories'));
+    yield call(handleSnackBarSuccess, SUCCESS_UPDATE_STATUS);
   } catch (e) {
     yield setCategoriesError(e);
   }
 }
 
-function* handleDeleteCategory({ payload }) {
+function* handleDeleteCategory() {
   try {
     yield put(setCategoriesLoading(true));
-    yield call(deleteCategoryById, payload);
-    // FETCH AGAIN
+    const { switchId, deleteId } = yield select(({ Categories }) => ({
+      switchId: Categories.switchId,
+      deleteId: Categories.deleteId
+    }));
+    yield call(deleteCategoryById, deleteId, switchId);
     const categories = yield call(getAllCategories);
     yield put(setCategories(categories.data.getAllCategories));
-
     yield put(setCategoriesLoading(false));
+    yield call(handleSnackBarSuccess, SUCCESS_DELETE_STATUS);
   } catch (e) {
     yield setCategoriesError(e);
   }
@@ -87,6 +104,12 @@ function* handleSubcategoriesLoad({ payload }) {
   } catch (e) {
     yield setCategoriesError(e);
   }
+}
+
+function* handleSnackBarSuccess(status) {
+  yield put(setSnackBarSeverity('success'));
+  yield put(setSnackBarMessage(status));
+  yield put(setSnackBarStatus(true));
 }
 
 export default function* newsSaga() {

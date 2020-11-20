@@ -13,7 +13,4 @@ export const useStyles = makeStyles((theme) => ({
     width:'100%',
     textTransform:'capitalize',
   },
-  menuItems:{
-    textTransform:'capitalize',
-  }
 }));

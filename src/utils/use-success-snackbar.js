@@ -9,8 +9,9 @@ const useSuccessSnackbar = () => {
     dialogTitle,
     dialogContent,
     buttonTitle,
+    showIcon,
     showCancelButton = true,
-    buttonStyle = 'standart'
+    buttonStyle = 'standart',
   ) => {
     dispatch(
       showDialog({
@@ -19,8 +20,9 @@ const useSuccessSnackbar = () => {
         dialogContent,
         buttonTitle,
         onClickHandler,
+        showIcon,
         showCancelButton,
-        buttonStyle
+        buttonStyle,
       })
     );
   };

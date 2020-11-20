@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { useStyles } from './products-nav-filters.styles';
 
 import {

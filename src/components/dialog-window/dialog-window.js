@@ -21,6 +21,7 @@ const DialogWindow = () => {
     dialogTitle,
     dialogContent,
     buttonTitle,
+    showIcon,
     showCancelButton,
     onClickHandler
   } = useSelector(({ DialogWindow: dialogWindow }) => ({
@@ -28,6 +29,7 @@ const DialogWindow = () => {
     dialogTitle: dialogWindow.dialogTitle,
     dialogContent: dialogWindow.dialogContent,
     buttonTitle: dialogWindow.buttonTitle,
+    showIcon: dialogWindow.showIcon,
     showCancelButton: dialogWindow.showCancelButton,
     onClickHandler: dialogWindow.onClickHandler
   }));
@@ -49,16 +51,22 @@ const DialogWindow = () => {
         {showCancelButton ? (
           <>
             <StandardButton
+              data-cy='dialog-cancel'
               variant='outlined'
               title={CANCEL_TITLE}
               onClickHandler={handleClose}
             />
-            <DeleteButton onClickHandler={onClickHandler}>
+            <DeleteButton
+              data-cy='dialog-confirm'
+              onClickHandler={onClickHandler}
+              showIcon={showIcon}
+            >
               {buttonTitle}
             </DeleteButton>
           </>
         ) : (
           <StandardButton
+            data-cy='dialog-confirm'
             variant='contained'
             title={buttonTitle}
             onClickHandler={onClickHandler}

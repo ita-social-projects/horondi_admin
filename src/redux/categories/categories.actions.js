@@ -9,7 +9,10 @@ import {
   SET_CATEGORY,
   RESET_NEW_CATEGORY,
   EDIT_CATEGORY,
-  GET_SUBCATEGORIES
+  GET_SUBCATEGORIES,
+  TOGGLE_CATEGORY_DELETE_DIALOG,
+  SET_CATEGORY_DELETE_ID,
+  SET_CATEGORY_SWITCH_ID
 } from './categories.types';
 
 export const getCategories = () => ({
@@ -55,11 +58,23 @@ export const editCategory = (payload) => ({
   payload
 });
 
-export const deleteCategory = (payload) => ({
-  type: DELETE_CATEGORY,
-  payload
+export const deleteCategory = () => ({
+  type: DELETE_CATEGORY
 });
 export const getSubcategories = (payload) => ({
   type: GET_SUBCATEGORIES,
+  payload
+});
+export const toggleCategoryDeleteDialog = () => ({
+  type: TOGGLE_CATEGORY_DELETE_DIALOG
+});
+
+export const setCategoryDeleteId = (payload) => ({
+  type: SET_CATEGORY_DELETE_ID,
+  payload
+});
+
+export const setCategorySwitchId = (payload) => ({
+  type: SET_CATEGORY_SWITCH_ID,
   payload
 });
