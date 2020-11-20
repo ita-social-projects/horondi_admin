@@ -88,6 +88,20 @@ describe('Business pages test ', () => {
     cy.get('.MuiAlert-message').contains('400 Така сторінка вже існує!');
   });
 
+  it('should edit page', () => {
+    cy.get('[data-cy=edit-btn]').last().click();
+    cy.get('[data-cy=page-code]').type('sd');
+    cy.get('[data-cy=page-header-ua]').type('ds');
+    cy.get('.ql-editor').type('ddsa');
+    cy.get('[data-cy=en]').click();
+    cy.get('[data-cy=page-header-en]').type('dads');
+    cy.get('.ql-editor').type('dsadsa');
+    cy.get('[data-cy=save-btn]').click();
+    cy.wait(2000);
+    cy.get('.MuiAlert-message').should('be.visible');
+    cy.get('.MuiAlert-message').contains('Успішно змінено!');
+  });
+
   it('should delete page', () => {
     cy.get('[data-cy=delete-btn]').last().click();
     cy.get('[data-cy=dialog-confirm]').last().click();
