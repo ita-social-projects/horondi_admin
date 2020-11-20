@@ -32,7 +32,9 @@ const TableContainerRow = ({
   const properties = { ...rest };
 
   const tableCells = Object.keys(properties).map((property) => (
-    <TableCell key={property} data-cy='table-cell'>{properties[property]}</TableCell>
+    <TableCell key={property} data-cy='table-cell'>
+      {properties[property]}
+    </TableCell>
   ));
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
@@ -59,7 +61,11 @@ const TableContainerRow = ({
       {tableCells}
       <TableCell>
         {showEdit && (
-          <CustomizedEditIcon size={iconSize} onClickHandler={editHandler} data-cy='edit-btn' />
+          <CustomizedEditIcon
+            size={iconSize}
+            onClickHandler={editHandler}
+            data-cy='edit-btn'
+          />
         )}
         {showDelete && (
           <CustomizedDeleteIcon

@@ -123,7 +123,9 @@ const BusinessPageForm = ({ id, editMode }) => {
     formik.values.enTitle = enTitle;
   }, [code, ukTitle, enTitle]);
 
-  const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} data-cy={lang} />);
+  const languageTabs = languages.map((lang) => (
+    <Tab label={lang} key={lang} data-cy={lang} />
+  ));
 
   if (loading) {
     return <LoadingBar />;
@@ -242,7 +244,6 @@ const BusinessPageForm = ({ id, editMode }) => {
             id='save'
             type='submit'
             title='Зберегти'
-            data-cy='page-header-en'
             data-cy='save-btn'
           />
         </div>
