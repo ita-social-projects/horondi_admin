@@ -84,6 +84,7 @@ const BusinessPageList = () => {
           to={pathToAddBusinessPage}
           variant='contained'
           color='primary'
+          data-cy='add-business-page'
         >
           {CREATE_BUSINESS_PAGE}
         </Button>

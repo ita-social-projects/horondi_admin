@@ -88,7 +88,7 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
   ];
 
   return (
-    <div>
+    <div data-cy='editor'>
       <div id='toolbar'>
         <select
           className='ql-header'
