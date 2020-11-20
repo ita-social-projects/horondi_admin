@@ -13,7 +13,7 @@ import { formatPhoneNumber } from '../../utils/format-phone-number';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import { useStyles } from './contacts-page.style';
+
 import { useCommonStyles } from '../common';
 import { config } from '../../configs';
 
@@ -30,7 +30,6 @@ const pathToAddContactPage = config.routes.pathToAddContact;
 const tableTitles = config.tableHeadRowTitles.contacts;
 
 const ContactsPage = () => {
-  const styles = useStyles();
   const common = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
