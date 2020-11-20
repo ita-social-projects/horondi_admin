@@ -8,7 +8,6 @@
 
 # testing
 /coverage
-cypress.json
 
 # production
 /build
