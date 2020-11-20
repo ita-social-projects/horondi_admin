@@ -16,7 +16,7 @@ const ImageUploadContainer = ({
       <label htmlFor='upload-photo'>
         <input
           style={{ display: 'none' }}
-          accept='image/*'
+          accept='video/*,image/*'
           id='upload-photo'
           name='upload-photo'
           type='file'
