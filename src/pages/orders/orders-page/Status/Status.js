@@ -6,7 +6,8 @@ const Status = ({ status }) => {
   const styles = useStyles();
   let color;
   switch (status) {
-  case 'CANCELLED' || 'REFUNDED': {
+  case 'CANCELLED':
+  case 'REFUNDED': {
     color = styles.redStatus;
     break;
   }
