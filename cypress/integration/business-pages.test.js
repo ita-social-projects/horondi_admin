@@ -3,16 +3,16 @@ import { config } from '../../src/configs';
 
 describe('Business pages test ', () => {
   let pageCode;
-  let ukHeader;
+  let uaHeader;
   let enHeader;
-  let ukText;
+  let uaText;
   let enText;
 
   before(() => {
     pageCode = 'page';
-    ukHeader = 'Сторінка';
+    uaHeader = 'Сторінка';
     enHeader = 'Page';
-    ukText = 'деякий текст';
+    uaText = 'деякий текст';
     enText = 'some text';
   });
 
@@ -63,8 +63,8 @@ describe('Business pages test ', () => {
   it('should create business page', () => {
     cy.get('[data-cy=add-business-page]').click();
     cy.get('[data-cy=page-code]').type(pageCode);
-    cy.get('[data-cy=page-header-ua]').type(ukHeader);
-    cy.get('.ql-editor.ql-blank').type(ukText);
+    cy.get('[data-cy=page-header-ua]').type(uaHeader);
+    cy.get('.ql-editor.ql-blank').type(uaText);
     cy.get('[data-cy=en]').click();
     cy.get('[data-cy=page-header-en]').type(enHeader);
     cy.get('.ql-editor.ql-blank').type(enText);
@@ -77,8 +77,8 @@ describe('Business pages test ', () => {
   it('should throw error when page with code already exist', () => {
     cy.get('[data-cy=add-business-page]').click();
     cy.get('[data-cy=page-code]').type(pageCode);
-    cy.get('.ql-editor.ql-blank').type(ukText);
-    cy.get('[data-cy=page-header-ua]').type(ukHeader);
+    cy.get('.ql-editor.ql-blank').type(uaText);
+    cy.get('[data-cy=page-header-ua]').type(uaHeader);
     cy.get('[data-cy=en]').click();
     cy.get('.ql-editor.ql-blank').type(enText);
     cy.get('[data-cy=page-header-en]').type(enHeader);
