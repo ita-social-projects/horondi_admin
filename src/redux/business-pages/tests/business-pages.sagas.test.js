@@ -71,8 +71,12 @@ describe('business pages sagas test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         expect(analysis).toHaveLength(4);
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter(
+          (element) => element.type === 'PUT'
+        );
+        const analysisCall = analysis.filter(
+          (element) => element.type === 'CALL'
+        );
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
         expect(analysisPut[0]).toEqual(
