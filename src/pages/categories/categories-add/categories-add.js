@@ -230,6 +230,10 @@ const CategoriesAdd = ({ id, editMode }) => {
       setNewName(nameModel);
     }
   };
+  const changeInput = (e) => {
+    const inputValue = e.target.value;
+    console.log(inputValue);
+  };
 
   const handleNameChange = (e) => {
     const inputName = e.target.name;
@@ -346,8 +350,8 @@ const CategoriesAdd = ({ id, editMode }) => {
                       onChange={handleChange}
                     />
                   }
-                  label='Основна категорія' */}
-                {/* />
+                  label='Основна категорія' 
+                 /> 
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -361,7 +365,8 @@ const CategoriesAdd = ({ id, editMode }) => {
                       ? categoryTranslations.CATEGORY_IS_AVAILABLE
                       : categoryTranslations.SUBCATEGORY_IS_AVAILABLE
                   }
-                /> */}
+                />  */}
+                чекбокси чи головна категорія доступна
               </Paper>
               <Paper className={classes.addFields}>
                 <Tabs
@@ -374,8 +379,8 @@ const CategoriesAdd = ({ id, editMode }) => {
                 >
                   <Tab label='Назва' />
                   <Tab label='Зображення' />
-                  {/* {/* {!isMain && <Tab label='Батьківська категорія' />} */}
-                  {isMain && editMode && <Tab label='Підкатегорії' />}
+                  {/* {/* {!isMain && <Tab label='Батьківська категорія' />} 
+                  {isMain && editMode && <Tab label='Підкатегорії' />} */}
                 </Tabs>
                 <TabPanel value={tabValue} index={0}>
                   <div>
@@ -411,14 +416,17 @@ const CategoriesAdd = ({ id, editMode }) => {
                           <TextField
                             label='Назва(En)'
                             variant='outlined'
-                            name='value'
                             // error={!nameIsValid && shouldValidate}
                             // helperText={
                             //   !nameIsValid && shouldValidate
                             //     ? "Ім'я повинно містити 2 значення(Ukr & En)"
                             //     : ''
                             // }
-                            value={newName.value}
+                            // name='value'
+                            // value={newName.value}
+
+                            name='lang'
+                            value={newName.lang}
                             className={classes.addNameInput}
                             onChange={handleNameChange}
                             fullWidth
@@ -426,7 +434,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                         </>
                       ) : null}
                       <div className={classes.addNameBtnGroup}>
-                        {/* <Button
+                        {/* <Button             
                           variant='contained'
                           color='primary'
                           className={classes.addNameBtn}
@@ -434,7 +442,8 @@ const CategoriesAdd = ({ id, editMode }) => {
                           fullWidth
                         >
                           {config.buttonTitles.ADD_CATEGORY_NAME}
-                        </Button> */}
+                        </Button>  */}
+                        Кнопка яка додає назву в старому функціоналі
                         {showAddNameForm ? (
                           <>
                             <div className={classes.divider} />
@@ -442,7 +451,18 @@ const CategoriesAdd = ({ id, editMode }) => {
                               variant='contained'
                               color='primary'
                               className={classes.addNameBtn}
-                              onClick={hideAddNameForm}
+                              // onClick={hideAddNameForm}
+                              onClick={changeInput}
+                              по
+                              кліку
+                              пропадає
+                              форма
+                              а
+                              треба
+                              зробити
+                              щоб
+                              очищався
+                              інпут
                               fullWidth
                             >
                               {config.buttonTitles.CANCEL}
@@ -487,15 +507,15 @@ const CategoriesAdd = ({ id, editMode }) => {
                     </div>
                   </div>
                 </TabPanel>
-                {!isMain && (
+                {/* {!isMain && (
                   <TabPanel value={tabValue} index={2}>
                     <div>
                       <div className={classes.addImageForm}>
                         <FormControl
                           variant='outlined'
                           className={classes.imageSelect}
-                        >
-                          {/* <Select
+                        > */}
+                {/* <Select
                             native
                             fullWidth
                             value={!parentId ? '' : parentId}
@@ -510,11 +530,11 @@ const CategoriesAdd = ({ id, editMode }) => {
                               </option>
                             ))}
                           </Select> */}
-                        </FormControl>
+                {/* </FormControl>
                       </div>
                     </div>
                   </TabPanel>
-                )}
+                )} */}
                 {/* {isMain && editMode && (
                   <TabPanel value={tabValue} index={2}>
                     <div>
@@ -533,7 +553,8 @@ const CategoriesAdd = ({ id, editMode }) => {
           variant='contained'
           color='primary'
           className={classes.saveBtn}
-          onClick={editMode ? handleCategoryEdit : handleCategorySave}
+          // onClick={editMode ? handleCategoryEdit : handleCategorySave}
+          onClick={handleCategorySave}
         >
           {config.buttonTitles.titleGenerator(editMode, !isMain)}
         </Button>
