@@ -10,7 +10,8 @@ const titles = {
     mainPageTitle: 'Інформація про продукти'
   },
   categoryPageTitles: {
-    mainPageTitle: 'Інформація про категорії'
+    mainPageTitle: 'Інформація про категорії',
+    createPageTitle: 'Додати нову категорію'
   },
   contactsPageTitles: {
     mainPageTitle: 'Інформація про контакти'
@@ -33,7 +34,8 @@ const titles = {
     mainPageTitle: 'Інформація про моделі'
   },
   headerPageTitles: {
-    mainPageTitle: 'Інформація про посилання'
+    mainPageTitle: 'Інформація про посилання',
+    createPageTitle: 'Створити посилання'
   },
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
@@ -43,7 +45,8 @@ const titles = {
     createColorTitle: 'Створити колір'
   },
   businessPageTitles: {
-    mainPageTitle: 'Інформація про бізнес сторінки'
+    mainPageTitle: 'Інформація про бізнес сторінки',
+    addBusinessPageTitle: 'Додати нову бізнес сторінку'
   },
   materialColorPaletteTitle: {
     mainPageTitle: 'Iнформація про палітру кольорів'

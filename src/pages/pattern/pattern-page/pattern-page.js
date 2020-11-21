@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './pattern-page.styles';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 import {
   getPatterns,
   deletePattern,

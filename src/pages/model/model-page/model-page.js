@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './model-page.styles';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 import { config } from '../../../configs';
 import {
   getModels,
@@ -29,7 +29,7 @@ const tableTitles = config.tableHeadRowTitles.models;
 
 const ModelPage = () => {
   const styles = useStyles();
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, pagesCount, currentPage, modelsPerPage } = useSelector(
@@ -101,9 +101,9 @@ const ModelPage = () => {
       : null;
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.modelPageTitles.mainPageTitle}
         </Typography>
         <Button

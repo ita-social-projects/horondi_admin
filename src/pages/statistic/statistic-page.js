@@ -19,7 +19,7 @@ import {
 } from '../../redux/stats/stats.actions';
 
 import { config } from '../../configs';
-import { useCommonStyles } from '../common';
+import { useCommonStyles } from '../common.styles';
 
 const {
   titles: {

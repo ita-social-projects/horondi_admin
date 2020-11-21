@@ -14,7 +14,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import TableContainerRow from '../../containers/table-container-row';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 
-import { useCommonStyles } from '../common';
+import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 
 import {
@@ -30,7 +30,7 @@ const pathToAddContactPage = config.routes.pathToAddContact;
 const tableTitles = config.tableHeadRowTitles.contacts;
 
 const ContactsPage = () => {
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -103,9 +103,9 @@ const ContactsPage = () => {
   }
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.contactsPageTitles.mainPageTitle}
         </Typography>
         <Button
@@ -123,7 +123,7 @@ const ContactsPage = () => {
         tableTitles={tableTitles}
         tableItems={contactItems}
       />
-      <div className={common.pagination}>
+      <div className={commonStyles.pagination}>
         <Pagination
           count={contactPagesCount}
           variant='outlined'

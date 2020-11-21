@@ -7,7 +7,7 @@ import ProductsNavClearFilters from './products-nav-clear-filters/products-nav-c
 
 import { productsTranslations } from '../../../../translations/product.translations';
 import routes from '../../../../configs/routes';
-import { useCommonStyles } from '../../../common';
+import { useCommonStyles } from '../../../common.styles';
 import { config } from '../../../../configs';
 
 const { ADD_PRODUCT } = productsTranslations;

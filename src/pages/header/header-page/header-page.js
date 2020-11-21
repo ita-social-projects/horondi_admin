@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 import { config } from '../../../configs';
 import { getHeaders, deleteHeader } from '../../../redux/header/header.actions';
 
@@ -22,7 +22,7 @@ const pathToHeaderAddPage = routes.pathToAddHeader;
 const tableTitles = config.tableHeadRowTitles.headers;
 
 const HeaderPage = () => {
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ Header }) => ({
@@ -72,9 +72,9 @@ const HeaderPage = () => {
   }
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.headerPageTitles.mainPageTitle}
         </Typography>
         <Button

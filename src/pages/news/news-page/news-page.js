@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './news-page.styles';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 import { config } from '../../../configs';
 import {
   getNews,
@@ -27,7 +27,7 @@ const tableTitles = config.tableHeadRowTitles.news;
 
 const NewsPage = () => {
   const styles = useStyles();
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, pagesCount, currentPage, newsPerPage } = useSelector(
@@ -91,9 +91,9 @@ const NewsPage = () => {
   }
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.newsPageTitles.mainPageTitle}
         </Typography>
         <Button

@@ -6,7 +6,7 @@ import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
 
 import { useStyles } from './email-questions-list.styles';
-import { useCommonStyles } from '../common';
+import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
@@ -31,7 +31,7 @@ const tableTitles = tableHeadRowTitles.emailQuestions;
 
 const EmailQuestionsList = () => {
   const styles = useStyles();
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
@@ -157,9 +157,9 @@ const EmailQuestionsList = () => {
   }
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
       </div>
@@ -180,12 +180,12 @@ const EmailQuestionsList = () => {
             tableItems={questions}
           />
         ) : (
-          <Typography variant='h1' className={common.materialTitle}>
+          <Typography variant='h1' className={commonStyles.materialTitle}>
             {messages.EMPTY_LIST}
           </Typography>
         )}
       </div>
-      <div className={common.pagination}>
+      <div className={commonStyles.pagination}>
         <Pagination
           count={pagesCount}
           variant='outlined'

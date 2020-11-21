@@ -18,7 +18,7 @@ import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 import { materialTranslations } from '../../../translations/material.translations';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { REMOVE_MATERIAL_TITLE, CREATE_MATERIAL_TITLE } = config.buttonTitles;
@@ -28,7 +28,7 @@ const tableTitles = config.tableHeadRowTitles.materials;
 
 const MaterialPage = () => {
   const styles = useStyles();
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
@@ -104,9 +104,9 @@ const MaterialPage = () => {
   }
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.materialTitles.mainPageTitle}
         </Typography>
         <Button

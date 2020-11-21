@@ -4,7 +4,7 @@ import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
-import { useCommonStyles } from '../common';
+import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllBusinessPages,
@@ -27,7 +27,7 @@ const { pathToAddBusinessPage } = config.routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
 
 const BusinessPageList = () => {
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ BusinessPages }) => ({
@@ -77,9 +77,9 @@ const BusinessPageList = () => {
   }
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.businessPageTitles.mainPageTitle}
         </Typography>
         <Button
@@ -92,13 +92,11 @@ const BusinessPageList = () => {
           {CREATE_BUSINESS_PAGE}
         </Button>
       </div>
-      <div>
-        <TableContainerGenerator
-          id='businessPageTable'
-          tableTitles={tableTitles}
-          tableItems={pages}
-        />
-      </div>
+      <TableContainerGenerator
+        id='businessPageTable'
+        tableTitles={tableTitles}
+        tableItems={pages}
+      />
     </div>
   );
 };

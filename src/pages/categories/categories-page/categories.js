@@ -11,7 +11,7 @@ import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
 import StandardButton from '../../../components/buttons/standard-button';
 
@@ -19,7 +19,7 @@ const Categories = () => {
   const { IMG_URL } = config;
   const { ADD_CATEGORY } = config.buttonTitles;
 
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
   const { categories, categoriesLoading } = useSelector(({ Categories }) => ({
@@ -74,9 +74,9 @@ const Categories = () => {
     : null;
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.categoryPageTitles.mainPageTitle}
         </Typography>
         <StandardButton

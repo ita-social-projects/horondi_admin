@@ -19,7 +19,7 @@ import { config } from '../../../configs';
 import { productsTranslations } from '../../../translations/product.translations';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 
 const {
   PRODUCT_NOT_FOUND,

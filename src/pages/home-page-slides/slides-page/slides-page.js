@@ -19,7 +19,7 @@ import { slidesTranslations } from '../../../translations/home-page-slides.trans
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import SlidesOrder from '../slides-order';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 
 const { REMOVE_SLIDE_MESSAGE } = config.messages;
 const { DELETE_SLIDE_TITLE, CREATE_SLIDE_TITLE } = config.buttonTitles;
@@ -29,7 +29,7 @@ const { pathToAddHomePageSlide } = config.routes;
 
 const SlidesPage = () => {
   const styles = useStyles();
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const dispatch = useDispatch();
 
@@ -102,9 +102,9 @@ const SlidesPage = () => {
   }
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {mainPageTitle}
         </Typography>
         <Button
@@ -124,7 +124,7 @@ const SlidesPage = () => {
           tableItems={slidesItems}
         />
       </div>
-      <div className={common.pagination}>
+      <div className={commonStyles.pagination}>
         <Pagination
           className={styles.pagination}
           count={pagesCount}

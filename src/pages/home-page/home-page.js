@@ -14,14 +14,14 @@ import {
   updateHomePageData
 } from '../../redux/home/home.actions';
 import { useStyles } from './home-page.styles';
-import { useCommonStyles } from '../common';
+import { useCommonStyles } from '../common.styles';
 
 const { homePageTitles } = titles;
 const { IMG_URL } = config;
 
 const HomePage = () => {
   const styles = useStyles();
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const dispatch = useDispatch();
 
@@ -109,9 +109,9 @@ const HomePage = () => {
   }
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {homePageTitles.mainPageTitle}
         </Typography>
       </div>

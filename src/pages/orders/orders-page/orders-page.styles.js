@@ -10,7 +10,6 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '20%',
     fontSize: 16
   }
 }));

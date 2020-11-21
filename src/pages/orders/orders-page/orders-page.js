@@ -6,7 +6,7 @@ import { push } from 'connected-react-router';
 import Typography from '@material-ui/core/Typography';
 
 import { useStyles } from './orders-page.styles';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 import { getOrderList } from '../../../redux/orders/orders.actions';
 import Status from './Status/Status';
 import LoadingBar from '../../../components/loading-bar';
@@ -18,7 +18,7 @@ import { config } from '../../../configs';
 
 const OrdersPage = () => {
   const styles = useStyles();
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
   const [status, setStatus] = useState('All');
@@ -77,9 +77,9 @@ const OrdersPage = () => {
     ));
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.orderTitles.mainPageTitle}
         </Typography>
         <div className={styles.filterBy}>
@@ -92,20 +92,21 @@ const OrdersPage = () => {
       <div className={styles.orderCount}>
         {count} {config.titles.orderTitles.orders}
       </div>
-
-      {orderLoading ? (
-        <LoadingBar />
-      ) : orders && orders.length ? (
-        <TableContainerGenerator
-          pagination
-          tableTitles={config.tableHeadRowTitles.orders}
-          tableItems={orderItems}
-        />
-      ) : (
-        <Typography variant='h1' className={styles.ordersDisabledTitle}>
-          {config.titles.orderTitles.ORDER_NOT_FOUND}
-        </Typography>
-      )}
+      <div className={commonStyles.table}>
+        {orderLoading ? (
+          <LoadingBar />
+        ) : orders && orders.length ? (
+          <TableContainerGenerator
+            pagination
+            tableTitles={config.tableHeadRowTitles.orders}
+            tableItems={orderItems}
+          />
+        ) : (
+          <Typography variant='h1' className={commonStyles.materialTitle}>
+            {config.titles.orderTitles.ORDER_NOT_FOUND}
+          </Typography>
+        )}
+      </div>
     </div>
   );
 };

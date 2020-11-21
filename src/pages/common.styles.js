@@ -6,7 +6,7 @@ export const useCommonStyles = makeStyles((theme) => ({
     marginTop: 65,
     position: 'static',
     padding: 20,
-    textAlign: 'center'
+    textAlign: 'left'
   },
   adminHeader: {
     display: 'flex',
@@ -43,5 +43,11 @@ export const useCommonStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: '30px'
+  },
+  table: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column'
   }
 }));

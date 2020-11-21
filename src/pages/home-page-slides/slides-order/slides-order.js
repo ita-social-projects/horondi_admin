@@ -14,11 +14,11 @@ import {
   setSlides,
   updateSlidesOrder
 } from '../../../redux/home-page-slides/home-page-slides.actions';
-import { useCommonStyles } from '../../common';
+import { useCommonStyles } from '../../common.styles';
 
 const SlidesOrder = (props) => {
   const styles = useStyles();
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
 
   const dispatch = useDispatch();
 
@@ -194,9 +194,9 @@ const SlidesOrder = (props) => {
     : null;
   return (
     <Paper elevation={3}>
-      <div className={common.container}>
-        <div className={common.adminHeader}>
-          <Typography variant='h1' className={common.materialTitle}>
+      <div className={commonStyles.container}>
+        <div className={commonStyles.adminHeader}>
+          <Typography variant='h1' className={commonStyles.materialTitle}>
             {slideOrderTitle}
           </Typography>
           <div>

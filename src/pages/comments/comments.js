@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
-import { useCommonStyles } from '../common';
+import { useCommonStyles } from '../common.styles';
 import {
   getRecentComments,
   setCommentsCurrentPage,
@@ -27,7 +27,9 @@ const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 const { RECENT_COMMENTS } = commentsTranslations;
 
 const Comments = ({ productId }) => {
-  const common = useCommonStyles();
+  const commonStyles = useCommonStyles();
+  const dispatch = useDispatch();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     loading,
@@ -42,7 +44,6 @@ const Comments = ({ productId }) => {
     currentPage: Comments.pagination.currentPage,
     commentsPerPage: Comments.pagination.commentsPerPage
   }));
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
@@ -104,9 +105,9 @@ const Comments = ({ productId }) => {
       : null;
 
   return (
-    <div className={common.container}>
-      <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {RECENT_COMMENTS}
         </Typography>
       </div>
@@ -115,7 +116,7 @@ const Comments = ({ productId }) => {
         tableTitles={userComments ? tableHeaders : [NO_COMMENTS_MESSAGE]}
         tableItems={userComments}
       />
-      <div className={common.pagination}>
+      <div className={commonStyles.pagination}>
         <Pagination
           count={pagesCount}
           variant='outlined'
