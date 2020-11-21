@@ -1,6 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call, put } from 'redux-saga/effects';
-import { LOGIN_USER ,
+import {
+  LOGIN_USER,
   SET_AUTH,
   SET_AUTH_LOADING,
   SET_ADMIN_ID,
@@ -49,26 +50,26 @@ describe('auth sagas tests', () => {
 
   it('shouls check admin by token', () => {
     expectSaga(handleAdminCheckByToken, CHECK_USER_BY_TOKEN)
-      .provide([[call(getUserByToken, { token }), { email, userId }]])
+      .provide([[call(getUserByToken, { token }), { userId, email }]])
       .put(setAuthLoading(true))
       .put(setAdminId(userId))
       .put(setAuth(true))
       .put(setAuthLoading(false))
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
+      .then((res) => {
+        const { allEffects: analysis } = res;
         expect(analysis).toHaveLength(5);
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((el) => el.type === 'PUT');
+        const analysisCall = analysis.filter((el) => el.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
         expect(analysisPut[0]).toEqual(
           put({ type: SET_AUTH_LOADING, payload: true })
         );
         expect(analysisPut[1]).toEqual(
-          put({ type: SET_ADMIN_ID, payload: userId })
+          put({ payload: userId, type: SET_ADMIN_ID })
         );
-        expect(analysisPut[2]).toEqual(put({ type: SET_AUTH, payload: true }));
+        expect(analysisPut[2]).toEqual(put({ payload: true, type: SET_AUTH }));
         expect(analysisPut[3]).toEqual(
           put({ type: SET_AUTH_LOADING, payload: false })
         );
