@@ -5,7 +5,6 @@ import {
   TextField,
   Grid,
   Tab,
-  AppBar,
   Tabs,
   Typography
 } from '@material-ui/core';
