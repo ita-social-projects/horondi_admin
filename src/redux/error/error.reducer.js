@@ -5,15 +5,14 @@ const initialState = {
 };
 
 const errorReducer = (action, state = initialState) => {
-  switch (action.type) {
-  case SET_ERROR:
+  if (action.type === SET_ERROR) {
     return {
       ...state,
       error: action.payload
     };
-  default:
-    return state;
-  }
+  } 
+  return state;
+  
 };
 
 export default errorReducer;
