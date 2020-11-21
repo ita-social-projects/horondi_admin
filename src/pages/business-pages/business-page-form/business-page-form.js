@@ -123,7 +123,9 @@ const BusinessPageForm = ({ id, editMode }) => {
     formik.values.enTitle = enTitle;
   }, [code, ukTitle, enTitle]);
 
-  const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
+  const languageTabs = languages.map((lang) => (
+    <Tab label={lang} key={lang} data-cy={lang} />
+  ));
 
   if (loading) {
     return <LoadingBar />;
@@ -148,6 +150,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                     ? 'Введіть унікальний ідентифікатор для сторінки'
                     : ''
                 }
+                data-cy='page-code'
               />
             </Paper>
           </Grid>
@@ -177,15 +180,17 @@ const BusinessPageForm = ({ id, editMode }) => {
                     ? 'Введіть заголовок'
                     : ''
                 }
+                data-cy='page-header-ua'
               />
               <Editor
                 value={ukText}
                 placeholder='Текст'
                 onEditorChange={(value) => ukSetText(value)}
                 setFiles={setFiles}
+                data-cy='page-editor'
               />
               {(editorField.test(ukText) || !ukText) && shouldValidate && (
-                <div className={classes.errorMessage}>
+                <div className={classes.errorMessage} data-cy='editor-error'>
                   Введіть текст для сторінки
                 </div>
               )}
@@ -207,6 +212,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                     ? 'Введіть заголовок'
                     : ''
                 }
+                data-cy='page-header-en'
               />
               <Editor
                 value={enText}
@@ -215,7 +221,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                 setFiles={setFiles}
               />
               {(editorField.test(enText) || !enText) && shouldValidate && (
-                <div className={classes.errorMessage}>
+                <div className={classes.errorMessage} data-cy='editor-error'>
                   Введіть текст для сторінки
                 </div>
               )}
@@ -230,6 +236,7 @@ const BusinessPageForm = ({ id, editMode }) => {
               title='Назад'
               variant='outlined'
               onClickHandler={() => {}}
+              data-cy='back-btn'
             />
           </Link>
           <SaveButton
@@ -237,6 +244,7 @@ const BusinessPageForm = ({ id, editMode }) => {
             id='save'
             type='submit'
             title='Зберегти'
+            data-cy='save-btn'
           />
         </div>
       </form>
