@@ -76,7 +76,7 @@ describe('business pages sagas test', () => {
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
         expect(analysisPut[0]).toEqual(
-          put({ type: SET_BUSINESS_PAGES_LOADING, payload: true })
+          put({ payload: true, type: SET_BUSINESS_PAGES_LOADING })
         );
         expect(analysisPut[1]).toEqual(
           put({ type: SET_BUSINESS_PAGES, payload: fakePages })
@@ -93,8 +93,8 @@ describe('business pages sagas test', () => {
       .put(setCurrentBusinessPage(fakeBusinessPage))
       .put(setLoading(false))
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
+      .then((res) => {
+        const { allEffects: analysis } = res;
         expect(analysis).toHaveLength(4);
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
@@ -150,8 +150,8 @@ describe('business pages sagas test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         expect(analysis).toHaveLength(4);
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((item) => item.type === 'PUT');
+        const analysisCall = analysis.filter((item) => item.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
         expect(analysisPut[0]).toEqual(
@@ -175,8 +175,8 @@ describe('business pages sagas test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         expect(analysis).toHaveLength(4);
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((el) => el.type === 'PUT');
+        const analysisCall = analysis.filter((el) => el.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
         expect(analysisPut[0]).toEqual(
