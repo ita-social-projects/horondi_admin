@@ -19,8 +19,7 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch() {
-    const setError = this.props.setError;
-    setError({ error: 'DEFAULT_ERROR' });
+    this.props.setError({ error: 'DEFAULT_ERROR' });
     this.setState({ hasError: true });
   }
 

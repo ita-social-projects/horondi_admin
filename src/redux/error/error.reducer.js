@@ -4,7 +4,7 @@ const initialState = {
   error: null
 };
 
-const errorReducer = (state = initialState, action) => {
+const errorReducer = (action, state = initialState) => {
   switch (action.type) {
   case SET_ERROR:
     return {
