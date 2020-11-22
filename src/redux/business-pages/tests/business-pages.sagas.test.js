@@ -1,5 +1,6 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
+import { call, put } from 'redux-saga/effects';
 import {
   handleBusinessPagesLoad,
   handleCurrentBusinessPageLoad,
@@ -39,49 +40,43 @@ describe('business pages sagas test', () => {
     expect(updateBusinessPage).not.toThrow();
     expect(getBusinessPageById).not.toThrow();
   });
-  it('#2 should receive all business pages and set to store', () => {
+  it('#2 should receive all business pages and set to store', () =>
     expectSaga(handleBusinessPagesLoad)
-      .provide([[matchers.call.fn(getAllBusinessPages), fakePages]])
+      .provide([[call(getAllBusinessPages), businessPages]])
       .put(setLoading(true))
-      .put(setBusinessPages(fakePages))
+      .put(setBusinessPages(businessPages))
       .put(setLoading(false))
-      .run();
-  });
-  it('#3 should receive one page and set to store', () => {
-    expectSaga(handleCurrentBusinessPageLoad, businessPageId)
-      .provide([[matchers.call.fn(getBusinessPageById()), fakeBusinessPage]])
+      .run());
+  it('#3 should receive one page and set to store', () =>
+    expectSaga(handleCurrentBusinessPageLoad, { payload: businessPageId })
+      .provide([
+        [call(getBusinessPageById), fakeBusinessPage.data.getBusinessPageById]
+      ])
       .put(setLoading(true))
       .put(setCurrentBusinessPage(fakeBusinessPage))
       .put(setLoading(false))
-      .run();
-  });
+      .run());
 
-  it('#4 Should delete business page and remove it from store', () => {
-    expectSaga(handleBusinessPageDelete, businessPageId)
-      .provide([
-        [matchers.call.fn(deleteBusinessPage()), businessPageToDeleteMock]
-      ])
+  it('#4 Should delete business page and remove it from store', () =>
+    expectSaga(handleBusinessPageDelete, { payload: businessPageId })
+      .provide([[call(deleteBusinessPage), businessPageToDeleteMock]])
       .put(setLoading(true))
       .put(setBusinessPages(businessPageToDeleteMock))
       .put(setLoading(false))
-      .run();
-  });
-
-  it('#5 Should to add business page and set it to store', () => {
-    expectSaga(handleAddBusinessPage, businessPage)
-      .provide([[matchers.call.fn(addBusinessPage()), businessPage]])
+      .run());
+  it('#5 Should to add business page and set it to store', () =>
+    expectSaga(handleAddBusinessPage, { payload: businessPage })
+      .provide([[call(addBusinessPage), businessPage]])
       .put(setLoading(true))
       .put(setBusinessPages(businessPages))
       .put(setLoading(false))
-      .run();
-  });
+      .run());
 
-  it('#6 Should to update business page', () => {
-    expectSaga(handleBusinessPageUpdate, businessPageToUpdate)
-      .provide([[matchers.call.fn(updateBusinessPage()), businessPageToUpdate]])
+  it('#6 Should to update business page', () =>
+    expectSaga(handleBusinessPageUpdate, { payload: businessPageToUpdate })
+      .provide([[call(updateBusinessPage), businessPageToUpdate]])
       .put(setLoading(true))
       .put(setBusinessPages(businessPages))
       .put(setLoading(false))
-      .run();
-  });
+      .run());
 });

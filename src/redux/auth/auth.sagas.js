@@ -50,7 +50,6 @@ export function* handleAdminCheckByToken() {
       return;
     }
     const admin = yield call(getUserByToken, authToken);
-    console.log(authToken);
     yield put(setAdminId(admin._id));
     yield put(setAuth(true));
     yield put(setAuthLoading(false));
