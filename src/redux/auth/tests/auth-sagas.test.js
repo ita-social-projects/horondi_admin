@@ -12,7 +12,7 @@ import {
   handleAdminLogout
 } from '../auth.sagas';
 import { loginAdmin, getUserByToken } from '../auth.operations';
-import { email, password, token, userId, loginData } from './auth.variables';
+import { email, password, token, userId } from './auth.variables';
 
 import { setAuth, setAuthLoading, setAdminId } from '../auth.actions';
 
