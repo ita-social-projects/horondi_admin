@@ -1,20 +1,16 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call, put } from 'redux-saga/effects';
-import * as matchers from 'redux-saga-test-plan/matchers';
 import {
-  LOGIN_USER,
   SET_AUTH,
   SET_AUTH_LOADING,
   SET_ADMIN_ID,
-  LOGOUT_USER,
-  CHECK_USER_BY_TOKEN
+  LOGOUT_USER
 } from '../auth.types';
 import {
   handleAdminLoad,
   handleAdminCheckByToken,
   handleAdminLogout
 } from '../auth.sagas';
-import { getFromLocalStorage } from '../../../services/local-storage.service';
 import { loginAdmin, getUserByToken } from '../auth.operations';
 import { email, password, token, userId, loginData } from './auth.variables';
 
