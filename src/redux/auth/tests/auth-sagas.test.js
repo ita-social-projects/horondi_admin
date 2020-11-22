@@ -15,14 +15,18 @@ import {
 } from '../auth.sagas';
 
 import { loginAdmin, getUserByToken } from '../auth.operations';
-import { email, password, token, userId } from './auth.variables';
+import { email, password, token, userId, loginData } from './auth.variables';
 
 import { setAuth, setAuthLoading, setAdminId } from '../auth.actions';
 
 describe('auth sagas tests', () => {
-  it('should login', () => {
-    expectSaga(handleAdminLoad, LOGIN_USER)
-      .provide([[call(loginAdmin, { email, password }), { token, userId }]])
+  it('should login', () =>
+    expectSaga(handleAdminLoad, {
+      payload: { loginInput: { email, password } }
+    })
+      .provide([
+        [call(loginAdmin, { loginInput: { email, password } }), loginData]
+      ])
       .put(setAuthLoading(true))
       .put(setAdminId(userId))
       .put(setAuth(true))
@@ -45,10 +49,9 @@ describe('auth sagas tests', () => {
         expect(analysisPut[3]).toEqual(
           put({ type: SET_AUTH_LOADING, payload: false })
         );
-      });
-  });
+      }));
 
-  it('shouls check admin by token', () => {
+  it('shouls check admin by token', () =>
     expectSaga(handleAdminCheckByToken, CHECK_USER_BY_TOKEN)
       .provide([[call(getUserByToken, { token }), { userId, email }]])
       .put(setAuthLoading(true))
@@ -73,10 +76,9 @@ describe('auth sagas tests', () => {
         expect(analysisPut[3]).toEqual(
           put({ type: SET_AUTH_LOADING, payload: false })
         );
-      });
-  });
+      }));
 
-  it('should handle admin logout', () => {
+  it('should handle admin logout', () =>
     expectSaga(handleAdminLogout, LOGOUT_USER)
       .put(setAuth(false))
       .run()
@@ -92,6 +94,5 @@ describe('auth sagas tests', () => {
             payload: { method: 'push', args: ['/'] }
           })
         );
-      });
-  });
+      }));
 });
