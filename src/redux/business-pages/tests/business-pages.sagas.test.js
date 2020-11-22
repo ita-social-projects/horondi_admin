@@ -61,7 +61,7 @@ describe('business pages sagas test', () => {
     expect(updateBusinessPage).not.toThrow();
     expect(getBusinessPageById).not.toThrow();
   });
-  it('#2 should receive all business pages and set to store', () => {
+  it('#2 should receive all business pages and set to store', () =>
     expectSaga(handleBusinessPagesLoad)
       .provide([[call(getAllBusinessPages), fakePages]])
       .put(setLoading(true))
@@ -85,14 +85,13 @@ describe('business pages sagas test', () => {
         expect(analysisPut[1]).toEqual(
           put({ type: SET_BUSINESS_PAGES, payload: fakePages })
         );
-        expect(analysisPut[2]).toEqual(
-          put({ type: SET_BUSINESS_PAGES_LOADING, payload: false })
-        );
-      });
-  });
-  it('#3 should receive one page and set to store', () => {
+        expect(analysisPut[2].payload).toMatchObject({
+          action: { type: SET_BUSINESS_PAGES_LOADING, payload: false }
+        });
+      }));
+  it('#3 should receive one page and set to store', () =>
     expectSaga(handleCurrentBusinessPageLoad, businessPageId)
-      .provide([[call(getBusinessPageById), fakeBusinessPage]])
+      .provide([[call(getBusinessPageById, businessPageId), fakeBusinessPage]])
       .put(setLoading(true))
       .put(setCurrentBusinessPage(fakeBusinessPage))
       .put(setLoading(false))
@@ -113,10 +112,9 @@ describe('business pages sagas test', () => {
         expect(analysisPut[2]).toEqual(
           put({ type: SET_BUSINESS_PAGES_LOADING, payload: false })
         );
-      });
-  });
+      }));
 
-  it('#4 Should delete business page and remove it from store', () => {
+  it('#4 Should delete business page and remove it from store', () =>
     expectSaga(handleBusinessPageDelete, businessPageId)
       .provide([
         [matchers.call.fn(deleteBusinessPage()), businessPageToDeleteMock]
@@ -141,12 +139,19 @@ describe('business pages sagas test', () => {
         expect(analysisPut[2]).toEqual(
           put({ type: SET_BUSINESS_PAGES_LOADING, payload: false })
         );
-      });
-  });
+      }));
 
-  it('#5 Should to update business page', () => {
+  it('#5 Should to update business page', () =>
     expectSaga(handleBusinessPageUpdate, businessPageToUpdate)
-      .provide([[call(updateBusinessPage), businessPageToUpdate]])
+      .provide([
+        [
+          call(updateBusinessPage, {
+            id: businessPageId,
+            page: businessPageToUpdate
+          }),
+          businessPageToUpdate
+        ]
+      ])
       .put(setLoading(true))
       .put(setBusinessPages(businessPages))
       .put(setLoading(false))
@@ -167,9 +172,8 @@ describe('business pages sagas test', () => {
         expect(analysisPut[2]).toEqual(
           put({ type: SET_BUSINESS_PAGES_LOADING, payload: false })
         );
-      });
-  });
-  it('#6 Should to add business page and set it to store', () => {
+      }));
+  it('#6 Should to add business page and set it to store', () =>
     expectSaga(handleAddBusinessPage, businessPage)
       .provide([[call(addBusinessPage), businessPage]])
       .put(setLoading(true))
@@ -192,9 +196,8 @@ describe('business pages sagas test', () => {
         expect(analysisPut[2]).toEqual(
           put({ type: SET_BUSINESS_PAGES_LOADING, payload: false })
         );
-      });
-  });
-  it('#7 should handle orders error', () => {
+      }));
+  it('#7 should handle orders error', () =>
     expectSaga(handleBusinessPageError, fakeError)
       .put(setLoading(false))
       .put(setBusinessPagesError({ e: fakeError }))
@@ -221,6 +224,5 @@ describe('business pages sagas test', () => {
         expect(analysisPut[4]).toEqual(
           put({ type: SET_SNACKBAR_STATUS, payload: true })
         );
-      });
-  });
+      }));
 });

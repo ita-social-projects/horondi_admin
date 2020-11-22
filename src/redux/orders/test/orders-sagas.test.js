@@ -39,72 +39,74 @@ import {
 } from '../../snackbar/snackbar.types';
 
 describe('order sagas tests', () => {
-  it('should handle all order list', () => expectSaga(handleOrdersListLoad, { payload: getFakeOrderList })
-    .put(setOrderLoading(true))
-    .provide([
-      [
-        call(
-          getAllOrders,
-          getFakeOrderList.skip,
-          getFakeOrderList.limit,
-          getFakeOrderList.filter.orderStatus
-        ),
-        fakeOrderList
-      ]
-    ])
-    .put(setItemsCount(fakeOrderList.count))
-    .put(setOrderList(fakeOrderList))
-    .put(setOrderLoading(false))
-    .run()
-    .then((result) => {
-      const { allEffects: analysis } = result;
-      expect(analysis).toHaveLength(5);
-      const analysisPut = analysis.filter((e) => e.type === 'PUT');
-      const analysisCall = analysis.filter((e) => e.type === 'CALL');
-      expect(analysisPut).toHaveLength(4);
-      expect(analysisCall).toHaveLength(1);
-      expect(analysisPut[0]).toEqual(
-        put({ type: SET_ORDER_LOADING, payload: true })
-      );
-      expect(analysisPut[1]).toEqual(
-        put({ type: SET_ITEMS_COUNT, payload: fakeOrderList.count })
-      );
-      expect(analysisPut[2]).toEqual(
-        put({ type: SET_ORDER_LIST, payload: { ...fakeOrderList } })
-      );
-      expect(analysisPut[3]).toEqual(
-        put({ type: SET_ORDER_LOADING, payload: false })
-      );
-    }));
+  it('should handle all order list', () =>
+    expectSaga(handleOrdersListLoad, { payload: getFakeOrderList })
+      .put(setOrderLoading(true))
+      .provide([
+        [
+          call(
+            getAllOrders,
+            getFakeOrderList.skip,
+            getFakeOrderList.limit,
+            getFakeOrderList.filter.orderStatus
+          ),
+          fakeOrderList
+        ]
+      ])
+      .put(setItemsCount(fakeOrderList.count))
+      .put(setOrderList(fakeOrderList))
+      .put(setOrderLoading(false))
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        expect(analysis).toHaveLength(5);
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(1);
+        expect(analysisPut[0]).toEqual(
+          put({ type: SET_ORDER_LOADING, payload: true })
+        );
+        expect(analysisPut[1]).toEqual(
+          put({ type: SET_ITEMS_COUNT, payload: fakeOrderList.count })
+        );
+        expect(analysisPut[2]).toEqual(
+          put({ type: SET_ORDER_LIST, payload: { ...fakeOrderList } })
+        );
+        expect(analysisPut[3]).toEqual(
+          put({ type: SET_ORDER_LOADING, payload: false })
+        );
+      }));
 
-  it('should handle order by id', () => expectSaga(handleOrderLoad, { payload: fakeId })
-    .put(setOrderLoading(true))
-    .provide([[call(getOrderById, fakeId), fakeIdOrder]])
-    .put(setOrder(fakeIdOrder.data.getOrderById))
-    .put(setOrderLoading(false))
-    .run()
-    .then((result) => {
-      const { allEffects: analysis } = result;
-      const analysisPut = analysis.filter((e) => e.type === 'PUT');
-      const analysisCall = analysis.filter((e) => e.type === 'CALL');
-      expect(analysis).toHaveLength(4);
-      expect(analysisPut).toHaveLength(3);
-      expect(analysisCall).toHaveLength(1);
-      expect(analysisPut[0]).toEqual(
-        put({ type: SET_ORDER_LOADING, payload: true })
-      );
-      expect(analysisPut[1]).toEqual(
-        put({
-          type: SET_ORDER,
-          payload: { ...fakeIdOrder.data.getOrderById }
-        })
-      );
-      expect(analysisPut[2]).toEqual(
-        put({ type: SET_ORDER_LOADING, payload: false })
-      );
-    }));
+  it('should handle order by id', () =>
+    expectSaga(handleOrderLoad, { payload: fakeId })
+      .put(setOrderLoading(true))
+      .provide([[call(getOrderById, fakeId), fakeIdOrder]])
+      .put(setOrder(fakeIdOrder.data.getOrderById))
+      .put(setOrderLoading(false))
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysis).toHaveLength(4);
+        expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
+        expect(analysisPut[0]).toEqual(
+          put({ type: SET_ORDER_LOADING, payload: true })
+        );
+        expect(analysisPut[1]).toEqual(
+          put({
+            type: SET_ORDER,
+            payload: { ...fakeIdOrder.data.getOrderById }
+          })
+        );
+        expect(analysisPut[2]).toEqual(
+          put({ type: SET_ORDER_LOADING, payload: false })
+        );
+      }));
 
-  it('should handle orders error', () => {
+  it('should handle orders error', () =>
     expectSaga(handleOrdersError, fakeError)
       .put(setOrderLoading(false))
       .put(setOrderError({ e: fakeError }))
@@ -131,6 +133,5 @@ describe('order sagas tests', () => {
         expect(analysisPut[4]).toEqual(
           put({ type: SET_SNACKBAR_STATUS, payload: true })
         );
-      });
-  });
+      }));
 });
