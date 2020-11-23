@@ -130,7 +130,7 @@ const Comments = ({ productId }) => {
 };
 
 Comments.propTypes = {
-  productId: PropTypes.number.isRequired
+  productId: PropTypes.string.isRequired
 };
 
 export default Comments;
