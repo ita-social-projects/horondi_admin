@@ -43,7 +43,44 @@ export const businessPages = [
     ]
   }
 ];
-
+export const businessPageToCreate = {
+  page: {
+    code: 'business-page',
+    title: [{ value: 'Укр заголовок' }, { value: 'Eng title' }],
+    text: [
+      {
+        value: ukText
+      },
+      {
+        value: enText
+      }
+    ],
+    lang: ['uk', 'ua']
+  },
+  files: []
+};
+export const updatedBusinessPage = {
+  _id: 'de57efa1gdg543414b430',
+  code: 'business-page',
+  title: [
+    {
+      lang: 'uk',
+      value: `${ukText} про нас оновлена`
+    },
+    {
+      lang: 'en',
+      value: `${enText} about us updated`
+    }
+  ],
+  text: [
+    {
+      value: ukText
+    },
+    {
+      value: enText
+    }
+  ]
+};
 export const businessPageToUpdate = {
   id: 'de57efa1gdg543414b430',
   page: {
@@ -59,34 +96,37 @@ export const businessPageToUpdate = {
     ]
   }
 };
-export const fakeBusinessPage = {
+export const fakeBusinessPageRes = {
   data: {
     getBusinessTextById: {
-      _id: '0c3c7954dd35de268bed4fe8',
-      title: [
-        {
-          lang: 'uk',
-          value: 'Пустишка'
-        },
-        {
-          lang: 'en',
-          value: 'Fake'
-        }
-      ],
-      text: [
-        {
-          lang: 'uk',
-          value: 'Текс пустишка'
-        },
-        {
-          lang: 'en',
-          value: 'Fake text'
-        }
-      ]
+      ...fakeBusinessPage
     }
   }
 };
 
+export const fakeBusinessPage = {
+  _id: '0c3c7954dd35de268bed4fe8',
+  title: [
+    {
+      lang: 'uk',
+      value: 'Пустишка'
+    },
+    {
+      lang: 'en',
+      value: 'Fake'
+    }
+  ],
+  text: [
+    {
+      lang: 'uk',
+      value: 'Текс пустишка'
+    },
+    {
+      lang: 'en',
+      value: 'Fake text'
+    }
+  ]
+};
 export const fakePages = {
   data: {
     getAllBusinessTexts: {
