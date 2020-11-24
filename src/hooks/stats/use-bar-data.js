@@ -48,7 +48,9 @@ const useBarData = () => {
           ticks: {
             fontColor: theme.palette.text.secondary,
             beginAtZero: true,
-            min: 0
+            min: 0,
+            stepSize: 1,
+            callback: (value) => (Number.isInteger(value) ? value : false)
           },
           gridLines: {
             borderDash: [2],
