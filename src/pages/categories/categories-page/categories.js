@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button } from '@material-ui/core';
 import { push } from 'connected-react-router';
+import Typography from '@material-ui/core/Typography';
 import {
   getCategories,
   setCategoryDeleteId,
@@ -11,13 +11,15 @@ import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
-import { useStyles } from './categories.styles';
+import { useCommonStyles } from '../../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
+import StandardButton from '../../../components/buttons/standard-button';
 
 const Categories = () => {
   const { IMG_URL } = config;
   const { ADD_CATEGORY } = config.buttonTitles;
 
+  const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
   const { categories, categoriesLoading } = useSelector(({ Categories }) => ({
@@ -38,8 +40,6 @@ const Categories = () => {
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
-
-  const classes = useStyles();
 
   if (categoriesLoading) {
     return <LoadingBar />;
@@ -74,18 +74,20 @@ const Categories = () => {
     : null;
 
   return (
-    <div className={classes.outerContainer}>
-      <div className={classes.tableNav}>
-        <Button onClick={handleAddCategory} variant='contained' color='primary'>
-          {ADD_CATEGORY}
-        </Button>
-      </div>
-      <div className='classes.tableContainer'>
-        <TableContainerGenerator
-          tableTitles={config.tableHeadRowTitles.categories}
-          tableItems={categoriesList}
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
+          {config.titles.categoryPageTitles.mainPageTitle}
+        </Typography>
+        <StandardButton
+          title={ADD_CATEGORY}
+          onClickHandler={handleAddCategory}
         />
       </div>
+      <TableContainerGenerator
+        tableTitles={config.tableHeadRowTitles.categories}
+        tableItems={categoriesList}
+      />
       <CategoryDeleteDialog />
     </div>
   );
