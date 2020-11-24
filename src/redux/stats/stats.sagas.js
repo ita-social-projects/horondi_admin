@@ -37,6 +37,7 @@ function* handleInitialStatsLoad() {
     yield put(setStatsLoading(true));
     const categories = yield call(getPopularCategories);
     const products = yield call(getPopularProducts);
+    console.log(products);
     yield put(setPopularCategories(categories));
     yield put(setPopularProducts(products));
     yield put(setStatsLoading(false));

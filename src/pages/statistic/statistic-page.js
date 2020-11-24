@@ -53,6 +53,7 @@ const StatisticPage = () => {
   useEffect(() => {
     const { categories } = doughnutData;
     if (!categories.counts.length) {
+      console.log('dispatch');
       dispatch(getIniitalStats());
     }
   }, [dispatch, doughnutData]);
