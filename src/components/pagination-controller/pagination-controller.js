@@ -42,7 +42,6 @@ const PaginationController = () => {
       setCurrentPage(Math.max(0, Math.ceil(itemsCount / rowsPerPage) - 1))
     );
   };
-
   return (
     <div className={styles.root}>
       <IconButton
@@ -61,18 +60,14 @@ const PaginationController = () => {
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
-        disabled={Boolean(
-          Math.ceil(currentPage >= itemsCount / rowsPerPage - 1)
-        )}
+        disabled={Boolean(currentPage >= itemsCount / rowsPerPage - 1)}
         aria-label='next page'
       >
         <KeyboardArrowRight />
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
-        disabled={Boolean(
-          Math.ceil(currentPage >= itemsCount / rowsPerPage - 1)
-        )}
+        disabled={Boolean(currentPage >= itemsCount / rowsPerPage - 1)}
         aria-label='last page'
       >
         <LastPageIcon />

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Table, TableBody, Paper } from '@material-ui/core';
+import { TableBody, Paper, Table as MaterialTable } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableContainerHead from '../table-container-head';
@@ -18,13 +18,13 @@ const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table
+        <MaterialTable
           className={classes.table}
           size={dense ? SMALL_SIZE : DEFAULT_SIZE}
         >
           <TableContainerHead titles={tableTitles} />
           <TableBody id='table-body'>{tableItems}</TableBody>
-        </Table>
+        </MaterialTable>
       </TableContainer>
       {pagination && <TablePaginator />}
     </>
