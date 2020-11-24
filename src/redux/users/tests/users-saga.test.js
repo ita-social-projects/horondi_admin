@@ -112,10 +112,21 @@ describe('Users saga test', () => {
     );
   };
 
-  const filterAnalysis = (analysis) => ({
-    analysisPut: analysis.filter((e) => e.type === 'PUT'),
-    analysisCall: analysis.filter((e) => e.type === 'CALL')
-  });
+  const filterAndCheckLenght = (
+    analysis,
+    putCount,
+    callCount,
+    optional = 0
+  ) => {
+    const analysisPut = analysis.filter((e) => e.type === 'PUT');
+    const analysisCall = analysis.filter((e) => e.type === 'CALL');
+
+    expect(analysis).toHaveLength(putCount + callCount + optional);
+    expect(analysisPut).toHaveLength(putCount);
+    expect(analysisCall).toHaveLength(callCount);
+
+    return analysisPut;
+  };
 
   it('should load all users', () =>
     expectSaga(handleUsersLoad)
@@ -161,12 +172,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(7);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(5);
-        expect(analysisCall).toHaveLength(1);
+        const analysisPut = filterAndCheckLenght(analysis, 5, 1, 1);
 
         loadingExpect(analysisPut, FIRST, FIFTH);
 
@@ -197,12 +204,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(4);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
+        const analysisPut = filterAndCheckLenght(analysis, 3, 1);
 
         loadingExpect(analysisPut, FIRST, THIRD);
         expect(analysisPut[SECOND]).toEqual(
@@ -234,12 +237,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(5);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(2);
+        const analysisPut = filterAndCheckLenght(analysis, 3, 2);
 
         loadingExpect(analysisPut, FIRST, THIRD);
         expect(analysisPut[SECOND]).toEqual(
@@ -271,12 +270,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(5);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(2);
+        const analysisPut = filterAndCheckLenght(analysis, 3, 2);
 
         loadingExpect(analysisPut, FIRST, THIRD);
         expect(analysisPut[SECOND]).toEqual(
@@ -302,12 +297,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(5);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(2);
+        const analysisPut = filterAndCheckLenght(analysis, 3, 2);
 
         loadingExpect(analysisPut, FIRST, SECOND);
         pushExpect(analysisPut, THIRD, '/users');
@@ -331,12 +322,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(5);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(2);
+        const analysisPut = filterAndCheckLenght(analysis, 3, 2);
 
         loadingExpect(analysisPut, FIRST, SECOND);
         pushExpect(analysisPut, THIRD, '/');
@@ -356,12 +343,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(3);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(2);
-        expect(analysisCall).toHaveLength(1);
+        const analysisPut = filterAndCheckLenght(analysis, 2, 1);
 
         loadingExpect(analysisPut, FIRST, SECOND);
       }));
@@ -395,12 +378,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(5);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(5);
-        expect(analysisCall).toHaveLength(0);
+        const analysisPut = filterAndCheckLenght(analysis, 5, 0);
 
         expect(analysisPut[FIRST]).toEqual(
           put({ type: SET_USERS_LOADING, payload: false })
@@ -440,12 +419,8 @@ describe('Users saga test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        expect(analysis).toHaveLength(3);
 
-        const { analysisPut, analysisCall } = filterAnalysis(analysis);
-
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(0);
+        const analysisPut = filterAndCheckLenght(analysis, 3, 0);
 
         expect(analysisPut[FIRST]).toEqual(
           put({ type: SET_SNACKBAR_SEVERITY, payload: 'success' })
