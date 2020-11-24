@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core/';
+import { Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
-import { useStyles } from './comments.style';
-
+import { useCommonStyles } from '../common.styles';
 import {
   getRecentComments,
   setCommentsCurrentPage,
@@ -28,7 +27,9 @@ const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 const { RECENT_COMMENTS } = commentsTranslations;
 
 const Comments = ({ productId }) => {
-  const classes = useStyles();
+  const commonStyles = useCommonStyles();
+  const dispatch = useDispatch();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     loading,
@@ -43,7 +44,6 @@ const Comments = ({ productId }) => {
     currentPage: Comments.pagination.currentPage,
     commentsPerPage: Comments.pagination.commentsPerPage
   }));
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
@@ -105,20 +105,18 @@ const Comments = ({ productId }) => {
       : null;
 
   return (
-    <div className={classes.content}>
-      <div className={classes.tableNavigation}>
-        <Typography variant='h1' className={classes.usersTitle}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {RECENT_COMMENTS}
         </Typography>
       </div>
-      <div className={classes.tableContainer}>
-        <TableContainerGenerator
-          id='commentsTable'
-          tableTitles={userComments ? tableHeaders : [NO_COMMENTS_MESSAGE]}
-          tableItems={userComments}
-        />
-      </div>
-      <div className={classes.pagination}>
+      <TableContainerGenerator
+        id='commentsTable'
+        tableTitles={userComments ? tableHeaders : [NO_COMMENTS_MESSAGE]}
+        tableItems={userComments}
+      />
+      <div className={commonStyles.pagination}>
         <Pagination
           count={pagesCount}
           variant='outlined'
