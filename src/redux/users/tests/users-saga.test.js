@@ -88,6 +88,21 @@ const {
 } = statuses;
 
 describe('Users saga test', () => {
+  const FIRST = 0;
+  const SECOND = 1;
+  const THIRD = 2;
+  const FOURTH = 3;
+  const FIFTH = 4;
+
+  const loadingExpect = (analysis, start, end) => {
+    expect(analysis[start]).toEqual(
+      put({ type: SET_USERS_LOADING, payload: true })
+    );
+    expect(analysis[end]).toEqual(
+      put({ type: SET_USERS_LOADING, payload: false })
+    );
+  };
+
   const filterAnalysis = (analysis) => ({
     analysisPut: analysis.filter((e) => e.type === 'PUT'),
     analysisCall: analysis.filter((e) => e.type === 'CALL')
@@ -144,20 +159,16 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(1);
 
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: true })
+        loadingExpect(analysisPut, FIRST, FIFTH);
+
+        expect(analysisPut[SECOND]).toEqual(
+          put({ type: SET_PAGES_COUNT, payload: pageCount })
         );
-        expect(analysisPut[1]).toEqual(
-          put({ type: SET_PAGES_COUNT, payload: 1 })
+        expect(analysisPut[THIRD]).toEqual(
+          put({ type: SET_ITEMS_COUNT, payload: mockUsersList.count })
         );
-        expect(analysisPut[2]).toEqual(
-          put({ type: SET_ITEMS_COUNT, payload: 5 })
-        );
-        expect(analysisPut[3]).toEqual(
+        expect(analysisPut[FOURTH]).toEqual(
           put({ type: SET_USERS, payload: mockUsersList.items })
-        );
-        expect(analysisPut[4]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: false })
         );
       }));
 
@@ -184,14 +195,9 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
 
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: true })
-        );
-        expect(analysisPut[1]).toEqual(
+        loadingExpect(analysisPut, FIRST, THIRD);
+        expect(analysisPut[SECOND]).toEqual(
           put({ type: SET_USER, payload: mockUser })
-        );
-        expect(analysisPut[2]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: false })
         );
       }));
 
@@ -226,14 +232,9 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
 
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: true })
-        );
-        expect(analysisPut[1]).toEqual(
+        loadingExpect(analysisPut, FIRST, THIRD);
+        expect(analysisPut[SECOND]).toEqual(
           put({ type: DELETE_USER_LOCALLY, payload: mockUser._id })
-        );
-        expect(analysisPut[2]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: false })
         );
       })
       .catch((err) => {
@@ -271,14 +272,9 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
 
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: true })
-        );
-        expect(analysisPut[1]).toEqual(
+        loadingExpect(analysisPut, FIRST, THIRD);
+        expect(analysisPut[SECOND]).toEqual(
           put({ type: UPDATE_USER_LOCALLY, payload: mockUser._id })
-        );
-        expect(analysisPut[2]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: false })
         );
       })
       .catch((err) => {
@@ -310,13 +306,8 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
 
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: true })
-        );
-        expect(analysisPut[1]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: false })
-        );
-        expect(analysisPut[2]).toEqual(
+        loadingExpect(analysisPut, FIRST, SECOND);
+        expect(analysisPut[THIRD]).toEqual(
           put({
             type: '@@router/CALL_HISTORY_METHOD',
             payload: { method: 'push', args: ['/users'] }
@@ -352,13 +343,8 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
 
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: true })
-        );
-        expect(analysisPut[1]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: false })
-        );
-        expect(analysisPut[2]).toEqual(
+        loadingExpect(analysisPut, FIRST, SECOND);
+        expect(analysisPut[THIRD]).toEqual(
           put({
             type: '@@router/CALL_HISTORY_METHOD',
             payload: { method: 'push', args: ['/'] }
@@ -390,12 +376,7 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(1);
 
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: true })
-        );
-        expect(analysisPut[1]).toEqual(
-          put({ type: SET_USERS_LOADING, payload: false })
-        );
+        loadingExpect(analysisPut, FIRST, SECOND);
       })
       .catch((err) => {
         throw err;
@@ -437,22 +418,22 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(0);
 
-        expect(analysisPut[0]).toEqual(
+        expect(analysisPut[FIRST]).toEqual(
           put({ type: SET_USERS_LOADING, payload: false })
         );
-        expect(analysisPut[1]).toEqual(
+        expect(analysisPut[SECOND]).toEqual(
           put({ type: SET_USERS_ERROR, payload: { e: mockError } })
         );
-        expect(analysisPut[2]).toEqual(
+        expect(analysisPut[THIRD]).toEqual(
           put({ type: SET_SNACKBAR_SEVERITY, payload: 'error' })
         );
-        expect(analysisPut[3]).toEqual(
+        expect(analysisPut[FOURTH]).toEqual(
           put({
             type: SET_SNACKBAR_MESSAGE,
             payload: mockError.payload.message
           })
         );
-        expect(analysisPut[4]).toEqual(
+        expect(analysisPut[FIFTH]).toEqual(
           put({ type: SET_SNACKBAR_STATUS, payload: true })
         );
       })
@@ -485,13 +466,13 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(0);
 
-        expect(analysisPut[0]).toEqual(
+        expect(analysisPut[FIRST]).toEqual(
           put({ type: SET_SNACKBAR_SEVERITY, payload: 'success' })
         );
-        expect(analysisPut[1]).toEqual(
+        expect(analysisPut[SECOND]).toEqual(
           put({ type: SET_SNACKBAR_MESSAGE, payload: mockStatus })
         );
-        expect(analysisPut[2]).toEqual(
+        expect(analysisPut[THIRD]).toEqual(
           put({ type: SET_SNACKBAR_STATUS, payload: true })
         );
       })

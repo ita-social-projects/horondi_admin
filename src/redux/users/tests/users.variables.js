@@ -51,36 +51,9 @@ export const mockUsersList = {
       role: 'user',
       phoneNumber: null,
       banned: false
-    },
-    {
-      _id: '5fac42c0cef414384847a01b',
-      firstName: 'Denis',
-      lastName: 'Babarin',
-      email: 'denisBB@gmail.com',
-      role: 'user',
-      phoneNumber: null,
-      banned: false
-    },
-    {
-      _id: '5fac42c0cef414384847a01d',
-      firstName: 'Bob',
-      lastName: 'Evense',
-      email: 'evenseB@gmail.com',
-      role: 'user',
-      phoneNumber: null,
-      banned: false
-    },
-    {
-      _id: '5faced09c2f10c15f0cf536f',
-      firstName: 'One',
-      lastName: 'User',
-      email: 'secretEmail@sec.com',
-      role: 'user',
-      phoneNumber: null,
-      banned: false
     }
   ],
-  count: 5
+  count: 2
 };
 
 export const statuses = {
