@@ -23,7 +23,6 @@ const getPopularProducts = async () => {
 			}
 		}	
 	`);
-  console.log(res.data.getPopularProducts);
   return res.data.getPopularProducts;
 };
 
