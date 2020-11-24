@@ -21,7 +21,6 @@ const ProductSpeciesContainer = ({
   colors,
   patterns,
   models,
-  getSelectedCategory,
   values,
   errors,
   touched,
@@ -40,11 +39,6 @@ const ProductSpeciesContainer = ({
     })
   );
 
-  const selectedCategory = useMemo(
-    () => (values.category ? getSelectedCategory(values.category) : null),
-    [values.category, getSelectedCategory]
-  );
-
   const categoriesOptions = useMemo(
     () =>
       categories
@@ -55,24 +49,6 @@ const ProductSpeciesContainer = ({
           </MenuItem>
         )),
     [categories]
-  );
-
-  const subcategoriesOptions = useMemo(
-    () =>
-      categories
-        .filter(
-          ({ isMain, _id }) =>
-            !isMain &&
-            (selectedCategory
-              ? selectedCategory.subcategories.includes(_id)
-              : true)
-        )
-        .map(({ _id, name }) => (
-          <MenuItem value={_id} key={_id}>
-            {name[0].value}
-          </MenuItem>
-        )),
-    [categories, selectedCategory]
   );
 
   const colorsOptions = useMemo(
@@ -116,7 +92,6 @@ const ProductSpeciesContainer = ({
 
   const options = [
     categoriesOptions,
-    subcategoriesOptions,
     modelsOptions,
     colorsOptions,
     patternsOptions
@@ -192,7 +167,6 @@ ProductSpeciesContainer.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  getSelectedCategory: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   toggleFieldsChanged: PropTypes.func
 };

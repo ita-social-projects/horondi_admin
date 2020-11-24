@@ -101,12 +101,6 @@ const labels = {
         required: true
       },
       {
-        label: 'Підкатегорія ',
-        name: 'subcategory',
-        type: 'select',
-        required: true
-      },
-      {
         label: 'Модель ',
         name: 'model',
         type: 'select',
