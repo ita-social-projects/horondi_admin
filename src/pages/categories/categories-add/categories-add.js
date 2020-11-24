@@ -316,7 +316,6 @@ const CategoriesAdd = ({ id, editMode }) => {
   if (loading) {
     return <LoadingBar />;
   }
-
   return (
     <div className={classes.container}>
       <div>
