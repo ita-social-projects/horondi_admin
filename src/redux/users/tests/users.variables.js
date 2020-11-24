@@ -1,8 +1,12 @@
 export const mockUsersState = {
-  sort: {
-    name: 1
-  },
-  filters: initialFilters
+  filters: initialFilters,
+  list: [],
+  sort: { name: 1 },
+  tab: 0,
+  user: null,
+  userError: null,
+  userLoading: false,
+  usersCount: null
 };
 
 const initialFilters = {
@@ -12,13 +16,20 @@ const initialFilters = {
 };
 
 export const mockTableState = {
+  dense: false,
+  itemsCount: 0,
   pagination: {
-    currentPage: 1,
+    currentPage: 0,
+    pagesCount: 1,
     rowsPerPage: 10,
-    rowsPerPageOptions: [10, 20, 30],
-    pagesCount: 1
-  },
-  itemsCount: 0
+    rowsPerPageOptions: [10, 20, 30]
+  }
+};
+
+export const mockSnackarState = {
+  snackBarStatus: false,
+  snackBarSeverity: '',
+  snackBarMessage: ''
 };
 
 export const mockUsersList = {
@@ -83,3 +94,21 @@ export const adminInput = {
   email: 'admin@mail.com',
   role: 'admin'
 };
+
+export const mockToken = '123asd321bfd';
+
+export const mockAdmin = { adminInput, token: mockToken };
+
+export const mockUser = mockUsersList.items[0];
+
+export const mockError = {
+  payload: {
+    message: 'error'
+  }
+};
+
+export const mockStatus = statuses.SUCCESS_UPDATE_STATUS;
+
+export const pageCount = Math.ceil(
+  mockUsersList.count / mockTableState.pagination.rowsPerPage
+);

@@ -37,7 +37,9 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+
 import { setItemsCount, setPagesCount } from '../table/table.actions';
+import { selectUsersAndTable } from '../selectors/users.selectors';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -49,12 +51,11 @@ const {
 export function* handleUsersLoad() {
   try {
     yield put(setUsersLoading(true));
-    const { usersState, tableState } = yield select(({ Users, Table }) => ({
-      usersState: Users,
-      tableState: Table
-    }));
+    const { usersState, tableState } = yield select(selectUsersAndTable);
     const result = yield call(getAllUsers, usersState, tableState);
-    yield put(setPagesCount(Math.ceil(result.count / tableState.rowsPerPage)));
+    yield put(
+      setPagesCount(Math.ceil(result.count / tableState.pagination.rowsPerPage))
+    );
     yield put(setItemsCount(result.count));
     yield put(setUsers(result.items));
     yield put(setUsersLoading(false));
@@ -137,7 +138,7 @@ export function* handleUsersError(e) {
   yield put(setUsersLoading(false));
   yield put(setUserError({ e }));
   yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
+  yield put(setSnackBarMessage(e.payload.message));
   yield put(setSnackBarStatus(true));
 }
 
