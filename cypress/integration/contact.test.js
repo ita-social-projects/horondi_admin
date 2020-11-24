@@ -2,11 +2,11 @@
 
 describe('Contacts test', () => {
   let phoneNumber;
-  let ukSchedule;
+  let uaSchedule;
   let enSchedule;
-  let ukAddress;
+  let uaAddress;
   let enAddress;
-  let ukCartImage;
+  let uaCartImage;
   let enCartImage;
   let cartLink;
   let email;
@@ -14,13 +14,13 @@ describe('Contacts test', () => {
 
   before(() => {
     phoneNumber = '380961737361';
-    ukSchedule =
+    uaSchedule =
       'Пн: 09:00 - 17:00|Вт: 09:00 - 18:00|Ср: 09:00 - 18:00|Чт: 09:00 - 18:00|Пт: 09:00 - 18:00|Сб: Вихідний|Нд: Вихідний';
     enSchedule =
       'Mon: 9 a.m. - 5 p.m.|Tue: 9 a.m. - 6 p.m.|Wed: 9 a.m. - 6 p.m.|Thu: 9 a.m. - 6 p.m.|Fri: 9 a.m. - 6 p.m.|Sat: Closed|Sun: Closed';
-    ukAddress = 'Львів вул. Угорська, 2';
+    uaAddress = 'Львів вул. Угорська, 2';
     enAddress = 'Lviv 2 Uhorska Str.';
-    ukCartImage =
+    uaCartImage =
       'https://horondi.blob.core.windows.net/horondi/images/thumbnail_26ebx5pkkf8cwuvd_map.png';
     enCartImage =
       'https://horondi.blob.core.windows.net/horondi/images/thumbnail_26ebx5pkkf8cwuve_map.png';
@@ -59,13 +59,13 @@ describe('Contacts test', () => {
     cy.visit(`contacts/${id}`);
 
     cy.get('[data-cy=phoneNumber]').should('have.text', phoneNumber);
-    cy.get('[data-cy=ukSchedule]').should('have.text', ukSchedule);
+    cy.get('[data-cy=uaSchedule]').should('have.text', uaSchedule);
     cy.get('[data-cy=enSchedule]').should('have.text', enSchedule);
-    cy.get('[data-cy=ukAddress]').should('have.text', ukAddress);
+    cy.get('[data-cy=uaAddress]').should('have.text', uaAddress);
     cy.get('[data-cy=enAddress]').should('have.text', enAddress);
-    cy.get('[data-cy=ukCartImage]')
+    cy.get('[data-cy=uaCartImage]')
       .should('have.attr', 'src')
-      .should('include', ukCartImage);
+      .should('include', uaCartImage);
     cy.get('[data-cy=enCartImage]')
       .should('have.attr', 'src')
       .should('include', enCartImage);

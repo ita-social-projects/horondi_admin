@@ -112,23 +112,23 @@ const useProductHandlers = () => {
 
   const createProductInfo = (values) => ({
     name: [
-      { lang: languages[0], value: values['uk-name'] },
+      { lang: languages[0], value: values['ua-name'] },
       { lang: languages[1], value: values['en-name'] }
     ],
     mainMaterial: [
-      { lang: languages[0], value: values['uk-mainMaterial'] },
+      { lang: languages[0], value: values['ua-mainMaterial'] },
       { lang: languages[1], value: values['en-mainMaterial'] }
     ],
     innerMaterial: [
-      { lang: languages[0], value: values['uk-innerMaterial'] },
+      { lang: languages[0], value: values['ua-innerMaterial'] },
       { lang: languages[1], value: values['en-innerMaterial'] }
     ],
     closure: [
-      { lang: languages[0], value: values['uk-closure'] },
+      { lang: languages[0], value: values['ua-closure'] },
       { lang: languages[1], value: values['en-closure'] }
     ],
     description: [
-      { lang: languages[0], value: values['uk-description'] },
+      { lang: languages[0], value: values['ua-description'] },
       { lang: languages[1], value: values['en-description'] }
     ],
     strapLengthInCm: values.strapLengthInCm

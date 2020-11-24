@@ -42,7 +42,7 @@ const HeaderForm = ({ header, id }) => {
     enName: Yup.string()
       .min(2, HEADER_VALIDATION_ERROR)
       .required(HEADER_ERROR_MESSAGE),
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, HEADER_VALIDATION_ERROR)
       .required(HEADER_ERROR_MESSAGE),
     priority: Yup.number(),
@@ -54,7 +54,7 @@ const HeaderForm = ({ header, id }) => {
   const { values, handleSubmit, handleChange, touched, errors } = useFormik({
     validationSchema: headerValidationSchema,
     initialValues: {
-      ukName: header.title ? header.title[0].value : '',
+      uaName: header.title ? header.title[0].value : '',
       enName: header.title ? header.title[1].value : '',
       priority: header.priority || 1,
       link: header.link || ''
@@ -171,19 +171,19 @@ HeaderForm.propTypes = {
   }),
   values: PropTypes.shape({
     link: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
     priority: PropTypes.number
   }),
   errors: PropTypes.shape({
     link: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
     priority: PropTypes.number
   }),
   touched: PropTypes.shape({
     link: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
     priority: PropTypes.number
   }),

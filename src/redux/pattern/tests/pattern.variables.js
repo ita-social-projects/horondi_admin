@@ -1,10 +1,10 @@
-export const ukDescriptionBase = 'Фабричний гобелен із зображенням';
+export const uaDescriptionBase = 'Фабричний гобелен із зображенням';
 export const enDescriptionBase = 'Manufactured tapestry with';
 export const pattern = {
   _id: 'de57efa1b187d1913414b430',
   description: [
     {
-      value: `${ukDescriptionBase} квітів`
+      value: `${uaDescriptionBase} квітів`
     },
     {
       value: `${enDescriptionBase} flower pattern`
@@ -33,7 +33,7 @@ export const patterns = [
     _id: '0c3c7929dd85de268bed4fe8',
     description: [
       {
-        value: `${ukDescriptionBase} рожевої хвильки`
+        value: `${uaDescriptionBase} рожевої хвильки`
       },
       {
         value: `${enDescriptionBase} pink wave pattern`
@@ -58,7 +58,7 @@ export const patterns = [
     _id: 'fdc7529135f2c050c877a67a',
     description: [
       {
-        value: `${ukDescriptionBase} синьої хвильки`
+        value: `${uaDescriptionBase} синьої хвильки`
       },
       {
         value: `${enDescriptionBase} blue wave pattern`
@@ -83,7 +83,7 @@ export const patterns = [
     _id: '51af3801f347948f14f6933c',
     description: [
       {
-        value: `${ukDescriptionBase} синьо-рожевої хвильки`
+        value: `${uaDescriptionBase} синьо-рожевої хвильки`
       },
       {
         value: `${enDescriptionBase} blue-pink wave pattern`
@@ -111,7 +111,7 @@ export const patternToUpdate = {
   pattern: {
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Червона хвилька'
       },
       {
@@ -127,7 +127,7 @@ export const fakePattern = {
       _id: '0c3c7929dd85de268bed4fe8',
       name: [
         {
-          lang: 'uk',
+          lang: 'ua',
           value: 'Олені'
         },
         {

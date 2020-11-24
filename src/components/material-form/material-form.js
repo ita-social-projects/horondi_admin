@@ -65,7 +65,7 @@ function MaterialForm({ material, id }) {
   } = useMaterialHandlers();
 
   const formSchema = Yup.object().shape({
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
@@ -75,7 +75,7 @@ function MaterialForm({ material, id }) {
       .max(100, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
 
-    ukDescription: Yup.string()
+    uaDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
@@ -106,9 +106,9 @@ function MaterialForm({ material, id }) {
     validationSchema: formSchema,
     validateOnBlur: true,
     initialValues: {
-      ukName: material.name[0].value || '',
+      uaName: material.name[0].value || '',
       enName: material.name[1].value || '',
-      ukDescription: material.description[0].value || '',
+      uaDescription: material.description[0].value || '',
       enDescription: material.description[1].value || '',
       purpose: material.purpose || '',
       available: material.available || false,
@@ -359,25 +359,25 @@ MaterialForm.propTypes = {
   values: PropTypes.shape({
     available: PropTypes.bool,
     purpose: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   errors: PropTypes.shape({
     available: PropTypes.bool,
     purpose: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   touched: PropTypes.shape({
     available: PropTypes.bool,
     purpose: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   match: PropTypes.shape({

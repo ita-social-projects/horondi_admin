@@ -16,23 +16,23 @@ const ContactsAdd = () => {
 
   const [contactFormValues] = useState({
     phoneNumber: '',
-    ukSchedule: '',
+    uaSchedule: '',
     enSchedule: '',
-    ukAddress: '',
+    uaAddress: '',
     enAddress: '',
     email: '',
-    ukCartImage: null,
+    uaCartImage: null,
     enCartImage: null,
     cartLink: ''
   });
 
   const contactSaveHandler = async ({
     phoneNumber,
-    ukSchedule,
+    uaSchedule,
     enSchedule,
-    ukAddress,
+    uaAddress,
     enAddress,
-    ukCartImage,
+    uaCartImage,
     enCartImage,
     cartLink,
     email
@@ -40,11 +40,11 @@ const ContactsAdd = () => {
     const newContact = {
       phoneNumber,
       openHours: [
-        { lang: languages[0], value: ukSchedule },
+        { lang: languages[0], value: uaSchedule },
         { lang: languages[1], value: enSchedule }
       ],
       address: [
-        { lang: languages[0], value: ukAddress },
+        { lang: languages[0], value: uaAddress },
         { lang: languages[1], value: enAddress }
       ],
       email,
@@ -52,11 +52,11 @@ const ContactsAdd = () => {
     };
 
     const mapImages =
-      !!ukCartImage && !!enCartImage
+      !!uaCartImage && !!enCartImage
         ? [
           {
             lang: languages[0],
-            image: ukCartImage
+            image: uaCartImage
           },
           {
             lang: languages[1],

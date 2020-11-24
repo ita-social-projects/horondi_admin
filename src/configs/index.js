@@ -36,7 +36,7 @@ export const config = {
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
-  languages: ['uk', 'en'],
+  languages: ['ua', 'en'],
   tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {
@@ -131,7 +131,7 @@ export const config = {
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
   initialLanguageValues: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: ''
     },
     {

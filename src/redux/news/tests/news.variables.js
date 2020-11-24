@@ -28,7 +28,7 @@ export const article = {
   show: true,
   images: {
     primary: {
-      medium: 'https://ukr.media/static/ba/aimg/3/9/3/393626_1.jpg'
+      medium: 'https://uar.media/static/ba/aimg/3/9/3/393626_1.jpg'
     }
   }
 };

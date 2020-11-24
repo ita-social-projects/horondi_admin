@@ -111,7 +111,7 @@ describe('material actions tests', () => {
       ...filteredMaterial,
       name: [
         {
-          lang: 'uk',
+          lang: 'ua',
           value: 'test'
         },
         {

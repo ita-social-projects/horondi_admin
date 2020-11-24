@@ -47,13 +47,13 @@ const NewsAdd = () => {
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
 
   const formSchema = Yup.object().shape({
-    ukAuthorName: Yup.string()
+    uaAuthorName: Yup.string()
       .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
     enAuthorName: Yup.string()
       .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
-    ukTitle: Yup.string()
+    uaTitle: Yup.string()
       .min(10, newsErrorMessages.TITLE_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.TITLE_MAX_LENGTH_MESSAGE),
     enTitle: Yup.string()

@@ -8,16 +8,16 @@ export const contact = {
   _id: '5c3c7929dd85de268bed4fe8',
   phoneNumber: '3801241242144',
   openHours: [
-    { lang: 'uk', value: 'ПН ...' },
+    { lang: 'ua', value: 'ПН ...' },
     { lang: 'en', value: 'FR ...' }
   ],
   address: [
-    { lang: 'uk', value: 'Вулиця 3' },
+    { lang: 'ua', value: 'Вулиця 3' },
     { lang: 'en', value: 'Street 3' }
   ],
   email: 'test@test.com',
   images: [
-    { lang: 'uk', value: { medium: 'medium.jpg' } },
+    { lang: 'ua', value: { medium: 'medium.jpg' } },
     { lang: 'en', value: { medium: 'medium.jpg' } }
   ],
   link: 'https://testURL.com'
@@ -26,16 +26,16 @@ export const contact = {
 export const updatedContact = {
   phoneNumber: '3809241242144',
   openHours: [
-    { lang: 'uk', value: 'ПН ...' },
+    { lang: 'ua', value: 'ПН ...' },
     { lang: 'en', value: 'FR ...' }
   ],
   address: [
-    { lang: 'uk', value: 'updated' },
+    { lang: 'ua', value: 'updated' },
     { lang: 'en', value: 'updated' }
   ],
   email: 'updatedtest@test.com',
   images: [
-    { lang: 'uk', value: { medium: 'updatedmedium.jpg' } },
+    { lang: 'ua', value: { medium: 'updatedmedium.jpg' } },
     { lang: 'en', value: { medium: 'updatedmedium.jpg' } }
   ],
   link: 'https://testURL.com'

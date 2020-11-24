@@ -56,10 +56,10 @@ const PatternForm = ({ pattern, id }) => {
     enName: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE),
-    ukDescription: Yup.string()
+    uaDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE),
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE),
     material: Yup.string()
@@ -82,9 +82,9 @@ const PatternForm = ({ pattern, id }) => {
     validationSchema: patternValidationSchema,
     initialValues: {
       patternImage: pattern.images.thumbnail || '',
-      ukName: pattern.name[0].value || '',
+      uaName: pattern.name[0].value || '',
       enName: pattern.name[1].value || '',
-      ukDescription: pattern.description[0].value || '',
+      uaDescription: pattern.description[0].value || '',
       enDescription: pattern.description[1].value || '',
       material: pattern.material || '',
       available: pattern.available || false,
@@ -268,25 +268,25 @@ PatternForm.propTypes = {
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   match: PropTypes.shape({

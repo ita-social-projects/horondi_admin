@@ -59,11 +59,11 @@ const NewsForm = ({ article, id }) => {
     initialValues: {
       authorPhoto: article.author.image.small || '',
       newsImage: article.images.primary.medium || '',
-      ukAuthorName: article.author.name[0].value || '',
+      uaAuthorName: article.author.name[0].value || '',
       enAuthorName: article.author.name[1].value || '',
-      ukTitle: article.title[0].value || '',
+      uaTitle: article.title[0].value || '',
       enTitle: article.title[1].value || '',
-      ukText: article.text[0].value || '',
+      uaText: article.text[0].value || '',
       enText: article.text[1].value || ''
     },
     onSubmit: () => {

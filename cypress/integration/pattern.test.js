@@ -47,9 +47,9 @@ describe('pattern tests', () => {
     cy.get('[data-cy=patternImage]').should('be.visible');
     cy.get('[data-cy=add-photo]').should('be.visible');
     cy.get('[data-cy=material').should('be.visible');
-    cy.get('[data-cy=ukName]').should('be.visible');
-    cy.get('[data-cy=ukDescription]').should('be.visible');
-    cy.get('[data-cy=uk]').should('be.visible');
+    cy.get('[data-cy=uaName]').should('be.visible');
+    cy.get('[data-cy=uaDescription]').should('be.visible');
+    cy.get('[data-cy=ua]').should('be.visible');
     cy.get('[data-cy=en]').should('be.visible');
   });
   it('should contain', () => {
@@ -67,23 +67,23 @@ describe('pattern tests', () => {
       'contain',
       config.labels.pattern.material
     );
-    cy.get('[data-cy=uk]').should('contain', 'uk');
+    cy.get('[data-cy=ua]').should('contain', 'ua');
     cy.get('[data-cy=en]').should('contain', 'en');
-    cy.get('[data-cy=ukName]').should(
+    cy.get('[data-cy=uaName]').should(
       'contain',
       config.tableHeadRowTitles.patterns[1]
     );
-    cy.get('[data-cy=ukDescription]').should('contain', 'Опис');
+    cy.get('[data-cy=uaDescription]').should('contain', 'Опис');
   });
   it('check validation', () => {
     cy.get('[data-cy=save]').click();
     cy.get('[data-cy=material-error]').contains(
       config.patternErrorMessages.PATTERN_ERROR_MESSAGE
     );
-    cy.get('[data-cy=ukName-error]').contains(
+    cy.get('[data-cy=uaName-error]').contains(
       config.patternErrorMessages.PATTERN_ERROR_MESSAGE
     );
-    cy.get('[data-cy=ukDescription-error]').contains(
+    cy.get('[data-cy=uaDescription-error]').contains(
       config.patternErrorMessages.PATTERN_ERROR_MESSAGE
     );
     cy.get('[data-cy=en]').click();
@@ -102,13 +102,13 @@ describe('pattern tests', () => {
     cy.get('[data-cy=enDescription-error]').contains(
       config.patternErrorMessages.PATTERN_VALIDATION_ERROR
     );
-    cy.get('[data-cy=uk]').click();
-    cy.get('[data-cy=ukName]').type('a');
-    cy.get('[data-cy=ukName-error]').contains(
+    cy.get('[data-cy=ua]').click();
+    cy.get('[data-cy=uaName]').type('a');
+    cy.get('[data-cy=uaName-error]').contains(
       config.patternErrorMessages.PATTERN_VALIDATION_ERROR
     );
-    cy.get('[data-cy=ukDescription]').type('a');
-    cy.get('[data-cy=ukDescription-error]').contains(
+    cy.get('[data-cy=uaDescription]').type('a');
+    cy.get('[data-cy=uaDescription-error]').contains(
       config.patternErrorMessages.PATTERN_VALIDATION_ERROR
     );
     cy.get('[data-cy=material-error]').contains(
@@ -118,8 +118,8 @@ describe('pattern tests', () => {
   it('should add new pattern', () => {
     cy.get('[data-cy=handmade]').click();
     cy.get('[data-cy=material').type(111);
-    cy.get('[data-cy=ukName]').type('cypress test');
-    cy.get('[data-cy=ukDescription]').type('cypress test');
+    cy.get('[data-cy=uaName]').type('cypress test');
+    cy.get('[data-cy=uaDescription]').type('cypress test');
     cy.get('[data-cy=en]').click();
     cy.get('[data-cy=enName]').type('cypress test');
     cy.get('[data-cy=enDescription]').type('cypress test');

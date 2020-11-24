@@ -3,7 +3,7 @@ export const fakeId = '11cb36bf1e5ea5af3014e312';
 export const material = {
   name: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: 'Тканина Кордура'
     },
     {
@@ -13,7 +13,7 @@ export const material = {
   ],
   description: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: 'test'
     },
     {
@@ -35,7 +35,7 @@ export const material = {
       available: true,
       simpleName: [
         {
-          lang: 'uk',
+          lang: 'ua',
           value: 'чорний'
         },
         {
@@ -55,7 +55,7 @@ export const materials = [
     _id: '88cb31bf8e5ea5af3014e342',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Натуральна шкіра'
       },
       {
@@ -65,7 +65,7 @@ export const materials = [
     ],
     description: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'test'
       },
       {
@@ -87,7 +87,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'чорний'
           },
           {
@@ -103,7 +103,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'коричневий'
           },
           {
@@ -122,7 +122,7 @@ export const materials = [
     _id: '56ade69dd46eafc5968e5390',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Мальмо'
       },
       {
@@ -132,7 +132,7 @@ export const materials = [
     ],
     description: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value:
           '100% poliester прошита додатковим шаром спеціального матеріалу, який зміцнює та захищає від води + підкладка + фабричний гобелен'
       },
@@ -156,7 +156,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'коричневий'
           },
           {
@@ -172,7 +172,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'коричневий'
           },
           {
@@ -188,7 +188,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'коричневий'
           },
           {
@@ -204,7 +204,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'коричневий'
           },
           {
@@ -220,7 +220,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'рожевий'
           },
           {
@@ -236,7 +236,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'червоний'
           },
           {
@@ -252,7 +252,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'жовтий'
           },
           {
@@ -268,7 +268,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'зелений'
           },
           {
@@ -284,7 +284,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'сірий'
           },
           {
@@ -300,7 +300,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'синій'
           },
           {
@@ -316,7 +316,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'синій'
           },
           {
@@ -332,7 +332,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'сірий'
           },
           {
@@ -348,7 +348,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'сірий'
           },
           {
@@ -364,7 +364,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'сірий'
           },
           {
@@ -380,7 +380,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'сірий'
           },
           {
@@ -396,7 +396,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'сірий'
           },
           {
@@ -415,7 +415,7 @@ export const materials = [
     _id: '1d2bba5d0b80938327ac9012',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Бонд'
       },
       {
@@ -425,7 +425,7 @@ export const materials = [
     ],
     description: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value:
           '100% poliester прошита додатковим шаром спеціального матеріалу, який зміцнює та захищає від води + підкладка + фабричний гобелен'
       },
@@ -449,7 +449,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'бежевий'
           },
           {
@@ -465,7 +465,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'бежевий'
           },
           {
@@ -481,7 +481,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'бежевий'
           },
           {
@@ -497,7 +497,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'коричневий'
           },
           {
@@ -513,7 +513,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'коричневий'
           },
           {
@@ -529,7 +529,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'коричневий'
           },
           {
@@ -545,7 +545,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'сірий'
           },
           {
@@ -561,7 +561,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'сірий'
           },
           {
@@ -577,7 +577,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'червоний'
           },
           {
@@ -593,7 +593,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'синій'
           },
           {
@@ -609,7 +609,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'оранжевий'
           },
           {
@@ -625,7 +625,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'оранжевий'
           },
           {
@@ -641,7 +641,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'жовтий'
           },
           {
@@ -657,7 +657,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'зелений'
           },
           {
@@ -673,7 +673,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'зелений'
           },
           {
@@ -689,7 +689,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'червоний'
           },
           {
@@ -705,7 +705,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'синій'
           },
           {
@@ -721,7 +721,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'синій'
           },
           {
@@ -737,7 +737,7 @@ export const materials = [
         available: true,
         simpleName: [
           {
-            lang: 'uk',
+            lang: 'ua',
             value: 'червоний'
           },
           {
@@ -758,7 +758,7 @@ export const newColor = {
   code: 200,
   name: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: 'Світло-коричневий'
     },
     {
@@ -768,7 +768,7 @@ export const newColor = {
   ],
   simpleName: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: 'коричневий'
     },
     {

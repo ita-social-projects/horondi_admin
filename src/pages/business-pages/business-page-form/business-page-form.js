@@ -34,14 +34,14 @@ const BusinessPageForm = ({ id, editMode }) => {
     tabsValue,
     handleTabsChange,
     createBusinessPage,
-    ukSetText,
+    uaSetText,
     enSetText,
-    ukSetTitle,
+    uaSetTitle,
     enSetTitle,
-    ukText,
+    uaText,
     enText,
     enTitle,
-    ukTitle,
+    uaTitle,
     code,
     setCode,
     files,
@@ -59,8 +59,8 @@ const BusinessPageForm = ({ id, editMode }) => {
     const isEditingReady = businessPage && editMode;
 
     setCode(isEditingReady ? businessPage.code : '');
-    ukSetTitle(isEditingReady ? businessPage.title[0].value : '');
-    ukSetText(isEditingReady ? businessPage.text[0].value : '');
+    uaSetTitle(isEditingReady ? businessPage.title[0].value : '');
+    uaSetText(isEditingReady ? businessPage.text[0].value : '');
     enSetTitle(isEditingReady ? businessPage.title[1].value : '');
     enSetText(isEditingReady ? businessPage.text[1].value : '');
   }, [
@@ -68,15 +68,15 @@ const BusinessPageForm = ({ id, editMode }) => {
     setCode,
     editMode,
     businessPage,
-    ukSetText,
-    ukSetTitle,
+    uaSetText,
+    uaSetTitle,
     enSetText,
     enSetTitle
   ]);
 
   const checkValidation = (values) => {
     const requiredValidationArray = [...Object.values(values)];
-    const editorFields = [ukText, enText];
+    const editorFields = [uaText, enText];
 
     return (
       requiredValidationArray.every((field) => field.trim()) &&
@@ -87,7 +87,7 @@ const BusinessPageForm = ({ id, editMode }) => {
   const formik = useFormik({
     initialValues: {
       code,
-      ukTitle,
+      uaTitle,
       enTitle
     },
     onSubmit: async (values) => {
@@ -103,12 +103,12 @@ const BusinessPageForm = ({ id, editMode }) => {
         );
       });
 
-      const newUkText = ukText.replace(/src="data:image.*?"/g, 'src=""');
+      const newUaText = uaText.replace(/src="data:image.*?"/g, 'src=""');
       const newEnText = enText.replace(/src="data:image.*?"/g, 'src=""');
 
       const page = createBusinessPage({
         ...values,
-        ukText: newUkText,
+        uaText: newUaText,
         enText: newEnText
       });
       editMode
@@ -119,9 +119,9 @@ const BusinessPageForm = ({ id, editMode }) => {
 
   useMemo(() => {
     formik.values.code = code;
-    formik.values.ukTitle = ukTitle;
+    formik.values.uaTitle = uaTitle;
     formik.values.enTitle = enTitle;
-  }, [code, ukTitle, enTitle]);
+  }, [code, uaTitle, enTitle]);
 
   const languageTabs = languages.map((lang) => <Tab label={lang} key={lang} />);
 
@@ -164,27 +164,27 @@ const BusinessPageForm = ({ id, editMode }) => {
           <TabPanel value={tabsValue} index={0}>
             <Paper className={classes.businessPageForm}>
               <TextField
-                id='ukTitle'
+                id='uaTitle'
                 className={classes.textField}
                 variant='outlined'
-                label='Заголовок uk'
+                label='Заголовок ua'
                 multiline
-                value={formik.values.ukTitle}
+                value={formik.values.uaTitle}
                 onChange={formik.handleChange}
-                error={!formik.values.ukTitle && shouldValidate}
+                error={!formik.values.uaTitle && shouldValidate}
                 helperText={
-                  !formik.values.ukTitle && shouldValidate
+                  !formik.values.uaTitle && shouldValidate
                     ? 'Введіть заголовок'
                     : ''
                 }
               />
               <Editor
-                value={ukText}
+                value={uaText}
                 placeholder='Текст'
-                onEditorChange={(value) => ukSetText(value)}
+                onEditorChange={(value) => uaSetText(value)}
                 setFiles={setFiles}
               />
-              {(editorField.test(ukText) || !ukText) && shouldValidate && (
+              {(editorField.test(uaText) || !uaText) && shouldValidate && (
                 <div className={classes.errorMessage}>
                   Введіть текст для сторінки
                 </div>
