@@ -95,7 +95,7 @@ const UsersDetails = (props) => {
           buttonHandler={() => userStatusHandler(id)}
         />
         <div className={styles.controlsBlock}>
-          <Link to={config.routes.pathToBusinessPages}>
+          <Link to={config.routes.pathToUsers}>
             <StandardButton
               className={styles.userDetails}
               id='back'

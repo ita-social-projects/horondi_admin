@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
 import useNewsHandlers from '../../utils/use-news-handlers';
 import { useStyles } from './news-form.styles';
-import { SaveButton } from '../buttons';
+import {SaveButton, StandardButton} from '../buttons';
 import TabPanel from '../tab-panel';
+import { Link } from 'react-router-dom';
 
 import { config } from '../../configs';
 import { updateArticle } from '../../redux/news/news.actions';
@@ -158,6 +159,18 @@ const NewsForm = ({ article, id }) => {
           </TabPanel>
         ))}
       </form>
+
+      <div className={classes.controlsBlock}>
+        <Link to={config.routes.pathToNews}>
+          <StandardButton
+              id='back'
+              title='Назад'
+              variant='outlined'
+              onClickHandler={() => {}}
+              data-cy='back-btn'
+          />
+        </Link>
+      </div>
     </div>
   );
 };

@@ -71,7 +71,7 @@ const formStyles = (theme) => ({
     '@media (max-width: 768px)': {
       display: 'none'
     }
-  }
+  },
 });
 
 export { formStyles };

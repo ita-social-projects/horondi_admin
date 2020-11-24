@@ -30,8 +30,10 @@ import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actio
 import { productsTranslations } from '../../../../translations/product.translations';
 import ProductCarousel from './product-carousel';
 import DeleteButton from '../../../../components/buttons/delete-button';
-import { config } from '../../../../configs';
 import CommentsPage from '../../../comments';
+import {StandardButton} from "../../../../components/buttons";
+import { config } from '../../../../configs';
+import { Link } from 'react-router-dom';
 
 const { priceLabel } = config.labels.product;
 
@@ -303,6 +305,17 @@ const ProductEditForm = () => {
         </Grid>
         <CommentsPage productId={product._id} />
       </Grid>
+      <div className={styles.controlsBlock}>
+        <Link to={config.routes.pathToProducts}>
+          <StandardButton
+              id='back'
+              title='Назад'
+              variant='outlined'
+              onClickHandler={() => {}}
+              data-cy='back-btn'
+          />
+        </Link>
+      </div>
     </div>
   );
 };

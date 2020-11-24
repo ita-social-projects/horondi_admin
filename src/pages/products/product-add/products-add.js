@@ -16,6 +16,9 @@ import ProductAddOptions from './product-add-options';
 import ProductAddImages from './product-add-images';
 import ProductAddSubmit from './product-add-submit';
 import ProductAddPrice from './product-add-price';
+import {StandardButton} from "../../../components/buttons";
+import { config } from '../../../configs';
+import { Link } from 'react-router-dom';
 
 const ProductsAdd = () => {
   const styles = useStyles();
@@ -131,7 +134,19 @@ const ProductsAdd = () => {
   return (
     <Paper className={styles.container}>
       <CustomizedStepper steps={steps} activeStep={activeStep} />
+      <div className={styles.controlsBlock}>
+        <Link to={config.routes.pathToProducts}>
+          <StandardButton
+              id='back'
+              title='Назад'
+              variant='outlined'
+              onClickHandler={() => {}}
+              data-cy='back-btn'
+          />
+        </Link>
+      </div>
     </Paper>
+
   );
 };
 

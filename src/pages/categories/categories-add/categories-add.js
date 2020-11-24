@@ -36,6 +36,8 @@ import AddPhoto from '../../../images/add-photo.png';
 import { categoryTranslations } from '../../../translations/category.translations';
 import { config } from '../../../configs';
 import { useCommonStyles } from '../../common.styles';
+import {StandardButton} from "../../../components/buttons";
+import { Link } from 'react-router-dom';
 
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
 const { DELETE_CATEGORY } = config.buttonTitles;
@@ -517,14 +519,26 @@ const CategoriesAdd = ({ id, editMode }) => {
           </Grid>
         </Grid>
       </FormControl>
-      <Button
-        variant='contained'
-        color='primary'
-        className={classes.saveBtn}
-        onClick={editMode ? handleCategoryEdit : handleCategorySave}
-      >
-        {config.buttonTitles.titleGenerator(editMode, isMain)}
-      </Button>
+
+      <div className={classes.controlsBlock}>
+        <Link to={config.routes.pathToCategories}>
+          <StandardButton
+              id='back'
+              title='Назад'
+              variant='outlined'
+              onClickHandler={() => {}}
+              data-cy='back-btn'
+          />
+        </Link>
+        <Button
+            variant='contained'
+            color='primary'
+            className={classes.saveBtn}
+            onClick={editMode ? handleCategoryEdit : handleCategorySave}
+        >
+          {config.buttonTitles.titleGenerator(editMode, isMain)}
+        </Button>
+      </div>
     </div>
   );
 };

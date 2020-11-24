@@ -12,6 +12,9 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels'
+import {config} from "../../configs";
+import StandardButton from "../../components/buttons/standard-button";
+import {Link} from "react-router-dom";
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -75,6 +78,7 @@ const OrderItem = ({ id }) => {
   }
 
   return (
+
     <form onSubmit={handleSubmit} className={classes.orderContainer}>
       <Paper>
         <Tabs value={tabValue} onChange={handleTabChange}>
@@ -104,6 +108,17 @@ const OrderItem = ({ id }) => {
       >
         {SAVE_ORDER}
       </Button>}
+      <div className={classes.controlsBlock}>
+        <Link to={config.routes.pathToOrders}>
+          <StandardButton
+              id='back'
+              title='Назад'
+              variant='outlined'
+              onClickHandler={() => {}}
+              data-cy='back-btn'
+          />
+        </Link>
+      </div>
     </form>
   );
 };

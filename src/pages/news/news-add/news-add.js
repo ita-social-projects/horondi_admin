@@ -4,12 +4,13 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import TabPanel from '../../../components/tab-panel';
-import { SaveButton } from '../../../components/buttons';
+import {SaveButton, StandardButton} from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 import { useStyles } from './news-add.styles';
 import { addArticle } from '../../../redux/news/news.actions';
 import { config } from '../../../configs';
+import { Link } from 'react-router-dom';
 
 const { languages } = config;
 const { newsErrorMessages } = config;
@@ -183,6 +184,17 @@ const NewsAdd = () => {
               required
             />
           </Paper>
+          <div className={classes.controlsBlock}>
+            <Link to={config.routes.pathToNews}>
+              <StandardButton
+                  id='back'
+                  title='Назад'
+                  variant='outlined'
+                  onClickHandler={() => {}}
+                  data-cy='back-btn'
+              />
+            </Link>
+          </div>
         </Grid>
         {preferredLanguages.length > 0 ? (
           <div>

@@ -28,6 +28,7 @@ export const useStyles = makeStyles((theme) => ({
       width: '100%'
     }
   },
+
   controlsBlock: {
     display: 'flex',
     margin: '40px 10px 20px 0'
