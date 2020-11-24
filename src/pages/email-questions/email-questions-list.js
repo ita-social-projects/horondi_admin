@@ -50,13 +50,13 @@ const EmailQuestionsList = () => {
 
   const dispatch = useDispatch();
 
-  const [filter, setFilter] = useState([]);
+  const [filter, setFilter] = useState(['ALL']);
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
-        filter,
+        filter: filter.slice(1),
         skip: currentPage * questionsPerPage
       })
     );
@@ -97,8 +97,8 @@ const EmailQuestionsList = () => {
   };
 
   const filterChangeHandler = (id) => {
-    if (id === 'all') {
-      setFilter([]);
+    if (id === 'ALL') {
+      setFilter([id]);
       return;
     }
 
@@ -137,7 +137,7 @@ const EmailQuestionsList = () => {
             senderName={question.senderName}
             email={question.email}
             qA={ReactHtmlParser(questionToShow + answerToShow)}
-            date={getTime(question.date)}
+            date={ReactHtmlParser(getTime(question.date, true))}
             status={labels.emailQuestionsLabels.ua[question.status]}
             showAvatar={false}
             showEdit={false}
@@ -158,20 +158,23 @@ const EmailQuestionsList = () => {
 
   return (
     <div className={commonStyles.container}>
-      <div className={commonStyles.adminHeader}>
+      <div
+        className={commonStyles.adminHeader}
+        style={{ flexDirection: 'column', alignItems: 'flex-start' }}
+      >
         <Typography variant='h1' className={commonStyles.materialTitle}>
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
-      </div>
-      <div className={styles.operations}>
-        <EmailQuestionsFilter
-          filterItems={filter}
-          changeHandler={filterChangeHandler}
-        />
-        <EmailQuestionsOperationsButtons
-          questionsToOperate={questionsToOperate}
-          setQuestionsToOperate={setQuestionsToOperate}
-        />
+        <div className={styles.operations}>
+          <EmailQuestionsFilter
+            filterItems={filter}
+            filterChangeHandler={filterChangeHandler}
+          />
+          <EmailQuestionsOperationsButtons
+            questionsToOperate={questionsToOperate}
+            setQuestionsToOperate={setQuestionsToOperate}
+          />
+        </div>
       </div>
       <div className={styles.tableList}>
         {questions.length ? (
