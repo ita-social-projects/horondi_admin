@@ -21,7 +21,7 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import SlidesOrder from '../slides-order';
 
 const { REMOVE_SLIDE_MESSAGE } = config.messages;
-const { DELETE_SLIDE_TITLE, CREATE_SLIDE_TITLE } = config.buttonTitles;
+const { DELETE_TITLE, CREATE_SLIDE_TITLE } = config.buttonTitles;
 const tableTitles = config.tableHeadRowTitles.homePageSlides;
 const { mainPageTitle, slideTitle } = config.titles.homePageSliderTitle;
 const { pathToAddHomePageSlide } = config.routes;
@@ -65,9 +65,9 @@ const SlidesPage = () => {
     };
     openSuccessSnackbar(
       removeSlide,
-      DELETE_SLIDE_TITLE,
+      DELETE_TITLE,
       REMOVE_SLIDE_MESSAGE,
-      DELETE_SLIDE_TITLE,
+      DELETE_TITLE,
       'danger'
     );
   };

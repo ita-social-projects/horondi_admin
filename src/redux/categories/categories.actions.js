@@ -4,7 +4,7 @@ import {
   SET_CATEGORIES_ERROR,
   SET_CATEGORIES_LOADING,
   GET_CATEGORY,
-  DELETE_CATEGORY,
+  DELETE_TITLE,
   CREATE_CATEGORY,
   SET_CATEGORY,
   RESET_NEW_CATEGORY,
@@ -59,7 +59,7 @@ export const editCategory = (payload) => ({
 });
 
 export const deleteCategory = () => ({
-  type: DELETE_CATEGORY
+  type: DELETE_TITLE
 });
 export const getSubcategories = (payload) => ({
   type: GET_SUBCATEGORIES,

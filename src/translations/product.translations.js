@@ -13,7 +13,7 @@ export const productsTranslations = {
   NEXT: 'Далі',
   BACK: 'Назад',
   CREATE_PRODUCT: 'Створити продукт',
-  DELETE_PRODUCT_TITLE: 'Видалити продукт',
+  DELETE_PRODUCT_TITLE: 'Видалити',
   DELETE_PRODUCT_MESSAGE: 'Ви дійсно хочете видалити продукт?',
   DELETE_PRODUCT_BTN: 'Видалити',
   DELETE_IMAGE_TITLE: 'Видалити зображення',

@@ -5,7 +5,7 @@ import {
   GET_CATEGORY,
   CREATE_CATEGORY,
   EDIT_CATEGORY,
-  DELETE_CATEGORY,
+  DELETE_TITLE,
   GET_SUBCATEGORIES
 } from './categories.types';
 import {
@@ -117,6 +117,6 @@ export default function* newsSaga() {
   yield takeEvery(GET_CATEGORY, handleLoadCategoryById);
   yield takeEvery(CREATE_CATEGORY, handleCreateCategory);
   yield takeEvery(EDIT_CATEGORY, handleEditCategory);
-  yield takeEvery(DELETE_CATEGORY, handleDeleteCategory);
+  yield takeEvery(DELETE_TITLE, handleDeleteCategory);
   yield takeEvery(GET_SUBCATEGORIES, handleSubcategoriesLoad);
 }

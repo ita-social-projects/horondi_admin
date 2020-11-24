@@ -11,7 +11,7 @@ import AdminTab from './components/admin-tab';
 import UserTab from './components/user-tab';
 import useUsersTabs from '../../../hooks/user/use-users-tabs';
 
-const { REMOVE_USER_TITLE } = config.buttonTitles;
+const { DELETE_TITLE } = config.buttonTitles;
 const { REMOVE_USER_MESSAGE } = config.messages;
 const userTabNames = config.tabNames.users;
 
@@ -40,9 +40,9 @@ const UsersPage = () => {
     };
     openSuccessSnackbar(
       removeUser,
-      REMOVE_USER_TITLE,
+      DELETE_TITLE,
       REMOVE_USER_MESSAGE,
-      REMOVE_USER_TITLE
+      DELETE_TITLE
     );
   };
 

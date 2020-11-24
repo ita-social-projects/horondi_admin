@@ -76,7 +76,7 @@ const EmailQuestionsOperationsButtons = ({
         onClick={deleteMany}
         disabled={!questionsToOperate.length}
       >
-        {buttonTitles.DELETE_SELECTED}
+        {buttonTitles.DELETE_TITLE}
       </Button>
     </>
   );

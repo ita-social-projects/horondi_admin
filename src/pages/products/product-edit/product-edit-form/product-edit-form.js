@@ -206,7 +206,8 @@ const ProductEditForm = () => {
             <Button
               size={buttonSize}
               type='submit'
-              variant='contained'
+              // variant='contained'
+              variant='outlined'
               color='primary'
               disabled={!isFieldsChanged}
               onClick={handleProductValidate}

@@ -3,7 +3,7 @@ import {
   SET_CATEGORIES_ERROR,
   SET_CATEGORIES_LOADING,
   GET_CATEGORY,
-  DELETE_CATEGORY,
+  DELETE_TITLE,
   SET_CATEGORY,
   RESET_NEW_CATEGORY
 } from '../categories.types';
@@ -47,7 +47,7 @@ describe('category actions tests', () => {
   });
   it('should delete category', () => {
     expect(deleteCategory(categoryId)).toEqual({
-      type: DELETE_CATEGORY,
+      type: DELETE_TITLE,
       payload: categoryId
     });
   });

@@ -36,7 +36,7 @@ import { categoryTranslations } from '../../../translations/category.translation
 import { config } from '../../../configs';
 
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
-const { DELETE_CATEGORY } = config.buttonTitles;
+const { DELETE_TITLE } = config.buttonTitles;
 const CategoriesAdd = ({ id, editMode }) => {
   // HOOKS
   const dispatch = useDispatch();
@@ -193,9 +193,9 @@ const CategoriesAdd = ({ id, editMode }) => {
       };
       openSuccessSnackbar(
         removeCategory,
-        DELETE_CATEGORY,
+        DELETE_TITLE,
         DELETE_CATEGORY_MESSAGE,
-        DELETE_CATEGORY
+        DELETE_TITLE
       );
     },
     [dispatch, openSuccessSnackbar]
