@@ -85,6 +85,9 @@ const ProductAddImages = ({
             ) : null}
           </Grid>
         </Grid>
+        {shouldValidate && !primaryImage && (
+          <div className={styles.error}>{REQUIRED_PHOTOS}</div>
+        )}
       </Box>
       <div className={styles.chipContainer}>
         <div>
@@ -105,9 +108,6 @@ const ProductAddImages = ({
           ))}
         </div>
       </div>
-      {shouldValidate && (!primaryImage || !additionalImages.length) && (
-        <div className={styles.error}>{REQUIRED_PHOTOS}</div>
-      )}
       <StepperButtons
         activeStep={activeStep}
         handleBack={handleBack}
