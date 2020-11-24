@@ -103,6 +103,15 @@ describe('Users saga test', () => {
     );
   };
 
+  const pushExpect = (analysis, id, url) => {
+    expect(analysis[id]).toEqual(
+      put({
+        type: '@@router/CALL_HISTORY_METHOD',
+        payload: { method: 'push', args: [url] }
+      })
+    );
+  };
+
   const filterAnalysis = (analysis) => ({
     analysisPut: analysis.filter((e) => e.type === 'PUT'),
     analysisCall: analysis.filter((e) => e.type === 'CALL')
@@ -236,9 +245,6 @@ describe('Users saga test', () => {
         expect(analysisPut[SECOND]).toEqual(
           put({ type: DELETE_USER_LOCALLY, payload: mockUser._id })
         );
-      })
-      .catch((err) => {
-        throw err;
       }));
 
   it('should switch user status', () =>
@@ -276,9 +282,6 @@ describe('Users saga test', () => {
         expect(analysisPut[SECOND]).toEqual(
           put({ type: UPDATE_USER_LOCALLY, payload: mockUser._id })
         );
-      })
-      .catch((err) => {
-        throw err;
       }));
 
   it('should register admin', () =>
@@ -307,15 +310,7 @@ describe('Users saga test', () => {
         expect(analysisCall).toHaveLength(2);
 
         loadingExpect(analysisPut, FIRST, SECOND);
-        expect(analysisPut[THIRD]).toEqual(
-          put({
-            type: '@@router/CALL_HISTORY_METHOD',
-            payload: { method: 'push', args: ['/users'] }
-          })
-        );
-      })
-      .catch((err) => {
-        throw err;
+        pushExpect(analysisPut, THIRD, '/users');
       }));
 
   it('should confirm admin', () =>
@@ -344,15 +339,7 @@ describe('Users saga test', () => {
         expect(analysisCall).toHaveLength(2);
 
         loadingExpect(analysisPut, FIRST, SECOND);
-        expect(analysisPut[THIRD]).toEqual(
-          put({
-            type: '@@router/CALL_HISTORY_METHOD',
-            payload: { method: 'push', args: ['/'] }
-          })
-        );
-      })
-      .catch((err) => {
-        throw err;
+        pushExpect(analysisPut, THIRD, '/');
       }));
 
   it('should valiadte token', () =>
@@ -377,9 +364,6 @@ describe('Users saga test', () => {
         expect(analysisCall).toHaveLength(1);
 
         loadingExpect(analysisPut, FIRST, SECOND);
-      })
-      .catch((err) => {
-        throw err;
       }));
 
   it('should handle users error', () =>
@@ -436,9 +420,6 @@ describe('Users saga test', () => {
         expect(analysisPut[FIFTH]).toEqual(
           put({ type: SET_SNACKBAR_STATUS, payload: true })
         );
-      })
-      .catch((err) => {
-        throw err;
       }));
 
   it('should handle snackbar success', () =>
@@ -475,8 +456,5 @@ describe('Users saga test', () => {
         expect(analysisPut[THIRD]).toEqual(
           put({ type: SET_SNACKBAR_STATUS, payload: true })
         );
-      })
-      .catch((err) => {
-        throw err;
       }));
 });
