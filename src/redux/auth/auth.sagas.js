@@ -29,7 +29,7 @@ export function* handleAdminLoad({ payload }) {
 
     yield put(setAdminId(admin._id));
     yield put(setAuth(true));
-    yield put(push('/stats'));
+    yield put(push('/mainpage'));
     yield put(setAuthLoading(false));
   } catch (error) {
     yield put(setAuthLoading(false));

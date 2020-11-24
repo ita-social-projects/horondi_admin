@@ -1,4 +1,10 @@
 const titles = {
+  mainPageTitles: {
+    mainTitle: 'Домашня сторінка',
+    commentsTitle: 'Останні коментарі',
+    ordersTitle: 'Останні замовлення',
+    changesTitle: 'Останні зміни'
+  },
   categoriesTitles: {
     deleteTitle: 'Видалити категорію'
   },

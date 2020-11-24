@@ -14,9 +14,11 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import StyleIcon from '@material-ui/icons/Style';
 import LinkIcon from '@material-ui/icons/Link';
 import FilterIcon from '@material-ui/icons/Filter';
+import HomeIcon from '@material-ui/icons/Home';
 import routes from './routes';
 
 const menuCategories = [
+  ['Домашня сторінка', routes.pathToMainPage, HomeIcon],
   ['Статистика', routes.pathToStatistic, BarChartIcon],
   ['Продукти', routes.pathToProducts, ShoppingCart],
   ['Категорії', routes.pathToCategories, CategoryIcon],

@@ -50,6 +50,7 @@ import StatisticPage from '../pages/statistic';
 import SlidesPage from '../pages/home-page-slides/slides-page';
 import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
+import MainPage from '../pages/main-page';
 
 const { routes } = config;
 
@@ -82,6 +83,7 @@ const Routes = () => {
       <NavBar />
       <NavMenu />
       <Switch>
+        <Route path={routes.pathToMainPage} exact component={MainPage} />
         <Route path={routes.pathToUsers} exact component={UsersPage} />
         <Route
           path={routes.pathToUsersDetails}
