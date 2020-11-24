@@ -37,7 +37,7 @@ import { config } from '../../../configs';
 
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
 const { DELETE_CATEGORY } = config.buttonTitles;
-const CategoriesAdd = ({ id, editMode }) => {
+const CategoriesAdd = ({ id, editMode}) => {
   // HOOKS
   const dispatch = useDispatch();
   const { newCategory, categories, loading } = useSelector(
@@ -47,11 +47,10 @@ const CategoriesAdd = ({ id, editMode }) => {
       loading: Categories.categoriesLoading
     })
   );
-
-  const { isMain } = newCategory;
+   const { isMain } = newCategory;
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  // MAIN CATEGORIES []
+  //MAIN CATEGORIES []
   const mainCategories = useMemo(
     () =>
       categories
@@ -70,8 +69,8 @@ const CategoriesAdd = ({ id, editMode }) => {
 
   const parentCategory = useMemo(
     () => mainCategories.find((ctg) => ctg.subcategories.includes(id)),
-    [id, mainCategories]
-  );
+      [id, mainCategories]
+    );
 
   useEffect(() => {
     if (!editMode) {
@@ -112,12 +111,12 @@ const CategoriesAdd = ({ id, editMode }) => {
   const [tabValue, setTabValue] = useState(0);
 
   // NAMES
-  const nameModel = { lang: '', value: '' };
+  const nameModel = { en: { value: '' }, uk: { value: '' } };
   const [newName, setNewName] = useState(nameModel);
   const [showAddNameForm, setShowAddNameForm] = useState(true);
 
   // PARENT CATEGORY
-  const [parentId, setParentId] = useState(parentCategory);
+   const [parentId, setParentId] = useState(parentCategory);
 
   // IMAGES
   const [categoryImageUrl, setCategoryImageUrl] = useState(null);
@@ -140,17 +139,27 @@ const CategoriesAdd = ({ id, editMode }) => {
     } else {
       setCodeIsValid(false);
     }
-    if (newCategory.name.length >= 2) {
+    if (newCategory.name.length >=1) {
       setNameIsValid(true);
     } else {
       setNameIsValid(false);
     }
   }, [newCategory.code, newCategory.name, setCodeIsValid, setNameIsValid]);
 
+
+//   if (newCategory.name.length >= 2) {
+//     setNameIsValid(true);
+//   } else {
+//     setNameIsValid(false);
+//   }
+// }, [newCategory.code, newCategory.name, setCodeIsValid, setNameIsValid]);
+
   // HANDLERS
   const handleChange = (e) => {
     const inputName = e.target.name;
+   
     let inputValue = e.target.checked;
+    
     if (e.target.type === 'text') {
       inputValue = e.target.value;
     }
@@ -160,19 +169,20 @@ const CategoriesAdd = ({ id, editMode }) => {
     dispatch(setCategory({ [inputName]: inputValue }));
   };
 
-  const handleTabChange = (e, newValue) => {
+   const handleTabChange = (e, newValue) => {
     setTabValue(newValue);
-  };
-
+   };
+  /// //////////////////////////////////////////////////
   const handleCategorySave = () => {
-    setShouldValidate(true);
-    if (isMain) {
-      setParentId(null);
-    }
-    if (codeIsValid && nameIsValid) {
-      dispatch(createCategory({ category: newCategory, parentId, upload }));
-    }
+    //  setShouldValidate(true);
+    // if (isMain) {
+    //   setParentId(null);
+    // }
+    //  if (codeIsValid && nameIsValid) {
+    dispatch(createCategory({ category: newCategory, parentId: null, upload }));
+    console.log('rrrrrrrrrrrrr');
   };
+  //};
 
   const handleCategoryEdit = () => {
     const id = newCategory._id;
@@ -200,45 +210,48 @@ const CategoriesAdd = ({ id, editMode }) => {
     },
     [dispatch, openSuccessSnackbar]
   );
+  /// /////////////////////////////////////////////////////////////////////////////////////
+  const clearCategoryNames = () => {
+    setNewName({ en: { value: '' }, uk: { value: '' } });
+  };
 
   // NAME HANDLERS
   const hideAddNameForm = () => {
     setShowAddNameForm(false);
   };
 
-  const handleAddName = () => {
-    if (!showAddNameForm) {
-      return setShowAddNameForm(true);
-    }
-    const nameIndex = newCategory.name.findIndex(
-      (name) => name.lang === newName.lang
-    );
-    if (nameIndex >= 0) {
-      return dispatch(
-        setCategory({
-          name: [
-            ...newCategory.name.slice(0, nameIndex),
-            newName,
-            ...newCategory.name.slice(nameIndex + 1)
-          ]
-        })
-      );
-    }
+  // const handleAddName = () => {
+  //   if (!showAddNameForm) {
+  //     return setShowAddNameForm(true);
+  //   }
+  //   const nameIndex = newCategory.name.findIndex(
+  //     (name) => name.lang === newName.lang
+  //   );
+  //   if (nameIndex >= 0) {
+  //     return dispatch(
+  //       setCategory({
+  //         name: [
+  //           ...newCategory.name.slice(0, nameIndex),
+  //           newName,
+  //           ...newCategory.name.slice(nameIndex + 1)
+  //         ]
+  //       })
+  //     );
+  //   }
 
-    if (Object.keys(newName).every((key) => newName[key])) {
-      dispatch(setCategory({ name: [...newCategory.name, newName] }));
-      setNewName(nameModel);
-    }
-  };
-  const changeInput = (e) => {
-    const inputValue = e.target.value;
-    console.log(inputValue);
-  };
+  //   if (Object.keys(newName).every((key) => newName[key])) {
+  //     dispatch(setCategory({ name: [...newCategory.name, newName] }));
+  //     setNewName(nameModel);
+  //   }
+  // };
+  // const changeInput = (e) => {
+  //   setNewName({lang:'En',value:''})
+  // };
 
   const handleNameChange = (e) => {
     const inputName = e.target.name;
     const inputValue = e.target.value;
-    setNewName({ ...newName, [inputName]: inputValue });
+    setNewName((prevState) => ({ ...prevState, [inputName]: { value: inputValue } }));
   };
 
   const handleNameEdit = (lang, value) => {
@@ -267,25 +280,25 @@ const CategoriesAdd = ({ id, editMode }) => {
   };
 
   // SUBCATEGORY LIST []
-  const subcategoryList = useMemo(() => {
-    const mainCategory = categories.find((category) => category._id === id);
-    return categories
-      .filter(
-        (subcategory) =>
-          mainCategory && mainCategory.subcategories.includes(subcategory._id)
-      )
-      .map((subcategory) => (
-        <TableContainerRow
-          key={subcategory._id}
-          id={subcategory._id}
-          image={subcategory.images.thumbnail || ''}
-          name={subcategory.name[0].value}
-          available={subcategory.available ? 'Так' : 'Ні'}
-          deleteHandler={() => categoryDeleteHandler(subcategory._id)}
-          editHandler={() => dispatch(push(`/add-category/${subcategory._id}`))}
-        />
-      ));
-  }, [id, categories, dispatch, categoryDeleteHandler]);
+  // const subcategoryList = useMemo(() => {
+  //   const mainCategory = categories.find((category) => category._id === id);
+  //   return categories
+  //     .filter(
+  //       (subcategory) =>
+  //         mainCategory && mainCategory.subcategories.includes(subcategory._id)
+  //     )
+  //     .map((subcategory) => (
+  //       <TableContainerRow
+  //         key={subcategory._id}
+  //         id={subcategory._id}
+  //         image={subcategory.images.thumbnail || ''}
+  //         name={subcategory.name[0].value}
+  //         available={subcategory.available ? 'Так' : 'Ні'}
+  //         deleteHandler={() => categoryDeleteHandler(subcategory._id)}
+  //         editHandler={() => dispatch(push(`/add-category/${subcategory._id}`))}
+  //       />
+  //     ));
+  // }, [id, categories, dispatch, categoryDeleteHandler]);
 
   // CATEGORY NAME LIST []
   const categoryNameList = useMemo(
@@ -400,14 +413,14 @@ const CategoriesAdd = ({ id, editMode }) => {
                           <TextField
                             label='Назва(Ukr)'
                             variant='outlined'
-                            name='value'
-                            // error={!nameIsValid && shouldValidate}
-                            // helperText={
-                            //   !nameIsValid && shouldValidate
-                            //     ? "Ім'я повинно містити як мінімум 2 значення"
-                            //     : ''
-                            // }
-                            value={newName.value}
+                            name='uk'
+                             error={!nameIsValid && shouldValidate}
+                            helperText={
+                              !nameIsValid && shouldValidate
+                                ? "Ім'я повинно містити 2 значення(Ukr & En)"
+                                : ''
+                            }
+                            value={newName.uk.value}
                             className={classes.addNameInput}
                             onChange={handleNameChange}
                             fullWidth
@@ -416,17 +429,16 @@ const CategoriesAdd = ({ id, editMode }) => {
                           <TextField
                             label='Назва(En)'
                             variant='outlined'
-                            // error={!nameIsValid && shouldValidate}
-                            // helperText={
-                            //   !nameIsValid && shouldValidate
-                            //     ? "Ім'я повинно містити 2 значення(Ukr & En)"
-                            //     : ''
-                            // }
-                            // name='value'
-                            // value={newName.value}
-
-                            name='lang'
-                            value={newName.lang}
+                             error={!nameIsValid && shouldValidate}
+                            helperText={
+                              !nameIsValid && shouldValidate
+                                ? "Ім'я повинно містити 2 значення(Ukr & En)"
+                                : ''
+                            }
+                            name='value'
+                            value={newName.value}
+                            name='en'
+                            value={newName.en.value}
                             className={classes.addNameInput}
                             onChange={handleNameChange}
                             fullWidth
@@ -442,7 +454,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                           fullWidth
                         >
                           {config.buttonTitles.ADD_CATEGORY_NAME}
-                        </Button>  */}
+                        </Button>   */}
                         Кнопка яка додає назву в старому функціоналі
                         {showAddNameForm ? (
                           <>
@@ -452,18 +464,7 @@ const CategoriesAdd = ({ id, editMode }) => {
                               color='primary'
                               className={classes.addNameBtn}
                               // onClick={hideAddNameForm}
-                              onClick={changeInput}
-                              по
-                              кліку
-                              пропадає
-                              форма
-                              а
-                              треба
-                              зробити
-                              щоб
-                              очищався
-                              інпут
-                              fullWidth
+                              onClick={clearCategoryNames}
                             >
                               {config.buttonTitles.CANCEL}
                             </Button>
@@ -553,8 +554,9 @@ const CategoriesAdd = ({ id, editMode }) => {
           variant='contained'
           color='primary'
           className={classes.saveBtn}
-          // onClick={editMode ? handleCategoryEdit : handleCategorySave}
+          //  onClick={editMode ? handleCategoryEdit : handleCategorySave}
           onClick={handleCategorySave}
+          // onClick={handleCategoryEdit}
         >
           {config.buttonTitles.titleGenerator(editMode, !isMain)}
         </Button>
