@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
 
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../hooks/user/use-users-handlers';
 import LoadingBar from '../../../components/loading-bar';
@@ -14,6 +15,7 @@ import UserDetailsCard from './containers/user-details-card';
 import CommentsSection from '../../../components/comments-section/comments-section';
 import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
 import { config } from '../../../configs';
+import { StandardButton } from '../../../components/buttons';
 
 const {
   USER_ACTIVE_TITLE,
@@ -92,6 +94,18 @@ const UsersDetails = (props) => {
           buttonStatus={buttonStatus}
           buttonHandler={() => userStatusHandler(id)}
         />
+        <div className={styles.controlsBlock}>
+          <Link to={config.routes.pathToBusinessPages}>
+            <StandardButton
+              className={styles.userDetails}
+              id='back'
+              title='Назад'
+              variant='outlined'
+              onClickHandler={() => {}}
+              data-cy='back-btn'
+            />
+          </Link>
+        </div>
       </Grid>
       <Grid className={styles.showComments}>
         <Button
