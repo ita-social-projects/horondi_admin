@@ -17,7 +17,7 @@ export const businessPageId = '0c3c7954dd35de268bed4fe8';
 export const businessPageToRemoveId = '0c3c7954dd35de268bed4fe8';
 export const businessPages = [
   {
-    _id: '0c3c7954dd35de268bed4fe8',
+    _id: '0c3c7954dd35de268bed4fe9',
     code: 'about-us-test',
     title: [{ value: 'Про нас' }, { value: 'About us' }],
     text: [
@@ -43,6 +43,7 @@ export const businessPages = [
     ]
   }
 ];
+
 export const businessPageToCreate = {
   page: {
     code: 'business-page',
@@ -59,28 +60,7 @@ export const businessPageToCreate = {
   },
   files: []
 };
-export const updatedBusinessPage = {
-  _id: 'de57efa1gdg543414b430',
-  code: 'business-page',
-  title: [
-    {
-      lang: 'uk',
-      value: `${ukText} про нас оновлена`
-    },
-    {
-      lang: 'en',
-      value: `${enText} about us updated`
-    }
-  ],
-  text: [
-    {
-      value: ukText
-    },
-    {
-      value: enText
-    }
-  ]
-};
+
 export const businessPageToUpdate = {
   id: 'de57efa1gdg543414b430',
   page: {
@@ -94,13 +74,6 @@ export const businessPageToUpdate = {
         value: `${enText} about us updated`
       }
     ]
-  }
-};
-export const fakeBusinessPageRes = {
-  data: {
-    getBusinessTextById: {
-      ...fakeBusinessPage
-    }
   }
 };
 
@@ -126,19 +99,4 @@ export const fakeBusinessPage = {
       value: 'Fake text'
     }
   ]
-};
-export const fakePages = {
-  data: {
-    getAllBusinessTexts: {
-      ...businessPages
-    }
-  }
-};
-
-export const businessPageToDeleteMock = {
-  data: {
-    deleteBusinessText: {
-      ...businessPages
-    }
-  }
 };
