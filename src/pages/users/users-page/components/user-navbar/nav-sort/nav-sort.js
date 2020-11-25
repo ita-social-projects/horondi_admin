@@ -32,6 +32,7 @@ const NavSort = () => {
       <Typography>{userLabelsTranslations.sort}</Typography>
       <FormControl className={styles.formControl}>
         <Select
+          data-cy='user-sorting'
           labelId='checkbox-label'
           id='checkbox'
           value={sortValue}
