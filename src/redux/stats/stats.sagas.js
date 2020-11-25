@@ -32,7 +32,9 @@ import {
   setSnackBarStatus
 } from '../snackbar/snackbar.actions';
 
-function* handleInitialStatsLoad() {
+import { selectStatsDate } from '../selectors/stats.selectors';
+
+export function* handleInitialStatsLoad() {
   try {
     yield put(setStatsLoading(true));
     const categories = yield call(getPopularCategories);
@@ -45,10 +47,10 @@ function* handleInitialStatsLoad() {
   }
 }
 
-function* handleOrdersStatisticLoad() {
+export function* handleOrdersStatisticLoad() {
   try {
     yield put(setUpdatingDoughnutData(true));
-    const date = yield select(({ Stats }) => Stats.date);
+    const date = yield select(selectStatsDate);
     const orders = yield call(getOrdersStats, date);
     yield put(setAllOrdersStats(orders));
     yield put(setUpdatingDoughnutData(false));
@@ -57,7 +59,7 @@ function* handleOrdersStatisticLoad() {
   }
 }
 
-function* handlePaidOrdersLoad() {
+export function* handlePaidOrdersLoad() {
   try {
     yield put(setUpdatingBarData(true));
     const date = yield select(({ Stats }) => Stats.date);
@@ -69,7 +71,7 @@ function* handlePaidOrdersLoad() {
   }
 }
 
-function* handleUsersStatisticLoad() {
+export function* handleUsersStatisticLoad() {
   try {
     yield put(setUpdatingBarData(true));
     const date = yield select(({ Stats }) => Stats.date);
@@ -81,7 +83,7 @@ function* handleUsersStatisticLoad() {
   }
 }
 
-function* handleStatsErrors(e) {
+export function* handleStatsErrors(e) {
   yield put(setStatsLoading(false));
   yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(e.message));
