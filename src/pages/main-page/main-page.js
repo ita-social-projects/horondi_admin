@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Typography } from '@material-ui/core';
+import moment from 'moment';
 import { useStyles } from './main-page.styles';
 
 import { getRecentComments } from '../../redux/comments/comments.actions';
-import { getOrderList } from '../../redux/orders/orders.actions';
+import { getOrderList, getOrder } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
 import titles from '../../configs/titles';
 
@@ -27,7 +28,7 @@ const MainPage = () => {
     orderLoading: Orders.orderLoading,
     ordersList: Orders.list.items
   }));
-  console.log(ordersList);
+
   useEffect(() => {
     dispatch(getRecentComments());
   }, [dispatch]);
@@ -36,7 +37,7 @@ const MainPage = () => {
     dispatch(
       getOrderList({
         filter: {
-          orderStatus: 'CREATED'
+          orderStatus: 'CANCELLED'
         }
       })
     );
@@ -48,20 +49,12 @@ const MainPage = () => {
         <div className={classes.commentText}>{text}</div>
         <div className={classes.commentInfo}>
           <div>{user.name || 'Гість'}</div>
-          <div>
-            {new Date(+date).toLocaleTimeString()}{' '}
-            {new Date(+date).toLocaleDateString()}
-          </div>
+          <div>{moment.unix(date / 1000).format('HH:mm DD.MM.YYYY ')}</div>
         </div>
       </div>
     ) : null
   );
 
-  //   const orders1 = ordersList?.map(({})=>{
-  //       return
-  //   })
-
-  //   const orders = orders1 || 'message'
   if (orderLoading || commentsLoading) {
     return <LoadingBar />;
   }
@@ -92,7 +85,26 @@ const MainPage = () => {
               <Typography variant='h5' className={classes.blockTitle}>
                 {ordersTitle}
               </Typography>
-              {/* {ordersList &&orders} */}
+              {ordersList && ordersList.length ? (
+                ordersList.map(({ dateOfCreation, totalItemsPrice, _id }) => (
+                  <div className={classes.order} key={_id}>
+                    Замовлення від{' '}
+                    <span>
+                      {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
+                    </span>{' '}
+                    на суму{' '}
+                    <span>
+                      {totalItemsPrice[0].value}
+                      {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
+                      {totalItemsPrice[1].currency}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <div className={classes.emptyOrders}>
+                  У вас немає нових замовлень
+                </div>
+              )}
             </Paper>
           </Grid>
           <Grid item className={classes.commentsContainer}>

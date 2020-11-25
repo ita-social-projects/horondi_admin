@@ -26,13 +26,39 @@ export const useStyles = makeStyles((theme) => {
       marginBottom: 15
     },
     ordersContainer: {
-      height: '50%'
+      height: 'calc(50vh - 62.5px)',
+      '@media (max-width: 599px)': {
+        height: `calc(100vh - 125px)`
+      }
+    },
+    order: {
+      marginBottom: 10,
+      borderBottom: '1px solid lightgrey',
+      '& span': {
+        fontWeight: 'bold',
+        fontSize: '1.1em',
+        margin: '0 5px'
+      }
+    },
+    emptyOrders: {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: '1.5em',
+      marginTop: -40
     },
     commentsContainer: {
-      height: '50%'
+      height: 'calc(50vh - 62.5px)',
+      '@media (max-width: 599px)': {
+        height: 'fit-content',
+        paddingLeft: '0',
+        paddingRight: 0
+      }
     },
     changesContainer: {
-      height: '100%'
+      height: `calc(100vh - 125px)`
     },
     comment: {
       borderBottom: '1px solid lightgrey',
