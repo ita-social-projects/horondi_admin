@@ -75,9 +75,7 @@ export const mockAdmin = { adminInput, token: mockToken };
 export const mockUser = mockUsersList.items[0];
 
 export const mockError = {
-  payload: {
-    message: 'error'
-  }
+  message: 'error'
 };
 
 export const mockStatus = statuses.SUCCESS_UPDATE_STATUS;

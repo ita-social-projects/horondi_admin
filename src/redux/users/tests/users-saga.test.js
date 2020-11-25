@@ -361,7 +361,7 @@ describe('Users saga test', () => {
       .put(setUsersLoading(false))
       .put(setUserError({ e: mockError }))
       .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(mockError.payload.message))
+      .put(setSnackBarMessage(mockError.message))
       .put(setSnackBarStatus(true))
       .hasFinalState({
         Users: {
@@ -393,7 +393,7 @@ describe('Users saga test', () => {
         expect(analysisPut[FOURTH]).toEqual(
           put({
             type: SET_SNACKBAR_MESSAGE,
-            payload: mockError.payload.message
+            payload: mockError.message
           })
         );
         expect(analysisPut[FIFTH]).toEqual(

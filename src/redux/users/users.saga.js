@@ -138,7 +138,7 @@ export function* handleUsersError(e) {
   yield put(setUsersLoading(false));
   yield put(setUserError({ e }));
   yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.payload.message));
+  yield put(setSnackBarMessage(e.message));
   yield put(setSnackBarStatus(true));
 }
 
