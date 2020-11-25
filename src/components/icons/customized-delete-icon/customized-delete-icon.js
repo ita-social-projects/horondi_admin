@@ -12,7 +12,11 @@ const CustomizedDeleteIcon = (props) => {
 
   return (
     <Tooltip title={DELETE_TITLE}>
-      <IconButton aria-label={DELETE_TITLE} onClick={onClickHandler}>
+      <IconButton
+        aria-label={DELETE_TITLE}
+        onClick={onClickHandler}
+        data-cy='delete-btn'
+      >
         <DeleteIcon fontSize={size} color='error' />
       </IconButton>
     </Tooltip>
