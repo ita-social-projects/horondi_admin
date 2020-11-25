@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useStyles } from './main-page.styles';
 
 import { getRecentComments } from '../../redux/comments/comments.actions';
-import { getOrderList, getOrder } from '../../redux/orders/orders.actions';
+import { getOrderList } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
 import titles from '../../configs/titles';
 
@@ -72,6 +72,7 @@ const MainPage = () => {
         className={classes.gridContainer}
       >
         <Grid
+          classes={{ item: classes.item }}
           container
           item
           spacing={3}
