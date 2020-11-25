@@ -33,13 +33,15 @@ const ImageUploadContainer = ({
           Завантажити
         </Button>
       </label>
-      <Avatar
-        data-cy='patternImage'
-        src={srcForAvatar}
-        className={styles.large}
-      >
-        <Image />
-      </Avatar>
+      {srcForAvatar ? (
+        <Avatar
+          data-cy='patternImage'
+          src={srcForAvatar}
+          className={styles.large}
+        >
+          <Image />
+        </Avatar>
+      ) : null}
       <span className={styles.imageName}>{fileName}</span>
     </div>
   );

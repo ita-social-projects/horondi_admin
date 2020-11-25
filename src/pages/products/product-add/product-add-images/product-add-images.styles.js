@@ -5,10 +5,8 @@ export const useStyles = makeStyles((theme) => ({
     position: 'relative'
   },
   error: {
-    // position: 'absolute',
-    color: theme.palette.error.main
-    // left: theme.spacing(1),
-    // bottom: 39
+    color: theme.palette.error.main,
+    padding: '10px 0 0 0'
   },
   chipContainer: {
     display: 'grid',
