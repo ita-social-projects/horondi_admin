@@ -5,12 +5,14 @@ import {
   handleCurrentBusinessPageLoad,
   handleAddBusinessPage,
   handleBusinessPageUpdate,
-  handleBusinessPageDelete
+  handleBusinessPageDelete,
+  handleBusinessPageError
 } from '../business-pages.sagas';
 import {
   setBusinessPages,
   setLoading,
-  setCurrentBusinessPage
+  setCurrentBusinessPage,
+  setBusinessPagesError
 } from '../business-pages.actions';
 import { config } from '../../../configs';
 import {
@@ -25,7 +27,8 @@ import {
   businessPage,
   fakeBusinessPage,
   businessPageToUpdate,
-  businessPageToCreate
+  businessPageToCreate,
+  error
 } from './business-pages.variables';
 
 import {
@@ -167,4 +170,25 @@ describe('business pages sagas test', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(6);
       }));
+  it('should handle orders error', () => {
+    expectSaga(handleBusinessPageError, error)
+      .withReducer(businessPagesReducer)
+      .put(setLoading(false))
+      .put(setBusinessPagesError({ e: error }))
+      .put(setSnackBarSeverity('error'))
+      .put(setSnackBarMessage(error.message))
+      .put(setSnackBarStatus(true))
+      .hasFinalState({
+        list: [],
+        currentPage: null,
+        loading: false,
+        error: { e: error }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(5);
+      });
+  });
 });
