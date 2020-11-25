@@ -1,5 +1,9 @@
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+import {
+  selectProductsAndTable,
+  selectProducts
+} from '../selectors/products.selectors';
 
 import {
   setAllProducts,
@@ -62,15 +66,12 @@ const { routes } = config;
 export function* handleFilterLoad() {
   try {
     yield put(setProductsLoading(true));
-    const { productsState, tableState } = yield select(
-      ({ Products, Table }) => ({
-        productsState: Products,
-        tableState: Table
-      })
-    );
+    const { productsState, tableState } = yield select(selectProductsAndTable);
     const products = yield call(getAllProducts, productsState, tableState);
     yield put(
-      setPagesCount(Math.ceil(products.count / tableState.rowsPerPage))
+      setPagesCount(
+        Math.ceil(products.count / tableState.pagination.rowsPerPage)
+      )
     );
     yield put(setItemsCount(products.count));
     yield put(setAllProducts(products.items));
@@ -123,7 +124,7 @@ export function* handleModelsLoad({ payload }) {
 export function* handleProductAdd() {
   try {
     yield put(setProductsLoading(true));
-    const productState = yield select(({ Products }) => Products);
+    const productState = yield select(selectProducts);
     const addedProduct = yield call(addProduct, productState);
     yield call(handleFilterLoad);
     yield put(clearProductToSend());
