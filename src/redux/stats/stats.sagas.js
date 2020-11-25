@@ -62,7 +62,7 @@ export function* handleOrdersStatisticLoad() {
 export function* handlePaidOrdersLoad() {
   try {
     yield put(setUpdatingBarData(true));
-    const date = yield select(({ Stats }) => Stats.date);
+    const date = yield select(selectStatsDate);
     const orders = yield call(getPaidOrdersStats, date);
     yield put(setPaidOrdersStats(orders));
     yield put(setUpdatingBarData(false));
@@ -74,7 +74,7 @@ export function* handlePaidOrdersLoad() {
 export function* handleUsersStatisticLoad() {
   try {
     yield put(setUpdatingBarData(true));
-    const date = yield select(({ Stats }) => Stats.date);
+    const date = yield select(selectStatsDate);
     const users = yield call(getUsersByDays, date);
     yield put(setUsersByDays(users));
     yield put(setUpdatingBarData(false));
