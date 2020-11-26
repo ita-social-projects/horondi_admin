@@ -104,7 +104,7 @@ export function* handleModelUpdate({ payload }) {
   }
 }
 
-function* handleModelError(e) {
+export function* handleModelError(e) {
   yield put(setModelLoading(false));
   yield put(setModelError({ e }));
   yield put(setSnackBarSeverity('error'));
