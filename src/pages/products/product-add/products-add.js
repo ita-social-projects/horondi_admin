@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { Paper } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { push } from 'react-router-redux';
 import { useStyles } from './products-add.styles';
 
 import useProductHandlers from '../../../hooks/product/use-product-handlers';
@@ -140,7 +141,7 @@ const ProductsAdd = () => {
             id='back'
             title={config.buttonTitles.GO_BACK_TITLE}
             variant='outlined'
-            onClickHandler={() => {}}
+            onClickHandler={() => dispatch(push(config.routes.pathToProducts))}
             data-cy='back-btn'
           />
         </Link>
