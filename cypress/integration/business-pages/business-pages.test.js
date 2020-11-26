@@ -36,6 +36,10 @@ describe('Business pages test ', () => {
   });
 
   it('should be visible and contain values', () => {
+    cy.get('[data-cy=main-header]').should('be.visible');
+    cy.get('[data-cy=main-header]').contains(
+      config.titles.businessPageTitles.mainPageTitle
+    );
     cy.get('[data-cy=add-business-page]').should('be.visible');
     cy.get('[data-cy=№]').contains(config.tableHeadRowTitles.businessPages[0]);
     cy.get('[data-cy=Код]').contains(
@@ -54,6 +58,10 @@ describe('Business pages test ', () => {
       .its('list')
       .should('not.to.be', null);
     cy.get('[data-cy=add-business-page]').click();
+    cy.get('[data-cy=add-header]').should('be.visible');
+    cy.get('[data-cy=add-header]').contains(
+      config.titles.businessPageTitles.addBusinessPageTitle
+    );
     cy.get('[data-cy=page-code]').should('be.visible');
     cy.get('[data-cy=page-code]').contains('Код сторінки');
     cy.get('[data-cy=ua]').should('be.visible');

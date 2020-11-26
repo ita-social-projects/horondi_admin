@@ -143,7 +143,11 @@ const BusinessPageForm = ({ id, editMode }) => {
   return (
     <div className={common.container}>
       <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+        <Typography
+          variant='h1'
+          className={common.materialTitle}
+          data-cy='add-header'
+        >
           {config.titles.businessPageTitles.addBusinessPageTitle}
         </Typography>
       </div>
