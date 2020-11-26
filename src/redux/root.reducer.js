@@ -11,7 +11,7 @@ import Material from './material/material.reducer';
 import Pattern from './pattern/pattern.reducer';
 import BusinessPages from './business-pages/business-pages.reducer';
 import Products from './products/products.reducer';
-import Categories from './categories/categories.reducer';
+import Categories from './category-new/category.reducer';
 import Users from './users/users.reducer';
 import Comments from './comments/comments.reducer';
 import HomePage from './home/home.reducer';

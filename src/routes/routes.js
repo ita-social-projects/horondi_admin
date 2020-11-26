@@ -20,8 +20,9 @@ import MaterialPage from '../pages/material/material-page';
 import MaterialAdd from '../pages/material/material-add';
 import ProductsPage from '../pages/products/products-page';
 import ProductsAdd from '../pages/products/product-add';
-import Categories from '../pages/categories/categories-page';
-import CategoriesAdd from '../pages/categories/categories-add/categories-add';
+import Categories from '../pages/category-new/category-page';
+import CategoryDetails from '../pages/category-new/category-details'
+import CategoryAdd from '../pages/category-new/category-add';
 import UsersDetails from '../pages/users/users-details';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
@@ -50,6 +51,7 @@ import StatisticPage from '../pages/statistic';
 import SlidesPage from '../pages/home-page-slides/slides-page';
 import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
+
 
 const { routes } = config;
 
@@ -166,13 +168,13 @@ const Routes = () => {
         <Route
           path={routes.pathToAddCategory}
           exact
-          component={CategoriesAdd}
+          component={CategoryAdd}
         />
         <Route
           path={routes.pathToEditCategory}
           exact
           render={({ match }) => (
-            <CategoriesAdd id={match.params.id} editMode />
+            <CategoryDetails id={match.params.id} />
           )}
         />
         <Route

@@ -30,6 +30,12 @@ export const patternErrorMessages = {
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
+
+
+export const categoryErrorMessages = {
+  CATEGORY_VALIDATION_ERROR: 'Мінімум 2 символи',
+  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім',
+};
 export const headerErrorMessages = {
   HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
   HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
