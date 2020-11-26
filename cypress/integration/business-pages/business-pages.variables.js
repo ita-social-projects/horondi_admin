@@ -128,6 +128,19 @@ export const deleteBusinessText = (req, body) => {
 };
 
 export const updateBusinessText = (req) => {
+  businessTexts.pop();
+  businessTexts.push({
+    _id: addedBusinessPage._id,
+    title: [
+      {
+        value: addedBusinessPage.title[0].value + updateValues
+      },
+      {
+        value: addedBusinessPage.title[1].value + updateValues
+      }
+    ],
+    code: addedBusinessPage.code
+  });
   req.reply({
     body: {
       data: {
