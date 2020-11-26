@@ -3,14 +3,15 @@ import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
+import { push } from 'react-router-redux';
 import TabPanel from '../../../components/tab-panel';
-import {SaveButton, StandardButton} from '../../../components/buttons';
+import { SaveButton, StandardButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 import { useStyles } from './news-add.styles';
 import { addArticle } from '../../../redux/news/news.actions';
 import { config } from '../../../configs';
-import { Link } from 'react-router-dom';
 
 const { languages } = config;
 const { newsErrorMessages } = config;
@@ -187,11 +188,11 @@ const NewsAdd = () => {
           <div className={classes.controlsBlock}>
             <Link to={config.routes.pathToNews}>
               <StandardButton
-                  id='back'
-                  title='Назад'
-                  variant='outlined'
-                  onClickHandler={() => {}}
-                  data-cy='back-btn'
+                id='back'
+                title={config.buttonTitles.GO_BACK_TITLE}
+                variant='outlined'
+                onClickHandler={() => dispatch(push(config.routes.pathToNews))}
+                data-cy='back-btn'
               />
             </Link>
           </div>

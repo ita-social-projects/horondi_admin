@@ -160,6 +160,7 @@ export const config = {
     }
   },
   UAH: 'грн',
+
   buttonTitles,
   detailTitles,
   messages,

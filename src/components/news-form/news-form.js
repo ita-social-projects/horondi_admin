@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
+import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import useNewsHandlers from '../../utils/use-news-handlers';
 import { useStyles } from './news-form.styles';
-import {SaveButton, StandardButton} from '../buttons';
+import { SaveButton, StandardButton } from '../buttons';
 import TabPanel from '../tab-panel';
-import { Link } from 'react-router-dom';
 
 import { config } from '../../configs';
 import { updateArticle } from '../../redux/news/news.actions';
@@ -163,11 +164,11 @@ const NewsForm = ({ article, id }) => {
       <div className={classes.controlsBlock}>
         <Link to={config.routes.pathToNews}>
           <StandardButton
-              id='back'
-              title='Назад'
-              variant='outlined'
-              onClickHandler={() => {}}
-              data-cy='back-btn'
+            id='back'
+            title={config.buttonTitles.GO_BACK_TITLE}
+            variant='outlined'
+            onClickHandler={() => dispatch(push(config.routes.pathToNews))}
+            data-cy='back-btn'
           />
         </Link>
       </div>

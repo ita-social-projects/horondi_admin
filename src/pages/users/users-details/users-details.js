@@ -5,6 +5,7 @@ import { Grid, Button } from '@material-ui/core';
 
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import { push } from 'react-router-redux';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../hooks/user/use-users-handlers';
 import LoadingBar from '../../../components/loading-bar';
@@ -99,9 +100,9 @@ const UsersDetails = (props) => {
             <StandardButton
               className={styles.userDetails}
               id='back'
-              title='Назад'
+              title={config.buttonTitles.GO_BACK_TITLE}
               variant='outlined'
-              onClickHandler={() => {}}
+              onClickHandler={() => dispatch(push(config.routes.pathToUsers))}
               data-cy='back-btn'
             />
           </Link>

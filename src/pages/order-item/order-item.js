@@ -1,46 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { useStyles } from './order-item.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import TabPanel from '../../components/tab-panel';
 import { Paper, Tabs, Tab, Button } from '@material-ui/core';
-import {Delivery,Recipient,Products,General} from './tabs'
-import {getOrder,updateOrder} from '../../redux/orders/orders.actions'
 import { useFormik } from 'formik';
+import { Link } from 'react-router-dom';
+import { push } from 'react-router-redux';
+import PropTypes from 'prop-types';
+import { useStyles } from './order-item.styles';
+import TabPanel from '../../components/tab-panel';
+import { Delivery, Recipient, Products, General } from './tabs';
+import { getOrder, updateOrder } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
-import labels from '../../configs/labels'
-import {config} from "../../configs";
-import StandardButton from "../../components/buttons/standard-button";
-import {Link} from "react-router-dom";
+import labels from '../../configs/labels';
+import { config } from '../../configs';
+import StandardButton from '../../components/buttons/standard-button';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {orderTabs} = labels
-  const {delivery,general,products,receiver} = orderTabs
-  const {buttonTitle,dialogTitle,dialogContent} = orders
-  const {SAVE_ORDER} = buttonTitles
+  const { orderTabs } = labels;
+  const { delivery, general, products, receiver } = orderTabs;
+  const { buttonTitle, dialogTitle, dialogContent } = orders;
+  const { SAVE_ORDER } = buttonTitles;
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { selectedOrder, orderLoading } = useSelector(
-    ({ Orders }) => ({
-      selectedOrder: Orders.selectedOrder,
-      orderLoading: Orders.orderLoading,
-    })
-  );
+  const { selectedOrder, orderLoading } = useSelector(({ Orders }) => ({
+    selectedOrder: Orders.selectedOrder,
+    orderLoading: Orders.orderLoading
+  }));
 
   const handleTabChange = (e, newValue) => {
     setTabValue(newValue);
   };
 
-  const handleFormSubmit = (order)=> {
-    if(order.status!==initialValues.status&&!['CREATED','CONFIRMED'].includes(order.status)) {
+  const handleFormSubmit = (order) => {
+    if (
+      order.status !== initialValues.status &&
+      !['CREATED', 'CONFIRMED'].includes(order.status)
+    ) {
       const updateOrderSnackbar = () => {
         dispatch(closeDialog());
-        dispatch(updateOrder(order))
+        dispatch(updateOrder(order));
       };
       openSuccessSnackbar(
         updateOrderSnackbar,
@@ -50,77 +53,103 @@ const OrderItem = ({ id }) => {
         false
       );
     } else {
-      dispatch(updateOrder(order))
+      dispatch(updateOrder(order));
     }
-  }
+  };
 
-  const {handleChange,values, handleSubmit, setFieldValue, dirty, initialValues, resetForm} = useFormik({
+  const {
+    handleChange,
+    values,
+    handleSubmit,
+    setFieldValue,
+    dirty,
+    initialValues,
+    resetForm
+  } = useFormik({
     initialValues: {},
-    onSubmit: handleFormSubmit,
-  })
+    onSubmit: handleFormSubmit
+  });
 
   useEffect(() => {
-    if(id) {
-      dispatch(getOrder(id))
+    if (id) {
+      dispatch(getOrder(id));
     }
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
-  useEffect(()=> {
-    if(selectedOrder) {
+  useEffect(() => {
+    if (selectedOrder) {
       resetForm({ values: selectedOrder });
     }
-  },[selectedOrder,resetForm])
+  }, [selectedOrder, resetForm]);
 
-  const formikHandleChange = ['CREATED','CONFIRMED'].includes(selectedOrder && selectedOrder.status) ? handleChange : ()=> {}
+  const formikHandleChange = ['CREATED', 'CONFIRMED'].includes(
+    selectedOrder && selectedOrder.status
+  )
+    ? handleChange
+    : () => {};
 
-  if(orderLoading) {
-    return <LoadingBar />
+  if (orderLoading) {
+    return <LoadingBar />;
   }
 
   return (
-
     <form onSubmit={handleSubmit} className={classes.orderContainer}>
       <Paper>
         <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab value={0} label={general}/>
-          <Tab value={1} label={receiver}/>
-          <Tab value={2} label={products}/>
-          <Tab value={3} label={delivery}/>
+          <Tab value={0} label={general} />
+          <Tab value={1} label={receiver} />
+          <Tab value={2} label={products} />
+          <Tab value={3} label={delivery} />
         </Tabs>
         <TabPanel value={tabValue} index={0}>
-          <General data={values} handleChange={formikHandleChange}/>
+          <General data={values} handleChange={formikHandleChange} />
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
-          <Recipient data={{user: values.user, userComment: values.userComment }} handleChange={formikHandleChange}/>
+          <Recipient
+            data={{ user: values.user, userComment: values.userComment }}
+            handleChange={formikHandleChange}
+          />
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
-          <Products data={{items:values.items}} setFieldValue={setFieldValue} />
+          <Products
+            data={{ items: values.items }}
+            setFieldValue={setFieldValue}
+          />
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
-          <Delivery data={{delivery: values.delivery,address: values.address}} handleChange={formikHandleChange}/>
+          <Delivery
+            data={{ delivery: values.delivery, address: values.address }}
+            handleChange={formikHandleChange}
+          />
         </TabPanel>
       </Paper>
-      {dirty && <Button
-        type='submit'
-        variant='contained'
-        color='primary'
-        className={classes.saveBtn}
-      >
-        {SAVE_ORDER}
-      </Button>}
+      {dirty && (
+        <Button
+          type='submit'
+          variant='contained'
+          color='primary'
+          className={classes.saveBtn}
+        >
+          {SAVE_ORDER}
+        </Button>
+      )}
       <div className={classes.controlsBlock}>
         <Link to={config.routes.pathToOrders}>
           <StandardButton
-              id='back'
-              title='Назад'
-              variant='outlined'
-              onClickHandler={() => {}}
-              data-cy='back-btn'
+            id='back'
+            title={config.buttonTitles.GO_BACK_TITLE}
+            variant='outlined'
+            onClickHandler={() => dispatch(push(config.routes.pathToOrders))}
+            data-cy='back-btn'
           />
         </Link>
       </div>
     </form>
   );
+};
+
+OrderItem.propTypes = {
+  id: PropTypes.string.isRequired
 };
 
 export default OrderItem;

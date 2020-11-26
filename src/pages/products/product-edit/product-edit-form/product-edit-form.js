@@ -11,6 +11,7 @@ import {
   useTheme
 } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import { Link } from 'react-router-dom';
 import useProductHandlers from '../../../../hooks/product/use-product-handlers';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import useProductValidation from '../../../../hooks/product/use-product-validation';
@@ -31,9 +32,8 @@ import { productsTranslations } from '../../../../translations/product.translati
 import ProductCarousel from './product-carousel';
 import DeleteButton from '../../../../components/buttons/delete-button';
 import CommentsPage from '../../../comments';
-import {StandardButton} from "../../../../components/buttons";
+import { StandardButton } from '../../../../components/buttons';
 import { config } from '../../../../configs';
-import { Link } from 'react-router-dom';
 
 const { priceLabel } = config.labels.product;
 
@@ -308,11 +308,11 @@ const ProductEditForm = () => {
       <div className={styles.controlsBlock}>
         <Link to={config.routes.pathToProducts}>
           <StandardButton
-              id='back'
-              title='Назад'
-              variant='outlined'
-              onClickHandler={() => {}}
-              data-cy='back-btn'
+            id='back'
+            title={config.buttonTitles.GO_BACK_TITLE}
+            variant='outlined'
+            onClickHandler={() => {}}
+            data-cy='back-btn'
           />
         </Link>
       </div>

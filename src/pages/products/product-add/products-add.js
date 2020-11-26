@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Paper } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { useStyles } from './products-add.styles';
 
 import useProductHandlers from '../../../hooks/product/use-product-handlers';
@@ -16,9 +17,8 @@ import ProductAddOptions from './product-add-options';
 import ProductAddImages from './product-add-images';
 import ProductAddSubmit from './product-add-submit';
 import ProductAddPrice from './product-add-price';
-import {StandardButton} from "../../../components/buttons";
+import { StandardButton } from '../../../components/buttons';
 import { config } from '../../../configs';
-import { Link } from 'react-router-dom';
 
 const ProductsAdd = () => {
   const styles = useStyles();
@@ -137,16 +137,15 @@ const ProductsAdd = () => {
       <div className={styles.controlsBlock}>
         <Link to={config.routes.pathToProducts}>
           <StandardButton
-              id='back'
-              title='Назад'
-              variant='outlined'
-              onClickHandler={() => {}}
-              data-cy='back-btn'
+            id='back'
+            title={config.buttonTitles.GO_BACK_TITLE}
+            variant='outlined'
+            onClickHandler={() => {}}
+            data-cy='back-btn'
           />
         </Link>
       </div>
     </Paper>
-
   );
 };
 

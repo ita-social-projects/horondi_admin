@@ -15,6 +15,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { push } from 'connected-react-router';
+import { Link } from 'react-router-dom';
 import { useStyles } from './categories-add.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TabPanel from '../../../components/tab-panel';
@@ -36,8 +37,7 @@ import AddPhoto from '../../../images/add-photo.png';
 import { categoryTranslations } from '../../../translations/category.translations';
 import { config } from '../../../configs';
 import { useCommonStyles } from '../../common.styles';
-import {StandardButton} from "../../../components/buttons";
-import { Link } from 'react-router-dom';
+import { StandardButton } from '../../../components/buttons';
 
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
 const { DELETE_CATEGORY } = config.buttonTitles;
@@ -523,18 +523,20 @@ const CategoriesAdd = ({ id, editMode }) => {
       <div className={classes.controlsBlock}>
         <Link to={config.routes.pathToCategories}>
           <StandardButton
-              id='back'
-              title='Назад'
-              variant='outlined'
-              onClickHandler={() => {}}
-              data-cy='back-btn'
+            id='back'
+            title={config.buttonTitles.GO_BACK_TITLE}
+            variant='outlined'
+            onClickHandler={() =>
+              dispatch(push(config.routes.pathToCategories))
+            }
+            data-cy='back-btn'
           />
         </Link>
         <Button
-            variant='contained'
-            color='primary'
-            className={classes.saveBtn}
-            onClick={editMode ? handleCategoryEdit : handleCategorySave}
+          variant='contained'
+          color='primary'
+          className={classes.saveBtn}
+          onClick={editMode ? handleCategoryEdit : handleCategorySave}
         >
           {config.buttonTitles.titleGenerator(editMode, isMain)}
         </Button>
