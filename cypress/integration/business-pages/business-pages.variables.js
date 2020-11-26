@@ -1,7 +1,6 @@
 export const businessTexts = [
   {
     _id: '5fa034039a59a904f0610e37',
-    code: 'about-us',
     title: [
       {
         value: 'Про нас '
@@ -9,11 +8,11 @@ export const businessTexts = [
       {
         value: 'About Us'
       }
-    ]
+    ],
+    code: 'about-us'
   },
   {
     _id: '5fa034039a5r9a906f0610e38',
-    code: 'privacy-policy',
     title: [
       {
         value: 'Умови'
@@ -21,11 +20,10 @@ export const businessTexts = [
       {
         value: 'Terms and Conditions'
       }
-    ]
+    ],
+    code: 'privacy-policy'
   },
   {
-    _id: '5fa034039t59a906f0610e33',
-    code: 'payment-and-shipping',
     title: [
       {
         value: 'Оплата і доставка'
@@ -33,7 +31,9 @@ export const businessTexts = [
       {
         value: 'Payment and Shipping'
       }
-    ]
+    ],
+    _id: '5fa034039t59a906f0610e33',
+    code: 'payment-and-shipping'
   },
   {
     _id: '5fa034039a59a906f0610e34',
@@ -48,8 +48,6 @@ export const businessTexts = [
     ]
   },
   {
-    _id: '5fa034039a59a901f0610e39',
-    code: 'materials',
     title: [
       {
         value: 'Матеріали'
@@ -57,7 +55,9 @@ export const businessTexts = [
       {
         value: 'Materials'
       }
-    ]
+    ],
+    _id: '5fa034039a59a901f0610e39',
+    code: 'materials'
   }
 ];
 
