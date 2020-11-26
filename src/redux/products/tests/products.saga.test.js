@@ -58,7 +58,14 @@ import {
   mockModels,
   mockFilledProductsState,
   mockProduct,
-  statuses
+  statuses,
+  mockProductToDelete,
+  mockProductToUpdatePayload,
+  mockProductToUpload,
+  mockSnackarState,
+  mockError,
+  mockProductsStateToDeleteImages,
+  mockId
 } from './products.variables';
 
 import {
@@ -75,12 +82,14 @@ import Snackbar from '../../snackbar/snackbar.reducer';
 
 import {
   selectProductsAndTable,
-  selectProducts
+  selectProducts,
+  selectProductsToUpload,
+  selectFilesToDeleteAndProduct
 } from '../../selectors/products.selectors';
 
 const {
   SUCCESS_ADD_STATUS,
-  SUCCESS_CREATION_STATUS,
+  SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
 } = statuses;
 
@@ -242,6 +251,193 @@ describe('Test products saga', () => {
         Products: {
           ...mockProductsState,
           loading: true
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(4);
+      }));
+
+  it('should delete product', () =>
+    expectSaga(handleProductDelete, { payload: mockProductToDelete })
+      .withReducer(combineReducers({ Products }), {
+        Products: mockProductsState
+      })
+      .provide([
+        [call(deleteProduct, mockProductToDelete.id)],
+        [call(handleFilterLoad)],
+        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
+      ])
+      .hasFinalState({
+        Products: mockProductsState
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(0);
+      }));
+
+  it('should update product', () =>
+    expectSaga(handleProductUpdate, { payload: mockProductToUpdatePayload })
+      .withReducer(combineReducers({ Products }), {
+        Products: mockProductToUpload
+      })
+      .put(setProductsLoading(true))
+      .provide([
+        [
+          select(selectProductsToUpload),
+          {
+            upload: mockProductToUpload.upload,
+            primaryImageUpload: mockProductToUpload.primaryImageUpload
+          }
+        ],
+        [
+          call(
+            updateProduct,
+            mockProductToUpdatePayload,
+            mockProductToUpload.upload,
+            mockProductToUpload.primaryImageUpload
+          ),
+          mockProductsList.items[0]
+        ],
+        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
+      ])
+      .put(setProduct(mockProductsList.items[0]))
+      .put(clearFilesToUpload())
+      .put(setProductsLoading(false))
+      .hasFinalState({
+        Products: {
+          ...mockProductToUpload,
+          upload: [],
+          selectedProduct: mockProductsList.items[0]
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(4);
+      }));
+
+  it('should load product by id', () =>
+    expectSaga(handleProductLoad, { payload: mockProduct._id })
+      .withReducer(combineReducers({ Products }), {
+        Products: mockProductsState
+      })
+      .put(setProductsLoading(true))
+      .provide([
+        [call(handleProductOptionsLoad)],
+        [call(handleProductSpeciesLoad)],
+        [call(getProduct, mockProduct._id), mockProduct]
+      ])
+      .put(setProduct(mockProduct))
+      .put(setProductsLoading(false))
+      .hasFinalState({
+        Products: {
+          ...mockProductsState,
+          selectedProduct: mockProduct
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(3);
+      }));
+
+  it('should handle snackbar success', () =>
+    expectSaga(handleSuccessSnackbar, SUCCESS_ADD_STATUS)
+      .withReducer(combineReducers({ Snackbar }), {
+        Snackbar: mockSnackarState
+      })
+      .put(setSnackBarSeverity('success'))
+      .put(setSnackBarMessage(SUCCESS_ADD_STATUS))
+      .put(setSnackBarStatus(true))
+      .hasFinalState({
+        Snackbar: {
+          snackBarStatus: true,
+          snackBarSeverity: 'success',
+          snackBarMessage: SUCCESS_ADD_STATUS
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(3);
+      }));
+
+  it('should handle products errors', () =>
+    expectSaga(handleProductsErrors, mockError)
+      .withReducer(combineReducers({ Products, Snackbar }), {
+        Products: {
+          ...mockProductsState,
+          loading: true
+        },
+        Snackbar: mockSnackarState
+      })
+      .put(setProductsLoading(false))
+      .put(setProductsError({ e: mockError }))
+      .put(setSnackBarSeverity('error'))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .hasFinalState({
+        Products: {
+          ...mockProductsState,
+          loading: false,
+          productsError: { e: mockError }
+        },
+        Snackbar: {
+          snackBarStatus: true,
+          snackBarSeverity: 'error',
+          snackBarMessage: mockError.message
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(5);
+      }));
+
+  it('should delete images by id', () =>
+    expectSaga(handleImagesDelete, { payload: mockId })
+      .withReducer(combineReducers({ Products }), {
+        Products: mockProductsStateToDeleteImages
+      })
+      .put(setProductsLoading(true))
+      .provide([
+        [
+          select(selectFilesToDeleteAndProduct),
+          {
+            images: mockProductsStateToDeleteImages.filesToDelete,
+            selectedProduct: mockProductsStateToDeleteImages.selectedProduct
+          }
+        ],
+        [
+          call(
+            deleteImages,
+            mockId,
+            mockProductsStateToDeleteImages.filesToDelete
+          ),
+          {}
+        ],
+        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
+      ])
+      .put(setProduct({ ...mockProduct, images: {} }))
+      .put(setFilesToDelete([]))
+      .put(setProductsLoading(false))
+      .hasFinalState({
+        Products: {
+          ...mockProductsStateToDeleteImages,
+          filesToDelete: [],
+          selectedProduct: {
+            ...mockProduct,
+            images: {}
+          }
         }
       })
       .run()

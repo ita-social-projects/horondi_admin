@@ -2,7 +2,9 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import {
   selectProductsAndTable,
-  selectProducts
+  selectProducts,
+  selectProductsToUpload,
+  selectFilesToDeleteAndProduct
 } from '../selectors/products.selectors';
 
 import {
@@ -153,10 +155,7 @@ export function* handleProductDelete({ payload }) {
 export function* handleProductUpdate({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const { upload, primaryImageUpload } = yield select(({ Products }) => ({
-      upload: Products.upload,
-      primaryImageUpload: Products.primaryImageUpload
-    }));
+    const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
     const productToUpdate = yield call(
       updateProduct,
       payload,
@@ -202,10 +201,9 @@ export function* handleProductsErrors(e) {
 export function* handleImagesDelete({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const { images, selectedProduct } = yield select(({ Products }) => ({
-      images: Products.filesToDelete,
-      selectedProduct: Products.selectedProduct
-    }));
+    const { images, selectedProduct } = yield select(
+      selectFilesToDeleteAndProduct
+    );
     const newImages = yield call(deleteImages, payload, images);
     yield put(setProduct({ ...selectedProduct, images: newImages }));
     yield put(setFilesToDelete([]));

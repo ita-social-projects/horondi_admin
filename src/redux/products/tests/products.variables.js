@@ -120,9 +120,11 @@ const mockProductsList = {
   ]
 };
 
+const mockProduct = mockProductsList.items[0];
+
 const mockFiltersData = [
   {
-    ...mockProductsList.items[0],
+    ...mockProduct,
     options: [{ additions: [] }]
   }
 ];
@@ -230,18 +232,49 @@ const mockFilledProductsState = {
   }
 };
 
-const mockProduct = {
-  _id: '123'
-};
 const pagesCount = Math.ceil(
   mockProductsList.count / mockTableState.pagination.rowsPerPage
 );
 
+const mockProductToDelete = {
+  id: mockId,
+  request: true
+};
+
+const mockProductToUpdatePayload = {
+  product: mockProduct,
+  id: mockProduct._id
+};
+
+const mockProductToUpload = {
+  ...mockProductsState,
+  upload: ['some upload info'],
+  primaryImageUpload: ['upload image']
+};
+
+const mockSnackarState = {
+  snackBarStatus: false,
+  snackBarSeverity: '',
+  snackBarMessage: ''
+};
+
+const mockError = {
+  message: 'error'
+};
+
 const statuses = {
   SUCCESS_ADD_STATUS: 'Успішно додано!',
-  SUCCESS_CREATION_STATUS: 'Успішно створено!',
-  SUCCESS_UPDATE_STATUS: 'Успішно змінено!'
+  SUCCESS_UPDATE_STATUS: 'Успішно змінено!',
+  SUCCESS_DELETE_STATUS: 'Успішно видалено!'
 };
+
+const mockProductsStateToDeleteImages = {
+  ...mockProductsState,
+  selectedProduct: mockProduct,
+  filesToDelete: ['file to delete']
+};
+
+const mockId = '5fa034049a59a906d0640e42';
 
 export {
   mockProductsState,
@@ -255,5 +288,12 @@ export {
   mockModels,
   mockFilledProductsState,
   mockProduct,
-  statuses
+  statuses,
+  mockProductToDelete,
+  mockProductToUpdatePayload,
+  mockProductToUpload,
+  mockSnackarState,
+  mockError,
+  mockProductsStateToDeleteImages,
+  mockId
 };
