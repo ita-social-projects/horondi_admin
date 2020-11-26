@@ -56,7 +56,7 @@ import {
   mockProductOptions,
   mockCategoryId,
   mockModels,
-  mockFilledProductsState,
+  mockProductsToAddState,
   mockProduct,
   statuses,
   mockProductToDelete,
@@ -235,12 +235,12 @@ describe('Test products saga', () => {
   it('should add product', () =>
     expectSaga(handleProductAdd)
       .withReducer(combineReducers({ Products }), {
-        Products: mockFilledProductsState
+        Products: mockProductsToAddState
       })
       .put(setProductsLoading(true))
       .provide([
-        [select(selectProducts), mockFilledProductsState],
-        [call(addProduct, mockFilledProductsState), mockProduct],
+        [select(selectProducts), mockProductsToAddState],
+        [call(addProduct, mockProductsToAddState), mockProduct],
         [call(handleFilterLoad)],
         [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
       ])

@@ -26,13 +26,31 @@ const productModel = {
 };
 
 const mockProductsState = {
-  loading: false,
-  currentPage: 0,
-  productsPerPage: 9,
   sorting: {
     sortByPrice: 0,
     sortByRate: 0,
     sortByPopularity: -1
+  },
+  currentPage: 0,
+  loading: false,
+  filterData: [],
+  upload: [],
+  productSpecies: {
+    categories: [],
+    modelsForSelectedCategory: []
+  },
+  productToSend: {
+    ...productModel,
+    model: ''
+  },
+  selectedProduct: productModel,
+  products: [],
+  filesToDelete: [],
+  primaryImageUpload: null,
+  productsPerPage: 9,
+  productOptions: {
+    sizes: [],
+    bottomMaterials: []
   },
   filters: {
     colorsFilter: [],
@@ -41,26 +59,8 @@ const mockProductsState = {
     searchFilter: '',
     modelsFilter: []
   },
-  filterData: [],
-  selectedProduct: productModel,
-  productToSend: {
-    ...productModel,
-    model: ''
-  },
-  products: [],
   pagesCount: 1,
-  productsError: null,
-  filesToDelete: [],
-  upload: [],
-  primaryImageUpload: null,
-  productSpecies: {
-    categories: [],
-    modelsForSelectedCategory: []
-  },
-  productOptions: {
-    sizes: [],
-    bottomMaterials: []
-  }
+  productsError: null
 };
 
 const mockTableState = {
@@ -224,7 +224,7 @@ const mockModels = [
   }
 ];
 
-const mockFilledProductsState = {
+const mockProductsToAddState = {
   ...mockProductsState,
   upload: ['some data'],
   productToSend: {
@@ -286,7 +286,7 @@ export {
   mockProductOptions,
   mockCategoryId,
   mockModels,
-  mockFilledProductsState,
+  mockProductsToAddState,
   mockProduct,
   statuses,
   mockProductToDelete,
