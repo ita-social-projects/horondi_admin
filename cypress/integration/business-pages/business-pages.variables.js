@@ -1,6 +1,6 @@
 export const businessTexts = [
   {
-    _id: '5fa034039a59a906f0610e37',
+    _id: '5fa034039a59a904f0610e37',
     code: 'about-us',
     title: [
       {
@@ -12,7 +12,7 @@ export const businessTexts = [
     ]
   },
   {
-    _id: '5fa034039a59a906f0610e38',
+    _id: '5fa034039a5r9a906f0610e38',
     code: 'privacy-policy',
     title: [
       {
@@ -24,7 +24,7 @@ export const businessTexts = [
     ]
   },
   {
-    _id: '5fa034039a59a906f0610e33',
+    _id: '5fa034039t59a906f0610e33',
     code: 'payment-and-shipping',
     title: [
       {
@@ -48,7 +48,7 @@ export const businessTexts = [
     ]
   },
   {
-    _id: '5fa034039a59a906f0610e39',
+    _id: '5fa034039a59a901f0610e39',
     code: 'materials',
     title: [
       {
