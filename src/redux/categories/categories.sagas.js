@@ -35,7 +35,7 @@ const {
   SUCCESS_CREATION_STATUS
 } = config.statuses;
 
-function* handleCategoriesLoad() {
+export function* handleCategoriesLoad() {
   try {
     yield put(setCategoriesLoading(true));
     const categories = yield call(getAllCategories);
@@ -46,7 +46,7 @@ function* handleCategoriesLoad() {
   }
 }
 
-function* handleLoadCategoryById({ payload }) {
+export function* handleLoadCategoryById({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     const category = yield call(getCategoryById, payload);
@@ -56,7 +56,7 @@ function* handleLoadCategoryById({ payload }) {
   }
 }
 
-function* handleCreateCategory({ payload }) {
+export function* handleCreateCategory({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     yield call(createCategory, payload);
@@ -67,7 +67,7 @@ function* handleCreateCategory({ payload }) {
   }
 }
 
-function* handleEditCategory({ payload }) {
+export function* handleEditCategory({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     yield call(updateCategoryById, payload);
@@ -79,7 +79,7 @@ function* handleEditCategory({ payload }) {
   }
 }
 
-function* handleDeleteCategory() {
+export function* handleDeleteCategory() {
   try {
     yield put(setCategoriesLoading(true));
     const { switchId, deleteId } = yield select(({ Categories }) => ({
@@ -96,7 +96,7 @@ function* handleDeleteCategory() {
   }
 }
 
-function* handleSubcategoriesLoad({ payload }) {
+export function* handleSubcategoriesLoad({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     const subcategories = yield call(getSubcategories, payload);
@@ -106,7 +106,7 @@ function* handleSubcategoriesLoad({ payload }) {
   }
 }
 
-function* handleSnackBarSuccess(status) {
+export function* handleSnackBarSuccess(status) {
   yield put(setSnackBarSeverity('success'));
   yield put(setSnackBarMessage(status));
   yield put(setSnackBarStatus(true));

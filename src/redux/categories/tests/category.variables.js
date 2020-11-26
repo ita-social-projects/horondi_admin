@@ -16,6 +16,14 @@ export const category = {
 
 export const error = 'NOT_FOUND';
 
+export const categoriesRes = {
+  data: {
+    getAllCategories: {
+      ...categories
+    }
+  }
+};
+
 export const categories = [
   {
     _id: 'ddc81f5dbac48c38d0403dd3',
