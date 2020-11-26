@@ -44,9 +44,9 @@ const Categories = () => {
   if (categoriesLoading) {
     return <LoadingBar />;
   }
-
   const categoriesList = categories.length
     ? categories
+      .slice()
       .sort((a, b) => {
         if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
           return 1;

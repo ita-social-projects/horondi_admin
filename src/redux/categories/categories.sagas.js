@@ -39,7 +39,7 @@ export function* handleCategoriesLoad() {
   try {
     yield put(setCategoriesLoading(true));
     const categories = yield call(getAllCategories);
-    yield put(setCategories(categories.data.getAllCategories));
+    yield put(setCategories(categories));
   } catch (e) {
     yield put(push('/error-page'));
     yield setCategoriesError(e);
@@ -50,7 +50,7 @@ export function* handleLoadCategoryById({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     const category = yield call(getCategoryById, payload);
-    yield put(setCategory(category.data.getCategoryById));
+    yield put(setCategory(category));
   } catch (e) {
     yield setCategoriesError(e);
   }

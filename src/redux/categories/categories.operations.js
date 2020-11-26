@@ -1,62 +1,72 @@
-import { getItems, setItems } from '../../utils/client';
+import { gql } from '@apollo/client';
+import { getItems, setItems, client } from '../../utils/client';
 
-export const getCategoryById = (id) => {
-  const query = `
-    query getCategoryById($id: ID){
-  getCategoryById(id: $id) {
-    ... on Category {
-      _id
-      code
-      name{
-        lang
-        value
+export const getCategoryById = async (id) => {
+  const result = await client.query({
+    variables: { id },
+    query: gql`
+      query getCategoryById($id: ID) {
+        getCategoryById(id: $id) {
+          ... on Category {
+            _id
+            code
+            name {
+              lang
+              value
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            subcategories
+            isMain
+            available
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
       }
-      images{
-        large
-        medium
-        small
-        thumbnail
-      }
-      subcategories
-      isMain
-      available
-    }
-    ... on Error {
-      message
-      statusCode
-    }
-  }
-}
-  `;
-  return getItems(query, { id });
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  const { data } = result;
+  return data.getCategoryById;
 };
 
-export const getAllCategories = () => {
-  const query = `
+export const getAllCategories = async () => {
+  const result = await client.query({
+    query: gql`
       query {
-       getAllCategories {
-    _id
-    code
-    name {
-      lang
-      value
-    }
-    images {
-      large
-      medium
-      small
-      thumbnail
-    }
-    subcategories
-    isMain
-    available
-  }
-  }
-  `;
-  return getItems(query);
+        getAllCategories {
+          _id
+          code
+          name {
+            lang
+            value
+          }
+          images {
+            large
+            medium
+            small
+            thumbnail
+          }
+          subcategories
+          isMain
+          available
+        }
+      }
+    `
+  });
+  client.resetStore();
+  const { data } = result;
+  return data.getAllCategories;
 };
 
-export const createCategory = (data) => {
+export const createCategory = async (data) => {
   const query = `
         mutation addCategory($category: CategoryInput!, $parentId: ID, $upload: Upload) {
     addCategory(category: $category, parentId: $parentId, upload: $upload) {
@@ -69,12 +79,12 @@ export const createCategory = (data) => {
         message
       }
     }
-  }
+  },
   `;
   return setItems(query, data);
 };
 
-export const updateCategoryById = (data) => {
+export const updateCategoryById = async (data) => {
   const query = `
     mutation updateCategory($id: ID!, $category: CategoryInput!, $upload: Upload){
       updateCategory(id: $id, category: $category, upload: $upload) {
@@ -93,7 +103,7 @@ export const updateCategoryById = (data) => {
   return setItems(query, data);
 };
 
-export const deleteCategoryById = (deleteId, switchId) => {
+export const deleteCategoryById = async (deleteId, switchId) => {
   const query = `
         mutation deleteCategory($deleteId: ID!, $switchId: ID!){
       deleteCategory(
@@ -114,27 +124,34 @@ export const deleteCategoryById = (deleteId, switchId) => {
   return setItems(query, { deleteId, switchId });
 };
 
-export const getSubcategories = (data) => {
-  const query = `
-    query getSubcategories($id: ID!) {
-      getSubcategories(id: $id) {
-        _id
-        code
-        name {
-          lang
-          value
+export const getSubcategories = async ({ id }) => {
+  const result = await client.query({
+    query: gql`
+      query getSubcategories($id: ID!) {
+        getSubcategories(id: $id) {
+          _id
+          code
+          name {
+            lang
+            value
+          }
+          images {
+            large
+            medium
+            small
+            thumbnail
+          }
+          subcategories
+          isMain
+          available
         }
-        images {
-          large
-          medium
-          small
-          thumbnail
-        }
-        subcategories
-        isMain
-        available
       }
+    `,
+    variables: {
+      id
     }
-  `;
-  return getItems(query, data);
+  });
+  client.resetStore();
+  const { data } = result;
+  return data.getSubcategories;
 };
