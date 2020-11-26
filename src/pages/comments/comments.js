@@ -39,7 +39,6 @@ const Comments = ({ productId }) => {
     currentPage,
     commentsPerPage
   } = useSelector(CommentsSelector);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(

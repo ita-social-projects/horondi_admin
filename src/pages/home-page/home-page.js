@@ -19,7 +19,6 @@ import { HomePageSelector } from '../../redux/selectors/home-page.selectors';
 
 import { useCommonStyles } from '../common.styles';
 
-
 const { homePageTitles } = titles;
 const { IMG_URL } = config;
 
@@ -28,9 +27,7 @@ const HomePage = () => {
   const commonStyles = useCommonStyles();
 
   const dispatch = useDispatch();
-  const classes = useStyles();
   const { loading, photos } = useSelector(HomePageSelector);
-
 
   const [image, setImageUrl] = useState({});
 
