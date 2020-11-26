@@ -193,6 +193,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                       ? 'Введіть заголовок'
                       : ''
                   }
+                  data-cy='page-header-ua'
                 />
                 <Editor
                   value={ukText}
@@ -201,7 +202,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   setFiles={setFiles}
                 />
                 {(editorField.test(ukText) || !ukText) && shouldValidate && (
-                  <div className={classes.errorMessage}>
+                  <div className={classes.errorMessage} data-cy='editor-error'>
                     Введіть текст для сторінки
                   </div>
                 )}
@@ -232,7 +233,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   setFiles={setFiles}
                 />
                 {(editorField.test(enText) || !enText) && shouldValidate && (
-                  <div className={classes.errorMessage}>
+                  <div className={classes.errorMessage} data-cy='editor-error'>
                     Введіть текст для сторінки
                   </div>
                 )}
