@@ -1,11 +1,29 @@
 import { expectSaga } from 'redux-saga-test-plan';
-import * as matchers from 'redux-saga-test-plan/matchers';
+import { call } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
+
+import { combineReducers } from 'redux';
 import {
   handleAddNews,
   handleArticleLoad,
-  handleNewsLoad
+  handleNewsLoad,
+  handleNewsDelete,
+  handleNewsError,
+  handleNewsUpdate
 } from '../news.sagas';
-import { GET_NEWS, GET_ARTICLE } from '../news.types';
+
+import {
+  mockNews,
+  mockSnackbarState,
+  mockNewsState,
+  mockId,
+  mockNewsLoadPayload,
+  mockArticle,
+  pagesCount,
+  statuses,
+  mockError
+} from './news.variables';
+
 import {
   getAllNews,
   getArticleById,
@@ -18,57 +36,209 @@ import {
   setNewsLoading,
   setNews,
   setPagesCount,
-  setArticle
+  setArticle,
+  setCurrentPage,
+  setNewsError
 } from '../news.actions';
+
 import {
   setSnackBarMessage,
   setSnackBarStatus,
   setSnackBarSeverity
 } from '../../snackbar/snackbar.actions';
 
-import { article, news, skip, limit, newsId } from './news.variables';
+import News from '../news.reducer';
+import Snackbar from '../../snackbar/snackbar.reducer';
 
-import { config } from '../../../configs';
+const {
+  SUCCESS_ADD_STATUS,
+  SUCCESS_DELETE_STATUS,
+  SUCCESS_UPDATE_STATUS
+} = statuses;
 
-describe('news sagas tests', () => {
-  it('Should not throw error during execution', () => {
-    expect(getAllNews).not.toThrow();
-    expect(getArticleById).not.toThrow();
-    expect(createArticle).not.toThrow();
-    expect(updateArticle).not.toThrow();
-    expect(deleteArticle).not.toThrow();
-    expect(deleteArticle).not.toBeNull();
-  });
-  it('Should receive all news and set them to store', () => {
-    expectSaga(handleNewsLoad, GET_NEWS)
-      .provide([[matchers.call.fn(getAllNews), { skip, limit }]])
+describe('Test news sagas', () => {
+  it('should load news', () =>
+    expectSaga(handleNewsLoad, { payload: mockNewsLoadPayload })
+      .withReducer(combineReducers({ News }), { News: mockNewsState })
       .put(setNewsLoading(true))
-      .put(setNews(news))
-      .put(setPagesCount(4))
+      .provide([
+        [
+          call(getAllNews, mockNewsLoadPayload.skip, mockNewsLoadPayload.limit),
+          mockNews
+        ]
+      ])
+      .put(setPagesCount(pagesCount))
+      .put(setNews(mockNews.items))
       .put(setNewsLoading(false))
-      .run();
-  });
+      .hasFinalState({
+        News: {
+          ...mockNewsState,
+          pagination: {
+            ...mockNewsState.pagination,
+            pagesCount
+          },
+          list: mockNews.items
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(4);
+      }));
 
-  it('Should add new article to database', () => {
-    expectSaga(handleAddNews, article)
-      .provide([[matchers.call.fn(createArticle), article]])
+  it('should load article by id', () =>
+    expectSaga(handleArticleLoad, { payload: mockId })
+      .withReducer(combineReducers({ News }), { News: mockNewsState })
       .put(setNewsLoading(true))
-      .put(setNews(article))
+      .provide([[call(getArticleById, mockId), mockArticle]])
+      .put(setArticle(mockArticle))
+      .put(setNewsLoading(false))
+      .hasFinalState({
+        News: {
+          ...mockNewsState,
+          newsArticle: mockArticle
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(3);
+      }));
+
+  it('should add news', () =>
+    expectSaga(handleAddNews, { payload: mockArticle })
+      .withReducer(combineReducers({ News, Snackbar }), {
+        News: mockNewsState,
+        Snackbar: mockSnackbarState
+      })
+      .put(setNewsLoading(true))
+      .provide([[call(createArticle, mockArticle)]])
+      .put(setSnackBarSeverity('success'))
+      .put(setSnackBarMessage(SUCCESS_ADD_STATUS))
+      .put(setSnackBarStatus(true))
+      .put(push('/news'))
+      .hasFinalState({
+        News: {
+          ...mockNewsState,
+          newsLoading: true
+        },
+        Snackbar: {
+          snackBarStatus: true,
+          snackBarSeverity: 'success',
+          snackBarMessage: SUCCESS_ADD_STATUS
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(5);
+      }));
+
+  it('should delete news', () =>
+    expectSaga(handleNewsDelete, { payload: mockId })
+      .withReducer(combineReducers({ News, Snackbar }), {
+        News: {
+          ...mockNewsState,
+          pagination: {
+            ...mockNewsState.pagination,
+            currentPage: 5
+          }
+        },
+        Snackbar: mockSnackbarState
+      })
+      .put(setNewsLoading(true))
+      .provide([[call(deleteArticle, mockId)]])
+      .put(setCurrentPage(1))
       .put(setNewsLoading(false))
       .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(config.statuses.SUCCESS_ADD_STATUS))
+      .put(setSnackBarMessage(SUCCESS_DELETE_STATUS))
       .put(setSnackBarStatus(true))
-      .run();
-  });
-  it('Should get one article and set it to store', () => {
-    expectSaga(handleArticleLoad, GET_ARTICLE)
-      .provide([[matchers.call.fn(setArticle), newsId]])
+      .hasFinalState({
+        News: {
+          ...mockNewsState,
+          pagination: {
+            ...mockNewsState.pagination,
+            currentPage: 0
+          }
+        },
+        Snackbar: {
+          snackBarStatus: true,
+          snackBarSeverity: 'success',
+          snackBarMessage: SUCCESS_DELETE_STATUS
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(6);
+      }));
+
+  it('should update article', () =>
+    expectSaga(handleNewsUpdate, {
+      payload: { id: mockId, newArticle: mockArticle }
+    })
+      .withReducer(combineReducers({ News, Snackbar }), {
+        News: mockNewsState,
+        Snackbar: mockSnackbarState
+      })
       .put(setNewsLoading(true))
-      .put(setArticle(article))
+      .provide([[call(updateArticle, mockId, mockArticle)]])
       .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(config.statuses.SUCCESS_ADD_STATUS))
-      .put(setNewsLoading(false))
+      .put(setSnackBarMessage(SUCCESS_UPDATE_STATUS))
       .put(setSnackBarStatus(true))
-      .run();
-  });
+      .put(push('/news'))
+      .hasFinalState({
+        News: {
+          ...mockNewsState,
+          newsLoading: true
+        },
+        Snackbar: {
+          snackBarStatus: true,
+          snackBarSeverity: 'success',
+          snackBarMessage: SUCCESS_UPDATE_STATUS
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(5);
+      }));
+
+  it('should handle news error', () =>
+    expectSaga(handleNewsError, mockError)
+      .withReducer(combineReducers({ News, Snackbar }), {
+        News: {
+          ...mockNewsState,
+          newsLoading: true
+        },
+        Snackbar: mockSnackbarState
+      })
+      .put(setNewsLoading(false))
+      .put(setNewsError({ e: mockError }))
+      .put(setSnackBarSeverity('error'))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .hasFinalState({
+        News: {
+          ...mockNewsState,
+          newsLoading: false,
+          newsError: { e: mockError }
+        },
+        Snackbar: {
+          snackBarStatus: true,
+          snackBarSeverity: 'error',
+          snackBarMessage: mockError.message
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(5);
+      }));
 });
