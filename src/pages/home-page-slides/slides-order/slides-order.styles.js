@@ -1,13 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    width: `100%`,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: theme.spacing(2)
-  },
   dndContainer: {
     display: 'flex',
     width: `100%`,
@@ -85,15 +78,6 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '10px',
         wordWrap: 'initial'
       }
-    }
-  },
-  slideTitle: {
-    marginBottom: '10px',
-    fontSize: theme.spacing(3),
-    color: theme.palette.text.disabled,
-    fontWeight: 'bold',
-    '@media (max-width: 375px)': {
-      fontSize: theme.spacing(2)
     }
   },
   discoverMore: {
