@@ -20,6 +20,7 @@ import { config } from '../../../configs';
 import { productsTranslations } from '../../../translations/product.translations';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import { ProductsAndTableSelectors } from '../../../redux/selectors/products-page.selectors';
 
 const {
   PRODUCT_NOT_FOUND,
@@ -43,28 +44,7 @@ const ProductsPage = () => {
     sortByPrice,
     filters,
     sortByPopularity
-  } = useSelector(
-    ({
-      Products: {
-        loading,
-        products,
-        filters,
-        sorting: { sortByPopularity, sortByPrice, sortByRate }
-      },
-      Table: {
-        pagination: { rowsPerPage, currentPage }
-      }
-    }) => ({
-      loading,
-      products,
-      sortByRate,
-      sortByPrice,
-      filters,
-      sortByPopularity,
-      rowsPerPage,
-      currentPage
-    })
-  );
+  } = useSelector(ProductsAndTableSelectors);
 
   const {
     categoryFilter,

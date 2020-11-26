@@ -13,6 +13,7 @@ import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './categories.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
+import { CategoriesSelector } from '../../../redux/selectors/categories.selectors';
 
 const Categories = () => {
   const { IMG_URL } = config;
@@ -20,11 +21,7 @@ const Categories = () => {
 
   const dispatch = useDispatch();
 
-  const { categories, categoriesLoading } = useSelector(({ Categories }) => ({
-    categories: Categories.categories,
-    categoriesLoading: Categories.categoriesLoading,
-    isDeleteDialogOpen: Categories.isDeleteDialogOpen
-  }));
+  const { categories, categoriesLoading } = useSelector(CategoriesSelector);
 
   const handleDeleteCategory = (id) => {
     dispatch(setCategoryDeleteId(id));

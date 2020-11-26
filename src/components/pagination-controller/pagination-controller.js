@@ -8,22 +8,12 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './pagination-controller.styles';
 import { setCurrentPage } from '../../redux/table/table.actions';
+import { TableSelector } from '../../redux/selectors/pagination-controller.selectors';
 
 const PaginationController = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { currentPage, itemsCount, rowsPerPage } = useSelector(
-    ({
-      Table: {
-        itemsCount,
-        pagination: { currentPage, rowsPerPage }
-      }
-    }) => ({
-      currentPage,
-      itemsCount,
-      rowsPerPage
-    })
-  );
+  const { currentPage, itemsCount, rowsPerPage } = useSelector(TableSelector);
 
   const handleFirstPageButtonClick = () => {
     dispatch(setCurrentPage(0));
@@ -60,14 +50,14 @@ const PaginationController = () => {
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
-        disabled={Boolean(currentPage >= itemsCount / rowsPerPage - 1)}
+        disabled={currentPage >= itemsCount / rowsPerPage - 1}
         aria-label='next page'
       >
         <KeyboardArrowRight />
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
-        disabled={Boolean(currentPage >= itemsCount / rowsPerPage - 1)}
+        disabled={currentPage >= itemsCount / rowsPerPage - 1}
         aria-label='last page'
       >
         <LastPageIcon />

@@ -14,6 +14,7 @@ import {
   updateHomePageData
 } from '../../redux/home/home.actions';
 import { useStyles } from './home-page.styles';
+import { HomePageSelector } from '../../redux/selectors/home-page.selectors';
 
 const { homePageEdit } = titles;
 const { IMG_URL } = config;
@@ -21,10 +22,7 @@ const { IMG_URL } = config;
 const HomePage = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { loading, photos } = useSelector(({ HomePage }) => ({
-    loading: HomePage.homePageLoading,
-    photos: HomePage.photos
-  }));
+  const { loading, photos } = useSelector(HomePageSelector);
 
   const [image, setImageUrl] = useState({});
 
