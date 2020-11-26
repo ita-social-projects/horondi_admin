@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import { config } from '../../../src/configs';
+import { businessTranslations } from '../../../src/translations/business.translations.js';
 import {
   getAllBusinessTexts,
   addedBusinessPage,
@@ -108,7 +109,9 @@ describe('Business pages test ', () => {
     cy.get('[data-cy=save-btn]').click();
     cy.wait(1000);
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.get('.MuiAlert-message').contains('400 Така сторінка вже існує!');
+    cy.get('.MuiAlert-message').contains(
+      businessTranslations.BUSINESS_TEXT_WITH_THIS_CODE_ALREADY_EXIST
+    );
   });
 
   it('should edit page', () => {
