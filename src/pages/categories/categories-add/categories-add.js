@@ -15,7 +15,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { push } from 'connected-react-router';
-import { Link } from 'react-router-dom';
 import { useStyles } from './categories-add.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TabPanel from '../../../components/tab-panel';
@@ -521,17 +520,13 @@ const CategoriesAdd = ({ id, editMode }) => {
       </FormControl>
 
       <div className={classes.controlsBlock}>
-        <Link to={config.routes.pathToCategories}>
-          <StandardButton
-            id='back'
-            title={config.buttonTitles.GO_BACK_TITLE}
-            variant='outlined'
-            onClickHandler={() =>
-              dispatch(push(config.routes.pathToCategories))
-            }
-            data-cy='back-btn'
-          />
-        </Link>
+        <StandardButton
+          id='back'
+          title={config.buttonTitles.GO_BACK_TITLE}
+          variant='outlined'
+          onClickHandler={() => dispatch(push(config.routes.pathToCategories))}
+          data-cy='back-btn'
+        />
         <Button
           variant='contained'
           color='primary'

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab, Button } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import PropTypes from 'prop-types';
 import { useStyles } from './order-item.styles';
@@ -134,15 +133,13 @@ const OrderItem = ({ id }) => {
         </Button>
       )}
       <div className={classes.controlsBlock}>
-        <Link to={config.routes.pathToOrders}>
-          <StandardButton
-            id='back'
-            title={config.buttonTitles.GO_BACK_TITLE}
-            variant='outlined'
-            onClickHandler={() => dispatch(push(config.routes.pathToOrders))}
-            data-cy='back-btn'
-          />
-        </Link>
+        <StandardButton
+          id='back'
+          title={config.buttonTitles.GO_BACK_TITLE}
+          variant='outlined'
+          onClickHandler={() => dispatch(push(config.routes.pathToOrders))}
+          data-cy='back-btn'
+        />
       </div>
     </form>
   );

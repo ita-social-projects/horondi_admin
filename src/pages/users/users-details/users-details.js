@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
 
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../hooks/user/use-users-handlers';
@@ -96,16 +95,14 @@ const UsersDetails = (props) => {
           buttonHandler={() => userStatusHandler(id)}
         />
         <div className={styles.controlsBlock}>
-          <Link to={config.routes.pathToUsers}>
-            <StandardButton
-              className={styles.userDetails}
-              id='back'
-              title={config.buttonTitles.GO_BACK_TITLE}
-              variant='outlined'
-              onClickHandler={() => dispatch(push(config.routes.pathToUsers))}
-              data-cy='back-btn'
-            />
-          </Link>
+          <StandardButton
+            className={styles.userDetails}
+            id='back'
+            title={config.buttonTitles.GO_BACK_TITLE}
+            variant='outlined'
+            onClickHandler={() => dispatch(push(config.routes.pathToUsers))}
+            data-cy='back-btn'
+          />
         </div>
       </Grid>
       <Grid className={styles.showComments}>

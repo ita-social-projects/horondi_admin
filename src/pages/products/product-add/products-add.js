@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Paper } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { push } from 'react-router-redux';
 import { useStyles } from './products-add.styles';
 
@@ -136,15 +135,13 @@ const ProductsAdd = () => {
     <Paper className={styles.container}>
       <CustomizedStepper steps={steps} activeStep={activeStep} />
       <div className={styles.controlsBlock}>
-        <Link to={config.routes.pathToProducts}>
-          <StandardButton
-            id='back'
-            title={config.buttonTitles.GO_BACK_TITLE}
-            variant='outlined'
-            onClickHandler={() => dispatch(push(config.routes.pathToProducts))}
-            data-cy='back-btn'
-          />
-        </Link>
+        <StandardButton
+          id='back'
+          title={config.buttonTitles.GO_BACK_TITLE}
+          variant='outlined'
+          onClickHandler={() => dispatch(push(config.routes.pathToProducts))}
+          data-cy='back-btn'
+        />
       </div>
     </Paper>
   );
