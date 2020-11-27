@@ -16,7 +16,6 @@ import CategoryDeleteDialog from './category-delete-dialog';
 import { CategoriesSelector } from '../../../redux/selectors/categories.selectors';
 import StandardButton from '../../../components/buttons/standard-button';
 
-
 const Categories = () => {
   const { IMG_URL } = config;
   const { ADD_CATEGORY } = config.buttonTitles;
