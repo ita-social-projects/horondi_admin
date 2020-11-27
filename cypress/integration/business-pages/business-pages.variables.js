@@ -198,3 +198,9 @@ export const addedBusinessPage = {
     }
   ]
 };
+
+export const pageCode = addedBusinessPage.code;
+export const uaHeader = addedBusinessPage.title[0].value;
+export const enHeader = addedBusinessPage.title[1].value;
+export const uaText = addedBusinessPage.text[0].value;
+export const enText = addedBusinessPage.text[1].value;

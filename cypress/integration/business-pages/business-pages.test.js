@@ -3,30 +3,20 @@ import { config } from '../../../src/configs';
 import { businessTranslations } from '../../../src/translations/business.translations.js';
 import {
   getAllBusinessTexts,
-  addedBusinessPage,
   getBusinessTextById,
   addBusinessText,
   deleteBusinessText,
   updateValues,
   errorBusinessPage,
-  updateBusinessText
+  updateBusinessText,
+  enText,
+  uaText,
+  enHeader,
+  uaHeader,
+  pageCode
 } from './business-pages.variables';
 
 describe('Business pages test ', () => {
-  let pageCode;
-  let uaHeader;
-  let enHeader;
-  let uaText;
-  let enText;
-
-  before(() => {
-    pageCode = addedBusinessPage.code;
-    uaHeader = addedBusinessPage.title[0].value;
-    enHeader = addedBusinessPage.title[1].value;
-    uaText = addedBusinessPage.text[0].value;
-    enText = addedBusinessPage.text[1].value;
-  });
-
   beforeEach(() => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
     cy.stubRequest('getAllBusinessTexts', getAllBusinessTexts).as(
