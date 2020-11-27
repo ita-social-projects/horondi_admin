@@ -104,7 +104,7 @@ export function* handlePatternUpdate({ payload }) {
   }
 }
 
-function* handlePatternError(e) {
+export function* handlePatternError(e) {
   yield put(setPatternLoading(false));
   yield put(setPatternError({ e }));
   yield put(setSnackBarSeverity('error'));

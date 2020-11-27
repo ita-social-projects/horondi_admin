@@ -69,7 +69,7 @@ export const emailQuestionsErrorMessages = {
 };
 
 export const materialErrorMessages = {
-  MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
+  MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
   VALIDATION_ERROR: 'Поле обовязкове',
   PRICE_VALIDATION_ERROR: 'Тільки цифри. Число має бути більше нуля'
