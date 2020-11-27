@@ -44,7 +44,7 @@ describe('reducer tests', () => {
   it('should remove pattern from store', () => {
     const state = { ...initialState, list: patterns };
     const filteredPatterns = patterns.filter(
-      (pattern) => pattern._id !== patternToRemoveId
+      (patternEl) => patternEl._id !== patternToRemoveId
     );
     expect(
       patternReducer(state, removePatternFromStore(patternToRemoveId))

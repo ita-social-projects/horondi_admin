@@ -180,21 +180,21 @@ const CategoriesAdd = ({ id, editMode }) => {
   };
 
   const handleCategoryEdit = () => {
-    const id = newCategory._id;
+    const categoryId = newCategory._id;
     dispatch(
       editCategory({
         category: omitTypename(newCategory, { deleteId: true }),
-        id,
+        id: categoryId,
         upload
       })
     );
   };
 
   const categoryDeleteHandler = useCallback(
-    (id) => {
+    (categoryId) => {
       const removeCategory = () => {
         dispatch(closeDialog());
-        dispatch(deleteCategory({ id }));
+        dispatch(deleteCategory({ categoryId }));
       };
       openSuccessSnackbar(
         removeCategory,
@@ -254,8 +254,8 @@ const CategoriesAdd = ({ id, editMode }) => {
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setCategoryImageUrl(e.target.result);
+      reader.onload = (event) => {
+        setCategoryImageUrl(event.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
