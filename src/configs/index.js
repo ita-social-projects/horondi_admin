@@ -36,7 +36,7 @@ export const config = {
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
-  languages: ['uk', 'en'],
+  languages: ['ua', 'en'],
   tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {
@@ -188,4 +188,9 @@ export const config = {
 export const inputTypes = {
   button: 'button',
   submit: 'submit'
+};
+
+export const badgePosition = {
+  vertical: 'top',
+  horizontal: 'left'
 };

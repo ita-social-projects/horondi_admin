@@ -6,6 +6,7 @@ import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
 
 import { useStyles } from './email-questions-list.styles';
+import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
@@ -30,6 +31,8 @@ const tableTitles = tableHeadRowTitles.emailQuestions;
 
 const EmailQuestionsList = () => {
   const styles = useStyles();
+  const commonStyles = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     list,
@@ -47,13 +50,13 @@ const EmailQuestionsList = () => {
 
   const dispatch = useDispatch();
 
-  const [filter, setFilter] = useState([]);
+  const [filter, setFilter] = useState(['ALL']);
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
-        filter,
+        filter: filter.slice(1),
         skip: currentPage * questionsPerPage
       })
     );
@@ -94,8 +97,8 @@ const EmailQuestionsList = () => {
   };
 
   const filterChangeHandler = (id) => {
-    if (id === 'all') {
-      setFilter([]);
+    if (id === 'ALL') {
+      setFilter([id]);
       return;
     }
 
@@ -134,7 +137,7 @@ const EmailQuestionsList = () => {
             senderName={question.senderName}
             email={question.email}
             qA={ReactHtmlParser(questionToShow + answerToShow)}
-            date={getTime(question.date)}
+            date={ReactHtmlParser(getTime(question.date, true))}
             status={labels.emailQuestionsLabels.ua[question.status]}
             showAvatar={false}
             showEdit={false}
@@ -154,15 +157,18 @@ const EmailQuestionsList = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.tableNav}>
-        <Typography variant='h1' className={styles.title}>
+    <div className={commonStyles.container}>
+      <div
+        className={commonStyles.adminHeader}
+        style={{ flexDirection: 'column', alignItems: 'flex-start' }}
+      >
+        <Typography variant='h1' className={commonStyles.materialTitle}>
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
         <div className={styles.operations}>
           <EmailQuestionsFilter
             filterItems={filter}
-            changeHandler={filterChangeHandler}
+            filterChangeHandler={filterChangeHandler}
           />
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
@@ -177,10 +183,12 @@ const EmailQuestionsList = () => {
             tableItems={questions}
           />
         ) : (
-          <h3 className={styles.emptyList}>{messages.EMPTY_LIST}</h3>
+          <Typography variant='h1' className={commonStyles.materialTitle}>
+            {messages.EMPTY_LIST}
+          </Typography>
         )}
       </div>
-      <div className={styles.paginationDiv}>
+      <div className={commonStyles.pagination}>
         <Pagination
           count={pagesCount}
           variant='outlined'
