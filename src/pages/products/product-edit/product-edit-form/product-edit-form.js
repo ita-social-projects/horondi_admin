@@ -306,15 +306,13 @@ const ProductEditForm = () => {
         <CommentsPage productId={product._id} />
       </Grid>
       <div className={styles.controlsBlock}>
-        <Link to={config.routes.pathToProducts}>
           <StandardButton
             id='back'
             title={config.buttonTitles.GO_BACK_TITLE}
             variant='outlined'
-            onClickHandler={() => {}}
+             onClickHandler={() => dispatch(push(config.routes.pathToProducts))}
             data-cy='back-btn'
           />
-        </Link>
       </div>
     </div>
   );
