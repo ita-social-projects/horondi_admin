@@ -45,8 +45,8 @@ describe('categories sagas tests', () => {
         categories
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
+      .then((res) => {
+        const { allEffects: analysis } = res;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysis).toHaveLength(3);
@@ -157,8 +157,8 @@ describe('categories sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysis).toHaveLength(3);
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(1);
