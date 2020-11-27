@@ -66,7 +66,7 @@ export const getAllCategories = async () => {
   return data.getAllCategories;
 };
 
-export const createCategory = async (data) => {
+export const createCategory = (data) => {
   const query = `
         mutation addCategory($category: CategoryInput!, $parentId: ID, $upload: Upload) {
     addCategory(category: $category, parentId: $parentId, upload: $upload) {
@@ -84,7 +84,7 @@ export const createCategory = async (data) => {
   return setItems(query, data);
 };
 
-export const updateCategoryById = async (data) => {
+export const updateCategoryById = (data) => {
   const query = `
     mutation updateCategory($id: ID!, $category: CategoryInput!, $upload: Upload){
       updateCategory(id: $id, category: $category, upload: $upload) {
@@ -103,7 +103,7 @@ export const updateCategoryById = async (data) => {
   return setItems(query, data);
 };
 
-export const deleteCategoryById = async (deleteId, switchId) => {
+export const deleteCategoryById = (deleteId, switchId) => {
   const query = `
         mutation deleteCategory($deleteId: ID!, $switchId: ID!){
       deleteCategory(

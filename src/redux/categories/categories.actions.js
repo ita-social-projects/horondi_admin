@@ -9,6 +9,7 @@ import {
   SET_CATEGORY,
   RESET_NEW_CATEGORY,
   EDIT_CATEGORY,
+  GET_SUBCATEGORIES,
   TOGGLE_CATEGORY_DELETE_DIALOG,
   SET_CATEGORY_DELETE_ID,
   SET_CATEGORY_SWITCH_ID
@@ -59,6 +60,11 @@ export const editCategory = (payload) => ({
 
 export const deleteCategory = () => ({
   type: DELETE_CATEGORY
+});
+
+export const getSubcategories = (payload) => ({
+  type: GET_SUBCATEGORIES,
+  payload
 });
 
 export const toggleCategoryDeleteDialog = () => ({
