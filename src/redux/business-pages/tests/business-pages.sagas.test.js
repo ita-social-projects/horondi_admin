@@ -1,6 +1,5 @@
 import { expectSaga } from 'redux-saga-test-plan';
-import * as matchers from 'redux-saga-test-plan/matchers';
-import { call, put } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 import {
   handleBusinessPagesLoad,
   handleCurrentBusinessPageLoad,
@@ -20,7 +19,6 @@ import {
   businessPageId,
   businessPage,
   fakeBusinessPage,
-  fakePages,
   businessPageToDeleteMock,
   businessPageToUpdate
 } from './business-pages.variables';
