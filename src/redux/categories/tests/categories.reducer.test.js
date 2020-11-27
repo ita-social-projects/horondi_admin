@@ -1,4 +1,4 @@
-import { initialState, categoriesReducer } from '../categories.reducer';
+import categoriesReducer, { initialState } from '../categories.reducer';
 
 import {
   setCategories,
