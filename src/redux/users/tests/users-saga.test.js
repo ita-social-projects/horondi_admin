@@ -116,7 +116,11 @@ describe('Users saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
         expect(analysisPut).toHaveLength(5);
+        expect(analysisCall).toHaveLength(1);
+        expect(analysisSelect).toHaveLength(1);
       }));
 
   it('should load all user by id', () =>
@@ -136,7 +140,9 @@ describe('Users saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should delete user by id', () =>
@@ -164,7 +170,9 @@ describe('Users saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should switch user status', () =>
@@ -192,7 +200,9 @@ describe('Users saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should register admin', () =>
@@ -214,7 +224,9 @@ describe('Users saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should confirm admin', () =>
@@ -236,7 +248,9 @@ describe('Users saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should valiadte token', () =>
@@ -254,7 +268,9 @@ describe('Users saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(2);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should handle users error', () =>
