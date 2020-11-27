@@ -11,7 +11,6 @@ import {
   useTheme
 } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
 import useProductHandlers from '../../../../hooks/product/use-product-handlers';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import useProductValidation from '../../../../hooks/product/use-product-validation';
