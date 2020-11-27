@@ -9,19 +9,13 @@ export const getAllCategories = async () => {
       query {
         getAllCategories {
             _id
-    code
     name {
       lang
       value
     }
     images {
-      large
-      medium
-      small
       thumbnail
     }
-    isMain
-    available
           }
         }
     `
@@ -42,12 +36,6 @@ export const getCategoryById = async (id) => {
             name {
               value
             }
-            description {
-              value
-            }
-            material
-            handmade
-            available
             images {
               thumbnail
             }
@@ -85,7 +73,6 @@ export const deleteCategory = async (id) => {
   ) {
     ... on Category {
       _id
-      code
     }
     ... on Error {
       statusCode
@@ -157,6 +144,7 @@ export const updateCategory = async (payload) => {
       updateCategory(id: $id, category: $category, upload: $upload) {
         ... on Category {
           _id
+          name
         }
         ... on Error {
           statusCode

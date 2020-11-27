@@ -9,11 +9,10 @@ import { getCategory } from '../../../redux/category-new/category.actions';
 
 const CategoryDetails = ({ match }) => {
   const { id } = match.params;
-
   const dispatch = useDispatch();
-  const { loading, category } = useSelector(({ Category}) => ({
-    loading: Category.categoryLoading,
-    category: Category.category
+  const { loading, category } = useSelector(({ Categories}) => ({
+    loading: Categories.categoryLoading,
+    category: Categories.category
   }));
   const styles = useStyles();
 

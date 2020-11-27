@@ -193,13 +193,9 @@ CategoryForm.propTypes = {
   id: PropTypes.string,
 category: PropTypes.shape({
     _id: PropTypes.string,
-    available: PropTypes.bool,
-    description: PropTypes.arrayOf(valueShape),
-    handmade: PropTypes.bool,
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
-    material: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
   }),
   values: PropTypes.shape({

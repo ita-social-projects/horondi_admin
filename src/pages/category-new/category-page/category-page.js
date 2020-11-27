@@ -76,7 +76,6 @@ const CategoryPage = () => {
           key={categoryItem._id}
           id={categoryItem.id}
           name={categoryItem.name[0].value}
-          available={categoryItem.available ? 'Так' : 'Ні'}
           deleteHandler={() => categoryDeleteHandler(categoryItem._id)}
           editHandler={() => {
             dispatch(push(`/categories/${categoryItem._id}`));

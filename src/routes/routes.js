@@ -173,9 +173,7 @@ const Routes = () => {
         <Route
           path={routes.pathToEditCategory}
           exact
-          render={({ match }) => (
-            <CategoryDetails id={match.params.id} />
-          )}
+            component={CategoryDetails}
         />
         <Route
           path={routes.pathToEmailQuestions}

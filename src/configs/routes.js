@@ -16,7 +16,7 @@ const routes = {
   pathToEditProduct: '/product/:id',
   pathToCategories: '/categories',
   pathToAddCategory: '/add-category',
-  pathToEditCategory: '/add-category/:id',
+  pathToEditCategory: '/categories/:id',
   pathToRegisterAdmin: '/register',
   pathToConfirmAdmin: '/confirmation/:token',
   pathToContacts: '/contacts',
