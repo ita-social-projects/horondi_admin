@@ -136,7 +136,11 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
         expect(analysisPut).toHaveLength(5);
+        expect(analysisCall).toHaveLength(1);
+        expect(analysisSelect).toHaveLength(1);
       }));
 
   it('should get filters', () =>
@@ -158,7 +162,9 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load product species', () =>
@@ -186,7 +192,9 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(2);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should load product options', () =>
@@ -206,7 +214,9 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(1);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load model by id', () =>
@@ -229,7 +239,9 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(1);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should add product', () =>
@@ -257,7 +269,11 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
         expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(3);
+        expect(analysisSelect).toHaveLength(1);
       }));
 
   it('should delete product', () =>
@@ -276,8 +292,8 @@ describe('Test products saga', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(0);
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisCall).toHaveLength(3);
       }));
 
   it('should update product', () =>
@@ -319,7 +335,11 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
         expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(2);
+        expect(analysisSelect).toHaveLength(1);
       }));
 
   it('should load product by id', () =>
@@ -345,7 +365,9 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(3);
       }));
 
   it('should handle snackbar success', () =>
@@ -444,6 +466,10 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
         expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(2);
+        expect(analysisSelect).toHaveLength(1);
       }));
 });
