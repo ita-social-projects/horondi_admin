@@ -215,18 +215,18 @@ describe('Users saga test', () => {
         [call(registerAdmin, adminInput)],
         [call(handleSnackBarSuccess, SUCCESS_CREATION_STATUS)]
       ])
-      .put(setUsersLoading(false))
       .put(push('/users'))
+      .put(setUsersLoading(false))
       .hasFinalState({
         Users: mockUsersState
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisCall).toHaveLength(2);
+        expect(analysisPut).toHaveLength(3);
       }));
 
   it('should confirm admin', () =>
