@@ -111,7 +111,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load material by id', () =>
@@ -133,7 +135,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load all material colors by id', () =>
@@ -155,7 +159,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load material color by code', () =>
@@ -177,7 +183,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should add metarial', () =>
@@ -203,7 +211,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should add metarial color', () =>
@@ -229,7 +239,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should delete material by id', () =>
@@ -257,7 +269,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should delete material color by code', () =>
@@ -289,7 +303,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should update material', () =>
@@ -320,7 +336,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(2);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should handle success snackbar', () =>

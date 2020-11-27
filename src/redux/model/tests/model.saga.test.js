@@ -89,7 +89,9 @@ describe('Test model sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load model by id', () =>
@@ -109,7 +111,9 @@ describe('Test model sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should add model', () =>
@@ -139,7 +143,9 @@ describe('Test model sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(5);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should delete model', () =>
@@ -173,7 +179,9 @@ describe('Test model sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(6);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should update model', () =>
@@ -203,7 +211,9 @@ describe('Test model sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(5);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should handle models error', () =>
