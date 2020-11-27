@@ -8,7 +8,8 @@ import {
   Button,
   TextField,
   FormControlLabel,
-  Select
+  Select,
+  Typography
 } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tabs from '@material-ui/core/Tabs';
@@ -34,11 +35,15 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 import AddPhoto from '../../../images/add-photo.png';
 import { categoryTranslations } from '../../../translations/category.translations';
 import { config } from '../../../configs';
+import { useCommonStyles } from '../../common.styles';
 
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
 const { DELETE_CATEGORY } = config.buttonTitles;
+
 const CategoriesAdd = ({ id, editMode }) => {
-  // HOOKS
+  const classes = useStyles();
+  const commonStyles = useCommonStyles();
+
   const dispatch = useDispatch();
   const { newCategory, categories, loading } = useSelector(
     ({ Categories }) => ({
@@ -175,21 +180,21 @@ const CategoriesAdd = ({ id, editMode }) => {
   };
 
   const handleCategoryEdit = () => {
-    const id = newCategory._id;
+    const categoryId = newCategory._id;
     dispatch(
       editCategory({
         category: omitTypename(newCategory, { deleteId: true }),
-        id,
+        id: categoryId,
         upload
       })
     );
   };
 
   const categoryDeleteHandler = useCallback(
-    (id) => {
+    (categoryId) => {
       const removeCategory = () => {
         dispatch(closeDialog());
-        dispatch(deleteCategory({ id }));
+        dispatch(deleteCategory({ categoryId }));
       };
       openSuccessSnackbar(
         removeCategory,
@@ -249,8 +254,8 @@ const CategoriesAdd = ({ id, editMode }) => {
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setCategoryImageUrl(e.target.result);
+      reader.onload = (event) => {
+        setCategoryImageUrl(event.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
@@ -310,218 +315,216 @@ const CategoriesAdd = ({ id, editMode }) => {
     [newCategory, dispatch]
   );
 
-  // STYLES
-  const classes = useStyles();
-
   if (loading) {
     return <LoadingBar />;
   }
 
   return (
-    <div className={classes.container}>
-      <div>
-        <FormControl className={classes.addForm}>
-          <Grid container spacing={1}>
-            <Grid item className={classes.wrapper}>
-              <Paper className={classes.addFields}>
-                <TextField
-                  label={isMain ? 'Код категорії' : 'Код підкатегорії'}
-                  variant='outlined'
-                  name='code'
-                  required
-                  error={!codeIsValid && shouldValidate}
-                  helperText={
-                    !codeIsValid && shouldValidate
-                      ? 'Введіть код категорії'
-                      : ''
-                  }
-                  value={newCategory.code}
-                  onChange={handleChange}
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={newCategory.isMain}
-                      name='isMain'
-                      onChange={handleChange}
-                    />
-                  }
-                  label='Основна категорія'
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={newCategory.available}
-                      name='available'
-                      onChange={handleChange}
-                    />
-                  }
-                  label={
-                    isMain
-                      ? categoryTranslations.CATEGORY_IS_AVAILABLE
-                      : categoryTranslations.SUBCATEGORY_IS_AVAILABLE
-                  }
-                />
-              </Paper>
-              <Paper className={classes.addFields}>
-                <Tabs
-                  value={tabValue}
-                  indicatorColor='primary'
-                  textColor='primary'
-                  onChange={handleTabChange}
-                  aria-label='tabs'
-                  className={classes.tabs}
-                >
-                  <Tab label='Назва' />
-                  <Tab label='Зображення' />
-                  {!isMain && <Tab label='Батьківська категорія' />}
-                  {isMain && editMode && <Tab label='Підкатегорії' />}
-                </Tabs>
-                <TabPanel value={tabValue} index={0}>
-                  <div>
-                    <form autoComplete='on' className={classes.addNameForm}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
+          {config.titles.categoryPageTitles.createPageTitle}
+        </Typography>
+      </div>
+      <FormControl className={classes.addForm}>
+        <Grid container spacing={1}>
+          <Grid item className={classes.wrapper}>
+            <Paper className={classes.addFields}>
+              <TextField
+                label={isMain ? 'Код категорії' : 'Код підкатегорії'}
+                variant='outlined'
+                name='code'
+                required
+                error={!codeIsValid && shouldValidate}
+                helperText={
+                  !codeIsValid && shouldValidate ? 'Введіть код категорії' : ''
+                }
+                value={newCategory.code}
+                onChange={handleChange}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={newCategory.isMain}
+                    name='isMain'
+                    onChange={handleChange}
+                  />
+                }
+                label='Основна категорія'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={newCategory.available}
+                    name='available'
+                    onChange={handleChange}
+                  />
+                }
+                label={
+                  isMain
+                    ? categoryTranslations.CATEGORY_IS_AVAILABLE
+                    : categoryTranslations.SUBCATEGORY_IS_AVAILABLE
+                }
+              />
+            </Paper>
+            <Paper className={classes.addFields}>
+              <Tabs
+                value={tabValue}
+                indicatorColor='primary'
+                textColor='primary'
+                onChange={handleTabChange}
+                aria-label='tabs'
+                className={commonStyles.tabs}
+              >
+                <Tab label='Назва' />
+                <Tab label='Зображення' />
+                {!isMain && <Tab label='Батьківська категорія' />}
+                {isMain && editMode && <Tab label='Підкатегорії' />}
+              </Tabs>
+              <TabPanel value={tabValue} index={0}>
+                <div>
+                  <form autoComplete='on' className={classes.addNameForm}>
+                    {showAddNameForm ? (
+                      <>
+                        <TextField
+                          label='Мова'
+                          variant='outlined'
+                          name='lang'
+                          value={newName.lang}
+                          error={!nameIsValid && shouldValidate}
+                          className={classes.addNameInput}
+                          onChange={handleNameChange}
+                          fullWidth
+                        />
+                        <TextField
+                          label='Назва'
+                          variant='outlined'
+                          name='value'
+                          error={!nameIsValid && shouldValidate}
+                          helperText={
+                            !nameIsValid && shouldValidate
+                              ? "Ім'я повинно містити як мінімум 2 значення"
+                              : ''
+                          }
+                          value={newName.value}
+                          className={classes.addNameInput}
+                          onChange={handleNameChange}
+                          fullWidth
+                        />
+                      </>
+                    ) : null}
+                    <div className={classes.addNameBtnGroup}>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        className={classes.addNameBtn}
+                        onClick={handleAddName}
+                        fullWidth
+                      >
+                        {config.buttonTitles.ADD_CATEGORY_NAME}
+                      </Button>
                       {showAddNameForm ? (
                         <>
-                          <TextField
-                            label='Мова'
-                            variant='outlined'
-                            name='lang'
-                            value={newName.lang}
-                            error={!nameIsValid && shouldValidate}
-                            className={classes.addNameInput}
-                            onChange={handleNameChange}
+                          <div className={classes.divider} />
+                          <Button
+                            variant='contained'
+                            color='primary'
+                            className={classes.addNameBtn}
+                            onClick={hideAddNameForm}
                             fullWidth
-                          />
-                          <TextField
-                            label='Назва'
-                            variant='outlined'
-                            name='value'
-                            error={!nameIsValid && shouldValidate}
-                            helperText={
-                              !nameIsValid && shouldValidate
-                                ? "Ім'я повинно містити як мінімум 2 значення"
-                                : ''
-                            }
-                            value={newName.value}
-                            className={classes.addNameInput}
-                            onChange={handleNameChange}
-                            fullWidth
-                          />
+                          >
+                            {config.buttonTitles.CANCEL}
+                          </Button>
                         </>
                       ) : null}
-                      <div className={classes.addNameBtnGroup}>
-                        <Button
-                          variant='contained'
-                          color='primary'
-                          className={classes.addNameBtn}
-                          onClick={handleAddName}
-                          fullWidth
-                        >
-                          {config.buttonTitles.ADD_CATEGORY_NAME}
-                        </Button>
-                        {showAddNameForm ? (
-                          <>
-                            <div className={classes.divider} />
-                            <Button
-                              variant='contained'
-                              color='primary'
-                              className={classes.addNameBtn}
-                              onClick={hideAddNameForm}
-                              fullWidth
-                            >
-                              {config.buttonTitles.CANCEL}
-                            </Button>
-                          </>
-                        ) : null}
-                      </div>
-                    </form>
-                    {categoryNameList.length ? (
-                      <TableContainerGenerator
-                        tableTitles={config.tableHeadRowTitles.categoryName}
-                        tableItems={categoryNameList}
-                      />
-                    ) : null}
+                    </div>
+                  </form>
+                  {categoryNameList.length ? (
+                    <TableContainerGenerator
+                      tableTitles={config.tableHeadRowTitles.categoryName}
+                      tableItems={categoryNameList}
+                    />
+                  ) : null}
+                </div>
+              </TabPanel>
+              <TabPanel value={tabValue} index={1}>
+                <div className={classes.addImageForm}>
+                  <div className={classes.imageContainer}>
+                    <img
+                      src={categoryImageUrl || AddPhoto}
+                      alt='profile-logo'
+                      className={classes.userImage}
+                      onError={handleImageError}
+                    />
+                    <input
+                      type='file'
+                      className={classes.photoUpload}
+                      id='photoUpload'
+                      onChange={handleImageLoad}
+                      multiple={false}
+                      accept='image/*'
+                    />
+                    <label
+                      htmlFor='photoUpload'
+                      className={classes.uploadLabel}
+                    >
+                      <Button component='span' className={classes.uploadBtn}>
+                        {config.buttonTitles.ADD_PHOTO_LABEL}
+                      </Button>
+                    </label>
                   </div>
-                </TabPanel>
-                <TabPanel value={tabValue} index={1}>
-                  <div className={classes.addImageForm}>
-                    <div className={classes.imageContainer}>
-                      <img
-                        src={categoryImageUrl || AddPhoto}
-                        alt='profile-logo'
-                        className={classes.userImage}
-                        onError={handleImageError}
-                      />
-                      <input
-                        type='file'
-                        className={classes.photoUpload}
-                        id='photoUpload'
-                        onChange={handleImageLoad}
-                        multiple={false}
-                        accept='image/*'
-                      />
-                      <label
-                        htmlFor='photoUpload'
-                        className={classes.uploadLabel}
+                </div>
+              </TabPanel>
+              {!isMain && (
+                <TabPanel value={tabValue} index={2}>
+                  <div>
+                    <div className={classes.addImageForm}>
+                      <FormControl
+                        variant='outlined'
+                        className={classes.imageSelect}
                       >
-                        <Button component='span' className={classes.uploadBtn}>
-                          {config.buttonTitles.ADD_PHOTO_LABEL}
-                        </Button>
-                      </label>
+                        <Select
+                          native
+                          fullWidth
+                          value={!parentId ? '' : parentId}
+                          onChange={handleParentChange}
+                        >
+                          <option value='' disabled>
+                            Оберіть батьківську категорію
+                          </option>
+                          {mainCategories.map((category) => (
+                            <option key={category._id} value={category._id}>
+                              {category.name[0].value}
+                            </option>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </div>
                   </div>
                 </TabPanel>
-                {!isMain && (
-                  <TabPanel value={tabValue} index={2}>
-                    <div>
-                      <div className={classes.addImageForm}>
-                        <FormControl
-                          variant='outlined'
-                          className={classes.imageSelect}
-                        >
-                          <Select
-                            native
-                            fullWidth
-                            value={!parentId ? '' : parentId}
-                            onChange={handleParentChange}
-                          >
-                            <option value='' disabled>
-                              Оберіть батьківську категорію
-                            </option>
-                            {mainCategories.map((category) => (
-                              <option key={category._id} value={category._id}>
-                                {category.name[0].value}
-                              </option>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </div>
-                    </div>
-                  </TabPanel>
-                )}
-                {isMain && editMode && (
-                  <TabPanel value={tabValue} index={2}>
-                    <div>
-                      <TableContainerGenerator
-                        tableTitles={config.tableHeadRowTitles.subcategories}
-                        tableItems={subcategoryList}
-                      />
-                    </div>
-                  </TabPanel>
-                )}
-              </Paper>
-            </Grid>
+              )}
+              {isMain && editMode && (
+                <TabPanel value={tabValue} index={2}>
+                  <div>
+                    <TableContainerGenerator
+                      tableTitles={config.tableHeadRowTitles.subcategories}
+                      tableItems={subcategoryList}
+                    />
+                  </div>
+                </TabPanel>
+              )}
+            </Paper>
           </Grid>
-        </FormControl>
-        <Button
-          variant='contained'
-          color='primary'
-          className={classes.saveBtn}
-          onClick={editMode ? handleCategoryEdit : handleCategorySave}
-        >
-          {config.buttonTitles.titleGenerator(editMode, isMain)}
-        </Button>
-      </div>
+        </Grid>
+      </FormControl>
+      <Button
+        variant='contained'
+        color='primary'
+        className={classes.saveBtn}
+        onClick={editMode ? handleCategoryEdit : handleCategorySave}
+      >
+        {config.buttonTitles.titleGenerator(editMode, isMain)}
+      </Button>
     </div>
   );
 };

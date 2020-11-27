@@ -10,7 +10,7 @@ import {
 } from './categories.types';
 import { config } from '../../configs';
 
-const initialState = {
+export const initialState = {
   categories: [],
   categoriesLoading: false,
   categoriesError: null,
@@ -20,7 +20,7 @@ const initialState = {
   switchId: null
 };
 
-const categoriesReducer = (state = initialState, action = {}) => {
+export const categoriesReducer = (state = initialState, action = {}) => {
   switch (action.type) {
   case SET_CATEGORIES:
     return {

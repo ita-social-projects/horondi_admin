@@ -16,6 +16,7 @@ const CustomizedEditIcon = (props) => {
         aria-label={EDIT_TITLE}
         onClick={onClickHandler}
         color='secondary'
+        data-cy='edit-btn'
       >
         <EditIcon fontSize={size} />
       </IconButton>

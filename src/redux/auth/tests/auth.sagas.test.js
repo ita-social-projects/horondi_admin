@@ -1,11 +1,6 @@
 import { expectSaga } from 'redux-saga-test-plan';
-import { call, put } from 'redux-saga/effects';
-import {
-  SET_AUTH,
-  SET_AUTH_LOADING,
-  SET_ADMIN_ID,
-  LOGOUT_USER
-} from '../auth.types';
+import { call } from 'redux-saga/effects';
+import { LOGOUT_USER } from '../auth.types';
 import {
   handleAdminLoad,
   handleAdminCheckByToken,
@@ -16,6 +11,8 @@ import { email, password, token, userId } from './auth.variables';
 
 import { setAuth, setAuthLoading, setAdminId } from '../auth.actions';
 
+import authReducer, { initialState } from '../auth.reducer';
+
 jest.mock('../../../services/local-storage.service');
 
 describe('auth sagas tests', () => {
@@ -23,6 +20,7 @@ describe('auth sagas tests', () => {
     expectSaga(handleAdminLoad, {
       payload: { loginInput: { email, password } }
     })
+      .withReducer(authReducer)
       .provide([
         [
           call(loginAdmin, { loginInput: { email, password } }),
@@ -33,6 +31,11 @@ describe('auth sagas tests', () => {
       .put(setAdminId(userId))
       .put(setAuth(true))
       .put(setAuthLoading(false))
+      .hasFinalState({
+        ...initialState,
+        adminId: userId,
+        isAuth: true
+      })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
@@ -41,31 +44,21 @@ describe('auth sagas tests', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(1);
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_AUTH_LOADING, payload: true })
-        );
-        expect(analysisPut[1]).toEqual(
-          put({ type: SET_ADMIN_ID, payload: userId })
-        );
-        expect(analysisPut[2]).toEqual(put({ type: SET_AUTH, payload: true }));
-        expect(analysisPut[3]).toEqual(
-          put({
-            type: '@@router/CALL_HISTORY_METHOD',
-            payload: { method: 'push', args: ['/stats'] }
-          })
-        );
-        expect(analysisPut[4]).toEqual(
-          put({ type: SET_AUTH_LOADING, payload: false })
-        );
       }));
 
   it('shouls check admin by token', () =>
     expectSaga(handleAdminCheckByToken)
+      .withReducer(authReducer)
       .provide([[call(getUserByToken, token), { _id: userId, email }]])
       .put(setAuthLoading(true))
       .put(setAdminId(userId))
       .put(setAuth(true))
       .put(setAuthLoading(false))
+      .hasFinalState({
+        ...initialState,
+        adminId: userId,
+        isAuth: true
+      })
       .run()
       .then((res) => {
         const { allEffects: analysis } = res;
@@ -74,33 +67,21 @@ describe('auth sagas tests', () => {
         const analysisCall = analysis.filter((el) => el.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
-        expect(analysisPut[0]).toEqual(
-          put({ type: SET_AUTH_LOADING, payload: true })
-        );
-        expect(analysisPut[1]).toEqual(
-          put({ payload: userId, type: SET_ADMIN_ID })
-        );
-        expect(analysisPut[2]).toEqual(put({ payload: true, type: SET_AUTH }));
-        expect(analysisPut[3]).toEqual(
-          put({ type: SET_AUTH_LOADING, payload: false })
-        );
       }));
 
   it('should handle admin logout', () =>
     expectSaga(handleAdminLogout, LOGOUT_USER)
+      .withReducer(authReducer)
       .put(setAuth(false))
+      .hasFinalState({
+        ...initialState,
+        isAuth: false
+      })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         expect(analysis).toHaveLength(2);
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(2);
-        expect(analysisPut[0]).toEqual(put({ type: SET_AUTH, payload: false }));
-        expect(analysisPut[1]).toEqual(
-          put({
-            type: '@@router/CALL_HISTORY_METHOD',
-            payload: { method: 'push', args: ['/'] }
-          })
-        );
       }));
 });

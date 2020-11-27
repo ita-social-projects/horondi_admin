@@ -6,6 +6,7 @@ import { push } from 'connected-react-router';
 import Typography from '@material-ui/core/Typography';
 
 import { useStyles } from './orders-page.styles';
+import { useCommonStyles } from '../../common.styles';
 import { getOrderList } from '../../../redux/orders/orders.actions';
 import Status from './Status/Status';
 import LoadingBar from '../../../components/loading-bar';
@@ -17,6 +18,7 @@ import { config } from '../../../configs';
 
 const OrdersPage = () => {
   const styles = useStyles();
+  const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
   const [status, setStatus] = useState('All');
@@ -75,11 +77,11 @@ const OrdersPage = () => {
     ));
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.orderCount}>
-          {count} {config.titles.orderTitles.orders}
-        </div>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
+          {config.titles.orderTitles.mainPageTitle}
+        </Typography>
         <div className={styles.filterBy}>
           {config.titles.orderTitles.filterBy}
           <Select value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -87,19 +89,24 @@ const OrdersPage = () => {
           </Select>
         </div>
       </div>
-      {orderLoading ? (
-        <LoadingBar />
-      ) : orders && orders.length ? (
-        <TableContainerGenerator
-          pagination
-          tableTitles={config.tableHeadRowTitles.orders}
-          tableItems={orderItems}
-        />
-      ) : (
-        <Typography variant='h1' className={styles.ordersDisabledTitle}>
-          {config.titles.orderTitles.ORDER_NOT_FOUND}
-        </Typography>
-      )}
+      <div className={styles.orderCount}>
+        {count} {config.titles.orderTitles.orders}
+      </div>
+      <div className={commonStyles.table}>
+        {orderLoading ? (
+          <LoadingBar />
+        ) : orders && orders.length ? (
+          <TableContainerGenerator
+            pagination
+            tableTitles={config.tableHeadRowTitles.orders}
+            tableItems={orderItems}
+          />
+        ) : (
+          <Typography variant='h1' className={commonStyles.materialTitle}>
+            {config.titles.orderTitles.ORDER_NOT_FOUND}
+          </Typography>
+        )}
+      </div>
     </div>
   );
 };

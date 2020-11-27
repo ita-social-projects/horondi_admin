@@ -13,7 +13,8 @@ import { formatPhoneNumber } from '../../utils/format-phone-number';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import { useStyles } from './contacts-page.style';
+
+import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 
 import {
@@ -29,8 +30,10 @@ const pathToAddContactPage = config.routes.pathToAddContact;
 const tableTitles = config.tableHeadRowTitles.contacts;
 
 const ContactsPage = () => {
+  const commonStyles = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const classes = useStyles();
+
   const {
     contacts,
     loading,
@@ -100,10 +103,10 @@ const ContactsPage = () => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.tableNav}>
-        <Typography variant='h1' className={classes.contactsTitle}>
-          Контактна інформація
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
+          {config.titles.contactsPageTitles.mainPageTitle}
         </Typography>
         <Button
           id='add-contact'
@@ -115,14 +118,12 @@ const ContactsPage = () => {
           {CREATE_CONTACT_TITLE}
         </Button>
       </div>
-      <div className={classes.tableContainer}>
-        <TableContainerGenerator
-          id='contactTable'
-          tableTitles={tableTitles}
-          tableItems={contactItems}
-        />
-      </div>
-      <div className={classes.paginationContainer}>
+      <TableContainerGenerator
+        id='contactTable'
+        tableTitles={tableTitles}
+        tableItems={contactItems}
+      />
+      <div className={commonStyles.pagination}>
         <Pagination
           count={contactPagesCount}
           variant='outlined'

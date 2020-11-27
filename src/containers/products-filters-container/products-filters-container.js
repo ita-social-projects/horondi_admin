@@ -15,11 +15,7 @@ import {
 import { useStyles } from './products-filters-container.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
-
-const badgePosition = {
-  vertical: 'top',
-  horizontal: 'left'
-};
+import { badgePosition } from '../../configs';
 
 const { CATEGORIES } = productsTranslations;
 
