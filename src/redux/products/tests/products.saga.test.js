@@ -334,12 +334,12 @@ describe('Test products saga', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
-        expect(analysisPut).toHaveLength(4);
-        expect(analysisCall).toHaveLength(2);
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisSelect).toHaveLength(1);
+        expect(analysisCall).toHaveLength(2);
+        expect(analysisPut).toHaveLength(4);
       }));
 
   it('should load product by id', () =>
