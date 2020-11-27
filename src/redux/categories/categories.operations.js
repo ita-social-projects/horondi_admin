@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { getItems, setItems, client } from '../../utils/client';
+import { setItems, client } from '../../utils/client';
 
 export const getCategoryById = async (id) => {
   const result = await client.query({
