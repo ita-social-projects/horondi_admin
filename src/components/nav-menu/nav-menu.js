@@ -52,6 +52,7 @@ const NavMenu = ({ width }) => {
         component={NavLink}
         to={pathTo}
         activeClassName={classes.selectedCategory}
+        isActive={(props) => (props ? props.url === pathTo : null)}
       >
         <ListItemIcon>
           <PathIcon />
@@ -93,7 +94,8 @@ const NavMenu = ({ width }) => {
 };
 
 NavMenu.propTypes = {
-  width: PropTypes.string.isRequired
+  width: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
 };
 
 export default withWidth()(NavMenu);

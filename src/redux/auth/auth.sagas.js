@@ -29,7 +29,7 @@ export function* handleAdminLoad({ payload }) {
 
     yield put(setAdminId(admin._id));
     yield put(setAuth(true));
-    yield put(push('/mainpage'));
+    yield put(push('/'));
     yield put(setAuthLoading(false));
   } catch (error) {
     yield put(setAuthLoading(false));
@@ -59,14 +59,14 @@ export function* handleAdminCheckByToken() {
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
     setToLocalStorage('HORONDI_AUTH_TOKEN', null);
-    yield put(push('/'));
+    yield put(push('/login'));
   }
 }
 
 export function* handleAdminLogout() {
   setToLocalStorage('HORONDI_AUTH_TOKEN', null);
   yield put(setAuth(false));
-  yield put(push('/'));
+  yield put(push('/login'));
 }
 
 export default function* authSaga() {
