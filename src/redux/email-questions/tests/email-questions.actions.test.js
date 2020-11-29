@@ -34,8 +34,8 @@ import {
   skip,
   filter,
   id,
-  questions,
-  question,
+  mockQuestions,
+  mockQuestion,
   answer,
   count
 } from './email-questions.variables';
@@ -56,16 +56,16 @@ describe('email questions tests', () => {
   });
 
   it('should set all email questions', () => {
-    expect(setAllEmailQuestion(questions)).toEqual({
+    expect(setAllEmailQuestion(mockQuestions)).toEqual({
       type: SET_ALL_EMAIL_QUESTIONS,
-      payload: questions
+      payload: mockQuestions
     });
   });
 
   it('should set current email question', () => {
-    expect(setCurrentEmailQuestion(question)).toEqual({
+    expect(setCurrentEmailQuestion(mockQuestion)).toEqual({
       type: SET_CURRENT_EMAIL_QUESTION,
-      payload: question
+      payload: mockQuestion
     });
   });
 
@@ -91,16 +91,16 @@ describe('email questions tests', () => {
   });
 
   it('should move email question to spam', () => {
-    expect(moveEmailQuestionsToSpam(question)).toEqual({
+    expect(moveEmailQuestionsToSpam(mockQuestion)).toEqual({
       type: MOVE_EMAIL_QUESTIONS_TO_SPAM,
-      payload: question
+      payload: mockQuestion
     });
   });
 
   it('should delete email question', () => {
-    expect(deleteEmailQuestions(question)).toEqual({
+    expect(deleteEmailQuestions(mockQuestion)).toEqual({
       type: DELETE_EMAIL_QUESTIONS,
-      payload: question
+      payload: mockQuestion
     });
   });
 

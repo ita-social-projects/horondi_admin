@@ -12,7 +12,11 @@ import {
   setEmailQuestionsPagesCount
 } from '../email-questions.actions';
 
-import { questions, question, count } from './email-questions.variables';
+import {
+  mockQuestions,
+  mockQuestion,
+  count
+} from './email-questions.variables';
 
 describe('Email questions reducer tests', () => {
   it('should return default state', () => {
@@ -21,19 +25,19 @@ describe('Email questions reducer tests', () => {
 
   it('should set all questions', () => {
     expect(
-      emailQuestionsReducer(initialState, setAllEmailQuestion(questions))
+      emailQuestionsReducer(initialState, setAllEmailQuestion(mockQuestions))
     ).toEqual({
       ...initialState,
-      list: questions
+      list: mockQuestions
     });
   });
 
   it('should set one question', () => {
     expect(
-      emailQuestionsReducer(initialState, setCurrentEmailQuestion(question))
+      emailQuestionsReducer(initialState, setCurrentEmailQuestion(mockQuestion))
     ).toEqual({
       ...initialState,
-      currentQuestion: question
+      currentQuestion: mockQuestion
     });
   });
 

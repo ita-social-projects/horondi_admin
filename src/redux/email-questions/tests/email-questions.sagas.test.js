@@ -25,7 +25,6 @@ import {
   emailQuestionsPayload,
   emailQuestionsState,
   id,
-  mockDeletedQuestion,
   mockMoveQuestionToSpam,
   mockMoveQuestionToSpamPayload,
   mockQuestion,
