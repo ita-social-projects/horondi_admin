@@ -3,14 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 import { useStyles } from './category-page.styles';
 import {
   getCategories,
-  deleteCategory,
-  setCategoriesCurrentPage
+  deleteCategory
 } from '../../../redux/category-new/category.actions';
-
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -29,10 +26,7 @@ const CategoryPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     list,
-    loading,
-    pagesCount,
-    currentPage,
-    categoriesPerPage
+    loading
   } = useSelector(({ Categories}) => ({
     list: Categories.list,
     loading: Categories.newsLoading,
@@ -57,12 +51,10 @@ const CategoryPage = () => {
     openSuccessSnackbar(
       removeCategory,
       DELETE_CATEGORY,
-      CATEGORY_REMOVE_MESSAGE,
-      DELETE_CATEGORY
+      CATEGORY_REMOVE_MESSAGE
     );
   };
 
-  const changeHandler = (e, value) => dispatch(setCategoriesCurrentPage(value));
 
   const categoryItems =
     list !== undefined

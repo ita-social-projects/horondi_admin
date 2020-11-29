@@ -9,7 +9,7 @@ const CategoryAdd = () => {
   return (
     <div className={styles.container}>
       <span className={styles.categoryTitle}>
-       {config.titles.categoriesTitles.createPageTitle}
+        {config.titles.categoriesTitles.createPageTitle} 
       </span>
       <CategoryForm />
     </div>

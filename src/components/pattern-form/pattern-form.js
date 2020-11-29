@@ -162,11 +162,11 @@ const PatternForm = ({ pattern, id }) => {
               onChange={handleChange}
               error={touched.material && !!errors.material}
             />
-            {touched.material && errors.material && (
+             {touched.material && errors.material && (
               <div data-cy='material-error' className={styles.inputError}>
                 {errors.material}
               </div>
-            )}
+            )} 
           </Paper>
         </Grid>
         <AppBar position='static'>

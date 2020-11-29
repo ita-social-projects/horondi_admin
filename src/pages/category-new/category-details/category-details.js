@@ -26,7 +26,7 @@ const CategoryDetails = ({ match }) => {
 
   return (
     <div className={styles.detailsContainer}>
-      {category !== null ? <CategoryForm id={id} edit={true} category={category} /> : null}
+       {category !== null ? <CategoryForm id={id} edit={true} category={category} /> : null} 
     </div>
   );
 };

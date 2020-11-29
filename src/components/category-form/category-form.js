@@ -24,14 +24,14 @@ import ImageUploadContainer from '../../containers/image-upload-container';
 const {
   CATEGORY_VALIDATION_ERROR,
   CATEGORY_ERROR_MESSAGE,
-  CATEGORY_ERROR_ENGLISH_AND_DIGITS_ONLY
+
 } = config.categoryErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
 const { languages } = config;
 
-const CategoryForm = ({ category, id, edit }) => {
+const CategoryForm = ({ category, id,edit}) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
@@ -55,6 +55,9 @@ const CategoryForm = ({ category, id, edit }) => {
     ukName: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE),
+      code: Yup.string()
+      .min(2, CATEGORY_VALIDATION_ERROR)
+      .required(CATEGORY_ERROR_MESSAGE)
   });
 
   const {
@@ -70,6 +73,7 @@ const CategoryForm = ({ category, id, edit }) => {
       categoryImage: category.images.thumbnail || '',
       ukName: category.name[0].value || '',
       enName:category.name[1].value || '',
+      code:category.code || ''
     },
     onSubmit: () => {
       const newCategory = createCategory(values);
@@ -109,14 +113,15 @@ const CategoryForm = ({ category, id, edit }) => {
                 categoryImage ||
                 `${config.categoryImageLink}${values.categoryImage}`
               }
-              fileName={upload.name ||category.images.thumbnail}
+              fileName={category.images.thumbnail}
+               fileName={upload.name ||category.images.thumbnail}
             />
             <TextField
               data-cy='code'
               id='code'
               className={styles.textField}
               variant='outlined'
-              label={'код'}
+              label={'Код категорії'}
               value={values.code}
               onChange={handleChange}
               error={touched.code && !!errors.code}
@@ -141,17 +146,17 @@ const CategoryForm = ({ category, id, edit }) => {
         {languages.map((lang, index) => (
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.categoryItemUpdate}>
-              <TextField
+               <TextField
                 data-cy={`${lang}Name`}
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label='Назва'
+                label='Назва категорії'
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
                 error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-              />
+              /> 
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div
                   data-cy={`${lang}Name-error`}
