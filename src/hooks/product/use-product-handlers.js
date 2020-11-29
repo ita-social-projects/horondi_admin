@@ -4,7 +4,7 @@ import { config } from '../../configs';
 import {
   AdditionsSelector,
   OptionsSelector
-} from '../../redux/selectors/use-product-handlers.selectors';
+} from '../../redux/selectors/other.selectors';
 import useProductSpecies from './use-product-species';
 
 const {

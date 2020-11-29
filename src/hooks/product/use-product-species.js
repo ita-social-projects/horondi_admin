@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { ColorsSelector } from '../../redux/selectors/use-product-species.selectors';
+import { ColorsSelector } from '../../redux/selectors/other.selectors';
 
 export default function useProductSpecies() {
   const filterData = useSelector(({ Products }) => Products.filterData);

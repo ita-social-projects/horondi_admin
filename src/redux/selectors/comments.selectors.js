@@ -1,4 +1,4 @@
-export const CommentsSelector = ({ Comments }) => ({
+export const CommentsPageSelector = ({ Comments }) => ({
   list: Comments.list,
   loading: Comments.commentsLoading,
   pagesCount: Comments.pagination.pagesCount,
