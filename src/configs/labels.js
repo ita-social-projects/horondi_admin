@@ -178,11 +178,13 @@ const labels = {
   },
   emailQuestionsLabels: {
     en: {
+      ALL: 'ALL',
       PENDING: 'PENDING',
       SPAM: 'SPAM',
       ANSWERED: 'ANSWERED'
     },
     ua: {
+      ALL: 'Всі',
       PENDING: 'Очікує відповіді',
       SPAM: 'Спам',
       ANSWERED: 'Відповідь надано'

@@ -18,8 +18,8 @@ const ProductAddPrice = ({ activeStep, handleBack, handleNext }) => {
     ({ Products }) => Products.productToSend.basePrice
   );
 
-  const onSubmit = ({ basePrice }) => {
-    dispatch(setProductToSend({ basePrice }));
+  const onSubmit = ({ initialPrice }) => {
+    dispatch(setProductToSend({ initialPrice }));
     handleNext();
   };
 
