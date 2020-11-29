@@ -129,6 +129,7 @@ export function* handleEmailQuestionsDelete({ payload }) {
     yield call(deleteEmailQuestions, payload);
 
     const emailQuestions = yield call(handleGettingQuestionFromStore);
+
     yield put(
       setAllEmailQuestion(
         emailQuestions.filter(
