@@ -1,59 +1,39 @@
 import React from 'react';
-import { Avatar, Button } from '@material-ui/core';
-import { AttachFile, Image } from '@material-ui/icons';
 import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
+import { AttachFile } from '@material-ui/icons';
 import { useStyles } from './image-upload-container.styles';
 
-const ImageUploadContainer = ({
-  handler,
-  srcForAvatar,
-  fileName,
-  multiple = false
-}) => {
+const ImageUploadContainer = ({ handler, multiple, buttonLabel }) => {
   const styles = useStyles();
   return (
     <div className={styles.imageUploadContainer}>
       <label htmlFor='upload-photo'>
-        <input
-          style={{ display: 'none' }}
-          accept='image/*'
-          id='upload-photo'
-          name='upload-photo'
-          type='file'
-          onChange={handler}
-          multiple={multiple}
-        />
-        <Button
-          data-cy='add-photo'
-          variant='outlined'
-          color='primary'
-          component='span'
-        >
+        <Button variant='contained' color='primary' component='label'>
           <AttachFile className={styles.attachFile} />
-          Завантажити
+          {buttonLabel}
+          <input
+            style={{ display: 'none' }}
+            id='upload-photo'
+            name='upload-photo'
+            type='file'
+            onChange={handler}
+          />
         </Button>
       </label>
-      {srcForAvatar ? (
-        <Avatar
-          data-cy='patternImage'
-          src={srcForAvatar}
-          className={styles.large}
-        >
-          <Image />
-        </Avatar>
-      ) : null}
-      <span className={styles.imageName}>{fileName}</span>
     </div>
   );
 };
+
 ImageUploadContainer.propTypes = {
   handler: PropTypes.func.isRequired,
-  fileName: PropTypes.string,
-  srcForAvatar: PropTypes.oneOfType([PropTypes.string]).isRequired,
-  multiple: PropTypes.bool
+  multiple: PropTypes.bool,
+  buttonLabel: PropTypes.string
 };
+
 ImageUploadContainer.defaultProps = {
   multiple: false,
-  fileName: ''
+  buttonLabel: 'Upload File'
 };
+
 export default ImageUploadContainer;

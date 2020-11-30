@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Box, Grid, Chip, Avatar } from '@material-ui/core';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { Box, Grid, Avatar } from '@material-ui/core';
 import { Image } from '@material-ui/icons';
 import { useStyles } from './product-add-images.styles';
 
-import UploadButton from '../../../../components/buttons/upload-button';
 import StepperButtons from '../../../../components/stepper-control-buttons';
 import { setFilesToUpload } from '../../../../redux/products/products.actions';
 
@@ -42,19 +40,31 @@ const ProductAddImages = ({
   };
 
   const handleAdditionalImagesLoad = (e) => {
+    // if (e.target.files && e.target.files[0]) {
+    //   const reader = new FileReader();
+    //   reader.onload = (event) => {
+    //     setAdditionalImages(event.target.result);
+    //     console.log(event.target.result);
+    //   };
+    //   reader.readAsDataURL(e.target.files[0]);
+    // }
+
     const { files } = e.target;
-    if (files && files[0]) {
+    if (e.target.files && e.target.files[0]) {
       // const reader = new FileReader();
       const imagesNames = additionalImages.map(({ name }) => name);
+      console.log(imagesNames);
       const newImages = Array.from(files).filter(
         ({ name }) => !imagesNames.includes(name) && name !== primaryImage.name
       );
+      console.log(newImages);
       setAdditionalImages((prevImages) => [...prevImages, ...newImages]);
+      console.log(additionalImages);
 
       // reader.onload = (event) => {
-      // setAdditionalImages(event.target.result);
-      // reader.readAsDataURL(e.target.files[0]);
-      // }
+      //   setAdditionalImages((prevImages) => [...prevImages, ...newImages]);
+      //   console.log(event.target.result);
+      // };
     }
   };
 
@@ -85,9 +95,13 @@ const ProductAddImages = ({
           <Grid item>
             <ImageUploadContainer
               handler={handlePrimaryImageLoad}
-              srcForAvatar={primaryImage}
-              // fileName={primaryImage.name}
+              buttonLabel={MAIN_PHOTO}
             />
+            {primaryImage && (
+              <Avatar src={primaryImage}>
+                <Image />
+              </Avatar>
+            )}
           </Grid>
         </Grid>
         {shouldValidate && !primaryImage && (
@@ -98,8 +112,8 @@ const ProductAddImages = ({
         <Grid container spacing={1}>
           <Grid item>
             <ImageUploadContainer
-              multiple
               handler={handleAdditionalImagesLoad}
+              buttonLabel={ADDITIONAL_PHOTOS}
             />
             {additionalImages.map((e, { name }) => (
               <Avatar key={name} label={name} src={e}>
@@ -109,15 +123,6 @@ const ProductAddImages = ({
           </Grid>
         </Grid>
       </Box>
-      <div className={styles.chipContainer}>
-        <div>
-          <UploadButton
-            buttonLabel={ADDITIONAL_PHOTOS}
-            multiple
-            onChangeHandler={handleAdditionalImagesLoad}
-          />
-        </div>
-      </div>
       <StepperButtons
         activeStep={activeStep}
         handleBack={handleBack}
