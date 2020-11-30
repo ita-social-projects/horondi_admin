@@ -98,12 +98,12 @@ describe('Comments sagas tests', () => {
         pagination
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+      .then((res) => {
+        const { allEffects: analysis } = res;
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisCall).toHaveLength(1);
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('Should delete comment and remove it from store', () =>

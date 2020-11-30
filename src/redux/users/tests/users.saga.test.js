@@ -37,8 +37,7 @@ import {
   mockAdmin,
   mockToken,
   mockError,
-  mockSnackarState,
-  mockStatus
+  mockSnackarState
 } from './users.variables';
 
 import {
@@ -51,12 +50,6 @@ import {
 } from '../users.actions';
 
 import { setPagesCount, setItemsCount } from '../../table/table.actions';
-
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../../snackbar/snackbar.actions';
 
 import Users from '../users.reducer';
 import Table from '../../table/table.reducer';
@@ -113,14 +106,14 @@ describe('Users saga test', () => {
         }
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
+      .then((res) => {
+        const { allEffects: analysis } = res;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(5);
-        expect(analysisCall).toHaveLength(1);
         expect(analysisSelect).toHaveLength(1);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load all user by id', () =>
