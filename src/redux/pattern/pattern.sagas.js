@@ -100,7 +100,7 @@ export function* handlePatternUpdate({ payload }) {
 export function* handlePatternError(e) {
   yield put(setPatternLoading(false));
   yield put(setPatternError({ e }));
-  yield call(handleErrorSnackbar(e.message));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* patternSaga() {
