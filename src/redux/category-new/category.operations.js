@@ -13,6 +13,7 @@ export const getAllCategories = async () => {
       lang
       value
     }
+     code
     images {
       thumbnail
     }
@@ -34,8 +35,10 @@ export const getCategoryById = async (id) => {
           ... on Category {
             _id
             name {
+              lang
               value
             }
+             code
             images {
               thumbnail
             }
@@ -97,7 +100,6 @@ export const deleteCategory = async (id) => {
 
 export const createCategory = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-console.log(payload);
   const result = await client.mutate({
     context: { headers: { token } },
     variables: payload,
@@ -107,14 +109,10 @@ console.log(payload);
         addCategory(category: $category, upload: $upload) {
           ... on Category {
             _id
-            name {
-              lang
-              value
-            }
           }
           ... on Error {
-            message
-            statusCode
+           statusCode 
+           message 
           }
         }
       }
@@ -144,8 +142,7 @@ export const updateCategory = async (payload) => {
       updateCategory(id: $id, category: $category, upload: $upload) {
         ... on Category {
           _id
-          name
-        }
+            }
         ... on Error {
           statusCode
           message
@@ -156,7 +153,6 @@ export const updateCategory = async (payload) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
-
   if (result.data.updateCategory.message) {
     throw new Error(
       `${result.data.updateCategory.statusCode} ${categoryTranslations[result.data.updateCategory.message]

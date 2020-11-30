@@ -22,7 +22,7 @@ import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { addModel, updateModel } from '../../redux/model/model.actions';
-import { getCategories } from '../../redux/categories/categories.actions';
+import { getCategories } from '../../redux/category-new/category.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
 
@@ -70,9 +70,9 @@ const ModelForm = ({ model, id }) => {
   });
 
   const { categories } = useSelector(({ Categories }) => ({
-    categories: Categories.categories.filter((result) => result.isMain)
+    categories: Categories.list
   }));
-
+ 
   const [category, setCategory] = useState(model.category._id || '');
 
   const handleCategory = (event) => {

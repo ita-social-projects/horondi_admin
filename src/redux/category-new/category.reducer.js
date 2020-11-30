@@ -56,7 +56,7 @@ const categoryReducer = (state = initialState, action = {}) => {
       ...state,
       pagination: {
         ...state.pagination,
-        categorIESPerPage: action.payload
+        categorieSPerPage: action.payload
       }
     };
   case SET_CATEGORIES_PAGES_COUNT:

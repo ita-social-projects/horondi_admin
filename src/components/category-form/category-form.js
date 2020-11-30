@@ -78,13 +78,18 @@ const CategoryForm = ({ category, id,edit}) => {
     onSubmit: () => {
       const newCategory = createCategory(values);
 
-      if (edit) {
+ if (edit) {
         dispatch(updateCategory({ id,category: newCategory,upload }));
         return;
       }
       dispatch(addCategory({category: newCategory,upload }));
+     
     }
   });
+
+
+     
+  
 
   
   const handleImageLoad = (e) => {
@@ -111,14 +116,13 @@ const CategoryForm = ({ category, id,edit}) => {
               handler={handleImageLoad}
               srcForAvatar={
                 categoryImage ||
-                `${config.categoryImageLink}${values.categoryImage}`
+                `${config.imagePrefix}${values.categoryImage}`
               }
-              fileName={category.images.thumbnail}
-               fileName={upload.name ||category.images.thumbnail}
+                fileName={upload.name ||category.images.thumbnail}
             />
             <TextField
               data-cy='code'
-              id='code'
+              name='code'
               className={styles.textField}
               variant='outlined'
               label={'Код категорії'}
@@ -240,6 +244,7 @@ category: {
         value: ''
       }
     ],
+     code:'',
     images: {
       thumbnail: ''
     },

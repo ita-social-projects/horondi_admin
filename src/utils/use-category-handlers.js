@@ -25,6 +25,7 @@ const useCategoryHandlers = () => {
           value: values.enName
         }
       ],
+       code: values.code
     }
     return newCategory;
   };

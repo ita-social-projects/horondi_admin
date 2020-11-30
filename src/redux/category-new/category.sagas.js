@@ -5,7 +5,6 @@ import {
   setCategoryLoading,
   setCategory,
   setCategoryError,
-  setPagesCount,
   removeCategoryFromStore
 } from './category.actions';
 
@@ -62,7 +61,6 @@ export function* handleCategoryLoad({ payload }) {
 }
 
 export function* handleAddCategory({ payload }) {
-  console.log(payload,'sagaaaaaaaa');
   try {
     yield put(setCategoryLoading(true));
     yield call(createCategory, payload);

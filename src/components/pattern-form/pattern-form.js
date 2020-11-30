@@ -148,7 +148,7 @@ const PatternForm = ({ pattern, id }) => {
               handler={handleImageLoad}
               srcForAvatar={
                 patternImage ||
-                `${config.patternImageLink}${values.patternImage}`
+                `${config.imagePrefix}${values.patternImage}`
               }
               fileName={upload.name || pattern.images.thumbnail}
             />
