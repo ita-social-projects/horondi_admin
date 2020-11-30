@@ -12,7 +12,7 @@ export function* handleSuccessSnackbar(message) {
 }
 
 export function* handleErrorSnackbar(message) {
-  yield put(setSnackBarSeverity('success'));
+  yield put(setSnackBarSeverity('error'));
   yield put(setSnackBarMessage(message));
   yield put(setSnackBarStatus(true));
 }
