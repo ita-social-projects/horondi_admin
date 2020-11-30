@@ -83,8 +83,7 @@ const SlidesPage = () => {
         showAvatar={false}
         id={slidesItem.id}
         index={slidesItem.order}
-        name={slidesItem.title[0].value || slideTitle}
-          // purpose={slidesItem.description[0].value||slideDescription}
+        name={slidesItem.title[0].value||slideTitle}
         available={
           slidesItem.show ? slidesTranslations.YES : slidesTranslations.NO
         }
