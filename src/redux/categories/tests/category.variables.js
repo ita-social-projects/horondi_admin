@@ -1,28 +1,20 @@
 export const categoryId = 'ed17f080d44d728efe0a4ad1';
 export const category = {
-  code: 'test',
-  subcategories: ['688ded7be0c2621f2fb17b05'],
-  name: [
-    {
-      value: 'test'
-    },
-    {
-      value: 'test'
-    }
-  ],
-  isMain: true,
-  available: true
+  available: false,
+  code: '',
+  images: {
+    large: '',
+    medium: '',
+    small: '',
+    thumbnail: ''
+  },
+  isMain: false,
+  name: [],
+  subcategories: []
 };
-
+export const deleteId = '1a83772f0ec8fe5a2ef119ba';
+export const switchId = 'ed17f080d44d728efe0a4ad1';
 export const error = 'NOT_FOUND';
-
-export const categoriesRes = {
-  data: {
-    getAllCategories: {
-      ...categories
-    }
-  }
-};
 
 export const categories = [
   {

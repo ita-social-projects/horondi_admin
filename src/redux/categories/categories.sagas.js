@@ -28,6 +28,7 @@ import {
   setSnackBarStatus
 } from '../snackbar/snackbar.actions';
 import { config } from '../../configs';
+import { selectCategorySwitchAndDeleteId } from '../selectors/category.selectors';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -39,7 +40,7 @@ export function* handleCategoriesLoad() {
   try {
     yield put(setCategoriesLoading(true));
     const categories = yield call(getAllCategories);
-    yield put(setCategories(categories.data.getAllCategories));
+    yield put(setCategories(categories));
   } catch (e) {
     yield put(push('/error-page'));
     yield setCategoriesError(e);
@@ -50,7 +51,7 @@ export function* handleLoadCategoryById({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     const category = yield call(getCategoryById, payload);
-    yield put(setCategory(category.data.getCategoryById));
+    yield put(setCategory(category));
   } catch (e) {
     yield setCategoriesError(e);
   }
@@ -82,13 +83,12 @@ export function* handleEditCategory({ payload }) {
 export function* handleDeleteCategory() {
   try {
     yield put(setCategoriesLoading(true));
-    const { switchId, deleteId } = yield select(({ Categories }) => ({
-      switchId: Categories.switchId,
-      deleteId: Categories.deleteId
-    }));
+    const { switchId, deleteId } = yield select(
+      selectCategorySwitchAndDeleteId
+    );
     yield call(deleteCategoryById, deleteId, switchId);
     const categories = yield call(getAllCategories);
-    yield put(setCategories(categories.data.getAllCategories));
+    yield put(setCategories(categories));
     yield put(setCategoriesLoading(false));
     yield call(handleSnackBarSuccess, SUCCESS_DELETE_STATUS);
   } catch (e) {
@@ -100,7 +100,7 @@ export function* handleSubcategoriesLoad({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     const subcategories = yield call(getSubcategories, payload);
-    yield put(setCategories(subcategories.data.getSubcategories));
+    yield put(setCategories(subcategories));
   } catch (e) {
     yield setCategoriesError(e);
   }

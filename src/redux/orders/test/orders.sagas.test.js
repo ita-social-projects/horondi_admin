@@ -1,5 +1,5 @@
 import { expectSaga } from 'redux-saga-test-plan';
-import { call, put } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 import {
   setSnackBarMessage,
