@@ -2,12 +2,15 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   filters: {
-    marginTop: theme.spacing(1),
     paddingRight:'0px !important',
   },
   filtersMenu:{
     width:'100%',
-    padding:'10px'
+    padding:'5px 5px 10px'
+  },
+  wrapper:{
+    padding:'0px 14px 0px 8px',
+    marginBottom: theme.spacing(1),
   },
   heading: {
     marginBottom: theme.spacing(1),
