@@ -18,11 +18,7 @@ import {
   getSlideById,
   updateSlide
 } from './home-page-slides.operations';
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../snackbar/snackbar.actions';
+
 import {
   ADD_SLIDE,
   DELETE_SLIDE,
@@ -33,6 +29,10 @@ import {
   UPDATE_SLIDES_ORDER
 } from './home-page-slides.types';
 import { config } from '../../configs';
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -103,9 +103,7 @@ export function* handleSlideUpdate({ payload }) {
   try {
     yield put(setSlideLoading(true));
     yield call(updateSlide, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToHomePageSlides));
   } catch (error) {
     yield call(handleSlideError, error);
@@ -114,9 +112,7 @@ export function* handleSlideUpdate({ payload }) {
 export function* handleUpdateSlideOrder({ payload }) {
   try {
     yield call(updateSlide, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (error) {
     yield call(handleSlideError, error);
   }
@@ -128,26 +124,16 @@ export function* handleSlideDelete({ payload }) {
     yield call(deleteSlide, payload);
     yield put(removeSlideFromStore(payload));
     yield put(setSlideLoading(false));
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleSlideError, error);
   }
 }
 
-function* handleSuccessSnackbar(status) {
-  yield put(setSnackBarSeverity('success'));
-  yield put(setSnackBarMessage(status));
-  yield put(setSnackBarStatus(true));
-}
-
 function* handleSlideError(e) {
   yield put(setSlideLoading(false));
   yield put(setSlideError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* slideSaga() {

@@ -18,6 +18,8 @@ import {
   setUsersByDays
 } from './stats.actions';
 
+import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
+
 import {
   getPopularCategories,
   getPopularProducts,
@@ -25,12 +27,6 @@ import {
   getPaidOrdersStats,
   getUsersByDays
 } from './stats.operations';
-
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../snackbar/snackbar.actions';
 
 import { selectStatsDate } from '../selectors/stats.selectors';
 
@@ -85,9 +81,7 @@ export function* handleUsersStatisticLoad() {
 
 export function* handleStatsErrors(e) {
   yield put(setStatsLoading(false));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* statsSaga() {

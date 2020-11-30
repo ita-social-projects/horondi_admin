@@ -49,13 +49,12 @@ import {
   deleteImages
 } from './products.operations';
 
-import { config } from '../../configs';
-
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
+
+import { config } from '../../configs';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -184,18 +183,10 @@ export function* handleProductLoad({ payload }) {
   }
 }
 
-export function* handleSuccessSnackbar(message) {
-  yield put(setSnackBarSeverity('success'));
-  yield put(setSnackBarMessage(message));
-  yield put(setSnackBarStatus(true));
-}
-
 export function* handleProductsErrors(e) {
   yield put(setProductsLoading(false));
   yield put(setProductsError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export function* handleImagesDelete({ payload }) {

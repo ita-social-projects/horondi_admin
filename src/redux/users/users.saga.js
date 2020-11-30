@@ -32,14 +32,12 @@ import {
   VALIDATE_TOKEN
 } from './users.types';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
-
 import { setItemsCount, setPagesCount } from '../table/table.actions';
 import { selectUsersAndTable } from '../selectors/users.selectors';
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -81,7 +79,7 @@ export function* handleUsersDelete({ payload }) {
     yield call(deleteUser, payload);
     yield put(deleteUserLocally(payload));
     yield put(setUsersLoading(false));
-    yield call(handleSnackBarSuccess, SUCCESS_DELETE_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -93,7 +91,7 @@ export function* handleUserStatusSwitch({ payload }) {
     yield call(switchUserStatus, payload);
     yield put(updateUserLocally(payload));
     yield put(setUsersLoading(false));
-    yield call(handleSnackBarSuccess, SUCCESS_UPDATE_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -105,7 +103,7 @@ export function* handleAdminRegister({ payload }) {
     yield call(registerAdmin, payload);
     yield put(setUsersLoading(false));
     yield put(push('/users'));
-    yield call(handleSnackBarSuccess, SUCCESS_CREATION_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -117,7 +115,7 @@ export function* handleAdminConfirm({ payload }) {
     yield call(completeAdminRegister, payload);
     yield put(setUsersLoading(false));
     yield put(push('/'));
-    yield call(handleSnackBarSuccess, SUCCESS_CONFIRMATION_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_CONFIRMATION_STATUS);
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -137,15 +135,7 @@ export function* handleTokenValidation({ payload }) {
 export function* handleUsersError(e) {
   yield put(setUsersLoading(false));
   yield put(setUserError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
-}
-
-export function* handleSnackBarSuccess(status) {
-  yield put(setSnackBarSeverity('success'));
-  yield put(setSnackBarMessage(status));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* usersSaga() {

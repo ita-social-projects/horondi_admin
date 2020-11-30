@@ -15,13 +15,11 @@ import {
 
 import { GET_HOME_PAGE_DATA, UPDATE_HOME_PAGE_DATA } from './home.types';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
-
 import { config } from '../../configs';
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const { SUCCESS_UPDATE_STATUS } = config.statuses;
 
@@ -47,9 +45,7 @@ export function* handleHomePageImagesUpdate({ payload }) {
     yield put(updateHomePageImagesInStore(id, upload));
 
     yield put(setHomePageDataLoading(false));
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push('/home-page-edit'));
   } catch (error) {
     yield call(handleHomePageError, error);
@@ -59,9 +55,7 @@ export function* handleHomePageImagesUpdate({ payload }) {
 export function* handleHomePageError(e) {
   yield put(setHomePageDataLoading(false));
   yield put(setHomePageDataError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* homePageSaga() {

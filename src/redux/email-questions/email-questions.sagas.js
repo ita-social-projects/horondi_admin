@@ -28,12 +28,11 @@ import {
 
 import { config } from '../../configs';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
 import { selectEmailQuestionsList } from '../selectors/email-questions.selectors';
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
@@ -86,7 +85,7 @@ export function* handleMoveEmailQuestionsToSpam({ payload }) {
       return spammedQuestion || item;
     });
 
-    yield call(handleSuccessSnackBar, SUCCESS_UPDATE_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(setAllEmailQuestion(newQuestionsToStore));
 
     yield put(setEmailQuestionLoading(false));
@@ -102,7 +101,7 @@ export function* handleAnswerEmailQuestion({ payload }) {
     const answeredQuestion = yield call(answerEmailQuestion, payload);
 
     const emailQuestions = yield call(handleGettingQuestionFromStore);
-    yield call(handleSuccessSnackBar, SUCCESS_UPDATE_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
 
     yield put(
       setAllEmailQuestion(
@@ -139,7 +138,7 @@ export function* handleEmailQuestionsDelete({ payload }) {
       )
     );
 
-    yield call(handleSuccessSnackBar, SUCCESS_DELETE_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
     yield put(setEmailQuestionLoading(false));
   } catch (error) {
     yield call(handleEmailQuestionError, error);
@@ -158,15 +157,7 @@ export function* handleGettingQuestionFromStore() {
 export function* handleEmailQuestionError(e) {
   yield put(setEmailQuestionLoading(false));
   yield put(setEmailQuestionsError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
-}
-
-export function* handleSuccessSnackBar(message) {
-  yield put(setSnackBarSeverity('success'));
-  yield put(setSnackBarMessage(message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* emailQuestionSaga() {
