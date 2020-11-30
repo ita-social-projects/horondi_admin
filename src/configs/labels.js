@@ -4,6 +4,20 @@ const labels = {
   user: {
     unknownAdmin: 'Невідомий адмін'
   },
+  news: {
+    authorsName: [
+      { value: "Ім'я автора", lang: 'ua' },
+      { value: "Author's name", lang: 'en' }
+    ],
+    title: [
+      { value: 'Заголовок', lang: 'ua' },
+      { value: 'Title', lang: 'en' }
+    ],
+    text: [
+      { value: 'Текст', lang: 'ua' },
+      { value: 'Text', lang: 'en' }
+    ]
+  },
   model: {
     name: 'Назва',
     description: 'Опис',
@@ -20,7 +34,10 @@ const labels = {
     switchCategory: "Категорія, на яку замінити пов'язані товари"
   },
   header: {
-    name: 'Назва',
+    name: [
+      { value: "Ім'я", lang: 'ua' },
+      { value: 'Name', lang: 'en' }
+    ],
     link: 'Посилання',
     priority: 'Пріорітет'
   },
@@ -29,15 +46,43 @@ const labels = {
     material: 'Код матеріалу',
     available: 'Доступний',
     handmade: 'Зроблений вручну',
-    avatarText: 'Фото'
+    avatarText: 'Фото',
+    form: {
+      name: [
+        { value: 'Назва', lang: 'ua' },
+        { value: 'Name', lang: 'en' }
+      ],
+      description: [
+        { value: 'Опис', lang: 'ua' },
+        { value: 'Description', lang: 'en' }
+      ]
+    }
   },
   material: {
-    image: 'Фото матеріалу',
-    purpose: 'Застосування',
-    available: 'Доступний',
-    name: 'Назва матеріалу',
-    description: 'Опис матеріалу',
-    additionalPrice: 'Додаткова ціна'
+    image: [
+      { value: 'Фото матеріалу', lang: 'ua' },
+      { value: 'Material photo', lang: 'eu' }
+    ],
+    purpose: [
+      { value: 'Застосування', lang: 'ua' },
+      { value: 'Purpose', lang: 'eu' }
+    ],
+    available: [
+      { value: 'Доступний', lang: 'ua' },
+      { value: 'Available', lang: 'en' }
+    ],
+    name: [
+      { value: 'Назва матеріалу', lang: 'ua' },
+      { value: 'Material name', lang: 'en' }
+    ],
+    description: [
+      { value: 'Опис матеріалу', lang: 'ua' },
+      { value: 'Material description', lang: 'eu' }
+    ],
+    additionalPrice: [
+      { value: 'Додаткова ціна', lang: 'ua' },
+      { value: 'Additional price', lang: 'eu' }
+    ]
   },
   colors: {
     image: 'Фото кольору',
@@ -46,24 +91,34 @@ const labels = {
     code: 'Код кольору',
     available: 'Доступний'
   },
+  businessPage: [
+    {
+      label: [
+        { value: 'Заголовок', lang: 'ua' },
+        { value: 'Title', lang: 'en' }
+      ],
+      errorLabel: [
+        { value: 'Введіть заголовок', lang: 'ua' },
+        { value: 'Pass title', lang: 'en' }
+      ]
+    },
+    {
+      label: [
+        { value: 'Текст', lang: 'ua' },
+        { value: 'Text', lang: 'en' }
+      ],
+      errorLabel: [
+        { value: 'Введіть текст для сторінки', lang: 'ua' },
+        { value: 'Pass text for the page', lang: 'en' }
+      ]
+    }
+  ],
   product: {
     sortBySelectOptions: [
-      {
-        label: 'популярністю',
-        value: 'popularity'
-      },
-      {
-        label: 'від дорогих до дешевих',
-        value: 'sortDesc'
-      },
-      {
-        label: 'від дешевих до дорогих',
-        value: 'sortAsc'
-      },
-      {
-        label: 'рейтингом',
-        value: 'rate'
-      }
+      { label: 'популярністю', value: 'popularity' },
+      { label: 'від дорогих до дешевих', value: 'sortDesc' },
+      { label: 'від дешевих до дорогих', value: 'sortAsc' },
+      { label: 'рейтингом', value: 'rate' }
     ],
     stepsLabels: [
       'Введіть інформацію про продукт',
@@ -74,24 +129,54 @@ const labels = {
       'Підтвердження створення продукту'
     ],
     infoLabels: [
-      { label: 'Назва', name: 'name', required: true },
       {
-        label: 'Основний матеріал',
+        label: [
+          { value: 'Назва', lang: 'ua' },
+          { value: 'Name', lang: 'en' }
+        ],
+        name: 'name',
+        required: true
+      },
+      {
+        label: [
+          { value: 'Основний матеріал', lang: 'ua' },
+          { value: 'Primary material', lang: 'en' }
+        ],
         name: 'mainMaterial',
         required: true
       },
       {
-        label: 'Внутрішній матеріал',
+        label: [
+          { value: 'Внутрішній матеріал', lang: 'ua' },
+          { value: 'Inner material', lang: 'en' }
+        ],
         name: 'innerMaterial',
         required: false
       },
-      { label: 'Замок', name: 'closure', required: false },
       {
-        label: 'Довжина лямок(см)',
+        label: [
+          { value: 'Замок', lang: 'ua' },
+          { value: 'Closure', lang: 'en' }
+        ],
+        name: 'closure',
+        required: false
+      },
+      {
+        label: [
+          { value: 'Довжина лямок(см)', lang: 'ua' },
+          { value: 'Strap length (cm)', lang: 'en' }
+        ],
         name: 'strapLengthInCm',
         required: false
       },
-      { label: 'Опис', name: 'description', required: false }
+      {
+        label: [
+          { value: 'Опис', lang: 'ua' },
+          { value: 'Description', lang: 'en' }
+        ],
+        name: 'description',
+        required: false
+      }
     ],
     selectsLabels: [
       {
@@ -264,7 +349,10 @@ const labels = {
   },
   homePageSlide: {
     image: 'Фото слайду',
-    title: 'Заголовок слайду',
+    title: [
+      { value: 'Заголовок слайду', lang: 'ua' },
+      { value: 'Slider title', lang: 'en' }
+    ],
     show: 'Доступний',
     description: 'Опис слайду',
     link: 'Посилання для переходу'

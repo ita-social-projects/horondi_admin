@@ -123,7 +123,7 @@ const HeaderForm = ({ header, id }) => {
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label={config.labels.header.name}
+                label={config.labels.header.name[tabsValue].value}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}

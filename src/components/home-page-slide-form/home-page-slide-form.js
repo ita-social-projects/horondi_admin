@@ -127,7 +127,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       id={`${language}${textField}`}
       className={styles.textField}
       variant='outlined'
-      label={config.labels.homePageSlide.title}
+      label={config.labels.homePageSlide.title[tabsValue].value}
       multiline
       value={values[`${language}${textField}`]}
       onChange={handleChange}

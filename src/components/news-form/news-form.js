@@ -13,6 +13,8 @@ import { updateArticle } from '../../redux/news/news.actions';
 
 const { languages } = config;
 
+const labels = config.labels.news;
+
 const NewsForm = ({ article, id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -126,7 +128,9 @@ const NewsForm = ({ article, id }) => {
                 id={`${lang}AuthorName`}
                 className={classes.textField}
                 variant='outlined'
-                label={`Ім'я автора`}
+                label={
+                  labels.authorsName.find((item) => item.lang === lang).value
+                }
                 multiline
                 value={values[`${lang}AuthorName`]}
                 onChange={handleChange}
@@ -137,7 +141,7 @@ const NewsForm = ({ article, id }) => {
                 id={`${lang}Title`}
                 className={classes.textField}
                 variant='outlined'
-                label='Заголовок'
+                label={labels.title.find((item) => item.lang === lang).value}
                 multiline
                 value={values[`${lang}Title`]}
                 onChange={handleChange}
@@ -148,7 +152,7 @@ const NewsForm = ({ article, id }) => {
                 id={`${lang}Text`}
                 className={classes.textField}
                 variant='outlined'
-                label='Текст'
+                label={labels.text.find((item) => item.lang === lang).value}
                 multiline
                 value={values[`${lang}Text`]}
                 onChange={handleChange}
