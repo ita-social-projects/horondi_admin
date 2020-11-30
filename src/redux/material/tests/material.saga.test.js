@@ -35,7 +35,6 @@ import {
   mockMaterial,
   mockMaterials,
   mockMaterialState,
-  mockSnackbarState,
   mockMaterialsLoadPayload,
   mockMaterialsPagesCount,
   mockColors,
@@ -61,18 +60,9 @@ import {
   deleteMaterialColor
 } from '../material.operations';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../snackbar/snackbar.actions';
-
 import Material from '../material.reducer';
-import Snackbar from '../../snackbar/snackbar.reducer';
-import {
-  handleErrorSnackbar,
-  handleSuccessSnackbar
-} from '../../snackbar/snackbar.sagas';
+
+import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
