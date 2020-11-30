@@ -34,7 +34,7 @@ ImageUploadContainer.propTypes = {
 
 ImageUploadContainer.defaultProps = {
   multiple: false,
-  buttonLabel: 'Upload File'
+  buttonLabel: 'Завантажити'
 };
 
 export default ImageUploadContainer;
