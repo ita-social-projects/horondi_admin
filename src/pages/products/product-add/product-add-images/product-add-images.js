@@ -33,38 +33,21 @@ const ProductAddImages = ({
       const reader = new FileReader();
       reader.onload = (event) => {
         setPrimaryImage(event.target.result);
-        console.log(event.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
     }
   };
 
   const handleAdditionalImagesLoad = (e) => {
-    // if (e.target.files && e.target.files[0]) {
-    //   const reader = new FileReader();
-    //   reader.onload = (event) => {
-    //     setAdditionalImages(event.target.result);
-    //     console.log(event.target.result);
-    //   };
-    //   reader.readAsDataURL(e.target.files[0]);
-    // }
-
-    const { files } = e.target;
     if (e.target.files && e.target.files[0]) {
-      // const reader = new FileReader();
-      const imagesNames = additionalImages.map(({ name }) => name);
-      console.log(imagesNames);
-      const newImages = Array.from(files).filter(
-        ({ name }) => !imagesNames.includes(name) && name !== primaryImage.name
-      );
-      console.log(newImages);
-      setAdditionalImages((prevImages) => [...prevImages, ...newImages]);
-      console.log(additionalImages);
-
-      // reader.onload = (event) => {
-      //   setAdditionalImages((prevImages) => [...prevImages, ...newImages]);
-      //   console.log(event.target.result);
-      // };
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setAdditionalImages((prevImages) => [
+          ...prevImages,
+          event.target.result
+        ]);
+      };
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
@@ -74,19 +57,10 @@ const ProductAddImages = ({
       dispatch(setFilesToUpload([primaryImage, ...additionalImages]));
       handleNext();
     } else if (primaryImage) {
-      dispatch(setFilesToUpload([primaryImage, null]));
+      dispatch(setFilesToUpload([primaryImage]));
       handleNext();
     }
   };
-
-  // const handleDeletePrimaryImage = () => {
-  //   setPrimaryImage('');
-  // };
-
-  // const handleDeleteAdditionalImage = (name) => {
-  //   const newImages = additionalImages.filter((image) => image.name !== name);
-  //   setAdditionalImages(newImages);
-  // };
 
   return (
     <div className={styles.container}>
@@ -115,11 +89,13 @@ const ProductAddImages = ({
               handler={handleAdditionalImagesLoad}
               buttonLabel={ADDITIONAL_PHOTOS}
             />
-            {additionalImages.map((e, { name }) => (
-              <Avatar key={name} label={name} src={e}>
-                <Image />
-              </Avatar>
-            ))}
+            <div className={styles.avatarWrapper}>
+              {additionalImages.map((e) => (
+                <Avatar key={e} src={e}>
+                  <Image />
+                </Avatar>
+              ))}
+            </div>
           </Grid>
         </Grid>
       </Box>
@@ -138,7 +114,7 @@ ProductAddImages.propTypes = {
   handleBack: PropTypes.func.isRequired,
   setAdditionalImages: PropTypes.func.isRequired,
   setPrimaryImage: PropTypes.func.isRequired,
-  additionalImages: PropTypes.arrayOf(PropTypes.object),
+  additionalImages: PropTypes.arrayOf(PropTypes.string),
   primaryImage: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.object),
     PropTypes.string

@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme) => ({
   imageUploadContainer: {
     display: 'flex',
     alignItems: 'center',
-    margin: '10px'
+    margin: '10px 0'
   },
   large: {
     marginLeft: '10px',

@@ -17,5 +17,11 @@ export const useStyles = makeStyles((theme) => ({
     '& div': {
       margin: '4px 6px'
     }
+  },
+  avatarWrapper: {
+    display: 'flex',
+    '& div': {
+      margin: '5px 10px 0 0'
+    }
   }
 }));

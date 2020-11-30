@@ -17,6 +17,7 @@ const ImageUploadContainer = ({ handler, multiple, buttonLabel }) => {
             id='upload-photo'
             name='upload-photo'
             type='file'
+            multiple
             onChange={handler}
           />
         </Button>
