@@ -2,11 +2,12 @@ import { useSelector } from 'react-redux';
 import { useTheme } from '@material-ui/core';
 import { config } from '../../configs';
 
-const { descriptions } = config.labels.bar;
+const { descriptions, year } = config.labels.bar;
 
 const useBarData = () => {
   const theme = useTheme();
   const barData = useSelector(({ Stats }) => Stats.bar);
+  const date = useSelector(({ Stats }) => Stats.date);
 
   const { selectedValue } = barData;
   const { counts, labels } = barData[selectedValue];
@@ -16,7 +17,7 @@ const useBarData = () => {
       {
         backgroundColor: theme.palette.secondary.main,
         data: counts,
-        label: descriptions[selectedValue],
+        label: descriptions[selectedValue][date === year ? 'byMonth' : 'byDay'],
         maxBarThickness: 17,
         categoryPercentage: 0.5
       }

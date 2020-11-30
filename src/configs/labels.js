@@ -209,15 +209,25 @@ const labels = {
       { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
     descriptions: {
-      users: 'Цей день',
-      orders: 'Цей день',
-      products: 'Кількість покупок'
+      users: {
+        byDay: 'Цей день',
+        byMonth: 'Цей місяць'
+      },
+      orders: {
+        byDay: 'Цей день',
+        byMonth: 'Цей місяць'
+      },
+      products: {
+        byDay: 'Кількість покупок',
+        byMonth: 'Кількість покупок'
+      }
     },
     message: {
       users: 'Кількість користувачів за цей час: ',
       orders: 'Кількість замовлень за цей час: ',
       products: 'Кількість продуктів за цей час: '
-    }
+    },
+    year: 365
   },
   orderTabs: {
     general: 'Загальне',
