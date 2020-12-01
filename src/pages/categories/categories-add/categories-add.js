@@ -267,6 +267,9 @@ const CategoriesAdd = ({ id, editMode }) => {
   const handleParentChange = (e) => {
     setParentId(e.target.value);
   };
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
+  };
 
   // SUBCATEGORY LIST []
   const subcategoryList = useMemo(() => {
@@ -521,10 +524,10 @@ const CategoriesAdd = ({ id, editMode }) => {
 
       <div className={classes.controlsBlock}>
         <StandardButton
-          id='back'
+          id='back-btn'
           title={config.buttonTitles.GO_BACK_TITLE}
           variant='outlined'
-          onClickHandler={() => dispatch(push(config.routes.pathToCategories))}
+          onClickHandler={handleGoBack}
           data-cy='back-btn'
         />
         <Button

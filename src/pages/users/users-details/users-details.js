@@ -54,6 +54,10 @@ const UsersDetails = (props) => {
     isBanned
   } = useUsersHandler(id);
 
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
+  };
+
   if (loading) {
     return <LoadingBar />;
   }
@@ -97,10 +101,10 @@ const UsersDetails = (props) => {
         <div className={styles.controlsBlock}>
           <StandardButton
             className={styles.userDetails}
-            id='back'
+            id='back-btn'
             title={config.buttonTitles.GO_BACK_TITLE}
             variant='outlined'
-            onClickHandler={() => dispatch(push(config.routes.pathToUsers))}
+            onClickHandler={handleGoBack}
             data-cy='back-btn'
           />
         </div>

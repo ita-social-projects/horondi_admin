@@ -49,6 +49,10 @@ const ProductsAdd = () => {
 
   const [activeStep, setActiveStep] = useState(0);
 
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
+  };
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -136,10 +140,10 @@ const ProductsAdd = () => {
       <CustomizedStepper steps={steps} activeStep={activeStep} />
       <div className={styles.controlsBlock}>
         <StandardButton
-          id='back'
+          id='back-btn'
           title={config.buttonTitles.GO_BACK_TITLE}
           variant='outlined'
-          onClickHandler={() => dispatch(push(config.routes.pathToProducts))}
+          onClickHandler={handleGoBack}
           data-cy='back-btn'
         />
       </div>

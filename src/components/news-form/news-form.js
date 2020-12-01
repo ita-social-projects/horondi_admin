@@ -73,6 +73,10 @@ const NewsForm = ({ article, id }) => {
     }
   });
 
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -162,10 +166,10 @@ const NewsForm = ({ article, id }) => {
 
       <div className={classes.controlsBlock}>
         <StandardButton
-          id='back'
+          id='back-btn'
           title={config.buttonTitles.GO_BACK_TITLE}
           variant='outlined'
-          onClickHandler={() => dispatch(push(config.routes.pathToNews))}
+          onClickHandler={handleGoBack}
           data-cy='back-btn'
         />
       </div>

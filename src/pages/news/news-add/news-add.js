@@ -47,6 +47,10 @@ const NewsAdd = () => {
 
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
 
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
+  };
+
   const formSchema = Yup.object().shape({
     ukAuthorName: Yup.string()
       .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
@@ -186,10 +190,10 @@ const NewsAdd = () => {
           </Paper>
           <div className={classes.controlsBlock}>
             <StandardButton
-              id='back'
+              id='back-btn'
               title={config.buttonTitles.GO_BACK_TITLE}
               variant='outlined'
-              onClickHandler={() => dispatch(push(config.routes.pathToNews))}
+              onClickHandler={handleGoBack}
               data-cy='back-btn'
             />
           </div>

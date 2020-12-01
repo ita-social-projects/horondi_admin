@@ -30,6 +30,7 @@ const OrderItem = ({ id }) => {
     selectedOrder: Orders.selectedOrder,
     orderLoading: Orders.orderLoading
   }));
+  const submitStatus = ['CREATED', 'CONFIRMED'];
 
   const handleTabChange = (e, newValue) => {
     setTabValue(newValue);
@@ -38,7 +39,7 @@ const OrderItem = ({ id }) => {
   const handleFormSubmit = (order) => {
     if (
       order.status !== initialValues.status &&
-      !['CREATED', 'CONFIRMED'].includes(order.status)
+      !submitStatus.includes(order.status)
     ) {
       const updateOrderSnackbar = () => {
         dispatch(closeDialog());
@@ -54,6 +55,9 @@ const OrderItem = ({ id }) => {
     } else {
       dispatch(updateOrder(order));
     }
+  };
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
   };
 
   const {
@@ -81,7 +85,7 @@ const OrderItem = ({ id }) => {
     }
   }, [selectedOrder, resetForm]);
 
-  const formikHandleChange = ['CREATED', 'CONFIRMED'].includes(
+  const formikHandleChange = submitStatus.includes(
     selectedOrder && selectedOrder.status
   )
     ? handleChange
@@ -134,10 +138,10 @@ const OrderItem = ({ id }) => {
       )}
       <div className={classes.controlsBlock}>
         <StandardButton
-          id='back'
+          id='back-btn'
           title={config.buttonTitles.GO_BACK_TITLE}
           variant='outlined'
-          onClickHandler={() => dispatch(push(config.routes.pathToOrders))}
+          onClickHandler={handleGoBack}
           data-cy='back-btn'
         />
       </div>
