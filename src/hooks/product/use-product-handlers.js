@@ -1,11 +1,11 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../../configs';
-import {
-  AdditionsSelector,
-  OptionsSelector
-} from '../../redux/selectors/other.selectors';
 import useProductSpecies from './use-product-species';
+
+const AdditionsSelector = ({ additions }) => additions.length;
+
+const OptionsSelector = ({ options }) => options.find(AdditionsSelector);
 
 const {
   languages,

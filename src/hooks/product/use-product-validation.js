@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
-import { NameSelector } from '../../redux/selectors/other.selectors';
+
+const NameSelector = ({ name }) => [name, Yup.string().required()];
 
 const {
   labels: {
