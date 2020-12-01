@@ -1,6 +1,54 @@
 export const materialToUpdateDeleteId = '88cb31bf8e5ea5af3014e342';
 export const fakeId = '11cb36bf1e5ea5af3014e312';
 const UA = UA;
+const colorBrown = {
+  available: true,
+  simpleName: [
+    {
+      lang: UA,
+      value: 'коричневий'
+    },
+    {
+      lang: 'en',
+      value: 'brown'
+    }
+  ],
+  images: {
+    medium: 'medium_light-brown'
+  }
+};
+const colorBlue = {
+  available: true,
+  simpleName: [
+    {
+      lang: UA,
+      value: 'синій'
+    },
+    {
+      lang: 'en',
+      value: 'blue'
+    }
+  ],
+  images: {
+    medium: 'medium_steel-blue'
+  }
+};
+const colorGray = {
+  available: true,
+  simpleName: [
+    {
+      lang: UA,
+      value: 'сірий'
+    },
+    {
+      lang: 'en',
+      value: 'grey'
+    }
+  ],
+  images: {
+    medium: 'medium_light-steel'
+  }
+};
 const materialMain = {
   name: [
     {
@@ -34,70 +82,10 @@ const materialMain = {
     }
   ],
   colors: [
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'коричневий'
-        },
-        {
-          lang: 'en',
-          value: 'brown'
-        }
-      ],
-      images: {
-        medium: 'medium_light-brown'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'коричневий'
-        },
-        {
-          lang: 'en',
-          value: 'brown'
-        }
-      ],
-      images: {
-        medium: 'medium_rosy-brown'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'коричневий'
-        },
-        {
-          lang: 'en',
-          value: 'brown'
-        }
-      ],
-      images: {
-        medium: 'medium_saddle-brown'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'коричневий'
-        },
-        {
-          lang: 'en',
-          value: 'brown'
-        }
-      ],
-      images: {
-        medium: 'medium_dark-brown'
-      }
-    },
+    ...colorBrown,
+    ...colorBrown,
+    ...colorBrown,
+    ...colorBrown,
     {
       available: true,
       simpleName: [
@@ -162,134 +150,14 @@ const materialMain = {
         medium: 'medium_dark-olive'
       }
     },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'сірий'
-        },
-        {
-          lang: 'en',
-          value: 'grey'
-        }
-      ],
-      images: {
-        medium: 'medium_light-steel'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'синій'
-        },
-        {
-          lang: 'en',
-          value: 'blue'
-        }
-      ],
-      images: {
-        medium: 'medium_steel-blue'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'синій'
-        },
-        {
-          lang: 'en',
-          value: 'blue'
-        }
-      ],
-      images: {
-        medium: 'medium_dark-blue'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'сірий'
-        },
-        {
-          lang: 'en',
-          value: 'grey'
-        }
-      ],
-      images: {
-        medium: 'medium_light-grey'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'сірий'
-        },
-        {
-          lang: 'en',
-          value: 'grey'
-        }
-      ],
-      images: {
-        medium: 'medium_silver'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'сірий'
-        },
-        {
-          lang: 'en',
-          value: 'grey'
-        }
-      ],
-      images: {
-        medium: 'medium_slate-grey'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'сірий'
-        },
-        {
-          lang: 'en',
-          value: 'grey'
-        }
-      ],
-      images: {
-        medium: 'medium_dim-grey'
-      }
-    },
-    {
-      available: true,
-      simpleName: [
-        {
-          lang: UA,
-          value: 'сірий'
-        },
-        {
-          lang: 'en',
-          value: 'grey'
-        }
-      ],
-      images: {
-        medium: 'medium_dark-grey'
-      }
-    }
+    ...colorGray,
+    ...colorBlue,
+    ...colorBlue,
+    ...colorGray,
+    ...colorGray,
+    ...colorGray,
+    ...colorGray,
+    ...colorGray
   ],
   purpose: 'main'
 };
