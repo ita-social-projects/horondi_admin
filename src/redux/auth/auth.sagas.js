@@ -44,15 +44,16 @@ export function* handleAdminCheckByToken() {
   try {
     const authToken = getFromLocalStorage('HORONDI_AUTH_TOKEN');
     yield put(setAuthLoading(true));
+
     if (!authToken) {
       yield put(setAuthLoading(false));
       yield put(setAuth(false));
       return;
-    }
-    const admin = yield call(getUserByToken, authToken);
-
-    yield put(setAdminId(admin._id));
+    } 
     yield put(setAuth(true));
+    
+    const admin = yield call(getUserByToken, authToken);
+    yield put(setAdminId(admin._id));
     yield put(setAuthLoading(false));
   } catch (error) {
     console.error(error);
