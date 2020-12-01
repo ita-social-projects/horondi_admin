@@ -29,6 +29,7 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+import { selectBusinessPagesList } from '../selectors/business-pages.selectors';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -79,9 +80,7 @@ export function* handleBusinessPageDelete({ payload }) {
     yield put(setLoading(true));
     yield call(deleteBusinessPage, payload);
 
-    const businessPages = yield select(
-      ({ BusinessPages }) => BusinessPages.list
-    );
+    const businessPages = yield select(selectBusinessPagesList);
     yield put(
       setBusinessPages(businessPages.filter((page) => page._id !== payload))
     );

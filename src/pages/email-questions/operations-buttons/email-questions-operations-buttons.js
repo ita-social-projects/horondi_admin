@@ -65,6 +65,7 @@ const EmailQuestionsOperationsButtons = ({
       <Button
         className={styles.spamBtn}
         variant='contained'
+        color='primary'
         onClick={moveQuestionsToSpam}
         disabled={!questionsToOperate.length}
       >
@@ -73,6 +74,7 @@ const EmailQuestionsOperationsButtons = ({
       <Button
         className={styles.spamBtn}
         variant='contained'
+        color='primary'
         onClick={deleteMany}
         disabled={!questionsToOperate.length}
       >

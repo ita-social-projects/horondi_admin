@@ -54,11 +54,13 @@ const ProductsNavSort = () => {
 
   return (
     <div className={styles.sort}>
-      <Typography>{SORT}</Typography>
+      <Typography className={styles.sortTitle}>{SORT}</Typography>
       <FormControl className={styles.formControl}>
         <Select
+          className={styles.menuItems}
           labelId='checkbox-label'
           id='checkbox'
+          MenuProps={{ variant: 'menu' }}
           value={selectedSort}
           onChange={selectHandler}
           defaultValue={0}

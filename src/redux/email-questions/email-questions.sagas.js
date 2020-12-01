@@ -33,6 +33,7 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+import { selectEmailQuestionsList } from '../selectors/email-questions.selectors';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
@@ -129,6 +130,7 @@ export function* handleEmailQuestionsDelete({ payload }) {
     yield call(deleteEmailQuestions, payload);
 
     const emailQuestions = yield call(handleGettingQuestionFromStore);
+
     yield put(
       setAllEmailQuestion(
         emailQuestions.filter(
@@ -150,7 +152,7 @@ export function* handleReloadingPendingQuestionsCount(list) {
 }
 
 export function* handleGettingQuestionFromStore() {
-  return yield select(({ EmailQuestions }) => EmailQuestions.list);
+  return yield select(selectEmailQuestionsList);
 }
 
 export function* handleEmailQuestionError(e) {

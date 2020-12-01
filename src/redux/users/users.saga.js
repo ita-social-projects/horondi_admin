@@ -37,7 +37,9 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+
 import { setItemsCount, setPagesCount } from '../table/table.actions';
+import { selectUsersAndTable } from '../selectors/users.selectors';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -46,15 +48,14 @@ const {
   SUCCESS_CONFIRMATION_STATUS
 } = config.statuses;
 
-function* handleUsersLoad() {
+export function* handleUsersLoad() {
   try {
     yield put(setUsersLoading(true));
-    const { usersState, tableState } = yield select(({ Users, Table }) => ({
-      usersState: Users,
-      tableState: Table
-    }));
+    const { usersState, tableState } = yield select(selectUsersAndTable);
     const result = yield call(getAllUsers, usersState, tableState);
-    yield put(setPagesCount(Math.ceil(result.count / tableState.rowsPerPage)));
+    yield put(
+      setPagesCount(Math.ceil(result.count / tableState.pagination.rowsPerPage))
+    );
     yield put(setItemsCount(result.count));
     yield put(setUsers(result.items));
     yield put(setUsersLoading(false));
@@ -63,7 +64,7 @@ function* handleUsersLoad() {
   }
 }
 
-function* handleUserLoad({ payload }) {
+export function* handleUserLoad({ payload }) {
   try {
     yield put(setUsersLoading(true));
     const user = yield call(getUserById, payload);
@@ -74,7 +75,7 @@ function* handleUserLoad({ payload }) {
   }
 }
 
-function* handleUsersDelete({ payload }) {
+export function* handleUsersDelete({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(deleteUser, payload);
@@ -86,7 +87,7 @@ function* handleUsersDelete({ payload }) {
   }
 }
 
-function* handleUserStatusSwitch({ payload }) {
+export function* handleUserStatusSwitch({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(switchUserStatus, payload);
@@ -98,7 +99,7 @@ function* handleUserStatusSwitch({ payload }) {
   }
 }
 
-function* handleAdminRegister({ payload }) {
+export function* handleAdminRegister({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(registerAdmin, payload);
@@ -110,7 +111,7 @@ function* handleAdminRegister({ payload }) {
   }
 }
 
-function* handleAdminConfirm({ payload }) {
+export function* handleAdminConfirm({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(completeAdminRegister, payload);
@@ -122,7 +123,7 @@ function* handleAdminConfirm({ payload }) {
   }
 }
 
-function* handleTokenValidation({ payload }) {
+export function* handleTokenValidation({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(validateToken, payload);
@@ -133,7 +134,7 @@ function* handleTokenValidation({ payload }) {
   }
 }
 
-function* handleUsersError(e) {
+export function* handleUsersError(e) {
   yield put(setUsersLoading(false));
   yield put(setUserError({ e }));
   yield put(setSnackBarSeverity('error'));
@@ -141,7 +142,7 @@ function* handleUsersError(e) {
   yield put(setSnackBarStatus(true));
 }
 
-function* handleSnackBarSuccess(status) {
+export function* handleSnackBarSuccess(status) {
   yield put(setSnackBarSeverity('success'));
   yield put(setSnackBarMessage(status));
   yield put(setSnackBarStatus(true));
