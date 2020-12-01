@@ -78,8 +78,14 @@ export const mockError = {
   message: 'error'
 };
 
+export const mockId = '5fa3015e311c9429103b2853';
+
 export const mockStatus = statuses.SUCCESS_UPDATE_STATUS;
 
 export const pageCount = Math.ceil(
   mockUsersList.count / mockTableState.pagination.rowsPerPage
 );
+
+export const mockFilter = { banned: false };
+export const mockSort = { name: 1 };
+export const mockTab = 'admins';
