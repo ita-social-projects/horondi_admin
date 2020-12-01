@@ -13,7 +13,6 @@ import {
   handleProductDelete,
   handleProductUpdate,
   handleProductLoad,
-  handleSuccessSnackbar,
   handleProductsErrors,
   handleImagesDelete
 } from '../products.sagas';
@@ -86,6 +85,7 @@ import {
   selectProductsToUpload,
   selectFilesToDeleteAndProduct
 } from '../../selectors/products.selectors';
+import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,

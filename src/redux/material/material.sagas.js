@@ -41,10 +41,9 @@ import {
 import { config } from '../../configs';
 
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -167,18 +166,10 @@ export function* handleMaterialUpdate({ payload }) {
   }
 }
 
-export function* handleSuccessSnackbar(status) {
-  yield put(setSnackBarSeverity('success'));
-  yield put(setSnackBarMessage(status));
-  yield put(setSnackBarStatus(true));
-}
-
 export function* handleMaterialError(e) {
   yield put(setMaterialLoading(false));
   yield put(setMaterialError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* materialSaga() {

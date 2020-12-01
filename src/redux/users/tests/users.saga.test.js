@@ -17,7 +17,6 @@ import {
   handleUserLoad,
   handleUsersLoad,
   handleUsersDelete,
-  handleSnackBarSuccess,
   handleUserStatusSwitch,
   handleAdminRegister,
   handleAdminConfirm,
@@ -38,8 +37,7 @@ import {
   mockAdmin,
   mockToken,
   mockError,
-  mockSnackarState,
-  mockStatus
+  mockSnackarState
 } from './users.variables';
 
 import {
@@ -53,15 +51,10 @@ import {
 
 import { setPagesCount, setItemsCount } from '../../table/table.actions';
 
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../../snackbar/snackbar.actions';
-
 import Users from '../users.reducer';
 import Table from '../../table/table.reducer';
 import Snackbar from '../../snackbar/snackbar.reducer';
+import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -113,14 +106,14 @@ describe('Users saga test', () => {
         }
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
+      .then((res) => {
+        const { allEffects: analysis } = res;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(5);
-        expect(analysisCall).toHaveLength(1);
         expect(analysisSelect).toHaveLength(1);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load all user by id', () =>
@@ -156,7 +149,7 @@ describe('Users saga test', () => {
       .put(setUsersLoading(true))
       .provide([
         [call(deleteUser, mockUser._id)],
-        [call(handleSnackBarSuccess, SUCCESS_DELETE_STATUS)]
+        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
       .put(deleteUserLocally(mockUser._id))
       .put(setUsersLoading(false))
@@ -186,7 +179,7 @@ describe('Users saga test', () => {
       .put(setUsersLoading(true))
       .provide([
         [call(switchUserStatus, mockUser._id)],
-        [call(handleSnackBarSuccess, SUCCESS_UPDATE_STATUS)]
+        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
       .put(updateUserLocally(mockUser._id))
       .put(setUsersLoading(false))
@@ -213,7 +206,7 @@ describe('Users saga test', () => {
       .put(setUsersLoading(true))
       .provide([
         [call(registerAdmin, adminInput)],
-        [call(handleSnackBarSuccess, SUCCESS_CREATION_STATUS)]
+        [call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS)]
       ])
       .put(push('/users'))
       .put(setUsersLoading(false))
@@ -237,7 +230,7 @@ describe('Users saga test', () => {
       .put(setUsersLoading(true))
       .provide([
         [call(completeAdminRegister, mockAdmin)],
-        [call(handleSnackBarSuccess, SUCCESS_CONFIRMATION_STATUS)]
+        [call(handleSuccessSnackbar, SUCCESS_CONFIRMATION_STATUS)]
       ])
       .put(setUsersLoading(false))
       .put(push('/'))
@@ -284,9 +277,6 @@ describe('Users saga test', () => {
       })
       .put(setUsersLoading(false))
       .put(setUserError({ e: mockError }))
-      .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(mockError.message))
-      .put(setSnackBarStatus(true))
       .hasFinalState({
         Users: {
           ...mockUsersState,
@@ -304,27 +294,5 @@ describe('Users saga test', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(5);
-      }));
-
-  it('should handle snackbar success', () =>
-    expectSaga(handleSnackBarSuccess, mockStatus)
-      .withReducer(combineReducers({ Snackbar }), {
-        Snackbar: mockSnackarState
-      })
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(mockStatus))
-      .put(setSnackBarStatus(true))
-      .hasFinalState({
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'success',
-          snackBarMessage: mockStatus
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(3);
       }));
 });

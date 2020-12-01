@@ -28,10 +28,9 @@ import {
 import { config } from '../../configs';
 
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -68,9 +67,7 @@ export function* handleAddPattern({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(createPattern, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(config.routes.pathToPatterns));
   } catch (error) {
     yield call(handlePatternError, error);
@@ -83,9 +80,7 @@ export function* handlePatternDelete({ payload }) {
     yield call(deletePattern, payload);
     yield put(removePatternFromStore(payload));
     yield put(setPatternLoading(false));
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handlePatternError, error);
   }
@@ -95,9 +90,7 @@ export function* handlePatternUpdate({ payload }) {
   try {
     yield put(setPatternLoading(true));
     yield call(updatePattern, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToPatterns));
   } catch (error) {
     yield call(handlePatternError, error);
@@ -107,9 +100,7 @@ export function* handlePatternUpdate({ payload }) {
 export function* handlePatternError(e) {
   yield put(setPatternLoading(false));
   yield put(setPatternError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* patternSaga() {
