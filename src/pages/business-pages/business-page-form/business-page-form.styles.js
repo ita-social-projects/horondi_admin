@@ -9,11 +9,6 @@ export const useStyles = makeStyles((theme) => ({
   textField: {
     margin: '10px 5px'
   },
-  container: {
-    width: '100%',
-    padding: 20,
-    marginTop: 70
-  },
   tabs: {
     backgroundColor: '#424242'
   },
@@ -28,5 +23,10 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 5,
     marginLeft: 15,
     fontSize: '.9em'
+  },
+  tabField: {
+    padding: 20,
+    display: 'flex',
+    flexDirection: 'column'
   }
 }));

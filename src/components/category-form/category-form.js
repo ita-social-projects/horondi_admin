@@ -75,9 +75,9 @@ const CategoryForm = ({ category, id,edit}) => {
       enName:category.name[1].value || '',
       code:category.code || ''
     },
-    onSubmit: () => {
-      const newCategory = createCategory(values);
-
+    onSubmit: (data) => {
+      const newCategory = createCategory(data);
+console.log((data));
  if (edit) {
         dispatch(updateCategory({ id,category: newCategory,upload }));
         return;
@@ -86,10 +86,6 @@ const CategoryForm = ({ category, id,edit}) => {
      
     }
   });
-
-
-     
-  
 
   
   const handleImageLoad = (e) => {

@@ -1,13 +1,7 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import {GET_ORDER,UPDATE_ORDER, GET_ORDER_LIST} from './orders.types'
-import { getOrderById, updateOrder, getAllOrders } from './orders.operations'
-import { setItemsCount, setPagesCount } from '../table/table.actions';
-
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../snackbar/snackbar.actions';
+import { GET_ORDER, UPDATE_ORDER, GET_ORDER_LIST } from './orders.types';
+import { getOrderById, updateOrder, getAllOrders } from './orders.operations';
+import { setItemsCount } from '../table/table.actions';
 
 import {
   setOrderList,
@@ -15,19 +9,20 @@ import {
   setOrderLoading,
   setOrder
 } from './orders.actions';
+import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
 
-function* handleOrderUpdate({ payload }) {
+export function* handleOrderUpdate({ payload }) {
   try {
-    yield put(setOrderLoading(true))
-    const order = yield call(updateOrder,payload)
-    if(order.errors) {
-      throw new Error(order.errors[0].message)
+    yield put(setOrderLoading(true));
+    const order = yield call(updateOrder, payload);
+    if (order.errors) {
+      throw new Error(order.errors[0].message);
     }
-    yield put(setOrder(order.data.updateOrder))
+    yield put(setOrder(order.data.updateOrder));
   } catch (e) {
-    yield put(setOrderError(e))
+    yield put(setOrderError(e));
   } finally {
-    yield put(setOrderLoading(false))
+    yield put(setOrderLoading(false));
   }
 }
 
@@ -64,9 +59,7 @@ export function* handleOrderLoad({ payload }) {
 export function* handleOrdersError(e) {
   yield put(setOrderLoading(false));
   yield put(setOrderError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* ordersSaga() {

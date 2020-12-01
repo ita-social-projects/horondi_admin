@@ -101,12 +101,6 @@ const labels = {
         required: true
       },
       {
-        label: 'Підкатегорія ',
-        name: 'subcategory',
-        type: 'select',
-        required: true
-      },
-      {
         label: 'Модель ',
         name: 'model',
         type: 'select',
@@ -184,11 +178,13 @@ const labels = {
   },
   emailQuestionsLabels: {
     en: {
+      ALL: 'ALL',
       PENDING: 'PENDING',
       SPAM: 'SPAM',
       ANSWERED: 'ANSWERED'
     },
     ua: {
+      ALL: 'Всі',
       PENDING: 'Очікує відповіді',
       SPAM: 'Спам',
       ANSWERED: 'Відповідь надано'

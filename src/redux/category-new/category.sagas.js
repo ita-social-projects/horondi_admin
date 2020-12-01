@@ -61,6 +61,7 @@ export function* handleCategoryLoad({ payload }) {
 }
 
 export function* handleAddCategory({ payload }) {
+  console.log((payload));
   try {
     yield put(setCategoryLoading(true));
     yield call(createCategory, payload);

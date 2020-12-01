@@ -58,7 +58,6 @@ const ProductEditForm = () => {
 
   const formikSpeciesValues = {
     category: product.category._id,
-    subcategory: product.subcategory._id,
     model: product.model[0].value,
     pattern: product.pattern[0].value,
     colors: product.colors[0].simpleName[0].value
@@ -79,7 +78,6 @@ const ProductEditForm = () => {
     patterns,
     models,
     options,
-    getSelectedCategory,
     setOptions,
     selectedOptions,
     additions: productAdditions
@@ -137,14 +135,7 @@ const ProductEditForm = () => {
   ]);
 
   const onSubmit = (formValues) => {
-    const {
-      colors,
-      pattern,
-      model,
-      category,
-      subcategory,
-      basePrice
-    } = formValues;
+    const { colors, pattern, model, category, basePrice } = formValues;
 
     const productInfo = createProductInfo(formValues);
     dispatch(
@@ -157,7 +148,6 @@ const ProductEditForm = () => {
           images: product.images,
           options,
           category,
-          subcategory,
           basePrice
         },
         id: product._id
@@ -267,7 +257,6 @@ const ProductEditForm = () => {
               models={models}
               patterns={patterns}
               colors={productColors}
-              getSelectedCategory={getSelectedCategory}
               values={values}
               errors={errors}
               touched={touched}

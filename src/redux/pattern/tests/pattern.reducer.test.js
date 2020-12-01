@@ -1,4 +1,4 @@
-import { pattern, patterns, patternToRemoveId } from './pattern.variables';
+import { mockPatterns, mockId } from './pattern.variables';
 import {
   setPatternError,
   setPatternLoading,
@@ -18,9 +18,11 @@ describe('reducer tests', () => {
   });
 
   it('should set pattern to store', () => {
-    expect(patternReducer(initialState, setPattern(pattern))).toEqual({
+    expect(
+      patternReducer(initialState, setPattern(mockPatterns.items[0]))
+    ).toEqual({
       ...initialState,
-      pattern
+      pattern: mockPatterns.items[0]
     });
   });
   it('should set pattern loading to true', () => {
@@ -36,19 +38,19 @@ describe('reducer tests', () => {
     });
   });
   it('should set patterns to store', () => {
-    expect(patternReducer(initialState, setPatterns(patterns))).toEqual({
+    expect(
+      patternReducer(initialState, setPatterns(mockPatterns.items))
+    ).toEqual({
       ...initialState,
-      list: patterns
+      list: mockPatterns.items
     });
   });
   it('should remove pattern from store', () => {
-    const state = { ...initialState, list: patterns };
-    const filteredPatterns = patterns.filter(
-      (pattern) => pattern._id !== patternToRemoveId
+    const state = { ...initialState, list: mockPatterns.items };
+    const filteredPatterns = mockPatterns.items.filter(
+      (patternEl) => patternEl._id !== mockId
     );
-    expect(
-      patternReducer(state, removePatternFromStore(patternToRemoveId))
-    ).toEqual({
+    expect(patternReducer(state, removePatternFromStore(mockId))).toEqual({
       ...state,
       list: filteredPatterns
     });
