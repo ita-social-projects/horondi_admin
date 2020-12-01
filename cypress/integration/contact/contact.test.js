@@ -31,8 +31,6 @@ describe('Contacts test', () => {
 
   it('Data from the server should be equal with the incoming data', () => {
     cy.visit(`contacts/${id}`);
-    // cy.get('[data-cy=edit-btn]').click()
-    // data-cy='edit-btn'
     cy.get('[data-cy=phoneNumber]').contains(phoneNumber);
     cy.get('[data-cy=ukSchedule]').contains(uaSchedule);
     cy.get('[data-cy=enSchedule]').contains(enSchedule);
