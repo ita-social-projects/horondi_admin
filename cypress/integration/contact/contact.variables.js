@@ -1,4 +1,11 @@
-export const id = '5f46a8ac90e86913ed0a95e1';
+export const id = '5fa034049a59a906f0610e41';
 export const telephoneNumber = /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{2}$/g;
 export const email = /^((([0-9A-Za-z]{1}[-0-9A-z]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/u;
 export const textString = /^[а-яіїА-Яa-zA-Z0-9.,)( ]+$/;
+export const phoneNumber = '380961737361';
+export const uaSchedule =
+  'Пн: 10:00 - 19:00|Вт: 10:00 - 19:00|Ср: 10:00 - 19:00|Чт: 10:00 - 19:00|Пт: 10:00 - 19:00|Сб: Вихідний|Нд: Вихідний';
+export const enSchedule =
+  'Mon: 10 a.m. - 7 p.m.|Tue: 10 a.m. - 7 p.m.|Wed: 10 a.m. - 7 p.m.|Thu: 10 a.m. - 7 p.m.|Fri: 10 a.m. - 7 p.m.|Sat: Closed|Sun: Closed';
+export const uaAddress = 'Львів, вул. Заводська, 31';
+export const enAddress = 'Lviv, 31 Zavodska Str.';
