@@ -8,6 +8,8 @@ HORONDI project is an e-commerce online shop that provides hand-made backpacks, 
 [![Pending Pull-Requests](https://img.shields.io/github/issues-pr/ita-social-projects/horondi_admin?style=flat-square)](https://github.com/ita-social-projects/Horondi_admin/pulls)
 [![GitHub license](https://img.shields.io/github/license/ita-social-projects/horondi_admin)](https://github.com/ita-social-projects/horondi_admin/blob/master/LICENSE)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=horondi_horondi_admin&metric=alert_status)](https://sonarcloud.io/dashboard?id=horondi_horondi_admin)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ita-social-projects-horondi-client-admin&metric=coverage)](https://sonarcloud.io/dashboard?id=ita-social-projects-horondi-client-admin)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/horondi/horondi_admin)
 
 ---
 
