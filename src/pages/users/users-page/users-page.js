@@ -17,7 +17,6 @@ const { REMOVE_USER_MESSAGE } = config.messages;
 const userTabNames = config.tabNames.users;
 
 const UsersPage = () => {
-  const styles = useStyles();
   const common = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();

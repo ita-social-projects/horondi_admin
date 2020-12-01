@@ -18,6 +18,8 @@ import {
   setUsersByDays
 } from './stats.actions';
 
+import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
+
 import {
   getPopularCategories,
   getPopularProducts,
@@ -26,13 +28,9 @@ import {
   getUsersByDays
 } from './stats.operations';
 
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../snackbar/snackbar.actions';
+import { selectStatsDate } from '../selectors/stats.selectors';
 
-function* handleInitialStatsLoad() {
+export function* handleInitialStatsLoad() {
   try {
     yield put(setStatsLoading(true));
     const categories = yield call(getPopularCategories);
@@ -45,10 +43,10 @@ function* handleInitialStatsLoad() {
   }
 }
 
-function* handleOrdersStatisticLoad() {
+export function* handleOrdersStatisticLoad() {
   try {
     yield put(setUpdatingDoughnutData(true));
-    const date = yield select(({ Stats }) => Stats.date);
+    const date = yield select(selectStatsDate);
     const orders = yield call(getOrdersStats, date);
     yield put(setAllOrdersStats(orders));
     yield put(setUpdatingDoughnutData(false));
@@ -57,10 +55,10 @@ function* handleOrdersStatisticLoad() {
   }
 }
 
-function* handlePaidOrdersLoad() {
+export function* handlePaidOrdersLoad() {
   try {
     yield put(setUpdatingBarData(true));
-    const date = yield select(({ Stats }) => Stats.date);
+    const date = yield select(selectStatsDate);
     const orders = yield call(getPaidOrdersStats, date);
     yield put(setPaidOrdersStats(orders));
     yield put(setUpdatingBarData(false));
@@ -69,10 +67,10 @@ function* handlePaidOrdersLoad() {
   }
 }
 
-function* handleUsersStatisticLoad() {
+export function* handleUsersStatisticLoad() {
   try {
     yield put(setUpdatingBarData(true));
-    const date = yield select(({ Stats }) => Stats.date);
+    const date = yield select(selectStatsDate);
     const users = yield call(getUsersByDays, date);
     yield put(setUsersByDays(users));
     yield put(setUpdatingBarData(false));
@@ -81,11 +79,9 @@ function* handleUsersStatisticLoad() {
   }
 }
 
-function* handleStatsErrors(e) {
+export function* handleStatsErrors(e) {
   yield put(setStatsLoading(false));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* statsSaga() {

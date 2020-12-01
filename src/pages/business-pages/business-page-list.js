@@ -79,7 +79,11 @@ const BusinessPageList = () => {
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
-        <Typography variant='h1' className={commonStyles.materialTitle}>
+        <Typography
+          variant='h1'
+          className={commonStyles.materialTitle}
+          data-cy='main-header'
+        >
           {config.titles.businessPageTitles.mainPageTitle}
         </Typography>
         <Button

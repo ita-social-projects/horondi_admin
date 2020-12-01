@@ -61,10 +61,12 @@ export const editCategory = (payload) => ({
 export const deleteCategory = () => ({
   type: DELETE_CATEGORY
 });
+
 export const getSubcategories = (payload) => ({
   type: GET_SUBCATEGORIES,
   payload
 });
+
 export const toggleCategoryDeleteDialog = () => ({
   type: TOGGLE_CATEGORY_DELETE_DIALOG
 });

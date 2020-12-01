@@ -11,7 +11,6 @@ const store = configureStore();
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('nav bar tests', () => {
-  const mockCallBack = jest.fn(() => {});
   let component;
 
   beforeEach(() => {

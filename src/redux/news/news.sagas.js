@@ -27,12 +27,11 @@ import {
 
 import { config } from '../../configs';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
 import routes from '../../configs/routes';
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -75,9 +74,7 @@ export function* handleAddNews({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(createArticle, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(routes.pathToNews));
   } catch (error) {
     yield call(handleNewsError, error);
@@ -90,9 +87,7 @@ export function* handleNewsDelete({ payload }) {
     yield call(deleteArticle, payload);
     yield put(setCurrentPage(1));
     yield put(setNewsLoading(false));
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleNewsError, error);
   }
@@ -103,9 +98,7 @@ export function* handleNewsUpdate({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(updateArticle, id, newArticle);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToNews));
   } catch (error) {
     yield call(handleNewsError, error);
@@ -115,9 +108,7 @@ export function* handleNewsUpdate({ payload }) {
 export function* handleNewsError(e) {
   yield put(setNewsLoading(false));
   yield put(setNewsError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* newsSaga() {

@@ -20,39 +20,34 @@ import {
   GET_PATTERNS,
   ADD_PATTERN
 } from '../pattern.types';
-import {
-  pattern,
-  patternId,
-  patterns,
-  patternToUpdate
-} from './pattern.variables';
+import { mockPatterns, mockId } from './pattern.variables';
 
 describe('pattern actions tests', () => {
   it('should get pattern', () => {
-    expect(getPattern('0c3c7929dd85de268bed4fe8')).toEqual({
+    expect(getPattern(mockId)).toEqual({
       type: GET_PATTERN,
-      payload: patternId
+      payload: mockId
     });
   });
   it('should add pattern', () => {
-    expect(addPattern(pattern)).toEqual({
+    expect(addPattern(mockPatterns.items[0])).toEqual({
       type: ADD_PATTERN,
-      payload: pattern
+      payload: mockPatterns.items[0]
     });
   });
   it('should set pattern', () => {
-    expect(setPattern(pattern)).toEqual({
+    expect(setPattern(mockPatterns.items[0])).toEqual({
       type: SET_PATTERN,
-      payload: pattern
+      payload: mockPatterns.items[0]
     });
   });
   it('should get patterns', () => {
     expect(getPatterns()).toEqual({ type: GET_PATTERNS });
   });
   it('should set patterns', () => {
-    expect(setPatterns(patterns)).toEqual({
+    expect(setPatterns(mockPatterns.list)).toEqual({
       type: SET_PATTERNS,
-      payload: patterns
+      payload: mockPatterns.list
     });
   });
   it('should set pattern loading to true', () => {
@@ -68,13 +63,13 @@ describe('pattern actions tests', () => {
     });
   });
   it('should update pattern', () => {
-    expect(updatePattern(patternToUpdate)).toEqual({
+    expect(updatePattern(mockPatterns.items[0])).toEqual({
       type: UPDATE_PATTERN,
-      payload: patternToUpdate
+      payload: mockPatterns.items[0]
     });
   });
   it('should delete pattern', () => {
-    const patternToDelete = '0c3c7929dd85de268bed4fe8';
+    const patternToDelete = mockId;
     expect(deletePattern(patternToDelete)).toEqual({
       type: DELETE_PATTERN,
       payload: patternToDelete

@@ -29,6 +29,11 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../snackbar/snackbar.actions';
+import { selectBusinessPagesList } from '../selectors/business-pages.selectors';
+import {
+  handleSuccessSnackbar,
+  handleErrorSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -64,9 +69,7 @@ export function* handleAddBusinessPage({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(createBusinessPage, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(setLoading(false));
     yield put(push(routes.pathToBusinessPages));
   } catch (error) {
@@ -79,9 +82,7 @@ export function* handleBusinessPageDelete({ payload }) {
     yield put(setLoading(true));
     yield call(deleteBusinessPage, payload);
 
-    const businessPages = yield select(
-      ({ BusinessPages }) => BusinessPages.list
-    );
+    const businessPages = yield select(selectBusinessPagesList);
     yield put(
       setBusinessPages(businessPages.filter((page) => page._id !== payload))
     );
@@ -98,9 +99,7 @@ export function* handleBusinessPageUpdate({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(updateBusinessPage, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(setLoading(false));
     yield put(push(routes.pathToBusinessPages));
   } catch (error) {
@@ -111,9 +110,7 @@ export function* handleBusinessPageUpdate({ payload }) {
 export function* handleBusinessPageError(e) {
   yield put(setLoading(false));
   yield put(setBusinessPagesError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* businessPagesSaga() {
