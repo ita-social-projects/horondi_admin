@@ -107,7 +107,7 @@ export function* handleMaterialColorLoad({ payload }) {
     yield call(handleMaterialError, error);
   }
 }
-function* handleAddMaterial({ payload }) {
+export function* handleAddMaterial({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     yield call(createMaterial, payload);
@@ -118,7 +118,7 @@ function* handleAddMaterial({ payload }) {
     yield call(handleMaterialError, error);
   }
 }
-function* handleAddMaterialColor({ payload }) {
+export function* handleAddMaterialColor({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     yield call(createMaterialColor, payload);
@@ -167,13 +167,13 @@ export function* handleMaterialUpdate({ payload }) {
   }
 }
 
-function* handleSuccessSnackbar(status) {
+export function* handleSuccessSnackbar(status) {
   yield put(setSnackBarSeverity('success'));
   yield put(setSnackBarMessage(status));
   yield put(setSnackBarStatus(true));
 }
 
-function* handleMaterialError(e) {
+export function* handleMaterialError(e) {
   yield put(setMaterialLoading(false));
   yield put(setMaterialError({ e }));
   yield put(setSnackBarSeverity('error'));

@@ -1,12 +1,10 @@
-import { differenceInHours, differenceInCalendarDays, format } from 'date-fns';
+import { format } from 'date-fns';
 
-export default (time) => {
-  const now = new Date();
-  const hoursFromNow = differenceInHours(now, +time);
-  const daysFromNow = differenceInCalendarDays(now, +time);
-
-  if (hoursFromNow <= 23 && !daysFromNow) {
-    return format(+time, 'H:mm');
+export default (time, showBreakLine) => {
+  if (showBreakLine) {
+    return `${format(+time, 'H:mm')} <br />
+  ${format(+time, 'dd/MM/yy')}`;
   }
-  return format(+time, 'dd/MM/yy');
+
+  return `${format(+time, 'H:mm')} ${format(+time, 'dd/MM/yy')}`;
 };

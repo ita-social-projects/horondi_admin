@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 
-import { useStyles } from './business-page-list.styles';
+import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllBusinessPages,
@@ -27,7 +27,8 @@ const { pathToAddBusinessPage } = config.routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
 
 const BusinessPageList = () => {
-  const classes = useStyles();
+  const commonStyles = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ BusinessPages }) => ({
     list: BusinessPages.list,
@@ -76,8 +77,15 @@ const BusinessPageList = () => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.tableNav}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography
+          variant='h1'
+          className={commonStyles.materialTitle}
+          data-cy='main-header'
+        >
+          {config.titles.businessPageTitles.mainPageTitle}
+        </Typography>
         <Button
           id='add-business-page'
           component={Link}
@@ -89,13 +97,11 @@ const BusinessPageList = () => {
           {CREATE_BUSINESS_PAGE}
         </Button>
       </div>
-      <div>
-        <TableContainerGenerator
-          id='businessPageTable'
-          tableTitles={tableTitles}
-          tableItems={pages}
-        />
-      </div>
+      <TableContainerGenerator
+        id='businessPageTable'
+        tableTitles={tableTitles}
+        tableItems={pages}
+      />
     </div>
   );
 };

@@ -2,20 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: 65,
-    padding: theme.spacing(3),
-    width: '100vw',
-    height: `calc(100vh - 125px)`,
-    boxSizing: 'border-box'
+    height: `calc(100vh - 125px)`
   },
-  pageTitle: {
-    fontSize: 24,
-    color: theme.palette.text.disabled,
-    fontWeight: 'bold'
-  },
-  container: {
+  main: {
     display: 'flex',
-    padding: '15px 0',
+    paddingBottom: 15,
     boxSizing: 'border-box',
     '@media (max-width: 599px)': {
       display: 'block'
@@ -47,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
   order: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: 'darkgrey',
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
       fontWeight: 'bold'
     }
   },

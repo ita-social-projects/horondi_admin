@@ -2,11 +2,9 @@ import authReducer, { initialState } from '../auth.reducer';
 
 import {
   setAuth,
-  loginUser,
   logoutUser,
   setAuthError,
-  setAuthLoading,
-  checkUserByToken
+  setAuthLoading
 } from '../auth.actions';
 
 describe('authReducer tests', () => {

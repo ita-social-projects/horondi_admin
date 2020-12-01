@@ -51,6 +51,7 @@ import SlidesPage from '../pages/home-page-slides/slides-page';
 import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
 import MainPage from '../pages/main-page';
+import ErrorBoundary from '../components/error-boundary/error-boundary';
 
 const { routes } = config;
 
@@ -82,135 +83,151 @@ const Routes = () => {
     <ConnectedRouter history={history}>
       <NavBar />
       <NavMenu />
-      <Switch>
-        <Route path={routes.pathToMainPage} exact component={MainPage} />
-        <Route path={routes.pathToUsers} exact component={UsersPage} />
-        <Route
-          path={routes.pathToUsersDetails}
-          exact
-          component={UsersDetails}
-        />
-        <Route path={routes.pathToNews} exact component={NewsPage} />
-        <Route path={routes.pathToPatterns} exact component={PatternPage} />
-        <Route path={routes.pathToModels} exact component={ModelPage} />
-        <Route path={routes.pathToHeaders} exact component={HeaderPage} />
-        <Route path={routes.pathToAddNews} exact component={NewsAdd} />
-        <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
-        <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
-        <Route path={routes.pathToNewsDetails} exact component={NewsDetails} />
-        <Route
-          path={routes.pathToHeaderDetails}
-          exact
-          component={HeaderDetails}
-        />
-        <Route path={routes.pathToMaterials} exact component={MaterialPage} />
-        <Route
-          path={routes.pathToMaterialDetails}
-          exact
-          component={MaterialDetails}
-        />
-        <Route
-          path={routes.pathToMaterialsColorPalette}
-          exact
-          component={MaterialColorPalette}
-        />
-        <Route path={routes.pathToAddMaterial} exact component={MaterialAdd} />
-        <Route
-          path={routes.pathToPatternDetails}
-          exact
-          component={PatternDetails}
-        />
-        <Route
-          path={routes.pathToBusinessPages}
-          exact
-          component={BusinessPageList}
-        />
-        <Route
-          path={routes.pathToAddBusinessPage}
-          exact
-          component={BusinessPageForm}
-        />
-        <Route
-          path={routes.pathToBusinessPageDetails}
-          exact
-          render={({ match }) => (
-            <BusinessPageForm id={match.params.id} editMode />
-          )}
-        />
-        <Route path={routes.pathToContacts} exact component={ContactsPage} />
-        <Route
-          path={routes.pathToContactsEdit}
-          exact
-          component={ContactsEdit}
-        />
-        <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
-        <Route path={routes.pathToAddModel} exact component={ModelAdd} />
-        <Route
-          path={routes.pathToModelDetails}
-          exact
-          component={ModelDetails}
-        />
-        <Route path={routes.pathToProducts} exact component={ProductsPage} />
-        <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
-        <Route
-          path={routes.pathToEditProduct}
-          exact
-          render={({ match }) => <ProductEdit id={match.params.id} />}
-        />
-        <Route path={routes.pathToCategories} exact component={Categories} />
-        <Route path={routes.pathToComments} exact component={Comments} />
-        <Route
-          path={routes.pathToRegisterAdmin}
-          exact
-          component={RegisterUser}
-        />
-        <Route path={routes.pathToHomePageEdit} exact component={HomePage} />
-        <Route
-          path={routes.pathToAddCategory}
-          exact
-          component={CategoriesAdd}
-        />
-        <Route
-          path={routes.pathToEditCategory}
-          exact
-          render={({ match }) => (
-            <CategoriesAdd id={match.params.id} editMode />
-          )}
-        />
-        <Route
-          path={routes.pathToEmailQuestions}
-          exact
-          component={EmailQuestionsList}
-        />
-        <Route
-          path={routes.pathToEmailQuestionDetails}
-          exact
-          render={({ match }) => <EmailQuestionsDetails id={match.params.id} />}
-        />
-        <Route path={routes.pathToStatistic} exact component={StatisticPage} />
-        <Route path={routes.pathToOrders} exact component={Orders} />
-        <Route
-          path={routes.pathToOrderItem}
-          exact
-          render={({ match }) => <OrderItem id={match.params.id} />}
-        />
-        <Route
-          path={routes.pathToHomePageSlides}
-          exact
-          component={SlidesPage}
-        />
-        <Route
-          path={routes.pathToAddHomePageSlide}
-          exact
-          component={SlideAdd}
-        />
-        <Route
-          path={routes.pathToHomePageSlideDetail}
-          exact
-          component={SlideDetails}
-        />
-        <Route component={ErrorPage} />
-      </Switch>
+      <ErrorBoundary>
+        <Switch>
+          <Route path={routes.pathToMainPage} exact component={MainPage} />
+          <Route path={routes.pathToUsers} exact component={UsersPage} />
+          <Route
+            path={routes.pathToUsersDetails}
+            exact
+            component={UsersDetails}
+          />
+          <Route path={routes.pathToNews} exact component={NewsPage} />
+          <Route path={routes.pathToPatterns} exact component={PatternPage} />
+          <Route path={routes.pathToModels} exact component={ModelPage} />
+          <Route path={routes.pathToHeaders} exact component={HeaderPage} />
+          <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+          <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
+          <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
+          <Route
+            path={routes.pathToNewsDetails}
+            exact
+            component={NewsDetails}
+          />
+          <Route
+            path={routes.pathToHeaderDetails}
+            exact
+            component={HeaderDetails}
+          />
+          <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+          <Route
+            path={routes.pathToMaterialDetails}
+            exact
+            component={MaterialDetails}
+          />
+          <Route
+            path={routes.pathToMaterialsColorPalette}
+            exact
+            component={MaterialColorPalette}
+          />
+          <Route
+            path={routes.pathToAddMaterial}
+            exact
+            component={MaterialAdd}
+          />
+          <Route
+            path={routes.pathToPatternDetails}
+            exact
+            component={PatternDetails}
+          />
+          <Route
+            path={routes.pathToBusinessPages}
+            exact
+            component={BusinessPageList}
+          />
+          <Route
+            path={routes.pathToAddBusinessPage}
+            exact
+            component={BusinessPageForm}
+          />
+          <Route
+            path={routes.pathToBusinessPageDetails}
+            exact
+            render={({ match }) => (
+              <BusinessPageForm id={match.params.id} editMode />
+            )}
+          />
+          <Route path={routes.pathToContacts} exact component={ContactsPage} />
+          <Route
+            path={routes.pathToContactsEdit}
+            exact
+            component={ContactsEdit}
+          />
+          <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
+          <Route path={routes.pathToAddModel} exact component={ModelAdd} />
+          <Route
+            path={routes.pathToModelDetails}
+            exact
+            component={ModelDetails}
+          />
+          <Route path={routes.pathToProducts} exact component={ProductsPage} />
+          <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
+          <Route
+            path={routes.pathToEditProduct}
+            exact
+            render={({ match }) => <ProductEdit id={match.params.id} />}
+          />
+          <Route path={routes.pathToCategories} exact component={Categories} />
+          <Route path={routes.pathToComments} exact component={Comments} />
+          <Route
+            path={routes.pathToRegisterAdmin}
+            exact
+            component={RegisterUser}
+          />
+          <Route path={routes.pathToHomePageEdit} exact component={HomePage} />
+          <Route
+            path={routes.pathToAddCategory}
+            exact
+            component={CategoriesAdd}
+          />
+          <Route
+            path={routes.pathToEditCategory}
+            exact
+            render={({ match }) => (
+              <CategoriesAdd id={match.params.id} editMode />
+            )}
+          />
+          <Route
+            path={routes.pathToEmailQuestions}
+            exact
+            component={EmailQuestionsList}
+          />
+          <Route
+            path={routes.pathToEmailQuestionDetails}
+            exact
+            render={({ match }) => (
+              <EmailQuestionsDetails id={match.params.id} />
+            )}
+          />
+          <Route
+            path={routes.pathToStatistic}
+            exact
+            component={StatisticPage}
+          />
+          <Route path={routes.pathToOrders} exact component={Orders} />
+          <Route
+            path={routes.pathToOrderItem}
+            exact
+            render={({ match }) => <OrderItem id={match.params.id} />}
+          />
+          <Route
+            path={routes.pathToHomePageSlides}
+            exact
+            component={SlidesPage}
+          />
+          <Route
+            path={routes.pathToAddHomePageSlide}
+            exact
+            component={SlideAdd}
+          />
+          <Route
+            path={routes.pathToHomePageSlideDetail}
+            exact
+            component={SlideDetails}
+          />
+          <Route component={ErrorPage} />
+        </Switch>
+      </ErrorBoundary>
       <DialogWindow />
       <SnackbarItem />
     </ConnectedRouter>

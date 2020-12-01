@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './news-page.styles';
+import { useCommonStyles } from '../../common.styles';
 import { config } from '../../../configs';
 import {
   getNews,
@@ -25,7 +26,9 @@ const pathToNewsAddPage = config.routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;
 
 const NewsPage = () => {
-  const classes = useStyles();
+  const styles = useStyles();
+  const commonStyles = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, pagesCount, currentPage, newsPerPage } = useSelector(
     ({ News }) => ({
@@ -88,8 +91,11 @@ const NewsPage = () => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.tableNav}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
+          {config.titles.newsPageTitles.mainPageTitle}
+        </Typography>
         <Button
           id='add-news'
           component={Link}
@@ -100,14 +106,12 @@ const NewsPage = () => {
           {CREATE_NEWS_TITLE}
         </Button>
       </div>
-      <div className={classes.tableContainer}>
-        <TableContainerGenerator
-          id='newsTable'
-          tableTitles={tableTitles}
-          tableItems={newsItems}
-        />
-      </div>
-      <div className={classes.paginationDiv}>
+      <TableContainerGenerator
+        id='newsTable'
+        tableTitles={tableTitles}
+        tableItems={newsItems}
+      />
+      <div className={styles.paginationDiv}>
         <Pagination
           count={pagesCount}
           variant='outlined'

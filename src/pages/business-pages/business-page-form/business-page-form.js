@@ -1,6 +1,13 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
+import {
+  Paper,
+  TextField,
+  Grid,
+  Tab,
+  Tabs,
+  Typography
+} from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
@@ -19,6 +26,7 @@ import {
   updateBusinessPage
 } from '../../../redux/business-pages/business-pages.actions';
 import { config } from '../../../configs';
+import { useCommonStyles } from '../../common.styles';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -29,6 +37,7 @@ const BusinessPageForm = ({ id, editMode }) => {
   const [shouldValidate, setShouldValidate] = useState(false);
 
   const classes = useStyles();
+  const common = useCommonStyles();
 
   const {
     tabsValue,
@@ -132,7 +141,16 @@ const BusinessPageForm = ({ id, editMode }) => {
   }
 
   return (
-    <div className={classes.container}>
+    <div className={common.container}>
+      <div className={common.adminHeader}>
+        <Typography
+          variant='h1'
+          className={common.materialTitle}
+          data-cy='add-header'
+        >
+          {config.titles.businessPageTitles.addBusinessPageTitle}
+        </Typography>
+      </div>
       <form onSubmit={formik.handleSubmit}>
         <div>
           <Grid item xs={12}>
@@ -154,79 +172,78 @@ const BusinessPageForm = ({ id, editMode }) => {
               />
             </Paper>
           </Grid>
-          <AppBar position='static'>
+          <Paper className={classes.tabField}>
             <Tabs
-              className={classes.tabs}
+              className={common.tabs}
               value={tabsValue}
               onChange={handleTabsChange}
               aria-label='simple tabs example'
             >
               {languageTabs}
             </Tabs>
-          </AppBar>
-          <TabPanel value={tabsValue} index={0}>
-            <Paper className={classes.businessPageForm}>
-              <TextField
-                id='ukTitle'
-                className={classes.textField}
-                variant='outlined'
-                label='Заголовок uk'
-                multiline
-                value={formik.values.ukTitle}
-                onChange={formik.handleChange}
-                error={!formik.values.ukTitle && shouldValidate}
-                helperText={
-                  !formik.values.ukTitle && shouldValidate
-                    ? 'Введіть заголовок'
-                    : ''
-                }
-                data-cy='page-header-ua'
-              />
-              <Editor
-                value={ukText}
-                placeholder='Текст'
-                onEditorChange={(value) => ukSetText(value)}
-                setFiles={setFiles}
-                data-cy='page-editor'
-              />
-              {(editorField.test(ukText) || !ukText) && shouldValidate && (
-                <div className={classes.errorMessage} data-cy='editor-error'>
-                  Введіть текст для сторінки
-                </div>
-              )}
-            </Paper>
-          </TabPanel>
-          <TabPanel value={tabsValue} index={1}>
-            <Paper className={classes.businessPageForm}>
-              <TextField
-                id='enTitle'
-                className={classes.textField}
-                variant='outlined'
-                label='Заголовок en'
-                multiline
-                value={formik.values.enTitle}
-                onChange={formik.handleChange}
-                error={!formik.values.enTitle && shouldValidate}
-                helperText={
-                  !formik.values.enTitle && shouldValidate
-                    ? 'Введіть заголовок'
-                    : ''
-                }
-                data-cy='page-header-en'
-              />
-              <Editor
-                value={enText}
-                placeholder='Текст'
-                onEditorChange={(value) => enSetText(value)}
-                setFiles={setFiles}
-              />
-              {(editorField.test(enText) || !enText) && shouldValidate && (
-                <div className={classes.errorMessage} data-cy='editor-error'>
-                  Введіть текст для сторінки
-                </div>
-              )}
-            </Paper>
-          </TabPanel>
+            <TabPanel value={tabsValue} index={0}>
+              <Paper className={classes.businessPageForm}>
+                <TextField
+                  id='ukTitle'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Заголовок uk'
+                  multiline
+                  value={formik.values.ukTitle}
+                  onChange={formik.handleChange}
+                  error={!formik.values.ukTitle && shouldValidate}
+                  helperText={
+                    !formik.values.ukTitle && shouldValidate
+                      ? 'Введіть заголовок'
+                      : ''
+                  }
+                  data-cy='page-header-ua'
+                />
+                <Editor
+                  value={ukText}
+                  placeholder='Текст'
+                  onEditorChange={(value) => ukSetText(value)}
+                  setFiles={setFiles}
+                />
+                {(editorField.test(ukText) || !ukText) && shouldValidate && (
+                  <div className={classes.errorMessage} data-cy='editor-error'>
+                    Введіть текст для сторінки
+                  </div>
+                )}
+              </Paper>
+            </TabPanel>
+            <TabPanel value={tabsValue} index={1}>
+              <Paper className={classes.businessPageForm}>
+                <TextField
+                  id='enTitle'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Заголовок en'
+                  multiline
+                  value={formik.values.enTitle}
+                  onChange={formik.handleChange}
+                  error={!formik.values.enTitle && shouldValidate}
+                  helperText={
+                    !formik.values.enTitle && shouldValidate
+                      ? 'Введіть заголовок'
+                      : ''
+                  }
+                  data-cy='page-header-en'
+                />
+                <Editor
+                  value={enText}
+                  placeholder='Текст'
+                  onEditorChange={(value) => enSetText(value)}
+                  setFiles={setFiles}
+                />
+                {(editorField.test(enText) || !enText) && shouldValidate && (
+                  <div className={classes.errorMessage} data-cy='editor-error'>
+                    Введіть текст для сторінки
+                  </div>
+                )}
+              </Paper>
+            </TabPanel>
+          </Paper>
         </div>
         <div className={classes.controlsBlock}>
           <Link to={config.routes.pathToBusinessPages}>

@@ -19,6 +19,7 @@ import { getOrderList } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
 import titles from '../../configs/titles';
 
+import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
 
 const MainPage = () => {
@@ -29,6 +30,7 @@ const MainPage = () => {
     changesTitle
   } = titles.mainPageTitles;
   const classes = useStyles();
+  const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
   const { commentsList, commentsLoading } = useSelector(({ Comments }) => ({
     commentsList: Comments.list,
@@ -72,11 +74,11 @@ const MainPage = () => {
   }
 
   return (
-    <div className={classes.root}>
-      <Typography variant='h3' className={classes.pageTitle}>
+    <div className={`${commonClasses.container} ${classes.root}`}>
+      <Typography variant='h3' className={commonClasses.materialTitle}>
         {mainTitle}
       </Typography>
-      <div className={classes.container}>
+      <div className={classes.main}>
         <div className={classes.commentsOrders}>
           <Paper className={classes.ordersContainer}>
             <Typography variant='h5' className={classes.blockTitle}>
@@ -87,7 +89,7 @@ const MainPage = () => {
                 <Table
                   stickyHeader
                   aria-label='sticky table'
-                  className={classes.table}
+                  // className={commonClasses.table}
                 >
                   <TableHead>
                     <TableRow>

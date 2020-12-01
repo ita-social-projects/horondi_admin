@@ -4,9 +4,9 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import toJson from 'enzyme-to-json';
-import HomePageEdit from './index';
+import HomePageEdit from '../index';
 
-import titles from '../../configs/titles';
+import titles from '../../../configs/titles';
 
 const { homePageEdit } = titles;
 
