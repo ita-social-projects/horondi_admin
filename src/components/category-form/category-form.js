@@ -31,7 +31,7 @@ const { SAVE_TITLE } = config.buttonTitles;
 
 const { languages } = config;
 
-const CategoryForm = ({ category, id,edit}) => {
+const CategoryForm = ({ category, id,edit = false}) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
@@ -71,14 +71,13 @@ const CategoryForm = ({ category, id,edit}) => {
     validationSchema: categoryValidationSchema,
     initialValues: {
       categoryImage: category.images.thumbnail || '',
-      ukName: category.name[0].value || '',
+      uaName: category.name[0].value || '',
       enName:category.name[1].value || '',
       code:category.code || ''
     },
     onSubmit: (data) => {
       const newCategory = createCategory(data);
-console.log((data));
- if (edit) {
+       if (edit) {
         dispatch(updateCategory({ id,category: newCategory,upload }));
         return;
       }
@@ -87,7 +86,7 @@ console.log((data));
     }
   });
 
-  
+  console.log((values));
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -148,7 +147,7 @@ console.log((data));
             <Paper className={styles.categoryItemUpdate}>
                <TextField
                 data-cy={`${lang}Name`}
-                id={`${lang}Name`}
+                name={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
                 label='Назва категорії'
