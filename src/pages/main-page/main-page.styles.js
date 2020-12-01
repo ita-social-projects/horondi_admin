@@ -1,13 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 65,
-    padding: 24,
+    padding: theme.spacing(3),
     width: '100vw',
     height: `calc(100vh - 125px)`,
-    boxSizing: 'border-box',
-    '@media (max-width: 599px)': {}
+    boxSizing: 'border-box'
+  },
+  pageTitle: {
+    fontSize: 24,
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold'
   },
   container: {
     display: 'flex',
@@ -18,10 +22,11 @@ export const useStyles = makeStyles(() => ({
     }
   },
   blockTitle: {
-    padding: 15
+    padding: 15,
+    color: theme.palette.text.disabled
   },
   commentsOrders: {
-    height: 'calc(100vh - 170px)',
+    height: 'calc(100vh - 179px)',
     width: '50%',
     '@media (max-width: 599px)': {
       width: '100%',
@@ -30,10 +35,7 @@ export const useStyles = makeStyles(() => ({
   },
   ordersContainer: {
     height: '50%',
-    marginBottom: 15,
-    '& h5': {
-      // padding: "15px 0 0 15px",
-    },
+    marginBottom: theme.spacing(3),
     '@media (max-width: 599px)': {
       height: '100vh'
     }
@@ -51,7 +53,7 @@ export const useStyles = makeStyles(() => ({
   },
   commentsContainer: {
     height: '50%',
-    marginTop: 15,
+    marginTop: theme.spacing(3),
     paddingBottom: 15,
     '@media (max-width: 599px)': {
       height: 'fit-content',
@@ -62,14 +64,14 @@ export const useStyles = makeStyles(() => ({
   comments: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     overflowY: 'auto',
     padding: '0 15px',
-    height: 'calc(100% - 35px)'
+    height: 'calc(100% - 50px)',
+    boxSizing: 'border-box'
   },
   comment: {
     borderBottom: '1px solid lightgrey',
-    marginBottom: 15
+    marginBottom: 10
   },
   commentInfo: {
     display: 'flex',
@@ -82,12 +84,12 @@ export const useStyles = makeStyles(() => ({
   changesContainer: {
     width: '50%',
     height: 'calc(100vh - 155px)',
-    marginLeft: 15,
+    marginLeft: theme.spacing(3),
     '@media (max-width: 599px)': {
       height: 'fit-content',
       width: '100%',
       marginLeft: 0,
-      marginTop: 15
+      marginTop: theme.spacing(3)
     }
   },
   emptyOrders: {
