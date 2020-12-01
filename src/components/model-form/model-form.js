@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import {
   Paper,
   TextField,
@@ -136,10 +137,10 @@ const ModelForm = ({ model, id }) => {
       setUpload(e.target.files[0]);
     }
   };
-
+  const inputLabel = React.useRef(null);
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete='off'>
         <CheckboxOptions options={checkboxes} />
 
         <Grid item xs={12}>
@@ -155,7 +156,8 @@ const ModelForm = ({ model, id }) => {
               fileName={upload && upload.name}
             />
             <FormControl variant='outlined' className={styles.textField}>
-              <InputLabel htmlFor='category-select'>
+              {/* https://codesandbox.io/s/material-demo-r2jg2?fontsize=14&file=/demo.js */}
+              <InputLabel shrink ref={inputLabel} htmlFor='category-select'>
                 {config.labels.model.category}
               </InputLabel>
               <Select
