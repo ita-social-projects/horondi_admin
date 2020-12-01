@@ -1,4 +1,4 @@
-export const PaginationControllerSelector = ({
+export const selectTablePaginationCurrentRows = ({
   Table: {
     itemsCount,
     pagination: { currentPage, rowsPerPage }
@@ -9,9 +9,9 @@ export const PaginationControllerSelector = ({
   rowsPerPage
 });
 
-export const TableDenseSelector = ({ Table }) => Table.dense;
+export const selectTableDense = ({ Table }) => Table.dense;
 
-export const TablePaginationSelector = ({
+export const selectTablePaginationCurrentRowsOptions = ({
   Table: {
     itemsCount,
     pagination: { currentPage, rowsPerPage, rowsPerPageOptions }

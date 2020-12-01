@@ -8,13 +8,13 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './pagination-controller.styles';
 import { setCurrentPage } from '../../redux/table/table.actions';
-import { PaginationControllerSelector } from '../../redux/selectors/table.selectors';
+import { selectTablePaginationCurrentRows } from '../../redux/selectors/table.selectors';
 
 const PaginationController = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const { currentPage, itemsCount, rowsPerPage } = useSelector(
-    PaginationControllerSelector
+    selectTablePaginationCurrentRows
   );
 
   const handleFirstPageButtonClick = () => {

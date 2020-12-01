@@ -1,4 +1,4 @@
-export const CategoriesPageSelector = ({ Categories }) => ({
+export const selectCategoriesLoadingDialogOpen = ({ Categories }) => ({
   categories: Categories.categories,
   categoriesLoading: Categories.categoriesLoading,
   isDeleteDialogOpen: Categories.isDeleteDialogOpen
