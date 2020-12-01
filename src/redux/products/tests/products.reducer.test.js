@@ -11,7 +11,6 @@ import {
   setSortByDate,
   setSortByRate,
   setSortByPopularity,
-  setProductLoading,
   setProductToSend,
   clearProductToSend,
   setProductsError,
