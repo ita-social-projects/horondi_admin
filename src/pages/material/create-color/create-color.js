@@ -2,8 +2,9 @@ import React from 'react';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { TextField, AppBar, Tabs, Grid, Tab } from '@material-ui/core';
+import { TextField, AppBar, Tabs, Grid, Tab, Avatar } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { Image } from '@material-ui/icons';
 import useColorHandlers from '../../../utils/use-color-handlers';
 import LoadingBar from '../../../components/loading-bar';
 import {
@@ -213,12 +214,18 @@ function CreateColor({
           <CheckboxOptions options={checkboxes} />
         </div>
         <Grid item xs={12}>
-          <ImageUploadContainer
-            srcForAvatar={values.colorImage || values.image}
-            handler={handleImageLoad}
-            multiple={false}
-            fileName={values.image.name || ''}
-          />
+          <ImageUploadContainer handler={handleImageLoad} />
+          {values.colorImage ? (
+            <Avatar src={values.image}>
+              <Image />
+            </Avatar>
+          ) : values.image ? (
+            <Avatar src={values.image}>
+              <Image />
+            </Avatar>
+          ) : (
+            <></>
+          )}
           <div className={styles.materialItemAdd}>
             <TextField
               data-cy='code'

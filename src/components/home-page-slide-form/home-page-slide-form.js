@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
+import { Image } from '@material-ui/icons';
 import { useStyles } from './home-page-slide-form.styles';
 import { config } from '../../configs';
 import useHomePageSlideHandlers from '../../utils/use-home-page-slide-handlers';
@@ -160,13 +161,12 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             <span className={styles.imageUpload}>
               {config.labels.homePageSlide.image}
             </span>
-            <ImageUploadContainer
-              handler={handleImageLoad}
-              srcForAvatar={
-                slideImage || `${config.IMG_URL}${slide.images.large}`
-              }
-              fileName={upload.name || slide.images.large}
-            />
+            <ImageUploadContainer handler={handleImageLoad} />
+            {slideImage && (
+              <Avatar src={slideImage}>
+                <Image />
+              </Avatar>
+            )}
             <TextField
               data-cy='link'
               id='link'

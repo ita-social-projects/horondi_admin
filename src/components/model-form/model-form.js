@@ -12,10 +12,12 @@ import {
   Button,
   Select,
   FormControl,
-  InputLabel
+  InputLabel,
+  Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { Image } from '@material-ui/icons';
 import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { SaveButton } from '../buttons';
@@ -147,13 +149,12 @@ const ModelForm = ({ model, id }) => {
             <span className={styles.imageUpload}>
               {config.labels.model.avatarText}
             </span>
-            <ImageUploadContainer
-              handler={handleImageLoad}
-              srcForAvatar={
-                modelImage || `${config.IMG_URL}${values.modelImage}`
-              }
-              fileName={upload && upload.name}
-            />
+            <ImageUploadContainer handler={handleImageLoad} />
+            {modelImage && (
+              <Avatar src={modelImage}>
+                <Image />
+              </Avatar>
+            )}
             <FormControl variant='outlined' className={styles.textField}>
               <InputLabel htmlFor='category-select'>
                 {config.labels.model.category}

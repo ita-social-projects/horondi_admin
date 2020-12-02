@@ -20,6 +20,7 @@ import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
 
+import { Image } from '@material-ui/icons';
 import { config } from '../../configs';
 import { SaveButton } from '../buttons';
 import {
@@ -28,6 +29,7 @@ import {
   setSnackBarMessage
 } from '../../redux/snackbar/snackbar.actions';
 import { useStyles } from './contacts-form.style';
+import ImageUploadContainer from '../../containers/image-upload-container';
 
 const {
   PHONE_NUMBER_LENGTH_MESSAGE,
@@ -144,67 +146,49 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 <span className={classes.imageUpload}>
                   Зображення карти (Укр.)
                 </span>
-                <div className={classes.imageUploadContainer}>
-                  <label htmlFor='upload-photo'>
-                    <input
-                      style={{ display: 'none' }}
-                      accept='image/*'
-                      id='upload-photo'
-                      name='upload-photo'
-                      type='file'
-                      onChange={uaSelectImageHandler}
-                    />
-                    <Button
-                      id='add-contact'
-                      variant='outlined'
-                      color='primary'
-                      component='span'
-                    >
-                      <AttachFileIcon className={classes.attachFile} />
-                      Завантажити
-                    </Button>
-                  </label>
+                <ImageUploadContainer handler={uaSelectImageHandler} />
+                {uaMapImage.imageUrl ? (
                   <Avatar
                     data-cy='uaCartImage'
-                    src={uaMapImage.imageUrl || initialValues.uaCartImage}
+                    src={uaMapImage.imageUrl}
                     className={classes.large}
                   >
-                    <ImageIcon />
+                    <Image />
                   </Avatar>
-                  <span className={classes.imageName}>{uaMapImage.name}</span>
-                </div>
+                ) : initialValues.uaCartImage ? (
+                  <Avatar
+                    data-cy='uaCartImage'
+                    src={initialValues.uaCartImage}
+                    className={classes.large}
+                  >
+                    <Image />
+                  </Avatar>
+                ) : (
+                  <></>
+                )}
                 <span className={classes.imageUpload}>
                   Зображення карти (Англ.)
                 </span>
-                <div className={classes.imageUploadContainer}>
-                  <label>
-                    <input
-                      style={{ display: 'none' }}
-                      accept='image/*'
-                      id='upload-photo'
-                      name='upload-photo'
-                      type='file'
-                      onChange={enSelectImageHandler}
-                    />
-                    <Button
-                      id='add-contact'
-                      variant='outlined'
-                      color='primary'
-                      component='span'
-                    >
-                      <AttachFileIcon className={classes.attachFile} />
-                      Завантажити
-                    </Button>
-                  </label>
+                <ImageUploadContainer handler={enSelectImageHandler} />
+                {enMapImage.imageUrl ? (
                   <Avatar
                     data-cy='enCartImage'
-                    src={enMapImage.imageUrl || initialValues.enCartImage}
+                    src={enMapImage.imageUrl}
                     className={classes.large}
                   >
-                    <ImageIcon />
+                    <Image />
                   </Avatar>
-                  <span className={classes.imageName}>{enMapImage.name}</span>
-                </div>
+                ) : initialValues.enCartImage ? (
+                  <Avatar
+                    data-cy='enCartImage'
+                    src={initialValues.enCartImage}
+                    className={classes.large}
+                  >
+                    <Image />
+                  </Avatar>
+                ) : (
+                  <></>
+                )}
                 <TextField
                   data-cy='mapLink'
                   id='cartLink'
