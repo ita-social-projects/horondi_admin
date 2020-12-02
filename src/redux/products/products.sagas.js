@@ -1,5 +1,11 @@
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+import {
+  selectProductsAndTable,
+  selectProducts,
+  selectProductsToUpload,
+  selectFilesToDeleteAndProduct
+} from '../selectors/products.selectors';
 
 import {
   setAllProducts,
@@ -43,13 +49,12 @@ import {
   deleteImages
 } from './products.operations';
 
-import { config } from '../../configs';
-
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
+
+import { config } from '../../configs';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -62,15 +67,12 @@ const { routes } = config;
 export function* handleFilterLoad() {
   try {
     yield put(setProductsLoading(true));
-    const { productsState, tableState } = yield select(
-      ({ Products, Table }) => ({
-        productsState: Products,
-        tableState: Table
-      })
-    );
+    const { productsState, tableState } = yield select(selectProductsAndTable);
     const products = yield call(getAllProducts, productsState, tableState);
     yield put(
-      setPagesCount(Math.ceil(products.count / tableState.rowsPerPage))
+      setPagesCount(
+        Math.ceil(products.count / tableState.pagination.rowsPerPage)
+      )
     );
     yield put(setItemsCount(products.count));
     yield put(setAllProducts(products.items));
@@ -123,7 +125,7 @@ export function* handleModelsLoad({ payload }) {
 export function* handleProductAdd() {
   try {
     yield put(setProductsLoading(true));
-    const productState = yield select(({ Products }) => Products);
+    const productState = yield select(selectProducts);
     const addedProduct = yield call(addProduct, productState);
     yield call(handleFilterLoad);
     yield put(clearProductToSend());
@@ -152,10 +154,7 @@ export function* handleProductDelete({ payload }) {
 export function* handleProductUpdate({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const { upload, primaryImageUpload } = yield select(({ Products }) => ({
-      upload: Products.upload,
-      primaryImageUpload: Products.primaryImageUpload
-    }));
+    const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
     const productToUpdate = yield call(
       updateProduct,
       payload,
@@ -184,27 +183,18 @@ export function* handleProductLoad({ payload }) {
   }
 }
 
-export function* handleSuccessSnackbar(message) {
-  yield put(setSnackBarSeverity('success'));
-  yield put(setSnackBarMessage(message));
-  yield put(setSnackBarStatus(true));
-}
-
 export function* handleProductsErrors(e) {
   yield put(setProductsLoading(false));
   yield put(setProductsError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export function* handleImagesDelete({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const { images, selectedProduct } = yield select(({ Products }) => ({
-      images: Products.filesToDelete,
-      selectedProduct: Products.selectedProduct
-    }));
+    const { images, selectedProduct } = yield select(
+      selectFilesToDeleteAndProduct
+    );
     const newImages = yield call(deleteImages, payload, images);
     yield put(setProduct({ ...selectedProduct, images: newImages }));
     yield put(setFilesToDelete([]));

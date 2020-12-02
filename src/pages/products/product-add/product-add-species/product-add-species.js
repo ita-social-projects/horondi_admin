@@ -33,14 +33,13 @@ const ProductAddSpecies = ({
     })
   );
 
-  const onSubmit = (values) => {
-    const { colors, pattern, model } = values;
+  const onSubmit = (value) => {
     dispatch(
       setProductToSend({
-        ...values,
-        colors: getColorsToSend(colors),
-        pattern: getPatternToSend(pattern),
-        model: getModelToSend(model)._id
+        ...value,
+        colors: getColorsToSend(value.colors),
+        pattern: getPatternToSend(value.pattern),
+        model: getModelToSend(value.model)._id
       })
     );
     handleNext();

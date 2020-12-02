@@ -10,8 +10,8 @@ import ProductInfoContainer from '../../../../containers/product-info-container'
 const ProductAddInfo = ({ activeStep, handleNext, createProductInfo }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = (values) => {
-    const productInfo = createProductInfo(values);
+  const onSubmit = (value) => {
+    const productInfo = createProductInfo(value);
     dispatch(setProductToSend(productInfo));
     handleNext();
   };

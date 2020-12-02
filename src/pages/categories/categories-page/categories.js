@@ -13,6 +13,7 @@ import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useCommonStyles } from '../../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
+import { CategoriesSelector } from '../../../redux/selectors/categories.selectors';
 import StandardButton from '../../../components/buttons/standard-button';
 
 const Categories = () => {
@@ -22,11 +23,7 @@ const Categories = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
-  const { categories, categoriesLoading } = useSelector(({ Categories }) => ({
-    categories: Categories.categories,
-    categoriesLoading: Categories.categoriesLoading,
-    isDeleteDialogOpen: Categories.isDeleteDialogOpen
-  }));
+  const { categories, categoriesLoading } = useSelector(CategoriesSelector);
 
   const handleDeleteCategory = (id) => {
     dispatch(setCategoryDeleteId(id));
@@ -44,9 +41,9 @@ const Categories = () => {
   if (categoriesLoading) {
     return <LoadingBar />;
   }
-
   const categoriesList = categories.length
     ? categories
+      .slice()
       .sort((a, b) => {
         if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
           return 1;

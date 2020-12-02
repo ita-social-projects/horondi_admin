@@ -20,6 +20,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { commentsTranslations } from '../../translations/comments.translations';
 import { config } from '../../configs';
+import { CommentsSelector } from '../../redux/selectors/comments.selectors';
 
 const tableHeaders = config.tableHeadRowTitles.comments;
 const { REMOVE_COMMENT_TITLE } = config.buttonTitles;
@@ -37,13 +38,7 @@ const Comments = ({ productId }) => {
     pagesCount,
     currentPage,
     commentsPerPage
-  } = useSelector(({ Comments }) => ({
-    list: Comments.list,
-    loading: Comments.commentsLoading,
-    pagesCount: Comments.pagination.pagesCount,
-    currentPage: Comments.pagination.currentPage,
-    commentsPerPage: Comments.pagination.commentsPerPage
-  }));
+  } = useSelector(CommentsSelector);
 
   useEffect(() => {
     dispatch(

@@ -18,6 +18,7 @@ import ProductsNavSearch from '../products-nav-search';
 import { setCurrentPage } from '../../../../../redux/table/table.actions';
 import { productsTranslations } from '../../../../../translations/product.translations';
 import useProductSpecies from '../../../../../hooks/product/use-product-species';
+import ProductsNavClearFilters from '../products-nav-clear-filters/products-nav-clear-filters';
 
 const { CATEGORIES, PATTERNS, MODELS, COLORS } = productsTranslations;
 
@@ -45,38 +46,44 @@ const ProductsNavFilters = () => {
     dispatch(setFilter(target.value));
     dispatch(setCurrentPage(0));
   };
-
+  const handleFilterClear = (setFilter)=>{
+    dispatch(setFilter([]));
+  }
   const filtersOptions = {
     categories: {
       buttonName: CATEGORIES,
       productFilter: categoryFilter,
       list: categories,
       labels: categoriesNames,
+      clearFilter: () => handleFilterClear(setCategoryFilter),
       filterHandler: (e) => handleFilterChange(e, setCategoryFilter)
     },
     models: {
       buttonName: MODELS,
       productFilter: modelsFilter,
       list: modelNames,
+      clearFilter: () => handleFilterClear(setModelsFilter),
       filterHandler: (e) => handleFilterChange(e, setModelsFilter)
     },
     colors: {
       buttonName: COLORS,
       productFilter: colorsFilter,
       list: colorsNames,
+      clearFilter: () => handleFilterClear(setColorsFilter),
       filterHandler: (e) => handleFilterChange(e, setColorsFilter)
     },
     patterns: {
       buttonName: PATTERNS,
       productFilter: patternsFilter,
       list: patternsNames,
+      clearFilter: () => handleFilterClear(setPatternsFilter),
       filterHandler: (e) => handleFilterChange(e, setPatternsFilter)
     }
   };
 
   const filterButtons = Object.values(
     filtersOptions
-  ).map(({ buttonName, productFilter, list, labels, filterHandler }) => (
+  ).map(({ buttonName, productFilter, list, labels, filterHandler,clearFilter }) => (
     <ProductsFiltersContainer
       key={buttonName}
       buttonName={buttonName}
@@ -84,6 +91,7 @@ const ProductsNavFilters = () => {
       list={list}
       labels={labels}
       filterHandler={filterHandler}
+      clearFilter={clearFilter}
     />
   ));
 
@@ -95,15 +103,22 @@ const ProductsNavFilters = () => {
         className={styles.wrapper}
         spacing={2}
       >
-        <Grid item>
+        <Grid item xs={12} sm={6} md={6} lg={4}>
           <ProductsNavSort />
         </Grid>
-        <Grid item>
-          <Grid container>{filterButtons}</Grid>
-        </Grid>
-        <Grid item>
+        <Grid item xs={12} sm={6} md={6} lg={5}>
           <ProductsNavSearch />
         </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={3}>
+          <ProductsNavClearFilters />
+        </Grid>
+        <Grid
+          container
+          alignItems='space-around'
+          className={styles.wrapper}
+          spacing={2}
+        >{filterButtons}</Grid>
+
       </Grid>
     </div>
   );
