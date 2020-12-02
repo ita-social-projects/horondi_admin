@@ -45,7 +45,8 @@ import {
   mockGetSlidesPayload,
   mockError,
   mockDragAndDropList,
-  mockSlideUpdate
+  mockSlideUpdate,
+  mockNumber
 } from './home-page-slide.variables';
 
 describe('Test home page slide actions', () => {
@@ -57,23 +58,23 @@ describe('Test home page slide actions', () => {
   });
 
   it('should set slides current page', () => {
-    expect(setSlidesCurrentPage(2)).toEqual({
+    expect(setSlidesCurrentPage(mockNumber)).toEqual({
       type: SET_SLIDES_CURRENT_PAGE,
-      payload: 2
+      payload: mockNumber
     });
   });
 
   it('should set slides per page', () => {
-    expect(setSlidesPerPage(2)).toEqual({
+    expect(setSlidesPerPage(mockNumber)).toEqual({
       type: SET_SLIDES_PER_PAGE,
-      payload: 2
+      payload: mockNumber
     });
   });
 
   it('should set slides pages count', () => {
-    expect(setSlidesPagesCount(2)).toEqual({
+    expect(setSlidesPagesCount(mockNumber)).toEqual({
       type: SET_SLIDES_PAGES_COUNT,
-      payload: 2
+      payload: mockNumber
     });
   });
 

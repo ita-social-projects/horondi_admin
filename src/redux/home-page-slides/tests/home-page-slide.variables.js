@@ -94,6 +94,8 @@ const pageCount = Math.ceil(
   mockSlides.count / mockGetSlidesPayload.slidesPerPage
 );
 
+const mockNumber = 2;
+
 export {
   mockId,
   mockSlides,
@@ -105,5 +107,6 @@ export {
   mockEmptyDragAndDropList,
   pageCount,
   mockSlidesState,
-  mockSlideToAdd
+  mockSlideToAdd,
+  mockNumber
 };

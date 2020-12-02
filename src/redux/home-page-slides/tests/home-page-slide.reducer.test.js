@@ -17,7 +17,8 @@ import {
   mockId,
   mockSlide,
   mockSlides,
-  mockEmptyDragAndDropList
+  mockEmptyDragAndDropList,
+  mockNumber
 } from './home-page-slide.variables';
 
 import Slides, { initialState } from '../home-page-slides.reducer';
@@ -65,31 +66,31 @@ describe('Test home page slides reducer', () => {
   });
 
   it('should set slides current page into state', () => {
-    expect(Slides(initialState, setSlidesCurrentPage(2))).toEqual({
+    expect(Slides(initialState, setSlidesCurrentPage(mockNumber))).toEqual({
       ...initialState,
       pagination: {
         ...initialState.pagination,
-        currentPage: 1
+        currentPage: mockNumber - 1
       }
     });
   });
 
   it('should set slides per page into state', () => {
-    expect(Slides(initialState, setSlidesPerPage(2))).toEqual({
+    expect(Slides(initialState, setSlidesPerPage(mockNumber))).toEqual({
       ...initialState,
       pagination: {
         ...initialState.pagination,
-        slidesPerPage: 2
+        slidesPerPage: mockNumber
       }
     });
   });
 
   it('should set slides pages count into state', () => {
-    expect(Slides(initialState, setSlidesPagesCount(2))).toEqual({
+    expect(Slides(initialState, setSlidesPagesCount(mockNumber))).toEqual({
       ...initialState,
       pagination: {
         ...initialState.pagination,
-        pagesCount: 2
+        pagesCount: mockNumber
       }
     });
   });
