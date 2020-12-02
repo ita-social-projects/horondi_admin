@@ -31,6 +31,8 @@ const DialogWindow = ({
   const handleClose = () => {
     dispatch(closeDialog());
   };
+  // const dialogTitle = 'HELLO!!'
+
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
       <DialogTitle className={styles.dialogTitle}>{dialogTitle}</DialogTitle>
@@ -47,7 +49,7 @@ const DialogWindow = ({
             />
             <DeleteButton
               data-cy='dialog-confirm'
-              // onClickHandler={onClickHandler}
+              onClickHandler={() => {}}
               showIcon={showIcon}
             >
               {buttonTitle}
@@ -68,15 +70,9 @@ const DialogWindow = ({
 
 const mapStateToProps = basicSelector;
 
-// const mapStateToProps = ({DialogWindow}) => {
+// const mapDispatchToProps = ({DialogWindow}) => {
 //   return {
-//     isOpen: DialogWindow.isOpen,
-//     dialogTitle: DialogWindow.dialogTitle,
-//     dialogContent: DialogWindow.dialogContent,
-//     buttonTitle: DialogWindow.buttonTitle,
-//     showIcon: DialogWindow.showIcon,
-//     showCancelButton: DialogWindow.showCancelButton
-//   };
+//     onClickHandler: () => {}
 // };
 
 DialogWindow.propTypes = {
@@ -86,6 +82,7 @@ DialogWindow.propTypes = {
   buttonTitle: PropTypes.string,
   showIcon: PropTypes.bool,
   showCancelButton: PropTypes.bool
+  // onClickHandler: PropTypes.func
 };
 
 DialogWindow.defaultProps = {

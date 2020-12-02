@@ -1,5 +1,9 @@
 import { CLOSE_DIALOG, SHOW_DIALOG } from './dialog-window.types';
 
+// export const basicDispatchSelector = ({ DialogWindow }) => ({
+//   onClickHandler: () => {}
+// });
+
 export const basicSelector = ({ DialogWindow }) => ({
   isOpen: DialogWindow.isOpen,
   dialogTitle: DialogWindow.dialogTitle,
@@ -15,8 +19,8 @@ export const initialState = {
   dialogContent: '',
   buttonTitle: '',
   showIcon: true,
-  showCancelButton: true,
-  onClickHandler: () => {}
+  showCancelButton: true
+  // onClickHandler: () => {}
 };
 
 const dialogWindowReducer = (state = initialState, action = {}) => {
