@@ -7,8 +7,7 @@ import {
   handleEmailQuestionsLoad,
   handleGettingQuestionFromStore,
   handleMoveEmailQuestionsToSpam,
-  handlePendingEmailQuestionsCount,
-  handleSuccessSnackBar
+  handlePendingEmailQuestionsCount
 } from '../email-questions.sagas';
 
 import {
@@ -42,6 +41,7 @@ import {
 } from '../email-questions.actions';
 
 import { config } from '../../../configs';
+import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
 const { SUCCESS_UPDATE_STATUS } = config.statuses;
 
@@ -145,7 +145,7 @@ describe('email questions sagas test', () => {
           mockMoveQuestionToSpam
         ],
         [call(handleGettingQuestionFromStore), mockMoveQuestionToSpam],
-        [call(handleSuccessSnackBar, SUCCESS_UPDATE_STATUS)]
+        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
       .put(setAllEmailQuestion(mockMoveQuestionToSpam))
       .put(setEmailQuestionLoading(false))

@@ -28,10 +28,9 @@ import {
 import { config } from '../../configs';
 
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const { routes } = config;
 
@@ -68,9 +67,7 @@ export function* handleAddModel({ payload }) {
   try {
     yield put(setModelLoading(true));
     yield call(createModel, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(routes.pathToModels));
   } catch (error) {
     yield call(handleModelError, error);
@@ -83,9 +80,7 @@ export function* handleModelDelete({ payload }) {
     yield call(deleteModel, payload);
     yield put(removeModelFromStore(payload));
     yield put(setModelLoading(false));
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleModelError, error);
   }
@@ -95,9 +90,7 @@ export function* handleModelUpdate({ payload }) {
   try {
     yield put(setModelLoading(true));
     yield call(updateModel, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(routes.pathToModels));
   } catch (error) {
     yield call(handleModelError, error);
@@ -107,9 +100,7 @@ export function* handleModelUpdate({ payload }) {
 export function* handleModelError(e) {
   yield put(setModelLoading(false));
   yield put(setModelError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* modelSaga() {

@@ -13,11 +13,7 @@ import {
   setToLocalStorage,
   getFromLocalStorage
 } from '../../services/local-storage.service';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
 
 const { LOGIN_PAGE_STATUS } = config.statuses;
 
@@ -34,9 +30,7 @@ export function* handleAdminLoad({ payload }) {
   } catch (error) {
     yield put(setAuthLoading(false));
     yield put(setAuthError(error));
-    yield put(setSnackBarSeverity('error'));
-    yield put(setSnackBarMessage(LOGIN_PAGE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleErrorSnackbar, LOGIN_PAGE_STATUS);
   }
 }
 
@@ -49,9 +43,9 @@ export function* handleAdminCheckByToken() {
       yield put(setAuthLoading(false));
       yield put(setAuth(false));
       return;
-    } 
+    }
     yield put(setAuth(true));
-    
+
     const admin = yield call(getUserByToken, authToken);
     yield put(setAdminId(admin._id));
     yield put(setAuthLoading(false));

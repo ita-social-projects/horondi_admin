@@ -13,8 +13,7 @@ import {
   handleMaterialColorDelete,
   handleMaterialColorLoad,
   handleMaterialColorsLoad,
-  handleMaterialError,
-  handleSuccessSnackbar
+  handleMaterialError
 } from '../material.sagas';
 
 import {
@@ -36,7 +35,6 @@ import {
   mockMaterial,
   mockMaterials,
   mockMaterialState,
-  mockSnackbarState,
   mockMaterialsLoadPayload,
   mockMaterialsPagesCount,
   mockColors,
@@ -62,14 +60,9 @@ import {
   deleteMaterialColor
 } from '../material.operations';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../snackbar/snackbar.actions';
-
 import Material from '../material.reducer';
-import Snackbar from '../../snackbar/snackbar.reducer';
+
+import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -228,7 +221,7 @@ describe('Test material sagas', () => {
       ])
       .put(clearColors())
       .put(setMaterialLoading(false))
-      .put(getMaterialColors(mockColorToAdd.id)) // ask Andriy about it
+      .put(getMaterialColors(mockColorToAdd.id))
       .hasFinalState({
         Material: {
           ...mockMaterialStateWithColors,
@@ -341,52 +334,21 @@ describe('Test material sagas', () => {
         expect(analysisCall).toHaveLength(2);
       }));
 
-  it('should handle success snackbar', () =>
-    expectSaga(handleSuccessSnackbar, SUCCESS_ADD_STATUS)
-      .withReducer(combineReducers({ Snackbar }), {
-        Snackbar: mockSnackbarState
-      })
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_ADD_STATUS))
-      .put(setSnackBarStatus(true))
-      .hasFinalState({
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'success',
-          snackBarMessage: SUCCESS_ADD_STATUS
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(3);
-      }));
-
   it('should handle material error', () =>
     expectSaga(handleMaterialError, mockError)
-      .withReducer(combineReducers({ Material, Snackbar }), {
+      .withReducer(combineReducers({ Material }), {
         Material: {
           ...mockMaterialState,
           materialLoading: true
-        },
-        Snackbar: mockSnackbarState
+        }
       })
       .put(setMaterialLoading(false))
       .put(setMaterialError({ e: mockError }))
-      .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(mockError.message))
-      .put(setSnackBarStatus(true))
       .hasFinalState({
         Material: {
           ...mockMaterialState,
           materialLoading: false,
           materialError: { e: mockError }
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'error',
-          snackBarMessage: mockError.message
         }
       })
       .run()
