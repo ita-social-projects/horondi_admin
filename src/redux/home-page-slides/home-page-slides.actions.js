@@ -68,9 +68,8 @@ export const setAvailableSlides = (payload) => ({
   payload
 });
 
-export const getAvailableSlides = (payload) => ({
-  type: GET_AVAILABLE_SLIDES,
-  payload
+export const getAvailableSlides = () => ({
+  type: GET_AVAILABLE_SLIDES
 });
 
 export const updateSlide = (payload) => ({

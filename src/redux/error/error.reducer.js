@@ -1,6 +1,6 @@
 import { SET_ERROR } from './error.types';
 
-const initialState = {
+export const initialState = {
   error: null
 };
 

@@ -27,7 +27,6 @@ export function* handleHomePageImagesLoad() {
   try {
     yield put(setHomePageDataLoading(true));
     const homePageImages = yield call(getHomePageLooksImages);
-
     yield put(setHomePageData(homePageImages));
     yield put(setHomePageDataLoading(false));
   } catch (error) {
