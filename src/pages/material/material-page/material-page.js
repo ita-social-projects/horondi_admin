@@ -21,7 +21,7 @@ import { materialTranslations } from '../../../translations/material.translation
 import { useCommonStyles } from '../../common.styles';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
-const { REMOVE_MATERIAL_TITLE, CREATE_MATERIAL_TITLE } = config.buttonTitles;
+const { DELETE_TITLE, CREATE_MATERIAL_TITLE } = config.buttonTitles;
 
 const pathToMaterialAddPage = config.routes.pathToAddMaterial;
 const tableTitles = config.tableHeadRowTitles.materials;
@@ -70,9 +70,9 @@ const MaterialPage = () => {
     };
     openSuccessSnackbar(
       removeMaterial,
-      REMOVE_MATERIAL_TITLE,
+      DELETE_TITLE,
       REMOVE_MATERIAL_MESSAGE,
-      REMOVE_MATERIAL_TITLE,
+      DELETE_TITLE,
       'danger'
     );
   };

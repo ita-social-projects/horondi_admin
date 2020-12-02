@@ -20,7 +20,7 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import LoadingBar from '../../../components/loading-bar';
 
 const { REMOVE_MESSAGE } = config.messages;
-const { REMOVE_TITLE, CREATE_NEWS_TITLE } = config.buttonTitles;
+const { DELETE_TITLE, CREATE_NEWS_TITLE } = config.buttonTitles;
 
 const pathToNewsAddPage = config.routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;
@@ -57,7 +57,7 @@ const NewsPage = () => {
       dispatch(closeDialog());
       dispatch(deleteArticle(id));
     };
-    openSuccessSnackbar(removeNews, REMOVE_TITLE, REMOVE_MESSAGE, REMOVE_TITLE);
+    openSuccessSnackbar(removeNews, DELETE_TITLE, REMOVE_MESSAGE, DELETE_TITLE);
   };
 
   const changeHandler = (e, value) => dispatch(setCurrentPage(value));

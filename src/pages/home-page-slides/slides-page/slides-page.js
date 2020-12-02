@@ -22,7 +22,7 @@ import SlidesOrder from '../slides-order';
 import { useCommonStyles } from '../../common.styles';
 
 const { REMOVE_SLIDE_MESSAGE } = config.messages;
-const { DELETE_SLIDE_TITLE, CREATE_SLIDE_TITLE } = config.buttonTitles;
+const { DELETE_TITLE, CREATE_SLIDE_TITLE } = config.buttonTitles;
 const tableTitles = config.tableHeadRowTitles.homePageSlides;
 const { mainPageTitle, slideTitle } = config.titles.homePageSliderTitle;
 const { pathToAddHomePageSlide } = config.routes;
@@ -70,9 +70,9 @@ const SlidesPage = () => {
     };
     openSuccessSnackbar(
       removeSlide,
-      DELETE_SLIDE_TITLE,
+      DELETE_TITLE,
       REMOVE_SLIDE_MESSAGE,
-      DELETE_SLIDE_TITLE,
+      DELETE_TITLE,
       'danger'
     );
   };
@@ -83,7 +83,7 @@ const SlidesPage = () => {
         showAvatar={false}
         id={slidesItem.id}
         index={slidesItem.order}
-        name={slidesItem.title[0].value||slideTitle}
+        name={slidesItem.title[0].value || slideTitle}
         available={
           slidesItem.show ? slidesTranslations.YES : slidesTranslations.NO
         }

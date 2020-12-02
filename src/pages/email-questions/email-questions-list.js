@@ -72,7 +72,7 @@ const EmailQuestionsList = () => {
       removeQuestion,
       EMAIL_QUESTION_REMOVE_MESSAGE,
       '',
-      buttonTitles.REMOVE_EMAIL_QUESTION
+      buttonTitles.DELETE_TITLE
     );
   };
 
