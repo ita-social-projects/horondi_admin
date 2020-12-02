@@ -18,7 +18,7 @@ const useCategoryHandlers = () => {
       name: [
         {
           lang: languages[0],
-          value: values.ukName
+          value: values.uaName
         },
         {
           lang: languages[1],

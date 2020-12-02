@@ -52,7 +52,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
     enName: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE),
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE),
       code: Yup.string()
@@ -86,7 +86,6 @@ const CategoryForm = ({ category, id,edit = false}) => {
     }
   });
 
-  console.log((values));
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -204,17 +203,17 @@ category: PropTypes.shape({
   }),
   values: PropTypes.shape({
     categoryImage: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
   }),
   errors: PropTypes.shape({
     categoryImage: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
   }),
   touched: PropTypes.shape({
     categoryImage: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
   }),
   match: PropTypes.shape({
