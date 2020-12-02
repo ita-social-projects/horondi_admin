@@ -42,8 +42,9 @@ export function* handleAdminCheckByToken() {
     if (!authToken) {
       yield put(setAuthLoading(false));
       yield put(setAuth(false));
+      yield put(push('/login'));
       return;
-    }
+    } 
     yield put(setAuth(true));
 
     const admin = yield call(getUserByToken, authToken);
