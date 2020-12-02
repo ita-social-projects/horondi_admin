@@ -24,7 +24,7 @@ const menuCategories = [
   ['Категорії', routes.pathToCategories, CategoryIcon],
   ['Користувачі', routes.pathToUsers, PeopleIcon],
   ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
-  ['Останні коментарі', routes.pathToComments, SmsIcon],
+  ['Коментарі', routes.pathToComments, SmsIcon],
   ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
   ['Гобелени', routes.pathToPatterns, PaletteIcon],
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
