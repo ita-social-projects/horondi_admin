@@ -15,7 +15,6 @@ import {
 } from '../home-page-slides.sagas';
 
 import {
-  addSlide,
   removeSlideFromStore,
   setAvailableSlides,
   setSlide,
