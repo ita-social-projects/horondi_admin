@@ -36,7 +36,6 @@ const MainPage = () => {
     commentsList: Comments.list,
     commentsLoading: Comments.commentsLoading
   }));
-  // console.log(comments1);
 
   const { orderLoading, ordersList } = useSelector(({ Orders }) => ({
     orderLoading: Orders.orderLoading,
@@ -75,12 +74,16 @@ const MainPage = () => {
 
   return (
     <div className={`${commonClasses.container} ${classes.root}`}>
-      <Typography variant='h3' className={commonClasses.materialTitle}>
+      <Typography
+        variant='h3'
+        className={commonClasses.materialTitle}
+        data-cy='page-title'
+      >
         {mainTitle}
       </Typography>
       <div className={classes.main}>
         <div className={classes.commentsOrders}>
-          <Paper className={classes.ordersContainer}>
+          <Paper className={classes.ordersContainer} data-cy='orders-container'>
             <Typography variant='h5' className={classes.blockTitle}>
               {ordersTitle}
             </Typography>
@@ -89,7 +92,7 @@ const MainPage = () => {
                 <Table
                   stickyHeader
                   aria-label='sticky table'
-                  // className={commonClasses.table}
+                  data-cy='orders-table'
                 >
                   <TableHead>
                     <TableRow>
@@ -111,6 +114,7 @@ const MainPage = () => {
                           key={_id}
                           onClick={() => dispatch(push(`/orders/${_id}`))}
                           className={classes.order}
+                          data-cy='order'
                         >
                           <TableCell align='center'>
                             {moment
@@ -131,19 +135,22 @@ const MainPage = () => {
                 </Table>
               </TableContainer>
             ) : (
-              <div className={classes.emptyOrders}>
+              <div className={classes.emptyOrders} data-cy='empty-orders'>
                 У вас немає нових замовлень
               </div>
             )}
           </Paper>
-          <Paper className={classes.commentsContainer}>
+          <Paper
+            className={classes.commentsContainer}
+            data-cy='comments-container'
+          >
             <Typography variant='h5' className={classes.blockTitle}>
               {commentsTitle}
             </Typography>
             <div className={classes.comments}>{comments}</div>
           </Paper>
         </div>
-        <Paper className={classes.changesContainer}>
+        <Paper className={classes.changesContainer} data-cy='changes-container'>
           <Typography variant='h5' className={classes.blockTitle}>
             {changesTitle}
           </Typography>
