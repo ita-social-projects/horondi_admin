@@ -64,10 +64,10 @@ describe('Contact sagas tests', () => {
         contacts: contactRes.items
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+      .then((res) => {
+        const { allEffects: analysis } = res;
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
       }));
