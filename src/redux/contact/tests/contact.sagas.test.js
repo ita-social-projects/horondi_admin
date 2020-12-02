@@ -21,15 +21,11 @@ import {
 } from '../contact.actions';
 
 import {
-  contactsPagesCount,
-  contactId,
   contact,
   payload,
   contactRes,
-  contactsPerPage,
   newContact,
   updatedContact,
-  mapImages,
   error,
   initialState
 } from './contact.variables';
