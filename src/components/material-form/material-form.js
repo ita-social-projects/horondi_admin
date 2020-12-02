@@ -77,12 +77,12 @@ function MaterialForm({ material, id }) {
 
     uaDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
-      .max(100, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
 
     enDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
-      .max(100, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
 
     purpose: Yup.string()

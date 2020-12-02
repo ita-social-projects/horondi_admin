@@ -5,8 +5,12 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center'
   },
+  sortTitle: {
+    width: '150px'
+  },
   formControl: {
     marginLeft: theme.spacing(1),
-    marginBottom: theme.spacing(0.5)
+    width: '100%',
+    textTransform: 'capitalize'
   }
 }));

@@ -10,7 +10,7 @@ import {
 } from './categories.types';
 import { config } from '../../configs';
 
-const initialState = {
+export const initialState = {
   categories: [],
   categoriesLoading: false,
   categoriesError: null,

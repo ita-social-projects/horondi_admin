@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './model-page.styles';
+import { useCommonStyles } from '../../common.styles';
 import { config } from '../../../configs';
 import {
   getModels,
@@ -28,6 +29,8 @@ const tableTitles = config.tableHeadRowTitles.models;
 
 const ModelPage = () => {
   const styles = useStyles();
+  const commonStyles = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, pagesCount, currentPage, modelsPerPage } = useSelector(
     ({ Model }) => ({
@@ -72,7 +75,7 @@ const ModelPage = () => {
 
   const modelItems =
     list !== undefined
-      ? list.map((modelItem, index) => (
+      ? list.map((modelItem) => (
         <TableContainerRow
           image={
             modelItem.images
@@ -98,8 +101,11 @@ const ModelPage = () => {
       : null;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.tableNav}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography variant='h1' className={commonStyles.materialTitle}>
+          {config.titles.modelPageTitles.mainPageTitle}
+        </Typography>
         <Button
           data-cy='add-model'
           component={Link}
@@ -110,13 +116,11 @@ const ModelPage = () => {
           {CREATE_MODEL_TITLE}
         </Button>
       </div>
-      <div className={styles.tableContainer}>
-        <TableContainerGenerator
-          data-cy='modelTable'
-          tableTitles={tableTitles}
-          tableItems={modelItems}
-        />
-      </div>
+      <TableContainerGenerator
+        data-cy='modelTable'
+        tableTitles={tableTitles}
+        tableItems={modelItems}
+      />
       <div className={styles.paginationDiv}>
         <Pagination
           count={pagesCount}

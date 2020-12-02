@@ -28,6 +28,9 @@ const ProductsNavSearch = () => {
 
   const handleSearch = (event) => {
     dispatch(setSearchFilter(event.target.value));
+    if (searchFilter.trim().length) {
+      dispatch(getFiltredProducts({}));
+    }
   };
 
   const searchValue = () => {
@@ -46,6 +49,7 @@ const ProductsNavSearch = () => {
     <div>
       <Paper className={styles.root}>
         <InputBase
+          className={styles.searchInput}
           placeholder={SEARCH}
           value={searchFilter}
           onChange={handleSearch}

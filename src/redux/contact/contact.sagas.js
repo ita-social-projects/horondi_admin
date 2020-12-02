@@ -30,11 +30,14 @@ import {
 
 import {
   setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
+  setSnackBarStatus
 } from '../snackbar/snackbar.actions';
 
 import { config } from '../../configs';
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -82,9 +85,7 @@ export function* handleAddContact({ payload }) {
     yield put(addContactInStore(payload.newContact));
     yield put(setContactsLoading(false));
 
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push('/contacts'));
   } catch (error) {
     yield call(handleContactsError, error);
@@ -107,8 +108,8 @@ export function* handleContactDelete({ payload }) {
 
     yield put(setContactsLoading(false));
 
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
     yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
     yield put(setSnackBarStatus(true));
   } catch (error) {
     yield call(handleContactsError, error);
@@ -124,9 +125,7 @@ export function* handleContactUpdate({ payload }) {
 
     yield put(updateContactInStore(id, updatedContact));
 
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push('/contacts'));
   } catch (error) {
     yield call(handleContactsError, error);
@@ -136,9 +135,7 @@ export function* handleContactUpdate({ payload }) {
 export function* handleContactsError(e) {
   yield put(setContactsLoading(false));
   yield put(setContactsError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* contactsSaga() {

@@ -1,98 +1,157 @@
-export const materialToUpdateDeleteId = '88cb31bf8e5ea5af3014e342';
-export const fakeId = '11cb36bf1e5ea5af3014e312';
-const UA = UA;
-export const material = {
-  name: [
+const mockId = '88cb31bf8e5ea5af3014e342';
+
+const mockMaterials = {
+  items: [
     {
-      lang: UA,
-      value: 'Тканина Кордура'
-    },
-    {
-      lang: 'en',
-      value: 'Cordura fabric'
-    }
-  ],
-  description: [
-    {
-      lang: UA,
-      value: 'test'
-    },
-    {
-      lang: 'en',
-      value: 'test'
-    }
-  ],
-  available: true,
-  additionalPrice: [
-    {
-      value: 0
-    },
-    {
-      value: 0
-    }
-  ],
-  colors: [
-    {
-      available: true,
-      simpleName: [
+      _id: mockId,
+      name: [
         {
-          lang: UA,
-          value: 'чорний'
+          lang: 'ua',
+          value: 'Натуральна шкіра'
         },
         {
           lang: 'en',
-          value: 'black'
+          value: 'Genuine leather'
         }
       ],
-      images: {
-        medium: 'medium_black'
-      }
+      description: [
+        {
+          lang: 'ua',
+          value: 'test'
+        },
+        {
+          lang: 'en',
+          value: 'test'
+        }
+      ],
+      available: true,
+      additionalPrice: [
+        {
+          value: 35000
+        },
+        {
+          value: 1262
+        }
+      ],
+      colors: mockColors,
+      purpose: 'bottom'
     }
   ],
-  purpose: 'bottom'
+  count: 1
 };
-export const materials = [
+
+const mockColorCode = 200;
+
+const mockMaterial = mockMaterials.items[0];
+
+const mockColors = [
   {
-    _id: '88cb31bf8e5ea5af3014e342',
-    ...material
-  },
-  {
-    _id: '56ade69dd46eafc5968e5390',
-    ...material
-  },
-  {
-    _id: '1d2bba5d0b80938327ac9012',
-    ...material
+    code: mockColorCode,
+    available: true,
+    name: [
+      {
+        value: 'Світло-коричневий',
+        lang: 'ua'
+      },
+      {
+        value: 'Light-brown',
+        lang: 'en'
+      }
+    ],
+    simpleName: [
+      {
+        value: 'коричневий',
+        lang: 'ua'
+      },
+      {
+        value: 'brown',
+        lang: 'en'
+      }
+    ]
   }
 ];
 
-export const newColor = {
-  code: 200,
-  name: [
-    {
-      lang: UA,
-      value: 'Світло-коричневий'
-    },
-    {
-      lang: 'en',
-      value: 'Light-brown'
-    }
-  ],
-  simpleName: [
-    {
-      lang: UA,
-      value: 'коричневий'
-    },
-    {
-      lang: 'en',
-      value: 'brown'
-    }
-  ],
-  available: true,
-  images: {
-    large: 'large_light-brown',
-    medium: 'medium_light-brown',
-    small: 'small_light-brown',
-    thumbnail: 'thumbnail_light-brown'
-  }
+const mockColor = mockColors[0];
+
+const mockMaterialState = {
+  list: [],
+  material: null,
+  materialLoading: false,
+  materialError: null,
+  pagination: {
+    currentPage: 0,
+    materialsPerPage: 6,
+    pagesCount: 1
+  },
+  showColorDialogWindow: false,
+  colors: [],
+  materialColors: null,
+  materialColor: null,
+  editMaterialId: ''
+};
+
+const mockSnackbarState = {
+  snackBarStatus: false,
+  snackBarSeverity: '',
+  snackBarMessage: ''
+};
+
+const mockMaterialsLoadPayload = {
+  skip: 0,
+  limit: 10,
+  materialsPerPage: 10
+};
+
+const mockMaterialsPagesCount = Math.ceil(
+  mockMaterials.count / mockMaterialsLoadPayload.materialsPerPage
+);
+
+const mockMaterialStateWithColors = {
+  ...mockMaterialState,
+  colors: [mockColor]
+};
+
+const mockColorToAdd = {
+  id: mockId,
+  color: mockColor
+};
+
+const mockPayloadToDeleteColor = {
+  id: mockId,
+  code: mockColorCode
+};
+
+const mockPayloadToUpdateMaterial = {
+  id: mockId,
+  material: mockMaterial,
+  images: ['image']
+};
+
+const mockError = {
+  message: 'error'
+};
+
+const statuses = {
+  SUCCESS_ADD_STATUS: 'Успішно додано!',
+  SUCCESS_DELETE_STATUS: 'Успішно видалено!',
+  SUCCESS_UPDATE_STATUS: 'Успішно змінено!'
+};
+
+export {
+  mockId,
+  mockMaterial,
+  mockMaterials,
+  mockMaterialState,
+  mockSnackbarState,
+  mockMaterialsLoadPayload,
+  mockMaterialsPagesCount,
+  mockColors,
+  mockColorCode,
+  mockColor,
+  statuses,
+  mockMaterialStateWithColors,
+  mockColorToAdd,
+  mockPayloadToDeleteColor,
+  mockPayloadToUpdateMaterial,
+  mockError
 };

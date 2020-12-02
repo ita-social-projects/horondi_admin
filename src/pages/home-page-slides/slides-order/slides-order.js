@@ -14,10 +14,14 @@ import {
   setSlides,
   updateSlidesOrder
 } from '../../../redux/home-page-slides/home-page-slides.actions';
+import { useCommonStyles } from '../../common.styles';
 
 const SlidesOrder = (props) => {
   const styles = useStyles();
+  const commonStyles = useCommonStyles();
+
   const dispatch = useDispatch();
+
   const { drugAndDropList } = props;
   const [list, setList] = useState(drugAndDropList);
   const [dragging, setDragging] = useState(false);
@@ -190,11 +194,11 @@ const SlidesOrder = (props) => {
     : null;
   return (
     <Paper elevation={3}>
-      <div className={styles.container}>
-        <Typography variant='h1' className={styles.slideTitle}>
-          {slideOrderTitle}
-        </Typography>
-        <div>
+      <div className={commonStyles.container}>
+        <div className={commonStyles.adminHeader}>
+          <Typography variant='h1' className={commonStyles.materialTitle}>
+            {slideOrderTitle}
+          </Typography>
           <div>
             <SaveButton
               className={styles.saveButton}
@@ -213,8 +217,8 @@ const SlidesOrder = (props) => {
               type='button'
             />
           </div>
-          <div className={styles.dndContainer}>{drugAndDropContainer}</div>
         </div>
+        <div className={styles.dndContainer}>{drugAndDropContainer}</div>
       </div>
     </Paper>
   );

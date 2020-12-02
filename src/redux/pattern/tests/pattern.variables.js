@@ -1,149 +1,96 @@
-export const uaDescriptionBase = 'Фабричний гобелен із зображенням';
-export const enDescriptionBase = 'Manufactured tapestry with';
-export const pattern = {
-  _id: 'de57efa1b187d1913414b430',
-  description: [
-    {
-      value: `${uaDescriptionBase} квітів`
-    },
-    {
-      value: `${enDescriptionBase} flower pattern`
-    }
-  ],
-  name: [
-    {
-      value: 'Квіти'
-    },
-    {
-      value: 'Flowers'
-    }
-  ],
-  handmade: false,
-  available: true,
-  material: 'Cotton',
-  images: {
-    thumbnail: 'thumbnail_335nr4j5dkebkvus7_flowers.jpg'
-  }
-};
-export const patternId = '0c3c7929dd85de268bed4fe8';
-export const patternToRemoveId = '0c3c7929dd85de268bed4fe8';
-export const patternDoesNotExistId = '11111129dd85de268bed4fe8';
-export const patterns = [
-  {
-    _id: '0c3c7929dd85de268bed4fe8',
-    description: [
-      {
-        value: `${uaDescriptionBase} рожевої хвильки`
-      },
-      {
-        value: `${enDescriptionBase} pink wave pattern`
-      }
-    ],
-    name: [
-      {
-        value: 'Рожева хвилька'
-      },
-      {
-        value: 'Pink wave'
-      }
-    ],
-    handmade: false,
-    available: true,
-    material: 'Cotton',
-    images: {
-      thumbnail: 'thumbnail_335nr4j5dkebkw5cy_pink-wave.jpg'
-    }
-  },
-  {
-    _id: 'fdc7529135f2c050c877a67a',
-    description: [
-      {
-        value: `${uaDescriptionBase} синьої хвильки`
-      },
-      {
-        value: `${enDescriptionBase} blue wave pattern`
-      }
-    ],
-    name: [
-      {
-        value: 'Синя хвилька'
-      },
-      {
-        value: 'Blue wave'
-      }
-    ],
-    handmade: false,
-    available: true,
-    material: 'Cotton',
-    images: {
-      thumbnail: 'thumbnail_335nr4j5dkebkvle7_blue-wave.jpg'
-    }
-  },
-  {
-    _id: '51af3801f347948f14f6933c',
-    description: [
-      {
-        value: `${uaDescriptionBase} синьо-рожевої хвильки`
-      },
-      {
-        value: `${enDescriptionBase} blue-pink wave pattern`
-      }
-    ],
-    name: [
-      {
-        value: 'Синьо-рожева хвилька'
-      },
-      {
-        value: 'Blue-pink wave'
-      }
-    ],
-    handmade: false,
-    available: true,
-    material: 'Cotton',
-    images: {
-      thumbnail: 'thumbnail_335nr431gkebp19ht_blue-pink.jpg'
-    }
-  }
-];
+const uaDescriptionBase = 'Фабричний гобелен із зображенням';
+const enDescriptionBase = 'Manufactured tapestry with';
 
-export const patternToUpdate = {
-  id: '0c3c7929dd85de268bed4fe8',
-  pattern: {
-    name: [
-      {
-        lang: 'ua',
-        value: 'Червона хвилька'
-      },
-      {
-        lang: 'en',
-        value: 'Red wave'
-      }
-    ]
-  }
-};
-export const fakePattern = {
-  data: {
-    getPatternById: {
-      _id: '0c3c7929dd85de268bed4fe8',
-      name: [
+const mockId = '0c3c7929dd85de268bed4fe8';
+
+const mockPatterns = {
+  items: [
+    {
+      _id: mockId,
+      description: [
         {
-          lang: 'ua',
-          value: 'Олені'
+          value: `${uaDescriptionBase} рожевої хвильки`
         },
         {
-          lang: 'en',
-          value: 'Deers'
+          value: `${enDescriptionBase} pink wave pattern`
         }
       ],
-      images: {
-        large: 'large-deers.jpg',
-        medium: 'medium-deers.jpg',
-        small: 'small-deers.jpg',
-        thumbnail: 'thumbnail-deers.jpg'
-      },
-      material: 'Cotton',
+      name: [
+        {
+          value: 'Рожева хвилька'
+        },
+        {
+          value: 'Pink wave'
+        }
+      ],
+      handmade: false,
       available: true,
-      handmade: false
+      material: 'Cotton',
+      images: {
+        thumbnail: 'thumbnail_335nr4j5dkebkw5cy_pink-wave.jpg'
+      }
     }
+  ],
+  count: 1
+};
+
+const mockPattern = mockPatterns.items[0];
+
+const mockPatternsState = {
+  list: [],
+  pattern: null,
+  patternLoading: false,
+  patternError: null,
+  pagination: {
+    currentPage: 0,
+    patternsPerPage: 6,
+    pagesCount: 1
   }
+};
+
+const mockInputPattern = {
+  id: mockId,
+  pattern: mockPattern,
+  image: {
+    file: 'some image file'
+  }
+};
+
+const mockPatternsLoadPayload = {
+  skip: 0,
+  limit: 6,
+  patternsPerPage: 6
+};
+
+const pagesCount = Math.ceil(
+  mockPatterns.count / mockPatternsLoadPayload.patternsPerPage
+);
+
+const mockSnackarState = {
+  snackBarStatus: false,
+  snackBarSeverity: '',
+  snackBarMessage: ''
+};
+
+const statuses = {
+  SUCCESS_ADD_STATUS: 'Успішно додано!',
+  SUCCESS_DELETE_STATUS: 'Успішно видалено!',
+  SUCCESS_UPDATE_STATUS: 'Успішно змінено!'
+};
+
+const mockError = {
+  message: 'error'
+};
+
+export {
+  mockPatternsState,
+  mockPatternsLoadPayload,
+  mockPatterns,
+  pagesCount,
+  mockId,
+  mockPattern,
+  mockSnackarState,
+  statuses,
+  mockInputPattern,
+  mockError
 };

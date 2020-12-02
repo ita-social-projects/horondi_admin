@@ -1,6 +1,5 @@
 import { Quill } from 'react-quill';
 import axios from 'axios';
-import { loginAdmin } from '../../../redux/auth/auth.operations';
 
 const QuillClipboard = Quill.import('modules/clipboard');
 
@@ -48,7 +47,7 @@ class Clipboard extends QuillClipboard {
             })
             .catch((error) => console.error(error));
         })
-        .catch((e) => console.log(e));
+        .catch((err) => console.log(err));
     } else {
       super.onPaste(e);
     }

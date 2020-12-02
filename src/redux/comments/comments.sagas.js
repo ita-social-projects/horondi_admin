@@ -25,10 +25,9 @@ import {
 } from './comments.types';
 
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const { SUCCESS_DELETE_STATUS } = config.statuses;
 
@@ -78,7 +77,7 @@ export function* handleCommentDelete({ payload }) {
     yield put(deleteCommentLocally(payload));
 
     yield put(setCommentsLoading(false));
-    yield call(handleSnackBarSuccess, SUCCESS_DELETE_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleCommentsError, error);
   }
@@ -110,15 +109,7 @@ export function* handleCommentsError(error) {
   yield put(setCommentsLoading(false));
   yield put(setCommentError({ error }));
 
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(error.message));
-  yield put(setSnackBarStatus(true));
-}
-
-export function* handleSnackBarSuccess(status) {
-  yield put(setSnackBarSeverity('success'));
-  yield put(setSnackBarMessage(status));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, error.message);
 }
 
 export default function* commentsSaga() {
