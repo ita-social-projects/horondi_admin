@@ -56,17 +56,15 @@ const MainPage = () => {
     );
   }, [dispatch]);
 
-  const comments = commentsList.map(({ date, text, user, _id }, i) =>
-    i < 5 ? (
-      <div key={_id} className={classes.comment}>
-        <div className={classes.commentText}>{text}</div>
-        <div className={classes.commentInfo}>
-          <div>{user.name || 'Гість'}</div>
-          <div>{moment.unix(date / 1000).format('HH:mm DD.MM.YYYY ')}</div>
-        </div>
+  const comments = commentsList.map(({ date, text, user, _id }) => (
+    <div key={_id} className={classes.comment}>
+      <div className={classes.commentText}>{text}</div>
+      <div className={classes.commentInfo}>
+        <div>{user.name || 'Гість'}</div>
+        <div>{moment.unix(date / 1000).format('HH:mm DD.MM.YYYY ')}</div>
       </div>
-    ) : null
-  );
+    </div>
+  ));
 
   if (orderLoading || commentsLoading) {
     return <LoadingBar />;
