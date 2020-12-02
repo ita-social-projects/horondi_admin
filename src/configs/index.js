@@ -88,19 +88,19 @@ export const config = {
   product: {
     sortBySelectOptions: [
       {
-        label: 'популярністю',
+        label: 'Популярністю',
         value: 'popularity'
       },
       {
-        label: 'від дорогих до дешевих',
+        label: 'Від дорогих до дешевих',
         value: 'sortDesc'
       },
       {
-        label: 'від дешевих до дорогих',
+        label: 'Від дешевих до дорогих',
         value: 'sortAsc'
       },
       {
-        label: 'рейтингом',
+        label: 'Рейтингом',
         value: 'rate'
       }
     ],

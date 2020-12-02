@@ -74,6 +74,10 @@ const titles = {
     slideTitle: 'Заголовок слайду не вибрано',
     slideDescription: 'Опис слайду не вибрано',
     preview: 'Попередній перегляд'
+  },
+  productTitles: {
+    filters: 'Фільтри',
+    deleteFilter: 'Очистити фільтр'
   }
 };
 

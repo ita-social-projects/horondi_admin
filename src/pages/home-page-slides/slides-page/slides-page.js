@@ -84,7 +84,6 @@ const SlidesPage = () => {
         id={slidesItem.id}
         index={slidesItem.order}
         name={slidesItem.title[0].value || slideTitle}
-          // purpose={slidesItem.description[0].value||slideDescription}
         available={
           slidesItem.show ? slidesTranslations.YES : slidesTranslations.NO
         }

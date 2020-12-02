@@ -4,19 +4,14 @@ import { getOrderById, updateOrder, getAllOrders } from './orders.operations';
 import { setItemsCount } from '../table/table.actions';
 
 import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../snackbar/snackbar.actions';
-
-import {
   setOrderList,
   setOrderError,
   setOrderLoading,
   setOrder
 } from './orders.actions';
+import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
 
-function* handleOrderUpdate({ payload }) {
+export function* handleOrderUpdate({ payload }) {
   try {
     yield put(setOrderLoading(true));
     const order = yield call(updateOrder, payload);
@@ -64,9 +59,7 @@ export function* handleOrderLoad({ payload }) {
 export function* handleOrdersError(e) {
   yield put(setOrderLoading(false));
   yield put(setOrderError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* ordersSaga() {
