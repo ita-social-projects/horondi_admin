@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
-const NameSelector = ({ name }) => [name, Yup.string().required()];
+const selectName = ({ name }) => [name, Yup.string().required()];
 
 const {
   labels: {
@@ -92,7 +92,7 @@ const useProductValidation = (
     : {};
 
   const yupSpeciesSchema = formikSpeciesValues
-    ? Object.fromEntries(selectsLabels.map(NameSelector))
+    ? Object.fromEntries(selectsLabels.map(selectName))
     : {};
 
   const yupPriceSchema = formikPriceValue

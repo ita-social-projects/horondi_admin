@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import { config } from '../../configs';
 import useProductSpecies from './use-product-species';
 
-const AdditionsSelector = ({ additions }) => additions.length;
+const selectAdditionsLength = ({ additions }) => additions.length;
 
-const OptionsSelector = ({ options }) => options.find(AdditionsSelector);
+const selectOptionsLength = ({ options }) =>
+  options.find(selectAdditionsLength);
 
 const {
   languages,
@@ -44,8 +45,9 @@ const useProductHandlers = () => {
   const additions = useMemo(
     () =>
       filterData.length
-        ? filterData.find(OptionsSelector).options.find(AdditionsSelector)
-          .additions
+        ? filterData
+          .find(selectOptionsLength)
+          .options.find(selectAdditionsLength).additions
         : null,
     [filterData]
   );
