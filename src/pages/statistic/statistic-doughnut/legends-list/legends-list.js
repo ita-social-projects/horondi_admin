@@ -11,10 +11,18 @@ const LegendsList = ({ options, labels }) => (
   <Box display='flex' justifyContent='center' mt={2}>
     {options.map((relation, idx) => (
       <Box key={relation} p={1} textAlign='center'>
-        <Typography color='textPrimary' variant='body1'>
+        <Typography
+          data-cy='doughnut-legent-name'
+          color='textPrimary'
+          variant='body1'
+        >
           {labels[idx]}
         </Typography>
-        <Typography style={{ color: colors[idx] }} variant='h2'>
+        <Typography
+          data-cy='doughnut-legent-relation'
+          style={{ color: colors[idx] }}
+          variant='h2'
+        >
           {relation}%
         </Typography>
       </Box>
