@@ -17,6 +17,7 @@ import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
 import messages from '../../configs/messages';
 import TableContainerGenerator from '../../containers/table-container-generator';
+import routes from '../../configs/routes';
 
 const MainPage = () => {
   const {
@@ -28,6 +29,7 @@ const MainPage = () => {
   const ordersTableTitles = tableHeadRowTitles.mainPageOrders;
   const { guestUser } = labels.user;
   const { EMPTY_LIST } = messages;
+  const { pathToOrders } = routes;
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
@@ -70,7 +72,7 @@ const MainPage = () => {
       ? ordersList.map(({ dateOfCreation, totalItemsPrice, _id }) => (
         <TableRow
           key={_id}
-          onClick={() => dispatch(push(`/orders/${_id}`))}
+          onClick={() => dispatch(push(`${pathToOrders}/${_id}`))}
           className={classes.order}
           data-cy='order'
         >

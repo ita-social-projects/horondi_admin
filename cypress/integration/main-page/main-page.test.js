@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import { config } from '../../../src/configs';
-import { getAllOrders } from './main-page.variables';
+import { getAllOrders, orders } from './main-page.variables';
 
 const {
   mainTitle,
@@ -9,6 +9,7 @@ const {
   commentsTitle,
   changesTitle
 } = config.titles.mainPageTitles;
+const path = orders.items[0]._id;
 
 describe('Mainpage tests', () => {
   before(() => {
@@ -30,6 +31,7 @@ describe('Mainpage tests', () => {
   });
   it('should check orders redirect', () => {
     cy.get('[data-cy=orders-container] [data-cy=order]').first().click();
+    cy.url().should('include', `/orders/${path}`);
   });
   it('should check the mainpage button for clickability ', () => {
     cy.get('#menuDrawer').contains(mainTitle).click();
