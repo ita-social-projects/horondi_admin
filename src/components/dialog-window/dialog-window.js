@@ -71,10 +71,7 @@ const mapStateToProps = ({ DialogWindow }) => ({
   dialogTitle: DialogWindow.dialogTitle,
   dialogContent: DialogWindow.dialogContent,
   buttonTitle: DialogWindow.buttonTitle,
-  showCancelButton: DialogWindow.showCancelButton
-});
-
-const mapDispatchToProps = ({ DialogWindow }) => ({
+  showCancelButton: DialogWindow.showCancelButton,
   onClickHandler: DialogWindow.onClickHandler
 });
 
@@ -84,7 +81,7 @@ DialogWindow.propTypes = {
   dialogContent: PropTypes.string,
   buttonTitle: PropTypes.string,
   showCancelButton: PropTypes.bool,
-  onClickHandler: PropTypes.func.isRequired
+  onClickHandler: PropTypes.func
 };
 
 DialogWindow.defaultProps = {
@@ -92,7 +89,8 @@ DialogWindow.defaultProps = {
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
-  showCancelButton: true
+  showCancelButton: true,
+  onClickHandler: () => {}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DialogWindow);
+export default connect(mapStateToProps, null)(DialogWindow);
