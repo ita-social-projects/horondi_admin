@@ -144,7 +144,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.categoryItemUpdate}>
                <TextField
-                data-cy={`${lang}Name`}
+                data-cy={`${lang}-Name`}
                 name={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
@@ -156,7 +156,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
               /> 
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div
-                  data-cy={`${lang}Name-error`}
+                  data-cy={`${lang}-Name-error`}
                   className={styles.inputError}
                 >
                   {errors[`${lang}Name`]}
@@ -173,7 +173,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
           variant='outlined'
           color='primary'
           className={styles.returnButton}
-          data-cy='goBackButton'
+          data-cy='go-Back-Button'
         >
           {config.buttonTitles.GO_BACK_TITLE}
         </Button>
