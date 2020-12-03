@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Paper } from '@material-ui/core';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { useStyles } from './products-add.styles';
 
 import useProductHandlers from '../../../hooks/product/use-product-handlers';

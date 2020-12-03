@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
 
 import { withRouter } from 'react-router';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../hooks/user/use-users-handlers';
 import LoadingBar from '../../../components/loading-bar';

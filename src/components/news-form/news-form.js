@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
 import useNewsHandlers from '../../utils/use-news-handlers';
