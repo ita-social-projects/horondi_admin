@@ -180,7 +180,7 @@ describe('Contact sagas tests', () => {
       .hasFinalState({
         ...initialState,
         contactsLoading: false,
-        contactsError: { e: error.message }
+        contactsError: { e: error }
       })
       .run()
       .then((result) => {
