@@ -57,7 +57,7 @@ const OrderItem = ({ id }) => {
     }
   };
   const handleGoBack = () => {
-    dispatch(push(config.routes.pathToNews));
+    dispatch(push(config.routes.pathToOrders));
   };
 
   const {
