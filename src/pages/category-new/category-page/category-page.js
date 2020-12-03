@@ -18,16 +18,13 @@ import { config } from '../../../configs';
 const { CATEGORY_REMOVE_MESSAGE } = config.messages;
 const { CREATE_CATEGORY, DELETE_CATEGORY } = config.buttonTitles;
 
- const pathToCategoryAddPage = config.routes.pathToAddCategory;
+const pathToCategoryAddPage = config.routes.pathToAddCategory;
 const tableTitles = config.tableHeadRowTitles.Categories;
 
 const CategoryPage = () => {
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const {
-    list,
-    loading
-  } = useSelector(({ Categories}) => ({
+  const { list, loading } = useSelector(({ Categories }) => ({
     list: Categories.list,
     loading: Categories.newsLoading,
     pagesCount: Categories.pagination.pagesCount,
@@ -38,9 +35,7 @@ const CategoryPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(
-      getCategories()
-    );
+    dispatch(getCategories());
   }, [dispatch]);
 
   const categoryDeleteHandler = (id) => {
@@ -54,7 +49,6 @@ const CategoryPage = () => {
       CATEGORY_REMOVE_MESSAGE
     );
   };
-
 
   const categoryItems =
     list !== undefined
@@ -79,7 +73,6 @@ const CategoryPage = () => {
   if (loading) {
     return <LoadingBar />;
   }
-
   return (
     <div className={styles.container}>
       <Typography variant='h1' className={styles.categoryTitle}>
