@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab, Button } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';

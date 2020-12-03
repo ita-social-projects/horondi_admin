@@ -41,7 +41,6 @@
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-router-redux": "^4.0.8",
     "react-scripts": "3.4.1",
     "react-scripts-config": "^1.0.17-13",
     "react-scroll-up-button": "^1.6.4",
