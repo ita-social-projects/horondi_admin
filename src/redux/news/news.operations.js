@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { client, setItems } from '../../utils/client';
 
 import { newsTranslations } from '../../translations/news.translations';
 
@@ -164,41 +164,62 @@ const createArticle = async (news) => {
 };
 
 const updateArticle = async (id, news) => {
-  const result = await client.mutate({
-    variables: {
-      id,
-      news
-    },
-    mutation: gql`
-      mutation($id: ID!, $news: NewsInput!) {
-        updateNews(id: $id, news: $news) {
-          ... on News {
-            author {
-              name {
-                value
-              }
-            }
-          }
-          ... on Error {
-            message
-            statusCode
+  // const result = await client.mutate({
+  //   variables: {
+  //     id,
+  //     news
+  //   },
+  //   mutation: gql`
+  //     mutation($id: ID!, $news: NewsInput!) {
+  //       updateNews(id: $id, news: $news) {
+  //         ... on News {
+  //           author {
+  //             name {
+  //               value
+  //             }
+  //           }
+  //         }
+  //         ... on Error {
+  //           message
+  //           statusCode
+  //         }
+  //       }
+  //     }
+  //   `,
+  //   fetchPolicy: 'no-cache'
+  // });
+  // await client.resetStore();
+  setItems(
+    `mutation($id: ID!, $news: NewsInput!) {
+    updateNews(id: $id, news: $news) {
+      ... on News {
+        author {
+          name {
+            value
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+      ... on Error {
+        message
+        statusCode
+      }
+    }
+  }`,
+    {
+      id,
+      news
+    }
+  );
 
-  if (result.data.updateNews.message) {
-    throw new Error(
-      `${result.data.updateNews.statusCode} ${
-        newsTranslations[result.data.updateNews.message]
-      }`
-    );
-  }
+  // if (result.data.updateNews.message) {
+  //   throw new Error(
+  //     `${result.data.updateNews.statusCode} ${
+  //       newsTranslations[result.data.updateNews.message]
+  //     }`
+  //   );
+  // }
 
-  return result.data.updateNews;
+  // return result.data.updateNews;
 };
 
 export {

@@ -13,7 +13,6 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton } from '../buttons';
 import { useStyles } from './dialog-window.styles';
 import DeleteButton from '../buttons/delete-button';
-import { basicSelector } from '../../redux/dialog-window/dialog-window.reducer';
 
 const { CANCEL_TITLE } = config.buttonTitles;
 
@@ -22,7 +21,6 @@ const DialogWindow = ({
   dialogTitle,
   dialogContent,
   buttonTitle,
-  showIcon,
   showCancelButton
 }) => {
   const styles = useStyles();
@@ -31,7 +29,6 @@ const DialogWindow = ({
   const handleClose = () => {
     dispatch(closeDialog());
   };
-  // const dialogTitle = 'HELLO!!'
 
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
@@ -47,20 +44,13 @@ const DialogWindow = ({
               variant='outlined'
               title={CANCEL_TITLE}
             />
-            <DeleteButton
-              data-cy='dialog-confirm'
-              onClickHandler={() => {}}
-              showIcon={showIcon}
-            >
-              {buttonTitle}
-            </DeleteButton>
+            <DeleteButton data-cy='dialog-confirm'>{buttonTitle}</DeleteButton>
           </>
         ) : (
           <StandardButton
             data-cy='dialog-confirm'
             variant='contained'
             title={buttonTitle}
-            // onClickHandler={onClickHandler}
           />
         )}
       </DialogActions>
@@ -68,21 +58,20 @@ const DialogWindow = ({
   );
 };
 
-const mapStateToProps = basicSelector;
-
-// const mapDispatchToProps = ({DialogWindow}) => {
-//   return {
-//     onClickHandler: () => {}
-// };
+const mapStateToProps = ({ DialogWindow }) => ({
+  isOpen: DialogWindow.isOpen,
+  dialogTitle: DialogWindow.dialogTitle,
+  dialogContent: DialogWindow.dialogContent,
+  buttonTitle: DialogWindow.buttonTitle,
+  showCancelButton: DialogWindow.showCancelButton
+});
 
 DialogWindow.propTypes = {
   isOpen: PropTypes.bool,
   dialogTitle: PropTypes.string,
   dialogContent: PropTypes.string,
   buttonTitle: PropTypes.string,
-  showIcon: PropTypes.bool,
   showCancelButton: PropTypes.bool
-  // onClickHandler: PropTypes.func
 };
 
 DialogWindow.defaultProps = {
@@ -90,7 +79,6 @@ DialogWindow.defaultProps = {
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
-  showIcon: true,
   showCancelButton: true
 };
 
