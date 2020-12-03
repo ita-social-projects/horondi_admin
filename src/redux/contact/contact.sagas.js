@@ -28,11 +28,6 @@ import {
   GET_CONTACT
 } from './contact.types';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../snackbar/snackbar.actions';
-
 import { config } from '../../configs';
 import {
   handleErrorSnackbar,
@@ -109,8 +104,6 @@ export function* handleContactDelete({ payload }) {
     yield put(setContactsLoading(false));
 
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarStatus(true));
   } catch (error) {
     yield call(handleContactsError, error);
   }

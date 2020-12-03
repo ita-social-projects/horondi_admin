@@ -39,5 +39,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: theme.spacing(0.5)
+  },
+  controlsBlock: {
+    display: 'flex',
+    margin: '40px 10px 20px 0'
   }
 }));
