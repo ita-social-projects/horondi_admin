@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useStyles } from './category-details.styles';
 import LoadingBar from '../../../components/loading-bar';
 import CategoryForm from '../../../components/category-form';
-import { getCategory } from '../../../redux/category-new/category.actions';
+import { getCategory } from '../../../redux/category/category.actions';
 
 const CategoryDetails = ({ match }) => {
   const { id } = match.params;

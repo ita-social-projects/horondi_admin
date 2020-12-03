@@ -18,7 +18,7 @@ import { useStyles } from './category-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
-import { addCategory, updateCategory } from '../../redux/category-new/category.actions';
+import { addCategory, updateCategory } from '../../redux/category/category.actions';
 import ImageUploadContainer from '../../containers/image-upload-container';
 
 const {
@@ -45,7 +45,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
   } = useCategoryHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang) => <Tab label={lang} data-cy={lang} key={lang} />)
+      ? languages.map((lang) => <Tab label={lang} data-cy={`${lang}`} key={lang} />)
       : null;
 
   const categoryValidationSchema = Yup.object().shape({
@@ -119,7 +119,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
               name='code'
               className={styles.textField}
               variant='outlined'
-              label={'Код категорії'}
+              label= {config.labels.categories.categoryCode}
               value={values.code}
               onChange={handleChange}
               error={touched.code && !!errors.code}
@@ -136,7 +136,6 @@ const CategoryForm = ({ category, id,edit = false}) => {
             className={styles.tabs}
             value={tabsValue}
             onChange={handleTabsChange}
-            aria-label='simple tabs example'
           >
             {languageTabs}
           </Tabs>
@@ -149,7 +148,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
                 name={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label='Назва категорії'
+                label={config.labels.categories.categoryName}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -179,7 +178,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
           {config.buttonTitles.GO_BACK_TITLE}
         </Button>
         <SaveButton
-          className={styles.saveButton}
+          className={styles.saveCategoryButton}
           data-cy='save'
           type='submit'
           title={SAVE_TITLE}

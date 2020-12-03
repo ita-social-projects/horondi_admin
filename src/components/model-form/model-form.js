@@ -22,7 +22,7 @@ import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { addModel, updateModel } from '../../redux/model/model.actions';
-import { getCategories } from '../../redux/category-new/category.actions';
+import { getCategories } from '../../redux/category/category.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
 

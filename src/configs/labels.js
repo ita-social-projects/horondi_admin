@@ -18,6 +18,8 @@ const labels = {
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
+    categoryCode:"Код категорії",
+    categoryName:"Назва категорії"
   },
   header: {
     name: 'Назва',

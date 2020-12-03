@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
-  saveButton: {
+  saveCategoryButton: {
     margin: theme.spacing(2)
   },
   returnButton: {

@@ -7,7 +7,7 @@ import { useStyles } from './category-page.styles';
 import {
   getCategories,
   deleteCategory
-} from '../../../redux/category-new/category.actions';
+} from '../../../redux/category/category.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import TableContainerRow from '../../../containers/table-container-row';
