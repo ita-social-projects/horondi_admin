@@ -5,15 +5,7 @@ import moment from 'moment';
 
 import { push } from 'connected-react-router';
 import Paper from '@material-ui/core/Paper';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography
-} from '@material-ui/core';
+import { TableCell, TableRow, Typography } from '@material-ui/core';
 import { getRecentComments } from '../../redux/comments/comments.actions';
 import { getOrderList } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
