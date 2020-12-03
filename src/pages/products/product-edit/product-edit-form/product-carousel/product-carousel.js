@@ -42,7 +42,7 @@ const ProductCarousel = ({ toggleFieldsChanged }) => {
   useEffect(() => {
     if (product.images) {
       const images = [
-        { url: product.images.primary.large, prefix: true },
+        { url: encodeURIComponent(product.images.primary.large), prefix: true },
         ...product.images.additional.map(({ large }) => ({
           url: large,
           prefix: true
