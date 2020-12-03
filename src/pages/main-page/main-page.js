@@ -51,7 +51,7 @@ const MainPage = () => {
     dispatch(
       getOrderList({
         filter: {
-          orderStatus: 'CANCELLED'
+          orderStatus: 'CREATED'
         }
       })
     );
