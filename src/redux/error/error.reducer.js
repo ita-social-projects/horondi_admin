@@ -1,10 +1,10 @@
 import { SET_ERROR } from './error.types';
 
-const initialState = {
+export const initialState = {
   error: null
 };
 
-const errorReducer = (action, state = initialState) => {
+const errorReducer = (state = initialState, action = {}) => {
   if (action.type === SET_ERROR) {
     return {
       ...state,

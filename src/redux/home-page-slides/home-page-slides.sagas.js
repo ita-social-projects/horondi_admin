@@ -88,7 +88,7 @@ export function* handleSlideLoad({ payload }) {
   }
 }
 
-function* handleAddSlide({ payload }) {
+export function* handleAddSlide({ payload }) {
   try {
     yield put(setSlideLoading(true));
     yield call(createSlide, payload);
@@ -130,7 +130,7 @@ export function* handleSlideDelete({ payload }) {
   }
 }
 
-function* handleSlideError(e) {
+export function* handleSlideError(e) {
   yield put(setSlideLoading(false));
   yield put(setSlideError({ e }));
   yield call(handleErrorSnackbar, e.message);

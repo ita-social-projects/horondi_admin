@@ -9,6 +9,25 @@ const initialLanguageValues = [
   }
 ];
 
+const mockColors = [
+  {
+    name: [
+      { lang: 'uk', value: 'Золотий' },
+      { lang: 'en', value: 'Golden' }
+    ],
+    simpleName: [
+      { lang: 'uk', value: 'жовтий' },
+      { lang: 'en', value: 'yellow' }
+    ]
+  }
+];
+
+const mockCategory = {
+  _id: 'ddc81f5dbac48c38d0403dd3',
+  name: [{ value: 'Рюкзаки' }, { value: 'Backpacks' }],
+  isMain: true
+};
+
 const productModel = {
   name: initialLanguageValues,
   mainMaterial: initialLanguageValues,
@@ -79,30 +98,9 @@ const mockProductsList = {
   items: [
     {
       basePrice: [{ value: 146270 }, { value: 6270 }],
-      category: {
-        _id: 'ddc81f5dbac48c38d0403dd3',
-        name: [{ value: 'Рюкзаки' }, { value: 'Backpacks' }],
-        isMain: true
-      },
-      colors: [
-        {
-          name: [
-            { lang: 'uk', value: 'Золотий' },
-            { lang: 'en', value: 'Golden' }
-          ],
-          simpleName: [
-            { lang: 'uk', value: 'жовтий' },
-            { lang: 'en', value: 'yellow' }
-          ]
-        }
-      ],
-      images: {
-        primary: {
-          large: 'large_10b15c0khmaqssr_rolltop.jpg',
-          medium: 'medium_10b15c0khmaqssr_rolltop.jpg',
-          small: 'small_10b15c0khmaqssr_rolltop.jpg'
-        }
-      },
+      category: mockCategory,
+      colors: mockColors,
+      images: mockPrimaryImage,
       isHotItem: true,
       model: [{ value: 'Ролтоп' }, { value: 'Rolltop' }],
       name: [
@@ -245,10 +243,19 @@ const mockProductToUpdatePayload = {
   product: mockProduct,
   id: mockProduct._id
 };
+const mockFilesToUpload = ['some upload info'];
+
+const mockPrimaryImage = {
+  primary: {
+    large: 'large_10b15c0khmaqssr_rolltop.jpg',
+    medium: 'medium_10b15c0khmaqssr_rolltop.jpg',
+    small: 'small_10b15c0khmaqssr_rolltop.jpg'
+  }
+};
 
 const mockProductToUpload = {
   ...mockProductsState,
-  upload: ['some upload info'],
+  upload: mockFilesToUpload,
   primaryImageUpload: ['upload image']
 };
 
@@ -274,9 +281,15 @@ const mockProductsStateToDeleteImages = {
   filesToDelete: ['file to delete']
 };
 
+const mockUploadToRemoveImages = [{ name: 'image' }];
+
 const mockId = '5fa034049a59a906d0640e42';
 
 export {
+  mockUploadToRemoveImages,
+  mockPrimaryImage,
+  mockCategory,
+  mockColors,
   mockProductsState,
   mockTableState,
   mockProductsList,
@@ -295,5 +308,6 @@ export {
   mockSnackarState,
   mockError,
   mockProductsStateToDeleteImages,
-  mockId
+  mockId,
+  mockFilesToUpload
 };
