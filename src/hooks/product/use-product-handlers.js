@@ -1,11 +1,12 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../../configs';
-import {
-  AdditionsSelector,
-  OptionsSelector
-} from '../../redux/selectors/use-product-handlers.selectors';
 import useProductSpecies from './use-product-species';
+
+const selectAdditionsLength = ({ additions }) => additions.length;
+
+const selectOptionsLength = ({ options }) =>
+  options.find(selectAdditionsLength);
 
 const {
   languages,
@@ -44,8 +45,9 @@ const useProductHandlers = () => {
   const additions = useMemo(
     () =>
       filterData.length
-        ? filterData.find(OptionsSelector).options.find(AdditionsSelector)
-          .additions
+        ? filterData
+          .find(selectOptionsLength)
+          .options.find(selectAdditionsLength).additions
         : null,
     [filterData]
   );
