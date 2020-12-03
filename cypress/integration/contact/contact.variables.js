@@ -9,3 +9,19 @@ export const enSchedule =
   'Mon: 10 a.m. - 7 p.m.|Tue: 10 a.m. - 7 p.m.|Wed: 10 a.m. - 7 p.m.|Thu: 10 a.m. - 7 p.m.|Fri: 10 a.m. - 7 p.m.|Sat: Closed|Sun: Closed';
 export const uaAddress = 'Львів, вул. Заводська, 31';
 export const enAddress = 'Lviv, 31 Zavodska Str.';
+export const contactData = [
+  {
+    baseImage:
+      'https://www.google.com/search?q=images+google&sxsrf=ALeKk03n16quSgO5YhO3lrkNExvvcGHRjA:1606996555089&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjyw8jW4LHtAhUl_SoKHc_RB5cQ_AUoAXoECA0QAw&biw=1920&bih=937#imgrc=X3Bfcf__JU7bsM',
+    mapLink:
+      'https://www.google.com.ua/maps/@49.8282899,24.0034943,12.75z?hl=ru',
+    contactNumber: '380961234567',
+    scheduleUa:
+      'Пн: 10:00 - 19:00|Вт: 10:00 - 19:00|Ср: 10:00 - 19:00|Чт: 10:00 - 19:00|Пт: 10:00 - 19:00|Сб: Вихідний|Нд: Вихідний',
+    scheduleEn:
+      'Mon: 10 a.m. - 7 p.m.|Tue: 10 a.m. - 7 p.m.|Wed: 10 a.m. - 7 p.m.|Thu: 10 a.m. - 7 p.m.|Fri: 10 a.m. - 7 p.m.|Sat: Closed|Sun: Closed',
+    addressUa: 'Львів, вул.',
+    addressEn: 'Lviv, Str.',
+    email: 'adminHorondi@gmail.com'
+  }
+];
