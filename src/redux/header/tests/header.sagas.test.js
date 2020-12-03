@@ -1,6 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
+import { push } from 'connected-react-router';
 
 import {
   handleAddHeader,
@@ -12,6 +13,7 @@ import {
 
 import Header, { initialState } from '../header.reducer';
 import {
+  deleteHeader,
   createHeader,
   getAllHeaders,
   getHeaderById,
@@ -19,25 +21,31 @@ import {
 } from '../header.operations';
 
 import { headers, id, mockHeader } from './header.variables';
-import { config } from '../../../configs';
+
 import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
 import {
-  deleteHeader,
   removeHeaderFromStore,
   setHeader,
   setHeaderLoading,
   setHeaders
 } from '../header.actions';
 
-const { SUCCESS_ADD_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
+import { config } from '../../../configs';
+
+const { routes } = config;
+const {
+  SUCCESS_ADD_STATUS,
+  SUCCESS_UPDATE_STATUS,
+  SUCCESS_DELETE_STATUS
+} = config.statuses;
 
 describe('header sagas tests', () => {
   it('should load all headers', () => {
     expectSaga(handleHeadersLoad)
       .withReducer(combineReducers({ Header }), { Header: initialState })
       .put(setHeaderLoading(true))
-      .provide([[call(getAllHeaders)], headers])
+      .provide([[call(getAllHeaders), headers]])
       .put(setHeaders(headers))
       .put(setHeaderLoading(false))
       .hasFinalState({
@@ -64,7 +72,6 @@ describe('header sagas tests', () => {
       .hasFinalState({
         Header: {
           ...initialState,
-          list: [],
           header: mockHeader
         }
       })
@@ -82,14 +89,14 @@ describe('header sagas tests', () => {
       .put(setHeaderLoading(true))
       .provide([
         [call(createHeader, mockHeader)],
-        [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
+        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
       .put(setHeaderLoading(false))
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(6);
       });
   });
 
@@ -113,23 +120,24 @@ describe('header sagas tests', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(6);
       });
   });
 
   it('should update header', () => {
-    expectSaga(handleHeaderDelete, { payload: mockHeader })
+    expectSaga(handleHeaderUpdate, { payload: mockHeader })
       .withReducer(combineReducers({ Header }), { Header: initialState })
       .put(setHeaderLoading(true))
       .provide([
         [call(updateHeader, mockHeader), mockHeader],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
+      .put(push(routes.pathToHeaders))
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(6);
+        expect(analysisPut).toHaveLength(2);
       });
   });
 });
