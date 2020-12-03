@@ -17,7 +17,7 @@ const initialFilters = {
   search: ''
 };
 
-const initialState = {
+export const initialState = {
   list: [],
   sort: {
     name: 1

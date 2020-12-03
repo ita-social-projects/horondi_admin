@@ -8,7 +8,7 @@ import HomePageEdit from '../index';
 
 import titles from '../../../configs/titles';
 
-const { homePageEdit } = titles;
+const { homePageTitles } = titles;
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -45,7 +45,7 @@ describe('Home page tests', () => {
 
   it('Page should have title text', () => {
     expect(wrapper.find('[data-cy="homepage-title"]').first().text()).toEqual(
-      homePageEdit.mainPageTitle
+      homePageTitles.mainPageTitle
     );
   });
 
