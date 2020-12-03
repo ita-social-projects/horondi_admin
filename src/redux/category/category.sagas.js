@@ -31,12 +31,6 @@ import {
 
 import { config } from '../../configs';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
-
 const {
   SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
