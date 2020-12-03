@@ -8,14 +8,13 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     margin: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(2)
+    paddingLeft: theme.spacing('10px')
   },
   container: {
     width: `100%`,
     marginTop: 65,
     position: 'static',
-    padding: 20
+    padding: '20px'
   },
   paginationDiv: {
     display: 'flex',
