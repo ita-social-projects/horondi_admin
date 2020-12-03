@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ImageIcon from '@material-ui/icons/Image';
 
 import { useSelector } from 'react-redux';
+import { useStyles } from './editor-styles.js';
+
 import ImageBlot from './image-blot';
 import VideoBlot from './video-blot';
 import 'react-quill/dist/quill.snow.css';
@@ -89,12 +91,15 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
     'color',
     'insertImage'
   ];
-
+  const styleProps = {
+    isDarkMode
+  };
+  const styles = useStyles(styleProps);
   return (
     <div data-cy='editor'>
       <div
         id='toolbar'
-        style={{ backgroundColor: isDarkMode ? 'grey' : 'white' }}
+        className={`ql-toolbar ql-snow ${styles.editorBackground}`}
       >
         <select
           className='ql-header'
