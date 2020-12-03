@@ -21,7 +21,8 @@ const DialogWindow = ({
   dialogTitle,
   dialogContent,
   buttonTitle,
-  showCancelButton
+  showCancelButton,
+  onClickHandler
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -43,14 +44,21 @@ const DialogWindow = ({
               data-cy='dialog-cancel'
               variant='outlined'
               title={CANCEL_TITLE}
+              onClickHandler={handleClose}
             />
-            <DeleteButton data-cy='dialog-confirm'>{buttonTitle}</DeleteButton>
+            <DeleteButton
+              data-cy='dialog-confirm'
+              onClickHandler={onClickHandler}
+            >
+              {buttonTitle}
+            </DeleteButton>
           </>
         ) : (
           <StandardButton
             data-cy='dialog-confirm'
             variant='contained'
             title={buttonTitle}
+            onClickHandler={onClickHandler}
           />
         )}
       </DialogActions>
@@ -66,12 +74,17 @@ const mapStateToProps = ({ DialogWindow }) => ({
   showCancelButton: DialogWindow.showCancelButton
 });
 
+const mapDispatchToProps = ({ DialogWindow }) => ({
+  onClickHandler: DialogWindow.onClickHandler
+});
+
 DialogWindow.propTypes = {
   isOpen: PropTypes.bool,
   dialogTitle: PropTypes.string,
   dialogContent: PropTypes.string,
   buttonTitle: PropTypes.string,
-  showCancelButton: PropTypes.bool
+  showCancelButton: PropTypes.bool,
+  onClickHandler: PropTypes.func.isRequired
 };
 
 DialogWindow.defaultProps = {
@@ -82,4 +95,4 @@ DialogWindow.defaultProps = {
   showCancelButton: true
 };
 
-export default connect(mapStateToProps, null)(DialogWindow);
+export default connect(mapStateToProps, mapDispatchToProps)(DialogWindow);

@@ -5,7 +5,8 @@ export const initialState = {
   dialogTitle: '',
   dialogContent: '',
   buttonTitle: '',
-  showCancelButton: true
+  showCancelButton: true,
+  onClickHandler: () => {}
 };
 
 const dialogWindowReducer = (state = initialState, action = {}) => {

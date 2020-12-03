@@ -23,8 +23,8 @@ describe('dialog window reducer tests', () => {
     expect(initialState.buttonTitle).toBeDefined();
     expect(initialState.dialogTitle).toBeDefined();
     expect(initialState.dialogContent).toBeDefined();
-    // expect(initialState.onClickHandler).toBeDefined();
-    // expect(initialState.onClickHandler).not.toBeNull();
-    // expect(initialState.onClickHandler).not.toThrow();
+    expect(initialState.onClickHandler).toBeDefined();
+    expect(initialState.onClickHandler).not.toBeNull();
+    expect(initialState.onClickHandler).not.toThrow();
   });
 });
