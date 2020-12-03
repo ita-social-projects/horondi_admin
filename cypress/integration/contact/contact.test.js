@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-
 import 'cypress-file-upload';
 import {
   id,
@@ -73,6 +72,24 @@ describe('Contacts test', () => {
     cy.get('[ data-cy=email]').type(contactData[0].email);
     cy.get('[ data-cy = save]').click();
     cy.get('[data-cy=goBackButton]').click();
+  });
+  it('Tne data should be changed', () => {
+    cy.get('@table').eq(7).children().first().click();
+    cy.get('[data-cy=mapLink]').children().children().first().clear();
+    cy.get('[data-cy=mapLink]').type(contactData[1].mapLink);
+    cy.get('[data-cy=phoneNumber]').children().children().first().clear();
+    cy.get('[data-cy=phoneNumber]').type(contactData[1].contactNumber);
+    cy.get('[data-cy=ukSchedule]').children().children().first().clear();
+    cy.get('[data-cy=ukSchedule]').type(contactData[1].scheduleUa);
+    cy.get('[data-cy=enSchedule]').children().children().first().clear();
+    cy.get('[data-cy=enSchedule]').type(contactData[1].scheduleEn);
+    cy.get('[data-cy=ukAddress]').children().children().first().clear();
+    cy.get('[data-cy=ukAddress]').type(contactData[1].addressUa);
+    cy.get('[data-cy=enAddress]').children().children().first().clear();
+    cy.get('[data-cy=enAddress]').type(contactData[1].addressEn);
+    cy.get('[ data-cy=email]').children().children().first().clear();
+    cy.get('[ data-cy=email]').type(contactData[1].email);
+    cy.get('[ data-cy = save]').click();
   });
   it('The user should be deleted', () => {
     cy.get('@table').eq(7).children().next().click();

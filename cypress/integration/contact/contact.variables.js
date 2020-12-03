@@ -23,5 +23,19 @@ export const contactData = [
     addressUa: 'Львів, вул.',
     addressEn: 'Lviv, Str.',
     email: 'adminHorondi@gmail.com'
+  },
+  {
+    baseImage:
+      'https://www.google.com/search?q=images+google&sxsrf=ALeKk02EbmR_Pvd9YfNIvl6Dflp1AIdovg:1607034211545&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjGl8j67LLtAhVBpIsKHTLjC1AQ_AUoAXoECA0QAw&biw=1920&bih=937#imgrc=kTWWpFZfx_yXMM',
+    mapLink:
+      'https://www.google.com.ua/maps/@50.4782429,30.4822679,12.25z?hl=ru',
+    contactNumber: '380967654321',
+    scheduleUa:
+      'Пн: 8:00 - 19:00|Вт: 8:00 - 19:00|Ср: 11:00 - 19:00|Чт: 9:00 - 19:00|Пт: 8:00 - 19:00|Сб: Вихідний|Нд: Вихідний',
+    scheduleEn:
+      'Mon: 8 a.m. - 7 p.m.|Tue: 8 a.m. - 7 p.m.|Wed: 9 a.m. - 7 p.m.|Thu: 10 a.m. - 7 p.m.|Fri: 8 a.m. - 7 p.m.|Sat: Closed|Sun: Closed',
+    addressUa: 'Киев, вул.',
+    addressEn: 'Kyev, Str.',
+    email: 'Horondi@gmail.com'
   }
 ];
