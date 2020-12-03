@@ -24,6 +24,7 @@ import labels from '../../configs/labels';
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
 import messages from '../../configs/messages';
+import TableContainerGenerator from '../../containers/table-container-generator';
 
 const MainPage = () => {
   const {
@@ -32,7 +33,7 @@ const MainPage = () => {
     ordersTitle,
     changesTitle
   } = titles.mainPageTitles;
-  const ordersTableTitles = tableHeadRowTitles.orders;
+  const ordersTableTitles = tableHeadRowTitles.mainPageOrders;
   const { guestUser } = labels.user;
   const { EMPTY_LIST } = messages;
   const classes = useStyles();
@@ -72,6 +73,28 @@ const MainPage = () => {
     </div>
   ));
 
+  const orders =
+    ordersList && ordersList.length
+      ? ordersList.map(({ dateOfCreation, totalItemsPrice, _id }) => (
+        <TableRow
+          key={_id}
+          onClick={() => dispatch(push(`/orders/${_id}`))}
+          className={classes.order}
+          data-cy='order'
+        >
+          <TableCell>
+            {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
+          </TableCell>
+          <TableCell>
+            {totalItemsPrice[0].value}
+            {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
+            {totalItemsPrice[1].currency}
+          </TableCell>
+          <TableCell>{_id}</TableCell>
+        </TableRow>
+      ))
+      : null;
+
   if (orderLoading || commentsLoading) {
     return <LoadingBar />;
   }
@@ -92,55 +115,13 @@ const MainPage = () => {
               {ordersTitle}
             </Typography>
             {ordersList && ordersList.length ? (
-              <TableContainer className={classes.orders}>
-                <Table
-                  stickyHeader
-                  aria-label='sticky table'
-                  data-cy='orders-table'
-                  size='small'
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell component='th' align='center'>
-                        {ordersTableTitles[1]}
-                      </TableCell>
-                      <TableCell component='th' align='center'>
-                        {ordersTableTitles[2]}
-                      </TableCell>
-                      <TableCell component='th' align='center'>
-                        {ordersTableTitles[0]}
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {ordersList.map(
-                      ({ dateOfCreation, totalItemsPrice, _id }) => (
-                        <TableRow
-                          key={_id}
-                          onClick={() => dispatch(push(`/orders/${_id}`))}
-                          className={classes.order}
-                          data-cy='order'
-                        >
-                          <TableCell align='center'>
-                            {moment
-                              .unix(dateOfCreation / 1000)
-                              .format('DD.MM.YYYY')}
-                          </TableCell>
-                          <TableCell align='center'>
-                            {totalItemsPrice[0].value}
-                            {totalItemsPrice[0].currency} /{' '}
-                            {totalItemsPrice[1].value}
-                            {totalItemsPrice[1].currency}
-                          </TableCell>
-                          <TableCell align='center'>{_id}</TableCell>
-                        </TableRow>
-                      )
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+              <TableContainerGenerator
+                tableItems={orders}
+                tableTitles={ordersTableTitles}
+                data-cy='orders-table'
+              />
             ) : (
-              <div className={classes.emptyOrders} data-cy='empty-orders'>
+              <div className={classes.emptyList} data-cy='empty-orders'>
                 {EMPTY_LIST}
               </div>
             )}

@@ -26,14 +26,11 @@ export const useStyles = makeStyles((theme) => ({
   },
   ordersContainer: {
     height: '50%',
+    overflow: 'auto',
     marginBottom: theme.spacing(3),
     '@media (max-width: 599px)': {
       height: '100vh'
     }
-  },
-  orders: {
-    height: 'calc(100% - 50px)',
-    overflowY: 'auto'
   },
   order: {
     cursor: 'pointer',
@@ -87,7 +84,7 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(3)
     }
   },
-  emptyOrders: {
+  emptyList: {
     width: '100%',
     height: '100%',
     display: 'flex',
