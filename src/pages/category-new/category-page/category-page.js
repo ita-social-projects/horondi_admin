@@ -26,7 +26,7 @@ const CategoryPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading } = useSelector(({ Categories }) => ({
     list: Categories.list,
-    loading: Categories.newsLoading,
+    loading: Categories.categoryLoading,
     pagesCount: Categories.pagination.pagesCount,
     currentPage: Categories.pagination.currentPage,
     categoriesPerPage: Categories.pagination.categoriesPerPage
