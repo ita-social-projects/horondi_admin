@@ -1,4 +1,4 @@
-export const ProductsAndTableSelectors = ({
+export const selectProductsAndTable = ({
   Products: {
     loading,
     products,
