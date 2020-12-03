@@ -18,9 +18,12 @@ import { getRecentComments } from '../../redux/comments/comments.actions';
 import { getOrderList } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
 import titles from '../../configs/titles';
+import tableHeadRowTitles from '../../configs/table-head-row-titles';
+import labels from '../../configs/labels';
 
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
+import messages from '../../configs/messages';
 
 const MainPage = () => {
   const {
@@ -29,6 +32,9 @@ const MainPage = () => {
     ordersTitle,
     changesTitle
   } = titles.mainPageTitles;
+  const ordersTableTitles = tableHeadRowTitles.orders;
+  const { guestUser } = labels.user;
+  const { EMPTY_LIST } = messages;
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
@@ -60,7 +66,7 @@ const MainPage = () => {
     <div key={_id} className={classes.comment}>
       <div className={classes.commentText}>{text}</div>
       <div className={classes.commentInfo}>
-        <div>{user.name || 'Гість'}</div>
+        <div>{user.name || guestUser}</div>
         <div>{moment.unix(date / 1000).format('HH:mm DD.MM.YYYY ')}</div>
       </div>
     </div>
@@ -91,17 +97,18 @@ const MainPage = () => {
                   stickyHeader
                   aria-label='sticky table'
                   data-cy='orders-table'
+                  size='small'
                 >
                   <TableHead>
                     <TableRow>
                       <TableCell component='th' align='center'>
-                        Дата
+                        {ordersTableTitles[1]}
                       </TableCell>
                       <TableCell component='th' align='center'>
-                        Сума
+                        {ordersTableTitles[2]}
                       </TableCell>
                       <TableCell component='th' align='center'>
-                        ID замовлення
+                        {ordersTableTitles[0]}
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -134,7 +141,7 @@ const MainPage = () => {
               </TableContainer>
             ) : (
               <div className={classes.emptyOrders} data-cy='empty-orders'>
-                У вас немає нових замовлень
+                {EMPTY_LIST}
               </div>
             )}
           </Paper>

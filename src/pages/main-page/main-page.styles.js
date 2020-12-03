@@ -40,6 +40,10 @@ export const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.04)',
       fontWeight: 'bold'
+    },
+    '& td': {
+      paddingBottom: 15,
+      paddingTop: 15
     }
   },
   commentsContainer: {

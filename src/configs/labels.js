@@ -2,7 +2,8 @@ const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
   user: {
-    unknownAdmin: 'Невідомий адмін'
+    unknownAdmin: 'Невідомий адмін',
+    guestUser: 'Гість'
   },
   model: {
     name: 'Назва',
