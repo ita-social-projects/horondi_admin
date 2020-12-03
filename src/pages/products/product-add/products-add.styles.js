@@ -7,5 +7,9 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     minHeight: '83vh',
     width: '100%'
+  },
+  controlsBlock: {
+    display: 'flex',
+    margin: '20px 10px'
   }
 }));

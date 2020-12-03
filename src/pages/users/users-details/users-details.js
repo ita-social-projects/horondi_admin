@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
 
 import { withRouter } from 'react-router';
+import { push } from 'react-router-redux';
 import { useStyles } from './users-details.styles';
 import useUsersHandler from '../../../hooks/user/use-users-handlers';
 import LoadingBar from '../../../components/loading-bar';
@@ -14,6 +15,7 @@ import UserDetailsCard from './containers/user-details-card';
 import CommentsSection from '../../../components/comments-section/comments-section';
 import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
 import { config } from '../../../configs';
+import { StandardButton } from '../../../components/buttons';
 
 const {
   USER_ACTIVE_TITLE,
@@ -51,6 +53,10 @@ const UsersDetails = (props) => {
     email,
     isBanned
   } = useUsersHandler(id);
+
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
+  };
 
   if (loading) {
     return <LoadingBar />;
@@ -92,6 +98,16 @@ const UsersDetails = (props) => {
           buttonStatus={buttonStatus}
           buttonHandler={() => userStatusHandler(id)}
         />
+        <div className={styles.controlsBlock}>
+          <StandardButton
+            className={styles.userDetails}
+            id='back-btn'
+            title={config.buttonTitles.GO_BACK_TITLE}
+            variant='outlined'
+            onClickHandler={handleGoBack}
+            data-cy='back-btn'
+          />
+        </div>
       </Grid>
       <Grid className={styles.showComments}>
         <Button
