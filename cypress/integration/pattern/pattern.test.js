@@ -4,7 +4,10 @@ import {
   getAllPatterns,
   typeValue,
   addPattern,
-  addPatternError
+  addPatternError,
+  updateValue,
+  updatePattern,
+  deletePattern
 } from './pattern.variables';
 import routes from '../../../src/configs/routes';
 
@@ -130,7 +133,7 @@ describe('pattern tests', () => {
     cy.get('.MuiAlert-message').contains('Успішно додано!');
   });
 
-  it('should add pattern', () => {
+  it('should throw error pattern already exist', () => {
     cy.stubRequest('addPattern', addPatternError).as('addPattern');
     cy.get('[data-cy=add-pattern]').click();
     cy.fixture('HORONDI.png').then((fileContent) => {
@@ -152,5 +155,39 @@ describe('pattern tests', () => {
     cy.wait(2000);
     cy.get('.MuiAlert-message').should('be.visible');
     cy.get('.MuiAlert-message').contains('Успішно додано!');
+  });
+
+  it('should update pattern', () => {
+    cy.stubRequest('getPatternById', updatePattern).as('getPatternById');
+    cy.stubRequest('updatePattern', updatePattern).as('updatePattern');
+    cy.get('[data-cy=add-pattern]').click();
+    cy.fixture('HORONDI.png').then((fileContent) => {
+      cy.get('input[type="file"]').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: 'HORONDI.png',
+        mimeType: 'image/png',
+        filePath: '../fixtures'
+      });
+    });
+    cy.get('[data-cy=handmade]').click();
+    cy.get('[data-cy=material').type(updateValue);
+    cy.get('[data-cy=ua-name]').type(updateValue);
+    cy.get('[data-cy=ua-description]').type(updateValue);
+    cy.get('[data-cy=en-tab]').click();
+    cy.get('[data-cy=en-name]').type(updateValue);
+    cy.get('[data-cy=en-description]').type(updateValue);
+    cy.get('[data-cy=save-btn]').click();
+    cy.wait(2000);
+    cy.get('.MuiAlert-message').should('be.visible');
+    cy.get('.MuiAlert-message').contains('Успішно змінено!');
+  });
+
+  it('should delete pattern', () => {
+    cy.stubRequest('deletePattern', deletePattern).as('deletePattern');
+    cy.get('[data-cy=delete-btn]').last().click();
+    cy.get('[data-cy=dialog-confirm]').last().click();
+    cy.wait(1000);
+    cy.get('.MuiAlert-message').should('be.visible');
+    cy.get('.MuiAlert-message').contains('Успішно видалено!');
   });
 });

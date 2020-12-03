@@ -97,6 +97,20 @@ const patternToAdd = {
   }
 };
 
+const patternToUpdate = {
+  ...patternToAdd,
+  name: [
+    {
+      lang: 'uk',
+      value: typeValue + typeValue
+    },
+    {
+      lang: 'en',
+      value: typeValue + typeValue
+    }
+  ]
+};
+
 export const getAllPatterns = (req) => {
   req.reply({
     body: {
@@ -118,6 +132,20 @@ export const addPattern = (req) => {
   });
 };
 
+export const updatePattern = (req) => {
+  patterns.items.pop();
+  patterns.items.push(patternToUpdate);
+  req.reply({
+    body: {
+      data: {
+        updatePattern: patternToUpdate
+      }
+    }
+  });
+};
+
+export const updateValue = ' updated';
+
 export const addPatternError = (req) => {
   req.reply({
     body: {
@@ -126,6 +154,35 @@ export const addPatternError = (req) => {
           message: 'PATTERN_ALREADY_EXIST',
           status: 400
         }
+      }
+    }
+  });
+};
+export const getPatternById = (req) => {
+  req.reply({
+    body: {
+      data: {
+        getPatternById: {
+          ...patternToUpdate,
+          description: [
+            {
+              value: ''
+            },
+            {
+              value: ''
+            }
+          ]
+        }
+      }
+    }
+  });
+};
+export const deletePattern = (req) => {
+  patterns.items.pop();
+  req.reply({
+    body: {
+      data: {
+        deletePattern: patternToUpdate
       }
     }
   });
