@@ -9,6 +9,11 @@ import {
 } from './category.actions';
 
 import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
+
+import {
   getAllCategories,
   deleteCategory,
   createCategory,
@@ -64,9 +69,7 @@ export function* handleAddCategory({ payload }) {
   try {
     yield put(setCategoryLoading(true));
     yield call(createCategory, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(config.routes.pathToCategories));
   } catch (error) {
     yield call(handleCategoryError, error);
@@ -79,9 +82,7 @@ export function* handleCategoryDelete({ payload }) {
     yield call(deleteCategory, payload);
     yield put(removeCategoryFromStore(payload));
     yield put(setCategoryLoading(false));
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleCategoryError, error);
   }
@@ -91,9 +92,7 @@ export function* handleCategoryUpdate({ payload }) {
   try {
     yield put(setCategoryLoading(true));
     yield call(updateCategory, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToCategories));
   } catch (error) {
     yield call(handleCategoryError, error);
@@ -103,9 +102,7 @@ export function* handleCategoryUpdate({ payload }) {
 function* handleCategoryError(e) {
   yield put(setCategoryLoading(false));
   yield put(setCategoryError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* CategoriesSaga() {
