@@ -3,7 +3,7 @@ import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import TabPanel from '../../../components/tab-panel';
 import { SaveButton, StandardButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
