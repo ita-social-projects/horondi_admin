@@ -34,7 +34,7 @@ const ImageUploadContainer = ({
         </Button>
       </label>
       <Avatar
-        data-cy='patternImage'
+        data-cy='pattern-image'
         src={srcForAvatar}
         className={styles.large}
       >

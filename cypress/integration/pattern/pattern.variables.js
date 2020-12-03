@@ -1,0 +1,132 @@
+const patterns = {
+  items: [
+    {
+      _id: '0c3c7929dd85de268bed4fe6',
+      name: [
+        {
+          lang: 'ua',
+          value: 'Рожева хвилька'
+        },
+        {
+          lang: 'en',
+          value: 'Pink wave'
+        }
+      ],
+      material: 'Cotton',
+      available: true,
+      images: {
+        thumbnail: 'thumbnail_zzsjjooki856bu7_1.jpg'
+      }
+    },
+    {
+      _id: 'fdc7529135f2c050c877a61a',
+      name: [
+        {
+          lang: 'uk',
+          value: 'Синя хвилька'
+        },
+        {
+          lang: 'en',
+          value: 'Blue wave'
+        }
+      ],
+      material: 'Cotton',
+      available: true,
+      images: {
+        thumbnail: 'thumbnail_335nr4j5dkebkvle7_blue-wave.jpg'
+      }
+    },
+    {
+      _id: '51af3801f347948f19f6933c',
+      name: [
+        {
+          lang: 'uk',
+          value: 'Синьо-рожева хвилька'
+        },
+        {
+          lang: 'en',
+          value: 'Blue-pink wave'
+        }
+      ],
+      material: 'Cotton',
+      available: true,
+      images: {
+        thumbnail: 'thumbnail_335nr431gkebp19ht_blue-pink.jpg'
+      }
+    },
+    {
+      _id: '7c49f713a0fbbc6250a79173',
+      name: [
+        {
+          lang: 'uk',
+          value: 'Стрілки'
+        },
+        {
+          lang: 'en',
+          value: 'Arrows'
+        }
+      ],
+      material: 'Cotton',
+      available: true,
+      images: {
+        thumbnail: 'thumbnail_335nr4j5dkebkv6hj_arrows.jpg'
+      }
+    }
+  ],
+  count: 4
+};
+
+export const typeValue = 'pattern';
+
+const patternToAdd = {
+  _id: '7c49f713a0fbbc6250a79133',
+  name: [
+    {
+      lang: 'uk',
+      value: typeValue
+    },
+    {
+      lang: 'en',
+      value: typeValue
+    }
+  ],
+  material: typeValue,
+  available: true,
+  images: {
+    thumbnail: 'test'
+  }
+};
+
+export const getAllPatterns = (req) => {
+  req.reply({
+    body: {
+      data: {
+        getAllPatterns: patterns
+      }
+    }
+  });
+};
+
+export const addPattern = (req) => {
+  patterns.items.push(patternToAdd);
+  req.reply({
+    body: {
+      data: {
+        addPattern: patternToAdd
+      }
+    }
+  });
+};
+
+export const addPatternError = (req) => {
+  req.reply({
+    body: {
+      data: {
+        addPattern: {
+          message: 'PATTERN_ALREADY_EXIST',
+          status: 400
+        }
+      }
+    }
+  });
+};
