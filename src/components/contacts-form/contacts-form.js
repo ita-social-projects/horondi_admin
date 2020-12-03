@@ -350,6 +350,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
           type='submit'
           title='Зберегти'
           className={classes.saveButton}
+          data-cy='save'
         />
       </form>
     </div>
