@@ -7,7 +7,9 @@ import {
   getPopularCategoriesEmpty,
   getPopularProductsEmpty,
   getPaidOrdersStatistic,
-  getOrdersStatistic
+  getOrdersStatistic,
+  productCount,
+  orderCount
 } from './statistic.variables';
 
 describe('Statistic page test', () => {
@@ -22,7 +24,7 @@ describe('Statistic page test', () => {
     cy.visit('/');
     cy.wait(3000);
 
-    cy.get('[href="/stats"]').click();
+    cy.get(`[href="${config.routes.pathToStatistic}"]`).click();
   });
 
   it('should be visible and have default settings', () => {
@@ -56,7 +58,7 @@ describe('Statistic page test', () => {
     cy.get('[data-cy=bar-chart-box]').should('be.visible');
     cy.get('[data-cy=bar-chart-box]').children('canvas').should('be.visible');
     cy.get('[data-cy=total-count]').should('be.visible');
-    cy.get('[data-cy=total-count]').contains('120');
+    cy.get('[data-cy=total-count]').contains(`${productCount}`);
 
     cy.get('[data-cy=doughnut-chart-box]').should('be.visible');
     cy.get('[data-cy=doughnut-chart-box]')
@@ -87,7 +89,7 @@ describe('Statistic page test', () => {
     cy.get('[data-cy=bar-chart-box]').should('be.visible');
     cy.get('[data-cy=bar-chart-box]').children('canvas').should('be.visible');
     cy.get('[data-cy=total-count]').should('be.visible');
-    cy.get('[data-cy=total-count]').contains('9');
+    cy.get('[data-cy=total-count]').contains(`${orderCount}`);
   });
 
   it('should switch to last orders', () => {
@@ -123,7 +125,7 @@ describe('Test statistic with empty response', () => {
     cy.visit('/');
     cy.wait(3000);
 
-    cy.get('[href="/stats"]').click();
+    cy.get(`[href="${config.routes.pathToStatistic}"]`).click();
   });
   it('should show error if no data in response', () => {
     cy.get('[data-cy=bar-chart-box]').should('be.visible');

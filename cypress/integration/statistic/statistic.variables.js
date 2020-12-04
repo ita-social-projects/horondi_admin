@@ -1,3 +1,6 @@
+export const productCount = 120;
+export const orderCount = 9;
+
 export const popularProducts = {
   counts: [40, 30, 20, 30],
   labels: [
@@ -6,7 +9,7 @@ export const popularProducts = {
     'Гаманець червоний',
     "Сумка 'Три кольори'"
   ],
-  total: [120]
+  total: [productCount]
 };
 
 export const paidOrders = {
@@ -20,7 +23,7 @@ export const paidOrders = {
     'Oct 28',
     'Oct 29'
   ],
-  total: 9
+  total: orderCount
 };
 
 export const popularProductsEmpty = {
