@@ -16,6 +16,8 @@ import {
   pageCode
 } from './business-pages.variables';
 
+const { labels, titles, tableHeadRowTitles } = config;
+
 describe('Business pages test ', () => {
   beforeEach(() => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
@@ -29,19 +31,13 @@ describe('Business pages test ', () => {
   it('should be visible and contain values', () => {
     cy.get('[data-cy=main-header]').should('be.visible');
     cy.get('[data-cy=main-header]').contains(
-      config.titles.businessPageTitles.mainPageTitle
+      titles.businessPageTitles.mainPageTitle
     );
     cy.get('[data-cy=add-business-page]').should('be.visible');
     cy.get('[data-cy=№]').contains(config.tableHeadRowTitles.businessPages[0]);
-    cy.get('[data-cy=Код]').contains(
-      config.tableHeadRowTitles.businessPages[1]
-    );
-    cy.get('[data-cy=Заголовок]').contains(
-      config.tableHeadRowTitles.businessPages[2]
-    );
-    cy.get('[data-cy=Дії]').contains(
-      config.tableHeadRowTitles.businessPages[3]
-    );
+    cy.get('[data-cy=Код]').contains(tableHeadRowTitles.businessPages[1]);
+    cy.get('[data-cy=Заголовок]').contains(tableHeadRowTitles.businessPages[2]);
+    cy.get('[data-cy=Дії]').contains(tableHeadRowTitles.businessPages[3]);
     cy.window()
       .its('store')
       .invoke('getState')
@@ -51,7 +47,7 @@ describe('Business pages test ', () => {
     cy.get('[data-cy=add-business-page]').click();
     cy.get('[data-cy=add-header]').should('be.visible');
     cy.get('[data-cy=add-header]').contains(
-      config.titles.businessPageTitles.addBusinessPageTitle
+      titles.businessPageTitles.addBusinessPageTitle
     );
     cy.get('[data-cy=page-code]').should('be.visible');
     cy.get('[data-cy=page-code]').contains('Код сторінки');
@@ -60,12 +56,16 @@ describe('Business pages test ', () => {
     cy.get('[data-cy=en]').should('be.visible');
     cy.get('[data-cy=en]').contains('en');
     cy.get('[data-cy=page-header-ua]').should('be.visible');
-    cy.get('[data-cy=page-header-ua]').contains('Заголовок uk');
+    cy.get('[data-cy=page-header-ua]').contains(
+      labels.businessPage[0].label[0].value
+    );
     cy.get('[data-cy=editor]').should('be.visible');
     cy.get('.ql-editor.ql-blank').should('be.visible');
     cy.get('[data-cy=en]').click();
     cy.get('[data-cy=page-header-en]').should('be.visible');
-    cy.get('[data-cy=page-header-en]').contains('Заголовок en');
+    cy.get('[data-cy=page-header-en]').contains(
+      labels.businessPage[0].label[1].value
+    );
     cy.get('[data-cy=editor]').should('be.visible');
     cy.get('.ql-editor.ql-blank').should('be.visible');
     cy.get('[data-cy=back-btn]').should('be.visible');
