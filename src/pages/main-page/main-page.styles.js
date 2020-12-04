@@ -29,7 +29,8 @@ export const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     marginBottom: theme.spacing(3),
     '@media (max-width: 599px)': {
-      height: '100vh'
+      minHeight: 'fit-content',
+      maxHeight: '100vh'
     }
   },
   order: {
@@ -47,8 +48,10 @@ export const useStyles = makeStyles((theme) => ({
     height: '50%',
     marginTop: theme.spacing(3),
     paddingBottom: 15,
+    overflow: 'auto',
     '@media (max-width: 599px)': {
-      height: 'fit-content',
+      minHeight: 'fit-content',
+      maxHeight: '100vh',
       width: '100%',
       paddingBottom: 0
     }
