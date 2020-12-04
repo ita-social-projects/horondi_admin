@@ -153,6 +153,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       name='upload-photo'
                       type='file'
                       onChange={ukSelectImageHandler}
+                      data-cy='upload-uaPhoto'
                     />
                     <Button
                       id='add-contact'
@@ -165,7 +166,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     </Button>
                   </label>
                   <Avatar
-                    data-cy='ukCartImage'
+                    data-cy='ua-cart-image'
                     src={ukMapImage.imageUrl || initialValues.ukCartImage}
                     className={classes.large}
                   >
@@ -185,6 +186,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       name='upload-photo'
                       type='file'
                       onChange={enSelectImageHandler}
+                      data-cy='upload-enPhoto'
                     />
                     <Button
                       id='add-contact'
@@ -197,7 +199,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     </Button>
                   </label>
                   <Avatar
-                    data-cy='enCartImage'
+                    data-cy='en-cart-image'
                     src={enMapImage.imageUrl || initialValues.enCartImage}
                     className={classes.large}
                   >
@@ -206,7 +208,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   <span className={classes.imageName}>{enMapImage.name}</span>
                 </div>
                 <TextField
-                  data-cy='mapLink'
+                  data-cy='map-link'
                   id='cartLink'
                   className={classes.textField}
                   variant='outlined'
@@ -226,7 +228,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
-                  data-cy='phoneNumber'
+                  data-cy='phone-number'
                   id='phoneNumber'
                   className={classes.textField}
                   variant='outlined'
@@ -243,7 +245,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.phoneNumber && errors.phoneNumber}
                 />
                 <TextField
-                  data-cy='ukSchedule'
+                  data-cy='ua-schedule'
                   id='ukSchedule'
                   className={classes.textField}
                   variant='outlined'
@@ -260,7 +262,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.ukSchedule && errors.ukSchedule}
                 />
                 <TextField
-                  data-cy='enSchedule'
+                  data-cy='en-schedule'
                   id='enSchedule'
                   className={classes.textField}
                   variant='outlined'
@@ -281,7 +283,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
-                  data-cy='ukAddress'
+                  data-cy='ua-address'
                   id='ukAddress'
                   className={classes.textField}
                   variant='outlined'
@@ -298,7 +300,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.ukAddress && errors.ukAddress}
                 />
                 <TextField
-                  data-cy='enAddress'
+                  data-cy='en-address'
                   id='enAddress'
                   className={classes.textField}
                   variant='outlined'
@@ -341,7 +343,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
           variant='outlined'
           color='primary'
           className={classes.returnButton}
-          data-cy='goBackButton'
+          data-cy='go-back-button'
         >
           {GO_BACK_TITLE}
         </Button>
