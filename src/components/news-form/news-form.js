@@ -184,6 +184,18 @@ const NewsForm = ({ article, id }) => {
                 onChange={handleChange}
                 required
               />
+              {/* <Editor
+                data-cy={`${lang}Text`}
+                id={`${lang}Text`}
+                className={styles.textField}
+                variant='outlined'
+                multiline
+                value={values[`${lang}Text`]}
+                // value="ДЩУКЩАлВЗЛПівщапліщвзапщзіовапшоіщваптщів"
+                onEditorChange={handleChange}
+                placeholder='Текст'
+                required
+              /> */}
               <TextField
                 data-cy={`${lang}Text`}
                 id={`${lang}Text`}
