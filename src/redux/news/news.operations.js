@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { client, setItems } from '../../utils/client';
+import { client } from '../../utils/client';
 
 import { newsTranslations } from '../../translations/news.translations';
 
