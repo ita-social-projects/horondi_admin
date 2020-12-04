@@ -164,62 +164,41 @@ const createArticle = async (news) => {
 };
 
 const updateArticle = async (id, news) => {
-  // const result = await client.mutate({
-  //   variables: {
-  //     id,
-  //     news
-  //   },
-  //   mutation: gql`
-  //     mutation($id: ID!, $news: NewsInput!) {
-  //       updateNews(id: $id, news: $news) {
-  //         ... on News {
-  //           author {
-  //             name {
-  //               value
-  //             }
-  //           }
-  //         }
-  //         ... on Error {
-  //           message
-  //           statusCode
-  //         }
-  //       }
-  //     }
-  //   `,
-  //   fetchPolicy: 'no-cache'
-  // });
-  // await client.resetStore();
-  setItems(
-    `mutation($id: ID!, $news: NewsInput!) {
-    updateNews(id: $id, news: $news) {
-      ... on News {
-        author {
-          name {
-            value
+  const result = await client.mutate({
+    variables: {
+      id,
+      news
+    },
+    mutation: gql`
+      mutation($id: ID!, $news: NewsInput!) {
+        updateNews(id: $id, news: $news) {
+          ... on News {
+            author {
+              name {
+                value
+              }
+            }
+          }
+          ... on Error {
+            message
+            statusCode
           }
         }
       }
-      ... on Error {
-        message
-        statusCode
-      }
-    }
-  }`,
-    {
-      id,
-      news
-    }
-  );
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  await client.resetStore();
 
-  // if (result.data.updateNews.message) {
-  //   throw new Error(
-  //     `${result.data.updateNews.statusCode} ${
-  //       newsTranslations[result.data.updateNews.message]
-  //     }`
-  //   );
-  // }
+  if (result.data.updateNews.message) {
+    throw new Error(
+      `${result.data.updateNews.statusCode} ${
+        newsTranslations[result.data.updateNews.message]
+      }`
+    );
+  }
 
-  // return result.data.updateNews;
+  return result.data.updateNews;
 };
 
 export {

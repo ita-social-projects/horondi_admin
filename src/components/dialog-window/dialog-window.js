@@ -13,6 +13,7 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton } from '../buttons';
 import { useStyles } from './dialog-window.styles';
 import DeleteButton from '../buttons/delete-button';
+import { basicSelector } from '../../redux/dialog-window/dialog-window.reducer';
 
 const { CANCEL_TITLE } = config.buttonTitles;
 
@@ -66,14 +67,7 @@ const DialogWindow = ({
   );
 };
 
-const mapStateToProps = ({ DialogWindow }) => ({
-  isOpen: DialogWindow.isOpen,
-  dialogTitle: DialogWindow.dialogTitle,
-  dialogContent: DialogWindow.dialogContent,
-  buttonTitle: DialogWindow.buttonTitle,
-  showCancelButton: DialogWindow.showCancelButton,
-  onClickHandler: DialogWindow.onClickHandler
-});
+const mapStateToProps = basicSelector;
 
 DialogWindow.propTypes = {
   isOpen: PropTypes.bool,
