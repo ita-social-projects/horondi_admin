@@ -19,8 +19,14 @@ const labels = {
     ]
   },
   model: {
-    name: 'Назва',
-    description: 'Опис',
+    name: [
+      { value: 'Назва', lang: 'ua' },
+      { value: 'Name', lang: 'eu' }
+    ],
+    description: [
+      { value: 'Опис', lang: 'ua' },
+      { value: 'Description', lang: 'eu' }
+    ],
     image: 'Фото моделі',
     category: 'Категорія',
     available: 'Доступний',
