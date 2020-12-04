@@ -214,18 +214,18 @@ function CreateColor({
           <CheckboxOptions options={checkboxes} />
         </div>
         <Grid item xs={12}>
-          <ImageUploadContainer handler={handleImageLoad} />
-          {values.colorImage ? (
-            <Avatar src={values.image}>
-              <Image />
-            </Avatar>
-          ) : values.image ? (
-            <Avatar src={values.image}>
-              <Image />
-            </Avatar>
-          ) : (
-            <></>
-          )}
+          <div className={styles.imageUploadAvatar}>
+            <ImageUploadContainer handler={handleImageLoad} />
+            {values.colorImage ? (
+              <Avatar src={values.image}>
+                <Image />
+              </Avatar>
+            ) : values.image ? (
+              <Avatar src={values.image}>
+                <Image />
+              </Avatar>
+            ) : null}
+          </div>
           <div className={styles.materialItemAdd}>
             <TextField
               data-cy='code'

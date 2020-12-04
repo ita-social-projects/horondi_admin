@@ -146,49 +146,51 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 <span className={classes.imageUpload}>
                   Зображення карти (Укр.)
                 </span>
-                <ImageUploadContainer handler={uaSelectImageHandler} />
-                {uaMapImage.imageUrl ? (
-                  <Avatar
-                    data-cy='uaCartImage'
-                    src={uaMapImage.imageUrl}
-                    className={classes.large}
-                  >
-                    <Image />
-                  </Avatar>
-                ) : initialValues.uaCartImage ? (
-                  <Avatar
-                    data-cy='uaCartImage'
-                    src={initialValues.uaCartImage}
-                    className={classes.large}
-                  >
-                    <Image />
-                  </Avatar>
-                ) : (
-                  <></>
-                )}
+                <div className={classes.imageUploadAvatar}>
+                  <ImageUploadContainer handler={uaSelectImageHandler} />
+                  {uaMapImage.imageUrl ? (
+                    <Avatar
+                      data-cy='uaCartImage'
+                      src={uaMapImage.imageUrl}
+                      className={classes.large}
+                    >
+                      <Image />
+                    </Avatar>
+                  ) : initialValues.uaCartImage ? (
+                    <Avatar
+                      data-cy='uaCartImage'
+                      src={initialValues.uaCartImage}
+                      className={classes.large}
+                    >
+                      <Image />
+                    </Avatar>
+                  ) : null}
+                </div>
                 <span className={classes.imageUpload}>
                   Зображення карти (Англ.)
                 </span>
-                <ImageUploadContainer handler={enSelectImageHandler} />
-                {enMapImage.imageUrl ? (
-                  <Avatar
-                    data-cy='enCartImage'
-                    src={enMapImage.imageUrl}
-                    className={classes.large}
-                  >
-                    <Image />
-                  </Avatar>
-                ) : initialValues.enCartImage ? (
-                  <Avatar
-                    data-cy='enCartImage'
-                    src={initialValues.enCartImage}
-                    className={classes.large}
-                  >
-                    <Image />
-                  </Avatar>
-                ) : (
-                  <></>
-                )}
+                <div className={classes.imageUploadAvatar}>
+                  <ImageUploadContainer handler={enSelectImageHandler} />
+                  {enMapImage.imageUrl ? (
+                    <Avatar
+                      data-cy='enCartImage'
+                      src={enMapImage.imageUrl}
+                      className={classes.large}
+                    >
+                      <Image />
+                    </Avatar>
+                  ) : initialValues.enCartImage ? (
+                    <Avatar
+                      data-cy='enCartImage'
+                      src={initialValues.enCartImage}
+                      className={classes.large}
+                    >
+                      <Image />
+                    </Avatar>
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 <TextField
                   data-cy='mapLink'
                   id='cartLink'

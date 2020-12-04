@@ -149,12 +149,14 @@ const ModelForm = ({ model, id }) => {
             <span className={styles.imageUpload}>
               {config.labels.model.avatarText}
             </span>
-            <ImageUploadContainer handler={handleImageLoad} />
-            {modelImage && (
-              <Avatar src={modelImage}>
-                <Image />
-              </Avatar>
-            )}
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer handler={handleImageLoad} />
+              {modelImage && (
+                <Avatar src={modelImage}>
+                  <Image />
+                </Avatar>
+              )}
+            </div>
             <FormControl variant='outlined' className={styles.textField}>
               <InputLabel htmlFor='category-select'>
                 {config.labels.model.category}
