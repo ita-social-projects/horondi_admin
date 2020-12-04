@@ -29,7 +29,7 @@ const StatisticDoughnut = ({ selectedValue, onChangeDoughnut, updating }) => {
   const { mainData, options, relations, labels } = useDoughnutData();
 
   const doughnutList = select.map(({ label, value }) => (
-    <MenuItem key={value} value={value}>
+    <MenuItem data-cy={`doughnut-select-${label}`} key={value} value={value}>
       {label}
     </MenuItem>
   ));
@@ -39,7 +39,11 @@ const StatisticDoughnut = ({ selectedValue, onChangeDoughnut, updating }) => {
       <CardHeader
         title={
           <FormControl>
-            <Select onChange={onChangeDoughnut} value={selectedValue}>
+            <Select
+              data-cy='doughnut-selector'
+              onChange={onChangeDoughnut}
+              value={selectedValue}
+            >
               {doughnutList}
             </Select>
           </FormControl>
@@ -51,7 +55,7 @@ const StatisticDoughnut = ({ selectedValue, onChangeDoughnut, updating }) => {
           <LoadingBar />
         ) : (
           <>
-            <Box height={300} position='relative'>
+            <Box data-cy='doughnut-chart-box' height={300} position='relative'>
               {mainData.datasets[0].data.length ? (
                 <Doughnut redraw data={mainData} options={options} />
               ) : (

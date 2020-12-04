@@ -19,7 +19,7 @@ const {
 
 const DateMenu = ({ dateValue, onChangeDate }) => {
   const dateList = doughnut.dateMenuOptions.map(({ label, value }) => (
-    <MenuItem key={label} value={value}>
+    <MenuItem data-cy={`date-select-${label}`} key={label} value={value}>
       {label}
     </MenuItem>
   ));
@@ -36,7 +36,11 @@ const DateMenu = ({ dateValue, onChangeDate }) => {
         </Grid>
         <Grid item>
           <FormControl>
-            <Select onChange={onChangeDate} value={dateValue}>
+            <Select
+              data-cy='date-selector'
+              onChange={onChangeDate}
+              value={dateValue}
+            >
               {dateList}
             </Select>
           </FormControl>
