@@ -1,3 +1,5 @@
+import mapToLanguages from '../utils/map-languages';
+
 const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
@@ -5,28 +7,13 @@ const labels = {
     unknownAdmin: 'Невідомий адмін'
   },
   news: {
-    authorsName: [
-      { value: "Ім'я автора", lang: 'ua' },
-      { value: "Author's name", lang: 'en' }
-    ],
-    title: [
-      { value: 'Заголовок', lang: 'ua' },
-      { value: 'Title', lang: 'en' }
-    ],
-    text: [
-      { value: 'Текст', lang: 'ua' },
-      { value: 'Text', lang: 'en' }
-    ]
+    authorsName: mapToLanguages("Ім'я автора", "Author's name"),
+    title: mapToLanguages('Заголовок', 'Title'),
+    text: mapToLanguages('Текст', 'Text')
   },
   model: {
-    name: [
-      { value: 'Назва', lang: 'ua' },
-      { value: 'Name', lang: 'eu' }
-    ],
-    description: [
-      { value: 'Опис', lang: 'ua' },
-      { value: 'Description', lang: 'eu' }
-    ],
+    name: mapToLanguages('Назва', 'Name'),
+    description: mapToLanguages('Опис', 'Description'),
     image: 'Фото моделі',
     category: 'Категорія',
     available: 'Доступний',
@@ -40,10 +27,7 @@ const labels = {
     switchCategory: "Категорія, на яку замінити пов'язані товари"
   },
   header: {
-    name: [
-      { value: "Ім'я", lang: 'ua' },
-      { value: 'Name', lang: 'en' }
-    ],
+    name: mapToLanguages("І'мя", 'Name'),
     link: 'Посилання',
     priority: 'Пріорітет'
   },
@@ -54,41 +38,17 @@ const labels = {
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',
     form: {
-      name: [
-        { value: 'Назва', lang: 'ua' },
-        { value: 'Name', lang: 'en' }
-      ],
-      description: [
-        { value: 'Опис', lang: 'ua' },
-        { value: 'Description', lang: 'en' }
-      ]
+      name: mapToLanguages("І'мя", 'Name'),
+      description: mapToLanguages('Опис', 'Description')
     }
   },
   material: {
-    image: [
-      { value: 'Фото матеріалу', lang: 'ua' },
-      { value: 'Material photo', lang: 'eu' }
-    ],
-    purpose: [
-      { value: 'Застосування', lang: 'ua' },
-      { value: 'Purpose', lang: 'eu' }
-    ],
-    available: [
-      { value: 'Доступний', lang: 'ua' },
-      { value: 'Available', lang: 'en' }
-    ],
-    name: [
-      { value: 'Назва матеріалу', lang: 'ua' },
-      { value: 'Material name', lang: 'en' }
-    ],
-    description: [
-      { value: 'Опис матеріалу', lang: 'ua' },
-      { value: 'Material description', lang: 'eu' }
-    ],
-    additionalPrice: [
-      { value: 'Додаткова ціна', lang: 'ua' },
-      { value: 'Additional price', lang: 'eu' }
-    ]
+    image: mapToLanguages('Фото матеріалу', 'Material photo'),
+    purpose: mapToLanguages('Застосування', 'Purpose'),
+    available: mapToLanguages('Доступний', 'Available'),
+    name: mapToLanguages('Назва матеріалу', 'Material name'),
+    description: mapToLanguages('Опис матеріалу', 'Material description'),
+    additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
   },
   colors: {
     image: 'Фото кольору',
@@ -99,24 +59,15 @@ const labels = {
   },
   businessPage: [
     {
-      label: [
-        { value: 'Заголовок', lang: 'ua' },
-        { value: 'Title', lang: 'en' }
-      ],
-      errorLabel: [
-        { value: 'Введіть заголовок', lang: 'ua' },
-        { value: 'Pass title', lang: 'en' }
-      ]
+      label: mapToLanguages('Заголовок', 'Title'),
+      errorLabel: mapToLanguages('Введіть заголовок', 'Pass title')
     },
     {
-      label: [
-        { value: 'Текст', lang: 'ua' },
-        { value: 'Text', lang: 'en' }
-      ],
-      errorLabel: [
-        { value: 'Введіть текст для сторінки', lang: 'ua' },
-        { value: 'Pass text for the page', lang: 'en' }
-      ]
+      label: mapToLanguages('Текст', 'Text'),
+      errorLabel: mapToLanguages(
+        'Введіть текст для сторінки',
+        'Pass text for the page'
+      )
     }
   ],
   product: {
@@ -136,50 +87,32 @@ const labels = {
     ],
     infoLabels: [
       {
-        label: [
-          { value: 'Назва', lang: 'ua' },
-          { value: 'Name', lang: 'en' }
-        ],
+        label: mapToLanguages('Назва', 'Name'),
         name: 'name',
         required: true
       },
       {
-        label: [
-          { value: 'Основний матеріал', lang: 'ua' },
-          { value: 'Primary material', lang: 'en' }
-        ],
+        label: mapToLanguages('Основний матеріал', 'Primary material'),
         name: 'mainMaterial',
         required: true
       },
       {
-        label: [
-          { value: 'Внутрішній матеріал', lang: 'ua' },
-          { value: 'Inner material', lang: 'en' }
-        ],
+        label: mapToLanguages('Внутрішній матеріал', 'Inner material'),
         name: 'innerMaterial',
         required: false
       },
       {
-        label: [
-          { value: 'Замок', lang: 'ua' },
-          { value: 'Closure', lang: 'en' }
-        ],
+        label: mapToLanguages('Замок', 'Closure'),
         name: 'closure',
         required: false
       },
       {
-        label: [
-          { value: 'Довжина лямок(см)', lang: 'ua' },
-          { value: 'Strap length (cm)', lang: 'en' }
-        ],
+        label: mapToLanguages('Довжина лямок(см)', 'Strap length (cm)'),
         name: 'strapLengthInCm',
         required: false
       },
       {
-        label: [
-          { value: 'Опис', lang: 'ua' },
-          { value: 'Description', lang: 'en' }
-        ],
+        label: mapToLanguages('Опис', 'Description'),
         name: 'description',
         required: false
       }
@@ -355,10 +288,7 @@ const labels = {
   },
   homePageSlide: {
     image: 'Фото слайду',
-    title: [
-      { value: 'Заголовок слайду', lang: 'ua' },
-      { value: 'Slider title', lang: 'en' }
-    ],
+    title: mapToLanguages('Заголовок слайду', 'Slider title'),
     show: 'Доступний',
     description: 'Опис слайду',
     link: 'Посилання для переходу'
