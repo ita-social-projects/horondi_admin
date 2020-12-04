@@ -144,7 +144,7 @@ export const updatePattern = (req) => {
   });
 };
 
-export const updateValue = ' updated';
+export const updateValue = 'updated';
 
 export const addPatternError = (req) => {
   req.reply({
