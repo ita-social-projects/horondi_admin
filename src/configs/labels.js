@@ -101,12 +101,6 @@ const labels = {
         required: true
       },
       {
-        label: 'Підкатегорія ',
-        name: 'subcategory',
-        type: 'select',
-        required: true
-      },
-      {
         label: 'Модель ',
         name: 'model',
         type: 'select',
@@ -184,11 +178,13 @@ const labels = {
   },
   emailQuestionsLabels: {
     en: {
+      ALL: 'ALL',
       PENDING: 'PENDING',
       SPAM: 'SPAM',
       ANSWERED: 'ANSWERED'
     },
     ua: {
+      ALL: 'Всі',
       PENDING: 'Очікує відповіді',
       SPAM: 'Спам',
       ANSWERED: 'Відповідь надано'
@@ -214,16 +210,40 @@ const labels = {
       { label: 'Виконані замовлення', value: 'orders' },
       { label: 'Останні зареєстровані користувачі', value: 'users' }
     ],
+
+    days: {
+      7: 'byDay',
+      14: 'byDay',
+      30: 'byThreeDays',
+      90: 'byWeek',
+      365: 'byMonth'
+    },
     descriptions: {
-      users: 'Цей день',
-      orders: 'Цей день',
-      products: 'Кількість покупок'
+      users: {
+        byDay: 'Цей день',
+        byThreeDays: 'Ці дні',
+        byWeek: 'Цей тиждень',
+        byMonth: 'Цей місяць'
+      },
+      orders: {
+        byDay: 'Цей день',
+        byThreeDays: 'Ці дні',
+        byWeek: 'Цей тиждень',
+        byMonth: 'Цей місяць'
+      },
+      products: {
+        byDay: 'Кількість покупок',
+        byThreeDays: 'Кількість покупок',
+        byWeek: 'Кількість покупок',
+        byMonth: 'Кількість покупок'
+      }
     },
     message: {
       users: 'Кількість користувачів за цей час: ',
       orders: 'Кількість замовлень за цей час: ',
       products: 'Кількість продуктів за цей час: '
-    }
+    },
+    year: 365
   },
   orderTabs: {
     general: 'Загальне',

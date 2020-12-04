@@ -15,16 +15,19 @@ import {
 } from '../../redux/home/home.actions';
 import { useStyles } from './home-page.styles';
 
-const { homePageEdit } = titles;
+import { selectPhotosAndLoading } from '../../redux/selectors/homepage.selectors';
+
+import { useCommonStyles } from '../common.styles';
+
+const { homePageTitles } = titles;
 const { IMG_URL } = config;
 
 const HomePage = () => {
+  const styles = useStyles();
+  const commonStyles = useCommonStyles();
+
   const dispatch = useDispatch();
-  const classes = useStyles();
-  const { loading, photos } = useSelector(({ HomePage }) => ({
-    loading: HomePage.homePageLoading,
-    photos: HomePage.photos
-  }));
+  const { loading, photos } = useSelector(selectPhotosAndLoading);
 
   const [image, setImageUrl] = useState({});
 
@@ -70,7 +73,7 @@ const HomePage = () => {
           alignItems='center'
           data-cy={`${photo._id}-${i}`}
         >
-          <label className={classes.uploadContainer}>
+          <label className={styles.uploadContainer}>
             <input
               style={{ display: 'none' }}
               accept='image/*'
@@ -82,7 +85,7 @@ const HomePage = () => {
             />
             <Avatar
               variant='square'
-              className={classes.avatar}
+              className={styles.avatar}
               data-cy={`photo-${i}`}
               src={
                 (image[`upload-photo-${photo._id}`] &&
@@ -90,10 +93,10 @@ const HomePage = () => {
                   `${IMG_URL}${photo.images.small}`
               }
             >
-              <ImageIcon className={classes.avatarBright} />
+              <ImageIcon />
             </Avatar>
-            <div className={classes.overlay}>
-              <BackupIcon className={classes.uploadIcon} />
+            <div className={styles.overlay}>
+              <BackupIcon className={styles.uploadIcon} />
             </div>
           </label>
         </Grid>
@@ -105,23 +108,21 @@ const HomePage = () => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.tableNav}>
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
         <Typography
-          data-cy='homepage-title'
           variant='h1'
-          className={classes.title}
+          className={commonStyles.materialTitle}
+          data-cy='homepage-title'
         >
-          {homePageEdit.mainPageTitle}
+          {homePageTitles.mainPageTitle}
         </Typography>
       </div>
-      <div className={classes.tableContainer}>
-        <Paper className={classes.paper}>
-          <Grid container spacing={2}>
-            {photosItems}
-          </Grid>
-        </Paper>
-      </div>
+      <Paper className={styles.paper}>
+        <Grid container spacing={2}>
+          {photosItems}
+        </Grid>
+      </Paper>
     </div>
   );
 };

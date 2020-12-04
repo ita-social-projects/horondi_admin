@@ -13,11 +13,14 @@ export const businessPage = {
     }
   ]
 };
+export const error = {
+  message: 'NOT_FOUND'
+};
 export const businessPageId = '0c3c7954dd35de268bed4fe8';
 export const businessPageToRemoveId = '0c3c7954dd35de268bed4fe8';
 export const businessPages = [
   {
-    _id: '0c3c7954dd35de268bed4fe8',
+    _id: '0c3c7954dd35de268bed4fe9',
     code: 'about-us-test',
     title: [{ value: 'Про нас' }, { value: 'About us' }],
     text: [
@@ -44,6 +47,23 @@ export const businessPages = [
   }
 ];
 
+export const businessPageToCreate = {
+  page: {
+    code: 'business-page',
+    title: [{ value: 'Укр заголовок' }, { value: 'Eng title' }],
+    text: [
+      {
+        value: ukText
+      },
+      {
+        value: enText
+      }
+    ],
+    lang: ['uk', 'ua']
+  },
+  files: []
+};
+
 export const businessPageToUpdate = {
   id: 'de57efa1gdg543414b430',
   page: {
@@ -59,46 +79,27 @@ export const businessPageToUpdate = {
     ]
   }
 };
+
 export const fakeBusinessPage = {
-  data: {
-    getBusinessTextById: {
-      _id: '0c3c7954dd35de268bed4fe8',
-      title: [
-        {
-          lang: 'uk',
-          value: 'Пустишка'
-        },
-        {
-          lang: 'en',
-          value: 'Fake'
-        }
-      ],
-      text: [
-        {
-          lang: 'uk',
-          value: 'Текс пустишка'
-        },
-        {
-          lang: 'en',
-          value: 'Fake text'
-        }
-      ]
+  _id: '0c3c7954dd35de268bed4fe8',
+  title: [
+    {
+      lang: 'uk',
+      value: 'Пустишка'
+    },
+    {
+      lang: 'en',
+      value: 'Fake'
     }
-  }
-};
-
-export const fakePages = {
-  data: {
-    getAllBusinessTexts: {
-      ...businessPages
+  ],
+  text: [
+    {
+      lang: 'uk',
+      value: 'Текс пустишка'
+    },
+    {
+      lang: 'en',
+      value: 'Fake text'
     }
-  }
-};
-
-export const businessPageToDeleteMock = {
-  data: {
-    deleteBusinessText: {
-      ...businessPages
-    }
-  }
+  ]
 };

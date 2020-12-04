@@ -21,8 +21,7 @@ const ProductAddSpecies = ({
   handleBack,
   getColorsToSend,
   getPatternToSend,
-  getModelToSend,
-  getSelectedCategory
+  getModelToSend
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -34,14 +33,13 @@ const ProductAddSpecies = ({
     })
   );
 
-  const onSubmit = (values) => {
-    const { colors, pattern, model } = values;
+  const onSubmit = (value) => {
     dispatch(
       setProductToSend({
-        ...values,
-        colors: getColorsToSend(colors),
-        pattern: getPatternToSend(pattern),
-        model: getModelToSend(model)._id
+        ...value,
+        colors: getColorsToSend(value.colors),
+        pattern: getPatternToSend(value.pattern),
+        model: getModelToSend(value.model)._id
       })
     );
     handleNext();
@@ -88,7 +86,6 @@ const ProductAddSpecies = ({
         models={models}
         patterns={patterns}
         colors={colors}
-        getSelectedCategory={getSelectedCategory}
         values={values}
         errors={errors}
         touched={touched}
@@ -117,8 +114,7 @@ ProductAddSpecies.propTypes = {
   handleBack: PropTypes.func.isRequired,
   getColorsToSend: PropTypes.func.isRequired,
   getPatternToSend: PropTypes.func.isRequired,
-  getModelToSend: PropTypes.func.isRequired,
-  getSelectedCategory: PropTypes.func.isRequired
+  getModelToSend: PropTypes.func.isRequired
 };
 
 export default ProductAddSpecies;

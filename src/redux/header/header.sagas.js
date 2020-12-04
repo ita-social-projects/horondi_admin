@@ -27,10 +27,9 @@ import {
 import { config } from '../../configs';
 
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 
 const { routes } = config;
 
@@ -66,10 +65,9 @@ export function* handleAddHeader({ payload }) {
   try {
     yield put(setHeaderLoading(true));
     yield call(createHeader, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(routes.pathToHeaders));
+    yield put(setHeaderLoading(false));
   } catch (error) {
     yield call(handleHeaderError, error);
   }
@@ -81,9 +79,7 @@ export function* handleHeaderDelete({ payload }) {
     yield call(deleteHeader, payload);
     yield put(removeHeaderFromStore(payload));
     yield put(setHeaderLoading(false));
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleHeaderError, error);
   }
@@ -93,9 +89,7 @@ export function* handleHeaderUpdate({ payload }) {
   try {
     yield put(setHeaderLoading(true));
     yield call(updateHeader, payload);
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_UPDATE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(routes.pathToHeaders));
   } catch (error) {
     yield call(handleHeaderError, error);
@@ -105,9 +99,7 @@ export function* handleHeaderUpdate({ payload }) {
 function* handleHeaderError(e) {
   yield put(setHeaderLoading(false));
   yield put(setHeaderError({ e }));
-  yield put(setSnackBarSeverity('error'));
-  yield put(setSnackBarMessage(e.message));
-  yield put(setSnackBarStatus(true));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* headerSaga() {

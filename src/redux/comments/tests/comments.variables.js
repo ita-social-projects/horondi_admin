@@ -1,10 +1,21 @@
 export const productId = '264677d549443a6816da3d09';
 export const commentId = '564677d549443a6816da3d09';
 export const userId = '964612d549443a6816da3d09';
+export const limit = 20;
+export const skip = 0;
 export const commentsCurrentPage = 1;
 export const commentsPerPage = 1;
 export const commentsPagesCount = 1;
-
+export const userEmail = 'email@gmail.com';
+export const pagination = {
+  currentPage: 0,
+  commentsPerPage: 20,
+  pagesCount: 1
+};
+export const commentRes = {
+  items: [comment],
+  count: 1
+};
 export const comment = {
   text: 'Test text',
   user: { email: 'TEST3123@gmail.com' },

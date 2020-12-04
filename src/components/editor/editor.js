@@ -3,6 +3,9 @@ import ReactQuill, { Quill } from 'react-quill';
 import PropTypes from 'prop-types';
 import ImageIcon from '@material-ui/icons/Image';
 
+import { useSelector } from 'react-redux';
+import { useStyles } from './editor-styles.js';
+
 import ImageBlot from './image-blot';
 import VideoBlot from './video-blot';
 import 'react-quill/dist/quill.snow.css';
@@ -14,6 +17,8 @@ Quill.register(ImageBlot);
 const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
   const reactQuillRef = useRef(null);
   const inputOpenImageRef = useRef();
+
+  const isDarkMode = useSelector((state) => state.Theme.darkMode);
 
   const [content, setContent] = useState(value);
 
@@ -86,10 +91,16 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
     'color',
     'insertImage'
   ];
-
+  const styleProps = {
+    isDarkMode
+  };
+  const styles = useStyles(styleProps);
   return (
-    <div>
-      <div id='toolbar'>
+    <div data-cy='editor'>
+      <div
+        id='toolbar'
+        className={`ql-toolbar ql-snow ${styles.editorBackground}`}
+      >
         <select
           className='ql-header'
           defaultValue=''

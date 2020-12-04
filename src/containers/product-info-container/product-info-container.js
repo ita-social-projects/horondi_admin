@@ -68,7 +68,7 @@ const ProductInfoContainer = ({
       {infoLabels.map(({ label, name, required }) => {
         const inputLangName = `${lang}-${name}`;
         const inputError = touched[inputLangName] && errors[inputLangName];
-        const isStrapLengthInput = !!(name === infoLabels[4].name);
+        const isStrapLengthInput = Boolean(name === infoLabels[4].name);
 
         return name === infoLabels[5].name ? (
           <Box key={label} ml={1} my={2} className={styles.editor}>

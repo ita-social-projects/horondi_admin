@@ -10,9 +10,10 @@ import {
   updatedImages as updatedPhotos,
   loading,
   error,
-  _id,
   invalidId,
-  initialState
+  initialState,
+  mockUpdatePayload,
+  mockImages
 } from './home.variables';
 
 import homePageReducer from '../home.reducer';
@@ -55,16 +56,20 @@ describe('Homepage reducer tests', () => {
   });
 
   it('Should update homepage data in store', () => {
-    initialState.photos.push({ _id });
-
     expect(
       homePageReducer(
-        initialState,
-        updateHomePageImagesInStore(_id, updatedPhotos)
+        {
+          ...initialState,
+          photos: mockImages
+        },
+        updateHomePageImagesInStore(
+          mockUpdatePayload.id,
+          mockUpdatePayload.upload
+        )
       )
     ).toEqual({
       ...initialState,
-      photos: [{ _id }]
+      photos: [mockUpdatePayload.upload]
     });
   });
 });
