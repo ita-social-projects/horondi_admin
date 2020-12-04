@@ -153,7 +153,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       name='upload-photo'
                       type='file'
                       onChange={ukSelectImageHandler}
-                      data-cy='upload-uaPhoto'
+                      data-cy='upload-ua-photo'
                     />
                     <Button
                       id='add-contact'
@@ -186,7 +186,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       name='upload-photo'
                       type='file'
                       onChange={enSelectImageHandler}
-                      data-cy='upload-enPhoto'
+                      data-cy='upload-en-photo'
                     />
                     <Button
                       id='add-contact'

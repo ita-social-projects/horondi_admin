@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 import 'cypress-file-upload';
+import routes from '../../../src/configs/routes';
+import statuses from '../../../src/configs/statuses';
 import {
   telephoneNumber,
   email,
@@ -15,8 +17,7 @@ import {
 describe('Contacts test', () => {
   beforeEach(() => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
-    cy.visit('/contacts');
-    cy.get(`[href="${'/contacts'}"]`).click();
+    cy.visit(routes.pathToContacts);
     cy.wait(3000);
     cy.get('.MuiTableCell-root.MuiTableCell-body').as('table');
   });
@@ -61,14 +62,14 @@ describe('Contacts test', () => {
   it('The data of new contact should be add', () => {
     cy.get('[data-cy=add-contact]').click();
     cy.fixture('HORONDI.png').then((fileContent) => {
-      cy.get('[data-cy=upload-uaPhoto]').attachFile({
+      cy.get('[data-cy=upload-ua-photo]').attachFile({
         fileContent: fileContent.toString(),
         mimeType: 'image/png',
         filePath: '../fixtures/HORONDI.png'
       });
     });
     cy.fixture('HORONDI.png').then((fileContent) => {
-      cy.get('[data-cy=upload-enPhoto]').attachFile({
+      cy.get('[data-cy=upload-en-photo]').attachFile({
         fileContent: fileContent.toString(),
         mimeType: 'image/png',
         filePath: '../fixtures/HORONDI.png'
@@ -106,12 +107,12 @@ describe('Contacts test', () => {
     cy.get('[ data-cy = save]').click();
     cy.wait(3000);
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.get('.MuiAlert-message').contains('Успішно змінено!');
+    cy.get('.MuiAlert-message').contains(statuses.SUCCESS_UPDATE_STATUS);
   });
   it('  back button  check how it works', () => {
     cy.get('@table').eq(7).children().first().click();
     cy.fixture('link.png').then((fileContent) => {
-      cy.get('[data-cy=upload-enPhoto]').attachFile({
+      cy.get('[data-cy=upload-en-photo]').attachFile({
         fileContent: fileContent.toString(),
         mimeType: 'image/png',
         filePath: '../fixtures/link.png'
@@ -125,6 +126,6 @@ describe('Contacts test', () => {
     cy.get('[data-cy=dialog-confirm]').last().click();
     cy.wait(1000);
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.get('.MuiAlert-message').contains('Успішно видалено!');
+    cy.get('.MuiAlert-message').contains(statuses.SUCCESS_DELETE_STATUS);
   });
 });
