@@ -9,13 +9,14 @@ const {
   commentsTitle,
   changesTitle
 } = config.titles.mainPageTitles;
-const path = orders.items[0]._id;
+const { pathToMainPage, pathToOrders } = config.routes;
+const id = orders.items[0]._id;
 
 describe('Mainpage tests', () => {
   before(() => {
     cy.stubRequest('getAllOrders', getAllOrders).as('getAllOrders');
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
-    cy.visit('/');
+    cy.visit(pathToMainPage);
   });
   it('should find page title and check it content', () => {
     cy.get('[data-cy=page-title]').should('be.visible');
@@ -31,7 +32,7 @@ describe('Mainpage tests', () => {
   });
   it('should check orders redirect', () => {
     cy.get('[data-cy=orders-container] [data-cy=order]').first().click();
-    cy.url().should('include', `/orders/${path}`);
+    cy.url().should('include', `${pathToOrders}/${id}`);
   });
   it('should check the mainpage button for clickability ', () => {
     cy.get('#menuDrawer').contains(mainTitle).click();
