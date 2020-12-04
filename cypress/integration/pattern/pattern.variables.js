@@ -138,7 +138,7 @@ export const updatePattern = (req) => {
   req.reply({
     body: {
       data: {
-        updatePattern: patternToUpdate
+        addPattern: patternToUpdate
       }
     }
   });
@@ -152,7 +152,7 @@ export const addPatternError = (req) => {
       data: {
         addPattern: {
           message: 'PATTERN_ALREADY_EXIST',
-          status: 400
+          statusCode: 400
         }
       }
     }
@@ -166,10 +166,10 @@ export const getPatternById = (req) => {
           ...patternToUpdate,
           description: [
             {
-              value: ''
+              value: typeValue
             },
             {
-              value: ''
+              value: typeValue
             }
           ]
         }
