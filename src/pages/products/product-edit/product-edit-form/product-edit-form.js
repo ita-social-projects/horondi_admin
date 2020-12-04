@@ -11,6 +11,7 @@ import {
   useTheme
 } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import { push } from 'connected-react-router';
 import useProductHandlers from '../../../../hooks/product/use-product-handlers';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import useProductValidation from '../../../../hooks/product/use-product-validation';
@@ -30,8 +31,9 @@ import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actio
 import { productsTranslations } from '../../../../translations/product.translations';
 import ProductCarousel from './product-carousel';
 import DeleteButton from '../../../../components/buttons/delete-button';
-import { config } from '../../../../configs';
 import CommentsPage from '../../../comments';
+import { StandardButton } from '../../../../components/buttons';
+import { config } from '../../../../configs';
 
 const { priceLabel } = config.labels.product;
 
@@ -65,6 +67,10 @@ const ProductEditForm = () => {
 
   const formikPriceValue = {
     basePrice: Math.round(product.basePrice[1].value / 100)
+  };
+
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
   };
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -303,6 +309,15 @@ const ProductEditForm = () => {
         </Grid>
         <CommentsPage productId={product._id} />
       </Grid>
+      <div className={styles.controlsBlock}>
+        <StandardButton
+          id='back-btn'
+          title={config.buttonTitles.GO_BACK_TITLE}
+          variant='outlined'
+          onClickHandler={handleGoBack}
+          data-cy='back-btn'
+        />
+      </div>
     </div>
   );
 };

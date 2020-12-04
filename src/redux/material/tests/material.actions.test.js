@@ -16,12 +16,7 @@ import {
   showColorDialogWindow,
   clearColors
 } from '../material.actions';
-import {
-  material,
-  materials,
-  materialToUpdateDeleteId,
-  newColor
-} from './material.variables';
+import { mockMaterial, mockMaterials } from './material.variables';
 import {
   GET_MATERIALS,
   SET_MATERIALS,
@@ -40,31 +35,32 @@ import {
   SHOW_COLOR_DIALOG_WINDOW,
   CLEAR_COLORS
 } from '../material.types';
+import { mockId } from '../../model/tests/model.variables';
 
 describe('material actions tests', () => {
   it('should get materials', () => {
-    expect(getMaterials(materials)).toEqual({
+    expect(getMaterials(mockMaterials)).toEqual({
       type: GET_MATERIALS,
-      payload: materials
+      payload: mockMaterials
     });
   });
   it('should set materials', () => {
-    expect(setMaterials(materials)).toEqual({
+    expect(setMaterials(mockMaterials)).toEqual({
       type: SET_MATERIALS,
-      payload: materials
+      payload: mockMaterials
     });
   });
 
   it('should get material', () => {
-    expect(getMaterial(material)).toEqual({
+    expect(getMaterial(mockMaterial)).toEqual({
       type: GET_MATERIAL,
-      payload: material
+      payload: mockMaterial
     });
   });
   it('should set material', () => {
-    expect(setMaterial(material)).toEqual({
+    expect(setMaterial(mockMaterial)).toEqual({
       type: SET_MATERIAL,
-      payload: material
+      payload: mockMaterial
     });
   });
   it('should set loading to true', () => {
@@ -98,14 +94,14 @@ describe('material actions tests', () => {
     });
   });
   it('should add material', () => {
-    expect(addMaterial(material)).toEqual({
+    expect(addMaterial(mockMaterial)).toEqual({
       type: ADD_MATERIAL,
-      payload: material
+      payload: mockMaterial
     });
   });
   it('should update material', () => {
-    const filteredMaterial = materials.filter(
-      (item) => item._id === materialToUpdateDeleteId
+    const filteredMaterial = mockMaterials.items.filter(
+      (item) => item._id === mockId
     );
     const updatedMaterial = {
       ...filteredMaterial,
@@ -122,27 +118,27 @@ describe('material actions tests', () => {
     };
     expect(
       updateMaterial({
-        id: materialToUpdateDeleteId,
+        id: mockId,
         material: updatedMaterial
       })
     ).toEqual({
       type: UPDATE_MATERIAL,
       payload: {
-        id: materialToUpdateDeleteId,
+        id: mockId,
         material: updatedMaterial
       }
     });
   });
   it('should delete material', () => {
-    expect(deleteMaterial(materialToUpdateDeleteId)).toEqual({
+    expect(deleteMaterial(mockMaterial)).toEqual({
       type: DELETE_MATERIAL,
-      payload: materialToUpdateDeleteId
+      payload: mockMaterial
     });
   });
   it('should remove material from store', () => {
-    expect(removeMaterialFromStore(materialToUpdateDeleteId)).toEqual({
+    expect(removeMaterialFromStore(mockId)).toEqual({
       type: REMOVE_MATERIAL_FROM_STORE,
-      payload: materialToUpdateDeleteId
+      payload: mockId
     });
   });
   it('should set show color dialog window to true', () => {
@@ -152,9 +148,9 @@ describe('material actions tests', () => {
     });
   });
   it('should set new color to store', () => {
-    expect(setNewColorToStore(newColor)).toEqual({
+    expect(setNewColorToStore([])).toEqual({
       type: COLOR_DIALOG_DATA_TO_STORE,
-      payload: newColor
+      payload: []
     });
   });
   it('should remove colors from store', () => {
