@@ -28,7 +28,7 @@ const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
   const { total } = barData[selectedValue];
 
   const barList = select.map(({ label, value }) => (
-    <MenuItem key={value} value={value}>
+    <MenuItem data-cy={`bar-select-${label}`} key={value} value={value}>
       {label}
     </MenuItem>
   ));
@@ -38,7 +38,11 @@ const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
       <CardHeader
         title={
           <FormControl>
-            <Select onChange={onChangeBar} value={selectedValue}>
+            <Select
+              data-cy='bar-selector'
+              onChange={onChangeBar}
+              value={selectedValue}
+            >
               {barList}
             </Select>
           </FormControl>
@@ -46,7 +50,7 @@ const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
       />
       <Divider />
       <CardContent>
-        <Box height={400} position='relative'>
+        <Box data-cy='bar-chart-box' height={400} position='relative'>
           {updating ? (
             <LoadingBar />
           ) : mainData.datasets[0].data.length ? (
@@ -59,7 +63,7 @@ const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
       <Divider />
       {total ? (
         <Box p={2}>
-          <Typography variant='body1'>
+          <Typography data-cy='total-count' variant='body1'>
             {message[selectedValue] + total}
           </Typography>
         </Box>
