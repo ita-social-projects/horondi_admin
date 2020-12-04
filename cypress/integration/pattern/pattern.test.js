@@ -7,7 +7,8 @@ import {
   addPatternError,
   updateValue,
   updatePattern,
-  deletePattern
+  deletePattern,
+  wrongValue
 } from './pattern.variables';
 import statuses from '../../../src/configs/statuses';
 import routes from '../../../src/configs/routes';
@@ -57,8 +58,8 @@ describe('pattern tests', () => {
     cy.get('[data-cy=material').should('be.visible');
     cy.get('[data-cy=material').contains(config.labels.pattern.material);
     cy.get('[data-cy=ua-name]').should('be.visible');
-    cy.get('[data-cy=ua-name]').contains('Назва');
     cy.get('[data-cy=ua-description]').should('be.visible');
+    cy.get('[data-cy=ua-name]').contains('Назва');
     cy.get('[data-cy=ua-description]').contains('Опис');
     cy.get('[data-cy=ua-tab]').should('be.visible');
     cy.get('[data-cy=en-tab]').should('be.visible');
@@ -88,21 +89,21 @@ describe('pattern tests', () => {
     cy.get('[data-cy=en-description-error]').contains(
       config.patternErrorMessages.PATTERN_ERROR_MESSAGE
     );
-    cy.get('[data-cy=material').type('a');
-    cy.get('[data-cy=en-name]').type('a');
+    cy.get('[data-cy=material').type(wrongValue);
+    cy.get('[data-cy=en-name]').type(wrongValue);
     cy.get('[data-cy=en-name-error]').contains(
       config.patternErrorMessages.PATTERN_VALIDATION_ERROR
     );
-    cy.get('[data-cy=en-description]').type('a');
+    cy.get('[data-cy=en-description]').type(wrongValue);
     cy.get('[data-cy=en-description-error]').contains(
       config.patternErrorMessages.PATTERN_VALIDATION_ERROR
     );
     cy.get('[data-cy=ua-tab]').click();
-    cy.get('[data-cy=ua-name]').type('a');
+    cy.get('[data-cy=ua-name]').type(wrongValue);
     cy.get('[data-cy=ua-name-error]').contains(
       config.patternErrorMessages.PATTERN_VALIDATION_ERROR
     );
-    cy.get('[data-cy=ua-description]').type('a');
+    cy.get('[data-cy=ua-description]').type(wrongValue);
     cy.get('[data-cy=ua-description-error]').contains(
       config.patternErrorMessages.PATTERN_VALIDATION_ERROR
     );

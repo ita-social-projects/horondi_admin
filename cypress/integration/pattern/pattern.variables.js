@@ -1,7 +1,6 @@
 const patterns = {
   items: [
     {
-      _id: '0c3c7929dd85de268bed4fe6',
       name: [
         {
           lang: 'ua',
@@ -12,6 +11,7 @@ const patterns = {
           value: 'Pink wave'
         }
       ],
+      _id: '0c3c7929dd85de268bed4fe6',
       material: 'Cotton',
       available: true,
       images: {
@@ -30,11 +30,11 @@ const patterns = {
           value: 'Blue wave'
         }
       ],
-      material: 'Cotton',
-      available: true,
       images: {
         thumbnail: 'thumbnail_335nr4j5dkebkvle7_blue-wave.jpg'
-      }
+      },
+      material: 'Cotton',
+      available: true
     },
     {
       _id: '51af3801f347948f19f6933c',
@@ -55,6 +55,8 @@ const patterns = {
       }
     },
     {
+      material: 'Cotton',
+      available: true,
       _id: '7c49f713a0fbbc6250a79173',
       name: [
         {
@@ -66,8 +68,6 @@ const patterns = {
           value: 'Arrows'
         }
       ],
-      material: 'Cotton',
-      available: true,
       images: {
         thumbnail: 'thumbnail_335nr4j5dkebkv6hj_arrows.jpg'
       }
@@ -77,7 +77,7 @@ const patterns = {
 };
 
 export const typeValue = 'pattern';
-
+export const wrongValue = 'a';
 const patternToAdd = {
   _id: '7c49f713a0fbbc6250a79133',
   name: [
