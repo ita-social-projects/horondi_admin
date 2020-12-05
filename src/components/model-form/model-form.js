@@ -219,7 +219,7 @@ const ModelForm = ({ model, id }) => {
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label={config.labels.model.name[tabsValue].value}
+                label={config.labels.model.name}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
