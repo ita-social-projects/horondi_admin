@@ -20,6 +20,7 @@ import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { updateArticle } from '../../redux/news/news.actions';
 import ImageUploadContainer from '../../containers/image-upload-container';
+import Editor from '../editor/editor';
 
 const { languages } = config;
 
@@ -38,7 +39,9 @@ const NewsForm = ({ article, id }) => {
     authorPhoto,
     setAuthorPhoto,
     newsImage,
-    setNewsImage
+    setNewsImage,
+    uaSetText,
+    enSetText
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -184,27 +187,12 @@ const NewsForm = ({ article, id }) => {
                 onChange={handleChange}
                 required
               />
-              {/* <Editor
-                data-cy={`${lang}Text`}
-                id={`${lang}Text`}
-                className={styles.textField}
-                variant='outlined'
-                multiline
+              <Editor
                 value={values[`${lang}Text`]}
-                // value="ДЩУКЩАлВЗЛПівщапліщвзапщзіовапшоіщваптщів"
-                onEditorChange={handleChange}
                 placeholder='Текст'
-                required
-              /> */}
-              <TextField
-                data-cy={`${lang}Text`}
                 id={`${lang}Text`}
-                className={styles.textField}
-                variant='outlined'
-                label='Текст'
+                onEditorChange={(value) => setFieldValue(`${lang}Text`, value)}
                 multiline
-                value={values[`${lang}Text`]}
-                onChange={handleChange}
                 required
               />
             </Paper>
