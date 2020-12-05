@@ -1,5 +1,6 @@
 const routes = {
-  pathToLogin: '/',
+  pathToLogin: '/login',
+  pathToMainPage: '/',
   pathToPatterns: '/patterns',
   pathToPatternDetails: '/patterns/:id',
   pathToAddPattern: '/patterns/add',

@@ -20,6 +20,11 @@ const initialState = {
   }
 };
 
+export const selectCommentsList = ({ Comments }) => ({
+  commentsList: Comments.list,
+  commentsLoading: Comments.commentsLoading
+});
+
 const commentsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
   case SET_COMMENTS:

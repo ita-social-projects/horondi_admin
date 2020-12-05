@@ -14,6 +14,8 @@ import { updateArticle } from '../../redux/news/news.actions';
 
 const { languages } = config;
 
+const labels = config.labels.news;
+
 const NewsForm = ({ article, id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -60,11 +62,11 @@ const NewsForm = ({ article, id }) => {
     initialValues: {
       authorPhoto: article.author.image.small || '',
       newsImage: article.images.primary.medium || '',
-      ukAuthorName: article.author.name[0].value || '',
+      uaAuthorName: article.author.name[0].value || '',
       enAuthorName: article.author.name[1].value || '',
-      ukTitle: article.title[0].value || '',
+      uaTitle: article.title[0].value || '',
       enTitle: article.title[1].value || '',
-      ukText: article.text[0].value || '',
+      uaText: article.text[0].value || '',
       enText: article.text[1].value || ''
     },
     onSubmit: () => {
@@ -131,7 +133,9 @@ const NewsForm = ({ article, id }) => {
                 id={`${lang}AuthorName`}
                 className={classes.textField}
                 variant='outlined'
-                label={`Ім'я автора`}
+                label={
+                  labels.authorsName.find((item) => item.lang === lang).value
+                }
                 multiline
                 value={values[`${lang}AuthorName`]}
                 onChange={handleChange}
@@ -142,7 +146,7 @@ const NewsForm = ({ article, id }) => {
                 id={`${lang}Title`}
                 className={classes.textField}
                 variant='outlined'
-                label='Заголовок'
+                label={labels.title.find((item) => item.lang === lang).value}
                 multiline
                 value={values[`${lang}Title`]}
                 onChange={handleChange}
@@ -153,7 +157,7 @@ const NewsForm = ({ article, id }) => {
                 id={`${lang}Text`}
                 className={classes.textField}
                 variant='outlined'
-                label='Текст'
+                label={labels.text.find((item) => item.lang === lang).value}
                 multiline
                 value={values[`${lang}Text`]}
                 onChange={handleChange}
