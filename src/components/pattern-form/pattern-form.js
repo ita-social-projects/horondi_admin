@@ -146,12 +146,14 @@ const PatternForm = ({ pattern, id }) => {
             <span className={styles.imageUpload}>
               {config.labels.pattern.avatarText}
             </span>
-            <ImageUploadContainer handler={handleImageLoad} />
-            {patternImage && (
-              <Avatar src={patternImage}>
-                <Image />
-              </Avatar>
-            )}
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer handler={handleImageLoad} />
+              {patternImage && (
+                <Avatar src={patternImage}>
+                  <Image />
+                </Avatar>
+              )}
+            </div>
             <TextField
               data-cy='material'
               id='material'

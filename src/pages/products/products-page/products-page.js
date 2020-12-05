@@ -19,7 +19,7 @@ import { config } from '../../../configs';
 import { productsTranslations } from '../../../translations/product.translations';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import { ProductsAndTableSelectors } from '../../../redux/selectors/products-page.selectors';
+import { selectProductsAndTable } from '../../../redux/selectors/multiple.selectors';
 import { useCommonStyles } from '../../common.styles';
 
 const {
@@ -45,7 +45,7 @@ const ProductsPage = () => {
     sortByPrice,
     filters,
     sortByPopularity
-  } = useSelector(ProductsAndTableSelectors);
+  } = useSelector(selectProductsAndTable);
 
   const {
     categoryFilter,

@@ -12,12 +12,8 @@ import {
   showColorDialogWindow,
   clearColors
 } from '../material.actions';
-import {
-  materials,
-  material,
-  materialToUpdateDeleteId,
-  newColor
-} from './material.variables';
+import { mockMaterials } from './material.variables';
+import { mockId } from '../../model/tests/model.variables';
 
 describe('material reducer tests', () => {
   it('should return default value', () => {
@@ -27,15 +23,19 @@ describe('material reducer tests', () => {
     expect(materialReducer(initialState)).toEqual(initialState);
   });
   it('should set materials to store', () => {
-    expect(materialReducer(initialState, setMaterials(materials))).toEqual({
+    expect(
+      materialReducer(initialState, setMaterials(mockMaterials.items))
+    ).toEqual({
       ...initialState,
-      list: materials
+      list: mockMaterials.items
     });
   });
   it('should set material to store', () => {
-    expect(materialReducer(initialState, setMaterial(material))).toEqual({
+    expect(
+      materialReducer(initialState, setMaterial(mockMaterials.items[0]))
+    ).toEqual({
       ...initialState,
-      material
+      material: mockMaterials.items[0]
     });
   });
   it('should set materials per page', () => {
@@ -82,24 +82,20 @@ describe('material reducer tests', () => {
     });
   });
   it('should remove material from store', () => {
-    const filteredMaterials = materials.filter(
-      (item) => item._id !== materialToUpdateDeleteId
+    const filteredMaterials = mockMaterials.items.filter(
+      (item) => item._id !== mockId
     );
-    const state = { ...initialState, list: materials };
-    expect(
-      materialReducer(state, removeMaterialFromStore(materialToUpdateDeleteId))
-    ).toEqual({
+    const state = { ...initialState, list: mockMaterials.items };
+    expect(materialReducer(state, removeMaterialFromStore(mockId))).toEqual({
       ...initialState,
       list: filteredMaterials
     });
   });
   it('should add new color to store', () => {
-    expect(materialReducer(initialState, setNewColorToStore(newColor))).toEqual(
-      {
-        ...initialState,
-        colors: [...[], newColor]
-      }
-    );
+    expect(materialReducer(initialState, setNewColorToStore([]))).toEqual({
+      ...initialState,
+      colors: [...[], []]
+    });
   });
   it('should set showColodialogWindow to true', () => {
     expect(materialReducer(initialState, showColorDialogWindow(true))).toEqual({

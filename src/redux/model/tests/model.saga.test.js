@@ -145,7 +145,7 @@ describe('Test model sagas', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(5);
-        expect(analysisCall).toHaveLength(1);
+        expect(analysisCall).toHaveLength(3);
       }));
 
   it('should delete model', () =>
@@ -181,7 +181,7 @@ describe('Test model sagas', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(6);
-        expect(analysisCall).toHaveLength(1);
+        expect(analysisCall).toHaveLength(3);
       }));
 
   it('should update model', () =>
@@ -213,7 +213,7 @@ describe('Test model sagas', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(5);
-        expect(analysisCall).toHaveLength(1);
+        expect(analysisCall).toHaveLength(3);
       }));
 
   it('should handle models error', () =>

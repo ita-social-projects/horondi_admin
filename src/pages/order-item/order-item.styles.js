@@ -67,5 +67,9 @@ export const useStyles = makeStyles((theme) => ({
     '& > li': {
       marginBottom: '5px'
     }
+  },
+  controlsBlock: {
+    display: 'flex',
+    margin: '20px 0'
   }
 }));

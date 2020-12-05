@@ -15,7 +15,7 @@ import {
 } from '../../redux/home/home.actions';
 import { useStyles } from './home-page.styles';
 
-import { HomePageSelector } from '../../redux/selectors/home-page.selectors';
+import { selectPhotosAndLoading } from '../../redux/selectors/homepage.selectors';
 
 import { useCommonStyles } from '../common.styles';
 
@@ -27,7 +27,7 @@ const HomePage = () => {
   const commonStyles = useCommonStyles();
 
   const dispatch = useDispatch();
-  const { loading, photos } = useSelector(HomePageSelector);
+  const { loading, photos } = useSelector(selectPhotosAndLoading);
 
   const [image, setImageUrl] = useState({});
 
@@ -110,7 +110,11 @@ const HomePage = () => {
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
-        <Typography variant='h1' className={commonStyles.materialTitle}>
+        <Typography
+          variant='h1'
+          className={commonStyles.materialTitle}
+          data-cy='homepage-title'
+        >
           {homePageTitles.mainPageTitle}
         </Typography>
       </div>

@@ -23,9 +23,7 @@ const homePageReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       photos: state.photos.map((photo) =>
-        photo._id === action.payload._id
-          ? action.payload.updatedPhotos
-          : photo
+        photo._id === action.payload.id ? action.payload.upload : photo
       )
     };
 

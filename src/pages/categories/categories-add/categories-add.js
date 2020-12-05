@@ -36,6 +36,7 @@ import AddPhoto from '../../../images/add-photo.png';
 import { categoryTranslations } from '../../../translations/category.translations';
 import { config } from '../../../configs';
 import { useCommonStyles } from '../../common.styles';
+import { StandardButton } from '../../../components/buttons';
 
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
 const { DELETE_CATEGORY } = config.buttonTitles;
@@ -265,6 +266,9 @@ const CategoriesAdd = ({ id, editMode }) => {
   // PARENT CATEGORY HANDLERS
   const handleParentChange = (e) => {
     setParentId(e.target.value);
+  };
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
   };
 
   // SUBCATEGORY LIST []
@@ -517,14 +521,24 @@ const CategoriesAdd = ({ id, editMode }) => {
           </Grid>
         </Grid>
       </FormControl>
-      <Button
-        variant='contained'
-        color='primary'
-        className={classes.saveBtn}
-        onClick={editMode ? handleCategoryEdit : handleCategorySave}
-      >
-        {config.buttonTitles.titleGenerator(editMode, isMain)}
-      </Button>
+
+      <div className={classes.controlsBlock}>
+        <StandardButton
+          id='back-btn'
+          title={config.buttonTitles.GO_BACK_TITLE}
+          variant='outlined'
+          onClickHandler={handleGoBack}
+          data-cy='back-btn'
+        />
+        <Button
+          variant='contained'
+          color='primary'
+          className={classes.saveBtn}
+          onClick={editMode ? handleCategoryEdit : handleCategorySave}
+        >
+          {config.buttonTitles.titleGenerator(editMode, isMain)}
+        </Button>
+      </div>
     </div>
   );
 };

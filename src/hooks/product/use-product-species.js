@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { ColorsSelector } from '../../redux/selectors/use-product-species.selectors';
+
+const selectColorValue = ({ colors }) => colors[0].simpleName[0].value;
 
 export default function useProductSpecies() {
   const filterData = useSelector(({ Products }) => Products.filterData);
@@ -24,7 +25,7 @@ export default function useProductSpecies() {
   );
 
   const colorsNames = useMemo(
-    () => [...new Set(filterData.map(ColorsSelector))],
+    () => [...new Set(filterData.map(selectColorValue))],
     [filterData]
   );
 
