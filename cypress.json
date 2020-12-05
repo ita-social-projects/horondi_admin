@@ -5,9 +5,4 @@
   "experimentalNetworkStubbing": true,
   "chromeWebSecurity": false,
   "ignoreTestFiles": "*.variables.js",
-  "env": {
-    "SERVER_URL": "http://localhost:5000/graphql",
-    "ADMIN_LOGIN": "superadmin@gmail.com",
-    "ADMIN_PASSWORD": "qwertY123"
-  }
 }
