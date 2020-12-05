@@ -187,7 +187,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   id='uaTitle'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок ua'
+                  label={config.labels.lableTitle.ua}
                   multiline
                   value={formik.values.uaTitle}
                   onChange={formik.handleChange}
@@ -219,7 +219,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   id='enTitle'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок en'
+                  label={config.labels.lableTitle.en}
                   multiline
                   value={formik.values.enTitle}
                   onChange={formik.handleChange}

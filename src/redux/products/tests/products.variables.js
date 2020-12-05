@@ -12,11 +12,11 @@ const initialLanguageValues = [
 const mockColors = [
   {
     name: [
-      { lang: 'uk', value: 'Золотий' },
+      { lang: 'ua', value: 'Золотий' },
       { lang: 'en', value: 'Golden' }
     ],
     simpleName: [
-      { lang: 'uk', value: 'жовтий' },
+      { lang: 'ua', value: 'жовтий' },
       { lang: 'en', value: 'yellow' }
     ]
   }
