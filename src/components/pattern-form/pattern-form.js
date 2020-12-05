@@ -9,10 +9,12 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button
+  Button,
+  Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { Image } from '@material-ui/icons';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
@@ -148,14 +150,14 @@ const PatternForm = ({ pattern, id }) => {
             <span className={styles.imageUpload}>
               {config.labels.pattern.avatarText}
             </span>
-            <ImageUploadContainer
-              handler={handleImageLoad}
-              srcForAvatar={
-                patternImage ||
-                `${config.patternImageLink}${values.patternImage}`
-              }
-              fileName={upload.name || pattern.images.thumbnail}
-            />
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer handler={handleImageLoad} />
+              {patternImage && (
+                <Avatar src={patternImage}>
+                  <Image />
+                </Avatar>
+              )}
+            </div>
             <TextField
               data-cy='material'
               id='material'

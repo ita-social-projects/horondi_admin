@@ -316,6 +316,10 @@ const labels = {
     show: 'Доступний',
     description: 'Опис слайду',
     link: 'Посилання для переходу'
+  },
+  lableTitle: {
+    ua: 'Заголовок ua',
+    en: 'Заголовок en'
   }
 };
 export default labels;

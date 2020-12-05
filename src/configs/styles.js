@@ -43,10 +43,13 @@ const formStyles = (theme) => ({
     marginLeft: '10px',
     color: 'rgba(0, 0, 0, 0.54)'
   },
-  imageUploadContainer: {
+  imageUploadAvatar: {
+    padding: '10px',
     display: 'flex',
     alignItems: 'center',
-    margin: '10px'
+    '& div:nth-child(2)': {
+      marginLeft: '15px'
+    }
   },
 
   details: {
@@ -71,7 +74,7 @@ const formStyles = (theme) => ({
     '@media (max-width: 768px)': {
       display: 'none'
     }
-  },
+  }
 });
 
 export { formStyles };

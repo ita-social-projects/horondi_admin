@@ -133,7 +133,7 @@ export const config = {
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
   initialLanguageValues: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: ''
     },
     {

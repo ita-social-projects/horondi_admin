@@ -58,16 +58,12 @@ describe('Business pages test ', () => {
     cy.get('[data-cy=en]').should('be.visible');
     cy.get('[data-cy=en]').contains('en');
     cy.get('[data-cy=page-header-ua]').should('be.visible');
-    cy.get('[data-cy=page-header-ua]').contains(
-      labels.businessPage[0].label[0].value
-    );
+    cy.get('[data-cy=page-header-ua]').contains(config.labels.lableTitle.ua);
     cy.get('[data-cy=editor]').should('be.visible');
     cy.get('.ql-editor.ql-blank').should('be.visible');
     cy.get('[data-cy=en]').click();
     cy.get('[data-cy=page-header-en]').should('be.visible');
-    cy.get('[data-cy=page-header-en]').contains(
-      labels.businessPage[0].label[1].value
-    );
+    cy.get('[data-cy=page-header-en]').contains(config.labels.lableTitle.en);
     cy.get('[data-cy=editor]').should('be.visible');
     cy.get('.ql-editor.ql-blank').should('be.visible');
     cy.get('[data-cy=back-btn]').should('be.visible');

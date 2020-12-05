@@ -12,10 +12,12 @@ import {
   Button,
   Select,
   FormControl,
-  InputLabel
+  InputLabel,
+  Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { Image } from '@material-ui/icons';
 import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { SaveButton } from '../buttons';
@@ -59,10 +61,10 @@ const ModelForm = ({ model, id }) => {
     enName: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
-    ukDescription: Yup.string()
+    uaDescription: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
     priority: Yup.number(),
@@ -95,9 +97,9 @@ const ModelForm = ({ model, id }) => {
     validationSchema: modelValidationSchema,
     initialValues: {
       modelImage: model.images ? model.images.thumbnail : '',
-      ukName: model.name[0].value || '',
+      uaName: model.name[0].value || '',
       enName: model.name[1].value || '',
-      ukDescription: model.description[0].value || '',
+      uaDescription: model.description[0].value || '',
       enDescription: model.description[1].value || '',
       priority: model.priority || 1,
       category: category || '',
@@ -147,13 +149,14 @@ const ModelForm = ({ model, id }) => {
             <span className={styles.imageUpload}>
               {config.labels.model.avatarText}
             </span>
-            <ImageUploadContainer
-              handler={handleImageLoad}
-              srcForAvatar={
-                modelImage || `${config.IMG_URL}${values.modelImage}`
-              }
-              fileName={upload && upload.name}
-            />
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer handler={handleImageLoad} />
+              {modelImage && (
+                <Avatar src={modelImage}>
+                  <Image />
+                </Avatar>
+              )}
+            </div>
             <FormControl variant='outlined' className={styles.textField}>
               <InputLabel htmlFor='category-select'>
                 {config.labels.model.category}
@@ -289,27 +292,27 @@ ModelForm.propTypes = {
   values: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),
   errors: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),
   touched: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),
