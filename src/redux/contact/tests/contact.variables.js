@@ -3,6 +3,20 @@ export const mapImages = ['image1', 'image2'];
 export const contactsPagesCount = 1;
 export const contactsPerPage = 1;
 export const contactsCurrentPage = 1;
+export const error = { message: 'error' };
+export const payload = {
+  skip: 0,
+  limit: 6,
+  contactsPerPage: 1
+};
+export const newContact = {
+  newContact: { ...contact },
+  mapImages: []
+};
+export const contactRes = {
+  items: [contact],
+  count: 1
+};
 
 export const contact = {
   _id: '5c3c7929dd85de268bed4fe8',
@@ -53,39 +67,7 @@ export const initialState = {
   }
 };
 
-export const allContactsMock = {
-  data: {
-    getContacts: {
-      contact
-    }
-  }
-};
-
-export const contactByIdMock = {
-  data: {
-    getContactById: {
-      contact
-    }
-  }
-};
-
-export const contactDeleteIdMock = {
-  data: {
-    deleteContact: {
-      contact
-    }
-  }
-};
-
-export const contactUpdateMock = {
-  data: {
-    updateContact: {
-      contact
-    }
-  }
-};
-
-export const getContactsMock = {
+export const getContacts = {
   skip: 1,
   limit: 1,
   contactsPerPage: 1

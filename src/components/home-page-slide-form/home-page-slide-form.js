@@ -161,12 +161,14 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             <span className={styles.imageUpload}>
               {config.labels.homePageSlide.image}
             </span>
-            <ImageUploadContainer handler={handleImageLoad} />
-            {slideImage && (
-              <Avatar src={slideImage}>
-                <Image />
-              </Avatar>
-            )}
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer handler={handleImageLoad} />
+              {slideImage && (
+                <Avatar src={slideImage}>
+                  <Image />
+                </Avatar>
+              )}
+            </div>
             <TextField
               data-cy='link'
               id='link'

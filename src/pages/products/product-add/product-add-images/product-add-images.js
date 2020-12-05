@@ -67,15 +67,17 @@ const ProductAddImages = ({
       <Box my={3}>
         <Grid container spacing={1}>
           <Grid item>
-            <ImageUploadContainer
-              handler={handlePrimaryImageLoad}
-              buttonLabel={MAIN_PHOTO}
-            />
-            {primaryImage && (
-              <Avatar src={primaryImage}>
-                <Image />
-              </Avatar>
-            )}
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer
+                handler={handlePrimaryImageLoad}
+                buttonLabel={MAIN_PHOTO}
+              />
+              {primaryImage && (
+                <Avatar src={primaryImage}>
+                  <Image />
+                </Avatar>
+              )}
+            </div>
           </Grid>
         </Grid>
         {shouldValidate && !primaryImage && (
@@ -85,16 +87,18 @@ const ProductAddImages = ({
       <Box my={3}>
         <Grid container spacing={1}>
           <Grid item>
-            <ImageUploadContainer
-              handler={handleAdditionalImagesLoad}
-              buttonLabel={ADDITIONAL_PHOTOS}
-            />
-            <div className={styles.avatarWrapper}>
-              {additionalImages.map((e) => (
-                <Avatar key={e} src={e}>
-                  <Image />
-                </Avatar>
-              ))}
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer
+                handler={handleAdditionalImagesLoad}
+                buttonLabel={ADDITIONAL_PHOTOS}
+              />
+              <div className={styles.avatarWrapper}>
+                {additionalImages.map((e) => (
+                  <Avatar key={e} src={e}>
+                    <Image />
+                  </Avatar>
+                ))}
+              </div>
             </div>
           </Grid>
         </Grid>

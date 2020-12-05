@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => {
     imageUpload,
     itemUpdate,
     inputError,
-    imageUploadContainer,
+    imageUploadAvatar,
     imageName
   } = formStyles(theme);
   return {
@@ -33,7 +33,7 @@ export const useStyles = makeStyles((theme) => {
     attachFile,
     imageUpload,
     inputError,
-    imageUploadContainer,
+    imageUploadAvatar,
     imageName
   };
 });

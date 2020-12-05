@@ -49,7 +49,7 @@ describe('Homepage actions test', () => {
   it('Should update homepage data in store', () => {
     expect(updateHomePageImagesInStore(id, updatedImages)).toEqual({
       type: UPDATE_HOME_PAGE_DATA_LOCALLY,
-      payload: { id, updatedImages }
+      payload: { id, upload: updatedImages }
     });
   });
 

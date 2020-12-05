@@ -83,7 +83,6 @@ const OrdersPage = () => {
           {config.titles.orderTitles.mainPageTitle}
         </Typography>
         <div className={styles.filterBy}>
-          {config.titles.orderTitles.filterBy}
           <Select value={status} onChange={(e) => setStatus(e.target.value)}>
             {statusList}
           </Select>
