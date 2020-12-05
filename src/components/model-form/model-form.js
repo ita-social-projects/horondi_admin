@@ -37,9 +37,9 @@ const { routes } = config;
 
 const ModelForm = ({ model, id }) => {
   const { enSetText, setFiles, languages } = useBusinessHandlers();
-
   const styles = useStyles();
   const dispatch = useDispatch();
+  const inputLabel = React.useRef(null);
   const {
     tabsValue,
     handleTabsChange,
@@ -114,8 +114,6 @@ const ModelForm = ({ model, id }) => {
       dispatch(addModel({ model: newModel, image: upload }));
     }
   });
-
-  const inputLabel = React.useRef(null);
 
   const checkboxes = [
     {
@@ -219,7 +217,7 @@ const ModelForm = ({ model, id }) => {
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label={config.labels.model.name}
+                label={config.labels.model.name[tabsValue].value}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -229,7 +227,7 @@ const ModelForm = ({ model, id }) => {
                 <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
               )}
               <Editor
-                value={values[`${lang}Description`]}
+                value={values[`${lang}Description`] || ''}
                 placeholder='Текст'
                 onEditorChange={(value) => enSetText(value)}
                 setFiles={setFiles}
