@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 import { config } from '../../../src/configs';
 import { businessTranslations } from '../../../src/translations/business.translations.js';
+import routes from '../../../src/configs/routes';
 import {
   getAllBusinessTexts,
   getBusinessTextById,
@@ -22,7 +23,8 @@ describe('Business pages test ', () => {
     cy.stubRequest('getAllBusinessTexts', getAllBusinessTexts).as(
       'getAllBusinessTexts'
     );
-    cy.visit('/business-pages');
+    cy.visit('/');
+    cy.get(`[href="${routes.pathToBusinessPages}"]`).click();
     cy.wait(3000);
   });
 

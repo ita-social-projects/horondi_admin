@@ -46,7 +46,9 @@ const PatternForm = ({ pattern, id }) => {
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang) => <Tab label={lang} data-cy={lang} key={lang} />)
+      ? languages.map((lang) => (
+        <Tab label={lang} data-cy={`${lang}-tab`} key={lang} />
+      ))
       : null;
 
   const patternValidationSchema = Yup.object().shape({
@@ -56,10 +58,10 @@ const PatternForm = ({ pattern, id }) => {
     enName: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE),
-    ukDescription: Yup.string()
+    uaDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE),
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE),
     material: Yup.string()
@@ -82,9 +84,9 @@ const PatternForm = ({ pattern, id }) => {
     validationSchema: patternValidationSchema,
     initialValues: {
       patternImage: pattern.images.thumbnail || '',
-      ukName: pattern.name[0].value || '',
+      uaName: pattern.name[0].value || '',
       enName: pattern.name[1].value || '',
-      ukDescription: pattern.description[0].value || '',
+      uaDescription: pattern.description[0].value || '',
       enDescription: pattern.description[1].value || '',
       material: pattern.material || '',
       available: pattern.available || false,
@@ -183,7 +185,7 @@ const PatternForm = ({ pattern, id }) => {
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.patternItemUpdate}>
               <TextField
-                data-cy={`${lang}Name`}
+                data-cy={`${lang}-name`}
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
@@ -195,14 +197,14 @@ const PatternForm = ({ pattern, id }) => {
               />
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div
-                  data-cy={`${lang}Name-error`}
+                  data-cy={`${lang}-name-error`}
                   className={styles.inputError}
                 >
                   {errors[`${lang}Name`]}
                 </div>
               )}
               <TextField
-                data-cy={`${lang}Description`}
+                data-cy={`${lang}-description`}
                 id={`${lang}Description`}
                 className={styles.textField}
                 variant='outlined'
@@ -217,7 +219,7 @@ const PatternForm = ({ pattern, id }) => {
               />
               {touched[`${lang}Description`] && errors[`${lang}Description`] && (
                 <div
-                  data-cy={`${lang}Description-error`}
+                  data-cy={`${lang}-description-error`}
                   className={styles.inputError}
                 >
                   {errors[`${lang}Description`]}
@@ -234,13 +236,13 @@ const PatternForm = ({ pattern, id }) => {
           variant='outlined'
           color='primary'
           className={styles.returnButton}
-          data-cy='goBackButton'
+          data-cy='go-back-btn'
         >
           {config.buttonTitles.GO_BACK_TITLE}
         </Button>
         <SaveButton
           className={styles.saveButton}
-          data-cy='save'
+          data-cy='save-btn'
           type='submit'
           title={SAVE_TITLE}
         />
@@ -268,25 +270,25 @@ PatternForm.propTypes = {
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   match: PropTypes.shape({
