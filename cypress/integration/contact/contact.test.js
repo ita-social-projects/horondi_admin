@@ -11,14 +11,17 @@ import {
   enSchedule,
   uaAddress,
   enAddress,
-  contactData
+  contactToAdd,
+  getContacts
 } from './contact.variables';
 
 describe('Contacts test', () => {
   beforeEach(() => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
-    cy.visit(routes.pathToContacts);
     cy.wait(3000);
+    cy.stubRequest('getContacts', getContacts).as('getContacts');
+    cy.visit(routes.pathToContacts);
+    cy.wait(500);
     cy.get('.MuiTableCell-root.MuiTableCell-body').as('table');
   });
   it('Should find a page title', () => {
@@ -33,6 +36,7 @@ describe('Contacts test', () => {
 
   it('Data from the server should be equal with the incoming data', () => {
     cy.get('@table').eq(3).children().first().click();
+    cy.wait(1000);
     cy.get('[data-cy=phone-number]').contains(phoneNumber);
     cy.get('[data-cy=ua-schedule]').contains(uaSchedule);
     cy.get('[data-cy=en-schedule]').contains(enSchedule);
@@ -76,14 +80,14 @@ describe('Contacts test', () => {
       });
     });
 
-    cy.get('[data-cy=map-link]').type(contactData[0].mapLink);
-    cy.get('[data-cy=phone-number]').type(contactData[0].contactNumber);
-    cy.get('[data-cy=ua-schedule]').type(contactData[0].scheduleUa);
-    cy.get('[data-cy=en-schedule]').type(contactData[0].scheduleEn);
-    cy.get('[data-cy=ua-address]').type(contactData[0].addressUa);
-    cy.get('[data-cy=en-address]').type(contactData[0].addressEn);
-    cy.get('[ data-cy=email]').type(contactData[0].email);
-    cy.get('[ data-cy = save]').click();
+    cy.get('[data-cy=map-link]').type(contactToAdd[0].mapLink);
+    cy.get('[data-cy=phone-number]').type(contactToAdd[0].contactNumber);
+    cy.get('[data-cy=ua-schedule]').type(contactToAdd[0].scheduleUa);
+    cy.get('[data-cy=en-schedule]').type(contactToAdd[0].scheduleEn);
+    cy.get('[data-cy=ua-address]').type(contactToAdd[0].addressUa);
+    cy.get('[data-cy=en-address]').type(contactToAdd[0].addressEn);
+    cy.get('[ data-cy=email]').type(contactToAdd[0].email);
+    cy.get('[ data-cy=save]').click();
     cy.wait(3000);
     cy.get('.MuiAlert-message').should('be.visible');
     cy.get('.MuiAlert-message').contains('Успішно додано!');
@@ -91,19 +95,19 @@ describe('Contacts test', () => {
   it('Tne data should be changed', () => {
     cy.get('@table').eq(7).children().first().click();
     cy.get('[data-cy=map-link]').children().children().first().clear();
-    cy.get('[data-cy=map-link]').type(contactData[1].mapLink);
+    cy.get('[data-cy=map-link]').type(contactToAdd[1].mapLink);
     cy.get('[data-cy=phone-number]').children().children().first().clear();
-    cy.get('[data-cy=phone-number]').type(contactData[1].contactNumber);
+    cy.get('[data-cy=phone-number]').type(contactToAdd[1].contactNumber);
     cy.get('[data-cy=ua-schedule]').children().children().first().clear();
-    cy.get('[data-cy=ua-schedule]').type(contactData[1].scheduleUa);
+    cy.get('[data-cy=ua-schedule]').type(contactToAdd[1].scheduleUa);
     cy.get('[data-cy=en-schedule]').children().children().first().clear();
-    cy.get('[data-cy=en-schedule]').type(contactData[1].scheduleEn);
+    cy.get('[data-cy=en-schedule]').type(contactToAdd[1].scheduleEn);
     cy.get('[data-cy=ua-address]').children().children().first().clear();
-    cy.get('[data-cy=ua-address]').type(contactData[1].addressUa);
+    cy.get('[data-cy=ua-address]').type(contactToAdd[1].addressUa);
     cy.get('[data-cy=en-address]').children().children().first().clear();
-    cy.get('[data-cy=en-address]').type(contactData[1].addressEn);
+    cy.get('[data-cy=en-address]').type(contactToAdd[1].addressEn);
     cy.get('[ data-cy=email]').children().children().first().clear();
-    cy.get('[ data-cy=email]').type(contactData[1].email);
+    cy.get('[ data-cy=email]').type(contactToAdd[1].email);
     cy.get('[ data-cy = save]').click();
     cy.wait(3000);
     cy.get('.MuiAlert-message').should('be.visible');
