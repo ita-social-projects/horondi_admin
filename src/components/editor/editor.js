@@ -155,12 +155,13 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
 
 Editor.propTypes = {
   value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   onEditorChange: PropTypes.func.isRequired,
   setFiles: PropTypes.func
 };
 
 Editor.defaultProps = {
+  placeholder: 'Текст',
   setFiles: () => {}
 };
 

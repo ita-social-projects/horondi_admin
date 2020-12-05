@@ -107,115 +107,113 @@ const NewsForm = ({ article, id }) => {
       };
       reader.readAsDataURL(e.target.files[0]);
     }
+  };
 
-    const handleGoBack = () => {
-      dispatch(push(config.routes.pathToNews));
-    };
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
+  };
 
-    return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.controlsBlock}>
-            <div>{languageCheckboxes}</div>
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='save'
-              type='submit'
-              title={config.buttonTitles.SAVE_TITLE}
-            />
-          </div>
-          <Box my={3}>
-            <Grid container spacing={1}>
-              <Grid item>
-                <ImageUploadContainer
-                  handler={handleAuthorImageLoad}
-                  buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
-                />
-                {authorPhoto && (
-                  <Avatar src={authorPhoto}>
-                    <Image />
-                  </Avatar>
-                )}
-              </Grid>
-            </Grid>
-          </Box>
-          <Box my={3}>
-            <Grid container spacing={1}>
-              <Grid item>
-                <ImageUploadContainer
-                  handler={handleNewsImageLoad}
-                  buttonLabel={config.buttonTitles.MAIN_PHOTO}
-                />
-                {newsImage && (
-                  <Avatar src={newsImage}>
-                    <Image />
-                  </Avatar>
-                )}
-              </Grid>
-            </Grid>
-          </Box>
-          <AppBar position='static'>
-            <Tabs
-              className={styles.tabs}
-              value={tabsValue}
-              onChange={handleTabsChange}
-              aria-label='simple tabs example'
-            >
-              {languageTabs}
-            </Tabs>
-          </AppBar>
-          {preferredLanguages.map((lang, index) => (
-            <TabPanel key={index} value={tabsValue} index={index}>
-              <Paper className={styles.newsItemUpdate}>
-                <TextField
-                  data-cy={`${lang}AuthorName`}
-                  id={`${lang}AuthorName`}
-                  className={styles.textField}
-                  variant='outlined'
-                  label={config.labels.news.name}
-                  multiline
-                  value={values[`${lang}AuthorName`]}
-                  onChange={handleChange}
-                  required
-                />
-                <TextField
-                  data-cy={`${lang}Title`}
-                  id={`${lang}Title`}
-                  className={styles.textField}
-                  variant='outlined'
-                  label={config.labels.news.title}
-                  multiline
-                  value={values[`${lang}Title`]}
-                  onChange={handleChange}
-                  required
-                />
-                <Editor
-                  value={values[`${lang}Text`]}
-                  placeholder={config.labels.news.text}
-                  id={`${lang}Text`}
-                  onEditorChange={(value) =>
-                    setFieldValue(`${lang}Text`, value)
-                  }
-                  multiline
-                  required
-                />
-              </Paper>
-            </TabPanel>
-          ))}
-        </form>
-
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
         <div className={styles.controlsBlock}>
-          <StandardButton
-            id='back-btn'
-            title={config.buttonTitles.GO_BACK_TITLE}
-            variant='outlined'
-            onClickHandler={handleGoBack}
-            data-cy='back-btn'
+          <div>{languageCheckboxes}</div>
+          <SaveButton
+            className={styles.saveButton}
+            data-cy='save'
+            type='submit'
+            title={config.buttonTitles.SAVE_TITLE}
           />
         </div>
+        <Box my={3}>
+          <Grid container spacing={1}>
+            <Grid item>
+              <ImageUploadContainer
+                handler={handleAuthorImageLoad}
+                buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
+              />
+              {authorPhoto && (
+                <Avatar src={authorPhoto}>
+                  <Image />
+                </Avatar>
+              )}
+            </Grid>
+          </Grid>
+        </Box>
+        <Box my={3}>
+          <Grid container spacing={1}>
+            <Grid item>
+              <ImageUploadContainer
+                handler={handleNewsImageLoad}
+                buttonLabel={config.buttonTitles.MAIN_PHOTO}
+              />
+              {newsImage && (
+                <Avatar src={newsImage}>
+                  <Image />
+                </Avatar>
+              )}
+            </Grid>
+          </Grid>
+        </Box>
+        <AppBar position='static'>
+          <Tabs
+            className={styles.tabs}
+            value={tabsValue}
+            onChange={handleTabsChange}
+            aria-label='simple tabs example'
+          >
+            {languageTabs}
+          </Tabs>
+        </AppBar>
+        {preferredLanguages.map((lang, index) => (
+          <TabPanel key={index} value={tabsValue} index={index}>
+            <Paper className={styles.newsItemUpdate}>
+              <TextField
+                data-cy={`${lang}AuthorName`}
+                id={`${lang}AuthorName`}
+                className={styles.textField}
+                variant='outlined'
+                label={config.labels.news.name}
+                multiline
+                value={values[`${lang}AuthorName`]}
+                onChange={handleChange}
+                required
+              />
+              <TextField
+                data-cy={`${lang}Title`}
+                id={`${lang}Title`}
+                className={styles.textField}
+                variant='outlined'
+                label={config.labels.news.title}
+                multiline
+                value={values[`${lang}Title`]}
+                onChange={handleChange}
+                required
+              />
+              <Editor
+                value={values[`${lang}Text`]}
+                placeholder={config.labels.news.text}
+                id={`${lang}Text`}
+                onEditorChange={(value) => setFieldValue(`${lang}Text`, value)}
+                multiline
+                required
+              />
+            </Paper>
+          </TabPanel>
+        ))}
+      </form>
+
+      <div className={styles.controlsBlock}>
+        <StandardButton
+          id='back-btn'
+          title={config.buttonTitles.GO_BACK_TITLE}
+          variant='outlined'
+          onClickHandler={handleGoBack}
+          data-cy='back-btn'
+        />
       </div>
-    );
-  };
+    </div>
+  );
 };
 
 NewsForm.propTypes = {

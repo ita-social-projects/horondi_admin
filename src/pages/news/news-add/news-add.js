@@ -234,15 +234,6 @@ const NewsAdd = () => {
             </Grid>
           </Grid>
         </Box>
-        <div className={styles.controlsBlock}>
-          <StandardButton
-            id='back-btn'
-            title={config.buttonTitles.GO_BACK_TITLE}
-            variant='outlined'
-            onClickHandler={handleGoBack}
-            data-cy='back-btn'
-          />
-        </div>
         {preferredLanguages.length > 0 ? (
           <div>
             <AppBar position='static'>
@@ -258,6 +249,15 @@ const NewsAdd = () => {
             {TabPanels}
           </div>
         ) : null}
+        <div className={styles.controlsBlock}>
+          <StandardButton
+            id='back-btn'
+            title={config.buttonTitles.GO_BACK_TITLE}
+            variant='outlined'
+            onClickHandler={handleGoBack}
+            data-cy='back-btn'
+          />
+        </div>
       </form>
     </div>
   );
