@@ -25,6 +25,8 @@ import { addModel, updateModel } from '../../redux/model/model.actions';
 import { getCategories } from '../../redux/categories/categories.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
+import Editor from '../editor';
+import useBusinessHandlers from '../../utils/use-business-handlers';
 
 const {
   MODEL_VALIDATION_ERROR,
@@ -33,9 +35,9 @@ const {
 
 const { routes } = config;
 
-const { languages } = config;
-
 const ModelForm = ({ model, id }) => {
+  const { enSetText, setFiles, languages } = useBusinessHandlers();
+
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
@@ -113,6 +115,8 @@ const ModelForm = ({ model, id }) => {
     }
   });
 
+  const inputLabel = React.useRef(null);
+
   const checkboxes = [
     {
       id: 'show',
@@ -139,7 +143,7 @@ const ModelForm = ({ model, id }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete='off'>
         <CheckboxOptions options={checkboxes} />
 
         <Grid item xs={12}>
@@ -155,7 +159,7 @@ const ModelForm = ({ model, id }) => {
               fileName={upload && upload.name}
             />
             <FormControl variant='outlined' className={styles.textField}>
-              <InputLabel htmlFor='category-select'>
+              <InputLabel shrink ref={inputLabel} htmlFor='category-select'>
                 {config.labels.model.category}
               </InputLabel>
               <Select
@@ -215,7 +219,7 @@ const ModelForm = ({ model, id }) => {
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label={config.labels.model.name[tabsValue].value}
+                label={config.labels.model.name}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -224,15 +228,14 @@ const ModelForm = ({ model, id }) => {
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
               )}
-              <TextField
-                data-cy={`${lang}Description`}
-                id={`${lang}Description`}
-                className={styles.textField}
-                variant='outlined'
-                label={config.labels.model.description[tabsValue].value}
-                multiline
+              <Editor
                 value={values[`${lang}Description`]}
+                placeholder='Текст'
+                onEditorChange={(value) => enSetText(value)}
+                setFiles={setFiles}
                 onChange={handleChange}
+                label={config.labels.model.description}
+                data-cy={`${lang}Description`}
                 error={
                   touched[`${lang}Description`] &&
                   !!errors[`${lang}Description`]
