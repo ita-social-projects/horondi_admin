@@ -6,18 +6,22 @@ import moment from 'moment';
 import { push } from 'connected-react-router';
 import Paper from '@material-ui/core/Paper';
 import { TableCell, TableRow, Typography } from '@material-ui/core';
+import LoadingBar from '../../components/loading-bar';
+import TableContainerGenerator from '../../containers/table-container-generator';
+
 import { getRecentComments } from '../../redux/comments/comments.actions';
 import { getOrderList } from '../../redux/orders/orders.actions';
-import LoadingBar from '../../components/loading-bar';
+import { selectOrderList } from '../../redux/orders/orders.reducer';
+import { selectCommentsList } from '../../redux/comments/comments.reducer';
+
 import titles from '../../configs/titles';
 import tableHeadRowTitles from '../../configs/table-head-row-titles';
 import labels from '../../configs/labels';
+import messages from '../../configs/messages';
+import routes from '../../configs/routes';
 
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
-import messages from '../../configs/messages';
-import TableContainerGenerator from '../../containers/table-container-generator';
-import routes from '../../configs/routes';
 
 const MainPage = () => {
   const {
@@ -33,15 +37,9 @@ const MainPage = () => {
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
-  const { commentsList, commentsLoading } = useSelector(({ Comments }) => ({
-    commentsList: Comments.list,
-    commentsLoading: Comments.commentsLoading
-  }));
+  const { commentsList, commentsLoading } = useSelector(selectCommentsList);
 
-  const { orderLoading, ordersList } = useSelector(({ Orders }) => ({
-    orderLoading: Orders.orderLoading,
-    ordersList: Orders.list.items
-  }));
+  const { orderLoading, ordersList } = useSelector(selectOrderList);
 
   useEffect(() => {
     dispatch(getRecentComments());
