@@ -4,7 +4,8 @@ const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
   user: {
-    unknownAdmin: 'Невідомий адмін'
+    unknownAdmin: 'Невідомий адмін',
+    guestUser: 'Гість'
   },
   news: {
     authorsName: mapToLanguages("Ім'я автора", "Author's name"),
