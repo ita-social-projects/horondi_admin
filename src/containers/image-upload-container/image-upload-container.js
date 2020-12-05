@@ -5,8 +5,13 @@ import { AttachFile } from '@material-ui/icons';
 
 const ImageUploadContainer = ({ handler, multiple, buttonLabel }) => (
   <div>
-    <label htmlFor='upload-photo'>
-      <Button variant='contained' color='primary' component='label'>
+    <label htmlFor='upload-photo' data-cy='pattern-image'>
+      <Button
+        variant='contained'
+        color='primary'
+        component='label'
+        data-cy='add-photo'
+      >
         <AttachFile />
         {buttonLabel}
         <input

@@ -59,15 +59,13 @@ describe('pattern tests', () => {
     cy.get('[data-cy=material').contains(config.labels.pattern.material);
     cy.get('[data-cy=ua-name]').should('be.visible');
     cy.get('[data-cy=ua-description]').should('be.visible');
-    cy.get('[data-cy=ua-name]').contains('Назва');
     cy.get('[data-cy=ua-description]').contains('Опис');
     cy.get('[data-cy=ua-tab]').should('be.visible');
     cy.get('[data-cy=en-tab]').should('be.visible');
     cy.get('[data-cy=en-tab]').click();
     cy.get('[data-cy=en-name]').should('be.visible');
-    cy.get('[data-cy=en-name]').contains('Назва');
     cy.get('[data-cy=en-description]').should('be.visible');
-    cy.get('[data-cy=en-description]').contains('Опис');
+    cy.get('[data-cy=en-description]').contains('Description');
   });
 
   it('should check validation', () => {
@@ -83,10 +81,10 @@ describe('pattern tests', () => {
       config.patternErrorMessages.PATTERN_ERROR_MESSAGE
     );
     cy.get('[data-cy=en-tab]').click();
-    cy.get('[data-cy=en-name-error]').contains(
+    cy.get('[data-cy=en-description-error]').contains(
       config.patternErrorMessages.PATTERN_ERROR_MESSAGE
     );
-    cy.get('[data-cy=en-description-error]').contains(
+    cy.get('[data-cy=en-name-error]').contains(
       config.patternErrorMessages.PATTERN_ERROR_MESSAGE
     );
     cy.get('[data-cy=material').type(wrongValue);
