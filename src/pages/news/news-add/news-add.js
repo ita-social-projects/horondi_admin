@@ -107,7 +107,7 @@ const NewsAdd = () => {
               id={`${lang}AuthorName`}
               className={styles.textfield}
               variant='outlined'
-              label={`Ім'я автора`}
+              label={config.labels.news.name}
               error={
                 touched[`${lang}AuthorName`] && !!errors[`${lang}AuthorName`]
               }
@@ -126,7 +126,7 @@ const NewsAdd = () => {
               id={`${lang}Title`}
               className={styles.textfield}
               variant='outlined'
-              label='Заголовок'
+              label={config.labels.news.title}
               multiline
               error={touched[`${lang}Title`] && !!errors[`${lang}Title`]}
               value={values[`${lang}Title`]}
@@ -140,7 +140,7 @@ const NewsAdd = () => {
             )}
             <Editor
               value={values[`${lang}Text`]}
-              placeholder='Текст'
+              label={config.labels.news.text}
               id={`${lang}Text`}
               onEditorChange={(value) => setFieldValue(`${lang}Text`, value)}
               multiline
@@ -196,7 +196,7 @@ const NewsAdd = () => {
             className={styles.saveButton}
             data-cy='save'
             type='submit'
-            title='Зберегти'
+            title={config.buttonTitles.SAVE_TITLE}
           />
         </div>
         <Box my={3}>
@@ -204,7 +204,7 @@ const NewsAdd = () => {
             <Grid item>
               <ImageUploadContainer
                 handler={handleAuthorImageLoad}
-                buttonLabel='Фото Автора'
+                buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
               />
               {authorPhoto && (
                 <Avatar src={authorPhoto}>
@@ -219,7 +219,7 @@ const NewsAdd = () => {
             <Grid item>
               <ImageUploadContainer
                 handler={handleNewsImageLoad}
-                buttonLabel='Головне зображення'
+                buttonLabel={config.buttonTitles.MAIN_PHOTO}
               />
               {newsImage && (
                 <Avatar src={newsImage}>

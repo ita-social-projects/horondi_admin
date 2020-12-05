@@ -63,6 +63,8 @@ const buttonTitles = {
   OPEN_SLIDE_EDIT: 'Увімкнути редагування',
   SAVE_SLIDE_ORDER: 'Зберегти зміни',
   CANCEL_SLIDE_ORDER: 'Скасувати зміни',
+  AUTHOR_PHOTO: 'Фото Автора',
+  MAIN_PHOTO: 'Головне зображення',
 
   titleGenerator: (editMode, isMain) => {
     const editModeMap = new Map([

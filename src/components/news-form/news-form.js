@@ -22,7 +22,7 @@ import { updateArticle } from '../../redux/news/news.actions';
 import ImageUploadContainer from '../../containers/image-upload-container';
 import Editor from '../editor/editor';
 
-const { languages } = config;
+const { languages, labels } = config;
 
 const NewsForm = ({ article, id }) => {
   const styles = useStyles();
@@ -119,7 +119,7 @@ const NewsForm = ({ article, id }) => {
             className={styles.saveButton}
             data-cy='save'
             type='submit'
-            title='Зберегти'
+            title={config.buttonTitles.SAVE_TITLE}
           />
         </div>
         <Box my={3}>
@@ -127,7 +127,7 @@ const NewsForm = ({ article, id }) => {
             <Grid item>
               <ImageUploadContainer
                 handler={handleAuthorImageLoad}
-                buttonLabel='Фото Автора'
+                buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
               />
               {authorPhoto && (
                 <Avatar src={authorPhoto}>
@@ -142,7 +142,7 @@ const NewsForm = ({ article, id }) => {
             <Grid item>
               <ImageUploadContainer
                 handler={handleNewsImageLoad}
-                buttonLabel='Головне зображення'
+                buttonLabel={config.buttonTitles.MAIN_PHOTO}
               />
               {newsImage && (
                 <Avatar src={newsImage}>
@@ -170,7 +170,7 @@ const NewsForm = ({ article, id }) => {
                 id={`${lang}AuthorName`}
                 className={styles.textField}
                 variant='outlined'
-                label={`Ім'я автора`}
+                label={config.labels.news.name}
                 multiline
                 value={values[`${lang}AuthorName`]}
                 onChange={handleChange}
@@ -181,7 +181,7 @@ const NewsForm = ({ article, id }) => {
                 id={`${lang}Title`}
                 className={styles.textField}
                 variant='outlined'
-                label='Заголовок'
+                label={config.labels.news.title}
                 multiline
                 value={values[`${lang}Title`]}
                 onChange={handleChange}
@@ -189,7 +189,7 @@ const NewsForm = ({ article, id }) => {
               />
               <Editor
                 value={values[`${lang}Text`]}
-                placeholder='Текст'
+                placeholder={config.labels.news.text}
                 id={`${lang}Text`}
                 onEditorChange={(value) => setFieldValue(`${lang}Text`, value)}
                 multiline

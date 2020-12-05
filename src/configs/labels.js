@@ -46,6 +46,11 @@ const labels = {
     code: 'Код кольору',
     available: 'Доступний'
   },
+  news: {
+    title: 'Заголовок',
+    name: `Ім'я автора`,
+    text: 'Текст'
+  },
   product: {
     sortBySelectOptions: [
       {
