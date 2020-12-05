@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Table, TableBody, Paper } from '@material-ui/core';
+import { TableBody, Paper, Table } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableContainerHead from '../table-container-head';
@@ -9,11 +9,12 @@ import TableContainerHead from '../table-container-head';
 import useStyles from './table-container-generator.styles';
 import { config } from '../../configs';
 import TablePaginator from '../table-pagination-container';
+import { selectTableDense } from '../../redux/selectors/table.selectors';
 
 const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
   const classes = useStyles();
-  const dense = useSelector(({ Table }) => Table.dense);
+  const dense = useSelector(selectTableDense);
 
   return (
     <>

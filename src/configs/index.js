@@ -15,7 +15,8 @@ import {
   errorMessages,
   modelErrorMessages,
   headerErrorMessages,
-  homePageSlideErrorMessages
+  homePageSlideErrorMessages,
+  statsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -27,6 +28,7 @@ import {
 } from './pagination';
 import titles from './titles';
 import { sort } from './sort';
+import languages from './languages';
 
 export const config = {
   app: {
@@ -36,7 +38,7 @@ export const config = {
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
-  languages: ['uk', 'en'],
+  languages,
   tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {
@@ -88,19 +90,19 @@ export const config = {
   product: {
     sortBySelectOptions: [
       {
-        label: 'популярністю',
+        label: 'Популярністю',
         value: 'popularity'
       },
       {
-        label: 'від дорогих до дешевих',
+        label: 'Від дорогих до дешевих',
         value: 'sortDesc'
       },
       {
-        label: 'від дешевих до дорогих',
+        label: 'Від дешевих до дорогих',
         value: 'sortAsc'
       },
       {
-        label: 'рейтингом',
+        label: 'Рейтингом',
         value: 'rate'
       }
     ],
@@ -131,7 +133,7 @@ export const config = {
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
   initialLanguageValues: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: ''
     },
     {
@@ -160,6 +162,7 @@ export const config = {
     }
   },
   UAH: 'грн',
+
   buttonTitles,
   detailTitles,
   messages,
@@ -182,10 +185,16 @@ export const config = {
   materialPaginationPayload,
   modelErrorMessages,
   headerErrorMessages,
+  statsErrorMessages,
   homePageSlideErrorMessages,
   sort
 };
 export const inputTypes = {
   button: 'button',
   submit: 'submit'
+};
+
+export const badgePosition = {
+  vertical: 'top',
+  horizontal: 'left'
 };

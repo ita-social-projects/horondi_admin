@@ -22,12 +22,10 @@ import {
   deleteCategoryById,
   getSubcategories
 } from './categories.operations';
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../snackbar/snackbar.actions';
+
 import { config } from '../../configs';
+import { selectCategorySwitchAndDeleteId } from '../selectors/category.selectors';
+import { handleSuccessSnackbar } from '../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -35,81 +33,74 @@ const {
   SUCCESS_CREATION_STATUS
 } = config.statuses;
 
-function* handleCategoriesLoad() {
+export function* handleCategoriesLoad() {
   try {
     yield put(setCategoriesLoading(true));
     const categories = yield call(getAllCategories);
-    yield put(setCategories(categories.data.getAllCategories));
+    yield put(setCategories(categories));
   } catch (e) {
     yield put(push('/error-page'));
     yield setCategoriesError(e);
   }
 }
 
-function* handleLoadCategoryById({ payload }) {
+export function* handleLoadCategoryById({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     const category = yield call(getCategoryById, payload);
-    yield put(setCategory(category.data.getCategoryById));
+    yield put(setCategory(category));
   } catch (e) {
     yield setCategoriesError(e);
   }
 }
 
-function* handleCreateCategory({ payload }) {
+export function* handleCreateCategory({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     yield call(createCategory, payload);
     yield put(push('/categories'));
-    yield call(handleSnackBarSuccess, SUCCESS_CREATION_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
   } catch (e) {
     yield setCategoriesError(e);
   }
 }
 
-function* handleEditCategory({ payload }) {
+export function* handleEditCategory({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     yield call(updateCategoryById, payload);
     yield put(setCategoriesLoading(false));
     yield put(push('/categories'));
-    yield call(handleSnackBarSuccess, SUCCESS_UPDATE_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
     yield setCategoriesError(e);
   }
 }
 
-function* handleDeleteCategory() {
+export function* handleDeleteCategory() {
   try {
     yield put(setCategoriesLoading(true));
-    const { switchId, deleteId } = yield select(({ Categories }) => ({
-      switchId: Categories.switchId,
-      deleteId: Categories.deleteId
-    }));
+    const { switchId, deleteId } = yield select(
+      selectCategorySwitchAndDeleteId
+    );
     yield call(deleteCategoryById, deleteId, switchId);
     const categories = yield call(getAllCategories);
-    yield put(setCategories(categories.data.getAllCategories));
+    yield put(setCategories(categories));
     yield put(setCategoriesLoading(false));
-    yield call(handleSnackBarSuccess, SUCCESS_DELETE_STATUS);
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
     yield setCategoriesError(e);
   }
 }
 
-function* handleSubcategoriesLoad({ payload }) {
+export function* handleSubcategoriesLoad({ payload }) {
   try {
     yield put(setCategoriesLoading(true));
     const subcategories = yield call(getSubcategories, payload);
-    yield put(setCategories(subcategories.data.getSubcategories));
+    yield put(setCategories(subcategories));
   } catch (e) {
     yield setCategoriesError(e);
   }
-}
-
-function* handleSnackBarSuccess(status) {
-  yield put(setSnackBarSeverity('success'));
-  yield put(setSnackBarMessage(status));
-  yield put(setSnackBarStatus(true));
 }
 
 export default function* newsSaga() {

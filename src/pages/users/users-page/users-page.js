@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppBar, Tabs, Tab } from '@material-ui/core';
-import { useStyles } from './users-page.styles';
+import { AppBar, Tabs, Tab, Typography } from '@material-ui/core';
+import { useCommonStyles } from '../../common.styles';
 import { deleteUser, getUsers } from '../../../redux/users/users.actions';
 import TabPanel from '../../../components/tab-panel';
 import { config } from '../../../configs';
@@ -16,7 +16,8 @@ const { REMOVE_USER_MESSAGE } = config.messages;
 const userTabNames = config.tabNames.users;
 
 const UsersPage = () => {
-  const styles = useStyles();
+  const common = useCommonStyles();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, filters, sort, currentPage, rowsPerPage } = useSelector(
     ({ Users, Table: { pagination } }) => ({
@@ -51,12 +52,17 @@ const UsersPage = () => {
   const userTabs = userTabNames.map((name) => <Tab key={name} label={name} />);
 
   return (
-    <div className={styles.container}>
+    <div className={common.container}>
+      <div className={common.adminHeader}>
+        <Typography variant='h1' className={common.materialTitle}>
+          {config.titles.usersPageTitles.mainPageTitle}
+        </Typography>
+      </div>
       <AppBar position='static' color='primary'>
         <Tabs
           value={tab}
+          className={common.tabs}
           onChange={(_, nextTab) => handleTabChange(nextTab)}
-          className={styles.tabs}
           variant='fullWidth'
         >
           {userTabs}

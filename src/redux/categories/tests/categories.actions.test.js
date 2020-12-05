@@ -47,8 +47,7 @@ describe('category actions tests', () => {
   });
   it('should delete category', () => {
     expect(deleteCategory(categoryId)).toEqual({
-      type: DELETE_CATEGORY,
-      payload: categoryId
+      type: DELETE_CATEGORY
     });
   });
   it('should receive all categories', () => {

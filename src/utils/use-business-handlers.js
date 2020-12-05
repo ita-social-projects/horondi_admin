@@ -6,8 +6,8 @@ const { languages } = config;
 const useBusinessHandlers = () => {
   const [code, setCode] = useState('');
 
-  const [ukTitle, ukSetTitle] = useState('');
-  const [ukText, ukSetText] = useState('');
+  const [uaTitle, uaSetTitle] = useState('');
+  const [uaText, uaSetText] = useState('');
 
   const [enTitle, enSetTitle] = useState('');
   const [enText, enSetText] = useState('');
@@ -24,7 +24,7 @@ const useBusinessHandlers = () => {
     title: [
       {
         lang: languages[0],
-        value: values.ukTitle
+        value: values.uaTitle
       },
       {
         lang: languages[1],
@@ -34,7 +34,7 @@ const useBusinessHandlers = () => {
     text: [
       {
         lang: languages[0],
-        value: values.ukText
+        value: values.uaText
       },
       {
         lang: languages[1],
@@ -46,14 +46,14 @@ const useBusinessHandlers = () => {
 
   return {
     code,
-    ukText,
-    ukTitle,
+    uaText,
+    uaTitle,
     enText,
     enTitle,
     tabsValue,
     setCode,
-    ukSetText,
-    ukSetTitle,
+    uaSetText,
+    uaSetTitle,
     enSetText,
     enSetTitle,
     setTabsValue,

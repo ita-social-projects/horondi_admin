@@ -32,7 +32,9 @@ const ProductsNavClearFilters = () => {
   return (
     <Box ml={1}>
       <Button
+        variant='contained'
         className={styles.clearButton}
+        color='primary'
         disabled={
           Object.values(arrayFilters).every((filter) => !filter.length) &&
           !isHotItemFilter &&

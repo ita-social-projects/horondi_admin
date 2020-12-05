@@ -9,6 +9,7 @@ import {
 } from '../../redux/table/table.actions';
 
 import { tableTranslations } from '../../translations/table.translations';
+import { selectTablePaginationCurrentRowsOptions } from '../../redux/selectors/table.selectors';
 
 const { ROWS_PER_PAGE } = tableTranslations;
 
@@ -19,19 +20,7 @@ const TablePaginator = () => {
     rowsPerPage,
     rowsPerPageOptions,
     currentPage
-  } = useSelector(
-    ({
-      Table: {
-        itemsCount,
-        pagination: { currentPage, rowsPerPage, rowsPerPageOptions }
-      }
-    }) => ({
-      itemsCount,
-      rowsPerPage,
-      rowsPerPageOptions,
-      currentPage
-    })
-  );
+  } = useSelector(selectTablePaginationCurrentRowsOptions);
 
   const handleChangePage = (event, newPage) => {
     dispatch(setCurrentPage(newPage));

@@ -258,3 +258,96 @@ describe('Register and confirm admin', () => {
     cy.get('#table-body').should('be.visible');
   });
 });
+
+describe('Filter users', () => {
+  const STATUS = 5;
+  const NAME = 1;
+  const EMAIL = 3;
+  const DELAY = 1000;
+  const DESC = -1;
+  const ACTIVE = 'Активний(-a)';
+  const BANNED = 'Неактивний(-a)';
+  const TABLEID = '#table-body';
+
+  const checkStatus = (elem, toBe, notToBe) => {
+    if (cy.get(elem)) {
+      cy.get(elem).then((table) => {
+        const users = Array.from(table.children());
+        users.forEach((user) => {
+          expect(user.children[STATUS]).to.have.text(toBe);
+        });
+
+        users.forEach((user) => {
+          expect(user.children[STATUS]).to.not.have.text(notToBe);
+        });
+      });
+    }
+  };
+
+  const checkSorting = (elem, sortedBy, order = 1) => {
+    if (cy.get(elem)) {
+      cy.get(elem).then((table) => {
+        const users = Array.from(table.children()).map(
+          (el) => el.children[sortedBy].innerText
+        );
+        const compareUsers = [...users].sort();
+        if (order === -1) {
+          compareUsers.reverse();
+        }
+        expect(users).to.deep.equal(compareUsers);
+        expect(users).to.not.deep.equal([...compareUsers].reverse());
+      });
+    }
+  };
+
+  beforeEach(() => {
+    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
+    cy.visit('/');
+    cy.wait(DELAY);
+    cy.visit('/users');
+  });
+
+  it('should show only active users', () => {
+    cy.get('[data-cy="user-filters-Статус"]').should('be.visible').click();
+    cy.get('[data-cy="user-filters-list-Активний(-a)"]').click();
+    cy.get('#menu- > .MuiPaper-root').invoke('hide');
+    cy.wait(DELAY);
+    checkStatus(TABLEID, ACTIVE, BANNED);
+  });
+
+  it('should show only banned users', () => {
+    cy.get('[data-cy="user-filters-Статус"]').should('be.visible').click();
+    cy.get('[data-cy="user-filters-list-Неактивний(-a)"]').click();
+    cy.get('#menu- > .MuiPaper-root').invoke('hide');
+    cy.wait(DELAY);
+    checkStatus(TABLEID, BANNED, ACTIVE);
+  });
+
+  it('should sort users by name fom a to z', () => {
+    cy.get('[data-cy="user-sorting"]').should('be.visible').click();
+    cy.get('[data-value="sortByNameAsc"]').click();
+    cy.wait(DELAY);
+    checkSorting(TABLEID, NAME);
+  });
+
+  it('should sort users by name from z to a', () => {
+    cy.get('[data-cy="user-sorting"]').should('be.visible').click();
+    cy.get('[data-value="sortByNameDesc"]').click();
+    cy.wait(DELAY);
+    checkSorting(TABLEID, NAME, DESC);
+  });
+
+  it('should sort users by email from a to z', () => {
+    cy.get('[data-cy="user-sorting"]').should('be.visible').click();
+    cy.get('[data-value="sortByEmailAsc"]').click();
+    cy.wait(DELAY);
+    checkSorting(TABLEID, EMAIL);
+  });
+
+  it('should sort users by email from z to a', () => {
+    cy.get('[data-cy="user-sorting"]').should('be.visible').click();
+    cy.get('[data-value="sortByEmailDesc"]').click();
+    cy.wait(DELAY);
+    checkSorting(TABLEID, EMAIL, DESC);
+  });
+});

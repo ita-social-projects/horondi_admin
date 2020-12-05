@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import Typography from '@material-ui/core/Typography';
-import { useStyles } from './products-page.styles';
 
 import {
   getFiltredProducts,
@@ -20,6 +19,8 @@ import { config } from '../../../configs';
 import { productsTranslations } from '../../../translations/product.translations';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import { selectProductsAndTable } from '../../../redux/selectors/multiple.selectors';
+import { useCommonStyles } from '../../common.styles';
 
 const {
   PRODUCT_NOT_FOUND,
@@ -31,7 +32,8 @@ const tableTitles = config.tableHeadRowTitles.products;
 const { imagePrefix } = config;
 
 const ProductsPage = () => {
-  const styles = useStyles();
+  const common = useCommonStyles();
+
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
@@ -43,28 +45,7 @@ const ProductsPage = () => {
     sortByPrice,
     filters,
     sortByPopularity
-  } = useSelector(
-    ({
-      Products: {
-        loading,
-        products,
-        filters,
-        sorting: { sortByPopularity, sortByPrice, sortByRate }
-      },
-      Table: {
-        pagination: { rowsPerPage, currentPage }
-      }
-    }) => ({
-      loading,
-      products,
-      sortByRate,
-      sortByPrice,
-      filters,
-      sortByPopularity,
-      rowsPerPage,
-      currentPage
-    })
-  );
+  } = useSelector(selectProductsAndTable);
 
   const {
     categoryFilter,
@@ -142,10 +123,8 @@ const ProductsPage = () => {
     : null;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.tableNav}>
-        <ProductsNav />
-      </div>
+    <div className={common.container}>
+      <ProductsNav />
       {loading ? (
         <LoadingBar />
       ) : products.length ? (
@@ -155,7 +134,7 @@ const ProductsPage = () => {
           tableItems={productsItems}
         />
       ) : (
-        <Typography variant='h1' className={styles.productsTitle}>
+        <Typography variant='h1' className={common.materialTitle}>
           {PRODUCT_NOT_FOUND}
         </Typography>
       )}

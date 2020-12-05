@@ -54,9 +54,9 @@ export const contactErrorMessages = {
   PHONE_NUMBER_TYPE_MESSAGE: 'Номер повинен містити лише числа',
   ENTER_PHONE_NUMBER_MESSAGE: 'Введіть номер',
   INPUT_LENGTH_MESSAGE: 'Довжина повинна містити не менше 10 символів',
-  ENTER_UK_SCHEDULE_MESSAGE: 'Введіть розклад українською',
+  ENTER_UA_SCHEDULE_MESSAGE: 'Введіть розклад українською',
   ENTER_EN_SCHEDULE_MESSAGE: 'Введіть розклад англійською',
-  ENTER_UK_ADDRESS_MESSAGE: 'Введіть адресу українською',
+  ENTER_UA_ADDRESS_MESSAGE: 'Введіть адресу українською',
   ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
   IMAGE_FORMAT_MESSAGE:
     'Введіть коректний формат, наприклад: https://example.com/',
@@ -69,7 +69,7 @@ export const emailQuestionsErrorMessages = {
 };
 
 export const materialErrorMessages = {
-  MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
+  MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
   VALIDATION_ERROR: 'Поле обовязкове',
   PRICE_VALIDATION_ERROR: 'Тільки цифри. Число має бути більше нуля'

@@ -1,7 +1,31 @@
+export const fakeOrderState = {
+  list: [],
+  selectedOrder: null,
+  orderLoading: false,
+  orderError: null
+};
+
+export const fakeTableState = {
+  dense: false,
+  pagination: {
+    currentPage: 0,
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30],
+    pagesCount: 1
+  },
+  itemsCount: 0
+};
+
+export const fakeSnackarState = {
+  snackBarStatus: false,
+  snackBarSeverity: '',
+  snackBarMessage: ''
+};
+
 export const fakeOrderList = {
   items: [
     {
-      _id: '29c7214c0bd65f0807caf95b',
+      _id: fakeId,
       status: 'DELIVERED',
       dateOfCreation: '1603980848358',
       totalItemsPrice: [
@@ -137,19 +161,11 @@ export const getFakeOrderList = {
   }
 };
 
-export const fakeOrders = {
-  data: {
-    getAllOrders: {
-      ...fakeOrderList
-    }
-  }
-};
-
 export const fakeId = '29c7214c0bd65f0807caf95b';
 export const fakeIdOrder = {
   data: {
     getOrderById: {
-      _id: '29c7214c0bd65f0807caf95b',
+      _id: fakeId,
       status: 'DELIVERED',
       user: {
         firstName: 'Аркадій',
@@ -193,7 +209,7 @@ export const fakeIdOrder = {
         {
           name: [
             {
-              lang: 'uk',
+              lang: 'ua',
               value: 'Сумка з гобеленом синя'
             },
             {
@@ -205,7 +221,7 @@ export const fakeIdOrder = {
         {
           name: [
             {
-              lang: 'uk',
+              lang: 'ua',
               value: 'Новий червоний 2'
             },
             {

@@ -1,4 +1,4 @@
-export const ukText = 'Український текст бізнес сторінки';
+export const uaText = 'Український текст бізнес сторінки';
 export const enText = 'English text of business page';
 export const businessPage = {
   _id: 'de57efa1gdg543414b430',
@@ -6,23 +6,26 @@ export const businessPage = {
   title: [{ value: 'Укр заголовок' }, { value: 'Eng title' }],
   text: [
     {
-      value: ukText
+      value: uaText
     },
     {
       value: enText
     }
   ]
 };
+export const error = {
+  message: 'NOT_FOUND'
+};
 export const businessPageId = '0c3c7954dd35de268bed4fe8';
 export const businessPageToRemoveId = '0c3c7954dd35de268bed4fe8';
 export const businessPages = [
   {
-    _id: '0c3c7954dd35de268bed4fe8',
+    _id: '0c3c7954dd35de268bed4fe9',
     code: 'about-us-test',
     title: [{ value: 'Про нас' }, { value: 'About us' }],
     text: [
       {
-        value: `${ukText} про нас`
+        value: `${uaText} про нас`
       },
       {
         value: `${enText} about us`
@@ -35,22 +38,39 @@ export const businessPages = [
     title: [{ value: 'Умови конфіденційності' }, { value: 'Privacy policy' }],
     text: [
       {
-        value: `${ukText} умови конфіденційності`
+        value: `${uaText} умови конфіденційності`
       },
       {
-        value: `${ukText} privacy policy`
+        value: `${uaText} privacy policy`
       }
     ]
   }
 ];
+
+export const businessPageToCreate = {
+  page: {
+    code: 'business-page',
+    title: [{ value: 'Укр заголовок' }, { value: 'Eng title' }],
+    text: [
+      {
+        value: uaText
+      },
+      {
+        value: enText
+      }
+    ],
+    lang: ['ua', 'ua']
+  },
+  files: []
+};
 
 export const businessPageToUpdate = {
   id: 'de57efa1gdg543414b430',
   page: {
     title: [
       {
-        lang: 'uk',
-        value: `${ukText} про нас оновлена`
+        lang: 'ua',
+        value: `${uaText} про нас оновлена`
       },
       {
         lang: 'en',
@@ -59,46 +79,27 @@ export const businessPageToUpdate = {
     ]
   }
 };
+
 export const fakeBusinessPage = {
-  data: {
-    getBusinessTextById: {
-      _id: '0c3c7954dd35de268bed4fe8',
-      title: [
-        {
-          lang: 'uk',
-          value: 'Пустишка'
-        },
-        {
-          lang: 'en',
-          value: 'Fake'
-        }
-      ],
-      text: [
-        {
-          lang: 'uk',
-          value: 'Текс пустишка'
-        },
-        {
-          lang: 'en',
-          value: 'Fake text'
-        }
-      ]
+  _id: '0c3c7954dd35de268bed4fe8',
+  title: [
+    {
+      lang: 'ua',
+      value: 'Пустишка'
+    },
+    {
+      lang: 'en',
+      value: 'Fake'
     }
-  }
-};
-
-export const fakePages = {
-  data: {
-    getAllBusinessTexts: {
-      ...businessPages
+  ],
+  text: [
+    {
+      lang: 'ua',
+      value: 'Текс пустишка'
+    },
+    {
+      lang: 'en',
+      value: 'Fake text'
     }
-  }
-};
-
-export const businessPageToDeleteMock = {
-  data: {
-    deleteBusinessText: {
-      ...businessPages
-    }
-  }
+  ]
 };

@@ -68,15 +68,20 @@ const ProductInfoContainer = ({
       {infoLabels.map(({ label, name, required }) => {
         const inputLangName = `${lang}-${name}`;
         const inputError = touched[inputLangName] && errors[inputLangName];
-        const isStrapLengthInput = !!(name === infoLabels[4].name);
+        const isStrapLengthInput = Boolean(name === infoLabels[4].name);
 
         return name === infoLabels[5].name ? (
-          <Box key={label} ml={1} my={2} className={styles.editor}>
+          <Box
+            key={label[tabValue].value}
+            ml={1}
+            my={2}
+            className={styles.editor}
+          >
             <Editor
               name={inputLangName}
               value={values[inputLangName]}
               onEditorChange={(value) => handleDescriptionChange(value, lang)}
-              placeholder={label}
+              placeholder={label[tabValue].value}
             />
           </Box>
         ) : (
@@ -91,7 +96,7 @@ const ProductInfoContainer = ({
             value={isStrapLengthInput ? values[name] : values[inputLangName]}
             onChange={handleInfoChange}
             onBlur={handleBlur}
-            label={`${label}${required ? '*' : ''}`}
+            label={`${label[tabValue].value}${required ? '*' : ''}`}
             error={!!inputError}
             helperText={inputError}
           />

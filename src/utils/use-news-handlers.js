@@ -13,9 +13,9 @@ const useNewsHandlers = () => {
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
 
-  const [ukAuthorName, ukSetAuthor] = useState('');
-  const [ukText, ukSetText] = useState('');
-  const [ukTitle, ukSetTitle] = useState('');
+  const [uaAuthorName, uaSetAuthor] = useState('');
+  const [uaText, uaSetText] = useState('');
+  const [uaTitle, uaSetTitle] = useState('');
 
   const [enAuthorName, enSetAuthor] = useState('');
   const [enText, enSetText] = useState('');
@@ -54,7 +54,7 @@ const useNewsHandlers = () => {
         name: [
           {
             lang: languages[0],
-            value: values.ukAuthorName || null
+            value: values.uaAuthorName || null
           },
           {
             lang: languages[1],
@@ -68,7 +68,7 @@ const useNewsHandlers = () => {
       title: [
         {
           lang: languages[0],
-          value: values.ukTitle || null
+          value: values.uaTitle || null
         },
         {
           lang: languages[1],
@@ -78,7 +78,7 @@ const useNewsHandlers = () => {
       text: [
         {
           lang: languages[0],
-          value: values.ukText || null
+          value: values.uaText || null
         },
         {
           lang: languages[1],
@@ -100,9 +100,9 @@ const useNewsHandlers = () => {
     checkboxes,
     authorPhoto,
     newsImage,
-    ukAuthorName,
-    ukText,
-    ukTitle,
+    uaAuthorName,
+    uaText,
+    uaTitle,
     enAuthorName,
     enText,
     enTitle,
@@ -110,9 +110,9 @@ const useNewsHandlers = () => {
     tabsValue,
     setAuthorPhoto,
     setNewsImage,
-    ukSetAuthor,
-    ukSetText,
-    ukSetTitle,
+    uaSetAuthor,
+    uaSetText,
+    uaSetTitle,
     enSetAuthor,
     enSetText,
     enSetTitle,

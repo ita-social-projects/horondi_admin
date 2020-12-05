@@ -13,13 +13,11 @@ import {
   setToLocalStorage,
   getFromLocalStorage
 } from '../../services/local-storage.service';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
+import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
+import routes from '../../configs/routes';
 
 const { LOGIN_PAGE_STATUS } = config.statuses;
+const { pathToMainPage, pathToLogin } = routes;
 
 export function* handleAdminLoad({ payload }) {
   try {
@@ -29,14 +27,12 @@ export function* handleAdminLoad({ payload }) {
 
     yield put(setAdminId(admin._id));
     yield put(setAuth(true));
-    yield put(push('/stats'));
+    yield put(push(pathToMainPage));
     yield put(setAuthLoading(false));
   } catch (error) {
     yield put(setAuthLoading(false));
     yield put(setAuthError(error));
-    yield put(setSnackBarSeverity('error'));
-    yield put(setSnackBarMessage(LOGIN_PAGE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield call(handleErrorSnackbar, LOGIN_PAGE_STATUS);
   }
 }
 
@@ -44,29 +40,31 @@ export function* handleAdminCheckByToken() {
   try {
     const authToken = getFromLocalStorage('HORONDI_AUTH_TOKEN');
     yield put(setAuthLoading(true));
+
     if (!authToken) {
       yield put(setAuthLoading(false));
       yield put(setAuth(false));
+      yield put(push(pathToLogin));
       return;
     }
-    const admin = yield call(getUserByToken, authToken);
-
-    yield put(setAdminId(admin._id));
     yield put(setAuth(true));
+
+    const admin = yield call(getUserByToken, authToken);
+    yield put(setAdminId(admin._id));
     yield put(setAuthLoading(false));
   } catch (error) {
     console.error(error);
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
     setToLocalStorage('HORONDI_AUTH_TOKEN', null);
-    yield put(push('/'));
+    yield put(push(pathToLogin));
   }
 }
 
 export function* handleAdminLogout() {
   setToLocalStorage('HORONDI_AUTH_TOKEN', null);
   yield put(setAuth(false));
-  yield put(push('/'));
+  yield put(push(pathToLogin));
 }
 
 export default function* authSaga() {

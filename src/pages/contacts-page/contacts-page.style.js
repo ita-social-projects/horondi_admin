@@ -21,26 +21,10 @@ export const useStyles = makeStyles((theme) => ({
   saveButton: {
     margin: theme.spacing(2)
   },
-  container: {
-    width: '100%',
-    padding: 20,
-    marginTop: 70
-  },
   inputLabel: {
     fontSize: 12,
     '&.shrink': {
       transform: 'translate(32px, -3px) scale(0.75)'
     }
-  },
-  paginationContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '30px'
-  },
-  contactsTitle: {
-    marginBottom: '10px',
-    fontSize: 24,
-    color: theme.palette.text.disabled,
-    fontWeight: 'bold'
   }
 }));

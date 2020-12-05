@@ -28,7 +28,7 @@ const NavFilterItem = ({
   const styles = useStyles();
 
   const formGroupOptions = filterList.map((item, idx) => (
-    <MenuItem key={item} value={item}>
+    <MenuItem data-cy={`user-filters-list-${item}`} key={item} value={item}>
       <Checkbox
         checked={filterValues.findIndex((filter) => filter === item) !== -1}
       />
@@ -52,6 +52,7 @@ const NavFilterItem = ({
           <InputLabel id='multiple-checkbox-label'>{buttonName}</InputLabel>
           <Select
             labelId='multiple-checkbox-label'
+            data-cy={`user-filters-${buttonName}`}
             id='multiple-checkbox'
             multiple
             value={filterValues}
