@@ -32,6 +32,8 @@ const { SAVE_TITLE } = config.buttonTitles;
 
 const { languages } = config;
 
+const labels = config.labels.pattern.form;
+
 const PatternForm = ({ pattern, id }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -189,7 +191,7 @@ const PatternForm = ({ pattern, id }) => {
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label='Назва'
+                label={labels.name[index].value}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -208,7 +210,7 @@ const PatternForm = ({ pattern, id }) => {
                 id={`${lang}Description`}
                 className={styles.textField}
                 variant='outlined'
-                label='Опис'
+                label={labels.description[index].value}
                 multiline
                 value={values[`${lang}Description`]}
                 onChange={handleChange}

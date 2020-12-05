@@ -28,6 +28,7 @@ import {
 } from './pagination';
 import titles from './titles';
 import { sort } from './sort';
+import languages from './languages';
 
 export const config = {
   app: {
@@ -37,7 +38,7 @@ export const config = {
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
-  languages: ['ua', 'en'],
+  languages,
   tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {

@@ -148,7 +148,7 @@ function MaterialForm({ material, id }) {
           id={`${lang}Name`}
           className={styles.textField}
           variant='outlined'
-          label={config.labels.material.name}
+          label={config.labels.material.name[tabsValue].value}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
           multiline
           value={values[`${lang}Name`]}
@@ -162,7 +162,7 @@ function MaterialForm({ material, id }) {
           id={`${lang}Description`}
           className={styles.textField}
           variant='outlined'
-          label={config.labels.material.description}
+          label={config.labels.material.description[tabsValue].value}
           multiline
           error={
             touched[`${lang}Description`] && !!errors[`${lang}Description`]
@@ -186,7 +186,7 @@ function MaterialForm({ material, id }) {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.material.available,
+      label: config.labels.material.available[0].value,
       handler: () => setFieldValue('available', !values.available)
     }
   ];
@@ -257,7 +257,7 @@ function MaterialForm({ material, id }) {
               id='purpose'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.purpose}
+              label={config.labels.material.purpose[0].value}
               value={values.purpose}
               onChange={handleChange}
               error={touched.purpose && !!errors.purpose}
@@ -270,7 +270,7 @@ function MaterialForm({ material, id }) {
               id='additionalPrice'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.additionalPrice}
+              label={config.labels.material.additionalPrice[0].value}
               value={values.additionalPrice}
               onChange={handleChange}
               error={touched.additionalPrice && !!errors.additionalPrice}

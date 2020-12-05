@@ -39,6 +39,8 @@ const BusinessPageForm = ({ id, editMode }) => {
   const classes = useStyles();
   const common = useCommonStyles();
 
+  const labels = config.labels.businessPage;
+
   const {
     tabsValue,
     handleTabsChange,
@@ -187,27 +189,27 @@ const BusinessPageForm = ({ id, editMode }) => {
                   id='ukTitle'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок uk'
+                  label={labels[0].label[tabsValue].value}
                   multiline
                   value={formik.values.ukTitle}
                   onChange={formik.handleChange}
                   error={!formik.values.ukTitle && shouldValidate}
                   helperText={
                     !formik.values.ukTitle && shouldValidate
-                      ? 'Введіть заголовок'
+                      ? labels[0].errorLabel[tabsValue].value
                       : ''
                   }
                   data-cy='page-header-ua'
                 />
                 <Editor
                   value={ukText}
-                  placeholder='Текст'
+                  placeholder={labels[1].label[tabsValue].value}
                   onEditorChange={(value) => ukSetText(value)}
                   setFiles={setFiles}
                 />
                 {(editorField.test(ukText) || !ukText) && shouldValidate && (
                   <div className={classes.errorMessage} data-cy='editor-error'>
-                    Введіть текст для сторінки
+                    {labels[1].errorLabel[tabsValue].value}
                   </div>
                 )}
               </Paper>
@@ -218,27 +220,27 @@ const BusinessPageForm = ({ id, editMode }) => {
                   id='enTitle'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок en'
+                  label={labels[0].label[tabsValue].value}
                   multiline
                   value={formik.values.enTitle}
                   onChange={formik.handleChange}
                   error={!formik.values.enTitle && shouldValidate}
                   helperText={
                     !formik.values.enTitle && shouldValidate
-                      ? 'Введіть заголовок'
+                      ? labels[0].errorLabel[tabsValue].value
                       : ''
                   }
                   data-cy='page-header-en'
                 />
                 <Editor
                   value={enText}
-                  placeholder='Текст'
+                  placeholder={labels[1].label[tabsValue].value}
                   onEditorChange={(value) => enSetText(value)}
                   setFiles={setFiles}
                 />
                 {(editorField.test(enText) || !enText) && shouldValidate && (
                   <div className={classes.errorMessage} data-cy='editor-error'>
-                    Введіть текст для сторінки
+                    {labels[1].errorLabel[tabsValue].value}
                   </div>
                 )}
               </Paper>

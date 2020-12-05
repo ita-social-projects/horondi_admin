@@ -14,6 +14,7 @@ import { config } from '../../../configs';
 
 const { languages } = config;
 const { newsErrorMessages } = config;
+const labels = config.labels.news;
 
 const NewsAdd = () => {
   const classes = useStyles();
@@ -89,7 +90,9 @@ const NewsAdd = () => {
               id={`${lang}AuthorName`}
               className={classes.textfield}
               variant='outlined'
-              label={`Ім'я автора`}
+              label={
+                labels.authorsName.find((item) => item.lang === lang).value
+              }
               error={
                 touched[`${lang}AuthorName`] && !!errors[`${lang}AuthorName`]
               }
@@ -108,7 +111,7 @@ const NewsAdd = () => {
               id={`${lang}Title`}
               className={classes.textfield}
               variant='outlined'
-              label='Заголовок'
+              label={labels.title.find((item) => item.lang === lang).value}
               multiline
               error={touched[`${lang}Title`] && !!errors[`${lang}Title`]}
               value={values[`${lang}Title`]}
@@ -126,7 +129,7 @@ const NewsAdd = () => {
               className={classes.textfield}
               variant='outlined'
               error={touched[`${lang}Text`] && !!errors[`${lang}Text`]}
-              label='Текст'
+              label={labels.text.find((item) => item.lang === lang).value}
               multiline
               value={values[`${lang}Text`]}
               onChange={handleChange}
