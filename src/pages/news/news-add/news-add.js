@@ -169,7 +169,6 @@ const NewsAdd = () => {
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-
       if (
         e.target.previousSibling.textContent ===
         config.buttonTitles.AUTHOR_PHOTO
@@ -186,7 +185,6 @@ const NewsAdd = () => {
           setNewsImage(event.target.result);
         };
       }
-
       reader.readAsDataURL(e.target.files[0]);
     }
   };
@@ -208,34 +206,26 @@ const NewsAdd = () => {
           />
         </div>
         <Box my={3}>
-          <Grid container spacing={1}>
-            <Grid item>
-              <ImageUploadContainer
-                handler={handleImageLoad}
-                buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
-              />
-              {authorPhoto && (
-                <Avatar src={authorPhoto}>
-                  <Image />
-                </Avatar>
-              )}
-            </Grid>
-          </Grid>
+          <ImageUploadContainer
+            handler={handleImageLoad}
+            buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
+          />
+          {authorPhoto && (
+            <Avatar src={authorPhoto}>
+              <Image />
+            </Avatar>
+          )}
         </Box>
         <Box my={3}>
-          <Grid container spacing={1}>
-            <Grid item>
-              <ImageUploadContainer
-                handler={handleImageLoad}
-                buttonLabel={config.buttonTitles.MAIN_PHOTO}
-              />
-              {newsImage && (
-                <Avatar src={newsImage}>
-                  <Image />
-                </Avatar>
-              )}
-            </Grid>
-          </Grid>
+          <ImageUploadContainer
+            handler={handleImageLoad}
+            buttonLabel={config.buttonTitles.MAIN_PHOTO}
+          />
+          {newsImage && (
+            <Avatar src={newsImage}>
+              <Image />
+            </Avatar>
+          )}
         </Box>
         {preferredLanguages.length > 0 ? (
           <div>

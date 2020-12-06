@@ -38,9 +38,9 @@ const NewsForm = ({ article, id }) => {
     setPreferredLanguages,
     createArticle,
     authorPhoto,
-    setAuthorPhoto,
     newsImage,
-    setNewsImage
+    setNewsImage,
+    setAuthorPhoto
   } = useNewsHandlers();
 
   useEffect(() => {
@@ -129,34 +129,26 @@ const NewsForm = ({ article, id }) => {
           />
         </div>
         <Box my={3}>
-          <Grid container spacing={1}>
-            <Grid item>
-              <ImageUploadContainer
-                handler={handleImageLoad}
-                buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
-              />
-              {authorPhoto && (
-                <Avatar src={authorPhoto}>
-                  <Image />
-                </Avatar>
-              )}
-            </Grid>
-          </Grid>
+          <ImageUploadContainer
+            handler={handleImageLoad}
+            buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
+          />
+          {authorPhoto && (
+            <Avatar src={authorPhoto}>
+              <Image />
+            </Avatar>
+          )}
         </Box>
         <Box my={3}>
-          <Grid container spacing={1}>
-            <Grid item>
-              <ImageUploadContainer
-                handler={handleImageLoad}
-                buttonLabel={config.buttonTitles.MAIN_PHOTO}
-              />
-              {newsImage && (
-                <Avatar src={newsImage}>
-                  <Image />
-                </Avatar>
-              )}
-            </Grid>
-          </Grid>
+          <ImageUploadContainer
+            handler={handleImageLoad}
+            buttonLabel={config.buttonTitles.MAIN_PHOTO}
+          />
+          {newsImage && (
+            <Avatar src={newsImage}>
+              <Image />
+            </Avatar>
+          )}
         </Box>
         <AppBar position='static'>
           <Tabs
