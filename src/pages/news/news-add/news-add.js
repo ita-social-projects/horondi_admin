@@ -63,10 +63,6 @@ const NewsAdd = () => {
 
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
 
-  const handleGoBack = () => {
-    dispatch(push(config.routes.pathToNews));
-  };
-
   const formSchema = Yup.object().shape({
     uaAuthorName: Yup.string()
       .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
@@ -187,6 +183,10 @@ const NewsAdd = () => {
       }
       reader.readAsDataURL(e.target.files[0]);
     }
+  };
+
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
   };
 
   if (loading) {

@@ -133,6 +133,7 @@ const NewsForm = ({ article, id }) => {
             handler={handleImageLoad}
             buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
           />
+
           {authorPhoto && (
             <Avatar src={authorPhoto}>
               <Image />
