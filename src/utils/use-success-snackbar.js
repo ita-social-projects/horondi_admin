@@ -6,7 +6,6 @@ const useSuccessSnackbar = () => {
 
   const openSuccessSnackbar = (
     onClickHandler,
-    dialogTitle,
     dialogContent,
     showIcon,
     showCancelButton = true,
@@ -15,7 +14,6 @@ const useSuccessSnackbar = () => {
     dispatch(
       showDialog({
         isOpen: true,
-        dialogTitle,
         dialogContent,
         onClickHandler,
         showIcon,

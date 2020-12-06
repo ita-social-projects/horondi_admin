@@ -34,11 +34,11 @@ const DialogWindow = ({
 
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
-      <DialogTitle className={styles.dialogTitle}>{dialogTitle}</DialogTitle>
+      <DialogTitle className={styles.dialogTitle}>{DELETE_TITLE}</DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
-      <DialogActions>
+      <DialogActions className={styles.buttonStyles}>
         {showCancelButton ? (
           <>
             <StandardButton
