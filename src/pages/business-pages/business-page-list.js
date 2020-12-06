@@ -18,7 +18,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 
 const { REMOVE_BUSINESS_PAGE } = config.messages;
-const { DELETE_TITLE, CREATE_BUSINESS_PAGE } = config.buttonTitles;
+const { CREATE_BUSINESS_PAGE } = config.buttonTitles;
 
 const { pathToAddBusinessPage } = config.routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
@@ -43,12 +43,7 @@ const BusinessPageList = () => {
       dispatch(closeDialog());
       dispatch(deleteBusinessPage(id));
     };
-    openSuccessSnackbar(
-      removeBusinessPage,
-      DELETE_TITLE,
-      REMOVE_BUSINESS_PAGE,
-      DELETE_TITLE
-    );
+    openSuccessSnackbar(removeBusinessPage, REMOVE_BUSINESS_PAGE);
   };
 
   const pages =

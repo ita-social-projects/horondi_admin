@@ -15,7 +15,6 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { routes } = config;
 const { HEADER_REMOVE_MESSAGE } = config.messages;
-const { DELETE_TITLE } = config.buttonTitles;
 
 const { CREATE_HEADER_TITLE } = config.buttonTitles;
 const pathToHeaderAddPage = routes.pathToAddHeader;
@@ -41,12 +40,7 @@ const HeaderPage = () => {
       dispatch(closeDialog());
       dispatch(deleteHeader(id));
     };
-    openSuccessSnackbar(
-      removeHeader,
-      DELETE_TITLE,
-      HEADER_REMOVE_MESSAGE,
-      DELETE_TITLE
-    );
+    openSuccessSnackbar(removeHeader, HEADER_REMOVE_MESSAGE);
   };
 
   const headerItems =

@@ -68,12 +68,7 @@ const EmailQuestionsList = () => {
       dispatch(closeDialog());
       dispatch(deleteEmailQuestions([id]));
     };
-    openSuccessSnackbar(
-      removeQuestion,
-      EMAIL_QUESTION_REMOVE_MESSAGE,
-      '',
-      buttonTitles.DELETE_TITLE
-    );
+    openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE, '');
   };
 
   const changePaginationHandler = (e, value) =>

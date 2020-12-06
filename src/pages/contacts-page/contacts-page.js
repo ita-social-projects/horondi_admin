@@ -24,7 +24,7 @@ import {
 } from '../../redux/contact/contact.actions';
 
 const { REMOVE_CONTACT_MESSAGE } = config.messages;
-const { CREATE_CONTACT_TITLE, DELETE_TITLE } = config.buttonTitles;
+const { CREATE_CONTACT_TITLE } = config.buttonTitles;
 
 const pathToAddContactPage = config.routes.pathToAddContact;
 const tableTitles = config.tableHeadRowTitles.contacts;
@@ -56,12 +56,7 @@ const ContactsPage = () => {
       dispatch(deleteContact(id));
     };
 
-    openSuccessSnackbar(
-      removeContact,
-      DELETE_TITLE,
-      REMOVE_CONTACT_MESSAGE,
-      DELETE_TITLE
-    );
+    openSuccessSnackbar(removeContact, REMOVE_CONTACT_MESSAGE);
   };
 
   useEffect(() => {

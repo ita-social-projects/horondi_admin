@@ -21,7 +21,7 @@ import { materialTranslations } from '../../../translations/material.translation
 import { useCommonStyles } from '../../common.styles';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
-const { DELETE_TITLE, CREATE_MATERIAL_TITLE } = config.buttonTitles;
+const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
 
 const pathToMaterialAddPage = config.routes.pathToAddMaterial;
 const tableTitles = config.tableHeadRowTitles.materials;
@@ -68,13 +68,7 @@ const MaterialPage = () => {
       dispatch(closeDialog());
       dispatch(deleteMaterial(id));
     };
-    openSuccessSnackbar(
-      removeMaterial,
-      DELETE_TITLE,
-      REMOVE_MATERIAL_MESSAGE,
-      DELETE_TITLE,
-      'danger'
-    );
+    openSuccessSnackbar(removeMaterial, REMOVE_MATERIAL_MESSAGE, 'danger');
   };
 
   const changeHandler = (e, value) => dispatch(setMaterialsCurrentPage(value));

@@ -26,7 +26,6 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 
 const tableTitles = config.tableHeadRowTitles.materialColors;
 const { REMOVE_MATERIAL_COLOR_MESSAGE } = config.messages;
-const { DELETE_TITLE } = config.buttonTitles;
 const MaterialColorPalette = ({ match }) => {
   const materialId = match.params.id;
   const styles = useStyles();
@@ -58,13 +57,7 @@ const MaterialColorPalette = ({ match }) => {
       );
     };
 
-    openSuccessSnackbar(
-      removeColor,
-      DELETE_TITLE,
-      REMOVE_MATERIAL_COLOR_MESSAGE,
-      DELETE_TITLE,
-      'danger'
-    );
+    openSuccessSnackbar(removeColor, REMOVE_MATERIAL_COLOR_MESSAGE, 'danger');
   };
   const colorEditHandler = (code) => {
     dispatch(getMaterialColor(code));

@@ -17,7 +17,6 @@ import {
 import { useStyles } from './comments-section.style';
 
 const tableHeaders = config.tableHeadRowTitles.comments;
-const { DELETE_TITLE } = config.buttonTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 
 const CommentsSection = ({ value, commentsType }) => {
@@ -38,12 +37,7 @@ const CommentsSection = ({ value, commentsType }) => {
       dispatch(closeDialog());
       dispatch(deleteComment(id));
     };
-    openSuccessSnackbar(
-      removeComment,
-      DELETE_TITLE,
-      REMOVE_COMMENT_MESSAGE,
-      DELETE_TITLE
-    );
+    openSuccessSnackbar(removeComment, REMOVE_COMMENT_MESSAGE);
   };
 
   if (loading) {

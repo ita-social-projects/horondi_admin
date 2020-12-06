@@ -38,7 +38,6 @@ import { config } from '../../../configs';
 import { useCommonStyles } from '../../common.styles';
 
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
-const { DELETE_TITLE } = config.buttonTitles;
 
 const CategoriesAdd = ({ id, editMode }) => {
   const classes = useStyles();
@@ -196,12 +195,7 @@ const CategoriesAdd = ({ id, editMode }) => {
         dispatch(closeDialog());
         dispatch(deleteCategory({ categoryId }));
       };
-      openSuccessSnackbar(
-        removeCategory,
-        DELETE_TITLE,
-        DELETE_CATEGORY_MESSAGE,
-        DELETE_TITLE
-      );
+      openSuccessSnackbar(removeCategory, DELETE_CATEGORY_MESSAGE);
     },
     [dispatch, openSuccessSnackbar]
   );

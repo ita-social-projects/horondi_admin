@@ -21,8 +21,6 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;
-const { DELETE_TITLE } = config.buttonTitles;
-
 const { CREATE_MODEL_TITLE } = config.buttonTitles;
 const pathToModelAddPage = routes.pathToAddModel;
 const tableTitles = config.tableHeadRowTitles.models;
@@ -59,12 +57,7 @@ const ModelPage = () => {
       dispatch(closeDialog());
       dispatch(deleteModel(id));
     };
-    openSuccessSnackbar(
-      removeModel,
-      DELETE_TITLE,
-      MODEL_REMOVE_MESSAGE,
-      DELETE_TITLE
-    );
+    openSuccessSnackbar(removeModel, MODEL_REMOVE_MESSAGE);
   };
 
   const changeHandler = (e, value) => dispatch(setModelsCurrentPage(value));

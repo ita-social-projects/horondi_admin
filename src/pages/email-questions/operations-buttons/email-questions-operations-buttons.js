@@ -55,8 +55,7 @@ const EmailQuestionsOperationsButtons = ({
     openSuccessSnackbar(
       deleteQuestions,
       EMAIL_QUESTIONS_MOVE_TO_DELETE_MESSAGE,
-      '',
-      buttonTitles.DELETE_TITLE
+      ''
     );
   };
 

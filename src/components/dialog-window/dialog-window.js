@@ -16,12 +16,12 @@ import DeleteButton from '../buttons/delete-button';
 import { basicSelector } from '../../redux/dialog-window/dialog-window.reducer';
 
 const { CANCEL_TITLE } = config.buttonTitles;
+const { DELETE_TITLE } = config.buttonTitles;
 
 const DialogWindow = ({
   isOpen,
   dialogTitle,
   dialogContent,
-  buttonTitle,
   showCancelButton,
   onClickHandler
 }) => {
@@ -51,14 +51,14 @@ const DialogWindow = ({
               data-cy='dialog-confirm'
               onClickHandler={onClickHandler}
             >
-              {buttonTitle}
+              {DELETE_TITLE}
             </DeleteButton>
           </>
         ) : (
           <StandardButton
             data-cy='dialog-confirm'
             variant='contained'
-            title={buttonTitle}
+            title={DELETE_TITLE}
             onClickHandler={onClickHandler}
           />
         )}
@@ -73,7 +73,6 @@ DialogWindow.propTypes = {
   isOpen: PropTypes.bool,
   dialogTitle: PropTypes.string,
   dialogContent: PropTypes.string,
-  buttonTitle: PropTypes.string,
   showCancelButton: PropTypes.bool,
   onClickHandler: PropTypes.func
 };
@@ -82,7 +81,6 @@ DialogWindow.defaultProps = {
   isOpen: false,
   dialogTitle: '',
   dialogContent: '',
-  buttonTitle: '',
   showCancelButton: true,
   onClickHandler: () => {}
 };
