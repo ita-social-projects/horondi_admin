@@ -87,24 +87,27 @@ const NewsForm = ({ article, id }) => {
     }
   });
 
-  const handleAuthorImageLoad = (e) => {
+  const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-      reader.onload = (event) => {
-        setFieldValue('authorPhoto', event.target.result);
-        setAuthorPhoto(event.target.result);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
 
-  const handleNewsImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setFieldValue('newsImage', event.target.result);
-        setNewsImage(event.target.result);
-      };
+      if (
+        e.target.previousSibling.textContent ===
+        config.buttonTitles.AUTHOR_PHOTO
+      ) {
+        reader.onload = (event) => {
+          setFieldValue('authorPhoto', event.target.result);
+          setAuthorPhoto(event.target.result);
+        };
+      } else if (
+        e.target.previousSibling.textContent === config.buttonTitles.MAIN_PHOTO
+      ) {
+        reader.onload = (event) => {
+          setFieldValue('newsImage', event.target.result);
+          setNewsImage(event.target.result);
+        };
+      }
+
       reader.readAsDataURL(e.target.files[0]);
     }
   };
@@ -129,7 +132,7 @@ const NewsForm = ({ article, id }) => {
           <Grid container spacing={1}>
             <Grid item>
               <ImageUploadContainer
-                handler={handleAuthorImageLoad}
+                handler={handleImageLoad}
                 buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
               />
               {authorPhoto && (
@@ -144,7 +147,7 @@ const NewsForm = ({ article, id }) => {
           <Grid container spacing={1}>
             <Grid item>
               <ImageUploadContainer
-                handler={handleNewsImageLoad}
+                handler={handleImageLoad}
                 buttonLabel={config.buttonTitles.MAIN_PHOTO}
               />
               {newsImage && (
