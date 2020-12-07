@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useStyles } from './delete-button.styles';
 
-const DeleteButton = ({ children, showIcon, onClickHandler, ...props }) => {
+const DeleteButton = ({ children,showIcon, onClickHandler, ...props }) => {
   const styles = useStyles();
 
   return (
@@ -23,13 +23,11 @@ const DeleteButton = ({ children, showIcon, onClickHandler, ...props }) => {
 
 DeleteButton.propTypes = {
   children: PropTypes.node.isRequired,
-  showIcon: PropTypes.bool,
   onClickHandler: PropTypes.func,
   size: PropTypes.string
 };
 
 DeleteButton.defaultProps = {
-  showIcon: true,
   size: 'medium',
   onClickHandler: () => {}
 };

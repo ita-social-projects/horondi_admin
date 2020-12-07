@@ -173,7 +173,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
           variant='outlined'
           color='primary'
           className={styles.returnButton}
-          data-cy='go-Back-Button'
+          data-cy='go-back-button'
         >
           {config.buttonTitles.GO_BACK_TITLE}
         </Button>

@@ -23,7 +23,6 @@ import { config } from '../../configs';
 import { selectCommentsListLoadingPages } from '../../redux/selectors/comments.selectors';
 
 const tableHeaders = config.tableHeadRowTitles.comments;
-const { REMOVE_COMMENT_TITLE } = config.buttonTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 const { RECENT_COMMENTS } = commentsTranslations;
 
@@ -62,12 +61,7 @@ const Comments = ({ productId }) => {
       dispatch(closeDialog());
       dispatch(deleteComment(id));
     };
-    openSuccessSnackbar(
-      removeComment,
-      REMOVE_COMMENT_TITLE,
-      REMOVE_COMMENT_MESSAGE,
-      REMOVE_COMMENT_TITLE
-    );
+    openSuccessSnackbar(removeComment, REMOVE_COMMENT_MESSAGE);
   };
 
   const changePageHandler = (e, value) =>

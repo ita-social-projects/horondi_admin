@@ -1,3 +1,5 @@
+import { mapToLanguages } from '../utils/map-languages';
+
 const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
