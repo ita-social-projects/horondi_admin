@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => {
   const {
     attachFile,
     imageUpload,
-    imageUploadAvatar,
+    imageUploadContainer,
     large,
     returnButton,
     saveButton,
@@ -37,7 +37,7 @@ export const useStyles = makeStyles((theme) => {
     saveButton,
     returnButton,
     inputError,
-    imageUploadAvatar,
+    imageUploadContainer,
     large,
     imageName,
     imageUpload,

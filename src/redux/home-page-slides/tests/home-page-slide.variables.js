@@ -20,7 +20,7 @@ const mockSlides = {
   items: [
     {
       description: [
-        { value: '-20 на всі гаманці', lang: 'ua' },
+        { value: '-20 на всі гаманці', lang: 'uk' },
         { value: '-20 for all wallets', lang: 'en' }
       ],
       images: {
@@ -32,7 +32,7 @@ const mockSlides = {
       show: true,
       title: [
         {
-          lang: 'ua',
+          lang: 'uk',
           value: 'Акція '
         },
         {

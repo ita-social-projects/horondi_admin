@@ -18,7 +18,7 @@ const useMaterialHandlers = () => {
       name: [
         {
           lang: languages[0],
-          value: values.uaName || null
+          value: values.ukName || null
         },
         {
           lang: languages[1],
@@ -29,7 +29,7 @@ const useMaterialHandlers = () => {
       description: [
         {
           lang: languages[0],
-          value: values.uaDescription || null
+          value: values.ukDescription || null
         },
         {
           lang: languages[1],

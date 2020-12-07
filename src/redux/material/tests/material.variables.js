@@ -6,7 +6,7 @@ const mockMaterials = {
       _id: mockId,
       name: [
         {
-          lang: 'ua',
+          lang: 'uk',
           value: 'Натуральна шкіра'
         },
         {
@@ -16,7 +16,7 @@ const mockMaterials = {
       ],
       description: [
         {
-          lang: 'ua',
+          lang: 'uk',
           value: 'test'
         },
         {
@@ -51,7 +51,7 @@ const mockColors = [
     name: [
       {
         value: 'Світло-коричневий',
-        lang: 'ua'
+        lang: 'uk'
       },
       {
         value: 'Light-brown',
@@ -61,7 +61,7 @@ const mockColors = [
     simpleName: [
       {
         value: 'коричневий',
-        lang: 'ua'
+        lang: 'uk'
       },
       {
         value: 'brown',

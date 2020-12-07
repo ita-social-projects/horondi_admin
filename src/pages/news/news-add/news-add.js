@@ -14,7 +14,6 @@ import { config } from '../../../configs';
 
 const { languages } = config;
 const { newsErrorMessages } = config;
-const labels = config.labels.news;
 
 const NewsAdd = () => {
   const classes = useStyles();
@@ -53,13 +52,13 @@ const NewsAdd = () => {
   };
 
   const formSchema = Yup.object().shape({
-    uaAuthorName: Yup.string()
+    ukAuthorName: Yup.string()
       .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
     enAuthorName: Yup.string()
       .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
-    uaTitle: Yup.string()
+    ukTitle: Yup.string()
       .min(10, newsErrorMessages.TITLE_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.TITLE_MAX_LENGTH_MESSAGE),
     enTitle: Yup.string()
@@ -90,9 +89,7 @@ const NewsAdd = () => {
               id={`${lang}AuthorName`}
               className={classes.textfield}
               variant='outlined'
-              label={
-                labels.authorsName.find((item) => item.lang === lang).value
-              }
+              label={`Ім'я автора`}
               error={
                 touched[`${lang}AuthorName`] && !!errors[`${lang}AuthorName`]
               }
@@ -111,7 +108,7 @@ const NewsAdd = () => {
               id={`${lang}Title`}
               className={classes.textfield}
               variant='outlined'
-              label={labels.title.find((item) => item.lang === lang).value}
+              label='Заголовок'
               multiline
               error={touched[`${lang}Title`] && !!errors[`${lang}Title`]}
               value={values[`${lang}Title`]}
@@ -129,7 +126,7 @@ const NewsAdd = () => {
               className={classes.textfield}
               variant='outlined'
               error={touched[`${lang}Text`] && !!errors[`${lang}Text`]}
-              label={labels.text.find((item) => item.lang === lang).value}
+              label='Текст'
               multiline
               value={values[`${lang}Text`]}
               onChange={handleChange}

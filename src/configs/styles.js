@@ -43,13 +43,10 @@ const formStyles = (theme) => ({
     marginLeft: '10px',
     color: 'rgba(0, 0, 0, 0.54)'
   },
-  imageUploadAvatar: {
-    padding: '10px',
+  imageUploadContainer: {
     display: 'flex',
     alignItems: 'center',
-    '& div:nth-child(2)': {
-      marginLeft: '15px'
-    }
+    margin: '10px'
   },
 
   details: {

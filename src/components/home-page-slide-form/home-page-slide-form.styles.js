@@ -2,13 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formStyles } from '../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
-  const {
-    imageUpload,
-    textField,
-    inputError,
-    tabs,
-    imageUploadAvatar
-  } = formStyles(theme);
+  const { imageUpload, textField, inputError, tabs } = formStyles(theme);
   return {
     formContainer: {
       width: '100%',
@@ -122,7 +116,6 @@ export const useStyles = makeStyles((theme) => {
     imageUpload,
     textField,
     tabs,
-    inputError,
-    imageUploadAvatar
+    inputError
   };
 });

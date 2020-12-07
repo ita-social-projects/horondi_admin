@@ -1,4 +1,4 @@
-const uaDescriptionBase = 'Фабричний гобелен із зображенням';
+const ukDescriptionBase = 'Фабричний гобелен із зображенням';
 const enDescriptionBase = 'Manufactured tapestry with';
 
 const mockId = '0c3c7929dd85de268bed4fe8';
@@ -9,7 +9,7 @@ const mockPatterns = {
       _id: mockId,
       description: [
         {
-          value: `${uaDescriptionBase} рожевої хвильки`
+          value: `${ukDescriptionBase} рожевої хвильки`
         },
         {
           value: `${enDescriptionBase} pink wave pattern`

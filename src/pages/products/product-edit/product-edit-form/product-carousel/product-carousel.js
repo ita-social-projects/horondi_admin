@@ -11,6 +11,7 @@ import {
   setPrimaryImageToUpload
 } from '../../../../../redux/products/products.actions';
 import { closeDialog } from '../../../../../redux/dialog-window/dialog-window.actions';
+import UploadButton from '../../../../../components/buttons/upload-button';
 import { config } from '../../../../../configs';
 import { productsTranslations } from '../../../../../translations/product.translations';
 import useSuccessSnackbar from '../../../../../utils/use-success-snackbar';
@@ -18,7 +19,6 @@ import { useStyles } from './product-carousel.styles';
 import 'react-multi-carousel/lib/styles.css';
 import './product-carousel.css';
 import DeleteButton from '../../../../../components/buttons/delete-button';
-import ImageUploadContainer from '../../../../../containers/image-upload-container';
 
 const {
   imagePrefix,
@@ -163,9 +163,10 @@ const ProductCarousel = ({ toggleFieldsChanged }) => {
               }}
             >
               <Box mt={1}>
-                <ImageUploadContainer
+                <UploadButton
+                  className={styles.imageBtn}
                   buttonLabel={idx === 0 ? UPDATE_MAIN_PHOTO : NEW_PHOTOS}
-                  handler={
+                  onChangeHandler={
                     idx === 0 ? handlePrimaryImageLoad : handleMultipleFilesLoad
                   }
                   multiple={idx !== 0}

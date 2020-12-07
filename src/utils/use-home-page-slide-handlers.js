@@ -18,7 +18,7 @@ const useHomePageSlideHandlers = () => {
       title: [
         {
           lang: languages[0],
-          value: values.uaTitle
+          value: values.ukTitle
         },
         {
           lang: languages[1],
@@ -29,7 +29,7 @@ const useHomePageSlideHandlers = () => {
       description: [
         {
           lang: languages[0],
-          value: values.uaDescription
+          value: values.ukDescription
         },
         {
           lang: languages[1],

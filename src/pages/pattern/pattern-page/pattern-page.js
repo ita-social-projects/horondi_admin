@@ -101,11 +101,7 @@ const PatternPage = () => {
   return (
     <div className={common.container}>
       <div className={common.adminHeader}>
-        <Typography
-          variant='h1'
-          className={common.materialTitle}
-          data-cy='pattern-header'
-        >
+        <Typography variant='h1' className={common.materialTitle}>
           {config.titles.patternTitles.mainPageTitle}
         </Typography>
         <Button

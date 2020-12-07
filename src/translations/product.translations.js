@@ -20,7 +20,7 @@ export const productsTranslations = {
   DELETE_IMAGE_MESSAGE: 'Ви дійсно хочете видалити зображення?',
   MAIN_PHOTO: 'ГОЛОВНЕ ФОТО',
   ADDITIONAL_PHOTOS: 'ДОДАТКОВІ ФОТО',
-  REQUIRED_PHOTOS: "Головне фото для продукту є обов'язковими",
+  REQUIRED_PHOTOS: "Фото для продукту є обов'язковими",
   ALL_FIELDS_ARE_REQUIRED: "Усі поля обов'язкові",
   ADDITIONAL_PRICE: 'Додаткова ціна(грн)',
   REQUIRED_FIELD: "Обов'язкове поле",

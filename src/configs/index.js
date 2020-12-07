@@ -16,6 +16,7 @@ import {
   modelErrorMessages,
   headerErrorMessages,
   homePageSlideErrorMessages,
+  categoryErrorMessages,
   statsErrorMessages
 } from './error-messages';
 import messages from './messages';
@@ -28,7 +29,6 @@ import {
 } from './pagination';
 import titles from './titles';
 import { sort } from './sort';
-import languages from './languages';
 
 export const config = {
   app: {
@@ -38,7 +38,7 @@ export const config = {
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
-  languages,
+  languages: ['ua', 'en'],
   tokenName: 'HORONDI_AUTH_TOKEN',
   templates: {
     categoryTemplate: {
@@ -133,7 +133,7 @@ export const config = {
   imagePrefix: 'https://horondi.blob.core.windows.net/horondi/images/',
   initialLanguageValues: [
     {
-      lang: 'ua',
+      lang: 'uk',
       value: ''
     },
     {
@@ -179,6 +179,7 @@ export const config = {
   patternErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
+  categoryErrorMessages,
   errorMessages,
   newsPaginationPayload,
   contactsPaginationPayload,

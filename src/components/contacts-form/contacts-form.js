@@ -20,7 +20,6 @@ import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
 
-import { Image } from '@material-ui/icons';
 import { config } from '../../configs';
 import { SaveButton } from '../buttons';
 import {
@@ -29,16 +28,15 @@ import {
   setSnackBarMessage
 } from '../../redux/snackbar/snackbar.actions';
 import { useStyles } from './contacts-form.style';
-import ImageUploadContainer from '../../containers/image-upload-container';
 
 const {
   PHONE_NUMBER_LENGTH_MESSAGE,
   PHONE_NUMBER_TYPE_MESSAGE,
   ENTER_PHONE_NUMBER_MESSAGE,
   INPUT_LENGTH_MESSAGE,
-  ENTER_UA_SCHEDULE_MESSAGE,
+  ENTER_UK_SCHEDULE_MESSAGE,
   ENTER_EN_SCHEDULE_MESSAGE,
-  ENTER_UA_ADDRESS_MESSAGE,
+  ENTER_UK_ADDRESS_MESSAGE,
   ENTER_EN_ADDRESS_MESSAGE,
   IMAGE_FORMAT_MESSAGE,
   ENTER_LINK_MESSAGE,
@@ -59,7 +57,7 @@ const pathToContactsPage = config.routes.pathToContacts;
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [uaMapImage, uaSetMapImage] = useState({
+  const [ukMapImage, ukSetMapImage] = useState({
     name: '',
     imageUrl: ''
   });
@@ -68,14 +66,14 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     imageUrl: ''
   });
 
-  const uaSelectImageHandler = ({ target }) => {
+  const ukSelectImageHandler = ({ target }) => {
     if (target.files && target.files[0]) {
-      uaSetMapImage({
+      ukSetMapImage({
         name: target.files[0].name,
         imageUrl: URL.createObjectURL(target.files[0])
       });
 
-      [values.uaCartImage] = target.files;
+      [values.ukCartImage] = target.files;
     }
   };
 
@@ -95,15 +93,15 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .min(12, PHONE_NUMBER_LENGTH_MESSAGE)
       .typeError(PHONE_NUMBER_TYPE_MESSAGE)
       .required(ENTER_PHONE_NUMBER_MESSAGE),
-    uaSchedule: Yup.string()
+    ukSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
-      .required(ENTER_UA_SCHEDULE_MESSAGE),
+      .required(ENTER_UK_SCHEDULE_MESSAGE),
     enSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
       .required(ENTER_EN_SCHEDULE_MESSAGE),
-    uaAddress: Yup.string()
+    ukAddress: Yup.string()
       .min(8, INPUT_LENGTH_MESSAGE)
-      .required(ENTER_UA_ADDRESS_MESSAGE),
+      .required(ENTER_UK_ADDRESS_MESSAGE),
     enAddress: Yup.string()
       .min(8, INPUT_LENGTH_MESSAGE)
       .matches(enAddressRegex, ENTER_EN_ADDRESS_MESSAGE)
@@ -123,9 +121,9 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     validateOnBlur: true,
     onSubmit: (formValues) => {
       if (
-        formValues.uaCartImage &&
+        formValues.ukCartImage &&
         formValues.enCartImage &&
-        typeof formValues.uaCartImage === typeof formValues.enCartImage
+        typeof formValues.ukCartImage === typeof formValues.enCartImage
       ) {
         contactSaveHandler(formValues);
       } else {
@@ -146,50 +144,66 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 <span className={classes.imageUpload}>
                   Зображення карти (Укр.)
                 </span>
-                <div className={classes.imageUploadAvatar}>
-                  <ImageUploadContainer handler={uaSelectImageHandler} />
-                  {uaMapImage.imageUrl ? (
-                    <Avatar
-                      data-cy='uaCartImage'
-                      src={uaMapImage.imageUrl}
-                      className={classes.large}
+                <div className={classes.imageUploadContainer}>
+                  <label htmlFor='upload-photo'>
+                    <input
+                      style={{ display: 'none' }}
+                      accept='image/*'
+                      id='upload-photo'
+                      name='upload-photo'
+                      type='file'
+                      onChange={ukSelectImageHandler}
+                    />
+                    <Button
+                      id='add-contact'
+                      variant='outlined'
+                      color='primary'
+                      component='span'
                     >
-                      <Image />
-                    </Avatar>
-                  ) : initialValues.uaCartImage ? (
-                    <Avatar
-                      data-cy='uaCartImage'
-                      src={initialValues.uaCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
-                  ) : null}
+                      <AttachFileIcon className={classes.attachFile} />
+                      Завантажити
+                    </Button>
+                  </label>
+                  <Avatar
+                    data-cy='ukCartImage'
+                    src={ukMapImage.imageUrl || initialValues.ukCartImage}
+                    className={classes.large}
+                  >
+                    <ImageIcon />
+                  </Avatar>
+                  <span className={classes.imageName}>{ukMapImage.name}</span>
                 </div>
                 <span className={classes.imageUpload}>
                   Зображення карти (Англ.)
                 </span>
-                <div className={classes.imageUploadAvatar}>
-                  <ImageUploadContainer handler={enSelectImageHandler} />
-                  {enMapImage.imageUrl ? (
-                    <Avatar
-                      data-cy='enCartImage'
-                      src={enMapImage.imageUrl}
-                      className={classes.large}
+                <div className={classes.imageUploadContainer}>
+                  <label>
+                    <input
+                      style={{ display: 'none' }}
+                      accept='image/*'
+                      id='upload-photo'
+                      name='upload-photo'
+                      type='file'
+                      onChange={enSelectImageHandler}
+                    />
+                    <Button
+                      id='add-contact'
+                      variant='outlined'
+                      color='primary'
+                      component='span'
                     >
-                      <Image />
-                    </Avatar>
-                  ) : initialValues.enCartImage ? (
-                    <Avatar
-                      data-cy='enCartImage'
-                      src={initialValues.enCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
-                  ) : (
-                    <></>
-                  )}
+                      <AttachFileIcon className={classes.attachFile} />
+                      Завантажити
+                    </Button>
+                  </label>
+                  <Avatar
+                    data-cy='enCartImage'
+                    src={enMapImage.imageUrl || initialValues.enCartImage}
+                    className={classes.large}
+                  >
+                    <ImageIcon />
+                  </Avatar>
+                  <span className={classes.imageName}>{enMapImage.name}</span>
                 </div>
                 <TextField
                   data-cy='mapLink'
@@ -229,8 +243,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.phoneNumber && errors.phoneNumber}
                 />
                 <TextField
-                  data-cy='uaSchedule'
-                  id='uaSchedule'
+                  data-cy='ukSchedule'
+                  id='ukSchedule'
                   className={classes.textField}
                   variant='outlined'
                   label='Розклад (укр.)'
@@ -240,10 +254,10 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={values.uaSchedule}
+                  value={values.ukSchedule}
                   onChange={handleChange}
-                  error={touched.uaSchedule && !!errors.uaSchedule}
-                  helperText={touched.uaSchedule && errors.uaSchedule}
+                  error={touched.ukSchedule && !!errors.ukSchedule}
+                  helperText={touched.ukSchedule && errors.ukSchedule}
                 />
                 <TextField
                   data-cy='enSchedule'
@@ -267,8 +281,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
-                  data-cy='uaAddress'
-                  id='uaAddress'
+                  data-cy='ukAddress'
+                  id='ukAddress'
                   className={classes.textField}
                   variant='outlined'
                   label='Адреса (укр.)'
@@ -278,10 +292,10 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                       shrink: 'shrink'
                     }
                   }}
-                  value={values.uaAddress}
+                  value={values.ukAddress}
                   onChange={handleChange}
-                  error={touched.uaAddress && !!errors.uaAddress}
-                  helperText={touched.uaAddress && errors.uaAddress}
+                  error={touched.ukAddress && !!errors.ukAddress}
+                  helperText={touched.ukAddress && errors.ukAddress}
                 />
                 <TextField
                   data-cy='enAddress'
@@ -346,11 +360,11 @@ ContactsForm.propTypes = {
   contactSaveHandler: PropTypes.func.isRequired,
   initialValues: PropTypes.shape({
     phoneNumber: PropTypes.string.isRequired,
-    uaSchedule: PropTypes.string.isRequired,
+    ukSchedule: PropTypes.string.isRequired,
     enSchedule: PropTypes.string.isRequired,
-    uaAddress: PropTypes.string.isRequired,
+    ukAddress: PropTypes.string.isRequired,
     enAddress: PropTypes.string.isRequired,
-    uaCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    ukCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     enCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     email: PropTypes.string.isRequired,
     cartLink: PropTypes.string.isRequired
@@ -359,7 +373,7 @@ ContactsForm.propTypes = {
 
 ContactsForm.defaultProps = {
   initialValues: {
-    uaCartImage: null,
+    ukCartImage: null,
     enCartImage: null
   }
 };

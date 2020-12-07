@@ -20,8 +20,9 @@ import MaterialPage from '../pages/material/material-page';
 import MaterialAdd from '../pages/material/material-add';
 import ProductsPage from '../pages/products/products-page';
 import ProductsAdd from '../pages/products/product-add';
-import Categories from '../pages/categories/categories-page';
-import CategoriesAdd from '../pages/categories/categories-add/categories-add';
+import Categories from '../pages/category/category-page';
+import CategoryDetails from '../pages/category/category-details'
+import CategoryAdd from '../pages/category/category-add';
 import UsersDetails from '../pages/users/users-details';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
@@ -50,8 +51,8 @@ import StatisticPage from '../pages/statistic';
 import SlidesPage from '../pages/home-page-slides/slides-page';
 import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
-import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
+
 
 const { routes } = config;
 
@@ -85,7 +86,6 @@ const Routes = () => {
       <NavMenu />
       <ErrorBoundary>
         <Switch>
-          <Route path={routes.pathToMainPage} exact component={MainPage} />
           <Route path={routes.pathToUsers} exact component={UsersPage} />
           <Route
             path={routes.pathToUsersDetails}
@@ -178,14 +178,12 @@ const Routes = () => {
           <Route
             path={routes.pathToAddCategory}
             exact
-            component={CategoriesAdd}
+            component={CategoryAdd}
           />
           <Route
             path={routes.pathToEditCategory}
             exact
-            render={({ match }) => (
-              <CategoriesAdd id={match.params.id} editMode />
-            )}
+            component={CategoryDetails}
           />
           <Route
             path={routes.pathToEmailQuestions}

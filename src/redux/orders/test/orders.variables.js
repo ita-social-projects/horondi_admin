@@ -209,7 +209,7 @@ export const fakeIdOrder = {
         {
           name: [
             {
-              lang: 'ua',
+              lang: 'uk',
               value: 'Сумка з гобеленом синя'
             },
             {
@@ -221,7 +221,7 @@ export const fakeIdOrder = {
         {
           name: [
             {
-              lang: 'ua',
+              lang: 'uk',
               value: 'Новий червоний 2'
             },
             {

@@ -1,9 +1,4 @@
-import {
-  SET_ORDER,
-  SET_ORDER_LOADING,
-  SET_ORDER_ERROR,
-  SET_ORDER_LIST
-} from './orders.types';
+import {SET_ORDER, SET_ORDER_LOADING, SET_ORDER_ERROR, SET_ORDER_LIST} from './orders.types'
 
 export const initialState = {
   list: [],
@@ -12,36 +7,31 @@ export const initialState = {
   orderError: null
 };
 
-export const selectOrderList = ({ Orders }) => ({
-  orderLoading: Orders.orderLoading,
-  ordersList: Orders.list.items
-});
-
 const ordersReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_ORDER:
-    return {
-      ...state,
-      selectedOrder: action.payload
-    };
-  case SET_ORDER_LOADING:
-    return {
-      ...state,
-      orderLoading: action.payload
-    };
-  case SET_ORDER_ERROR:
-    return {
-      ...state,
-      orderError: action.payload
-    };
-  case SET_ORDER_LIST:
-    return {
-      ...state,
-      list: action.payload
-    };
-  default:
-    return state;
+    case SET_ORDER:
+      return {
+        ...state,
+        selectedOrder: action.payload
+      };
+    case SET_ORDER_LOADING:
+      return {
+        ...state,
+        orderLoading: action.payload
+      };
+    case SET_ORDER_ERROR:
+      return {
+        ...state,
+        orderError: action.payload
+      };
+    case SET_ORDER_LIST:
+      return {
+        ...state,
+        list: action.payload
+      };
+    default:
+      return state
   }
-};
+}
 
-export default ordersReducer;
+export default ordersReducer

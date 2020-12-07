@@ -7,6 +7,7 @@ export const useStyles = makeStyles((theme) => {
     inputError,
     imageName,
     saveButton,
+    imageUploadContainer,
     tabs,
     controlsBlock,
     attachFile,
@@ -14,7 +15,6 @@ export const useStyles = makeStyles((theme) => {
     returnButton,
     imageUpload,
     textField,
-    imageUploadAvatar,
     itemUpdate
   } = formStyles(theme);
   return {
@@ -26,6 +26,7 @@ export const useStyles = makeStyles((theme) => {
     },
     imageName,
     inputError,
+    imageUploadContainer,
     textField,
     imageUpload,
     saveButton,
@@ -33,7 +34,6 @@ export const useStyles = makeStyles((theme) => {
     attachFile,
     large,
     tabs,
-    imageUploadAvatar,
     controlsBlock
   };
 });

@@ -65,7 +65,7 @@ function MaterialForm({ material, id }) {
   } = useMaterialHandlers();
 
   const formSchema = Yup.object().shape({
-    uaName: Yup.string()
+    ukName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
@@ -75,7 +75,7 @@ function MaterialForm({ material, id }) {
       .max(100, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
 
-    uaDescription: Yup.string()
+    ukDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(300, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
@@ -106,9 +106,9 @@ function MaterialForm({ material, id }) {
     validationSchema: formSchema,
     validateOnBlur: true,
     initialValues: {
-      uaName: material.name[0].value || '',
+      ukName: material.name[0].value || '',
       enName: material.name[1].value || '',
-      uaDescription: material.description[0].value || '',
+      ukDescription: material.description[0].value || '',
       enDescription: material.description[1].value || '',
       purpose: material.purpose || '',
       available: material.available || false,
@@ -148,7 +148,7 @@ function MaterialForm({ material, id }) {
           id={`${lang}Name`}
           className={styles.textField}
           variant='outlined'
-          label={config.labels.material.name[tabsValue].value}
+          label={config.labels.material.name}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
           multiline
           value={values[`${lang}Name`]}
@@ -162,7 +162,7 @@ function MaterialForm({ material, id }) {
           id={`${lang}Description`}
           className={styles.textField}
           variant='outlined'
-          label={config.labels.material.description[tabsValue].value}
+          label={config.labels.material.description}
           multiline
           error={
             touched[`${lang}Description`] && !!errors[`${lang}Description`]
@@ -186,7 +186,7 @@ function MaterialForm({ material, id }) {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.material.available[0].value,
+      label: config.labels.material.available,
       handler: () => setFieldValue('available', !values.available)
     }
   ];
@@ -257,7 +257,7 @@ function MaterialForm({ material, id }) {
               id='purpose'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.purpose[0].value}
+              label={config.labels.material.purpose}
               value={values.purpose}
               onChange={handleChange}
               error={touched.purpose && !!errors.purpose}
@@ -270,7 +270,7 @@ function MaterialForm({ material, id }) {
               id='additionalPrice'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.additionalPrice[0].value}
+              label={config.labels.material.additionalPrice}
               value={values.additionalPrice}
               onChange={handleChange}
               error={touched.additionalPrice && !!errors.additionalPrice}
@@ -359,25 +359,25 @@ MaterialForm.propTypes = {
   values: PropTypes.shape({
     available: PropTypes.bool,
     purpose: PropTypes.string,
-    uaName: PropTypes.string,
+    ukName: PropTypes.string,
     enName: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   errors: PropTypes.shape({
     available: PropTypes.bool,
     purpose: PropTypes.string,
-    uaName: PropTypes.string,
+    ukName: PropTypes.string,
     enName: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   touched: PropTypes.shape({
     available: PropTypes.bool,
     purpose: PropTypes.string,
-    uaName: PropTypes.string,
+    ukName: PropTypes.string,
     enName: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   match: PropTypes.shape({

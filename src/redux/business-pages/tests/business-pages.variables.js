@@ -1,4 +1,4 @@
-export const uaText = 'Український текст бізнес сторінки';
+export const ukText = 'Український текст бізнес сторінки';
 export const enText = 'English text of business page';
 export const businessPage = {
   _id: 'de57efa1gdg543414b430',
@@ -6,7 +6,7 @@ export const businessPage = {
   title: [{ value: 'Укр заголовок' }, { value: 'Eng title' }],
   text: [
     {
-      value: uaText
+      value: ukText
     },
     {
       value: enText
@@ -25,7 +25,7 @@ export const businessPages = [
     title: [{ value: 'Про нас' }, { value: 'About us' }],
     text: [
       {
-        value: `${uaText} про нас`
+        value: `${ukText} про нас`
       },
       {
         value: `${enText} about us`
@@ -38,10 +38,10 @@ export const businessPages = [
     title: [{ value: 'Умови конфіденційності' }, { value: 'Privacy policy' }],
     text: [
       {
-        value: `${uaText} умови конфіденційності`
+        value: `${ukText} умови конфіденційності`
       },
       {
-        value: `${uaText} privacy policy`
+        value: `${ukText} privacy policy`
       }
     ]
   }
@@ -53,13 +53,13 @@ export const businessPageToCreate = {
     title: [{ value: 'Укр заголовок' }, { value: 'Eng title' }],
     text: [
       {
-        value: uaText
+        value: ukText
       },
       {
         value: enText
       }
     ],
-    lang: ['ua', 'ua']
+    lang: ['uk', 'ua']
   },
   files: []
 };
@@ -69,8 +69,8 @@ export const businessPageToUpdate = {
   page: {
     title: [
       {
-        lang: 'ua',
-        value: `${uaText} про нас оновлена`
+        lang: 'uk',
+        value: `${ukText} про нас оновлена`
       },
       {
         lang: 'en',
@@ -84,7 +84,7 @@ export const fakeBusinessPage = {
   _id: '0c3c7954dd35de268bed4fe8',
   title: [
     {
-      lang: 'ua',
+      lang: 'uk',
       value: 'Пустишка'
     },
     {
@@ -94,7 +94,7 @@ export const fakeBusinessPage = {
   ],
   text: [
     {
-      lang: 'ua',
+      lang: 'uk',
       value: 'Текс пустишка'
     },
     {

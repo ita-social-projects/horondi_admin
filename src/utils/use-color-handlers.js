@@ -15,7 +15,7 @@ const useColorHandlers = () => {
       name: [
         {
           lang: languages[0],
-          value: values.uaName || null
+          value: values.ukName || null
         },
         {
           lang: languages[1],
@@ -26,7 +26,7 @@ const useColorHandlers = () => {
       simpleName: [
         {
           lang: languages[0],
-          value: values.uaSimpleName || null
+          value: values.ukSimpleName || null
         },
         {
           lang: languages[1],

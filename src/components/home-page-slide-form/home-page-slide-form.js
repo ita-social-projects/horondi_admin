@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
-import { Image } from '@material-ui/icons';
 import { useStyles } from './home-page-slide-form.styles';
 import { config } from '../../configs';
 import useHomePageSlideHandlers from '../../utils/use-home-page-slide-handlers';
@@ -58,8 +57,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
     enTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    uaDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    uaTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
+    ukDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
+    ukTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
     link: Yup.string().min(2, SLIDE_VALIDATION_ERROR)
   });
 
@@ -74,9 +73,9 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     validationSchema: slideValidationSchema,
     initialValues: {
       slideImage: slide.images.large || '',
-      uaTitle: slide.title[0].value || '',
+      ukTitle: slide.title[0].value || '',
       enTitle: slide.title[1].value || '',
-      uaDescription: slide.description[0].value || '',
+      ukDescription: slide.description[0].value || '',
       enDescription: slide.description[1].value || '',
       link: slide.link || '',
       show: slide.show || false,
@@ -128,7 +127,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       id={`${language}${textField}`}
       className={styles.textField}
       variant='outlined'
-      label={config.labels.homePageSlide.title[tabsValue].value}
+      label={config.labels.homePageSlide.title}
       multiline
       value={values[`${language}${textField}`]}
       onChange={handleChange}
@@ -161,14 +160,13 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             <span className={styles.imageUpload}>
               {config.labels.homePageSlide.image}
             </span>
-            <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
-              {slideImage && (
-                <Avatar src={slideImage}>
-                  <Image />
-                </Avatar>
-              )}
-            </div>
+            <ImageUploadContainer
+              handler={handleImageLoad}
+              srcForAvatar={
+                slideImage || `${config.IMG_URL}${slide.images.large}`
+              }
+              fileName={upload.name || slide.images.large}
+            />
             <TextField
               data-cy='link'
               id='link'
@@ -253,9 +251,9 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         </Avatar>
         <div className={styles.slideContent}>
           <div className={styles.mainContent}>
-            <h3 className={styles.mainContentTitle}>{values.uaTitle}</h3>
+            <h3 className={styles.mainContentTitle}>{values.ukTitle}</h3>
             <p className={styles.mainContentDescription}>
-              {values.uaDescription}
+              {values.ukDescription}
             </p>
           </div>
           <p className={styles.discoverMore}>
@@ -288,25 +286,25 @@ HomePageSlideForm.propTypes = {
   }),
   values: PropTypes.shape({
     slideImage: PropTypes.string,
-    uaTitle: PropTypes.string,
+    ukTitle: PropTypes.string,
     enTitle: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string,
     link: PropTypes.string
   }),
   errors: PropTypes.shape({
     slideImage: PropTypes.string,
-    uaTitle: PropTypes.string,
+    ukTitle: PropTypes.string,
     enTitle: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string,
     link: PropTypes.string
   }),
   touched: PropTypes.shape({
     slideImage: PropTypes.string,
-    uaTitle: PropTypes.string,
+    ukTitle: PropTypes.string,
     enTitle: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string,
     link: PropTypes.string
   }),

@@ -24,12 +24,12 @@ const ContactsEdit = ({ match }) => {
 
   const [contactFormValues, setContactFormValues] = useState({
     phoneNumber: '',
-    uaSchedule: '',
+    ukSchedule: '',
     enSchedule: '',
-    uaAddress: '',
+    ukAddress: '',
     enAddress: '',
     email: '',
-    uaCartImage: null,
+    ukCartImage: null,
     enCartImage: null,
     cartLink: ''
   });
@@ -44,12 +44,12 @@ const ContactsEdit = ({ match }) => {
     if (contact !== null) {
       setContactFormValues({
         phoneNumber: contact.phoneNumber,
-        uaSchedule: contact.openHours[0].value,
+        ukSchedule: contact.openHours[0].value,
         enSchedule: contact.openHours[1].value,
-        uaAddress: contact.address[0].value,
+        ukAddress: contact.address[0].value,
         enAddress: contact.address[1].value,
         email: contact.email,
-        uaCartImage:
+        ukCartImage:
           contact.images.length && contact.images[0].value.thumbnail
             ? `${config.imagePrefix}${contact.images[0].value.thumbnail}`
             : '',
@@ -64,35 +64,35 @@ const ContactsEdit = ({ match }) => {
     contact,
     setContactFormValues,
     contactFormValues.phoneNumber,
-    contactFormValues.uaSchedule,
+    contactFormValues.ukSchedule,
     contactFormValues.enSchedule,
-    contactFormValues.uaAddress,
+    contactFormValues.ukAddress,
     contactFormValues.enAddress,
     contactFormValues.email,
-    contactFormValues.uaCartImage,
+    contactFormValues.ukCartImage,
     contactFormValues.enCartImage,
     contactFormValues.cartLink
   ]);
 
   const contactSaveHandler = async ({
     phoneNumber,
-    uaSchedule,
+    ukSchedule,
     enSchedule,
-    uaAddress,
+    ukAddress,
     enAddress,
     email,
-    uaCartImage,
+    ukCartImage,
     enCartImage,
     cartLink
   }) => {
     const updatedContact = {
       phoneNumber,
       openHours: [
-        { lang: languages[0], value: uaSchedule },
+        { lang: languages[0], value: ukSchedule },
         { lang: languages[1], value: enSchedule }
       ],
       address: [
-        { lang: languages[0], value: uaAddress },
+        { lang: languages[0], value: ukAddress },
         { lang: languages[1], value: enAddress }
       ],
       email,
@@ -100,11 +100,11 @@ const ContactsEdit = ({ match }) => {
     };
 
     const mapImages =
-      uaCartImage.name && enCartImage.name
+      ukCartImage.name && enCartImage.name
         ? [
           {
             lang: languages[0],
-            image: uaCartImage
+            image: ukCartImage
           },
           {
             lang: languages[1],

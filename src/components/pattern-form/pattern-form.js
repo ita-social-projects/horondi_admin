@@ -9,12 +9,10 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button,
-  Avatar
+  Button
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import { Image } from '@material-ui/icons';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { SaveButton } from '../buttons';
@@ -34,8 +32,6 @@ const { SAVE_TITLE } = config.buttonTitles;
 
 const { languages } = config;
 
-const labels = config.labels.pattern.form;
-
 const PatternForm = ({ pattern, id }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -50,9 +46,7 @@ const PatternForm = ({ pattern, id }) => {
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang) => (
-        <Tab label={lang} data-cy={`${lang}-tab`} key={lang} />
-      ))
+      ? languages.map((lang) => <Tab label={lang} data-cy={lang} key={lang} />)
       : null;
 
   const patternValidationSchema = Yup.object().shape({
@@ -96,6 +90,7 @@ const PatternForm = ({ pattern, id }) => {
       available: pattern.available || false,
       handmade: pattern.handmade || false
     },
+
     onSubmit: () => {
       const newPattern = createPattern(values);
 
@@ -150,14 +145,14 @@ const PatternForm = ({ pattern, id }) => {
             <span className={styles.imageUpload}>
               {config.labels.pattern.avatarText}
             </span>
-            <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
-              {patternImage && (
-                <Avatar src={patternImage}>
-                  <Image />
-                </Avatar>
-              )}
-            </div>
+            <ImageUploadContainer
+              handler={handleImageLoad}
+              srcForAvatar={
+                patternImage ||
+                `${config.imagePrefix}${values.patternImage}`
+              }
+              fileName={upload.name || pattern.images.thumbnail}
+            />
             <TextField
               data-cy='material'
               id='material'
@@ -168,11 +163,11 @@ const PatternForm = ({ pattern, id }) => {
               onChange={handleChange}
               error={touched.material && !!errors.material}
             />
-            {touched.material && errors.material && (
+             {touched.material && errors.material && (
               <div data-cy='material-error' className={styles.inputError}>
                 {errors.material}
               </div>
-            )}
+            )} 
           </Paper>
         </Grid>
         <AppBar position='static'>
@@ -189,11 +184,11 @@ const PatternForm = ({ pattern, id }) => {
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.patternItemUpdate}>
               <TextField
-                data-cy={`${lang}-name`}
+                data-cy={`${lang}Name`}
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label={labels.name[index].value}
+                label='Назва'
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -201,18 +196,18 @@ const PatternForm = ({ pattern, id }) => {
               />
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div
-                  data-cy={`${lang}-name-error`}
+                  data-cy={`${lang}Name-error`}
                   className={styles.inputError}
                 >
                   {errors[`${lang}Name`]}
                 </div>
               )}
               <TextField
-                data-cy={`${lang}-description`}
+                data-cy={`${lang}Description`}
                 id={`${lang}Description`}
                 className={styles.textField}
                 variant='outlined'
-                label={labels.description[index].value}
+                label='Опис'
                 multiline
                 value={values[`${lang}Description`]}
                 onChange={handleChange}
@@ -223,7 +218,7 @@ const PatternForm = ({ pattern, id }) => {
               />
               {touched[`${lang}Description`] && errors[`${lang}Description`] && (
                 <div
-                  data-cy={`${lang}-description-error`}
+                  data-cy={`${lang}Description-error`}
                   className={styles.inputError}
                 >
                   {errors[`${lang}Description`]}
@@ -240,13 +235,13 @@ const PatternForm = ({ pattern, id }) => {
           variant='outlined'
           color='primary'
           className={styles.returnButton}
-          data-cy='go-back-btn'
+          data-cy='goBackButton'
         >
           {config.buttonTitles.GO_BACK_TITLE}
         </Button>
         <SaveButton
           className={styles.saveButton}
-          data-cy='save-btn'
+          data-cy='save'
           type='submit'
           title={SAVE_TITLE}
         />
@@ -274,25 +269,25 @@ PatternForm.propTypes = {
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    uaName: PropTypes.string,
+    ukName: PropTypes.string,
     enName: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    uaName: PropTypes.string,
+    ukName: PropTypes.string,
     enName: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    uaName: PropTypes.string,
+    ukName: PropTypes.string,
     enName: PropTypes.string,
-    uaDescription: PropTypes.string,
+    ukDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   match: PropTypes.shape({
