@@ -22,9 +22,7 @@ cypress.json
 .env.development.local
 .env.test.local
 .env.production.local
-package-lock.json
 *.env.json
-package-lock.json
 
 debug.log
 npm-debug.log*
