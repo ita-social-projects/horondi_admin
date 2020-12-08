@@ -22,7 +22,7 @@ const patterns = {
       _id: 'fdc7529135f2c050c877a61a',
       name: [
         {
-          lang: 'uk',
+          lang: 'ua',
           value: 'Синя хвилька'
         },
         {
@@ -40,7 +40,7 @@ const patterns = {
       _id: '51af3801f347948f19f6933c',
       name: [
         {
-          lang: 'uk',
+          lang: 'ua',
           value: 'Синьо-рожева хвилька'
         },
         {
@@ -60,7 +60,7 @@ const patterns = {
       _id: '7c49f713a0fbbc6250a79173',
       name: [
         {
-          lang: 'uk',
+          lang: 'ua',
           value: 'Стрілки'
         },
         {
@@ -82,7 +82,7 @@ const patternToAdd = {
   _id: '7c49f713a0fbbc6250a79133',
   name: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: typeValue
     },
     {
@@ -101,7 +101,7 @@ const patternToUpdate = {
   ...patternToAdd,
   name: [
     {
-      lang: 'uk',
+      lang: 'ua',
       value: typeValue + typeValue
     },
     {

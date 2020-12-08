@@ -57,8 +57,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
     enTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    ukDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    ukTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
+    uaDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
+    uaTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
     link: Yup.string().min(2, SLIDE_VALIDATION_ERROR)
   });
 
@@ -73,9 +73,9 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     validationSchema: slideValidationSchema,
     initialValues: {
       slideImage: slide.images.large || '',
-      ukTitle: slide.title[0].value || '',
+      uaTitle: slide.title[0].value || '',
       enTitle: slide.title[1].value || '',
-      ukDescription: slide.description[0].value || '',
+      uaDescription: slide.description[0].value || '',
       enDescription: slide.description[1].value || '',
       link: slide.link || '',
       show: slide.show || false,
@@ -251,9 +251,9 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         </Avatar>
         <div className={styles.slideContent}>
           <div className={styles.mainContent}>
-            <h3 className={styles.mainContentTitle}>{values.ukTitle}</h3>
+            <h3 className={styles.mainContentTitle}>{values.uaTitle}</h3>
             <p className={styles.mainContentDescription}>
-              {values.ukDescription}
+              {values.uaDescription}
             </p>
           </div>
           <p className={styles.discoverMore}>
@@ -286,25 +286,25 @@ HomePageSlideForm.propTypes = {
   }),
   values: PropTypes.shape({
     slideImage: PropTypes.string,
-    ukTitle: PropTypes.string,
+    uaTitle: PropTypes.string,
     enTitle: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     link: PropTypes.string
   }),
   errors: PropTypes.shape({
     slideImage: PropTypes.string,
-    ukTitle: PropTypes.string,
+    uaTitle: PropTypes.string,
     enTitle: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     link: PropTypes.string
   }),
   touched: PropTypes.shape({
     slideImage: PropTypes.string,
-    ukTitle: PropTypes.string,
+    uaTitle: PropTypes.string,
     enTitle: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     link: PropTypes.string
   }),

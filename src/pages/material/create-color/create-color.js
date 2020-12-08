@@ -44,7 +44,7 @@ function CreateColor({
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
 
   const formSchema = Yup.object().shape({
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
       .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
       .required(config.materialErrorMessages.VALIDATION_ERROR),
@@ -54,7 +54,7 @@ function CreateColor({
       .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
       .required(config.materialErrorMessages.VALIDATION_ERROR),
 
-    ukSimpleName: Yup.string()
+    uaSimpleName: Yup.string()
       .min(2, config.materialErrorMessages.MIN_LENGTH_MESSAGE)
       .max(100, config.materialErrorMessages.MAX_LENGTH_MESSAGE)
       .required(config.materialErrorMessages.VALIDATION_ERROR),

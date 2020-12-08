@@ -31,10 +31,9 @@ export const patternErrorMessages = {
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
 
-
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Мінімум 2 символи',
-  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім'
 };
 export const headerErrorMessages = {
   HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
@@ -60,9 +59,9 @@ export const contactErrorMessages = {
   PHONE_NUMBER_TYPE_MESSAGE: 'Номер повинен містити лише числа',
   ENTER_PHONE_NUMBER_MESSAGE: 'Введіть номер',
   INPUT_LENGTH_MESSAGE: 'Довжина повинна містити не менше 10 символів',
-  ENTER_UK_SCHEDULE_MESSAGE: 'Введіть розклад українською',
+  ENTER_UA_SCHEDULE_MESSAGE: 'Введіть розклад українською',
   ENTER_EN_SCHEDULE_MESSAGE: 'Введіть розклад англійською',
-  ENTER_UK_ADDRESS_MESSAGE: 'Введіть адресу українською',
+  ENTER_UA_ADDRESS_MESSAGE: 'Введіть адресу українською',
   ENTER_EN_ADDRESS_MESSAGE: 'Введіть адресу англійською',
   IMAGE_FORMAT_MESSAGE:
     'Введіть коректний формат, наприклад: https://example.com/',

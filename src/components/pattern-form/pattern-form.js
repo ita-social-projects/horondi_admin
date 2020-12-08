@@ -148,8 +148,7 @@ const PatternForm = ({ pattern, id }) => {
             <ImageUploadContainer
               handler={handleImageLoad}
               srcForAvatar={
-                patternImage ||
-                `${config.imagePrefix}${values.patternImage}`
+                patternImage || `${config.imagePrefix}${values.patternImage}`
               }
               fileName={upload.name || pattern.images.thumbnail}
             />
@@ -163,11 +162,11 @@ const PatternForm = ({ pattern, id }) => {
               onChange={handleChange}
               error={touched.material && !!errors.material}
             />
-             {touched.material && errors.material && (
+            {touched.material && errors.material && (
               <div data-cy='material-error' className={styles.inputError}>
                 {errors.material}
               </div>
-            )} 
+            )}
           </Paper>
         </Grid>
         <AppBar position='static'>
@@ -269,25 +268,25 @@ PatternForm.propTypes = {
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string
   }),
   match: PropTypes.shape({

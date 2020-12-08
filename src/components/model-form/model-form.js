@@ -59,10 +59,10 @@ const ModelForm = ({ model, id }) => {
     enName: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
-    ukDescription: Yup.string()
+    uaDescription: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
     priority: Yup.number(),
@@ -72,7 +72,7 @@ const ModelForm = ({ model, id }) => {
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.list
   }));
- 
+
   const [category, setCategory] = useState(model.category._id || '');
 
   const handleCategory = (event) => {
@@ -95,9 +95,9 @@ const ModelForm = ({ model, id }) => {
     validationSchema: modelValidationSchema,
     initialValues: {
       modelImage: model.images ? model.images.thumbnail : '',
-      ukName: model.name[0].value || '',
+      uaName: model.name[0].value || '',
       enName: model.name[1].value || '',
-      ukDescription: model.description[0].value || '',
+      uaDescription: model.description[0].value || '',
       enDescription: model.description[1].value || '',
       priority: model.priority || 1,
       category: category || '',
@@ -289,27 +289,27 @@ ModelForm.propTypes = {
   values: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),
   errors: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),
   touched: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),

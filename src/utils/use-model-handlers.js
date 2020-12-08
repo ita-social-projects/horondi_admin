@@ -18,7 +18,7 @@ const useModelHandlers = () => {
       name: [
         {
           lang: languages[0],
-          value: values.ukName
+          value: values.uaName
         },
         {
           lang: languages[1],
@@ -29,7 +29,7 @@ const useModelHandlers = () => {
       description: [
         {
           lang: languages[0],
-          value: values.ukDescription
+          value: values.uaDescription
         },
         {
           lang: languages[1],

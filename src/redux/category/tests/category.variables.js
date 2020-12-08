@@ -22,7 +22,7 @@ export const categories = [
     code: 'main-backpacks',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Рюкзаки'
       },
       {
@@ -45,7 +45,7 @@ export const categories = [
     code: 'main-bags',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Сумки'
       },
       {
