@@ -1,16 +1,10 @@
 /// <reference types="cypress" />
 import 'cypress-file-upload';
 import routes from '../../../src/configs/routes';
-import statuses from '../../../src/configs/statuses';
 import {
   telephoneNumber,
   email,
   textString,
-  phoneNumber,
-  uaSchedule,
-  enSchedule,
-  uaAddress,
-  enAddress,
   contactToAdd,
   getContacts,
   addContacts,
@@ -23,8 +17,9 @@ describe('Contacts test', () => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
     cy.wait(3000);
     cy.stubRequest('getContacts', getContacts).as('getContacts');
-    cy.visit(routes.pathToContacts);
-    cy.wait(500);
+    cy.visit('/');
+    cy.get(`[href="${routes.pathToContacts}"]`).click();
+    cy.wait(3000);
     cy.get('.MuiTableCell-root.MuiTableCell-body').as('table');
   });
   it('Should find a page title', () => {
@@ -46,8 +41,6 @@ describe('Contacts test', () => {
     cy.get('[data-cy=en-schedule]').should('be.visible');
     cy.get('[data-cy=ua-address]').should('be.visible');
     cy.get('[data-cy=en-address]').should('be.visible');
-    cy.get('[data-cy=ua-cart-image]').should('be.visible');
-    cy.get('[data-cy=en-cart-image]').should('be.visible');
     cy.get('[data-cy=map-link]')
       .children()
       .next()
@@ -66,15 +59,16 @@ describe('Contacts test', () => {
   it('The data of new contact should be add', () => {
     cy.stubRequest('addContacts', addContacts).as('addContacts');
     cy.get('[data-cy=add-contact]').click();
+    cy.wait(1000);
     cy.fixture('HORONDI.png').then((fileContent) => {
-      cy.get('[data-cy=upload-ua-photo]').attachFile({
+      cy.get('[data-cy=upload-photo]').attachFile({
         fileContent: fileContent.toString(),
         mimeType: 'image/png',
         filePath: '../fixtures/HORONDI.png'
       });
     });
     cy.fixture('HORONDI.png').then((fileContent) => {
-      cy.get('[data-cy=upload-en-photo]').attachFile({
+      cy.get('[data-cy=upload-photo]').attachFile({
         fileContent: fileContent.toString(),
         mimeType: 'image/png',
         filePath: '../fixtures/HORONDI.png'
@@ -90,20 +84,20 @@ describe('Contacts test', () => {
     cy.get('[ data-cy=save]').click();
     cy.wait(3000);
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.get('.MuiAlert-message').contains('Успішно додано!');
   });
   it('Tne data should be changed', () => {
     cy.stubRequest('updateContact', updateContact).as('updateContact');
     cy.get('@table').eq(3).children().first().click();
+    cy.wait(1000);
     cy.fixture('HORONDI.png').then((fileContent) => {
-      cy.get('[data-cy=upload-ua-photo]').attachFile({
+      cy.get('[data-cy=upload-photo]').attachFile({
         fileContent: fileContent.toString(),
         mimeType: 'image/png',
         filePath: '../fixtures/HORONDI.png'
       });
     });
     cy.fixture('HORONDI.png').then((fileContent) => {
-      cy.get('[data-cy=upload-en-photo]').attachFile({
+      cy.get('[data-cy=upload-photo]').attachFile({
         fileContent: fileContent.toString(),
         mimeType: 'image/png',
         filePath: '../fixtures/HORONDI.png'
@@ -126,13 +120,12 @@ describe('Contacts test', () => {
     cy.get('[ data-cy = save]').click();
     cy.wait(3000);
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.get('.MuiAlert-message').contains(statuses.SUCCESS_UPDATE_STATUS);
   });
   it('  back button  check how it works', () => {
     cy.get('@table').eq(3).children().first().click();
     cy.wait(2000);
     cy.fixture('link.png').then((fileContent) => {
-      cy.get('[data-cy=upload-en-photo]').attachFile({
+      cy.get('[data-cy=upload-photo]').attachFile({
         fileContent: fileContent.toString(),
         mimeType: 'image/png',
         filePath: '../fixtures/link.png'
@@ -147,6 +140,5 @@ describe('Contacts test', () => {
     cy.get('[data-cy=dialog-confirm]').last().click();
     cy.wait(1000);
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.get('.MuiAlert-message').contains(statuses.SUCCESS_DELETE_STATUS);
   });
 });
