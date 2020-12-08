@@ -3,8 +3,9 @@ import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { push } from 'connected-react-router';
 import TabPanel from '../../../components/tab-panel';
-import { SaveButton } from '../../../components/buttons';
+import { SaveButton, StandardButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 import { useStyles } from './news-add.styles';
@@ -13,6 +14,7 @@ import { config } from '../../../configs';
 
 const { languages } = config;
 const { newsErrorMessages } = config;
+const labels = config.labels.news;
 
 const NewsAdd = () => {
   const classes = useStyles();
@@ -46,14 +48,18 @@ const NewsAdd = () => {
 
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
 
+  const handleGoBack = () => {
+    dispatch(push(config.routes.pathToNews));
+  };
+
   const formSchema = Yup.object().shape({
-    ukAuthorName: Yup.string()
+    uaAuthorName: Yup.string()
       .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
     enAuthorName: Yup.string()
       .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
-    ukTitle: Yup.string()
+    uaTitle: Yup.string()
       .min(10, newsErrorMessages.TITLE_MIN_LENGTH_MESSAGE)
       .max(100, newsErrorMessages.TITLE_MAX_LENGTH_MESSAGE),
     enTitle: Yup.string()
@@ -84,7 +90,9 @@ const NewsAdd = () => {
               id={`${lang}AuthorName`}
               className={classes.textfield}
               variant='outlined'
-              label={`Ім'я автора`}
+              label={
+                labels.authorsName.find((item) => item.lang === lang).value
+              }
               error={
                 touched[`${lang}AuthorName`] && !!errors[`${lang}AuthorName`]
               }
@@ -103,7 +111,7 @@ const NewsAdd = () => {
               id={`${lang}Title`}
               className={classes.textfield}
               variant='outlined'
-              label='Заголовок'
+              label={labels.title.find((item) => item.lang === lang).value}
               multiline
               error={touched[`${lang}Title`] && !!errors[`${lang}Title`]}
               value={values[`${lang}Title`]}
@@ -121,7 +129,7 @@ const NewsAdd = () => {
               className={classes.textfield}
               variant='outlined'
               error={touched[`${lang}Text`] && !!errors[`${lang}Text`]}
-              label='Текст'
+              label={labels.text.find((item) => item.lang === lang).value}
               multiline
               value={values[`${lang}Text`]}
               onChange={handleChange}
@@ -183,6 +191,15 @@ const NewsAdd = () => {
               required
             />
           </Paper>
+          <div className={classes.controlsBlock}>
+            <StandardButton
+              id='back-btn'
+              title={config.buttonTitles.GO_BACK_TITLE}
+              variant='outlined'
+              onClickHandler={handleGoBack}
+              data-cy='back-btn'
+            />
+          </div>
         </Grid>
         {preferredLanguages.length > 0 ? (
           <div>

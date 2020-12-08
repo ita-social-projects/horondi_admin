@@ -26,7 +26,13 @@ const ProductsNav = () => {
   };
 
   return (
-    <Grid container direction='column' justify='center' spacing={2} className={styles.wrapper}>
+    <Grid
+      container
+      direction='column'
+      justify='center'
+      spacing={2}
+      className={styles.wrapper}
+    >
       <div className={common.adminHeader}>
         <Typography variant='h1' className={common.materialTitle}>
           {config.titles.productPageTitles.mainPageTitle}
@@ -52,7 +58,6 @@ const ProductsNav = () => {
         </Accordion>
       </Grid>
     </Grid>
-
   );
 };
 

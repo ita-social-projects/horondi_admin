@@ -46,9 +46,9 @@ const ProductsNavFilters = () => {
     dispatch(setFilter(target.value));
     dispatch(setCurrentPage(0));
   };
-  const handleFilterClear = (setFilter)=>{
+  const handleFilterClear = (setFilter) => {
     dispatch(setFilter([]));
-  }
+  };
   const filtersOptions = {
     categories: {
       buttonName: CATEGORIES,
@@ -83,17 +83,26 @@ const ProductsNavFilters = () => {
 
   const filterButtons = Object.values(
     filtersOptions
-  ).map(({ buttonName, productFilter, list, labels, filterHandler,clearFilter }) => (
-    <ProductsFiltersContainer
-      key={buttonName}
-      buttonName={buttonName}
-      productFilter={productFilter}
-      list={list}
-      labels={labels}
-      filterHandler={filterHandler}
-      clearFilter={clearFilter}
-    />
-  ));
+  ).map(
+    ({
+      buttonName,
+      productFilter,
+      list,
+      labels,
+      filterHandler,
+      clearFilter
+    }) => (
+      <ProductsFiltersContainer
+        key={buttonName}
+        buttonName={buttonName}
+        productFilter={productFilter}
+        list={list}
+        labels={labels}
+        filterHandler={filterHandler}
+        clearFilter={clearFilter}
+      />
+    )
+  );
 
   return (
     <div>
@@ -117,8 +126,9 @@ const ProductsNavFilters = () => {
           alignItems='space-around'
           className={styles.wrapper}
           spacing={2}
-        >{filterButtons}</Grid>
-
+        >
+          {filterButtons}
+        </Grid>
       </Grid>
     </div>
   );

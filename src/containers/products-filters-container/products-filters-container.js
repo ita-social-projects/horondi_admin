@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import {
@@ -28,12 +28,12 @@ const MenuProps = {
   variant: 'menu',
   PaperProps: {
     style: {
-      maxHeight: 300,
-    },
-  },
+      maxHeight: 300
+    }
+  }
 };
 const { CATEGORIES } = productsTranslations;
-const {deleteFilter}=config.titles.productTitles;
+const { deleteFilter } = config.titles.productTitles;
 const ProductsFiltersContainer = ({
   buttonName,
   labels,
@@ -56,7 +56,10 @@ const ProductsFiltersContainer = ({
           size='small'
           checked={!!productFilter.find((filter) => filter === condition)}
         />
-        <ListItemText primary={labels.length ? labels[idx] : item} className={styles.menuItems} />
+        <ListItemText
+          primary={labels.length ? labels[idx] : item}
+          className={styles.menuItems}
+        />
       </MenuItem>
     );
   });
@@ -75,16 +78,30 @@ const ProductsFiltersContainer = ({
   );
 
   return (
-    <Grid item xs={12} sm={6} md={6} lg={3} alignItems='center' className={styles.container}>
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      md={6}
+      lg={3}
+      alignItems='center'
+      className={styles.container}
+    >
       <Badge
         badgeContent={productFilter.length}
         color='error'
         anchorOrigin={badgePosition}
         className={styles.badge}
       >
-        {productFilter.length? <Tooltip title={deleteFilter}>
-          <RemoveCircleOutlineIcon onClick={clearFilter} color='error' className={styles.filterIcon} />
-        </Tooltip>:null}
+        {productFilter.length ? (
+          <Tooltip title={deleteFilter}>
+            <RemoveCircleOutlineIcon
+              onClick={clearFilter}
+              color='error'
+              className={styles.filterIcon}
+            />
+          </Tooltip>
+        ) : null}
         <FormControl className={styles.formControl}>
           <InputLabel id='multiple-checkbox-label'>{buttonName}</InputLabel>
           <Select
@@ -114,7 +131,7 @@ ProductsFiltersContainer.propTypes = {
     PropTypes.oneOfType([PropTypes.object, PropTypes.string])
   ).isRequired,
   filterHandler: PropTypes.func.isRequired,
-  clearFilter: PropTypes.func.isRequired,
+  clearFilter: PropTypes.func.isRequired
 };
 
 ProductsFiltersContainer.defaultProps = {

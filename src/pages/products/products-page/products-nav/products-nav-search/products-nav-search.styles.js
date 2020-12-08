@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme) => ({
     height: '36px'
   },
   searchInput: {
-    width: '100%',
+    width: '100%'
   },
   iconButton: {
     padding: 10,

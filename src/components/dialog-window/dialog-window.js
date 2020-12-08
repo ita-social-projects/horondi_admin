@@ -6,48 +6,39 @@ import {
   DialogTitle,
   Typography
 } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { config } from '../../configs';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton } from '../buttons';
 import { useStyles } from './dialog-window.styles';
 import DeleteButton from '../buttons/delete-button';
+import { basicSelector } from '../../redux/dialog-window/dialog-window.reducer';
 
 const { CANCEL_TITLE } = config.buttonTitles;
+const { DELETE_TITLE } = config.buttonTitles;
 
-const DialogWindow = () => {
-  const {
-    isOpen,
-    dialogTitle,
-    dialogContent,
-    buttonTitle,
-    showIcon,
-    showCancelButton,
-    onClickHandler
-  } = useSelector(({ DialogWindow: dialogWindow }) => ({
-    isOpen: dialogWindow.isOpen,
-    dialogTitle: dialogWindow.dialogTitle,
-    dialogContent: dialogWindow.dialogContent,
-    buttonTitle: dialogWindow.buttonTitle,
-    showIcon: dialogWindow.showIcon,
-    showCancelButton: dialogWindow.showCancelButton,
-    onClickHandler: dialogWindow.onClickHandler
-  }));
+const DialogWindow = ({
+  isOpen,
+  dialogTitle,
+  dialogContent,
+  showCancelButton,
+  onClickHandler
+}) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
   const handleClose = () => {
     dispatch(closeDialog());
   };
+
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
-      <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
-        {dialogTitle}
-      </DialogTitle>
+      <DialogTitle className={styles.dialogTitle}>{DELETE_TITLE}</DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
-      <DialogActions>
+      <DialogActions className={styles.buttonStyles}>
         {showCancelButton ? (
           <>
             <StandardButton
@@ -59,16 +50,15 @@ const DialogWindow = () => {
             <DeleteButton
               data-cy='dialog-confirm'
               onClickHandler={onClickHandler}
-              showIcon={showIcon}
             >
-              {buttonTitle}
+              {DELETE_TITLE}
             </DeleteButton>
           </>
         ) : (
           <StandardButton
             data-cy='dialog-confirm'
             variant='contained'
-            title={buttonTitle}
+            title={DELETE_TITLE}
             onClickHandler={onClickHandler}
           />
         )}
@@ -77,4 +67,22 @@ const DialogWindow = () => {
   );
 };
 
-export default DialogWindow;
+const mapStateToProps = basicSelector;
+
+DialogWindow.propTypes = {
+  isOpen: PropTypes.bool,
+  dialogTitle: PropTypes.string,
+  dialogContent: PropTypes.string,
+  showCancelButton: PropTypes.bool,
+  onClickHandler: PropTypes.func
+};
+
+DialogWindow.defaultProps = {
+  isOpen: false,
+  dialogTitle: '',
+  dialogContent: '',
+  showCancelButton: true,
+  onClickHandler: () => {}
+};
+
+export default connect(mapStateToProps, null)(DialogWindow);

@@ -50,6 +50,7 @@ import StatisticPage from '../pages/statistic';
 import SlidesPage from '../pages/home-page-slides/slides-page';
 import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
+import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
 
 const { routes } = config;
@@ -84,6 +85,7 @@ const Routes = () => {
       <NavMenu />
       <ErrorBoundary>
         <Switch>
+          <Route path={routes.pathToMainPage} exact component={MainPage} />
           <Route path={routes.pathToUsers} exact component={UsersPage} />
           <Route
             path={routes.pathToUsersDetails}

@@ -1,6 +1,6 @@
 const initialLanguageValues = [
   {
-    lang: 'uk',
+    lang: 'ua',
     value: ''
   },
   {
@@ -12,11 +12,11 @@ const initialLanguageValues = [
 const mockColors = [
   {
     name: [
-      { lang: 'uk', value: 'Золотий' },
+      { lang: 'ua', value: 'Золотий' },
       { lang: 'en', value: 'Golden' }
     ],
     simpleName: [
-      { lang: 'uk', value: 'жовтий' },
+      { lang: 'ua', value: 'жовтий' },
       { lang: 'en', value: 'yellow' }
     ]
   }
@@ -104,11 +104,11 @@ const mockProductsList = {
       isHotItem: true,
       model: [{ value: 'Ролтоп' }, { value: 'Rolltop' }],
       name: [
-        { lang: 'uk', value: 'Ролтоп жовтий 1' },
+        { lang: 'ua', value: 'Ролтоп жовтий 1' },
         { lang: 'en', value: 'Rolltop Yellow 1' }
       ],
       pattern: [
-        { lang: 'uk', value: 'Квіти' },
+        { lang: 'ua', value: 'Квіти' },
         { lang: 'en', value: 'Flowers' }
       ],
       purchasedCount: 49,
@@ -132,7 +132,7 @@ const mockCategoriesList = [
     _id: 'ddc81f5dbac48c38d0403dd3',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Рюкзаки'
       },
       {
@@ -146,7 +146,7 @@ const mockCategoriesList = [
     _id: '54c1cfb719f3bb97c28d762e',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Сумки'
       },
       {
@@ -184,7 +184,7 @@ const mockProductOptions = {
       _id: '56ade69dd46eafc5968e5390',
       name: [
         {
-          lang: 'uk',
+          lang: 'ua',
           value: 'Мальмо'
         },
         {

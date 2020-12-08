@@ -39,18 +39,20 @@ const BusinessPageForm = ({ id, editMode }) => {
   const classes = useStyles();
   const common = useCommonStyles();
 
+  const labels = config.labels.businessPage;
+
   const {
     tabsValue,
     handleTabsChange,
     createBusinessPage,
-    ukSetText,
+    uaSetText,
     enSetText,
-    ukSetTitle,
+    uaSetTitle,
     enSetTitle,
-    ukText,
+    uaText,
     enText,
     enTitle,
-    ukTitle,
+    uaTitle,
     code,
     setCode,
     files,
@@ -68,8 +70,8 @@ const BusinessPageForm = ({ id, editMode }) => {
     const isEditingReady = businessPage && editMode;
 
     setCode(isEditingReady ? businessPage.code : '');
-    ukSetTitle(isEditingReady ? businessPage.title[0].value : '');
-    ukSetText(isEditingReady ? businessPage.text[0].value : '');
+    uaSetTitle(isEditingReady ? businessPage.title[0].value : '');
+    uaSetText(isEditingReady ? businessPage.text[0].value : '');
     enSetTitle(isEditingReady ? businessPage.title[1].value : '');
     enSetText(isEditingReady ? businessPage.text[1].value : '');
   }, [
@@ -77,15 +79,15 @@ const BusinessPageForm = ({ id, editMode }) => {
     setCode,
     editMode,
     businessPage,
-    ukSetText,
-    ukSetTitle,
+    uaSetText,
+    uaSetTitle,
     enSetText,
     enSetTitle
   ]);
 
   const checkValidation = (values) => {
     const requiredValidationArray = [...Object.values(values)];
-    const editorFields = [ukText, enText];
+    const editorFields = [uaText, enText];
 
     return (
       requiredValidationArray.every((field) => field.trim()) &&
@@ -96,7 +98,7 @@ const BusinessPageForm = ({ id, editMode }) => {
   const formik = useFormik({
     initialValues: {
       code,
-      ukTitle,
+      uaTitle,
       enTitle
     },
     onSubmit: async (values) => {
@@ -112,12 +114,12 @@ const BusinessPageForm = ({ id, editMode }) => {
         );
       });
 
-      const newUkText = ukText.replace(/src="data:image.*?"/g, 'src=""');
+      const newUaText = uaText.replace(/src="data:image.*?"/g, 'src=""');
       const newEnText = enText.replace(/src="data:image.*?"/g, 'src=""');
 
       const page = createBusinessPage({
         ...values,
-        ukText: newUkText,
+        uaText: newUaText,
         enText: newEnText
       });
       editMode
@@ -128,9 +130,9 @@ const BusinessPageForm = ({ id, editMode }) => {
 
   useMemo(() => {
     formik.values.code = code;
-    formik.values.ukTitle = ukTitle;
+    formik.values.uaTitle = uaTitle;
     formik.values.enTitle = enTitle;
-  }, [code, ukTitle, enTitle]);
+  }, [code, uaTitle, enTitle]);
 
   const languageTabs = languages.map((lang) => (
     <Tab label={lang} key={lang} data-cy={lang} />
@@ -184,28 +186,29 @@ const BusinessPageForm = ({ id, editMode }) => {
             <TabPanel value={tabsValue} index={0}>
               <Paper className={classes.businessPageForm}>
                 <TextField
-                  id='ukTitle'
+                  id='uaTitle'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок uk'
+                  label={config.labels.lableTitle.ua}
                   multiline
-                  value={formik.values.ukTitle}
+                  value={formik.values.uaTitle}
                   onChange={formik.handleChange}
-                  error={!formik.values.ukTitle && shouldValidate}
+                  error={!formik.values.uaTitle && shouldValidate}
                   helperText={
-                    !formik.values.ukTitle && shouldValidate
+                    !formik.values.uaTitle && shouldValidate
                       ? 'Введіть заголовок'
                       : ''
                   }
                   data-cy='page-header-ua'
                 />
                 <Editor
-                  value={ukText}
+                  value={uaText}
                   placeholder='Текст'
-                  onEditorChange={(value) => ukSetText(value)}
+                  onEditorChange={(value) => uaSetText(value)}
                   setFiles={setFiles}
+                  data-cy='page-editor'
                 />
-                {(editorField.test(ukText) || !ukText) && shouldValidate && (
+                {(editorField.test(uaText) || !uaText) && shouldValidate && (
                   <div className={classes.errorMessage} data-cy='editor-error'>
                     Введіть текст для сторінки
                   </div>
@@ -218,27 +221,27 @@ const BusinessPageForm = ({ id, editMode }) => {
                   id='enTitle'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок en'
+                  label={config.labels.lableTitle.en}
                   multiline
                   value={formik.values.enTitle}
                   onChange={formik.handleChange}
                   error={!formik.values.enTitle && shouldValidate}
                   helperText={
                     !formik.values.enTitle && shouldValidate
-                      ? 'Введіть заголовок'
+                      ? labels[0].errorLabel[tabsValue].value
                       : ''
                   }
                   data-cy='page-header-en'
                 />
                 <Editor
                   value={enText}
-                  placeholder='Текст'
+                  placeholder={labels[1].label[tabsValue].value}
                   onEditorChange={(value) => enSetText(value)}
                   setFiles={setFiles}
                 />
                 {(editorField.test(enText) || !enText) && shouldValidate && (
                   <div className={classes.errorMessage} data-cy='editor-error'>
-                    Введіть текст для сторінки
+                    {labels[1].errorLabel[tabsValue].value}
                   </div>
                 )}
               </Paper>

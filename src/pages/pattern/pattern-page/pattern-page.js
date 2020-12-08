@@ -20,7 +20,7 @@ import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { CREATE_PATTERN_TITLE, PATTERN_REMOVE_TITLE } = config.buttonTitles;
+const { CREATE_PATTERN_TITLE, DELETE_TITLE } = config.buttonTitles;
 
 const pathToPatternAddPage = config.routes.pathToAddPattern;
 const tableTitles = config.tableHeadRowTitles.patterns;
@@ -62,12 +62,7 @@ const PatternPage = () => {
       dispatch(closeDialog());
       dispatch(deletePattern(id));
     };
-    openSuccessSnackbar(
-      removePattern,
-      PATTERN_REMOVE_TITLE,
-      PATTERN_REMOVE_MESSAGE,
-      PATTERN_REMOVE_TITLE
-    );
+    openSuccessSnackbar(removePattern, PATTERN_REMOVE_MESSAGE);
   };
 
   const changeHandler = (e, value) => dispatch(setPatternsCurrentPage(value));
@@ -101,7 +96,11 @@ const PatternPage = () => {
   return (
     <div className={common.container}>
       <div className={common.adminHeader}>
-        <Typography variant='h1' className={common.materialTitle}>
+        <Typography
+          variant='h1'
+          className={common.materialTitle}
+          data-cy='pattern-header'
+        >
           {config.titles.patternTitles.mainPageTitle}
         </Typography>
         <Button

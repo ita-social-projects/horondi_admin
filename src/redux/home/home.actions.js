@@ -21,9 +21,9 @@ const updateHomePageData = (payload) => ({
   payload
 });
 
-const updateHomePageImagesInStore = (id, updatedImages) => ({
+const updateHomePageImagesInStore = (id, upload) => ({
   type: UPDATE_HOME_PAGE_DATA_LOCALLY,
-  payload: { id, updatedImages }
+  payload: { id, upload }
 });
 
 const setHomePageDataLoading = (payload) => ({

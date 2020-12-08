@@ -9,12 +9,12 @@ import TableContainerHead from '../table-container-head';
 import useStyles from './table-container-generator.styles';
 import { config } from '../../configs';
 import TablePaginator from '../table-pagination-container';
-import { TableSelector } from '../../redux/selectors/table-container-generator.selectors';
+import { selectTableDense } from '../../redux/selectors/table.selectors';
 
 const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
   const classes = useStyles();
-  const dense = useSelector(TableSelector);
+  const dense = useSelector(selectTableDense);
 
   return (
     <>

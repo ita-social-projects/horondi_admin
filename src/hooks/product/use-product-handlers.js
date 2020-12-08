@@ -1,11 +1,12 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../../configs';
-import {
-  AdditionsSelector,
-  OptionsSelector
-} from '../../redux/selectors/use-product-handlers.selectors';
 import useProductSpecies from './use-product-species';
+
+const selectAdditionsLength = ({ additions }) => additions.length;
+
+const selectOptionsLength = ({ options }) =>
+  options.find(selectAdditionsLength);
 
 const {
   languages,
@@ -44,8 +45,9 @@ const useProductHandlers = () => {
   const additions = useMemo(
     () =>
       filterData.length
-        ? filterData.find(OptionsSelector).options.find(AdditionsSelector)
-          .additions
+        ? filterData
+          .find(selectOptionsLength)
+          .options.find(selectAdditionsLength).additions
         : null,
     [filterData]
   );
@@ -113,23 +115,23 @@ const useProductHandlers = () => {
 
   const createProductInfo = (values) => ({
     name: [
-      { lang: languages[0], value: values['uk-name'] },
+      { lang: languages[0], value: values['ua-name'] },
       { lang: languages[1], value: values['en-name'] }
     ],
     mainMaterial: [
-      { lang: languages[0], value: values['uk-mainMaterial'] },
+      { lang: languages[0], value: values['ua-mainMaterial'] },
       { lang: languages[1], value: values['en-mainMaterial'] }
     ],
     innerMaterial: [
-      { lang: languages[0], value: values['uk-innerMaterial'] },
+      { lang: languages[0], value: values['ua-innerMaterial'] },
       { lang: languages[1], value: values['en-innerMaterial'] }
     ],
     closure: [
-      { lang: languages[0], value: values['uk-closure'] },
+      { lang: languages[0], value: values['ua-closure'] },
       { lang: languages[1], value: values['en-closure'] }
     ],
     description: [
-      { lang: languages[0], value: values['uk-description'] },
+      { lang: languages[0], value: values['ua-description'] },
       { lang: languages[1], value: values['en-description'] }
     ],
     strapLengthInCm: values.strapLengthInCm

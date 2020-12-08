@@ -1,5 +1,8 @@
 import { expectSaga } from 'redux-saga-test-plan';
-import * as matchers from 'redux-saga-test-plan/matchers';
+import { call } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
+
+import { combineReducers } from 'redux';
 import {
   getHomePageLooksImages,
   updateHomePageLooksImage
@@ -19,58 +22,112 @@ import {
 } from '../home.actions';
 
 import {
-  looksImageUpdateMock,
-  looksImagesMock,
-  updatedImages,
-  _id,
-  images,
-  error
+  initialState,
+  mockImages,
+  mockUpdatePayload,
+  mockError
 } from './home.variables';
 
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../snackbar/snackbar.actions';
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../../snackbar/snackbar.sagas';
+
+import { config } from '../../../configs';
+
+import Home from '../home.reducer';
+
+const { SUCCESS_UPDATE_STATUS } = config.statuses;
 
 describe('Homapage sagas test', () => {
-  it('Should not throw error', () => {
-    expect(getHomePageLooksImages).not.toThrow();
-    expect(updateHomePageLooksImage).not.toThrow();
-    expect(setHomePageData).not.toThrow();
-    expect(setHomePageDataLoading).not.toThrow();
-    expect(updateHomePageImagesInStore).not.toThrow();
-    expect(setHomePageDataError).not.toThrow();
-  });
-
-  it('Should receive all looks images and set to store', () => {
+  it('should load home page images', () =>
     expectSaga(handleHomePageImagesLoad)
-      .provide([[matchers.call.fn(getHomePageLooksImages), looksImagesMock]])
+      .withReducer(combineReducers({ Home }), { Home: initialState })
       .put(setHomePageDataLoading(true))
-      .put(setHomePageData(looksImagesMock))
+      .provide([[call(getHomePageLooksImages), mockImages]])
+      .put(setHomePageData(mockImages))
       .put(setHomePageDataLoading(false))
-      .run();
-  });
+      .hasFinalState({
+        Home: {
+          ...initialState,
+          photos: mockImages
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
+      }));
 
-  it('Should update looks image in db, store', () => {
-    expectSaga(handleHomePageImagesUpdate, { id: _id, upload: images })
+  it('should update home page images', () =>
+    expectSaga(handleHomePageImagesUpdate, { payload: mockUpdatePayload })
+      .withReducer(combineReducers({ Home }), {
+        Home: {
+          ...initialState,
+          photos: mockImages
+        }
+      })
+      .put(setHomePageDataLoading(true))
       .provide([
-        [matchers.call.fn(updateHomePageLooksImage), looksImageUpdateMock]
+        [
+          call(
+            updateHomePageLooksImage,
+            mockUpdatePayload.id,
+            mockUpdatePayload.upload
+          )
+        ],
+        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
-      .put(setHomePageDataLoading(true))
-      .put(updateHomePageImagesInStore(_id, updatedImages))
+      .put(
+        updateHomePageImagesInStore(
+          mockUpdatePayload.id,
+          mockUpdatePayload.upload
+        )
+      )
       .put(setHomePageDataLoading(false))
-      .run();
-  });
+      .put(push('/home-page-edit'))
+      .hasFinalState({
+        Home: {
+          ...initialState,
+          photos: [mockUpdatePayload.upload]
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(2);
+      }));
 
-  it('Should throw snackbar error', () => {
-    expectSaga(handleHomePageError, !error)
-      .put(setHomePageDataLoading(true))
-      .put(setHomePageDataError({ error }))
-      .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(error.message))
-      .put(setSnackBarStatus(true))
+  it('should handle home page error', () =>
+    expectSaga(handleHomePageError, mockError)
+      .withReducer(combineReducers({ Home }), {
+        Home: {
+          ...initialState,
+          homePageLoading: true
+        }
+      })
       .put(setHomePageDataLoading(false))
-      .run();
-  });
+      .provide([[call(handleErrorSnackbar, mockError.message)]])
+      .put(setHomePageDataError({ e: mockError }))
+      .hasFinalState({
+        Home: {
+          ...initialState,
+          homePageLoading: false,
+          homePageError: { e: mockError }
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(2);
+        expect(analysisCall).toHaveLength(1);
+      }));
 });
