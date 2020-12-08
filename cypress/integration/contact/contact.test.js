@@ -12,7 +12,10 @@ import {
   uaAddress,
   enAddress,
   contactToAdd,
-  getContacts
+  getContacts,
+  addContacts,
+  updateContact,
+  deleteContacts
 } from './contact.variables';
 
 describe('Contacts test', () => {
@@ -29,6 +32,7 @@ describe('Contacts test', () => {
   });
 
   it('User list row should have all types of necessary information about the user', () => {
+    cy.stubRequest('getContacts', getContacts).as('getContacts');
     cy.get('@table').eq(0).invoke('text').should('match', telephoneNumber);
     cy.get('@table').eq(1).invoke('text').should('match', email);
     cy.get('@table').eq(2).invoke('text').should('match', textString);
@@ -37,33 +41,30 @@ describe('Contacts test', () => {
   it('Data from the server should be equal with the incoming data', () => {
     cy.get('@table').eq(3).children().first().click();
     cy.wait(1000);
-    cy.get('[data-cy=phone-number]').contains(phoneNumber);
-    cy.get('[data-cy=ua-schedule]').contains(uaSchedule);
-    cy.get('[data-cy=en-schedule]').contains(enSchedule);
-    cy.get('[data-cy=ua-address]').contains(uaAddress);
-    cy.get('[data-cy=en-address]').contains(enAddress);
-    cy.get('[data-cy=ua-cart-image]').children().should('have.attr', 'src');
-    cy.get('[data-cy=en-cart-image]').children().should('have.attr', 'src');
+    cy.get('[data-cy=phone-number]').should('be.visible');
+    cy.get('[data-cy=ua-schedule]').should('be.visible');
+    cy.get('[data-cy=en-schedule]').should('be.visible');
+    cy.get('[data-cy=ua-address]').should('be.visible');
+    cy.get('[data-cy=en-address]').should('be.visible');
+    cy.get('[data-cy=ua-cart-image]').should('be.visible');
+    cy.get('[data-cy=en-cart-image]').should('be.visible');
     cy.get('[data-cy=map-link]')
       .children()
       .next()
       .children()
       .eq(0)
-      .should('have.value', 'https://g.page/horondi?share');
+      .should('be.visible');
     cy.get('[data-cy=email]')
       .children()
       .next()
       .children()
       .eq(0)
-      .should('have.value', 'horondi@gmail.com');
-    cy.get('[data-cy=go-back-button]')
-      .should('be.visible')
-      .should('have.text', 'Назад')
-      .click()
-      .wait(2000);
+      .should('be.visible');
+    cy.get('[data-cy=go-back-button]').should('be.visible').click().wait(2000);
     cy.location('pathname', { timeout: 1000 }).should('eq', '/contacts');
   });
   it('The data of new contact should be add', () => {
+    cy.stubRequest('addContacts', addContacts).as('addContacts');
     cy.get('[data-cy=add-contact]').click();
     cy.fixture('HORONDI.png').then((fileContent) => {
       cy.get('[data-cy=upload-ua-photo]').attachFile({
@@ -79,7 +80,6 @@ describe('Contacts test', () => {
         filePath: '../fixtures/HORONDI.png'
       });
     });
-
     cy.get('[data-cy=map-link]').type(contactToAdd[0].mapLink);
     cy.get('[data-cy=phone-number]').type(contactToAdd[0].contactNumber);
     cy.get('[data-cy=ua-schedule]').type(contactToAdd[0].scheduleUa);
@@ -93,7 +93,22 @@ describe('Contacts test', () => {
     cy.get('.MuiAlert-message').contains('Успішно додано!');
   });
   it('Tne data should be changed', () => {
-    cy.get('@table').eq(7).children().first().click();
+    cy.stubRequest('updateContact', updateContact).as('updateContact');
+    cy.get('@table').eq(3).children().first().click();
+    cy.fixture('HORONDI.png').then((fileContent) => {
+      cy.get('[data-cy=upload-ua-photo]').attachFile({
+        fileContent: fileContent.toString(),
+        mimeType: 'image/png',
+        filePath: '../fixtures/HORONDI.png'
+      });
+    });
+    cy.fixture('HORONDI.png').then((fileContent) => {
+      cy.get('[data-cy=upload-en-photo]').attachFile({
+        fileContent: fileContent.toString(),
+        mimeType: 'image/png',
+        filePath: '../fixtures/HORONDI.png'
+      });
+    });
     cy.get('[data-cy=map-link]').children().children().first().clear();
     cy.get('[data-cy=map-link]').type(contactToAdd[1].mapLink);
     cy.get('[data-cy=phone-number]').children().children().first().clear();
@@ -114,7 +129,8 @@ describe('Contacts test', () => {
     cy.get('.MuiAlert-message').contains(statuses.SUCCESS_UPDATE_STATUS);
   });
   it('  back button  check how it works', () => {
-    cy.get('@table').eq(7).children().first().click();
+    cy.get('@table').eq(3).children().first().click();
+    cy.wait(2000);
     cy.fixture('link.png').then((fileContent) => {
       cy.get('[data-cy=upload-en-photo]').attachFile({
         fileContent: fileContent.toString(),
@@ -126,7 +142,8 @@ describe('Contacts test', () => {
     cy.wait(2000);
   });
   it('The user should be deleted', () => {
-    cy.get('@table').eq(7).children().next().click();
+    cy.stubRequest('deleteContacts', deleteContacts).as('deleteContacts');
+    cy.get('@table').eq(3).children().next().click();
     cy.get('[data-cy=dialog-confirm]').last().click();
     cy.wait(1000);
     cy.get('.MuiAlert-message').should('be.visible');

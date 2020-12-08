@@ -10,10 +10,7 @@ export const uaAddress = 'Львів, вул. Заводська, 31';
 export const enAddress = 'Lviv, 31 Zavodska Str.';
 export const contactToAdd = [
   {
-    baseImage:
-      'https://www.google.com/search?q=images+google&sxsrf=ALeKk03n16quSgO5YhO3lrkNExvvcGHRjA:1606996555089&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjyw8jW4LHtAhUl_SoKHc_RB5cQ_AUoAXoECA0QAw&biw=1920&bih=937#imgrc=X3Bfcf__JU7bsM',
-    mapLink:
-      'https://www.google.com.ua/maps/@49.8282899,24.0034943,12.75z?hl=ru',
+    _id: '5fa034049a59a906f0610e42',
     contactNumber: '380961234567',
     scheduleUa:
       'Пн: 10:00 - 19:00|Вт: 10:00 - 19:00|Ср: 10:00 - 19:00|Чт: 10:00 - 19:00|Пт: 10:00 - 19:00|Сб: Вихідний|Нд: Вихідний',
@@ -21,13 +18,12 @@ export const contactToAdd = [
       'Mon: 10 a.m. - 7 p.m.|Tue: 10 a.m. - 7 p.m.|Wed: 10 a.m. - 7 p.m.|Thu: 10 a.m. - 7 p.m.|Fri: 10 a.m. - 7 p.m.|Sat: Closed|Sun: Closed',
     addressUa: 'Львів, вул.',
     addressEn: 'Lviv, Str.',
-    email: 'adminHorondi@gmail.com'
+    email: 'horondi@gmail.com',
+    mapLink:
+      'https://www.google.com.ua/maps/@49.8282899,24.0034943,12.75z?hl=ru'
   },
   {
-    baseImage:
-      'https://www.google.com/search?q=images+google&sxsrf=ALeKk02EbmR_Pvd9YfNIvl6Dflp1AIdovg:1607034211545&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjGl8j67LLtAhVBpIsKHTLjC1AQ_AUoAXoECA0QAw&biw=1920&bih=937#imgrc=kTWWpFZfx_yXMM',
-    mapLink:
-      'https://www.google.com.ua/maps/@50.4782429,30.4822679,12.25z?hl=ru',
+    _id: '5fa034049a59a906f0610e43',
     contactNumber: '380967654321',
     scheduleUa:
       'Пн: 8:00 - 19:00|Вт: 8:00 - 19:00|Ср: 11:00 - 19:00|Чт: 9:00 - 19:00|Пт: 8:00 - 19:00|Сб: Вихідний|Нд: Вихідний',
@@ -35,7 +31,9 @@ export const contactToAdd = [
       'Mon: 8 a.m. - 7 p.m.|Tue: 8 a.m. - 7 p.m.|Wed: 9 a.m. - 7 p.m.|Thu: 10 a.m. - 7 p.m.|Fri: 8 a.m. - 7 p.m.|Sat: Closed|Sun: Closed',
     addressUa: 'Киев, вул.',
     addressEn: 'Kyev, Str.',
-    email: 'Horondi@gmail.com'
+    email: 'Horondi@gmail.com',
+    mapLink:
+      'https://www.google.com.ua/maps/@50.4782429,30.4822679,12.25z?hl=ru'
   }
 ];
 export const contacts = {
@@ -76,6 +74,66 @@ export const getContacts = (req) => {
     body: {
       data: {
         getContacts: contacts
+      }
+    }
+  });
+};
+export const addContacts = (req) => {
+  contacts.push({
+    _id: contactToAdd[0]._id,
+    phoneNumber: contactToAdd[0].contactNumber,
+    openHours: [
+      {
+        lang: 'ua',
+        value: contactToAdd[0].scheduleUa
+      },
+      {
+        lang: 'en',
+        value: contactToAdd[0].scheduleEn
+      }
+    ],
+    address: [
+      {
+        lang: 'ua',
+        value: contactToAdd[0].addressUa
+      },
+      {
+        lang: 'en',
+        value: contactToAdd[0].addressEn
+      }
+    ],
+    images: {
+      value: {
+        thumbnail: ''
+      }
+    },
+    email: contactToAdd[0].email,
+    link: contactToAdd[0].mapLink
+  });
+  req.reply({
+    body: {
+      data: {
+        addContacts: contactToAdd[0]
+      }
+    }
+  });
+};
+export const updateContact = (req) => {
+  contacts.pop();
+  contacts.push({});
+  req.reply({
+    body: {
+      data: {
+        updateContact: contacts
+      }
+    }
+  });
+};
+export const deleteContacts = (req, _id) => {
+  req.reply({
+    body: {
+      data: {
+        deleteContacts: _id
       }
     }
   });
