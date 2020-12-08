@@ -14,6 +14,7 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 import CategoryDeleteDialog from '../category-delete-dialog';
+import { useCommonStyles } from '../../common.styles';
 
 const { CREATE_CATEGORY } = config.buttonTitles;
 
@@ -22,6 +23,7 @@ const tableTitles = config.tableHeadRowTitles.Categories;
 
 const CategoryPage = () => {
   const styles = useStyles();
+  const common = useCommonStyles();
   const { categories, loading } = useSelector(({ Categories }) => ({
     categories: Categories.categories,
     loading: Categories.categoryLoading,
@@ -65,11 +67,11 @@ const CategoryPage = () => {
     return <LoadingBar />;
   }
   return (
-    <div className={styles.container}>
-      <Typography variant='h1' className={styles.categoryTitle}>
-        {config.titles.categoriesTitles.mainPageTitle}
-      </Typography>
-      <div className={styles.tableNav}>
+    <div className={common.container}>
+      <div className={common.adminHeader}>
+        <Typography variant='h1' className={common.materialTitle}>
+          {config.titles.categoryPageTitles.mainPageTitle}
+        </Typography>
         <Button
           data-cy='add-category'
           component={Link}
