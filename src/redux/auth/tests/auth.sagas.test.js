@@ -7,7 +7,7 @@ import {
   handleAdminLogout
 } from '../auth.sagas';
 import { loginAdmin, getUserByToken } from '../auth.operations';
-import { email, password, token, userId } from './auth.variables';
+import { email, pass, token, userId } from './auth.variables';
 
 import { setAuth, setAuthLoading, setAdminId } from '../auth.actions';
 
@@ -18,12 +18,12 @@ jest.mock('../../../services/local-storage.service');
 describe('auth sagas tests', () => {
   it('should login', () =>
     expectSaga(handleAdminLoad, {
-      payload: { loginInput: { email, password } }
+      payload: { loginInput: { email, pass } }
     })
       .withReducer(authReducer)
       .provide([
         [
-          call(loginAdmin, { loginInput: { email, password } }),
+          call(loginAdmin, { loginInput: { email, pass } }),
           { token, _id: userId }
         ]
       ])
