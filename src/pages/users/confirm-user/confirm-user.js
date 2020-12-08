@@ -47,7 +47,7 @@ const ConfirmUser = ({ match }) => {
     password: Yup.string()
       .min(8, loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE)
       .max(20, loginErrorMessages.PASSWORD_MAX_LENGTH_MESSAGE)
-      .matches(formRegExp.password, loginErrorMessages.PASSWORD_LANG_MESSAGE)
+      .matches(formRegExp.pass, loginErrorMessages.PASSWORD_LANG_MESSAGE)
       .required(loginErrorMessages.ENTER_PASSWORD_MESSAGE)
   });
 
