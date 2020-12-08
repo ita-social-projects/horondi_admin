@@ -209,7 +209,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   data-cy='page-editor'
                 />
                 {(editorField.test(uaText) || !uaText) && shouldValidate && (
-                  <div className={classes.errorMessage}>
+                  <div className={classes.errorMessage} data-cy='editor-error'>
                     Введіть текст для сторінки
                   </div>
                 )}

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar, Tabs, Tab, Typography } from '@material-ui/core';
-import { useStyles } from './users-page.styles';
 import { useCommonStyles } from '../../common.styles';
 import { deleteUser, getUsers } from '../../../redux/users/users.actions';
 import TabPanel from '../../../components/tab-panel';
@@ -12,7 +11,7 @@ import AdminTab from './components/admin-tab';
 import UserTab from './components/user-tab';
 import useUsersTabs from '../../../hooks/user/use-users-tabs';
 
-const { REMOVE_USER_TITLE } = config.buttonTitles;
+const { DELETE_TITLE } = config.buttonTitles;
 const { REMOVE_USER_MESSAGE } = config.messages;
 const userTabNames = config.tabNames.users;
 
@@ -40,12 +39,7 @@ const UsersPage = () => {
       dispatch(closeDialog());
       dispatch(deleteUser(id));
     };
-    openSuccessSnackbar(
-      removeUser,
-      REMOVE_USER_TITLE,
-      REMOVE_USER_MESSAGE,
-      REMOVE_USER_TITLE
-    );
+    openSuccessSnackbar(removeUser, REMOVE_USER_MESSAGE);
   };
 
   const { tab, handleTabChange } = useUsersTabs();

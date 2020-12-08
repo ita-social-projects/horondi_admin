@@ -24,7 +24,6 @@ cypress.json
 .env.production.local
 package-lock.json
 *.env.json
-package-lock.json
 
 debug.log
 npm-debug.log*

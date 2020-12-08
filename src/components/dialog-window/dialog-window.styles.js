@@ -6,5 +6,9 @@ export const useStyles = makeStyles(() => ({
       fontSize: '1.5rem !important',
       fontWeight: '700 !important'
     }
+  },
+  buttonStyles: {
+    display: 'flex',
+    justifyContent: 'center'
   }
 }));

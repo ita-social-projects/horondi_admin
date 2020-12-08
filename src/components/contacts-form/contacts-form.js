@@ -13,9 +13,6 @@ import {
   Avatar
 } from '@material-ui/core';
 
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import ImageIcon from '@material-ui/icons/Image';
-
 import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
