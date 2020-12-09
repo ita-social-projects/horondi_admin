@@ -25,7 +25,7 @@ import Error from './error/error.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
-    contactsReducer,
+    Contact: contactsReducer,
     News,
     Theme,
     Table,
@@ -44,7 +44,7 @@ export const rootReducer = (history) =>
     Model,
     EmailQuestions,
     HomePage,
-    statsReducer,
+    Stats: statsReducer,
     Header,
     Slides,
     Error
