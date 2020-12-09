@@ -18,7 +18,7 @@ import { useStyles } from './category-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
-import { addCategory, updateCategory } from '../../redux/category/category.actions';
+import { addCategory, updateCategory } from '../../redux/categories/categories.actions';
 import ImageUploadContainer from '../../containers/image-upload-container';
 
 const {
