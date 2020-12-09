@@ -176,20 +176,7 @@ const Routes = () => {
             component={RegisterUser}
           />
           <Route path={routes.pathToHomePageEdit} exact component={HomePage} />
-          {/* <Route
-            path={routes.pathToAddCategory}
-            exact
-            component={CategoriesAdd}
-          />
           <Route
-            path={routes.pathToEditCategory}
-            exact
-            render={({ match }) => (
-              <CategoriesAdd id={match.params.id} editMode />
-            )}
-          /> */}
-
-             <Route
             path={routes.pathToAddCategory}
             exact
             component={CategoriesAdd}
@@ -199,7 +186,6 @@ const Routes = () => {
             exact
             component={CategoryDetails}
           />
-
 
           <Route
             path={routes.pathToEmailQuestions}
