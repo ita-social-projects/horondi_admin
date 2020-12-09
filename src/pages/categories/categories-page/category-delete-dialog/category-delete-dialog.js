@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import FormDialog from '../../../../containers/form-dialog';
+import FormDialog from '../../../containers/form-dialog';
 import CategoryDelete from '../category-delete';
 import {
   setCategoryDeleteId,
   setCategorySwitchId,
   toggleCategoryDeleteDialog
-} from '../../../../redux/categories/categories.actions';
-import { config } from '../../../../configs';
+} from '../../../redux/category/category.actions';
+import { config } from '../../../configs';
 
 const { categoriesTitles } = config.titles;
 
