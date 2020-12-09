@@ -49,13 +49,15 @@ import {
 
 import { selectStatsDate } from '../../selectors/stats.selectors';
 
-import Stats from '../stats.reducer';
+import { statsReducer } from '../stats.reducer';
 import Snackbar from '../../snackbar/snackbar.reducer';
 
 describe('Stats saga test', () => {
   it('should load initial stats', () =>
     expectSaga(handleInitialStatsLoad)
-      .withReducer(combineReducers({ Stats }), { Stats: initialState })
+      .withReducer(combineReducers({ statsReducer }), {
+        statsReducer: initialState
+      })
       .put(setStatsLoading(true))
       .provide([
         [call(getPopularCategories), mockCategories],
@@ -65,7 +67,7 @@ describe('Stats saga test', () => {
       .put(setPopularProducts(mockProducts))
       .put(setStatsLoading(false))
       .hasFinalState({
-        Stats: {
+        statsReducer: {
           ...initialState,
           doughnut: {
             ...initialState.doughnut,
@@ -86,7 +88,9 @@ describe('Stats saga test', () => {
 
   it('should load orders statistic', () =>
     expectSaga(handleOrdersStatisticLoad)
-      .withReducer(combineReducers({ Stats }), { Stats: initialState })
+      .withReducer(combineReducers({ statsReducer }), {
+        statsReducer: initialState
+      })
       .put(setUpdatingDoughnutData(true))
       .provide([
         [select(selectStatsDate), mockDate],
@@ -95,7 +99,7 @@ describe('Stats saga test', () => {
       .put(setAllOrdersStats(mockDoughnutOrders))
       .put(setUpdatingDoughnutData(false))
       .hasFinalState({
-        Stats: {
+        statsReducer: {
           ...initialState,
           doughnut: {
             ...initialState.doughnut,
@@ -112,7 +116,9 @@ describe('Stats saga test', () => {
 
   it('should load paid orders', () =>
     expectSaga(handlePaidOrdersLoad)
-      .withReducer(combineReducers({ Stats }), { Stats: initialState })
+      .withReducer(combineReducers({ statsReducer }), {
+        statsReducer: initialState
+      })
       .put(setUpdatingBarData(true))
       .provide([
         [select(selectStatsDate), mockDate],
@@ -121,7 +127,7 @@ describe('Stats saga test', () => {
       .put(setPaidOrdersStats(mockPaidOrders))
       .put(setUpdatingBarData(false))
       .hasFinalState({
-        Stats: {
+        statsReducer: {
           ...initialState,
           bar: {
             ...initialState.bar,
@@ -138,7 +144,9 @@ describe('Stats saga test', () => {
 
   it('should load users statistic', () =>
     expectSaga(handleUsersStatisticLoad)
-      .withReducer(combineReducers({ Stats }), { Stats: initialState })
+      .withReducer(combineReducers({ statsReducer }), {
+        statsReducer: initialState
+      })
       .put(setUpdatingBarData(true))
       .provide([
         [select(selectStatsDate), mockDate],
@@ -147,7 +155,7 @@ describe('Stats saga test', () => {
       .put(setUsersByDays(mockUsers))
       .put(setUpdatingBarData(false))
       .hasFinalState({
-        Stats: {
+        statsReducer: {
           ...initialState,
           bar: {
             ...initialState.bar,
@@ -164,8 +172,8 @@ describe('Stats saga test', () => {
 
   it('should handle stats errors', () =>
     expectSaga(handleStatsErrors, mockError)
-      .withReducer(combineReducers({ Stats, Snackbar }), {
-        Stats: {
+      .withReducer(combineReducers({ statsReducer, Snackbar }), {
+        statsReducer: {
           ...initialState,
           loading: true
         },
@@ -176,7 +184,7 @@ describe('Stats saga test', () => {
       .put(setSnackBarMessage(mockError.message))
       .put(setSnackBarStatus(true))
       .hasFinalState({
-        Stats: {
+        statsReducer: {
           ...initialState,
           loading: false
         },
