@@ -38,7 +38,14 @@ export const useStyles = makeStyles((theme) => ({
     color: '#e60000',
     marginLeft: '5px'
   },
-
+  imageUploadAvatar: {
+    padding: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    '& div:nth-child(2)': {
+      marginLeft: '15px'
+    }
+  },
   imageUploadContainer: {
     display: 'flex',
     alignItems: 'center',

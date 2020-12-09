@@ -9,7 +9,8 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button
+  Button,
+  Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -18,6 +19,7 @@ import { useStyles } from './category-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
+import { Image } from '@material-ui/icons';
 import { addCategory, updateCategory } from '../../redux/categories/categories.actions';
 import ImageUploadContainer from '../../containers/image-upload-container';
 
@@ -25,7 +27,7 @@ const {
   CATEGORY_VALIDATION_ERROR,
   CATEGORY_ERROR_MESSAGE,
 
-} = config.categoryErrorMessages;
+} = config.errorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -106,14 +108,15 @@ const CategoryForm = ({ category, id,edit = false}) => {
             <span className={styles.imageUpload}>
               {config.labels.avatarText}
             </span>
-            <ImageUploadContainer
-              handler={handleImageLoad}
-              srcForAvatar={
-                categoryImage ||
-                `${config.imagePrefix}${values.categoryImage}`
-              }
-                fileName={upload.name ||category.images.thumbnail}
-            />
+            <div className={styles.imageUploadAvatar}>
+            <ImageUploadContainer handler={handleImageLoad} />
+              {categoryImage && (
+                <Avatar src={categoryImage}>
+                  <Image />
+                </Avatar>
+
+                    )}
+                    </div>
             <TextField
               data-cy='code'
               name='code'

@@ -20,8 +20,9 @@ import MaterialPage from '../pages/material/material-page';
 import MaterialAdd from '../pages/material/material-add';
 import ProductsPage from '../pages/products/products-page';
 import ProductsAdd from '../pages/products/product-add';
-import Categories from '../pages/categories/categories-page';
-import CategoriesAdd from '../pages/categories/categories-add/categories-add';
+import Categories from '../pages/categories/categories-page/categories';
+import CategoriesAdd from '../pages/categories/categories-add';
+import CategoryDetails from '../pages/categories/categories-details';
 import UsersDetails from '../pages/users/users-details';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
@@ -175,7 +176,7 @@ const Routes = () => {
             component={RegisterUser}
           />
           <Route path={routes.pathToHomePageEdit} exact component={HomePage} />
-          <Route
+          {/* <Route
             path={routes.pathToAddCategory}
             exact
             component={CategoriesAdd}
@@ -186,7 +187,20 @@ const Routes = () => {
             render={({ match }) => (
               <CategoriesAdd id={match.params.id} editMode />
             )}
+          /> */}
+
+             <Route
+            path={routes.pathToAddCategory}
+            exact
+            component={CategoriesAdd}
           />
+          <Route
+            path={routes.pathToEditCategory}
+            exact
+            component={CategoryDetails}
+          />
+
+
           <Route
             path={routes.pathToEmailQuestions}
             exact

@@ -42,7 +42,7 @@ const categoryReducer = (state = initialState, action = {}) => {
   case SET_CATEGORY_LOADING:
     return {
       ...state,
-      categoryLoading: action.payload
+      categoriesLoading: action.payload
     };
   case SET_CATEGORY_ERROR:
     return {
