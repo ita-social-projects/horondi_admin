@@ -67,6 +67,7 @@ export function* handleAddHeader({ payload }) {
     yield call(createHeader, payload);
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(routes.pathToHeaders));
+    yield put(setHeaderLoading(false));
   } catch (error) {
     yield call(handleHeaderError, error);
   }

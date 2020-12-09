@@ -110,7 +110,11 @@ const HomePage = () => {
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
-        <Typography variant='h1' className={commonStyles.materialTitle}>
+        <Typography
+          variant='h1'
+          className={commonStyles.materialTitle}
+          data-cy='homepage-title'
+        >
           {homePageTitles.mainPageTitle}
         </Typography>
       </div>

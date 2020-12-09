@@ -32,8 +32,9 @@ describe('User list and items test', () => {
 
   beforeEach(() => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
-    cy.visit('/users');
+    cy.visit('/');
     cy.wait(3000);
+    cy.get('[href="/users"]').click();
     cy.get('#table-body').as('table');
   });
 
@@ -122,25 +123,14 @@ describe('User list and items test', () => {
 });
 
 describe('Register and confirm admin', () => {
-  let firstName;
-  let lastName;
-  let password;
-  let email;
-  let token;
-  let role;
-
-  before(() => {
-    firstName = 'Bob';
-    lastName = 'Marley';
-    password = 'qwertY123';
-    role = 'admin';
-    email = 'admin3@gmail.com';
+  beforeEach(() => {
+    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
+    cy.visit('/');
+    cy.wait(3000);
+    cy.get(`[href="${config.routes.pathToUsers}"]`).click();
   });
 
   it('Should show an dialog window with admin registration', () => {
-    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
-    cy.visit(`/users`);
-    cy.wait(3000);
     cy.contains('Адміністратори').click();
     cy.wait(3000);
     cy.get('[data-cy=add-user-admin-button]').click();
@@ -151,13 +141,8 @@ describe('Register and confirm admin', () => {
   });
 
   it('Should show an error label when email or role are incorrect', () => {
-    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
-    cy.visit(`/users`);
-    cy.wait(4000);
     cy.contains('Адміністратори').click();
-    cy.wait(4000);
     cy.get('[data-cy=add-user-admin-button]').click();
-    cy.wait(4000);
     cy.get('[data-cy=email]').type('Bob');
     cy.get('[data-cy=submit-admin-register]').click();
     cy.get('[data-cy=email-error-label]').should(
@@ -171,22 +156,33 @@ describe('Register and confirm admin', () => {
   });
 
   it('Should show an error caused by the lack of previlegies', () => {
-    cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
-    cy.visit(`/users`);
-    cy.wait(3000);
     cy.contains('Адміністратори').click();
-    cy.wait(3000);
     cy.get('[data-cy=add-user-admin-button]').click();
-    cy.wait(3000);
     cy.get('[data-cy=email]').type('admin3@gmail.com');
     cy.get('[data-cy=role]').click();
     cy.get('[data-cy=admin]').click();
     cy.get('[data-cy=submit-admin-register]').click();
-    cy.wait(3000);
     cy.get('[data-cy=snack-bar-message]').should(
       'have.text',
       'Помилка: Недостатньо прав користувача'
     );
+  });
+});
+
+describe('Test superadmin functionality', () => {
+  let firstName;
+  let lastName;
+  let pass;
+  let email;
+  let token;
+  let role;
+
+  before(() => {
+    firstName = 'Bob';
+    lastName = 'Marley';
+    pass = 'qwertY123';
+    role = 'admin';
+    email = 'admin3@gmail.com';
   });
 
   it('Register new admin', () => {
@@ -241,7 +237,7 @@ describe('Register and confirm admin', () => {
     cy.wait(3000);
     cy.get('[data-cy=firstName]').type(firstName);
     cy.get('[data-cy=lastName]').type(lastName);
-    cy.get('[data-cy=password]').type(password);
+    cy.get('[data-cy=password]').type(pass);
     cy.get('[data-cy=submit-admin-confirmation]').click();
     cy.wait(3000);
     cy.get('[data-cy=snack-bar-message]').should(
@@ -251,9 +247,9 @@ describe('Register and confirm admin', () => {
   });
 
   it('Should login as an admin', () => {
-    cy.login(email, password);
+    cy.login(email, pass);
     cy.wait(3000);
-    cy.visit('/users');
+    cy.get(`[href="${config.routes.pathToUsers}"]`).click();
     cy.wait(3000);
     cy.get('#table-body').should('be.visible');
   });
@@ -304,7 +300,7 @@ describe('Filter users', () => {
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));
     cy.visit('/');
     cy.wait(DELAY);
-    cy.visit('/users');
+    cy.get(`[href="${config.routes.pathToUsers}"]`).click();
   });
 
   it('should show only active users', () => {

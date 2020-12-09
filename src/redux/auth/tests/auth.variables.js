@@ -1,5 +1,5 @@
 const email = 'test@gmail.com';
-const password = 'testpass';
+const pass = 'testpass';
 const token = '1111bGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
 const userId = '1111bGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
 const loginData = {
@@ -10,4 +10,4 @@ const loginData = {
     }
   }
 };
-export { email, password, token, userId, loginData };
+export { email, pass, token, userId, loginData };

@@ -1,6 +1,6 @@
 const initialLanguageValues = [
   {
-    lang: 'uk',
+    lang: 'ua',
     value: ''
   },
   {
@@ -8,6 +8,25 @@ const initialLanguageValues = [
     value: ''
   }
 ];
+
+const mockColors = [
+  {
+    name: [
+      { lang: 'ua', value: 'Золотий' },
+      { lang: 'en', value: 'Golden' }
+    ],
+    simpleName: [
+      { lang: 'ua', value: 'жовтий' },
+      { lang: 'en', value: 'yellow' }
+    ]
+  }
+];
+
+const mockCategory = {
+  _id: 'ddc81f5dbac48c38d0403dd3',
+  name: [{ value: 'Рюкзаки' }, { value: 'Backpacks' }],
+  isMain: true
+};
 
 const productModel = {
   name: initialLanguageValues,
@@ -79,38 +98,17 @@ const mockProductsList = {
   items: [
     {
       basePrice: [{ value: 146270 }, { value: 6270 }],
-      category: {
-        _id: 'ddc81f5dbac48c38d0403dd3',
-        name: [{ value: 'Рюкзаки' }, { value: 'Backpacks' }],
-        isMain: true
-      },
-      colors: [
-        {
-          name: [
-            { lang: 'uk', value: 'Золотий' },
-            { lang: 'en', value: 'Golden' }
-          ],
-          simpleName: [
-            { lang: 'uk', value: 'жовтий' },
-            { lang: 'en', value: 'yellow' }
-          ]
-        }
-      ],
-      images: {
-        primary: {
-          large: 'large_10b15c0khmaqssr_rolltop.jpg',
-          medium: 'medium_10b15c0khmaqssr_rolltop.jpg',
-          small: 'small_10b15c0khmaqssr_rolltop.jpg'
-        }
-      },
+      category: mockCategory,
+      colors: mockColors,
+      images: mockPrimaryImage,
       isHotItem: true,
       model: [{ value: 'Ролтоп' }, { value: 'Rolltop' }],
       name: [
-        { lang: 'uk', value: 'Ролтоп жовтий 1' },
+        { lang: 'ua', value: 'Ролтоп жовтий 1' },
         { lang: 'en', value: 'Rolltop Yellow 1' }
       ],
       pattern: [
-        { lang: 'uk', value: 'Квіти' },
+        { lang: 'ua', value: 'Квіти' },
         { lang: 'en', value: 'Flowers' }
       ],
       purchasedCount: 49,
@@ -134,7 +132,7 @@ const mockCategoriesList = [
     _id: 'ddc81f5dbac48c38d0403dd3',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Рюкзаки'
       },
       {
@@ -148,7 +146,7 @@ const mockCategoriesList = [
     _id: '54c1cfb719f3bb97c28d762e',
     name: [
       {
-        lang: 'uk',
+        lang: 'ua',
         value: 'Сумки'
       },
       {
@@ -186,7 +184,7 @@ const mockProductOptions = {
       _id: '56ade69dd46eafc5968e5390',
       name: [
         {
-          lang: 'uk',
+          lang: 'ua',
           value: 'Мальмо'
         },
         {
@@ -245,10 +243,19 @@ const mockProductToUpdatePayload = {
   product: mockProduct,
   id: mockProduct._id
 };
+const mockFilesToUpload = ['some upload info'];
+
+const mockPrimaryImage = {
+  primary: {
+    large: 'large_10b15c0khmaqssr_rolltop.jpg',
+    medium: 'medium_10b15c0khmaqssr_rolltop.jpg',
+    small: 'small_10b15c0khmaqssr_rolltop.jpg'
+  }
+};
 
 const mockProductToUpload = {
   ...mockProductsState,
-  upload: ['some upload info'],
+  upload: mockFilesToUpload,
   primaryImageUpload: ['upload image']
 };
 
@@ -274,9 +281,15 @@ const mockProductsStateToDeleteImages = {
   filesToDelete: ['file to delete']
 };
 
+const mockUploadToRemoveImages = [{ name: 'image' }];
+
 const mockId = '5fa034049a59a906d0640e42';
 
 export {
+  mockUploadToRemoveImages,
+  mockPrimaryImage,
+  mockCategory,
+  mockColors,
   mockProductsState,
   mockTableState,
   mockProductsList,
@@ -295,5 +308,6 @@ export {
   mockSnackarState,
   mockError,
   mockProductsStateToDeleteImages,
-  mockId
+  mockId,
+  mockFilesToUpload
 };

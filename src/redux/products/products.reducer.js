@@ -82,7 +82,7 @@ export const initialState = {
     bottomMaterials: []
   }
 };
-const setSort = ({
+export const setSort = ({
   sortByPrice = 0,
   sortByRate = 0,
   sortByPopularity = 0

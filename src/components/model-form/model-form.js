@@ -12,10 +12,12 @@ import {
   Button,
   Select,
   FormControl,
-  InputLabel
+  InputLabel,
+  Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { Image } from '@material-ui/icons';
 import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { SaveButton } from '../buttons';
@@ -25,6 +27,8 @@ import { addModel, updateModel } from '../../redux/model/model.actions';
 import { getCategories } from '../../redux/categories/categories.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
+import Editor from '../editor';
+import useBusinessHandlers from '../../utils/use-business-handlers';
 
 const {
   MODEL_VALIDATION_ERROR,
@@ -33,11 +37,11 @@ const {
 
 const { routes } = config;
 
-const { languages } = config;
-
 const ModelForm = ({ model, id }) => {
+  const { enSetText, setFiles, languages } = useBusinessHandlers();
   const styles = useStyles();
   const dispatch = useDispatch();
+  const inputLabel = React.useRef(null);
   const {
     tabsValue,
     handleTabsChange,
@@ -59,10 +63,10 @@ const ModelForm = ({ model, id }) => {
     enName: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
-    ukDescription: Yup.string()
+    uaDescription: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
-    ukName: Yup.string()
+    uaName: Yup.string()
       .min(2, MODEL_VALIDATION_ERROR)
       .required(MODEL_ERROR_MESSAGE),
     priority: Yup.number(),
@@ -95,9 +99,9 @@ const ModelForm = ({ model, id }) => {
     validationSchema: modelValidationSchema,
     initialValues: {
       modelImage: model.images ? model.images.thumbnail : '',
-      ukName: model.name[0].value || '',
+      uaName: model.name[0].value || '',
       enName: model.name[1].value || '',
-      ukDescription: model.description[0].value || '',
+      uaDescription: model.description[0].value || '',
       enDescription: model.description[1].value || '',
       priority: model.priority || 1,
       category: category || '',
@@ -139,7 +143,7 @@ const ModelForm = ({ model, id }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete='off'>
         <CheckboxOptions options={checkboxes} />
 
         <Grid item xs={12}>
@@ -147,15 +151,16 @@ const ModelForm = ({ model, id }) => {
             <span className={styles.imageUpload}>
               {config.labels.model.avatarText}
             </span>
-            <ImageUploadContainer
-              handler={handleImageLoad}
-              srcForAvatar={
-                modelImage || `${config.IMG_URL}${values.modelImage}`
-              }
-              fileName={upload && upload.name}
-            />
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer handler={handleImageLoad} />
+              {modelImage && (
+                <Avatar src={modelImage}>
+                  <Image />
+                </Avatar>
+              )}
+            </div>
             <FormControl variant='outlined' className={styles.textField}>
-              <InputLabel htmlFor='category-select'>
+              <InputLabel shrink ref={inputLabel} htmlFor='category-select'>
                 {config.labels.model.category}
               </InputLabel>
               <Select
@@ -215,7 +220,7 @@ const ModelForm = ({ model, id }) => {
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label={config.labels.model.name}
+                label={config.labels.model.name[tabsValue].value}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -224,15 +229,14 @@ const ModelForm = ({ model, id }) => {
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
               )}
-              <TextField
-                data-cy={`${lang}Description`}
-                id={`${lang}Description`}
-                className={styles.textField}
-                variant='outlined'
-                label={config.labels.model.description}
-                multiline
-                value={values[`${lang}Description`]}
+              <Editor
+                value={values[`${lang}Description`] || ''}
+                placeholder='Текст'
+                onEditorChange={(value) => enSetText(value)}
+                setFiles={setFiles}
                 onChange={handleChange}
+                label={config.labels.model.description}
+                data-cy={`${lang}Description`}
                 error={
                   touched[`${lang}Description`] &&
                   !!errors[`${lang}Description`]
@@ -289,27 +293,27 @@ ModelForm.propTypes = {
   values: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),
   errors: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),
   touched: PropTypes.shape({
     modelImage: PropTypes.string,
     category: PropTypes.string,
-    ukName: PropTypes.string,
+    uaName: PropTypes.string,
     enName: PropTypes.string,
-    ukDescription: PropTypes.string,
+    uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
     priority: PropTypes.number
   }),

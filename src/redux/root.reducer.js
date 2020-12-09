@@ -21,6 +21,7 @@ import Model from './model/model.reducer';
 import Header from './header/header.reducer';
 import Orders from './orders/orders.reducer';
 import Slides from './home-page-slides/home-page-slides.reducer';
+import Error from './error/error.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
@@ -45,5 +46,6 @@ export const rootReducer = (history) =>
     HomePage,
     statsReducer,
     Header,
-    Slides
+    Slides,
+    Error
   });
