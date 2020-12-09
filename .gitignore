@@ -6,7 +6,7 @@
 /coverage
 /.vscode
 .pnp.js
-
+test-report.xml
 # testing
 /coverage
 cypress.json
