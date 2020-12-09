@@ -14,9 +14,10 @@ describe('dialog window reducer tests', () => {
     });
   });
   it('should set isOpen to false', () => {
-    expect(dialogWindowReducer(initialState, closeDialog())).toEqual(
-      initialState
-    );
+    expect(dialogWindowReducer(initialState, closeDialog())).toEqual({
+      ...initialState,
+      isOpen: false
+    });
   });
   it('should be defined', () => {
     expect(initialState.buttonTitle).toBeDefined();
