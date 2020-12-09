@@ -6,7 +6,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import { useDispatch, useSelector } from 'react-redux';
-import useStyles from './pagination-controller.styles';
+import { useStyles } from './pagination-controller.styles';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import { selectTablePaginationCurrentRows } from '../../redux/selectors/table.selectors';
 

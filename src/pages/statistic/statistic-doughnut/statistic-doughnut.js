@@ -13,7 +13,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 import useDoughnutData from '../../../hooks/stats/use-doughnut-data';
-import useStyles from './statistic-doughnut.styles';
+import { useStyles } from './statistic-doughnut.styles';
 
 import LegendsList from './legends-list/legends-list';
 import StatisticError from '../statistic-error';

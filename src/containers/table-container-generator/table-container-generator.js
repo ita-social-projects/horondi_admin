@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableContainerHead from '../table-container-head';
 
-import useStyles from './table-container-generator.styles';
+import { useStyles } from './table-container-generator.styles';
 import { config } from '../../configs';
 import TablePaginator from '../table-pagination-container';
 import { selectTableDense } from '../../redux/selectors/table.selectors';
