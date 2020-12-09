@@ -27,8 +27,11 @@ jobs:
       - run: cat sonar-project.properties
       - run: npm install
       - run: npm test -- -u
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      - uses: mathrix-education/sonar-scanner@master
+        with:
+          version: 4.2.0.1873 # required
+          scan: true
+          args: --debug -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
