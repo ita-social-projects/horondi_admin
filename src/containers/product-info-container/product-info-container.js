@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { TextField, Paper, Tabs, Tab, Box } from '@material-ui/core';
-import useStyles from './product-info-container.styles';
+import { useStyles } from './product-info-container.styles';
 
 import Editor from '../../components/editor';
 import TabPanel from '../../components/tab-panel';
