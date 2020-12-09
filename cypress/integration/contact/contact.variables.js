@@ -78,7 +78,7 @@ export const getContacts = (req) => {
     }
   });
 };
-export const addContacts = (req) => {
+export const addContact = (req) => {
   contacts.push({
     _id: contactToAdd[0]._id,
     phoneNumber: contactToAdd[0].contactNumber,
@@ -118,6 +118,17 @@ export const addContacts = (req) => {
     }
   });
 };
+export const getContactById = (req) => {
+  req.reply({
+    body: {
+      data: {
+        getContactById: {
+          ...contactToAdd
+        }
+      }
+    }
+  });
+};
 export const updateContact = (req) => {
   contacts.pop();
   contacts.push({});
@@ -129,11 +140,11 @@ export const updateContact = (req) => {
     }
   });
 };
-export const deleteContacts = (req, _id) => {
+export const deleteContact = (req, _id) => {
   req.reply({
     body: {
       data: {
-        deleteContacts: _id
+        deleteContact: _id
       }
     }
   });

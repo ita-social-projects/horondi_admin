@@ -7,9 +7,10 @@ import {
   textString,
   contactToAdd,
   getContacts,
-  addContacts,
+  addContact,
   updateContact,
-  deleteContacts
+  deleteContact,
+  getContactById
 } from './contact.variables';
 
 describe('Contacts test', () => {
@@ -27,7 +28,6 @@ describe('Contacts test', () => {
   });
 
   it('User list row should have all types of necessary information about the user', () => {
-    cy.stubRequest('getContacts', getContacts).as('getContacts');
     cy.get('@table').eq(0).invoke('text').should('match', telephoneNumber);
     cy.get('@table').eq(1).invoke('text').should('match', email);
     cy.get('@table').eq(2).invoke('text').should('match', textString);
@@ -57,7 +57,7 @@ describe('Contacts test', () => {
     cy.location('pathname', { timeout: 1000 }).should('eq', '/contacts');
   });
   it('The data of new contact should be add', () => {
-    cy.stubRequest('addContacts', addContacts).as('addContacts');
+    cy.stubRequest('addContact', addContact).as('addContact');
     cy.get('[data-cy=add-contact]').click();
     cy.wait(1000);
     cy.fixture('HORONDI.png').then((fileContent) => {
@@ -86,6 +86,7 @@ describe('Contacts test', () => {
     cy.get('.MuiAlert-message').should('be.visible');
   });
   it('Tne data should be changed', () => {
+    cy.stubRequest('getContactById', getContactById).as('getContactById');
     cy.stubRequest('updateContact', updateContact).as('updateContact');
     cy.get('@table').eq(3).children().first().click();
     cy.wait(1000);
@@ -135,7 +136,7 @@ describe('Contacts test', () => {
     cy.wait(2000);
   });
   it('The user should be deleted', () => {
-    cy.stubRequest('deleteContacts', deleteContacts).as('deleteContacts');
+    cy.stubRequest('deleteContact', deleteContact).as('deleteContact');
     cy.get('@table').eq(3).children().next().click();
     cy.get('[data-cy=dialog-confirm]').last().click();
     cy.wait(1000);
