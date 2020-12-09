@@ -4,6 +4,7 @@ import { Paper, Tabs, Tab, Button } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
+import { createBrowserHistory } from 'history';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
 import { Delivery, Recipient, Products, General } from './tabs';
@@ -18,6 +19,7 @@ import { config } from '../../configs';
 import StandardButton from '../../components/buttons/standard-button';
 
 const OrderItem = ({ id }) => {
+  console.log(createBrowserHistory());
   const classes = useStyles();
   const dispatch = useDispatch();
   const { orderTabs } = labels;
