@@ -24,7 +24,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
-      - run: cat sonar-properties
       - run: npm install
       - run: npm test -- -u
       - name: SonarCloud Scan
