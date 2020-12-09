@@ -6,7 +6,7 @@ import {
   setCategory,
   setCategoryError,
   removeCategoryFromStore
-} from './category.actions';
+} from './categories.actions';
 
 import {
   handleErrorSnackbar,
@@ -19,7 +19,7 @@ import {
   createCategory,
   updateCategory,
   getCategoryById
-} from './category.operations';
+} from './categories.operations';
 
 import {
   GET_CATEGORIES,
@@ -27,7 +27,7 @@ import {
   ADD_CATEGORY,
   UPDATE_CATEGORY,
   GET_CATEGORY
-} from './category.types';
+} from './categories.types';
 
 import { config } from '../../configs';
 import { selectCategorySwitchAndDeleteId } from '../selectors/category.selectors';

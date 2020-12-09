@@ -8,16 +8,16 @@ import {
   Select
 } from '@material-ui/core';
 import { useStyles } from './category-delete.styles';
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
 import {
   deleteCategory,
   setCategorySwitchId,
   toggleCategoryDeleteDialog
-} from '../../../redux/category/category.actions';
+} from '../../../../redux/categories/categories.actions';
 
-import { config } from '../../../configs';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import { SaveButton } from '../../../components/buttons';
+import { config } from '../../../../configs';
+import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
+import { SaveButton } from '../../../../components/buttons';
 
 const { DELETE_TITLE } = config.buttonTitles;
 const { DELETE_CATEGORY } = config.buttonTitles;

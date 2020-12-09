@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStyles } from './category-add.styles';
+import { useStyles } from './categories-add.styles';
 import CategoryForm from '../../../components/category-form';
 import { config } from '../../../configs';
 

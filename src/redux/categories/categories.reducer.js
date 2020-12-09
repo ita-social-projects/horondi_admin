@@ -10,7 +10,7 @@ import {
   TOGGLE_CATEGORY_DELETE_DIALOG,
   SET_CATEGORY_DELETE_ID,
   SET_CATEGORY_SWITCH_ID
-} from './category.types';
+} from './categories.types';
 
 export const initialState = {
   categories: [],
