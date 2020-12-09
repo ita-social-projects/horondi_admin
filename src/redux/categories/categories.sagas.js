@@ -1,113 +1,112 @@
-import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { takeEvery, call, select, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import {
-  GET_CATEGORIES,
-  GET_CATEGORY,
-  CREATE_CATEGORY,
-  EDIT_CATEGORY,
-  DELETE_CATEGORY,
-  GET_SUBCATEGORIES
-} from './categories.types';
-import {
   setCategories,
-  setCategoriesError,
-  setCategoriesLoading,
-  setCategory
-} from './categories.actions';
+  setCategoryLoading,
+  setCategory,
+  setCategoryError,
+  removeCategoryFromStore
+} from './category.actions';
+
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
+
 import {
   getAllCategories,
-  getCategoryById,
-  createCategory,
-  updateCategoryById,
   deleteCategoryById,
-  getSubcategories
-} from './categories.operations';
+  createCategory,
+  updateCategory,
+  getCategoryById
+} from './category.operations';
+
+import {
+  GET_CATEGORIES,
+  DELETE_CATEGORY,
+  ADD_CATEGORY,
+  UPDATE_CATEGORY,
+  GET_CATEGORY
+} from './category.types';
 
 import { config } from '../../configs';
 import { selectCategorySwitchAndDeleteId } from '../selectors/category.selectors';
-import { handleSuccessSnackbar } from '../snackbar/snackbar.sagas';
 
 const {
+  SUCCESS_ADD_STATUS,
   SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS,
-  SUCCESS_CREATION_STATUS
+  SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleCategoriesLoad() {
+export function* handleCategoriesLoad({ payload }) {
   try {
-    yield put(setCategoriesLoading(true));
+    yield put(setCategoryLoading(true));
     const categories = yield call(getAllCategories);
     yield put(setCategories(categories));
-  } catch (e) {
-    yield put(push('/error-page'));
-    yield setCategoriesError(e);
+    yield put(setCategoryLoading(false));
+  } catch (error) {
+    yield call(handleCategoryError, error);
   }
 }
 
-export function* handleLoadCategoryById({ payload }) {
+export function* handleCategoryLoad({ payload }) {
   try {
-    yield put(setCategoriesLoading(true));
+    yield put(setCategoryLoading(true));
     const category = yield call(getCategoryById, payload);
     yield put(setCategory(category));
-  } catch (e) {
-    yield setCategoriesError(e);
+    yield put(setCategoryLoading(false));
+  } catch (error) {
+    yield call(handleCategoryError, error);
   }
 }
 
-export function* handleCreateCategory({ payload }) {
+export function* handleAddCategory({ payload }) {
   try {
-    yield put(setCategoriesLoading(true));
+    yield put(setCategoryLoading(true));
     yield call(createCategory, payload);
-    yield put(push('/categories'));
-    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
-  } catch (e) {
-    yield setCategoriesError(e);
-  }
-}
-
-export function* handleEditCategory({ payload }) {
-  try {
-    yield put(setCategoriesLoading(true));
-    yield call(updateCategoryById, payload);
-    yield put(setCategoriesLoading(false));
-    yield put(push('/categories'));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-  } catch (e) {
-    yield setCategoriesError(e);
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+    yield put(push(config.routes.pathToCategories));
+  } catch (error) {
+    yield call(handleCategoryError, error);
   }
 }
 
 export function* handleDeleteCategory() {
   try {
-    yield put(setCategoriesLoading(true));
+    yield put(setCategoryLoading(true));
     const { switchId, deleteId } = yield select(
       selectCategorySwitchAndDeleteId
     );
     yield call(deleteCategoryById, deleteId, switchId);
-    const categories = yield call(getAllCategories);
-    yield put(setCategories(categories));
-    yield put(setCategoriesLoading(false));
+    yield put(removeCategoryFromStore(deleteId));
+    yield put(setCategoryLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-  } catch (e) {
-    yield setCategoriesError(e);
+  } catch (error) {
+    yield call(handleCategoryError, error);
   }
 }
 
-export function* handleSubcategoriesLoad({ payload }) {
+export function* handleCategoryUpdate({ payload }) {
   try {
-    yield put(setCategoriesLoading(true));
-    const subcategories = yield call(getSubcategories, payload);
-    yield put(setCategories(subcategories));
-  } catch (e) {
-    yield setCategoriesError(e);
+    yield put(setCategoryLoading(true));
+    yield call(updateCategory, payload);
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    yield put(push(config.routes.pathToCategories));
+  } catch (error) {
+    yield call(handleCategoryError, error);
   }
 }
 
-export default function* newsSaga() {
+function* handleCategoryError(e) {
+  yield put(setCategoryLoading(false));
+  yield put(setCategoryError({ e }));
+  yield call(handleErrorSnackbar, e.message);
+}
+
+export default function* CategoriesSaga() {
   yield takeEvery(GET_CATEGORIES, handleCategoriesLoad);
-  yield takeEvery(GET_CATEGORY, handleLoadCategoryById);
-  yield takeEvery(CREATE_CATEGORY, handleCreateCategory);
-  yield takeEvery(EDIT_CATEGORY, handleEditCategory);
   yield takeEvery(DELETE_CATEGORY, handleDeleteCategory);
-  yield takeEvery(GET_SUBCATEGORIES, handleSubcategoriesLoad);
+  yield takeEvery(GET_CATEGORY, handleCategoryLoad);
+  yield takeEvery(ADD_CATEGORY, handleAddCategory);
+  yield takeEvery(UPDATE_CATEGORY, handleCategoryUpdate);
 }
