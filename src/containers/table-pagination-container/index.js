@@ -1,3 +1,3 @@
-import TablePaginationContainer from './table-pagination-container';
+import { TablePaginator } from './table-pagination-container';
 
-export default TablePaginationContainer;
+export default TablePaginator;
