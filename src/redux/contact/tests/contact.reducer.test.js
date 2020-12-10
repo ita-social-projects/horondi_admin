@@ -20,7 +20,7 @@ import {
   updateContactInStore
 } from '../contact.actions';
 
-import contactsReducer from '../contact.reducer';
+import { contactsReducer } from '../contact.reducer';
 
 describe('Contacts reducer tests', () => {
   it('Should return default state', () => {

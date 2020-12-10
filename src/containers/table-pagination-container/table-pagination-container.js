@@ -13,7 +13,7 @@ import { selectTablePaginationCurrentRowsOptions } from '../../redux/selectors/t
 
 const { ROWS_PER_PAGE } = tableTranslations;
 
-const TablePaginator = () => {
+export const TablePaginator = () => {
   const dispatch = useDispatch();
   const {
     itemsCount,
@@ -52,5 +52,3 @@ const TablePaginator = () => {
     />
   );
 };
-
-export default TablePaginator;

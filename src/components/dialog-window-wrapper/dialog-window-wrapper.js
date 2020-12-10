@@ -11,7 +11,11 @@ import PropTypes from 'prop-types';
 import { showColorDialogWindow } from '../../redux/material/material.actions';
 import { useStyles } from './dialog-window-wrapper.style';
 
-const DialogWindowForComponent = ({ dialogTitle, buttonTitle, component }) => {
+export const DialogWindowForComponent = ({
+  dialogTitle,
+  buttonTitle,
+  component
+}) => {
   const { isOpen } = useSelector(({ Material }) => ({
     isOpen: Material.showColorDialogWindow
   }));
@@ -50,5 +54,3 @@ DialogWindowForComponent.propTypes = {
   buttonTitle: PropTypes.string.isRequired,
   component: PropTypes.element.isRequired
 };
-
-export default DialogWindowForComponent;

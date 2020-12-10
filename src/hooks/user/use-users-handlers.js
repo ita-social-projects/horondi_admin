@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../redux/users/users.actions';
 
-const useUsersHandler = (id) => {
+export const useUsersHandler = (id) => {
   const dispatch = useDispatch();
 
   const { user } = useSelector(({ Users }) => ({
@@ -61,5 +61,3 @@ const useUsersHandler = (id) => {
     isBanned
   };
 };
-
-export default useUsersHandler;

@@ -9,7 +9,7 @@ import {
   TextField,
   MenuItem
 } from '@material-ui/core';
-import useStyles from './product-species-container.styles';
+import { useStyles } from './product-species-container.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
 import { config } from '../../configs';

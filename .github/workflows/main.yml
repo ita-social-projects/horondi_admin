@@ -26,6 +26,12 @@ jobs:
         uses: actions/setup-node@v2.1.2
       - run: npm install
       - run: npm test -- -u
+
+      - name: fix code coverage paths
+        run: | 
+          sed -i 's/\/home\/runner\/work\/horondi_admin\/horondi_admin\//\/github\/workspace\//g' test-report.xml
+          sed -i 's/\/home\/runner\/work\/horondi_admin\/horondi_admin\//\/github\/workspace\//g' coverage/lcov.info
+      
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
