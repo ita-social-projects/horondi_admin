@@ -53,13 +53,11 @@ describe('save button tests', () => {
   });
   it('should have propTypes', () => {
     expect(SaveButton.propTypes.title).toBeDefined();
-    expect(SaveButton.propTypes.size).toBeDefined();
     expect(SaveButton.propTypes.type).toBeDefined();
     expect(SaveButton.propTypes.onClickHandler).toBeDefined();
   });
   it('should have default props', () => {
     expect(SaveButton.defaultProps.size).toBeDefined();
-    expect(SaveButton.defaultProps.size).toEqual(size);
     expect(SaveButton.defaultProps.onClickHandler).toBeDefined();
     expect(SaveButton.defaultProps.onClickHandler()).toEqual(mockCallBack());
   });
