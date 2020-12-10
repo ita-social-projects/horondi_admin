@@ -9,18 +9,16 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button,
   Select,
   FormControl,
   InputLabel,
   Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 import { Image } from '@material-ui/icons';
 import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { addModel, updateModel } from '../../redux/model/model.actions';
@@ -34,8 +32,6 @@ const {
   MODEL_VALIDATION_ERROR,
   MODEL_ERROR_MESSAGE
 } = config.modelErrorMessages;
-
-const { routes } = config;
 
 const ModelForm = ({ model, id }) => {
   const { enSetText, setFiles, languages } = useBusinessHandlers();
@@ -251,18 +247,7 @@ const ModelForm = ({ model, id }) => {
             </Paper>
           </TabPanel>
         ))}
-
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={routes.pathToModels}
-          variant='outlined'
-          color='primary'
-          className={styles.returnButton}
-          data-cy='goBackButton'
-        >
-          {config.buttonTitles.GO_BACK_TITLE}
-        </Button>
+        <BackButton data-cy='back-btn' />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'

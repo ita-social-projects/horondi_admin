@@ -9,15 +9,13 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button,
   Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 import { Image } from '@material-ui/icons';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
@@ -232,18 +230,7 @@ const PatternForm = ({ pattern, id }) => {
             </Paper>
           </TabPanel>
         ))}
-
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={config.routes.pathToPatterns}
-          variant='outlined'
-          color='primary'
-          className={styles.returnButton}
-          data-cy='go-back-btn'
-        >
-          {config.buttonTitles.GO_BACK_TITLE}
-        </Button>
+        <BackButton data-cy='back-btn' />
         <SaveButton
           className={styles.saveButton}
           data-cy='save-btn'

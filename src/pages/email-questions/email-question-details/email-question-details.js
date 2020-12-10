@@ -2,12 +2,11 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 import { Typography, TextField } from '@material-ui/core';
 import { push } from 'connected-react-router';
 
 import { useStyles } from './email-question-details.styles';
-import { SaveButton, StandardButton } from '../../../components/buttons';
+import { BackButton, SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import {
   getEmailQuestionById,
@@ -146,15 +145,7 @@ const EmailQuestionDetails = ({ id }) => {
             </div>
           </div>
           <div className={styles.controlsBlock}>
-            <Link to={config.routes.pathToEmailQuestions}>
-              <StandardButton
-                className={styles.controlButton}
-                id='back'
-                title={buttonTitles.GO_BACK_TITLE}
-                variant='outlined'
-                onClickHandler={() => {}}
-              />
-            </Link>
+            <BackButton data-cy='back-btn' />
             {question.status === labels.emailQuestionsLabels.en.PENDING && (
               <SaveButton
                 className={styles.controlButton}

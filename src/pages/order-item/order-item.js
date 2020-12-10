@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab, Button } from '@material-ui/core';
 import { useFormik } from 'formik';
-import { push } from 'connected-react-router';
 import PropTypes from 'prop-types';
-import { createBrowserHistory } from 'history';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
 import { Delivery, Recipient, Products, General } from './tabs';
@@ -15,11 +13,9 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
-import { config } from '../../configs';
-import StandardButton from '../../components/buttons/standard-button';
+import { BackButton } from '../../components/buttons';
 
 const OrderItem = ({ id }) => {
-  console.log(createBrowserHistory());
   const classes = useStyles();
   const dispatch = useDispatch();
   const { orderTabs } = labels;
@@ -57,9 +53,6 @@ const OrderItem = ({ id }) => {
     } else {
       dispatch(updateOrder(order));
     }
-  };
-  const handleGoBack = () => {
-    dispatch(push(config.routes.pathToOrders));
   };
 
   const {
@@ -139,13 +132,7 @@ const OrderItem = ({ id }) => {
         </Button>
       )}
       <div className={classes.controlsBlock}>
-        <StandardButton
-          id='back-btn'
-          title={config.buttonTitles.GO_BACK_TITLE}
-          variant='outlined'
-          onClickHandler={handleGoBack}
-          data-cy='back-btn'
-        />
+        <BackButton data-cy='back-btn' />
       </div>
     </form>
   );

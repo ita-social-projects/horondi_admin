@@ -7,17 +7,15 @@ import {
   Tab,
   AppBar,
   Avatar,
-  Button,
   Paper
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import TabPanel from '../tab-panel';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import LoadingBar from '../loading-bar';
 import useMaterialHandlers from '../../utils/use-material-handlers';
 import { useStyles } from './material-form.styles';
@@ -299,17 +297,7 @@ function MaterialForm({ material, id }) {
         ) : null}
         <div className={styles.controlsBlock}>
           <div>
-            <Button
-              id='go-back'
-              component={Link}
-              to={config.routes.pathToMaterials}
-              variant='outlined'
-              color='primary'
-              className={styles.returnButton}
-              data-cy='goBackButton'
-            >
-              {config.buttonTitles.GO_BACK_TITLE}
-            </Button>
+            <BackButton data-cy='back-btn' />
             {createColorButton}
             <SaveButton
               className={styles.saveButton}
