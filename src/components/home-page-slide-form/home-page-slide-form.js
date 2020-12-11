@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import {
   AppBar,
-  Button,
   Grid,
   Paper,
   Tab,
@@ -13,7 +12,6 @@ import {
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 import { Image } from '@material-ui/icons';
@@ -23,7 +21,7 @@ import useHomePageSlideHandlers from '../../utils/use-home-page-slide-handlers';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
 import TabPanel from '../tab-panel';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import {
   addSlide,
   updateSlide
@@ -220,18 +218,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             </Paper>
           </TabPanel>
         ))}
-
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={config.routes.pathToHomePageSlides}
-          variant='outlined'
-          color='primary'
-          className={styles.formButton}
-          data-cy='goBackButton'
-        >
-          {config.buttonTitles.GO_BACK_TITLE}
-        </Button>
+        <BackButton />
         <SaveButton
           className={styles.formButton}
           data-cy='save'

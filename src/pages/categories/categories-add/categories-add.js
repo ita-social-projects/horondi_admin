@@ -36,7 +36,7 @@ import AddPhoto from '../../../images/add-photo.png';
 import { categoryTranslations } from '../../../translations/category.translations';
 import { config } from '../../../configs';
 import { useCommonStyles } from '../../common.styles';
-import { StandardButton } from '../../../components/buttons';
+import { BackButton } from '../../../components/buttons';
 
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
 
@@ -260,9 +260,6 @@ const CategoriesAdd = ({ id, editMode }) => {
   // PARENT CATEGORY HANDLERS
   const handleParentChange = (e) => {
     setParentId(e.target.value);
-  };
-  const handleGoBack = () => {
-    dispatch(push(config.routes.pathToNews));
   };
 
   // SUBCATEGORY LIST []
@@ -517,13 +514,7 @@ const CategoriesAdd = ({ id, editMode }) => {
       </FormControl>
 
       <div className={classes.controlsBlock}>
-        <StandardButton
-          id='back-btn'
-          title={config.buttonTitles.GO_BACK_TITLE}
-          variant='outlined'
-          onClickHandler={handleGoBack}
-          data-cy='back-btn'
-        />
+        <BackButton />
         <Button
           variant='contained'
           color='primary'

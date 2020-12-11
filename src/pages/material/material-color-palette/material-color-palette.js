@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
 import { Typography } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
@@ -10,7 +9,7 @@ import { materialTranslations } from '../../../translations/material.translation
 import { config } from '../../../configs';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './material-color-palette-style';
-import { SaveButton } from '../../../components/buttons';
+import { BackButton, SaveButton } from '../../../components/buttons';
 import {
   getMaterialColor,
   getMaterialColors,
@@ -67,9 +66,6 @@ const MaterialColorPalette = ({ match }) => {
     dispatch(showColorDialogWindow(true));
     dispatch(setEditMaterialId(materialId));
   };
-  const colorPaletteClickHandler = () => {
-    dispatch(push(`/materials/${materialId}`));
-  };
   const materialColorItems = colors
     ? colors.colors.map((colorItem) => (
       <TableContainerRow
@@ -105,15 +101,7 @@ const MaterialColorPalette = ({ match }) => {
         {config.titles.materialColorPaletteTitle.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
-        <SaveButton
-          className={styles.returnButton}
-          data-cy='go-to-material'
-          type='button'
-          color='primary'
-          variant='outlined'
-          title={config.buttonTitles.GO_BACK_TITLE}
-          onClickHandler={colorPaletteClickHandler}
-        />
+        <BackButton />
         <SaveButton
           className={styles.saveButton}
           data-cy='open-dialog'

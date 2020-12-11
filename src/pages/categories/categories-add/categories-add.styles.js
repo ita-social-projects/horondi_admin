@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   saveBtn: {
-    margin: '0 16px 16px'
+    marginLeft: 16
   },
   addNameForm: {
     maxWidth: '400px',
