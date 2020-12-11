@@ -94,7 +94,7 @@ const UsersDetails = (props) => {
           buttonHandler={() => userStatusHandler(id)}
         />
         <div className={styles.controlsBlock}>
-          <BackButton data-cy='back-btn' />
+          <BackButton />
         </div>
       </Grid>
       <Grid className={styles.showComments}>

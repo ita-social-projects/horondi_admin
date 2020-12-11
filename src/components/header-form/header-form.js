@@ -124,7 +124,7 @@ const HeaderForm = ({ header, id }) => {
             </Paper>
           </TabPanel>
         ))}
-        <BackButton data-cy='back-btn' />
+        <BackButton />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'

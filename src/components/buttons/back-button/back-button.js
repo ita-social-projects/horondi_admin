@@ -13,6 +13,7 @@ const BackButton = ({ type, variant, color, ...props }) => {
       color={color}
       variant={variant}
       onClick={() => history.goBack()}
+      data-cy='back-btn'
       {...props}
     >
       {GO_BACK_TITLE}

@@ -218,7 +218,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             </Paper>
           </TabPanel>
         ))}
-        <BackButton data-cy='back-btn' />
+        <BackButton />
         <SaveButton
           className={styles.formButton}
           data-cy='save'

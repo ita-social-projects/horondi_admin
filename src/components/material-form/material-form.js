@@ -297,7 +297,7 @@ function MaterialForm({ material, id }) {
         ) : null}
         <div className={styles.controlsBlock}>
           <div>
-            <BackButton data-cy='back-btn' />
+            <BackButton />
             {createColorButton}
             <SaveButton
               className={styles.saveButton}

@@ -101,7 +101,7 @@ const MaterialColorPalette = ({ match }) => {
         {config.titles.materialColorPaletteTitle.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
-        <BackButton data-cy='back-btn' />
+        <BackButton />
         <SaveButton
           className={styles.saveButton}
           data-cy='open-dialog'

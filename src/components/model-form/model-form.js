@@ -247,7 +247,7 @@ const ModelForm = ({ model, id }) => {
             </Paper>
           </TabPanel>
         ))}
-        <BackButton data-cy='back-btn' />
+        <BackButton />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'

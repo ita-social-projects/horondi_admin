@@ -132,7 +132,7 @@ const OrderItem = ({ id }) => {
         </Button>
       )}
       <div className={classes.controlsBlock}>
-        <BackButton data-cy='back-btn' />
+        <BackButton />
       </div>
     </form>
   );

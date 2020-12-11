@@ -514,7 +514,7 @@ const CategoriesAdd = ({ id, editMode }) => {
       </FormControl>
 
       <div className={classes.controlsBlock}>
-        <BackButton data-cy='back-btn' />
+        <BackButton />
         <Button
           variant='contained'
           color='primary'

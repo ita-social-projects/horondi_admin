@@ -133,7 +133,7 @@ const ProductsAdd = () => {
     <Paper className={styles.container}>
       <CustomizedStepper steps={steps} activeStep={activeStep} />
       <div className={styles.controlsBlock}>
-        <BackButton data-cy='back-btn' />
+        <BackButton />
       </div>
     </Paper>
   );

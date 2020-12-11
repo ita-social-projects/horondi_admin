@@ -145,7 +145,7 @@ const EmailQuestionDetails = ({ id }) => {
             </div>
           </div>
           <div className={styles.controlsBlock}>
-            <BackButton data-cy='back-btn' />
+            <BackButton />
             {question.status === labels.emailQuestionsLabels.en.PENDING && (
               <SaveButton
                 className={styles.controlButton}

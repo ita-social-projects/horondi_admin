@@ -305,7 +305,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <BackButton data-cy='back-btn' />
+        <BackButton />
         <SaveButton
           id='save'
           type='submit'

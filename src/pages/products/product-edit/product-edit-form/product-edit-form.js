@@ -305,7 +305,7 @@ const ProductEditForm = () => {
         <CommentsPage productId={product._id} />
       </Grid>
       <div className={styles.controlsBlock}>
-        <BackButton data-cy='back-btn' />
+        <BackButton />
       </div>
     </div>
   );

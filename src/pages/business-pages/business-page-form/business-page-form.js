@@ -248,7 +248,7 @@ const BusinessPageForm = ({ id, editMode }) => {
           </Paper>
         </div>
         <div className={classes.controlsBlock}>
-          <BackButton data-cy='back-btn' />
+          <BackButton />
           <SaveButton
             className={classes.controlButton}
             id='save'

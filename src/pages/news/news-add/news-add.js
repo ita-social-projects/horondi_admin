@@ -187,7 +187,7 @@ const NewsAdd = () => {
             />
           </Paper>
           <div className={classes.controlsBlock}>
-            <BackButton data-cy='back-btn' />
+            <BackButton />
           </div>
         </Grid>
         {preferredLanguages.length > 0 ? (
