@@ -94,7 +94,8 @@ const CategoryForm = ({ category, id, edit }) => {
       if (edit) {
         dispatch(updateCategory({ id, category: newCategory, upload }));
         return;
-      } if (upload instanceof File) {
+      }
+      if (upload instanceof File) {
         dispatch(addCategory({ category: newCategory, upload }));
         return;
       }
