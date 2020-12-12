@@ -48,18 +48,6 @@ const buttonTitles = {
   CREATE_SLIDE_TITLE: 'Створити слайд',
   OPEN_SLIDE_EDIT: 'Увімкнути редагування',
   SAVE_SLIDE_ORDER: 'Зберегти зміни',
-  CANCEL_SLIDE_ORDER: 'Скасувати зміни',
-
-  titleGenerator: (editMode, isMain) => {
-    const editModeMap = new Map([
-      [true, 'Зберегти'],
-      [false, 'Створити']
-    ]);
-    const isMainMap = new Map([
-      [true, 'категорію'],
-      [false, 'підкатегорію']
-    ]);
-    return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
-  }
+  CANCEL_SLIDE_ORDER: 'Скасувати зміни'
 };
 export default buttonTitles;

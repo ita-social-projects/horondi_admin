@@ -14,26 +14,35 @@ import {
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { Image } from '@material-ui/icons';
 import useCategoryHandlers from '../../utils/use-category-handlers';
 import { useStyles } from './category-form.styles';
 import { SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
-import { Image } from '@material-ui/icons';
-import { addCategory, updateCategory } from '../../redux/categories/categories.actions';
+import {
+  addCategory,
+  updateCategory
+} from '../../redux/categories/categories.actions';
 import ImageUploadContainer from '../../containers/image-upload-container';
+import { categoryTranslations } from '../../translations/category.translations';
+import {
+  setSnackBarSeverity,
+  setSnackBarStatus,
+  setSnackBarMessage
+} from '../../redux/snackbar/snackbar.actions';
 
 const {
   CATEGORY_VALIDATION_ERROR,
-  CATEGORY_ERROR_MESSAGE,
-
+  CATEGORY_ERROR_MESSAGE
 } = config.errorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
-
+const { IMG_URL } = config;
 const { languages } = config;
+const { CATEGORY_ERROR } = categoryTranslations;
 
-const CategoryForm = ({ category, id,edit = false}) => {
+const CategoryForm = ({ category, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
@@ -45,9 +54,12 @@ const CategoryForm = ({ category, id,edit = false}) => {
     categoryImage,
     setCategoryImage
   } = useCategoryHandlers();
+
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang) => <Tab label={lang} data-cy={`${lang}`} key={lang} />)
+      ? languages.map((lang) => (
+        <Tab label={lang} data-cy={`${lang}`} key={lang} />
+      ))
       : null;
 
   const categoryValidationSchema = Yup.object().shape({
@@ -57,7 +69,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
     uaName: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE),
-      code: Yup.string()
+    code: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE)
   });
@@ -72,19 +84,23 @@ const CategoryForm = ({ category, id,edit = false}) => {
   } = useFormik({
     validationSchema: categoryValidationSchema,
     initialValues: {
-      categoryImage: category.images.thumbnail || '',
+      categoryImage: IMG_URL + category.images.thumbnail || '',
       uaName: category.name[0].value || '',
-      enName:category.name[1].value || '',
-      code:category.code || ''
+      enName: category.name[1].value || '',
+      code: category.code || ''
     },
     onSubmit: (data) => {
       const newCategory = createCategory(data);
-       if (edit) {
-        dispatch(updateCategory({ id,category: newCategory,upload }));
+      if (edit) {
+        dispatch(updateCategory({ id, category: newCategory, upload }));
+        return;
+      } if (upload instanceof File) {
+        dispatch(addCategory({ category: newCategory, upload }));
         return;
       }
-      dispatch(addCategory({category: newCategory,upload }));
-     
+      dispatch(setSnackBarSeverity('error'));
+      dispatch(setSnackBarMessage(CATEGORY_ERROR));
+      dispatch(setSnackBarStatus(true));
     }
   });
 
@@ -109,26 +125,25 @@ const CategoryForm = ({ category, id,edit = false}) => {
               {config.labels.avatarText}
             </span>
             <div className={styles.imageUploadAvatar}>
-            <ImageUploadContainer handler={handleImageLoad} />
+              <ImageUploadContainer handler={handleImageLoad} />
               {categoryImage && (
                 <Avatar src={categoryImage}>
                   <Image />
                 </Avatar>
-
-                    )}
-                    </div>
+              )}
+            </div>
             <TextField
               data-cy='code'
               name='code'
               className={styles.textField}
               variant='outlined'
-              label= {config.labels.categories.categoryCode}
+              label={config.labels.categories.categoryCode}
               value={values.code}
               onChange={handleChange}
               error={touched.code && !!errors.code}
             />
             {touched.code && errors.code && (
-              <div data-cy='code-error' className={styles.inputError}>
+              <div data-cy='code-error' className={styles.error}>
                 {errors.code}
               </div>
             )}
@@ -146,8 +161,8 @@ const CategoryForm = ({ category, id,edit = false}) => {
         {languages.map((lang, index) => (
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.categoryItemUpdate}>
-               <TextField
-                data-cy={`${lang}-Name`}
+              <TextField
+                data-cy={`${lang}-name`}
                 name={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
@@ -156,12 +171,9 @@ const CategoryForm = ({ category, id,edit = false}) => {
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
                 error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-              /> 
+              />
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div
-                  data-cy={`${lang}-Name-error`}
-                  className={styles.inputError}
-                >
+                <div data-cy={`${lang}-name-error`} className={styles.error}>
                   {errors[`${lang}Name`]}
                 </div>
               )}
@@ -176,7 +188,7 @@ const CategoryForm = ({ category, id,edit = false}) => {
           variant='outlined'
           color='primary'
           className={styles.returnButton}
-          data-cy='go-back-button'
+          data-cy='go-back-btn'
         >
           {config.buttonTitles.GO_BACK_TITLE}
         </Button>
@@ -196,41 +208,37 @@ const valueShape = PropTypes.shape({
 });
 CategoryForm.propTypes = {
   id: PropTypes.string,
-category: PropTypes.shape({
+  category: PropTypes.shape({
     _id: PropTypes.string,
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
-    name: PropTypes.arrayOf(valueShape)
+    name: PropTypes.arrayOf(valueShape),
+    code: PropTypes.string
   }),
   values: PropTypes.shape({
     categoryImage: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string,
+    enName: PropTypes.string
   }),
   errors: PropTypes.shape({
     categoryImage: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string,
+    enName: PropTypes.string
   }),
   touched: PropTypes.shape({
     categoryImage: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string,
+    enName: PropTypes.string
   }),
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired
-    })
-  })
+  edit: PropTypes.bool
 };
 CategoryForm.defaultProps = {
   id: '',
-  match: {},
   values: {},
   errors: {},
   touched: {},
-category: {
+  category: {
     _id: '',
     name: [
       {
@@ -240,12 +248,13 @@ category: {
         value: ''
       }
     ],
-     code:'',
+    code: '',
     images: {
       thumbnail: ''
     },
-    available: false,
-  }
+    available: false
+  },
+  edit: false
 };
 
 export default CategoryForm;

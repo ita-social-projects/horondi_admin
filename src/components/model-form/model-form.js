@@ -70,7 +70,7 @@ const ModelForm = ({ model, id }) => {
   });
 
   const { categories } = useSelector(({ Categories }) => ({
-    categories: Categories.categories.filter((result) => result.isMain)
+    categories: Categories.categories
   }));
 
   const [category, setCategory] = useState(model.category._id || '');

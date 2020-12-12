@@ -34,7 +34,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between'
   },
-  inputError: {
+  error: {
     color: '#e60000',
     marginLeft: '5px'
   },

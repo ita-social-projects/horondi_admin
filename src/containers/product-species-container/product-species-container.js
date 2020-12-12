@@ -41,13 +41,11 @@ const ProductSpeciesContainer = ({
 
   const categoriesOptions = useMemo(
     () =>
-      categories
-        .filter(({ isMain }) => isMain)
-        .map(({ name, _id }) => (
-          <MenuItem value={_id} key={_id}>
-            {name[0].value}
-          </MenuItem>
-        )),
+      categories.map(({ name, _id }) => (
+        <MenuItem value={_id} key={_id}>
+          {name[0].value}
+        </MenuItem>
+      )),
     [categories]
   );
 
