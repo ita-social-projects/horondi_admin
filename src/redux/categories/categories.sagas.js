@@ -38,7 +38,7 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleCategoriesLoad({ payload }) {
+export function* handleCategoriesLoad() {
   try {
     yield put(setCategoryLoading(true));
     const categories = yield call(getAllCategories);

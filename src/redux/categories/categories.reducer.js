@@ -42,7 +42,7 @@ const categoryReducer = (state = initialState, action = {}) => {
   case SET_CATEGORY_LOADING:
     return {
       ...state,
-      categoriesLoading: action.payload
+      categoryLoading: action.payload
     };
   case SET_CATEGORY_ERROR:
     return {
@@ -62,7 +62,7 @@ const categoryReducer = (state = initialState, action = {}) => {
       ...state,
       pagination: {
         ...state.pagination,
-        categorieSPerPage: action.payload
+        categoriesPerPage: action.payload
       }
     };
   case SET_CATEGORIES_PAGES_COUNT:
