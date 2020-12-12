@@ -11,12 +11,11 @@ import {
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import useBusinessHandlers from '../../../utils/use-business-handlers';
 import Editor from '../../../components/editor';
 import { useStyles } from './business-page-form.styles';
-import { SaveButton, StandardButton } from '../../../components/buttons';
+import { SaveButton, BackButton } from '../../../components/buttons';
 import TabPanel from '../../../components/tab-panel';
 import LoadingBar from '../../../components/loading-bar';
 
@@ -249,16 +248,7 @@ const BusinessPageForm = ({ id, editMode }) => {
           </Paper>
         </div>
         <div className={classes.controlsBlock}>
-          <Link to={config.routes.pathToBusinessPages}>
-            <StandardButton
-              className={classes.controlButton}
-              id='back'
-              title='Назад'
-              variant='outlined'
-              onClickHandler={() => {}}
-              data-cy='back-btn'
-            />
-          </Link>
+          <BackButton />
           <SaveButton
             className={classes.controlButton}
             id='save'

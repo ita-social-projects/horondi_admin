@@ -17,14 +17,12 @@ const SaveButton = ({ title, type, onClickHandler, color, ...props }) => (
 
 SaveButton.propTypes = {
   onClickHandler: PropTypes.func,
-  size: PropTypes.string,
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired
 };
 
 SaveButton.defaultProps = {
-  size: 'small',
   color: 'primary',
   onClickHandler: () => {}
 };

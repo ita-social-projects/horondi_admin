@@ -13,10 +13,11 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: '#424242'
   },
   controlsBlock: {
-    display: 'flex'
+    display: 'flex',
+    marginTop: 20
   },
   controlButton: {
-    margin: '20px 10px 20px 0'
+    marginLeft: 20
   },
   errorMessage: {
     color: 'red',
