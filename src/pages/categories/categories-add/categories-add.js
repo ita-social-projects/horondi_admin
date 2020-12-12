@@ -3,7 +3,7 @@ import { useStyles } from './categories-add.styles';
 import CategoryForm from '../../../components/category-form';
 import { config } from '../../../configs';
 
-const CategoriesAdd = () => {
+export const CategoriesAdd = () => {
   const styles = useStyles();
 
   return (
@@ -15,5 +15,3 @@ const CategoriesAdd = () => {
     </div>
   );
 };
-
-export default CategoriesAdd;
