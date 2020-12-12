@@ -103,10 +103,10 @@ describe('categories sagas tests', () => {
         categoryLoading: true
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+      .then((res) => {
+        const { allEffects: analysis } = res;
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysis).toHaveLength(8);
         expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(3);
