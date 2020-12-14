@@ -1,8 +1,8 @@
 module.exports = {
   testEnvironment: 'jsdom',
   verbose: true,
-  testPathIgnorePatterns: ['cypress'],
-  modulePathIgnorePatterns: ['cypress'],
+  testPathIgnorePatterns: ['cypress', './scr/configs'],
+  modulePathIgnorePatterns: ['cypress', './scr/configs'],
   coverageThreshold: {
     global: {
       branches: 0,
