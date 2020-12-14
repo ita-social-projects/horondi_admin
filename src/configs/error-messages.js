@@ -45,7 +45,8 @@ export const newsErrorMessages = {
 export const modelErrorMessages = {
   MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',
   MODEL_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  MODEL_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+  MODEL_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  NO_PHOTO: 'Додайте фото для моделі'
 };
 export const contactErrorMessages = {
   INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
