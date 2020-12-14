@@ -27,7 +27,9 @@ const PatternDetails = ({ match }) => {
 
   return (
     <div className={styles.detailsContainer}>
-      {pattern !== null ? <PatternForm id={id} pattern={pattern} /> : null}
+      {pattern !== null ? (
+        <PatternForm id={id} pattern={pattern} isEdit />
+      ) : null}
     </div>
   );
 };

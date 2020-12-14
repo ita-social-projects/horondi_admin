@@ -21,11 +21,17 @@ import { config } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
+import {
+  setSnackBarMessage,
+  setSnackBarSeverity,
+  setSnackBarStatus
+} from '../../redux/snackbar/snackbar.actions';
 
 const {
   PATTERN_VALIDATION_ERROR,
   PATTERN_ERROR_MESSAGE,
-  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
+  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
+  NO_PHOTO
 } = config.patternErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -34,7 +40,7 @@ const { languages } = config;
 
 const labels = config.labels.pattern.form;
 
-const PatternForm = ({ pattern, id }) => {
+const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
@@ -97,11 +103,17 @@ const PatternForm = ({ pattern, id }) => {
     onSubmit: () => {
       const newPattern = createPattern(values);
 
-      if (pattern && pattern.material) {
-        dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+      if (upload instanceof File || pattern.images.thumbnail) {
+        if (isEdit) {
+          dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+          return;
+        }
+        dispatch(addPattern({ pattern: newPattern, image: upload }));
         return;
       }
-      dispatch(addPattern({ pattern: newPattern, image: upload }));
+      dispatch(setSnackBarSeverity('error'));
+      dispatch(setSnackBarMessage(NO_PHOTO));
+      dispatch(setSnackBarStatus(true));
     }
   });
 
@@ -286,7 +298,8 @@ PatternForm.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  })
+  }),
+  isEdit: PropTypes.bool
 };
 PatternForm.defaultProps = {
   id: '',
@@ -318,7 +331,8 @@ PatternForm.defaultProps = {
     material: '',
     available: false,
     handmade: false
-  }
+  },
+  isEdit: false
 };
 
 export default PatternForm;

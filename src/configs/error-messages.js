@@ -28,7 +28,8 @@ export const loginErrorMessages = {
 export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  NO_PHOTO: 'Додайте фото для гобелену'
 };
 export const headerErrorMessages = {
   HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
