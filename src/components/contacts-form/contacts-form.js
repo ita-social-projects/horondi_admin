@@ -135,7 +135,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   <ImageUploadContainer handler={uaSelectImageHandler} />
                   {uaMapImage.imageUrl ? (
                     <Avatar
-                      data-cy='uaCartImage'
+                      data-cy='ua-cart-image'
                       src={uaMapImage.imageUrl}
                       className={classes.large}
                     >
@@ -158,7 +158,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   <ImageUploadContainer handler={enSelectImageHandler} />
                   {enMapImage.imageUrl ? (
                     <Avatar
-                      data-cy='enCartImage'
+                      data-cy='en-cart-image'
                       src={enMapImage.imageUrl}
                       className={classes.large}
                     >
@@ -177,7 +177,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   )}
                 </div>
                 <TextField
-                  data-cy='mapLink'
+                  data-cy='map-link'
                   id='cartLink'
                   className={classes.textField}
                   variant='outlined'
@@ -197,7 +197,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
-                  data-cy='phoneNumber'
+                  data-cy='phone-number'
                   id='phoneNumber'
                   className={classes.textField}
                   variant='outlined'
@@ -214,7 +214,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.phoneNumber && errors.phoneNumber}
                 />
                 <TextField
-                  data-cy='uaSchedule'
+                  data-cy='ua-schedule'
                   id='uaSchedule'
                   className={classes.textField}
                   variant='outlined'
@@ -231,7 +231,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.uaSchedule && errors.uaSchedule}
                 />
                 <TextField
-                  data-cy='enSchedule'
+                  data-cy='en-schedule'
                   id='enSchedule'
                   className={classes.textField}
                   variant='outlined'
@@ -252,7 +252,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
-                  data-cy='uaAddress'
+                  data-cy='ua-address'
                   id='uaAddress'
                   className={classes.textField}
                   variant='outlined'
@@ -269,7 +269,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.uaAddress && errors.uaAddress}
                 />
                 <TextField
-                  data-cy='enAddress'
+                  data-cy='en-address'
                   id='enAddress'
                   className={classes.textField}
                   variant='outlined'
@@ -305,12 +305,14 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <BackButton />
+        <BackButton data-cy='go-back-button' />
+
         <SaveButton
           id='save'
           type='submit'
           title='Зберегти'
           className={classes.saveButton}
+          data-cy='save'
         />
       </form>
     </div>

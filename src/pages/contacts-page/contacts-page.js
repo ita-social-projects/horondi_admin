@@ -109,6 +109,7 @@ const ContactsPage = () => {
           to={pathToAddContactPage}
           variant='contained'
           color='primary'
+          data-cy='add-contact'
         >
           {CREATE_CONTACT_TITLE}
         </Button>

@@ -10,7 +10,7 @@ const ImageUploadContainer = ({ handler, multiple, buttonLabel }) => (
         variant='contained'
         color='primary'
         component='label'
-        data-cy='add-photo'
+        data-cy='upload-photo'
       >
         <AttachFile />
         {buttonLabel}
