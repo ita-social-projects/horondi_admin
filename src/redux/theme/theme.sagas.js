@@ -6,6 +6,6 @@ function* handleThemeChange({ payload }) {
   yield setToLocalStorage('darkMode', payload);
 }
 
-export default function* themeSaga() {
+export function* themeSaga() {
   yield takeEvery(SET_THEME_MODE, handleThemeChange);
 }

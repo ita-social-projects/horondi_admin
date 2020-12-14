@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
 import newsSaga from './news/news.sagas';
 import authSaga from './auth/auth.sagas';
-import themeSaga from './theme/theme.sagas';
+import { themeSaga } from './theme/theme.sagas';
 import materialSaga from './material/material.sagas';
 import patternSaga from './pattern/pattern.sagas';
 import businessPagesSaga from './business-pages/business-pages.sagas';
@@ -18,7 +18,7 @@ import emailQuestionSaga from './email-questions/email-questions.sagas';
 import headerSaga from './header/header.sagas';
 import homePageSlideSaga from './home-page-slides/home-page-slides.sagas';
 
-export default function* rootSaga() {
+export function* rootSaga() {
   yield all([
     newsSaga(),
     authSaga(),

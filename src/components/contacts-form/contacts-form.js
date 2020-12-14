@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 
-import {
-  FormControl,
-  Paper,
-  TextField,
-  Grid,
-  Button,
-  Avatar
-} from '@material-ui/core';
+import { FormControl, Paper, TextField, Grid, Avatar } from '@material-ui/core';
 
 import { useFormik } from 'formik';
 
@@ -19,7 +11,7 @@ import * as Yup from 'yup';
 
 import { Image } from '@material-ui/icons';
 import { config } from '../../configs';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -48,10 +40,6 @@ const {
 } = config.loginErrorMessages;
 
 const { enAddressRegex } = config.formRegExp;
-
-const { GO_BACK_TITLE } = config.buttonTitles;
-
-const pathToContactsPage = config.routes.pathToContacts;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
@@ -317,17 +305,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={pathToContactsPage}
-          variant='outlined'
-          color='primary'
-          className={classes.returnButton}
-          data-cy='go-back-button'
-        >
-          {GO_BACK_TITLE}
-        </Button>
+        <BackButton data-cy='go-back-button' />
+
         <SaveButton
           id='save'
           type='submit'

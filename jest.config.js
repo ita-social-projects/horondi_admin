@@ -10,5 +10,8 @@ module.exports = {
       lines: 0,
       statements: 0
     }
-  }
+  },
+  testResultsProcessor: 'jest-sonar-reporter',
+  collectCoverage: true,
+  coveragePathIgnorePatterns: ['/node_modules/', 'cypress']
 };

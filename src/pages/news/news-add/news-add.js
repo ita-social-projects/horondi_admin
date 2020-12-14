@@ -3,9 +3,8 @@ import { TextField, Paper, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { push } from 'connected-react-router';
 import TabPanel from '../../../components/tab-panel';
-import { SaveButton, StandardButton } from '../../../components/buttons';
+import { BackButton, SaveButton } from '../../../components/buttons';
 import LoadingBar from '../../../components/loading-bar';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 import { useStyles } from './news-add.styles';
@@ -47,10 +46,6 @@ const NewsAdd = () => {
   }));
 
   const formikValues = langValues !== null ? Object.assign(...langValues) : {};
-
-  const handleGoBack = () => {
-    dispatch(push(config.routes.pathToNews));
-  };
 
   const formSchema = Yup.object().shape({
     uaAuthorName: Yup.string()
@@ -192,13 +187,7 @@ const NewsAdd = () => {
             />
           </Paper>
           <div className={classes.controlsBlock}>
-            <StandardButton
-              id='back-btn'
-              title={config.buttonTitles.GO_BACK_TITLE}
-              variant='outlined'
-              onClickHandler={handleGoBack}
-              data-cy='back-btn'
-            />
+            <BackButton />
           </div>
         </Grid>
         {preferredLanguages.length > 0 ? (
