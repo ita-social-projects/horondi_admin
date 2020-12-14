@@ -44,8 +44,6 @@ describe('save button tests', () => {
     expect(component.find('button').type()).toEqual('button');
   });
   it('should have props', () => {
-    expect(component.props().size).toBeDefined();
-    expect(component.props().size).toEqual(size);
     expect(component.props().type).toBeDefined();
     expect(component.props().type).toEqual(type);
     expect(component.props().onClickHandler).toBeDefined();
@@ -53,13 +51,10 @@ describe('save button tests', () => {
   });
   it('should have propTypes', () => {
     expect(SaveButton.propTypes.title).toBeDefined();
-    expect(SaveButton.propTypes.size).toBeDefined();
     expect(SaveButton.propTypes.type).toBeDefined();
     expect(SaveButton.propTypes.onClickHandler).toBeDefined();
   });
   it('should have default props', () => {
-    expect(SaveButton.defaultProps.size).toBeDefined();
-    expect(SaveButton.defaultProps.size).toEqual(size);
     expect(SaveButton.defaultProps.onClickHandler).toBeDefined();
     expect(SaveButton.defaultProps.onClickHandler()).toEqual(mockCallBack());
   });
