@@ -107,11 +107,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
         if (isEdit && upload instanceof File) {
           dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
           return;
-        } if (isEdit) {
+        }
+        if (isEdit) {
           dispatch(updatePattern({ id, pattern: newPattern }));
           return;
         }
-        console.log(3);
         dispatch(addPattern({ pattern: newPattern, image: upload }));
         return;
       }
