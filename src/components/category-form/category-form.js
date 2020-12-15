@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 import { Image } from '@material-ui/icons';
 import useCategoryHandlers from '../../utils/use-category-handlers';
 import { useStyles } from './category-form.styles';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import {
@@ -182,17 +182,7 @@ const CategoryForm = ({ category, id, edit }) => {
           </TabPanel>
         ))}
 
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={config.routes.pathToCategories}
-          variant='outlined'
-          color='primary'
-          className={styles.returnButton}
-          data-cy='go-back-btn'
-        >
-          {config.buttonTitles.GO_BACK_TITLE}
-        </Button>
+        <BackButton />
         <SaveButton
           className={styles.saveCategoryButton}
           data-cy='save'
