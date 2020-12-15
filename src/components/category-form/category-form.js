@@ -9,11 +9,9 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button,
   Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 import { Image } from '@material-ui/icons';
 import useCategoryHandlers from '../../utils/use-category-handlers';
 import { useStyles } from './category-form.styles';
