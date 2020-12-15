@@ -36,7 +36,7 @@ import {
 const {
   MODEL_VALIDATION_ERROR,
   MODEL_ERROR_MESSAGE,
-  NO_PHOTO
+  PHOTO_NOT_PROVIDED
 } = config.modelErrorMessages;
 
 const ModelForm = ({ model, id, isEdit }) => {
@@ -112,15 +112,19 @@ const ModelForm = ({ model, id, isEdit }) => {
     onSubmit: () => {
       const newModel = createModel(values);
       if (upload instanceof File || model.images.thumbnail) {
-        if (isEdit) {
+        if (isEdit && upload instanceof File) {
           dispatch(updateModel({ id, model: newModel, image: upload }));
+          return;
+        }
+        if (isEdit) {
+          dispatch(updateModel({ id, model: newModel }));
           return;
         }
         dispatch(addModel({ model: newModel, image: upload }));
         return;
       }
       dispatch(setSnackBarSeverity('error'));
-      dispatch(setSnackBarMessage(NO_PHOTO));
+      dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
       dispatch(setSnackBarStatus(true));
     }
   });

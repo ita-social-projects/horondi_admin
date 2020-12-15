@@ -31,7 +31,7 @@ const {
   PATTERN_VALIDATION_ERROR,
   PATTERN_ERROR_MESSAGE,
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
-  NO_PHOTO
+  PHOTO_NOT_PROVIDED
 } = config.patternErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -104,15 +104,19 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       const newPattern = createPattern(values);
 
       if (upload instanceof File || pattern.images.thumbnail) {
-        if (isEdit) {
+        if (isEdit && upload instanceof File) {
           dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
           return;
+        } if (isEdit) {
+          dispatch(updatePattern({ id, pattern: newPattern }));
+          return;
         }
+        console.log(3);
         dispatch(addPattern({ pattern: newPattern, image: upload }));
         return;
       }
       dispatch(setSnackBarSeverity('error'));
-      dispatch(setSnackBarMessage(NO_PHOTO));
+      dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
       dispatch(setSnackBarStatus(true));
     }
   });
