@@ -27,13 +27,19 @@ import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
 import Editor from '../editor';
 import useBusinessHandlers from '../../utils/use-business-handlers';
+import {
+  setSnackBarMessage,
+  setSnackBarSeverity,
+  setSnackBarStatus
+} from '../../redux/snackbar/snackbar.actions';
 
 const {
   MODEL_VALIDATION_ERROR,
-  MODEL_ERROR_MESSAGE
+  MODEL_ERROR_MESSAGE,
+  PHOTO_NOT_PROVIDED
 } = config.modelErrorMessages;
 
-const ModelForm = ({ model, id }) => {
+const ModelForm = ({ model, id, isEdit }) => {
   const { enSetText, setFiles, languages } = useBusinessHandlers();
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -105,11 +111,21 @@ const ModelForm = ({ model, id }) => {
     },
     onSubmit: () => {
       const newModel = createModel(values);
-      if (model && model.category) {
-        dispatch(updateModel({ id, model: newModel, image: upload }));
+      if (upload instanceof File || model.images.thumbnail) {
+        if (isEdit && upload instanceof File) {
+          dispatch(updateModel({ id, model: newModel, image: upload }));
+          return;
+        }
+        if (isEdit) {
+          dispatch(updateModel({ id, model: newModel }));
+          return;
+        }
+        dispatch(addModel({ model: newModel, image: upload }));
         return;
       }
-      dispatch(addModel({ model: newModel, image: upload }));
+      dispatch(setSnackBarSeverity('error'));
+      dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
+      dispatch(setSnackBarStatus(true));
     }
   });
 
@@ -306,7 +322,8 @@ ModelForm.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  })
+  }),
+  isEdit: PropTypes.bool
 };
 ModelForm.defaultProps = {
   id: '',
@@ -338,7 +355,8 @@ ModelForm.defaultProps = {
     category: '',
     show: false,
     priority: 1
-  }
+  },
+  isEdit: false
 };
 
 export default ModelForm;

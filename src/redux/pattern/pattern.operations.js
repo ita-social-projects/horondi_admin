@@ -164,7 +164,7 @@ export const updatePattern = async (payload) => {
     context: { headers: { token } },
     variables: payload,
     mutation: gql`
-      mutation($id: ID!, $pattern: PatternInput!, $image: Upload!) {
+      mutation($id: ID!, $pattern: PatternInput!, $image: Upload) {
         updatePattern(id: $id, pattern: $pattern, image: $image) {
           ... on Pattern {
             _id

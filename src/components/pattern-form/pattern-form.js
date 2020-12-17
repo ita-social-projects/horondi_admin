@@ -21,11 +21,17 @@ import { config } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
+import {
+  setSnackBarMessage,
+  setSnackBarSeverity,
+  setSnackBarStatus
+} from '../../redux/snackbar/snackbar.actions';
 
 const {
   PATTERN_VALIDATION_ERROR,
   PATTERN_ERROR_MESSAGE,
-  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
+  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
+  PHOTO_NOT_PROVIDED
 } = config.patternErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -34,7 +40,7 @@ const { languages } = config;
 
 const labels = config.labels.pattern.form;
 
-const PatternForm = ({ pattern, id }) => {
+const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
@@ -97,11 +103,21 @@ const PatternForm = ({ pattern, id }) => {
     onSubmit: () => {
       const newPattern = createPattern(values);
 
-      if (pattern && pattern.material) {
-        dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+      if (upload instanceof File || pattern.images.thumbnail) {
+        if (isEdit && upload instanceof File) {
+          dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+          return;
+        }
+        if (isEdit) {
+          dispatch(updatePattern({ id, pattern: newPattern }));
+          return;
+        }
+        dispatch(addPattern({ pattern: newPattern, image: upload }));
         return;
       }
-      dispatch(addPattern({ pattern: newPattern, image: upload }));
+      dispatch(setSnackBarSeverity('error'));
+      dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
+      dispatch(setSnackBarStatus(true));
     }
   });
 
@@ -286,7 +302,8 @@ PatternForm.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  })
+  }),
+  isEdit: PropTypes.bool
 };
 PatternForm.defaultProps = {
   id: '',
@@ -318,7 +335,8 @@ PatternForm.defaultProps = {
     material: '',
     available: false,
     handmade: false
-  }
+  },
+  isEdit: false
 };
 
 export default PatternForm;
