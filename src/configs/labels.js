@@ -25,7 +25,9 @@ const labels = {
     showDisable: 'Ні'
   },
   categories: {
-    switchCategory: "Категорія, на яку замінити пов'язані товари"
+    switchCategory: "Категорія, на яку замінити пов'язані товари",
+    categoryCode:"Код категорії",
+    categoryName:"Назва категорії"
   },
   header: {
     name: mapToLanguages("І'мя", 'Name'),

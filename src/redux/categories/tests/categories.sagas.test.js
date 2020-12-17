@@ -2,25 +2,24 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { select } from 'redux-saga-test-plan/matchers';
 import {
-  createCategory,
   setCategories,
-  setCategoriesLoading,
-  setCategory
+  setCategoryLoading,
+  setCategory,
+  removeCategoryFromStore
 } from '../categories.actions';
 import {
   getAllCategories,
   getCategoryById,
-  getSubcategories,
   deleteCategoryById,
-  updateCategoryById
+  updateCategory,
+  createCategory
 } from '../categories.operations';
 import {
   handleCategoriesLoad,
-  handleLoadCategoryById,
-  handleCreateCategory,
-  handleEditCategory,
-  handleDeleteCategory,
-  handleSubcategoriesLoad
+  handleCategoryLoad,
+  handleAddCategory,
+  handleCategoryUpdate,
+  handleDeleteCategory
 } from '../categories.sagas';
 import {
   categories,
@@ -38,7 +37,7 @@ describe('categories sagas tests', () => {
     expectSaga(handleCategoriesLoad)
       .withReducer(categoriesReducer)
       .provide([[call(getAllCategories), categories]])
-      .put(setCategoriesLoading(true))
+      .put(setCategoryLoading(true))
       .put(setCategories(categories))
       .hasFinalState({
         ...initialState,
@@ -49,68 +48,67 @@ describe('categories sagas tests', () => {
         const { allEffects: analysis } = res;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysis).toHaveLength(3);
-        expect(analysisPut).toHaveLength(2);
+        expect(analysis).toHaveLength(4);
+        expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
       }));
   it('should handle load category by id', () =>
-    expectSaga(handleLoadCategoryById, { payload: categoryId })
+    expectSaga(handleCategoryLoad, { payload: categoryId })
       .withReducer(categoriesReducer)
       .provide([[call(getCategoryById, categoryId), categories[0]]])
-      .put(setCategoriesLoading(true))
+      .put(setCategoryLoading(true))
       .put(setCategory(categories[0]))
       .hasFinalState({
         ...initialState,
-        newCategory: categories[0],
-        categoriesLoading: true
+        category: categories[0]
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysis).toHaveLength(3);
-        expect(analysisPut).toHaveLength(2);
+        expect(analysis).toHaveLength(4);
+        expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
       }));
   it('should handle create category', () =>
-    expectSaga(handleCreateCategory, {
+    expectSaga(handleAddCategory, {
       payload: { ...category }
     })
       .withReducer(categoriesReducer)
       .provide([[call(createCategory, { ...category })]])
-      .put(setCategoriesLoading(true))
+      .put(setCategoryLoading(true))
       .hasFinalState({
         ...initialState,
-        categoriesLoading: true
+        categoryLoading: true
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysis).toHaveLength(2);
-        expect(analysisPut).toHaveLength(1);
-        expect(analysisCall).toHaveLength(1);
+        expect(analysis).toHaveLength(8);
+        expect(analysisPut).toHaveLength(5);
+        expect(analysisCall).toHaveLength(3);
       }));
   it('should handle edit category', () =>
-    expectSaga(handleEditCategory, {
+    expectSaga(handleCategoryUpdate, {
       payload: categoryId
     })
       .withReducer(categoriesReducer)
-      .provide([[call(updateCategoryById, categoryId)]])
-      .put(setCategoriesLoading(true))
-      .put(setCategoriesLoading(false))
+      .provide([[call(updateCategory, categoryId)]])
+      .put(setCategoryLoading(true))
       .hasFinalState({
-        ...initialState
+        ...initialState,
+        categoryLoading: true
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+      .then((res) => {
+        const { allEffects: analysis } = res;
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysis).toHaveLength(9);
-        expect(analysisPut).toHaveLength(6);
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysis).toHaveLength(8);
+        expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(3);
       }));
   it('should handle delete category', () =>
@@ -127,40 +125,18 @@ describe('categories sagas tests', () => {
         [call(deleteCategoryById, deleteId, switchId)],
         [call(getAllCategories), categories]
       ])
-      .put(setCategoriesLoading(true))
-      .put(setCategories(categories))
-      .put(setCategoriesLoading(false))
+      .put(removeCategoryFromStore(deleteId))
+      .put(setCategoryLoading(false))
       .hasFinalState({
-        ...initialState,
-        categories
+        ...initialState
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysis).toHaveLength(11);
+        expect(analysis).toHaveLength(10);
         expect(analysisPut).toHaveLength(6);
-        expect(analysisCall).toHaveLength(4);
-      }));
-
-  it('should handle subcategories load', () =>
-    expectSaga(handleSubcategoriesLoad, { payload: { id: categoryId } })
-      .withReducer(categoriesReducer)
-      .provide([[call(getSubcategories, { id: categoryId }), categories]])
-      .put(setCategoriesLoading(true))
-      .put(setCategories(categories))
-      .hasFinalState({
-        ...initialState,
-        categories
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysis).toHaveLength(3);
-        expect(analysisPut).toHaveLength(2);
-        expect(analysisCall).toHaveLength(1);
+        expect(analysisCall).toHaveLength(3);
       }));
 });

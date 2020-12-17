@@ -20,8 +20,9 @@ import MaterialPage from '../pages/material/material-page';
 import MaterialAdd from '../pages/material/material-add';
 import ProductsPage from '../pages/products/products-page';
 import ProductsAdd from '../pages/products/product-add';
-import Categories from '../pages/categories/categories-page';
-import CategoriesAdd from '../pages/categories/categories-add/categories-add';
+import Categories from '../pages/categories/categories-page/categories';
+import CategoriesAdd from '../pages/categories/categories-add';
+import CategoryDetails from '../pages/categories/categories-details';
 import UsersDetails from '../pages/users/users-details';
 import ContactsPage from '../pages/contacts-page';
 import ContactsEdit from '../pages/contacts-page/contacts-edit';
@@ -183,10 +184,9 @@ const Routes = () => {
           <Route
             path={routes.pathToEditCategory}
             exact
-            render={({ match }) => (
-              <CategoriesAdd id={match.params.id} editMode />
-            )}
+            component={CategoryDetails}
           />
+
           <Route
             path={routes.pathToEmailQuestions}
             exact

@@ -14,16 +14,13 @@ const buttonTitles = {
   USER_ACTIVE_TITLE: 'Активувати',
   ADD_CATEGORY: 'Додати категорію',
   GO_BACK_TITLE: 'Назад',
-  ADD_SUBCATEGORY: 'Додати підкатегорію',
   ADD_CATEGORY_IMAGE: 'Додати зображення',
   ADD_CATEGORY_NAME: 'Додати назву',
   CANCEL: 'Відмінити',
   SAVE_CATEGORY: 'Зберегти категорію',
-  SAVE_SUBCATEGORY: 'Зберегти підкатегорію',
   CREATE_SPECIAL_USER: 'Створити спецкористувача',
   ADD_PHOTO_LABEL: '+',
   CREATE_CATEGORY: 'Створити категорію',
-  CREATE_SUBCATEGORY: 'Створити підкатегорію',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   REMOVE_CONTACT_MESSAGE: 'Ви впевнені, що хочете видалити цей контакт?',
   USER_UNACTIVE_TITLE: 'Деактивувати',
@@ -48,18 +45,6 @@ const buttonTitles = {
   CREATE_SLIDE_TITLE: 'Створити слайд',
   OPEN_SLIDE_EDIT: 'Увімкнути редагування',
   SAVE_SLIDE_ORDER: 'Зберегти зміни',
-  CANCEL_SLIDE_ORDER: 'Скасувати зміни',
-
-  titleGenerator: (editMode, isMain) => {
-    const editModeMap = new Map([
-      [true, 'Зберегти'],
-      [false, 'Створити']
-    ]);
-    const isMainMap = new Map([
-      [true, 'категорію'],
-      [false, 'підкатегорію']
-    ]);
-    return `${editModeMap.get(editMode)} ${isMainMap.get(isMain)}`;
-  }
+  CANCEL_SLIDE_ORDER: 'Скасувати зміни'
 };
 export default buttonTitles;
