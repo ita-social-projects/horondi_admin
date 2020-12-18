@@ -8,9 +8,7 @@ export const category = {
     small: '',
     thumbnail: ''
   },
-  isMain: false,
-  name: [],
-  subcategories: []
+  name: []
 };
 export const deleteId = '1a83772f0ec8fe5a2ef119ba';
 export const switchId = 'ed17f080d44d728efe0a4ad1';
@@ -36,8 +34,6 @@ export const categories = [
       small: 'small_10b1e9gkhm7xa9m_backpacks.jpg',
       thumbnail: 'thumbnail_10b1e9gkhm7xa9m_backpacks.jpg'
     },
-    subcategories: ['688ded7be0c2621f2fb17b05'],
-    isMain: true,
     available: false
   },
   {
@@ -59,8 +55,6 @@ export const categories = [
       small: 'small_10b1e9gkhm7xifr_bags.jpg',
       thumbnail: 'thumbnail_10b1e9gkhm7xifr_bags.jpg'
     },
-    subcategories: ['e1f1b72509068804c599d1ff', '47727f468018c6e246903dbf'],
-    isMain: true,
     available: false
   }
 ];

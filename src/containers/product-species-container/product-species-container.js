@@ -9,7 +9,7 @@ import {
   TextField,
   MenuItem
 } from '@material-ui/core';
-import useStyles from './product-species-container.styles';
+import { useStyles } from './product-species-container.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
 import { config } from '../../configs';
@@ -41,13 +41,11 @@ const ProductSpeciesContainer = ({
 
   const categoriesOptions = useMemo(
     () =>
-      categories
-        .filter(({ isMain }) => isMain)
-        .map(({ name, _id }) => (
-          <MenuItem value={_id} key={_id}>
-            {name[0].value}
-          </MenuItem>
-        )),
+      categories.map(({ name, _id }) => (
+        <MenuItem value={_id} key={_id}>
+          {name[0].value}
+        </MenuItem>
+      )),
     [categories]
   );
 

@@ -33,7 +33,7 @@ const initialState = {
   date: 7
 };
 
-const statsReducer = (state = initialState, action = {}) => {
+export const statsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
   case SET_STATS_LOADING: {
     return {
@@ -132,5 +132,3 @@ const statsReducer = (state = initialState, action = {}) => {
     return state;
   }
 };
-
-export default statsReducer;

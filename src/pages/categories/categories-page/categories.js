@@ -55,7 +55,7 @@ const Categories = () => {
         }
         return 0;
       })
-      .filter((category) => category.isMain)
+      .filter((category) => category)
       .map((category) => (
         <TableContainerRow
           key={category._id}
@@ -71,7 +71,6 @@ const Categories = () => {
         />
       ))
     : null;
-
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>

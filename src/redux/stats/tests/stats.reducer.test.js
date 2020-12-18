@@ -27,7 +27,7 @@ import {
   initialState
 } from './stats.variables';
 
-import statsReducer from '../stats.reducer';
+import { statsReducer } from '../stats.reducer';
 
 describe('stats reducer tests', () => {
   it('should return default state', () => {

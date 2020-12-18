@@ -9,32 +9,38 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button,
   Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 import { Image } from '@material-ui/icons';
 import usePatternHandlers from '../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
+import {
+  setSnackBarMessage,
+  setSnackBarSeverity,
+  setSnackBarStatus
+} from '../../redux/snackbar/snackbar.actions';
 
 const {
   PATTERN_VALIDATION_ERROR,
   PATTERN_ERROR_MESSAGE,
-  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
+  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
+  PHOTO_NOT_PROVIDED
 } = config.patternErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
 const { languages } = config;
 
-const PatternForm = ({ pattern, id }) => {
+const labels = config.labels.pattern.form;
+
+const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
@@ -48,7 +54,9 @@ const PatternForm = ({ pattern, id }) => {
   } = usePatternHandlers();
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang) => <Tab label={lang} data-cy={lang} key={lang} />)
+      ? languages.map((lang) => (
+        <Tab label={lang} data-cy={`${lang}-tab`} key={lang} />
+      ))
       : null;
 
   const patternValidationSchema = Yup.object().shape({
@@ -95,11 +103,21 @@ const PatternForm = ({ pattern, id }) => {
     onSubmit: () => {
       const newPattern = createPattern(values);
 
-      if (pattern && pattern.material) {
-        dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+      if (upload instanceof File || pattern.images.thumbnail) {
+        if (isEdit && upload instanceof File) {
+          dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+          return;
+        }
+        if (isEdit) {
+          dispatch(updatePattern({ id, pattern: newPattern }));
+          return;
+        }
+        dispatch(addPattern({ pattern: newPattern, image: upload }));
         return;
       }
-      dispatch(addPattern({ pattern: newPattern, image: upload }));
+      dispatch(setSnackBarSeverity('error'));
+      dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
+      dispatch(setSnackBarStatus(true));
     }
   });
 
@@ -185,11 +203,11 @@ const PatternForm = ({ pattern, id }) => {
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.patternItemUpdate}>
               <TextField
-                data-cy={`${lang}Name`}
+                data-cy={`${lang}-name`}
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label='Назва'
+                label={labels.name[index].value}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -197,18 +215,18 @@ const PatternForm = ({ pattern, id }) => {
               />
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div
-                  data-cy={`${lang}Name-error`}
+                  data-cy={`${lang}-name-error`}
                   className={styles.inputError}
                 >
                   {errors[`${lang}Name`]}
                 </div>
               )}
               <TextField
-                data-cy={`${lang}Description`}
+                data-cy={`${lang}-description`}
                 id={`${lang}Description`}
                 className={styles.textField}
                 variant='outlined'
-                label='Опис'
+                label={labels.description[index].value}
                 multiline
                 value={values[`${lang}Description`]}
                 onChange={handleChange}
@@ -219,7 +237,7 @@ const PatternForm = ({ pattern, id }) => {
               />
               {touched[`${lang}Description`] && errors[`${lang}Description`] && (
                 <div
-                  data-cy={`${lang}Description-error`}
+                  data-cy={`${lang}-description-error`}
                   className={styles.inputError}
                 >
                   {errors[`${lang}Description`]}
@@ -228,21 +246,10 @@ const PatternForm = ({ pattern, id }) => {
             </Paper>
           </TabPanel>
         ))}
-
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={config.routes.pathToPatterns}
-          variant='outlined'
-          color='primary'
-          className={styles.returnButton}
-          data-cy='goBackButton'
-        >
-          {config.buttonTitles.GO_BACK_TITLE}
-        </Button>
+        <BackButton />
         <SaveButton
           className={styles.saveButton}
-          data-cy='save'
+          data-cy='save-btn'
           type='submit'
           title={SAVE_TITLE}
         />
@@ -295,7 +302,8 @@ PatternForm.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  })
+  }),
+  isEdit: PropTypes.bool
 };
 PatternForm.defaultProps = {
   id: '',
@@ -327,7 +335,8 @@ PatternForm.defaultProps = {
     material: '',
     available: false,
     handmade: false
-  }
+  },
+  isEdit: false
 };
 
 export default PatternForm;

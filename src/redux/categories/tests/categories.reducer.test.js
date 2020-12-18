@@ -2,17 +2,14 @@ import categoriesReducer, { initialState } from '../categories.reducer';
 
 import {
   setCategories,
-  setCategoriesLoading,
-  setCategoriesError,
-  setCategory,
-  resetNewCategory,
   toggleCategoryDeleteDialog,
   setCategorySwitchId,
-  setCategoryDeleteId
+  setCategoryDeleteId,
+  setCategoryError,
+  setCategoryLoading
 } from '../categories.actions.js';
 
 import { categories, category, error } from './category.variables';
-import { config } from '../../../configs';
 
 describe('Categories reducer tests', () => {
   it('should return default state', () => {
@@ -23,40 +20,21 @@ describe('Categories reducer tests', () => {
     expect(categoriesReducer(initialState, setCategories(categories))).toEqual({
       ...initialState,
       categories,
-      categoriesLoading: false,
-      categoriesError: null
+      categoryLoading: false,
+      categoryError: null
     });
   });
   it('should set categories loading', () => {
-    expect(categoriesReducer(initialState, setCategoriesLoading(true))).toEqual(
-      {
-        ...initialState,
-        categoriesLoading: true
-      }
-    );
+    expect(categoriesReducer(initialState, setCategoryLoading(true))).toEqual({
+      ...initialState,
+      categoryLoading: true
+    });
   });
   it('should set categories error', () => {
-    expect(categoriesReducer(initialState, setCategoriesError(error))).toEqual({
+    expect(categoriesReducer(initialState, setCategoryError(error))).toEqual({
       ...initialState,
-      categoriesError: error,
-      categoriesLoading: false
-    });
-  });
-  it('should set category', () => {
-    expect(categoriesReducer(initialState, setCategory(category))).toEqual({
-      ...initialState,
-      newCategory: {
-        ...config.templates.categoryTemplate,
-        ...category
-      }
-    });
-  });
-  it('should reset new category', () => {
-    expect(categoriesReducer(initialState, resetNewCategory())).toEqual({
-      ...initialState,
-      newCategory: {
-        ...config.templates.categoryTemplate
-      }
+      categoryError: error,
+      categoryLoading: false
     });
   });
   it('should toggle category delete dialog', () => {

@@ -1,28 +1,47 @@
 import { gql } from '@apollo/client';
-import { setItems, client } from '../../utils/client';
+import { client, setItems } from '../../utils/client';
+import { getFromLocalStorage } from '../../services/local-storage.service';
+import { categoryTranslations } from '../../translations/category.translations';
+
+export const getAllCategories = async () => {
+  const result = await client.query({
+    query: gql`
+      query {
+        getAllCategories {
+          _id
+          name {
+            lang
+            value
+          }
+          code
+          images {
+            thumbnail
+          }
+        }
+      }
+    `
+  });
+  client.resetStore();
+
+  return result.data.getAllCategories;
+};
 
 export const getCategoryById = async (id) => {
   const result = await client.query({
     variables: { id },
     query: gql`
-      query getCategoryById($id: ID) {
+      query($id: ID!) {
         getCategoryById(id: $id) {
           ... on Category {
             _id
-            code
             name {
               lang
               value
             }
+            code
             images {
-              large
-              medium
-              small
               thumbnail
             }
-            subcategories
-            isMain
-            available
           }
           ... on Error {
             message
@@ -33,74 +52,16 @@ export const getCategoryById = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  const { data } = result;
-  return data.getCategoryById;
-};
 
-export const getAllCategories = async () => {
-  const result = await client.query({
-    query: gql`
-      query {
-        getAllCategories {
-          _id
-          code
-          name {
-            lang
-            value
-          }
-          images {
-            large
-            medium
-            small
-            thumbnail
-          }
-          subcategories
-          isMain
-          available
-        }
-      }
-    `
-  });
-  client.resetStore();
-  const { data } = result;
-  return data.getAllCategories;
-};
+  if (result.data.getCategoryById.message) {
+    throw new Error(
+      `${result.data.getCategoryById.statusCode} ${
+        categoryTranslations[result.data.getCategoryById.message]
+      }`
+    );
+  }
 
-export const createCategory = (data) => {
-  const query = `
-        mutation addCategory($category: CategoryInput!, $parentId: ID, $upload: Upload) {
-    addCategory(category: $category, parentId: $parentId, upload: $upload) {
-      ... on Category {
-        _id
-        code
-      }
-      ... on Error {
-        statusCode
-        message
-      }
-    }
-  },
-  `;
-  return setItems(query, data);
-};
-
-export const updateCategoryById = (data) => {
-  const query = `
-    mutation updateCategory($id: ID!, $category: CategoryInput!, $upload: Upload){
-      updateCategory(id: $id, category: $category, upload: $upload) {
-        ... on Category {
-          _id
-          code
-          available
-        }
-        ... on Error {
-          statusCode
-          message
-        }
-      }
-    }
-  `;
-  return setItems(query, data);
+  return result.data.getCategoryById;
 };
 
 export const deleteCategoryById = (deleteId, switchId) => {
@@ -124,34 +85,73 @@ export const deleteCategoryById = (deleteId, switchId) => {
   return setItems(query, { deleteId, switchId });
 };
 
-export const getSubcategories = async ({ id }) => {
-  const result = await client.query({
-    query: gql`
-      query getSubcategories($id: ID!) {
-        getSubcategories(id: $id) {
-          _id
-          code
-          name {
-            lang
-            value
+export const createCategory = async (payload) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+  const result = await client.mutate({
+    context: { headers: { token } },
+    variables: payload,
+
+    mutation: gql`
+      mutation($category: CategoryInput!, $upload: Upload!) {
+        addCategory(category: $category, upload: $upload) {
+          ... on Category {
+            _id
           }
-          images {
-            large
-            medium
-            small
-            thumbnail
+          ... on Error {
+            statusCode
+            message
           }
-          subcategories
-          isMain
-          available
         }
       }
     `,
-    variables: {
-      id
-    }
+    fetchPolicy: 'no-cache'
   });
   client.resetStore();
-  const { data } = result;
-  return data.getSubcategories;
+
+  if (result.data.addCategory.message) {
+    throw new Error(
+      `${result.data.addCategory.statusCode} ${
+        categoryTranslations[result.data.addCategory.message]
+      }`
+    );
+  }
+
+  return result.data.addCategory;
+};
+
+export const updateCategory = async (payload) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
+  const result = await client.mutate({
+    context: { headers: { token } },
+    variables: payload,
+    mutation: gql`
+      mutation updateCategory(
+        $id: ID!
+        $category: CategoryInput!
+        $upload: Upload
+      ) {
+        updateCategory(id: $id, category: $category, upload: $upload) {
+          ... on Category {
+            _id
+          }
+          ... on Error {
+            statusCode
+            message
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+  if (result.data.updateCategory.message) {
+    throw new Error(
+      `${result.data.updateCategory.statusCode} ${
+        categoryTranslations[result.data.updateCategory.message]
+      }`
+    );
+  }
+
+  return result.data.updateCategory;
 };

@@ -2,20 +2,11 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Paper,
-  TextField,
-  Grid,
-  Tab,
-  AppBar,
-  Tabs,
-  Button
-} from '@material-ui/core';
+import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 import useHeaderHandlers from '../../utils/use-header-handlers';
 import { useStyles } from './header-form.styles';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { addHeader, updateHeader } from '../../redux/header/header.actions';
@@ -24,8 +15,6 @@ const {
   HEADER_VALIDATION_ERROR,
   HEADER_ERROR_MESSAGE
 } = config.headerErrorMessages;
-
-const { routes } = config;
 
 const { languages } = config;
 
@@ -123,7 +112,7 @@ const HeaderForm = ({ header, id }) => {
                 id={`${lang}Name`}
                 className={styles.textField}
                 variant='outlined'
-                label={config.labels.header.name}
+                label={config.labels.header.name[tabsValue].value}
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
@@ -135,18 +124,7 @@ const HeaderForm = ({ header, id }) => {
             </Paper>
           </TabPanel>
         ))}
-
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={routes.pathToHeaders}
-          variant='outlined'
-          color='primary'
-          className={styles.returnButton}
-          data-cy='goBackButton'
-        >
-          {config.buttonTitles.GO_BACK_TITLE}
-        </Button>
+        <BackButton />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'

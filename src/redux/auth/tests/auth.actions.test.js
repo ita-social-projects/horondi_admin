@@ -15,13 +15,13 @@ import {
   setAuthLoading,
   checkUserByToken
 } from '../auth.actions';
-import { email, password, token } from './auth.variables';
+import { email, pass, token } from './auth.variables';
 
 describe('authorization actions tests', () => {
   it('should login user', () => {
-    expect(loginUser({ email, password })).toEqual({
+    expect(loginUser({ email, pass })).toEqual({
       type: LOGIN_USER,
-      payload: { email, password }
+      payload: { email, pass }
     });
   });
   it('should logout user', () => {

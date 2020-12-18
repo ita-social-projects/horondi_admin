@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 150
@@ -18,5 +18,3 @@ const useStyles = makeStyles((theme) => ({
     color: theme.textColor
   }
 }));
-
-export default useStyles;

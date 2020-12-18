@@ -113,7 +113,11 @@ const StatisticPage = () => {
       <Box mt={11}>
         <Grid container spacing={2} justify='space-between'>
           <Grid item>
-            <Typography variant='h1' className={common.materialTitle}>
+            <Typography
+              data-cy='page-title'
+              variant='h1'
+              className={common.materialTitle}
+            >
               {mainPageTitle}
             </Typography>
           </Grid>

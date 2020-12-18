@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 
-import {
-  FormControl,
-  Paper,
-  TextField,
-  Grid,
-  Button,
-  Avatar
-} from '@material-ui/core';
-
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import ImageIcon from '@material-ui/icons/Image';
+import { FormControl, Paper, TextField, Grid, Avatar } from '@material-ui/core';
 
 import { useFormik } from 'formik';
 
@@ -22,7 +11,7 @@ import * as Yup from 'yup';
 
 import { Image } from '@material-ui/icons';
 import { config } from '../../configs';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -51,10 +40,6 @@ const {
 } = config.loginErrorMessages;
 
 const { enAddressRegex } = config.formRegExp;
-
-const { GO_BACK_TITLE } = config.buttonTitles;
-
-const pathToContactsPage = config.routes.pathToContacts;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
@@ -150,7 +135,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   <ImageUploadContainer handler={uaSelectImageHandler} />
                   {uaMapImage.imageUrl ? (
                     <Avatar
-                      data-cy='uaCartImage'
+                      data-cy='ua-cart-image'
                       src={uaMapImage.imageUrl}
                       className={classes.large}
                     >
@@ -173,7 +158,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   <ImageUploadContainer handler={enSelectImageHandler} />
                   {enMapImage.imageUrl ? (
                     <Avatar
-                      data-cy='enCartImage'
+                      data-cy='en-cart-image'
                       src={enMapImage.imageUrl}
                       className={classes.large}
                     >
@@ -192,7 +177,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   )}
                 </div>
                 <TextField
-                  data-cy='mapLink'
+                  data-cy='map-link'
                   id='cartLink'
                   className={classes.textField}
                   variant='outlined'
@@ -212,7 +197,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
-                  data-cy='phoneNumber'
+                  data-cy='phone-number'
                   id='phoneNumber'
                   className={classes.textField}
                   variant='outlined'
@@ -229,7 +214,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.phoneNumber && errors.phoneNumber}
                 />
                 <TextField
-                  data-cy='uaSchedule'
+                  data-cy='ua-schedule'
                   id='uaSchedule'
                   className={classes.textField}
                   variant='outlined'
@@ -246,7 +231,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.uaSchedule && errors.uaSchedule}
                 />
                 <TextField
-                  data-cy='enSchedule'
+                  data-cy='en-schedule'
                   id='enSchedule'
                   className={classes.textField}
                   variant='outlined'
@@ -267,7 +252,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
-                  data-cy='uaAddress'
+                  data-cy='ua-address'
                   id='uaAddress'
                   className={classes.textField}
                   variant='outlined'
@@ -284,7 +269,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.uaAddress && errors.uaAddress}
                 />
                 <TextField
-                  data-cy='enAddress'
+                  data-cy='en-address'
                   id='enAddress'
                   className={classes.textField}
                   variant='outlined'
@@ -320,22 +305,14 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={pathToContactsPage}
-          variant='outlined'
-          color='primary'
-          className={classes.returnButton}
-          data-cy='goBackButton'
-        >
-          {GO_BACK_TITLE}
-        </Button>
+        <BackButton data-cy='go-back-button' />
+
         <SaveButton
           id='save'
           type='submit'
           title='Зберегти'
           className={classes.saveButton}
+          data-cy='save'
         />
       </form>
     </div>

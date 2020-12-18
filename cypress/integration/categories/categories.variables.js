@@ -9,8 +9,6 @@ export const allCategories = [
       small: '3.png',
       thumbnail: '4.png'
     },
-    subcategories: 3,
-    isMain: true,
     available: true
   },
   {
@@ -23,8 +21,6 @@ export const allCategories = [
       small: '3.png',
       thumbnail: '4.png'
     },
-    subcategories: 2,
-    isMain: true,
     available: true
   },
   {
@@ -37,8 +33,6 @@ export const allCategories = [
       small: '3.png',
       thumbnail: '4.png'
     },
-    subcategories: 1,
-    isMain: true,
     available: true
   }
 ];

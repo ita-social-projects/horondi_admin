@@ -1,21 +1,19 @@
 import {
   GET_CATEGORIES,
-  SET_CATEGORIES_ERROR,
-  SET_CATEGORIES_LOADING,
   GET_CATEGORY,
   DELETE_CATEGORY,
   SET_CATEGORY,
-  RESET_NEW_CATEGORY
+  SET_CATEGORY_LOADING,
+  SET_CATEGORY_ERROR
 } from '../categories.types';
 
 import {
   getCategories,
   getCategory,
-  setCategoriesError,
-  setCategoriesLoading,
   setCategory,
   deleteCategory,
-  resetNewCategory
+  setCategoryLoading,
+  setCategoryError
 } from '../categories.actions';
 
 import { categoryId, category } from './category.variables';
@@ -34,14 +32,14 @@ describe('category actions tests', () => {
     });
   });
   it('should set categories loading to true', () => {
-    expect(setCategoriesLoading(true)).toEqual({
-      type: SET_CATEGORIES_LOADING,
+    expect(setCategoryLoading(true)).toEqual({
+      type: SET_CATEGORY_LOADING,
       payload: true
     });
   });
   it('should set categories error to true', () => {
-    expect(setCategoriesError(true)).toEqual({
-      type: SET_CATEGORIES_ERROR,
+    expect(setCategoryError(true)).toEqual({
+      type: SET_CATEGORY_ERROR,
       payload: true
     });
   });
@@ -53,11 +51,6 @@ describe('category actions tests', () => {
   it('should receive all categories', () => {
     expect(getCategories()).toEqual({
       type: GET_CATEGORIES
-    });
-  });
-  it('should reset category', () => {
-    expect(resetNewCategory()).toEqual({
-      type: RESET_NEW_CATEGORY
     });
   });
 });

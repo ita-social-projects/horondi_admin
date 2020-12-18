@@ -11,12 +11,11 @@ import {
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import useBusinessHandlers from '../../../utils/use-business-handlers';
 import Editor from '../../../components/editor';
 import { useStyles } from './business-page-form.styles';
-import { SaveButton, StandardButton } from '../../../components/buttons';
+import { SaveButton, BackButton } from '../../../components/buttons';
 import TabPanel from '../../../components/tab-panel';
 import LoadingBar from '../../../components/loading-bar';
 
@@ -38,6 +37,8 @@ const BusinessPageForm = ({ id, editMode }) => {
 
   const classes = useStyles();
   const common = useCommonStyles();
+
+  const labels = config.labels.businessPage;
 
   const {
     tabsValue,
@@ -187,7 +188,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   id='uaTitle'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок ua'
+                  label={config.labels.lableTitle.ua}
                   multiline
                   value={formik.values.uaTitle}
                   onChange={formik.handleChange}
@@ -207,7 +208,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   data-cy='page-editor'
                 />
                 {(editorField.test(uaText) || !uaText) && shouldValidate && (
-                  <div className={classes.errorMessage}>
+                  <div className={classes.errorMessage} data-cy='editor-error'>
                     Введіть текст для сторінки
                   </div>
                 )}
@@ -219,27 +220,27 @@ const BusinessPageForm = ({ id, editMode }) => {
                   id='enTitle'
                   className={classes.textField}
                   variant='outlined'
-                  label='Заголовок en'
+                  label={config.labels.lableTitle.en}
                   multiline
                   value={formik.values.enTitle}
                   onChange={formik.handleChange}
                   error={!formik.values.enTitle && shouldValidate}
                   helperText={
                     !formik.values.enTitle && shouldValidate
-                      ? 'Введіть заголовок'
+                      ? labels[0].errorLabel[tabsValue].value
                       : ''
                   }
                   data-cy='page-header-en'
                 />
                 <Editor
                   value={enText}
-                  placeholder='Текст'
+                  placeholder={labels[1].label[tabsValue].value}
                   onEditorChange={(value) => enSetText(value)}
                   setFiles={setFiles}
                 />
                 {(editorField.test(enText) || !enText) && shouldValidate && (
                   <div className={classes.errorMessage} data-cy='editor-error'>
-                    Введіть текст для сторінки
+                    {labels[1].errorLabel[tabsValue].value}
                   </div>
                 )}
               </Paper>
@@ -247,16 +248,7 @@ const BusinessPageForm = ({ id, editMode }) => {
           </Paper>
         </div>
         <div className={classes.controlsBlock}>
-          <Link to={config.routes.pathToBusinessPages}>
-            <StandardButton
-              className={classes.controlButton}
-              id='back'
-              title='Назад'
-              variant='outlined'
-              onClickHandler={() => {}}
-              data-cy='back-btn'
-            />
-          </Link>
+          <BackButton />
           <SaveButton
             className={classes.controlButton}
             id='save'

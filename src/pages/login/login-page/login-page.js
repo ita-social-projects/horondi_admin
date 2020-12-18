@@ -52,7 +52,7 @@ const LoginPage = () => {
       .required(ENTER_EMAIL_MESSAGE),
     password: Yup.string()
       .min(8, PASSWORD_MIN_LENGTH_MESSAGE)
-      .matches(config.formRegExp.password, PASSWORD_LANG_MESSAGE)
+      .matches(config.formRegExp.pass, PASSWORD_LANG_MESSAGE)
       .required(ENTER_PASSWORD_MESSAGE)
   });
 

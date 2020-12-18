@@ -7,17 +7,15 @@ import {
   Tab,
   AppBar,
   Avatar,
-  Button,
   Paper
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import TabPanel from '../tab-panel';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import LoadingBar from '../loading-bar';
 import useMaterialHandlers from '../../utils/use-material-handlers';
 import { useStyles } from './material-form.styles';
@@ -148,7 +146,7 @@ function MaterialForm({ material, id }) {
           id={`${lang}Name`}
           className={styles.textField}
           variant='outlined'
-          label={config.labels.material.name}
+          label={config.labels.material.name[tabsValue].value}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
           multiline
           value={values[`${lang}Name`]}
@@ -162,7 +160,7 @@ function MaterialForm({ material, id }) {
           id={`${lang}Description`}
           className={styles.textField}
           variant='outlined'
-          label={config.labels.material.description}
+          label={config.labels.material.description[tabsValue].value}
           multiline
           error={
             touched[`${lang}Description`] && !!errors[`${lang}Description`]
@@ -186,7 +184,7 @@ function MaterialForm({ material, id }) {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.material.available,
+      label: config.labels.material.available[0].value,
       handler: () => setFieldValue('available', !values.available)
     }
   ];
@@ -257,7 +255,7 @@ function MaterialForm({ material, id }) {
               id='purpose'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.purpose}
+              label={config.labels.material.purpose[0].value}
               value={values.purpose}
               onChange={handleChange}
               error={touched.purpose && !!errors.purpose}
@@ -270,7 +268,7 @@ function MaterialForm({ material, id }) {
               id='additionalPrice'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.additionalPrice}
+              label={config.labels.material.additionalPrice[0].value}
               value={values.additionalPrice}
               onChange={handleChange}
               error={touched.additionalPrice && !!errors.additionalPrice}
@@ -299,17 +297,7 @@ function MaterialForm({ material, id }) {
         ) : null}
         <div className={styles.controlsBlock}>
           <div>
-            <Button
-              id='go-back'
-              component={Link}
-              to={config.routes.pathToMaterials}
-              variant='outlined'
-              color='primary'
-              className={styles.returnButton}
-              data-cy='goBackButton'
-            >
-              {config.buttonTitles.GO_BACK_TITLE}
-            </Button>
+            <BackButton />
             {createColorButton}
             <SaveButton
               className={styles.saveButton}

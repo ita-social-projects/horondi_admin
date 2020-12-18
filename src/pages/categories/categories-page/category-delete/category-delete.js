@@ -19,6 +19,7 @@ import { config } from '../../../../configs';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import { SaveButton } from '../../../../components/buttons';
 
+const { DELETE_TITLE } = config.buttonTitles;
 const { DELETE_CATEGORY } = config.buttonTitles;
 const { DELETE_CATEGORY_MESSAGE } = config.messages;
 const { categories: categoryLabels } = config.labels;
@@ -38,14 +39,13 @@ const CategoryDelete = () => {
   const handleDeleteCategory = () => {
     const removeCategory = () => {
       dispatch(closeDialog());
-      dispatch(deleteCategory());
       dispatch(toggleCategoryDeleteDialog());
+      dispatch(deleteCategory());
     };
     openSuccessSnackbar(
       removeCategory,
       DELETE_CATEGORY,
-      DELETE_CATEGORY_MESSAGE,
-      DELETE_CATEGORY
+      DELETE_CATEGORY_MESSAGE
     );
   };
 
@@ -54,7 +54,7 @@ const CategoryDelete = () => {
   };
 
   const categoriesOptionList = categories
-    .filter((item) => item.isMain && item._id !== deleteId)
+    .filter((item) => item._id !== deleteId)
     .map((item, idx) => (
       <MenuItem
         key={item.code}
@@ -88,8 +88,8 @@ const CategoryDelete = () => {
         </FormControl>
         <FormControl className={styles.formControl}>
           <SaveButton
-            onClick={handleDeleteCategory}
-            title={DELETE_CATEGORY}
+            onClick={() => handleDeleteCategory()}
+            title={DELETE_TITLE}
             data-cy='category-delete-submit'
             className={styles.saveButton}
             disabled={!switchId}
