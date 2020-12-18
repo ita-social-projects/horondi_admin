@@ -4,8 +4,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import { useSelector } from 'react-redux';
 import UsersPage from '../pages/users/users-page';
 import NewsPage from '../pages/news/news-page';
-import NewsAdd from '../pages/news/news-add';
-import NewsDetails from '../pages/news/news-details';
 import NavBar from '../components/nav-bar';
 import NavMenu from '../components/nav-menu';
 import SnackbarItem from '../components/snackbar';
@@ -51,6 +49,7 @@ import SlidesPage from '../pages/home-page-slides/slides-page';
 import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
+import NewsForm from '../components/news-form';
 
 const { routes } = config;
 
@@ -94,13 +93,13 @@ const Routes = () => {
           <Route path={routes.pathToPatterns} exact component={PatternPage} />
           <Route path={routes.pathToModels} exact component={ModelPage} />
           <Route path={routes.pathToHeaders} exact component={HeaderPage} />
-          <Route path={routes.pathToAddNews} exact component={NewsAdd} />
           <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
           <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
+          <Route path={routes.pathToAddNews} exact component={NewsForm} />
           <Route
             path={routes.pathToNewsDetails}
             exact
-            component={NewsDetails}
+            render={({ match }) => <NewsForm id={match.params.id} editMode />}
           />
           <Route
             path={routes.pathToHeaderDetails}
