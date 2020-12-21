@@ -27,9 +27,7 @@ const ModelDetails = ({ match }) => {
 
   return (
     <div className={styles.detailsContainer}>
-      {model !== null ? (
-        <ModelForm id={id} model={model} isEdit />
-      ) : null}
+      {model !== null ? <ModelForm id={id} model={model} isEdit /> : null}
     </div>
   );
 };

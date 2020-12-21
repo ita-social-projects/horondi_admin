@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
-
 import { newsTranslations } from '../../translations/news.translations';
+import { getFromLocalStorage } from '../../services/local-storage.service';
 
 const getAllNews = async (skip, limit) => {
   const result = await client.query({
@@ -94,8 +94,11 @@ const getArticleById = async (id) => {
 };
 
 const deleteArticle = async (id) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   const result = await client.mutate({
     variables: { id },
+    context: { headers: { token } },
     mutation: gql`
       mutation($id: ID!) {
         deleteNews(id: $id) {
@@ -129,7 +132,11 @@ const deleteArticle = async (id) => {
 };
 
 const createArticle = async (news) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   const result = await client.mutate({
+    variables: { news },
+    context: { headers: { token } },
     mutation: gql`
       mutation($news: NewsInput!) {
         addNews(news: $news) {
@@ -147,8 +154,7 @@ const createArticle = async (news) => {
         }
       }
     `,
-    fetchPolicy: 'no-cache',
-    variables: { news }
+    fetchPolicy: 'no-cache'
   });
   await client.resetStore();
 
@@ -164,11 +170,14 @@ const createArticle = async (news) => {
 };
 
 const updateArticle = async (id, news) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   const result = await client.mutate({
     variables: {
       id,
       news
     },
+    context: { headers: { token } },
     mutation: gql`
       mutation($id: ID!, $news: NewsInput!) {
         updateNews(id: $id, news: $news) {
@@ -185,8 +194,7 @@ const updateArticle = async (id, news) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
+    `
   });
   await client.resetStore();
 

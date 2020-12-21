@@ -8,9 +8,9 @@ const labels = {
     guestUser: 'Гість'
   },
   news: {
-    authorsName: mapToLanguages("Ім'я автора", "Author's name"),
-    title: mapToLanguages('Заголовок', 'Title'),
-    text: mapToLanguages('Текст', 'Text')
+    authorsName: "Ім'я автора",
+    title: 'Заголовок',
+    text: 'Текст'
   },
   model: {
     name: mapToLanguages('Назва', 'Name'),
@@ -26,8 +26,8 @@ const labels = {
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
-    categoryCode:"Код категорії",
-    categoryName:"Назва категорії"
+    categoryCode: 'Код категорії',
+    categoryName: 'Назва категорії'
   },
   header: {
     name: mapToLanguages("І'мя", 'Name'),
