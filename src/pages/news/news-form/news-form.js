@@ -2,33 +2,30 @@ import React, { useEffect, useMemo } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
-import * as Yup from 'yup';
 import {
-  Paper,
-  TextField,
-  Tab,
   AppBar,
-  Tabs,
+  Avatar,
   Box,
-  Avatar
+  Paper,
+  Tab,
+  Tabs,
+  TextField
 } from '@material-ui/core';
 import { Image } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useStyles } from './news-form.styles';
-import { SaveButton, StandardButton } from '../buttons';
-import useNewsHandlers from '../../utils/use-news-handlers';
-import TabPanel from '../tab-panel';
-import { config } from '../../configs';
+import { SaveButton, StandardButton } from '../../../components/buttons';
+import useNewsHandlers from '../../../utils/use-news-handlers';
+import TabPanel from '../../../components/tab-panel';
+import { config } from '../../../configs';
 import {
-  updateArticle,
   addArticle,
-  getArticle
-} from '../../redux/news/news.actions';
-import ImageUploadContainer from '../../containers/image-upload-container';
-import Editor from '../editor/editor';
-import LoadingBar from '../loading-bar';
-
-const { newsErrorMessages } = config;
+  getArticle,
+  updateArticle
+} from '../../../redux/news/news.actions';
+import ImageUploadContainer from '../../../containers/image-upload-container';
+import Editor from '../../../components/editor/editor';
+import LoadingBar from '../../../components/loading-bar';
 
 const NewsForm = ({ id, editMode }) => {
   const styles = useStyles();
@@ -108,27 +105,7 @@ const NewsForm = ({ id, editMode }) => {
     setPreferredLanguages(prefLanguages);
   }, [checkboxes, setPreferredLanguages]);
 
-  useEffect(() => {
-    console.log(newsArticle, id, editMode);
-  }, [newsArticle, id, editMode]);
-
-  const formSchema = Yup.object().shape({
-    uaAuthorName: Yup.string()
-      .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
-      .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
-    enAuthorName: Yup.string()
-      .min(6, newsErrorMessages.NAME_MIN_LENGTH_MESSAGE)
-      .max(100, newsErrorMessages.NAME_MAX_LENGTH_MESSAGE),
-    uaTitle: Yup.string()
-      .min(10, newsErrorMessages.TITLE_MIN_LENGTH_MESSAGE)
-      .max(100, newsErrorMessages.TITLE_MAX_LENGTH_MESSAGE),
-    enTitle: Yup.string()
-      .min(10, newsErrorMessages.TITLE_MIN_LENGTH_MESSAGE)
-      .max(100, newsErrorMessages.TITLE_MAX_LENGTH_MESSAGE)
-  });
-
   const formik = useFormik({
-    validationSchema: formSchema,
     initialValues: {
       authorPhoto,
       newsImage,
@@ -216,27 +193,31 @@ const NewsForm = ({ id, editMode }) => {
           />
         </div>
         <Box my={3}>
-          <ImageUploadContainer
-            handler={handleImageLoad}
-            buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
-          />
+          <div className={styles.imageUploadAvatar}>
+            <ImageUploadContainer
+              handler={handleImageLoad}
+              buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
+            />
 
-          {authorPhoto && (
-            <Avatar src={authorPhoto}>
-              <Image />
-            </Avatar>
-          )}
+            {authorPhoto && (
+              <Avatar src={authorPhoto}>
+                <Image />
+              </Avatar>
+            )}
+          </div>
         </Box>
         <Box my={3}>
-          <ImageUploadContainer
-            handler={handleImageLoad}
-            buttonLabel={config.buttonTitles.MAIN_PHOTO}
-          />
-          {newsImage && (
-            <Avatar src={newsImage}>
-              <Image />
-            </Avatar>
-          )}
+          <div className={styles.imageUploadAvatar}>
+            <ImageUploadContainer
+              handler={handleImageLoad}
+              buttonLabel={config.buttonTitles.MAIN_PHOTO}
+            />
+            {newsImage && (
+              <Avatar src={newsImage}>
+                <Image />
+              </Avatar>
+            )}
+          </div>
         </Box>
 
         {preferredLanguages.length > 0 && (
@@ -261,7 +242,7 @@ const NewsForm = ({ id, editMode }) => {
                   id={`${lang}AuthorName`}
                   className={styles.textField}
                   variant='outlined'
-                  label={config.labels.news.name}
+                  label={config.labels.news.authorsName}
                   multiline
                   value={formik.values[`${lang}AuthorName`]}
                   onChange={formik.handleChange}

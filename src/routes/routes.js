@@ -51,7 +51,7 @@ import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
 import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
-import NewsForm from '../components/news-form';
+import NewsForm from '../pages/news/news-form';
 
 const { routes } = config;
 
