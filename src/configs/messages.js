@@ -24,6 +24,7 @@ const messages = {
   EMPTY_LIST: 'Список порожній',
   REMOVE_MATERIAL_MESSAGE: 'Ви впевнені, що хочете видалити цей матеріал?',
   HEADER_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити це посилання?',
-  REMOVE_SLIDE_MESSAGE: 'Ви впевнені, що хочете видалити цей слайд?'
+  REMOVE_SLIDE_MESSAGE: 'Ви впевнені, що хочете видалити цей слайд?',
+  REMOVE_COLOR_MESSAGE: 'Ви впевнені, що хочете видалити цей колір?'
 };
 export default messages;

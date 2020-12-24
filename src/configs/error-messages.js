@@ -79,16 +79,14 @@ export const materialErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
   VALIDATION_ERROR: 'Поле обовязкове',
-  PRICE_VALIDATION_ERROR: 'Тільки цифри. Число має бути більше нуля'
+  PRICE_VALIDATION_ERROR: 'Тільки цифри.'
 };
 
 export const colorErrorMessages = {
-  CODE_VALIDATION_ERROR: 'Тільки цифри',
-  MAX_CODE_LENGTH_MESSAGE: 'Не більше 10 символів',
-  MAX_LENGTH_MESSAGE: `Не більше 1000 символів`,
-  MIN_LENGTH_MESSAGE: `Не менше 1 символа`,
-  VALIDATION_ERROR: 'Поле обовязкове',
-  CODE_NOT_UNIQUE_ERROR: 'Такий код вже використовується'
+  MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
+  MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
+  COLOR_VALIDATION_ERROR: 'Неправильний формат кольору',
+  VALIDATION_ERROR: 'Поле обовязкове'
 };
 export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'

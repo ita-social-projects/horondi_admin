@@ -12,5 +12,14 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: '30px'
+  },
+  colorCircleInTextfield: {
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
+  root: {
+    width: '300px',
+    marginBottom: '15px'
   }
 }));

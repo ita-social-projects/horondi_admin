@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '1rem',
     cursor: 'pointer',
     '&:hover': {
-      border: '1px solid rgba(0,0,0,.5)'
+      backgroundColor: '#e8e8e8'
     }
   }
 }));

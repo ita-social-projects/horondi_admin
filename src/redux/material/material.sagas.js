@@ -6,24 +6,14 @@ import {
   setMaterialError,
   setMaterialsPagesCount,
   setMaterialLoading,
-  removeMaterialFromStore,
-  clearColors,
-  setMaterialColors,
-  setMaterialColor,
-  getMaterialColors,
-  removeMaterialColorFromStore
+  removeMaterialFromStore
 } from './material.actions';
-// eslint-disable-next-line import/no-cycle
 import {
   getAllMaterials,
   getMaterialById,
   createMaterial,
   updateMaterial,
-  deleteMaterial,
-  getMaterialColorsById,
-  getMaterialColorByCode,
-  createMaterialColor,
-  deleteMaterialColor
+  deleteMaterial
 } from './material.operations';
 
 import {
@@ -31,11 +21,7 @@ import {
   GET_MATERIALS,
   DELETE_MATERIAL,
   ADD_MATERIAL,
-  UPDATE_MATERIAL,
-  GET_MATERIALS_COLORS,
-  GET_MATERIALS_COLOR,
-  ADD_MATERIAL_COLOR,
-  DELETE_MATERIAL_COLOR
+  UPDATE_MATERIAL
 } from './material.types';
 
 import { config } from '../../configs';
@@ -51,10 +37,16 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const { skip, limit, materialsPerPage } = config.materialPaginationPayload;
+const {
+  skip,
+  limit,
+  materialsPerPage,
+  filter
+} = config.materialPaginationPayload;
 
 export function* handleMaterialsLoad({
   payload = {
+    filter,
     skip,
     limit,
     materialsPerPage
@@ -62,7 +54,12 @@ export function* handleMaterialsLoad({
 }) {
   try {
     yield put(setMaterialLoading(true));
-    const materials = yield call(getAllMaterials, payload.skip, payload.limit);
+    const materials = yield call(
+      getAllMaterials,
+      payload.filter,
+      payload.skip,
+      payload.limit
+    );
     yield put(
       setMaterialsPagesCount(
         Math.ceil(materials.count / payload.materialsPerPage)
@@ -86,45 +83,12 @@ export function* handleMaterialLoad({ payload }) {
   }
 }
 
-export function* handleMaterialColorsLoad({ payload }) {
-  try {
-    yield put(setMaterialLoading(true));
-    const colors = yield call(getMaterialColorsById, payload);
-    yield put(setMaterialColors(colors));
-    yield put(setMaterialLoading(false));
-  } catch (error) {
-    yield call(handleMaterialError, error);
-  }
-}
-export function* handleMaterialColorLoad({ payload }) {
-  try {
-    yield put(setMaterialLoading(true));
-    const color = yield call(getMaterialColorByCode, payload);
-    yield put(setMaterialColor(color));
-    yield put(setMaterialLoading(false));
-  } catch (error) {
-    yield call(handleMaterialError, error);
-  }
-}
 export function* handleAddMaterial({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     yield call(createMaterial, payload);
-    yield put(clearColors());
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(config.routes.pathToMaterials));
-  } catch (error) {
-    yield call(handleMaterialError, error);
-  }
-}
-export function* handleAddMaterialColor({ payload }) {
-  try {
-    yield put(setMaterialLoading(true));
-    yield call(createMaterialColor, payload);
-    yield put(clearColors());
-    yield put(setMaterialLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(getMaterialColors(payload.id));
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -137,18 +101,6 @@ export function* handleMaterialDelete({ payload }) {
     yield put(setMaterialLoading(false));
     yield put(removeMaterialFromStore(payload));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-  } catch (error) {
-    yield call(handleMaterialError, error);
-  }
-}
-
-export function* handleMaterialColorDelete({ payload }) {
-  try {
-    yield put(setMaterialLoading(true));
-    yield call(deleteMaterialColor, payload);
-    yield put(setMaterialLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    yield put(removeMaterialColorFromStore(payload.code));
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -177,9 +129,5 @@ export default function* materialSaga() {
   yield takeEvery(DELETE_MATERIAL, handleMaterialDelete);
   yield takeEvery(GET_MATERIAL, handleMaterialLoad);
   yield takeEvery(ADD_MATERIAL, handleAddMaterial);
-  yield takeEvery(ADD_MATERIAL_COLOR, handleAddMaterialColor);
   yield takeEvery(UPDATE_MATERIAL, handleMaterialUpdate);
-  yield takeEvery(GET_MATERIALS_COLORS, handleMaterialColorsLoad);
-  yield takeEvery(GET_MATERIALS_COLOR, handleMaterialColorLoad);
-  yield takeEvery(DELETE_MATERIAL_COLOR, handleMaterialColorDelete);
 }

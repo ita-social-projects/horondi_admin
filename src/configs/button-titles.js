@@ -34,6 +34,7 @@ const buttonTitles = {
   MOVE_ALL_TO_SPAM: 'Перемістити у СПАМ',
   CREATE_MATERIAL_TITLE: 'Створити матеріал',
   CREATE_COLOR_TITLE: 'Створити колір',
+  UPDATE_COLOR_TITLE: 'Зберегти зміни',
   SAVE_MATERIAL: 'Зберегти матеріал',
   CREATE_HEADER_TITLE: 'Створити посилання',
   HEADER_SAVE_TITLE: 'Зберегти посилання',

@@ -70,6 +70,10 @@ export const config = {
     SMALL_SIZE: 'small',
     DEFAULT_SIZE: 'default'
   },
+  colorCircleSizes: {
+    SMALL_CIRCLE: '25',
+    DEFAULT_CIRCLE: '50'
+  },
   theme: {
     DARK_THEME: 'dark',
     LIGHT_THEME: 'light'

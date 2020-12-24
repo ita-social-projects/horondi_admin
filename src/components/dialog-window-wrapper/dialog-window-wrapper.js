@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Dialog,
   DialogActions,
@@ -6,24 +7,11 @@ import {
   DialogTitle,
   Tooltip
 } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { showColorDialogWindow } from '../../redux/material/material.actions';
-import { useStyles } from './dialog-window-wrapper.style';
+import { useStyles } from './dialog-window-wrapper.styles';
+import { config } from '../../configs';
 
-export const DialogWindowForComponent = ({
-  dialogTitle,
-  buttonTitle,
-  component
-}) => {
-  const { isOpen } = useSelector(({ Material }) => ({
-    isOpen: Material.showColorDialogWindow
-  }));
-  const dispatch = useDispatch();
+const DialogWindowWrapper = ({ isOpen, handleClose, title, children }) => {
   const styles = useStyles();
-  const handleClose = () => {
-    dispatch(showColorDialogWindow(false));
-  };
 
   return (
     <Dialog
@@ -34,23 +22,30 @@ export const DialogWindowForComponent = ({
     >
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
-          {dialogTitle}
+          {title}
         </DialogTitle>
-        <Tooltip title={buttonTitle} placement='bottom'>
+        <Tooltip
+          title={config.buttonTitles.CLOSE_DIALOG_TITLE}
+          placement='bottom'
+        >
           <span className={styles.closeButton} onClick={handleClose}>
             &#215;
           </span>
         </Tooltip>
       </div>
       <DialogContent className={styles.dialogComponent} dividers>
-        {component}
+        {children}
       </DialogContent>
       <DialogActions style={{ justifyContent: 'center' }} />
     </Dialog>
   );
 };
-DialogWindowForComponent.propTypes = {
-  dialogTitle: PropTypes.string.isRequired,
-  buttonTitle: PropTypes.string.isRequired,
-  component: PropTypes.element.isRequired
+
+DialogWindowWrapper.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired
 };
+
+export default DialogWindowWrapper;
