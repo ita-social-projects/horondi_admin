@@ -51,14 +51,12 @@ export const getColorById = async (id) => {
     fetchPolicy: 'no-cache'
   });
 
-  const { getColorById } = result.data;
-  if (getColorById.message) {
-    throw new Error(
-      `${getColorById.statusCode} ${colorsTranslations[getColorById.message]}`
-    );
+  const { getColorById: color } = result.data;
+  if (color.message) {
+    throw new Error(`${color.statusCode} ${colorsTranslations[color.message]}`);
   }
 
-  return getColorById;
+  return color;
 };
 
 export const createColor = async (payload) => {
@@ -82,14 +80,12 @@ export const createColor = async (payload) => {
     fetchPolicy: 'no-cache'
   });
 
-  const { addColor } = result.data;
-  if (addColor.message) {
-    throw new Error(
-      `${addColor.statusCode} ${colorsTranslations[addColor.message]}`
-    );
+  const { addColor: color } = result.data;
+  if (color.message) {
+    throw new Error(`${color.statusCode} ${colorsTranslations[color.message]}`);
   }
 
-  return addColor;
+  return color;
 };
 
 export const deleteColor = async (id) => {
@@ -134,14 +130,12 @@ export const deleteColor = async (id) => {
     fetchPolicy: 'no-cache'
   });
 
-  const { deleteColor } = result.data;
-  if (deleteColor.message) {
-    throw new Error(
-      `${deleteColor.statusCode} ${colorsTranslations[deleteColor.message]}`
-    );
-  } else if (deleteColor.items) {
-    return deleteColor.items;
+  const { deleteColor: color } = result.data;
+  if (color.message) {
+    throw new Error(`${color.statusCode} ${colorsTranslations[color.message]}`);
+  } else if (color.items) {
+    return color.items;
   }
 
-  return deleteColor;
+  return color;
 };

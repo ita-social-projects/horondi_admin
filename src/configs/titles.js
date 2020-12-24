@@ -48,7 +48,8 @@ const titles = {
     createPageTitle: 'Створити матеріал'
   },
   colorTitles: {
-    createColorTitle: 'Створити колір'
+    createColorTitle: 'Створити колір',
+    alreadyUse: 'Колір вже використовується!'
   },
   businessPageTitles: {
     mainPageTitle: 'Інформація про бізнес сторінки',

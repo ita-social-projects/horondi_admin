@@ -27,7 +27,7 @@ import { useCommonStyles } from '../../common.styles';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
-
+const { mainLabel } = config.labels.color;
 const pathToMaterialAddPage = config.routes.pathToAddMaterial;
 const tableTitles = config.tableHeadRowTitles.materials;
 const { DEFAULT_CIRCLE } = config.colorCircleSizes;
@@ -168,8 +168,8 @@ const MaterialPage = () => {
           <TextField
             {...params}
             variant='outlined'
-            label='Кольори'
-            placeholder='Колір'
+            label={mainLabel}
+            placeholder={mainLabel}
           />
         )}
         onChange={(e, value) => {

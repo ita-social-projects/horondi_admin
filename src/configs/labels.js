@@ -26,8 +26,8 @@ const labels = {
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
-    categoryCode:"Код категорії",
-    categoryName:"Назва категорії"
+    categoryCode: 'Код категорії',
+    categoryName: 'Назва категорії'
   },
   header: {
     name: mapToLanguages("І'мя", 'Name'),
@@ -53,12 +53,11 @@ const labels = {
     description: mapToLanguages('Опис матеріалу', 'Material description'),
     additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
   },
-  colors: {
-    image: 'Фото кольору',
+  color: {
     name: 'Назва кольору',
     simpleName: 'Проста назва кольору',
-    code: 'Код кольору',
-    available: 'Доступний'
+    colorHex: '# Колір',
+    mainLabel: 'Колір'
   },
   businessPage: [
     {

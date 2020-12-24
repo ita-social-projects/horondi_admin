@@ -24,7 +24,8 @@ const { SMALL_SIZE } = config.iconSizes;
 const { DEFAULT_CIRCLE, SMALL_CIRCLE } = config.colorCircleSizes;
 const { REMOVE_COLOR_MESSAGE } = config.messages;
 const { CREATE_COLOR_TITLE } = config.buttonTitles;
-const { createColorTitle } = config.titles.colorTitles;
+const { createColorTitle, alreadyUse } = config.titles.colorTitles;
+const { name, mainLabel } = config.labels.color;
 
 function ColorsBar({ onColorChange, color }) {
   const dispatch = useDispatch();
@@ -90,8 +91,8 @@ function ColorsBar({ onColorChange, color }) {
             <TextField
               {...params}
               variant='outlined'
-              label='Кольори'
-              placeholder='Назва кольору'
+              label={mainLabel}
+              placeholder={name}
             />
           )}
         />
@@ -116,7 +117,7 @@ function ColorsBar({ onColorChange, color }) {
       </DialogWindowWrapper>
       <DialogWindowWrapper
         isOpen={showBound}
-        title='Колір вже використовується'
+        title={alreadyUse}
         handleClose={() => {
           dispatch(showBoundMaterialsWindow(false));
         }}
@@ -134,7 +135,7 @@ function ColorsBar({ onColorChange, color }) {
               <span className={styles.materialName}>
                 {material.name[0].value}
               </span>
-              <ArrowForwardIosIcon fontSize='small' />
+              <ArrowForwardIosIcon fontSize={SMALL_SIZE} />
             </div>
           ))}
       </DialogWindowWrapper>
@@ -162,4 +163,4 @@ ColorsBar.propTypes = {
   }).isRequired
 };
 
-export default ColorCircle;
+export default ColorsBar;

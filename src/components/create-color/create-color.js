@@ -86,10 +86,13 @@ const CreateColor = () => {
     }
   });
 
-  useEffect(() => () => {
-    resetForm();
-    handleTabsChange(null, 0);
-  }, []);
+  useEffect(
+    () => () => {
+      resetForm();
+      handleTabsChange(null, 0);
+    },
+    []
+  );
 
   const tabPanels = languages.map((lang, index) => (
     <TabPanel key={lang} value={tabsValue} index={index}>
@@ -99,7 +102,7 @@ const CreateColor = () => {
           id={`${lang}Name`}
           className={styles.textfield}
           variant='outlined'
-          label={config.labels.colors.name}
+          label={config.labels.color.name}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
           multiline
           value={values[`${lang}Name`]}
@@ -113,7 +116,7 @@ const CreateColor = () => {
           id={`${lang}SimpleName`}
           className={styles.textfield}
           variant='outlined'
-          label={config.labels.colors.simpleName}
+          label={config.labels.color.simpleName}
           multiline
           error={touched[`${lang}SimpleName`] && !!errors[`${lang}SimpleName`]}
           value={values[`${lang}SimpleName`]}
@@ -150,7 +153,7 @@ const CreateColor = () => {
             <TextField
               autoComplete='off'
               variant='outlined'
-              label='# Колір'
+              label={config.labels.color.colorHex}
               id='colorHex'
               value={values.colorHex}
               className={styles.textfield}
