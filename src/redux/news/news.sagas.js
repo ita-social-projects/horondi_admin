@@ -71,9 +71,10 @@ export function* handleArticleLoad({ payload }) {
 }
 
 export function* handleAddNews({ payload }) {
+  const { article: news, upload } = payload;
   try {
     yield put(setNewsLoading(true));
-    yield call(createArticle, payload);
+    yield call(createArticle, news, upload);
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(routes.pathToNews));
   } catch (error) {
@@ -94,10 +95,10 @@ export function* handleNewsDelete({ payload }) {
 }
 
 export function* handleNewsUpdate({ payload }) {
-  const { id, newArticle } = payload;
+  const { id, newArticle, upload } = payload;
   try {
     yield put(setNewsLoading(true));
-    yield call(updateArticle, id, newArticle);
+    yield call(updateArticle, id, newArticle, upload);
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToNews));
   } catch (error) {

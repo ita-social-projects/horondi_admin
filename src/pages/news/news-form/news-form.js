@@ -27,6 +27,8 @@ import ImageUploadContainer from '../../../containers/image-upload-container';
 import Editor from '../../../components/editor/editor';
 import LoadingBar from '../../../components/loading-bar';
 
+const { IMG_URL } = config;
+
 const NewsForm = ({ id, editMode }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -57,7 +59,9 @@ const NewsForm = ({ id, editMode }) => {
     uaTitle,
     enTitle,
     uaText,
-    enText
+    enText,
+    upload,
+    setUpload
   } = useNewsHandlers();
 
   const languageTabs =
@@ -74,8 +78,8 @@ const NewsForm = ({ id, editMode }) => {
   useEffect(() => {
     const isEditingReady = newsArticle && editMode;
 
-    setAuthorPhoto(isEditingReady ? newsArticle.author.image.small : '');
-    setNewsImage(isEditingReady ? newsArticle.images.primary.medium : '');
+    setAuthorPhoto(isEditingReady ? IMG_URL + newsArticle.author.image : '');
+    setNewsImage(isEditingReady ? IMG_URL + newsArticle.image : '');
     uaSetAuthor(isEditingReady ? newsArticle.author.name[0].value : '');
     enSetAuthor(isEditingReady ? newsArticle.author.name[1].value : '');
     uaSetTitle(isEditingReady ? newsArticle.title[0].value : '');
@@ -119,10 +123,10 @@ const NewsForm = ({ id, editMode }) => {
     onSubmit: () => {
       if (editMode) {
         const newArticle = createArticle(formik.values);
-        dispatch(updateArticle({ id, newArticle }));
+        dispatch(updateArticle({ id, newArticle, upload }));
       } else {
         const article = createArticle(formik.values);
-        dispatch(addArticle(article));
+        dispatch(addArticle({ article, upload }));
       }
     }
   });
@@ -150,7 +154,6 @@ const NewsForm = ({ id, editMode }) => {
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-
       if (
         e.target.previousSibling.textContent ===
         config.buttonTitles.AUTHOR_PHOTO
@@ -159,6 +162,10 @@ const NewsForm = ({ id, editMode }) => {
           formik.setFieldValue('authorPhoto', event.target.result);
           setAuthorPhoto(event.target.result);
         };
+
+        upload
+          ? setUpload([e.target.files[0], ...upload])
+          : setUpload([e.target.files[0]]);
       } else if (
         e.target.previousSibling.textContent === config.buttonTitles.MAIN_PHOTO
       ) {
@@ -166,6 +173,10 @@ const NewsForm = ({ id, editMode }) => {
           formik.setFieldValue('newsImage', event.target.result);
           setNewsImage(event.target.result);
         };
+
+        upload
+          ? setUpload([...upload, e.target.files[0]])
+          : setUpload([e.target.files[0]]);
       }
 
       reader.readAsDataURL(e.target.files[0]);

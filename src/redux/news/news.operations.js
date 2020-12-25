@@ -19,9 +19,7 @@ const getAllNews = async (skip, limit) => {
                 lang
                 value
               }
-              image {
-                small
-              }
+              image
             }
             title {
               lang
@@ -52,22 +50,13 @@ const getArticleById = async (id) => {
               lang
               value
             }
-            images {
-              primary {
-                medium
-              }
-              additional {
-                large
-              }
-            }
+            image
             author {
               name {
                 lang
                 value
               }
-              image {
-                small
-              }
+              image
             }
             languages
             date
@@ -131,15 +120,14 @@ const deleteArticle = async (id) => {
   return result.data.deleteNews;
 };
 
-const createArticle = async (news) => {
+const createArticle = async (news, upload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
   const result = await client.mutate({
-    variables: { news },
+    variables: { news, upload },
     context: { headers: { token } },
     mutation: gql`
-      mutation($news: NewsInput!) {
-        addNews(news: $news) {
+      mutation($news: NewsInput!, $upload: Upload) {
+        addNews(news: $news, upload: $upload) {
           ... on News {
             author {
               name {
@@ -169,18 +157,18 @@ const createArticle = async (news) => {
   return result.data.addNews;
 };
 
-const updateArticle = async (id, news) => {
+const updateArticle = async (id, news, upload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
   const result = await client.mutate({
     variables: {
       id,
-      news
+      news,
+      upload
     },
     context: { headers: { token } },
     mutation: gql`
-      mutation($id: ID!, $news: NewsInput!) {
-        updateNews(id: $id, news: $news) {
+      mutation($id: ID!, $news: NewsInput!, $upload: Upload) {
+        updateNews(id: $id, news: $news, upload: $upload) {
           ... on News {
             author {
               name {

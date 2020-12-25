@@ -20,6 +20,7 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { REMOVE_MESSAGE } = config.messages;
 const { CREATE_NEWS_TITLE } = config.buttonTitles;
+const { IMG_URL } = config;
 
 const pathToNewsAddPage = config.routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;
@@ -64,7 +65,7 @@ const NewsPage = () => {
       ? list.map((newsItem, index) => (
         <TableContainerRow
           key={index}
-          image={newsItem.author.image.small}
+          image={IMG_URL + newsItem.author.image}
           id={newsItem.id}
           author={
             newsItem.title[0].value !== null
