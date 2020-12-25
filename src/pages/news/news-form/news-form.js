@@ -123,6 +123,7 @@ const NewsForm = ({ id, editMode }) => {
     onSubmit: () => {
       if (editMode) {
         const newArticle = createArticle(formik.values);
+        console.log(upload);
         dispatch(updateArticle({ id, newArticle, upload }));
       } else {
         const article = createArticle(formik.values);
