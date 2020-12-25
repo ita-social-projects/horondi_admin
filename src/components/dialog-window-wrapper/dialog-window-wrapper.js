@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Tooltip
-} from '@material-ui/core';
+import { Dialog, DialogContent, DialogTitle, Tooltip } from '@material-ui/core';
 import { useStyles } from './dialog-window-wrapper.styles';
 import { config } from '../../configs';
 
@@ -15,12 +9,12 @@ const DialogWindowWrapper = ({ isOpen, handleClose, title, children }) => {
 
   return (
     <Dialog
-      style={{ alignContent: 'start' }}
+      className={styles.dialogComponent}
       id='dialog-window'
       onClose={handleClose}
       open={isOpen}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div className={styles.dialogTitleWrapper}>
         <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
           {title}
         </DialogTitle>
@@ -33,10 +27,7 @@ const DialogWindowWrapper = ({ isOpen, handleClose, title, children }) => {
           </span>
         </Tooltip>
       </div>
-      <DialogContent className={styles.dialogComponent} dividers>
-        {children}
-      </DialogContent>
-      <DialogActions style={{ justifyContent: 'center' }} />
+      <DialogContent dividers>{children}</DialogContent>
     </Dialog>
   );
 };
@@ -45,7 +36,11 @@ DialogWindowWrapper.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element
+};
+
+DialogWindowWrapper.defaultProps = {
+  children: null
 };
 
 export default DialogWindowWrapper;

@@ -23,11 +23,12 @@ const ColorCircle = ({ color, colorName, size, onDelete }) => {
 ColorCircle.propTypes = {
   color: PropTypes.string.isRequired,
   colorName: PropTypes.string,
-  size: PropTypes.string.isRequired,
+  size: PropTypes.string,
   onDelete: PropTypes.func
 };
 
 ColorCircle.defaultProps = {
+  size: '',
   colorName: '',
   onDelete: () => {}
 };

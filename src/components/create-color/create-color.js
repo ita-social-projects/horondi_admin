@@ -12,6 +12,7 @@ import LoadingBar from '../loading-bar';
 import { SaveButton } from '../buttons';
 import { config } from '../../configs';
 import useColorHandlers from '../../utils/use-color-handlers';
+import { selectColorLoading } from '../../redux/selectors/color.selectors';
 
 const { languages, colorErrorMessages, buttonTitles } = config;
 const {
@@ -28,10 +29,7 @@ const CreateColor = () => {
   const [colorPicker, setColorPicker] = useState(false);
   const { createColor, tabsValue, handleTabsChange } = useColorHandlers();
 
-  const { loading } = useSelector(({ Color }) => ({
-    isOpen: Color.showColorDialogWindow,
-    loading: Color.colorLoading
-  }));
+  const { loading } = useSelector(selectColorLoading);
 
   const dispatch = useDispatch();
   const styles = useStyles();
@@ -98,9 +96,9 @@ const CreateColor = () => {
     <TabPanel key={lang} value={tabsValue} index={index}>
       <div className={styles.materialItemAdd}>
         <TextField
-          data-cy={`${lang}Name`}
+          data-cy={`${lang}-Name`}
           id={`${lang}Name`}
-          className={styles.textfield}
+          className={styles.textField}
           variant='outlined'
           label={config.labels.color.name}
           error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
@@ -112,9 +110,9 @@ const CreateColor = () => {
           <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
         )}
         <TextField
-          data-cy={`${lang}SimpleName`}
+          data-cy={`${lang}-SimpleName`}
           id={`${lang}SimpleName`}
-          className={styles.textfield}
+          className={styles.textField}
           variant='outlined'
           label={config.labels.color.simpleName}
           multiline
@@ -148,7 +146,7 @@ const CreateColor = () => {
   return (
     <div className={styles.container}>
       {!loading ? (
-        <form className={styles.colorForm} onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className={styles.colorPickerBlock}>
             <TextField
               autoComplete='off'
@@ -156,7 +154,7 @@ const CreateColor = () => {
               label={config.labels.color.colorHex}
               id='colorHex'
               value={values.colorHex}
-              className={styles.textfield}
+              className={styles.textField}
               error={touched.colorHex && !!errors.colorHex}
               onFocus={() => {
                 setColorPicker(true);

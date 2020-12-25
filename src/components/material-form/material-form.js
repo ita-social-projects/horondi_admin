@@ -17,6 +17,7 @@ import {
 } from '../../redux/material/material.actions';
 import { config } from '../../configs';
 import CheckboxOptions from '../checkbox-options';
+import { selectMaterialLoading } from '../../redux/selectors/material.selectors';
 
 const { languages } = config;
 const {
@@ -29,9 +30,7 @@ function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { loading } = useSelector(({ Material }) => ({
-    loading: Material.materialLoading
-  }));
+  const { loading } = useSelector(selectMaterialLoading);
 
   const { createMaterial, tabsValue, handleTabsChange } = useMaterialHandlers();
 

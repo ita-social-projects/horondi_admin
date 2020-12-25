@@ -2,9 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   dialogComponent: {
-    '& div': {
-      margin: 0
-    }
+    alignContent: 'start'
+  },
+  dialogTitleWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   dialogTitle: {
     '& h2': {

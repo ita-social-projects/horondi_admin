@@ -19,6 +19,7 @@ import CreateColor from '../create-color';
 import { CustomizedDeleteIcon } from '../icons';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { config } from '../../configs';
+import { selectColors } from '../../redux/selectors/color.selectors';
 
 const { SMALL_SIZE } = config.iconSizes;
 const { DEFAULT_CIRCLE, SMALL_CIRCLE } = config.colorCircleSizes;
@@ -30,12 +31,7 @@ const { name, mainLabel } = config.labels.color;
 function ColorsBar({ onColorChange, color }) {
   const dispatch = useDispatch();
   const { colors, boundMaterials, showBound, showCreateColor } = useSelector(
-    ({ Color }) => ({
-      colors: Color.list,
-      boundMaterials: Color.boundMaterials,
-      showBound: Color.showBoundMaterialsWindow,
-      showCreateColor: Color.showColorDialogWindow
-    })
+    selectColors
   );
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -160,7 +156,11 @@ ColorsBar.propTypes = {
       })
     ),
     colorHex: PropTypes.string
-  }).isRequired
+  })
+};
+
+ColorsBar.defaultProps = {
+  color: null
 };
 
 export default ColorsBar;

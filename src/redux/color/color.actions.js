@@ -16,7 +16,6 @@ import {
 
 export const getColors = () => ({
   type: GET_COLORS
-  // maybe make sense to add filters to backend
 });
 
 export const getColor = (payload) => ({
