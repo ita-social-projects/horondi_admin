@@ -27,6 +27,7 @@ const { REMOVE_COLOR_MESSAGE } = config.messages;
 const { CREATE_COLOR_TITLE } = config.buttonTitles;
 const { createColorTitle, alreadyUse } = config.titles.colorTitles;
 const { name, mainLabel } = config.labels.color;
+const { pathToMaterials } = config.routes;
 
 function ColorsBar({ onColorChange, color }) {
   const dispatch = useDispatch();
@@ -125,7 +126,7 @@ function ColorsBar({ onColorChange, color }) {
               key={material._id}
               onClick={() => {
                 dispatch(showBoundMaterialsWindow(false));
-                dispatch(push(`/materials/${material._id}`));
+                dispatch(push(`${pathToMaterials}/${material._id}`));
               }}
             >
               <span className={styles.materialName}>

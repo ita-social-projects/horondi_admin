@@ -36,7 +36,10 @@ DialogWindowWrapper.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.element
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ])
 };
 
 DialogWindowWrapper.defaultProps = {

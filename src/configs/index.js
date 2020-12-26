@@ -67,8 +67,8 @@ export const config = {
     DEFAULT_SIZE: 'default'
   },
   colorCircleSizes: {
-    SMALL_CIRCLE: '25',
-    DEFAULT_CIRCLE: '50'
+    SMALL_CIRCLE: '25px',
+    DEFAULT_CIRCLE: '50px'
   },
   theme: {
     DARK_THEME: 'dark',

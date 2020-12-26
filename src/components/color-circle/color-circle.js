@@ -4,18 +4,10 @@ import { Tooltip } from '@material-ui/core';
 import { useStyles } from './color-circle.styles';
 
 const ColorCircle = ({ color, colorName, size, onDelete }) => {
-  const styles = useStyles();
+  const styles = useStyles({ color, size });
   return (
     <Tooltip title={colorName || color}>
-      <div
-        style={{
-          backgroundColor: color,
-          height: `${size}px`,
-          width: `${size}px`
-        }}
-        className={styles.colorCircle}
-        onClick={onDelete}
-      />
+      <div className={styles.colorCircle} onClick={onDelete} />
     </Tooltip>
   );
 };
@@ -23,12 +15,11 @@ const ColorCircle = ({ color, colorName, size, onDelete }) => {
 ColorCircle.propTypes = {
   color: PropTypes.string.isRequired,
   colorName: PropTypes.string,
-  size: PropTypes.string,
+  size: PropTypes.string.isRequired,
   onDelete: PropTypes.func
 };
 
 ColorCircle.defaultProps = {
-  size: '',
   colorName: '',
   onDelete: () => {}
 };

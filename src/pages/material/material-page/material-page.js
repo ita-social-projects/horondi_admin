@@ -31,7 +31,7 @@ const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
 const { mainLabel } = config.labels.color;
 const pathToMaterialAddPage = config.routes.pathToAddMaterial;
 const tableTitles = config.tableHeadRowTitles.materials;
-const { DEFAULT_CIRCLE } = config.colorCircleSizes;
+const { DEFAULT_CIRCLE, SMALL_CIRCLE } = config.colorCircleSizes;
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
@@ -141,6 +141,7 @@ const MaterialPage = () => {
               <ColorCircle
                 color={option.colorHex}
                 colorName={option.name[0].value}
+                size={SMALL_CIRCLE}
                 {...getTagProps({ index })}
               />
             </div>
@@ -154,7 +155,7 @@ const MaterialPage = () => {
               style={{ marginRight: 8 }}
               checked={selected}
             />
-            <ColorCircle color={option.colorHex} />
+            <ColorCircle size={SMALL_CIRCLE} color={option.colorHex} />
             {option.name[0].value}
           </>
         )}
