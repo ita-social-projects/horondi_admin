@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
-
 import { newsTranslations } from '../../translations/news.translations';
+import { getFromLocalStorage } from '../../services/local-storage.service';
 
 const getAllNews = async (skip, limit) => {
   const result = await client.query({
@@ -19,9 +19,7 @@ const getAllNews = async (skip, limit) => {
                 lang
                 value
               }
-              image {
-                small
-              }
+              image
             }
             title {
               lang
@@ -52,22 +50,13 @@ const getArticleById = async (id) => {
               lang
               value
             }
-            images {
-              primary {
-                medium
-              }
-              additional {
-                large
-              }
-            }
+            image
             author {
               name {
                 lang
                 value
               }
-              image {
-                small
-              }
+              image
             }
             languages
             date
@@ -94,8 +83,11 @@ const getArticleById = async (id) => {
 };
 
 const deleteArticle = async (id) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   const result = await client.mutate({
     variables: { id },
+    context: { headers: { token } },
     mutation: gql`
       mutation($id: ID!) {
         deleteNews(id: $id) {
@@ -128,50 +120,14 @@ const deleteArticle = async (id) => {
   return result.data.deleteNews;
 };
 
-const createArticle = async (news) => {
+const createArticle = async (news, upload) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
+    variables: { news, upload },
+    context: { headers: { token } },
     mutation: gql`
-      mutation($news: NewsInput!) {
-        addNews(news: $news) {
-          ... on News {
-            author {
-              name {
-                value
-              }
-            }
-          }
-          ... on Error {
-            message
-            statusCode
-          }
-        }
-      }
-    `,
-    fetchPolicy: 'no-cache',
-    variables: { news }
-  });
-  await client.resetStore();
-
-  if (result.data.addNews.message) {
-    throw new Error(
-      `${result.data.addNews.statusCode} ${
-        newsTranslations[result.data.addNews.message]
-      }`
-    );
-  }
-
-  return result.data.addNews;
-};
-
-const updateArticle = async (id, news) => {
-  const result = await client.mutate({
-    variables: {
-      id,
-      news
-    },
-    mutation: gql`
-      mutation($id: ID!, $news: NewsInput!) {
-        updateNews(id: $id, news: $news) {
+      mutation($news: NewsInput!, $upload: Upload) {
+        addNews(news: $news, upload: $upload) {
           ... on News {
             author {
               name {
@@ -187,6 +143,46 @@ const updateArticle = async (id, news) => {
       }
     `,
     fetchPolicy: 'no-cache'
+  });
+  await client.resetStore();
+
+  if (result.data.addNews.message) {
+    throw new Error(
+      `${result.data.addNews.statusCode} ${
+        newsTranslations[result.data.addNews.message]
+      }`
+    );
+  }
+
+  return result.data.addNews;
+};
+
+const updateArticle = async (id, news, upload) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+  const result = await client.mutate({
+    variables: {
+      id,
+      news,
+      upload
+    },
+    context: { headers: { token } },
+    mutation: gql`
+      mutation($id: ID!, $news: NewsInput!, $upload: Upload) {
+        updateNews(id: $id, news: $news, upload: $upload) {
+          ... on News {
+            author {
+              name {
+                value
+              }
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `
   });
   await client.resetStore();
 

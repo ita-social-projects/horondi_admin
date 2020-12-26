@@ -46,6 +46,8 @@ const buttonTitles = {
   CREATE_SLIDE_TITLE: 'Створити слайд',
   OPEN_SLIDE_EDIT: 'Увімкнути редагування',
   SAVE_SLIDE_ORDER: 'Зберегти зміни',
-  CANCEL_SLIDE_ORDER: 'Скасувати зміни'
+  CANCEL_SLIDE_ORDER: 'Скасувати зміни',
+  AUTHOR_PHOTO: 'Фото Автора',
+  MAIN_PHOTO: 'Головне Фото'
 };
 export default buttonTitles;

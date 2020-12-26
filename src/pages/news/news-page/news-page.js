@@ -12,7 +12,6 @@ import {
   deleteArticle,
   setCurrentPage
 } from '../../../redux/news/news.actions';
-
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -21,6 +20,7 @@ import LoadingBar from '../../../components/loading-bar';
 
 const { REMOVE_MESSAGE } = config.messages;
 const { CREATE_NEWS_TITLE } = config.buttonTitles;
+const { IMG_URL } = config;
 
 const pathToNewsAddPage = config.routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;
@@ -28,7 +28,7 @@ const tableTitles = config.tableHeadRowTitles.news;
 const NewsPage = () => {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
-
+  const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, pagesCount, currentPage, newsPerPage } = useSelector(
     ({ News }) => ({
@@ -39,8 +39,6 @@ const NewsPage = () => {
       newsPerPage: News.pagination.newsPerPage
     })
   );
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
@@ -67,6 +65,7 @@ const NewsPage = () => {
       ? list.map((newsItem, index) => (
         <TableContainerRow
           key={index}
+          image={IMG_URL + newsItem.author.image}
           id={newsItem.id}
           author={
             newsItem.title[0].value !== null
