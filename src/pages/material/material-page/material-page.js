@@ -132,6 +132,7 @@ const MaterialPage = () => {
         multiple
         id='tags-filled'
         options={colors}
+        value={filter.colors}
         disableCloseOnSelect
         getOptionLabel={(option) => option.name[0].value}
         renderTags={(value, getTagProps) =>
@@ -166,7 +167,7 @@ const MaterialPage = () => {
           />
         )}
         onChange={(e, value) => {
-          dispatch(setColorFilter(value.map((color) => color._id)));
+          dispatch(setColorFilter(value));
         }}
       />
       <div>

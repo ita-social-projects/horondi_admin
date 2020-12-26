@@ -37,26 +37,16 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const {
-  skip,
-  limit,
-  materialsPerPage,
-  filter
-} = config.materialPaginationPayload;
-
-export function* handleMaterialsLoad({
-  payload = {
-    filter,
-    skip,
-    limit,
-    materialsPerPage
-  }
-}) {
+export function* handleMaterialsLoad({ payload }) {
+  const filter = {
+    ...payload.filter,
+    colors: payload.filter.colors.map((el) => el._id)
+  };
   try {
     yield put(setMaterialLoading(true));
     const materials = yield call(
       getAllMaterials,
-      payload.filter,
+      filter,
       payload.skip,
       payload.limit
     );
