@@ -45,7 +45,6 @@ import HeaderAdd from '../pages/header/header-add';
 import HeaderDetails from '../pages/header/header-details';
 import ProductEdit from '../pages/products/product-edit';
 import MaterialDetails from '../pages/material/material-details/material-details';
-import MaterialColorPalette from '../pages/material/material-color-palette';
 import Orders from '../pages/orders/orders-page/orders-page';
 import StatisticPage from '../pages/statistic';
 import SlidesPage from '../pages/home-page-slides/slides-page';
@@ -115,11 +114,6 @@ const Routes = () => {
             path={routes.pathToMaterialDetails}
             exact
             component={MaterialDetails}
-          />
-          <Route
-            path={routes.pathToMaterialsColorPalette}
-            exact
-            component={MaterialColorPalette}
           />
           <Route
             path={routes.pathToAddMaterial}

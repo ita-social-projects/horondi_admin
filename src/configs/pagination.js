@@ -8,9 +8,3 @@ export const contactsPaginationPayload = {
   limit: 6,
   contactsPerPage: 7
 };
-
-export const materialPaginationPayload = {
-  skip: 0,
-  limit: 5,
-  materialsPerPage: 6
-};

@@ -5,9 +5,6 @@ const { languages } = config;
 
 const useMaterialHandlers = () => {
   const [tabsValue, setTabsValue] = useState(0);
-  const [colorImagesToUpload, setColorImagesToUpload] = useState([]);
-  const [colorImages, setColorImages] = useState([]);
-  const [colors, setColors] = useState([]);
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
@@ -38,26 +35,17 @@ const useMaterialHandlers = () => {
       ],
       available: values.available,
       purpose: values.purpose,
-      additionalPrice: +values.additionalPrice
+      additionalPrice: +values.additionalPrice,
+      color: values.color
     };
-    if (colors.length) {
-      newMaterial.colors = colors;
-    }
     return newMaterial;
   };
-  const addNewColorImages = (data) => {
-    setColorImages([...colorImages, data]);
-  };
+
   return {
     createMaterial,
     tabsValue,
     handleTabsChange,
-    colorImagesToUpload,
-    setColorImagesToUpload,
-    colorImages,
-    addNewColorImages,
-    setTabsValue,
-    setColors
+    setTabsValue
   };
 };
 

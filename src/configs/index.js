@@ -21,11 +21,7 @@ import {
 import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
-import {
-  newsPaginationPayload,
-  contactsPaginationPayload,
-  materialPaginationPayload
-} from './pagination';
+import { newsPaginationPayload, contactsPaginationPayload } from './pagination';
 import titles from './titles';
 import { sort } from './sort';
 import languages from './languages';
@@ -69,6 +65,10 @@ export const config = {
   iconSizes: {
     SMALL_SIZE: 'small',
     DEFAULT_SIZE: 'default'
+  },
+  colorCircleSizes: {
+    SMALL_CIRCLE: '25px',
+    DEFAULT_CIRCLE: '50px'
   },
   theme: {
     DARK_THEME: 'dark',
@@ -180,7 +180,6 @@ export const config = {
   errorMessages,
   newsPaginationPayload,
   contactsPaginationPayload,
-  materialPaginationPayload,
   modelErrorMessages,
   headerErrorMessages,
   statsErrorMessages,

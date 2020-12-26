@@ -2,9 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   dialogComponent: {
-    '& div': {
-      margin: 0
-    }
+    alignContent: 'start'
+  },
+  dialogTitleWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   dialogTitle: {
     '& h2': {
@@ -17,7 +19,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '1rem',
     cursor: 'pointer',
     '&:hover': {
-      border: '1px solid rgba(0,0,0,.5)'
+      backgroundColor: '#e8e8e8'
     }
   }
 }));

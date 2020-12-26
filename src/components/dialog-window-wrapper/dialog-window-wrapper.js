@@ -1,56 +1,49 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Tooltip
-} from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { showColorDialogWindow } from '../../redux/material/material.actions';
-import { useStyles } from './dialog-window-wrapper.style';
+import { Dialog, DialogContent, DialogTitle, Tooltip } from '@material-ui/core';
+import { useStyles } from './dialog-window-wrapper.styles';
+import { config } from '../../configs';
 
-export const DialogWindowForComponent = ({
-  dialogTitle,
-  buttonTitle,
-  component
-}) => {
-  const { isOpen } = useSelector(({ Material }) => ({
-    isOpen: Material.showColorDialogWindow
-  }));
-  const dispatch = useDispatch();
+const DialogWindowWrapper = ({ isOpen, handleClose, title, children }) => {
   const styles = useStyles();
-  const handleClose = () => {
-    dispatch(showColorDialogWindow(false));
-  };
 
   return (
     <Dialog
-      style={{ alignContent: 'start' }}
+      className={styles.dialogComponent}
       id='dialog-window'
       onClose={handleClose}
       open={isOpen}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div className={styles.dialogTitleWrapper}>
         <DialogTitle className={styles.dialogTitle} onClose={handleClose}>
-          {dialogTitle}
+          {title}
         </DialogTitle>
-        <Tooltip title={buttonTitle} placement='bottom'>
+        <Tooltip
+          title={config.buttonTitles.CLOSE_DIALOG_TITLE}
+          placement='bottom'
+        >
           <span className={styles.closeButton} onClick={handleClose}>
             &#215;
           </span>
         </Tooltip>
       </div>
-      <DialogContent className={styles.dialogComponent} dividers>
-        {component}
-      </DialogContent>
-      <DialogActions style={{ justifyContent: 'center' }} />
+      <DialogContent dividers>{children}</DialogContent>
     </Dialog>
   );
 };
-DialogWindowForComponent.propTypes = {
-  dialogTitle: PropTypes.string.isRequired,
-  buttonTitle: PropTypes.string.isRequired,
-  component: PropTypes.element.isRequired
+
+DialogWindowWrapper.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ])
 };
+
+DialogWindowWrapper.defaultProps = {
+  children: null
+};
+
+export default DialogWindowWrapper;

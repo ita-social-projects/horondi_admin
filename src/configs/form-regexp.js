@@ -5,11 +5,12 @@ const formRegExp = {
   pass: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
   unwrapHtml: /(<([^>]+)>)/gi,
   enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
-  onlyPositiveDigits: /^[1-9]\d*$/,
+  onlyPositiveDigits: /^[0-9]\d*$/,
   editorField: /^<p><br><\/p>|<p><\/p>$/,
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
   userName: /[а-яА-Я]{2,}/g,
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
-  userStatuses: /(Активний|Неактивний)/g
+  userStatuses: /(Активний|Неактивний)/g,
+  hexString: /^#[0-9a-f]{3,6}$/i
 };
 export default formRegExp;
