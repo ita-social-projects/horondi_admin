@@ -21,7 +21,8 @@ import {
   mockArticle,
   pagesCount,
   statuses,
-  mockError
+  mockError,
+  mockFile
 } from './news.variables';
 
 import {
@@ -108,13 +109,15 @@ describe('Test news sagas', () => {
       }));
 
   it('should add news', () =>
-    expectSaga(handleAddNews, { payload: mockArticle })
+    expectSaga(handleAddNews, {
+      payload: { article: mockArticle, upload: mockFile }
+    })
       .withReducer(combineReducers({ News, Snackbar }), {
         News: mockNewsState,
         Snackbar: mockSnackbarState
       })
       .put(setNewsLoading(true))
-      .provide([[call(createArticle, mockArticle)]])
+      .provide([[call(createArticle, mockArticle, mockFile)]])
       .put(setSnackBarSeverity('success'))
       .put(setSnackBarMessage(SUCCESS_ADD_STATUS))
       .put(setSnackBarStatus(true))
@@ -179,14 +182,14 @@ describe('Test news sagas', () => {
 
   it('should update article', () =>
     expectSaga(handleNewsUpdate, {
-      payload: { id: mockId, newArticle: mockArticle }
+      payload: { id: mockId, newArticle: mockArticle, upload: mockFile }
     })
       .withReducer(combineReducers({ News, Snackbar }), {
         News: mockNewsState,
         Snackbar: mockSnackbarState
       })
       .put(setNewsLoading(true))
-      .provide([[call(updateArticle, mockId, mockArticle)]])
+      .provide([[call(updateArticle, mockId, mockArticle, mockFile)]])
       .put(setSnackBarSeverity('success'))
       .put(setSnackBarMessage(SUCCESS_UPDATE_STATUS))
       .put(setSnackBarStatus(true))
