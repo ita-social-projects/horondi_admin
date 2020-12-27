@@ -9,7 +9,7 @@ import {
   setCategoryLoading
 } from '../categories.actions.js';
 
-import { categories, category, error } from './category.variables';
+import { categories, error } from './category.variables';
 
 describe('Categories reducer tests', () => {
   it('should return default state', () => {
