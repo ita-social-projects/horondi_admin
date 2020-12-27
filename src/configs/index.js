@@ -50,9 +50,7 @@ export const config = {
         small: '',
         thumbnail: ''
       },
-      isMain: false,
-      name: [],
-      subcategories: []
+      name: []
     }
   },
   userRoles: [

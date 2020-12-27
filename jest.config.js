@@ -1,8 +1,8 @@
 module.exports = {
   testEnvironment: 'jsdom',
   verbose: true,
-  testPathIgnorePatterns: ['cypress'],
-  modulePathIgnorePatterns: ['cypress'],
+  testPathIgnorePatterns: ['cypress', './scr/configs'],
+  modulePathIgnorePatterns: ['cypress', './scr/configs'],
   coverageThreshold: {
     global: {
       branches: 0,
@@ -10,5 +10,8 @@ module.exports = {
       lines: 0,
       statements: 0
     }
-  }
+  },
+  testResultsProcessor: 'jest-sonar-reporter',
+  collectCoverage: true,
+  coveragePathIgnorePatterns: ['/node_modules/', 'cypress']
 };

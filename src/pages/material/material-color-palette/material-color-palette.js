@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
 import { Typography } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
@@ -10,7 +9,7 @@ import { materialTranslations } from '../../../translations/material.translation
 import { config } from '../../../configs';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './material-color-palette-style';
-import { SaveButton } from '../../../components/buttons';
+import { BackButton, SaveButton } from '../../../components/buttons';
 import {
   getMaterialColor,
   getMaterialColors,
@@ -26,7 +25,6 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 
 const tableTitles = config.tableHeadRowTitles.materialColors;
 const { REMOVE_MATERIAL_COLOR_MESSAGE } = config.messages;
-const { REMOVE_COLOR_TITLE } = config.buttonTitles;
 const MaterialColorPalette = ({ match }) => {
   const materialId = match.params.id;
   const styles = useStyles();
@@ -58,13 +56,7 @@ const MaterialColorPalette = ({ match }) => {
       );
     };
 
-    openSuccessSnackbar(
-      removeColor,
-      REMOVE_COLOR_TITLE,
-      REMOVE_MATERIAL_COLOR_MESSAGE,
-      REMOVE_COLOR_TITLE,
-      'danger'
-    );
+    openSuccessSnackbar(removeColor, REMOVE_MATERIAL_COLOR_MESSAGE, 'danger');
   };
   const colorEditHandler = (code) => {
     dispatch(getMaterialColor(code));
@@ -73,9 +65,6 @@ const MaterialColorPalette = ({ match }) => {
   const colorClickHandler = () => {
     dispatch(showColorDialogWindow(true));
     dispatch(setEditMaterialId(materialId));
-  };
-  const colorPaletteClickHandler = () => {
-    dispatch(push(`/materials/${materialId}`));
   };
   const materialColorItems = colors
     ? colors.colors.map((colorItem) => (
@@ -112,15 +101,7 @@ const MaterialColorPalette = ({ match }) => {
         {config.titles.materialColorPaletteTitle.mainPageTitle}
       </Typography>
       <div className={styles.tableNav}>
-        <SaveButton
-          className={styles.returnButton}
-          data-cy='go-to-material'
-          type='button'
-          color='primary'
-          variant='outlined'
-          title={config.buttonTitles.GO_BACK_TITLE}
-          onClickHandler={colorPaletteClickHandler}
-        />
+        <BackButton />
         <SaveButton
           className={styles.saveButton}
           data-cy='open-dialog'

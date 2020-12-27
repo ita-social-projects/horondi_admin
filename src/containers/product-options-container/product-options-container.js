@@ -20,7 +20,7 @@ import {
   Tooltip
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import useStyles from './product-options-container.styles';
+import { useStyles } from './product-options-container.styles';
 
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';

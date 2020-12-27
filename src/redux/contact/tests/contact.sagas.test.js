@@ -37,7 +37,7 @@ import {
   updateContact
 } from '../contact.operations';
 import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
-import contactReducer from '../contact.reducer';
+import { contactsReducer } from '../contact.reducer';
 import { config } from '../../../configs';
 
 const {
@@ -49,7 +49,7 @@ const {
 describe('Contact sagas tests', () => {
   it('Should receive all contacts and set them to store', () =>
     expectSaga(handleContactsLoad, { payload })
-      .withReducer(contactReducer)
+      .withReducer(contactsReducer)
       .provide([[call(getContacts, payload.skip, payload.limit), contactRes]])
       .put(setContactsLoading(true))
       .put(
@@ -74,7 +74,7 @@ describe('Contact sagas tests', () => {
 
   it('Should receive single contact and set to store', () =>
     expectSaga(handleContactLoad, { payload: contact._id })
-      .withReducer(contactReducer)
+      .withReducer(contactsReducer)
       .provide([[call(getContactById, contact._id), contact]])
       .put(setContactsLoading(true))
       .put(setContact(contact))
@@ -94,7 +94,7 @@ describe('Contact sagas tests', () => {
 
   it('Should add single contact and set to store', () =>
     expectSaga(handleAddContact, { payload: newContact })
-      .withReducer(contactReducer)
+      .withReducer(contactsReducer)
       .provide([
         [call(addContact, newContact.newContact, newContact.mapImages)],
         [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
@@ -118,7 +118,7 @@ describe('Contact sagas tests', () => {
 
   it('Should delete contact and remove it from store', () =>
     expectSaga(handleContactDelete, { payload: contact._id })
-      .withReducer(contactReducer)
+      .withReducer(contactsReducer)
       .provide([
         [call(deleteContact, contact._id)],
         [call(getContacts, payload.skip, payload.limit), contactRes],
@@ -150,7 +150,7 @@ describe('Contact sagas tests', () => {
     expectSaga(handleContactUpdate, {
       payload: { id: contact._id, updatedContact, mapImages: [] }
     })
-      .withReducer(contactReducer)
+      .withReducer(contactsReducer)
       .provide([
         [call(updateContact, contact._id, updatedContact, [])],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
@@ -173,7 +173,7 @@ describe('Contact sagas tests', () => {
 
   it('Should handle error', () =>
     expectSaga(handleContactsError, error)
-      .withReducer(contactReducer)
+      .withReducer(contactsReducer)
       .provide([[call(handleSuccessSnackbar, error.message)]])
       .put(setContactsLoading(false))
       .put(setContactsError({ e: error }))

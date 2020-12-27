@@ -9,18 +9,16 @@ import {
   Tab,
   AppBar,
   Tabs,
-  Button,
   Select,
   FormControl,
   InputLabel,
   Avatar
 } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 import { Image } from '@material-ui/icons';
 import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
-import { SaveButton } from '../buttons';
+import { BackButton, SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
 import { config } from '../../configs';
 import { addModel, updateModel } from '../../redux/model/model.actions';
@@ -29,15 +27,19 @@ import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
 import Editor from '../editor';
 import useBusinessHandlers from '../../utils/use-business-handlers';
+import {
+  setSnackBarMessage,
+  setSnackBarSeverity,
+  setSnackBarStatus
+} from '../../redux/snackbar/snackbar.actions';
 
 const {
   MODEL_VALIDATION_ERROR,
-  MODEL_ERROR_MESSAGE
+  MODEL_ERROR_MESSAGE,
+  PHOTO_NOT_PROVIDED
 } = config.modelErrorMessages;
 
-const { routes } = config;
-
-const ModelForm = ({ model, id }) => {
+const ModelForm = ({ model, id, isEdit }) => {
   const { enSetText, setFiles, languages } = useBusinessHandlers();
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -74,7 +76,7 @@ const ModelForm = ({ model, id }) => {
   });
 
   const { categories } = useSelector(({ Categories }) => ({
-    categories: Categories.categories.filter((result) => result.isMain)
+    categories: Categories.categories
   }));
 
   const [category, setCategory] = useState(model.category._id || '');
@@ -109,11 +111,21 @@ const ModelForm = ({ model, id }) => {
     },
     onSubmit: () => {
       const newModel = createModel(values);
-      if (model && model.category) {
-        dispatch(updateModel({ id, model: newModel, image: upload }));
+      if (upload instanceof File || model.images.thumbnail) {
+        if (isEdit && upload instanceof File) {
+          dispatch(updateModel({ id, model: newModel, image: upload }));
+          return;
+        }
+        if (isEdit) {
+          dispatch(updateModel({ id, model: newModel }));
+          return;
+        }
+        dispatch(addModel({ model: newModel, image: upload }));
         return;
       }
-      dispatch(addModel({ model: newModel, image: upload }));
+      dispatch(setSnackBarSeverity('error'));
+      dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
+      dispatch(setSnackBarStatus(true));
     }
   });
 
@@ -251,18 +263,7 @@ const ModelForm = ({ model, id }) => {
             </Paper>
           </TabPanel>
         ))}
-
-        <Button
-          id='contactsBack'
-          component={Link}
-          to={routes.pathToModels}
-          variant='outlined'
-          color='primary'
-          className={styles.returnButton}
-          data-cy='goBackButton'
-        >
-          {config.buttonTitles.GO_BACK_TITLE}
-        </Button>
+        <BackButton />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'
@@ -321,7 +322,8 @@ ModelForm.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
-  })
+  }),
+  isEdit: PropTypes.bool
 };
 ModelForm.defaultProps = {
   id: '',
@@ -353,7 +355,8 @@ ModelForm.defaultProps = {
     category: '',
     show: false,
     priority: 1
-  }
+  },
+  isEdit: false
 };
 
 export default ModelForm;

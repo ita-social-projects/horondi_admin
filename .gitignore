@@ -6,7 +6,7 @@
 /coverage
 /.vscode
 .pnp.js
-
+test-report.xml
 # testing
 /coverage
 cypress.json
@@ -20,11 +20,11 @@ cypress.json
 .env
 .env.local
 .env.development.local
+.env.test
 .env.test.local
 .env.production.local
 package-lock.json
 *.env.json
-package-lock.json
 
 debug.log
 npm-debug.log*

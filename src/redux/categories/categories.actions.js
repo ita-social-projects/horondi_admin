@@ -1,36 +1,68 @@
 import {
   GET_CATEGORIES,
   SET_CATEGORIES,
-  SET_CATEGORIES_ERROR,
-  SET_CATEGORIES_LOADING,
-  GET_CATEGORY,
+  SET_CATEGORY_LOADING,
   DELETE_CATEGORY,
-  CREATE_CATEGORY,
+  ADD_CATEGORY,
+  GET_CATEGORY,
   SET_CATEGORY,
-  RESET_NEW_CATEGORY,
-  EDIT_CATEGORY,
-  GET_SUBCATEGORIES,
+  UPDATE_CATEGORY,
+  SET_CATEGORY_ERROR,
+  SET_CATEGORIES_CURRENT_PAGE,
+  SET_CATEGORIES_PER_PAGE,
+  SET_CATEGORIES_PAGES_COUNT,
+  REMOVE_CATEGORY_FROM_STORE,
   TOGGLE_CATEGORY_DELETE_DIALOG,
   SET_CATEGORY_DELETE_ID,
   SET_CATEGORY_SWITCH_ID
 } from './categories.types';
-
-export const getCategories = () => ({
-  type: GET_CATEGORIES
-});
 
 export const setCategories = (payload) => ({
   type: SET_CATEGORIES,
   payload
 });
 
-export const setCategoriesLoading = (payload) => ({
-  type: SET_CATEGORIES_LOADING,
+export const setCategoriesCurrentPage = (payload) => ({
+  type: SET_CATEGORIES_CURRENT_PAGE,
   payload
 });
 
-export const setCategoriesError = (payload) => ({
-  type: SET_CATEGORIES_ERROR,
+export const setCategoriesPerPage = (payload) => ({
+  type: SET_CATEGORIES_PER_PAGE,
+  payload
+});
+
+export const setPagesCount = (payload) => ({
+  type: SET_CATEGORIES_PAGES_COUNT,
+  payload
+});
+
+export const getCategories = (payload) => ({
+  type: GET_CATEGORIES,
+  payload
+});
+
+export const deleteCategory = () => ({
+  type: DELETE_CATEGORY
+});
+
+export const addCategory = (payload) => ({
+  type: ADD_CATEGORY,
+  payload
+});
+
+export const setCategoryLoading = (payload) => ({
+  type: SET_CATEGORY_LOADING,
+  payload
+});
+
+export const updateCategory = (payload) => ({
+  type: UPDATE_CATEGORY,
+  payload
+});
+
+export const setCategory = (payload) => ({
+  type: SET_CATEGORY,
   payload
 });
 
@@ -39,31 +71,13 @@ export const getCategory = (payload) => ({
   payload
 });
 
-export const createCategory = (category) => ({
-  type: CREATE_CATEGORY,
-  payload: category
-});
-
-export const setCategory = (payload) => ({
-  type: SET_CATEGORY,
+export const setCategoryError = (payload) => ({
+  type: SET_CATEGORY_ERROR,
   payload
 });
 
-export const resetNewCategory = () => ({
-  type: RESET_NEW_CATEGORY
-});
-
-export const editCategory = (payload) => ({
-  type: EDIT_CATEGORY,
-  payload
-});
-
-export const deleteCategory = () => ({
-  type: DELETE_CATEGORY
-});
-
-export const getSubcategories = (payload) => ({
-  type: GET_SUBCATEGORIES,
+export const removeCategoryFromStore = (payload) => ({
+  type: REMOVE_CATEGORY_FROM_STORE,
   payload
 });
 

@@ -24,8 +24,7 @@ const mockColors = [
 
 const mockCategory = {
   _id: 'ddc81f5dbac48c38d0403dd3',
-  name: [{ value: 'Рюкзаки' }, { value: 'Backpacks' }],
-  isMain: true
+  name: [{ value: 'Рюкзаки' }, { value: 'Backpacks' }]
 };
 
 const productModel = {
@@ -139,8 +138,7 @@ const mockCategoriesList = [
         lang: 'en',
         value: 'Backpacks'
       }
-    ],
-    isMain: true
+    ]
   },
   {
     _id: '54c1cfb719f3bb97c28d762e',
@@ -153,8 +151,7 @@ const mockCategoriesList = [
         lang: 'en',
         value: 'Bags'
       }
-    ],
-    isMain: true
+    ]
   }
 ];
 

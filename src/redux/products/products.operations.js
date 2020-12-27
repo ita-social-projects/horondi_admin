@@ -77,7 +77,6 @@ const getAllProducts = async (productsState, tableState) => {
               name {
                 value
               }
-              isMain
             }
             isHotItem
           }
@@ -143,7 +142,6 @@ const getAllFilters = async () => {
               name {
                 value
               }
-              isMain
             }
             options {
               additions {
@@ -175,7 +173,6 @@ const getProductCategories = async () => {
             lang
             value
           }
-          isMain
         }
       }
     `
