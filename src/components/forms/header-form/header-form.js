@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Tab, AppBar, Tabs } from '@material-ui/core';
 import * as Yup from 'yup';
-import useHeaderHandlers from '../../utils/use-header-handlers';
+import useHeaderHandlers from '../../../utils/use-header-handlers';
 import { useStyles } from './header-form.styles';
-import { BackButton, SaveButton } from '../buttons';
-import TabPanel from '../tab-panel';
-import { config } from '../../configs';
-import { addHeader, updateHeader } from '../../redux/header/header.actions';
+import { BackButton, SaveButton } from '../../buttons';
+import TabPanel from '../../tab-panel';
+import { config } from '../../../configs';
+import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 
 const {
   HEADER_VALIDATION_ERROR,

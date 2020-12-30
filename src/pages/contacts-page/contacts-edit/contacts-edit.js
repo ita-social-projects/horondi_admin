@@ -11,7 +11,7 @@ import {
   updateContact
 } from '../../../redux/contact/contact.actions';
 
-import ContactsForm from '../../../components/contacts-form';
+import ContactsForm from '../../../components/forms/contacts-form';
 
 const { languages } = config;
 

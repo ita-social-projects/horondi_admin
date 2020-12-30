@@ -12,20 +12,20 @@ import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import useBusinessHandlers from '../../utils/use-business-handlers';
-import Editor from '../editor';
+import useBusinessHandlers from '../../../utils/use-business-handlers';
+import Editor from '../../editor';
 import { useStyles } from './business-page-form.styles';
-import { SaveButton, BackButton } from '../buttons';
-import TabPanel from '../tab-panel';
-import LoadingBar from '../loading-bar';
+import { SaveButton, BackButton } from '../../buttons';
+import TabPanel from '../../tab-panel';
+import LoadingBar from '../../loading-bar';
 
 import {
   addBusinessPage,
   getBusinessPageById,
   updateBusinessPage
-} from '../../redux/business-pages/business-pages.actions';
-import { config } from '../../configs';
-import { useCommonStyles } from '../../pages/common.styles';
+} from '../../../redux/business-pages/business-pages.actions';
+import { config } from '../../../configs';
+import { useCommonStyles } from '../../../pages/common.styles';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();

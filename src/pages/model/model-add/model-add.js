@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStyles } from './model-add.styles';
-import ModelForm from '../../../components/model-form';
+import ModelForm from '../../../components/forms/model-form';
 
 const ModelAdd = () => {
   const styles = useStyles();

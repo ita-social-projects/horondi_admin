@@ -10,7 +10,7 @@ import SnackbarItem from '../components/snackbar';
 import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login';
 import BusinessPageList from '../pages/business-pages';
-import BusinessPageForm from '../components/business-page-form';
+import BusinessPageForm from '../components/forms/business-page-form';
 import ErrorPage from '../pages/error-page';
 import { config } from '../configs';
 import { history } from '../store/store';
@@ -51,7 +51,7 @@ import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
 import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
-import NewsForm from '../components/news-form';
+import NewsForm from '../components/forms/news-form';
 
 const { routes } = config;
 

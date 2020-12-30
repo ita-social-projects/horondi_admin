@@ -10,15 +10,15 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { Image } from '@material-ui/icons';
-import { config } from '../../configs';
-import { BackButton, SaveButton } from '../buttons';
+import { config } from '../../../configs';
+import { BackButton, SaveButton } from '../../buttons';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
   setSnackBarMessage
-} from '../../redux/snackbar/snackbar.actions';
+} from '../../../redux/snackbar/snackbar.actions';
 import { useStyles } from './contacts-form.style';
-import ImageUploadContainer from '../../containers/image-upload-container';
+import ImageUploadContainer from '../../../containers/image-upload-container';
 
 const {
   PHONE_NUMBER_LENGTH_MESSAGE,

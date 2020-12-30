@@ -13,19 +13,22 @@ import {
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
-import usePatternHandlers from '../../utils/use-pattern-handlers';
+import usePatternHandlers from '../../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
-import { BackButton, SaveButton } from '../buttons';
-import TabPanel from '../tab-panel';
-import { config } from '../../configs';
-import { addPattern, updatePattern } from '../../redux/pattern/pattern.actions';
-import CheckboxOptions from '../checkbox-options';
-import ImageUploadContainer from '../../containers/image-upload-container';
+import { BackButton, SaveButton } from '../../buttons';
+import TabPanel from '../../tab-panel';
+import { config } from '../../../configs';
+import {
+  addPattern,
+  updatePattern
+} from '../../../redux/pattern/pattern.actions';
+import CheckboxOptions from '../../checkbox-options';
+import ImageUploadContainer from '../../../containers/image-upload-container';
 import {
   setSnackBarMessage,
   setSnackBarSeverity,
   setSnackBarStatus
-} from '../../redux/snackbar/snackbar.actions';
+} from '../../../redux/snackbar/snackbar.actions';
 
 const {
   PATTERN_VALIDATION_ERROR,

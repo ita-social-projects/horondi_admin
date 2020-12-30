@@ -14,10 +14,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
-import TabPanel from '../tab-panel';
-import { BackButton, SaveButton } from '../buttons';
-import LoadingBar from '../loading-bar';
-import useMaterialHandlers from '../../utils/use-material-handlers';
+import TabPanel from '../../tab-panel';
+import { BackButton, SaveButton } from '../../buttons';
+import LoadingBar from '../../loading-bar';
+import useMaterialHandlers from '../../../utils/use-material-handlers';
 import { useStyles } from './material-form.styles';
 import {
   addMaterial,
@@ -25,16 +25,16 @@ import {
   showColorDialogWindow,
   setMaterialColor,
   setEditMaterialId
-} from '../../redux/material/material.actions';
-import { config } from '../../configs';
-import CheckboxOptions from '../checkbox-options';
-import CreateColor from '../../pages/material/create-color';
-import DialogWindowWrapper from '../dialog-window-wrapper';
+} from '../../../redux/material/material.actions';
+import { config } from '../../../configs';
+import CheckboxOptions from '../../checkbox-options';
+import CreateColor from '../../../pages/material/create-color';
+import DialogWindowWrapper from '../../dialog-window-wrapper';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
   setSnackBarMessage
-} from '../../redux/snackbar/snackbar.actions';
+} from '../../../redux/snackbar/snackbar.actions';
 
 const { languages } = config;
 const {

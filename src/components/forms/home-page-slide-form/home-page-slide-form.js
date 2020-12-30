@@ -16,16 +16,16 @@ import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 import { Image } from '@material-ui/icons';
 import { useStyles } from './home-page-slide-form.styles';
-import { config } from '../../configs';
-import useHomePageSlideHandlers from '../../utils/use-home-page-slide-handlers';
-import CheckboxOptions from '../checkbox-options';
-import ImageUploadContainer from '../../containers/image-upload-container';
-import TabPanel from '../tab-panel';
-import { BackButton, SaveButton } from '../buttons';
+import { config } from '../../../configs';
+import useHomePageSlideHandlers from '../../../utils/use-home-page-slide-handlers';
+import CheckboxOptions from '../../checkbox-options';
+import ImageUploadContainer from '../../../containers/image-upload-container';
+import TabPanel from '../../tab-panel';
+import { BackButton, SaveButton } from '../../buttons';
 import {
   addSlide,
   updateSlide
-} from '../../redux/home-page-slides/home-page-slides.actions';
+} from '../../../redux/home-page-slides/home-page-slides.actions';
 
 const { languages } = config;
 

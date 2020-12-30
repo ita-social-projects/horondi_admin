@@ -16,22 +16,22 @@ import {
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
-import useModelHandlers from '../../utils/use-model-handlers';
+import useModelHandlers from '../../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
-import { BackButton, SaveButton } from '../buttons';
-import TabPanel from '../tab-panel';
-import { config } from '../../configs';
-import { addModel, updateModel } from '../../redux/model/model.actions';
-import { getCategories } from '../../redux/categories/categories.actions';
-import CheckboxOptions from '../checkbox-options';
-import ImageUploadContainer from '../../containers/image-upload-container';
-import Editor from '../editor';
-import useBusinessHandlers from '../../utils/use-business-handlers';
+import { BackButton, SaveButton } from '../../buttons';
+import TabPanel from '../../tab-panel';
+import { config } from '../../../configs';
+import { addModel, updateModel } from '../../../redux/model/model.actions';
+import { getCategories } from '../../../redux/categories/categories.actions';
+import CheckboxOptions from '../../checkbox-options';
+import ImageUploadContainer from '../../../containers/image-upload-container';
+import Editor from '../../editor';
+import useBusinessHandlers from '../../../utils/use-business-handlers';
 import {
   setSnackBarMessage,
   setSnackBarSeverity,
   setSnackBarStatus
-} from '../../redux/snackbar/snackbar.actions';
+} from '../../../redux/snackbar/snackbar.actions';
 
 const {
   MODEL_VALIDATION_ERROR,

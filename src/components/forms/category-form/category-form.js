@@ -13,22 +13,22 @@ import {
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
-import useCategoryHandlers from '../../utils/use-category-handlers';
+import useCategoryHandlers from '../../../utils/use-category-handlers';
 import { useStyles } from './category-form.styles';
-import { BackButton, SaveButton } from '../buttons';
-import TabPanel from '../tab-panel';
-import { config } from '../../configs';
+import { BackButton, SaveButton } from '../../buttons';
+import TabPanel from '../../tab-panel';
+import { config } from '../../../configs';
 import {
   addCategory,
   updateCategory
-} from '../../redux/categories/categories.actions';
-import ImageUploadContainer from '../../containers/image-upload-container';
-import { categoryTranslations } from '../../translations/category.translations';
+} from '../../../redux/categories/categories.actions';
+import ImageUploadContainer from '../../../containers/image-upload-container';
+import { categoryTranslations } from '../../../translations/category.translations';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
   setSnackBarMessage
-} from '../../redux/snackbar/snackbar.actions';
+} from '../../../redux/snackbar/snackbar.actions';
 
 const {
   CATEGORY_VALIDATION_ERROR,

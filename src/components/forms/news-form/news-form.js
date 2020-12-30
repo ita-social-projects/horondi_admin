@@ -14,18 +14,18 @@ import {
 import { Image } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useStyles } from './news-form.styles';
-import { SaveButton, StandardButton } from '../buttons';
-import useNewsHandlers from '../../utils/use-news-handlers';
-import TabPanel from '../tab-panel';
-import { config } from '../../configs';
+import { SaveButton, StandardButton } from '../../buttons';
+import useNewsHandlers from '../../../utils/use-news-handlers';
+import TabPanel from '../../tab-panel';
+import { config } from '../../../configs';
 import {
   addArticle,
   getArticle,
   updateArticle
-} from '../../redux/news/news.actions';
-import ImageUploadContainer from '../../containers/image-upload-container';
-import Editor from '../editor/editor';
-import LoadingBar from '../loading-bar';
+} from '../../../redux/news/news.actions';
+import ImageUploadContainer from '../../../containers/image-upload-container';
+import Editor from '../../editor/editor';
+import LoadingBar from '../../loading-bar';
 
 const NewsForm = ({ id, editMode }) => {
   const styles = useStyles();

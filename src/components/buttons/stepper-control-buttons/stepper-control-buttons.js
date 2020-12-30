@@ -6,8 +6,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Box, Button, Grid } from '@material-ui/core';
 import { useStyles } from './stepper-control-buttons.styles';
 
-import { config } from '../../configs';
-import { productsTranslations } from '../../translations/product.translations';
+import { config } from '../../../configs';
+import { productsTranslations } from '../../../translations/product.translations';
 
 const { stepsLabels } = config.labels.product;
 const { NEXT, CREATE_PRODUCT, BACK } = productsTranslations;

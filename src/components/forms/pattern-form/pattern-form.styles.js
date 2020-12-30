@@ -1,39 +1,39 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { formStyles } from '../../configs/styles';
+import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
     details,
-    returnButton,
-    saveButton,
-    textField,
-    controlsBlock,
-    tabs,
-    large,
-    attachFile,
-    imageUpload,
-    itemUpdate,
     inputError,
+    imageName,
+    saveButton,
+    tabs,
+    controlsBlock,
+    attachFile,
+    large,
+    returnButton,
+    imageUpload,
+    textField,
     imageUploadAvatar,
-    imageName
+    itemUpdate
   } = formStyles(theme);
   return {
-    modelItemUpdate: {
+    patternItemUpdate: {
       ...itemUpdate
     },
-    modelDetails: {
+    patternDetails: {
       ...details
     },
-    returnButton,
-    saveButton,
-    textField,
-    controlsBlock,
-    tabs,
-    large,
-    attachFile,
-    imageUpload,
+    imageName,
     inputError,
+    textField,
+    imageUpload,
+    saveButton,
+    returnButton,
+    attachFile,
+    large,
+    tabs,
     imageUploadAvatar,
-    imageName
+    controlsBlock
   };
 });
