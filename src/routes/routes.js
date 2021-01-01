@@ -150,11 +150,7 @@ const Routes = () => {
           />
           <Route path={routes.pathToContacts} exact component={ContactsPage} />
           <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
-          <Route
-            path={routes.pathToContactsEdit}
-            exact
-            render={({ match }) => <ContactsEdit id={match.params.id} />}
-          />
+          <Route path={routes.pathToContactsEdit} exact />
           <Route path={routes.pathToAddModel} exact component={ModelAdd} />
           <Route
             path={routes.pathToModelDetails}
