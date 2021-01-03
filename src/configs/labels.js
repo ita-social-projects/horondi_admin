@@ -45,6 +45,7 @@ const labels = {
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',
+    constructorImgText: 'Фото для конструктора',
     form: {
       name: mapToLanguages("І'мя", 'Name'),
       description: mapToLanguages('Опис', 'Description')
