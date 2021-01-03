@@ -10,36 +10,36 @@ export const getAllModels = async (skip, limit) => {
       limit
     },
     query: gql`
-      query($skip: Int, $limit: Int) {
-        getAllModels(skip: $skip, limit: $limit) {
-          items {
-            _id
-            name {
-              lang
-              value
+        query($skip: Int, $limit: Int) {
+            getAllModels(skip: $skip, limit: $limit) {
+                items {
+                    _id
+                    name {
+                        lang
+                        value
+                    }
+                    category {
+                        name {
+                            value
+                            lang
+                        }
+                    }
+                    images {
+                        large
+                        medium
+                        small
+                        thumbnail
+                    }
+                    priority
+                    show
+                    description {
+                        value
+                        lang
+                    }
+                }
+                count
             }
-            category {
-              name {
-                value
-                lang
-              }
-            }
-            images {
-              large
-              medium
-              small
-              thumbnail
-            }
-            priority
-            show
-            description {
-              value
-              lang
-            }
-          }
-          count
         }
-      }
     `
   });
   client.resetStore();
@@ -51,40 +51,53 @@ export const getModelById = async (id) => {
   const result = await client.query({
     variables: { id },
     query: gql`
-      query($id: ID!) {
-        getModelById(id: $id) {
-          ... on Model {
-            _id
-            name {
-              lang
-              value
+        query($id: ID!) {
+            getModelById(id: $id) {
+                ... on Model {
+                    _id
+                    name {
+                        lang
+                        value
+                    }
+                    category {
+                        _id
+                        name {
+                            value
+                            lang
+                        }
+                    }
+                    images {
+                        large
+                        medium
+                        small
+                        thumbnail
+                    }
+                    priority
+                    show
+                    availableForConstructor
+                    description {
+                        value
+                        lang
+                    }
+                    constructorBasic{
+                        _id
+                    }
+                    constructorPattern{
+                        _id
+                    }
+                    constructorFrontPocket{
+                        _id
+                    }
+                    constructorBottom{
+                        _id
+                    }
+                }
+                ... on Error {
+                    message
+                    statusCode
+                }
             }
-            category {
-              _id
-              name {
-                value
-                lang
-              }
-            }
-            images {
-              large
-              medium
-              small
-              thumbnail
-            }
-            priority
-            show
-            description {
-              value
-              lang
-            }
-          }
-          ... on Error {
-            message
-            statusCode
-          }
         }
-      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -107,17 +120,17 @@ export const deleteModel = async (id) => {
     variables: { id },
     context: { headers: { token } },
     mutation: gql`
-      mutation($id: ID!) {
-        deleteModel(id: $id) {
-          ... on Model {
-            _id
-          }
-          ... on Error {
-            message
-            statusCode
-          }
+        mutation($id: ID!) {
+            deleteModel(id: $id) {
+                ... on Model {
+                    _id
+                }
+                ... on Error {
+                    message
+                    statusCode
+                }
+            }
         }
-      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -143,39 +156,39 @@ export const createModel = async (payload) => {
     variables: payload,
 
     mutation: gql`
-      mutation($model: ModelInput!, $image: Upload) {
-        addModel(model: $model, upload: $image) {
-          ... on Model {
-            _id
-            name {
-              lang
-              value
+        mutation($model: ModelInput!, $image: Upload) {
+            addModel(model: $model, upload: $image) {
+                ... on Model {
+                    _id
+                    name {
+                        lang
+                        value
+                    }
+                    category {
+                        name {
+                            value
+                            lang
+                        }
+                    }
+                    images {
+                        large
+                        medium
+                        small
+                        thumbnail
+                    }
+                    priority
+                    show
+                    description {
+                        value
+                        lang
+                    }
+                }
+                ... on Error {
+                    message
+                    statusCode
+                }
             }
-            category {
-              name {
-                value
-                lang
-              }
-            }
-            images {
-              large
-              medium
-              small
-              thumbnail
-            }
-            priority
-            show
-            description {
-              value
-              lang
-            }
-          }
-          ... on Error {
-            message
-            statusCode
-          }
         }
-      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -198,39 +211,39 @@ export const updateModel = async (payload) => {
     context: { headers: { token } },
     variables: { id, model, image },
     mutation: gql`
-      mutation($id: ID!, $model: ModelInput!, $image: Upload) {
-        updateModel(id: $id, model: $model, upload: $image) {
-          ... on Model {
-            _id
-            name {
-              lang
-              value
+        mutation($id: ID!, $model: ModelInput!, $image: Upload) {
+            updateModel(id: $id, model: $model, upload: $image) {
+                ... on Model {
+                    _id
+                    name {
+                        lang
+                        value
+                    }
+                    category {
+                        name {
+                            value
+                            lang
+                        }
+                    }
+                    images {
+                        large
+                        medium
+                        small
+                        thumbnail
+                    }
+                    priority
+                    show
+                    description {
+                        value
+                        lang
+                    }
+                }
+                ... on Error {
+                    message
+                    statusCode
+                }
             }
-            category {
-              name {
-                value
-                lang
-              }
-            }
-            images {
-              large
-              medium
-              small
-              thumbnail
-            }
-            priority
-            show
-            description {
-              value
-              lang
-            }
-          }
-          ... on Error {
-            message
-            statusCode
-          }
         }
-      }
     `,
     fetchPolicy: 'no-cache'
   });

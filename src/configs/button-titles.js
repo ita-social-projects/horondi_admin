@@ -5,6 +5,7 @@ const buttonTitles = {
   CREATE_PATTERN_TITLE: 'Додати гобелен',
   CREATE_MODEL_TITLE: 'Додати модель',
   MODEL_SAVE_TITLE: 'Зберегти',
+  MODEL_CONSTRUCTOR: 'Конструктор',
   CANCEL_TITLE: 'Відмінити',
   LOGOUT_TITLE: 'Вихід',
   CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку',

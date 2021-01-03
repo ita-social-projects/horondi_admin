@@ -51,6 +51,7 @@ import SlideDetails from '../pages/home-page-slides/slide-details';
 import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
 import NewsForm from '../pages/news/news-form';
+import ConstructorPage from '../pages/model/constructor/constructor-page';
 
 const { routes } = config;
 
@@ -217,6 +218,11 @@ const Routes = () => {
             path={routes.pathToHomePageSlideDetail}
             exact
             component={SlideDetails}
+          />
+          <Route
+            path={routes.pathToConstructor}
+            exact
+            component={ConstructorPage}
           />
           <Route component={ErrorPage} />
         </Switch>
