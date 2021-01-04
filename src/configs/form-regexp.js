@@ -11,7 +11,8 @@ const formRegExp = {
   userName: /[а-яА-Я]{2,}/g,
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
   userStatuses: /(Активний|Неактивний)/g,
-  uaNameCreation: /^[а-яїієґ]+$/i,
-  enNameCreation: /^[a-z]+$/i
+  uaNameCreation: /^[а-яїієґ0-9]+$/i,
+  enNameCreation: /^[a-z0-9]+$/i,
+  categoryCode: /^[a-z0-9|-]/i
 };
 export default formRegExp;

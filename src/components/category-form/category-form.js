@@ -34,14 +34,15 @@ const {
   CATEGORY_VALIDATION_ERROR,
   CATEGORY_ERROR_MESSAGE,
   CATEGORY_UA_NAME_MESSAGE,
-  CATEGORY_EN_NAME_MESSAGE
+  CATEGORY_EN_NAME_MESSAGE,
+  CATEGORY_CODE_MESSAGE
 } = config.categoryErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { IMG_URL } = config;
 const { languages } = config;
 const { CATEGORY_ERROR } = categoryTranslations;
-const { enNameCreation, uaNameCreation } = config.formRegExp;
+const { enNameCreation, uaNameCreation, categoryCode } = config.formRegExp;
 
 const CategoryForm = ({ category, id, edit }) => {
   const styles = useStyles();
@@ -75,6 +76,7 @@ const CategoryForm = ({ category, id, edit }) => {
     code: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE)
+      .matches(categoryCode, CATEGORY_CODE_MESSAGE)
   });
 
   const {
