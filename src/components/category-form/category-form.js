@@ -32,13 +32,16 @@ import {
 
 const {
   CATEGORY_VALIDATION_ERROR,
-  CATEGORY_ERROR_MESSAGE
-} = config.errorMessages;
+  CATEGORY_ERROR_MESSAGE,
+  CATEGORY_UA_NAME_MESSAGE,
+  CATEGORY_EN_NAME_MESSAGE
+} = config.categoryErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { IMG_URL } = config;
 const { languages } = config;
 const { CATEGORY_ERROR } = categoryTranslations;
+const { enNameCreation, uaNameCreation } = config.formRegExp;
 
 const CategoryForm = ({ category, id, edit }) => {
   const styles = useStyles();
@@ -63,10 +66,12 @@ const CategoryForm = ({ category, id, edit }) => {
   const categoryValidationSchema = Yup.object().shape({
     enName: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
-      .required(CATEGORY_ERROR_MESSAGE),
+      .required(CATEGORY_ERROR_MESSAGE)
+      .matches(enNameCreation, CATEGORY_EN_NAME_MESSAGE),
     uaName: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
-      .required(CATEGORY_ERROR_MESSAGE),
+      .required(CATEGORY_ERROR_MESSAGE)
+      .matches(uaNameCreation, CATEGORY_UA_NAME_MESSAGE),
     code: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE)

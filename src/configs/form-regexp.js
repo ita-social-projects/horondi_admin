@@ -10,6 +10,8 @@ const formRegExp = {
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
   userName: /[а-яА-Я]{2,}/g,
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
-  userStatuses: /(Активний|Неактивний)/g
+  userStatuses: /(Активний|Неактивний)/g,
+  uaNameCreation: /^[а-я]+$/i,
+  enNameCreation: /^[a-z]+$/i
 };
 export default formRegExp;
