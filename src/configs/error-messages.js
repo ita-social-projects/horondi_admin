@@ -29,7 +29,8 @@ export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
-  PHOTO_NOT_PROVIDED: 'Додайте фото для гобелену'
+  PHOTO_NOT_PROVIDED: "Фото гобелена є обов'язковим",
+  CONSTRUCTOR_PHOTO_NOT_PROVIDED: "Фото для конструктора є обов'язковим"
 };
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Мінімум 2 символи',
