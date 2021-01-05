@@ -109,6 +109,11 @@ const Routes = () => {
             exact
             component={HeaderDetails}
           />
+          <Route
+            path={routes.pathToAddMaterial}
+            exact
+            component={MaterialAdd}
+          />
           <Route path={routes.pathToMaterials} exact component={MaterialPage} />
           <Route
             path={routes.pathToMaterialDetails}
@@ -120,11 +125,7 @@ const Routes = () => {
             exact
             component={MaterialColorPalette}
           />
-          <Route
-            path={routes.pathToAddMaterial}
-            exact
-            component={MaterialAdd}
-          />
+
           <Route
             path={routes.pathToPatternDetails}
             exact
@@ -148,12 +149,12 @@ const Routes = () => {
             )}
           />
           <Route path={routes.pathToContacts} exact component={ContactsPage} />
+          <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
           <Route
             path={routes.pathToContactsEdit}
             exact
             component={ContactsEdit}
           />
-          <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
           <Route path={routes.pathToAddModel} exact component={ModelAdd} />
           <Route
             path={routes.pathToModelDetails}
