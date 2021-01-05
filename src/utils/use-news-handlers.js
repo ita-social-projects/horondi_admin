@@ -10,7 +10,8 @@ const useNewsHandlers = () => {
     {}
   );
 
-  const [upload, setUpload] = useState([]);
+  const [uploadAuthorImage, setUploadAuthorImage] = useState(null);
+  const [uploadNewsImage, setUploadNewsImage] = useState(null);
 
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
@@ -62,7 +63,8 @@ const useNewsHandlers = () => {
             lang: languages[1],
             value: values.enAuthorName || null
           }
-        ]
+        ],
+        image: values.authorPhoto
       },
       title: [
         {
@@ -74,6 +76,7 @@ const useNewsHandlers = () => {
           value: values.enTitle || null
         }
       ],
+      image: values.newsImage,
       text: [
         {
           lang: languages[0],
@@ -117,8 +120,10 @@ const useNewsHandlers = () => {
     handleCheckboxChange,
     languageCheckboxes,
     createArticle,
-    upload,
-    setUpload
+    uploadAuthorImage,
+    setUploadAuthorImage,
+    uploadNewsImage,
+    setUploadNewsImage
   };
 };
 
