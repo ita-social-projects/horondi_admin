@@ -73,7 +73,6 @@ const UsersDetails = (props) => {
     };
     openSuccessSnackbar(
       updateStatus,
-      SWITCH_USER_STATUS_TITLE,
       SWITCH_USER_STATUS_MESSAGE,
       SWITCH_USER_STATUS_TITLE
     );
