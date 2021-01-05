@@ -52,7 +52,8 @@ PatternDetails.propTypes = {
       thumbnail: PropTypes.string
     }),
     material: PropTypes.string,
-    name: PropTypes.arrayOf(valueShape)
+    name: PropTypes.arrayOf(valueShape),
+    constructorImg: PropTypes.string
   })
 };
 
