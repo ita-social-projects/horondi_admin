@@ -186,6 +186,12 @@ const CategoryForm = ({ category, id, edit }) => {
           data-cy='save'
           type='submit'
           title={SAVE_TITLE}
+          disable={
+            edit
+              ? values.uaName && values.enName && values.code
+              : values.uaName && values.enName && values.code && upload?.size
+          }
+          errors={!!Object.keys(errors).length}
         />
       </form>
     </div>
