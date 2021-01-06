@@ -61,9 +61,7 @@
     "lint:fix": "eslint . --fix --color",
     "cypress": "cypress open",
     "eslint-check": "eslint --print-config src/components/App/App.js | eslint-config-prettier-check",
-    "test": "jest --coverage",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "test": "jest --coverage"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -95,12 +93,6 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
-    "@storybook/addon-actions": "^6.1.11",
-    "@storybook/addon-essentials": "^6.1.11",
-    "@storybook/addon-links": "^6.1.11",
-    "@storybook/node-logger": "^6.1.11",
-    "@storybook/preset-create-react-app": "^3.1.5",
-    "@storybook/react": "^6.1.11",
     "@types/apollo-upload-client": "^14.1.0",
     "babel-eslint": "^10.1.0",
     "cypress": "^5.6.0",
