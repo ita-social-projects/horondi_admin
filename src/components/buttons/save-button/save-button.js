@@ -16,6 +16,7 @@ const SaveButton = ({
   const { IMG_URL } = config;
   const error = !!Object.keys(errors).length;
   const disable = Object.values(values).every((el) => {
+    console.log(el);
     if (typeof el === 'boolean') {
       return true;
     }
@@ -24,15 +25,13 @@ const SaveButton = ({
         return false;
       }
       return true;
-    } 
+    }
     return false;
-    
   });
 
   const [disabled, setDisabled] = useState(!disable);
   useEffect(() => {
     setDisabled(!disable);
-    
   }, [disable, values, error]);
 
   return (
@@ -60,8 +59,8 @@ SaveButton.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  values: PropTypes.objectOf(PropTypes.object()),
-  errors: PropTypes.objectOf(PropTypes.object())
+  values: PropTypes.objectOf(PropTypes.object),
+  errors: PropTypes.objectOf(PropTypes.object)
 };
 
 SaveButton.defaultProps = {
