@@ -255,6 +255,8 @@ const BusinessPageForm = ({ id, editMode }) => {
             type='submit'
             title='Зберегти'
             data-cy='save-btn'
+            values={formik.values}
+            errors={formik.errors}
           />
         </div>
       </form>

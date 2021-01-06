@@ -190,6 +190,8 @@ const NewsForm = ({ id, editMode }) => {
             data-cy='save'
             type='submit'
             title={config.buttonTitles.SAVE_TITLE}
+            values={formik.values}
+            errors={formik.errors}
           />
         </div>
         <Box my={3}>

@@ -108,7 +108,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       dispatch(addSlide({ slide: newSlide, upload }));
     }
   });
-  console.log(values, slide);
+
   const checkboxes = [
     {
       id: 'show',

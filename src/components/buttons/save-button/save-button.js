@@ -2,20 +2,38 @@ import React, { useEffect, useState } from 'react';
 
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { config } from '../../../configs';
 
 const SaveButton = ({
   title,
   type,
   onClickHandler,
   color,
-  disable,
   errors,
+  values,
   ...props
 }) => {
+  const { IMG_URL } = config;
+  const error = !!Object.keys(errors).length;
+  const disable = Object.values(values).every((el) => {
+    if (typeof el === 'boolean') {
+      return true;
+    }
+    if (el) {
+      if (el === IMG_URL) {
+        return false;
+      }
+      return true;
+    } 
+    return false;
+    
+  });
+
   const [disabled, setDisabled] = useState(!disable);
   useEffect(() => {
     setDisabled(!disable);
-  }, [disable, errors]);
+    
+  }, [disable, values, error]);
 
   return (
     <Button
@@ -24,10 +42,10 @@ const SaveButton = ({
       type={type}
       onClick={() => {
         setTimeout(() => {
-          if (!errors) {
+          if (!error) {
             setDisabled(true);
           }
-        }, 50);
+        }, 10);
       }}
       disabled={disabled}
       {...props}
@@ -42,14 +60,14 @@ SaveButton.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  disable: PropTypes.bool,
-  errors: PropTypes.bool
+  values: PropTypes.objectOf(PropTypes.object()),
+  errors: PropTypes.objectOf(PropTypes.object())
 };
 
 SaveButton.defaultProps = {
   color: 'primary',
-  disable: false,
-  errors: false,
+  errors: {},
+  values: {},
   onClickHandler: () => {}
 };
 

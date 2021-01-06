@@ -130,6 +130,8 @@ const HeaderForm = ({ header, id }) => {
           data-cy='save'
           type='submit'
           title={config.buttonTitles.HEADER_SAVE_TITLE}
+          values={values}
+          errors={errors}
         />
       </form>
     </div>
