@@ -9,7 +9,7 @@ import { materialTranslations } from '../../../translations/material.translation
 import { config } from '../../../configs';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import { useStyles } from './material-color-palette-style';
-import { BackButton, SaveButton } from '../../../components/buttons';
+import { BackButton, StandardButton } from '../../../components/buttons';
 import {
   getMaterialColor,
   getMaterialColors,
@@ -102,7 +102,7 @@ const MaterialColorPalette = ({ match }) => {
       </Typography>
       <div className={styles.tableNav}>
         <BackButton />
-        <SaveButton
+        <StandardButton
           className={styles.saveButton}
           data-cy='open-dialog'
           type='button'

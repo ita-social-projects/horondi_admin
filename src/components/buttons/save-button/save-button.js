@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { config } from '../../../configs';
 
 const SaveButton = ({
   title,
@@ -13,17 +12,12 @@ const SaveButton = ({
   values,
   ...props
 }) => {
-  const { IMG_URL } = config;
   const error = !!Object.keys(errors).length;
   const disable = Object.values(values).every((el) => {
-    console.log(el);
     if (typeof el === 'boolean') {
       return true;
     }
     if (el) {
-      if (el === IMG_URL) {
-        return false;
-      }
       return true;
     }
     return false;

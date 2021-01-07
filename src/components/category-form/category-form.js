@@ -36,7 +36,6 @@ const {
 } = config.errorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
-const { IMG_URL } = config;
 const { languages } = config;
 const { CATEGORY_ERROR } = categoryTranslations;
 
@@ -82,7 +81,7 @@ const CategoryForm = ({ category, id, edit }) => {
   } = useFormik({
     validationSchema: categoryValidationSchema,
     initialValues: {
-      categoryImage: IMG_URL + category.images.thumbnail || '',
+      categoryImage: category.images.thumbnail || '',
       uaName: category.name[0].value || '',
       enName: category.name[1].value || '',
       code: category.code || ''

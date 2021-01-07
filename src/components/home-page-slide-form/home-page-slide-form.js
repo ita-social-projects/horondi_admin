@@ -224,6 +224,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
           data-cy='save'
           type='submit'
           title={config.buttonTitles.CREATE_SLIDE_TITLE}
+          values={values}
+          errors={errors}
         />
       </form>
       <Typography variant='h1' className={styles.slideTitle}>

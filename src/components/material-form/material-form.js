@@ -216,7 +216,7 @@ function MaterialForm({ material, id }) {
   };
 
   const materialColorPaletteButton = id ? (
-    <SaveButton
+    <StandardButton
       className={styles.colorPaletteButton}
       data-cy='go-to-color-palette'
       type='button'

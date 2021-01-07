@@ -11,7 +11,6 @@ import AdminTab from './components/admin-tab';
 import UserTab from './components/user-tab';
 import useUsersTabs from '../../../hooks/user/use-users-tabs';
 
-const { DELETE_TITLE } = config.buttonTitles;
 const { REMOVE_USER_MESSAGE } = config.messages;
 const userTabNames = config.tabNames.users;
 
