@@ -9,6 +9,17 @@ export const useStyles = makeStyles((theme) => {
     backButton: {
       paddingBottom: '20px'
     },
+    dialogTitle:{
+      width: '400px',
+    },
+    avatar:{
+      marginLeft: theme.spacing(8),
+      marginRight: theme.spacing(2),
+      width: theme.spacing(8),
+      height: theme.spacing(8),
+      padding:'5px',
+      backgroundColor:'#ceded2'
+    },
     tabs,
   };
 });

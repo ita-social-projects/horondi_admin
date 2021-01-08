@@ -17,6 +17,7 @@ import {
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import { push } from "connected-react-router";
 import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { BackButton, SaveButton } from '../buttons';
@@ -168,6 +169,9 @@ const ModelForm = ({ model, id, isEdit }) => {
       setUpload(e.target.files[0]);
     }
   };
+  const handleConstructor=()=>{
+    dispatch(push(`/constructor/${id}`));
+  }
   return (
     <div>
       <form onSubmit={handleSubmit} autoComplete='off'>
@@ -287,9 +291,8 @@ const ModelForm = ({ model, id, isEdit }) => {
         {isEdit?<Button
           data-cy='constructor'
           className={styles.saveButton}
+          onClick={handleConstructor}
           color='secondary'
-          component={Link}
-          to={routes.pathToConstructor}
           variant='contained'
         >
           {config.buttonTitles.MODEL_CONSTRUCTOR}

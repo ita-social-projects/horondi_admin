@@ -49,6 +49,9 @@ const buttonTitles = {
   SAVE_SLIDE_ORDER: 'Зберегти зміни',
   CANCEL_SLIDE_ORDER: 'Скасувати зміни',
   AUTHOR_PHOTO: 'Фото Автора',
-  MAIN_PHOTO: 'Головне Фото'
+  MAIN_PHOTO: 'Головне Фото',
+  CREATE_CONSTRUCTOR_BASIC_TITLE: 'Додати основу',
+  CREATE_CONSTRUCTOR_FRONT_POCKET_TITLE: 'Додати передню кишеню',
+  CREATE_CONSTRUCTOR_BOTTOM_TITLE: 'Додати низ',
 };
 export default buttonTitles;

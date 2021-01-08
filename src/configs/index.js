@@ -16,7 +16,7 @@ import {
   modelErrorMessages,
   headerErrorMessages,
   homePageSlideErrorMessages,
-  statsErrorMessages
+  statsErrorMessages, constructorErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -184,6 +184,7 @@ export const config = {
   headerErrorMessages,
   statsErrorMessages,
   homePageSlideErrorMessages,
+  constructorErrorMessages,
   sort
 };
 export const inputTypes = {
