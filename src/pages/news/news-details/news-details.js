@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useStyles } from './news-details.styles';
+import { useCommonStyles } from '../../common.styles';
 import NewsForm from '../news-form/news-form';
 import LoadingBar from '../../../components/loading-bar';
 import { getArticle } from '../../../redux/news/news.actions';
@@ -10,7 +10,7 @@ const NewsDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
-  const styles = useStyles();
+  const common = useCommonStyles();
 
   const { loading, newsArticle } = useSelector(({ News }) => ({
     loading: News.newsLoading,
@@ -26,7 +26,7 @@ const NewsDetails = ({ match }) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={common.container}>
       {newsArticle !== null ? (
         <NewsForm id={id} newsArticle={newsArticle} editMode />
       ) : null}

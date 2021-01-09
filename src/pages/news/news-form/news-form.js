@@ -26,7 +26,8 @@ import Editor from '../../../components/editor/editor';
 const { MAIN_PHOTO, AUTHOR_PHOTO, SAVE_TITLE } = config.buttonTitles;
 const {
   NAME_MIN_LENGTH_MESSAGE,
-  TITLE_MIN_LENGTH_MESSAGE
+  TITLE_MIN_LENGTH_MESSAGE,
+  TEXT_MIN_LENGTH_MESSAGE
 } = config.newsErrorMessages;
 
 const NewsForm = ({ id, newsArticle, editMode }) => {
@@ -70,9 +71,21 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     uaAuthorName: Yup.string()
       .min(6, NAME_MIN_LENGTH_MESSAGE)
       .required(NAME_MIN_LENGTH_MESSAGE),
+    enAuthorName: Yup.string()
+      .min(6, NAME_MIN_LENGTH_MESSAGE)
+      .required(NAME_MIN_LENGTH_MESSAGE),
     uaTitle: Yup.string()
       .min(10, TITLE_MIN_LENGTH_MESSAGE)
-      .required(TITLE_MIN_LENGTH_MESSAGE)
+      .required(TITLE_MIN_LENGTH_MESSAGE),
+    enTitle: Yup.string()
+      .min(10, TITLE_MIN_LENGTH_MESSAGE)
+      .required(TITLE_MIN_LENGTH_MESSAGE),
+    uaText: Yup.string()
+      .min(10, TEXT_MIN_LENGTH_MESSAGE)
+      .required(TEXT_MIN_LENGTH_MESSAGE),
+    enText: Yup.string()
+      .min(10, TEXT_MIN_LENGTH_MESSAGE)
+      .required(TEXT_MIN_LENGTH_MESSAGE)
   });
 
   const {
@@ -206,7 +219,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                   value={values[`${lang}AuthorName`]}
                   onChange={handleChange}
                   error={touched.uaAuthorName && errors.uaAuthorName}
-                  required
                 />
                 {touched.uaAuthorName && errors.uaAuthorName && (
                   <div className={styles.inputError}>
@@ -223,10 +235,12 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                   multiline
                   value={values[`${lang}Title`]}
                   onChange={handleChange}
-                  error={touched.warningTitle && errors.warningTitle}
+                  error={touched[`${lang}Title`] && errors[`${lang}Title`]}
                 />
-                {touched.uaTitle && errors.uaTitle && (
-                  <div className={styles.inputError}>{errors.uaTitle}</div>
+                {touched[`${lang}Title`] && errors[`${lang}Title`] && (
+                  <div className={styles.inputError}>
+                    {errors[`${lang}Title`]}
+                  </div>
                 )}
                 <Editor
                   value={values[`${lang}Text`]}
@@ -237,6 +251,11 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                   }
                   multiline
                 />
+                {touched[`${lang}Text`] && errors[`${lang}Text`] && (
+                  <div className={styles.inputError}>
+                    {errors[`${lang}Text`]}
+                  </div>
+                )}
               </Paper>
             </TabPanel>
           ))

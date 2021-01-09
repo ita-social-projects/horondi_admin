@@ -1,12 +1,12 @@
 import React from 'react';
-import { useStyles } from './news-add.styles';
 import NewsForm from '../news-form/news-form';
+import { useCommonStyles } from '../../common.styles';
 
 const NewsAdd = () => {
-  const styles = useStyles();
+  const common = useCommonStyles();
 
   return (
-    <div className={styles.container}>
+    <div className={common.container}>
       <NewsForm />
     </div>
   );
