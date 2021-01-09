@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import Typography from '@material-ui/core/Typography';
+import { gql, useQuery } from '@apollo/client';
 import {
-  getCategories,
   setCategoryDeleteId,
   toggleCategoryDeleteDialog
 } from '../../../redux/categories/categories.actions';
@@ -16,16 +16,28 @@ import CategoryDeleteDialog from './category-delete-dialog';
 import { selectCategoriesLoadingDialogOpen } from '../../../redux/selectors/categories.selectors';
 import StandardButton from '../../../components/buttons/standard-button';
 
+const GET_CATEGORIES = gql`
+  query {
+    getAllCategories {
+      _id
+      name {
+        lang
+        value
+      }
+      code
+      images {
+        thumbnail
+      }
+    }
+  }
+`;
+
 const Categories = () => {
   const { IMG_URL } = config;
   const { ADD_CATEGORY } = config.buttonTitles;
 
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
-
-  const { categories, categoriesLoading } = useSelector(
-    selectCategoriesLoadingDialogOpen
-  );
 
   const handleDeleteCategory = (id) => {
     dispatch(setCategoryDeleteId(id));
@@ -36,13 +48,12 @@ const Categories = () => {
     dispatch(push(config.routes.pathToAddCategory));
   };
 
-  useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
+  const { data, loading } = useQuery(GET_CATEGORIES);
 
-  if (categoriesLoading) {
+  if (loading) {
     return <LoadingBar />;
   }
+  const categories = data.getAllCategories;
   const categoriesList = categories.length
     ? categories
       .slice()
