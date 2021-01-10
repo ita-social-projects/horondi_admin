@@ -39,9 +39,9 @@ const {
 } = config.categoryErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
-const { IMG_URL } = config;
 const { languages } = config;
 const { CATEGORY_ERROR } = categoryTranslations;
+const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, categoryCode } = config.formRegExp;
 
 const CategoryForm = ({ category, id, edit }) => {
@@ -89,7 +89,7 @@ const CategoryForm = ({ category, id, edit }) => {
   } = useFormik({
     validationSchema: categoryValidationSchema,
     initialValues: {
-      categoryImage: IMG_URL + category.images.thumbnail || '',
+      categoryImage: edit ? IMG_URL + category.images.thumbnail : '',
       uaName: category.name[0].value || '',
       enName: category.name[1].value || '',
       code: category.code || ''
@@ -132,8 +132,8 @@ const CategoryForm = ({ category, id, edit }) => {
             </span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer handler={handleImageLoad} />
-              {categoryImage && (
-                <Avatar src={categoryImage}>
+              {(categoryImage || edit) && (
+                <Avatar src={edit ? values.categoryImage : categoryImage}>
                   <Image />
                 </Avatar>
               )}
@@ -193,6 +193,8 @@ const CategoryForm = ({ category, id, edit }) => {
           data-cy='save'
           type='submit'
           title={SAVE_TITLE}
+          errors={errors}
+          values={values}
         />
       </form>
     </div>

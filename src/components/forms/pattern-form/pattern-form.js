@@ -255,6 +255,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           data-cy='save-btn'
           type='submit'
           title={SAVE_TITLE}
+          values={values}
+          errors={errors}
         />
       </form>
     </div>

@@ -269,6 +269,8 @@ const ModelForm = ({ model, id, isEdit }) => {
           data-cy='save'
           type='submit'
           title={config.buttonTitles.MODEL_SAVE_TITLE}
+          values={values}
+          errors={errors}
         />
       </form>
     </div>

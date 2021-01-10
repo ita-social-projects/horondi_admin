@@ -14,10 +14,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
-import TabPanel from '../../tab-panel';
-import { BackButton, SaveButton } from '../../buttons';
-import LoadingBar from '../../loading-bar';
-import useMaterialHandlers from '../../../utils/use-material-handlers';
+import TabPanel from '../tab-panel';
+import { BackButton, SaveButton, StandardButton } from '../buttons';
+import LoadingBar from '../loading-bar';
+import useMaterialHandlers from '../../utils/use-material-handlers';
 import { useStyles } from './material-form.styles';
 import {
   addMaterial,
@@ -216,7 +216,7 @@ function MaterialForm({ material, id }) {
   };
 
   const materialColorPaletteButton = id ? (
-    <SaveButton
+    <StandardButton
       className={styles.colorPaletteButton}
       data-cy='go-to-color-palette'
       type='button'
@@ -227,7 +227,7 @@ function MaterialForm({ material, id }) {
   ) : null;
 
   const createColorButton = !id ? (
-    <SaveButton
+    <StandardButton
       className={styles.saveButton}
       data-cy='open-dialog'
       type='button'
@@ -304,6 +304,8 @@ function MaterialForm({ material, id }) {
               data-cy='save'
               type='submit'
               title={config.buttonTitles.SAVE_MATERIAL}
+              values={values}
+              errors={errors}
             />
             {materialColorPaletteButton}
           </div>

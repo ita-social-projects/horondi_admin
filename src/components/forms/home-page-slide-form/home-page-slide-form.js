@@ -108,7 +108,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       dispatch(addSlide({ slide: newSlide, upload }));
     }
   });
-  console.log(values, slide);
+
   const checkboxes = [
     {
       id: 'show',
@@ -224,6 +224,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
           data-cy='save'
           type='submit'
           title={config.buttonTitles.CREATE_SLIDE_TITLE}
+          values={values}
+          errors={errors}
         />
       </form>
       <Typography variant='h1' className={styles.slideTitle}>

@@ -15,9 +15,9 @@ import {
   toggleCategoryDeleteDialog
 } from '../../../redux/categories/categories.actions';
 
-import { config } from '../../../configs';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import { SaveButton } from '../../../components/buttons';
+import { config } from '../../../../configs';
+import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
+import { StandardButton } from '../../../../components/buttons';
 
 const { DELETE_TITLE } = config.buttonTitles;
 const { DELETE_CATEGORY } = config.buttonTitles;
@@ -87,8 +87,8 @@ const CategoryDelete = () => {
           </Select>
         </FormControl>
         <FormControl className={styles.formControl}>
-          <SaveButton
-            onClick={() => handleDeleteCategory()}
+          <StandardButton
+            onClick={handleDeleteCategory}
             title={DELETE_TITLE}
             data-cy='category-delete-submit'
             className={styles.saveButton}

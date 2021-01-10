@@ -115,6 +115,8 @@ const RegisterUser = ({ handleClose }) => {
                 title='Створити'
                 data-cy='submit-admin-register'
                 className={styles.saveButton}
+                values={values}
+                errors={errors}
               />
             </FormControl>
           </Paper>
