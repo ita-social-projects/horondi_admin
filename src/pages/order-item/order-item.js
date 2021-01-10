@@ -43,13 +43,7 @@ const OrderItem = ({ id }) => {
         dispatch(closeDialog());
         dispatch(updateOrder(order));
       };
-      openSuccessSnackbar(
-        updateOrderSnackbar,
-        dialogTitle,
-        dialogContent,
-        buttonTitle,
-        false
-      );
+      openSuccessSnackbar(updateOrderSnackbar, dialogContent, dialogTitle);
     } else {
       dispatch(updateOrder(order));
     }

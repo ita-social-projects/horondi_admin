@@ -34,7 +34,7 @@ const DialogWindow = ({
 
   return (
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
-      <DialogTitle className={styles.dialogTitle}>{DELETE_TITLE}</DialogTitle>
+      <DialogTitle className={styles.dialogTitle}>{dialogTitle}</DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{dialogContent}</Typography>
       </DialogContent>
@@ -51,14 +51,14 @@ const DialogWindow = ({
               data-cy='dialog-confirm'
               onClickHandler={onClickHandler}
             >
-              {DELETE_TITLE}
+              {dialogTitle}
             </DeleteButton>
           </>
         ) : (
           <StandardButton
             data-cy='dialog-confirm'
             variant='contained'
-            title={DELETE_TITLE}
+            title={dialogTitle}
             onClickHandler={onClickHandler}
           />
         )}
@@ -79,7 +79,7 @@ DialogWindow.propTypes = {
 
 DialogWindow.defaultProps = {
   isOpen: false,
-  dialogTitle: '',
+  dialogTitle: DELETE_TITLE,
   dialogContent: '',
   showCancelButton: true,
   onClickHandler: () => {}
