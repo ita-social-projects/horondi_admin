@@ -56,7 +56,7 @@ const MaterialColorPalette = ({ match }) => {
       );
     };
 
-    openSuccessSnackbar(removeColor, REMOVE_MATERIAL_COLOR_MESSAGE, 'danger');
+    openSuccessSnackbar(removeColor, REMOVE_MATERIAL_COLOR_MESSAGE);
   };
   const colorEditHandler = (code) => {
     dispatch(getMaterialColor(code));

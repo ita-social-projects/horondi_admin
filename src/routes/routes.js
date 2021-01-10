@@ -1,6 +1,5 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
+import React, { useEffect } from 'react';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UsersPage from '../pages/users/users-page';
 import NewsPage from '../pages/news/news-page';
@@ -13,7 +12,6 @@ import BusinessPageList from '../pages/business-pages';
 import BusinessPageForm from '../pages/business-pages/business-page-form';
 import ErrorPage from '../pages/error-page';
 import { config } from '../configs';
-import { history } from '../store/store';
 import MaterialPage from '../pages/material/material-page';
 import MaterialAdd from '../pages/material/material-add';
 import ProductsPage from '../pages/products/products-page';
@@ -56,13 +54,20 @@ import NewsForm from '../pages/news/news-form';
 const { routes } = config;
 
 const Routes = () => {
+  const location = useLocation();
+  const history = useHistory();
+  useEffect(() => {
+    if (location.pathname !== history.location.pathname) {
+      history.push(location.pathname);
+    }
+  }, [location, history]);
   const { isAuth } = useSelector(({ Auth }) => ({
     isAuth: Auth.isAuth
   }));
 
   if (!isAuth) {
     return (
-      <ConnectedRouter history={history}>
+      <>
         <NavBar />
         <Switch>
           <Route
@@ -75,12 +80,12 @@ const Routes = () => {
         </Switch>
         <DialogWindow />
         <SnackbarItem />
-      </ConnectedRouter>
+      </>
     );
   }
 
   return (
-    <ConnectedRouter history={history}>
+    <>
       <NavBar />
       <NavMenu />
       <ErrorBoundary>
@@ -230,7 +235,7 @@ const Routes = () => {
       </ErrorBoundary>
       <DialogWindow />
       <SnackbarItem />
-    </ConnectedRouter>
+    </>
   );
 };
 

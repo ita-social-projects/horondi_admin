@@ -68,7 +68,7 @@ const SlidesPage = () => {
       dispatch(closeDialog());
       dispatch(deleteSlide(id));
     };
-    openSuccessSnackbar(removeSlide, REMOVE_SLIDE_MESSAGE, 'danger');
+    openSuccessSnackbar(removeSlide, REMOVE_SLIDE_MESSAGE);
   };
   const slidesItems = list.length
     ? list.map((slidesItem) => (
