@@ -3,20 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { config } from '../../../configs';
+import { config } from '../../configs';
 import {
   getMaterials,
   deleteMaterial
-} from '../../../redux/material/material.actions.js';
+} from '../../redux/material/material.actions.js';
 
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import TableContainerRow from '../../../containers/table-container-row';
-import TableContainerGenerator from '../../../containers/table-container-generator';
-import LoadingBar from '../../../components/loading-bar';
-import { materialTranslations } from '../../../translations/material.translations';
-import { useCommonStyles } from '../../common.styles';
-import { selectMaterialAndTable } from '../../../redux/selectors/material.selectors';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import TableContainerRow from '../../containers/table-container-row';
+import TableContainerGenerator from '../../containers/table-container-generator';
+import LoadingBar from '../../components/loading-bar';
+import { materialTranslations } from '../../translations/material.translations';
+import { useCommonStyles } from '../common.styles';
+import { selectMaterialAndTable } from '../../redux/selectors/material.selectors';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;

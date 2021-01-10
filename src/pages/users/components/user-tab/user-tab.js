@@ -8,8 +8,8 @@ import { userRoleTranslations } from '../../../../translations/user.translations
 import { formatPhoneNumber } from '../../../../utils/format-phone-number';
 import { config } from '../../../../configs';
 import UserNavbar from '../user-navbar';
-import LoadingBar from '../../../../../components/loading-bar';
-import { selectUserLoadAndItemsCount } from '../../../../../redux/selectors/users.selectors';
+import LoadingBar from '../../../../components/loading-bar';
+import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const tableTitles = config.tableHeadRowTitles.users.userTab;

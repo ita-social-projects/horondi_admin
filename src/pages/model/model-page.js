@@ -3,16 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { useCommonStyles } from '../../common.styles';
-import { config } from '../../../configs';
-import { getModels, deleteModel } from '../../../redux/model/model.actions';
+import { useCommonStyles } from '../common.styles';
+import { config } from '../../configs';
+import { getModels, deleteModel } from '../../redux/model/model.actions';
 
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import TableContainerRow from '../../../containers/table-container-row';
-import TableContainerGenerator from '../../../containers/table-container-generator';
-import LoadingBar from '../../../components/loading-bar';
-import { selectModelAndTable } from '../../../redux/selectors/model.selectors';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import TableContainerRow from '../../containers/table-container-row';
+import TableContainerGenerator from '../../containers/table-container-generator';
+import LoadingBar from '../../components/loading-bar';
+import { selectModelAndTable } from '../../redux/selectors/model.selectors';
 
 const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;

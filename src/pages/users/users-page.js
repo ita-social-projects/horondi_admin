@@ -9,8 +9,8 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import AdminTab from './components/admin-tab';
 import UserTab from './components/user-tab';
-import useUsersTabs from '../../../hooks/user/use-users-tabs';
-import { selectUsersAndTable } from '../../../redux/selectors/users.selectors';
+import useUsersTabs from '../../hooks/user/use-users-tabs';
+import { selectUsersAndTable } from '../../redux/selectors/users.selectors';
 
 const { REMOVE_USER_MESSAGE } = config.messages;
 const userTabNames = config.tabNames.users;

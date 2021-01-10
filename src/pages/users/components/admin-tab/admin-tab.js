@@ -8,9 +8,9 @@ import TableContainerRow from '../../../../containers/table-container-row';
 import { userRoleTranslations } from '../../../../translations/user.translations';
 import { config } from '../../../../configs';
 import RegisterDialog from '../register-dialog';
-import useFormDialog from '../../../../../hooks/form-dialog/use-form-dialog';
-import LoadingBar from '../../../../../components/loading-bar';
-import { selectUserLoadAndItemsCount } from '../../../../../redux/selectors/users.selectors';
+import useFormDialog from '../../../../hooks/form-dialog/use-form-dialog';
+import LoadingBar from '../../../../components/loading-bar';
+import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 
 const tableHeaders = config.tableHeadRowTitles.users.adminTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
