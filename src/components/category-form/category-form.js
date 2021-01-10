@@ -71,7 +71,7 @@ const CategoryForm = ({ category, id, edit }) => {
       .min(2, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE)
   });
-  console.log(IMG_URL + category.images.thumbnail);
+
   const {
     values,
     handleSubmit,
@@ -125,8 +125,8 @@ const CategoryForm = ({ category, id, edit }) => {
             </span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer handler={handleImageLoad} />
-              {edit && (
-                <Avatar src={values.categoryImage}>
+              {(categoryImage || edit) && (
+                <Avatar src={edit ? values.categoryImage : categoryImage}>
                   <Image />
                 </Avatar>
               )}
