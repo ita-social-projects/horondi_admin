@@ -3,13 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
-import { useStyles } from './material-page.styles';
 import { config } from '../../../configs';
 import {
   getMaterials,
-  deleteMaterial,
-  setMaterialsCurrentPage
+  deleteMaterial
 } from '../../../redux/material/material.actions.js';
 
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
@@ -19,6 +16,7 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import LoadingBar from '../../../components/loading-bar';
 import { materialTranslations } from '../../../translations/material.translations';
 import { useCommonStyles } from '../../common.styles';
+import { selectMaterialAndTable } from '../../../redux/selectors/material.selectors';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
@@ -27,41 +25,24 @@ const pathToMaterialAddPage = config.routes.pathToAddMaterial;
 const tableTitles = config.tableHeadRowTitles.materials;
 
 const MaterialPage = () => {
-  const styles = useStyles();
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const {
-    list,
-    loading,
-    pagesCount,
-    currentPage,
-    materialsPerPage
-  } = useSelector(({ Material }) => ({
-    list: Material.list,
-    loading: Material.materialLoading,
-    pagesCount: Material.pagination.pagesCount,
-    currentPage: Material.pagination.currentPage,
-    materialsPerPage: Material.pagination.materialsPerPage
-  }));
+  const { list, loading, itemsCount, currentPage, rowsPerPage } = useSelector(
+    selectMaterialAndTable
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
       getMaterials({
-        limit: materialsPerPage,
-        skip: currentPage * materialsPerPage,
-        materialsPerPage
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        rowsPerPage
       })
     );
-  }, [dispatch, materialsPerPage, currentPage]);
-
-  useEffect(() => {
-    if (!list.length && currentPage > 0) {
-      dispatch(setMaterialsCurrentPage(currentPage));
-    }
-  }, [list, dispatch, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage]);
 
   const materialDeleteHandler = (id) => {
     const removeMaterial = () => {
@@ -71,7 +52,6 @@ const MaterialPage = () => {
     openSuccessSnackbar(removeMaterial, REMOVE_MATERIAL_MESSAGE);
   };
 
-  const changeHandler = (e, value) => dispatch(setMaterialsCurrentPage(value));
   const materialItems = list.length
     ? list.map((materialItem) => (
       <TableContainerRow
@@ -116,17 +96,10 @@ const MaterialPage = () => {
 
       <div>
         <TableContainerGenerator
+          pagination
+          count={itemsCount}
           tableTitles={tableTitles}
           tableItems={materialItems}
-        />
-      </div>
-      <div className={styles.paginationDiv}>
-        <Pagination
-          count={pagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage + 1}
-          onChange={changeHandler}
         />
       </div>
     </div>

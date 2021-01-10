@@ -17,7 +17,8 @@ import {
   modelErrorMessages,
   headerErrorMessages,
   homePageSlideErrorMessages,
-  statsErrorMessages
+  statsErrorMessages,
+  paginationInputErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -161,6 +162,7 @@ export const config = {
     }
   },
   UAH: 'грн',
+  maxItemsPerPage: 10,
 
   buttonTitles,
   detailTitles,
@@ -187,7 +189,8 @@ export const config = {
   headerErrorMessages,
   statsErrorMessages,
   homePageSlideErrorMessages,
-  sort
+  sort,
+  paginationInputErrorMessages
 };
 export const inputTypes = {
   button: 'button',

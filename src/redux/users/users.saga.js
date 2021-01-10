@@ -1,4 +1,4 @@
-import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { config } from '../../configs';
@@ -32,8 +32,7 @@ import {
   VALIDATE_TOKEN
 } from './users.types';
 
-import { setItemsCount, setPagesCount } from '../table/table.actions';
-import { selectUsersAndTable } from '../selectors/users.selectors';
+import { setItemsCount } from '../table/table.actions';
 import {
   handleErrorSnackbar,
   handleSuccessSnackbar
@@ -46,14 +45,10 @@ const {
   SUCCESS_CONFIRMATION_STATUS
 } = config.statuses;
 
-export function* handleUsersLoad() {
+export function* handleUsersLoad({ payload: { filter, pagination, sort } }) {
   try {
     yield put(setUsersLoading(true));
-    const { usersState, tableState } = yield select(selectUsersAndTable);
-    const result = yield call(getAllUsers, usersState, tableState);
-    yield put(
-      setPagesCount(Math.ceil(result.count / tableState.pagination.rowsPerPage))
-    );
+    const result = yield call(getAllUsers, filter, pagination, sort);
     yield put(setItemsCount(result.count));
     yield put(setUsers(result.items));
     yield put(setUsersLoading(false));

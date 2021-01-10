@@ -21,7 +21,7 @@ import {
   clearFilesToUpload,
   setFilesToDelete
 } from './products.actions';
-import { setItemsCount, setPagesCount } from '../table/table.actions';
+import { setItemsCount } from '../table/table.actions';
 
 import {
   GET_ALL_FILTERS,
@@ -69,11 +69,6 @@ export function* handleFilterLoad() {
     yield put(setProductsLoading(true));
     const { productsState, tableState } = yield select(selectProductsAndTable);
     const products = yield call(getAllProducts, productsState, tableState);
-    yield put(
-      setPagesCount(
-        Math.ceil(products.count / tableState.pagination.rowsPerPage)
-      )
-    );
     yield put(setItemsCount(products.count));
     yield put(setAllProducts(products.items));
     yield put(setProductsLoading(false));

@@ -17,6 +17,12 @@ export const useStyles = makeStyles(() => ({
   goToPage: {
     display: 'flex',
     alignItems: 'center',
-    margin: '0 15px'
+    margin: '0 15px',
+    position: 'relative'
+  },
+  error: {
+    color: '#e60000',
+    position: 'absolute',
+    bottom: '-10px'
   }
 }));

@@ -8,9 +8,6 @@ import {
   SET_CATEGORY,
   UPDATE_CATEGORY,
   SET_CATEGORY_ERROR,
-  SET_CATEGORIES_CURRENT_PAGE,
-  SET_CATEGORIES_PER_PAGE,
-  SET_CATEGORIES_PAGES_COUNT,
   REMOVE_CATEGORY_FROM_STORE,
   TOGGLE_CATEGORY_DELETE_DIALOG,
   SET_CATEGORY_DELETE_ID,
@@ -19,21 +16,6 @@ import {
 
 export const setCategories = (payload) => ({
   type: SET_CATEGORIES,
-  payload
-});
-
-export const setCategoriesCurrentPage = (payload) => ({
-  type: SET_CATEGORIES_CURRENT_PAGE,
-  payload
-});
-
-export const setCategoriesPerPage = (payload) => ({
-  type: SET_CATEGORIES_PER_PAGE,
-  payload
-});
-
-export const setPagesCount = (payload) => ({
-  type: SET_CATEGORIES_PAGES_COUNT,
   payload
 });
 

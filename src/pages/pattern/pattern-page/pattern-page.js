@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-// import { Pagination } from '@material-ui/lab';
-import { useStyles } from './pattern-page.styles';
 import { useCommonStyles } from '../../common.styles';
 import {
   getPatterns,
@@ -17,26 +15,21 @@ import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
+import { selectPatternAndTable } from '../../../redux/selectors/pattern.selectors';
 
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { CREATE_PATTERN_TITLE, DELETE_TITLE } = config.buttonTitles;
+const { CREATE_PATTERN_TITLE } = config.buttonTitles;
 
 const pathToPatternAddPage = config.routes.pathToAddPattern;
 const tableTitles = config.tableHeadRowTitles.patterns;
 
 const PatternPage = () => {
-  const styles = useStyles();
   const common = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { list, loading, currentPage, rowsPerPage } = useSelector(
-    ({ Pattern, Table }) => ({
-      list: Pattern.list,
-      loading: Pattern.patternLoading,
-      currentPage: Table.pagination.currentPage,
-      rowsPerPage: Table.pagination.rowsPerPage
-    })
+  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
+    selectPatternAndTable
   );
 
   const dispatch = useDispatch();
@@ -102,8 +95,9 @@ const PatternPage = () => {
       </div>
       {!loading ? (
         <TableContainerGenerator
-          data-cy='patternTable'
           pagination
+          data-cy='patternTable'
+          count={itemsCount}
           tableTitles={tableTitles}
           tableItems={patternItems}
         />

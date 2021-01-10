@@ -5,7 +5,6 @@ import { push } from 'connected-react-router';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Button, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import LoadingBar from '../../components/loading-bar';
@@ -19,7 +18,6 @@ import { config } from '../../configs';
 
 import {
   getContacts,
-  setContactsCurrentPage,
   deleteContact
 } from '../../redux/contact/contact.actions';
 
@@ -37,15 +35,15 @@ const ContactsPage = () => {
   const {
     contacts,
     loading,
-    contactPagesCount,
-    contactsCurrentPage,
-    contactsPerPage
-  } = useSelector(({ Contact }) => ({
+    itemsCount,
+    currentPage,
+    rowsPerPage
+  } = useSelector(({ Contact, Table }) => ({
     contacts: Contact.contacts,
     loading: Contact.ContactLoading,
-    contactPagesCount: Contact.pagination.contactPagesCount,
-    contactsCurrentPage: Contact.pagination.contactsCurrentPage,
-    contactsPerPage: Contact.pagination.contactsPerPage
+    currentPage: Table.pagination.currentPage,
+    rowsPerPage: Table.pagination.rowsPerPage,
+    itemsCount: Table.itemsCount
   }));
 
   const dispatch = useDispatch();
@@ -62,16 +60,12 @@ const ContactsPage = () => {
   useEffect(() => {
     dispatch(
       getContacts({
-        limit: contactsPerPage,
-        skip: contactsCurrentPage * contactsPerPage,
-        contactsPerPage
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        rowsPerPage
       })
     );
-  }, [dispatch, contactsPerPage, contactsCurrentPage]);
-
-  const changePageHandler = (e, pageIndex) => {
-    dispatch(setContactsCurrentPage(pageIndex));
-  };
+  }, [dispatch, rowsPerPage, currentPage]);
 
   const contactItems = contacts
     ? contacts.map((contact, index) => (
@@ -115,19 +109,12 @@ const ContactsPage = () => {
         </Button>
       </div>
       <TableContainerGenerator
+        pagination
+        count={itemsCount}
         id='contactTable'
         tableTitles={tableTitles}
         tableItems={contactItems}
       />
-      <div className={commonStyles.pagination}>
-        <Pagination
-          count={contactPagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={contactsCurrentPage + 1}
-          onChange={changePageHandler}
-        />
-      </div>
     </div>
   );
 };

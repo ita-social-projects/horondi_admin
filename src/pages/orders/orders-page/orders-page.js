@@ -35,9 +35,10 @@ const OrdersPage = () => {
     count: Orders.list.count
   }));
 
-  const { currentPage, rowsPerPage } = useSelector(({ Table }) => ({
+  const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
-    rowsPerPage: Table.pagination.rowsPerPage
+    rowsPerPage: Table.pagination.rowsPerPage,
+    itemsCount: Table.itemsCount
   }));
 
   useEffect(() => {
@@ -97,6 +98,7 @@ const OrdersPage = () => {
         ) : orders && orders.length ? (
           <TableContainerGenerator
             pagination
+            count={itemsCount}
             tableTitles={config.tableHeadRowTitles.orders}
             tableItems={orderItems}
           />

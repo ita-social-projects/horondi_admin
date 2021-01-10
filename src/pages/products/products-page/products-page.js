@@ -25,8 +25,7 @@ import { useCommonStyles } from '../../common.styles';
 const {
   PRODUCT_NOT_FOUND,
   DELETE_PRODUCT_MESSAGE,
-  DELETE_PRODUCT_TITLE,
-  DELETE_PRODUCT_BTN
+  DELETE_PRODUCT_TITLE
 } = productsTranslations;
 const tableTitles = config.tableHeadRowTitles.products;
 const { imagePrefix } = config;
@@ -44,7 +43,8 @@ const ProductsPage = () => {
     sortByRate,
     sortByPrice,
     filters,
-    sortByPopularity
+    sortByPopularity,
+    itemsCount
   } = useSelector(selectProductsAndTable);
 
   const {
@@ -129,6 +129,7 @@ const ProductsPage = () => {
       ) : products.length ? (
         <TableContainerGenerator
           pagination
+          count={itemsCount}
           tableTitles={tableTitles}
           tableItems={productsItems}
         />

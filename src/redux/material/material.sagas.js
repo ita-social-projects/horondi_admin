@@ -1,10 +1,12 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
+import { setItemsCount, updatePagination } from '../table/table.actions';
+
 import {
   setMaterials,
   setMaterial,
   setMaterialError,
-  setMaterialsPagesCount,
   setMaterialLoading,
   removeMaterialFromStore,
   clearColors,
@@ -51,23 +53,11 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const { skip, limit, materialsPerPage } = config.materialPaginationPayload;
-
-export function* handleMaterialsLoad({
-  payload = {
-    skip,
-    limit,
-    materialsPerPage
-  }
-}) {
+export function* handleMaterialsLoad({ payload: { skip, limit } }) {
   try {
     yield put(setMaterialLoading(true));
-    const materials = yield call(getAllMaterials, payload.skip, payload.limit);
-    yield put(
-      setMaterialsPagesCount(
-        Math.ceil(materials.count / payload.materialsPerPage)
-      )
-    );
+    const materials = yield call(getAllMaterials, skip, limit);
+    yield put(setItemsCount(materials.count));
     yield put(setMaterials(materials.items));
     yield put(setMaterialLoading(false));
   } catch (error) {
@@ -136,6 +126,8 @@ export function* handleMaterialDelete({ payload }) {
     yield call(deleteMaterial, payload);
     yield put(setMaterialLoading(false));
     yield put(removeMaterialFromStore(payload));
+    const itemsCount = yield select(({ Material }) => Material.list.length);
+    yield put(updatePagination(itemsCount));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleMaterialError, error);

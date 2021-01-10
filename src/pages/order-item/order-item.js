@@ -20,7 +20,7 @@ const OrderItem = ({ id }) => {
   const dispatch = useDispatch();
   const { orderTabs } = labels;
   const { delivery, general, products, receiver } = orderTabs;
-  const { buttonTitle, dialogTitle, dialogContent } = orders;
+  const { dialogTitle, dialogContent } = orders;
   const { SAVE_ORDER } = buttonTitles;
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();

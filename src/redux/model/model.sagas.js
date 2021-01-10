@@ -1,11 +1,13 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
+import { setItemsCount } from '../table/table.actions';
+
 import {
   setModels,
   setModelLoading,
   setModel,
   setModelError,
-  setPagesCount,
   removeModelFromStore
 } from './model.actions';
 
@@ -44,7 +46,7 @@ export function* handleModelsLoad({ payload }) {
   try {
     yield put(setModelLoading(true));
     const models = yield call(getAllModels, payload.skip, payload.limit);
-    yield put(setPagesCount(Math.ceil(models.count / payload.modelsPerPage)));
+    yield put(setItemsCount(models.count));
     yield put(setModels(models.items));
     yield put(setModelLoading(false));
   } catch (error) {

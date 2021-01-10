@@ -3,9 +3,6 @@ import {
   SET_CONTACTS_LOADING,
   SET_CONTACT,
   SET_CONTACTS_ERROR,
-  SET_CONTACTS_CURRENT_PAGE,
-  SET_CONTACTS_PER_PAGE,
-  SET_CONTACTS_PAGES_COUNT,
   ADD_CONTACT_IN_STORE,
   DELETE_CONTACT_IN_STORE,
   UPDATE_CONTACT_IN_STORE
@@ -15,12 +12,7 @@ const initialState = {
   contacts: [],
   contact: null,
   contactsLoading: false,
-  contactsError: null,
-  pagination: {
-    contactsCurrentPage: 0,
-    contactsPerPage: 6,
-    contactPagesCount: 1
-  }
+  contactsError: null
 };
 
 export const contactsReducer = (state = initialState, action = {}) => {
@@ -47,33 +39,6 @@ export const contactsReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       contactsError: action.payload
-    };
-
-  case SET_CONTACTS_CURRENT_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        contactsCurrentPage: action.payload - 1
-      }
-    };
-
-  case SET_CONTACTS_PER_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        contactsPerPage: action.payload
-      }
-    };
-
-  case SET_CONTACTS_PAGES_COUNT:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        contactPagesCount: action.payload
-      }
     };
   case ADD_CONTACT_IN_STORE:
     return {
