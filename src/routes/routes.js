@@ -1,6 +1,5 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
+import React, { useEffect } from 'react';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UsersPage from '../pages/users';
 import NewsPage from '../pages/news';
@@ -13,7 +12,6 @@ import BusinessPageList from '../pages/business-pages';
 import BusinessPageForm from '../components/forms/business-page-form';
 import ErrorPage from '../pages/error-page';
 import { config } from '../configs';
-import { history } from '../store/store';
 import MaterialPage from '../pages/material';
 import MaterialAdd from '../pages/material/material-add';
 import ProductsPage from '../pages/products';
@@ -56,13 +54,20 @@ import NewsForm from '../components/forms/news-form';
 const { routes } = config;
 
 const Routes = () => {
+  const location = useLocation();
+  const history = useHistory();
+  useEffect(() => {
+    if (location.pathname !== history.location.pathname) {
+      history.push(location.pathname);
+    }
+  }, [location, history]);
   const { isAuth } = useSelector(({ Auth }) => ({
     isAuth: Auth.isAuth
   }));
 
   if (!isAuth) {
     return (
-      <ConnectedRouter history={history}>
+      <>
         <NavBar />
         <Switch>
           <Route
@@ -75,12 +80,12 @@ const Routes = () => {
         </Switch>
         <DialogWindow />
         <SnackbarItem />
-      </ConnectedRouter>
+      </>
     );
   }
 
   return (
-    <ConnectedRouter history={history}>
+    <>
       <NavBar />
       <NavMenu />
       <ErrorBoundary>
@@ -109,6 +114,11 @@ const Routes = () => {
             exact
             component={HeaderDetails}
           />
+          <Route
+            path={routes.pathToAddMaterial}
+            exact
+            component={MaterialAdd}
+          />
           <Route path={routes.pathToMaterials} exact component={MaterialPage} />
           <Route
             path={routes.pathToMaterialDetails}
@@ -120,11 +130,7 @@ const Routes = () => {
             exact
             component={MaterialColorPalette}
           />
-          <Route
-            path={routes.pathToAddMaterial}
-            exact
-            component={MaterialAdd}
-          />
+
           <Route
             path={routes.pathToPatternDetails}
             exact
@@ -148,12 +154,12 @@ const Routes = () => {
             )}
           />
           <Route path={routes.pathToContacts} exact component={ContactsPage} />
+          <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
           <Route
             path={routes.pathToContactsEdit}
             exact
             component={ContactsEdit}
           />
-          <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
           <Route path={routes.pathToAddModel} exact component={ModelAdd} />
           <Route
             path={routes.pathToModelDetails}
@@ -229,7 +235,7 @@ const Routes = () => {
       </ErrorBoundary>
       <DialogWindow />
       <SnackbarItem />
-    </ConnectedRouter>
+    </>
   );
 };
 

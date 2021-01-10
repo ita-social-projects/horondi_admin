@@ -3,7 +3,6 @@ import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import toJson from 'enzyme-to-json';
 import HomePageEdit from '../index';
 
 import titles from '../../../configs/titles';
@@ -38,7 +37,6 @@ describe('Home page tests', () => {
   });
 
   it('Component should exist', () => {
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.exists());
     expect(wrapper.find('div[className*="container"]').first()).toBeTruthy();
   });

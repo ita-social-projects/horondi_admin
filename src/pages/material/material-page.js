@@ -68,7 +68,7 @@ const MaterialPage = () => {
       dispatch(closeDialog());
       dispatch(deleteMaterial(id));
     };
-    openSuccessSnackbar(removeMaterial, REMOVE_MATERIAL_MESSAGE, 'danger');
+    openSuccessSnackbar(removeMaterial, REMOVE_MATERIAL_MESSAGE);
   };
 
   const changeHandler = (e, value) => dispatch(setMaterialsCurrentPage(value));
