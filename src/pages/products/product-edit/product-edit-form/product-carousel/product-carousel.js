@@ -128,9 +128,8 @@ const ProductCarousel = ({ toggleFieldsChanged }) => {
     }
     openSuccessSnackbar(
       removeProduct,
-      DELETE_IMAGE_TITLE,
       DELETE_IMAGE_MESSAGE,
-      DELETE_PRODUCT_BTN
+      DELETE_IMAGE_TITLE
     );
   };
 

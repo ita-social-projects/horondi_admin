@@ -193,9 +193,8 @@ const ProductEditForm = () => {
     };
     openSuccessSnackbar(
       removeProduct,
-      DELETE_PRODUCT_TITLE,
       DELETE_PRODUCT_MESSAGE,
-      DELETE_PRODUCT_BTN
+      DELETE_PRODUCT_TITLE
     );
   };
 

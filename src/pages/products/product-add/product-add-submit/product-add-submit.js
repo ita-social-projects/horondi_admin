@@ -14,7 +14,7 @@ import TabPanel from '../../../../components/tab-panel';
 import { config } from '../../../../configs';
 import { useStyles } from './product-add-submit.styles';
 import Detail from '../../../../components/detail';
-import StepperButtons from '../../../../components/stepper-control-buttons';
+import StepperButtons from '../../../../components/buttons/stepper-control-buttons';
 import { addProduct } from '../../../../redux/products/products.actions';
 
 const {
