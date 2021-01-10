@@ -44,8 +44,8 @@ const CategoryDelete = () => {
     };
     openSuccessSnackbar(
       removeCategory,
-      DELETE_CATEGORY,
-      DELETE_CATEGORY_MESSAGE
+      DELETE_CATEGORY_MESSAGE,
+      DELETE_CATEGORY
     );
   };
 
