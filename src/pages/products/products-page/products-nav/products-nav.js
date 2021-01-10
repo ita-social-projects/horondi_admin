@@ -51,9 +51,9 @@ const ProductsNav = () => {
             <Typography className={styles.heading}>{filters}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography className={styles.filtersMenu}>
-              <ProductsNavFilters />
-            </Typography>
+            {/* <Typography className={styles.filtersMenu}>
+            </Typography> */}
+            <ProductsNavFilters />
           </AccordionDetails>
         </Accordion>
       </Grid>
