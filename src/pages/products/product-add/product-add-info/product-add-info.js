@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import useProductValidation from '../../../../hooks/product/use-product-validation';
 
 import { setProductToSend } from '../../../../redux/products/products.actions';
-import StepperControlButtons from '../../../../components/stepper-control-buttons/stepper-control-buttons';
+import StepperControlButtons from '../../../../components/buttons/stepper-control-buttons/stepper-control-buttons';
 import ProductInfoContainer from '../../../../containers/product-info-container';
 
 const ProductAddInfo = ({ activeStep, handleNext, createProductInfo }) => {

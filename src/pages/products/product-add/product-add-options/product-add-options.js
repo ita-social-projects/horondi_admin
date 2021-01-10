@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import { setProductToSend } from '../../../../redux/products/products.actions';
-import StepperControlButtons from '../../../../components/stepper-control-buttons/stepper-control-buttons';
+import StepperControlButtons from '../../../../components/buttons/stepper-control-buttons/stepper-control-buttons';
 import ProductOptionsContainer from '../../../../containers/product-options-container';
 
 const ProductAddOptions = ({

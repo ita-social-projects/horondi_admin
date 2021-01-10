@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStyles } from './header-add.styles';
-import HeaderForm from '../../../components/header-form';
+import HeaderForm from '../../../components/forms/header-form';
 
 const HeaderAdd = () => {
   const styles = useStyles();

@@ -8,7 +8,7 @@ import { Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './slides-order.styles';
 import { config } from '../../../configs';
-import { SaveButton } from '../../../components/buttons';
+import { StandardButton } from '../../../components/buttons';
 import { slidesTranslations } from '../../../translations/home-page-slides.translations';
 import {
   setSlides,
@@ -200,7 +200,7 @@ const SlidesOrder = (props) => {
             {slideOrderTitle}
           </Typography>
           <div>
-            <SaveButton
+            <StandardButton
               className={styles.saveButton}
               color='secondary'
               data-cy='save'
@@ -208,7 +208,7 @@ const SlidesOrder = (props) => {
               onClickHandler={changeHandler}
               type='button'
             />
-            <SaveButton
+            <StandardButton
               className={styles.saveButton}
               data-cy='save'
               onClickHandler={saveHandler}
