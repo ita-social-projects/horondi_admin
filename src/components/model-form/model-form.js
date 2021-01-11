@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 import { push } from "connected-react-router";
 import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
@@ -34,7 +33,7 @@ import {
 } from '../../redux/snackbar/snackbar.actions';
 import { getCategories } from '../../redux/categories/categories.actions';
 
-const { languages, routes } = config;
+const { languages } = config;
 const {
   MODEL_VALIDATION_ERROR,
   MODEL_ERROR_MESSAGE,

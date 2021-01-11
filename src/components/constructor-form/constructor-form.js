@@ -160,6 +160,17 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     });
   };
 
+  const textField = (inputValue, inputLabel) => (<TextField
+    data-cy={inputValue}
+    id={inputValue}
+    className={styles.textField}
+    variant='outlined'
+    label={inputLabel}
+    value={inputValue}
+    onChange={handleChange}
+    error={touched.inputValue && !!errors.inputValue}
+  />)
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -185,16 +196,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
                 )}
               </div>
             </div>
-            <TextField
-              data-cy='basePrice'
-              id='basePrice'
-              className={styles.textField}
-              variant='outlined'
-              label={config.labels.model.basePrice}
-              value={values.basePrice}
-              onChange={handleChange}
-              error={touched.basePrice && !!errors.basePrice}
-            />
+            {textField(values.basePrice, config.labels.model.basePrice)}
             {touched.basePrice && errors.basePrice && (
               <div className={styles.inputError}>{errors.basePrice}</div>
             )}
@@ -239,17 +241,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         {languages.map((lang, index) => (
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.constructorItemUpdate}>
-              <TextField
-                data-cy={`${lang}-name`}
-                id={`${lang}Name`}
-                className={styles.textField}
-                variant='outlined'
-                label={labels.name[index].value}
-                multiline
-                value={values[`${lang}Name`]}
-                onChange={handleChange}
-                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-              />
+              {textField(values[`${lang}Name`], labels.name[index].value)}
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div
                   data-cy={`${lang}-name-error`}
@@ -266,7 +258,6 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
           className={styles.saveButton}
           data-cy='save-btn'
           type='submit'
-          // onClick={() => history.goBack()}
           title={SAVE_TITLE}
         />
       </form>

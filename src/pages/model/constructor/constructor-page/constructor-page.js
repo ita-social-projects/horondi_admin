@@ -85,10 +85,9 @@ const ConstructorPage = ({ match }) => {
   const handleCloseDialog = ()=>{
     setOpenDialog(false);
   }
-  const handleListItemClick = (id, pattern)=>{
+  const handleListItemClick = (modelID, pattern)=>{
     setOpenDialog(false);
-    dispatch(addConstructorPattern({ id, pattern }))
-    console.log(id)
+    dispatch(addConstructorPattern({ modelID, pattern }))
   }
   const handleUpdateConstructor = (method, elementId, element) =>{
     dispatch(push(`/constructor/${id}/${elementId}`));
