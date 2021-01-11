@@ -104,7 +104,6 @@ const CategoryForm = ({ category, id, edit }) => {
       setUpload(e.target.files[0]);
     }
   };
-
   const inputs = [
     { label: config.labels.categories.categoryName, name: 'name' }
   ];
@@ -151,7 +150,6 @@ const CategoryForm = ({ category, id, edit }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-
         <BackButton />
         <SaveButton
           className={styles.saveCategoryButton}
