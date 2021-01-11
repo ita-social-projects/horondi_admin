@@ -3,6 +3,7 @@ import { Paper, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import capitalize from 'lodash/capitalize';
 import { useStyles } from './language-panel.styles';
+import Editor from '../../editor';
 
 const LanguagePanel = ({ lang, inputOptions }) => {
   const styles = useStyles();
@@ -17,7 +18,16 @@ const LanguagePanel = ({ lang, inputOptions }) => {
       <Paper className={styles.inputPanel}>
         {inputs.map((input) => {
           const inputName = lang + capitalize(input.name);
-
+          if (input.isEditor) {
+            return (
+              <Editor
+                value={values[inputName]}
+                placeholder={input.label}
+                onEditorChange={input.onEditorChange}
+                setFiles={input.setFiles}
+              />
+            );
+          }
           return (
             <React.Fragment key={input.name}>
               <TextField
@@ -54,7 +64,8 @@ LanguagePanel.propTypes = {
   inputOptions: [
     {
       name: PropTypes.string,
-      label: PropTypes.string
+      label: PropTypes.string,
+      isEditor: PropTypes.string
     }
   ]
 };
@@ -65,7 +76,8 @@ LanguagePanel.defaultProps = {
     inputs: [
       {
         name: '',
-        label: ''
+        label: '',
+        isEditor: false
       }
     ]
   }
