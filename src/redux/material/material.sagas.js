@@ -126,8 +126,7 @@ export function* handleMaterialDelete({ payload }) {
     yield call(deleteMaterial, payload);
     yield put(setMaterialLoading(false));
     yield put(removeMaterialFromStore(payload));
-    const itemsCount = yield select(({ Material }) => Material.list.length);
-    yield put(updatePagination(itemsCount));
+    yield put(updatePagination());
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleMaterialError, error);

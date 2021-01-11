@@ -21,7 +21,7 @@ import {
   clearFilesToUpload,
   setFilesToDelete
 } from './products.actions';
-import { setItemsCount } from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
 import {
   GET_ALL_FILTERS,
@@ -140,6 +140,7 @@ export function* handleProductDelete({ payload }) {
     } else {
       yield put(push(routes.pathToProducts));
     }
+    yield put(updatePagination());
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);

@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { setItemsCount } from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 import {
   setPatterns,
   setPatternLoading,
@@ -78,6 +78,7 @@ export function* handlePatternDelete({ payload }) {
     yield put(setPatternLoading(true));
     yield call(deletePattern, payload);
     yield put(removePatternFromStore(payload));
+    yield put(updatePagination());
     yield put(setPatternLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {

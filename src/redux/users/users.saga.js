@@ -32,7 +32,7 @@ import {
   VALIDATE_TOKEN
 } from './users.types';
 
-import { setItemsCount } from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 import {
   handleErrorSnackbar,
   handleSuccessSnackbar
@@ -73,6 +73,7 @@ export function* handleUsersDelete({ payload }) {
     yield put(setUsersLoading(true));
     yield call(deleteUser, payload);
     yield put(deleteUserLocally(payload));
+    yield put(updatePagination());
     yield put(setUsersLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (err) {

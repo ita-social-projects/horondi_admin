@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { setItemsCount } from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
 import {
   setNews,
@@ -79,6 +79,7 @@ export function* handleNewsDelete({ payload }) {
     yield put(setNewsLoading(true));
     yield call(deleteArticle, payload);
     yield put(setNewsLoading(false));
+    yield put(updatePagination());
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleNewsError, error);

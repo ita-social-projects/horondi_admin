@@ -44,15 +44,16 @@ const tableState = (state = initialState, action = {}) => {
   case UPDATE_PADAGINATION: {
     const page =
         state.pagination.currentPage >
-        Math.ceil(action.payload / state.pagination.rowsPerPage)
+        Math.ceil(state.itemsCount - 1 / state.pagination.rowsPerPage)
           ? state.pagination.currentPage - 1
           : state.pagination.currentPage;
     return {
       ...state,
       pagination: {
+        ...state.pagination,
         currentPage: page
       },
-      itemsCount: action.payload
+      itemsCount: state.itemsCount - 1
     };
   }
   default:

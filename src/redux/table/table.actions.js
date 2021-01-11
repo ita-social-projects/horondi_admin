@@ -32,7 +32,6 @@ export const resetPagination = (payload) => ({
   payload
 });
 
-export const updatePagination = (payload) => ({
-  type: UPDATE_PADAGINATION,
-  payload
+export const updatePagination = () => ({
+  type: UPDATE_PADAGINATION
 });

@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { setItemsCount } from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
 import {
   getContacts,
@@ -83,8 +83,8 @@ export function* handleContactDelete({ payload }) {
     yield put(setContactsLoading(true));
     yield call(deleteContact, payload);
     yield put(deleteContactInStore(payload));
+    yield put(updatePagination());
     yield put(setContactsLoading(false));
-
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleContactsError, error);
