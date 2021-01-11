@@ -40,18 +40,10 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const { skip, limit, newsPerPage } = config.newsPaginationPayload;
-
-export function* handleNewsLoad({
-  payload = {
-    skip,
-    limit,
-    newsPerPage
-  }
-}) {
+export function* handleNewsLoad({ payload: { skip, limit } }) {
   try {
     yield put(setNewsLoading(true));
-    const news = yield call(getAllNews, payload.skip, payload.limit);
+    const news = yield call(getAllNews, skip, limit);
     yield put(setItemsCount(news.count));
     yield put(setNews(news.items));
     yield put(setNewsLoading(false));
