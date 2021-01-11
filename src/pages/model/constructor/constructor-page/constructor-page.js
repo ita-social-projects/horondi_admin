@@ -36,7 +36,13 @@ import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import { selectConstructorMethodAndMaterials } from '../../../../redux/selectors/constructor.selectors';
 import { getPatterns } from '../../../../redux/pattern/pattern.actions';
 
-const { constructorBasic, constructorBottom, constructorPattern, constructorFrontPocket } = config.labels.model;
+const {
+  constructorBasic,
+  constructorBottom,
+  constructorPattern,
+  constructorFrontPocket,
+  availablePatternsForConstructor
+} = config.labels.model;
 const constructorTitles = config.tableHeadRowTitles.constructor;
 const { DEFAULT_CIRCLE } = config.colorCircleSizes;
 const { REMOVE_CONSTRUCTOR_MESSAGE } = config.messages;
@@ -87,7 +93,7 @@ const ConstructorPage = ({ match }) => {
   }
   const handleListItemClick = (modelID, pattern)=>{
     setOpenDialog(false);
-    dispatch(addConstructorPattern({ modelID, pattern }))
+    dispatch(addConstructorPattern({ id:modelID, pattern }))
   }
   const handleUpdateConstructor = (method, elementId, element) =>{
     dispatch(push(`/constructor/${id}/${elementId}`));
@@ -242,7 +248,7 @@ const ConstructorPage = ({ match }) => {
         )
       )}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle className={styles.dialogTitle}>Set backup account</DialogTitle>
+        <DialogTitle className={styles.dialogTitle}>{availablePatternsForConstructor}</DialogTitle>
         <List>
           {patternList.filter(el=>el.constructorImg).map((pattern) => (
             pattern?<ListItem button

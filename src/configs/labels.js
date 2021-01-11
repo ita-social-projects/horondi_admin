@@ -30,7 +30,8 @@ const labels = {
     avatarText: 'Фото',
     priority: 'Пріорітет',
     showEnable: 'Так',
-    showDisable: 'Ні'
+    showDisable: 'Ні',
+    availablePatternsForConstructor:'Доступні патерни для контсруктора',
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
