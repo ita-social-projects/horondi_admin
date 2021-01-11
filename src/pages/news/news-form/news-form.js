@@ -67,26 +67,25 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     setPreferredLanguages(prefLanguages);
   }, [checkboxes, setPreferredLanguages]);
 
-  const formSchema = Yup.object().shape({
-    uaAuthorName: Yup.string()
-      .min(6, NAME_MIN_LENGTH_MESSAGE)
-      .required(NAME_MIN_LENGTH_MESSAGE),
-    enAuthorName: Yup.string()
-      .min(6, NAME_MIN_LENGTH_MESSAGE)
-      .required(NAME_MIN_LENGTH_MESSAGE),
-    uaTitle: Yup.string()
-      .min(10, TITLE_MIN_LENGTH_MESSAGE)
-      .required(TITLE_MIN_LENGTH_MESSAGE),
-    enTitle: Yup.string()
-      .min(10, TITLE_MIN_LENGTH_MESSAGE)
-      .required(TITLE_MIN_LENGTH_MESSAGE),
-    uaText: Yup.string()
-      .min(10, TEXT_MIN_LENGTH_MESSAGE)
-      .required(TEXT_MIN_LENGTH_MESSAGE),
-    enText: Yup.string()
-      .min(10, TEXT_MIN_LENGTH_MESSAGE)
-      .required(TEXT_MIN_LENGTH_MESSAGE)
-  });
+  const selectFormSchema = () => {
+    const formObj = preferredLanguages.reduce((reducer, lang) => {
+      reducer[`${lang}AuthorName`] = Yup.string()
+        .min(6, NAME_MIN_LENGTH_MESSAGE)
+        .required(NAME_MIN_LENGTH_MESSAGE);
+      reducer[`${lang}Title`] = Yup.string()
+        .min(10, TITLE_MIN_LENGTH_MESSAGE)
+        .required(TITLE_MIN_LENGTH_MESSAGE);
+      reducer[`${lang}Text`] = Yup.string()
+        .min(10, TEXT_MIN_LENGTH_MESSAGE)
+        .required(TEXT_MIN_LENGTH_MESSAGE);
+
+      return reducer;
+    }, {});
+
+    return Yup.object().shape(formObj);
+  };
+
+  const formSchema = selectFormSchema();
 
   const {
     values,
@@ -151,6 +150,10 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   const handleGoBack = () => {
     dispatch(push(config.routes.pathToNews));
   };
+
+  useEffect(() => {
+    console.log(preferredLanguages);
+  }, [preferredLanguages]);
 
   return (
     <div>
@@ -218,11 +221,16 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                   multiline
                   value={values[`${lang}AuthorName`]}
                   onChange={handleChange}
-                  error={touched.uaAuthorName && errors.uaAuthorName}
+                  error={
+                    touched[`${lang}AuthorName`] &&
+                      errors[`${lang}AuthorName`]
+                  }
                 />
-                {touched.uaAuthorName && errors.uaAuthorName && (
+
+                {touched[`${lang}AuthorName`] &&
+                    errors[`${lang}AuthorName`] && (
                   <div className={styles.inputError}>
-                    {errors.uaAuthorName}
+                    {errors[`${lang}AuthorName`]}
                   </div>
                 )}
 
