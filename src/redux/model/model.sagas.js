@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { setItemsCount } from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
 import {
   setModels,
@@ -81,6 +81,7 @@ export function* handleModelDelete({ payload }) {
     yield put(setModelLoading(true));
     yield call(deleteModel, payload);
     yield put(removeModelFromStore(payload));
+    yield put(updatePagination());
     yield put(setModelLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {

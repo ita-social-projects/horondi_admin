@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { setItemsCount } from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 import {
   removeSlideFromStore,
   setAvailableSlides,
@@ -121,6 +121,7 @@ export function* handleSlideDelete({ payload }) {
     yield put(setSlideLoading(true));
     yield call(deleteSlide, payload);
     yield put(removeSlideFromStore(payload));
+    yield put(updatePagination());
     yield put(setSlideLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {

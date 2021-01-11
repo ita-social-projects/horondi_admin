@@ -1,4 +1,4 @@
-import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { setItemsCount, updatePagination } from '../table/table.actions';
