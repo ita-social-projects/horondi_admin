@@ -68,10 +68,10 @@ const newsReducer = (state = initialState, action = {}) => {
       }
     };
   case REMOVE_ARTICLE_FROM_STORE:
-    const article = state.list.filter(
+    const articles = state.list.filter(
       (article) => article._id !== action.payload
     );
-    return { ...state, list: article };
+    return { ...state, list: articles };
 
   default:
     return state;

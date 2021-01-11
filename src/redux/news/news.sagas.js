@@ -33,7 +33,6 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
-import { contactsPaginationPayload } from '../../configs/pagination';
 
 const {
   SUCCESS_ADD_STATUS,
