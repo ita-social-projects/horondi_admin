@@ -25,6 +25,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                 placeholder={input.label}
                 onEditorChange={input.onEditorChange}
                 setFiles={input.setFiles}
+                data-cy={`${lang}-${input.name}`}
               />
             );
           }
