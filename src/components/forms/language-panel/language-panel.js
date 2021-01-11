@@ -19,7 +19,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
           const inputName = lang + _.capitalize(input.name);
 
           return (
-            <>
+            <React.Fragment key={input.name}>
               <TextField
                 data-cy={`${lang}-${input.name}`}
                 id={inputName}
@@ -39,7 +39,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                   {errors[inputName]}
                 </div>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </Paper>
