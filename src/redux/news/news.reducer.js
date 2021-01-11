@@ -5,7 +5,8 @@ import {
   SET_NEWS_ERROR,
   SET_CURRENT_PAGE,
   SET_NEWS_PER_PAGE,
-  SET_PAGES_COUNT
+  SET_PAGES_COUNT,
+  REMOVE_ARTICLE_FROM_STORE
 } from './news.types';
 
 export const initialState = {
@@ -66,6 +67,12 @@ const newsReducer = (state = initialState, action = {}) => {
         pagesCount: action.payload
       }
     };
+  case REMOVE_ARTICLE_FROM_STORE:
+    const articles = state.list.filter(
+      (article) => article._id !== action.payload
+    );
+    return { ...state, list: articles };
+
   default:
     return state;
   }
