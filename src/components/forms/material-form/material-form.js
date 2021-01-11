@@ -14,10 +14,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
-import TabPanel from '../tab-panel';
-import { BackButton, SaveButton, StandardButton } from '../buttons';
-import LoadingBar from '../loading-bar';
-import useMaterialHandlers from '../../utils/use-material-handlers';
+import TabPanel from '../../tab-panel';
+import { BackButton, SaveButton, StandardButton } from '../../buttons';
+import LoadingBar from '../../loading-bar';
+import useMaterialHandlers from '../../../utils/use-material-handlers';
 import { useStyles } from './material-form.styles';
 import {
   addMaterial,

@@ -2,21 +2,12 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Paper,
-  TextField,
-  Grid,
-  Tab,
-  AppBar,
-  Tabs,
-  Avatar
-} from '@material-ui/core';
+import { Paper, TextField, Grid, Avatar } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
 import useCategoryHandlers from '../../../utils/use-category-handlers';
 import { useStyles } from './category-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
-import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
 import {
   addCategory,
@@ -29,6 +20,7 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../../../redux/snackbar/snackbar.actions';
+import LanguagePanel from '../language-panel';
 
 const {
   CATEGORY_VALIDATION_ERROR,
@@ -48,21 +40,12 @@ const CategoryForm = ({ category, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
-    tabsValue,
-    handleTabsChange,
     createCategory,
     setUpload,
     upload,
     categoryImage,
     setCategoryImage
   } = useCategoryHandlers();
-
-  const languageTabs =
-    languages.length > 0
-      ? languages.map((lang) => (
-        <Tab label={lang} data-cy={`${lang}`} key={lang} />
-      ))
-      : null;
 
   const categoryValidationSchema = Yup.object().shape({
     enName: Yup.string()
@@ -122,6 +105,16 @@ const CategoryForm = ({ category, id, edit }) => {
     }
   };
 
+  const inputs = [
+    { label: config.labels.categories.categoryName, name: 'name' }
+  ];
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -155,36 +148,8 @@ const CategoryForm = ({ category, id, edit }) => {
             )}
           </Paper>
         </Grid>
-        <AppBar position='static'>
-          <Tabs
-            className={styles.tabs}
-            value={tabsValue}
-            onChange={handleTabsChange}
-          >
-            {languageTabs}
-          </Tabs>
-        </AppBar>
-        {languages.map((lang, index) => (
-          <TabPanel key={index} value={tabsValue} index={index}>
-            <Paper className={styles.categoryItemUpdate}>
-              <TextField
-                data-cy={`${lang}-name`}
-                name={`${lang}Name`}
-                className={styles.textField}
-                variant='outlined'
-                label={config.labels.categories.categoryName}
-                multiline
-                value={values[`${lang}Name`]}
-                onChange={handleChange}
-                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-              />
-              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div data-cy={`${lang}-name-error`} className={styles.error}>
-                  {errors[`${lang}Name`]}
-                </div>
-              )}
-            </Paper>
-          </TabPanel>
+        {languages.map((lang) => (
+          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
 
         <BackButton />
