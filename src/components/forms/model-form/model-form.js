@@ -249,10 +249,6 @@ const ModelForm = ({ model, id, isEdit }) => {
                 onChange={handleChange}
                 label={config.labels.model.description}
                 data-cy={`${lang}Description`}
-                // error={
-                //   touched[`${lang}Description`] &&
-                //   !!errors[`${lang}Description`]
-                // }
               />
               {touched[`${lang}Description`] &&
                 errors[`${lang}Description`] && (
