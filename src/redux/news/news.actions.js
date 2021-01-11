@@ -10,7 +10,8 @@ import {
   SET_NEWS_ERROR,
   SET_CURRENT_PAGE,
   SET_NEWS_PER_PAGE,
-  SET_PAGES_COUNT
+  SET_PAGES_COUNT,
+  REMOVE_ARTICLE_FROM_STORE
 } from './news.types';
 
 const setNews = (news) => ({
@@ -73,6 +74,11 @@ const setNewsError = (error) => ({
   payload: error
 });
 
+const removeArticleFromStore = (payload) => ({
+  type: REMOVE_ARTICLE_FROM_STORE,
+  payload
+});
+
 export {
   setNews,
   getNews,
@@ -85,5 +91,6 @@ export {
   setNewsError,
   setCurrentPage,
   setNewsPerPage,
-  setPagesCount
+  setPagesCount,
+  removeArticleFromStore
 };
