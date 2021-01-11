@@ -22,21 +22,21 @@ const LanguagePanel = ({ lang, inputOptions }) => {
             <>
               <TextField
                 data-cy={`${lang}-${input.name}`}
-                id={`${inputName}`}
+                id={inputName}
                 className={styles.textField}
                 variant='outlined'
                 label={input.label}
-                error={touched[`${inputName}`] && !!errors[`${inputName}`]}
+                error={touched[inputName] && !!errors[inputName]}
                 multiline
-                value={values[`${inputName}`]}
+                value={values[inputName]}
                 onChange={handleChange}
               />
-              {touched[`${inputName}`] && errors[`${inputName}`] && (
+              {touched[inputName] && errors[inputName] && (
                 <div
                   data-cy={`${lang}-${input.name}-error`}
                   className={styles.error}
                 >
-                  {errors[`${inputName}`]}
+                  {errors[inputName]}
                 </div>
               )}
             </>

@@ -8,7 +8,7 @@ export const useStyles = makeStyles((theme) => ({
   inputPanel: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '10px 0 !important',
+    margin: '10px 0',
     padding: '10px'
   },
   textField: {
