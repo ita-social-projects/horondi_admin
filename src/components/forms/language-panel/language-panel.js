@@ -57,7 +57,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                 setFiles={input.setFiles}
                 data-cy={`${lang}-${input.name}`}
                 label={lang}
-                id={lang}
+                id={`${lang}-${input.name}`}
                 key={lang}
               />
             ))
