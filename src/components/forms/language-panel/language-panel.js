@@ -1,8 +1,8 @@
 import React from 'react';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { useStyles } from './language-panel.styles';
-import { capitalizeFirstLetter } from '../../../utils';
 
 const LanguagePanel = ({ lang, inputOptions }) => {
   const styles = useStyles();
@@ -16,7 +16,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
       </Typography>
       <Paper className={styles.inputPanel}>
         {inputs.map((input) => {
-          const inputName = lang + capitalizeFirstLetter(input.name);
+          const inputName = lang + _.capitalize(input.name);
 
           return (
             <>
