@@ -151,10 +151,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     dispatch(push(config.routes.pathToNews));
   };
 
-  useEffect(() => {
-    console.log(preferredLanguages);
-  }, [preferredLanguages]);
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
