@@ -39,7 +39,6 @@ const { priceLabel } = config.labels.product;
 const {
   DELETE_PRODUCT_MESSAGE,
   DELETE_PRODUCT_TITLE,
-  DELETE_PRODUCT_BTN,
   SAVE,
   PRODUCT_SPECIFICATION,
   PRODUCT_OPTIONS,
