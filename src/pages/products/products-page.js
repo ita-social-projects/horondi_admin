@@ -25,8 +25,7 @@ import { useCommonStyles } from '../common.styles';
 const {
   PRODUCT_NOT_FOUND,
   DELETE_PRODUCT_MESSAGE,
-  DELETE_PRODUCT_TITLE,
-  DELETE_PRODUCT_BTN
+  DELETE_PRODUCT_TITLE
 } = productsTranslations;
 const tableTitles = config.tableHeadRowTitles.products;
 const { imagePrefix } = config;
