@@ -4,7 +4,7 @@ import {
   SET_ROWS_PER_PAGE,
   SET_ITEMS_COUNT,
   RESET_PAGINATION,
-  UPDATE_PADAGINATION
+  UPDATE_PAGINATION
 } from './table.types';
 
 export const setTableDense = (newTableDense) => ({
@@ -33,5 +33,5 @@ export const resetPagination = (payload) => ({
 });
 
 export const updatePagination = () => ({
-  type: UPDATE_PADAGINATION
+  type: UPDATE_PAGINATION
 });

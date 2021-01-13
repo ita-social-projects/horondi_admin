@@ -24,7 +24,11 @@ const { ROWS_PER_PAGE } = tableTranslations;
 const {
   labels: { goToPage },
   buttonTitles: { GO },
-  paginationInputErrorMessages: { MUST_BE_NUMBER, MUST_BE_POSITIVE }
+  paginationInputErrorMessages: {
+    MUST_BE_NUMBER,
+    MUST_BE_POSITIVE,
+    PAGE_NOT_FOUND
+  }
 } = config;
 
 export const TablePaginator = () => {
@@ -40,6 +44,7 @@ export const TablePaginator = () => {
   const formSchema = Yup.object().shape({
     pageInput: Yup.number()
       .min(1)
+      .max(Math.ceil(itemsCount / rowsPerPage), PAGE_NOT_FOUND)
       .typeError(MUST_BE_NUMBER)
       .positive(MUST_BE_POSITIVE)
   });
@@ -51,16 +56,18 @@ export const TablePaginator = () => {
       pageInput: ''
     },
     onSubmit: (data) => {
-      let page = data.pageInput;
-      const lastPage = Math.ceil(itemsCount / rowsPerPage);
-      page = page > lastPage ? lastPage : page;
-
-      dispatch(setCurrentPage(page - 1));
+      dispatch(setCurrentPage(data.pageInput - 1));
     }
   });
 
   const handleChangePage = (event, newPage) => {
     dispatch(setCurrentPage(newPage));
+  };
+
+  const handlePressEnter = (event) => {
+    if (event.key === 'Enter' && values.pageInput && !errors.pageInput) {
+      handleSubmit(values);
+    }
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -95,6 +102,7 @@ export const TablePaginator = () => {
           variant='outlined'
           value={values.pageInput}
           onChange={handleChange}
+          onKeyPress={handlePressEnter}
           error={!!errors.pageInput}
         />
         <Button

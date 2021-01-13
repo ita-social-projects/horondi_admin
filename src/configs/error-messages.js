@@ -105,5 +105,6 @@ export const homePageSlideErrorMessages = {
 
 export const paginationInputErrorMessages = {
   MUST_BE_NUMBER: 'Тільки цифри',
-  MUST_BE_POSITIVE: 'Тільки більше нуля'
+  MUST_BE_POSITIVE: 'Тільки більше нуля',
+  PAGE_NOT_FOUND: 'Сторінку не знайдено'
 };

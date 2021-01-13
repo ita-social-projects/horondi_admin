@@ -4,7 +4,7 @@ import {
   SET_ROWS_PER_PAGE,
   SET_ITEMS_COUNT,
   RESET_PAGINATION,
-  UPDATE_PADAGINATION
+  UPDATE_PAGINATION
 } from './table.types';
 
 export const initialState = {
@@ -41,7 +41,7 @@ const tableState = (state = initialState, action = {}) => {
     };
   case RESET_PAGINATION:
     return initialState;
-  case UPDATE_PADAGINATION: {
+  case UPDATE_PAGINATION: {
     const page =
         state.pagination.currentPage >
         Math.ceil((state.itemsCount - 1) / state.pagination.rowsPerPage) - 1

@@ -23,6 +23,6 @@ export const useStyles = makeStyles(() => ({
   error: {
     color: '#e60000',
     position: 'absolute',
-    bottom: '-10px'
+    bottom: '-15px'
   }
 }));
