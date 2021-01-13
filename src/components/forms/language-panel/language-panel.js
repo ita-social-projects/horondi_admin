@@ -48,12 +48,14 @@ const LanguagePanel = ({ lang, inputOptions }) => {
           })}
           {map(inputsEditor, (input) => {
             const inputName = lang + capitalize(input.name);
+            const setEditorValue =
+              `set${ capitalize(lang) }${capitalize(input.name)}`;
             return (
               <Editor
                 value={values[inputName]}
                 placeholder={input.label}
                 onChange={handleChange}
-                onEditorChange={input.onEditorChange}
+                onEditorChange={input[setEditorValue]}
                 setFiles={input.setFiles}
                 data-cy={`${lang}-${input.name}`}
                 label={lang}
