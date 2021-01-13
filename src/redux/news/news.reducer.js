@@ -9,12 +9,7 @@ export const initialState = {
   list: [],
   newsArticle: null,
   newsLoading: false,
-  newsError: null,
-  pagination: {
-    currentPage: 0,
-    newsPerPage: 6,
-    pagesCount: 1
-  }
+  newsError: null
 };
 
 const newsReducer = (state = initialState, action = {}) => {

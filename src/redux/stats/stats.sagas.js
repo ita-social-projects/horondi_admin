@@ -1,4 +1,4 @@
-import { call, takeEvery, put, select } from 'redux-saga/effects';
+import { call, takeEvery, put } from 'redux-saga/effects';
 
 import {
   GET_INITIAL_STATS,
@@ -28,8 +28,6 @@ import {
   getUsersByDays
 } from './stats.operations';
 
-import { selectStatsDate } from '../selectors/stats.selectors';
-
 export function* handleInitialStatsLoad() {
   try {
     yield put(setStatsLoading(true));
@@ -43,11 +41,10 @@ export function* handleInitialStatsLoad() {
   }
 }
 
-export function* handleOrdersStatisticLoad() {
+export function* handleOrdersStatisticLoad({ payload }) {
   try {
     yield put(setUpdatingDoughnutData(true));
-    const date = yield select(selectStatsDate);
-    const orders = yield call(getOrdersStats, date);
+    const orders = yield call(getOrdersStats, payload);
     yield put(setAllOrdersStats(orders));
     yield put(setUpdatingDoughnutData(false));
   } catch (e) {
@@ -55,11 +52,10 @@ export function* handleOrdersStatisticLoad() {
   }
 }
 
-export function* handlePaidOrdersLoad() {
+export function* handlePaidOrdersLoad({ payload }) {
   try {
     yield put(setUpdatingBarData(true));
-    const date = yield select(selectStatsDate);
-    const orders = yield call(getPaidOrdersStats, date);
+    const orders = yield call(getPaidOrdersStats, payload);
     yield put(setPaidOrdersStats(orders));
     yield put(setUpdatingBarData(false));
   } catch (e) {
@@ -67,11 +63,10 @@ export function* handlePaidOrdersLoad() {
   }
 }
 
-export function* handleUsersStatisticLoad() {
+export function* handleUsersStatisticLoad({ payload }) {
   try {
     yield put(setUpdatingBarData(true));
-    const date = yield select(selectStatsDate);
-    const users = yield call(getUsersByDays, date);
+    const users = yield call(getUsersByDays, payload);
     yield put(setUsersByDays(users));
     yield put(setUpdatingBarData(false));
   } catch (e) {

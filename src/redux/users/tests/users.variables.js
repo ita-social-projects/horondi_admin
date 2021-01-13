@@ -88,4 +88,14 @@ export const pageCount = Math.ceil(
 
 export const mockFilter = { banned: false };
 export const mockSort = { name: 1 };
+export const mockPagination = {
+  skip: 0,
+  limit: 10
+};
+
+export const mockPayload = {
+  filter: mockFilter,
+  pagination: mockPagination,
+  sort: mockSort
+};
 export const mockTab = 'admins';

@@ -1,9 +1,6 @@
 import materialReducer, { initialState } from '../material.reducer';
 import {
   setMaterials,
-  setMaterialsPerPage,
-  setMaterialsPagesCount,
-  setMaterialsCurrentPage,
   setMaterialError,
   setMaterialLoading,
   setNewColorToStore,
@@ -36,36 +33,6 @@ describe('material reducer tests', () => {
     ).toEqual({
       ...initialState,
       material: mockMaterials.items[0]
-    });
-  });
-  it('should set materials per page', () => {
-    expect(materialReducer(initialState, setMaterialsPerPage(22))).toEqual({
-      ...initialState,
-      pagination: {
-        currentPage: 0,
-        materialsPerPage: 22,
-        pagesCount: 1
-      }
-    });
-  });
-  it('should set materials pages count', () => {
-    expect(materialReducer(initialState, setMaterialsPagesCount(12))).toEqual({
-      ...initialState,
-      pagination: {
-        currentPage: 0,
-        materialsPerPage: 6,
-        pagesCount: 12
-      }
-    });
-  });
-  it('should set materials current page', () => {
-    expect(materialReducer(initialState, setMaterialsCurrentPage(5))).toEqual({
-      ...initialState,
-      pagination: {
-        currentPage: 4,
-        materialsPerPage: 6,
-        pagesCount: 1
-      }
     });
   });
 

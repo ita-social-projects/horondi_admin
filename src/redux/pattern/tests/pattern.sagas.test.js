@@ -15,7 +15,6 @@ import {
   setPatterns,
   setPatternLoading,
   setPattern,
-  setPagesCount,
   removePatternFromStore,
   setPatternError
 } from '../pattern.actions';
@@ -24,13 +23,12 @@ import {
   mockPatternsState,
   mockPatternsLoadPayload,
   mockPatterns,
-  pagesCount,
   mockId,
   mockPattern,
-  mockSnackarState,
   statuses,
   mockInputPattern,
-  mockError
+  mockError,
+  mockTableState
 } from './pattern.variables';
 
 import {
@@ -41,13 +39,15 @@ import {
   updatePattern
 } from '../pattern.operations';
 
+import { setItemsCount, updatePagination } from '../../table/table.actions';
+
 import Pattern from '../pattern.reducer';
-import Snackbar from '../../snackbar/snackbar.reducer';
+import Table from '../../table/table.reducer';
+
 import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../../snackbar/snackbar.actions';
+  handleSuccessSnackbar,
+  handleErrorSnackbar
+} from '../../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -58,7 +58,10 @@ const {
 describe('Test pattern sagas', () => {
   it('should load all patterns', () =>
     expectSaga(handlePatternsLoad, { payload: mockPatternsLoadPayload })
-      .withReducer(combineReducers({ Pattern }), { Pattern: mockPatternsState })
+      .withReducer(combineReducers({ Pattern, Table }), {
+        Pattern: mockPatternsState,
+        Table: mockTableState
+      })
       .put(setPatternLoading(true))
       .provide([
         [
@@ -70,17 +73,17 @@ describe('Test pattern sagas', () => {
           mockPatterns
         ]
       ])
-      .put(setPagesCount(pagesCount))
+      .put(setItemsCount(mockPatterns.count))
       .put(setPatterns(mockPatterns.items))
       .put(setPatternLoading(false))
       .hasFinalState({
         Pattern: {
           ...mockPatternsState,
-          pagination: {
-            ...mockPatternsState.pagination,
-            pagesCount
-          },
           list: mockPatterns.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: mockPatterns.count
         }
       })
       .run()
@@ -112,128 +115,103 @@ describe('Test pattern sagas', () => {
 
   it('should add pattern by input data', () =>
     expectSaga(handleAddPattern, { payload: mockInputPattern })
-      .withReducer(combineReducers({ Pattern, Snackbar }), {
-        Pattern: mockPatternsState,
-        Snackbar: mockSnackarState
+      .withReducer(combineReducers({ Pattern }), {
+        Pattern: mockPatternsState
       })
       .put(setPatternLoading(true))
-      .provide([[call(createPattern, mockInputPattern)]])
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_ADD_STATUS))
-      .put(setSnackBarStatus(true))
+      .provide([
+        [call(createPattern, mockInputPattern)],
+        [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
+      ])
       .put(push('/patterns'))
       .hasFinalState({
         Pattern: {
           ...mockPatternsState,
           patternLoading: true
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'success',
-          snackBarMessage: SUCCESS_ADD_STATUS
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(5);
+        expect(analysisPut).toHaveLength(2);
       }));
 
   it('should delete pattern by id', () =>
     expectSaga(handlePatternDelete, { payload: mockId })
-      .withReducer(combineReducers({ Pattern, Snackbar }), {
+      .withReducer(combineReducers({ Pattern }), {
         Pattern: {
           ...mockPatternsState,
           list: mockPatterns.items
-        },
-        Snackbar: mockSnackarState
+        }
       })
       .put(setPatternLoading(true))
-      .provide([[call(deletePattern, mockId)]])
+      .provide([
+        [call(deletePattern, mockId)],
+        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
+      ])
       .put(removePatternFromStore(mockId))
+      .put(updatePagination())
       .put(setPatternLoading(false))
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_DELETE_STATUS))
-      .put(setSnackBarStatus(true))
       .hasFinalState({
         Pattern: {
           ...mockPatternsState,
           list: []
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'success',
-          snackBarMessage: SUCCESS_DELETE_STATUS
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(6);
+        expect(analysisPut).toHaveLength(4);
       }));
 
   it('should update pattern by input data', () =>
     expectSaga(handlePatternUpdate, { payload: mockInputPattern })
-      .withReducer(combineReducers({ Pattern, Snackbar }), {
-        Pattern: mockPatternsState,
-        Snackbar: mockSnackarState
+      .withReducer(combineReducers({ Pattern }), {
+        Pattern: mockPatternsState
       })
       .put(setPatternLoading(true))
-      .provide([[call(updatePattern, mockInputPattern)]])
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_UPDATE_STATUS))
-      .put(setSnackBarStatus(true))
+      .provide([
+        [call(updatePattern, mockInputPattern)],
+        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
+      ])
       .put(push('/patterns'))
       .hasFinalState({
         Pattern: {
           ...mockPatternsState,
           patternLoading: true
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'success',
-          snackBarMessage: SUCCESS_UPDATE_STATUS
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(5);
+        expect(analysisPut).toHaveLength(2);
       }));
 
   it('should handle pattern errors', () =>
     expectSaga(handlePatternError, mockError)
-      .withReducer(combineReducers({ Pattern, Snackbar }), {
+      .withReducer(combineReducers({ Pattern }), {
         Pattern: {
           ...mockPatternsState,
           patternLoading: true
-        },
-        Snackbar: mockSnackarState
+        }
       })
+      .provide([[call(handleErrorSnackbar, mockError.message)]])
       .put(setPatternLoading(false))
       .put(setPatternError({ e: mockError }))
-      .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(mockError.message))
-      .put(setSnackBarStatus(true))
       .hasFinalState({
         Pattern: {
           ...mockPatternsState,
           patternLoading: false,
           patternError: { e: mockError }
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'error',
-          snackBarMessage: mockError.message
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(5);
+        expect(analysisPut).toHaveLength(2);
       }));
 });

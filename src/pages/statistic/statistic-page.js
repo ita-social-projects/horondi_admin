@@ -70,13 +70,13 @@ const StatisticPage = () => {
     const newDate = parseInt(e.target.value);
     dispatch(setDateValue(newDate));
     if (doughnutValue === doughnut.select[1].value) {
-      dispatch(getAllOrdersStats());
+      dispatch(getAllOrdersStats(date));
     }
     if (barValue === bar.select[1].value) {
-      dispatch(getPaidOrdersStats());
+      dispatch(getPaidOrdersStats(date));
     }
     if (barValue === bar.select[2].value) {
-      dispatch(getUsersByDays());
+      dispatch(getUsersByDays(date));
     }
     fetchedDoughnutStats.current.push(doughnutValue);
     fetchedBarStats.current.push(barValue);
@@ -87,7 +87,7 @@ const StatisticPage = () => {
     const { select } = doughnut;
     const isFetched = fetchedDoughnutStats.current.includes(value);
     if (value === select[1].value && !isFetched) {
-      dispatch(getAllOrdersStats());
+      dispatch(getAllOrdersStats(date));
       fetchedDoughnutStats.current.push(value);
     }
     dispatch(setDoughnutValue(value));
@@ -98,11 +98,11 @@ const StatisticPage = () => {
     const { select } = bar;
     const isFetched = fetchedBarStats.current.includes(value);
     if (value === select[1].value && !isFetched) {
-      dispatch(getPaidOrdersStats());
+      dispatch(getPaidOrdersStats(date));
       fetchedBarStats.current.push(value);
     }
     if (value === select[2].value && !isFetched) {
-      dispatch(getUsersByDays());
+      dispatch(getUsersByDays(date));
       fetchedBarStats.current.push(value);
     }
     dispatch(setBarValue(value));

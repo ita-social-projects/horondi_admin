@@ -3,9 +3,6 @@ import {
   setModels,
   setModelError,
   setModelLoading,
-  setModelsCurrentPage,
-  setModelsPerPage,
-  setPagesCount,
   getModel,
   getModels,
   addModel,
@@ -24,9 +21,6 @@ import {
   SET_MODEL,
   UPDATE_MODEL,
   SET_MODEL_ERROR,
-  SET_MODELS_CURRENT_PAGE,
-  SET_MODELS_PER_PAGE,
-  SET_MODELS_PAGES_COUNT,
   REMOVE_MODEL_FROM_STORE
 } from '../model.types';
 
@@ -43,27 +37,6 @@ describe('Test models actions', () => {
     expect(setModels(mockModels)).toEqual({
       type: SET_MODELS,
       payload: mockModels
-    });
-  });
-
-  it('should set models current page', () => {
-    expect(setModelsCurrentPage(mockModel)).toEqual({
-      type: SET_MODELS_CURRENT_PAGE,
-      payload: mockModel
-    });
-  });
-
-  it('should set models per page', () => {
-    expect(setModelsPerPage(1)).toEqual({
-      type: SET_MODELS_PER_PAGE,
-      payload: 1
-    });
-  });
-
-  it('should set pages count', () => {
-    expect(setPagesCount(1)).toEqual({
-      type: SET_MODELS_PAGES_COUNT,
-      payload: 1
     });
   });
 
