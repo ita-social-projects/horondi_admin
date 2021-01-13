@@ -2,6 +2,7 @@ import React from 'react';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import capitalize from 'lodash/capitalize';
+import map from 'lodash/map';
 import { useStyles } from './language-panel.styles';
 import Editor from '../../editor';
 
@@ -18,39 +19,38 @@ const LanguagePanel = ({ lang, inputOptions }) => {
           {lang.toUpperCase()}
         </Typography>
         <Paper className={styles.inputPanel}>
-          {inputsTextfields.length
-            ? inputsTextfields.map((input) => {
-              const inputName = lang + capitalize(input.name);
+          {map(inputsTextfields, (input) => {
+            const inputName = lang + capitalize(input.name);
 
-              return (
-                <React.Fragment key={input.name}>
-                  <TextField
-                    data-cy={`${lang}-${input.name}`}
-                    id={inputName}
-                    className={styles.textField}
-                    variant='outlined'
-                    label={input.label}
-                    error={touched[inputName] && !!errors[inputName]}
-                    multiline
-                    value={values[inputName]}
-                    onChange={handleChange}
-                  />
-                  {touched[inputName] && errors[inputName] && (
-                    <div
-                      data-cy={`${lang}-${input.name}-error`}
-                      className={styles.error}
-                    >
-                      {errors[inputName]}
-                    </div>
-                  )}
-                </React.Fragment>
-              );
-            })
-            : ''}
-          {inputsEditor.length
-            ? inputsEditor.map((input) => (
+            return (
+              <React.Fragment key={input.name}>
+                <TextField
+                  data-cy={`${lang}-${input.name}`}
+                  id={inputName}
+                  className={styles.textField}
+                  variant='outlined'
+                  label={input.label}
+                  error={touched[inputName] && !!errors[inputName]}
+                  multiline
+                  value={values[inputName]}
+                  onChange={handleChange}
+                />
+                {touched[inputName] && errors[inputName] && (
+                  <div
+                    data-cy={`${lang}-${input.name}-error`}
+                    className={styles.error}
+                  >
+                    {errors[inputName]}
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+          {map(inputsEditor, (input) => {
+            const inputName = lang + capitalize(input.name);
+            return (
               <Editor
-                value=''
+                value={values[inputName]}
                 placeholder={input.label}
                 onChange={handleChange}
                 onEditorChange={input.onEditorChange}
@@ -60,8 +60,8 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                 id={`${lang}-${input.name}`}
                 key={lang}
               />
-            ))
-            : ''}
+            );
+          })}
         </Paper>
       </div>
     </>
