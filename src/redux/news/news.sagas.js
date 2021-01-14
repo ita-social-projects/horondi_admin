@@ -6,7 +6,8 @@ import {
   setArticle,
   setNewsError,
   setPagesCount,
-  setCurrentPage
+  setCurrentPage,
+  removeArticleFromStore
 } from './news.actions';
 
 import {
@@ -87,6 +88,7 @@ export function* handleNewsDelete({ payload }) {
     yield put(setNewsLoading(true));
     yield call(deleteArticle, payload);
     yield put(setCurrentPage(1));
+    yield put(removeArticleFromStore(payload));
     yield put(setNewsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {

@@ -50,7 +50,8 @@ import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
 import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
-import NewsForm from '../pages/news/news-form';
+import NewsDetails from '../pages/news/news-details/news-details';
+import NewsAdd from '../pages/news/news-add/news-add';
 import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
@@ -100,11 +101,11 @@ const Routes = () => {
           <Route path={routes.pathToHeaders} exact component={HeaderPage} />
           <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
           <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
-          <Route path={routes.pathToAddNews} exact component={NewsForm} />
+          <Route path={routes.pathToAddNews} exact component={NewsAdd} />
           <Route
             path={routes.pathToNewsDetails}
             exact
-            render={({ match }) => <NewsForm id={match.params.id} editMode />}
+            component={NewsDetails}
           />
           <Route
             path={routes.pathToHeaderDetails}
