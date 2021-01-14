@@ -3,6 +3,34 @@ import { client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { constructorTranslations } from '../../translations/constructor.translations';
 
+const constructorElementRequest = `
+  _id
+  available
+  basePrice{
+   value
+   currency
+  }
+  name {
+   value
+   lang
+  }
+  image
+  material{
+    _id
+  name {
+    value
+    lang
+  }
+  }
+  color{
+     _id
+    colorHex
+    name {
+    value
+    lang
+  }
+  }
+`;
 export const deleteConstructorBasic = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
@@ -45,27 +73,7 @@ export const createConstructorBasic = async (payload) => {
         mutation($constructorElement: ConstructorBasicInput!) {
             addConstructorBasic(constructorElement: $constructorElement) {
                 ... on ConstructorBasic {
-                    _id
-                    available
-                    basePrice{
-                        value
-                        currency
-                    }
-                    name {
-                        value
-                        lang
-                    }
-                    image
-                    material{
-                        _id
-                        name {
-                            value
-                            lang
-                        }
-                        color{
-                            colorHex
-                        }
-                    }
+                  ${constructorElementRequest}
                 }
                 ... on Error {
                     message
@@ -101,27 +109,7 @@ export const updateConstructorBasic = async (payload) => {
         mutation($id: ID!, $constructorElement: ConstructorBasicInput!) {
             updateConstructorBasic(id: $id, constructorElement: $constructorElement) {
                 ... on ConstructorBasic {
-                    _id
-                    available
-                    basePrice{
-                        value
-                        currency
-                    }
-                    name {
-                        value
-                        lang
-                    }
-                    image
-                    material{
-                        _id
-                        name {
-                            value
-                            lang
-                        }
-                        color{
-                            colorHex
-                        }
-                    }
+                    ${constructorElementRequest}
                 }
                 ... on Error {
                     message
@@ -154,27 +142,7 @@ export const createConstructorBottom = async (payload) => {
         mutation($constructorElement: ConstructorBottomInput!) {
             addConstructorBottom(constructorElement: $constructorElement) {
                 ... on ConstructorBottom {
-                    _id
-                    available
-                    basePrice{
-                        value
-                        currency
-                    }
-                    name {
-                        value
-                        lang
-                    }
-                    image
-                    material{
-                        _id
-                        name {
-                            value
-                            lang
-                        }
-                        color{
-                            colorHex
-                        }
-                    }
+                    ${constructorElementRequest}
                 }
                 ... on Error {
                     message
@@ -243,27 +211,7 @@ export const updateConstructorBottom = async (payload) => {
         mutation($id: ID!, $constructorElement: ConstructorBottomInput!) {
             updateConstructorBottom(id: $id, constructorElement: $constructorElement) {
                 ... on ConstructorBottom {
-                    _id
-                    available
-                    basePrice{
-                        value
-                        currency
-                    }
-                    name {
-                        value
-                        lang
-                    }
-                    image
-                    material{
-                        _id
-                        name {
-                            value
-                            lang
-                        }
-                        color{
-                            colorHex
-                        }
-                    }
+                    ${constructorElementRequest}
                 }
                 ... on Error {
                     message
@@ -296,27 +244,7 @@ export const createConstructorFrontPocket = async (payload) => {
         mutation($constructorElement: ConstructorFrontPocketInput!) {
             addConstructorFrontPocket(constructorElement: $constructorElement) {
                 ... on ConstructorFrontPocket {
-                    _id
-                    available
-                    basePrice{
-                        value
-                        currency
-                    }
-                    name {
-                        value
-                        lang
-                    }
-                    image
-                    material{
-                        _id
-                        name {
-                            value
-                            lang
-                        }
-                        color{
-                            colorHex
-                        }
-                    }
+                    ${constructorElementRequest}
                 }
                 ... on Error {
                     message
@@ -385,27 +313,7 @@ export const updateConstructorFrontPocket = async (payload) => {
         mutation($id: ID!, $constructorElement: ConstructorFrontPocketInput!) {
             updateConstructorFrontPocket(id: $id, constructorElement: $constructorElement) {
                 ... on ConstructorFrontPocket {
-                    _id
-                    available
-                    basePrice{
-                        value
-                        currency
-                    }
-                    name {
-                        value
-                        lang
-                    }
-                    image
-                    material{
-                        _id
-                        name {
-                            value
-                            lang
-                        }
-                        color{
-                            colorHex
-                        }
-                    }
+                    ${constructorElementRequest}
                 }
                 ... on Error {
                     message

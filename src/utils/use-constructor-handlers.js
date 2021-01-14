@@ -26,7 +26,9 @@ const useConstructorHandlers = () => {
       ],
       image: values.image,
       material: values.material,
+      color: values.color,
       available: values.available,
+      default: values.default,
       basePrice: +values.basePrice,
     };
     return newConstructorElement;

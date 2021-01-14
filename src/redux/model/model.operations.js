@@ -3,6 +3,35 @@ import { client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { modelTranslations } from '../../translations/model.translations';
 
+const constructorElementRequest = `
+  _id
+  available
+  basePrice{
+   value
+   currency
+  }
+  name {
+   value
+   lang
+  }
+  image
+  material{
+    _id
+  name {
+    value
+    lang
+  }
+  }
+  color{
+     _id
+    colorHex
+    name {
+    value
+    lang
+  }
+  }
+`;
+
 export const getAllModels = async (skip, limit) => {
   const result = await client.query({
     variables: {
@@ -80,27 +109,7 @@ export const getModelById = async (id) => {
                         lang
                     }
                     constructorBasic{
-                        _id
-                        available
-                        basePrice{
-                            value
-                            currency
-                        }
-                        name {
-                            value
-                            lang
-                        }
-                        image
-                        material{
-                            _id
-                            name {
-                                value
-                                lang
-                            }
-                            color{
-                                colorHex
-                            }
-                        }
+                        ${constructorElementRequest}
                     }
                     constructorPattern{
                         _id
@@ -116,50 +125,10 @@ export const getModelById = async (id) => {
                         available
                     }
                     constructorFrontPocket{
-                        _id
-                        available
-                        basePrice{
-                            value
-                            currency
-                        }
-                        name {
-                            value
-                            lang
-                        }
-                        image
-                        material{
-                            _id
-                            name {
-                                value
-                                lang
-                            }
-                            color{
-                                colorHex
-                            }
-                        }
+                        ${constructorElementRequest}
                     }
                     constructorBottom{
-                        _id
-                        available
-                        basePrice{
-                            value
-                            currency
-                        }
-                        name {
-                            value
-                            lang
-                        }
-                        image
-                        material{
-                            _id
-                            name {
-                                value
-                                lang
-                            }
-                            color{
-                                colorHex
-                            }
-                        }
+                        ${constructorElementRequest}
                     }
                 }
                 ... on Error {

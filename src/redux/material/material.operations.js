@@ -19,7 +19,7 @@ const materialRequest = `
     value
   }
   purpose
-  color {
+  colors {
     _id
     name {
       lang

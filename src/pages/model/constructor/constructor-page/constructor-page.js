@@ -35,6 +35,7 @@ import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actio
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import { selectConstructorMethodAndMaterials } from '../../../../redux/selectors/constructor.selectors';
 import { getPatterns } from '../../../../redux/pattern/pattern.actions';
+import { getMaterials } from '../../../../redux/material/material.actions';
 
 const {
   constructorBasic,
@@ -113,7 +114,7 @@ const ConstructorPage = ({ match }) => {
 
         color={
           <ColorCircle
-            color={listItem.material.color.colorHex}
+            color={listItem.color.colorHex}
             size={DEFAULT_CIRCLE}
           />
         }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar, Avatar, FormControl, Grid, InputLabel, Paper, Select, Tab, Tabs, TextField } from '@material-ui/core';
@@ -46,6 +46,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const history = createBrowserHistory();
+  const [materialColors, setMaterialColors] = useState([]);
   const {
     tabsValue,
     handleTabsChange,
@@ -56,8 +57,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
 
   const {
     list,
-    filter,
     model,
+    filter,
     constructorElementMethod,
   } = useSelector(selectConstructorMethodAndMaterials);
 
@@ -69,8 +70,9 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     );
     if (editableConstructorElement) {
       setConstructorImg(editableConstructorElement.image);
+      setMaterialColors([editableConstructorElement.color]);
     }
-  }, [dispatch, filter]);
+  }, [dispatch]);
 
   const languageTabs =
     languages.length > 0
@@ -108,7 +110,9 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       uaName: editableConstructorElement.name[0].value || '',
       enName: editableConstructorElement.name[1].value || '',
       material: editableConstructorElement.material._id || '',
+      color: editableConstructorElement.color._id || '',
       available: editableConstructorElement.available || false,
+      default: editableConstructorElement.default || false,
       basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
     },
 
@@ -129,9 +133,25 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   });
 
   const handleMaterial = (e) => {
-    setFieldValue('material', e.target.value)
+    setFieldValue('material', e.target.value);
+    setMaterialColors(list.filter(el=>el._id===e.target.value)[0].colors);
+  }
+  const handleMaterialColor = (e) => {
+    setFieldValue('color', e.target.value);
   }
   const checkboxes = [
+    {
+      id: 'default',
+      dataCy: 'default',
+      value: values.default,
+      checked: values.default,
+      color: 'primary',
+      label: config.labels.model.show,
+      handler: () => setFieldValue('default', !values.default)
+    }
+  ];
+
+  const defaultCheckbox = [
     {
       id: 'available',
       dataCy: 'available',
@@ -160,21 +180,51 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     });
   };
 
-  const textField = (inputValue, inputLabel) => (<TextField
-    data-cy={inputValue}
-    id={inputValue}
+  const textField = (inputValue, inputName, inputLabel, land) => (<TextField
+    data-cy={land?`${land}${inputName}`:`${inputName}`}
+    id={land?`${land}${inputName}`:`${inputName}`}
     className={styles.textField}
     variant='outlined'
     label={inputLabel}
     value={inputValue}
     onChange={handleChange}
-    error={touched.inputValue && !!errors.inputValue}
+    error={touched.inputName && !!errors.inputName}
   />)
+
+  const selectField = (selectValue,
+    selectChangeAction,
+    selectItemsList,
+    inputLabel,
+    defaultValue)=> (<div> <InputLabel id={`multiple-${selectValue}-label`}>
+    {inputLabel}
+  </InputLabel>
+  <Select
+    labelId={`multiple-${selectValue}-label`}
+    id={`multiple-${selectValue}`}
+    onChange={selectChangeAction}
+    input={<Input />}
+    defaultValue={defaultValue}
+    MenuProps={MenuProps}
+    disabled={!selectItemsList.length}
+  >
+    {selectItemsList?selectItemsList.map((selectItem) => (
+      <MenuItem value={selectItem._id} key={selectItem._id}>
+        <div className={styles.selectBox}>
+          {selectValue === 'color' ? <ColorCircle size={SMALL_CIRCLE} color={selectItem.colorHex} /> : null}
+          <span> {selectItem.name[0].value}</span>
+        </div>
+      </MenuItem>
+    )):null}
+  </Select>
+  {touched.selectValue && errors.selectValue && (
+    <div className={styles.inputError}>{errors.selectValue}</div>
+  )}</div>)
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <CheckboxOptions options={checkboxes} />
+        <CheckboxOptions options={defaultCheckbox} />
         <Grid item xs={12}>
           <Paper className={styles.constructorItemUpdate}>
             <div>
@@ -196,36 +246,14 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
                 )}
               </div>
             </div>
-            {textField(values.basePrice, config.labels.model.basePrice)}
+            {textField(values.basePrice, 'basePrice', config.labels.model.basePrice)}
             {touched.basePrice && errors.basePrice && (
               <div className={styles.inputError}>{errors.basePrice}</div>
             )}
             <FormControl variant='outlined' className={styles.textField}>
-              <InputLabel id='multiple-checkbox-label'>
-                {config.labels.model.material}
-              </InputLabel>
-              <Select
-                labelId='multiple-checkbox-label'
-                id='multiple-checkbox'
-                onChange={handleMaterial}
-                input={<Input />}
-                defaultValue={values.material}
-                MenuProps={MenuProps}
-              >
-                {list.map((cat) => (
-                  <MenuItem value={cat._id} key={cat._id}>
-                    <div className={styles.selectBox}>
-                      <ColorCircle size={SMALL_CIRCLE} color={cat.color.colorHex} />
-                      <span> {cat.name[0].value}</span>
-                    </div>
-                  </MenuItem>
-                ))}
-              </Select>
-              {touched.material && errors.material && (
-                <div className={styles.inputError}>{errors.material}</div>
-              )}
+              {selectField('material', handleMaterial, list, config.labels.model.material, values.material)}
+              {selectField('color', handleMaterialColor, materialColors, config.labels.model.material, values.color)}
             </FormControl>
-
           </Paper>
         </Grid>
         <AppBar position='static'>
@@ -241,7 +269,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         {languages.map((lang, index) => (
           <TabPanel key={index} value={tabsValue} index={index}>
             <Paper className={styles.constructorItemUpdate}>
-              {textField(values[`${lang}Name`], labels.name[index].value)}
+              {textField(values[`${lang}Name`], 'Name', labels.name[index].value, lang)}
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (
                 <div
                   data-cy={`${lang}-name-error`}
@@ -273,8 +301,17 @@ ConstructorForm.propTypes = {
   editableConstructorElement: PropTypes.shape({
     _id: PropTypes.string,
     available: PropTypes.bool,
+    default: PropTypes.bool,
     image:PropTypes.string,
-    material: PropTypes.string,
+    material: PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.arrayOf(valueShape),
+    }),
+    color:PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.arrayOf(valueShape),
+      colorHex: PropTypes.string,
+    }),
     name: PropTypes.arrayOf(valueShape),
     basePrice: PropTypes.arrayOf(
       PropTypes.shape({
@@ -285,25 +322,31 @@ ConstructorForm.propTypes = {
   values: PropTypes.shape({
     image: PropTypes.string,
     material: PropTypes.string,
+    color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     available: PropTypes.bool,
+    default: PropTypes.bool,
     basePrice: PropTypes.number
   }),
   errors: PropTypes.shape({
     image: PropTypes.string,
     material: PropTypes.string,
+    color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     available: PropTypes.bool,
+    default: PropTypes.bool,
     basePrice: PropTypes.number
   }),
   touched: PropTypes.shape({
     image: PropTypes.string,
     material: PropTypes.string,
+    color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     available: PropTypes.bool,
+    default: PropTypes.bool,
     basePrice: PropTypes.number
   }),
   match: PropTypes.shape({
@@ -332,7 +375,9 @@ ConstructorForm.defaultProps = {
     ],
     image: '',
     material: '',
+    color: '',
     available: false,
+    default: false,
     basePrice: [
       {
         value: 0
