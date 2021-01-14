@@ -110,7 +110,7 @@ export const deleteColor = async (id) => {
                 value
               }
               purpose
-              color {
+              colors {
                 _id
               }
               available

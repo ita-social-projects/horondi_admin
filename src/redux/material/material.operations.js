@@ -164,7 +164,7 @@ export const updateMaterial = async (id, material) => {
             additionalPrice {
               value
             }
-            color {
+            colors {
               _id
             }
           }
