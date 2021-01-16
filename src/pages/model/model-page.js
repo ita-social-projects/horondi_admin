@@ -5,20 +5,19 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './model-page.styles';
-import { useCommonStyles } from '../../common.styles';
-import { config } from '../../../configs';
+import { useCommonStyles } from '../common.styles';
+import { config } from '../../configs';
 import {
   getModels,
   deleteModel,
   setModelsCurrentPage
-} from '../../../redux/model/model.actions';
-
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import TableContainerRow from '../../../containers/table-container-row';
-import TableContainerGenerator from '../../../containers/table-container-generator';
-import LoadingBar from '../../../components/loading-bar';
-import {selectModels} from '../../../redux/selectors/model.selectors'
+} from '../../redux/model/model.actions';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import TableContainerRow from '../../containers/table-container-row';
+import TableContainerGenerator from '../../containers/table-container-generator';
+import LoadingBar from '../../components/loading-bar';
+import {selectModels} from '../../redux/selectors/model.selectors'
 
 const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;

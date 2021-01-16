@@ -37,7 +37,7 @@ import { selectConstructorMethodAndMaterials } from '../../../../redux/selectors
 import { getPatterns } from '../../../../redux/pattern/pattern.actions';
 import { getMaterials } from '../../../../redux/material/material.actions';
 
-const _ = require('lodash');
+const map = require('lodash/map');
 
 const {
   constructorBasic,
@@ -106,7 +106,7 @@ const ConstructorPage = ({ match }) => {
     dispatch(setEditableConstructorElement(element));
   }
 
-  const constructorItems = (list,deleteAction, editAction) => _.map(list, listItem => (
+  const constructorItems = (list,deleteAction, editAction) => map(list, listItem => (
     <TableContainerRow
       image={
         listItem.images
@@ -134,7 +134,7 @@ const ConstructorPage = ({ match }) => {
     />
   ));
 
-  const patternItems = (list,deleteAction) => _.map(list, listItem => (
+  const patternItems = (list,deleteAction) => map(list, listItem => (
     <TableContainerRow
       image={
         listItem.images
@@ -257,7 +257,7 @@ const ConstructorPage = ({ match }) => {
         <DialogTitle className={styles.dialogTitle}>{availablePatternsForConstructor}</DialogTitle>
         <List>
           {patternList.filter(el=>el.constructorImg).map((pattern) => (
-            pattern?<ListItem button
+            <ListItem button
               onClick={() => handleListItemClick(id, pattern)}
               key={pattern._id}>
               <ListItemAvatar>
@@ -269,13 +269,14 @@ const ConstructorPage = ({ match }) => {
               <Avatar src={pattern.constructorImg} variant='rounded' className={styles.avatar}>
                 <Image />
               </Avatar>
-            </ListItem>:null
+            </ListItem>
           ))}
         </List>
       </Dialog>
     </div>
   );
 };
+
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });

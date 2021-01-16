@@ -16,22 +16,22 @@ import {
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
-import { push } from "connected-react-router";
-import useModelHandlers from '../../utils/use-model-handlers';
+import { push } from 'connected-react-router';
+import useModelHandlers from '../../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
-import { BackButton, SaveButton } from '../buttons';
-import TabPanel from '../tab-panel';
-import { config } from '../../configs';
-import { addModel, updateModel } from '../../redux/model/model.actions';
-import CheckboxOptions from '../checkbox-options';
-import ImageUploadContainer from '../../containers/image-upload-container';
-import Editor from '../editor';
+import { BackButton, SaveButton } from '../../buttons';
+import TabPanel from '../../tab-panel';
+import { config } from '../../../configs';
+import { addModel, updateModel } from '../../../redux/model/model.actions';
+import CheckboxOptions from '../../checkbox-options';
+import ImageUploadContainer from '../../../containers/image-upload-container';
+import Editor from '../../editor';
 import {
   setSnackBarMessage,
   setSnackBarSeverity,
   setSnackBarStatus
-} from '../../redux/snackbar/snackbar.actions';
-import { getCategories } from '../../redux/categories/categories.actions';
+} from '../../../redux/snackbar/snackbar.actions';
+import { getCategories } from '../../../redux/categories/categories.actions';
 
 const { languages } = config;
 const {

@@ -333,6 +333,6 @@ const labels = {
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
-  }
+  },
 };
 export default labels;

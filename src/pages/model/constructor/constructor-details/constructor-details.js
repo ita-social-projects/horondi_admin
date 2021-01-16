@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useStyles } from './constructor-details.styles';
-import ConstructorForm from '../../../../components/constructor-form';
+import ConstructorForm from '../../../../components/forms/business-page-form/constructor-form';
 import { selectConstructorMethodAndMaterials } from '../../../../redux/selectors/constructor.selectors';
 
 const ConstructorDetails = () => {

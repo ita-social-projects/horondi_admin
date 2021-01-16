@@ -9,16 +9,17 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import { createBrowserHistory } from 'history';
 import { useStyles } from './constructor-form.styles';
-import { config } from '../../configs';
-import CheckboxOptions from '../checkbox-options';
-import ImageUploadContainer from '../../containers/image-upload-container';
-import TabPanel from '../tab-panel';
-import { BackButton, SaveButton } from '../buttons';
-import useConstructorHandlers from '../../utils/use-constructor-handlers';
-import ColorCircle from '../color-circle';
+import { config } from '../../../../configs';
+import CheckboxOptions from '../../../checkbox-options';
+import ImageUploadContainer from '../../../../containers/image-upload-container';
+import TabPanel from '../../../tab-panel';
+import { BackButton, SaveButton } from '../../../buttons';
+import useConstructorHandlers from '../../../../utils/use-constructor-handlers';
+import ColorCircle from '../../../color-circle';
 import {
   selectConstructorMethodAndMaterials
-} from '../../redux/selectors/constructor.selectors';
+} from '../../../../redux/selectors/constructor.selectors';
+import LanguagePanel from '../../language-panel';
 
 const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
@@ -206,6 +207,17 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     </Select>
   </FormControl >)
 
+  const inputs = [
+    { label: config.labels.categories.categoryName, name: 'name' },
+  ];
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -248,30 +260,33 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
             </div>
           </Paper>
         </Grid>
-        <AppBar position='static'>
-          <Tabs
-            className={styles.tabs}
-            value={tabsValue}
-            onChange={handleTabsChange}
-          >
-            {languageTabs}
-          </Tabs>
-        </AppBar>
-        {languages.map((lang, index) => (
-          <TabPanel key={index} value={tabsValue} index={index}>
-            <Paper className={styles.constructorItemUpdate}>
-              {textField(values[`${lang}Name`], 'Name', labels.name[index].value, lang)}
-              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div
-                  data-cy={`${lang}-name-error`}
-                  className={styles.inputError}
-                >
-                  {errors[`${lang}Name`]}
-                </div>
-              )}
-            </Paper>
-          </TabPanel>
+        {/*<AppBar position='static'>*/}
+        {/*  <Tabs*/}
+        {/*    className={styles.tabs}*/}
+        {/*    value={tabsValue}*/}
+        {/*    onChange={handleTabsChange}*/}
+        {/*  >*/}
+        {/*    {languageTabs}*/}
+        {/*  </Tabs>*/}
+        {/*</AppBar>*/}
+        {languages.map((lang) => (
+          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
+        {/*{languages.map((lang, index) => (*/}
+        {/*  <TabPanel key={index} value={tabsValue} index={index}>*/}
+        {/*    <Paper className={styles.constructorItemUpdate}>*/}
+        {/*      {textField(values[`${lang}Name`], 'Name', labels.name[index].value, lang)}*/}
+        {/*      {touched[`${lang}Name`] && errors[`${lang}Name`] && (*/}
+        {/*        <div*/}
+        {/*          data-cy={`${lang}-name-error`}*/}
+        {/*          className={styles.inputError}*/}
+        {/*        >*/}
+        {/*          {errors[`${lang}Name`]}*/}
+        {/*        </div>*/}
+        {/*      )}*/}
+        {/*    </Paper>*/}
+        {/*  </TabPanel>*/}
+        {/*))}*/}
         <BackButton />
         <SaveButton
           className={styles.saveButton}
