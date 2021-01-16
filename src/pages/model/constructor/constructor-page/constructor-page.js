@@ -64,13 +64,16 @@ const ConstructorPage = ({ match }) => {
   const {
     model,
     constructorTabs,
-    patternList
+    patternList,
+    filter
   } = useSelector(selectConstructorMethodAndMaterials);
 
   useEffect(()=>{
-    dispatch(getPatterns({
-      skip: 0,
-    }));
+    dispatch(
+      getMaterials({
+        filter
+      })
+    );
   }, [dispatch]);
 
   const constructorElementDeleteHandler = (constructorElementID, action, modelID)=>{
@@ -191,11 +194,53 @@ const ConstructorPage = ({ match }) => {
 
   const handleTabsChange = (event, newValue) => {
     dispatch(setConstructorTabs(newValue));
+    if(!constructorTabs){
+      dispatch(getPatterns({
+        skip: 0,
+      }));
+    }
   };
 
   const constructorTabsValue = Object.values(
     constructorOptions
   ).map(({ label }) => <Tab label={label} key={label} />);
+
+  const constructorTables = Object.values(
+    constructorOptions
+  ).map(
+    ({
+      label,
+      list,
+      buttonTitle,
+      createConstructorElement,
+      deleteConstructorElement,
+      updateConstructorElement
+    }, index) => (
+      <TabPanel key={label} value={constructorTabs} index={index}>
+        <div className={commonStyles.adminHeader}>
+          <Typography variant='h1' className={commonStyles.materialTitle}>
+            {label}
+          </Typography>
+          <Button
+            data-cy='add-constructor-element'
+            onClick={()=>label===constructorPattern?
+              handleOpenDialog():
+              handleConstructorOptions(createConstructorElement)}
+            variant='contained'
+            color='primary'
+          >
+            {buttonTitle}
+          </Button>
+        </div>
+        <TableContainerGenerator
+          data-cy='constructorTable'
+          tableTitles={constructorTitles}
+          tableItems={label===constructorPattern?patternItems(list, deleteConstructorElement,):
+            constructorItems(list, deleteConstructorElement, updateConstructorElement)}
+        />
+      </TabPanel>
+    )
+  );
 
   return (
     <div className={commonStyles.container}>
@@ -207,47 +252,11 @@ const ConstructorPage = ({ match }) => {
           className={styles.tabs}
           value={constructorTabs}
           onChange={handleTabsChange}
-          aria-label='simple tabs example'
         >
           {constructorTabsValue}
         </Tabs>
       </AppBar>
-      {Object.values(
-        constructorOptions
-      ).map(
-        ({
-          label,
-          list,
-          buttonTitle,
-          createConstructorElement,
-          deleteConstructorElement,
-          updateConstructorElement
-        }, index) => (
-          <TabPanel key={label} value={constructorTabs} index={index}>
-            <div className={commonStyles.adminHeader}>
-              <Typography variant='h1' className={commonStyles.materialTitle}>
-                {label}
-              </Typography>
-              <Button
-                data-cy='add-constructor-element'
-                onClick={()=>label===constructorPattern?
-                  handleOpenDialog():
-                  handleConstructorOptions(createConstructorElement)}
-                variant='contained'
-                color='primary'
-              >
-                {buttonTitle}
-              </Button>
-            </div>
-            <TableContainerGenerator
-              data-cy='constructorTable'
-              tableTitles={constructorTitles}
-              tableItems={label===constructorPattern?patternItems(list, deleteConstructorElement,):
-                constructorItems(list, deleteConstructorElement, updateConstructorElement)}
-            />
-          </TabPanel>
-        )
-      )}
+      {constructorTables}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle className={styles.dialogTitle}>{availablePatternsForConstructor}</DialogTitle>
         <List>

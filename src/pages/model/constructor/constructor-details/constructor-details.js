@@ -13,13 +13,13 @@ const ConstructorDetails = () => {
     filter
   } = useSelector(selectConstructorMethodAndMaterials);
 
-  useEffect(() => {
-    dispatch(
-      getMaterials({
-        filter
-      })
-    );
-  }, [dispatch, filter]);
+  // useEffect(() => {
+  //   dispatch(
+  //     getMaterials({
+  //       filter
+  //     })
+  //   );
+  // }, [dispatch, filter]);
 
   return (
     <div className={styles.container}>

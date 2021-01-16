@@ -6,6 +6,7 @@ import { constructorTranslations } from '../../translations/constructor.translat
 const constructorElementRequest = `
   _id
   available
+  default
   basePrice{
    value
    currency

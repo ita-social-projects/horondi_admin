@@ -15,7 +15,6 @@ import ImageUploadContainer from '../../containers/image-upload-container';
 import TabPanel from '../tab-panel';
 import { BackButton, SaveButton } from '../buttons';
 import useConstructorHandlers from '../../utils/use-constructor-handlers';
-import { getMaterials } from '../../redux/material/material.actions';
 import ColorCircle from '../color-circle';
 import {
   selectConstructorMethodAndMaterials
@@ -46,7 +45,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const history = createBrowserHistory();
-  const [materialColors, setMaterialColors] = useState([]);
+
   const {
     tabsValue,
     handleTabsChange,
@@ -58,19 +57,15 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const {
     list,
     model,
-    filter,
     constructorElementMethod,
   } = useSelector(selectConstructorMethodAndMaterials);
 
+  const [materialColors, setMaterialColors] = useState([])
+
   useEffect(() => {
-    dispatch(
-      getMaterials({
-        filter
-      })
-    );
-    if (editableConstructorElement) {
+    if (isEdit) {
       setConstructorImg(editableConstructorElement.image);
-      setMaterialColors([editableConstructorElement.color]);
+      setMaterialColors(list.filter(el=>el._id===editableConstructorElement.material._id)[0].colors);
     }
   }, [dispatch]);
 
@@ -89,6 +84,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       .min(2, CONSTRUCTOR_VALIDATION_ERROR)
       .required(CONSTRUCTOR_ERROR_MESSAGE),
     material: Yup.string()
+      .required(CONSTRUCTOR_ERROR_MESSAGE),
+    color: Yup.string()
       .required(CONSTRUCTOR_ERROR_MESSAGE),
     image: Yup.string().required(PHOTO_NOT_PROVIDED),
     basePrice: Yup.string()
@@ -139,27 +136,16 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const handleMaterialColor = (e) => {
     setFieldValue('color', e.target.value);
   }
-  const checkboxes = [
-    {
-      id: 'default',
-      dataCy: 'default',
-      value: values.default,
-      checked: values.default,
-      color: 'primary',
-      label: config.labels.model.show,
-      handler: () => setFieldValue('default', !values.default)
-    }
-  ];
 
-  const defaultCheckbox = [
+  const checkboxes =(checkBoxName, label)=>[
     {
-      id: 'available',
-      dataCy: 'available',
-      value: values.available,
-      checked: values.available,
+      id: `${checkBoxName}`,
+      dataCy: `${checkBoxName}`,
+      value: values[`${checkBoxName}`],
+      checked: values[`${checkBoxName}`],
       color: 'primary',
-      label: config.labels.model.show,
-      handler: () => setFieldValue('available', !values.available)
+      label,
+      handler: () => setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
     }
   ];
 
@@ -195,36 +181,36 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     selectChangeAction,
     selectItemsList,
     inputLabel,
-    defaultValue)=> (<div> <InputLabel id={`multiple-${selectValue}-label`}>
-    {inputLabel}
-  </InputLabel>
-  <Select
-    labelId={`multiple-${selectValue}-label`}
-    id={`multiple-${selectValue}`}
-    onChange={selectChangeAction}
-    input={<Input />}
-    defaultValue={defaultValue}
-    MenuProps={MenuProps}
-    disabled={!selectItemsList.length}
-  >
-    {selectItemsList?selectItemsList.map((selectItem) => (
-      <MenuItem value={selectItem._id} key={selectItem._id}>
-        <div className={styles.selectBox}>
-          {selectValue === 'color' ? <ColorCircle size={SMALL_CIRCLE} color={selectItem.colorHex} /> : null}
-          <span> {selectItem.name[0].value}</span>
-        </div>
-      </MenuItem>
-    )):null}
-  </Select>
-  {touched.selectValue && errors.selectValue && (
-    <div className={styles.inputError}>{errors.selectValue}</div>
-  )}</div>)
+    defaultValue) => (<FormControl className={styles.formControl}>
+    <InputLabel id={`multiple-${selectValue}-label`}>
+      {inputLabel}
+    </InputLabel>
+    <Select
+      variant='outlined'
+      labelId={`multiple-${selectValue}-label`}
+      id={`multiple-${selectValue}`}
+      onChange={selectChangeAction}
+      input={<Input />}
+      value={defaultValue || ''}
+      MenuProps={MenuProps}
+      disabled={!selectItemsList.length}
+    >
+      {selectItemsList?selectItemsList.map((selectItem) => (
+        <MenuItem value={selectItem._id} key={selectItem._id}>
+          <div className={styles.selectBox}>
+            {selectValue === 'color' ? <ColorCircle size={SMALL_CIRCLE} color={selectItem.colorHex} /> : null}
+            <span> {selectItem.name[0].value}</span>
+          </div>
+        </MenuItem>
+      )):null}
+    </Select>
+  </FormControl >)
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <CheckboxOptions options={checkboxes} />
-        <CheckboxOptions options={defaultCheckbox} />
+        <CheckboxOptions options={checkboxes('available', config.labels.model.show)} />
+        <CheckboxOptions options={checkboxes('default', config.labels.model.default)} />
         <Grid item xs={12}>
           <Paper className={styles.constructorItemUpdate}>
             <div>
@@ -250,10 +236,16 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
             {touched.basePrice && errors.basePrice && (
               <div className={styles.inputError}>{errors.basePrice}</div>
             )}
-            <FormControl variant='outlined' className={styles.textField}>
+            <div className={styles.textField}>
               {selectField('material', handleMaterial, list, config.labels.model.material, values.material)}
-              {selectField('color', handleMaterialColor, materialColors, config.labels.model.material, values.color)}
-            </FormControl>
+              {touched.material && errors.material && (
+                <div className={styles.inputError}>{errors.material}</div>
+              )}
+              {selectField('color', handleMaterialColor, materialColors, config.labels.model.color, values.color)}
+              {touched.color && errors.color && (
+                <div className={styles.inputError}>{errors.color}</div>
+              )}
+            </div>
           </Paper>
         </Grid>
         <AppBar position='static'>
@@ -261,7 +253,6 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
             className={styles.tabs}
             value={tabsValue}
             onChange={handleTabsChange}
-            aria-label='simple tabs example'
           >
             {languageTabs}
           </Tabs>
@@ -287,11 +278,12 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
           data-cy='save-btn'
           type='submit'
           title={SAVE_TITLE}
+          values={values}
+          errors={errors}
         />
       </form>
     </div>
   );
-
 };
 const valueShape = PropTypes.shape({
   value: PropTypes.string
