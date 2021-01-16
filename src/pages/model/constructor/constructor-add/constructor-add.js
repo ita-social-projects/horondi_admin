@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStyles } from './constructor-add.styles';
-import ConstructorForm from '../../../../components/forms/business-page-form/constructor-form';
+import ConstructorForm from '../../../../components/forms/constructor-form';
 
 const ConstructorAdd = () => {
   const styles = useStyles();

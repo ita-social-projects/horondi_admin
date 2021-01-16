@@ -72,8 +72,7 @@ export const getAllModels = async (skip, limit) => {
         }
     `
   });
-
-  client.resetStore();
+  await client.resetStore();
   return result.data.getAllModels;
 };
 
@@ -142,6 +141,7 @@ export const getModelById = async (id) => {
     fetchPolicy: 'no-cache'
   });
   const { data } = result;
+  await client.resetStore();
   if (data.getModelById.message) {
     throw new Error(
       `${data.getModelById.statusCode} ${

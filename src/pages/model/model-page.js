@@ -19,6 +19,8 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import {selectModels} from '../../redux/selectors/model.selectors'
 
+const map = require('lodash/map');
+
 const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;
 const { CREATE_MODEL_TITLE } = config.buttonTitles;
@@ -65,32 +67,29 @@ const ModelPage = () => {
     return <LoadingBar />;
   }
 
-  const modelItems =
-    list !== undefined
-      ? list.map((modelItem) => (
-        <TableContainerRow
-          image={
-            modelItem.images
-              ? `${config.IMG_URL}${modelItem.images.thumbnail}`
-              : ''
-          }
-          key={modelItem._id}
-          id={modelItem._id}
-          name={modelItem.name[0].value}
-          category={modelItem.category.name[0].value}
-          show={
-            modelItem.show
-              ? config.labels.model.showEnable
-              : config.labels.model.showDisable
-          }
-          priority={modelItem.priority}
-          deleteHandler={() => modelDeleteHandler(modelItem._id)}
-          editHandler={() => {
-            dispatch(push(`/models/${modelItem._id}`));
-          }}
-        />
-      ))
-      : null;
+  const modelItems = map( list, modelItem => (
+    <TableContainerRow
+      image={
+        modelItem.images
+          ? `${config.IMG_URL}${modelItem.images.thumbnail}`
+          : ''
+      }
+      key={modelItem._id}
+      id={modelItem._id}
+      name={modelItem.name[0].value}
+      category={modelItem.category.name[0].value}
+      show={
+        modelItem.show
+          ? config.labels.model.showEnable
+          : config.labels.model.showDisable
+      }
+      priority={modelItem.priority}
+      deleteHandler={() => modelDeleteHandler(modelItem._id)}
+      editHandler={() => {
+        dispatch(push(`/models/${modelItem._id}`));
+      }}
+    />
+  ));
 
   return (
     <div className={commonStyles.container}>

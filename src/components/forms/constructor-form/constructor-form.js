@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppBar, Avatar, FormControl, Grid, InputLabel, Paper, Select, Tab, Tabs, TextField } from '@material-ui/core';
+import { Avatar, FormControl, Grid, InputLabel, Paper, Select, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -9,17 +9,16 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import { createBrowserHistory } from 'history';
 import { useStyles } from './constructor-form.styles';
-import { config } from '../../../../configs';
-import CheckboxOptions from '../../../checkbox-options';
-import ImageUploadContainer from '../../../../containers/image-upload-container';
-import TabPanel from '../../../tab-panel';
-import { BackButton, SaveButton } from '../../../buttons';
-import useConstructorHandlers from '../../../../utils/use-constructor-handlers';
-import ColorCircle from '../../../color-circle';
+import { config } from '../../../configs';
+import CheckboxOptions from '../../checkbox-options';
+import ImageUploadContainer from '../../../containers/image-upload-container';
+import { BackButton, SaveButton } from '../../buttons';
+import useConstructorHandlers from '../../../utils/use-constructor-handlers';
+import ColorCircle from '../../color-circle';
 import {
   selectConstructorMethodAndMaterials
-} from '../../../../redux/selectors/constructor.selectors';
-import LanguagePanel from '../../language-panel';
+} from '../../../redux/selectors/constructor.selectors';
+import LanguagePanel from '../language-panel';
 
 const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
@@ -30,7 +29,6 @@ const {
   PRICE_VALIDATION_ERROR
 } = config.constructorErrorMessages;
 
-const labels = config.labels.pattern.form;
 const { SMALL_CIRCLE } = config.colorCircleSizes;
 
 const MenuProps = {
@@ -48,8 +46,6 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const history = createBrowserHistory();
 
   const {
-    tabsValue,
-    handleTabsChange,
     constructorImg,
     setConstructorImg,
     createConstructor
@@ -69,13 +65,6 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       setMaterialColors(list.filter(el=>el._id===editableConstructorElement.material._id)[0].colors);
     }
   }, [dispatch]);
-
-  const languageTabs =
-    languages.length > 0
-      ? languages.map((lang) => (
-        <Tab label={lang} data-cy={`${lang}-tab`} key={lang} />
-      ))
-      : null;
 
   const constructorValidationSchema = Yup.object().shape({
     enName: Yup.string()
@@ -167,17 +156,6 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     });
   };
 
-  const textField = (inputValue, inputName, inputLabel, land) => (<TextField
-    data-cy={land?`${land}${inputName}`:`${inputName}`}
-    id={land?`${land}${inputName}`:`${inputName}`}
-    className={styles.textField}
-    variant='outlined'
-    label={inputLabel}
-    value={inputValue}
-    onChange={handleChange}
-    error={touched.inputName && !!errors.inputName}
-  />)
-
   const selectField = (selectValue,
     selectChangeAction,
     selectItemsList,
@@ -208,7 +186,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   </FormControl >)
 
   const inputs = [
-    { label: config.labels.categories.categoryName, name: 'name' },
+    { label: config.labels.model.constructorName, name: 'name' },
   ];
   const inputOptions = {
     errors,
@@ -244,7 +222,16 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
                 )}
               </div>
             </div>
-            {textField(values.basePrice, 'basePrice', config.labels.model.basePrice)}
+            <TextField
+              data-cy='basePrice'
+              id='basePrice'
+              className={styles.textField}
+              variant='outlined'
+              label={config.labels.model.basePrice}
+              value={values.basePrice}
+              onChange={handleChange}
+              error={touched.basePrice && !!errors.basePrice}
+            />
             {touched.basePrice && errors.basePrice && (
               <div className={styles.inputError}>{errors.basePrice}</div>
             )}
@@ -260,33 +247,9 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
             </div>
           </Paper>
         </Grid>
-        {/*<AppBar position='static'>*/}
-        {/*  <Tabs*/}
-        {/*    className={styles.tabs}*/}
-        {/*    value={tabsValue}*/}
-        {/*    onChange={handleTabsChange}*/}
-        {/*  >*/}
-        {/*    {languageTabs}*/}
-        {/*  </Tabs>*/}
-        {/*</AppBar>*/}
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        {/*{languages.map((lang, index) => (*/}
-        {/*  <TabPanel key={index} value={tabsValue} index={index}>*/}
-        {/*    <Paper className={styles.constructorItemUpdate}>*/}
-        {/*      {textField(values[`${lang}Name`], 'Name', labels.name[index].value, lang)}*/}
-        {/*      {touched[`${lang}Name`] && errors[`${lang}Name`] && (*/}
-        {/*        <div*/}
-        {/*          data-cy={`${lang}-name-error`}*/}
-        {/*          className={styles.inputError}*/}
-        {/*        >*/}
-        {/*          {errors[`${lang}Name`]}*/}
-        {/*        </div>*/}
-        {/*      )}*/}
-        {/*    </Paper>*/}
-        {/*  </TabPanel>*/}
-        {/*))}*/}
         <BackButton />
         <SaveButton
           className={styles.saveButton}

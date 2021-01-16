@@ -9,7 +9,7 @@ import Editor from '../../editor';
 const LanguagePanel = ({ lang, inputOptions }) => {
   const styles = useStyles();
 
-  const { values, touched, errors, inputs, handleChange } = inputOptions;
+  const { values, touched, errors, inputs, handleChange, handleEditorChange } = inputOptions;
   const inputsTextfields = inputs.filter((input) => !input.isEditor);
   const inputsEditor = inputs.filter((input) => input.isEditor);
   return (
@@ -48,15 +48,20 @@ const LanguagePanel = ({ lang, inputOptions }) => {
           })}
           {map(inputsEditor, (input) => {
             const inputName = lang + capitalize(input.name);
-            const setEditorValue = `set${capitalize(lang)}${capitalize(
-              input.name
-            )}`;
+            const setEditorValue =(value)=>{
+              values[`${inputName}`] = value
+            }
+            // console.log(inputName)
+            // const setEditorValue = `set${capitalize(lang)}${capitalize(
+            //   input.name
+            // )}`;
             return (
               <Editor
                 value={values[inputName]}
                 placeholder={input.label[lang]}
                 onChange={handleChange}
-                onEditorChange={input[setEditorValue]}
+                onEditorChange={(value)=>setEditorValue(value)}
+                // onEditorChange={input[setEditorValue]}
                 setFiles={input.setFiles}
                 data-cy={`${lang}-${input.name}`}
                 label={lang}

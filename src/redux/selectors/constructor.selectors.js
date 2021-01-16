@@ -2,6 +2,7 @@ export const selectConstructorMethodAndMaterials = ({ Constructor, Material, Mod
   list: Material.list,
   filter: Material.filter,
   model:Model.model,
+  loading: Model.modelLoading,
   patternList:Pattern.list,
   constructorTabs:Constructor.constructorTabs,
   constructorElementMethod: Constructor.constructorElementMethod,

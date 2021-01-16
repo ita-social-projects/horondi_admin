@@ -13,8 +13,14 @@ const labels = {
     text: 'Текст'
   },
   model: {
-    name: mapToLanguages('Назва', 'Name'),
-    description: mapToLanguages('Опис', 'Description'),
+    name: {
+      ua: 'Назва',
+      en: 'Name'
+    },
+    description: {
+      ua: 'Опис',
+      en: 'Description'
+    },
     image: 'Фото моделі',
     category: 'Категорія',
     available: 'Доступний',
@@ -34,6 +40,10 @@ const labels = {
     showEnable: 'Так',
     showDisable: 'Ні',
     availablePatternsForConstructor:'Доступні патерни для контсруктора',
+    constructorName: {
+      ua: 'Назва елементу конструктора',
+      en: 'Constructor element name'
+    }
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",

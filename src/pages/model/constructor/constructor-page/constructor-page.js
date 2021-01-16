@@ -36,6 +36,7 @@ import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import { selectConstructorMethodAndMaterials } from '../../../../redux/selectors/constructor.selectors';
 import { getPatterns } from '../../../../redux/pattern/pattern.actions';
 import { getMaterials } from '../../../../redux/material/material.actions';
+import LoadingBar from '../../../../components/loading-bar';
 
 const map = require('lodash/map');
 
@@ -67,7 +68,8 @@ const ConstructorPage = ({ match }) => {
     model,
     constructorTabs,
     patternList,
-    filter
+    filter,
+    loading
   } = useSelector(selectConstructorMethodAndMaterials);
 
   useEffect(()=>{
@@ -237,7 +239,9 @@ const ConstructorPage = ({ match }) => {
       </TabPanel>
     )
   );
-
+  if (loading) {
+    return <LoadingBar />;
+  }
   return (
     <div className={commonStyles.container}>
       <div className={styles.backButton}>
