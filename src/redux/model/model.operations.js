@@ -73,7 +73,6 @@ export const getAllModels = async (skip, limit) => {
     `
   });
   client.resetStore();
-
   return result.data.getAllModels;
 };
 
