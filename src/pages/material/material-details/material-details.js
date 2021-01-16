@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from '../material-add/material-add.styles';
 import LoadingBar from '../../../components/loading-bar';
-import MaterialForm from '../../../components/material-form';
+import MaterialForm from '../../../components/forms/material-form';
 import { getMaterial } from '../../../redux/material/material.actions';
 
 const MaterialDetails = ({ match }) => {

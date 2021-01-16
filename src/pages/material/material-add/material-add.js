@@ -1,5 +1,5 @@
 import React from 'react';
-import MaterialForm from '../../../components/material-form';
+import MaterialForm from '../../../components/forms/material-form';
 import { useStyles } from './material-add.styles';
 
 const MaterialAdd = () => {

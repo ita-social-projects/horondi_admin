@@ -9,7 +9,7 @@ import {
   getModelsByCategory,
   setProductToSend
 } from '../../../../redux/products/products.actions';
-import StepperControlButtons from '../../../../components/stepper-control-buttons/stepper-control-buttons';
+import StepperControlButtons from '../../../../components/buttons/stepper-control-buttons/stepper-control-buttons';
 import ProductSpeciesContainer from '../../../../containers/product-species-container';
 
 const ProductAddSpecies = ({

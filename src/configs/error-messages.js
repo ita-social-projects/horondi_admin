@@ -34,9 +34,13 @@ export const patternErrorMessages = {
 };
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Мінімум 2 символи',
-  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім'
+  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CATEGORY_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  CATEGORY_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  CATEGORY_CODE_MESSAGE: 'Поле не може містити спеціальні символи'
 };
-
 export const headerErrorMessages = {
   HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
   HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',

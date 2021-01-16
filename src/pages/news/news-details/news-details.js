@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useCommonStyles } from '../../common.styles';
-import NewsForm from '../news-form/news-form';
+import NewsForm from '../../../components/forms/news-form';
 import LoadingBar from '../../../components/loading-bar';
 import { getArticle } from '../../../redux/news/news.actions';
 

@@ -20,7 +20,6 @@ describe('dialog window reducer tests', () => {
     });
   });
   it('should be defined', () => {
-    expect(initialState.buttonTitle).toBeDefined();
     expect(initialState.dialogTitle).toBeDefined();
     expect(initialState.dialogContent).toBeDefined();
     expect(initialState.onClickHandler).toBeDefined();

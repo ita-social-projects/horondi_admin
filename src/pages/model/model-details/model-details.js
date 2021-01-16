@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { useStyles } from './model-details.styles';
 import LoadingBar from '../../../components/loading-bar';
-import ModelForm from '../../../components/model-form';
+import ModelForm from '../../../components/forms/model-form';
 import { getModel } from '../../../redux/model/model.actions';
 import {selectModels} from '../../../redux/selectors/model.selectors'
 

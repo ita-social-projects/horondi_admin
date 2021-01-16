@@ -46,6 +46,7 @@ const tableHeadRowTitles = {
     ''
   ],
   homePageSlides: ['Порядок', 'Назва', 'Доступний', 'Дії'],
+  actionLabel: 'Дії',
   constructor: ['Колір', 'Назва', 'Матеріал', 'Доступний', 'Дії'],
 };
 
