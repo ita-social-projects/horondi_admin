@@ -37,6 +37,8 @@ import { selectConstructorMethodAndMaterials } from '../../../../redux/selectors
 import { getPatterns } from '../../../../redux/pattern/pattern.actions';
 import { getMaterials } from '../../../../redux/material/material.actions';
 
+const _ = require('lodash');
+
 const {
   constructorBasic,
   constructorBottom,
@@ -88,7 +90,6 @@ const ConstructorPage = ({ match }) => {
     dispatch(setConstructorElementMethod(method));
     dispatch(setEditableConstructorElement(''));
   }
-
   const handleOpenDialog = () =>{
     setOpenDialog(true);
   }
@@ -105,59 +106,54 @@ const ConstructorPage = ({ match }) => {
     dispatch(setEditableConstructorElement(element));
   }
 
-  const constructorItems = (list,deleteAction, editAction) => list.length
-    ? list.map((listItem) => (
-      <TableContainerRow
-        image={
-          listItem.images
-            ? `${config.IMG_URL}${listItem.images.thumbnail}`
-            : ''
-        }
-        showAvatar={listItem.label===constructorPattern}
+  const constructorItems = (list,deleteAction, editAction) => _.map(list, listItem => (
+    <TableContainerRow
+      image={
+        listItem.images
+          ? `${config.IMG_URL}${listItem.images.thumbnail}`
+          : ''
+      }
+      showAvatar={listItem.label===constructorPattern}
+      color={
+        <ColorCircle
+          color={listItem.color.colorHex}
+          size={DEFAULT_CIRCLE}
+        />
+      }
+      key={listItem._id}
+      id={listItem._id}
+      name={listItem.name[0].value}
+      material={listItem.material.name[0].value}
+      show={
+        listItem.available
+          ? config.labels.model.showEnable
+          : config.labels.model.showDisable
+      }
+      deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
+      editHandler={() => handleUpdateConstructor(editAction, listItem._id, listItem)}
+    />
+  ));
 
-        color={
-          <ColorCircle
-            color={listItem.color.colorHex}
-            size={DEFAULT_CIRCLE}
-          />
-        }
-        key={listItem._id}
-        id={listItem._id}
-        name={listItem.name[0].value}
-        material={listItem.material.name[0].value}
-        show={
-          listItem.available
-            ? config.labels.model.showEnable
-            : config.labels.model.showDisable
-        }
-        deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
-        editHandler={() => handleUpdateConstructor(editAction, listItem._id, listItem)}
-      />
-    ))
-    : null;
-
-  const patternItems = (list,deleteAction) => list.length
-    ? list.map((listItem) => (
-      <TableContainerRow
-        image={
-          listItem.images
-            ? `${config.IMG_URL}${listItem.images.thumbnail}`
-            : ''
-        }
-        key={listItem._id}
-        id={listItem._id}
-        name={listItem.name[0].value}
-        material={listItem.material}
-        show={
-          listItem.available
-            ? config.labels.model.showEnable
-            : config.labels.model.showDisable
-        }
-        deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
-        showEdit={false}
-      />
-    ))
-    : null;
+  const patternItems = (list,deleteAction) => _.map(list, listItem => (
+    <TableContainerRow
+      image={
+        listItem.images
+          ? `${config.IMG_URL}${listItem.images.thumbnail}`
+          : ''
+      }
+      key={listItem._id}
+      id={listItem._id}
+      name={listItem.name[0].value}
+      material={listItem.material}
+      show={
+        listItem.available
+          ? config.labels.model.showEnable
+          : config.labels.model.showDisable
+      }
+      deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
+      showEdit={false}
+    />
+  ));
 
   const constructorOptions = {
     constructorBasic: {
