@@ -29,7 +29,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                   id={inputName}
                   className={styles.textField}
                   variant='outlined'
-                  label={input.label}
+                  label={input.label[lang]}
                   error={touched[inputName] && !!errors[inputName]}
                   multiline
                   value={values[inputName]}
@@ -48,12 +48,13 @@ const LanguagePanel = ({ lang, inputOptions }) => {
           })}
           {map(inputsEditor, (input) => {
             const inputName = lang + capitalize(input.name);
-            const setEditorValue =
-              `set${ capitalize(lang) }${capitalize(input.name)}`;
+            const setEditorValue = `set${capitalize(lang)}${capitalize(
+              input.name
+            )}`;
             return (
               <Editor
                 value={values[inputName]}
-                placeholder={input.label}
+                placeholder={input.label[lang]}
                 onChange={handleChange}
                 onEditorChange={input[setEditorValue]}
                 setFiles={input.setFiles}
