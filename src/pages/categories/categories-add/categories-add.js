@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStyles } from './categories-add.styles';
-import CategoryForm from '../../../components/category-form';
+import CategoryForm from '../../../components/forms/category-form';
 import { config } from '../../../configs';
 
 export const CategoriesAdd = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStyles } from './pattern-add.styles';
-import PatternForm from '../../../components/pattern-form';
+import PatternForm from '../../../components/forms/pattern-form';
 import { config } from '../../../configs';
 
 const PatternAdd = () => {

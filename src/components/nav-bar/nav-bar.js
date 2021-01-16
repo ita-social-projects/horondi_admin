@@ -53,7 +53,7 @@ const NavBar = () => {
       dispatch(closeDialog());
       dispatch(logoutUser());
     };
-    openSuccessSnackbar(logout, LOGOUT_TITLE, LOGOUT_MESSAGE, LOGOUT_TITLE);
+    openSuccessSnackbar(logout, LOGOUT_MESSAGE, LOGOUT_TITLE);
   };
 
   const menuToggle = (

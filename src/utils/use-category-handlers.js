@@ -5,13 +5,8 @@ const { languages } = config;
 
 const useCategoryHandlers = () => {
   const [categoryImage, setCategoryImage] = useState('');
-  const [tabsValue, setTabsValue] = useState(0);
   const [upload, setUpload] = useState({});
   const [imageName, setImageName] = useState('');
-
-  const handleTabsChange = (event, newValue) => {
-    setTabsValue(newValue);
-  };
 
   const createCategory = (values) => {
     const newCategory = {
@@ -33,9 +28,6 @@ const useCategoryHandlers = () => {
   return {
     categoryImage,
     setCategoryImage,
-    tabsValue,
-    setTabsValue,
-    handleTabsChange,
     createCategory,
     upload,
     setUpload,

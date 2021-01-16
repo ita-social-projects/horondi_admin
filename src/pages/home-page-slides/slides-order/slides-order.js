@@ -8,7 +8,7 @@ import { Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './slides-order.styles';
 import { config } from '../../../configs';
-import { SaveButton } from '../../../components/buttons';
+import { StandardButton } from '../../../components/buttons';
 import { slidesTranslations } from '../../../translations/home-page-slides.translations';
 import {
   setSlides,
@@ -101,7 +101,7 @@ const SlidesOrder = (props) => {
     list.forEach((el) => {
       if (el.title === 'available') {
         el.items.forEach((availableSlide, index) => {
-          const { order, show, ...rest } = availableSlide;
+          const { ...rest } = availableSlide;
           available.push({
             id: availableSlide._id,
             slide: { order: +index + 1, show: true, ...rest }
@@ -110,7 +110,7 @@ const SlidesOrder = (props) => {
       }
       if (el.title === 'nonAvailable') {
         el.items.forEach((nonAvailableSlide) => {
-          const { order, show, ...rest } = nonAvailableSlide;
+          const { ...rest } = nonAvailableSlide;
           nonAvailable.push({
             id: nonAvailableSlide._id,
             slide: { order: 0, show: false, ...rest }
@@ -200,7 +200,7 @@ const SlidesOrder = (props) => {
             {slideOrderTitle}
           </Typography>
           <div>
-            <SaveButton
+            <StandardButton
               className={styles.saveButton}
               color='secondary'
               data-cy='save'
@@ -208,7 +208,7 @@ const SlidesOrder = (props) => {
               onClickHandler={changeHandler}
               type='button'
             />
-            <SaveButton
+            <StandardButton
               className={styles.saveButton}
               data-cy='save'
               onClickHandler={saveHandler}

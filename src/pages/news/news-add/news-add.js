@@ -1,5 +1,5 @@
 import React from 'react';
-import NewsForm from '../news-form/news-form';
+import NewsForm from '../../../components/forms/news-form';
 import { useCommonStyles } from '../../common.styles';
 
 const NewsAdd = () => {

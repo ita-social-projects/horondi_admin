@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useStyles } from './slide-details.styles';
-import HomePageSlideForm from '../../../components/home-page-slide-form';
+import HomePageSlideForm from '../../../components/forms/home-page-slide-form';
 import {
   getAvailableSlides,
   getSlide
