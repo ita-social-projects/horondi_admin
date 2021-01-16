@@ -194,6 +194,7 @@ export const createModel = async (payload) => {
 export const updateModel = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const { id, model, image } = payload;
+  console.log(payload);
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, model, image },
@@ -217,6 +218,14 @@ export const updateModel = async (payload) => {
               medium
               small
               thumbnail
+            }
+            sizes {
+              name
+              heightInCm
+              widthInCm
+              depthInCm
+              volumeInLiters
+              weightInKg
             }
             priority
             show

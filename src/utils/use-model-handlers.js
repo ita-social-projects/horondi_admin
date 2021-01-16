@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { config } from '../configs';
+import useSizeHandlers from './use-size-handlers';
 
 const { languages } = config;
 
@@ -8,6 +9,8 @@ const useModelHandlers = () => {
   const [tabsValue, setTabsValue] = useState(0);
   const [upload, setUpload] = useState(null);
   const [imageName, setImageName] = useState('');
+
+  const { createSize } = useSizeHandlers();
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
@@ -37,7 +40,10 @@ const useModelHandlers = () => {
         }
       ],
       category: values.category,
-      show: values.show
+      show: values.show,
+      sizes: {
+        ...createSize(values)
+      }
     };
     return newModel;
   };

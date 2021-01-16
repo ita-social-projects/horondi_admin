@@ -20,6 +20,7 @@ import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { BackButton, SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
+import SizesForm from '../sizes-form/index';
 import { config } from '../../configs';
 import { addModel, updateModel } from '../../redux/model/model.actions';
 import { getCategories } from '../../redux/categories/categories.actions';
@@ -107,7 +108,13 @@ const ModelForm = ({ model, id, isEdit }) => {
       enDescription: model.description[1].value || '',
       priority: model.priority || 1,
       category: category || '',
-      show: model.show || false
+      show: model.show || false,
+      name: '',
+      heightInCm: 0,
+      widthInCm: 0,
+      depthInCm: 0,
+      volumeInLiters: 0,
+      weightInKg: 0
     },
     onSubmit: () => {
       const newModel = createModel(values);
@@ -214,6 +221,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             )}
           </Paper>
         </Grid>
+        {/* <SizesForm handleChange={handleChange} /> */}
         <AppBar position='static'>
           <Tabs
             className={styles.tabs}
@@ -287,6 +295,14 @@ ModelForm.propTypes = {
     priority: PropTypes.number,
     images: PropTypes.shape({
       thumbnail: PropTypes.string
+    }),
+    sizes: PropTypes.shape({
+      name: PropTypes.string,
+      heightInCm: PropTypes.number,
+      widthInCm: PropTypes.number,
+      depthInCm: PropTypes.number,
+      volumeInLiters: PropTypes.number,
+      weightInKg: PropTypes.number
     }),
     category: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
