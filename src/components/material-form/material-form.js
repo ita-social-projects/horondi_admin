@@ -64,7 +64,7 @@ function MaterialForm({ material, id }) {
       .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
       .required(VALIDATION_ERROR),
 
-    color: Yup.string().required(VALIDATION_ERROR)
+    colors: Yup.array().of(Yup.string()).required(VALIDATION_ERROR)
   });
 
   const {
@@ -85,7 +85,8 @@ function MaterialForm({ material, id }) {
       purpose: material.purpose || '',
       available: material.available || false,
       additionalPrice: +material.additionalPrice[1].value / 100 || 0,
-      color: material.color._id || ''
+      colors:
+        (material.colors && material.colors.map((color) => color._id)) || []
     },
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
@@ -180,13 +181,16 @@ function MaterialForm({ material, id }) {
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <ColorsBar
-            onColorChange={(color) => {
-              setFieldValue('color', color ? color._id : '');
+            onColorChange={(colors) => {
+              setFieldValue(
+                'colors',
+                colors.map((color) => color._id)
+              );
             }}
-            color={material.color._id ? material.color : null}
+            colors={material.colors}
           />
-          {errors.color && (
-            <div className={styles.inputError}>{errors.color}</div>
+          {errors.colors && (
+            <div className={styles.inputError}>{errors.colors}</div>
           )}
           <Paper className={styles.materialItemAdd}>
             <TextField
@@ -265,12 +269,14 @@ MaterialForm.propTypes = {
         value: PropTypes.number
       })
     ),
-    color: PropTypes.shape({
-      _id: PropTypes.string,
-      colorHex: PropTypes.string,
-      name: PropTypes.arrayOf(valueShape),
-      simpleName: PropTypes.arrayOf(valueShape)
-    }),
+    colors: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        colorHex: PropTypes.string,
+        name: PropTypes.arrayOf(valueShape),
+        simpleName: PropTypes.arrayOf(valueShape)
+      })
+    ),
     purpose: PropTypes.string,
     available: PropTypes.bool
   }),
@@ -281,7 +287,7 @@ MaterialForm.propTypes = {
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
-    color: PropTypes.string
+    colors: PropTypes.arrayOf(PropTypes.string)
   }),
   errors: PropTypes.shape({
     available: PropTypes.bool,
@@ -290,7 +296,7 @@ MaterialForm.propTypes = {
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
-    color: PropTypes.string
+    colors: PropTypes.string
   }),
   touched: PropTypes.shape({
     available: PropTypes.bool,
@@ -341,9 +347,7 @@ MaterialForm.defaultProps = {
         value: 0
       }
     ],
-    color: {
-      _id: ''
-    }
+    colors: []
   }
 };
 

@@ -2,10 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-import { Button, Typography, TextField, Checkbox } from '@material-ui/core';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Button, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useStyles } from './material-page.styles';
 import { config } from '../../../configs';
@@ -25,16 +22,13 @@ import LoadingBar from '../../../components/loading-bar';
 import { materialTranslations } from '../../../translations/material.translations';
 import { useCommonStyles } from '../../common.styles';
 import { selectMaterialsAndColors } from '../../../redux/selectors/material.selectors';
+import ColorsAutocomplete from '../../../components/colors-autocomplete';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
-const { mainLabel } = config.labels.color;
 const pathToMaterialAddPage = config.routes.pathToAddMaterial;
 const tableTitles = config.tableHeadRowTitles.materials;
-const { DEFAULT_CIRCLE, SMALL_CIRCLE } = config.colorCircleSizes;
-
-const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
-const checkedIcon = <CheckBoxIcon fontSize='small' />;
+const { SMALL_CIRCLE } = config.colorCircleSizes;
 
 const MaterialPage = () => {
   const styles = useStyles();
@@ -90,12 +84,17 @@ const MaterialPage = () => {
         showAvatar={false}
         id={materialItem.id}
         name={materialItem.name[0].value}
-        color={
-          <ColorCircle
-            colorName={materialItem.color.name[0].value}
-            color={materialItem.color.colorHex}
-            size={DEFAULT_CIRCLE}
-          />
+        colors={
+          <div className={styles.colorsCell}>
+            {materialItem.colors.map((color) => (
+              <ColorCircle
+                key={color._id}
+                colorName={color.name[0].value}
+                color={color.colorHex}
+                size={SMALL_CIRCLE}
+              />
+            ))}
+          </div>
         }
         purpose={materialItem.purpose}
         available={
@@ -127,50 +126,15 @@ const MaterialPage = () => {
           {CREATE_MATERIAL_TITLE}
         </Button>
       </div>
-      <Autocomplete
-        className={styles.root}
-        multiple
-        id='tags-filled'
-        options={colors}
-        value={filter.colors}
-        disableCloseOnSelect
-        getOptionLabel={(option) => option.name[0].value}
-        renderTags={(value, getTagProps) =>
-          value.map((option, index) => (
-            <div key={option._id} className={styles.colorCircleInTextfield}>
-              <ColorCircle
-                color={option.colorHex}
-                colorName={option.name[0].value}
-                size={SMALL_CIRCLE}
-                {...getTagProps({ index })}
-              />
-            </div>
-          ))
-        }
-        renderOption={(option, { selected }) => (
-          <>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
-              checked={selected}
-            />
-            <ColorCircle size={SMALL_CIRCLE} color={option.colorHex} />
-            {option.name[0].value}
-          </>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant='outlined'
-            label={mainLabel}
-            placeholder={mainLabel}
-          />
-        )}
-        onChange={(e, value) => {
-          dispatch(setColorFilter(value));
-        }}
-      />
+      <div className={styles.filters}>
+        <ColorsAutocomplete
+          colorsSet={colors}
+          selectedColors={filter.colors}
+          handleChange={(value) => {
+            dispatch(setColorFilter(value));
+          }}
+        />
+      </div>
       <div>
         {!loading ? (
           <TableContainerGenerator

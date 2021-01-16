@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { TextField, Button } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Button } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {
@@ -14,29 +13,29 @@ import {
 import DialogWindowWrapper from '../dialog-window-wrapper';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { useStyles } from './color-bar.styles';
-import ColorCircle from '../color-circle';
 import CreateColor from '../create-color';
-import { CustomizedDeleteIcon } from '../icons';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { config } from '../../configs';
 import { selectColors } from '../../redux/selectors/color.selectors';
+import ColorsAutocomplete from '../colors-autocomplete';
 
 const { SMALL_SIZE } = config.iconSizes;
-const { DEFAULT_CIRCLE, SMALL_CIRCLE } = config.colorCircleSizes;
 const { REMOVE_COLOR_MESSAGE } = config.messages;
 const { CREATE_COLOR_TITLE } = config.buttonTitles;
 const { createColorTitle, alreadyUse } = config.titles.colorTitles;
-const { name, mainLabel } = config.labels.color;
 const { pathToMaterials } = config.routes;
 
-function ColorsBar({ onColorChange, color }) {
+function ColorsBar({ onColorChange, colors }) {
   const dispatch = useDispatch();
-  const { colors, boundMaterials, showBound, showCreateColor } = useSelector(
-    selectColors
-  );
+  const {
+    colors: colorsSet,
+    boundMaterials,
+    showBound,
+    showCreateColor
+  } = useSelector(selectColors);
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const [selectedColor, setSelectedColor] = useState(color);
+  const [selectedColor, setSelectedColor] = useState(colors);
 
   useEffect(() => {
     dispatch(getColors());
@@ -53,45 +52,14 @@ function ColorsBar({ onColorChange, color }) {
   return (
     <>
       <div className={styles.colorBar}>
-        <ColorCircle
-          color={selectedColor ? selectedColor.colorHex : ''}
-          colorName={selectedColor && selectedColor.name[0].value}
-          size={DEFAULT_CIRCLE}
-        />
-        <Autocomplete
-          className={styles.root}
-          options={colors}
-          disableCloseOnSelect
-          value={selectedColor}
-          getOptionSelected={(option, value) => option._id === value._id}
-          getOptionLabel={(option) => option.name[0].value}
-          onChange={(e, value) => {
+        <ColorsAutocomplete
+          colorsSet={colorsSet}
+          selectedColors={selectedColor}
+          handleChange={(value) => {
             setSelectedColor(value);
             onColorChange(value);
           }}
-          renderOption={(option) => (
-            <div className={styles.selectOptionRow}>
-              <div>
-                <ColorCircle color={option.colorHex} size={SMALL_CIRCLE} />
-                {option.name[0].value}
-              </div>
-              <CustomizedDeleteIcon
-                size={SMALL_SIZE}
-                onClickHandler={(e) => {
-                  e.stopPropagation();
-                  colorDeleteHandler(option._id);
-                }}
-              />
-            </div>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant='outlined'
-              label={mainLabel}
-              placeholder={name}
-            />
-          )}
+          deleteHandler={colorDeleteHandler}
         />
         <Button
           variant='contained'
@@ -142,26 +110,28 @@ function ColorsBar({ onColorChange, color }) {
 
 ColorsBar.propTypes = {
   onColorChange: PropTypes.func.isRequired,
-  color: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.string,
-        lang: PropTypes.string
-      })
-    ),
-    simpleName: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.string,
-        lang: PropTypes.string
-      })
-    ),
-    colorHex: PropTypes.string
-  })
+  colors: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string,
+          lang: PropTypes.string
+        })
+      ),
+      simpleName: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string,
+          lang: PropTypes.string
+        })
+      ),
+      colorHex: PropTypes.string
+    })
+  )
 };
 
 ColorsBar.defaultProps = {
-  color: null
+  colors: []
 };
 
 export default ColorsBar;
