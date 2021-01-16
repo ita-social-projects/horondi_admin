@@ -27,7 +27,10 @@ const labels = {
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
     categoryCode: 'Код категорії',
-    categoryName: 'Назва категорії'
+    categoryName: {
+      ua: 'Назва категорії',
+      en: 'Category name'
+    }
   },
   header: {
     name: mapToLanguages("І'мя", 'Name'),
