@@ -14,7 +14,7 @@ Quill.debug('error');
 Quill.register(VideoBlot);
 Quill.register(ImageBlot);
 
-const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
+const Editor = ({ value, placeholder, onEditorChange, setFiles, id }) => {
   const reactQuillRef = useRef(null);
   const inputOpenImageRef = useRef();
 
@@ -65,7 +65,7 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
 
   const modules = {
     toolbar: {
-      container: '#toolbar'
+      container: id ? `#${id}` : '#toolbar'
     },
     clipboard: {
       matchVisual: false
@@ -98,7 +98,7 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles }) => {
   return (
     <div data-cy='editor'>
       <div
-        id='toolbar'
+        id={id || 'toolbar'}
         className={`ql-toolbar ql-snow ${styles.editorBackground}`}
       >
         <select
@@ -157,13 +157,15 @@ Editor.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
   onEditorChange: PropTypes.func.isRequired,
-  setFiles: PropTypes.func
+  setFiles: PropTypes.func,
+  id: PropTypes.string
 };
 
 Editor.defaultProps = {
   value: '',
   placeholder: 'Текст',
-  setFiles: () => {}
+  setFiles: () => {},
+  id: ''
 };
 
 export default Editor;
