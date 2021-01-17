@@ -26,6 +26,12 @@ const { MODEL_REMOVE_MESSAGE } = config.messages;
 const { CREATE_MODEL_TITLE } = config.buttonTitles;
 const pathToModelAddPage = routes.pathToAddModel;
 const tableTitles = config.tableHeadRowTitles.models;
+const pageTitle = config.titles.modelPageTitles.mainPageTitle;
+const { IMG_URL } = config;
+const {
+  showEnable,
+  showDisable
+} = config.labels.model;
 
 const ModelPage = () => {
   const styles = useStyles();
@@ -71,7 +77,7 @@ const ModelPage = () => {
     <TableContainerRow
       image={
         modelItem.images
-          ? `${config.IMG_URL}${modelItem.images.thumbnail}`
+          ? `${IMG_URL}${modelItem.images.thumbnail}`
           : ''
       }
       key={modelItem._id}
@@ -80,8 +86,8 @@ const ModelPage = () => {
       category={modelItem.category.name[0].value}
       show={
         modelItem.show
-          ? config.labels.model.showEnable
-          : config.labels.model.showDisable
+          ? showEnable
+          : showDisable
       }
       priority={modelItem.priority}
       deleteHandler={() => modelDeleteHandler(modelItem._id)}
@@ -95,7 +101,7 @@ const ModelPage = () => {
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
         <Typography variant='h1' className={commonStyles.materialTitle}>
-          {config.titles.modelPageTitles.mainPageTitle}
+          {pageTitle}
         </Typography>
         <Button
           data-cy='add-model'

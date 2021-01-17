@@ -36,6 +36,20 @@ const {
   PHOTO_NOT_PROVIDED
 } = config.modelErrorMessages;
 
+const {
+  availableForConstructor,
+  show,
+  name,
+  availableCategory,
+  description,
+  avatarText,
+  priority
+} = config.labels.model;
+
+const {IMG_URL} = config;
+
+const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
+
 const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -91,7 +105,7 @@ const ModelForm = ({ model, id, isEdit }) => {
   } = useFormik({
     validationSchema: modelValidationSchema,
     initialValues: {
-      modelImage: model.images ? model.images.thumbnail : '',
+      modelImage: model.images.thumbnail || '',
       uaName: model.name[0].value || '',
       enName: model.name[1].value || '',
       uaDescription: model.description[0].value || '',
@@ -121,26 +135,15 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
-  const checkboxes = [
+  const checkboxes =(checkBoxName, label)=>[
     {
-      id: 'show',
-      dataCy: 'show',
-      value: values.show,
-      checked: values.show,
+      id: `${checkBoxName}`,
+      dataCy: `${checkBoxName}`,
+      value: values[`${checkBoxName}`],
+      checked: values[`${checkBoxName}`],
       color: 'primary',
-      label: config.labels.model.show,
-      handler: (e) => setFieldValue('show', !values.show)
-    }
-  ];
-  const constructorCheckboxes = [
-    {
-      id: 'availableForConstructor',
-      dataCy: 'availableForConstructor',
-      value: values.availableForConstructor,
-      checked: values.availableForConstructor,
-      color: 'primary',
-      label: config.labels.model.availableForConstructor,
-      handler: (e) => setFieldValue('availableForConstructor', !values.availableForConstructor)
+      label,
+      handler: () => setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
     }
   ];
 
@@ -160,8 +163,8 @@ const ModelForm = ({ model, id, isEdit }) => {
   }
 
   const inputs = [
-    { label: config.labels.model.name, name: 'name' },
-    { label: config.labels.model.description, name: 'description', isEditor:true,  },
+    { label: name, name: 'name' },
+    { label: description, name: 'description', isEditor:true },
   ];
   const inputOptions = {
     errors,
@@ -174,32 +177,30 @@ const ModelForm = ({ model, id, isEdit }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} autoComplete='off'>
-        <CheckboxOptions options={checkboxes} />
-        <CheckboxOptions options={constructorCheckboxes} />
+        <CheckboxOptions options={checkboxes('show', show )} />
+        <CheckboxOptions options={checkboxes('availableForConstructor', availableForConstructor )} />
 
         <Grid item xs={12}>
           <Paper className={styles.modelItemUpdate}>
             <span className={styles.imageUpload}>
-              {config.labels.model.avatarText}
+              {avatarText}
             </span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer handler={handleImageLoad} />
-              {modelImage && (
-                <Avatar src={modelImage}>
-                  <Image />
-                </Avatar>
-              )}
+              <Avatar src={modelImage || `${IMG_URL}${model.images.thumbnail}`} >
+                <Image />
+              </Avatar>
             </div>
             <FormControl variant='outlined' className={styles.textField}>
               <InputLabel shrink ref={inputLabel} htmlFor='category-select'>
-                {config.labels.model.category}
+                {availableCategory}
               </InputLabel>
               <Select
                 data-cy='category'
                 native
                 value={category}
                 onChange={handleCategory}
-                label={config.labels.model.category}
+                label={availableCategory}
                 inputProps={{
                   name: 'category',
                   id: 'category-select'
@@ -223,7 +224,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               data-cy='priority'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.model.priority}
+              label={priority}
               value={values.priority}
               onChange={handleChange}
               error={touched.priority && !!errors.priority}
@@ -234,14 +235,14 @@ const ModelForm = ({ model, id, isEdit }) => {
           </Paper>
         </Grid>
         {languages.map((lang) => (
-          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang}  />
+          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
         <BackButton />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'
           type='submit'
-          title={config.buttonTitles.MODEL_SAVE_TITLE}
+          title={MODEL_SAVE_TITLE}
           values={values}
           errors={errors}
         />
@@ -252,7 +253,7 @@ const ModelForm = ({ model, id, isEdit }) => {
           color='secondary'
           variant='contained'
         >
-          {config.buttonTitles.MODEL_CONSTRUCTOR}
+          {MODEL_CONSTRUCTOR}
         </Button>:null}
       </form>
     </div>

@@ -45,8 +45,11 @@ const {
   constructorBottom,
   constructorPattern,
   constructorFrontPocket,
-  availablePatternsForConstructor
+  availablePatternsForConstructor,
+  showEnable,
+  showDisable
 } = config.labels.model;
+const {imagePrefix, IMG_URL} = config;
 const constructorTitles = config.tableHeadRowTitles.constructor;
 const { DEFAULT_CIRCLE } = config.colorCircleSizes;
 const { REMOVE_CONSTRUCTOR_MESSAGE } = config.messages;
@@ -112,7 +115,7 @@ const ConstructorPage = ({ match }) => {
     <TableContainerRow
       image={
         listItem.images
-          ? `${config.IMG_URL}${listItem.images.thumbnail}`
+          ? `${IMG_URL}${listItem.images.thumbnail}`
           : ''
       }
       showAvatar={listItem.label===constructorPattern}
@@ -128,8 +131,8 @@ const ConstructorPage = ({ match }) => {
       material={listItem.material.name[0].value}
       show={
         listItem.available
-          ? config.labels.model.showEnable
-          : config.labels.model.showDisable
+          ? showEnable
+          : showDisable
       }
       deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
       editHandler={() => handleUpdateConstructor(editAction, listItem._id, listItem)}
@@ -140,7 +143,7 @@ const ConstructorPage = ({ match }) => {
     <TableContainerRow
       image={
         listItem.images
-          ? `${config.IMG_URL}${listItem.images.thumbnail}`
+          ? `${IMG_URL}${listItem.images.thumbnail}`
           : ''
       }
       key={listItem._id}
@@ -149,8 +152,8 @@ const ConstructorPage = ({ match }) => {
       material={listItem.material}
       show={
         listItem.available
-          ? config.labels.model.showEnable
-          : config.labels.model.showDisable
+          ? showEnable
+          : showDisable
       }
       deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
       showEdit={false}
@@ -265,7 +268,7 @@ const ConstructorPage = ({ match }) => {
               onClick={() => handleListItemClick(id, pattern)}
               key={pattern._id}>
               <ListItemAvatar>
-                <Avatar src={`${config.imagePrefix}${pattern.images.thumbnail}`}>
+                <Avatar src={`${imagePrefix}${pattern.images.thumbnail}`}>
                   <Image />
                 </Avatar>
               </ListItemAvatar>

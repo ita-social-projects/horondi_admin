@@ -29,6 +29,16 @@ const {
   PRICE_VALIDATION_ERROR
 } = config.constructorErrorMessages;
 
+const {
+  constructorName,
+  constructorPhoto,
+  show,
+  defaultElement,
+  baseConstructorElementPrice,
+  constructorMaterial,
+  constructorColor
+} = config.labels.model
+
 const { SMALL_CIRCLE } = config.colorCircleSizes;
 
 const MenuProps = {
@@ -183,10 +193,10 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         </MenuItem>
       )):null}
     </Select>
-  </FormControl >)
+  </FormControl >);
 
   const inputs = [
-    { label: config.labels.model.constructorName, name: 'name' },
+    { label: constructorName, name: 'name' },
   ];
   const inputOptions = {
     errors,
@@ -199,13 +209,13 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <CheckboxOptions options={checkboxes('available', config.labels.model.show)} />
-        <CheckboxOptions options={checkboxes('default', config.labels.model.default)} />
+        <CheckboxOptions options={checkboxes('available', show )} />
+        <CheckboxOptions options={checkboxes('default', defaultElement )} />
         <Grid item xs={12}>
           <Paper className={styles.constructorItemUpdate}>
             <div>
               <span className={styles.imageUpload}>
-                {config.labels.model.constructorPhoto}
+                { constructorPhoto }
               </span>
               <div className={styles.imageUploadAvatar}>
                 <ImageUploadContainer handler={handleLoadConstructorImage} />
@@ -227,7 +237,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
               id='basePrice'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.model.basePrice}
+              label={baseConstructorElementPrice}
               value={values.basePrice}
               onChange={handleChange}
               error={touched.basePrice && !!errors.basePrice}
@@ -236,11 +246,11 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
               <div className={styles.inputError}>{errors.basePrice}</div>
             )}
             <div className={styles.textField}>
-              {selectField('material', handleMaterial, list, config.labels.model.material, values.material)}
+              {selectField('material', handleMaterial, list, constructorMaterial, values.material)}
               {touched.material && errors.material && (
                 <div className={styles.inputError}>{errors.material}</div>
               )}
-              {selectField('color', handleMaterialColor, materialColors, config.labels.model.color, values.color)}
+              {selectField('color', handleMaterialColor, materialColors, constructorColor, values.color)}
               {touched.color && errors.color && (
                 <div className={styles.inputError}>{errors.color}</div>
               )}
