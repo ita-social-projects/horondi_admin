@@ -263,7 +263,7 @@ const ConstructorPage = ({ match }) => {
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle className={styles.dialogTitle}>{availablePatternsForConstructor}</DialogTitle>
         <List>
-          {patternList.filter(el=>el.constructorImg).map((pattern) => (
+          {map(patternList.filter(el=>el.constructorImg), pattern => (
             <ListItem button
               onClick={() => handleListItemClick(id, pattern)}
               key={pattern._id}>

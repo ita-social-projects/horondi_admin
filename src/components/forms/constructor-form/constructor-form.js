@@ -20,6 +20,8 @@ import {
 } from '../../../redux/selectors/constructor.selectors';
 import LanguagePanel from '../language-panel';
 
+const map = require('lodash/map');
+
 const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
 const {
@@ -184,14 +186,14 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       MenuProps={MenuProps}
       disabled={!selectItemsList.length}
     >
-      {selectItemsList?selectItemsList.map((selectItem) => (
+      {map(selectItemsList, selectItem => (
         <MenuItem value={selectItem._id} key={selectItem._id}>
           <div className={styles.selectBox}>
             {selectValue === 'color' ? <ColorCircle size={SMALL_CIRCLE} color={selectItem.colorHex} /> : null}
             <span> {selectItem.name[0].value}</span>
           </div>
         </MenuItem>
-      )):null}
+      ))}
     </Select>
   </FormControl >);
 
