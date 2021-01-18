@@ -49,7 +49,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
           {map(inputsEditor, (input) => {
             const inputName = lang + capitalize(input.name);
             const setEditorValue =(value)=>{
-              values[`${inputName}`] = value
+              values[inputName] = value
             }
             return (
               <Editor
