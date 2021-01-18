@@ -8,6 +8,12 @@ import {
   UPDATE_CONTACT_IN_STORE
 } from './contact.types';
 
+export const selectContact = ({ Contact }) => ({
+  contacts: Contact.contacts,
+  loading: Contact.ContactLoading,
+  contact: Contact.contact
+});
+
 const initialState = {
   contacts: [],
   contact: null,

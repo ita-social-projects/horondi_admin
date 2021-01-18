@@ -1,12 +1,17 @@
-export const selectContactsAndTable = ({ Contact, Table }) => ({
-  contacts: Contact.contacts,
-  loading: Contact.ContactLoading,
-  currentPage: Table.pagination.currentPage,
-  rowsPerPage: Table.pagination.rowsPerPage,
-  itemsCount: Table.itemsCount
-});
+import { createSelector } from 'reselect';
+import { selectPagination } from '../table/table.reducer';
+import { selectContact } from '../contact/contact.reducer';
 
-export const selectContact = ({ Contact }) => ({
-  loading: Contact.contactsLoading,
-  contact: Contact.contact
-});
+export const contactSelector = createSelector(
+  selectContact,
+  (contact) => contact
+);
+
+export const contactSelectorWithPagination = createSelector(
+  contactSelector,
+  selectPagination,
+  (contact, table) => ({
+    ...contact,
+    ...table
+  })
+);

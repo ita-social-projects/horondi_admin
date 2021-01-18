@@ -20,7 +20,7 @@ import {
   getContacts,
   deleteContact
 } from '../../redux/contact/contact.actions';
-import { selectContactsAndTable } from '../../redux/selectors/contacts.selectors';
+import { contactSelectorWithPagination } from '../../redux/selectors/contacts.selectors';
 
 const { REMOVE_CONTACT_MESSAGE } = config.messages;
 const { CREATE_CONTACT_TITLE } = config.buttonTitles;
@@ -39,7 +39,7 @@ const ContactsPage = () => {
     itemsCount,
     currentPage,
     rowsPerPage
-  } = useSelector(selectContactsAndTable);
+  } = useSelector(contactSelectorWithPagination);
 
   const dispatch = useDispatch();
 

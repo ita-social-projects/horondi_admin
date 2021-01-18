@@ -7,6 +7,12 @@ import {
   UPDATE_PAGINATION
 } from './table.types';
 
+export const selectPagination = ({ Table }) => ({
+  currentPage: Table.pagination.currentPage,
+  rowsPerPage: Table.pagination.rowsPerPage,
+  itemsCount: Table.itemsCount
+});
+
 export const initialState = {
   dense: false,
   pagination: {
