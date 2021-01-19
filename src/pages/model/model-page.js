@@ -12,33 +12,40 @@ import {
   deleteModel,
   setModelsCurrentPage
 } from '../../redux/model/model.actions';
-
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
+import {selectModels} from '../../redux/selectors/model.selectors'
+
+const map = require('lodash/map');
 
 const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;
 const { CREATE_MODEL_TITLE } = config.buttonTitles;
 const pathToModelAddPage = routes.pathToAddModel;
 const tableTitles = config.tableHeadRowTitles.models;
+const pageTitle = config.titles.modelPageTitles.mainPageTitle;
+const { IMG_URL } = config;
+const {
+  showEnable,
+  showDisable
+} = config.labels.model;
 
 const ModelPage = () => {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading, pagesCount, currentPage, modelsPerPage } = useSelector(
-    ({ Model }) => ({
-      list: Model.list,
-      loading: Model.newsLoading,
-      pagesCount: Model.pagination.pagesCount,
-      currentPage: Model.pagination.currentPage,
-      modelsPerPage: Model.pagination.modelsPerPage
-    })
-  );
+
+  const {
+    list,
+    loading,
+    pagesCount,
+    currentPage,
+    modelsPerPage
+  } = useSelector(selectModels);
 
   const dispatch = useDispatch();
 
@@ -66,38 +73,35 @@ const ModelPage = () => {
     return <LoadingBar />;
   }
 
-  const modelItems =
-    list !== undefined
-      ? list.map((modelItem) => (
-        <TableContainerRow
-          image={
-            modelItem.images
-              ? `${config.IMG_URL}${modelItem.images.thumbnail}`
-              : ''
-          }
-          key={modelItem._id}
-          id={modelItem._id}
-          name={modelItem.name[0].value}
-          category={modelItem.category.name[0].value}
-          show={
-            modelItem.show
-              ? config.labels.model.showEnable
-              : config.labels.model.showDisable
-          }
-          priority={modelItem.priority}
-          deleteHandler={() => modelDeleteHandler(modelItem._id)}
-          editHandler={() => {
-            dispatch(push(`/models/${modelItem._id}`));
-          }}
-        />
-      ))
-      : null;
+  const modelItems = map( list, modelItem => (
+    <TableContainerRow
+      image={
+        modelItem.images
+          ? `${IMG_URL}${modelItem.images.thumbnail}`
+          : ''
+      }
+      key={modelItem._id}
+      id={modelItem._id}
+      name={modelItem.name[0].value}
+      category={modelItem.category.name[0].value}
+      show={
+        modelItem.show
+          ? showEnable
+          : showDisable
+      }
+      priority={modelItem.priority}
+      deleteHandler={() => modelDeleteHandler(modelItem._id)}
+      editHandler={() => {
+        dispatch(push(`/models/${modelItem._id}`));
+      }}
+    />
+  ));
 
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
         <Typography variant='h1' className={commonStyles.materialTitle}>
-          {config.titles.modelPageTitles.mainPageTitle}
+          {pageTitle}
         </Typography>
         <Button
           data-cy='add-model'

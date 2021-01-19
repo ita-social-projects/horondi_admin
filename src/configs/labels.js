@@ -13,21 +13,45 @@ const labels = {
     text: 'Текст'
   },
   model: {
-    name: mapToLanguages('Назва', 'Name'),
-    description: mapToLanguages('Опис', 'Description'),
+    name: {
+      ua: 'Назва',
+      en: 'Name'
+    },
+    description: {
+      ua: 'Опис',
+      en: 'Description'
+    },
     image: 'Фото моделі',
-    category: 'Категорія',
+    availableCategory: 'Категорія',
     available: 'Доступний',
     show: 'Показати',
+    defaultElement: 'За замовчуванням',
+    availableForConstructor: 'Доступний для конструктора',
+    constructorBasic:'Основа',
+    constructorPattern:'Гобелен',
+    constructorFrontPocket:'Передня кишеня',
+    constructorBottom:'Низ',
+    constructorPhoto:'Фото для конструктора',
+    baseConstructorElementPrice:'Базова ціна',
+    constructorMaterial: 'Матеріал',
+    constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
     showEnable: 'Так',
-    showDisable: 'Ні'
+    showDisable: 'Ні',
+    availablePatternsForConstructor:'Доступні патерни для контсруктора',
+    constructorName: {
+      ua: 'Назва елементу конструктора',
+      en: 'Constructor element name'
+    }
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
     categoryCode: 'Код категорії',
-    categoryName: 'Назва категорії'
+    categoryName: {
+      ua: 'Назва категорії',
+      en: 'Category name'
+    }
   },
   header: {
     name: mapToLanguages("І'мя", 'Name'),
@@ -322,6 +346,6 @@ const labels = {
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
-  }
+  },
 };
 export default labels;

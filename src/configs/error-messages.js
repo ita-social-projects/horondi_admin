@@ -100,3 +100,11 @@ export const homePageSlideErrorMessages = {
   SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
   SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
+
+export const constructorErrorMessages = {
+  CONSTRUCTOR_VALIDATION_ERROR: 'Мінімум 2 символи',
+  CONSTRUCTOR_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CONSTRUCTOR_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  PRICE_VALIDATION_ERROR: 'Тільки цифри',
+  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора'
+};

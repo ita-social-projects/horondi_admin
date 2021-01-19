@@ -20,6 +20,7 @@ export const getAllPatterns = async (skip, limit) => {
             }
             material
             available
+            constructorImg  
             images {
               thumbnail
             }

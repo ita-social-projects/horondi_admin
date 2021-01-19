@@ -37,7 +37,8 @@ const useModelHandlers = () => {
         }
       ],
       category: values.category,
-      show: values.show
+      show: values.show,
+      availableForConstructor: values.availableForConstructor
     };
     return newModel;
   };

@@ -50,6 +50,9 @@ import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
 import NewsDetails from '../pages/news/news-details/news-details';
 import NewsAdd from '../pages/news/news-add/news-add';
+import ConstructorPage from '../pages/model/constructor/constructor-page';
+import ConstructorAdd from '../pages/model/constructor/constructor-add';
+import ConstructorDetails from '../pages/model/constructor/constructor-details';
 
 const { routes } = config;
 
@@ -223,6 +226,21 @@ const Routes = () => {
             path={routes.pathToHomePageSlideDetail}
             exact
             component={SlideDetails}
+          />
+          <Route
+            path={routes.pathToConstructor}
+            exact
+            component={ConstructorPage}
+          />
+          <Route
+            path={routes.pathToAddConstructor}
+            exact
+            component={ConstructorAdd}
+          />
+          <Route
+            path={routes.pathToConstructorDetails}
+            exact
+            component={ConstructorDetails}
           />
           <Route component={ErrorPage} />
         </Switch>
