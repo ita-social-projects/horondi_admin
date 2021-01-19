@@ -43,10 +43,18 @@ const labels = {
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',
-    form: {
-      name: mapToLanguages("І'мя", 'Name'),
-      description: mapToLanguages('Опис', 'Description')
+    patternName: {
+      ua: 'Назва гобелену',
+      en: 'Pattern name'
+    },
+    patternDescription: {
+      ua: 'Опис гобелену',
+      en: 'Pattern description'
     }
+    // form: {
+    //   name: mapToLanguages("І'мя", 'Name'),
+    //   description: mapToLanguages('Опис', 'Description')
+    // }
   },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
