@@ -11,6 +11,8 @@ import { config } from '../../configs';
 import TablePaginator from '../table-pagination-container';
 import { selectTableDense } from '../../redux/selectors/table.selectors';
 
+const { maxItemsPerPage } = config;
+
 const TableContainerGenerator = ({
   tableTitles,
   tableItems,
@@ -32,7 +34,7 @@ const TableContainerGenerator = ({
           <TableBody id='table-body'>{tableItems}</TableBody>
         </Table>
       </TableContainer>
-      {pagination && count > config.maxItemsPerPage && <TablePaginator />}
+      {pagination && count > maxItemsPerPage && <TablePaginator />}
     </>
   );
 };

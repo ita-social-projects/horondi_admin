@@ -16,7 +16,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { materialTranslations } from '../../translations/material.translations';
 import { useCommonStyles } from '../common.styles';
-import { selectMaterialAndTable } from '../../redux/selectors/material.selectors';
+import { materialSelectorWithPagination } from '../../redux/selectors/material.selectors';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
@@ -29,7 +29,7 @@ const MaterialPage = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, itemsCount, currentPage, rowsPerPage } = useSelector(
-    selectMaterialAndTable
+    materialSelectorWithPagination
   );
 
   const dispatch = useDispatch();

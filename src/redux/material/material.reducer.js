@@ -13,6 +13,12 @@ import {
   REMOVE_MATERIAL_COLOR_FROM_STORE
 } from './material.types';
 
+export const selectMaterial = ({ Material }) => ({
+  list: Material.list,
+  loading: Material.materialLoading,
+  material: Material.material
+});
+
 export const initialState = {
   list: [],
   material: null,

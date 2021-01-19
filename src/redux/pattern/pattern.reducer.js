@@ -6,6 +6,12 @@ import {
   REMOVE_PATTERN_FROM_STORE
 } from './pattern.types';
 
+export const selectPattern = ({ Pattern }) => ({
+  list: Pattern.list,
+  loading: Pattern.patternLoading,
+  pattern: Pattern.pattern
+});
+
 export const initialState = {
   list: [],
   pattern: null,

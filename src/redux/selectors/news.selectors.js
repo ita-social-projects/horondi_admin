@@ -1,12 +1,14 @@
-export const selectNewsAndTable = ({ News, Table }) => ({
-  list: News.list,
-  loading: News.newsLoading,
-  currentPage: Table.pagination.currentPage,
-  rowsPerPage: Table.pagination.rowsPerPage,
-  itemsCount: Table.itemsCount
-});
+import { createSelector } from 'reselect';
+import { selectPagination } from '../table/table.reducer';
+import { selectNews } from '../news/news.reducer';
 
-export const selectNews = ({ News }) => ({
-  loading: News.newsLoading,
-  newsArticle: News.newsArticle
-});
+export const newsSelector = createSelector(selectNews, (news) => news);
+
+export const newsSelectorWithPagination = createSelector(
+  selectNews,
+  selectPagination,
+  (news, table) => ({
+    ...news,
+    ...table
+  })
+);

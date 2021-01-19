@@ -26,12 +26,12 @@ import {
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import Editor from '../../editor/editor';
 import LoadingBar from '../../loading-bar';
-import { selectNews } from '../../../redux/selectors/news.selectors';
+import { newsSelector } from '../../../redux/selectors/news.selectors';
 
 const NewsForm = ({ id, editMode }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { loading, newsArticle } = useSelector(selectNews);
+  const { loading, newsArticle } = useSelector(newsSelector);
   const {
     tabsValue,
     checkboxes,

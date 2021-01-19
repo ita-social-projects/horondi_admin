@@ -1,12 +1,17 @@
-export const selectMaterialAndTable = ({ Material, Table }) => ({
-  list: Material.list,
-  loading: Material.materialLoading,
-  currentPage: Table.pagination.currentPage,
-  rowsPerPage: Table.pagination.rowsPerPage,
-  itemsCount: Table.itemsCount
-});
+import { createSelector } from 'reselect';
+import { selectPagination } from '../table/table.reducer';
+import { selectMaterial } from '../material/material.reducer';
 
-export const selectMaterial = ({ Material }) => ({
-  loading: Material.materialLoading,
-  material: Material.material
-});
+export const materialSelector = createSelector(
+  selectMaterial,
+  (material) => material
+);
+
+export const materialSelectorWithPagination = createSelector(
+  selectMaterial,
+  selectPagination,
+  (material, table) => ({
+    ...material,
+    ...table
+  })
+);

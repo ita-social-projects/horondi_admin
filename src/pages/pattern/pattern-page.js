@@ -15,7 +15,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
-import { selectPatternAndTable } from '../../redux/selectors/pattern.selectors';
+import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
 
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
 const { CREATE_PATTERN_TITLE } = config.buttonTitles;
@@ -29,7 +29,7 @@ const PatternPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
-    selectPatternAndTable
+    patternSelectorWithPagination
   );
 
   const dispatch = useDispatch();

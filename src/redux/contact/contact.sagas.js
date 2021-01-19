@@ -44,7 +44,6 @@ const {
 export function* handleContactsLoad({ payload: { skip, limit } }) {
   try {
     yield put(setContactsLoading(true));
-    console.log(skip);
     const contacts = yield call(getContacts, skip, limit);
     yield put(setItemsCount(contacts.count));
     yield put(setContacts(contacts.items));

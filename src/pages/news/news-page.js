@@ -11,7 +11,7 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
-import { selectNewsAndTable } from '../../redux/selectors/news.selectors';
+import { newsSelectorWithPagination } from '../../redux/selectors/news.selectors';
 
 const { REMOVE_MESSAGE } = config.messages;
 const { CREATE_NEWS_TITLE } = config.buttonTitles;
@@ -24,7 +24,7 @@ const NewsPage = () => {
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
-    selectNewsAndTable
+    newsSelectorWithPagination
   );
 
   useEffect(() => {

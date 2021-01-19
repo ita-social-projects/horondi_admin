@@ -5,6 +5,12 @@ import {
   SET_NEWS_ERROR
 } from './news.types';
 
+export const selectNews = ({ News }) => ({
+  list: News.list,
+  loading: News.newsLoading,
+  newsArticle: News.newsArticle
+});
+
 export const initialState = {
   list: [],
   newsArticle: null,

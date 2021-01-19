@@ -1,12 +1,17 @@
-export const selectPatternAndTable = ({ Pattern, Table }) => ({
-  list: Pattern.list,
-  loading: Pattern.patternLoading,
-  currentPage: Table.pagination.currentPage,
-  rowsPerPage: Table.pagination.rowsPerPage,
-  itemsCount: Table.itemsCount
-});
+import { createSelector } from 'reselect';
+import { selectPagination } from '../table/table.reducer';
+import { selectPattern } from '../pattern/pattern.reducer';
 
-export const selectPattern = ({ Pattern }) => ({
-  loading: Pattern.patternLoading,
-  pattern: Pattern.pattern
-});
+export const patternSelector = createSelector(
+  selectPattern,
+  (pattern) => pattern
+);
+
+export const patternSelectorWithPagination = createSelector(
+  selectPattern,
+  selectPagination,
+  (pattern, table) => ({
+    ...pattern,
+    ...table
+  })
+);
