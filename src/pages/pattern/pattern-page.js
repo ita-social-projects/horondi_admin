@@ -17,6 +17,8 @@ import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
 
+const map = require('lodash/map');
+
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
 const { CREATE_PATTERN_TITLE } = config.buttonTitles;
 
@@ -53,7 +55,7 @@ const PatternPage = () => {
 
   const patternItems =
     list !== undefined
-      ? list.map((patternItem) => (
+      ? map(list, (patternItem) => (
         <TableContainerRow
           image={
             patternItem.images.thumbnail

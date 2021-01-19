@@ -18,6 +18,8 @@ import { materialTranslations } from '../../translations/material.translations';
 import { useCommonStyles } from '../common.styles';
 import { materialSelectorWithPagination } from '../../redux/selectors/material.selectors';
 
+const map = require('lodash/map');
+
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
 
@@ -53,7 +55,7 @@ const MaterialPage = () => {
   };
 
   const materialItems = list.length
-    ? list.map((materialItem) => (
+    ? map(list, (materialItem) => (
       <TableContainerRow
         key={materialItem._id}
         showAvatar={false}

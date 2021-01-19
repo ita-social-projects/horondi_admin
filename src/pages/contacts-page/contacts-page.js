@@ -22,6 +22,8 @@ import {
 } from '../../redux/contact/contact.actions';
 import { contactSelectorWithPagination } from '../../redux/selectors/contacts.selectors';
 
+const map = require('lodash/map');
+
 const { REMOVE_CONTACT_MESSAGE } = config.messages;
 const { CREATE_CONTACT_TITLE } = config.buttonTitles;
 
@@ -63,7 +65,7 @@ const ContactsPage = () => {
   }, [dispatch, rowsPerPage, currentPage]);
 
   const contactItems = contacts
-    ? contacts.map((contact, index) => (
+    ? map(contacts, (contact, index) => (
       <TableContainerRow
         key={`${contact.id}${index}`}
         id={contact.id}

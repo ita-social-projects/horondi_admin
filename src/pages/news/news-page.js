@@ -13,6 +13,8 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { newsSelectorWithPagination } from '../../redux/selectors/news.selectors';
 
+const map = require('lodash/map');
+
 const { REMOVE_MESSAGE } = config.messages;
 const { CREATE_NEWS_TITLE } = config.buttonTitles;
 
@@ -47,7 +49,7 @@ const NewsPage = () => {
 
   const newsItems =
     list !== undefined
-      ? list.map((newsItem, index) => (
+      ? map(list, (newsItem, index) => (
         <TableContainerRow
           key={index}
           image={newsItem.author.image.small}
