@@ -3,20 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
-import { useStyles } from './news-page.styles';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
-import {
-  getNews,
-  deleteArticle,
-  setCurrentPage
-} from '../../redux/news/news.actions';
+import { getNews, deleteArticle } from '../../redux/news/news.actions';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
+import { newsSelectorWithPagination } from '../../redux/selectors/news.selectors';
+
+const map = require('lodash/map');
 
 const { REMOVE_MESSAGE } = config.messages;
 const { CREATE_NEWS_TITLE } = config.buttonTitles;
@@ -25,29 +22,22 @@ const pathToNewsAddPage = config.routes.pathToAddNews;
 const tableTitles = config.tableHeadRowTitles.news;
 
 const NewsPage = () => {
-  const styles = useStyles();
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading, pagesCount, currentPage, newsPerPage } = useSelector(
-    ({ News }) => ({
-      list: News.list,
-      loading: News.newsLoading,
-      pagesCount: News.pagination.pagesCount,
-      currentPage: News.pagination.currentPage,
-      newsPerPage: News.pagination.newsPerPage
-    })
+  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
+    newsSelectorWithPagination
   );
 
   useEffect(() => {
     dispatch(
       getNews({
-        limit: newsPerPage,
-        skip: currentPage * newsPerPage,
-        newsPerPage
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        rowsPerPage
       })
     );
-  }, [dispatch, newsPerPage, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage]);
 
   const newsDeleteHandler = (id) => {
     const removeNews = () => {
@@ -57,32 +47,27 @@ const NewsPage = () => {
     openSuccessSnackbar(removeNews, REMOVE_MESSAGE);
   };
 
-  const changeHandler = (e, value) => dispatch(setCurrentPage(value));
-
-  const newsItems =
-    list !== undefined
-      ? list.map((newsItem, index) => (
-        <TableContainerRow
-          key={index}
-          image={newsItem.author.image.small}
-          id={newsItem.id}
-          author={
-            newsItem.title[0].value !== null
-              ? newsItem.author.name[0].value
-              : newsItem.author.name[1].value
-          }
-          title={
-            newsItem.title[0].value !== null
-              ? newsItem.title[0].value
-              : newsItem.title[1].value
-          }
-          deleteHandler={() => newsDeleteHandler(newsItem._id)}
-          editHandler={() => {
-            dispatch(push(`/news/${newsItem._id}`));
-          }}
-        />
-      ))
-      : null;
+  const newsItems = map(list, (newsItem, index) => (
+    <TableContainerRow
+      key={index}
+      image={newsItem.author.image.small}
+      id={newsItem.id}
+      author={
+        newsItem.title[0].value !== null
+          ? newsItem.author.name[0].value
+          : newsItem.author.name[1].value
+      }
+      title={
+        newsItem.title[0].value !== null
+          ? newsItem.title[0].value
+          : newsItem.title[1].value
+      }
+      deleteHandler={() => newsDeleteHandler(newsItem._id)}
+      editHandler={() => {
+        dispatch(push(`/news/${newsItem._id}`));
+      }}
+    />
+  ));
 
   if (loading) {
     return <LoadingBar />;
@@ -105,19 +90,12 @@ const NewsPage = () => {
         </Button>
       </div>
       <TableContainerGenerator
+        pagination
         id='newsTable'
+        count={itemsCount}
         tableTitles={tableTitles}
         tableItems={newsItems}
       />
-      <div className={styles.paginationDiv}>
-        <Pagination
-          count={pagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage + 1}
-          onChange={changeHandler}
-        />
-      </div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { useCommonStyles } from '../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
-import { selectCategoriesLoadingDialogOpen } from '../../redux/selectors/categories.selectors';
+import { selectCategoriesLoadingDialogOpen } from '../../redux/selectors/category.selectors';
 import StandardButton from '../../components/buttons/standard-button';
 
 const Categories = () => {

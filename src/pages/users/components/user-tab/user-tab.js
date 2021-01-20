@@ -9,6 +9,9 @@ import { formatPhoneNumber } from '../../../../utils/format-phone-number';
 import { config } from '../../../../configs';
 import UserNavbar from '../user-navbar';
 import LoadingBar from '../../../../components/loading-bar';
+import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
+
+const map = require('lodash/map');
 
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const tableTitles = config.tableHeadRowTitles.users.userTab;
@@ -16,10 +19,10 @@ const { unknownUser } = config.labels.user;
 
 const UserTab = (props) => {
   const { list, onDelete } = props;
-  const userLoading = useSelector(({ Users }) => Users.userLoading);
+  const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
   const dispatch = useDispatch();
 
-  const usersItems = list.map((userItem) => (
+  const usersItems = map(list, (userItem) => (
     <TableContainerRow
       key={userItem._id}
       id={userItem._id}
@@ -46,6 +49,7 @@ const UserTab = (props) => {
         ) : (
           <TableContainerGenerator
             pagination
+            count={itemsCount}
             id='usersTable'
             tableTitles={tableTitles}
             tableItems={usersItems}

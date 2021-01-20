@@ -38,8 +38,8 @@ const SlidesOrder = (props) => {
     CANCEL_SLIDE_ORDER
   } = config.buttonTitles;
 
-  const { slidesPerPage } = useSelector(({ Slides }) => ({
-    slidesPerPage: Slides.pagination.slidesPerPage
+  const { rowsPerPage } = useSelector(({ Table }) => ({
+    rowsPerPage: Table.pagination.rowsPerPage
   }));
 
   const dragItem = useRef();
@@ -128,7 +128,7 @@ const SlidesOrder = (props) => {
       )
     );
     const arrayToStore = newSlideItems.map((el) => el.slide);
-    arrayToStore.length = slidesPerPage;
+    arrayToStore.length = rowsPerPage;
     dispatch(setSlides(arrayToStore));
     setDraggable(false);
   };

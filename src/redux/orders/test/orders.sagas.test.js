@@ -1,11 +1,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../../snackbar/snackbar.actions';
+
 import { setItemsCount } from '../../table/table.actions';
 import {
   setOrder,
@@ -26,13 +22,12 @@ import {
   fakeId,
   fakeOrderList,
   fakeOrderState,
-  fakeTableState,
-  fakeSnackarState
+  fakeTableState
 } from './orders.variables';
 
+import { handleErrorSnackbar } from '../../snackbar/snackbar.sagas';
 import Table from '../../table/table.reducer';
 import Orders from '../orders.reducer';
-import Snackbar from '../../snackbar/snackbar.reducer';
 
 describe('order sagas tests', () => {
   it('should handle all order list', () =>
@@ -95,34 +90,26 @@ describe('order sagas tests', () => {
 
   it('should handle orders errors', () =>
     expectSaga(handleOrdersError, fakeError)
-      .withReducer(combineReducers({ Orders, Snackbar }), {
+      .withReducer(combineReducers({ Orders }), {
         Orders: {
           ...fakeOrderState,
           orderLoading: true
-        },
-        Snackbar: fakeSnackarState
+        }
       })
+      .provide([[call(handleErrorSnackbar, fakeError.message)]])
       .put(setOrderLoading(false))
       .put(setOrderError({ e: fakeError }))
-      .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(fakeError.message))
-      .put(setSnackBarStatus(true))
       .hasFinalState({
         Orders: {
           ...fakeOrderState,
           orderLoading: false,
           orderError: { e: fakeError }
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'error',
-          snackBarMessage: fakeError.message
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(5);
+        expect(analysisPut).toHaveLength(2);
       }));
 });

@@ -1,11 +1,12 @@
-import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import {
   setBusinessPages,
   setLoading,
   setBusinessPagesError,
-  setCurrentBusinessPage
+  setCurrentBusinessPage,
+  removeBusinessPageFromStore
 } from './business-pages.actions';
 import {
   getAllBusinessPages,
@@ -24,12 +25,6 @@ import {
 
 import { config } from '../../configs';
 
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../snackbar/snackbar.actions';
-import { selectBusinessPagesList } from '../selectors/business-pages.selectors';
 import {
   handleSuccessSnackbar,
   handleErrorSnackbar
@@ -81,14 +76,8 @@ export function* handleBusinessPageDelete({ payload }) {
   try {
     yield put(setLoading(true));
     yield call(deleteBusinessPage, payload);
-
-    const businessPages = yield select(selectBusinessPagesList);
-    yield put(
-      setBusinessPages(businessPages.filter((page) => page._id !== payload))
-    );
-    yield put(setSnackBarSeverity('success'));
-    yield put(setSnackBarMessage(SUCCESS_DELETE_STATUS));
-    yield put(setSnackBarStatus(true));
+    yield put(removeBusinessPageFromStore(payload));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
     yield put(setLoading(false));
   } catch (error) {
     yield call(handleBusinessPageError, error);

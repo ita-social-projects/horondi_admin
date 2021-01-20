@@ -95,7 +95,9 @@ const ProductAddSubmit = ({
           ? productToSend[name].find((product) => product.lang === lang).value
           : productToSend[name];
 
-        return text ? <Detail key={name} title={label} text={text} /> : null;
+        return text ? (
+          <Detail key={name} title={label[0].value} text={text} />
+        ) : null;
       })}
     </TabPanel>
   ));

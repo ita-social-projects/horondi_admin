@@ -7,7 +7,8 @@ import {
   deletePattern,
   getPattern,
   getPatterns,
-  addPattern
+  addPattern,
+  removePatternFromStore
 } from '../pattern.actions';
 import {
   SET_PATTERN,
@@ -18,7 +19,8 @@ import {
   DELETE_PATTERN,
   GET_PATTERN,
   GET_PATTERNS,
-  ADD_PATTERN
+  ADD_PATTERN,
+  REMOVE_PATTERN_FROM_STORE
 } from '../pattern.types';
 import { mockPatterns, mockId } from './pattern.variables';
 
@@ -73,6 +75,12 @@ describe('pattern actions tests', () => {
     expect(deletePattern(patternToDelete)).toEqual({
       type: DELETE_PATTERN,
       payload: patternToDelete
+    });
+  });
+  it('should remove pattern by id from store', () => {
+    expect(removePatternFromStore(mockId)).toEqual({
+      type: REMOVE_PATTERN_FROM_STORE,
+      payload: mockId
     });
   });
 });

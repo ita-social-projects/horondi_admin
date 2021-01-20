@@ -6,8 +6,7 @@ export const contactsCurrentPage = 1;
 export const error = { message: 'error' };
 export const payload = {
   skip: 0,
-  limit: 6,
-  contactsPerPage: 1
+  limit: 6
 };
 export const newContact = {
   newContact: { ...contact },
@@ -59,12 +58,17 @@ export const initialState = {
   contacts: [],
   contact: null,
   contactsLoading: false,
-  contactsError: null,
+  contactsError: null
+};
+
+export const mockTableState = {
+  dense: false,
   pagination: {
-    contactsCurrentPage: 0,
-    contactsPerPage: 6,
-    contactPagesCount: 1
-  }
+    currentPage: 0,
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30]
+  },
+  itemsCount: 0
 };
 
 export const getContacts = {

@@ -10,6 +10,7 @@ import { config } from '../../../../configs';
 import RegisterDialog from '../register-dialog';
 import useFormDialog from '../../../../hooks/form-dialog/use-form-dialog';
 import LoadingBar from '../../../../components/loading-bar';
+import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 
 const tableHeaders = config.tableHeadRowTitles.users.adminTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
@@ -19,7 +20,7 @@ const { forbiddenRolesFromDeleting } = config;
 
 const AdminTab = (props) => {
   const { list, onDelete } = props;
-  const userLoading = useSelector(({ Users }) => Users.userLoading);
+  const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
 
   const {
     isRegisterDialogOpen,
@@ -70,6 +71,7 @@ const AdminTab = (props) => {
       ) : (
         <TableContainerGenerator
           pagination
+          count={itemsCount}
           id='adminsTable'
           tableTitles={tableHeaders}
           tableItems={adminItems}

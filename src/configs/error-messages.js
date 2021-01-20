@@ -102,3 +102,9 @@ export const homePageSlideErrorMessages = {
   SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
   SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
+
+export const paginationInputErrorMessages = {
+  MUST_BE_NUMBER: 'Тільки цифри',
+  MUST_BE_POSITIVE: 'Тільки більше нуля',
+  PAGE_NOT_FOUND: 'Сторінку не знайдено'
+};

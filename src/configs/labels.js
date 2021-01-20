@@ -3,6 +3,7 @@ import { mapToLanguages } from '../utils/map-languages';
 const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
+  goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
     guestUser: 'Гість'

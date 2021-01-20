@@ -78,16 +78,21 @@ const mockMaterialState = {
   material: null,
   materialLoading: false,
   materialError: null,
-  pagination: {
-    currentPage: 0,
-    materialsPerPage: 6,
-    pagesCount: 1
-  },
   showColorDialogWindow: false,
   colors: [],
   materialColors: null,
   materialColor: null,
   editMaterialId: ''
+};
+
+const mockTableState = {
+  dense: false,
+  pagination: {
+    currentPage: 0,
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30]
+  },
+  itemsCount: 0
 };
 
 const mockSnackbarState = {
@@ -153,5 +158,6 @@ export {
   mockColorToAdd,
   mockPayloadToDeleteColor,
   mockPayloadToUpdateMaterial,
-  mockError
+  mockError,
+  mockTableState
 };

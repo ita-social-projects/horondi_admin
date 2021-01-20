@@ -4,12 +4,17 @@ const mockNewsState = {
   list: [],
   newsArticle: null,
   newsLoading: false,
-  newsError: null,
+  newsError: null
+};
+
+const mockTableState = {
+  dense: false,
   pagination: {
     currentPage: 0,
-    newsPerPage: 6,
-    pagesCount: 1
-  }
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30]
+  },
+  itemsCount: 0
 };
 
 const mockSnackbarState = {
@@ -83,10 +88,12 @@ const mockNews = {
 };
 
 const mockArticle = mockNews.items[0];
+const skip = 0;
+const limit = 10;
 
 const mockNewsLoadPayload = {
-  skip: 0,
-  limit: 10,
+  skip,
+  limit,
   newsPerPage: 10
 };
 
@@ -111,5 +118,8 @@ export {
   mockArticle,
   pagesCount,
   statuses,
-  mockError
+  mockError,
+  mockTableState,
+  skip,
+  limit
 };

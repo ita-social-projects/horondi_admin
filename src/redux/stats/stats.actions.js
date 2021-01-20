@@ -55,12 +55,14 @@ const getIniitalStats = () => ({
   type: GET_INITIAL_STATS
 });
 
-const getUsersByDays = () => ({
-  type: GET_USERS_STATS
+const getUsersByDays = (payload) => ({
+  type: GET_USERS_STATS,
+  payload
 });
 
-const getAllOrdersStats = () => ({
-  type: GET_ALL_ORDERS_STATS
+const getAllOrdersStats = (payload) => ({
+  type: GET_ALL_ORDERS_STATS,
+  payload
 });
 
 const setAllOrdersStats = (orders) => ({
@@ -68,8 +70,9 @@ const setAllOrdersStats = (orders) => ({
   payload: orders
 });
 
-const getPaidOrdersStats = () => ({
-  type: GET_PAID_ORDERS_STATS
+const getPaidOrdersStats = (payload) => ({
+  type: GET_PAID_ORDERS_STATS,
+  payload
 });
 
 const setPaidOrdersStats = (orders) => ({
