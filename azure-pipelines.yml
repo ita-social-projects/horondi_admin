@@ -26,11 +26,6 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: 'echo ''tests should run here'''
-
   - job: Build
     displayName: BuildandDeploy
     condition: in(variables['Build.Reason'], 'IndividualCI', 'Manual')  
