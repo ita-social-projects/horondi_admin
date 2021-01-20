@@ -69,27 +69,24 @@ const PatternPage = () => {
 
   const changeHandler = (e, value) => dispatch(setPatternsCurrentPage(value));
 
-  const patternItems =
-    list !== undefined
-      ? map(list, (patternItem) => (
-        <TableContainerRow
-          image={
-            patternItem.images.thumbnail
-              ? `${config.imagePrefix}${patternItem.images.thumbnail}`
-              : ''
-          }
-          key={patternItem._id}
-          id={patternItem.id}
-          name={patternItem.name[0].value}
-          material={patternItem.material}
-          available={patternItem.available ? 'Так' : 'Ні'}
-          deleteHandler={() => patternDeleteHandler(patternItem._id)}
-          editHandler={() => {
-            dispatch(push(`/patterns/${patternItem._id}`));
-          }}
-        />
-      ))
-      : null;
+  const patternItems = map(list, (patternItem) => (
+    <TableContainerRow
+      image={
+        patternItem.images.thumbnail
+          ? `${config.imagePrefix}${patternItem.images.thumbnail}`
+          : ''
+      }
+      key={patternItem._id}
+      id={patternItem.id}
+      name={patternItem.name[0].value}
+      material={patternItem.material}
+      available={patternItem.available ? 'Так' : 'Ні'}
+      deleteHandler={() => patternDeleteHandler(patternItem._id)}
+      editHandler={() => {
+        dispatch(push(`/patterns/${patternItem._id}`));
+      }}
+    />
+  ));
 
   if (loading) {
     return <LoadingBar />;
