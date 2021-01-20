@@ -47,30 +47,27 @@ const NewsPage = () => {
     openSuccessSnackbar(removeNews, REMOVE_MESSAGE);
   };
 
-  const newsItems =
-    list !== undefined
-      ? map(list, (newsItem, index) => (
-        <TableContainerRow
-          key={index}
-          image={newsItem.author.image.small}
-          id={newsItem.id}
-          author={
-            newsItem.title[0].value !== null
-              ? newsItem.author.name[0].value
-              : newsItem.author.name[1].value
-          }
-          title={
-            newsItem.title[0].value !== null
-              ? newsItem.title[0].value
-              : newsItem.title[1].value
-          }
-          deleteHandler={() => newsDeleteHandler(newsItem._id)}
-          editHandler={() => {
-            dispatch(push(`/news/${newsItem._id}`));
-          }}
-        />
-      ))
-      : null;
+  const newsItems = map(list, (newsItem, index) => (
+    <TableContainerRow
+      key={index}
+      image={newsItem.author.image.small}
+      id={newsItem.id}
+      author={
+        newsItem.title[0].value !== null
+          ? newsItem.author.name[0].value
+          : newsItem.author.name[1].value
+      }
+      title={
+        newsItem.title[0].value !== null
+          ? newsItem.title[0].value
+          : newsItem.title[1].value
+      }
+      deleteHandler={() => newsDeleteHandler(newsItem._id)}
+      editHandler={() => {
+        dispatch(push(`/news/${newsItem._id}`));
+      }}
+    />
+  ));
 
   if (loading) {
     return <LoadingBar />;

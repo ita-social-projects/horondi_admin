@@ -64,25 +64,23 @@ const ContactsPage = () => {
     );
   }, [dispatch, rowsPerPage, currentPage]);
 
-  const contactItems = contacts
-    ? map(contacts, (contact, index) => (
-      <TableContainerRow
-        key={`${contact.id}${index}`}
-        id={contact.id}
-        phone={formatPhoneNumber(contact.phoneNumber)}
-        email={contact.email}
-        address={contact.address[0].value.replace(
-          config.formRegExp.unwrapHtml,
-          ' '
-        )}
-        showAvatar={false}
-        deleteHandler={() => contactDeleteHandler(contact._id)}
-        editHandler={() => {
-          dispatch(push(`/contacts/${contact._id}`));
-        }}
-      />
-    ))
-    : null;
+  const contactItems = map(contacts, (contact, index) => (
+    <TableContainerRow
+      key={`${contact.id}${index}`}
+      id={contact.id}
+      phone={formatPhoneNumber(contact.phoneNumber)}
+      email={contact.email}
+      address={contact.address[0].value.replace(
+        config.formRegExp.unwrapHtml,
+        ' '
+      )}
+      showAvatar={false}
+      deleteHandler={() => contactDeleteHandler(contact._id)}
+      editHandler={() => {
+        dispatch(push(`/contacts/${contact._id}`));
+      }}
+    />
+  ));
 
   if (loading) {
     return <LoadingBar />;

@@ -54,26 +54,24 @@ const MaterialPage = () => {
     openSuccessSnackbar(removeMaterial, REMOVE_MATERIAL_MESSAGE);
   };
 
-  const materialItems = list.length
-    ? map(list, (materialItem) => (
-      <TableContainerRow
-        key={materialItem._id}
-        showAvatar={false}
-        id={materialItem.id}
-        name={materialItem.name[0].value}
-        purpose={materialItem.purpose}
-        available={
-          materialItem.available
-            ? materialTranslations.YES
-            : materialTranslations.NO
-        }
-        deleteHandler={() => materialDeleteHandler(materialItem._id)}
-        editHandler={() => {
-          dispatch(push(`/materials/${materialItem._id}`));
-        }}
-      />
-    ))
-    : null;
+  const materialItems = map(list, (materialItem) => (
+    <TableContainerRow
+      key={materialItem._id}
+      showAvatar={false}
+      id={materialItem.id}
+      name={materialItem.name[0].value}
+      purpose={materialItem.purpose}
+      available={
+        materialItem.available
+          ? materialTranslations.YES
+          : materialTranslations.NO
+      }
+      deleteHandler={() => materialDeleteHandler(materialItem._id)}
+      editHandler={() => {
+        dispatch(push(`/materials/${materialItem._id}`));
+      }}
+    />
+  ));
 
   if (loading) {
     return <LoadingBar />;
