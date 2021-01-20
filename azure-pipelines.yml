@@ -21,11 +21,6 @@ stages:
 - stage: Main
   displayName: Main
   jobs:
-  - job: tests
-    displayName: tests
-    pool:
-      vmImage: $(vmImageName)
-    steps:
   - job: Build
     displayName: BuildandDeploy
     condition: in(variables['Build.Reason'], 'IndividualCI', 'Manual')  
