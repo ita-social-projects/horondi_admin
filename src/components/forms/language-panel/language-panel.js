@@ -34,6 +34,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                   multiline
                   value={values[inputName]}
                   onChange={handleChange}
+                  {...input.props}
                 />
                 {touched[inputName] && errors[inputName] && (
                   <div
@@ -48,15 +49,15 @@ const LanguagePanel = ({ lang, inputOptions }) => {
           })}
           {map(inputsEditor, (input) => {
             const inputName = lang + capitalize(input.name);
-            const setEditorValue = `set${capitalize(lang)}${capitalize(
-              input.name
-            )}`;
+            const setEditorValue = (value) => {
+              values[inputName] = value;
+            };
             return (
               <Editor
                 value={values[inputName]}
                 placeholder={input.label[lang]}
                 onChange={handleChange}
-                onEditorChange={input[setEditorValue]}
+                onEditorChange={(value) => setEditorValue(value)}
                 setFiles={input.setFiles}
                 data-cy={`${lang}-${input.name}`}
                 label={lang}
