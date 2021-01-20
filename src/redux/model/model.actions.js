@@ -8,29 +8,11 @@ import {
   SET_MODEL,
   UPDATE_MODEL,
   SET_MODEL_ERROR,
-  SET_MODELS_CURRENT_PAGE,
-  SET_MODELS_PER_PAGE,
-  SET_MODELS_PAGES_COUNT,
   REMOVE_MODEL_FROM_STORE
 } from './model.types';
 
 export const setModels = (payload) => ({
   type: SET_MODELS,
-  payload
-});
-
-export const setModelsCurrentPage = (payload) => ({
-  type: SET_MODELS_CURRENT_PAGE,
-  payload
-});
-
-export const setModelsPerPage = (payload) => ({
-  type: SET_MODELS_PER_PAGE,
-  payload
-});
-
-export const setPagesCount = (payload) => ({
-  type: SET_MODELS_PAGES_COUNT,
   payload
 });
 

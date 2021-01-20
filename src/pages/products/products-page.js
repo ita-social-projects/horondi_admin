@@ -43,7 +43,8 @@ const ProductsPage = () => {
     sortByRate,
     sortByPrice,
     filters,
-    sortByPopularity
+    sortByPopularity,
+    itemsCount
   } = useSelector(selectProductsAndTable);
 
   const {
@@ -128,6 +129,7 @@ const ProductsPage = () => {
       ) : products.length ? (
         <TableContainerGenerator
           pagination
+          count={itemsCount}
           tableTitles={tableTitles}
           tableItems={productsItems}
         />

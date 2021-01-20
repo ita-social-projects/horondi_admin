@@ -3,13 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
-import { useStyles } from './pattern-page.styles';
 import { useCommonStyles } from '../common.styles';
 import {
   getPatterns,
-  deletePattern,
-  setPatternsCurrentPage
+  deletePattern
 } from '../../redux/pattern/pattern.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
@@ -18,6 +15,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
+import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
 
 const map = require('lodash/map');
 
@@ -28,36 +26,24 @@ const pathToPatternAddPage = config.routes.pathToAddPattern;
 const tableTitles = config.tableHeadRowTitles.patterns;
 
 const PatternPage = () => {
-  const styles = useStyles();
   const common = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const {
-    list,
-    loading,
-    pagesCount,
-    currentPage,
-    patternsPerPage
-  } = useSelector(({ Pattern }) => ({
-    list: Pattern.list,
-    loading: Pattern.newsLoading,
-    pagesCount: Pattern.pagination.pagesCount,
-    currentPage: Pattern.pagination.currentPage,
-    patternsPerPage: Pattern.pagination.patternsPerPage
-  }));
+  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
+    patternSelectorWithPagination
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
       getPatterns({
-        limit: patternsPerPage,
-        skip: currentPage * patternsPerPage,
-        patternsPerPage
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage
       })
     );
-  }, [dispatch, patternsPerPage, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage]);
 
   const patternDeleteHandler = (id) => {
     const removePattern = () => {
@@ -66,8 +52,6 @@ const PatternPage = () => {
     };
     openSuccessSnackbar(removePattern, PATTERN_REMOVE_MESSAGE);
   };
-
-  const changeHandler = (e, value) => dispatch(setPatternsCurrentPage(value));
 
   const patternItems = map(list, (patternItem) => (
     <TableContainerRow
@@ -87,10 +71,6 @@ const PatternPage = () => {
       }}
     />
   ));
-
-  if (loading) {
-    return <LoadingBar />;
-  }
 
   return (
     <div className={common.container}>
@@ -112,20 +92,17 @@ const PatternPage = () => {
           {CREATE_PATTERN_TITLE}
         </Button>
       </div>
-      <TableContainerGenerator
-        data-cy='patternTable'
-        tableTitles={tableTitles}
-        tableItems={patternItems}
-      />
-      <div className={styles.paginationDiv}>
-        <Pagination
-          count={pagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage + 1}
-          onChange={changeHandler}
+      {!loading ? (
+        <TableContainerGenerator
+          pagination
+          data-cy='patternTable'
+          count={itemsCount}
+          tableTitles={tableTitles}
+          tableItems={patternItems}
         />
-      </div>
+      ) : (
+        <LoadingBar />
+      )}
     </div>
   );
 };

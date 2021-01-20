@@ -5,16 +5,14 @@ import { useStyles } from '../material-add/material-add.styles';
 import LoadingBar from '../../../components/loading-bar';
 import MaterialForm from '../../../components/forms/material-form';
 import { getMaterial } from '../../../redux/material/material.actions';
+import { materialSelector } from '../../../redux/selectors/material.selectors';
 
 const MaterialDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
 
-  const { loading, material } = useSelector(({ Material }) => ({
-    loading: Material.materialLoading,
-    material: Material.material
-  }));
+  const { loading, material } = useSelector(materialSelector);
   const styles = useStyles();
 
   useEffect(() => {

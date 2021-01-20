@@ -73,7 +73,7 @@ import {
   setSnackBarMessage
 } from '../../snackbar/snackbar.actions';
 
-import { setItemsCount, setPagesCount } from '../../table/table.actions';
+import { setItemsCount } from '../../table/table.actions';
 
 import Products from '../products.reducer';
 import Table from '../../table/table.reducer';
@@ -114,7 +114,6 @@ describe('Test products saga', () => {
           mockProductsList
         ]
       ])
-      .put(setPagesCount(pagesCount))
       .put(setItemsCount(mockProductsList.count))
       .put(setAllProducts(mockProductsList.items))
       .put(setProductsLoading(false))
@@ -138,7 +137,7 @@ describe('Test products saga', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
-        expect(analysisPut).toHaveLength(5);
+        expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
         expect(analysisSelect).toHaveLength(1);
       }));

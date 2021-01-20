@@ -6,7 +6,8 @@ export const selectProductsAndTable = ({
     sorting: { sortByPopularity, sortByPrice, sortByRate }
   },
   Table: {
-    pagination: { rowsPerPage, currentPage }
+    pagination: { rowsPerPage, currentPage },
+    itemsCount
   }
 }) => ({
   loading,
@@ -16,5 +17,6 @@ export const selectProductsAndTable = ({
   filters,
   sortByPopularity,
   rowsPerPage,
-  currentPage
+  currentPage,
+  itemsCount
 });

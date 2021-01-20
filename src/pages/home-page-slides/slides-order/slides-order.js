@@ -38,8 +38,8 @@ const SlidesOrder = (props) => {
     CANCEL_SLIDE_ORDER
   } = config.buttonTitles;
 
-  const { slidesPerPage } = useSelector(({ Slides }) => ({
-    slidesPerPage: Slides.pagination.slidesPerPage
+  const { rowsPerPage } = useSelector(({ Table }) => ({
+    rowsPerPage: Table.pagination.rowsPerPage
   }));
 
   const dragItem = useRef();
@@ -101,19 +101,17 @@ const SlidesOrder = (props) => {
     list.forEach((el) => {
       if (el.title === 'available') {
         el.items.forEach((availableSlide, index) => {
-          const { order, show, ...rest } = availableSlide;
           available.push({
             id: availableSlide._id,
-            slide: { order: +index + 1, show: true, ...rest }
+            slide: { order: +index + 1, show: true, ...availableSlide }
           });
         });
       }
       if (el.title === 'nonAvailable') {
         el.items.forEach((nonAvailableSlide) => {
-          const { order, show, ...rest } = nonAvailableSlide;
           nonAvailable.push({
             id: nonAvailableSlide._id,
-            slide: { order: 0, show: false, ...rest }
+            slide: { order: 0, show: false, ...nonAvailableSlide }
           });
         });
       }
@@ -128,7 +126,7 @@ const SlidesOrder = (props) => {
       )
     );
     const arrayToStore = newSlideItems.map((el) => el.slide);
-    arrayToStore.length = slidesPerPage;
+    arrayToStore.length = rowsPerPage;
     dispatch(setSlides(arrayToStore));
     setDraggable(false);
   };

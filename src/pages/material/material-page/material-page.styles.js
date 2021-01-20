@@ -8,24 +8,9 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
   },
-  table: {
-    textTransform: 'capitalize'
-  },
   paginationDiv: {
     display: 'flex',
     justifyContent: 'center',
     marginTop: '30px'
-  },
-  container: {
-    width: `100%`,
-    marginTop: 65,
-    position: 'static',
-    padding: 20
-  },
-  patternTitle: {
-    marginBottom: '10px',
-    fontSize: 24,
-    color: theme.palette.text.disabled,
-    fontWeight: 'bold'
   }
 }));

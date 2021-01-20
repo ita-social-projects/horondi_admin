@@ -1,6 +1,8 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+import { combineReducers } from 'redux';
+
 import {
   handleContactsLoad,
   handleContactLoad,
@@ -14,7 +16,6 @@ import {
   setContactsLoading,
   setContact,
   setContactsError,
-  setContactsPagesCount,
   deleteContactInStore,
   addContactInStore,
   updateContactInStore
@@ -27,8 +28,12 @@ import {
   newContact,
   updatedContact,
   error,
-  initialState
+  initialState,
+  mockTableState
 } from './contact.variables';
+
+import { setItemsCount, updatePagination } from '../../table/table.actions';
+
 import {
   getContacts,
   deleteContact,
@@ -37,7 +42,9 @@ import {
   updateContact
 } from '../contact.operations';
 import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
-import { contactsReducer } from '../contact.reducer';
+
+import { contactsReducer as Contact } from '../contact.reducer';
+import Table from '../../table/table.reducer';
 import { config } from '../../../configs';
 
 const {
@@ -49,19 +56,24 @@ const {
 describe('Contact sagas tests', () => {
   it('Should receive all contacts and set them to store', () =>
     expectSaga(handleContactsLoad, { payload })
-      .withReducer(contactsReducer)
-      .provide([[call(getContacts, payload.skip, payload.limit), contactRes]])
+      .withReducer(combineReducers({ Contact, Table }), {
+        Contact: initialState,
+        Table: mockTableState
+      })
       .put(setContactsLoading(true))
-      .put(
-        setContactsPagesCount(
-          Math.ceil(contactRes.count / payload.contactsPerPage)
-        )
-      )
+      .provide([[call(getContacts, payload.skip, payload.limit), contactRes]])
+      .put(setItemsCount(contactRes.count))
       .put(setContacts(contactRes.items))
       .put(setContactsLoading(false))
       .hasFinalState({
-        ...initialState,
-        contacts: contactRes.items
+        Contact: {
+          ...initialState,
+          contacts: contactRes.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: contactRes.count
+        }
       })
       .run()
       .then((res) => {
@@ -74,14 +86,18 @@ describe('Contact sagas tests', () => {
 
   it('Should receive single contact and set to store', () =>
     expectSaga(handleContactLoad, { payload: contact._id })
-      .withReducer(contactsReducer)
+      .withReducer(combineReducers({ Contact }), {
+        Contact: initialState
+      })
       .provide([[call(getContactById, contact._id), contact]])
       .put(setContactsLoading(true))
       .put(setContact(contact))
       .put(setContactsLoading(false))
       .hasFinalState({
-        ...initialState,
-        contact
+        Contact: {
+          ...initialState,
+          contact
+        }
       })
       .run()
       .then((result) => {
@@ -94,7 +110,9 @@ describe('Contact sagas tests', () => {
 
   it('Should add single contact and set to store', () =>
     expectSaga(handleAddContact, { payload: newContact })
-      .withReducer(contactsReducer)
+      .withReducer(combineReducers({ Contact }), {
+        Contact: initialState
+      })
       .provide([
         [call(addContact, newContact.newContact, newContact.mapImages)],
         [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
@@ -104,8 +122,10 @@ describe('Contact sagas tests', () => {
       .put(setContactsLoading(false))
       .put(push('/contacts'))
       .hasFinalState({
-        ...initialState,
-        contacts: [newContact.newContact]
+        Contact: {
+          ...initialState,
+          contacts: [newContact.newContact]
+        }
       })
       .run()
       .then((result) => {
@@ -118,39 +138,39 @@ describe('Contact sagas tests', () => {
 
   it('Should delete contact and remove it from store', () =>
     expectSaga(handleContactDelete, { payload: contact._id })
-      .withReducer(contactsReducer)
+      .withReducer(combineReducers({ Contact }), {
+        Contact: initialState
+      })
       .provide([
         [call(deleteContact, contact._id)],
-        [call(getContacts, payload.skip, payload.limit), contactRes],
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
       .put(setContactsLoading(true))
       .put(deleteContactInStore(contact._id))
-      .put(
-        setContactsPagesCount(
-          Math.ceil(contactRes.count / payload.contactsPerPage)
-        )
-      )
-      .put(setContacts(contactRes.items))
+      .put(updatePagination())
       .put(setContactsLoading(false))
       .hasFinalState({
-        ...initialState,
-        contacts: contactRes.items
+        Contact: {
+          ...initialState,
+          contacts: []
+        }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(6);
-        expect(analysisCall).toHaveLength(3);
+        expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('Should update contact', () =>
     expectSaga(handleContactUpdate, {
       payload: { id: contact._id, updatedContact, mapImages: [] }
     })
-      .withReducer(contactsReducer)
+      .withReducer(combineReducers({ Contact }), {
+        Contact: initialState
+      })
       .provide([
         [call(updateContact, contact._id, updatedContact, [])],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
@@ -159,8 +179,10 @@ describe('Contact sagas tests', () => {
       .put(updateContactInStore(contact._id, updatedContact))
       .put(push('/contacts'))
       .hasFinalState({
-        ...initialState,
-        contactsLoading: true
+        Contact: {
+          ...initialState,
+          contactsLoading: true
+        }
       })
       .run()
       .then((result) => {
@@ -173,14 +195,18 @@ describe('Contact sagas tests', () => {
 
   it('Should handle error', () =>
     expectSaga(handleContactsError, error)
-      .withReducer(contactsReducer)
+      .withReducer(combineReducers({ Contact }), {
+        Contact: initialState
+      })
       .provide([[call(handleSuccessSnackbar, error.message)]])
       .put(setContactsLoading(false))
       .put(setContactsError({ e: error }))
       .hasFinalState({
-        ...initialState,
-        contactsLoading: false,
-        contactsError: { e: error }
+        Contact: {
+          ...initialState,
+          contactsLoading: false,
+          contactsError: { e: error }
+        }
       })
       .run()
       .then((result) => {

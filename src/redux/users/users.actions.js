@@ -18,8 +18,9 @@ import {
   CLEAR_FILTERS
 } from './users.types';
 
-const getUsers = () => ({
-  type: GET_USERS
+const getUsers = (payload) => ({
+  type: GET_USERS,
+  payload
 });
 
 const setUsers = (users) => ({

@@ -5,7 +5,6 @@ import { push } from 'connected-react-router';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Button, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import LoadingBar from '../../components/loading-bar';
@@ -19,9 +18,11 @@ import { config } from '../../configs';
 
 import {
   getContacts,
-  setContactsCurrentPage,
   deleteContact
 } from '../../redux/contact/contact.actions';
+import { contactSelectorWithPagination } from '../../redux/selectors/contacts.selectors';
+
+const map = require('lodash/map');
 
 const { REMOVE_CONTACT_MESSAGE } = config.messages;
 const { CREATE_CONTACT_TITLE } = config.buttonTitles;
@@ -37,16 +38,10 @@ const ContactsPage = () => {
   const {
     contacts,
     loading,
-    contactPagesCount,
-    contactsCurrentPage,
-    contactsPerPage
-  } = useSelector(({ Contact }) => ({
-    contacts: Contact.contacts,
-    loading: Contact.ContactLoading,
-    contactPagesCount: Contact.pagination.contactPagesCount,
-    contactsCurrentPage: Contact.pagination.contactsCurrentPage,
-    contactsPerPage: Contact.pagination.contactsPerPage
-  }));
+    itemsCount,
+    currentPage,
+    rowsPerPage
+  } = useSelector(contactSelectorWithPagination);
 
   const dispatch = useDispatch();
 
@@ -62,36 +57,30 @@ const ContactsPage = () => {
   useEffect(() => {
     dispatch(
       getContacts({
-        limit: contactsPerPage,
-        skip: contactsCurrentPage * contactsPerPage,
-        contactsPerPage
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        rowsPerPage
       })
     );
-  }, [dispatch, contactsPerPage, contactsCurrentPage]);
+  }, [dispatch, rowsPerPage, currentPage]);
 
-  const changePageHandler = (e, pageIndex) => {
-    dispatch(setContactsCurrentPage(pageIndex));
-  };
-
-  const contactItems = contacts
-    ? contacts.map((contact, index) => (
-      <TableContainerRow
-        key={`${contact.id}${index}`}
-        id={contact.id}
-        phone={formatPhoneNumber(contact.phoneNumber)}
-        email={contact.email}
-        address={contact.address[0].value.replace(
-          config.formRegExp.unwrapHtml,
-          ' '
-        )}
-        showAvatar={false}
-        deleteHandler={() => contactDeleteHandler(contact._id)}
-        editHandler={() => {
-          dispatch(push(`/contacts/${contact._id}`));
-        }}
-      />
-    ))
-    : null;
+  const contactItems = map(contacts, (contact, index) => (
+    <TableContainerRow
+      key={`${contact.id}${index}`}
+      id={contact.id}
+      phone={formatPhoneNumber(contact.phoneNumber)}
+      email={contact.email}
+      address={contact.address[0].value.replace(
+        config.formRegExp.unwrapHtml,
+        ' '
+      )}
+      showAvatar={false}
+      deleteHandler={() => contactDeleteHandler(contact._id)}
+      editHandler={() => {
+        dispatch(push(`/contacts/${contact._id}`));
+      }}
+    />
+  ));
 
   if (loading) {
     return <LoadingBar />;
@@ -115,19 +104,12 @@ const ContactsPage = () => {
         </Button>
       </div>
       <TableContainerGenerator
+        pagination
+        count={itemsCount}
         id='contactTable'
         tableTitles={tableTitles}
         tableItems={contactItems}
       />
-      <div className={commonStyles.pagination}>
-        <Pagination
-          count={contactPagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={contactsCurrentPage + 1}
-          onChange={changePageHandler}
-        />
-      </div>
     </div>
   );
 };

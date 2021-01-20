@@ -1,9 +1,6 @@
 import {
   contact,
   contactId,
-  contactsPagesCount,
-  contactsPerPage,
-  contactsCurrentPage,
   initialState,
   updatedContact
 } from './contact.variables';
@@ -12,9 +9,6 @@ import {
   setContactsLoading,
   setContact,
   setContactsError,
-  setContactsPerPage,
-  setContactsCurrentPage,
-  setContactsPagesCount,
   addContactInStore,
   deleteContactInStore,
   updateContactInStore
@@ -79,45 +73,6 @@ describe('Contacts reducer tests', () => {
     ).toEqual({
       ...initialState,
       contacts: initialState.contacts.filter((el) => el._id !== contactId)
-    });
-  });
-
-  it('Should set contacts current page', () => {
-    expect(
-      contactsReducer(initialState, setContactsCurrentPage(contactsCurrentPage))
-    ).toEqual({
-      ...initialState,
-      pagination: {
-        contactPagesCount: initialState.pagination.contactPagesCount,
-        contactsCurrentPage: contactsCurrentPage - 1,
-        contactsPerPage: initialState.pagination.contactsPerPage
-      }
-    });
-  });
-
-  it('Should set contacts pages count', () => {
-    expect(
-      contactsReducer(initialState, setContactsPagesCount(contactsPagesCount))
-    ).toEqual({
-      ...initialState,
-      pagination: {
-        contactPagesCount: contactsPagesCount,
-        contactsCurrentPage: initialState.pagination.contactsCurrentPage,
-        contactsPerPage: initialState.pagination.contactsPerPage
-      }
-    });
-  });
-
-  it('Should set number of contacts per page', () => {
-    expect(
-      contactsReducer(initialState, setContactsPerPage(contactsPerPage))
-    ).toEqual({
-      ...initialState,
-      pagination: {
-        contactPagesCount: initialState.pagination.contactPagesCount,
-        contactsCurrentPage: initialState.pagination.contactsCurrentPage,
-        contactsPerPage
-      }
     });
   });
 });

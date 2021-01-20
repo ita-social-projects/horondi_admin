@@ -10,6 +10,7 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import AdminTab from './components/admin-tab';
 import UserTab from './components/user-tab';
 import useUsersTabs from '../../hooks/user/use-users-tabs';
+import { selectUsersAndTable } from '../../redux/selectors/users.selectors';
 
 const { REMOVE_USER_MESSAGE } = config.messages;
 const userTabNames = config.tabNames.users;
@@ -18,20 +19,23 @@ const UsersPage = () => {
   const common = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, filters, sort, currentPage, rowsPerPage } = useSelector(
-    ({ Users, Table: { pagination } }) => ({
-      list: Users.list,
-      filters: Users.filters,
-      sort: Users.sort,
-      currentPage: pagination.currentPage,
-      rowsPerPage: pagination.rowsPerPage
-    })
+  const { list, filter, sort, currentPage, rowsPerPage } = useSelector(
+    selectUsersAndTable
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch, filters, sort, currentPage, rowsPerPage]);
+    dispatch(
+      getUsers({
+        filter,
+        pagination: {
+          skip: currentPage * rowsPerPage,
+          limit: rowsPerPage
+        },
+        sort
+      })
+    );
+  }, [dispatch, filter, sort, currentPage, rowsPerPage]);
 
   const userDeleteHandler = (id) => {
     const removeUser = () => {

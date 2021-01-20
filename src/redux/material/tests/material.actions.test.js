@@ -5,9 +5,6 @@ import {
   getMaterials,
   setMaterialError,
   setMaterialLoading,
-  setMaterialsCurrentPage,
-  setMaterialsPagesCount,
-  setMaterialsPerPage,
   addMaterial,
   updateMaterial,
   deleteMaterial,
@@ -24,9 +21,6 @@ import {
   SET_MATERIAL,
   SET_MATERIAL_LOADING,
   SET_MATERIAL_ERROR,
-  SET_MATERIALS_CURRENT_PAGE,
-  SET_MATERIALS_PAGES_COUNT,
-  SET_MATERIALS_PER_PAGE,
   ADD_MATERIAL,
   UPDATE_MATERIAL,
   DELETE_MATERIAL,
@@ -75,24 +69,7 @@ describe('material actions tests', () => {
       payload: true
     });
   });
-  it('should set materials current page', () => {
-    expect(setMaterialsCurrentPage(11)).toEqual({
-      type: SET_MATERIALS_CURRENT_PAGE,
-      payload: 11
-    });
-  });
-  it('should set materials pages count', () => {
-    expect(setMaterialsPagesCount(11)).toEqual({
-      type: SET_MATERIALS_PAGES_COUNT,
-      payload: 11
-    });
-  });
-  it('should set materials per page', () => {
-    expect(setMaterialsPerPage(11)).toEqual({
-      type: SET_MATERIALS_PER_PAGE,
-      payload: 11
-    });
-  });
+
   it('should add material', () => {
     expect(addMaterial(mockMaterial)).toEqual({
       type: ADD_MATERIAL,

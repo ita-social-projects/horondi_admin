@@ -8,9 +8,6 @@ import {
   setContact,
   getContact,
   setContactsError,
-  setContactsPerPage,
-  setContactsCurrentPage,
-  setContactsPagesCount,
   addContactInStore,
   deleteContactInStore,
   updateContactInStore
@@ -25,9 +22,6 @@ import {
   SET_CONTACT,
   UPDATE_CONTACT,
   SET_CONTACTS_ERROR,
-  SET_CONTACTS_CURRENT_PAGE,
-  SET_CONTACTS_PER_PAGE,
-  SET_CONTACTS_PAGES_COUNT,
   ADD_CONTACT_IN_STORE,
   DELETE_CONTACT_IN_STORE,
   UPDATE_CONTACT_IN_STORE
@@ -36,10 +30,7 @@ import {
   contact,
   contactId as id,
   updatedContact,
-  mapImages,
-  contactsPagesCount,
-  contactsPerPage,
-  contactsCurrentPage
+  mapImages
 } from './contact.variables';
 
 describe('Contact actions tests', () => {
@@ -106,27 +97,6 @@ describe('Contact actions tests', () => {
     expect(deleteContact(contactToDelete)).toEqual({
       type: DELETE_CONTACT,
       payload: contactToDelete
-    });
-  });
-
-  it('Should set contacts current page', () => {
-    expect(setContactsCurrentPage(contactsCurrentPage)).toEqual({
-      type: SET_CONTACTS_CURRENT_PAGE,
-      payload: contactsCurrentPage
-    });
-  });
-
-  it('Should set number of contacts per page', () => {
-    expect(setContactsPerPage(contactsPerPage)).toEqual({
-      type: SET_CONTACTS_PER_PAGE,
-      payload: contactsPerPage
-    });
-  });
-
-  it('Should set contact pages count', () => {
-    expect(setContactsPagesCount(contactsPagesCount)).toEqual({
-      type: SET_CONTACTS_PAGES_COUNT,
-      payload: contactsPagesCount
     });
   });
 

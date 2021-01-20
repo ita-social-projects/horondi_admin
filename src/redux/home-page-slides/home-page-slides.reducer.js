@@ -5,10 +5,7 @@ import {
   SET_SLIDE_ERROR,
   SET_SLIDE_LOADING,
   SET_SLIDES,
-  SET_SLIDES_CURRENT_PAGE,
-  SET_DRUG_AND_DROP_SLIDES,
-  SET_SLIDES_PAGES_COUNT,
-  SET_SLIDES_PER_PAGE
+  SET_DRUG_AND_DROP_SLIDES
 } from './home-page-slides.types';
 
 export const initialState = {
@@ -18,11 +15,6 @@ export const initialState = {
   slide: null,
   slideLoading: false,
   slideError: null,
-  pagination: {
-    currentPage: 0,
-    slidesPerPage: 4,
-    pagesCount: 1
-  },
   editStatus: false
 };
 
@@ -52,30 +44,6 @@ const slideReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       slideError: action.payload
-    };
-  case SET_SLIDES_CURRENT_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        currentPage: action.payload - 1
-      }
-    };
-  case SET_SLIDES_PER_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        slidesPerPage: action.payload
-      }
-    };
-  case SET_SLIDES_PAGES_COUNT:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        pagesCount: action.payload
-      }
     };
   case SET_AVAILABLE_SLIDES:
     return {
