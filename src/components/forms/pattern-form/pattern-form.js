@@ -2,21 +2,12 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  Paper,
-  TextField,
-  Grid,
-  Tab,
-  AppBar,
-  Tabs,
-  Avatar
-} from '@material-ui/core';
+import { Paper, TextField, Grid, Avatar } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
 import usePatternHandlers from '../../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
-import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
 import {
   addPattern,
@@ -29,58 +20,59 @@ import {
   setSnackBarSeverity,
   setSnackBarStatus
 } from '../../../redux/snackbar/snackbar.actions';
+import LanguagePanel from '../language-panel';
+
+const map = require('lodash/map');
 
 const {
   PATTERN_VALIDATION_ERROR,
   PATTERN_ERROR_MESSAGE,
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
-  PHOTO_NOT_PROVIDED
+  PHOTO_NOT_PROVIDED,
+  PATTERN_EN_NAME_MESSAGE,
+  PATTERN_UA_NAME_MESSAGE
 } = config.patternErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
-const { languages } = config;
+const {
+  languages,
+  formRegExp: { enNameCreation, uaNameCreation, patternMaterial }
+} = config;
 
-const labels = config.labels.pattern.form;
+const { patternDescription, patternName } = config.labels.pattern;
 
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
-    tabsValue,
-    handleTabsChange,
     createPattern,
     setUpload,
     upload,
     patternImage,
     setPatternImage
   } = usePatternHandlers();
-  const languageTabs =
-    languages.length > 0
-      ? languages.map((lang) => (
-        <Tab label={lang} data-cy={`${lang}-tab`} key={lang} />
-      ))
-      : null;
 
   const patternValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
+      .required(PATTERN_ERROR_MESSAGE)
+      .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
     enName: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
+      .required(PATTERN_ERROR_MESSAGE)
+      .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
     uaDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
+      .required(PATTERN_ERROR_MESSAGE)
+      .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
     uaName: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE),
+      .required(PATTERN_ERROR_MESSAGE)
+      .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
     material: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
-      .matches(
-        config.formRegExp.patternMaterial,
-        PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY
-      )
+      .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(PATTERN_ERROR_MESSAGE)
   });
 
@@ -157,6 +149,18 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   };
 
+  const inputs = [
+    { label: patternName, name: 'name' },
+    { label: patternDescription, name: 'description' }
+  ];
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -192,62 +196,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
             )}
           </Paper>
         </Grid>
-        <AppBar position='static'>
-          <Tabs
-            className={styles.tabs}
-            value={tabsValue}
-            onChange={handleTabsChange}
-            aria-label='simple tabs example'
-          >
-            {languageTabs}
-          </Tabs>
-        </AppBar>
-        {languages.map((lang, index) => (
-          <TabPanel key={index} value={tabsValue} index={index}>
-            <Paper className={styles.patternItemUpdate}>
-              <TextField
-                data-cy={`${lang}-name`}
-                id={`${lang}Name`}
-                className={styles.textField}
-                variant='outlined'
-                label={labels.name[index].value}
-                multiline
-                value={values[`${lang}Name`]}
-                onChange={handleChange}
-                error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-              />
-              {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-                <div
-                  data-cy={`${lang}-name-error`}
-                  className={styles.inputError}
-                >
-                  {errors[`${lang}Name`]}
-                </div>
-              )}
-              <TextField
-                data-cy={`${lang}-description`}
-                id={`${lang}Description`}
-                className={styles.textField}
-                variant='outlined'
-                label={labels.description[index].value}
-                multiline
-                value={values[`${lang}Description`]}
-                onChange={handleChange}
-                error={
-                  touched[`${lang}Description`] &&
-                  !!errors[`${lang}Description`]
-                }
-              />
-              {touched[`${lang}Description`] && errors[`${lang}Description`] && (
-                <div
-                  data-cy={`${lang}-description-error`}
-                  className={styles.inputError}
-                >
-                  {errors[`${lang}Description`]}
-                </div>
-              )}
-            </Paper>
-          </TabPanel>
+        {map(languages, (lang) => (
+          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
         <BackButton />
         <SaveButton

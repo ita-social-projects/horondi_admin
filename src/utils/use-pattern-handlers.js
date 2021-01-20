@@ -5,13 +5,8 @@ const { languages } = config;
 
 const usePatternHandlers = () => {
   const [patternImage, setPatternImage] = useState('');
-  const [tabsValue, setTabsValue] = useState(0);
   const [upload, setUpload] = useState({});
   const [imageName, setImageName] = useState('');
-
-  const handleTabsChange = (event, newValue) => {
-    setTabsValue(newValue);
-  };
 
   const createPattern = (values) => {
     const newPattern = {
@@ -46,9 +41,6 @@ const usePatternHandlers = () => {
   return {
     patternImage,
     setPatternImage,
-    tabsValue,
-    setTabsValue,
-    handleTabsChange,
     createPattern,
     upload,
     setUpload,
