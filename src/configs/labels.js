@@ -51,10 +51,6 @@ const labels = {
       ua: 'Опис гобелену',
       en: 'Pattern description'
     }
-    // form: {
-    //   name: mapToLanguages("І'мя", 'Name'),
-    //   description: mapToLanguages('Опис', 'Description')
-    // }
   },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
