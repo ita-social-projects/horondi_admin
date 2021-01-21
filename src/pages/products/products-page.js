@@ -108,8 +108,8 @@ const ProductsPage = () => {
           image={`${imagePrefix}${images.primary.small}`}
           name={name[0].value}
           category={category.name[0].value}
-          model={model[0].value}
-          pattern={pattern[0].value}
+          model={model.name[0].value}
+          pattern={pattern.name[0].value}
           price={Math.round(basePrice[0].value / 100)}
           rate={rate.toFixed(2)}
           purchasedCount={purchasedCount}

@@ -41,7 +41,7 @@ export default function useProductSpecies() {
   );
 
   const patternsNames = useMemo(
-    () => [...new Set(filterData.map(({ pattern }) => pattern[0].value))],
+    () => [...new Set(filterData.map(({ pattern }) => pattern.name[0].value))],
     [filterData]
   );
 
@@ -49,20 +49,22 @@ export default function useProductSpecies() {
     () =>
       patternsNames.map(
         (item) =>
-          filterData.find(({ pattern }) => pattern[0].value === item).pattern
+          filterData.find(({ pattern }) => pattern.name[0].value === item)
+            .pattern
       ),
     [filterData, patternsNames]
   );
 
   const modelNames = useMemo(
-    () => [...new Set(filterData.map(({ model }) => model[0].value))],
+    () => [...new Set(filterData.map(({ model }) => model.name[0].value))],
     [filterData]
   );
 
   const models = useMemo(
     () =>
       modelNames.map(
-        (item) => filterData.find(({ model }) => model[0].value === item).model
+        (item) =>
+          filterData.find(({ model }) => model.name[0].value === item).model
       ),
     [filterData, modelNames]
   );
