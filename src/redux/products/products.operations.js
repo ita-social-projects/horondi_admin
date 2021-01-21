@@ -47,7 +47,9 @@ const getAllProducts = async (productsState, tableState) => {
               value
             }
             model {
-              value
+              name {
+                value
+              }
             }
             rate
             images {
@@ -69,8 +71,10 @@ const getAllProducts = async (productsState, tableState) => {
               }
             }
             pattern {
-              lang
-              value
+              name {
+                lang
+                value
+              }
             }
             category {
               _id
@@ -110,14 +114,7 @@ const getAllFilters = async () => {
         getProducts {
           items {
             colors {
-              available
-              code
-              images {
-                medium
-                large
-                small
-                thumbnail
-              }
+              colorHex
               name {
                 lang
                 value
@@ -131,11 +128,15 @@ const getAllFilters = async () => {
               value
             }
             model {
-              value
+              name {
+                value
+              }
             }
             pattern {
-              lang
-              value
+              name {
+                lang
+                value
+              }
             }
             category {
               _id
