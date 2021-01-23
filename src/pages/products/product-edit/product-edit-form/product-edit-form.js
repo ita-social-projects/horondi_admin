@@ -58,9 +58,9 @@ const ProductEditForm = () => {
 
   const formikSpeciesValues = {
     category: product.category._id,
-    model: product.model[0].value,
-    pattern: product.pattern[0].value,
-    colors: product.colors[0].simpleName[0].value
+    model: product.model.name[0].value,
+    pattern: product.pattern.name[0].value,
+    strapLengthInCm: product.strapLengthInCm
   };
 
   const formikPriceValue = {
@@ -71,7 +71,6 @@ const ProductEditForm = () => {
 
   const {
     createProductInfo,
-    getColorsToSend,
     getPatternToSend,
     getModelToSend,
     colors: productColors,
@@ -135,20 +134,20 @@ const ProductEditForm = () => {
   ]);
 
   const onSubmit = (formValues) => {
-    const { colors, pattern, model, category, basePrice } = formValues;
+    const { strapLengthInCm, pattern, model, category, basePrice } = formValues;
 
     const productInfo = createProductInfo(formValues);
     dispatch(
       updateProduct({
         product: {
           ...productInfo,
-          colors: getColorsToSend(colors),
-          pattern: getPatternToSend(pattern),
+          pattern: getPatternToSend(pattern)._id,
           model: getModelToSend(model)._id,
           images: product.images,
           options,
           category,
-          basePrice
+          basePrice,
+          strapLengthInCm
         },
         id: product._id
       })
@@ -231,19 +230,17 @@ const ProductEditForm = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={7} xl={9}>
-          <Paper className={styles.paper}>
-            <ProductInfoContainer
-              shouldValidate={shouldValidate}
-              values={values}
-              errors={errors}
-              touched={touched}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              handleSubmit={handleSubmit}
-              toggleFieldsChanged={toggleFieldsChanged}
-              setFieldValue={setFieldValue}
-            />
-          </Paper>
+          <ProductInfoContainer
+            shouldValidate={shouldValidate}
+            values={values}
+            errors={errors}
+            touched={touched}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            handleSubmit={handleSubmit}
+            toggleFieldsChanged={toggleFieldsChanged}
+            setFieldValue={setFieldValue}
+          />
         </Grid>
         <Grid item xs={12}>
           <Paper className={styles.paper}>

@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-const selectColorValue = ({ colors }) => colors[0].simpleName[0].value;
-
 export default function useProductSpecies() {
   const filterData = useSelector(({ Products }) => Products.filterData);
 
@@ -22,22 +20,6 @@ export default function useProductSpecies() {
           ).category
       ),
     [filterData, categoriesNames]
-  );
-
-  const colorsNames = useMemo(
-    () => [...new Set(filterData.map(selectColorValue))],
-    [filterData]
-  );
-
-  const allColors = useMemo(
-    () =>
-      colorsNames.map(
-        (color) =>
-          filterData.find(
-            ({ colors }) => colors[0].simpleName[0].value === color
-          ).colors
-      ),
-    [filterData, colorsNames]
   );
 
   const patternsNames = useMemo(
@@ -70,8 +52,6 @@ export default function useProductSpecies() {
   );
 
   return {
-    colors: allColors,
-    colorsNames,
     categories,
     categoriesNames,
     models,

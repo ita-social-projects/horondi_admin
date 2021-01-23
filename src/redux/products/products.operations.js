@@ -237,104 +237,111 @@ const getModelsByCategory = async (payload) => {
 };
 
 const productQuery = `
-    ... on Product {
-            _id
-            category {
-              _id
-              name {
-                lang
-                value
-              }
-            } 
-            model {
-              value
-            }
-            name {
-              lang
-              value
-            }
-            description {
-              lang
-              value
-            }
-            mainMaterial {
-              lang
-              value
-            }
-            innerMaterial {
-              lang
-              value
-            }
-            strapLengthInCm
-            images {
-              primary {
-                large
-                medium
-                small
-                thumbnail
-              }
-              additional {
-                large
-                medium
-                small
-                thumbnail
-              }
-            }
-            colors {
-              simpleName {
-                lang
-                value
-              }
-            }
-            pattern {
-              lang
-              value
-            }
-            closure {
-              lang
-              value
-            }
-            basePrice {
-              value
-              currency
-            }
-            options {
-              size {
-                name
-                heightInCm
-                widthInCm
-                depthInCm
-                volumeInLiters
-                available
-                additionalPrice {
-                  value
-                  currency
-                }
-              }
-              bottomMaterial {
-                name {
-                  lang
-                  value
-                }
-                available
-                additionalPrice {
-                  value
-                  currency
-                }
-              }
-              additions {
-                name {
-                  lang
-                  value
-                }
-                available
-                additionalPrice {
-                  value
-                  currency
-                }
-              }
-            }
-          }
+  ... on Product {
+    _id
+    category {
+      _id
+      name {
+        lang
+        value
+      }
+    } 
+    model {
+      name {value}
+    }
+    name {
+      lang
+      value
+    }
+    description {
+      lang
+      value
+    }
+    mainMaterial {
+      name {
+        lang
+        value
+      }
+    }
+    innerMaterial {
+      name {
+        lang
+        value
+      }
+    }
+    strapLengthInCm
+    images {
+      primary {
+        large
+        medium
+        small
+        thumbnail
+      }
+      additional {
+        large
+        medium
+        small
+        thumbnail
+      }
+    }
+    colors {
+      simpleName {
+        lang
+        value
+      }
+    }
+    pattern {
+      name {lang
+      value
+      }
+    }
+    closure {
+      name {
+      lang
+      value
+      }
+    }
+    basePrice {
+      value
+      currency
+    }
+    options {
+      size {
+        name
+        heightInCm
+        widthInCm
+        depthInCm
+        volumeInLiters
+        available
+        additionalPrice {
+          value
+          currency
+        }
+      }
+      bottomMaterial {
+        name {
+          lang
+          value
+        }
+        available
+        additionalPrice {
+          value
+          currency
+        }
+      }
+      additions {
+        name {
+          lang
+          value
+        }
+        available
+        additionalPrice {
+          value
+          currency
+        }
+      }
+    }
+  }
 `;
 
 const addProduct = async (state) => {

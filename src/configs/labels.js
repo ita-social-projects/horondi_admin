@@ -27,19 +27,19 @@ const labels = {
     show: 'Показати',
     defaultElement: 'За замовчуванням',
     availableForConstructor: 'Доступний для конструктора',
-    constructorBasic:'Основа',
-    constructorPattern:'Гобелен',
-    constructorFrontPocket:'Передня кишеня',
-    constructorBottom:'Низ',
-    constructorPhoto:'Фото для конструктора',
-    baseConstructorElementPrice:'Базова ціна',
+    constructorBasic: 'Основа',
+    constructorPattern: 'Гобелен',
+    constructorFrontPocket: 'Передня кишеня',
+    constructorBottom: 'Низ',
+    constructorPhoto: 'Фото для конструктора',
+    baseConstructorElementPrice: 'Базова ціна',
     constructorMaterial: 'Матеріал',
     constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
     showEnable: 'Так',
     showDisable: 'Ні',
-    availablePatternsForConstructor:'Доступні патерни для контсруктора',
+    availablePatternsForConstructor: 'Доступні патерни для контсруктора',
     constructorName: {
       ua: 'Назва елементу конструктора',
       en: 'Constructor element name'
@@ -114,34 +114,14 @@ const labels = {
     ],
     infoLabels: [
       {
-        label: mapToLanguages('Назва', 'Name'),
+        label: { ua: 'Назва', en: 'Name' },
         name: 'name',
         required: true
       },
       {
-        label: mapToLanguages('Основний матеріал', 'Primary material'),
-        name: 'mainMaterial',
-        required: true
-      },
-      {
-        label: mapToLanguages('Внутрішній матеріал', 'Inner material'),
-        name: 'innerMaterial',
-        required: false
-      },
-      {
-        label: mapToLanguages('Замок', 'Closure'),
-        name: 'closure',
-        required: false
-      },
-      {
-        label: mapToLanguages('Довжина лямок(см)', 'Strap length (cm)'),
-        name: 'strapLengthInCm',
-        required: false
-      },
-      {
-        label: mapToLanguages('Опис', 'Description'),
+        label: { ua: 'Опис', en: 'Description' },
         name: 'description',
-        required: false
+        isEditor: true
       }
     ],
     selectsLabels: [
@@ -158,15 +138,15 @@ const labels = {
         required: true
       },
       {
-        label: 'Колір ',
-        name: 'colors',
+        label: 'Гобелен ',
+        name: 'pattern',
         type: 'select',
         required: true
       },
       {
-        label: 'Гобелен ',
-        name: 'pattern',
-        type: 'select',
+        label: 'Довжина лямок(см)',
+        name: 'strapLengthInCm',
+        type: 'number',
         required: true
       }
     ],
@@ -346,6 +326,6 @@ const labels = {
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
-  },
+  }
 };
 export default labels;

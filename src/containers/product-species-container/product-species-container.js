@@ -18,7 +18,6 @@ const { selectsLabels } = config.labels.product;
 const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations;
 
 const ProductSpeciesContainer = ({
-  colors,
   patterns,
   models,
   values,
@@ -49,26 +48,16 @@ const ProductSpeciesContainer = ({
     [categories]
   );
 
-  const colorsOptions = useMemo(
-    () =>
-      colors.map(([{ simpleName }]) => (
-        <MenuItem value={simpleName[0].value} key={simpleName[1].value}>
-          {simpleName[0].value}
-        </MenuItem>
-      )),
-    [colors]
-  );
-
   const patternsOptions = useMemo(
     () =>
       patterns.map((pattern) => (
-        <MenuItem value={pattern[0].value} key={pattern[1].value}>
-          {pattern[0].value}
+        <MenuItem value={pattern.name[0].value} key={pattern.name[1].value}>
+          {pattern.name[0].value}
         </MenuItem>
       )),
     [patterns]
   );
-
+  console.log(modelsForSelectedCategory);
   const modelsOptions = useMemo(
     () =>
       (modelsForSelectedCategory.length
@@ -77,7 +66,7 @@ const ProductSpeciesContainer = ({
       ).map((model) => {
         const value = modelsForSelectedCategory.length
           ? model.name[0].value
-          : model[0].value;
+          : '';
 
         return (
           <MenuItem value={value} key={value}>
@@ -88,12 +77,7 @@ const ProductSpeciesContainer = ({
     [modelsForSelectedCategory, models]
   );
 
-  const options = [
-    categoriesOptions,
-    modelsOptions,
-    colorsOptions,
-    patternsOptions
-  ];
+  const options = [categoriesOptions, modelsOptions, patternsOptions];
 
   const speciesErrors = useMemo(() => {
     const optionsNames = selectsLabels.map(({ name }) => name);
@@ -154,7 +138,6 @@ const ProductSpeciesContainer = ({
 };
 
 ProductSpeciesContainer.propTypes = {
-  colors: PropTypes.arrayOf(PropTypes.array).isRequired,
   patterns: PropTypes.arrayOf(PropTypes.array).isRequired,
   models: PropTypes.arrayOf(PropTypes.array).isRequired,
   values: PropTypes.objectOf(

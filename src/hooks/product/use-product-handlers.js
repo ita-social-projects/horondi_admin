@@ -34,8 +34,6 @@ const useProductHandlers = () => {
   const {
     categoriesNames,
     categories,
-    colorsNames,
-    colors,
     modelNames,
     models,
     patternsNames,
@@ -47,7 +45,7 @@ const useProductHandlers = () => {
       filterData.length
         ? filterData
           .find(selectOptionsLength)
-          .options.find(selectAdditionsLength).additions
+          ?.options?.find(selectAdditionsLength)?.additions
         : null,
     [filterData]
   );
@@ -104,11 +102,8 @@ const useProductHandlers = () => {
     });
   }, [sizeOptions, materialsOptions, additions, selectedOptions.additions]);
 
-  const getColorsToSend = (color) =>
-    colors.find((item) => item[0].simpleName[0].value === color);
-
   const getPatternToSend = (pattern) =>
-    patterns.find((item) => pattern === item[0].value);
+    patterns.find((item) => pattern === item.name[0].value);
 
   const getModelToSend = (model) =>
     modelsForSelectedCategory.find(({ name }) => name[0].value === model);
@@ -118,25 +113,10 @@ const useProductHandlers = () => {
       { lang: languages[0], value: values['ua-name'] },
       { lang: languages[1], value: values['en-name'] }
     ],
-    mainMaterial: [
-      { lang: languages[0], value: values['ua-mainMaterial'] },
-      { lang: languages[1], value: values['en-mainMaterial'] }
-    ],
-    innerMaterial: [
-      { lang: languages[0], value: values['ua-innerMaterial'] },
-      { lang: languages[1], value: values['en-innerMaterial'] }
-    ],
-    closure: [
-      { lang: languages[0], value: values['ua-closure'] },
-      { lang: languages[1], value: values['en-closure'] }
-    ],
     description: [
       { lang: languages[0], value: values['ua-description'] },
       { lang: languages[1], value: values['en-description'] }
-    ],
-    strapLengthInCm: values.strapLengthInCm
-      ? values.strapLengthInCm
-      : Number(values.strapLengthInCm)
+    ]
   });
 
   const getSelectedCategory = useCallback(
@@ -147,8 +127,6 @@ const useProductHandlers = () => {
   return {
     models,
     modelNames,
-    colors,
-    colorsNames,
     categories,
     categoriesNames,
     patterns,
@@ -162,7 +140,6 @@ const useProductHandlers = () => {
     additionalImages,
     setAdditionalImages,
     createProductInfo,
-    getColorsToSend,
     getModelToSend,
     getPatternToSend,
     getSelectedCategory
