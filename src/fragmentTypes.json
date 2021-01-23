@@ -84,6 +84,237 @@
             "name": "Error"
           }
         ]
+      },
+      {
+        "kind": "UNION",
+        "name": "BusinessTextResult",
+        "possibleTypes": [
+          {
+            "name": "BusinessText"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "LogicalResult",
+        "possibleTypes": [
+          {
+            "name": "SuccessfulResponse"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ModelResult",
+        "possibleTypes": [
+          {
+            "name": "Model"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ContactResult",
+        "possibleTypes": [
+          {
+            "name": "Contact"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "OrderResult",
+        "possibleTypes": [
+          {
+            "name": "Order"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "UserResult",
+        "possibleTypes": [
+          {
+            "name": "User"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "EmailQuestionResult",
+        "possibleTypes": [
+          {
+            "name": "EmailQuestion"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "NovaPoshtaOrderResult",
+        "possibleTypes": [
+          {
+            "name": "NovaPoshtaOrder"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "HeaderResult",
+        "possibleTypes": [
+          {
+            "name": "Header"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "HomepageImagesResult",
+        "possibleTypes": [
+          {
+            "name": "HomePageImages"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "HomePageSlideResult",
+        "possibleTypes": [
+          {
+            "name": "HomePageSlide"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "TokenResult",
+        "possibleTypes": [
+          {
+            "name": "Token"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ClosureResult",
+        "possibleTypes": [
+          {
+            "name": "Closure"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "SizeResult",
+        "possibleTypes": [
+          {
+            "name": "Size"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ColorResult",
+        "possibleTypes": [
+          {
+            "name": "Color"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ColorDeletingResult",
+        "possibleTypes": [
+          {
+            "name": "Color"
+          },
+          {
+            "name": "Materials"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ConstructorBasicResult",
+        "possibleTypes": [
+          {
+            "name": "ConstructorBasic"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ConstructorFrontPocketResult",
+        "possibleTypes": [
+          {
+            "name": "ConstructorFrontPocket"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "ConstructorBottomResult",
+        "possibleTypes": [
+          {
+            "name": "ConstructorBottom"
+          },
+          {
+            "name": "Error"
+          }
+        ]
       }
     ]
   }
