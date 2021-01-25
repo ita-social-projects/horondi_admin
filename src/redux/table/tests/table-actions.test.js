@@ -1,7 +1,6 @@
 import {
   SET_TABLE_DENSE,
   SET_CURRENT_PAGE,
-  SET_PAGES_COUNT,
   SET_ROWS_PER_PAGE,
   SET_ITEMS_COUNT
 } from '../table.types';
@@ -9,7 +8,6 @@ import {
 import {
   setCurrentPage,
   setItemsCount,
-  setPagesCount,
   setRowsPerPage,
   setTableDense
 } from '../table.actions';
@@ -24,12 +22,6 @@ describe('table actions tests', () => {
   it('should set items count to 5', () => {
     expect(setItemsCount(5)).toEqual({
       type: SET_ITEMS_COUNT,
-      payload: 5
-    });
-  });
-  it('should set pages count to 5', () => {
-    expect(setPagesCount(5)).toEqual({
-      type: SET_PAGES_COUNT,
       payload: 5
     });
   });

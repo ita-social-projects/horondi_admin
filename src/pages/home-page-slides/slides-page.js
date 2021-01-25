@@ -2,15 +2,13 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Pagination } from '@material-ui/lab';
 import { push } from 'connected-react-router';
 import { useStyles } from './slides-page.styles';
 import { config } from '../../configs';
 import {
   deleteSlide,
   getAvailableSlides,
-  getSlides,
-  setSlidesCurrentPage
+  getSlides
 } from '../../redux/home-page-slides/home-page-slides.actions';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
@@ -20,6 +18,7 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import SlidesOrder from './slides-order';
 import { useCommonStyles } from '../common.styles';
+import { selectSlidesAndTable } from '../../redux/selectors/home-page-slides.selectors';
 
 const { REMOVE_SLIDE_MESSAGE } = config.messages;
 const { CREATE_SLIDE_TITLE } = config.buttonTitles;
@@ -38,30 +37,21 @@ const SlidesPage = () => {
   const {
     list,
     loading,
-    pagesCount,
-    currentPage,
-    slidesPerPage,
-    drugAndDropList
-  } = useSelector(({ Slides }) => ({
-    list: Slides.list,
-    loading: Slides.slideLoading,
-    pagesCount: Slides.pagination.pagesCount,
-    currentPage: Slides.pagination.currentPage,
-    slidesPerPage: Slides.pagination.slidesPerPage,
-    drugAndDropList: Slides.drugAndDropList,
-    editStatus: Slides.editStatus
-  }));
+    drugAndDropList,
+    itemsCount,
+    rowsPerPage,
+    currentPage
+  } = useSelector(selectSlidesAndTable);
 
   useEffect(() => {
     dispatch(getAvailableSlides());
     dispatch(
       getSlides({
-        limit: slidesPerPage,
-        skip: currentPage * slidesPerPage,
-        slidesPerPage
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage
       })
     );
-  }, [dispatch, slidesPerPage, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage]);
 
   const slideDeleteHandler = (id) => {
     const removeSlide = () => {
@@ -88,7 +78,6 @@ const SlidesPage = () => {
       />
     ))
     : null;
-  const changeHandler = (e, value) => dispatch(setSlidesCurrentPage(value));
 
   if (loading) {
     return <LoadingBar />;
@@ -113,18 +102,10 @@ const SlidesPage = () => {
       </div>
       <div className={styles.tableContainer}>
         <TableContainerGenerator
+          pagination
+          count={itemsCount}
           tableTitles={tableTitles}
           tableItems={slidesItems}
-        />
-      </div>
-      <div className={commonStyles.pagination}>
-        <Pagination
-          className={styles.pagination}
-          count={pagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage + 1}
-          onChange={changeHandler}
         />
       </div>
       <Paper elevation={3}>

@@ -8,28 +8,10 @@ import {
   SET_CONTACT,
   UPDATE_CONTACT,
   SET_CONTACTS_ERROR,
-  SET_CONTACTS_CURRENT_PAGE,
-  SET_CONTACTS_PER_PAGE,
-  SET_CONTACTS_PAGES_COUNT,
   ADD_CONTACT_IN_STORE,
   DELETE_CONTACT_IN_STORE,
   UPDATE_CONTACT_IN_STORE
 } from './contact.types';
-
-const setContactsCurrentPage = (payload) => ({
-  type: SET_CONTACTS_CURRENT_PAGE,
-  payload
-});
-
-const setContactsPerPage = (payload) => ({
-  type: SET_CONTACTS_PER_PAGE,
-  payload
-});
-
-const setContactsPagesCount = (payload) => ({
-  type: SET_CONTACTS_PAGES_COUNT,
-  payload
-});
 
 const setContacts = (contacts) => ({
   type: SET_CONTACTS,
@@ -104,9 +86,6 @@ export {
   setContact,
   getContact,
   setContactsError,
-  setContactsPerPage,
-  setContactsCurrentPage,
-  setContactsPagesCount,
   addContactInStore,
   deleteContactInStore,
   updateContactInStore

@@ -7,7 +7,6 @@ export const useStyles = makeStyles((theme) => {
     inputError,
     imageName,
     saveButton,
-    tabs,
     controlsBlock,
     attachFile,
     large,
@@ -19,7 +18,8 @@ export const useStyles = makeStyles((theme) => {
   } = formStyles(theme);
   return {
     patternItemUpdate: {
-      ...itemUpdate
+      ...itemUpdate,
+      padding: '10px'
     },
     patternDetails: {
       ...details
@@ -32,7 +32,6 @@ export const useStyles = makeStyles((theme) => {
     returnButton,
     attachFile,
     large,
-    tabs,
     imageUploadAvatar,
     controlsBlock
   };

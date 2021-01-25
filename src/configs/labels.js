@@ -3,6 +3,7 @@ import { mapToLanguages } from '../utils/map-languages';
 const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
+  goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
     guestUser: 'Гість'
@@ -27,19 +28,19 @@ const labels = {
     show: 'Показати',
     defaultElement: 'За замовчуванням',
     availableForConstructor: 'Доступний для конструктора',
-    constructorBasic:'Основа',
-    constructorPattern:'Гобелен',
-    constructorFrontPocket:'Передня кишеня',
-    constructorBottom:'Низ',
-    constructorPhoto:'Фото для конструктора',
-    baseConstructorElementPrice:'Базова ціна',
+    constructorBasic: 'Основа',
+    constructorPattern: 'Гобелен',
+    constructorFrontPocket: 'Передня кишеня',
+    constructorBottom: 'Низ',
+    constructorPhoto: 'Фото для конструктора',
+    baseConstructorElementPrice: 'Базова ціна',
     constructorMaterial: 'Матеріал',
     constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
     showEnable: 'Так',
     showDisable: 'Ні',
-    availablePatternsForConstructor:'Доступні патерни для контсруктора',
+    availablePatternsForConstructor: 'Доступні патерни для контсруктора',
     constructorName: {
       ua: 'Назва елементу конструктора',
       en: 'Constructor element name'
@@ -68,6 +69,14 @@ const labels = {
     form: {
       name: mapToLanguages("І'мя", 'Name'),
       description: mapToLanguages('Опис', 'Description')
+    },
+    patternName: {
+      ua: 'Назва гобелену',
+      en: 'Pattern name'
+    },
+    patternDescription: {
+      ua: 'Опис гобелену',
+      en: 'Pattern description'
     }
   },
   material: {
@@ -346,6 +355,6 @@ const labels = {
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
-  },
+  }
 };
 export default labels;

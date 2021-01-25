@@ -4,12 +4,17 @@ const mockModelState = {
   list: [],
   model: null,
   modelLoading: false,
-  modelError: null,
+  modelError: null
+};
+
+const mockTableState = {
+  dense: false,
   pagination: {
     currentPage: 0,
-    modelsPerPage: 6,
-    pagesCount: 1
-  }
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30]
+  },
+  itemsCount: 0
 };
 
 const mockSnackbarState = {
@@ -106,5 +111,6 @@ export {
   mockModelState,
   mockSnackbarState,
   pagesCount,
-  mockModelToUpdate
+  mockModelToUpdate,
+  mockTableState
 };

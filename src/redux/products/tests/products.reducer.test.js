@@ -178,7 +178,7 @@ describe('Test products reducers', () => {
 
   it('should clear products to send into state', () => {
     expect(
-      productsReducer(mockProductsToAddState, clearProductToSend([]))
+      productsReducer(mockProductsToAddState, clearProductToSend())
     ).toEqual({
       ...initialState,
       upload: [],

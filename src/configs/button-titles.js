@@ -53,5 +53,6 @@ const buttonTitles = {
   CREATE_CONSTRUCTOR_BASIC_TITLE: 'Додати основу',
   CREATE_CONSTRUCTOR_FRONT_POCKET_TITLE: 'Додати передню кишеню',
   CREATE_CONSTRUCTOR_BOTTOM_TITLE: 'Додати низ',
+  GO: 'Перейти'
 };
 export default buttonTitles;

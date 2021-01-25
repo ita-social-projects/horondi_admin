@@ -1,5 +1,5 @@
 import { expectSaga } from 'redux-saga-test-plan';
-import { call, select } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { combineReducers } from 'redux';
@@ -24,20 +24,21 @@ import {
   handleUsersError
 } from '../users.saga';
 
-import { selectUsersAndTable } from '../../selectors/users.selectors';
-
 import {
   mockUsersState,
   mockTableState,
   mockUsersList,
-  pageCount,
   statuses,
   adminInput,
   mockUser,
   mockAdmin,
   mockToken,
   mockError,
-  mockSnackarState
+  mockSnackarState,
+  mockPagination,
+  mockFilter,
+  mockSort,
+  mockPayload
 } from './users.variables';
 
 import {
@@ -49,7 +50,7 @@ import {
   updateUserLocally
 } from '../users.actions';
 
-import { setPagesCount, setItemsCount } from '../../table/table.actions';
+import { setItemsCount, updatePagination } from '../../table/table.actions';
 
 import Users from '../users.reducer';
 import Table from '../../table/table.reducer';
@@ -65,7 +66,7 @@ const {
 
 describe('Users saga test', () => {
   it('should load all users', () =>
-    expectSaga(handleUsersLoad)
+    expectSaga(handleUsersLoad, { payload: mockPayload })
       .withReducer(
         combineReducers({
           Users,
@@ -77,17 +78,9 @@ describe('Users saga test', () => {
         }
       )
       .provide([
-        [
-          select(selectUsersAndTable),
-          {
-            usersState: mockUsersState,
-            tableState: mockTableState
-          }
-        ],
-        [call(getAllUsers, mockUsersState, mockTableState), mockUsersList]
+        [call(getAllUsers, mockFilter, mockPagination, mockSort), mockUsersList]
       ])
       .put(setUsersLoading(true))
-      .put(setPagesCount(pageCount))
       .put(setItemsCount(mockUsersList.count))
       .put(setUsers(mockUsersList.items))
       .put(setUsersLoading(false))
@@ -98,21 +91,15 @@ describe('Users saga test', () => {
         },
         Table: {
           ...mockTableState,
-          itemsCount: mockUsersList.count,
-          pagination: {
-            ...mockTableState.pagination,
-            pagesCount: pageCount
-          }
+          itemsCount: mockUsersList.count
         }
       })
       .run()
       .then((res) => {
         const { allEffects: analysis } = res;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(5);
-        expect(analysisSelect).toHaveLength(1);
+        expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
       }));
 
@@ -152,6 +139,7 @@ describe('Users saga test', () => {
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
       .put(deleteUserLocally(mockUser._id))
+      .put(updatePagination())
       .put(setUsersLoading(false))
       .hasFinalState({
         Users: {
@@ -164,7 +152,7 @@ describe('Users saga test', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
       }));
 

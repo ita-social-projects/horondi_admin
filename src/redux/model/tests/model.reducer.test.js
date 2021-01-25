@@ -3,9 +3,6 @@ import {
   setModelLoading,
   setModel,
   setModelError,
-  setModelsCurrentPage,
-  setModelsPerPage,
-  setPagesCount,
   removeModelFromStore
 } from '../model.actions';
 
@@ -43,36 +40,6 @@ describe('Test model reducer', () => {
     expect(modelReducer(initialState, setModelError(mockError))).toEqual({
       ...initialState,
       modelError: mockError
-    });
-  });
-
-  it('should set models cuurent page into state', () => {
-    expect(modelReducer(initialState, setModelsCurrentPage(2))).toEqual({
-      ...initialState,
-      pagination: {
-        ...initialState.pagination,
-        currentPage: 1
-      }
-    });
-  });
-
-  it('should set models per page into state', () => {
-    expect(modelReducer(initialState, setModelsPerPage(2))).toEqual({
-      ...initialState,
-      pagination: {
-        ...initialState.pagination,
-        modelsPerPage: 2
-      }
-    });
-  });
-
-  it('should set models page count into state', () => {
-    expect(modelReducer(initialState, setPagesCount(2))).toEqual({
-      ...initialState,
-      pagination: {
-        ...initialState.pagination,
-        pagesCount: 2
-      }
     });
   });
 

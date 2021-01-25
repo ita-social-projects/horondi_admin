@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 import {
   removeSlideFromStore,
   setAvailableSlides,
@@ -7,8 +8,7 @@ import {
   setSlideError,
   setSlideLoading,
   setSlides,
-  setSlidesDrugAndDropList,
-  setSlidesPagesCount
+  setSlidesDrugAndDropList
 } from './home-page-slides.actions';
 import {
   createSlide,
@@ -44,9 +44,7 @@ export function* handleSlidesLoad({ payload }) {
   try {
     yield put(setSlideLoading(true));
     const slides = yield call(getAllSlides, payload.skip, payload.limit);
-    yield put(
-      setSlidesPagesCount(Math.ceil(slides.count / payload.slidesPerPage))
-    );
+    yield put(setItemsCount(slides.count));
     yield put(setSlides(slides.items));
     yield put(setSlideLoading(false));
   } catch (error) {
@@ -123,6 +121,7 @@ export function* handleSlideDelete({ payload }) {
     yield put(setSlideLoading(true));
     yield call(deleteSlide, payload);
     yield put(removeSlideFromStore(payload));
+    yield put(updatePagination());
     yield put(setSlideLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {

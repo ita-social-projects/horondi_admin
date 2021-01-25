@@ -25,7 +25,6 @@ export const initialState = {
   filters: initialFilters,
   tab: 0,
   user: null,
-  usersCount: null,
   userLoading: false,
   userError: null
 };

@@ -49,7 +49,6 @@ const mockProductsState = {
     sortByRate: 0,
     sortByPopularity: -1
   },
-  currentPage: 0,
   loading: false,
   filterData: [],
   upload: [],
@@ -65,7 +64,6 @@ const mockProductsState = {
   products: [],
   filesToDelete: [],
   primaryImageUpload: null,
-  productsPerPage: 9,
   productOptions: {
     sizes: [],
     bottomMaterials: []
@@ -77,7 +75,6 @@ const mockProductsState = {
     searchFilter: '',
     modelsFilter: []
   },
-  pagesCount: 1,
   productsError: null
 };
 

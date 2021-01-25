@@ -10,6 +10,10 @@ import {
   SET_BOUND_MATERIALS
 } from './color.types';
 
+export const selectColors = ({ Color }) => ({
+  colors: Color.list
+});
+
 export const initialState = {
   list: [],
   color: null,

@@ -3,21 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
-import { useStyles } from './model-page.styles';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
-import {
-  getModels,
-  deleteModel,
-  setModelsCurrentPage
-} from '../../redux/model/model.actions';
+import { getModels, deleteModel } from '../../redux/model/model.actions';
+
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
-import {selectModels} from '../../redux/selectors/model.selectors'
+import { selectModelAndTable } from '../../redux/selectors/model.selectors';
 
 const map = require('lodash/map');
 
@@ -28,36 +23,27 @@ const pathToModelAddPage = routes.pathToAddModel;
 const tableTitles = config.tableHeadRowTitles.models;
 const pageTitle = config.titles.modelPageTitles.mainPageTitle;
 const { IMG_URL } = config;
-const {
-  showEnable,
-  showDisable
-} = config.labels.model;
+const { showEnable, showDisable } = config.labels.model;
 
 const ModelPage = () => {
-  const styles = useStyles();
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-
-  const {
-    list,
-    loading,
-    pagesCount,
-    currentPage,
-    modelsPerPage
-  } = useSelector(selectModels);
+  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
+    selectModelAndTable
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
       getModels({
-        limit: modelsPerPage,
-        skip: currentPage * modelsPerPage,
-        modelsPerPage
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        rowsPerPage
       })
     );
-  }, [dispatch, modelsPerPage, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage]);
 
   const modelDeleteHandler = (id) => {
     const removeModel = () => {
@@ -67,28 +53,18 @@ const ModelPage = () => {
     openSuccessSnackbar(removeModel, MODEL_REMOVE_MESSAGE);
   };
 
-  const changeHandler = (e, value) => dispatch(setModelsCurrentPage(value));
-
   if (loading) {
     return <LoadingBar />;
   }
 
-  const modelItems = map( list, modelItem => (
+  const modelItems = map(list, (modelItem) => (
     <TableContainerRow
-      image={
-        modelItem.images
-          ? `${IMG_URL}${modelItem.images.thumbnail}`
-          : ''
-      }
+      image={modelItem.images ? `${IMG_URL}${modelItem.images.thumbnail}` : ''}
       key={modelItem._id}
       id={modelItem._id}
       name={modelItem.name[0].value}
       category={modelItem.category.name[0].value}
-      show={
-        modelItem.show
-          ? showEnable
-          : showDisable
-      }
+      show={modelItem.show ? showEnable : showDisable}
       priority={modelItem.priority}
       deleteHandler={() => modelDeleteHandler(modelItem._id)}
       editHandler={() => {
@@ -115,18 +91,10 @@ const ModelPage = () => {
       </div>
       <TableContainerGenerator
         data-cy='modelTable'
+        count={itemsCount}
         tableTitles={tableTitles}
         tableItems={modelItems}
       />
-      <div className={styles.paginationDiv}>
-        <Pagination
-          count={pagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage + 1}
-          onChange={changeHandler}
-        />
-      </div>
     </div>
   );
 };
