@@ -20,7 +20,6 @@ import {
   setMaterials,
   setMaterial,
   setMaterialError,
-  setMaterialsPagesCount,
   setMaterialLoading,
   removeMaterialFromStore,
   clearColors,
@@ -36,7 +35,6 @@ import {
   mockMaterials,
   mockMaterialState,
   mockMaterialsLoadPayload,
-  mockMaterialsPagesCount,
   mockColors,
   mockColorCode,
   mockColor,
@@ -45,7 +43,8 @@ import {
   mockColorToAdd,
   mockPayloadToDeleteColor,
   mockPayloadToUpdateMaterial,
-  mockError
+  mockError,
+  mockTableState
 } from './material.variables';
 
 import {
@@ -59,8 +58,10 @@ import {
   createMaterialColor,
   deleteMaterialColor
 } from '../material.operations';
+import { setItemsCount, updatePagination } from '../../table/table.actions';
 
 import Material from '../material.reducer';
+import Table from '../../table/table.reducer';
 
 import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
@@ -73,8 +74,9 @@ const {
 describe('Test material sagas', () => {
   it('should load all materials', () =>
     expectSaga(handleMaterialsLoad, { payload: mockMaterialsLoadPayload })
-      .withReducer(combineReducers({ Material }), {
-        Material: mockMaterialState
+      .withReducer(combineReducers({ Material, Table }), {
+        Material: mockMaterialState,
+        Table: mockTableState
       })
       .put(setMaterialLoading(true))
       .provide([
@@ -87,17 +89,17 @@ describe('Test material sagas', () => {
           mockMaterials
         ]
       ])
-      .put(setMaterialsPagesCount(mockMaterialsPagesCount))
+      .put(setItemsCount(mockMaterials.count))
       .put(setMaterials(mockMaterials.items))
       .put(setMaterialLoading(false))
       .hasFinalState({
         Material: {
           ...mockMaterialState,
-          pagination: {
-            ...mockMaterialState.pagination,
-            pagesCount: mockMaterialsPagesCount
-          },
           list: mockMaterials.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: mockMaterials.count
         }
       })
       .run()
@@ -252,6 +254,7 @@ describe('Test material sagas', () => {
       ])
       .put(setMaterialLoading(false))
       .put(removeMaterialFromStore(mockId))
+      .put(updatePagination())
       .hasFinalState({
         Material: {
           ...mockMaterialState,
@@ -263,7 +266,7 @@ describe('Test material sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
       }));
 

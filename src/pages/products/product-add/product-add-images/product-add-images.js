@@ -6,7 +6,7 @@ import { Box, Grid, Avatar } from '@material-ui/core';
 import { Image } from '@material-ui/icons';
 import { useStyles } from './product-add-images.styles';
 
-import StepperButtons from '../../../../components/stepper-control-buttons';
+import StepperButtons from '../../../../components/buttons/stepper-control-buttons';
 import { setFilesToUpload } from '../../../../redux/products/products.actions';
 
 import { productsTranslations } from '../../../../translations/product.translations';

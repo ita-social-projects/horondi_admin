@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { useStyles } from './header-details.styles';
 import LoadingBar from '../../../components/loading-bar';
-import HeaderForm from '../../../components/header-form';
+import HeaderForm from '../../../components/forms/header-form';
 import { getHeader } from '../../../redux/header/header.actions';
 
 const HeaderDetails = ({ match }) => {

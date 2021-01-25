@@ -1,11 +1,12 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
+import { setItemsCount, updatePagination } from '../table/table.actions';
 import {
   setPatterns,
   setPatternLoading,
   setPattern,
   setPatternError,
-  setPagesCount,
   removePatternFromStore
 } from './pattern.actions';
 
@@ -42,9 +43,7 @@ export function* handlePatternsLoad({ payload }) {
   try {
     yield put(setPatternLoading(true));
     const patterns = yield call(getAllPatterns, payload.skip, payload.limit);
-    yield put(
-      setPagesCount(Math.ceil(patterns.count / payload.patternsPerPage))
-    );
+    yield put(setItemsCount(patterns.count));
     yield put(setPatterns(patterns.items));
     yield put(setPatternLoading(false));
   } catch (error) {
@@ -79,6 +78,7 @@ export function* handlePatternDelete({ payload }) {
     yield put(setPatternLoading(true));
     yield call(deletePattern, payload);
     yield put(removePatternFromStore(payload));
+    yield put(updatePagination());
     yield put(setPatternLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {

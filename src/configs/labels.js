@@ -3,6 +3,7 @@ import { mapToLanguages } from '../utils/map-languages';
 const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
+  goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
     guestUser: 'Гість'
@@ -27,7 +28,10 @@ const labels = {
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
     categoryCode: 'Код категорії',
-    categoryName: 'Назва категорії'
+    categoryName: {
+      ua: 'Назва категорії',
+      en: 'Category name'
+    }
   },
   header: {
     name: mapToLanguages("І'мя", 'Name'),
@@ -40,9 +44,13 @@ const labels = {
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',
-    form: {
-      name: mapToLanguages("І'мя", 'Name'),
-      description: mapToLanguages('Опис', 'Description')
+    patternName: {
+      ua: 'Назва гобелену',
+      en: 'Pattern name'
+    },
+    patternDescription: {
+      ua: 'Опис гобелену',
+      en: 'Pattern description'
     }
   },
   material: {

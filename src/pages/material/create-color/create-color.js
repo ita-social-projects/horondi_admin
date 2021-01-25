@@ -264,6 +264,8 @@ function CreateColor({
             data-cy='open-dialog'
             type='submit'
             title={config.buttonTitles.CREATE_COLOR_TITLE}
+            values={values}
+            errors={errors}
           />
         </div>
       </form>

@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
-import StepperControlButtons from '../../../../components/stepper-control-buttons';
+import StepperControlButtons from '../../../../components/buttons/stepper-control-buttons';
 import { config } from '../../../../configs';
 import useProductValidation from '../../../../hooks/product/use-product-validation';
 import { setProductToSend } from '../../../../redux/products/products.actions';

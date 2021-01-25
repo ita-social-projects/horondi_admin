@@ -11,7 +11,14 @@ import { config } from '../../configs';
 import TablePaginator from '../table-pagination-container';
 import { selectTableDense } from '../../redux/selectors/table.selectors';
 
-const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
+const { maxItemsPerPage } = config;
+
+const TableContainerGenerator = ({
+  tableTitles,
+  tableItems,
+  count,
+  pagination
+}) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
   const classes = useStyles();
   const dense = useSelector(selectTableDense);
@@ -27,13 +34,14 @@ const TableContainerGenerator = ({ tableTitles, tableItems, pagination }) => {
           <TableBody id='table-body'>{tableItems}</TableBody>
         </Table>
       </TableContainer>
-      {pagination && <TablePaginator />}
+      {pagination && count > maxItemsPerPage && <TablePaginator />}
     </>
   );
 };
 
 TableContainerGenerator.propTypes = {
   pagination: PropTypes.bool,
+  count: PropTypes.number,
   tableTitles: PropTypes.arrayOf(PropTypes.string.isRequired),
   tableItems: PropTypes.arrayOf(PropTypes.shape(PropTypes.element.isRequired))
 };
@@ -41,7 +49,8 @@ TableContainerGenerator.propTypes = {
 TableContainerGenerator.defaultProps = {
   pagination: false,
   tableTitles: [],
-  tableItems: []
+  tableItems: [],
+  count: 0
 };
 
 export default TableContainerGenerator;

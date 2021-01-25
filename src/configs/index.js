@@ -13,19 +13,16 @@ import {
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
+  categoryErrorMessages,
   modelErrorMessages,
   headerErrorMessages,
   homePageSlideErrorMessages,
-  statsErrorMessages
+  statsErrorMessages,
+  paginationInputErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
-import {
-  newsPaginationPayload,
-  contactsPaginationPayload,
-  materialPaginationPayload
-} from './pagination';
 import titles from './titles';
 import { sort } from './sort';
 import languages from './languages';
@@ -160,6 +157,7 @@ export const config = {
     }
   },
   UAH: 'грн',
+  maxItemsPerPage: 10,
 
   buttonTitles,
   detailTitles,
@@ -174,18 +172,17 @@ export const config = {
   loginErrorMessages,
   colorErrorMessages,
   contactErrorMessages,
+  categoryErrorMessages,
   patternErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
-  newsPaginationPayload,
-  contactsPaginationPayload,
-  materialPaginationPayload,
   modelErrorMessages,
   headerErrorMessages,
   statsErrorMessages,
   homePageSlideErrorMessages,
-  sort
+  sort,
+  paginationInputErrorMessages
 };
 export const inputTypes = {
   button: 'button',

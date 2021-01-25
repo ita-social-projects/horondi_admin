@@ -1,11 +1,7 @@
 import React from 'react';
 
-import { IconButton } from '@material-ui/core';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
 import { useDispatch, useSelector } from 'react-redux';
+import Pagination from '@material-ui/lab/Pagination';
 import { useStyles } from './pagination-controller.styles';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import { selectTablePaginationCurrentRows } from '../../redux/selectors/table.selectors';
@@ -17,53 +13,15 @@ const PaginationController = () => {
     selectTablePaginationCurrentRows
   );
 
-  const handleFirstPageButtonClick = () => {
-    dispatch(setCurrentPage(0));
-  };
-
-  const handleBackButtonClick = () => {
-    dispatch(setCurrentPage(currentPage - 1));
-  };
-
-  const handleNextButtonClick = () => {
-    dispatch(setCurrentPage(currentPage + 1));
-  };
-
-  const handleLastPageButtonClick = () => {
-    dispatch(
-      setCurrentPage(Math.max(0, Math.ceil(itemsCount / rowsPerPage) - 1))
-    );
-  };
   return (
     <div className={styles.root}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={currentPage === 0}
-        aria-label='first page'
-      >
-        <FirstPageIcon />
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={currentPage === 0}
-        aria-label='previous page'
-      >
-        <KeyboardArrowLeft />
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={currentPage >= itemsCount / rowsPerPage - 1}
-        aria-label='next page'
-      >
-        <KeyboardArrowRight />
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={currentPage >= itemsCount / rowsPerPage - 1}
-        aria-label='last page'
-      >
-        <LastPageIcon />
-      </IconButton>
+      <Pagination
+        count={Math.ceil(itemsCount / rowsPerPage)}
+        page={currentPage + 1}
+        onChange={(e, page) => {
+          dispatch(setCurrentPage(page - 1));
+        }}
+      />
     </div>
   );
 };

@@ -39,7 +39,6 @@ const { priceLabel } = config.labels.product;
 const {
   DELETE_PRODUCT_MESSAGE,
   DELETE_PRODUCT_TITLE,
-  DELETE_PRODUCT_BTN,
   SAVE,
   PRODUCT_SPECIFICATION,
   PRODUCT_OPTIONS,
@@ -193,9 +192,8 @@ const ProductEditForm = () => {
     };
     openSuccessSnackbar(
       removeProduct,
-      DELETE_PRODUCT_TITLE,
       DELETE_PRODUCT_MESSAGE,
-      DELETE_PRODUCT_BTN
+      DELETE_PRODUCT_TITLE
     );
   };
 

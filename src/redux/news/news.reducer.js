@@ -2,22 +2,20 @@ import {
   SET_NEWS,
   SET_NEWS_LOADING,
   SET_ARTICLE,
-  SET_NEWS_ERROR,
-  SET_CURRENT_PAGE,
-  SET_NEWS_PER_PAGE,
-  SET_PAGES_COUNT
+  SET_NEWS_ERROR
 } from './news.types';
+
+export const selectNews = ({ News }) => ({
+  list: News.list,
+  loading: News.newsLoading,
+  newsArticle: News.newsArticle
+});
 
 export const initialState = {
   list: [],
   newsArticle: null,
   newsLoading: false,
-  newsError: null,
-  pagination: {
-    currentPage: 0,
-    newsPerPage: 6,
-    pagesCount: 1
-  }
+  newsError: null
 };
 
 const newsReducer = (state = initialState, action = {}) => {
@@ -41,30 +39,6 @@ const newsReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       newsError: action.payload
-    };
-  case SET_CURRENT_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        currentPage: action.payload - 1
-      }
-    };
-  case SET_NEWS_PER_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        newsPerPage: action.payload
-      }
-    };
-  case SET_PAGES_COUNT:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        pagesCount: action.payload
-      }
     };
   default:
     return state;

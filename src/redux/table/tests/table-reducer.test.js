@@ -1,7 +1,6 @@
 import {
   setCurrentPage,
   setItemsCount,
-  setPagesCount,
   setRowsPerPage,
   setTableDense
 } from '../table.actions';
@@ -27,15 +26,6 @@ describe('table reducer tests', () => {
       pagination: {
         ...initialState.pagination,
         rowsPerPage: 5
-      }
-    });
-  });
-  it('should set pages count to 5', () => {
-    expect(tableState(initialState, setPagesCount(5))).toEqual({
-      ...initialState,
-      pagination: {
-        ...initialState.pagination,
-        pagesCount: 5
       }
     });
   });

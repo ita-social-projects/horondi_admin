@@ -3,22 +3,20 @@ import {
   SET_PATTERN_LOADING,
   SET_PATTERN,
   SET_PATTERN_ERROR,
-  SET_PATTERNS_CURRENT_PAGE,
-  SET_PATTERNS_PER_PAGE,
-  SET_PATTERNS_PAGES_COUNT,
   REMOVE_PATTERN_FROM_STORE
 } from './pattern.types';
+
+export const selectPattern = ({ Pattern }) => ({
+  list: Pattern.list,
+  loading: Pattern.patternLoading,
+  pattern: Pattern.pattern
+});
 
 export const initialState = {
   list: [],
   pattern: null,
   patternLoading: false,
-  patternError: null,
-  pagination: {
-    currentPage: 0,
-    patternsPerPage: 6,
-    pagesCount: 1
-  }
+  patternError: null
 };
 
 const patternReducer = (state = initialState, action = {}) => {
@@ -42,30 +40,6 @@ const patternReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       patternError: action.payload
-    };
-  case SET_PATTERNS_CURRENT_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        currentPage: action.payload - 1
-      }
-    };
-  case SET_PATTERNS_PER_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        patternsPerPage: action.payload
-      }
-    };
-  case SET_PATTERNS_PAGES_COUNT:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        pagesCount: action.payload
-      }
     };
   case REMOVE_PATTERN_FROM_STORE:
     const patterns = state.list.filter(

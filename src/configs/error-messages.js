@@ -29,13 +29,20 @@ export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
-  PHOTO_NOT_PROVIDED: 'Додайте фото для гобелену'
+  PHOTO_NOT_PROVIDED: 'Додайте фото для гобелену',
+  PATTERN_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Мінімум 2 символи',
-  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім'
+  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CATEGORY_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  CATEGORY_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  CATEGORY_CODE_MESSAGE: 'Поле не може містити спеціальні символи'
 };
-
 export const headerErrorMessages = {
   HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
   HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
@@ -97,4 +104,10 @@ export const homePageSlideErrorMessages = {
   SLIDE_VALIDATION_ERROR: 'Мінімум 2 символи',
   SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
   SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+};
+
+export const paginationInputErrorMessages = {
+  MUST_BE_NUMBER: 'Тільки цифри',
+  MUST_BE_POSITIVE: 'Тільки більше нуля',
+  PAGE_NOT_FOUND: 'Сторінку не знайдено'
 };

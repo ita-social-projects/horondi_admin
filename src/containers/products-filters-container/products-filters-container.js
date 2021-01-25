@@ -84,6 +84,7 @@ const ProductsFiltersContainer = ({
       sm={6}
       md={6}
       lg={3}
+      container
       alignItems='center'
       className={styles.container}
     >

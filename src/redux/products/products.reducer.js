@@ -47,8 +47,6 @@ export const productModel = {
 
 export const initialState = {
   loading: false,
-  currentPage: 0,
-  productsPerPage: 9,
   sorting: {
     sortByPrice: 0,
     sortByRate: 0,
@@ -68,7 +66,6 @@ export const initialState = {
     model: ''
   },
   products: [],
-  pagesCount: 1,
   productsError: null,
   filesToDelete: [],
   upload: [],

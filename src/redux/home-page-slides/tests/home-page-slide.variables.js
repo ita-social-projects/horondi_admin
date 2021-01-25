@@ -13,6 +13,16 @@ const mockSlidesState = {
   editStatus: false
 };
 
+const mockTableState = {
+  dense: false,
+  pagination: {
+    currentPage: 0,
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30]
+  },
+  itemsCount: 0
+};
+
 const mockId = '5fa034049a59a906f0610e5c';
 
 const mockSlides = {
@@ -108,5 +118,6 @@ export {
   pageCount,
   mockSlidesState,
   mockSlideToAdd,
-  mockNumber
+  mockNumber,
+  mockTableState
 };

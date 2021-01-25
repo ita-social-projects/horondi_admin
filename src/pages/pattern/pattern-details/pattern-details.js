@@ -4,17 +4,15 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { useStyles } from './pattern-details.styles';
 import LoadingBar from '../../../components/loading-bar';
-import PatternForm from '../../../components/pattern-form';
+import PatternForm from '../../../components/forms/pattern-form';
 import { getPattern } from '../../../redux/pattern/pattern.actions';
+import { patternSelector } from '../../../redux/selectors/pattern.selectors';
 
 const PatternDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
-  const { loading, pattern } = useSelector(({ Pattern }) => ({
-    loading: Pattern.patternLoading,
-    pattern: Pattern.pattern
-  }));
+  const { loading, pattern } = useSelector(patternSelector);
   const styles = useStyles();
 
   useEffect(() => {
