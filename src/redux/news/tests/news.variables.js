@@ -84,16 +84,20 @@ const mockNews = {
 };
 
 const mockArticle = mockNews.items[0];
+const mockUpload = '';
 const skip = 0;
 const limit = 10;
+
+const mockAddNewsPayload = {
+  article: mockArticle,
+  upload: mockUpload
+};
 
 const mockNewsLoadPayload = {
   skip,
   limit,
   newsPerPage: 10
 };
-
-const pagesCount = Math.ceil(mockNews.count / mockNewsLoadPayload.newsPerPage);
 
 const statuses = {
   SUCCESS_ADD_STATUS: 'Успішно додано!',
@@ -113,10 +117,8 @@ export {
   mockNewsLoadPayload,
   mockArticle,
   mockFile,
-  pagesCount,
   statuses,
   mockError,
   mockTableState,
-  skip,
-  limit
+  mockAddNewsPayload
 };

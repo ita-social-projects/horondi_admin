@@ -27,7 +27,6 @@ import {
   mockMaterialState,
   mockMaterialsLoadPayload,
   statuses,
-  mockMaterialStateWithColors,
   mockPayloadToUpdateMaterial,
   mockError,
   mockTableState
@@ -65,6 +64,7 @@ describe('Test material sagas', () => {
         [
           call(
             getAllMaterials,
+            mockMaterialsLoadPayload.filter,
             mockMaterialsLoadPayload.skip,
             mockMaterialsLoadPayload.limit
           ),
@@ -120,7 +120,7 @@ describe('Test material sagas', () => {
   it('should add metarial', () =>
     expectSaga(handleAddMaterial, { payload: mockMaterial })
       .withReducer(combineReducers({ Material }), {
-        Material: mockMaterialStateWithColors
+        Material: mockMaterialState
       })
       .put(setMaterialLoading(true))
       .provide([
@@ -130,9 +130,8 @@ describe('Test material sagas', () => {
       .put(push('/materials'))
       .hasFinalState({
         Material: {
-          ...mockMaterialStateWithColors,
-          materialLoading: true,
-          colors: []
+          ...mockMaterialState,
+          materialLoading: true
         }
       })
       .run()
