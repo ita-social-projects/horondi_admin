@@ -21,8 +21,7 @@ import {
   setSlideError,
   setSlideLoading,
   setSlides,
-  setSlidesDrugAndDropList,
-  setSlidesPagesCount
+  setSlidesDrugAndDropList
 } from '../home-page-slides.actions';
 
 import {
@@ -33,7 +32,6 @@ import {
 import {
   mockGetSlidesPayload,
   mockSlides,
-  pageCount,
   mockSlidesState,
   mockEmptyDragAndDropList,
   mockDragAndDropList,
@@ -41,8 +39,11 @@ import {
   mockSlide,
   mockError,
   mockSlideUpdate,
-  mockSlideToAdd
+  mockSlideToAdd,
+  mockTableState
 } from './home-page-slide.variables';
+
+import { setItemsCount, updatePagination } from '../../table/table.actions';
 
 import {
   createSlide,
@@ -56,6 +57,7 @@ import {
 import { config } from '../../../configs';
 
 import Slides from '../home-page-slides.reducer';
+import Table from '../../table/table.reducer';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -66,7 +68,10 @@ const {
 describe('Test home page slider saga', () => {
   it('should load slides', () =>
     expectSaga(handleSlidesLoad, { payload: mockGetSlidesPayload })
-      .withReducer(combineReducers({ Slides }), { Slides: mockSlidesState })
+      .withReducer(combineReducers({ Slides, Table }), {
+        Slides: mockSlidesState,
+        Table: mockTableState
+      })
       .put(setSlideLoading(true))
       .provide([
         [
@@ -78,13 +83,17 @@ describe('Test home page slider saga', () => {
           mockSlides
         ]
       ])
-      .put(setSlidesPagesCount(pageCount))
+      .put(setItemsCount(mockSlides.count))
       .put(setSlides(mockSlides.items))
       .put(setSlideLoading(false))
       .hasFinalState({
         Slides: {
           ...mockSlidesState,
           list: mockSlides.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: mockSlides.count
         }
       })
       .run()
@@ -222,6 +231,7 @@ describe('Test home page slider saga', () => {
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
       .put(removeSlideFromStore(mockId))
+      .put(updatePagination())
       .put(setSlideLoading(false))
       .hasFinalState({
         Slides: {
@@ -236,7 +246,7 @@ describe('Test home page slider saga', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisCall).toHaveLength(2);
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(4);
       }));
 
   it('should handle slide error', () =>

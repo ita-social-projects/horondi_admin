@@ -8,30 +8,12 @@ import {
   SET_ARTICLE,
   UPDATE_ARTICLE,
   SET_NEWS_ERROR,
-  SET_CURRENT_PAGE,
-  SET_NEWS_PER_PAGE,
-  SET_PAGES_COUNT,
   REMOVE_ARTICLE_FROM_STORE
 } from './news.types';
 
 const setNews = (news) => ({
   type: SET_NEWS,
   payload: news
-});
-
-const setCurrentPage = (payload) => ({
-  type: SET_CURRENT_PAGE,
-  payload
-});
-
-const setNewsPerPage = (payload) => ({
-  type: SET_NEWS_PER_PAGE,
-  payload
-});
-
-const setPagesCount = (payload) => ({
-  type: SET_PAGES_COUNT,
-  payload
 });
 
 const getNews = (payload) => ({
@@ -89,8 +71,5 @@ export {
   setArticle,
   getArticle,
   setNewsError,
-  setCurrentPage,
-  setNewsPerPage,
-  setPagesCount,
   removeArticleFromStore
 };

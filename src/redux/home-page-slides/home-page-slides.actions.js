@@ -10,31 +10,13 @@ import {
   SET_SLIDE_ERROR,
   SET_SLIDE_LOADING,
   SET_SLIDES,
-  SET_SLIDES_CURRENT_PAGE,
   SET_DRUG_AND_DROP_SLIDES,
-  SET_SLIDES_PAGES_COUNT,
-  SET_SLIDES_PER_PAGE,
   UPDATE_SLIDE,
   UPDATE_SLIDES_ORDER
 } from './home-page-slides.types';
 
 export const setSlides = (payload) => ({
   type: SET_SLIDES,
-  payload
-});
-
-export const setSlidesCurrentPage = (payload) => ({
-  type: SET_SLIDES_CURRENT_PAGE,
-  payload
-});
-
-export const setSlidesPerPage = (payload) => ({
-  type: SET_SLIDES_PER_PAGE,
-  payload
-});
-
-export const setSlidesPagesCount = (payload) => ({
-  type: SET_SLIDES_PAGES_COUNT,
   payload
 });
 

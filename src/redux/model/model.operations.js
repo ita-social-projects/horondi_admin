@@ -40,36 +40,36 @@ export const getAllModels = async (skip, limit) => {
       limit
     },
     query: gql`
-        query($skip: Int, $limit: Int) {
-            getAllModels(skip: $skip, limit: $limit) {
-                items {
-                    _id
-                    name {
-                        lang
-                        value
-                    }
-                    category {
-                        name {
-                            value
-                            lang
-                        }
-                    }
-                    images {
-                        large
-                        medium
-                        small
-                        thumbnail
-                    }
-                    priority
-                    show
-                    description {
-                        value
-                        lang
-                    }
-                }
-                count
+      query($skip: Int, $limit: Int) {
+        getAllModels(skip: $skip, limit: $limit) {
+          items {
+            _id
+            name {
+              lang
+              value
             }
+            category {
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
+            description {
+              value
+              lang
+            }
+          }
+          count
         }
+      }
     `
   });
   await client.resetStore();
@@ -160,29 +160,29 @@ export const deleteModel = async (id) => {
     variables: { id },
     context: { headers: { token } },
     mutation: gql`
-        mutation($id: ID!) {
-            deleteModel(id: $id) {
-                ... on Model {
-                    _id
-                    constructorBasic{
-                        _id
-                    }
-                    constructorPattern{
-                        _id
-                    }
-                    constructorFrontPocket{
-                        _id
-                    }
-                    constructorBottom{
-                        _id
-                    }
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
+      mutation($id: ID!) {
+        deleteModel(id: $id) {
+          ... on Model {
+            _id
+            constructorBasic {
+              _id
             }
+            constructorPattern {
+              _id
+            }
+            constructorFrontPocket {
+              _id
+            }
+            constructorBottom {
+              _id
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -208,39 +208,39 @@ export const createModel = async (payload) => {
     variables: payload,
 
     mutation: gql`
-        mutation($model: ModelInput!, $image: Upload) {
-            addModel(model: $model, upload: $image) {
-                ... on Model {
-                    _id
-                    name {
-                        lang
-                        value
-                    }
-                    category {
-                        name {
-                            value
-                            lang
-                        }
-                    }
-                    images {
-                        large
-                        medium
-                        small
-                        thumbnail
-                    }
-                    priority
-                    show
-                    description {
-                        value
-                        lang
-                    }
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
+      mutation($model: ModelInput!, $image: Upload) {
+        addModel(model: $model, upload: $image) {
+          ... on Model {
+            _id
+            name {
+              lang
+              value
             }
+            category {
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
+            description {
+              value
+              lang
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -263,39 +263,39 @@ export const updateModel = async (payload) => {
     context: { headers: { token } },
     variables: { id, model, image },
     mutation: gql`
-        mutation($id: ID!, $model: ModelInput!, $image: Upload) {
-            updateModel(id: $id, model: $model, upload: $image) {
-                ... on Model {
-                    _id
-                    name {
-                        lang
-                        value
-                    }
-                    category {
-                        name {
-                            value
-                            lang
-                        }
-                    }
-                    images {
-                        large
-                        medium
-                        small
-                        thumbnail
-                    }
-                    priority
-                    show
-                    description {
-                        value
-                        lang
-                    }
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
+      mutation($id: ID!, $model: ModelInput!, $image: Upload) {
+        updateModel(id: $id, model: $model, upload: $image) {
+          ... on Model {
+            _id
+            name {
+              lang
+              value
             }
+            category {
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
+            description {
+              value
+              lang
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -314,22 +314,25 @@ export const updateModel = async (payload) => {
 
 export const addModelConstructorBasic = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload
+  const { id, constructorElementID } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, constructorElementID },
     mutation: gql`
-        mutation($id:ID!, $constructorElementID:ID!) {
-            addModelConstructorBasic(id:$id, constructorElementID:$constructorElementID) {
-                ... on Model {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation($id: ID!, $constructorElementID: ID!) {
+        addModelConstructorBasic(
+          id: $id
+          constructorElementID: $constructorElementID
+        ) {
+          ... on Model {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -348,22 +351,25 @@ export const addModelConstructorBasic = async (payload) => {
 
 export const deleteModelConstructorBasic = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload
+  const { id, constructorElementID } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, constructorElementID },
     mutation: gql`
-        mutation($id:ID!, $constructorElementID:ID!) {
-            deleteModelConstructorBasic(id:$id, constructorElementID:$constructorElementID) {
-                ... on Model {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation($id: ID!, $constructorElementID: ID!) {
+        deleteModelConstructorBasic(
+          id: $id
+          constructorElementID: $constructorElementID
+        ) {
+          ... on Model {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -382,22 +388,25 @@ export const deleteModelConstructorBasic = async (payload) => {
 
 export const addModelConstructorPattern = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload
+  const { id, constructorElementID } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, constructorElementID },
     mutation: gql`
-        mutation($id:ID!, $constructorElementID:ID!) {
-            addModelConstructorPattern(id:$id, constructorElementID:$constructorElementID) {
-                ... on Model {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation($id: ID!, $constructorElementID: ID!) {
+        addModelConstructorPattern(
+          id: $id
+          constructorElementID: $constructorElementID
+        ) {
+          ... on Model {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -416,22 +425,25 @@ export const addModelConstructorPattern = async (payload) => {
 
 export const deleteModelConstructorPattern = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload
+  const { id, constructorElementID } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, constructorElementID },
     mutation: gql`
-        mutation($id:ID!, $constructorElementID:ID!) {
-            deleteModelConstructorPattern(id:$id, constructorElementID:$constructorElementID) {
-                ... on Model {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation($id: ID!, $constructorElementID: ID!) {
+        deleteModelConstructorPattern(
+          id: $id
+          constructorElementID: $constructorElementID
+        ) {
+          ... on Model {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -450,22 +462,25 @@ export const deleteModelConstructorPattern = async (payload) => {
 
 export const addModelConstructorFrontPocket = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload
+  const { id, constructorElementID } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, constructorElementID },
     mutation: gql`
-        mutation($id:ID!, $constructorElementID:ID!) {
-            addModelConstructorFrontPocket(id:$id, constructorElementID:$constructorElementID) {
-                ... on Model {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation($id: ID!, $constructorElementID: ID!) {
+        addModelConstructorFrontPocket(
+          id: $id
+          constructorElementID: $constructorElementID
+        ) {
+          ... on Model {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -484,22 +499,25 @@ export const addModelConstructorFrontPocket = async (payload) => {
 
 export const deleteModelConstructorFrontPocket = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload
+  const { id, constructorElementID } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, constructorElementID },
     mutation: gql`
-        mutation($id:ID!, $constructorElementID:ID!) {
-            deleteModelConstructorFrontPocket(id:$id, constructorElementID:$constructorElementID) {
-                ... on Model {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation($id: ID!, $constructorElementID: ID!) {
+        deleteModelConstructorFrontPocket(
+          id: $id
+          constructorElementID: $constructorElementID
+        ) {
+          ... on Model {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -518,22 +536,25 @@ export const deleteModelConstructorFrontPocket = async (payload) => {
 
 export const addModelConstructorBottom = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload
+  const { id, constructorElementID } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, constructorElementID },
     mutation: gql`
-        mutation($id:ID!, $constructorElementID:ID!) {
-            addModelConstructorBottom(id:$id, constructorElementID:$constructorElementID) {
-                ... on Model {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation($id: ID!, $constructorElementID: ID!) {
+        addModelConstructorBottom(
+          id: $id
+          constructorElementID: $constructorElementID
+        ) {
+          ... on Model {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -552,22 +573,25 @@ export const addModelConstructorBottom = async (payload) => {
 
 export const deleteModelConstructorBottom = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload
+  const { id, constructorElementID } = payload;
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { id, constructorElementID },
     mutation: gql`
-        mutation($id:ID!, $constructorElementID:ID!) {
-            deleteModelConstructorBottom(id:$id, constructorElementID:$constructorElementID) {
-                ... on Model {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation($id: ID!, $constructorElementID: ID!) {
+        deleteModelConstructorBottom(
+          id: $id
+          constructorElementID: $constructorElementID
+        ) {
+          ... on Model {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });

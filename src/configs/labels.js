@@ -3,6 +3,7 @@ import { mapToLanguages } from '../utils/map-languages';
 const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
+  goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
     guestUser: 'Гість'
@@ -68,6 +69,14 @@ const labels = {
     form: {
       name: mapToLanguages("І'мя", 'Name'),
       description: mapToLanguages('Опис', 'Description')
+    },
+    patternName: {
+      ua: 'Назва гобелену',
+      en: 'Pattern name'
+    },
+    patternDescription: {
+      ua: 'Опис гобелену',
+      en: 'Pattern description'
     }
   },
   material: {

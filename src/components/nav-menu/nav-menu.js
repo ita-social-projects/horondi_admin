@@ -95,7 +95,11 @@ const NavMenu = ({ width }) => {
 
 NavMenu.propTypes = {
   width: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired
+  url: PropTypes.string
+};
+
+NavMenu.defaultProps = {
+  url: ''
 };
 
 export default withWidth()(NavMenu);

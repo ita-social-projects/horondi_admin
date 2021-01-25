@@ -7,7 +7,8 @@ import {
   DELETE_BUSINESS_PAGE,
   SET_CURRENT_BUSINESS_PAGE,
   GET_BUSINESS_PAGE_BY_ID,
-  UPDATE_BUSINESS_PAGE
+  UPDATE_BUSINESS_PAGE,
+  REMOVE_BUSINESS_PAGE_FROM_STORE
 } from './business-pages.types';
 
 const setBusinessPages = (businessPage) => ({
@@ -54,6 +55,11 @@ const setCurrentBusinessPage = (currentBusinessPage) => ({
   payload: currentBusinessPage
 });
 
+const removeBusinessPageFromStore = (payload) => ({
+  type: REMOVE_BUSINESS_PAGE_FROM_STORE,
+  payload
+});
+
 export {
   setBusinessPages,
   getAllBusinessPages,
@@ -63,5 +69,6 @@ export {
   deleteBusinessPage,
   setCurrentBusinessPage,
   getBusinessPageById,
-  updateBusinessPage
+  updateBusinessPage,
+  removeBusinessPageFromStore
 };

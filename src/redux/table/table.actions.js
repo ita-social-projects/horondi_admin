@@ -1,10 +1,10 @@
 import {
   SET_TABLE_DENSE,
   SET_CURRENT_PAGE,
-  SET_PAGES_COUNT,
   SET_ROWS_PER_PAGE,
   SET_ITEMS_COUNT,
-  RESET_PAGINATION
+  RESET_PAGINATION,
+  UPDATE_PAGINATION
 } from './table.types';
 
 export const setTableDense = (newTableDense) => ({
@@ -22,11 +22,6 @@ export const setRowsPerPage = (payload) => ({
   payload
 });
 
-export const setPagesCount = (payload) => ({
-  type: SET_PAGES_COUNT,
-  payload
-});
-
 export const setItemsCount = (payload) => ({
   type: SET_ITEMS_COUNT,
   payload
@@ -35,4 +30,8 @@ export const setItemsCount = (payload) => ({
 export const resetPagination = (payload) => ({
   type: RESET_PAGINATION,
   payload
+});
+
+export const updatePagination = () => ({
+  type: UPDATE_PAGINATION
 });

@@ -1,5 +1,5 @@
 const formRegExp = {
-  patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
+  patternMaterial: '^[A-Za-z0-9]*$',
   email:
     '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
   pass: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',

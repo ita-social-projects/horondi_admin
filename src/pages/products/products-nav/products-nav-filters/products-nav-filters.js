@@ -109,7 +109,7 @@ const ProductsNavFilters = () => {
         </Grid>
         <Grid
           container
-          alignItems='space-around'
+          alignItems='center'
           className={styles.wrapper}
           spacing={2}
         >

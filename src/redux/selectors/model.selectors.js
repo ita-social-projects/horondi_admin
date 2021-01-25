@@ -1,8 +1,12 @@
-export const selectModels = ({ Model }) => ({
+export const selectModelAndTable = ({ Model, Table }) => ({
   list: Model.list,
-  model:Model.model,
   loading: Model.modelLoading,
-  pagesCount: Model.pagination.pagesCount,
-  currentPage: Model.pagination.currentPage,
-  modelsPerPage: Model.pagination.modelsPerPage
+  currentPage: Table.pagination.currentPage,
+  rowsPerPage: Table.pagination.rowsPerPage,
+  itemsCount: Table.itemsCount
+});
+
+export const selectModel = ({ Model }) => ({
+  loading: Model.modelLoading,
+  model: Model.model
 });

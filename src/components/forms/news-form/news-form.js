@@ -23,7 +23,7 @@ import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import Editor from '../../editor/editor';
 
-const { MAIN_PHOTO, AUTHOR_PHOTO, SAVE_TITLE } = config.buttonTitles;
+const { MAIN_PHOTO, AUTHOR_PHOTO } = config.buttonTitles;
 const {
   NAME_MIN_LENGTH_MESSAGE,
   TITLE_MIN_LENGTH_MESSAGE,

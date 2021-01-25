@@ -40,12 +40,17 @@ const mockPatternsState = {
   list: [],
   pattern: null,
   patternLoading: false,
-  patternError: null,
+  patternError: null
+};
+
+const mockTableState = {
+  dense: false,
   pagination: {
     currentPage: 0,
-    patternsPerPage: 6,
-    pagesCount: 1
-  }
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30]
+  },
+  itemsCount: 0
 };
 
 const mockInputPattern = {
@@ -61,10 +66,6 @@ const mockPatternsLoadPayload = {
   limit: 6,
   patternsPerPage: 6
 };
-
-const pagesCount = Math.ceil(
-  mockPatterns.count / mockPatternsLoadPayload.patternsPerPage
-);
 
 const mockSnackarState = {
   snackBarStatus: false,
@@ -86,11 +87,11 @@ export {
   mockPatternsState,
   mockPatternsLoadPayload,
   mockPatterns,
-  pagesCount,
   mockId,
   mockPattern,
   mockSnackarState,
   statuses,
   mockInputPattern,
-  mockError
+  mockError,
+  mockTableState
 };

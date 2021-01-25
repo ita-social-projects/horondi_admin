@@ -1,5 +1,5 @@
 import { expectSaga } from 'redux-saga-test-plan';
-import { call, select } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 import {
   handleBusinessPagesLoad,
   handleCurrentBusinessPageLoad,
@@ -12,14 +12,10 @@ import {
   setBusinessPages,
   setLoading,
   setCurrentBusinessPage,
-  setBusinessPagesError
+  setBusinessPagesError,
+  removeBusinessPageFromStore
 } from '../business-pages.actions';
 import { config } from '../../../configs';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../snackbar/snackbar.actions';
 
 import {
   businessPages,
@@ -39,8 +35,11 @@ import {
   updateBusinessPage
 } from '../business-pages.operations';
 
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../../snackbar/snackbar.sagas';
 import businessPagesReducer from '../business-pages.reducer';
-import { selectBusinessPagesList } from '../../selectors/business-pages.selectors';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -90,43 +89,13 @@ describe('business pages sagas test', () => {
 
   it('#3 Should delete business page and remove it from store', () =>
     expectSaga(handleBusinessPageDelete, { payload: businessPages[0]._id })
-      .provide([
-        [select(selectBusinessPagesList), businessPages],
-        [call(deleteBusinessPage, businessPages[0]._id), businessPages[0]]
-      ])
-      .withReducer(businessPagesReducer)
-      .put(setLoading(true))
-      .put(setBusinessPages([businessPages[1]]))
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_DELETE_STATUS))
-      .put(setSnackBarStatus(true))
-      .put(setLoading(false))
-      .hasFinalState({
-        list: [businessPages[1]],
-        currentPage: null,
-        loading: false,
-        error: null
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(6);
-      }));
-
-  it('#4 Should to add business page', () =>
-    expectSaga(handleAddBusinessPage, { payload: businessPageToCreate })
       .withReducer(businessPagesReducer)
       .provide([
-        [
-          call(createBusinessPage, businessPageToCreate),
-          { _id: businessPage._id }
-        ]
+        [call(deleteBusinessPage, businessPages[0]._id), businessPages[0]],
+        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
       .put(setLoading(true))
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_ADD_STATUS))
-      .put(setSnackBarStatus(true))
+      .put(removeBusinessPageFromStore(businessPages[0]._id))
       .put(setLoading(false))
       .hasFinalState({
         list: [],
@@ -138,7 +107,32 @@ describe('business pages sagas test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(6);
+        expect(analysisPut).toHaveLength(3);
+      }));
+
+  it('#4 Should to add business page', () =>
+    expectSaga(handleAddBusinessPage, { payload: businessPageToCreate })
+      .withReducer(businessPagesReducer)
+      .provide([
+        [
+          call(createBusinessPage, businessPageToCreate),
+          { _id: businessPage._id }
+        ],
+        [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
+      ])
+      .put(setLoading(true))
+      .put(setLoading(false))
+      .hasFinalState({
+        list: [],
+        currentPage: null,
+        loading: false,
+        error: null
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(3);
       }));
 
   it('#5 Should to update business page', () =>
@@ -151,12 +145,10 @@ describe('business pages sagas test', () => {
             _id: businessPageToUpdate.id,
             title: { value: businessPageToUpdate.page.title.value }
           }
-        ]
+        ],
+        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
       .put(setLoading(true))
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_UPDATE_STATUS))
-      .put(setSnackBarStatus(true))
       .put(setLoading(false))
       .hasFinalState({
         list: [],
@@ -168,16 +160,14 @@ describe('business pages sagas test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(6);
+        expect(analysisPut).toHaveLength(3);
       }));
   it('should handle orders error', () => {
     expectSaga(handleBusinessPageError, error)
       .withReducer(businessPagesReducer)
+      .provide([[call(handleErrorSnackbar, error.message)]])
       .put(setLoading(false))
       .put(setBusinessPagesError({ e: error }))
-      .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(error.message))
-      .put(setSnackBarStatus(true))
       .hasFinalState({
         list: [],
         currentPage: null,
@@ -188,7 +178,7 @@ describe('business pages sagas test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(5);
+        expect(analysisPut).toHaveLength(2);
       });
   });
 });

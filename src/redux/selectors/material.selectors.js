@@ -1,13 +1,20 @@
-export const selectMaterialsAndColors = ({ Material, Color }) => ({
-  list: Material.list,
-  colors: Color.list,
-  filter: Material.filter,
-  loading: Material.materialLoading,
-  pagesCount: Material.pagination.pagesCount,
-  currentPage: Material.pagination.currentPage,
-  materialsPerPage: Material.pagination.materialsPerPage
-});
+import { createSelector } from 'reselect';
+import { selectPagination } from '../table/table.reducer';
+import { selectMaterial } from '../material/material.reducer';
+import { selectColors } from '../color/color.reducer';
 
-export const selectMaterialLoading = ({ Material }) => ({
-  loading: Material.materialLoading
-});
+export const materialSelector = createSelector(
+  selectMaterial,
+  (material) => material
+);
+
+export const materialSelectorWithPagination = createSelector(
+  selectMaterial,
+  selectPagination,
+  selectColors,
+  (material, table, color) => ({
+    ...material,
+    ...table,
+    ...color
+  })
+);

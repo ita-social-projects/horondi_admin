@@ -3,14 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
-import { useStyles } from './material-page.styles';
 import { config } from '../../configs';
 import {
   getMaterials,
   deleteMaterial,
-  setColorFilter,
-  setMaterialsCurrentPage
+  setColorFilter
 } from '../../redux/material/material.actions.js';
 import { getColors } from '../../redux/color/color.actions';
 import ColorCircle from '../../components/color-circle';
@@ -18,11 +15,13 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
-import LoadingBar from '../../components/loading-bar';
 import { materialTranslations } from '../../translations/material.translations';
 import { useCommonStyles } from '../common.styles';
-import { selectMaterialsAndColors } from '../../redux/selectors/material.selectors';
+import { useStyles } from './material-page.styles';
 import ColorsAutocomplete from '../../components/colors-autocomplete';
+import { materialSelectorWithPagination } from '../../redux/selectors/material.selectors';
+
+const map = require('lodash/map');
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
@@ -31,19 +30,18 @@ const tableTitles = config.tableHeadRowTitles.materials;
 const { SMALL_CIRCLE } = config.colorCircleSizes;
 
 const MaterialPage = () => {
-  const styles = useStyles();
   const commonStyles = useCommonStyles();
+  const styles = useStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     list,
-    colors,
-    filter,
-    loading,
-    pagesCount,
+    itemsCount,
     currentPage,
-    materialsPerPage
-  } = useSelector(selectMaterialsAndColors);
+    rowsPerPage,
+    colors,
+    filter
+  } = useSelector(materialSelectorWithPagination);
 
   const dispatch = useDispatch();
 
@@ -55,18 +53,12 @@ const MaterialPage = () => {
     dispatch(
       getMaterials({
         filter,
-        limit: materialsPerPage,
-        skip: currentPage * materialsPerPage,
-        materialsPerPage
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        rowsPerPage
       })
     );
-  }, [dispatch, materialsPerPage, currentPage, filter]);
-
-  useEffect(() => {
-    if (!list.length && currentPage > 0) {
-      dispatch(setMaterialsCurrentPage(currentPage));
-    }
-  }, [list, dispatch, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage, filter]);
 
   const materialDeleteHandler = (id) => {
     const removeMaterial = () => {
@@ -76,39 +68,36 @@ const MaterialPage = () => {
     openSuccessSnackbar(removeMaterial, REMOVE_MATERIAL_MESSAGE);
   };
 
-  const changeHandler = (e, value) => dispatch(setMaterialsCurrentPage(value));
-  const materialItems = list.length
-    ? list.map((materialItem) => (
-      <TableContainerRow
-        key={materialItem._id}
-        showAvatar={false}
-        id={materialItem.id}
-        name={materialItem.name[0].value}
-        colors={
-          <div className={styles.colorsCell}>
-            {materialItem.colors.map((color) => (
-              <ColorCircle
-                key={color._id}
-                colorName={color.name[0].value}
-                color={color.colorHex}
-                size={SMALL_CIRCLE}
-              />
-            ))}
-          </div>
-        }
-        purpose={materialItem.purpose}
-        available={
-          materialItem.available
-            ? materialTranslations.YES
-            : materialTranslations.NO
-        }
-        deleteHandler={() => materialDeleteHandler(materialItem._id)}
-        editHandler={() => {
-          dispatch(push(`/materials/${materialItem._id}`));
-        }}
-      />
-    ))
-    : null;
+  const materialItems = map(list, (materialItem) => (
+    <TableContainerRow
+      key={materialItem._id}
+      showAvatar={false}
+      id={materialItem.id}
+      name={materialItem.name[0].value}
+      purpose={materialItem.purpose}
+      colors={
+        <div className={styles.colorsCell}>
+          {materialItem.colors.map((color) => (
+            <ColorCircle
+              key={color._id}
+              colorName={color.name[0].value}
+              color={color.colorHex}
+              size={SMALL_CIRCLE}
+            />
+          ))}
+        </div>
+      }
+      available={
+        materialItem.available
+          ? materialTranslations.YES
+          : materialTranslations.NO
+      }
+      deleteHandler={() => materialDeleteHandler(materialItem._id)}
+      editHandler={() => {
+        dispatch(push(`/materials/${materialItem._id}`));
+      }}
+    />
+  ));
 
   return (
     <div className={commonStyles.container}>
@@ -136,22 +125,11 @@ const MaterialPage = () => {
         />
       </div>
       <div>
-        {!loading ? (
-          <TableContainerGenerator
-            tableTitles={tableTitles}
-            tableItems={materialItems}
-          />
-        ) : (
-          <LoadingBar />
-        )}
-      </div>
-      <div className={styles.paginationDiv}>
-        <Pagination
-          count={pagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage + 1}
-          onChange={changeHandler}
+        <TableContainerGenerator
+          pagination
+          count={itemsCount}
+          tableTitles={tableTitles}
+          tableItems={materialItems}
         />
       </div>
     </div>

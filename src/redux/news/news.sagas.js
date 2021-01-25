@@ -1,12 +1,13 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
+import { setItemsCount, updatePagination } from '../table/table.actions';
+
 import {
   setNews,
   setNewsLoading,
   setArticle,
   setNewsError,
-  setPagesCount,
-  setCurrentPage,
   removeArticleFromStore
 } from './news.actions';
 
@@ -40,19 +41,11 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const { skip, limit, newsPerPage } = config.newsPaginationPayload;
-
-export function* handleNewsLoad({
-  payload = {
-    skip,
-    limit,
-    newsPerPage
-  }
-}) {
+export function* handleNewsLoad({ payload: { skip, limit } }) {
   try {
     yield put(setNewsLoading(true));
-    const news = yield call(getAllNews, payload.skip, payload.limit);
-    yield put(setPagesCount(Math.ceil(news.count / payload.newsPerPage)));
+    const news = yield call(getAllNews, skip, limit);
+    yield put(setItemsCount(news.count));
     yield put(setNews(news.items));
     yield put(setNewsLoading(false));
   } catch (error) {
@@ -87,9 +80,9 @@ export function* handleNewsDelete({ payload }) {
   try {
     yield put(setNewsLoading(true));
     yield call(deleteArticle, payload);
-    yield put(setCurrentPage(1));
     yield put(removeArticleFromStore(payload));
     yield put(setNewsLoading(false));
+    yield put(updatePagination());
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleNewsError, error);

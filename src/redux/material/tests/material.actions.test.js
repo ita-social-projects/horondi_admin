@@ -5,16 +5,9 @@ import {
   getMaterials,
   setMaterialError,
   setMaterialLoading,
-  setMaterialsCurrentPage,
-  setMaterialsPagesCount,
-  setMaterialsPerPage,
   addMaterial,
   updateMaterial,
-  deleteMaterial,
-  removeMaterialFromStore,
-  setNewColorToStore,
-  showColorDialogWindow,
-  clearColors
+  deleteMaterial
 } from '../material.actions';
 import { mockMaterial, mockMaterials } from './material.variables';
 import {
@@ -24,16 +17,9 @@ import {
   SET_MATERIAL,
   SET_MATERIAL_LOADING,
   SET_MATERIAL_ERROR,
-  SET_MATERIALS_CURRENT_PAGE,
-  SET_MATERIALS_PAGES_COUNT,
-  SET_MATERIALS_PER_PAGE,
   ADD_MATERIAL,
   UPDATE_MATERIAL,
-  DELETE_MATERIAL,
-  REMOVE_MATERIAL_FROM_STORE,
-  COLOR_DIALOG_DATA_TO_STORE,
-  SHOW_COLOR_DIALOG_WINDOW,
-  CLEAR_COLORS
+  DELETE_MATERIAL
 } from '../material.types';
 import { mockId } from '../../model/tests/model.variables';
 
@@ -75,24 +61,7 @@ describe('material actions tests', () => {
       payload: true
     });
   });
-  it('should set materials current page', () => {
-    expect(setMaterialsCurrentPage(11)).toEqual({
-      type: SET_MATERIALS_CURRENT_PAGE,
-      payload: 11
-    });
-  });
-  it('should set materials pages count', () => {
-    expect(setMaterialsPagesCount(11)).toEqual({
-      type: SET_MATERIALS_PAGES_COUNT,
-      payload: 11
-    });
-  });
-  it('should set materials per page', () => {
-    expect(setMaterialsPerPage(11)).toEqual({
-      type: SET_MATERIALS_PER_PAGE,
-      payload: 11
-    });
-  });
+
   it('should add material', () => {
     expect(addMaterial(mockMaterial)).toEqual({
       type: ADD_MATERIAL,
@@ -133,29 +102,6 @@ describe('material actions tests', () => {
     expect(deleteMaterial(mockMaterial)).toEqual({
       type: DELETE_MATERIAL,
       payload: mockMaterial
-    });
-  });
-  it('should remove material from store', () => {
-    expect(removeMaterialFromStore(mockId)).toEqual({
-      type: REMOVE_MATERIAL_FROM_STORE,
-      payload: mockId
-    });
-  });
-  it('should set show color dialog window to true', () => {
-    expect(showColorDialogWindow(true)).toEqual({
-      type: SHOW_COLOR_DIALOG_WINDOW,
-      payload: true
-    });
-  });
-  it('should set new color to store', () => {
-    expect(setNewColorToStore([])).toEqual({
-      type: COLOR_DIALOG_DATA_TO_STORE,
-      payload: []
-    });
-  });
-  it('should remove colors from store', () => {
-    expect(clearColors()).toEqual({
-      type: CLEAR_COLORS
     });
   });
 });
