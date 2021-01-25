@@ -91,6 +91,7 @@ const ModelPage = () => {
       </div>
       <TableContainerGenerator
         data-cy='modelTable'
+        pagination
         count={itemsCount}
         tableTitles={tableTitles}
         tableItems={modelItems}

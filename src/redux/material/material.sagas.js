@@ -39,10 +39,19 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleMaterialsLoad({ payload: { skip, limit } }) {
+export function* handleMaterialsLoad({ payload }) {
+  const filter = {
+    ...payload.filter,
+    colors: payload.filter.colors.map((el) => el._id)
+  };
   try {
     yield put(setMaterialLoading(true));
-    const materials = yield call(getAllMaterials, skip, limit);
+    const materials = yield call(
+      getAllMaterials,
+      filter,
+      payload.skip,
+      payload.limit
+    );
     yield put(setItemsCount(materials.count));
     yield put(setMaterials(materials.items));
     yield put(setMaterialLoading(false));

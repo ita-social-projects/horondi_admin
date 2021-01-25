@@ -52,12 +52,13 @@ const MaterialPage = () => {
   useEffect(() => {
     dispatch(
       getMaterials({
+        filter,
         limit: rowsPerPage,
         skip: currentPage * rowsPerPage,
         rowsPerPage
       })
     );
-  }, [dispatch, rowsPerPage, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage, filter]);
 
   const materialDeleteHandler = (id) => {
     const removeMaterial = () => {
