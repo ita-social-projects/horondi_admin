@@ -33,10 +33,6 @@ const materials = {
   items: []
 };
 
-const mockError = {
-  message: 'error'
-};
-
 module.exports = {
   colorId,
   colorsArr,
@@ -45,6 +41,5 @@ module.exports = {
   boundMaterials,
   mockColorsState,
   statuses,
-  materials,
-  mockError
+  materials
 };

@@ -44,7 +44,7 @@ import {
   oneColor,
   statuses,
   materials,
-  mockError
+  error
 } from './color.variables';
 
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS } = statuses;
@@ -188,21 +188,21 @@ describe('Test color saga', () => {
   });
 
   it('should handle color error', () => {
-    expectSaga(handleColorError, mockError)
+    expectSaga(handleColorError, error)
       .withReducer(combineReducers({ Color }), {
         Color: {
           ...mockColorsState,
           colorLoading: true
         }
       })
-      .provide([[call(handleErrorSnackbar, mockError.message)]])
+      .provide([[call(handleErrorSnackbar, error.message)]])
       .put(setColorsLoading(false))
-      .put(setColorsError({ e: mockError }))
+      .put(setColorsError({ e: error }))
       .hasFinalState({
         Color: {
           ...mockColorsState,
           colorLoading: false,
-          colorError: { e: mockError }
+          colorError: { e: error }
         }
       })
       .run()
