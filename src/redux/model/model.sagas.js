@@ -1,11 +1,13 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
+import { setItemsCount, updatePagination } from '../table/table.actions';
+
 import {
   setModels,
   setModelLoading,
   setModel,
   setModelError,
-  setPagesCount,
   removeModelFromStore
 } from './model.actions';
 
@@ -31,6 +33,7 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { handleCategoriesLoad } from '../categories/categories.sagas';
 
 const { routes } = config;
 
@@ -44,7 +47,7 @@ export function* handleModelsLoad({ payload }) {
   try {
     yield put(setModelLoading(true));
     const models = yield call(getAllModels, payload.skip, payload.limit);
-    yield put(setPagesCount(Math.ceil(models.count / payload.modelsPerPage)));
+    yield put(setItemsCount(models.count));
     yield put(setModels(models.items));
     yield put(setModelLoading(false));
   } catch (error) {
@@ -56,6 +59,7 @@ export function* handleModelLoad({ payload }) {
   try {
     yield put(setModelLoading(true));
     const model = yield call(getModelById, payload);
+    yield call(handleCategoriesLoad);
     yield put(setModel(model));
     yield put(setModelLoading(false));
   } catch (error) {
@@ -79,6 +83,7 @@ export function* handleModelDelete({ payload }) {
     yield put(setModelLoading(true));
     yield call(deleteModel, payload);
     yield put(removeModelFromStore(payload));
+    yield put(updatePagination());
     yield put(setModelLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {

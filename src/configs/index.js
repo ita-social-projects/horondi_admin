@@ -13,10 +13,13 @@ import {
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
+  categoryErrorMessages,
   modelErrorMessages,
   headerErrorMessages,
   homePageSlideErrorMessages,
-  statsErrorMessages
+  constructorErrorMessages,
+  statsErrorMessages,
+  paginationInputErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -160,6 +163,7 @@ export const config = {
     }
   },
   UAH: 'грн',
+  maxItemsPerPage: 10,
 
   buttonTitles,
   detailTitles,
@@ -174,6 +178,7 @@ export const config = {
   loginErrorMessages,
   colorErrorMessages,
   contactErrorMessages,
+  categoryErrorMessages,
   patternErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
@@ -184,7 +189,9 @@ export const config = {
   headerErrorMessages,
   statsErrorMessages,
   homePageSlideErrorMessages,
-  sort
+  constructorErrorMessages,
+  sort,
+  paginationInputErrorMessages
 };
 export const inputTypes = {
   button: 'button',

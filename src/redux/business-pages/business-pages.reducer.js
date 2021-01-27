@@ -2,7 +2,8 @@ import {
   SET_BUSINESS_PAGES,
   SET_BUSINESS_PAGES_LOADING,
   SET_BUSINESS_PAGES_ERROR,
-  SET_CURRENT_BUSINESS_PAGE
+  SET_CURRENT_BUSINESS_PAGE,
+  REMOVE_BUSINESS_PAGE_FROM_STORE
 } from './business-pages.types';
 
 export const initialState = {
@@ -34,6 +35,13 @@ const businessPagesReducer = (state = initialState, action = {}) => {
       ...state,
       currentPage: action.payload
     };
+  case REMOVE_BUSINESS_PAGE_FROM_STORE: {
+    const pages = state.list.filter((page) => page._id !== action.payload);
+    return {
+      ...state,
+      list: pages
+    };
+  }
   default:
     return state;
   }

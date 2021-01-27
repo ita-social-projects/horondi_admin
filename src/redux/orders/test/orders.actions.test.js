@@ -4,7 +4,8 @@ import {
   SET_ORDER_LOADING,
   SET_ORDER_ERROR,
   GET_ORDER_LIST,
-  SET_ORDER_LIST
+  SET_ORDER_LIST,
+  UPDATE_ORDER
 } from '../orders.types';
 
 import {
@@ -13,9 +14,14 @@ import {
   getOrderList,
   setOrderList,
   setOrderLoading,
-  setOrderError
+  setOrderError,
+  updateOrder
 } from '../orders.actions';
-import { getFakeOrderList, fakeOrderList } from './orders.variables';
+import {
+  getFakeOrderList,
+  fakeOrderList,
+  fakeIdOrder
+} from './orders.variables';
 
 describe('orders actions', () => {
   it('should create an action to get order', () => {
@@ -57,6 +63,12 @@ describe('orders actions', () => {
     expect(setOrderError(true)).toEqual({
       type: SET_ORDER_ERROR,
       payload: true
+    });
+  });
+  it('should update order', () => {
+    expect(updateOrder(fakeIdOrder)).toEqual({
+      type: UPDATE_ORDER,
+      payload: fakeIdOrder
     });
   });
 });

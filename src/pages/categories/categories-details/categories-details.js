@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { useStyles } from './categories-details.styles';
 import LoadingBar from '../../../components/loading-bar';
-import CategoryForm from '../../../components/category-form';
+import CategoryForm from '../../../components/forms/category-form';
 import { getCategory } from '../../../redux/categories/categories.actions';
 
 const CategoryDetails = ({ match }) => {

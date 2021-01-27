@@ -22,7 +22,7 @@ const routes = {
   pathToConfirmAdmin: '/confirmation/:token',
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
-  pathToAddContact: '/add-contact',
+  pathToAddContact: '/contacts/add',
   pathToOrders: '/orders',
   pathToComments: '/comments',
   pathToOrderItem: '/orders/:id',
@@ -30,7 +30,7 @@ const routes = {
   pathToEmailQuestions: '/email-questions',
   pathToEmailQuestionDetails: '/email-answer/:id',
   pathToMaterials: '/materials',
-  pathToAddMaterial: '/material/add',
+  pathToAddMaterial: '/materials/add',
   pathToMaterialDetails: '/materials/:id',
   pathToMaterialsColorPalette: '/materials/:id/colors',
   pathToStatistic: '/stats',
@@ -42,6 +42,9 @@ const routes = {
   pathToHeaderDetails: '/headers/:id',
   pathToHomePageSlides: '/home-page-slides',
   pathToAddHomePageSlide: '/home-page-slides/add',
-  pathToHomePageSlideDetail: '/home-page-slides/:id'
+  pathToHomePageSlideDetail: '/home-page-slides/:id',
+  pathToConstructor: '/constructor/:id',
+  pathToAddConstructor: '/constructor/:id/add',
+  pathToConstructorDetails: '/constructor/:id/:elementId'
 };
 export default routes;

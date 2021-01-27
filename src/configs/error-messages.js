@@ -29,23 +29,30 @@ export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
-  PHOTO_NOT_PROVIDED: 'Додайте фото для гобелену'
+  PHOTO_NOT_PROVIDED: "Фото гобелена є обов'язковим",
+  CONSTRUCTOR_PHOTO_NOT_PROVIDED: "Фото для конструктора є обов'язковим",
+  PATTERN_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Мінімум 2 символи',
-  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім'
+  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CATEGORY_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  CATEGORY_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  CATEGORY_CODE_MESSAGE: 'Поле не може містити спеціальні символи'
 };
-
 export const headerErrorMessages = {
   HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
   HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
   HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
 export const newsErrorMessages = {
-  NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
   NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,
-  TITLE_MAX_LENGTH_MESSAGE: 'Заголовок повинен містити не більше 100 символів',
-  TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів'
+  TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів',
+  TEXT_MIN_LENGTH_MESSAGE: 'Текстове поле повино містити не менше 10 символів'
 };
 export const modelErrorMessages = {
   MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',
@@ -95,4 +102,17 @@ export const homePageSlideErrorMessages = {
   SLIDE_VALIDATION_ERROR: 'Мінімум 2 символи',
   SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
   SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+};
+
+export const constructorErrorMessages = {
+  CONSTRUCTOR_VALIDATION_ERROR: 'Мінімум 2 символи',
+  CONSTRUCTOR_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CONSTRUCTOR_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  PRICE_VALIDATION_ERROR: 'Тільки цифри',
+  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора'
+};
+export const paginationInputErrorMessages = {
+  MUST_BE_NUMBER: 'Тільки цифри',
+  MUST_BE_POSITIVE: 'Тільки більше нуля',
+  PAGE_NOT_FOUND: 'Сторінку не знайдено'
 };

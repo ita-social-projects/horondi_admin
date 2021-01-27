@@ -146,6 +146,8 @@ const ConfirmUser = ({ match }) => {
                 title='Створити'
                 data-cy='submit-admin-confirmation'
                 className={styles.saveButton}
+                values={values}
+                errors={errors}
               />
             </FormControl>
           </Paper>

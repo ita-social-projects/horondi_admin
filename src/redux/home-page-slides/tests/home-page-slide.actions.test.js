@@ -10,10 +10,7 @@ import {
   setSlideError,
   setSlideLoading,
   setSlides,
-  setSlidesCurrentPage,
   setSlidesDrugAndDropList,
-  setSlidesPagesCount,
-  setSlidesPerPage,
   updateSlide,
   updateSlidesOrder
 } from '../home-page-slides.actions';
@@ -30,10 +27,7 @@ import {
   SET_SLIDE_ERROR,
   SET_SLIDE_LOADING,
   SET_SLIDES,
-  SET_SLIDES_CURRENT_PAGE,
   SET_DRUG_AND_DROP_SLIDES,
-  SET_SLIDES_PAGES_COUNT,
-  SET_SLIDES_PER_PAGE,
   UPDATE_SLIDE,
   UPDATE_SLIDES_ORDER
 } from '../home-page-slides.types';
@@ -45,8 +39,7 @@ import {
   mockGetSlidesPayload,
   mockError,
   mockDragAndDropList,
-  mockSlideUpdate,
-  mockNumber
+  mockSlideUpdate
 } from './home-page-slide.variables';
 
 describe('Test home page slide actions', () => {
@@ -54,27 +47,6 @@ describe('Test home page slide actions', () => {
     expect(setSlides(mockSlides.items)).toEqual({
       type: SET_SLIDES,
       payload: mockSlides.items
-    });
-  });
-
-  it('should set slides current page', () => {
-    expect(setSlidesCurrentPage(mockNumber)).toEqual({
-      type: SET_SLIDES_CURRENT_PAGE,
-      payload: mockNumber
-    });
-  });
-
-  it('should set slides per page', () => {
-    expect(setSlidesPerPage(mockNumber)).toEqual({
-      type: SET_SLIDES_PER_PAGE,
-      payload: mockNumber
-    });
-  });
-
-  it('should set slides pages count', () => {
-    expect(setSlidesPagesCount(mockNumber)).toEqual({
-      type: SET_SLIDES_PAGES_COUNT,
-      payload: mockNumber
     });
   });
 

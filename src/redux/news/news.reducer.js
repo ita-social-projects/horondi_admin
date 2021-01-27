@@ -3,21 +3,20 @@ import {
   SET_NEWS_LOADING,
   SET_ARTICLE,
   SET_NEWS_ERROR,
-  SET_CURRENT_PAGE,
-  SET_NEWS_PER_PAGE,
-  SET_PAGES_COUNT
+  REMOVE_ARTICLE_FROM_STORE
 } from './news.types';
+
+export const selectNews = ({ News }) => ({
+  list: News.list,
+  loading: News.newsLoading,
+  newsArticle: News.newsArticle
+});
 
 export const initialState = {
   list: [],
   newsArticle: null,
   newsLoading: false,
-  newsError: null,
-  pagination: {
-    currentPage: 0,
-    newsPerPage: 6,
-    pagesCount: 1
-  }
+  newsError: null
 };
 
 const newsReducer = (state = initialState, action = {}) => {
@@ -42,30 +41,11 @@ const newsReducer = (state = initialState, action = {}) => {
       ...state,
       newsError: action.payload
     };
-  case SET_CURRENT_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        currentPage: action.payload - 1
-      }
-    };
-  case SET_NEWS_PER_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        newsPerPage: action.payload
-      }
-    };
-  case SET_PAGES_COUNT:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        pagesCount: action.payload
-      }
-    };
+  case REMOVE_ARTICLE_FROM_STORE:
+    const articles = state.list.filter(
+      (article) => article._id !== action.payload
+    );
+    return { ...state, list: articles };
   default:
     return state;
   }

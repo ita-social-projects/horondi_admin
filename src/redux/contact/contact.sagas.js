@@ -1,5 +1,8 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
+import { setItemsCount, updatePagination } from '../table/table.actions';
+
 import {
   getContacts,
   deleteContact,
@@ -13,8 +16,6 @@ import {
   setContactsLoading,
   setContact,
   setContactsError,
-  setContactsCurrentPage,
-  setContactsPagesCount,
   addContactInStore,
   deleteContactInStore,
   updateContactInStore
@@ -40,21 +41,11 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const { skip, limit, contactsPerPage } = config.contactsPaginationPayload;
-
-export function* handleContactsLoad({
-  payload = {
-    skip: 1,
-    limit: 1,
-    contactsPerPage: 1
-  }
-}) {
+export function* handleContactsLoad({ payload: { skip, limit } }) {
   try {
     yield put(setContactsLoading(true));
-    const contacts = yield call(getContacts, payload.skip, payload.limit);
-    yield put(
-      setContactsPagesCount(Math.ceil(contacts.count / payload.contactsPerPage))
-    );
+    const contacts = yield call(getContacts, skip, limit);
+    yield put(setItemsCount(contacts.count));
     yield put(setContacts(contacts.items));
     yield put(setContactsLoading(false));
   } catch (error) {
@@ -90,19 +81,10 @@ export function* handleAddContact({ payload }) {
 export function* handleContactDelete({ payload }) {
   try {
     yield put(setContactsLoading(true));
-
     yield call(deleteContact, payload);
     yield put(deleteContactInStore(payload));
-
-    const contacts = yield call(getContacts, skip, limit);
-    yield put(
-      setContactsPagesCount(Math.ceil(contacts.count / contactsPerPage))
-    );
-    yield put(setContactsCurrentPage(1));
-    yield put(setContacts(contacts.items));
-
+    yield put(updatePagination());
     yield put(setContactsLoading(false));
-
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleContactsError, error);

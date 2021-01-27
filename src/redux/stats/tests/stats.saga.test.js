@@ -1,5 +1,5 @@
 import { expectSaga } from 'redux-saga-test-plan';
-import { call, select } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
 import { combineReducers } from 'redux';
 import {
@@ -47,8 +47,6 @@ import {
   setSnackBarStatus
 } from '../../snackbar/snackbar.actions';
 
-import { selectStatsDate } from '../../selectors/stats.selectors';
-
 import { statsReducer as Stats } from '../stats.reducer';
 import Snackbar from '../../snackbar/snackbar.reducer';
 
@@ -87,15 +85,12 @@ describe('Stats saga test', () => {
       }));
 
   it('should load orders statistic', () =>
-    expectSaga(handleOrdersStatisticLoad)
+    expectSaga(handleOrdersStatisticLoad, { payload: mockDate })
       .withReducer(combineReducers({ Stats }), {
         Stats: initialState
       })
       .put(setUpdatingDoughnutData(true))
-      .provide([
-        [select(selectStatsDate), mockDate],
-        [call(getOrdersStats, mockDate), mockDoughnutOrders]
-      ])
+      .provide([[call(getOrdersStats, mockDate), mockDoughnutOrders]])
       .put(setAllOrdersStats(mockDoughnutOrders))
       .put(setUpdatingDoughnutData(false))
       .hasFinalState({
@@ -111,19 +106,18 @@ describe('Stats saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load paid orders', () =>
-    expectSaga(handlePaidOrdersLoad)
+    expectSaga(handlePaidOrdersLoad, { payload: mockDate })
       .withReducer(combineReducers({ Stats }), {
         Stats: initialState
       })
       .put(setUpdatingBarData(true))
-      .provide([
-        [select(selectStatsDate), mockDate],
-        [call(getPaidOrdersStats, mockDate), mockPaidOrders]
-      ])
+      .provide([[call(getPaidOrdersStats, mockDate), mockPaidOrders]])
       .put(setPaidOrdersStats(mockPaidOrders))
       .put(setUpdatingBarData(false))
       .hasFinalState({
@@ -139,19 +133,18 @@ describe('Stats saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load users statistic', () =>
-    expectSaga(handleUsersStatisticLoad)
+    expectSaga(handleUsersStatisticLoad, { payload: mockDate })
       .withReducer(combineReducers({ Stats }), {
         Stats: initialState
       })
       .put(setUpdatingBarData(true))
-      .provide([
-        [select(selectStatsDate), mockDate],
-        [call(getUsersByDays, mockDate), mockUsers]
-      ])
+      .provide([[call(getUsersByDays, mockDate), mockUsers]])
       .put(setUsersByDays(mockUsers))
       .put(setUpdatingBarData(false))
       .hasFinalState({
@@ -167,7 +160,9 @@ describe('Stats saga test', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should handle stats errors', () =>

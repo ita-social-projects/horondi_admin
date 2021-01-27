@@ -8,29 +8,11 @@ import {
   SET_PATTERN,
   UPDATE_PATTERN,
   SET_PATTERN_ERROR,
-  SET_PATTERNS_CURRENT_PAGE,
-  SET_PATTERNS_PER_PAGE,
-  SET_PATTERNS_PAGES_COUNT,
   REMOVE_PATTERN_FROM_STORE
 } from './pattern.types';
 
 export const setPatterns = (payload) => ({
   type: SET_PATTERNS,
-  payload
-});
-
-export const setPatternsCurrentPage = (payload) => ({
-  type: SET_PATTERNS_CURRENT_PAGE,
-  payload
-});
-
-export const setPatternsPerPage = (payload) => ({
-  type: SET_PATTERNS_PER_PAGE,
-  payload
-});
-
-export const setPagesCount = (payload) => ({
-  type: SET_PATTERNS_PAGES_COUNT,
   payload
 });
 

@@ -20,9 +20,8 @@ import {
   mockError,
   statuses,
   mockModelState,
-  pagesCount,
-  mockSnackbarState,
-  mockModelToUpdate
+  mockModelToUpdate,
+  mockTableState
 } from './model.variables';
 
 import {
@@ -30,9 +29,10 @@ import {
   setModelLoading,
   setModel,
   setModelError,
-  setPagesCount,
   removeModelFromStore
 } from '../model.actions';
+
+import { setItemsCount, updatePagination } from '../../table/table.actions';
 
 import {
   getAllModels,
@@ -42,14 +42,15 @@ import {
   getModelById
 } from '../model.operations';
 
+import { handleCategoriesLoad } from '../../categories/categories.sagas';
+
 import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../snackbar/snackbar.actions';
+  handleSuccessSnackbar,
+  handleErrorSnackbar
+} from '../../snackbar/snackbar.sagas';
 
 import Model from '../model.reducer';
-import Snackbar from '../../snackbar/snackbar.reducer';
+import Table from '../../table/table.reducer';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -60,7 +61,10 @@ const {
 describe('Test model sagas', () => {
   it('should load all models', () =>
     expectSaga(handleModelsLoad, { payload: mockModelsLoadPayload })
-      .withReducer(combineReducers({ Model }), { Model: mockModelState })
+      .withReducer(combineReducers({ Model, Table }), {
+        Model: mockModelState,
+        Table: mockTableState
+      })
       .put(setModelLoading(true))
       .provide([
         [
@@ -72,17 +76,17 @@ describe('Test model sagas', () => {
           mockModels
         ]
       ])
-      .put(setPagesCount(pagesCount))
+      .put(setItemsCount(mockModels.count))
       .put(setModels(mockModels.items))
       .put(setModelLoading(false))
       .hasFinalState({
         Model: {
           ...mockModelState,
-          pagination: {
-            ...mockModelState.pagination,
-            pagesCount
-          },
           list: mockModels.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: mockModels.count
         }
       })
       .run()
@@ -98,7 +102,10 @@ describe('Test model sagas', () => {
     expectSaga(handleModelLoad, { payload: mockId })
       .withReducer(combineReducers({ Model }), { Model: mockModelState })
       .put(setModelLoading(true))
-      .provide([[call(getModelById, mockId), mockModel]])
+      .provide([
+        [call(getModelById, mockId), mockModel],
+        [call(handleCategoriesLoad)]
+      ])
       .put(setModel(mockModel))
       .put(setModelLoading(false))
       .hasFinalState({
@@ -113,30 +120,24 @@ describe('Test model sagas', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should add model', () =>
     expectSaga(handleAddModel, { payload: mockModel })
-      .withReducer(combineReducers({ Model, Snackbar }), {
-        Model: mockModelState,
-        Snackbar: mockSnackbarState
+      .withReducer(combineReducers({ Model }), {
+        Model: mockModelState
       })
       .put(setModelLoading(true))
-      .provide([[call(createModel, mockModel)]])
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_ADD_STATUS))
-      .put(setSnackBarStatus(true))
+      .provide([
+        [call(createModel, mockModel)],
+        [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
+      ])
       .put(push('/models'))
       .hasFinalState({
         Model: {
           ...mockModelState,
           modelLoading: true
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'success',
-          snackBarMessage: SUCCESS_ADD_STATUS
         }
       })
       .run()
@@ -144,35 +145,30 @@ describe('Test model sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(5);
-        expect(analysisCall).toHaveLength(3);
+        expect(analysisPut).toHaveLength(2);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should delete model', () =>
     expectSaga(handleModelDelete, { payload: mockId })
-      .withReducer(combineReducers({ Model, Snackbar }), {
+      .withReducer(combineReducers({ Model }), {
         Model: {
           ...mockModelState,
           list: mockModels.items
-        },
-        Snackbar: mockSnackbarState
+        }
       })
       .put(setModelLoading(true))
-      .provide([[call(deleteModel, mockId)]])
+      .provide([
+        [call(deleteModel, mockId)],
+        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
+      ])
       .put(removeModelFromStore(mockId))
+      .put(updatePagination())
       .put(setModelLoading(false))
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_DELETE_STATUS))
-      .put(setSnackBarStatus(true))
       .hasFinalState({
         Model: {
           ...mockModelState,
           list: []
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'success',
-          snackBarMessage: SUCCESS_DELETE_STATUS
         }
       })
       .run()
@@ -180,31 +176,25 @@ describe('Test model sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(6);
-        expect(analysisCall).toHaveLength(3);
+        expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should update model', () =>
     expectSaga(handleModelUpdate, { payload: mockModelToUpdate })
-      .withReducer(combineReducers({ Model, Snackbar }), {
-        Model: mockModelState,
-        Snackbar: mockSnackbarState
+      .withReducer(combineReducers({ Model }), {
+        Model: mockModelState
       })
       .put(setModelLoading(true))
-      .provide([[call(updateModel, mockModelToUpdate)]])
-      .put(setSnackBarSeverity('success'))
-      .put(setSnackBarMessage(SUCCESS_UPDATE_STATUS))
-      .put(setSnackBarStatus(true))
+      .provide([
+        [call(updateModel, mockModelToUpdate)],
+        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
+      ])
       .put(push('/models'))
       .hasFinalState({
         Model: {
           ...mockModelState,
           modelLoading: true
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'success',
-          snackBarMessage: SUCCESS_UPDATE_STATUS
         }
       })
       .run()
@@ -212,40 +202,32 @@ describe('Test model sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(5);
-        expect(analysisCall).toHaveLength(3);
+        expect(analysisPut).toHaveLength(2);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should handle models error', () =>
     expectSaga(handleModelError, mockError)
-      .withReducer(combineReducers({ Model, Snackbar }), {
+      .withReducer(combineReducers({ Model }), {
         Model: {
           ...mockModelState,
           modelLoading: true
-        },
-        Snackbar: mockSnackbarState
+        }
       })
+      .provide([[call(handleErrorSnackbar, mockError.message)]])
       .put(setModelLoading(false))
       .put(setModelError({ e: mockError }))
-      .put(setSnackBarSeverity('error'))
-      .put(setSnackBarMessage(mockError.message))
-      .put(setSnackBarStatus(true))
       .hasFinalState({
         Model: {
           ...mockModelState,
           modelLoading: false,
           modelError: { e: mockError }
-        },
-        Snackbar: {
-          snackBarStatus: true,
-          snackBarSeverity: 'error',
-          snackBarMessage: mockError.message
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(5);
+        expect(analysisPut).toHaveLength(2);
       }));
 });

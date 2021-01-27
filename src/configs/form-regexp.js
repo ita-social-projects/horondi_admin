@@ -1,5 +1,5 @@
 const formRegExp = {
-  patternMaterial: '^[A-Za-z][A-Za-z0-9]*$',
+  patternMaterial: '^[A-Za-z0-9]*$',
   email:
     '^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$',
   pass: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
@@ -11,6 +11,9 @@ const formRegExp = {
   userName: /[а-яА-Я]{2,}/g,
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
   userStatuses: /(Активний|Неактивний)/g,
-  hexString: /^#[0-9a-f]{3,6}$/i
+  hexString: /^#[0-9a-f]{3,6}$/i,
+  uaNameCreation: /^[а-яїієґ0-9]+$/i,
+  enNameCreation: /^[a-z0-9]+$/i,
+  categoryCode: /^[a-z0-9|-]/i
 };
 export default formRegExp;

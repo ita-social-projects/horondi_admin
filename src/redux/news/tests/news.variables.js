@@ -4,12 +4,17 @@ const mockNewsState = {
   list: [],
   newsArticle: null,
   newsLoading: false,
-  newsError: null,
+  newsError: null
+};
+
+const mockTableState = {
+  dense: false,
   pagination: {
     currentPage: 0,
-    newsPerPage: 6,
-    pagesCount: 1
-  }
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30]
+  },
+  itemsCount: 0
 };
 
 const mockSnackbarState = {
@@ -79,14 +84,20 @@ const mockNews = {
 };
 
 const mockArticle = mockNews.items[0];
+const mockUpload = '';
+const skip = 0;
+const limit = 10;
 
-const mockNewsLoadPayload = {
-  skip: 0,
-  limit: 10,
-  newsPerPage: 10
+const mockAddNewsPayload = {
+  article: mockArticle,
+  upload: mockUpload
 };
 
-const pagesCount = Math.ceil(mockNews.count / mockNewsLoadPayload.newsPerPage);
+const mockNewsLoadPayload = {
+  skip,
+  limit,
+  newsPerPage: 10
+};
 
 const statuses = {
   SUCCESS_ADD_STATUS: 'Успішно додано!',
@@ -99,6 +110,8 @@ const mockError = {
 };
 
 export {
+  skip,
+  limit,
   mockNews,
   mockSnackbarState,
   mockNewsState,
@@ -106,7 +119,8 @@ export {
   mockNewsLoadPayload,
   mockArticle,
   mockFile,
-  pagesCount,
   statuses,
-  mockError
+  mockError,
+  mockTableState,
+  mockAddNewsPayload
 };

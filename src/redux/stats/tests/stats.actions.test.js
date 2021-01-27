@@ -98,8 +98,9 @@ describe('stats tests', () => {
   });
 
   it('should get all all orders stats', () => {
-    expect(getAllOrdersStats()).toEqual({
-      type: GET_ALL_ORDERS_STATS
+    expect(getAllOrdersStats(dateValue)).toEqual({
+      type: GET_ALL_ORDERS_STATS,
+      payload: dateValue
     });
   });
 
@@ -111,8 +112,9 @@ describe('stats tests', () => {
   });
 
   it('should get paid order stats ', () => {
-    expect(getPaidOrdersStats()).toEqual({
-      type: GET_PAID_ORDERS_STATS
+    expect(getPaidOrdersStats(dateValue)).toEqual({
+      type: GET_PAID_ORDERS_STATS,
+      payload: dateValue
     });
   });
 
@@ -145,8 +147,9 @@ describe('stats tests', () => {
   });
 
   it('should get users by days', () => {
-    expect(getUsersByDays()).toEqual({
-      type: GET_USERS_STATS
+    expect(getUsersByDays(dateValue)).toEqual({
+      type: GET_USERS_STATS,
+      payload: dateValue
     });
   });
 });

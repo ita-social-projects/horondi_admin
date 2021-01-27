@@ -24,7 +24,7 @@ import getTime from '../../utils/getTime';
 import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
 
-const { labels, titles, messages, tableHeadRowTitles, buttonTitles } = config;
+const { labels, titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
 
 const tableTitles = tableHeadRowTitles.emailQuestions;
@@ -68,7 +68,7 @@ const EmailQuestionsList = () => {
       dispatch(closeDialog());
       dispatch(deleteEmailQuestions([id]));
     };
-    openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE, '');
+    openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE);
   };
 
   const changePaginationHandler = (e, value) =>
@@ -78,13 +78,7 @@ const EmailQuestionsList = () => {
     if (status === labels.emailQuestionsLabels.en.SPAM) {
       const handler = () => dispatch(closeDialog());
 
-      openSuccessSnackbar(
-        handler,
-        messages.ERROR,
-        EMAIL_QUESTION_SPAM_DETAILS,
-        buttonTitles.UNDERSTAND,
-        false
-      );
+      openSuccessSnackbar(handler, EMAIL_QUESTION_SPAM_DETAILS, messages.ERROR);
     } else {
       dispatch(setEmailQuestionLoading(true));
       dispatch(push(`/email-answer/${id}`));

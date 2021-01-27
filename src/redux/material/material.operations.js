@@ -19,7 +19,7 @@ const materialRequest = `
     value
   }
   purpose
-  color {
+  colors {
     _id
     name {
       lang
@@ -164,7 +164,7 @@ export const updateMaterial = async (id, material) => {
             additionalPrice {
               value
             }
-            color {
+            colors {
               _id
             }
           }

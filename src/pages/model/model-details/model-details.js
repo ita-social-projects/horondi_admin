@@ -4,17 +4,15 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { useStyles } from './model-details.styles';
 import LoadingBar from '../../../components/loading-bar';
-import ModelForm from '../../../components/model-form';
+import ModelForm from '../../../components/forms/model-form';
 import { getModel } from '../../../redux/model/model.actions';
+import { selectModel } from '../../../redux/selectors/model.selectors';
 
 const ModelDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
-  const { loading, model } = useSelector(({ Model }) => ({
-    loading: Model.modelLoading,
-    model: Model.model
-  }));
+  const { loading, model } = useSelector(selectModel);
   const styles = useStyles();
 
   useEffect(() => {

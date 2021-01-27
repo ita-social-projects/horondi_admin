@@ -1,6 +1,6 @@
 const formStyles = (theme) => ({
   saveButton: {
-    margin: theme.spacing(2)
+    marginLeft: theme.spacing(2)
   },
 
   inputError: {
@@ -40,8 +40,7 @@ const formStyles = (theme) => ({
 
   imageUpload: {
     fontSize: 14,
-    marginLeft: '10px',
-    color: 'rgba(0, 0, 0, 0.54)'
+    marginLeft: '10px'
   },
   imageUploadAvatar: {
     padding: '10px',

@@ -59,21 +59,23 @@ const TableContainerRow = ({
         </TableCell>
       )}
       {tableCells}
-      <TableCell>
-        {showEdit && (
-          <CustomizedEditIcon
-            size={iconSize}
-            onClickHandler={editHandler}
-            data-cy='edit-btn'
-          />
-        )}
-        {showDelete && (
-          <CustomizedDeleteIcon
-            size={iconSize}
-            onClickHandler={deleteHandler}
-          />
-        )}
-      </TableCell>
+      {(showEdit || showDelete) && (
+        <TableCell>
+          {showEdit && (
+            <CustomizedEditIcon
+              size={iconSize}
+              onClickHandler={editHandler}
+              data-cy='edit-btn'
+            />
+          )}
+          {showDelete && (
+            <CustomizedDeleteIcon
+              size={iconSize}
+              onClickHandler={deleteHandler}
+            />
+          )}
+        </TableCell>
+      )}
     </TableRow>
   );
 };

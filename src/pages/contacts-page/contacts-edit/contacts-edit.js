@@ -11,16 +11,14 @@ import {
   updateContact
 } from '../../../redux/contact/contact.actions';
 
-import ContactsForm from '../../../components/contacts-form';
+import ContactsForm from '../../../components/forms/contacts-form';
+import { contactSelector } from '../../../redux/selectors/contacts.selectors';
 
 const { languages } = config;
 
 const ContactsEdit = ({ match }) => {
   const dispatch = useDispatch();
-  const { loading, contact } = useSelector(({ Contact }) => ({
-    loading: Contact.contactsLoading,
-    contact: Contact.contact
-  }));
+  const { loading, contact } = useSelector(contactSelector);
 
   const [contactFormValues, setContactFormValues] = useState({
     phoneNumber: '',

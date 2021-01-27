@@ -3,18 +3,16 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from '../material-add/material-add.styles';
 import LoadingBar from '../../../components/loading-bar';
-import MaterialForm from '../../../components/material-form';
+import MaterialForm from '../../../components/forms/material-form';
 import { getMaterial } from '../../../redux/material/material.actions';
+import { materialSelector } from '../../../redux/selectors/material.selectors';
 
 const MaterialDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
 
-  const { loading, material } = useSelector(({ Material }) => ({
-    loading: Material.materialLoading,
-    material: Material.material
-  }));
+  const { loading, material } = useSelector(materialSelector);
   const styles = useStyles();
 
   useEffect(() => {
@@ -48,6 +46,14 @@ MaterialDetails.propTypes = {
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
+    colors: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        colorHex: PropTypes.string,
+        name: PropTypes.arrayOf(valueShape),
+        simpleName: PropTypes.arrayOf(valueShape)
+      })
+    ),
     purpose: PropTypes.string,
     available: PropTypes.bool
   })

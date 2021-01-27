@@ -1,10 +1,12 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
+import { setItemsCount, updatePagination } from '../table/table.actions';
+
 import {
   setMaterials,
   setMaterial,
   setMaterialError,
-  setMaterialsPagesCount,
   setMaterialLoading,
   removeMaterialFromStore
 } from './material.actions';
@@ -50,11 +52,7 @@ export function* handleMaterialsLoad({ payload }) {
       payload.skip,
       payload.limit
     );
-    yield put(
-      setMaterialsPagesCount(
-        Math.ceil(materials.count / payload.materialsPerPage)
-      )
-    );
+    yield put(setItemsCount(materials.count));
     yield put(setMaterials(materials.items));
     yield put(setMaterialLoading(false));
   } catch (error) {
@@ -90,6 +88,7 @@ export function* handleMaterialDelete({ payload }) {
     yield call(deleteMaterial, payload);
     yield put(setMaterialLoading(false));
     yield put(removeMaterialFromStore(payload));
+    yield put(updatePagination());
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleMaterialError, error);

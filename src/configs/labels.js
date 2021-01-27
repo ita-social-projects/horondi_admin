@@ -3,6 +3,7 @@ import { mapToLanguages } from '../utils/map-languages';
 const labels = {
   sort: 'Сортувати за',
   search: 'Шукати',
+  goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
     guestUser: 'Гість'
@@ -13,21 +14,45 @@ const labels = {
     text: 'Текст'
   },
   model: {
-    name: mapToLanguages('Назва', 'Name'),
-    description: mapToLanguages('Опис', 'Description'),
+    name: {
+      ua: 'Назва',
+      en: 'Name'
+    },
+    description: {
+      ua: 'Опис',
+      en: 'Description'
+    },
     image: 'Фото моделі',
-    category: 'Категорія',
+    availableCategory: 'Категорія',
     available: 'Доступний',
     show: 'Показати',
+    defaultElement: 'За замовчуванням',
+    availableForConstructor: 'Доступний для конструктора',
+    constructorBasic: 'Основа',
+    constructorPattern: 'Гобелен',
+    constructorFrontPocket: 'Передня кишеня',
+    constructorBottom: 'Низ',
+    constructorPhoto: 'Фото для конструктора',
+    baseConstructorElementPrice: 'Базова ціна',
+    constructorMaterial: 'Матеріал',
+    constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
     showEnable: 'Так',
-    showDisable: 'Ні'
+    showDisable: 'Ні',
+    availablePatternsForConstructor: 'Доступні патерни для контсруктора',
+    constructorName: {
+      ua: 'Назва елементу конструктора',
+      en: 'Constructor element name'
+    }
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
     categoryCode: 'Код категорії',
-    categoryName: 'Назва категорії'
+    categoryName: {
+      ua: 'Назва категорії',
+      en: 'Category name'
+    }
   },
   header: {
     name: mapToLanguages("І'мя", 'Name'),
@@ -40,9 +65,18 @@ const labels = {
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',
+    constructorImgText: 'Фото для конструктора',
     form: {
       name: mapToLanguages("І'мя", 'Name'),
       description: mapToLanguages('Опис', 'Description')
+    },
+    patternName: {
+      ua: 'Назва гобелену',
+      en: 'Pattern name'
+    },
+    patternDescription: {
+      ua: 'Опис гобелену',
+      en: 'Pattern description'
     }
   },
   material: {

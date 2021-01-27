@@ -3,9 +3,6 @@ import {
   SET_CATEGORY_LOADING,
   SET_CATEGORY,
   SET_CATEGORY_ERROR,
-  SET_CATEGORIES_CURRENT_PAGE,
-  SET_CATEGORIES_PER_PAGE,
-  SET_CATEGORIES_PAGES_COUNT,
   REMOVE_CATEGORY_FROM_STORE,
   TOGGLE_CATEGORY_DELETE_DIALOG,
   SET_CATEGORY_DELETE_ID,
@@ -19,12 +16,7 @@ export const initialState = {
   categoryError: null,
   isDeleteDialogOpen: false,
   deleteId: null,
-  switchId: null,
-  pagination: {
-    currentPage: 0,
-    categoriesPerPage: 6,
-    pagesCount: 1
-  }
+  switchId: null
 };
 
 const categoryReducer = (state = initialState, action = {}) => {
@@ -48,30 +40,6 @@ const categoryReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       categoryError: action.payload
-    };
-  case SET_CATEGORIES_CURRENT_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        currentPage: action.payload - 1
-      }
-    };
-  case SET_CATEGORIES_PER_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        categoriesPerPage: action.payload
-      }
-    };
-  case SET_CATEGORIES_PAGES_COUNT:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        pagesCount: action.payload
-      }
     };
   case REMOVE_CATEGORY_FROM_STORE:
     const categories = state.categories.filter(
