@@ -80,7 +80,7 @@ const useProductValidation = (
     ...yupSpeciesSchema,
     ...yupPriceSchema
   });
-  console.log(formikSpeciesValues);
+
   const formikValues = {
     ...formikInfoValues,
     ...formikSpeciesValues,
