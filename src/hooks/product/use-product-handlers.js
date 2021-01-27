@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../../configs';
 import useProductSpecies from './use-product-species';
@@ -8,13 +8,10 @@ const selectAdditionsLength = ({ additions }) => additions.length;
 const { languages } = config;
 
 const useProductHandlers = () => {
-  const { filterData, modelsForSelectedCategory } = useSelector(
-    ({ Products }) => ({
-      filterData: Products.filterData,
-      modelsForSelectedCategory:
-        Products.productSpecies.modelsForSelectedCategory
-    })
-  );
+  const { modelsForSelectedCategory } = useSelector(({ Products }) => ({
+    filterData: Products.filterData,
+    modelsForSelectedCategory: Products.productSpecies.modelsForSelectedCategory
+  }));
 
   const [primaryImage, setPrimaryImage] = useState('');
   const [additionalImages, setAdditionalImages] = useState([]);
