@@ -40,7 +40,7 @@ const ProductEdit = ({ id }) => {
     loading ||
     !product.name ||
     !product.name[0].value ||
-    !productOptions.sizes.length ||
+    !product.sizes.length ||
     !categories.length
   ) {
     return <LoadingBar />;

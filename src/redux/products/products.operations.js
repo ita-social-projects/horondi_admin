@@ -47,7 +47,9 @@ const getAllProducts = async (productsState, tableState) => {
               value
             }
             model {
-              value
+              name {
+                value
+              }
             }
             rate
             images {
@@ -58,19 +60,11 @@ const getAllProducts = async (productsState, tableState) => {
                 small
               }
             }
-            colors {
+            pattern {
               name {
                 lang
                 value
               }
-              simpleName {
-                lang
-                value
-              }
-            }
-            pattern {
-              lang
-              value
             }
             category {
               _id
@@ -109,50 +103,24 @@ const getAllFilters = async () => {
       query {
         getProducts {
           items {
-            colors {
-              available
-              code
-              images {
-                medium
-                large
-                small
-                thumbnail
-              }
-              name {
-                lang
-                value
-              }
-              simpleName {
-                lang
-                value
-              }
-            }
             basePrice {
               value
             }
             model {
-              value
+              name {
+                value
+              }
             }
             pattern {
-              lang
-              value
+              name {
+                lang
+                value
+              }
             }
             category {
               _id
               name {
                 value
-              }
-            }
-            options {
-              additions {
-                name {
-                  lang
-                  value
-                }
-                additionalPrice {
-                  value
-                  currency
-                }
               }
             }
           }
@@ -180,41 +148,6 @@ const getProductCategories = async () => {
   return result.data.getAllCategories;
 };
 
-const getProductOptions = async () => {
-  const result = await client.query({
-    query: gql`
-      query {
-        getProductOptions {
-          sizes {
-            _id
-            name
-            heightInCm
-            widthInCm
-            depthInCm
-            volumeInLiters
-            additionalPrice {
-              value
-              currency
-            }
-          }
-          bottomMaterials {
-            _id
-            name {
-              lang
-              value
-            }
-            additionalPrice {
-              value
-              currency
-            }
-          }
-        }
-      }
-    `
-  });
-  return result.data.getProductOptions;
-};
-
 const getModelsByCategory = async (payload) => {
   const result = await client.query({
     query: gql`
@@ -236,104 +169,131 @@ const getModelsByCategory = async (payload) => {
 };
 
 const productQuery = `
-    ... on Product {
-            _id
-            category {
-              _id
-              name {
-                lang
-                value
-              }
-            } 
-            model {
-              value
-            }
-            name {
-              lang
-              value
-            }
-            description {
-              lang
-              value
-            }
-            mainMaterial {
-              lang
-              value
-            }
-            innerMaterial {
-              lang
-              value
-            }
-            strapLengthInCm
-            images {
-              primary {
-                large
-                medium
-                small
-                thumbnail
-              }
-              additional {
-                large
-                medium
-                small
-                thumbnail
-              }
-            }
-            colors {
-              simpleName {
-                lang
-                value
-              }
-            }
-            pattern {
-              lang
-              value
-            }
-            closure {
-              lang
-              value
-            }
-            basePrice {
-              value
-              currency
-            }
-            options {
-              size {
-                name
-                heightInCm
-                widthInCm
-                depthInCm
-                volumeInLiters
-                available
-                additionalPrice {
-                  value
-                  currency
-                }
-              }
-              bottomMaterial {
-                name {
-                  lang
-                  value
-                }
-                available
-                additionalPrice {
-                  value
-                  currency
-                }
-              }
-              additions {
-                name {
-                  lang
-                  value
-                }
-                available
-                additionalPrice {
-                  value
-                  currency
-                }
-              }
-            }
-          }
+... on Product {
+  _id
+  category {
+    _id
+    name {
+      lang
+      value
+    }
+  }
+  model {
+    name {
+      value
+    }
+  }
+  name {
+    lang
+    value
+  }
+  description {
+    lang
+    value
+  }
+  mainMaterial {
+    material {
+      name {
+        lang
+        value
+      }
+    }
+    color {
+      colorHex
+      simpleName {
+        value
+        lang
+      }
+      name {
+        value
+        lang
+      }
+    }
+  }
+  innerMaterial {
+    material {
+      name {
+        lang
+        value
+      }
+    }
+    color {
+      colorHex
+      simpleName {
+        value
+        lang
+      }
+      name {
+        value
+        lang
+      }
+    }
+  }
+  strapLengthInCm
+  images {
+    primary {
+      large
+      medium
+      small
+      thumbnail
+    }
+    additional {
+      large
+      medium
+      small
+      thumbnail
+    }
+  }
+  pattern {
+    name {
+      lang
+      value
+    }
+  }
+  closure {
+    name {
+      lang
+      value
+    }
+  }
+  basePrice {
+    value
+    currency
+  }
+  sizes {
+    name
+    heightInCm
+    widthInCm
+    depthInCm
+    volumeInLiters
+    available
+    additionalPrice {
+      value
+      currency
+    }
+  }
+  bottomMaterial {
+    material {
+      name {
+        lang
+        value
+      }
+    }
+    color {
+      colorHex
+      simpleName {
+        value
+        lang
+      }
+      name {
+        value
+        lang
+      }
+    }
+  }
+
+  available
+}
 `;
 
 const addProduct = async (state) => {
@@ -441,7 +401,6 @@ export {
   getAllProducts,
   getAllFilters,
   getProductCategories,
-  getProductOptions,
   getModelsByCategory,
   addProduct,
   deleteProduct,

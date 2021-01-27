@@ -15,7 +15,6 @@ import {
   clearProductToSend,
   setProductsError,
   setProductCategories,
-  setProductOptions,
   setModels,
   setFilesToUpload,
   setProduct,
@@ -34,7 +33,6 @@ import {
   mockModels,
   mockPrimaryImage,
   mockProduct,
-  mockProductOptions,
   mockProductsList,
   mockProductsToAddState,
   mockUploadToRemoveImages
@@ -202,15 +200,6 @@ describe('Test products reducers', () => {
         ...initialState.productSpecies,
         categories: mockCategoriesList
       }
-    });
-  });
-
-  it('should set product options into state', () => {
-    expect(
-      productsReducer(initialState, setProductOptions(mockProductOptions))
-    ).toEqual({
-      ...initialState,
-      productOptions: mockProductOptions
     });
   });
 

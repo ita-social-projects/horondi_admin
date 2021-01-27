@@ -25,13 +25,16 @@ const ProductAddSpecies = ({
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { productToSend, modelsForSelectedCategory } = useSelector(
-    ({ Products }) => ({
-      productToSend: Products.productToSend,
-      modelsForSelectedCategory:
-        Products.productSpecies.modelsForSelectedCategory
-    })
-  );
+  const {
+    productToSend,
+    modelsForSelectedCategory,
+    strapLengthInCm
+  } = useSelector(({ Products }) => ({
+    productToSend: Products.productToSend,
+    modelsForSelectedCategory:
+      Products.productSpecies.modelsForSelectedCategory,
+    strapLengthInCm: Products.selectedProduct.strapLengthInCm
+  }));
 
   const onSubmit = (value) => {
     dispatch(
@@ -58,10 +61,7 @@ const ProductAddSpecies = ({
   const formikSpeciesValues = {
     category: productToSend.category,
     pattern: productToSend.pattern.length ? productToSend.pattern[0].value : '',
-    colors: productToSend.colors.length
-      ? productToSend.colors[0].simpleName[0].value
-      : '',
-    subcategory: productToSend.subcategory,
+    strapLengthInCm: strapLengthInCm || 0,
     model: selectedModel ? selectedModel.name[0].value : ''
   };
 

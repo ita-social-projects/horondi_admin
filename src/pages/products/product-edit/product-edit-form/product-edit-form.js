@@ -18,7 +18,6 @@ import { useStyles } from './product-edit-form.styles';
 
 import ProductInfoContainer from '../../../../containers/product-info-container';
 import ProductSpeciesContainer from '../../../../containers/product-species-container';
-import ProductOptionsContainer from '../../../../containers/product-options-container';
 
 import {
   deleteProduct,
@@ -58,9 +57,9 @@ const ProductEditForm = () => {
 
   const formikSpeciesValues = {
     category: product.category._id,
-    model: product.model[0].value,
-    pattern: product.pattern[0].value,
-    colors: product.colors[0].simpleName[0].value
+    model: product.model.name[0].value,
+    pattern: product.pattern.name[0].value,
+    strapLengthInCm: product.strapLengthInCm
   };
 
   const formikPriceValue = {
@@ -71,84 +70,29 @@ const ProductEditForm = () => {
 
   const {
     createProductInfo,
-    getColorsToSend,
     getPatternToSend,
     getModelToSend,
     colors: productColors,
     patterns,
     models,
-    options,
     setOptions,
-    selectedOptions,
-    additions: productAdditions
+    selectedOptions
   } = useProductHandlers();
 
-  const uniqueSizes = useMemo(
-    () => [
-      ...new Set(
-        product.options
-          .filter(({ size }) => !!size)
-          .map(({ size: { name } }) => name)
-      )
-    ],
-    [product.options]
-  );
-
-  const uniqueBottomMaterials = useMemo(
-    () => [
-      ...new Set(
-        product.options
-          .filter(({ bottomMaterial: item }) => item && item.available)
-          .map(({ bottomMaterial: item }) => item.name[0].value)
-      )
-    ],
-    [product.options]
-  );
-
-  const uniqueAdditions = useMemo(
-    () => [
-      ...new Set(
-        product.options
-          .filter(({ additions }) => additions.length > 0)
-          .map(
-            ({ additions: [{ available, name }] }) => available && name[0].value
-          )
-      )
-    ],
-    [product.options]
-  );
-
-  useEffect(() => {
-    if (product.options.length) {
-      setOptions({
-        sizes: uniqueSizes,
-        bottomMaterials: uniqueBottomMaterials,
-        additions: !!uniqueAdditions.length
-      });
-    }
-  }, [
-    product.options,
-    setOptions,
-    uniqueBottomMaterials,
-    uniqueAdditions.length,
-    uniqueSizes
-  ]);
-
   const onSubmit = (formValues) => {
-    const { colors, pattern, model, category, basePrice } = formValues;
+    const { strapLengthInCm, pattern, model, category, basePrice } = formValues;
 
     const productInfo = createProductInfo(formValues);
     dispatch(
       updateProduct({
         product: {
           ...productInfo,
-          colors: getColorsToSend(colors),
-          pattern: getPatternToSend(pattern),
+          pattern: getPatternToSend(pattern)._id,
           model: getModelToSend(model)._id,
           images: product.images,
-          options,
           category,
-          basePrice
+          basePrice,
+          strapLengthInCm
         },
         id: product._id
       })
@@ -231,19 +175,17 @@ const ProductEditForm = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={7} xl={9}>
-          <Paper className={styles.paper}>
-            <ProductInfoContainer
-              shouldValidate={shouldValidate}
-              values={values}
-              errors={errors}
-              touched={touched}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              handleSubmit={handleSubmit}
-              toggleFieldsChanged={toggleFieldsChanged}
-              setFieldValue={setFieldValue}
-            />
-          </Paper>
+          <ProductInfoContainer
+            shouldValidate={shouldValidate}
+            values={values}
+            errors={errors}
+            touched={touched}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            handleSubmit={handleSubmit}
+            toggleFieldsChanged={toggleFieldsChanged}
+            setFieldValue={setFieldValue}
+          />
         </Grid>
         <Grid item xs={12}>
           <Paper className={styles.paper}>
@@ -284,20 +226,6 @@ const ProductEditForm = () => {
                 onBlur={handleBlur}
               />
             </Box>
-            <Box mt={3}>
-              <Divider />
-            </Box>
-            <Box mt={3}>
-              <Typography className={styles.title}>
-                {PRODUCT_OPTIONS}
-              </Typography>
-            </Box>
-            <ProductOptionsContainer
-              setOptions={setOptions}
-              selectedOptions={selectedOptions}
-              additions={productAdditions}
-              toggleFieldsChanged={toggleFieldsChanged}
-            />
           </Paper>
         </Grid>
         <CommentsPage productId={product._id} />
