@@ -9,6 +9,10 @@ export const useStyles = makeStyles((theme) => {
     newsItemUpdate: {
       ...itemUpdate
     },
+    inputError: {
+      color: '#e60000',
+      marginLeft: '5px'
+    },
     formContainer: {
       width: '100%',
       padding: 20,

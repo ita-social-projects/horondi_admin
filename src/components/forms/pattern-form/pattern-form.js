@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -15,13 +15,9 @@ import {
 } from '../../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
 
+const { patternName, patternDescription } = config.labels.pattern;
 const map = require('lodash/map');
 
 const {
@@ -29,6 +25,7 @@ const {
   PATTERN_ERROR_MESSAGE,
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
+  CONSTRUCTOR_PHOTO_NOT_PROVIDED,
   PATTERN_EN_NAME_MESSAGE,
   PATTERN_UA_NAME_MESSAGE
 } = config.patternErrorMessages;
@@ -37,10 +34,9 @@ const { SAVE_TITLE } = config.buttonTitles;
 
 const {
   languages,
-  formRegExp: { enNameCreation, uaNameCreation, patternMaterial }
+  formRegExp: { enNameCreation, uaNameCreation, patternMaterial },
+  imagePrefix
 } = config;
-
-const { patternDescription, patternName } = config.labels.pattern;
 
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
@@ -50,8 +46,19 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     setUpload,
     upload,
     patternImage,
-    setPatternImage
+    setPatternImage,
+    constructorImg,
+    setConstructorImg
   } = usePatternHandlers();
+
+  useEffect(() => {
+    if (pattern.images.thumbnail) {
+      setPatternImage(`${imagePrefix}${pattern.images.thumbnail}`);
+    }
+    if (pattern.constructorImg) {
+      setConstructorImg(pattern.constructorImg);
+    }
+  }, [pattern]);
 
   const patternValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
@@ -73,7 +80,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     material: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(PATTERN_ERROR_MESSAGE)
+      .required(PATTERN_ERROR_MESSAGE),
+    patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
+    patternConstructorImage: Yup.string().required(
+      CONSTRUCTOR_PHOTO_NOT_PROVIDED
+    )
   });
 
   const {
@@ -86,6 +97,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   } = useFormik({
     validationSchema: patternValidationSchema,
     initialValues: {
+      patternConstructorImage: pattern.constructorImg || '',
       patternImage: pattern.images.thumbnail || '',
       uaName: pattern.name[0].value || '',
       enName: pattern.name[1].value || '',
@@ -98,21 +110,15 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     onSubmit: () => {
       const newPattern = createPattern(values);
 
-      if (upload instanceof File || pattern.images.thumbnail) {
-        if (isEdit && upload instanceof File) {
-          dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
-          return;
-        }
-        if (isEdit) {
-          dispatch(updatePattern({ id, pattern: newPattern }));
-          return;
-        }
-        dispatch(addPattern({ pattern: newPattern, image: upload }));
+      if (isEdit && upload instanceof File) {
+        dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
         return;
       }
-      dispatch(setSnackBarSeverity('error'));
-      dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
-      dispatch(setSnackBarStatus(true));
+      if (isEdit) {
+        dispatch(updatePattern({ id, pattern: newPattern }));
+        return;
+      }
+      dispatch(addPattern({ pattern: newPattern, image: upload }));
     }
   });
 
@@ -137,18 +143,30 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   ];
 
-  const handleImageLoad = (e) => {
+  const handleImageLoad = (e, callback) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFieldValue('patternImage', event.target.result);
-        setPatternImage(event.target.result);
+        callback(event);
       };
       reader.readAsDataURL(e.target.files[0]);
-      setUpload(e.target.files[0]);
     }
   };
 
+  const handleLoadMainImage = (e) => {
+    handleImageLoad(e, (event) => {
+      setFieldValue('patternImage', event.target.result);
+      setPatternImage(event.target.result);
+    });
+    setUpload(e.target.files[0]);
+  };
+
+  const handleLoadConstructorImage = (e) => {
+    handleImageLoad(e, (event) => {
+      setFieldValue('patternConstructorImage', event.target.result);
+      setConstructorImg(event.target.result);
+    });
+  };
   const inputs = [
     { label: patternName, name: 'name' },
     { label: patternDescription, name: 'description' }
@@ -168,17 +186,41 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
         <Grid item xs={12}>
           <Paper className={styles.patternItemUpdate}>
-            <span className={styles.imageUpload}>
-              {config.labels.pattern.avatarText}
-            </span>
-            <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
-              {patternImage && (
-                <Avatar src={patternImage}>
-                  <Image />
-                </Avatar>
-              )}
+            <div>
+              <span className={styles.imageUpload}>
+                {config.labels.pattern.avatarText}
+              </span>
+              <div className={styles.imageUploadAvatar}>
+                <ImageUploadContainer handler={handleLoadMainImage} />
+                {patternImage && (
+                  <Avatar src={patternImage}>
+                    <Image />
+                  </Avatar>
+                )}
+                {touched.patternImage && errors.patternImage && (
+                  <div className={styles.inputError}>{errors.patternImage}</div>
+                )}
+              </div>
+
+              <span className={styles.imageUpload}>
+                {config.labels.pattern.constructorImgText}
+              </span>
+              <div className={styles.imageUploadAvatar}>
+                <ImageUploadContainer handler={handleLoadConstructorImage} />
+                {constructorImg && (
+                  <Avatar src={constructorImg}>
+                    <Image />
+                  </Avatar>
+                )}
+                {touched.patternConstructorImage &&
+                  errors.patternConstructorImage && (
+                  <div className={styles.inputError}>
+                    {errors.patternConstructorImage}
+                  </div>
+                )}
+              </div>
             </div>
+
             <TextField
               data-cy='material'
               id='material'
@@ -226,6 +268,7 @@ PatternForm.propTypes = {
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
+    constructorImg: PropTypes.string,
     material: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
   }),
@@ -235,7 +278,8 @@ PatternForm.propTypes = {
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
-    enDescription: PropTypes.string
+    enDescription: PropTypes.string,
+    patternConstructorImage: PropTypes.string
   }),
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
@@ -243,7 +287,8 @@ PatternForm.propTypes = {
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
-    enDescription: PropTypes.string
+    enDescription: PropTypes.string,
+    patternConstructorImage: PropTypes.string
   }),
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
@@ -251,7 +296,8 @@ PatternForm.propTypes = {
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
-    enDescription: PropTypes.string
+    enDescription: PropTypes.string,
+    patternConstructorImage: PropTypes.string
   }),
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -287,6 +333,7 @@ PatternForm.defaultProps = {
     images: {
       thumbnail: ''
     },
+    constructorImg: '',
     material: '',
     available: false,
     handmade: false

@@ -6,13 +6,9 @@ import { useStyles } from './products-add.styles';
 
 import useProductHandlers from '../../../hooks/product/use-product-handlers';
 import CustomizedStepper from '../../../components/customized-stepper/customized-stepper';
-import {
-  getProductSpecies,
-  getProductOptions
-} from '../../../redux/products/products.actions';
+import { getProductSpecies } from '../../../redux/products/products.actions';
 import ProductAddInfo from './product-add-info';
 import ProductAddSpecies from './product-add-species';
-import ProductAddOptions from './product-add-options';
 import ProductAddImages from './product-add-images';
 import ProductAddSubmit from './product-add-submit';
 import ProductAddPrice from './product-add-price';
@@ -25,8 +21,6 @@ const ProductsAdd = () => {
     colors,
     patterns,
     models,
-    selectedOptions,
-    setOptions,
     additions,
     createProductInfo,
     options,
@@ -42,7 +36,6 @@ const ProductsAdd = () => {
 
   useEffect(() => {
     dispatch(getProductSpecies());
-    dispatch(getProductOptions());
   }, [dispatch]);
 
   const [activeStep, setActiveStep] = useState(0);
@@ -86,18 +79,6 @@ const ProductsAdd = () => {
     />
   );
 
-  const productAddOptionsStep = (
-    <ProductAddOptions
-      selectedOptions={selectedOptions}
-      setOptions={setOptions}
-      additions={additions}
-      activeStep={activeStep}
-      handleNext={handleNext}
-      handleBack={handleBack}
-      options={options}
-    />
-  );
-
   const productAddImagesStep = (
     <ProductAddImages
       activeStep={activeStep}
@@ -112,7 +93,6 @@ const ProductsAdd = () => {
 
   const productAddSubmitStep = (
     <ProductAddSubmit
-      selectedOptions={selectedOptions}
       additions={additions}
       activeStep={activeStep}
       handleBack={handleBack}
@@ -124,7 +104,6 @@ const ProductsAdd = () => {
     productAddInfoStep,
     productAddSpeciesStep,
     productAddPriceStep,
-    productAddOptionsStep,
     productAddImagesStep,
     productAddSubmitStep
   ];

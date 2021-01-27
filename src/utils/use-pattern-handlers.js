@@ -7,6 +7,7 @@ const usePatternHandlers = () => {
   const [patternImage, setPatternImage] = useState('');
   const [upload, setUpload] = useState({});
   const [imageName, setImageName] = useState('');
+  const [constructorImg, setConstructorImg] = useState('');
 
   const createPattern = (values) => {
     const newPattern = {
@@ -31,6 +32,7 @@ const usePatternHandlers = () => {
           value: values.enDescription
         }
       ],
+      constructorImg: values.patternConstructorImage,
       material: values.material,
       available: values.available,
       handmade: values.handmade
@@ -45,7 +47,9 @@ const usePatternHandlers = () => {
     upload,
     setUpload,
     imageName,
-    setImageName
+    setImageName,
+    constructorImg,
+    setConstructorImg
   };
 };
 

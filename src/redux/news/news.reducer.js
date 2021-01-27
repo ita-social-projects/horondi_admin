@@ -2,7 +2,8 @@ import {
   SET_NEWS,
   SET_NEWS_LOADING,
   SET_ARTICLE,
-  SET_NEWS_ERROR
+  SET_NEWS_ERROR,
+  REMOVE_ARTICLE_FROM_STORE
 } from './news.types';
 
 export const selectNews = ({ News }) => ({
@@ -40,6 +41,11 @@ const newsReducer = (state = initialState, action = {}) => {
       ...state,
       newsError: action.payload
     };
+  case REMOVE_ARTICLE_FROM_STORE:
+    const articles = state.list.filter(
+      (article) => article._id !== action.payload
+    );
+    return { ...state, list: articles };
   default:
     return state;
   }

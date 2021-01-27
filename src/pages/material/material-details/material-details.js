@@ -46,6 +46,14 @@ MaterialDetails.propTypes = {
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
+    colors: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        colorHex: PropTypes.string,
+        name: PropTypes.arrayOf(valueShape),
+        simpleName: PropTypes.arrayOf(valueShape)
+      })
+    ),
     purpose: PropTypes.string,
     available: PropTypes.bool
   })

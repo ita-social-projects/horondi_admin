@@ -21,8 +21,6 @@ import {
   SET_PRODUCTS_ERROR,
   GET_PRODUCT_SPECIES,
   SET_PRODUCT_CATEGORIES,
-  GET_PRODUCT_OPTIONS,
-  SET_PRODUCT_OPTIONS,
   GET_MODELS_BY_CATEGORY,
   SET_MODELS,
   ADD_PRODUCT,
@@ -142,15 +140,6 @@ export const getProductSpecies = () => ({
 export const setProductCategories = (payload) => ({
   type: SET_PRODUCT_CATEGORIES,
   payload
-});
-
-export const setProductOptions = (payload) => ({
-  type: SET_PRODUCT_OPTIONS,
-  payload
-});
-
-export const getProductOptions = () => ({
-  type: GET_PRODUCT_OPTIONS
 });
 
 export const getModelsByCategory = (payload) => ({

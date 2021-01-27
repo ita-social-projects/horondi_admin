@@ -3,11 +3,8 @@ import {
   setMaterials,
   setMaterialError,
   setMaterialLoading,
-  setNewColorToStore,
   setMaterial,
-  removeMaterialFromStore,
-  showColorDialogWindow,
-  clearColors
+  removeMaterialFromStore
 } from '../material.actions';
 import { mockMaterials } from './material.variables';
 import { mockId } from '../../model/tests/model.variables';
@@ -56,24 +53,6 @@ describe('material reducer tests', () => {
     expect(materialReducer(state, removeMaterialFromStore(mockId))).toEqual({
       ...initialState,
       list: filteredMaterials
-    });
-  });
-  it('should add new color to store', () => {
-    expect(materialReducer(initialState, setNewColorToStore([]))).toEqual({
-      ...initialState,
-      colors: [...[], []]
-    });
-  });
-  it('should set showColodialogWindow to true', () => {
-    expect(materialReducer(initialState, showColorDialogWindow(true))).toEqual({
-      ...initialState,
-      showColorDialogWindow: true
-    });
-  });
-  it('remove colors from the store', () => {
-    expect(materialReducer(initialState, clearColors())).toEqual({
-      ...initialState,
-      colors: []
     });
   });
 });

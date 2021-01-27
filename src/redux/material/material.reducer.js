@@ -4,19 +4,14 @@ import {
   SET_MATERIAL_LOADING,
   SET_MATERIAL_ERROR,
   REMOVE_MATERIAL_FROM_STORE,
-  SHOW_COLOR_DIALOG_WINDOW,
-  COLOR_DIALOG_DATA_TO_STORE,
-  CLEAR_COLORS,
-  SET_MATERIALS_COLORS,
-  SET_MATERIALS_COLOR,
-  SET_EDIT_MATERIAL_ID,
-  REMOVE_MATERIAL_COLOR_FROM_STORE
+  SET_COLOR_FILTER
 } from './material.types';
 
 export const selectMaterial = ({ Material }) => ({
   list: Material.list,
   loading: Material.materialLoading,
-  material: Material.material
+  material: Material.material,
+  filter: Material.filter
 });
 
 export const initialState = {
@@ -24,11 +19,9 @@ export const initialState = {
   material: null,
   materialLoading: false,
   materialError: null,
-  showColorDialogWindow: false,
-  colors: [],
-  materialColors: null,
-  materialColor: null,
-  editMaterialId: ''
+  filter: {
+    colors: []
+  }
 };
 
 const materialReducer = (state = initialState, action = {}) => {
@@ -58,43 +51,14 @@ const materialReducer = (state = initialState, action = {}) => {
       (material) => material._id !== action.payload
     );
     return { ...state, list: materials };
-
-  case COLOR_DIALOG_DATA_TO_STORE:
+  case SET_COLOR_FILTER:
     return {
       ...state,
-      colors: [...state.colors, action.payload]
+      filter: {
+        ...state.filter,
+        colors: action.payload
+      }
     };
-  case SHOW_COLOR_DIALOG_WINDOW: {
-    return {
-      ...state,
-      showColorDialogWindow: action.payload
-    };
-  }
-  case CLEAR_COLORS:
-    return {
-      ...state,
-      colors: []
-    };
-  case SET_MATERIALS_COLORS:
-    return {
-      ...state,
-      materialColors: action.payload
-    };
-  case SET_MATERIALS_COLOR:
-    return {
-      ...state,
-      materialColor: action.payload
-    };
-  case SET_EDIT_MATERIAL_ID:
-    return {
-      ...state,
-      editMaterialId: action.payload
-    };
-  case REMOVE_MATERIAL_COLOR_FROM_STORE:
-    const materialColorList = state.materialColors.colors.filter(
-      (color) => color.code !== action.payload
-    );
-    return { ...state, materialColors: { colors: materialColorList } };
   default:
     return state;
   }

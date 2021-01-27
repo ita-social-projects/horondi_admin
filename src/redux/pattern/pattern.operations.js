@@ -20,6 +20,7 @@ export const getAllPatterns = async (skip, limit) => {
             }
             material
             available
+            constructorImg  
             images {
               thumbnail
             }
@@ -54,6 +55,7 @@ export const getPatternById = async (id) => {
             images {
               thumbnail
             }
+            constructorImg
           }
           ... on Error {
             message
@@ -134,6 +136,7 @@ export const createPattern = async (payload) => {
             }
             material
             available
+            constructorImg
           }
           ... on Error {
             message
@@ -174,6 +177,7 @@ export const updatePattern = async (payload) => {
             }
             material
             available
+            constructorImg
           }
           ... on Error {
             message

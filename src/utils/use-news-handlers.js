@@ -10,6 +10,9 @@ const useNewsHandlers = () => {
     {}
   );
 
+  const [uploadAuthorImage, setUploadAuthorImage] = useState(null);
+  const [uploadNewsImage, setUploadNewsImage] = useState(null);
+
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
 
@@ -61,9 +64,7 @@ const useNewsHandlers = () => {
             value: values.enAuthorName || null
           }
         ],
-        image: {
-          small: values.authorPhoto
-        }
+        image: values.authorPhoto
       },
       title: [
         {
@@ -75,6 +76,7 @@ const useNewsHandlers = () => {
           value: values.enTitle || null
         }
       ],
+      image: values.newsImage,
       text: [
         {
           lang: languages[0],
@@ -85,11 +87,6 @@ const useNewsHandlers = () => {
           value: values.enText || null
         }
       ],
-      images: {
-        primary: {
-          medium: values.newsImage
-        }
-      },
       languages: preferredLanguages,
       date: new Date().toISOString()
     };
@@ -122,7 +119,11 @@ const useNewsHandlers = () => {
     handleTabsChange,
     handleCheckboxChange,
     languageCheckboxes,
-    createArticle
+    createArticle,
+    uploadAuthorImage,
+    setUploadAuthorImage,
+    uploadNewsImage,
+    setUploadNewsImage
   };
 };
 

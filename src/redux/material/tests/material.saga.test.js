@@ -9,10 +9,6 @@ import {
   handleMaterialUpdate,
   handleMaterialDelete,
   handleAddMaterial,
-  handleAddMaterialColor,
-  handleMaterialColorDelete,
-  handleMaterialColorLoad,
-  handleMaterialColorsLoad,
   handleMaterialError
 } from '../material.sagas';
 
@@ -21,12 +17,7 @@ import {
   setMaterial,
   setMaterialError,
   setMaterialLoading,
-  removeMaterialFromStore,
-  clearColors,
-  setMaterialColors,
-  setMaterialColor,
-  getMaterialColors,
-  removeMaterialColorFromStore
+  removeMaterialFromStore
 } from '../material.actions';
 
 import {
@@ -35,13 +26,7 @@ import {
   mockMaterials,
   mockMaterialState,
   mockMaterialsLoadPayload,
-  mockColors,
-  mockColorCode,
-  mockColor,
   statuses,
-  mockMaterialStateWithColors,
-  mockColorToAdd,
-  mockPayloadToDeleteColor,
   mockPayloadToUpdateMaterial,
   mockError,
   mockTableState
@@ -52,11 +37,7 @@ import {
   getMaterialById,
   createMaterial,
   updateMaterial,
-  deleteMaterial,
-  getMaterialColorsById,
-  getMaterialColorByCode,
-  createMaterialColor,
-  deleteMaterialColor
+  deleteMaterial
 } from '../material.operations';
 import { setItemsCount, updatePagination } from '../../table/table.actions';
 
@@ -83,6 +64,7 @@ describe('Test material sagas', () => {
         [
           call(
             getAllMaterials,
+            mockMaterialsLoadPayload.filter,
             mockMaterialsLoadPayload.skip,
             mockMaterialsLoadPayload.limit
           ),
@@ -135,71 +117,21 @@ describe('Test material sagas', () => {
         expect(analysisCall).toHaveLength(1);
       }));
 
-  it('should load all material colors by id', () =>
-    expectSaga(handleMaterialColorsLoad, { payload: mockId })
-      .withReducer(combineReducers({ Material }), {
-        Material: mockMaterialState
-      })
-      .put(setMaterialLoading(true))
-      .provide([[call(getMaterialColorsById, mockId), mockColors]])
-      .put(setMaterialColors(mockColors))
-      .put(setMaterialLoading(false))
-      .hasFinalState({
-        Material: {
-          ...mockMaterialState,
-          materialColors: mockColors
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
-      }));
-
-  it('should load material color by code', () =>
-    expectSaga(handleMaterialColorLoad, { payload: mockColorCode })
-      .withReducer(combineReducers({ Material }), {
-        Material: mockMaterialState
-      })
-      .put(setMaterialLoading(true))
-      .provide([[call(getMaterialColorByCode, mockColorCode), mockColor]])
-      .put(setMaterialColor(mockColor))
-      .put(setMaterialLoading(false))
-      .hasFinalState({
-        Material: {
-          ...mockMaterialState,
-          materialColor: mockColor
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
-      }));
-
   it('should add metarial', () =>
     expectSaga(handleAddMaterial, { payload: mockMaterial })
       .withReducer(combineReducers({ Material }), {
-        Material: mockMaterialStateWithColors
+        Material: mockMaterialState
       })
       .put(setMaterialLoading(true))
       .provide([
         [call(createMaterial, mockMaterial)],
         [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
       ])
-      .put(clearColors())
       .put(push('/materials'))
       .hasFinalState({
         Material: {
-          ...mockMaterialStateWithColors,
-          materialLoading: true,
-          colors: []
+          ...mockMaterialState,
+          materialLoading: true
         }
       })
       .run()
@@ -207,35 +139,7 @@ describe('Test material sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(2);
-      }));
-
-  it('should add metarial color', () =>
-    expectSaga(handleAddMaterialColor, { payload: mockColorToAdd })
-      .withReducer(combineReducers({ Material }), {
-        Material: mockMaterialStateWithColors
-      })
-      .put(setMaterialLoading(true))
-      .provide([
-        [call(createMaterialColor, mockColorToAdd)],
-        [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
-      ])
-      .put(clearColors())
-      .put(setMaterialLoading(false))
-      .put(getMaterialColors(mockColorToAdd.id))
-      .hasFinalState({
-        Material: {
-          ...mockMaterialStateWithColors,
-          colors: []
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(4);
+        expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
       }));
 
@@ -267,40 +171,6 @@ describe('Test material sagas', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
-        expect(analysisCall).toHaveLength(2);
-      }));
-
-  it('should delete material color by code', () =>
-    expectSaga(handleMaterialColorDelete, { payload: mockPayloadToDeleteColor })
-      .withReducer(combineReducers({ Material }), {
-        Material: {
-          ...mockMaterialState,
-          materialColors: {
-            colors: mockColors
-          }
-        }
-      })
-      .put(setMaterialLoading(true))
-      .provide([
-        [call(deleteMaterialColor, mockPayloadToDeleteColor)],
-        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
-      ])
-      .put(setMaterialLoading(false))
-      .put(removeMaterialColorFromStore(mockPayloadToDeleteColor.code))
-      .hasFinalState({
-        Material: {
-          ...mockMaterialState,
-          materialColors: {
-            colors: []
-          }
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
       }));
 

@@ -12,5 +12,12 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: '30px'
+  },
+  colorsCell: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  filters: {
+    marginBottom: '15px'
   }
 }));

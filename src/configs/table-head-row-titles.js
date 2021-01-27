@@ -4,7 +4,7 @@ const tableHeadRowTitles = {
   categories: ['Зображення', 'Категорія', 'Дії'],
   patterns: ['Фото', 'Назва', 'Код матеріалу', 'Доступний', 'Дії'],
   businessPages: ['№', 'Код', 'Заголовок', 'Дії'],
-  materials: ['Назва', 'Застосування', 'Доступний', 'Дії'],
+  materials: ['Назва', 'Колір', 'Застосування', 'Доступний', 'Дії'],
   materialColors: ['Фото', 'Повна назва', 'Коротка назва', 'Доступний', 'Дії'],
   products: [
     'Фото',
@@ -46,7 +46,8 @@ const tableHeadRowTitles = {
     ''
   ],
   homePageSlides: ['Порядок', 'Назва', 'Доступний', 'Дії'],
-  actionLabel: 'Дії'
+  actionLabel: 'Дії',
+  constructor: ['Колір', 'Назва', 'Матеріал', 'Доступний', 'Дії']
 };
 
 export default tableHeadRowTitles;

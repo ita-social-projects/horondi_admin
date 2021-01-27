@@ -14,16 +14,37 @@ const labels = {
     text: 'Текст'
   },
   model: {
-    name: mapToLanguages('Назва', 'Name'),
-    description: mapToLanguages('Опис', 'Description'),
+    name: {
+      ua: 'Назва',
+      en: 'Name'
+    },
+    description: {
+      ua: 'Опис',
+      en: 'Description'
+    },
     image: 'Фото моделі',
-    category: 'Категорія',
+    availableCategory: 'Категорія',
     available: 'Доступний',
     show: 'Показати',
+    defaultElement: 'За замовчуванням',
+    availableForConstructor: 'Доступний для конструктора',
+    constructorBasic: 'Основа',
+    constructorPattern: 'Гобелен',
+    constructorFrontPocket: 'Передня кишеня',
+    constructorBottom: 'Низ',
+    constructorPhoto: 'Фото для конструктора',
+    baseConstructorElementPrice: 'Базова ціна',
+    constructorMaterial: 'Матеріал',
+    constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
     showEnable: 'Так',
-    showDisable: 'Ні'
+    showDisable: 'Ні',
+    availablePatternsForConstructor: 'Доступні патерни для контсруктора',
+    constructorName: {
+      ua: 'Назва елементу конструктора',
+      en: 'Constructor element name'
+    }
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
@@ -44,6 +65,11 @@ const labels = {
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',
+    constructorImgText: 'Фото для конструктора',
+    form: {
+      name: mapToLanguages("І'мя", 'Name'),
+      description: mapToLanguages('Опис', 'Description')
+    },
     patternName: {
       ua: 'Назва гобелену',
       en: 'Pattern name'
@@ -61,12 +87,11 @@ const labels = {
     description: mapToLanguages('Опис матеріалу', 'Material description'),
     additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
   },
-  colors: {
-    image: 'Фото кольору',
+  color: {
     name: 'Назва кольору',
     simpleName: 'Проста назва кольору',
-    code: 'Код кольору',
-    available: 'Доступний'
+    colorHex: '# Колір',
+    mainLabel: 'Колір'
   },
   businessPage: [
     {
@@ -98,34 +123,14 @@ const labels = {
     ],
     infoLabels: [
       {
-        label: mapToLanguages('Назва', 'Name'),
+        label: { ua: 'Назва', en: 'Name' },
         name: 'name',
         required: true
       },
       {
-        label: mapToLanguages('Основний матеріал', 'Primary material'),
-        name: 'mainMaterial',
-        required: true
-      },
-      {
-        label: mapToLanguages('Внутрішній матеріал', 'Inner material'),
-        name: 'innerMaterial',
-        required: false
-      },
-      {
-        label: mapToLanguages('Замок', 'Closure'),
-        name: 'closure',
-        required: false
-      },
-      {
-        label: mapToLanguages('Довжина лямок(см)', 'Strap length (cm)'),
-        name: 'strapLengthInCm',
-        required: false
-      },
-      {
-        label: mapToLanguages('Опис', 'Description'),
+        label: { ua: 'Опис', en: 'Description' },
         name: 'description',
-        required: false
+        isEditor: true
       }
     ],
     selectsLabels: [
@@ -142,15 +147,15 @@ const labels = {
         required: true
       },
       {
-        label: 'Колір ',
-        name: 'colors',
+        label: 'Гобелен ',
+        name: 'pattern',
         type: 'select',
         required: true
       },
       {
-        label: 'Гобелен ',
-        name: 'pattern',
-        type: 'select',
+        label: 'Довжина лямок(см)',
+        name: 'strapLengthInCm',
+        type: 'number',
         required: true
       }
     ],
