@@ -18,7 +18,6 @@ import { useStyles } from './product-edit-form.styles';
 
 import ProductInfoContainer from '../../../../containers/product-info-container';
 import ProductSpeciesContainer from '../../../../containers/product-species-container';
-import ProductOptionsContainer from '../../../../containers/product-options-container';
 
 import {
   deleteProduct,
@@ -76,62 +75,9 @@ const ProductEditForm = () => {
     colors: productColors,
     patterns,
     models,
-    options,
     setOptions,
-    selectedOptions,
-    additions: productAdditions
+    selectedOptions
   } = useProductHandlers();
-
-  const uniqueSizes = useMemo(
-    () => [
-      ...new Set(
-        product.options
-          .filter(({ size }) => !!size)
-          .map(({ size: { name } }) => name)
-      )
-    ],
-    [product.options]
-  );
-
-  const uniqueBottomMaterials = useMemo(
-    () => [
-      ...new Set(
-        product.options
-          .filter(({ bottomMaterial: item }) => item && item.available)
-          .map(({ bottomMaterial: item }) => item.name[0].value)
-      )
-    ],
-    [product.options]
-  );
-
-  const uniqueAdditions = useMemo(
-    () => [
-      ...new Set(
-        product.options
-          .filter(({ additions }) => additions.length > 0)
-          .map(
-            ({ additions: [{ available, name }] }) => available && name[0].value
-          )
-      )
-    ],
-    [product.options]
-  );
-
-  useEffect(() => {
-    if (product.options.length) {
-      setOptions({
-        sizes: uniqueSizes,
-        bottomMaterials: uniqueBottomMaterials,
-        additions: !!uniqueAdditions.length
-      });
-    }
-  }, [
-    product.options,
-    setOptions,
-    uniqueBottomMaterials,
-    uniqueAdditions.length,
-    uniqueSizes
-  ]);
 
   const onSubmit = (formValues) => {
     const { strapLengthInCm, pattern, model, category, basePrice } = formValues;
@@ -144,7 +90,6 @@ const ProductEditForm = () => {
           pattern: getPatternToSend(pattern)._id,
           model: getModelToSend(model)._id,
           images: product.images,
-          options,
           category,
           basePrice,
           strapLengthInCm
@@ -281,20 +226,6 @@ const ProductEditForm = () => {
                 onBlur={handleBlur}
               />
             </Box>
-            <Box mt={3}>
-              <Divider />
-            </Box>
-            <Box mt={3}>
-              <Typography className={styles.title}>
-                {PRODUCT_OPTIONS}
-              </Typography>
-            </Box>
-            <ProductOptionsContainer
-              setOptions={setOptions}
-              selectedOptions={selectedOptions}
-              additions={productAdditions}
-              toggleFieldsChanged={toggleFieldsChanged}
-            />
           </Paper>
         </Grid>
         <CommentsPage productId={product._id} />

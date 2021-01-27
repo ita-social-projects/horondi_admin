@@ -57,7 +57,7 @@ const ProductSpeciesContainer = ({
       )),
     [patterns]
   );
-  console.log(modelsForSelectedCategory);
+
   const modelsOptions = useMemo(
     () =>
       (modelsForSelectedCategory.length
