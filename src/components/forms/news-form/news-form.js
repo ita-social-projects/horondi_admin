@@ -168,8 +168,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
             data-cy='save'
             type='submit'
             title={SAVE_TITLE}
-            // values={values}
-            // errors={errors}
           />
         </div>
         <Box my={3}>
