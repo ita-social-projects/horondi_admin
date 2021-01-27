@@ -18,6 +18,7 @@ import emailQuestionSaga from './email-questions/email-questions.sagas';
 import headerSaga from './header/header.sagas';
 import homePageSlideSaga from './home-page-slides/home-page-slides.sagas';
 import colorsSaga from './color/color.sagas';
+import sizeSaga from './sizes/sizes.sagas';
 
 export function* rootSaga() {
   yield all([
@@ -39,6 +40,7 @@ export function* rootSaga() {
     headerSaga(),
     ordersSaga(),
     homePageSlideSaga(),
-    colorsSaga()
+    colorsSaga(),
+    sizeSaga()
   ]);
 }

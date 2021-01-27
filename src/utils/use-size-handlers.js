@@ -1,12 +1,14 @@
 const useSizeHandlers = () => {
   const createSize = (values) => {
     const newSize = {
-      heightInCm: parseInt(values.heightInCm),
       name: values.name,
+      heightInCm: parseInt(values.heightInCm),
       widthInCm: parseInt(values.widthInCm),
       depthInCm: parseInt(values.depthInCm),
+      volumeInLiters: parseInt(values.volumeInLiters),
       weightInKg: parseFloat(values.weightInKg),
-      volumeInLiters: parseInt(values.volumeInLiters)
+      available: values.available,
+      additionalPrice: parseInt(values.valueUAH)
     };
     return newSize;
   };

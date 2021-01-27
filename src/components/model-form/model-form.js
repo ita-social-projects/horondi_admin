@@ -20,9 +20,10 @@ import useModelHandlers from '../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { BackButton, SaveButton } from '../buttons';
 import TabPanel from '../tab-panel';
-import SizesForm from '../sizes-form/index';
+import SizesForm from '../size-form/index';
 import { config } from '../../configs';
 import { addModel, updateModel } from '../../redux/model/model.actions';
+import { addSize } from '../../redux/sizes/sizes.actions';
 import { getCategories } from '../../redux/categories/categories.actions';
 import CheckboxOptions from '../checkbox-options';
 import ImageUploadContainer from '../../containers/image-upload-container';
@@ -80,6 +81,10 @@ const ModelForm = ({ model, id, isEdit }) => {
     categories: Categories.categories
   }));
 
+  const { size } = useSelector(({ Size }) => ({
+    size: Size.size
+  }));
+
   const [category, setCategory] = useState(model.category._id || '');
 
   const handleCategory = (event) => {
@@ -108,16 +113,11 @@ const ModelForm = ({ model, id, isEdit }) => {
       enDescription: model.description[1].value || '',
       priority: model.priority || 1,
       category: category || '',
-      show: model.show || false,
-      name: '',
-      heightInCm: 0,
-      widthInCm: 0,
-      depthInCm: 0,
-      volumeInLiters: 0,
-      weightInKg: 0
+      show: model.show || false
     },
     onSubmit: () => {
       const newModel = createModel(values);
+      dispatch(addSize(size));
       if (upload instanceof File || model.images.thumbnail) {
         if (isEdit && upload instanceof File) {
           dispatch(updateModel({ id, model: newModel, image: upload }));
@@ -221,7 +221,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             )}
           </Paper>
         </Grid>
-        {/* <SizesForm handleChange={handleChange} /> */}
+        <SizesForm />
         <AppBar position='static'>
           <Tabs
             className={styles.tabs}
@@ -295,14 +295,6 @@ ModelForm.propTypes = {
     priority: PropTypes.number,
     images: PropTypes.shape({
       thumbnail: PropTypes.string
-    }),
-    sizes: PropTypes.shape({
-      name: PropTypes.string,
-      heightInCm: PropTypes.number,
-      widthInCm: PropTypes.number,
-      depthInCm: PropTypes.number,
-      volumeInLiters: PropTypes.number,
-      weightInKg: PropTypes.number
     }),
     category: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
