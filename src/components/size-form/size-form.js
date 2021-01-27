@@ -52,7 +52,7 @@ const SizesForm = () => {
     },
     onSubmit: () => {
       const newSize = createSize(values);
-      // dispatch(addSize(newSize));
+      dispatch(addSize(newSize));
       dispatch(saveSizeInRedux(newSize));
     }
   });
@@ -60,7 +60,7 @@ const SizesForm = () => {
   return (
     <div>
       <Button variant='outlined' color='primary' onClick={handleClickOpen}>
-        Open form dialog
+        Add Size
       </Button>
       <Dialog
         open={open}

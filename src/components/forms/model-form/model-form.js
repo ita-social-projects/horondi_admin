@@ -29,6 +29,7 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { getCategories } from '../../../redux/categories/categories.actions';
 import LanguagePanel from '../language-panel';
+import SizeForm from '../../size-form/size-form';
 
 const { languages } = config;
 const {
@@ -87,10 +88,6 @@ const ModelForm = ({ model, id, isEdit }) => {
   });
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.categories
-  }));
-
-  const { size } = useSelector(({ Size }) => ({
-    size: Size.size
   }));
 
   const [category, setCategory] = useState(model.category._id || '');
@@ -243,6 +240,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             )}
           </Paper>
         </Grid>
+        <SizeForm />
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
