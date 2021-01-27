@@ -74,9 +74,7 @@ const ProductEditForm = () => {
     getModelToSend,
     colors: productColors,
     patterns,
-    models,
-    setOptions,
-    selectedOptions
+    models
   } = useProductHandlers();
 
   const onSubmit = (formValues) => {

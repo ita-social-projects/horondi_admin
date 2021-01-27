@@ -23,7 +23,6 @@ const ProductsAdd = () => {
     models,
     additions,
     createProductInfo,
-    options,
     getModelToSend,
     getPatternToSend,
     getColorsToSend,
