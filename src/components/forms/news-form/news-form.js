@@ -23,12 +23,19 @@ import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import Editor from '../../editor/editor';
 
-const { MAIN_PHOTO, AUTHOR_PHOTO } = config.buttonTitles;
+const {
+  MAIN_PHOTO,
+  AUTHOR_PHOTO,
+  SAVE_TITLE,
+  GO_BACK_TITLE
+} = config.buttonTitles;
 const {
   NAME_MIN_LENGTH_MESSAGE,
   TITLE_MIN_LENGTH_MESSAGE,
   TEXT_MIN_LENGTH_MESSAGE
 } = config.newsErrorMessages;
+const { IMG_URL } = config;
+const { authorsName, title, text } = config.labels.news;
 
 const NewsForm = ({ id, newsArticle, editMode }) => {
   const styles = useStyles();
@@ -160,9 +167,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
             className={styles.saveButton}
             data-cy='save'
             type='submit'
-            title={config.buttonTitles.SAVE_TITLE}
-            values={values}
-            errors={errors}
+            title={SAVE_TITLE}
           />
         </div>
         <Box my={3}>
@@ -215,7 +220,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                   id={`${lang}AuthorName`}
                   className={styles.textField}
                   variant='outlined'
-                  label={config.labels.news.authorsName}
+                  label={authorsName}
                   multiline
                   value={values[`${lang}AuthorName`]}
                   onChange={handleChange}
@@ -237,7 +242,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                   id={`${lang}Title`}
                   className={styles.textField}
                   variant='outlined'
-                  label={config.labels.news.title}
+                  label={title}
                   multiline
                   value={values[`${lang}Title`]}
                   onChange={handleChange}
@@ -250,7 +255,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 )}
                 <Editor
                   value={values[`${lang}Text`]}
-                  placeholder={config.labels.news.text}
+                  placeholder={text}
                   id={`${lang}Text`}
                   onEditorChange={(value) =>
                     setFieldValue(`${lang}Text`, value)
@@ -271,7 +276,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
       <div className={styles.controlsBlock}>
         <StandardButton
           id='back-btn'
-          title={config.buttonTitles.GO_BACK_TITLE}
+          title={GO_BACK_TITLE}
           variant='outlined'
           onClickHandler={handleGoBack}
           data-cy='back-btn'
