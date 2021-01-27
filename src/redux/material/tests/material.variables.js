@@ -33,45 +33,14 @@ const mockMaterials = {
           value: 1262
         }
       ],
-      colors: mockColors,
+      colors: [],
       purpose: 'bottom'
     }
   ],
   count: 1
 };
 
-const mockColorCode = 200;
-
 const mockMaterial = mockMaterials.items[0];
-
-const mockColors = [
-  {
-    code: mockColorCode,
-    available: true,
-    name: [
-      {
-        value: 'Світло-коричневий',
-        lang: 'ua'
-      },
-      {
-        value: 'Light-brown',
-        lang: 'en'
-      }
-    ],
-    simpleName: [
-      {
-        value: 'коричневий',
-        lang: 'ua'
-      },
-      {
-        value: 'brown',
-        lang: 'en'
-      }
-    ]
-  }
-];
-
-const mockColor = mockColors[0];
 
 const mockMaterialState = {
   list: [],
@@ -102,28 +71,12 @@ const mockSnackbarState = {
 };
 
 const mockMaterialsLoadPayload = {
+  filter: {
+    colors: []
+  },
   skip: 0,
   limit: 10,
   materialsPerPage: 10
-};
-
-const mockMaterialsPagesCount = Math.ceil(
-  mockMaterials.count / mockMaterialsLoadPayload.materialsPerPage
-);
-
-const mockMaterialStateWithColors = {
-  ...mockMaterialState,
-  colors: [mockColor]
-};
-
-const mockColorToAdd = {
-  id: mockId,
-  color: mockColor
-};
-
-const mockPayloadToDeleteColor = {
-  id: mockId,
-  code: mockColorCode
 };
 
 const mockPayloadToUpdateMaterial = {
@@ -147,16 +100,8 @@ export {
   mockMaterial,
   mockMaterials,
   mockMaterialState,
-  mockSnackbarState,
   mockMaterialsLoadPayload,
-  mockMaterialsPagesCount,
-  mockColors,
-  mockColorCode,
-  mockColor,
   statuses,
-  mockMaterialStateWithColors,
-  mockColorToAdd,
-  mockPayloadToDeleteColor,
   mockPayloadToUpdateMaterial,
   mockError,
   mockTableState
