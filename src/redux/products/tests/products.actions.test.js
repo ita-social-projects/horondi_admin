@@ -3,7 +3,6 @@ import {
   getAllFilters,
   getFiltredProducts,
   getModelsByCategory,
-  getProductOptions,
   getProductSpecies,
   setAllFilterData,
   setAllProducts,
@@ -19,7 +18,6 @@ import {
   setProduct,
   setProductCategories,
   setProductLoading,
-  setProductOptions,
   setProductToSend,
   setProductsError,
   setProductsLoading,
@@ -60,8 +58,6 @@ import {
   SET_PRODUCTS_ERROR,
   GET_PRODUCT_SPECIES,
   SET_PRODUCT_CATEGORIES,
-  GET_PRODUCT_OPTIONS,
-  SET_PRODUCT_OPTIONS,
   GET_MODELS_BY_CATEGORY,
   SET_MODELS,
   ADD_PRODUCT,
@@ -87,7 +83,6 @@ import {
   mockModels,
   mockPrimaryImage,
   mockProduct,
-  mockProductOptions,
   mockProductsList,
   mockProductToDelete,
   mockProductToUpdatePayload
@@ -249,19 +244,6 @@ describe('Test products actions', () => {
     expect(setProductCategories(mockCategory)).toEqual({
       type: SET_PRODUCT_CATEGORIES,
       payload: mockCategory
-    });
-  });
-
-  it('should set products options', () => {
-    expect(setProductOptions(mockProductOptions)).toEqual({
-      type: SET_PRODUCT_OPTIONS,
-      payload: mockProductOptions
-    });
-  });
-
-  it('should get products options', () => {
-    expect(getProductOptions()).toEqual({
-      type: GET_PRODUCT_OPTIONS
     });
   });
 
