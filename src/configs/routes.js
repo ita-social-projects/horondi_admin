@@ -6,7 +6,7 @@ const routes = {
   pathToAddPattern: '/patterns/add',
   pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd',
+  pathToAddNews: '/news/add',
   pathToBusinessPages: '/business-pages',
   pathToAddBusinessPage: '/business-page-add',
   pathToBusinessPageDetails: '/business-pages/:id',
@@ -45,6 +45,6 @@ const routes = {
   pathToHomePageSlideDetail: '/home-page-slides/:id',
   pathToConstructor: '/constructor/:id',
   pathToAddConstructor: '/constructor/:id/add',
-  pathToConstructorDetails: '/constructor/:id/:elementId',
+  pathToConstructorDetails: '/constructor/:id/:elementId'
 };
 export default routes;
