@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: '[Affected functionality] Clear and concise summary, e.g. "[Create news] ''Publish''
   button is not displayed on the ''Preview'' page"'
-labels: Bug
+labels: bug, Admin
 assignees: ''
 
 ---
