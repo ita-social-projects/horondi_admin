@@ -11,6 +11,10 @@ Using Enzyme lib write test for React component
 
 You should test:
 - [ ] component rendering
-- [ ] state changes (if it needs)
-- [ ] props changes (if it needs)
-- [ ] event handlers (if it needs)
+- [ ] state changes
+- [ ] props changes
+- [ ] event handlers
+- [ ] if...else
+- [ ] classes 
+- [ ] hooks
+- [ ] children components
