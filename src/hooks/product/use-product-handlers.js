@@ -3,27 +3,28 @@ import { useSelector } from 'react-redux';
 import { config } from '../../configs';
 import useProductSpecies from './use-product-species';
 
-const selectAdditionsLength = ({ additions }) => additions.length;
-
 const { languages } = config;
 
 const useProductHandlers = () => {
-  const { modelsForSelectedCategory } = useSelector(({ Products }) => ({
-    filterData: Products.filterData,
-    modelsForSelectedCategory: Products.productSpecies.modelsForSelectedCategory
-  }));
-
-  const [primaryImage, setPrimaryImage] = useState('');
-  const [additionalImages, setAdditionalImages] = useState([]);
+  const { modelsForSelectedCategory, details } = useSelector(
+    ({ Products }) => ({
+      modelsForSelectedCategory:
+        Products.productSpecies.modelsForSelectedCategory,
+      details: Products.details
+    })
+  );
 
   const {
-    categoriesNames,
     categories,
-    modelNames,
-    models,
-    patternsNames,
+    // materials,
     patterns
-  } = useProductSpecies();
+    // closures
+  } = details;
+
+  const [models, setModels] = useState([]);
+  const [primaryImage, setPrimaryImage] = useState('');
+  const [additionalImages, setAdditionalImages] = useState([]);
+  const { categoriesNames, modelNames, patternsNames } = useProductSpecies();
   const getPatternToSend = (pattern) =>
     patterns.find((item) => pattern === item.name[0].value);
 
@@ -60,7 +61,8 @@ const useProductHandlers = () => {
     createProductInfo,
     getModelToSend,
     getPatternToSend,
-    getSelectedCategory
+    getSelectedCategory,
+    setModels
   };
 };
 

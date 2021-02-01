@@ -21,7 +21,6 @@ import ProductSpeciesContainer from '../../../../containers/product-species-cont
 
 import {
   deleteProduct,
-  getModelsByCategory,
   updateProduct
 } from '../../../../redux/products/products.actions';
 import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
@@ -40,7 +39,6 @@ const {
   DELETE_PRODUCT_TITLE,
   SAVE,
   PRODUCT_SPECIFICATION,
-  PRODUCT_OPTIONS,
   PRODUCT_PRICE
 } = productsTranslations;
 
@@ -56,10 +54,10 @@ const ProductEditForm = () => {
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
   const formikSpeciesValues = {
-    category: product.category._id,
-    model: product.model.name[0].value,
-    pattern: product.pattern.name[0].value,
-    strapLengthInCm: product.strapLengthInCm
+    category: product.category._id || '',
+    model: product.model._id || '',
+    pattern: product.pattern._id || '',
+    strapLengthInCm: product.strapLengthInCm || 0
   };
 
   const formikPriceValue = {
@@ -70,24 +68,24 @@ const ProductEditForm = () => {
 
   const {
     createProductInfo,
-    getPatternToSend,
-    getModelToSend,
     colors: productColors,
     patterns,
-    models
+    models,
+    categories,
+    setModels
   } = useProductHandlers();
 
   const onSubmit = (formValues) => {
     const { strapLengthInCm, pattern, model, category, basePrice } = formValues;
-
+    console.log(formValues);
     const productInfo = createProductInfo(formValues);
     dispatch(
       updateProduct({
         product: {
           ...productInfo,
-          pattern: getPatternToSend(pattern)._id,
-          model: getModelToSend(model)._id,
           images: product.images,
+          pattern,
+          model,
           category,
           basePrice,
           strapLengthInCm
@@ -119,8 +117,12 @@ const ProductEditForm = () => {
   );
 
   useEffect(() => {
-    if (values.category) dispatch(getModelsByCategory(values.category));
-  }, [values.category, dispatch]);
+    if (values.category)
+      setModels(
+        categories.find((category) => category._id === values.category)
+          .models || []
+      );
+  }, [values.category, categories, dispatch]);
 
   const handleProductValidate = async () => {
     setShouldValidate(true);
@@ -196,6 +198,7 @@ const ProductEditForm = () => {
               models={models}
               patterns={patterns}
               colors={productColors}
+              categories={categories}
               values={values}
               errors={errors}
               touched={touched}

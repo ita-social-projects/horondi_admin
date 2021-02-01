@@ -131,6 +131,90 @@ const getAllFilters = async () => {
   return result.data.getProducts.items;
 };
 
+const getProductDetails = async () => {
+  const { data } = await client.query({
+    query: gql`
+      query {
+        getAllClosure {
+          items {
+            _id
+            name {
+              value
+            }
+          }
+        }
+        getAllPatterns {
+          items {
+            _id
+            name {
+              value
+            }
+          }
+        }
+        getCategoriesWithModels {
+          _id
+          name {
+            value
+          }
+          models {
+            _id
+            name {
+              value
+            }
+            sizes {
+              _id
+              name
+            }
+          }
+        }
+        getMaterialsByPurpose(purposes: [MAIN, BOTTOM, INNER]) {
+          main {
+            _id
+            name {
+              value
+            }
+            colors {
+              _id
+              name {
+                value
+              }
+            }
+          }
+          bottom {
+            _id
+            name {
+              value
+            }
+            colors {
+              _id
+              name {
+                value
+              }
+            }
+          }
+          inner {
+            name {
+              value
+            }
+            colors {
+              _id
+              name {
+                value
+              }
+            }
+          }
+        }
+      }
+    `
+  });
+  return {
+    closures: data.getAllClosure.items,
+    patterns: data.getAllPatterns.items,
+    categories: data.getCategoriesWithModels,
+    materials: data.getMaterialsByPurpose
+  };
+};
+
 const getProductCategories = async () => {
   const result = await client.query({
     query: gql`
@@ -179,6 +263,7 @@ const productQuery = `
     }
   }
   model {
+    _id
     name {
       value
     }
@@ -193,12 +278,14 @@ const productQuery = `
   }
   mainMaterial {
     material {
+      _id
       name {
         lang
         value
       }
     }
     color {
+      _id
       colorHex
       simpleName {
         value
@@ -212,12 +299,14 @@ const productQuery = `
   }
   innerMaterial {
     material {
+      _id
       name {
         lang
         value
       }
     }
     color {
+      _id
       colorHex
       simpleName {
         value
@@ -245,12 +334,14 @@ const productQuery = `
     }
   }
   pattern {
+    _id
     name {
       lang
       value
     }
   }
   closure {
+    _id
     name {
       lang
       value
@@ -261,6 +352,7 @@ const productQuery = `
     currency
   }
   sizes {
+    _id
     name
     heightInCm
     widthInCm
@@ -274,12 +366,14 @@ const productQuery = `
   }
   bottomMaterial {
     material {
+      _id
       name {
         lang
         value
       }
     }
     color {
+      _id
       colorHex
       simpleName {
         value
@@ -406,5 +500,6 @@ export {
   deleteProduct,
   getProduct,
   updateProduct,
-  deleteImages
+  deleteImages,
+  getProductDetails
 };

@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
 import {
   FormControl,
@@ -9,6 +8,7 @@ import {
   TextField,
   MenuItem
 } from '@material-ui/core';
+import { map } from 'lodash';
 import { useStyles } from './product-species-container.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
@@ -26,17 +26,11 @@ const ProductSpeciesContainer = ({
   handleBlur,
   handleChange,
   handleSubmit,
+  categories,
   setFieldValue,
   toggleFieldsChanged
 }) => {
   const styles = useStyles();
-  const { categories, modelsForSelectedCategory } = useSelector(
-    ({ Products: { productSpecies, productToSend } }) => ({
-      categories: productSpecies.categories,
-      modelsForSelectedCategory: productSpecies.modelsForSelectedCategory,
-      productToSend
-    })
-  );
 
   const categoriesOptions = useMemo(
     () =>
@@ -51,7 +45,7 @@ const ProductSpeciesContainer = ({
   const patternsOptions = useMemo(
     () =>
       patterns.map((pattern) => (
-        <MenuItem value={pattern.name[0].value} key={pattern.name[1].value}>
+        <MenuItem value={pattern._id} key={pattern.name[1].value}>
           {pattern.name[0].value}
         </MenuItem>
       )),
@@ -60,21 +54,16 @@ const ProductSpeciesContainer = ({
 
   const modelsOptions = useMemo(
     () =>
-      (modelsForSelectedCategory.length
-        ? modelsForSelectedCategory
-        : models
-      ).map((model) => {
-        const value = modelsForSelectedCategory.length
-          ? model.name[0].value
-          : '';
+      map(models, (model) => {
+        const {value} = model.name[0];
 
         return (
-          <MenuItem value={value} key={value}>
+          <MenuItem value={model._id} key={value}>
             {value}
           </MenuItem>
         );
       }),
-    [modelsForSelectedCategory, models]
+    [models]
   );
 
   const options = [categoriesOptions, modelsOptions, patternsOptions];
@@ -87,7 +76,6 @@ const ProductSpeciesContainer = ({
   const handleSelectChange = (e) => {
     if (e.target.name === selectsLabels[0].name) {
       setFieldValue(selectsLabels[1].name, '');
-      setFieldValue(selectsLabels[2].name, '');
     }
     handleSpeciesChange(e);
   };
@@ -139,6 +127,7 @@ const ProductSpeciesContainer = ({
 
 ProductSpeciesContainer.propTypes = {
   patterns: PropTypes.arrayOf(PropTypes.array).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.array).isRequired,
   models: PropTypes.arrayOf(PropTypes.array).isRequired,
   values: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])

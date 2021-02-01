@@ -18,7 +18,8 @@ import {
   setProduct,
   setFilesToUpload,
   clearFilesToUpload,
-  setFilesToDelete
+  setFilesToDelete,
+  setProductDetails
 } from './products.actions';
 import { setItemsCount, updatePagination } from '../table/table.actions';
 
@@ -43,7 +44,8 @@ import {
   deleteProduct,
   getProduct,
   updateProduct,
-  deleteImages
+  deleteImages,
+  getProductDetails
 } from './products.operations';
 
 import {
@@ -79,6 +81,17 @@ export function* handleGetFilters() {
     yield put(setProductsLoading(true));
     const filter = yield call(getAllFilters);
     yield put(setAllFilterData(filter));
+    yield put(setProductsLoading(false));
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
+export function* handleProductDetailsLoad() {
+  try {
+    yield put(setProductsLoading(true));
+    const details = yield call(getProductDetails);
+    yield put(setProductDetails(details));
     yield put(setProductsLoading(false));
   } catch (e) {
     yield call(handleProductsErrors, e);
@@ -158,6 +171,7 @@ export function* handleProductLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
     yield call(handleProductSpeciesLoad);
+    yield call(handleProductDetailsLoad);
     const product = yield call(getProduct, payload);
     yield put(setProduct(product));
     yield put(setProductsLoading(false));

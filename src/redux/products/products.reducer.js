@@ -23,7 +23,8 @@ import {
   CLEAR_FILES_TO_UPLOAD,
   SET_FILES_TO_DELETE,
   REMOVE_IMAGES_TO_UPLOAD,
-  SET_PRIMARY_IMAGE_TO_UPLOAD
+  SET_PRIMARY_IMAGE_TO_UPLOAD,
+  SET_PRODUCT_DETAILS
 } from './products.types';
 
 const { initialLanguageValues } = config;
@@ -72,6 +73,16 @@ export const initialState = {
   productSpecies: {
     categories: [],
     modelsForSelectedCategory: []
+  },
+  details: {
+    categories: [],
+    models: [],
+    closures: [],
+    materials: {
+      inner: [],
+      bottom: [],
+      main: []
+    }
   }
 };
 export const setSort = ({
@@ -102,6 +113,13 @@ const productsReducer = (state = initialState, action = {}) => {
       filters: {
         ...state.filters,
         patternsFilter: action.payload
+      }
+    };
+  case SET_PRODUCT_DETAILS:
+    return {
+      ...state,
+      details: {
+        ...action.payload
       }
     };
   case SET_COLORS_FILTER:
