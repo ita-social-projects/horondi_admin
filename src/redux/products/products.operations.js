@@ -193,6 +193,7 @@ const getProductDetails = async () => {
             }
           }
           inner {
+            _id
             name {
               value
             }

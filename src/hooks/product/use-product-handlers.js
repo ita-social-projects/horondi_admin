@@ -13,15 +13,14 @@ const useProductHandlers = () => {
       details: Products.details
     })
   );
-
-  const {
-    categories,
-    // materials,
-    patterns
-    // closures
-  } = details;
+  const getIdFromItem = (item) => item._id;
+  const { categories, materials, patterns, closures } = details;
 
   const [models, setModels] = useState([]);
+  const [innerColors, setInnerColors] = useState([]);
+  const [mainColors, setMainColors] = useState([]);
+  const [bottomColors, setBottomColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [primaryImage, setPrimaryImage] = useState('');
   const [additionalImages, setAdditionalImages] = useState([]);
   const { categoriesNames, modelNames, patternsNames } = useProductSpecies();
@@ -48,8 +47,19 @@ const useProductHandlers = () => {
   );
 
   return {
+    innerColors,
+    setInnerColors,
+    mainColors,
+    setMainColors,
+    bottomColors,
+    setBottomColors,
     models,
+    materials,
+    closures,
+    sizes,
+    setSizes,
     modelNames,
+    getIdFromItem,
     categories,
     categoriesNames,
     patterns,

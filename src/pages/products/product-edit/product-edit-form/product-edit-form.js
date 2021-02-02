@@ -11,6 +11,8 @@ import {
   useTheme
 } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
+import { find } from 'lodash';
 import useProductHandlers from '../../../../hooks/product/use-product-handlers';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import useProductValidation from '../../../../hooks/product/use-product-validation';
@@ -31,6 +33,7 @@ import DeleteButton from '../../../../components/buttons/delete-button';
 import CommentsPage from '../../../comments';
 import { config } from '../../../../configs';
 import { BackButton } from '../../../../components/buttons';
+import ProductMaterialsContainer from '../../../../containers/product-materials-container';
 
 const { priceLabel } = config.labels.product;
 
@@ -39,29 +42,24 @@ const {
   DELETE_PRODUCT_TITLE,
   SAVE,
   PRODUCT_SPECIFICATION,
-  PRODUCT_PRICE
+  PRODUCT_PRICE,
+  PRODUCT_MATERIALS
 } = productsTranslations;
 
-const ProductEditForm = () => {
+const ProductEditForm = ({ isEdit }) => {
   const styles = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
+
   const product = useSelector(({ Products }) => Products.selectedProduct);
 
   const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
-  const formikSpeciesValues = {
-    category: product.category._id || '',
-    model: product.model._id || '',
-    pattern: product.pattern._id || '',
-    strapLengthInCm: product.strapLengthInCm || 0
-  };
-
   const formikPriceValue = {
-    basePrice: Math.round(product.basePrice[1].value / 100)
+    basePrice: Math.round(product?.basePrice[1]?.value / 100) || 0
   };
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -71,13 +69,40 @@ const ProductEditForm = () => {
     colors: productColors,
     patterns,
     models,
+    innerColors,
+    setInnerColors,
+    mainColors,
+    setMainColors,
+    bottomColors,
+    setBottomColors,
+    closures,
+    sizes,
+    setSizes,
+    getIdFromItem,
     categories,
-    setModels
+    setModels,
+    materials
   } = useProductHandlers();
+
+  const formikSpeciesValues = {
+    category: product?.category?._id || '',
+    model: product?.model?._id || '',
+    pattern: product?.pattern?._id || '',
+    strapLengthInCm: product?.strapLengthInCm || 0,
+    closure: product?.closure?._id || '',
+    sizes: product?.sizes.map((el) => getIdFromItem(el) || [])
+  };
+  const formikMaterialsValues = {
+    innerMaterial: product?.innerMaterial?.material?._id || '',
+    innerColor: product?.innerMaterial?.color?._id || '',
+    mainMaterial: product?.mainMaterial?.material?._id || '',
+    mainColor: product?.mainMaterial?.color?._id || '',
+    bottomMaterial: product?.bottomMaterial?.material?._id || '',
+    bottomColor: product?.bottomMaterial?.color?._id || ''
+  };
 
   const onSubmit = (formValues) => {
     const { strapLengthInCm, pattern, model, category, basePrice } = formValues;
-    console.log(formValues);
     const productInfo = createProductInfo(formValues);
     dispatch(
       updateProduct({
@@ -113,17 +138,53 @@ const ProductEditForm = () => {
     onSubmit,
     formikSpeciesValues,
     'selectedProduct',
-    formikPriceValue
+    formikPriceValue,
+    formikMaterialsValues
   );
 
   useEffect(() => {
     if (values.category)
       setModels(
-        categories.find((category) => category._id === values.category)
-          .models || []
+        find(categories, (category) => category._id === values.category)
+          ?.models || []
       );
-  }, [values.category, categories, dispatch]);
-
+    if (values.model) {
+      setSizes(
+        find(models, (model) => model._id === values.model)?.sizes || []
+      );
+    }
+    if (values.innerMaterial) {
+      setInnerColors(
+        find(
+          materials.inner,
+          (material) => material._id === values.innerMaterial
+        )?.colors || []
+      );
+    }
+    if (values.bottomMaterial) {
+      setBottomColors(
+        find(
+          materials.bottom,
+          (material) => material._id === values.bottomMaterial
+        )?.colors || []
+      );
+    }
+    if (values.mainMaterial) {
+      setMainColors(
+        find(materials.main, (material) => material._id === values.mainMaterial)
+          ?.colors || []
+      );
+    }
+  }, [
+    values.category,
+    values.model,
+    models,
+    categories,
+    materials,
+    values.innerMaterial,
+    values.bottomMaterial,
+    values.mainMaterial
+  ]);
   const handleProductValidate = async () => {
     setShouldValidate(true);
     await submitForm();
@@ -199,6 +260,9 @@ const ProductEditForm = () => {
               patterns={patterns}
               colors={productColors}
               categories={categories}
+              closures={closures}
+              sizes={sizes}
+              setSizes={setSizes}
               values={values}
               errors={errors}
               touched={touched}
@@ -208,6 +272,32 @@ const ProductEditForm = () => {
               setFieldValue={setFieldValue}
               toggleFieldsChanged={toggleFieldsChanged}
             />
+            <Box mt={3}>
+              <Divider />
+            </Box>
+            <Box mt={2}>
+              <Typography className={styles.title}>
+                {PRODUCT_MATERIALS}
+              </Typography>
+            </Box>
+            <Box mt={3} ml={1}>
+              <ProductMaterialsContainer
+                innerMaterials={materials.inner}
+                innerColors={innerColors}
+                mainMaterials={materials.main}
+                mainColors={mainColors}
+                bottomMaterials={materials.bottom}
+                bottomColors={bottomColors}
+                values={values}
+                errors={errors}
+                touched={touched}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                handleSubmit={handleSubmit}
+                setFieldValue={setFieldValue}
+                toggleFieldsChanged={toggleFieldsChanged}
+              />
+            </Box>
             <Box mt={3}>
               <Divider />
             </Box>
@@ -229,13 +319,19 @@ const ProductEditForm = () => {
             </Box>
           </Paper>
         </Grid>
-        <CommentsPage productId={product._id} />
+        {isEdit ? <CommentsPage productId={product._id} /> : null}
       </Grid>
       <div className={styles.controlsBlock}>
         <BackButton />
       </div>
     </div>
   );
+};
+ProductEditForm.propTypes = {
+  isEdit: PropTypes.bool
+};
+ProductEditForm.defaultProps = {
+  isEdit: false
 };
 
 export default ProductEditForm;

@@ -16,11 +16,9 @@ import { productModel } from '../../../redux/products/products.reducer';
 
 const ProductEdit = ({ id }) => {
   const dispatch = useDispatch();
-  const { product, loading, categories } = useSelector(({ Products }) => ({
+  const { product, loading } = useSelector(({ Products }) => ({
     product: Products.selectedProduct,
-    loading: Products.loading,
-    productOptions: Products.productOptions,
-    categories: Products.productSpecies.categories
+    loading: Products.loading
   }));
 
   useEffect(() => {
@@ -38,15 +36,14 @@ const ProductEdit = ({ id }) => {
     loading ||
     !product.name ||
     !product.name[0].value ||
-    !product.sizes.length ||
-    !categories.length
+    !product.sizes.length
   ) {
     return <LoadingBar />;
   }
 
   return (
     <div>
-      <ProductEditForm />
+      <ProductEditForm isEdit />
     </div>
   );
 };

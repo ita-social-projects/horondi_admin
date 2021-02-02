@@ -26,8 +26,11 @@ const ProductSpeciesContainer = ({
   handleBlur,
   handleChange,
   handleSubmit,
+  setSizes,
   categories,
   setFieldValue,
+  closures,
+  sizes,
   toggleFieldsChanged
 }) => {
   const styles = useStyles();
@@ -55,7 +58,7 @@ const ProductSpeciesContainer = ({
   const modelsOptions = useMemo(
     () =>
       map(models, (model) => {
-        const {value} = model.name[0];
+        const { value } = model.name[0];
 
         return (
           <MenuItem value={model._id} key={value}>
@@ -66,7 +69,33 @@ const ProductSpeciesContainer = ({
     [models]
   );
 
-  const options = [categoriesOptions, modelsOptions, patternsOptions];
+  const sizesOptions = useMemo(
+    () =>
+      sizes.map((size) => (
+        <MenuItem value={size._id} key={size.name}>
+          {size.name}
+        </MenuItem>
+      )),
+    [sizes]
+  );
+
+  const closuresOptions = useMemo(
+    () =>
+      closures.map((closure) => (
+        <MenuItem value={closure._id} key={closure.name[1].value}>
+          {closure.name[0].value}
+        </MenuItem>
+      )),
+    [closures]
+  );
+
+  const options = [
+    categoriesOptions,
+    modelsOptions,
+    sizesOptions,
+    patternsOptions,
+    closuresOptions
+  ];
 
   const speciesErrors = useMemo(() => {
     const optionsNames = selectsLabels.map(({ name }) => name);
@@ -76,10 +105,11 @@ const ProductSpeciesContainer = ({
   const handleSelectChange = (e) => {
     if (e.target.name === selectsLabels[0].name) {
       setFieldValue(selectsLabels[1].name, '');
+      setFieldValue(selectsLabels[2].name, []);
+      setSizes([]);
     }
     handleSpeciesChange(e);
   };
-
   const handleSpeciesChange = (e) => {
     handleChange(e);
     toggleFieldsChanged(true);
@@ -87,7 +117,7 @@ const ProductSpeciesContainer = ({
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      {selectsLabels.map(({ label, name, type, required }, idx) =>
+      {selectsLabels.map(({ label, name, type, required, multiple }, idx) =>
         type === 'select' ? (
           <FormControl className={styles.formControl} key={label}>
             <InputLabel htmlFor={label}>{`${label}${
@@ -99,6 +129,7 @@ const ProductSpeciesContainer = ({
               value={values[name]}
               onChange={handleSelectChange}
               onBlur={handleBlur}
+              multiple={multiple}
             >
               {options[idx]}
             </Select>
@@ -128,6 +159,7 @@ const ProductSpeciesContainer = ({
 ProductSpeciesContainer.propTypes = {
   patterns: PropTypes.arrayOf(PropTypes.array).isRequired,
   categories: PropTypes.arrayOf(PropTypes.array).isRequired,
+  closures: PropTypes.arrayOf(PropTypes.array).isRequired,
   models: PropTypes.arrayOf(PropTypes.array).isRequired,
   values: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -138,7 +170,9 @@ ProductSpeciesContainer.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  toggleFieldsChanged: PropTypes.func
+  toggleFieldsChanged: PropTypes.func,
+  setSizes: PropTypes.func.isRequired,
+  sizes: PropTypes.arrayOf(PropTypes.array).isRequired
 };
 
 ProductSpeciesContainer.defaultProps = {
