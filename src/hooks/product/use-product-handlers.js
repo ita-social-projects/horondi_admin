@@ -31,6 +31,18 @@ const useProductHandlers = () => {
     modelsForSelectedCategory.find(({ name }) => name[0].value === model);
 
   const createProductInfo = (values) => ({
+    mainMaterial: {
+      material: values.mainMaterial,
+      color: values.mainColor
+    },
+    innerMaterial: {
+      material: values.innerMaterial,
+      color: values.innerColor
+    },
+    bottomMaterial: {
+      material: values.bottomMaterial,
+      color: values.bottomColor
+    },
     name: [
       { lang: languages[0], value: values.uaName },
       { lang: languages[1], value: values.enName }

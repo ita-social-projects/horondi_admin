@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { productsTranslations } from '../../translations/product.translations';
 import { client } from '../../utils/client';
 
 const getAllProducts = async (productsState, tableState) => {
@@ -399,6 +400,10 @@ const addProduct = async (state) => {
           ... on Product {
             _id
           }
+          ... on Error {
+            message
+            statusCode
+          }
         }
       }
     `,
@@ -407,7 +412,16 @@ const addProduct = async (state) => {
       upload: state.upload
     }
   });
+
+  if (result.data.addProduct.message) {
+    throw new Error(
+      `${result.data.addProduct.statusCode} ${
+        productsTranslations[result.data.addProduct.message]
+      }`
+    );
+  }
   await client.resetStore();
+
   return result.data.addProduct;
 };
 
@@ -449,11 +463,28 @@ const getProduct = async (payload) => {
 const updateProduct = async (payload, upload, primaryImageUpload) => {
   const result = await client.mutate({
     mutation: gql`
-      mutation($id: ID!, $product: ProductInput!, $upload: Upload, $primary: Upload) {
-        updateProduct(id: $id, product: $product, upload: $upload, primary: $primary) {
-            ${productQuery}
+      mutation(
+        $id: ID!
+        $product: ProductInput!
+        $upload: Upload
+        $primary: Upload
+      ) {
+        updateProduct(
+          id: $id
+          product: $product
+          upload: $upload
+          primary: $primary
+        ) {
+          ... on Product {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
-      }`,
+      }
+    `,
     variables: {
       id: payload.id,
       product: payload.product,
@@ -461,6 +492,13 @@ const updateProduct = async (payload, upload, primaryImageUpload) => {
       primary: primaryImageUpload || undefined
     }
   });
+  if (result.data.updateProduct.message) {
+    throw new Error(
+      `${result.data.updateProduct.statusCode} ${
+        productsTranslations[result.data.updateProduct.message]
+      }`
+    );
+  }
   return result.data.updateProduct;
 };
 

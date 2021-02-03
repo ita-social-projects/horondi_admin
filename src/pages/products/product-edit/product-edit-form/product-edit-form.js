@@ -102,11 +102,21 @@ const ProductEditForm = ({ isEdit }) => {
   };
 
   const onSubmit = (formValues) => {
-    const { strapLengthInCm, pattern, model, category, basePrice } = formValues;
+    const {
+      strapLengthInCm,
+      pattern,
+      model,
+      category,
+      basePrice,
+      closure,
+      sizes
+    } = formValues;
     const productInfo = createProductInfo(formValues);
     dispatch(
       updateProduct({
         product: {
+          closure,
+          sizes,
           ...productInfo,
           images: product.images,
           pattern,
@@ -187,6 +197,7 @@ const ProductEditForm = ({ isEdit }) => {
   ]);
   const handleProductValidate = async () => {
     setShouldValidate(true);
+
     await submitForm();
   };
 

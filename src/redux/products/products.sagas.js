@@ -160,6 +160,7 @@ export function* handleProductUpdate({ payload }) {
     );
     yield put(setProduct(productToUpdate));
     yield put(clearFilesToUpload());
+    yield put(push(routes.pathToProducts));
     yield put(setProductsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
