@@ -41,7 +41,7 @@ const ProductEdit = ({ id }) => {
 
   return (
     <div>
-      <ProductForm />
+      <ProductForm isEdit />
     </div>
   );
 };
