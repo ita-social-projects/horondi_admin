@@ -44,6 +44,16 @@ const productModel = {
 };
 
 const mockProductsState = {
+  details: {
+    categories: [],
+    closures: [],
+    materials: {
+      bottom: [],
+      inner: [],
+      main: []
+    },
+    models: []
+  },
   sorting: {
     sortByPrice: 0,
     sortByRate: 0,
