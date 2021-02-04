@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 import { map } from 'lodash';
-import { useStyles } from './product-materials-container.styles';
+import { useStyles } from '../product-species-container/product-species-container.styles';
 import { config } from '../../configs';
 
 const { materialLabels } = config.labels.product;

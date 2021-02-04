@@ -78,9 +78,7 @@ const ProductSpeciesContainer = ({
       )),
     [sizes]
   );
-  console.log(models);
-  console.log(sizes);
-  console.log(values);
+
   const closuresOptions = useMemo(
     () =>
       map(closures, (closure) => (

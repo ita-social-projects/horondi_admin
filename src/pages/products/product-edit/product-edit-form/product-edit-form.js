@@ -115,7 +115,7 @@ const ProductEditForm = ({ isEdit }) => {
       category,
       basePrice,
       closure,
-      sizes
+      sizes: sizeToSend
     } = formValues;
 
     const productInfo = createProductInfo(formValues);
@@ -129,7 +129,7 @@ const ProductEditForm = ({ isEdit }) => {
       dispatch(
         addProduct({
           closure,
-          sizes,
+          sizes: sizeToSend,
           ...productInfo,
           pattern,
           model,
@@ -144,7 +144,7 @@ const ProductEditForm = ({ isEdit }) => {
       updateProduct({
         product: {
           closure,
-          sizes,
+          sizes: sizeToSend,
           ...productInfo,
           pattern,
           model,
