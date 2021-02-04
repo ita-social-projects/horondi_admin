@@ -179,7 +179,6 @@ function MaterialForm({ material, id }) {
   if (loading) {
     return <LoadingBar />;
   }
-  console.log(values);
   return (
     <div className={styles.container}>
       <form className={styles.materialForm} onSubmit={handleSubmit}>
