@@ -13,13 +13,11 @@ import ProductEditForm from './product-edit-form';
 import LoadingBar from '../../../components/loading-bar';
 
 import { productModel } from '../../../redux/products/products.reducer';
+import { selectSelectedProductAndLoading } from '../../../redux/selectors/products.selectors';
 
 const ProductEdit = ({ id }) => {
   const dispatch = useDispatch();
-  const { product, loading } = useSelector(({ Products }) => ({
-    product: Products.selectedProduct,
-    loading: Products.loading
-  }));
+  const { product, loading } = useSelector(selectSelectedProductAndLoading);
 
   useEffect(() => {
     window.scrollTo(0, 0);

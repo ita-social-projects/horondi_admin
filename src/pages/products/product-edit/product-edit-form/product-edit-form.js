@@ -38,6 +38,7 @@ import { config } from '../../../../configs';
 import { BackButton } from '../../../../components/buttons';
 import ProductMaterialsContainer from '../../../../containers/product-materials-container';
 import ProductAddImages from '../../product-add/product-add-images';
+import { selectSelectedProduct } from '../../../../redux/selectors/products.selectors';
 
 const { priceLabel } = config.labels.product;
 
@@ -56,7 +57,7 @@ const ProductEditForm = ({ isEdit }) => {
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
 
-  const product = useSelector(({ Products }) => Products.selectedProduct);
+  const product = useSelector(selectSelectedProduct);
   const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);

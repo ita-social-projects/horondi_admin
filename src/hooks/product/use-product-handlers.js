@@ -1,18 +1,13 @@
 import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../../configs';
+import { selectProductDetails } from '../../redux/selectors/products.selectors';
 import useProductSpecies from './use-product-species';
 
 const { languages } = config;
 
 const useProductHandlers = () => {
-  const { modelsForSelectedCategory, details } = useSelector(
-    ({ Products }) => ({
-      modelsForSelectedCategory:
-        Products.productSpecies.modelsForSelectedCategory,
-      details: Products.details
-    })
-  );
+  const { details } = useSelector(selectProductDetails);
   const getIdFromItem = (item) => item._id;
   const { categories, materials, patterns, closures } = details;
 
@@ -24,11 +19,6 @@ const useProductHandlers = () => {
   const [primaryImage, setPrimaryImage] = useState('');
   const [additionalImages, setAdditionalImages] = useState([]);
   const { categoriesNames, modelNames, patternsNames } = useProductSpecies();
-  const getPatternToSend = (pattern) =>
-    patterns.find((item) => pattern === item.name[0].value);
-
-  const getModelToSend = (model) =>
-    modelsForSelectedCategory.find(({ name }) => name[0].value === model);
 
   const createProductInfo = (values) => ({
     name: [
@@ -53,11 +43,6 @@ const useProductHandlers = () => {
     }
   });
 
-  const getSelectedCategory = useCallback(
-    (category) => categories.find(({ _id }) => category === _id),
-    [categories]
-  );
-
   return {
     innerColors,
     setInnerColors,
@@ -81,9 +66,6 @@ const useProductHandlers = () => {
     additionalImages,
     setAdditionalImages,
     createProductInfo,
-    getModelToSend,
-    getPatternToSend,
-    getSelectedCategory,
     setModels
   };
 };
