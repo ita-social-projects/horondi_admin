@@ -32,7 +32,8 @@ import {
   GET_PRODUCT,
   UPDATE_PRODUCT,
   DELETE_IMAGES,
-  GET_PRODUCT_SPECIES
+  GET_PRODUCT_SPECIES,
+  GET_PRODUCT_DETAILS
 } from './products.types';
 
 import {
@@ -118,11 +119,11 @@ export function* handleModelsLoad({ payload }) {
   }
 }
 
-export function* handleProductAdd() {
+export function* handleProductAdd({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const productState = yield select(selectProducts);
-    const addedProduct = yield call(addProduct, productState);
+    const { upload } = yield select(selectProducts);
+    const addedProduct = yield call(addProduct, payload, upload);
     yield call(handleFilterLoad);
     yield put(clearProductToSend());
     yield put(setFilesToUpload([]));
@@ -152,13 +153,8 @@ export function* handleProductUpdate({ payload }) {
   try {
     yield put(setProductsLoading(true));
     const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
-    const productToUpdate = yield call(
-      updateProduct,
-      payload,
-      upload,
-      primaryImageUpload
-    );
-    yield put(setProduct(productToUpdate));
+    yield call(updateProduct, payload, upload, primaryImageUpload);
+    yield put(setProduct({}));
     yield put(clearFilesToUpload());
     yield put(push(routes.pathToProducts));
     yield put(setProductsLoading(false));
@@ -213,4 +209,5 @@ export default function* productsSaga() {
   yield takeEvery(UPDATE_PRODUCT, handleProductUpdate);
   yield takeEvery(DELETE_IMAGES, handleImagesDelete);
   yield takeEvery(GET_PRODUCT_SPECIES, handleProductSpeciesLoad);
+  yield takeEvery(GET_PRODUCT_DETAILS, handleProductDetailsLoad);
 }

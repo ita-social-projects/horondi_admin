@@ -37,7 +37,7 @@ const ProductSpeciesContainer = ({
 
   const categoriesOptions = useMemo(
     () =>
-      categories.map(({ name, _id }) => (
+      map(categories, ({ name, _id }) => (
         <MenuItem value={_id} key={_id}>
           {name[0].value}
         </MenuItem>
@@ -47,7 +47,7 @@ const ProductSpeciesContainer = ({
 
   const patternsOptions = useMemo(
     () =>
-      patterns.map((pattern) => (
+      map(patterns, (pattern) => (
         <MenuItem value={pattern._id} key={pattern.name[1].value}>
           {pattern.name[0].value}
         </MenuItem>
@@ -71,17 +71,19 @@ const ProductSpeciesContainer = ({
 
   const sizesOptions = useMemo(
     () =>
-      sizes.map((size) => (
+      map(sizes, (size) => (
         <MenuItem value={size._id} key={size.name}>
           {size.name}
         </MenuItem>
       )),
     [sizes]
   );
-
+  console.log(models);
+  console.log(sizes);
+  console.log(values);
   const closuresOptions = useMemo(
     () =>
-      closures.map((closure) => (
+      map(closures, (closure) => (
         <MenuItem value={closure._id} key={closure.name[1].value}>
           {closure.name[0].value}
         </MenuItem>
@@ -126,7 +128,7 @@ const ProductSpeciesContainer = ({
             <Select
               name={name}
               error={touched[name] && !!errors[name]}
-              value={values[name]}
+              value={values[name] || []}
               onChange={handleSelectChange}
               onBlur={handleBlur}
               multiple={multiple}

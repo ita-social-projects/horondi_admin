@@ -31,6 +31,14 @@ const useProductHandlers = () => {
     modelsForSelectedCategory.find(({ name }) => name[0].value === model);
 
   const createProductInfo = (values) => ({
+    name: [
+      { lang: languages[0], value: values.uaName },
+      { lang: languages[1], value: values.enName }
+    ],
+    description: [
+      { lang: languages[0], value: values.uaDescription },
+      { lang: languages[1], value: values.enDescription }
+    ],
     mainMaterial: {
       material: values.mainMaterial,
       color: values.mainColor
@@ -42,15 +50,7 @@ const useProductHandlers = () => {
     bottomMaterial: {
       material: values.bottomMaterial,
       color: values.bottomColor
-    },
-    name: [
-      { lang: languages[0], value: values.uaName },
-      { lang: languages[1], value: values.enName }
-    ],
-    description: [
-      { lang: languages[0], value: values.uaDescription },
-      { lang: languages[1], value: values.enDescription }
-    ]
+    }
   });
 
   const getSelectedCategory = useCallback(

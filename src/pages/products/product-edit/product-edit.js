@@ -43,7 +43,7 @@ const ProductEdit = ({ id }) => {
 
   return (
     <div>
-      <ProductEditForm isEdit />
+      <ProductEditForm />
     </div>
   );
 };

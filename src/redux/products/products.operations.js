@@ -392,7 +392,7 @@ const productQuery = `
 }
 `;
 
-const addProduct = async (state) => {
+const addProduct = async (product, upload) => {
   const result = await client.mutate({
     mutation: gql`
       mutation($product: ProductInput!, $upload: Upload!) {
@@ -408,8 +408,8 @@ const addProduct = async (state) => {
       }
     `,
     variables: {
-      product: state.productToSend,
-      upload: state.upload
+      product,
+      upload
     }
   });
 

@@ -10,8 +10,9 @@ import {
   useMediaQuery,
   useTheme
 } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
+
 import { find } from 'lodash';
 import useProductHandlers from '../../../../hooks/product/use-product-handlers';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
@@ -22,7 +23,9 @@ import ProductInfoContainer from '../../../../containers/product-info-container'
 import ProductSpeciesContainer from '../../../../containers/product-species-container';
 
 import {
+  addProduct,
   deleteProduct,
+  setFilesToUpload,
   updateProduct
 } from '../../../../redux/products/products.actions';
 import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
@@ -34,6 +37,7 @@ import CommentsPage from '../../../comments';
 import { config } from '../../../../configs';
 import { BackButton } from '../../../../components/buttons';
 import ProductMaterialsContainer from '../../../../containers/product-materials-container';
+import ProductAddImages from '../../product-add/product-add-images';
 
 const { priceLabel } = config.labels.product;
 
@@ -53,7 +57,6 @@ const ProductEditForm = ({ isEdit }) => {
   const dispatch = useDispatch();
 
   const product = useSelector(({ Products }) => Products.selectedProduct);
-
   const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
@@ -66,7 +69,6 @@ const ProductEditForm = ({ isEdit }) => {
 
   const {
     createProductInfo,
-    colors: productColors,
     patterns,
     models,
     innerColors,
@@ -81,7 +83,11 @@ const ProductEditForm = ({ isEdit }) => {
     getIdFromItem,
     categories,
     setModels,
-    materials
+    materials,
+    setAdditionalImages,
+    additionalImages,
+    setPrimaryImage,
+    primaryImage
   } = useProductHandlers();
 
   const formikSpeciesValues = {
@@ -90,7 +96,7 @@ const ProductEditForm = ({ isEdit }) => {
     pattern: product?.pattern?._id || '',
     strapLengthInCm: product?.strapLengthInCm || 0,
     closure: product?.closure?._id || '',
-    sizes: product?.sizes.map((el) => getIdFromItem(el) || [])
+    sizes: product?.sizes?.map((el) => getIdFromItem(el) || [])
   };
   const formikMaterialsValues = {
     innerMaterial: product?.innerMaterial?.material?._id || '',
@@ -111,14 +117,35 @@ const ProductEditForm = ({ isEdit }) => {
       closure,
       sizes
     } = formValues;
+
     const productInfo = createProductInfo(formValues);
+    if (!isEdit) {
+      setShouldValidate(true);
+      if (primaryImage && additionalImages.length) {
+        dispatch(setFilesToUpload([primaryImage, ...additionalImages]));
+      } else if (primaryImage) {
+        dispatch(setFilesToUpload([primaryImage]));
+      }
+      dispatch(
+        addProduct({
+          closure,
+          sizes,
+          ...productInfo,
+          pattern,
+          model,
+          category,
+          basePrice,
+          strapLengthInCm
+        })
+      );
+      return;
+    }
     dispatch(
       updateProduct({
         product: {
           closure,
           sizes,
           ...productInfo,
-          images: product.images,
           pattern,
           model,
           category,
@@ -243,7 +270,17 @@ const ProductEditForm = ({ isEdit }) => {
       <Grid container justify='center' spacing={3}>
         <Grid item xs={12} md={5} xl={3}>
           <Paper className={styles.paper}>
-            <ProductCarousel toggleFieldsChanged={toggleFieldsChanged} />
+            {isEdit ? (
+              <ProductCarousel toggleFieldsChanged={toggleFieldsChanged} />
+            ) : (
+              <ProductAddImages
+                setAdditionalImages={setAdditionalImages}
+                additionalImages={additionalImages}
+                setPrimaryImage={setPrimaryImage}
+                primaryImage={primaryImage}
+                validate={shouldValidate}
+              />
+            )}
           </Paper>
         </Grid>
         <Grid item xs={12} md={7} xl={9}>
@@ -269,7 +306,6 @@ const ProductEditForm = ({ isEdit }) => {
             <ProductSpeciesContainer
               models={models}
               patterns={patterns}
-              colors={productColors}
               categories={categories}
               closures={closures}
               sizes={sizes}
@@ -338,9 +374,11 @@ const ProductEditForm = ({ isEdit }) => {
     </div>
   );
 };
+
 ProductEditForm.propTypes = {
   isEdit: PropTypes.bool
 };
+
 ProductEditForm.defaultProps = {
   isEdit: false
 };

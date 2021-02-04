@@ -47,7 +47,7 @@ const ProductMaterialsContainer = ({
     handleChange(e);
     toggleFieldsChanged(true);
   };
-  console.log(mainColors);
+
   const mainMaterialOptions = useMemo(
     () =>
       map(mainMaterials, (material) => (
