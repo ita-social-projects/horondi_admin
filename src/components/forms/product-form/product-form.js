@@ -14,31 +14,31 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 
 import { find } from 'lodash';
-import useProductHandlers from '../../../../hooks/product/use-product-handlers';
-import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
-import useProductValidation from '../../../../hooks/product/use-product-validation';
-import { useStyles } from './product-edit-form.styles';
+import useProductHandlers from '../../../hooks/product/use-product-handlers';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import useProductValidation from '../../../hooks/product/use-product-validation';
+import { useStyles } from './product-form.styles';
 
-import ProductInfoContainer from '../../../../containers/product-info-container';
-import ProductSpeciesContainer from '../../../../containers/product-species-container';
+import ProductInfoContainer from '../../../containers/product-info-container';
+import ProductSpeciesContainer from '../../../containers/product-species-container';
 
 import {
   addProduct,
   deleteProduct,
   setFilesToUpload,
   updateProduct
-} from '../../../../redux/products/products.actions';
-import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
+} from '../../../redux/products/products.actions';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 
-import { productsTranslations } from '../../../../translations/product.translations';
+import { productsTranslations } from '../../../translations/product.translations';
 import ProductCarousel from './product-carousel';
-import DeleteButton from '../../../../components/buttons/delete-button';
-import CommentsPage from '../../../comments';
-import { config } from '../../../../configs';
-import { BackButton } from '../../../../components/buttons';
-import ProductMaterialsContainer from '../../../../containers/product-materials-container';
-import ProductAddImages from '../../product-add/product-add-images';
-import { selectSelectedProduct } from '../../../../redux/selectors/products.selectors';
+import DeleteButton from '../../buttons/delete-button';
+import CommentsPage from '../../../pages/comments';
+import { config } from '../../../configs';
+import { BackButton } from '../../buttons';
+import ProductMaterialsContainer from '../../../containers/product-materials-container';
+import ProductAddImages from '../../../pages/products/product-add/product-add-images';
+import { selectSelectedProduct } from '../../../redux/selectors/products.selectors';
 
 const { priceLabel } = config.labels.product;
 
@@ -51,7 +51,7 @@ const {
   PRODUCT_MATERIALS
 } = productsTranslations;
 
-const ProductEditForm = ({ isEdit }) => {
+const ProductForm = ({ isEdit }) => {
   const styles = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
@@ -376,12 +376,12 @@ const ProductEditForm = ({ isEdit }) => {
   );
 };
 
-ProductEditForm.propTypes = {
+ProductForm.propTypes = {
   isEdit: PropTypes.bool
 };
 
-ProductEditForm.defaultProps = {
+ProductForm.defaultProps = {
   isEdit: false
 };
 
-export default ProductEditForm;
+export default ProductForm;

@@ -9,7 +9,7 @@ import {
   setProduct
 } from '../../../redux/products/products.actions';
 
-import ProductEditForm from './product-edit-form';
+import ProductForm from '../../../components/forms/product-form';
 import LoadingBar from '../../../components/loading-bar';
 
 import { productModel } from '../../../redux/products/products.reducer';
@@ -41,7 +41,7 @@ const ProductEdit = ({ id }) => {
 
   return (
     <div>
-      <ProductEditForm />
+      <ProductForm />
     </div>
   );
 };
