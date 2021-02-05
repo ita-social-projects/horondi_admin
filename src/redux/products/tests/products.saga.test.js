@@ -7,7 +7,6 @@ import {
   handleFilterLoad,
   handleGetFilters,
   handleProductSpeciesLoad,
-  handleProductOptionsLoad,
   handleModelsLoad,
   handleProductAdd,
   handleProductDelete,
@@ -23,7 +22,6 @@ import {
   setAllFilterData,
   setProductsError,
   setProductCategories,
-  setProductOptions,
   setModels,
   clearProductToSend,
   setProduct,
@@ -36,7 +34,6 @@ import {
   getAllProducts,
   getAllFilters,
   getProductCategories,
-  getProductOptions,
   getModelsByCategory,
   addProduct,
   deleteProduct,
@@ -52,7 +49,6 @@ import {
   pagesCount,
   mockFiltersData,
   mockCategoriesList,
-  mockProductOptions,
   mockCategoryId,
   mockModels,
   mockProductsToAddState,
@@ -196,28 +192,6 @@ describe('Test products saga', () => {
         expect(analysisCall).toHaveLength(2);
       }));
 
-  it('should load product options', () =>
-    expectSaga(handleProductOptionsLoad)
-      .withReducer(combineReducers({ Products }), {
-        Products: mockProductsState
-      })
-      .provide([[call(getProductOptions), mockProductOptions]])
-      .put(setProductOptions(mockProductOptions))
-      .hasFinalState({
-        Products: {
-          ...mockProductsState,
-          productOptions: mockProductOptions
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(1);
-        expect(analysisCall).toHaveLength(1);
-      }));
-
   it('should load model by id', () =>
     expectSaga(handleModelsLoad, { payload: mockCategoryId })
       .withReducer(combineReducers({ Products }), {
@@ -348,7 +322,6 @@ describe('Test products saga', () => {
       })
       .put(setProductsLoading(true))
       .provide([
-        [call(handleProductOptionsLoad)],
         [call(handleProductSpeciesLoad)],
         [call(getProduct, mockProduct._id), mockProduct]
       ])
@@ -366,7 +339,7 @@ describe('Test products saga', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should handle snackbar success', () =>

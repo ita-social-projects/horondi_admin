@@ -16,14 +16,12 @@ import { productModel } from '../../../redux/products/products.reducer';
 
 const ProductEdit = ({ id }) => {
   const dispatch = useDispatch();
-  const { product, loading, productOptions, categories } = useSelector(
-    ({ Products }) => ({
-      product: Products.selectedProduct,
-      loading: Products.loading,
-      productOptions: Products.productOptions,
-      categories: Products.productSpecies.categories
-    })
-  );
+  const { product, loading, categories } = useSelector(({ Products }) => ({
+    product: Products.selectedProduct,
+    loading: Products.loading,
+    productOptions: Products.productOptions,
+    categories: Products.productSpecies.categories
+  }));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,7 +38,7 @@ const ProductEdit = ({ id }) => {
     loading ||
     !product.name ||
     !product.name[0].value ||
-    !productOptions.sizes.length ||
+    !product.sizes.length ||
     !categories.length
   ) {
     return <LoadingBar />;

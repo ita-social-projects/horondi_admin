@@ -6,7 +6,7 @@ const routes = {
   pathToAddPattern: '/patterns/add',
   pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd',
+  pathToAddNews: '/news/add',
   pathToBusinessPages: '/business-pages',
   pathToAddBusinessPage: '/business-page-add',
   pathToBusinessPageDetails: '/business-pages/:id',

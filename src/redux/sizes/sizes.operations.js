@@ -4,7 +4,6 @@ import { client } from '../../utils/client';
 
 export const createSize = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  console.log(payload);
   const result = await client.mutate({
     context: { headers: { token } },
     variables: { size: payload },

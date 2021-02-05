@@ -5,13 +5,23 @@ import { setSizeLoading } from './sizes.actions';
 
 import { createSize } from './sizes.operations';
 
+import { config } from '../../configs';
+
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
+
+const { SUCCESS_CREATION_STATUS } = config.statuses;
+
 export function* handleAddModel({ payload }) {
   try {
     yield put(setSizeLoading(true));
     yield call(createSize, payload);
     yield put(setSizeLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
   } catch (error) {
-    console.log(error);
+    yield call(handleErrorSnackbar, error);
   }
 }
 

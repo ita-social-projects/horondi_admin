@@ -17,7 +17,6 @@ import {
   CLEAR_PRODUCT_TO_SEND,
   SET_PRODUCTS_ERROR,
   SET_PRODUCT_CATEGORIES,
-  SET_PRODUCT_OPTIONS,
   SET_MODELS,
   SET_FILES_TO_UPLOAD,
   SET_PRODUCT,
@@ -73,10 +72,6 @@ export const initialState = {
   productSpecies: {
     categories: [],
     modelsForSelectedCategory: []
-  },
-  productOptions: {
-    sizes: [],
-    bottomMaterials: []
   }
 };
 export const setSort = ({
@@ -200,11 +195,6 @@ const productsReducer = (state = initialState, action = {}) => {
         ...state.productSpecies,
         categories: action.payload
       }
-    };
-  case SET_PRODUCT_OPTIONS:
-    return {
-      ...state,
-      productOptions: action.payload
     };
   case SET_MODELS:
     return {

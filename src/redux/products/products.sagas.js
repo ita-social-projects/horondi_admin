@@ -13,7 +13,6 @@ import {
   setAllFilterData,
   setProductsError,
   setProductCategories,
-  setProductOptions,
   setModels,
   clearProductToSend,
   setProduct,
@@ -32,7 +31,6 @@ import {
   GET_PRODUCT,
   UPDATE_PRODUCT,
   DELETE_IMAGES,
-  GET_PRODUCT_OPTIONS,
   GET_PRODUCT_SPECIES
 } from './products.types';
 
@@ -40,7 +38,6 @@ import {
   getAllProducts,
   getAllFilters,
   getProductCategories,
-  getProductOptions,
   getModelsByCategory,
   addProduct,
   deleteProduct,
@@ -94,15 +91,6 @@ export function* handleProductSpeciesLoad() {
     const species = yield call(getAllFilters);
     yield put(setProductCategories(categories));
     yield put(setAllFilterData(species));
-  } catch (e) {
-    yield call(handleProductsErrors, e);
-  }
-}
-
-export function* handleProductOptionsLoad() {
-  try {
-    const productOptions = yield call(getProductOptions);
-    yield put(setProductOptions(productOptions));
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -169,7 +157,6 @@ export function* handleProductUpdate({ payload }) {
 export function* handleProductLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    yield call(handleProductOptionsLoad);
     yield call(handleProductSpeciesLoad);
     const product = yield call(getProduct, payload);
     yield put(setProduct(product));
@@ -210,6 +197,5 @@ export default function* productsSaga() {
   yield takeEvery(GET_PRODUCT, handleProductLoad);
   yield takeEvery(UPDATE_PRODUCT, handleProductUpdate);
   yield takeEvery(DELETE_IMAGES, handleImagesDelete);
-  yield takeEvery(GET_PRODUCT_OPTIONS, handleProductOptionsLoad);
   yield takeEvery(GET_PRODUCT_SPECIES, handleProductSpeciesLoad);
 }

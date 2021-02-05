@@ -6,7 +6,6 @@ import { useStyles } from './products-nav-filters.styles';
 
 import {
   setCategoryFilter,
-  setColorsFilter,
   setModelsFilter,
   setPatternsFilter
 } from '../../../../redux/products/products.actions';
@@ -20,24 +19,18 @@ import { productsTranslations } from '../../../../translations/product.translati
 import useProductSpecies from '../../../../hooks/product/use-product-species';
 import ProductsNavClearFilters from '../products-nav-clear-filters/products-nav-clear-filters';
 
-const { CATEGORIES, PATTERNS, MODELS, COLORS } = productsTranslations;
+const { CATEGORIES, PATTERNS, MODELS } = productsTranslations;
 
 const ProductsNavFilters = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const filters = useSelector(({ Products }) => Products.filters);
 
-  const {
-    categoryFilter,
-    colorsFilter,
-    patternsFilter,
-    modelsFilter
-  } = filters;
+  const { categoryFilter, patternsFilter, modelsFilter } = filters;
 
   const {
     categories,
     categoriesNames,
-    colorsNames,
     patternsNames,
     modelNames
   } = useProductSpecies();
@@ -64,13 +57,6 @@ const ProductsNavFilters = () => {
       list: modelNames,
       clearFilter: () => handleFilterClear(setModelsFilter),
       filterHandler: (e) => handleFilterChange(e, setModelsFilter)
-    },
-    colors: {
-      buttonName: COLORS,
-      productFilter: colorsFilter,
-      list: colorsNames,
-      clearFilter: () => handleFilterClear(setColorsFilter),
-      filterHandler: (e) => handleFilterChange(e, setColorsFilter)
     },
     patterns: {
       buttonName: PATTERNS,

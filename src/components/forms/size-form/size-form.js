@@ -7,15 +7,15 @@ import {
   Switch,
   Button,
   Dialog,
-  DialogActions,
   DialogContent
 } from '@material-ui/core';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useStyles } from './size-form.styles';
-import useSizeHandlers from '../../utils/use-size-handlers';
-import { SaveButton } from '../buttons';
-import { addSize, saveSizeInRedux } from '../../redux/sizes/sizes.actions';
+import useSizeHandlers from '../../../utils/use-size-handlers';
+import { SaveButton } from '../../buttons';
+import { addSize, saveSizeInRedux } from '../../../redux/sizes/sizes.actions';
 
 const SizesForm = () => {
   const styles = useStyles();
@@ -34,7 +34,6 @@ const SizesForm = () => {
 
   const handleChangeAvailable = () => {
     setIsAvailable(!isAvailable);
-    console.log(isAvailable);
   };
 
   const { createSize } = useSizeHandlers();
@@ -121,28 +120,32 @@ const SizesForm = () => {
                   label='additional price UAH'
                   className={styles.textField}
                 />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      id='available'
-                      checked={isAvailable}
-                      onChange={handleChangeAvailable}
-                      name='switch'
-                      color='primary'
-                    />
-                  }
-                  label='available'
-                />
               </Grid>
+              <FormControlLabel
+                control={
+                  <Switch
+                    id='available'
+                    checked={isAvailable}
+                    onChange={handleChangeAvailable}
+                    name='switch'
+                    color='primary'
+                  />
+                }
+                label='available'
+              />
             </FormControl>
-            <SaveButton title='save size' type='submit' onClick={handleClose} />
+            <div className={styles.buttonContainer}>
+              <Button onClick={handleClose} color='primary'>
+                Cancel
+              </Button>
+              <SaveButton
+                title='save size'
+                type='submit'
+                onClick={handleClose}
+              />
+            </div>
           </form>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color='primary'>
-            Cancel
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );
