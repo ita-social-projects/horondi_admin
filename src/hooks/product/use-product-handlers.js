@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { config } from '../../configs';
 import { selectProductDetails } from '../../redux/selectors/products.selectors';
