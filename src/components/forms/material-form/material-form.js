@@ -89,7 +89,7 @@ function MaterialForm({ material, id }) {
       enDescription: material.description[1].value || '',
       purpose: material.purpose || Object.values(purposeEnum)[0],
       available: material.available || false,
-      additionalPrice: +material.additionalPrice[1].value / 100 || 0,
+      additionalPrice: +material.additionalPrice[0].value / 100 || 0,
       colors:
         (material.colors && material.colors.map((color) => color._id)) || []
     },

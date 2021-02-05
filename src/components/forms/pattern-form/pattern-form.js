@@ -103,7 +103,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       enName: pattern.name[1].value || '',
       uaDescription: pattern.description[0].value || '',
       enDescription: pattern.description[1].value || '',
-      material: pattern.material || '',
+      material: pattern.material.name[0].value || '',
       available: pattern.available || false,
       handmade: pattern.handmade || false
     },
@@ -334,7 +334,16 @@ PatternForm.defaultProps = {
       thumbnail: ''
     },
     constructorImg: '',
-    material: '',
+    material: {
+      name: [
+        {
+          value: ''
+        },
+        {
+          value: ''
+        }
+      ]
+    },
     available: false,
     handmade: false
   },

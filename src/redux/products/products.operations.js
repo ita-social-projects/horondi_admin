@@ -66,6 +66,15 @@ const getAllProducts = async (productsState, tableState) => {
                 value
               }
             }
+            mainMaterial {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
+              }
+            }
             category {
               _id
               name {

@@ -4,33 +4,32 @@ import { getFromLocalStorage } from '../../services/local-storage.service';
 import { modelTranslations } from '../../translations/model.translations';
 
 const constructorElementRequest = `
-  _id
-  available
-  default
-  basePrice{
-   value
-   currency
-  }
-  name {
-   value
-   lang
-  }
-  image
-  material{
     _id
-  name {
-    value
-    lang
-  }
-  }
-  color{
-     _id
-    colorHex
+    available
+    default
+    basePrice {
+     value
+     currency
+    }
     name {
-    value
-    lang
-  }
-  }
+     value
+     lang
+    }
+    material{
+      _id
+      name {
+        value
+        lang
+      }
+    }
+    color {
+       _id
+      colorHex
+      name {
+        value
+        lang
+    }
+    }
 `;
 
 export const getAllModels = async (skip, limit) => {
@@ -80,63 +79,70 @@ export const getModelById = async (id) => {
   const result = await client.query({
     variables: { id },
     query: gql`
-        query($id: ID!) {
-            getModelById(id: $id) {
-                ... on Model {
-                    _id
-                    name {
-                        lang
-                        value
-                    }
-                    category {
-                        _id
-                        name {
-                            value
-                            lang
-                        }
-                    }
-                    images {
-                        large
-                        medium
-                        small
-                        thumbnail
-                    }
-                    priority
-                    show
-                    availableForConstructor
-                    description {
-                        value
-                        lang
-                    }
-                    constructorBasic{
-                        ${constructorElementRequest}
-                    }
-                    constructorPattern{
-                        _id
-                        name {
-                            value
-                            lang
-                        }
-                        material
-                        constructorImg
-                        images {
-                            thumbnail
-                        }
-                        available
-                    }
-                    constructorFrontPocket{
-                        ${constructorElementRequest}
-                    }
-                    constructorBottom{
-                        ${constructorElementRequest}
-                    }
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
+    query($id: ID!) {
+      getModelById(id: $id) {
+        ... on Model {
+          _id
+          name {
+            lang
+            value
+          }
+          category {
+            _id
+            name {
+              value
+              lang
             }
+          }
+          images {
+            large
+            medium
+            small
+            thumbnail
+          }
+          priority
+          show
+          availableForConstructor
+          description {
+            value
+            lang
+          }
+          constructorBasic {
+            ${constructorElementRequest}
+          }
+          constructorPattern {
+            _id
+            name {
+              value
+              lang
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            material {
+              _id
+              name {
+                value
+                lang
+              }
+            }
+          }
+          constructorFrontPocket  {
+            ${constructorElementRequest}
+          }
+          constructorBottom{
+            ${constructorElementRequest}
+          }
         }
+        ... on Error {
+          message
+          statusCode
+        }
+      }
+    }
     `,
     fetchPolicy: 'no-cache'
   });
