@@ -5,6 +5,9 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import TabPanel from '../../tab-panel';
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
@@ -18,6 +21,7 @@ import {
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
+import purposeEnum from '../../../configs/purpose-enum';
 
 const { languages } = config;
 const {
@@ -26,6 +30,7 @@ const {
   MAX_LENGTH_MESSAGE,
   PRICE_VALIDATION_ERROR
 } = config.materialErrorMessages;
+
 function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -82,7 +87,7 @@ function MaterialForm({ material, id }) {
       enName: material.name[1].value || '',
       uaDescription: material.description[0].value || '',
       enDescription: material.description[1].value || '',
-      purpose: material.purpose || '',
+      purpose: material.purpose || Object.values(purposeEnum)[0],
       available: material.available || false,
       additionalPrice: +material.additionalPrice[1].value / 100 || 0,
       colors:
@@ -174,7 +179,6 @@ function MaterialForm({ material, id }) {
   if (loading) {
     return <LoadingBar />;
   }
-
   return (
     <div className={styles.container}>
       <form className={styles.materialForm} onSubmit={handleSubmit}>
@@ -193,19 +197,33 @@ function MaterialForm({ material, id }) {
             <div className={styles.inputError}>{errors.colors}</div>
           )}
           <Paper className={styles.materialItemAdd}>
-            <TextField
-              data-cy='purpose'
-              id='purpose'
-              className={styles.textField}
+            <FormControl
               variant='outlined'
-              label={config.labels.material.purpose[0].value}
-              value={values.purpose}
-              onChange={handleChange}
-              error={touched.purpose && !!errors.purpose}
-            />
+              className={`${styles.formControl} 
+              ${styles.purposeSelect}`}
+            >
+              <InputLabel htmlFor='outlined-age-native-simple'>
+                Застосування
+              </InputLabel>
+              <Select
+                data-cy='purpose'
+                id='purpose'
+                native
+                value={values.purpose}
+                onChange={(e) => setFieldValue('purpose', e.target.value)}
+                label='Застосування'
+              >
+                {Object.values(purposeEnum).map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
             {touched.purpose && errors.purpose && (
               <div className={styles.inputError}>{errors.purpose}</div>
             )}
+            <br />
             <TextField
               data-cy='additionalPrice'
               id='additionalPrice'
@@ -255,6 +273,7 @@ function MaterialForm({ material, id }) {
     </div>
   );
 }
+
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
