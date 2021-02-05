@@ -63,7 +63,7 @@ const PatternPage = () => {
       key={patternItem._id}
       id={patternItem.id}
       name={patternItem.name[0].value}
-      material={patternItem.material}
+      material={patternItem.material.name[0].value}
       available={patternItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => patternDeleteHandler(patternItem._id)}
       editHandler={() => {
