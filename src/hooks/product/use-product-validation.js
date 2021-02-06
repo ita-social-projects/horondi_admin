@@ -14,7 +14,7 @@ const selectName = ({ name, type }) =>
 
 const {
   labels: {
-    product: { infoLabels, selectsLabels }
+    product: { infoLabels, selectsLabels, materialLabels }
   },
   languages
 } = config;
@@ -30,7 +30,8 @@ const useProductValidation = (
   onSubmit,
   formikSpeciesValues,
   product,
-  formikPriceValue
+  formikPriceValue,
+  formikMaterialsValues
 ) => {
   const [shouldValidate, setShouldValidate] = useState(false);
 
@@ -66,7 +67,9 @@ const useProductValidation = (
       }))
     )
     : {};
-
+  const yupMaterialsSchema = formikMaterialsValues
+    ? Object.fromEntries(materialLabels.map(selectName))
+    : {};
   const yupSpeciesSchema = formikSpeciesValues
     ? Object.fromEntries(selectsLabels.map(selectName))
     : {};
@@ -78,13 +81,15 @@ const useProductValidation = (
   const yupSchema = Yup.object().shape({
     ...yupInfoSchema,
     ...yupSpeciesSchema,
-    ...yupPriceSchema
+    ...yupPriceSchema,
+    ...yupMaterialsSchema
   });
 
   const formikValues = {
     ...formikInfoValues,
     ...formikSpeciesValues,
-    ...formikPriceValue
+    ...formikPriceValue,
+    ...formikMaterialsValues
   };
 
   const {

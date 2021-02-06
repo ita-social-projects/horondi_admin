@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { productsTranslations } from '../../translations/product.translations';
 import { client } from '../../utils/client';
 
 const getAllProducts = async (productsState, tableState) => {
@@ -140,6 +141,91 @@ const getAllFilters = async () => {
   return result.data.getProducts.items;
 };
 
+const getProductDetails = async () => {
+  const { data } = await client.query({
+    query: gql`
+      query {
+        getAllClosure {
+          items {
+            _id
+            name {
+              value
+            }
+          }
+        }
+        getAllPatterns {
+          items {
+            _id
+            name {
+              value
+            }
+          }
+        }
+        getCategoriesWithModels {
+          _id
+          name {
+            value
+          }
+          models {
+            _id
+            name {
+              value
+            }
+            sizes {
+              _id
+              name
+            }
+          }
+        }
+        getMaterialsByPurpose(purposes: [MAIN, BOTTOM, INNER]) {
+          main {
+            _id
+            name {
+              value
+            }
+            colors {
+              _id
+              name {
+                value
+              }
+            }
+          }
+          bottom {
+            _id
+            name {
+              value
+            }
+            colors {
+              _id
+              name {
+                value
+              }
+            }
+          }
+          inner {
+            _id
+            name {
+              value
+            }
+            colors {
+              _id
+              name {
+                value
+              }
+            }
+          }
+        }
+      }
+    `
+  });
+  return {
+    closures: data.getAllClosure.items,
+    patterns: data.getAllPatterns.items,
+    categories: data.getCategoriesWithModels,
+    materials: data.getMaterialsByPurpose
+  };
+};
+
 const getProductCategories = async () => {
   const result = await client.query({
     query: gql`
@@ -188,6 +274,7 @@ const productQuery = `
     }
   }
   model {
+    _id
     name {
       value
     }
@@ -202,12 +289,14 @@ const productQuery = `
   }
   mainMaterial {
     material {
+      _id
       name {
         lang
         value
       }
     }
     color {
+      _id
       colorHex
       simpleName {
         value
@@ -221,12 +310,14 @@ const productQuery = `
   }
   innerMaterial {
     material {
+      _id
       name {
         lang
         value
       }
     }
     color {
+      _id
       colorHex
       simpleName {
         value
@@ -254,12 +345,14 @@ const productQuery = `
     }
   }
   pattern {
+    _id
     name {
       lang
       value
     }
   }
   closure {
+    _id
     name {
       lang
       value
@@ -270,6 +363,7 @@ const productQuery = `
     currency
   }
   sizes {
+    _id
     name
     heightInCm
     widthInCm
@@ -283,12 +377,14 @@ const productQuery = `
   }
   bottomMaterial {
     material {
+      _id
       name {
         lang
         value
       }
     }
     color {
+      _id
       colorHex
       simpleName {
         value
@@ -305,7 +401,7 @@ const productQuery = `
 }
 `;
 
-const addProduct = async (state) => {
+const addProduct = async (product, upload) => {
   const result = await client.mutate({
     mutation: gql`
       mutation($product: ProductInput!, $upload: Upload!) {
@@ -313,15 +409,28 @@ const addProduct = async (state) => {
           ... on Product {
             _id
           }
+          ... on Error {
+            message
+            statusCode
+          }
         }
       }
     `,
     variables: {
-      product: state.productToSend,
-      upload: state.upload
+      product,
+      upload
     }
   });
+
+  if (result.data.addProduct.message) {
+    throw new Error(
+      `${result.data.addProduct.statusCode} ${
+        productsTranslations[result.data.addProduct.message]
+      }`
+    );
+  }
   await client.resetStore();
+
   return result.data.addProduct;
 };
 
@@ -363,11 +472,28 @@ const getProduct = async (payload) => {
 const updateProduct = async (payload, upload, primaryImageUpload) => {
   const result = await client.mutate({
     mutation: gql`
-      mutation($id: ID!, $product: ProductInput!, $upload: Upload, $primary: Upload) {
-        updateProduct(id: $id, product: $product, upload: $upload, primary: $primary) {
-            ${productQuery}
+      mutation(
+        $id: ID!
+        $product: ProductInput!
+        $upload: Upload
+        $primary: Upload
+      ) {
+        updateProduct(
+          id: $id
+          product: $product
+          upload: $upload
+          primary: $primary
+        ) {
+          ... on Product {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
-      }`,
+      }
+    `,
     variables: {
       id: payload.id,
       product: payload.product,
@@ -375,6 +501,13 @@ const updateProduct = async (payload, upload, primaryImageUpload) => {
       primary: primaryImageUpload || undefined
     }
   });
+  if (result.data.updateProduct.message) {
+    throw new Error(
+      `${result.data.updateProduct.statusCode} ${
+        productsTranslations[result.data.updateProduct.message]
+      }`
+    );
+  }
   return result.data.updateProduct;
 };
 
@@ -415,5 +548,6 @@ export {
   deleteProduct,
   getProduct,
   updateProduct,
-  deleteImages
+  deleteImages,
+  getProductDetails
 };

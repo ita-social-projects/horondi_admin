@@ -117,7 +117,7 @@ const labels = {
       'Введіть інформацію про продукт',
       'Оберіть категорію, підкатегорію, модель, колір, гобелен та ціну продукту',
       'Вкажіть ціну продукту',
-      'Оберіть опційні параметри',
+      'Оберіть матеріали та кольори до них',
       'Завантажте фото для продукту',
       'Підтвердження створення продукту'
     ],
@@ -133,30 +133,80 @@ const labels = {
         isEditor: true
       }
     ],
+    materialLabels: [
+      {
+        label: 'Основний матеріал',
+        name: 'mainMaterial',
+        required: true
+      },
+      {
+        label: 'Колір основного матеріалу',
+        name: 'mainColor',
+        required: true
+      },
+      {
+        label: 'Нижній матеріал',
+        name: 'bottomMaterial',
+        required: false
+      },
+      {
+        label: 'Колір нижнього матеріалу',
+        name: 'bottomColor',
+        required: false
+      },
+      {
+        label: 'Внутрішній матеріал',
+        name: 'innerMaterial',
+        required: false
+      },
+      {
+        label: 'Колір внутрішнього матеріалу',
+        name: 'innerColor',
+        required: false
+      }
+    ],
     selectsLabels: [
       {
         label: 'Категорія ',
         name: 'category',
         type: 'select',
-        required: true
+        required: true,
+        multiple: false
       },
       {
         label: 'Модель ',
         name: 'model',
         type: 'select',
-        required: true
+        required: true,
+        multiple: false
+      },
+      {
+        label: 'Розміри ',
+        name: 'sizes',
+        type: 'select',
+        required: true,
+        multiple: true
       },
       {
         label: 'Гобелен ',
         name: 'pattern',
         type: 'select',
-        required: true
+        required: true,
+        multiple: false
+      },
+      {
+        label: 'Замочок',
+        name: 'closure',
+        type: 'select',
+        required: true,
+        multiple: false
       },
       {
         label: 'Довжина лямок(см)',
         name: 'strapLengthInCm',
         type: 'number',
-        required: true
+        required: true,
+        multiple: false
       }
     ],
     optionsLabels: [
