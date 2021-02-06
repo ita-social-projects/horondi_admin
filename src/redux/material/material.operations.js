@@ -61,19 +61,20 @@ export const getAllMaterialsByPurpose = async (purposes) => {
     },
     query: gql`
       query {
-       getMaterialsByPurpose(purposes:${purposes}){
-    	${purposes}  {
-        name{
-          lang
-          value
+        getMaterialsByPurpose(purposes: PATTERN) {
+          pattern {
+            _id
+            name {
+              lang
+              value
+            }
+          }
         }
-      }
-      } 
       }
     `
   });
 
-  client.resetStore();
+  // client.resetStore();
   return result.data.getMaterialsByPurpose;
 };
 

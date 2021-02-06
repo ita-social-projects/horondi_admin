@@ -45,7 +45,8 @@ export function* handleMaterialsByPurposeLoad({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     const materialsByPurpose = yield call(getAllMaterialsByPurpose, payload);
-    yield put(setMaterialsByPurpose(materialsByPurpose));
+    console.log(materialsByPurpose.pattern);
+    yield put(setMaterialsByPurpose(materialsByPurpose.pattern));
     yield put(setMaterialLoading(false));
   } catch (error) {
     yield call(handleMaterialError, error);

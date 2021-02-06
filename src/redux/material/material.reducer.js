@@ -5,14 +5,15 @@ import {
   SET_MATERIAL_ERROR,
   REMOVE_MATERIAL_FROM_STORE,
   SET_COLOR_FILTER,
-  GET_MATERIALS_BY_PURPOSE
+  SET_MATERIALS_BY_PURPOSE
 } from './material.types';
 
 export const selectMaterial = ({ Material }) => ({
   list: Material.list,
   loading: Material.materialLoading,
   material: Material.material,
-  filter: Material.filter
+  filter: Material.filter,
+  materialsByPurpose: Material.materialsByPurpose
 });
 
 export const initialState = {
@@ -23,7 +24,7 @@ export const initialState = {
   filter: {
     colors: []
   },
-  materialsByPurpose: null
+  materialsByPurpose: []
 };
 
 const materialReducer = (state = initialState, action = {}) => {
@@ -61,7 +62,7 @@ const materialReducer = (state = initialState, action = {}) => {
         colors: action.payload
       }
     };
-  case GET_MATERIALS_BY_PURPOSE:
+  case SET_MATERIALS_BY_PURPOSE:
     return {
       ...state,
       materialsByPurpose: action.payload
