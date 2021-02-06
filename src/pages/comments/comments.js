@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+// import { push } from 'connected-react-router';
+// import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 
+import ReactHtmlParser from 'react-html-parser';
 import { useCommonStyles } from '../common.styles';
 import {
-  getRecentComments,
+  getComments,
   setCommentsCurrentPage,
-  deleteComment,
-  getCommentsByProduct
+  deleteComment
+  // getCommentsByProduct
 } from '../../redux/comments/comments.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
@@ -20,12 +21,91 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { commentsTranslations } from '../../translations/comments.translations';
 import { config } from '../../configs';
-import { selectCommentsListLoadingPages } from '../../redux/selectors/comments.selectors';
+import { commentSelectorWithPagination } from '../../redux/selectors/comments.selectors';
+import getTime from '../../utils/getTime';
 
-const tableHeaders = config.tableHeadRowTitles.comments;
+const tableTitles = config.tableHeadRowTitles.comments.commentPageTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
-const { RECENT_COMMENTS } = commentsTranslations;
+// const { RECENT_COMMENTS } = commentsTranslations;
 
+const map = require('lodash/map');
+
+const Comments = () => {
+  const commonStyles = useCommonStyles();
+  const dispatch = useDispatch();
+
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+
+  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
+    commentSelectorWithPagination
+  );
+  useEffect(() => {
+    dispatch(
+      getComments({
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage
+      })
+    );
+  }, [dispatch, rowsPerPage, currentPage]);
+
+  const commentDeleteHandler = (id) => {
+    const removeComment = () => {
+      dispatch(closeDialog());
+      dispatch(deleteComment(id));
+    };
+    openSuccessSnackbar(removeComment, REMOVE_COMMENT_MESSAGE);
+  };
+
+  const changePageHandler = (e, value) =>
+    dispatch(setCommentsCurrentPage(value));
+
+  if (loading) {
+    return <LoadingBar />;
+  }
+  const commentItems = map(list, (comment) => (
+    <TableContainerRow
+      showAvatar={false}
+      showEdit={false}
+      userName={comment.user.email}
+      data={ReactHtmlParser(getTime(comment.date, true))}
+      text={comment.text}
+      id={comment._id}
+      key={comment._id}
+      deleteHandler={() => {
+        commentDeleteHandler(comment._id);
+      }}
+    />
+  ));
+
+  return (
+    <div className={commonStyles.container}>
+      <div className={commonStyles.adminHeader}>
+        <Typography
+          variant='h1'
+          className={commonStyles.materialTitle}
+          data-cy='comment-header'
+        >
+          {config.titles.commentTitles.mainPageTitle}
+        </Typography>
+      </div>
+      {!loading ? (
+        <TableContainerGenerator
+          pagination
+          data-cy='commentTable'
+          count={itemsCount}
+          tableTitles={commentItems ? tableTitles : [NO_COMMENTS_MESSAGE]}
+          tableItems={commentItems}
+        />
+      ) : (
+        <LoadingBar />
+      )}
+    </div>
+  );
+};
+
+export default Comments;
+
+/*
 const Comments = ({ productId }) => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
@@ -48,7 +128,7 @@ const Comments = ({ productId }) => {
           commentsPerPage,
           id: productId
         })
-        : getRecentComments({
+        : getComments({
           limit: commentsPerPage,
           skip: currentPage * commentsPerPage,
           commentsPerPage
@@ -120,6 +200,4 @@ const Comments = ({ productId }) => {
 
 Comments.propTypes = {
   productId: PropTypes.string.isRequired
-};
-
-export default Comments;
+}; */

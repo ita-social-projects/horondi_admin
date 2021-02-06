@@ -9,10 +9,10 @@ import { TableCell, TableRow, Typography } from '@material-ui/core';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 
-import { getRecentComments } from '../../redux/comments/comments.actions';
+import { getComments } from '../../redux/comments/comments.actions';
 import { getOrderList } from '../../redux/orders/orders.actions';
 import { selectOrderList } from '../../redux/orders/orders.reducer';
-import { selectCommentsList } from '../../redux/comments/comments.reducer';
+import { selectComment } from '../../redux/comments/comments.reducer';
 
 import titles from '../../configs/titles';
 import tableHeadRowTitles from '../../configs/table-head-row-titles';
@@ -37,12 +37,12 @@ const MainPage = () => {
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
-  const { commentsList, commentsLoading } = useSelector(selectCommentsList);
+  const { list, loading } = useSelector(selectComment);
 
   const { orderLoading, ordersList } = useSelector(selectOrderList);
 
   useEffect(() => {
-    dispatch(getRecentComments());
+    dispatch(getComments());
   }, [dispatch]);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const MainPage = () => {
     );
   }, [dispatch]);
 
-  const comments = commentsList.map(({ date, text, user, _id }) => (
+  const comments = list.map(({ date, text, user, _id }) => (
     <div key={_id} className={classes.comment}>
       <div className={classes.commentText}>{text}</div>
       <div className={classes.commentInfo}>
@@ -87,7 +87,7 @@ const MainPage = () => {
       ))
       : null;
 
-  if (orderLoading || commentsLoading) {
+  if (orderLoading || loading) {
     return <LoadingBar />;
   }
 
