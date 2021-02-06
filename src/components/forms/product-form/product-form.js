@@ -38,7 +38,7 @@ import { config } from '../../../configs';
 import { BackButton } from '../../buttons';
 import ProductMaterialsContainer from '../../../containers/product-materials-container';
 import ProductAddImages from '../../../pages/products/product-add/product-add-images';
-import { selectSelectedProduct } from '../../../redux/selectors/products.selectors';
+import { selectSelectedProductAndDetails } from '../../../redux/selectors/products.selectors';
 
 const { priceLabel } = config.labels.product;
 
@@ -57,7 +57,8 @@ const ProductForm = ({ isEdit }) => {
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
 
-  const product = useSelector(selectSelectedProduct);
+  const { product, details } = useSelector(selectSelectedProductAndDetails);
+
   const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
@@ -70,7 +71,6 @@ const ProductForm = ({ isEdit }) => {
 
   const {
     createProductInfo,
-    patterns,
     models,
     innerColors,
     setInnerColors,
@@ -78,18 +78,17 @@ const ProductForm = ({ isEdit }) => {
     setMainColors,
     bottomColors,
     setBottomColors,
-    closures,
     sizes,
     setSizes,
     getIdFromItem,
-    categories,
     setModels,
-    materials,
     setAdditionalImages,
     additionalImages,
     setPrimaryImage,
     primaryImage
   } = useProductHandlers();
+
+  const { categories, materials, patterns, closures } = details;
 
   const formikSpeciesValues = {
     category: product?.category?._id || '',
