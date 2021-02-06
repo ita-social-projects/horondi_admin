@@ -69,10 +69,10 @@ export const setColorFilter = (payload) => ({
   payload
 });
 
-export const getMaterialsByPurpose = (payload) => ({
-  type: GET_MATERIALS_BY_PURPOSE,
-  payload
+export const getMaterialsByPurpose = () => ({
+  type: GET_MATERIALS_BY_PURPOSE
 });
+
 export const setMaterialsByPurpose = (payload) => ({
   type: SET_MATERIALS_BY_PURPOSE,
   payload

@@ -16,7 +16,7 @@ import {
   createMaterial,
   updateMaterial,
   deleteMaterial,
-  getAllMaterialsByPurpose
+  getAllMaterialsByPatternPurpose
 } from './material.operations';
 
 import {
@@ -44,8 +44,7 @@ const {
 export function* handleMaterialsByPurposeLoad({ payload }) {
   try {
     yield put(setMaterialLoading(true));
-    const materialsByPurpose = yield call(getAllMaterialsByPurpose, payload);
-    console.log(materialsByPurpose.pattern);
+    const materialsByPurpose = yield call(getAllMaterialsByPatternPurpose);
     yield put(setMaterialsByPurpose(materialsByPurpose.pattern));
     yield put(setMaterialLoading(false));
   } catch (error) {

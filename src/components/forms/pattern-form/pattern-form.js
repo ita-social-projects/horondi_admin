@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Avatar } from '@material-ui/core';
+import { Paper, Grid, Avatar } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
-import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 import usePatternHandlers from '../../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -21,7 +22,6 @@ import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
-import purposeEnum from '../../../configs/purpose-enum';
 import LoadingBar from '../../loading-bar';
 
 const { patternName, patternDescription } = config.labels.pattern;
@@ -60,6 +60,10 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   } = usePatternHandlers();
 
   useEffect(() => {
+    dispatch(getMaterialsByPurpose());
+  }, []);
+
+  useEffect(() => {
     if (pattern.images.thumbnail) {
       setPatternImage(`${imagePrefix}${pattern.images.thumbnail}`);
     }
@@ -67,10 +71,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       setConstructorImg(pattern.constructorImg);
     }
   }, [dispatch, pattern]);
-
-  useEffect(() => {
-    dispatch(getMaterialsByPurpose());
-  }, []);
 
   const patternValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
@@ -115,7 +115,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       enName: pattern.name[1].value || '',
       uaDescription: pattern.description[0].value || '',
       enDescription: pattern.description[1].value || '',
-      // material: pattern.material.name[0].value || materialsByPurpose[0]._id,
       material: pattern.material.name[0].value || '',
       available: pattern.available || false,
       handmade: pattern.handmade || false
@@ -238,44 +237,22 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   )}
                 </div>
               </div>
-
-              {/* <TextField */}
-              {/*  data-cy='material' */}
-              {/*  id='material' */}
-              {/*  className={styles.textField} */}
-              {/*  variant='outlined' */}
-              {/*  label={config.labels.pattern.material} */}
-              {/*  value={values.material} */}
-              {/*  onChange={handleChange} */}
-              {/*  error={touched.material && !!errors.material} */}
-              {/* /> */}
-              {/* <Select */}
-              {/*  data-cy='material' */}
-              {/*  id='material' */}
-              {/*  native */}
-              {/*  value={values.material} */}
-              {/*  onChange={(e) => setFieldValue('material', e.target.value)} */}
-              {/*  label='Матеріал' */}
-              {/* > */}
-              {/*  <option value="">Матеры</option> */}
-              {/*  {materialsByPurpose.map(({_id,name}) => ( */}
-              {/*    <option key={_id} value={_id}> */}
-              {/*      {name[0].value} */}
-              {/*    </option> */}
-              {/*  ))} */}
-              {/* </Select> */}
-              <FormControl className={styles.formControl}>
-                <InputLabel htmlFor='label'>$abel</InputLabel>
+              <FormControl
+                variant='outlined'
+                className={`${styles.formControl} ${styles.materialSelect}`}
+              >
+                <InputLabel variant='filled'>Матеріал</InputLabel>
                 <Select
+                  data-cy='material'
                   name='material'
                   error={touched.material && !!errors.material}
                   value={values.material || []}
                   onChange={handleChange}
                 >
                   {materialsByPurpose.map(({ _id, name }) => (
-                    <option key={_id} value={_id}>
+                    <MenuItem key={_id} value={_id}>
                       {name[0].value}
-                    </option>
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>

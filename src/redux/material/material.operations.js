@@ -54,11 +54,8 @@ export const getAllMaterials = async (filter, skip, limit) => {
   client.resetStore();
   return result.data.getAllMaterials;
 };
-export const getAllMaterialsByPurpose = async (purposes) => {
+export const getAllMaterialsByPatternPurpose = async () => {
   const result = await client.query({
-    variables: {
-      purposes
-    },
     query: gql`
       query {
         getMaterialsByPurpose(purposes: PATTERN) {
@@ -74,7 +71,6 @@ export const getAllMaterialsByPurpose = async (purposes) => {
     `
   });
 
-  // client.resetStore();
   return result.data.getMaterialsByPurpose;
 };
 
