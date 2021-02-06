@@ -61,7 +61,7 @@ const labels = {
   },
   pattern: {
     image: 'Фото гобелена',
-    material: 'Код матеріалу',
+    material: 'Матеріал',
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',

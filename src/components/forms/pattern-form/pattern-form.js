@@ -24,7 +24,7 @@ import { materialSelector } from '../../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
 import LoadingBar from '../../loading-bar';
 
-const { patternName, patternDescription } = config.labels.pattern;
+const { patternName, material, patternDescription } = config.labels.pattern;
 const map = require('lodash/map');
 
 const {
@@ -241,7 +241,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                 variant='outlined'
                 className={`${styles.formControl} ${styles.materialSelect}`}
               >
-                <InputLabel variant='filled'>Матеріал</InputLabel>
+                <InputLabel variant='filled'>{material}</InputLabel>
                 <Select
                   data-cy='material'
                   name='material'
