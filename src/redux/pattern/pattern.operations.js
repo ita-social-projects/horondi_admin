@@ -18,9 +18,15 @@ export const getAllPatterns = async (skip, limit) => {
               lang
               value
             }
-            material
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             available
-            constructorImg  
+            constructorImg
             images {
               thumbnail
             }
@@ -49,7 +55,13 @@ export const getPatternById = async (id) => {
             description {
               value
             }
-            material
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             handmade
             available
             images {
@@ -93,7 +105,13 @@ export const deletePattern = async (id) => {
               lang
               value
             }
-            material
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             available
           }
           ... on Error {
@@ -134,7 +152,13 @@ export const createPattern = async (payload) => {
               lang
               value
             }
-            material
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             available
             constructorImg
           }
@@ -175,7 +199,13 @@ export const updatePattern = async (payload) => {
               lang
               value
             }
-            material
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
             available
             constructorImg
           }
