@@ -32,7 +32,9 @@ import {
   CLEAR_FILES_TO_UPLOAD,
   SET_FILES_TO_DELETE,
   REMOVE_IMAGES_TO_UPLOAD,
-  SET_PRIMARY_IMAGE_TO_UPLOAD
+  SET_PRIMARY_IMAGE_TO_UPLOAD,
+  SET_PRODUCT_DETAILS,
+  GET_PRODUCT_DETAILS
 } from './products.types';
 
 export const getProduct = (id) => ({
@@ -47,6 +49,11 @@ export const setAllFilterData = (payload) => ({
 
 export const setSortByPrice = (payload) => ({
   type: SET_SORT_BY_PRICE,
+  payload
+});
+
+export const setProductDetails = (payload) => ({
+  type: SET_PRODUCT_DETAILS,
   payload
 });
 
@@ -169,6 +176,11 @@ export const setFilesToUpload = (payload) => ({
 
 export const setProduct = (payload) => ({
   type: SET_PRODUCT,
+  payload
+});
+
+export const getProductDetails = (payload) => ({
+  type: GET_PRODUCT_DETAILS,
   payload
 });
 

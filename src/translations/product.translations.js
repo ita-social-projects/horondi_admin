@@ -41,6 +41,7 @@ export const productsTranslations = {
   SAVE: 'ЗБЕРЕГТИ',
   PRODUCT_SPECIFICATION: 'Специфікація продукту:',
   PRODUCT_OPTIONS: 'Опційні параметри продукту:',
+  PRODUCT_MATERIALS: 'Матеріали та їх кольори для продукту:',
   PRODUCT_PRICE: 'Вкажіть ціну продукту:',
   CORRECT_DATA_ERROR: 'Заповніть необхідні поля коректними даними для усіх мов '
 };
