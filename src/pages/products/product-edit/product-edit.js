@@ -9,19 +9,15 @@ import {
   setProduct
 } from '../../../redux/products/products.actions';
 
-import ProductEditForm from './product-edit-form';
+import ProductForm from '../../../components/forms/product-form';
 import LoadingBar from '../../../components/loading-bar';
 
 import { productModel } from '../../../redux/products/products.reducer';
+import { selectSelectedProductAndLoading } from '../../../redux/selectors/products.selectors';
 
 const ProductEdit = ({ id }) => {
   const dispatch = useDispatch();
-  const { product, loading, categories } = useSelector(({ Products }) => ({
-    product: Products.selectedProduct,
-    loading: Products.loading,
-    productOptions: Products.productOptions,
-    categories: Products.productSpecies.categories
-  }));
+  const { product, loading } = useSelector(selectSelectedProductAndLoading);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,15 +34,14 @@ const ProductEdit = ({ id }) => {
     loading ||
     !product.name ||
     !product.name[0].value ||
-    !product.sizes.length ||
-    !categories.length
+    !product.sizes.length
   ) {
     return <LoadingBar />;
   }
 
   return (
     <div>
-      <ProductEditForm />
+      <ProductForm isEdit />
     </div>
   );
 };

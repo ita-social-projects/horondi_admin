@@ -87,9 +87,10 @@ function MaterialForm({ material, id }) {
       enName: material.name[1].value || '',
       uaDescription: material.description[0].value || '',
       enDescription: material.description[1].value || '',
-      purpose: material.purpose || Object.values(purposeEnum)[0],
+      purpose: material.purpose || purposeEnum.MAIN,
       available: material.available || false,
-      additionalPrice: +material.additionalPrice[1].value / 100 || 0,
+
+      additionalPrice: +material.additionalPrice[0].value / 100 || 0,
       colors:
         (material.colors && material.colors.map((color) => color._id)) || []
     },

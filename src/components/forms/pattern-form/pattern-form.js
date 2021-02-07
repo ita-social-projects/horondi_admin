@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Avatar } from '@material-ui/core';
+import { Paper, Grid, Avatar } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 import usePatternHandlers from '../../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -16,8 +20,11 @@ import {
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
+import { materialSelector } from '../../../redux/selectors/material.selectors';
+import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
+import LoadingBar from '../../loading-bar';
 
-const { patternName, patternDescription } = config.labels.pattern;
+const { patternName, material, patternDescription } = config.labels.pattern;
 const map = require('lodash/map');
 
 const {
@@ -41,6 +48,7 @@ const {
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
+  const { materialsByPurpose, loading } = useSelector(materialSelector);
   const {
     createPattern,
     setUpload,
@@ -52,13 +60,17 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   } = usePatternHandlers();
 
   useEffect(() => {
+    dispatch(getMaterialsByPurpose());
+  }, []);
+
+  useEffect(() => {
     if (pattern.images.thumbnail) {
       setPatternImage(`${imagePrefix}${pattern.images.thumbnail}`);
     }
     if (pattern.constructorImg) {
       setConstructorImg(pattern.constructorImg);
     }
-  }, [pattern]);
+  }, [dispatch, pattern]);
 
   const patternValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
@@ -103,7 +115,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       enName: pattern.name[1].value || '',
       uaDescription: pattern.description[0].value || '',
       enDescription: pattern.description[1].value || '',
-      material: pattern.material || '',
+      material: pattern.material.name[0].value || '',
       available: pattern.available || false,
       handmade: pattern.handmade || false
     },
@@ -181,76 +193,90 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <CheckboxOptions options={checkboxes} />
+      {loading ? (
+        <LoadingBar />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <CheckboxOptions options={checkboxes} />
 
-        <Grid item xs={12}>
-          <Paper className={styles.patternItemUpdate}>
-            <div>
-              <span className={styles.imageUpload}>
-                {config.labels.pattern.avatarText}
-              </span>
-              <div className={styles.imageUploadAvatar}>
-                <ImageUploadContainer handler={handleLoadMainImage} />
-                {patternImage && (
-                  <Avatar src={patternImage}>
-                    <Image />
-                  </Avatar>
-                )}
-                {touched.patternImage && errors.patternImage && (
-                  <div className={styles.inputError}>{errors.patternImage}</div>
-                )}
-              </div>
+          <Grid item xs={12}>
+            <Paper className={styles.patternItemUpdate}>
+              <div>
+                <span className={styles.imageUpload}>
+                  {config.labels.pattern.avatarText}
+                </span>
+                <div className={styles.imageUploadAvatar}>
+                  <ImageUploadContainer handler={handleLoadMainImage} />
+                  {patternImage && (
+                    <Avatar src={patternImage}>
+                      <Image />
+                    </Avatar>
+                  )}
+                  {touched.patternImage && errors.patternImage && (
+                    <div className={styles.inputError}>
+                      {errors.patternImage}
+                    </div>
+                  )}
+                </div>
 
-              <span className={styles.imageUpload}>
-                {config.labels.pattern.constructorImgText}
-              </span>
-              <div className={styles.imageUploadAvatar}>
-                <ImageUploadContainer handler={handleLoadConstructorImage} />
-                {constructorImg && (
-                  <Avatar src={constructorImg}>
-                    <Image />
-                  </Avatar>
-                )}
-                {touched.patternConstructorImage &&
-                  errors.patternConstructorImage && (
-                  <div className={styles.inputError}>
-                    {errors.patternConstructorImage}
-                  </div>
-                )}
+                <span className={styles.imageUpload}>
+                  {config.labels.pattern.constructorImgText}
+                </span>
+                <div className={styles.imageUploadAvatar}>
+                  <ImageUploadContainer handler={handleLoadConstructorImage} />
+                  {constructorImg && (
+                    <Avatar src={constructorImg}>
+                      <Image />
+                    </Avatar>
+                  )}
+                  {touched.patternConstructorImage &&
+                    errors.patternConstructorImage && (
+                    <div className={styles.inputError}>
+                      {errors.patternConstructorImage}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-
-            <TextField
-              data-cy='material'
-              id='material'
-              className={styles.textField}
-              variant='outlined'
-              label={config.labels.pattern.material}
-              value={values.material}
-              onChange={handleChange}
-              error={touched.material && !!errors.material}
-            />
-            {touched.material && errors.material && (
-              <div data-cy='material-error' className={styles.inputError}>
-                {errors.material}
-              </div>
-            )}
-          </Paper>
-        </Grid>
-        {map(languages, (lang) => (
-          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
-        ))}
-        <BackButton />
-        <SaveButton
-          className={styles.saveButton}
-          data-cy='save-btn'
-          type='submit'
-          title={SAVE_TITLE}
-          values={values}
-          errors={errors}
-        />
-      </form>
+              <FormControl
+                variant='outlined'
+                className={`${styles.formControl} ${styles.materialSelect}`}
+              >
+                <InputLabel variant='filled'>{material}</InputLabel>
+                <Select
+                  data-cy='material'
+                  name='material'
+                  error={touched.material && !!errors.material}
+                  value={values.material || []}
+                  onChange={handleChange}
+                >
+                  {materialsByPurpose.map(({ _id, name }) => (
+                    <MenuItem key={_id} value={_id}>
+                      {name[0].value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {touched.material && errors.material && (
+                <div data-cy='material-error' className={styles.inputError}>
+                  {errors.material}
+                </div>
+              )}
+            </Paper>
+          </Grid>
+          {map(languages, (lang) => (
+            <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+          ))}
+          <BackButton />
+          <SaveButton
+            className={styles.saveButton}
+            data-cy='save-btn'
+            type='submit'
+            title={SAVE_TITLE}
+            values={values}
+            errors={errors}
+          />
+        </form>
+      )}
     </div>
   );
 };
@@ -334,7 +360,16 @@ PatternForm.defaultProps = {
       thumbnail: ''
     },
     constructorImg: '',
-    material: '',
+    material: {
+      name: [
+        {
+          value: ''
+        },
+        {
+          value: ''
+        }
+      ]
+    },
     available: false,
     handmade: false
   },

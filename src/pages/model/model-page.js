@@ -63,7 +63,7 @@ const ModelPage = () => {
       key={modelItem._id}
       id={modelItem._id}
       name={modelItem.name[0].value}
-      category={modelItem.category.name[0].value}
+      category={modelItem.category?.name[0].value}
       show={modelItem.show ? showEnable : showDisable}
       priority={modelItem.priority}
       deleteHandler={() => modelDeleteHandler(modelItem._id)}
