@@ -58,32 +58,14 @@ const removeCommentFromStore = (payload) => ({
   payload
 });
 
-/*
-const getRecentComments = (payload) => ({
-  type: GET_RECENT_COMMENTS,
-  payload
-});
-
-const setCommentsPerPage = (payload) => ({
-  type: SET_COMMENTS_PER_PAGE,
-  payload
-});
-
-const setCommentsPagesCount = (payload) => ({
-  type: SET_COMMENTS_PAGES_COUNT,
-  payload
-}); */
 export {
   setComments,
   getComments,
   getCommentsByType,
-  // getRecentComments,
   removeCommentFromStore,
   setCommentsLoading,
   deleteComment,
   setCommentError,
   setCommentsCurrentPage,
-  // setCommentsPerPage,
-  // setCommentsPagesCount,
   getCommentsByProduct
 };

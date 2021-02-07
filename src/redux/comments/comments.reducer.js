@@ -3,9 +3,6 @@ import {
   SET_COMMENTS,
   REMOVE_COMMENT_FROM_STORE,
   SET_COMMENTS_ERROR
-  // SET_COMMENTS_CURRENT_PAGE,
-  // SET_COMMENTS_PER_PAGE,
-  // SET_COMMENTS_PAGES_COUNT
 } from './comments.types';
 
 const initialState = {
@@ -46,34 +43,6 @@ const commentsReducer = (state = initialState, action = {}) => {
       ...state,
       commentsError: action.payload
     };
-
-    /*
-  case SET_COMMENTS_CURRENT_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        currentPage: action.payload - 1
-      }
-    };
-
-  case SET_COMMENTS_PER_PAGE:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        commentsPerPage: action.payload
-      }
-    };
-
-  case SET_COMMENTS_PAGES_COUNT:
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        pagesCount: action.payload
-      }
-    }; */
 
   default:
     return state;
