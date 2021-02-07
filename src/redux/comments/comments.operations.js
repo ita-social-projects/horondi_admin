@@ -22,6 +22,7 @@ const getAllComments = async (skip, limit) => {
             date
             user {
               _id
+              firstName
               email
             }
             product {

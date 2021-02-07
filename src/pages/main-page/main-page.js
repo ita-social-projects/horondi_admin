@@ -13,7 +13,7 @@ import { getComments } from '../../redux/comments/comments.actions';
 import { getOrderList } from '../../redux/orders/orders.actions';
 import { selectOrderList } from '../../redux/orders/orders.reducer';
 import { selectComment } from '../../redux/comments/comments.reducer';
-
+import { commentSelectorWithPagination } from '../../redux/selectors/comments.selectors';
 import titles from '../../configs/titles';
 import tableHeadRowTitles from '../../configs/table-head-row-titles';
 import labels from '../../configs/labels';
@@ -40,10 +40,18 @@ const MainPage = () => {
   const { list, loading } = useSelector(selectComment);
 
   const { orderLoading, ordersList } = useSelector(selectOrderList);
+  const { rowsPerPage, currentPage } = useSelector(
+    commentSelectorWithPagination
+  );
 
   useEffect(() => {
-    dispatch(getComments());
-  }, [dispatch]);
+    dispatch(
+      getComments({
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage
+      })
+    );
+  }, [dispatch, rowsPerPage, currentPage]);
 
   useEffect(() => {
     dispatch(
@@ -59,11 +67,13 @@ const MainPage = () => {
     <div key={_id} className={classes.comment}>
       <div className={classes.commentText}>{text}</div>
       <div className={classes.commentInfo}>
-        <div>{user.name || guestUser}</div>
+        <div>{user.firstName || guestUser}</div>
         <div>{moment.unix(date / 1000).format('HH:mm DD.MM.YYYY ')}</div>
       </div>
     </div>
   ));
+
+  console.log(comments);
 
   const orders =
     ordersList && ordersList.length
