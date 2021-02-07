@@ -2,20 +2,21 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { setItemsCount, updatePagination } from '../table/table.actions';
-
 import {
   setMaterials,
   setMaterial,
   setMaterialError,
   setMaterialLoading,
-  removeMaterialFromStore
+  removeMaterialFromStore,
+  setMaterialsByPurpose
 } from './material.actions';
 import {
   getAllMaterials,
   getMaterialById,
   createMaterial,
   updateMaterial,
-  deleteMaterial
+  deleteMaterial,
+  getAllMaterialsByPatternPurpose
 } from './material.operations';
 
 import {
@@ -23,7 +24,8 @@ import {
   GET_MATERIALS,
   DELETE_MATERIAL,
   ADD_MATERIAL,
-  UPDATE_MATERIAL
+  UPDATE_MATERIAL,
+  GET_MATERIALS_BY_PURPOSE
 } from './material.types';
 
 import { config } from '../../configs';
@@ -38,6 +40,17 @@ const {
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
+
+export function* handleMaterialsByPurposeLoad({ payload }) {
+  try {
+    yield put(setMaterialLoading(true));
+    const materialsByPurpose = yield call(getAllMaterialsByPatternPurpose);
+    yield put(setMaterialsByPurpose(materialsByPurpose.pattern));
+    yield put(setMaterialLoading(false));
+  } catch (error) {
+    yield call(handleMaterialError, error);
+  }
+}
 
 export function* handleMaterialsLoad({ payload }) {
   const filter = {
@@ -119,4 +132,5 @@ export default function* materialSaga() {
   yield takeEvery(GET_MATERIAL, handleMaterialLoad);
   yield takeEvery(ADD_MATERIAL, handleAddMaterial);
   yield takeEvery(UPDATE_MATERIAL, handleMaterialUpdate);
+  yield takeEvery(GET_MATERIALS_BY_PURPOSE, handleMaterialsByPurposeLoad);
 }
