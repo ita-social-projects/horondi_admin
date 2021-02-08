@@ -12,6 +12,9 @@ const titles = {
     mainPageTitle: 'Інформація про гобелени',
     createPageTitle: 'Створити гобелен'
   },
+  commentTitles: {
+    mainPageTitle: 'Інформація про коментарі'
+  },
   productPageTitles: {
     mainPageTitle: 'Інформація про продукти'
   },

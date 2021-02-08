@@ -1,7 +1,9 @@
 import {
   SET_SNACKBAR_MESSAGE,
   SET_SNACKBAR_SEVERITY,
-  SET_SNACKBAR_STATUS
+  SET_SNACKBAR_STATUS,
+  SHOW_ERROR_SNACKBAR,
+  SHOW_SUCCESS_SNACKBAR
 } from './snackbar.types';
 
 const setSnackBarStatus = (newSnackBarStatus) => ({
@@ -19,4 +21,20 @@ const setSnackBarMessage = (newSnackBarMessage) => ({
   payload: newSnackBarMessage
 });
 
-export { setSnackBarStatus, setSnackBarSeverity, setSnackBarMessage };
+const showSuccessSnackbar = (message) => ({
+  type: SHOW_SUCCESS_SNACKBAR,
+  payload: message
+});
+
+const showErrorSnackbar = (message) => ({
+  type: SHOW_ERROR_SNACKBAR,
+  payload: message
+});
+
+export {
+  setSnackBarStatus,
+  setSnackBarSeverity,
+  setSnackBarMessage,
+  showSuccessSnackbar,
+  showErrorSnackbar
+};

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles((theme) => ({
+export const useSharedStyles = makeStyles((theme) => ({
   container: {
     position: 'relative'
   },

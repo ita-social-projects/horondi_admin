@@ -9,7 +9,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 import { map } from 'lodash';
-import { useStyles } from './product-species-container.styles';
+import { useSharedStyles } from '../shared.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
 import { config } from '../../configs';
@@ -33,7 +33,7 @@ const ProductSpeciesContainer = ({
   sizes,
   toggleFieldsChanged
 }) => {
-  const styles = useStyles();
+  const styles = useSharedStyles();
 
   const categoriesOptions = useMemo(
     () =>
@@ -105,6 +105,9 @@ const ProductSpeciesContainer = ({
   const handleSelectChange = (e) => {
     if (e.target.name === selectsLabels[0].name) {
       setFieldValue(selectsLabels[1].name, '');
+      setFieldValue(selectsLabels[2].name, []);
+      setSizes([]);
+    } else if (e.target.name === selectsLabels[1].name) {
       setFieldValue(selectsLabels[2].name, []);
       setSizes([]);
     }

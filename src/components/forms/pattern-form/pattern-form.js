@@ -117,7 +117,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       enName: pattern.name[1].value || '',
       uaDescription: pattern.description[0].value || '',
       enDescription: pattern.description[1].value || '',
-      material: pattern.material.name[0].value || '',
+      material: pattern.material._id || '',
       available: pattern.available || false,
       handmade: pattern.handmade || false
     },
@@ -257,8 +257,9 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                 variant='outlined'
                 className={`${styles.formControl} ${styles.materialSelect}`}
               >
-                <InputLabel variant='filled'>{material}</InputLabel>
+                <InputLabel variant='outlined'>{material}</InputLabel>
                 <Select
+                  label={material}
                   data-cy='material'
                   name='material'
                   error={touched.material && !!errors.material}

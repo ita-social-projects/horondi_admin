@@ -10,7 +10,8 @@ import {
 } from '@material-ui/core';
 
 import { map } from 'lodash';
-import { useStyles } from '../product-species-container/product-species-container.styles';
+import { useSharedStyles } from '../shared.styles';
+import { useStyles } from './product-materials-container.styles';
 import { config } from '../../configs';
 
 const { materialLabels } = config.labels.product;
@@ -31,8 +32,8 @@ const ProductMaterialsContainer = ({
   setFieldValue,
   toggleFieldsChanged
 }) => {
+  const sharedStyles = useSharedStyles();
   const styles = useStyles();
-
   const handleSelectChange = (e) => {
     if (e.target.name === materialLabels[0].name) {
       setFieldValue(materialLabels[1].name, '');
@@ -43,6 +44,7 @@ const ProductMaterialsContainer = ({
     }
     handleSpeciesChange(e);
   };
+
   const handleSpeciesChange = (e) => {
     handleChange(e);
     toggleFieldsChanged(true);
@@ -114,7 +116,7 @@ const ProductMaterialsContainer = ({
   ];
 
   return (
-    <form onSubmit={handleSubmit} className={styles.container}>
+    <form onSubmit={handleSubmit} className={sharedStyles.container}>
       <Grid container spacing={1} xs={12} justify='flex-start'>
         {materialLabels.map(({ label, name, required }, idx) => (
           <FormControl className={styles.formControl} key={label}>
