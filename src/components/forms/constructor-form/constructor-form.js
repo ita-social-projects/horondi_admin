@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, FormControl, Grid, InputLabel, Paper, Select, TextField } from '@material-ui/core';
+import {
+  Avatar,
+  FormControl,
+  Grid,
+  InputLabel,
+  Paper,
+  Select,
+  TextField
+} from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -15,10 +23,10 @@ import ImageUploadContainer from '../../../containers/image-upload-container';
 import { BackButton, SaveButton } from '../../buttons';
 import useConstructorHandlers from '../../../utils/use-constructor-handlers';
 import ColorCircle from '../../color-circle';
-import {
-  selectConstructorMethodAndMaterials
-} from '../../../redux/selectors/constructor.selectors';
+import { selectConstructorMethodAndMaterials } from '../../../redux/selectors/constructor.selectors';
 import LanguagePanel from '../language-panel';
+
+const { IMG_URL } = config;
 
 const map = require('lodash/map');
 
@@ -39,7 +47,7 @@ const {
   baseConstructorElementPrice,
   constructorMaterial,
   constructorColor
-} = config.labels.model
+} = config.labels.model;
 
 const { SMALL_CIRCLE } = config.colorCircleSizes;
 
@@ -58,23 +66,26 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const history = createBrowserHistory();
 
   const {
-    constructorImg,
-    setConstructorImg,
-    createConstructor
+    createConstructor,
+    setUploadConstructorImg,
+    uploadConstructorImg
   } = useConstructorHandlers();
 
-  const {
-    list,
-    model,
-    constructorElementMethod,
-  } = useSelector(selectConstructorMethodAndMaterials);
+  const { list, model, constructorElementMethod } = useSelector(
+    selectConstructorMethodAndMaterials
+  );
 
-  const [materialColors, setMaterialColors] = useState([])
+  const [materialColors, setMaterialColors] = useState([]);
+  const [constructorAvatar, setConstructorAvatar] = useState('');
 
   useEffect(() => {
     if (isEdit) {
-      setConstructorImg(editableConstructorElement.image);
-      setMaterialColors(list.filter(el=>el._id===editableConstructorElement.material._id)[0].colors);
+      setConstructorAvatar(`${IMG_URL}${editableConstructorElement.image}`);
+      setMaterialColors(
+        list.filter(
+          (el) => el._id === editableConstructorElement.material._id
+        )[0].colors
+      );
     }
   }, [dispatch]);
 
@@ -85,10 +96,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     uaName: Yup.string()
       .min(2, CONSTRUCTOR_VALIDATION_ERROR)
       .required(CONSTRUCTOR_ERROR_MESSAGE),
-    material: Yup.string()
-      .required(CONSTRUCTOR_ERROR_MESSAGE),
-    color: Yup.string()
-      .required(CONSTRUCTOR_ERROR_MESSAGE),
+    material: Yup.string().required(CONSTRUCTOR_ERROR_MESSAGE),
+    color: Yup.string().required(CONSTRUCTOR_ERROR_MESSAGE),
     image: Yup.string().required(PHOTO_NOT_PROVIDED),
     basePrice: Yup.string()
       .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
@@ -114,32 +123,37 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       default: editableConstructorElement.default || false,
       basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
     },
-
     onSubmit: () => {
       const constructorElement = createConstructor(values);
-      history.goBack()
-      if(isEdit){
-        return dispatch(constructorElementMethod({
-          constructorElement,
-          id:editableConstructorElement._id
-        }))
+      history.goBack();
+      if (isEdit) {
+        return dispatch(
+          constructorElementMethod({
+            constructorElement,
+            id: editableConstructorElement._id,
+            upload: uploadConstructorImg
+          })
+        );
       }
-      return dispatch(constructorElementMethod({
-        constructorElement,
-        id:model._id
-      }))
+      return dispatch(
+        constructorElementMethod({
+          constructorElement,
+          id: model._id,
+          upload: uploadConstructorImg
+        })
+      );
     }
   });
 
   const handleMaterial = (e) => {
     setFieldValue('material', e.target.value);
-    setMaterialColors(list.filter(el=>el._id===e.target.value)[0].colors);
-  }
+    setMaterialColors(list.filter((el) => el._id === e.target.value)[0].colors);
+  };
   const handleMaterialColor = (e) => {
     setFieldValue('color', e.target.value);
-  }
+  };
 
-  const checkboxes =(checkBoxName, label)=>[
+  const checkboxes = (checkBoxName, label) => [
     {
       id: `${checkBoxName}`,
       dataCy: `${checkBoxName}`,
@@ -147,7 +161,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       checked: values[`${checkBoxName}`],
       color: 'primary',
       label,
-      handler: () => setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
+      handler: () =>
+        setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
     }
   ];
 
@@ -164,42 +179,45 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const handleLoadConstructorImage = (e) => {
     handleImageLoad(e, (event) => {
       setFieldValue('image', event.target.result);
-      setConstructorImg(event.target.result);
+      setConstructorAvatar(event.target.result);
     });
+    setUploadConstructorImg(e.target.files[0]);
   };
 
-  const selectField = (selectValue,
+  const selectField = (
+    selectValue,
     selectChangeAction,
     selectItemsList,
     inputLabel,
-    defaultValue) => (<FormControl className={styles.formControl}>
-    <InputLabel id={`multiple-${selectValue}-label`}>
-      {inputLabel}
-    </InputLabel>
-    <Select
-      variant='outlined'
-      labelId={`multiple-${selectValue}-label`}
-      id={`multiple-${selectValue}`}
-      onChange={selectChangeAction}
-      input={<Input />}
-      value={defaultValue || ''}
-      MenuProps={MenuProps}
-      disabled={!selectItemsList.length}
-    >
-      {map(selectItemsList, selectItem => (
-        <MenuItem value={selectItem._id} key={selectItem._id}>
-          <div className={styles.selectBox}>
-            {selectValue === 'color' ? <ColorCircle size={SMALL_CIRCLE} color={selectItem.colorHex} /> : null}
-            <span> {selectItem.name[0].value}</span>
-          </div>
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl >);
+    defaultValue
+  ) => (
+    <FormControl className={styles.formControl}>
+      <InputLabel id={`multiple-${selectValue}-label`}>{inputLabel}</InputLabel>
+      <Select
+        variant='outlined'
+        labelId={`multiple-${selectValue}-label`}
+        id={`multiple-${selectValue}`}
+        onChange={selectChangeAction}
+        input={<Input />}
+        value={defaultValue || ''}
+        MenuProps={MenuProps}
+        disabled={!selectItemsList.length}
+      >
+        {map(selectItemsList, (selectItem) => (
+          <MenuItem value={selectItem._id} key={selectItem._id}>
+            <div className={styles.selectBox}>
+              {selectValue === 'color' ? (
+                <ColorCircle size={SMALL_CIRCLE} color={selectItem.colorHex} />
+              ) : null}
+              <span> {selectItem.name[0].value}</span>
+            </div>
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
 
-  const inputs = [
-    { label: constructorName, name: 'name' },
-  ];
+  const inputs = [{ label: constructorName, name: 'name' }];
   const inputOptions = {
     errors,
     touched,
@@ -211,26 +229,25 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <CheckboxOptions options={checkboxes('available', show )} />
-        <CheckboxOptions options={checkboxes('default', defaultElement )} />
+        <CheckboxOptions options={checkboxes('available', show)} />
+        <CheckboxOptions options={checkboxes('default', defaultElement)} />
         <Grid item xs={12}>
           <Paper className={styles.constructorItemUpdate}>
             <div>
-              <span className={styles.imageUpload}>
-                { constructorPhoto }
-              </span>
+              <span className={styles.imageUpload}>{constructorPhoto}</span>
               <div className={styles.imageUploadAvatar}>
                 <ImageUploadContainer handler={handleLoadConstructorImage} />
-                {constructorImg && (
-                  <Avatar src={constructorImg} variant='rounded' className={styles.avatar}>
+                {constructorAvatar && (
+                  <Avatar
+                    src={constructorAvatar}
+                    variant='rounded'
+                    className={styles.avatar}
+                  >
                     <Image />
                   </Avatar>
                 )}
-                {touched.image &&
-                errors.image && (
-                  <div className={styles.inputError}>
-                    {errors.image}
-                  </div>
+                {touched.image && errors.image && (
+                  <div className={styles.inputError}>{errors.image}</div>
                 )}
               </div>
             </div>
@@ -248,11 +265,23 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
               <div className={styles.inputError}>{errors.basePrice}</div>
             )}
             <div className={styles.textField}>
-              {selectField('material', handleMaterial, list, constructorMaterial, values.material)}
+              {selectField(
+                'material',
+                handleMaterial,
+                list,
+                constructorMaterial,
+                values.material
+              )}
               {touched.material && errors.material && (
                 <div className={styles.inputError}>{errors.material}</div>
               )}
-              {selectField('color', handleMaterialColor, materialColors, constructorColor, values.color)}
+              {selectField(
+                'color',
+                handleMaterialColor,
+                materialColors,
+                constructorColor,
+                values.color
+              )}
               {touched.color && errors.color && (
                 <div className={styles.inputError}>{errors.color}</div>
               )}
@@ -284,22 +313,22 @@ ConstructorForm.propTypes = {
     _id: PropTypes.string,
     available: PropTypes.bool,
     default: PropTypes.bool,
-    image:PropTypes.string,
+    image: PropTypes.string,
     material: PropTypes.shape({
       _id: PropTypes.string,
-      name: PropTypes.arrayOf(valueShape),
+      name: PropTypes.arrayOf(valueShape)
     }),
-    color:PropTypes.shape({
+    color: PropTypes.shape({
       _id: PropTypes.string,
       name: PropTypes.arrayOf(valueShape),
-      colorHex: PropTypes.string,
+      colorHex: PropTypes.string
     }),
     name: PropTypes.arrayOf(valueShape),
     basePrice: PropTypes.arrayOf(
       PropTypes.shape({
         value: PropTypes.number
       })
-    ),
+    )
   }),
   values: PropTypes.shape({
     image: PropTypes.string,
@@ -367,8 +396,8 @@ ConstructorForm.defaultProps = {
       {
         value: 0
       }
-    ],
-  },
+    ]
+  }
 };
 
 export default ConstructorForm;
