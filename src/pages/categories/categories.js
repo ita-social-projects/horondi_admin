@@ -15,17 +15,25 @@ import { useCommonStyles } from '../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
 import { selectCategoriesLoadingDialogOpen } from '../../redux/selectors/category.selectors';
 import StandardButton from '../../components/buttons/standard-button';
+import NavBar from '../../components/filter-search-sort/navbar';
+import useCategoryFilters from '../../hooks/filters/use-category-filters';
 
 const Categories = () => {
   const { IMG_URL } = config;
   const { ADD_CATEGORY } = config.buttonTitles;
+  const categoryOptions = useCategoryFilters();
 
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
-  const { categories, categoriesLoading } = useSelector(
-    selectCategoriesLoadingDialogOpen
-  );
+  const {
+    categories,
+    categoriesLoading,
+    filter,
+    sort,
+    currentPage,
+    rowsPerPage
+  } = useSelector(selectCategoriesLoadingDialogOpen);
 
   const handleDeleteCategory = (id) => {
     dispatch(setCategoryDeleteId(id));
@@ -37,12 +45,22 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
+    dispatch(
+      getCategories({
+        filter,
+        pagination: {
+          skip: currentPage * rowsPerPage,
+          limit: rowsPerPage
+        },
+        sort
+      })
+    );
+  }, [dispatch, filter, sort, currentPage, rowsPerPage]);
 
   if (categoriesLoading) {
     return <LoadingBar />;
   }
+  console.log(categories);
   const categoriesList = categories.length
     ? categories
       .slice()
@@ -74,6 +92,7 @@ const Categories = () => {
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
+        <NavBar options={categoryOptions || {}} />
         <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.categoryPageTitles.mainPageTitle}
         </Typography>

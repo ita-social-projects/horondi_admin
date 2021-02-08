@@ -31,6 +31,7 @@ import {
 
 import { config } from '../../configs';
 import { selectCategorySwitchAndDeleteId } from '../selectors/category.selectors';
+import { setItemsCount } from '../table/table.actions';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -38,11 +39,14 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleCategoriesLoad() {
+export function* handleCategoriesLoad({
+  payload: { filter, pagination, sort }
+}) {
   try {
     yield put(setCategoryLoading(true));
-    const categories = yield call(getAllCategories);
-    yield put(setCategories(categories));
+    const categories = yield call(getAllCategories, filter, pagination, sort);
+    yield put(setItemsCount(categories.count));
+    yield put(setCategories(categories.items));
     yield put(setCategoryLoading(false));
   } catch (error) {
     yield call(handleCategoryError, error);
