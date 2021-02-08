@@ -15,19 +15,30 @@ export const selectProductsToUpload = ({ Products }) => ({
 export const selectProductDetails = ({ Products }) => ({
   details: Products.details
 });
+
 export const selectProductLoading = ({ Products }) => ({
   loading: Products.loading
 });
 
-export const selectSelectedProduct = ({ Products }) => Products.selectedProduct;
+export const selectSelectedProduct = ({ Products }) => ({
+  product: Products.selectedProduct
+});
+
 export const selectSelectedProductAndLoading = createSelector(
   selectProductLoading,
-  ({ Products }) => ({ product: Products.selectedProduct }),
+  selectSelectedProduct,
   (loading, product) => ({
     ...loading,
     ...product
   })
 );
+
+export const selectSelectedProductAndDetails = createSelector(
+  selectProductDetails,
+  selectSelectedProduct,
+  (details, product) => ({ ...product, ...details })
+);
+
 export const selectProductsLoadingAndDetails = createSelector(
   selectProductDetails,
   selectProductLoading,

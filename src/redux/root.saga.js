@@ -19,6 +19,7 @@ import headerSaga from './header/header.sagas';
 import homePageSlideSaga from './home-page-slides/home-page-slides.sagas';
 import colorsSaga from './color/color.sagas';
 import constructorSaga from './constructor/constructor.sagas';
+import snackbarSaga from './snackbar/snackbar.sagas';
 
 export function* rootSaga() {
   yield all([
@@ -41,6 +42,7 @@ export function* rootSaga() {
     ordersSaga(),
     homePageSlideSaga(),
     colorsSaga(),
-    constructorSaga()
+    constructorSaga(),
+    snackbarSaga()
   ]);
 }
