@@ -51,9 +51,6 @@ const Comments = () => {
     openSuccessSnackbar(removeComment, REMOVE_COMMENT_MESSAGE);
   };
 
-  const changePageHandler = (e, value) =>
-    dispatch(setCommentsCurrentPage(value));
-
   if (loading) {
     return <LoadingBar />;
   }
