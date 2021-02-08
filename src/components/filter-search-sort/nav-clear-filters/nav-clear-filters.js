@@ -7,7 +7,7 @@ import { config } from '../../../configs';
 const { CLEAR_FILTERS } = config.buttonTitles;
 
 const NavClearFilters = ({ clearOptions }) => {
-  const {clearAllFilters} = clearOptions;
+  const { clearAllFilters } = clearOptions;
   const styles = useStyles();
   const { search, ...arrayFilters } = clearOptions.filters;
 
@@ -32,6 +32,8 @@ const NavClearFilters = ({ clearOptions }) => {
 };
 
 NavClearFilters.propTypes = {
-  clearOptions: PropTypes.objectOf(PropTypes.string).isRequired
+  clearOptions: PropTypes.objectOf(PropTypes.object).isRequired,
+  filters: PropTypes.string.isRequired,
+  clearAllFilters: PropTypes.func.isRequired
 };
 export default NavClearFilters;

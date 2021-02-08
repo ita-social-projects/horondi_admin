@@ -19,35 +19,35 @@ const useCategoryFilters = () => {
         [key]: type === 'desc' ? -1 : 1
       })
     );
+  };
 
-    const setSearchFilter = (searchString) => {
-      dispatch(setCurrentPage(0));
-      dispatch(
-        setFilter({
-          search: searchString
-        })
-      );
-    };
+  const setSearchFilter = (searchString) => {
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setFilter({
+        search: searchString
+      })
+    );
+  };
 
-    const clearAllFilters = () => {
-      dispatch(setCurrentPage(0));
-      dispatch(clearFilters());
-    };
-    return {
-      sortOptions: {
-        labels: filterLabels.categories.sortLabels,
-        setSorting
-      },
-      filterOptions: {},
-      searchOptions: {
-        filters,
-        setSearchFilter
-      },
-      clearOptions: {
-        filters,
-        clearAllFilters
-      }
-    };
+  const clearAllFilters = () => {
+    dispatch(setCurrentPage(0));
+    dispatch(clearFilters());
+  };
+  return {
+    sortOptions: {
+      labels: filterLabels.categories.sortLabels,
+      setSorting
+    },
+    filterOptions: {},
+    searchOptions: {
+      filters,
+      setSearchFilter
+    },
+    clearOptions: {
+      filters,
+      clearAllFilters
+    }
   };
 };
 

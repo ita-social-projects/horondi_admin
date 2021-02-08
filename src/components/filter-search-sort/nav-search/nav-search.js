@@ -16,7 +16,7 @@ const { search: searchLabel } = labels;
 const NavSearch = ({ searchOptions }) => {
   const styles = useStyles();
   const filters = useSelector(searchOptions.filters);
-  const {setSearchFilter} = searchOptions;
+  const { setSearchFilter } = searchOptions;
   const { search } = filters;
   const [searchValue, setSearchValue] = useState(search);
 
@@ -57,6 +57,8 @@ const NavSearch = ({ searchOptions }) => {
   );
 };
 NavSearch.propTypes = {
-  searchOptions: PropTypes.objectOf(PropTypes.string).isRequired
+  searchOptions: PropTypes.objectOf(PropTypes.string).isRequired,
+  filters: PropTypes.string.isRequired,
+  setSearchFilter: PropTypes.func.isRequired
 };
 export default NavSearch;

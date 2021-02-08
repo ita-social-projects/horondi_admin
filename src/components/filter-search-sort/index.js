@@ -1,3 +1,3 @@
-import UserNavbar from './user-navbar';
+import Navbar from './navbar';
 
-export default UserNavbar;
+export default Navbar;

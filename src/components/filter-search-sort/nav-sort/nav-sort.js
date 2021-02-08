@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { useStyles } from './nav-sort.styles';
 
 const NavSort = ({ sortOptions }) => {
-  const [sortValue, setSortValue] = useState(sortOptions[0].value);
+  const [sortValue, setSortValue] = useState(sortOptions.labels[0].value);
   const styles = useStyles();
-  const {setSorting} = sortOptions;
+  const { setSorting } = sortOptions;
 
-  const selectOptions = sortOptions.map(({ label, value }) => (
+  const selectOptions = sortOptions.labels.map(({ label, value }) => (
     <MenuItem key={label} value={value}>
       {label}
     </MenuItem>
@@ -43,6 +43,8 @@ const NavSort = ({ sortOptions }) => {
 };
 
 NavSort.propTypes = {
-  sortOptions: PropTypes.objectOf(PropTypes.string).isRequired
+  sortOptions: PropTypes.objectOf(PropTypes.object).isRequired,
+  labels: PropTypes.arrayOf(PropTypes.array).isRequired,
+  setSorting: PropTypes.func.isRequired
 };
 export default NavSort;

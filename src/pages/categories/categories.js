@@ -60,7 +60,7 @@ const Categories = () => {
   if (categoriesLoading) {
     return <LoadingBar />;
   }
-  console.log(categories);
+
   const categoriesList = categories.length
     ? categories
       .slice()
