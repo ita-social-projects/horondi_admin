@@ -73,8 +73,6 @@ const MainPage = () => {
     </div>
   ));
 
-  console.log(comments);
-
   const orders =
     ordersList && ordersList.length
       ? ordersList.map(({ dateOfCreation, totalItemsPrice, _id }) => (
