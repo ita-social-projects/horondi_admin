@@ -54,6 +54,25 @@ export const getAllMaterials = async (filter, skip, limit) => {
   client.resetStore();
   return result.data.getAllMaterials;
 };
+export const getAllMaterialsByPatternPurpose = async () => {
+  const result = await client.query({
+    query: gql`
+      query {
+        getMaterialsByPurpose(purposes: PATTERN) {
+          pattern {
+            _id
+            name {
+              lang
+              value
+            }
+          }
+        }
+      }
+    `
+  });
+
+  return result.data.getMaterialsByPurpose;
+};
 
 export const getMaterialById = async (id) => {
   const result = await client.query({

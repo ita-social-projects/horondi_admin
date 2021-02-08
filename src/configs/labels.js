@@ -61,7 +61,7 @@ const labels = {
   },
   pattern: {
     image: 'Фото гобелена',
-    material: 'Код матеріалу',
+    material: 'Матеріал',
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',
@@ -137,32 +137,38 @@ const labels = {
       {
         label: 'Основний матеріал',
         name: 'mainMaterial',
-        required: true
+        required: true,
+        validation: 'string'
       },
       {
         label: 'Колір основного матеріалу',
         name: 'mainColor',
-        required: true
+        required: true,
+        validation: 'string'
       },
       {
         label: 'Нижній матеріал',
         name: 'bottomMaterial',
-        required: false
+        required: false,
+        validation: 'string'
       },
       {
         label: 'Колір нижнього матеріалу',
         name: 'bottomColor',
-        required: false
+        required: false,
+        validation: 'string'
       },
       {
         label: 'Внутрішній матеріал',
         name: 'innerMaterial',
-        required: false
+        required: false,
+        validation: 'string'
       },
       {
         label: 'Колір внутрішнього матеріалу',
         name: 'innerColor',
-        required: false
+        required: false,
+        validation: 'string'
       }
     ],
     selectsLabels: [
@@ -171,42 +177,48 @@ const labels = {
         name: 'category',
         type: 'select',
         required: true,
-        multiple: false
+        multiple: false,
+        validation: 'string'
       },
       {
         label: 'Модель ',
         name: 'model',
         type: 'select',
         required: true,
-        multiple: false
+        multiple: false,
+        validation: 'string'
       },
       {
         label: 'Розміри ',
         name: 'sizes',
         type: 'select',
         required: true,
-        multiple: true
+        multiple: true,
+        validation: 'string'
       },
       {
         label: 'Гобелен ',
         name: 'pattern',
         type: 'select',
         required: true,
-        multiple: false
+        multiple: false,
+        validation: 'string'
       },
       {
         label: 'Замочок',
         name: 'closure',
         type: 'select',
         required: true,
-        multiple: false
+        multiple: false,
+        validation: 'string'
       },
       {
         label: 'Довжина лямок(см)',
         name: 'strapLengthInCm',
         type: 'number',
         required: true,
-        multiple: false
+        multiple: false,
+        validation: 'number'
       }
     ],
     optionsLabels: [
