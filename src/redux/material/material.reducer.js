@@ -4,14 +4,16 @@ import {
   SET_MATERIAL_LOADING,
   SET_MATERIAL_ERROR,
   REMOVE_MATERIAL_FROM_STORE,
-  SET_COLOR_FILTER
+  SET_COLOR_FILTER,
+  SET_MATERIALS_BY_PURPOSE
 } from './material.types';
 
 export const selectMaterial = ({ Material }) => ({
   list: Material.list,
   loading: Material.materialLoading,
   material: Material.material,
-  filter: Material.filter
+  filter: Material.filter,
+  materialsByPurpose: Material.materialsByPurpose
 });
 
 export const initialState = {
@@ -21,7 +23,8 @@ export const initialState = {
   materialError: null,
   filter: {
     colors: []
-  }
+  },
+  materialsByPurpose: []
 };
 
 const materialReducer = (state = initialState, action = {}) => {
@@ -58,6 +61,11 @@ const materialReducer = (state = initialState, action = {}) => {
         ...state.filter,
         colors: action.payload
       }
+    };
+  case SET_MATERIALS_BY_PURPOSE:
+    return {
+      ...state,
+      materialsByPurpose: action.payload
     };
   default:
     return state;

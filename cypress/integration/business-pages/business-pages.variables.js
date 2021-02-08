@@ -98,7 +98,7 @@ export const addBusinessText = (req) => {
     ],
     code: addedBusinessPage.code
   });
-  console.log(businessTexts);
+
   req.reply({
     body: {
       data: {
