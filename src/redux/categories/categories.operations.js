@@ -16,15 +16,22 @@ export const getAllCategories = async (filter, pagination, sort) => {
           pagination: $pagination
           sort: $sort
         ) {
-          _id
-          name {
-            lang
-            value
+          items {
+            _id
+            code
+            name {
+              lang
+              value
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            available
           }
-          code
-          images {
-            thumbnail
-          }
+          count
         }
       }
     `,

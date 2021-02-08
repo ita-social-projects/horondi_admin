@@ -16,7 +16,7 @@ const useCategoryFilters = () => {
     dispatch(setCurrentPage(0));
     dispatch(
       setSort({
-        [key]: type === 'desc' ? -1 : 1
+        [key]: type === 'desc' ? 1 : -1
       })
     );
   };

@@ -64,15 +64,15 @@ const Categories = () => {
   const categoriesList = categories.length
     ? categories
       .slice()
-      .sort((a, b) => {
-        if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
-          return 1;
-        }
-        if (a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()) {
-          return -1;
-        }
-        return 0;
-      })
+        // .sort((a, b) => {
+        //   if (a.name[0].value.toLowerCase() > b.name[0].value.toLowerCase()) {
+        //     return 1;
+        //   }
+        //   if (a.name[0].value.toLowerCase() < b.name[0].value.toLowerCase()) {
+        //     return -1;
+        //   }
+        //   return 0;
+        // })
       .filter((category) => category)
       .map((category) => (
         <TableContainerRow

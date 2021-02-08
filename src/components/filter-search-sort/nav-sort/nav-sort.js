@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useStyles } from './nav-sort.styles';
 
 const NavSort = ({ sortOptions }) => {
-  const [sortValue, setSortValue] = useState(sortOptions.labels[0].value);
+  const [sortValue, setSortValue] = useState(sortOptions.labels[1].value);
   const styles = useStyles();
   const { setSorting } = sortOptions;
 
@@ -16,7 +16,7 @@ const NavSort = ({ sortOptions }) => {
 
   const selectHandler = (e) => {
     const { value } = e.target;
-    const result = sortOptions.find((item) => item.value === value);
+    const result = sortOptions.labels.find((item) => item.value === value);
 
     if (result) {
       setSortValue(result.value);
