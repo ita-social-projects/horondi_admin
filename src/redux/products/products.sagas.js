@@ -167,7 +167,6 @@ export function* handleProductUpdate({ payload }) {
 export function* handleProductLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    yield call(handleProductSpeciesLoad);
     yield call(handleProductDetailsLoad);
     const product = yield call(getProduct, payload);
     yield put(setProduct(product));
