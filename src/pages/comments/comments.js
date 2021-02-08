@@ -7,7 +7,6 @@ import ReactHtmlParser from 'react-html-parser';
 import { useCommonStyles } from '../common.styles';
 import {
   getComments,
-  setCommentsCurrentPage,
   deleteComment
 } from '../../redux/comments/comments.actions';
 
