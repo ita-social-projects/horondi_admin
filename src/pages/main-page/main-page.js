@@ -23,6 +23,8 @@ import routes from '../../configs/routes';
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
 
+const map = require('lodash/map');
+
 const MainPage = () => {
   const {
     mainTitle,
@@ -63,7 +65,7 @@ const MainPage = () => {
     );
   }, [dispatch]);
 
-  const comments = list.map(({ date, text, user, _id }) => (
+  const comments = map(list, ({ date, text, user, _id }) => (
     <div key={_id} className={classes.comment}>
       <div className={classes.commentText}>{text}</div>
       <div className={classes.commentInfo}>
@@ -75,7 +77,7 @@ const MainPage = () => {
 
   const orders =
     ordersList && ordersList.length
-      ? ordersList.map(({ dateOfCreation, totalItemsPrice, _id }) => (
+      ? map(ordersList, ({ dateOfCreation, totalItemsPrice, _id }) => (
         <TableRow
           key={_id}
           onClick={() => dispatch(push(`${pathToOrders}/${_id}`))}

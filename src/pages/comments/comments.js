@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
-
 import ReactHtmlParser from 'react-html-parser';
+
 import { useCommonStyles } from '../common.styles';
 import {
   getComments,
