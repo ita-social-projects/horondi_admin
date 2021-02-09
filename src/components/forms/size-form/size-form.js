@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { useStyles } from './size-form.styles';
 import useSizeHandlers from '../../../utils/use-size-handlers';
 import { SaveButton } from '../../buttons';
-import { addSize, saveSizeInRedux } from '../../../redux/sizes/sizes.actions';
+import { addSize } from '../../../redux/sizes/sizes.actions';
 
 const SizesForm = () => {
   const styles = useStyles();
@@ -52,7 +52,6 @@ const SizesForm = () => {
     onSubmit: () => {
       const newSize = createSize(values);
       dispatch(addSize(newSize));
-      dispatch(saveSizeInRedux(newSize));
     }
   });
 

@@ -1,4 +1,4 @@
-import { ADD_SIZE, SET_SIZE_LOADING, SAVE_SIZE_IN_REDUX } from './sizes.types';
+import { ADD_SIZE, SET_SIZE_LOADING } from './sizes.types';
 
 export const initialState = {
   size: {},
@@ -16,11 +16,6 @@ const sizeReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       sizeLoading: action.payload
-    };
-  case SAVE_SIZE_IN_REDUX:
-    return {
-      ...state,
-      size: action.payload
     };
   default:
     return state;
