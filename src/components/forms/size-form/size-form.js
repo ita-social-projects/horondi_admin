@@ -10,17 +10,19 @@ import {
   DialogContent
 } from '@material-ui/core';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { useStyles } from './size-form.styles';
 import useSizeHandlers from '../../../utils/use-size-handlers';
 import { SaveButton } from '../../buttons';
 import { addSize } from '../../../redux/sizes/sizes.actions';
+import labels from '../../../configs/labels';
 
 const SizesForm = () => {
   const styles = useStyles();
   const [isAvailable, setIsAvailable] = useState(true);
   const [open, setOpen] = useState(false);
+  const [textFieldData, setTextFieldData] = useState(labels.sizes);
+  console.log(textFieldData);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,55 +72,16 @@ const SizesForm = () => {
             <FormControl variant='outlined' className={styles.sizeFrom}>
               <span className={styles.formTitle}>SizesForm</span>
               <Grid xs={12}>
-                <TextField
-                  id='name'
-                  onChange={handleChange}
-                  variant='outlined'
-                  label='name'
-                  className={styles.textField}
-                />
-                <TextField
-                  id='heightInCm'
-                  onChange={handleChange}
-                  variant='outlined'
-                  label='height in cm'
-                  className={styles.textField}
-                />
-                <TextField
-                  id='widthInCm'
-                  onChange={handleChange}
-                  variant='outlined'
-                  label='width in cm'
-                  className={styles.textField}
-                />
-                <TextField
-                  id='depthInCm'
-                  onChange={handleChange}
-                  variant='outlined'
-                  label='depth in cm'
-                  className={styles.textField}
-                />
-                <TextField
-                  id='weightInKg'
-                  onChange={handleChange}
-                  variant='outlined'
-                  label='weight in kg'
-                  className={styles.textField}
-                />
-                <TextField
-                  id='volumeInLiters'
-                  onChange={handleChange}
-                  variant='outlined'
-                  label='volume in liters'
-                  className={styles.textField}
-                />
-                <TextField
-                  id='valueUAH'
-                  onChange={handleChange}
-                  variant='outlined'
-                  label='additional price UAH'
-                  className={styles.textField}
-                />
+                {textFieldData.map((data) => (
+                  <TextField
+                    id={data.id}
+                    onChange={handleChange}
+                    variant='outlined'
+                    label={data.label}
+                    className={styles.textField}
+                    key={data.id}
+                  />
+                ))}
               </Grid>
               <FormControlLabel
                 control={

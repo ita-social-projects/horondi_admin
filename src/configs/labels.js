@@ -397,6 +397,15 @@ const labels = {
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
-  }
+  },
+  sizes: [
+    { id: 'name', label: 'name' },
+    { id: 'heightInCm', label: 'height in cm' },
+    { id: 'widthInCm', label: 'width in cm' },
+    { id: 'depthInCm', label: 'depth in cm' },
+    { id: 'weightInKg', label: 'weight in kg' },
+    { id: 'volumeInLiters', label: 'volume in liters' },
+    { id: 'valueUAH', label: 'additional price UAH' }
+  ]
 };
 export default labels;
