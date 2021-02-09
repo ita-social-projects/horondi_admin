@@ -1,16 +1,34 @@
 import {
-  GET_COMMENTS_BY_TYPE,
-  GET_RECENT_COMMENTS,
   SET_COMMENTS,
+  GET_COMMENTS,
   DELETE_COMMENT,
-  DELETE_COMMENT_LOCALLY,
+  GET_COMMENTS_BY_PRODUCTS,
+  GET_COMMENTS_BY_TYPE,
+  SET_COMMENTS_CURRENT_PAGE,
   SET_COMMENTS_LOADING,
   SET_COMMENTS_ERROR,
-  SET_COMMENTS_CURRENT_PAGE,
-  SET_COMMENTS_PER_PAGE,
-  SET_COMMENTS_PAGES_COUNT,
-  GET_COMMENTS_BY_PRODUCTS
+  REMOVE_COMMENT_FROM_STORE
 } from './comments.types';
+
+const setComments = (comments) => ({
+  type: SET_COMMENTS,
+  payload: comments
+});
+
+const getComments = (payload) => ({
+  type: GET_COMMENTS,
+  payload
+});
+
+const deleteComment = (payload) => ({
+  type: DELETE_COMMENT,
+  payload
+});
+
+const getCommentsByProduct = (payload) => ({
+  type: GET_COMMENTS_BY_PRODUCTS,
+  payload
+});
 
 const getCommentsByType = (value, commentsType) => ({
   type: GET_COMMENTS_BY_TYPE,
@@ -20,66 +38,34 @@ const getCommentsByType = (value, commentsType) => ({
   }
 });
 
-const getRecentComments = (payload) => ({
-  type: GET_RECENT_COMMENTS,
-  payload
-});
-
-const setComments = (comments) => ({
-  type: SET_COMMENTS,
-  payload: comments
-});
-
-const setCommentsLoading = (loading) => ({
-  type: SET_COMMENTS_LOADING,
-  payload: loading
-});
-
-const deleteComment = (payload) => ({
-  type: DELETE_COMMENT,
-  payload
-});
-
-const deleteCommentLocally = (id) => ({
-  type: DELETE_COMMENT_LOCALLY,
-  payload: id
-});
-
-const setCommentError = (error) => ({
-  type: SET_COMMENTS_ERROR,
-  payload: error
-});
-
 const setCommentsCurrentPage = (payload) => ({
   type: SET_COMMENTS_CURRENT_PAGE,
   payload
 });
 
-const setCommentsPerPage = (payload) => ({
-  type: SET_COMMENTS_PER_PAGE,
+const setCommentsLoading = (payload) => ({
+  type: SET_COMMENTS_LOADING,
   payload
 });
 
-const setCommentsPagesCount = (payload) => ({
-  type: SET_COMMENTS_PAGES_COUNT,
+const setCommentError = (payload) => ({
+  type: SET_COMMENTS_ERROR,
   payload
 });
 
-const getCommentsByProduct = (payload) => ({
-  type: GET_COMMENTS_BY_PRODUCTS,
+const removeCommentFromStore = (payload) => ({
+  type: REMOVE_COMMENT_FROM_STORE,
   payload
 });
 
 export {
-  getCommentsByType,
-  getRecentComments,
   setComments,
+  getComments,
+  getCommentsByType,
+  removeCommentFromStore,
   setCommentsLoading,
   deleteComment,
-  deleteCommentLocally,
   setCommentError,
   setCommentsCurrentPage,
-  setCommentsPerPage,
-  setCommentsPagesCount,
   getCommentsByProduct
 };

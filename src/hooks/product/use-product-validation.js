@@ -7,10 +7,20 @@ import { capitalize } from '@material-ui/core';
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
 
-const selectName = ({ name, type }) =>
-  type === 'number'
-    ? [name, Yup.number().required()]
-    : [name, Yup.string().required()];
+const selectName = ({ name, validation, required }) =>
+  required
+    ? [
+      name,
+      validation === 'number'
+        ? Yup[validation]().min(1, REQUIRED_FIELD).required()
+        : Yup[validation]().required()
+    ]
+    : [
+      name,
+      validation === 'number'
+        ? Yup[validation]().min(1, REQUIRED_FIELD)
+        : Yup[validation]()
+    ];
 
 const {
   labels: {
