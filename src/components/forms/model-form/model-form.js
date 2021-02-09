@@ -29,7 +29,7 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { getCategories } from '../../../redux/categories/categories.actions';
 import LanguagePanel from '../language-panel';
-import SizeForm from '../size-form/size-form';
+import SizeForm from '../sizes-form/sizes-form';
 
 const { languages } = config;
 const {

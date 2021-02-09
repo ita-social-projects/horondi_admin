@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { useStyles } from './size-form.styles';
+import { useStyles } from './sizes-form.styles';
 import useSizeHandlers from '../../../utils/use-size-handlers';
 import { SaveButton } from '../../buttons';
 import { addSize } from '../../../redux/sizes/sizes.actions';
@@ -21,8 +21,7 @@ const SizesForm = () => {
   const styles = useStyles();
   const [isAvailable, setIsAvailable] = useState(true);
   const [open, setOpen] = useState(false);
-  const [textFieldData, setTextFieldData] = useState(labels.sizes);
-  console.log(textFieldData);
+  const textFieldData = [...labels.sizes];
 
   const handleClickOpen = () => {
     setOpen(true);
