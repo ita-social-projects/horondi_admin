@@ -116,3 +116,9 @@ export const paginationInputErrorMessages = {
   MUST_BE_POSITIVE: 'Тільки більше нуля',
   PAGE_NOT_FOUND: 'Сторінку не знайдено'
 };
+
+export const commentErrorMessages = {
+  COMMENT_VALIDATION_ERROR: 'Мінімум 2 символи',
+  COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
+};

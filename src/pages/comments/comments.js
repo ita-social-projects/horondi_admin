@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
+import { push } from 'connected-react-router';
 
 import { useCommonStyles } from '../common.styles';
 import {
@@ -55,7 +56,7 @@ const Comments = () => {
   const commentItems = map(list, (comment) => (
     <TableContainerRow
       showAvatar={false}
-      showEdit={false}
+      showEdit
       userName={comment.user.email}
       data={ReactHtmlParser(getTime(comment.date, true))}
       text={comment.text}
@@ -63,6 +64,9 @@ const Comments = () => {
       key={comment._id}
       deleteHandler={() => {
         commentDeleteHandler(comment._id);
+      }}
+      editHandler={() => {
+        dispatch(push(`/comments/${comment._id}`));
       }}
     />
   ));

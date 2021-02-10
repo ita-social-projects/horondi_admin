@@ -93,6 +93,9 @@ const labels = {
     colorHex: '# Колір',
     mainLabel: 'Колір'
   },
+  comment: {
+    text: 'Текст коментаря'
+  },
   businessPage: [
     {
       label: mapToLanguages('Заголовок', 'Title'),

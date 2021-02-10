@@ -19,7 +19,8 @@ import {
   homePageSlideErrorMessages,
   constructorErrorMessages,
   statsErrorMessages,
-  paginationInputErrorMessages
+  paginationInputErrorMessages,
+  commentErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -191,7 +192,8 @@ export const config = {
   homePageSlideErrorMessages,
   constructorErrorMessages,
   sort,
-  paginationInputErrorMessages
+  paginationInputErrorMessages,
+  commentErrorMessages
 };
 export const inputTypes = {
   button: 'button',

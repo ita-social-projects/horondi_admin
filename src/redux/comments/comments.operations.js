@@ -3,6 +3,7 @@ import { client } from '../../utils/client';
 
 import { config } from '../../configs';
 import { getFromLocalStorage } from '../../services/local-storage.service';
+import { commentsTranslations } from '../../translations/comments.translations';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');
 
@@ -78,4 +79,82 @@ const deleteComment = async (id) => {
   return result.data.deleteComment;
 };
 
-export { getAllComments, deleteComment };
+const getCommentById = async (id) => {
+  const result = await client.query({
+    variables: { id },
+    query: gql`
+      query($id: ID!) {
+        getCommentById(id: $id) {
+          ... on Comment {
+            _id
+            text
+            date
+            user {
+              _id
+              firstName
+              email
+            }
+            product {
+              _id
+            }
+            show
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+
+  if (result.data.getCommentById.message) {
+    throw new Error(
+      `${result.data.getCommentById.statusCode} ${
+        commentsTranslations[result.data.getCommentById.message]
+      }`
+    );
+  }
+
+  return result.data.getCommentById;
+};
+
+const updateComment = async (id, comment) => {
+  const token = getFromLocalStorage(config.tokenName);
+  const result = await client.mutate({
+    context: { headers: { token } },
+    variables: {
+      id,
+      comment
+    },
+    mutation: gql`
+      mutation($id: ID!, $comment: commentInput!) {
+        updateComment(id: $id, comment: $comment) {
+          ... on Comment {
+            _id
+            text
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+  console.log(result);
+  if (result.data.updateComment.message) {
+    throw new Error(
+      `${result.data.updateComment.statusCode} ${
+        commentsTranslations[result.data.updateComment.message]
+      }`
+    );
+  }
+
+  return result.data.updateComment;
+};
+
+export { getAllComments, deleteComment, updateComment, getCommentById };
