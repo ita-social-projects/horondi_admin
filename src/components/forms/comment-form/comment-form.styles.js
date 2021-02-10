@@ -4,9 +4,13 @@ export const useStyles = makeStyles((theme) => ({
   saveCommentButton: {
     margin: theme.spacing(2)
   },
+  paper: {
+    display: 'flex',
+    alignItems: 'center'
+  },
   textField: {
     margin: '10px 5px',
-    width: '1000px'
+    width: '1150px'
   },
   error: {
     color: '#e60000',

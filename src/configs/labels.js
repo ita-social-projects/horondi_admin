@@ -94,7 +94,9 @@ const labels = {
     mainLabel: 'Колір'
   },
   comment: {
-    text: 'Текст коментаря'
+    text: 'Текст коментаря',
+    show: 'Видимий',
+    productInfo: 'Інформація про продукт'
   },
   businessPage: [
     {

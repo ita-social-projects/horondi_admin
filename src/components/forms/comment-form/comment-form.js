@@ -1,14 +1,17 @@
 import React from 'react';
+import { Link , useHistory } from 'react-router-dom';
+
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, Grid, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
+import Button from '@material-ui/core/Button';
 import { useStyles } from './comment-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
+import CheckboxOptions from '../../checkbox-options';
 import { config } from '../../../configs';
 import { updateComment } from '../../../redux/comments/comments.actions';
-import { commentSelector } from '../../../redux/selectors/comments.selectors';
 
 const {
   COMMENT_VALIDATION_ERROR,
@@ -21,15 +24,24 @@ const { SAVE_TITLE } = config.buttonTitles;
 const CommentForm = ({ comment, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const commentValidationSchema = Yup.object().shape({
     text: Yup.string()
       .min(2, COMMENT_VALIDATION_ERROR)
       .max(300, MAX_LENGTH_MESSAGE)
-      .required(COMMENT_ERROR_MESSAGE)
+      .required(COMMENT_ERROR_MESSAGE),
+    show: Yup.bool()
   });
 
-  const { values, handleSubmit, handleChange, touched, errors } = useFormik({
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
     validationSchema: commentValidationSchema,
     initialValues: {
       text: comment.text || '',
@@ -52,11 +64,28 @@ const CommentForm = ({ comment, id, isEdit }) => {
     }
   });
 
+  const checkboxes = [
+    {
+      id: 'show',
+      dataCy: 'show',
+      value: values.show,
+      checked: values.show,
+      color: 'primary',
+      label: config.labels.comment.show,
+      handler: () => setFieldValue('show', !values.show)
+    }
+  ];
+
+  function handleProductClick() {
+    history.push(`/product/${comment.product._id}`);
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <Grid item xs={12}>
-          <Paper>
+          <CheckboxOptions options={checkboxes} />
+          <Paper className={styles.paper}>
             <TextField
               data-cy='text'
               name='text'
@@ -72,6 +101,9 @@ const CommentForm = ({ comment, id, isEdit }) => {
                 {errors.code}
               </div>
             )}
+            <Button variant='contained' onClick={handleProductClick}>
+              {config.labels.comment.productInfo}
+            </Button>
           </Paper>
           <BackButton />
           <SaveButton
