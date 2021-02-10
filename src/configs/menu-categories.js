@@ -15,6 +15,7 @@ import StyleIcon from '@material-ui/icons/Style';
 import LinkIcon from '@material-ui/icons/Link';
 import FilterIcon from '@material-ui/icons/Filter';
 import HomeIcon from '@material-ui/icons/Home';
+import LineWeight from '@material-ui/icons/LineWeight';
 import routes from './routes';
 
 const menuCategories = [
@@ -30,6 +31,7 @@ const menuCategories = [
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
   ['Новини', routes.pathToNews, ImportContactsIcon],
   ['Запитання покупців', routes.pathToEmailQuestions, LiveHelpIcon],
+  ['Розміри', routes.pathToSizes, LineWeight],
   ['Моделі', routes.pathToModels, StyleIcon],
   ['Посилання', routes.pathToHeaders, LinkIcon],
   ['Замовлення', routes.pathToOrders, ListAltIcon],
