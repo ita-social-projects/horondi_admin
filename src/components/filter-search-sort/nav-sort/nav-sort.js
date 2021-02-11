@@ -47,8 +47,8 @@ const NavSort = ({ sortOptions }) => {
 };
 
 NavSort.propTypes = {
-  sortOptions: PropTypes.objectOf(PropTypes.string),
-  labels: PropTypes.objectOf(PropTypes.array),
+  sortOptions: PropTypes.objectOf(PropTypes.object),
+  labels: PropTypes.arrayOf(PropTypes.array),
   setSorting: PropTypes.func
 };
 

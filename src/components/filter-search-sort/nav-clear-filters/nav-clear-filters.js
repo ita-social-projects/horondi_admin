@@ -32,7 +32,7 @@ const NavClearFilters = ({ clearOptions }) => {
 };
 
 NavClearFilters.propTypes = {
-  clearOptions: PropTypes.objectOf(PropTypes.string),
+  clearOptions: PropTypes.objectOf(PropTypes.object),
   filters: PropTypes.func,
   clearAllFilters: PropTypes.func
 };

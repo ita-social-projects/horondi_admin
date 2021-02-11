@@ -42,9 +42,9 @@ const NavFilters = ({ filterOptions }) => {
 };
 
 NavFilters.propTypes = {
-  filterOptions: PropTypes.objectOf(PropTypes.string),
+  filterOptions: PropTypes.objectOf(PropTypes.object),
   filters: PropTypes.func,
-  allCategories: PropTypes.func,
+  allCategories: PropTypes.arrayOf(PropTypes.array),
   buttonTitle: PropTypes.string,
   setStatusFilter: PropTypes.func
 };

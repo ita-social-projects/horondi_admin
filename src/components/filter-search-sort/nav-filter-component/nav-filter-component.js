@@ -49,7 +49,7 @@ NavFilterComponent.propTypes = {
   buttonName: PropTypes.string.isRequired,
   filterValues: PropTypes.arrayOf(PropTypes.string).isRequired,
   filterHandler: PropTypes.func.isRequired,
-  formGroupOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  formGroupOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
   badgePosition: PropTypes.objectOf(PropTypes.string).isRequired,
   renderFilters: PropTypes.func.isRequired
 };

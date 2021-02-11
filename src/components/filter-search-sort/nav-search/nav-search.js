@@ -55,7 +55,7 @@ const NavSearch = ({ searchOptions }) => {
   );
 };
 NavSearch.propTypes = {
-  searchOptions: PropTypes.objectOf(PropTypes.string),
+  searchOptions: PropTypes.objectOf(PropTypes.object),
   filters: PropTypes.func,
   setSearchFilter: PropTypes.func
 };
