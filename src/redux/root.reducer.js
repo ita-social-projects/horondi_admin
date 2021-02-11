@@ -14,6 +14,7 @@ import Products from './products/products.reducer';
 import Categories from './categories/categories.reducer';
 import Users from './users/users.reducer';
 import Comments from './comments/comments.reducer';
+import Sizes from './sizes/sizes.reducer';
 import HomePage from './home/home.reducer';
 import EmailQuestions from './email-questions/email-questions.reducer';
 import { statsReducer } from './stats/stats.reducer';
@@ -23,7 +24,7 @@ import Orders from './orders/orders.reducer';
 import Slides from './home-page-slides/home-page-slides.reducer';
 import Error from './error/error.reducer';
 import Color from './color/color.reducer';
-import Constructor from  './constructor/constructor.reducer'
+import Constructor from './constructor/constructor.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
@@ -42,6 +43,7 @@ export const rootReducer = (history) =>
     Categories,
     Users,
     Comments,
+    Sizes,
     Orders,
     Model,
     EmailQuestions,
