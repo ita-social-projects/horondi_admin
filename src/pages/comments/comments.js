@@ -22,6 +22,8 @@ import getTime from '../../utils/getTime';
 const tableTitles = config.tableHeadRowTitles.comments.commentPageTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 
+const { pathToCommentsEdit } = config.routes;
+
 const map = require('lodash/map');
 
 const Comments = () => {
@@ -66,7 +68,7 @@ const Comments = () => {
         commentDeleteHandler(comment._id);
       }}
       editHandler={() => {
-        dispatch(push(`/comments/${comment._id}`));
+        dispatch(push(pathToCommentsEdit.replace(':id', comment._id)));
       }}
     />
   ));

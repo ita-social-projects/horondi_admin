@@ -132,7 +132,7 @@ const updateComment = async (id, comment) => {
       comment
     },
     mutation: gql`
-      mutation($id: ID!, $comment: commentInput!) {
+      mutation($id: ID!, $comment: CommentUpdateInput!) {
         updateComment(id: $id, comment: $comment) {
           ... on Comment {
             _id

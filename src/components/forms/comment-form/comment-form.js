@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link , useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -20,6 +20,8 @@ const {
 } = config.commentErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
+
+const { pathToEditProduct } = config.routes;
 
 const CommentForm = ({ comment, id, isEdit }) => {
   const styles = useStyles();
@@ -54,9 +56,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
             id,
             comment: {
               text: data.text,
-              show: data.show,
-              user: comment.user._id,
-              product: comment.product._id
+              show: data.show
             }
           })
         );
@@ -77,7 +77,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
   ];
 
   function handleProductClick() {
-    history.push(`/product/${comment.product._id}`);
+    history.push(pathToEditProduct.replace(':id', comment.product._id));
   }
 
   return (
