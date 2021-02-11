@@ -7,7 +7,8 @@ import {
   getAllComments,
   deleteComment,
   updateComment,
-  getCommentById
+  getCommentById,
+  getCommentsByType
 } from './comments.operations';
 
 import {
@@ -22,7 +23,8 @@ import {
   GET_COMMENTS,
   DELETE_COMMENT,
   GET_COMMENT,
-  UPDATE_COMMENT
+  UPDATE_COMMENT,
+  GET_COMMENTS_BY_TYPE
 } from './comments.types';
 
 import {
@@ -73,12 +75,26 @@ export function* handleCommentDelete({ payload }) {
 
 export function* handleCommentUpdate({ payload }) {
   const { id, comment } = payload;
-  console.log(payload);
   try {
     yield put(setCommentsLoading(true));
     yield call(updateComment, id, comment);
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToComments));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleCommentsByTypeLoad({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+    const comments = yield call(
+      getCommentsByType,
+      payload.value,
+      payload.commentsType
+    );
+    yield put(setComments(comments));
+    yield put(setCommentsLoading(false));
   } catch (error) {
     yield call(handleCommentsError, error);
   }
@@ -95,4 +111,5 @@ export default function* commentsSaga() {
   yield takeEvery(DELETE_COMMENT, handleCommentDelete);
   yield takeEvery(UPDATE_COMMENT, handleCommentUpdate);
   yield takeEvery(GET_COMMENT, handleCommentLoad);
+  yield takeEvery(GET_COMMENTS_BY_TYPE, handleCommentsByTypeLoad);
 }

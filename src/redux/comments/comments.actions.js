@@ -10,7 +10,9 @@ import {
   REMOVE_COMMENT_FROM_STORE,
   UPDATE_COMMENT,
   SET_COMMENT,
-  GET_COMMENT
+  GET_COMMENT,
+  GET_USER_COMMENTS,
+  GET_PRODUCT_COMMENTS
 } from './comments.types';
 
 const setComments = (comments) => ({
@@ -43,12 +45,19 @@ const getCommentsByProduct = (payload) => ({
   payload
 });
 
-const getCommentsByType = (value, commentsType) => ({
+const getUserComments = (payload) => ({
+  type: GET_USER_COMMENTS,
+  payload
+});
+
+const getProductComments = (payload) => ({
+  type: GET_PRODUCT_COMMENTS,
+  payload
+});
+
+const getCommentsByType = (payload) => ({
   type: GET_COMMENTS_BY_TYPE,
-  payload: {
-    value,
-    commentsType
-  }
+  payload
 });
 
 const setCommentsCurrentPage = (payload) => ({
@@ -88,5 +97,7 @@ export {
   getCommentsByProduct,
   updateComment,
   setComment,
-  getComment
+  getComment,
+  getUserComments,
+  getProductComments
 };

@@ -5,6 +5,8 @@ import { config } from '../../configs';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { commentsTranslations } from '../../translations/comments.translations';
 
+import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
+
 const formError = (error) => error.message.replace('GraphQL error: ', '');
 
 const getAllComments = async (skip, limit) => {
@@ -36,6 +38,7 @@ const getAllComments = async (skip, limit) => {
     `
   });
   client.resetStore();
+
   return result.data.getAllComments;
 };
 
@@ -108,7 +111,7 @@ const getCommentById = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-
+  client.resetStore();
   if (result.data.getCommentById.message) {
     throw new Error(
       `${result.data.getCommentById.statusCode} ${
@@ -145,7 +148,7 @@ const updateComment = async (id, comment) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
-  console.log(result);
+
   if (result.data.updateComment.message) {
     throw new Error(
       `${result.data.updateComment.statusCode} ${
@@ -157,4 +160,95 @@ const updateComment = async (id, comment) => {
   return result.data.updateComment;
 };
 
-export { getAllComments, deleteComment, updateComment, getCommentById };
+const getCommentsByType = async (value, commentsType) => {
+  try {
+    if (commentsType === GET_USER_COMMENTS) {
+      return await getCommentsByUser(value);
+    }
+    if (commentsType === GET_PRODUCT_COMMENTS) {
+      return await getCommentsByProduct(value);
+    }
+  } catch (error) {
+    throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+  }
+  client.resetStore();
+};
+
+const getCommentsByProduct = async (id) => {
+  const result = await client
+    .query({
+      variables: { productId: id },
+      query: gql`
+        query($productId: ID!) {
+          getAllCommentsByProduct(
+            productId: $productId
+          ) {
+            ... on Comment{
+              _id
+              text
+              date
+              user {
+                firstName
+                email
+              }
+            ... on Error{
+              message
+              statusCode
+            }
+          }
+        }
+      `,
+      fetchPolicy: 'no-cache'
+    })
+    .catch((error) => {
+      throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+    });
+  client.resetStore();
+
+  return result.data.getAllCommentsByProduct;
+};
+
+const getCommentsByUser = async (userId) => {
+  const result = await client
+    .query({
+      variables: { userId },
+      query: gql`
+        query($userId: ID!) {
+          getAllCommentsByUser(userId: $userId) {
+            ... on Comment {
+              _id
+              text
+              user {
+                _id
+                firstName
+              }
+              product {
+                _id
+              }
+              date
+            }
+            ... on Error {
+              message
+              statusCode
+            }
+          }
+        }
+      `,
+      fetchPolicy: 'no-cache'
+    })
+    .catch((error) => {
+      throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+    });
+  client.resetStore();
+  return result.data.getAllCommentsByUser;
+};
+
+export {
+  getAllComments,
+  deleteComment,
+  updateComment,
+  getCommentById,
+  getCommentsByUser,
+  getCommentsByProduct,
+  getCommentsByType
+};
