@@ -31,11 +31,11 @@ const useCategoryFilters = () => {
     );
   };
 
-  const setStatusFilter = (categories) => {
+  const setStatusFilter = (_id) => {
     dispatch(setCurrentPage(0));
     dispatch(
       setFilter({
-        category: categories
+        _id
       })
     );
   };

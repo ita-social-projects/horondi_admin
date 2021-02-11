@@ -19,7 +19,7 @@ const NavFilters = ({ filterOptions }) => {
   const filterVariants = {
     status: {
       filterLabels: availableCategories,
-      filterValues: filters.category,
+      filterValues: filters._id,
       filterList: availableCategories,
       filterHandler: (e) => handleFilterChange(e),
       buttonName: buttonTitle
