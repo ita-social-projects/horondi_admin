@@ -38,7 +38,6 @@ import { selectCategorySwitchAndDeleteId } from '../../selectors/category.select
 import categoriesReducer, { initialState } from '../categories.reducer';
 
 describe('categories sagas tests', () => {
-  console.log(count);
   it('should handle categories load', () =>
     expectSaga(handleCategoriesLoad, { payload: { filter, pagination, sort } })
       .withReducer(categoriesReducer)
