@@ -6,7 +6,7 @@ import NavFilterItem from '../nav-filter-item';
 const NavFilters = ({ filterOptions }) => {
   const { filters } = filterOptions;
   const { setStatusFilter } = filterOptions;
-  const { categories } = filterOptions;
+  const { allCategories } = filterOptions;
   const { buttonTitle } = filterOptions;
 
   const handleFilterChange = ({ target }) => {
@@ -14,7 +14,7 @@ const NavFilters = ({ filterOptions }) => {
     setStatusFilter(result);
   };
 
-  const availableCategories = categories;
+  const availableCategories = allCategories;
 
   const filterVariants = {
     status: {
@@ -44,7 +44,7 @@ const NavFilters = ({ filterOptions }) => {
 NavFilters.propTypes = {
   filterOptions: PropTypes.objectOf(PropTypes.string),
   filters: PropTypes.func,
-  categories: PropTypes.func,
+  allCategories: PropTypes.func,
   buttonTitle: PropTypes.string,
   setStatusFilter: PropTypes.func
 };

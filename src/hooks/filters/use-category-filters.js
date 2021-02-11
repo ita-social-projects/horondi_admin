@@ -11,7 +11,7 @@ const useCategoryFilters = () => {
   const dispatch = useDispatch();
   const { filterLabels } = config;
   const filters = useSelector(({ Categories }) => Categories.filters);
-  const categories = useSelector(({ Categories }) => Categories.categories);
+  const allCategories = useSelector(({ Categories }) => Categories.categories);
 
   const setSorting = (key, type = 'asc') => {
     dispatch(setCurrentPage(0));
@@ -51,7 +51,7 @@ const useCategoryFilters = () => {
     },
     filterOptions: {
       filters,
-      categories,
+      allCategories,
       buttonTitle: 'Категорія',
       setStatusFilter
     },
