@@ -44,10 +44,18 @@ const Navbar = ({ options }) => {
 };
 
 Navbar.propTypes = {
-  options: PropTypes.objectOf(PropTypes.object).isRequired,
-  sortOptions: PropTypes.objectOf(PropTypes.object).isRequired,
-  filterOptions: PropTypes.objectOf(PropTypes.object).isRequired,
-  searchOptions: PropTypes.objectOf(PropTypes.object).isRequired,
-  clearOptions: PropTypes.objectOf(PropTypes.object).isRequired
+  options: PropTypes.objectOf(PropTypes.object),
+  sortOptions: PropTypes.objectOf(PropTypes.object),
+  filterOptions: PropTypes.objectOf(PropTypes.object),
+  searchOptions: PropTypes.objectOf(PropTypes.object),
+  clearOptions: PropTypes.objectOf(PropTypes.object)
+};
+
+Navbar.defaultProps = {
+  options: {},
+  sortOptions: {},
+  filterOptions: {},
+  searchOptions: {},
+  clearOptions: {}
 };
 export default Navbar;

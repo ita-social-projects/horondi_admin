@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { FormControl, MenuItem, Select } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { useStyles } from './nav-sort.styles';
 
 const NavSort = ({ sortOptions }) => {
@@ -8,21 +9,24 @@ const NavSort = ({ sortOptions }) => {
   const styles = useStyles();
   const { setSorting } = sortOptions;
 
-  const selectOptions = sortOptions.labels.map(({ label, value }) => (
+  const selectOptions = _.map(sortOptions.labels, ({ label, value }) => (
     <MenuItem key={label} value={value}>
       {label}
     </MenuItem>
   ));
 
-  const selectHandler = (e) => {
-    const { value } = e.target;
-    const result = sortOptions.labels.find((item) => item.value === value);
+  const selectHandler = useCallback(
+    (e) => {
+      const { value } = e.target;
+      const result = sortOptions.labels.find((item) => item.value === value);
 
-    if (result) {
-      setSortValue(result.value);
-      setSorting(result.key, result.type);
-    }
-  };
+      if (result) {
+        setSortValue(result.value);
+        setSorting(result.key, result.type);
+      }
+    },
+    [sortOptions.label]
+  );
 
   return (
     <div className={styles.sort}>
@@ -43,8 +47,14 @@ const NavSort = ({ sortOptions }) => {
 };
 
 NavSort.propTypes = {
-  sortOptions: PropTypes.objectOf(PropTypes.object).isRequired,
-  labels: PropTypes.arrayOf(PropTypes.array).isRequired,
-  setSorting: PropTypes.func.isRequired
+  sortOptions: PropTypes.objectOf(PropTypes.string),
+  labels: PropTypes.objectOf(PropTypes.array),
+  setSorting: PropTypes.func
+};
+
+NavSort.defaultProps = {
+  sortOptions: {},
+  labels: [],
+  setSorting: () => {}
 };
 export default NavSort;

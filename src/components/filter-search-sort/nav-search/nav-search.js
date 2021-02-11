@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-
+import React, { useState, useCallback } from 'react';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -15,7 +13,7 @@ const { search: searchLabel } = labels;
 
 const NavSearch = ({ searchOptions }) => {
   const styles = useStyles();
-  const {filters} = searchOptions;
+  const { filters } = searchOptions;
   const { setSearchFilter } = searchOptions;
   const { search } = filters;
   const [searchValue, setSearchValue] = useState(search);
@@ -30,9 +28,9 @@ const NavSearch = ({ searchOptions }) => {
     }
   };
 
-  const handleUserSearch = () => {
+  const handleUserSearch = useCallback(() => {
     setSearchFilter(searchValue);
-  };
+  }, [searchValue]);
 
   return (
     <div>
@@ -57,8 +55,14 @@ const NavSearch = ({ searchOptions }) => {
   );
 };
 NavSearch.propTypes = {
-  searchOptions: PropTypes.objectOf(PropTypes.string).isRequired,
-  filters: PropTypes.func.isRequired,
-  setSearchFilter: PropTypes.func.isRequired
+  searchOptions: PropTypes.objectOf(PropTypes.string),
+  filters: PropTypes.func,
+  setSearchFilter: PropTypes.func
+};
+
+NavSearch.defaultProps = {
+  searchOptions: {},
+  filters: () => {},
+  setSearchFilter: () => {}
 };
 export default NavSearch;

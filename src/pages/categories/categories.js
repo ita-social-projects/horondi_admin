@@ -83,7 +83,6 @@ const Categories = () => {
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
-        <NavBar options={categoryOptions || {}} />
         <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.categoryPageTitles.mainPageTitle}
         </Typography>
@@ -91,6 +90,9 @@ const Categories = () => {
           title={ADD_CATEGORY}
           onClickHandler={handleAddCategory}
         />
+      </div>
+      <div>
+        <NavBar options={categoryOptions || {}} />
       </div>
       <TableContainerGenerator
         tableTitles={config.tableHeadRowTitles.categories}

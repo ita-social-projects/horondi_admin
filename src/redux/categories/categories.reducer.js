@@ -13,6 +13,7 @@ import {
 } from './categories.types';
 
 const initialFilters = {
+  category: [],
   search: ''
 };
 

@@ -11,6 +11,7 @@ import {
   Checkbox,
   Badge
 } from '@material-ui/core';
+import _ from 'lodash';
 import { useStyles } from './nav-filter-item.styles';
 
 const badgePosition = {
@@ -27,14 +28,30 @@ const NavFilterItem = ({
 }) => {
   const styles = useStyles();
 
-  const formGroupOptions = filterList.map((item, idx) => (
-    <MenuItem data-cy={`user-filters-list-${item}`} key={item} value={item}>
-      <Checkbox
-        checked={filterValues.findIndex((filter) => filter === item) !== -1}
-      />
-      <ListItemText primary={filterLabels.length ? filterLabels[idx] : item} />
-    </MenuItem>
-  ));
+  const formGroupOptions = useMemo(
+    () =>
+      _.map(filterList, (item, idx) => (
+        <MenuItem
+          data-cy={`user-filters-list-${item}`}
+          key={item._id}
+          value={item._id}
+        >
+          <Checkbox
+            checked={
+              _.findIndex(filterValues, (filter) => filter === item._id) !== -1
+            }
+          />
+          <ListItemText
+            primary={
+              filterLabels.length
+                ? filterLabels[idx].name[0].value
+                : item.name[0].value
+            }
+          />
+        </MenuItem>
+      )),
+    [filterList]
+  );
 
   const renderFilters = useMemo(() => (selected) => selected.join(', '), [
     filterList,
@@ -70,7 +87,7 @@ const NavFilterItem = ({
 
 NavFilterItem.propTypes = {
   buttonName: PropTypes.string.isRequired,
-  filterLabels: PropTypes.arrayOf(PropTypes.string),
+  filterLabels: PropTypes.arrayOf(PropTypes.object),
   filterValues: PropTypes.arrayOf(PropTypes.string).isRequired,
   filterList: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.string])

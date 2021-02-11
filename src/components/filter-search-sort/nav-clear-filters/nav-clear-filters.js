@@ -32,8 +32,13 @@ const NavClearFilters = ({ clearOptions }) => {
 };
 
 NavClearFilters.propTypes = {
-  clearOptions: PropTypes.objectOf(PropTypes.object).isRequired,
-  filters: PropTypes.string.isRequired,
-  clearAllFilters: PropTypes.func.isRequired
+  clearOptions: PropTypes.objectOf(PropTypes.string),
+  filters: PropTypes.func,
+  clearAllFilters: PropTypes.func
+};
+NavClearFilters.defaultProps = {
+  clearOptions: {},
+  filters: () => {},
+  clearAllFilters: () => {}
 };
 export default NavClearFilters;

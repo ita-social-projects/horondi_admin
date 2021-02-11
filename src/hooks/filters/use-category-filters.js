@@ -11,6 +11,7 @@ const useCategoryFilters = () => {
   const dispatch = useDispatch();
   const { filterLabels } = config;
   const filters = useSelector(({ Categories }) => Categories.filters);
+  const categories = useSelector(({ Categories }) => Categories.categories);
 
   const setSorting = (key, type = 'asc') => {
     dispatch(setCurrentPage(0));
@@ -30,6 +31,15 @@ const useCategoryFilters = () => {
     );
   };
 
+  const setStatusFilter = (categories) => {
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setFilter({
+        category: categories
+      })
+    );
+  };
+
   const clearAllFilters = () => {
     dispatch(setCurrentPage(0));
     dispatch(clearFilters());
@@ -39,7 +49,12 @@ const useCategoryFilters = () => {
       labels: filterLabels.categories.sortLabels,
       setSorting
     },
-    filterOptions: {},
+    filterOptions: {
+      filters,
+      categories,
+      buttonTitle: 'Категорія',
+      setStatusFilter
+    },
     searchOptions: {
       filters,
       setSearchFilter
