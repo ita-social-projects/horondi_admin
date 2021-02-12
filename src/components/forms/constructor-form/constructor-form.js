@@ -29,6 +29,7 @@ import LanguagePanel from '../language-panel';
 const { IMG_URL } = config;
 
 const map = require('lodash/map');
+const filter = require('lodash/filter');
 
 const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
@@ -82,7 +83,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     if (isEdit) {
       setConstructorAvatar(`${IMG_URL}${editableConstructorElement.image}`);
       setMaterialColors(
-        list.filter(
+        filter(
+          list,
           (el) => el._id === editableConstructorElement.material._id
         )[0].colors
       );
@@ -123,8 +125,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       default: editableConstructorElement.default || false,
       basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
     },
-    onSubmit: () => {
-      const constructorElement = createConstructor(values);
+    onSubmit: (formValues) => {
+      const constructorElement = createConstructor(formValues);
       history.goBack();
       if (isEdit) {
         return dispatch(

@@ -23,7 +23,6 @@ const useConstructorHandlers = () => {
         value: values.enName
       }
     ],
-    image: values.image,
     material: values.material,
     color: values.color,
     available: values.available,

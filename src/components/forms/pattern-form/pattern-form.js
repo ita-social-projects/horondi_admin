@@ -124,7 +124,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     onSubmit: () => {
       const newPattern = createPattern(values);
 
-      if (isEdit && upload instanceof File) {
+      if (
+        isEdit &&
+        upload instanceof File &&
+        uploadConstructorImg instanceof File
+      ) {
         dispatch(
           updatePattern({
             id,
