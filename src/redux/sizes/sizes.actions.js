@@ -15,8 +15,44 @@ import {
 export const getSizes = () => ({
   type: GET_SIZES
 });
+
+export const getSize = (payload) => ({
+  type: GET_SIZE,
+  payload
+});
+
 export const setSizes = (payload) => ({
   type: SET_SIZES,
+  payload
+});
+
+export const setSize = (payload) => ({
+  type: SET_SIZE,
+  payload
+});
+
+export const addSize = (payload) => ({
+  type: ADD_SIZE,
+  payload
+});
+
+export const addSizeToState = (payload) => ({
+  type: ADD_SIZE_TO_STATE,
+  payload
+});
+
+export const removeSizeFromState = (payload) => ({
+  type: REMOVE_SIZE_FROM_STATE,
+  payload
+});
+
+export const deleteSize = (payload) => ({
+  type: DELETE_SIZE,
+  payload
+});
+
+export const showSizeDialogWindow = (payload) => ({
+  type: SHOW_SIZE_DIALOG_WINDOW,
   payload
 });
 

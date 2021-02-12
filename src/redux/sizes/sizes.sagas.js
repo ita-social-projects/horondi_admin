@@ -2,14 +2,9 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 
 import { getAllSizes } from './sizes.operations';
 
-import {
-  setSizes,
-  getSizes,
-  setSizesLoading,
-  setSizesError
-} from './sizes.actions';
+import { setSizes, setSizesLoading, setSizesError } from './sizes.actions';
 
-import { GET_SIZES, GET_SIZE, ADD_SIZE, DELETE_SIZE } from './sizes.types';
+import { GET_SIZES } from './sizes.types';
 
 export function* handleSizesLoad() {
   try {
