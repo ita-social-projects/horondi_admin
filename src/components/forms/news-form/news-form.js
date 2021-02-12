@@ -22,6 +22,7 @@ import { config } from '../../../configs';
 import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import Editor from '../../editor/editor';
+import LanguagePanel from '../language-panel';
 
 const {
   MAIN_PHOTO,
@@ -35,7 +36,7 @@ const {
   TEXT_MIN_LENGTH_MESSAGE
 } = config.newsErrorMessages;
 const { IMG_URL } = config;
-const { authorsName, title, text } = config.labels.news;
+const { authorName, title, text } = config.labels.news;
 
 const NewsForm = ({ id, newsArticle, editMode }) => {
   const styles = useStyles();
@@ -76,8 +77,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const selectFormSchema = () => {
     const formObj = preferredLanguages.reduce((reducer, lang) => {
-      reducer[`${lang}AuthorName`] = Yup.string()
-        .min(6, NAME_MIN_LENGTH_MESSAGE)
+      reducer[`${lang}Authorname`] = Yup.string()
+        .min(2, NAME_MIN_LENGTH_MESSAGE)
         .required(NAME_MIN_LENGTH_MESSAGE);
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
@@ -106,12 +107,12 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     initialValues: {
       authorPhoto: newsArticle.author.image || '',
       newsImage: newsArticle.image || '',
-      uaAuthorName: newsArticle.author.name[0].value || '',
-      enAuthorName: newsArticle.author.name[1].value || '',
+      uaAuthorname: newsArticle.author.name[0].value || '',
+      enAuthorname: newsArticle.author.name[1].value || '',
       uaTitle: newsArticle.title[0].value || '',
       enTitle: newsArticle.title[1].value || '',
       uaText: newsArticle.text[0].value || '',
-      enText: newsArticle.text[0].value || ''
+      enText: newsArticle.text[1].value || ''
     },
     onSubmit: () => {
       const newArticle = createArticle(values);
@@ -158,6 +159,20 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     dispatch(push(config.routes.pathToNews));
   };
 
+  const inputs = [
+    { label: authorName, name: 'authorName' },
+    { label: title, name: 'title' },
+    { label: text, name: 'text' }
+  ];
+
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -198,7 +213,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
           </div>
         </Box>
 
-        {preferredLanguages.length > 0 && (
+        {/* {preferredLanguages.length > 0 && (
           <AppBar position='static'>
             <Tabs
               className={styles.tabs}
@@ -209,68 +224,74 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
               {languageTabs}
             </Tabs>
           </AppBar>
-        )}
+        )} */}
 
         {preferredLanguages.length > 0
           ? preferredLanguages.map((lang, index) => (
-            <TabPanel key={index} value={tabsValue} index={index}>
-              <Paper className={styles.newsItemUpdate}>
-                <TextField
-                  data-cy={`${lang}AuthorName`}
-                  id={`${lang}AuthorName`}
-                  className={styles.textField}
-                  variant='outlined'
-                  label={authorsName}
-                  multiline
-                  value={values[`${lang}AuthorName`]}
-                  onChange={handleChange}
-                  error={
-                    touched[`${lang}AuthorName`] &&
-                      errors[`${lang}AuthorName`]
-                  }
-                />
-
-                {touched[`${lang}AuthorName`] &&
-                    errors[`${lang}AuthorName`] && (
-                  <div className={styles.inputError}>
-                    {errors[`${lang}AuthorName`]}
-                  </div>
-                )}
-
-                <TextField
-                  data-cy={`${lang}Title`}
-                  id={`${lang}Title`}
-                  className={styles.textField}
-                  variant='outlined'
-                  label={title}
-                  multiline
-                  value={values[`${lang}Title`]}
-                  onChange={handleChange}
-                  error={touched[`${lang}Title`] && errors[`${lang}Title`]}
-                />
-                {touched[`${lang}Title`] && errors[`${lang}Title`] && (
-                  <div className={styles.inputError}>
-                    {errors[`${lang}Title`]}
-                  </div>
-                )}
-                <Editor
-                  value={values[`${lang}Text`]}
-                  placeholder={text}
-                  id={`${lang}Text`}
-                  onEditorChange={(value) =>
-                    setFieldValue(`${lang}Text`, value)
-                  }
-                  multiline
-                />
-                {touched[`${lang}Text`] && errors[`${lang}Text`] && (
-                  <div className={styles.inputError}>
-                    {errors[`${lang}Text`]}
-                  </div>
-                )}
-              </Paper>
-            </TabPanel>
+            <LanguagePanel
+              lang={lang}
+              inputOptions={inputOptions}
+              key={lang}
+            />
           ))
-          : null}
+          : //   <TabPanel key={index} value={tabsValue} index={index}>
+            //     <Paper className={styles.newsItemUpdate}>
+            //       <TextField
+            //         data-cy={`${lang}AuthorName`}
+            //         id={`${lang}AuthorName`}
+            //         className={styles.textField}
+            //         variant='outlined'
+            //         label={authorsName}
+            //         multiline
+            //         value={values[`${lang}AuthorName`]}
+            //         onChange={handleChange}
+            //         error={
+            //           touched[`${lang}AuthorName`] &&
+            //           errors[`${lang}AuthorName`]
+            //         }
+            //       />
+
+            //       {touched[`${lang}AuthorName`] &&
+            //         errors[`${lang}AuthorName`] && (
+            //           <div className={styles.inputError}>
+            //             {errors[`${lang}AuthorName`]}
+            //           </div>
+            //         )}
+
+            //       <TextField
+            //         data-cy={`${lang}Title`}
+            //         id={`${lang}Title`}
+            //         className={styles.textField}
+            //         variant='outlined'
+            //         label={title}
+            //         multiline
+            //         value={values[`${lang}Title`]}
+            //         onChange={handleChange}
+            //         error={touched[`${lang}Title`] && errors[`${lang}Title`]}
+            //       />
+            //       {touched[`${lang}Title`] && errors[`${lang}Title`] && (
+            //         <div className={styles.inputError}>
+            //           {errors[`${lang}Title`]}
+            //         </div>
+            //       )}
+            //       <Editor
+            //         value={values[`${lang}Text`]}
+            //         placeholder={text}
+            //         id={`${lang}Text`}
+            //         onEditorChange={(value) =>
+            //           setFieldValue(`${lang}Text`, value)
+            //         }
+            //         multiline
+            //       />
+            //       {touched[`${lang}Text`] && errors[`${lang}Text`] && (
+            //         <div className={styles.inputError}>
+            //           {errors[`${lang}Text`]}
+            //         </div>
+            //       )}
+            //     </Paper>
+            //   </TabPanel>
+            // ))
+          null}
       </form>
 
       <div className={styles.controlsBlock}>

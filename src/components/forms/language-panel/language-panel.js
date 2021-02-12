@@ -21,7 +21,6 @@ const LanguagePanel = ({ lang, inputOptions }) => {
         <Paper className={styles.inputPanel}>
           {map(inputsTextfields, (input) => {
             const inputName = lang + capitalize(input.name);
-
             return (
               <React.Fragment key={input.name}>
                 <TextField

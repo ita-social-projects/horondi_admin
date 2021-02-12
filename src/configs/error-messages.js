@@ -50,7 +50,7 @@ export const headerErrorMessages = {
   HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
 export const newsErrorMessages = {
-  NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,
+  NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 2 символів`,
   TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів',
   TEXT_MIN_LENGTH_MESSAGE: 'Текстове поле повино містити не менше 10 символів'
 };
