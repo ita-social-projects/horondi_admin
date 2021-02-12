@@ -33,7 +33,6 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 import { productsTranslations } from '../../../translations/product.translations';
 import ProductCarousel from './product-carousel';
 import DeleteButton from '../../buttons/delete-button';
-import CommentsPage from '../../../pages/comments';
 import { config } from '../../../configs';
 import { BackButton } from '../../buttons';
 import ProductMaterialsContainer from '../../../containers/product-materials-container';
@@ -366,7 +365,6 @@ const ProductForm = ({ isEdit }) => {
             </Box>
           </Paper>
         </Grid>
-        {isEdit ? <CommentsPage productId={product._id} /> : null}
       </Grid>
       <div className={styles.controlsBlock}>
         <BackButton />
