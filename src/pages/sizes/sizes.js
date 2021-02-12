@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 
+import { Link } from 'react-router-dom';
 import { useCommonStyles } from '../common.styles';
 import { getSizes } from '../../redux/sizes/sizes.actions';
 
@@ -12,7 +13,7 @@ import { config } from '../../configs';
 import { sizesSelectorWithPagination } from '../../redux/selectors/sizes.selector';
 
 const tableTitles = config.tableHeadRowTitles.sizes.sizesPageTitles;
-
+const { CREATE_SIZE_TITLE } = config.buttonTitles;
 const { DELETE_SIZE_MESSAGE } = config.messages;
 const { AVALIABLE_TEXT, UNAVALIABLE_TEXT } = config.sizesAvailableVariants;
 const map = require('lodash/map');
@@ -35,8 +36,8 @@ const Sizes = () => {
   const sizeItems = map(sizesList, (size) => (
     <TableContainerRow
       showAvatar={false}
-      showEdit={false}
-      showDelete={false}
+      showEdit
+      showDelete
       name='Розмір для сумки'
       size={size.name}
       available={size.available ? AVALIABLE_TEXT : UNAVALIABLE_TEXT}
@@ -55,6 +56,14 @@ const Sizes = () => {
         >
           {config.titles.sizesTitles.mainPageTitle}
         </Typography>
+        <Button
+          id='add-sizes'
+          component={Link}
+          variant='contained'
+          color='primary'
+        >
+          {CREATE_SIZE_TITLE}
+        </Button>
       </div>
       {!loading ? (
         <TableContainerGenerator
