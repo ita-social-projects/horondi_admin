@@ -76,14 +76,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const formSchema = selectFormSchema();
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    setFieldValue,
-    touched,
-    errors
-  } = useFormik({
+  const { values, handleSubmit, handleChange, touched, errors } = useFormik({
     validationSchema: formSchema,
     initialValues: {
       authorPhoto: newsArticle.author.image || '',
