@@ -1,3 +1,3 @@
-import Navbar from './navbar';
+import FilterNavbar from './filter-navbar';
 
-export default Navbar;
+export default FilterNavbar;
