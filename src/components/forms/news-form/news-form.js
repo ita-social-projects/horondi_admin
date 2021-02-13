@@ -2,26 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Paper,
-  Tab,
-  Tabs,
-  TextField
-} from '@material-ui/core';
+import { Avatar, Box } from '@material-ui/core';
 import { Image } from '@material-ui/icons';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useStyles } from './news-form.styles';
 import { SaveButton, StandardButton } from '../../buttons';
 import useNewsHandlers from '../../../utils/use-news-handlers';
-import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
 import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import Editor from '../../editor/editor';
 import LanguagePanel from '../language-panel';
 
 const {
@@ -42,10 +32,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
-    tabsValue,
     checkboxes,
     preferredLanguages,
-    handleTabsChange,
     setPreferredLanguages,
     languageCheckboxes,
     createArticle,
@@ -57,13 +45,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const [authorAvatar, setAuthorAvatar] = useState('');
   const [newsAvatar, setNewsAvatar] = useState('');
-
-  const languageTabs =
-    preferredLanguages.length > 0
-      ? preferredLanguages.map((lang, index) => (
-        <Tab label={lang} key={index} />
-      ))
-      : null;
 
   useEffect(() => {
     const prefLanguages = [];
@@ -160,7 +141,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   };
 
   const inputs = [
-    { label: authorName, name: 'authorName' },
+    { label: authorName, name: 'authorname' },
     { label: title, name: 'title' },
     { label: text, name: 'text' }
   ];
@@ -212,20 +193,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
             )}
           </div>
         </Box>
-
-        {/* {preferredLanguages.length > 0 && (
-          <AppBar position='static'>
-            <Tabs
-              className={styles.tabs}
-              value={tabsValue}
-              onChange={handleTabsChange}
-              aria-label='simple tabs example'
-            >
-              {languageTabs}
-            </Tabs>
-          </AppBar>
-        )} */}
-
         {preferredLanguages.length > 0
           ? preferredLanguages.map((lang, index) => (
             <LanguagePanel
@@ -234,64 +201,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
               key={lang}
             />
           ))
-          : //   <TabPanel key={index} value={tabsValue} index={index}>
-            //     <Paper className={styles.newsItemUpdate}>
-            //       <TextField
-            //         data-cy={`${lang}AuthorName`}
-            //         id={`${lang}AuthorName`}
-            //         className={styles.textField}
-            //         variant='outlined'
-            //         label={authorsName}
-            //         multiline
-            //         value={values[`${lang}AuthorName`]}
-            //         onChange={handleChange}
-            //         error={
-            //           touched[`${lang}AuthorName`] &&
-            //           errors[`${lang}AuthorName`]
-            //         }
-            //       />
-
-            //       {touched[`${lang}AuthorName`] &&
-            //         errors[`${lang}AuthorName`] && (
-            //           <div className={styles.inputError}>
-            //             {errors[`${lang}AuthorName`]}
-            //           </div>
-            //         )}
-
-            //       <TextField
-            //         data-cy={`${lang}Title`}
-            //         id={`${lang}Title`}
-            //         className={styles.textField}
-            //         variant='outlined'
-            //         label={title}
-            //         multiline
-            //         value={values[`${lang}Title`]}
-            //         onChange={handleChange}
-            //         error={touched[`${lang}Title`] && errors[`${lang}Title`]}
-            //       />
-            //       {touched[`${lang}Title`] && errors[`${lang}Title`] && (
-            //         <div className={styles.inputError}>
-            //           {errors[`${lang}Title`]}
-            //         </div>
-            //       )}
-            //       <Editor
-            //         value={values[`${lang}Text`]}
-            //         placeholder={text}
-            //         id={`${lang}Text`}
-            //         onEditorChange={(value) =>
-            //           setFieldValue(`${lang}Text`, value)
-            //         }
-            //         multiline
-            //       />
-            //       {touched[`${lang}Text`] && errors[`${lang}Text`] && (
-            //         <div className={styles.inputError}>
-            //           {errors[`${lang}Text`]}
-            //         </div>
-            //       )}
-            //     </Paper>
-            //   </TabPanel>
-            // ))
-          null}
+          : null}
       </form>
 
       <div className={styles.controlsBlock}>

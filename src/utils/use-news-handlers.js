@@ -57,11 +57,11 @@ const useNewsHandlers = () => {
         name: [
           {
             lang: languages[0],
-            value: values.uaAuthorName || null
+            value: values.uaAuthorname || null
           },
           {
             lang: languages[1],
-            value: values.enAuthorName || null
+            value: values.enAuthorname || null
           }
         ],
         image: values.authorPhoto
