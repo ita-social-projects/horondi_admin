@@ -26,6 +26,8 @@ const routes = {
   pathToOrders: '/orders',
   pathToComments: '/comments',
   pathToSizes: '/sizes',
+  pathToAddSize: '/sizes/add',
+  pathToEditSize: '/sizes/:id',
   pathToOrderItem: '/orders/:id',
   pathToHomePageEdit: '/home-page-edit',
   pathToEmailQuestions: '/email-questions',
