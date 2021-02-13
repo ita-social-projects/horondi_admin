@@ -56,7 +56,9 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     patternImage,
     setPatternImage,
     constructorImg,
-    setConstructorImg
+    setConstructorImg,
+    uploadConstructorImg,
+    setUploadConstructorImg
   } = usePatternHandlers();
 
   useEffect(() => {
@@ -68,7 +70,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       setPatternImage(`${imagePrefix}${pattern.images.thumbnail}`);
     }
     if (pattern.constructorImg) {
-      setConstructorImg(pattern.constructorImg);
+      setConstructorImg(`${imagePrefix}${pattern.constructorImg}`);
     }
   }, [dispatch, pattern]);
 
@@ -122,15 +124,30 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     onSubmit: () => {
       const newPattern = createPattern(values);
 
-      if (isEdit && upload instanceof File) {
-        dispatch(updatePattern({ id, pattern: newPattern, image: upload }));
+      if (
+        isEdit &&
+        upload instanceof File &&
+        uploadConstructorImg instanceof File
+      ) {
+        dispatch(
+          updatePattern({
+            id,
+            pattern: newPattern,
+            image: [upload, uploadConstructorImg]
+          })
+        );
         return;
       }
       if (isEdit) {
         dispatch(updatePattern({ id, pattern: newPattern }));
         return;
       }
-      dispatch(addPattern({ pattern: newPattern, image: upload }));
+      dispatch(
+        addPattern({
+          pattern: newPattern,
+          image: [upload, uploadConstructorImg]
+        })
+      );
     }
   });
 
@@ -142,7 +159,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       checked: values.handmade,
       color: 'primary',
       label: config.labels.pattern.handmade,
-      handler: (e) => setFieldValue('handmade', !values.handmade)
+      handler: () => setFieldValue('handmade', !values.handmade)
     },
     {
       id: 'available',
@@ -151,7 +168,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       checked: values.available,
       color: 'primary',
       label: config.labels.pattern.available,
-      handler: (e) => setFieldValue('available', !values.available)
+      handler: () => setFieldValue('available', !values.available)
     }
   ];
 
@@ -178,11 +195,14 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       setFieldValue('patternConstructorImage', event.target.result);
       setConstructorImg(event.target.result);
     });
+    setUploadConstructorImg(e.target.files[0]);
   };
+
   const inputs = [
     { label: patternName, name: 'name' },
     { label: patternDescription, name: 'description' }
   ];
+
   const inputOptions = {
     errors,
     touched,

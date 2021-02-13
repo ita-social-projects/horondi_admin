@@ -273,7 +273,7 @@ const ConstructorPage = ({ match }) => {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText primary={pattern.name[0].value} />
-              <Avatar src={pattern.constructorImg} variant='rounded' className={styles.avatar}>
+              <Avatar src={IMG_URL + pattern.constructorImg} variant='rounded' className={styles.avatar}>
                 <Image />
               </Avatar>
             </ListItem>
