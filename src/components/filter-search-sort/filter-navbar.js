@@ -1,24 +1,17 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { useStyles } from './navbar.styles';
+import { useStyles } from './filter-navbar.styles';
 import NavFilters from './nav-filters';
 import NavSort from './nav-sort';
 import NavSearch from './nav-search';
 import NavClearFilters from './nav-clear-filters';
 
-const Navbar = ({ options }) => {
+const FilterNavbar = ({ options }) => {
   const styles = useStyles();
   const { sortOptions, filterOptions, searchOptions, clearOptions } = options;
   return (
-    <Grid
-      className={styles.container}
-      container
-      direction='row'
-      justify='flex-start'
-      alignItems='center'
-      spacing={2}
-    >
+    <Grid className={styles.container}>
       {sortOptions ? (
         <Grid item>
           <NavSort sortOptions={sortOptions} />
@@ -43,7 +36,7 @@ const Navbar = ({ options }) => {
   );
 };
 
-Navbar.propTypes = {
+FilterNavbar.propTypes = {
   options: PropTypes.objectOf(PropTypes.object),
   sortOptions: PropTypes.objectOf(PropTypes.object),
   filterOptions: PropTypes.objectOf(PropTypes.object),
@@ -51,11 +44,11 @@ Navbar.propTypes = {
   clearOptions: PropTypes.objectOf(PropTypes.object)
 };
 
-Navbar.defaultProps = {
+FilterNavbar.defaultProps = {
   options: {},
   sortOptions: {},
   filterOptions: {},
   searchOptions: {},
   clearOptions: {}
 };
-export default Navbar;
+export default FilterNavbar;

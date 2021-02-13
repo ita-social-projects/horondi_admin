@@ -15,7 +15,7 @@ import { useCommonStyles } from '../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
 import { selectCategoriesLoadingDialogOpen } from '../../redux/selectors/category.selectors';
 import StandardButton from '../../components/buttons/standard-button';
-import NavBar from '../../components/filter-search-sort/navbar';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useCategoryFilters from '../../hooks/filters/use-category-filters';
 
 const Categories = () => {
@@ -92,7 +92,7 @@ const Categories = () => {
         />
       </div>
       <div>
-        <NavBar options={categoryOptions || {}} />
+        <FilterNavbar options={categoryOptions || {}} />
       </div>
       <TableContainerGenerator
         tableTitles={config.tableHeadRowTitles.categories}

@@ -7,7 +7,7 @@ import {
   Input,
   Badge
 } from '@material-ui/core';
-import { useStyles } from './nav-filter-component.styles';
+import { useStyles } from '../nav-filter-item/nav-filter-item.styles';
 
 const NavFilterComponent = ({
   buttonName,
