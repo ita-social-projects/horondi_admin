@@ -1,14 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  AppBar,
-  Grid,
-  Paper,
-  Tab,
-  Tabs,
-  TextField,
-  Typography
-} from '@material-ui/core';
+import { AppBar, Grid, Paper, TextField, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
@@ -20,12 +12,12 @@ import { config } from '../../../configs';
 import useHomePageSlideHandlers from '../../../utils/use-home-page-slide-handlers';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import TabPanel from '../../tab-panel';
 import { BackButton, SaveButton } from '../../buttons';
 import {
   addSlide,
   updateSlide
 } from '../../../redux/home-page-slides/home-page-slides.actions';
+import LanguagePanel from '../language-panel';
 
 const { languages } = config;
 
@@ -47,11 +39,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     upload,
     setUpload
   } = useHomePageSlideHandlers();
-
-  const languageTabs =
-    languages.length > 0
-      ? languages.map((lang) => <Tab label={lang} data-cy={lang} key={lang} />)
-      : null;
 
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
@@ -149,6 +136,18 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     }
   };
 
+  const inputs = [
+    { label: config.labels.homePageSlide.title, name: 'title' },
+    { label: config.labels.homePageSlide.description, name: 'description' }
+  ];
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
+
   return (
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit}>
@@ -184,39 +183,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             )}
           </Paper>
         </Grid>
-        <AppBar position='static'>
-          <Tabs
-            className={styles.tabs}
-            value={tabsValue}
-            onChange={handleTabsChange}
-            aria-label='simple tabs example'
-          >
-            {languageTabs}
-          </Tabs>
-        </AppBar>
         {languages.map((lang, index) => (
-          <TabPanel key={`${lang}${index}`} value={tabsValue} index={index}>
-            <Paper className={styles.slideItemUpdate}>
-              {tabPanelField(lang, 'Title')}
-              {touched[`${lang}Title`] && errors[`${lang}Title`] && (
-                <div
-                  data-cy={`${lang}Title-error`}
-                  className={styles.inputError}
-                >
-                  {errors[`${lang}Name`]}
-                </div>
-              )}
-              {tabPanelField(lang, 'Description')}
-              {touched[`${lang}Description`] && errors[`${lang}Description`] && (
-                <div
-                  data-cy={`${lang}Description-error`}
-                  className={styles.inputError}
-                >
-                  {errors[`${lang}Description`]}
-                </div>
-              )}
-            </Paper>
-          </TabPanel>
+          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
         <BackButton />
         <SaveButton
