@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ListItemText, MenuItem, Checkbox } from '@material-ui/core';
-import _ from 'lodash';
+import { map, findIndex } from 'lodash';
 import NavFilterComponent from '../nav-filter-component/nav-filter-component';
 
 const badgePosition = {
@@ -18,15 +18,15 @@ const NavFilterItem = ({
 }) => {
   const formGroupOptions = useMemo(
     () =>
-      _.map(filterList, (item, idx) => (
+      map(filterList, (item, idx) => (
         <MenuItem
-          data-cy={`user-filters-list-${item}`}
+          data-cy={`filters-list-${item}`}
           key={item._id}
           value={item._id}
         >
           <Checkbox
             checked={
-              _.findIndex(filterValues, (filter) => filter === item._id) !== -1
+              findIndex(filterValues, (filter) => filter === item._id) !== -1
             }
           />
           <ListItemText

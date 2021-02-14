@@ -58,7 +58,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const selectFormSchema = () => {
     const formObj = preferredLanguages.reduce((reducer, lang) => {
-      reducer[`${lang}Authorname`] = Yup.string()
+      reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
         .required(NAME_MIN_LENGTH_MESSAGE);
       reducer[`${lang}Title`] = Yup.string()
@@ -81,8 +81,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     initialValues: {
       authorPhoto: newsArticle.author.image || '',
       newsImage: newsArticle.image || '',
-      uaAuthorname: newsArticle.author.name[0].value || '',
-      enAuthorname: newsArticle.author.name[1].value || '',
+      uaAuthorName: newsArticle.author.name[0].value || '',
+      enAuthorName: newsArticle.author.name[1].value || '',
       uaTitle: newsArticle.title[0].value || '',
       enTitle: newsArticle.title[1].value || '',
       uaText: newsArticle.text[0].value || '',
@@ -134,9 +134,9 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   };
 
   const inputs = [
-    { label: authorName, name: 'authorname' },
+    { label: authorName, name: 'authorName' },
     { label: title, name: 'title' },
-    { label: text, name: 'text' }
+    { label: text, name: 'text', isEditor: true }
   ];
 
   const inputOptions = {

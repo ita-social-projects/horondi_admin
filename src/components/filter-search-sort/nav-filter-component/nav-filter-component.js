@@ -26,10 +26,12 @@ const NavFilterComponent = ({
         anchorOrigin={badgePosition}
       >
         <FormControl className={styles.formControl}>
-          <InputLabel id='multiple-checkbox-label'>{buttonName}</InputLabel>
+          <InputLabel className='multiple-checkbox-label'>
+            {buttonName}
+          </InputLabel>
           <Select
             labelId='multiple-checkbox-label'
-            data-cy={`user-filters-${buttonName}`}
+            data-cy={`filters-${buttonName}`}
             id='multiple-checkbox'
             multiple
             value={filterValues}

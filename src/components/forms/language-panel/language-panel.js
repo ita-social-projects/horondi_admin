@@ -1,8 +1,8 @@
 import React from 'react';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import capitalize from 'lodash/capitalize';
 import map from 'lodash/map';
+import { upperFirst } from 'lodash';
 import { useStyles } from './language-panel.styles';
 import Editor from '../../editor';
 
@@ -20,7 +20,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
         </Typography>
         <Paper className={styles.inputPanel}>
           {map(inputsTextfields, (input) => {
-            const inputName = lang + capitalize(input.name);
+            const inputName = lang + upperFirst(input.name);
             return (
               <React.Fragment key={input.name}>
                 <TextField
@@ -47,7 +47,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
             );
           })}
           {map(inputsEditor, (input) => {
-            const inputName = lang + capitalize(input.name);
+            const inputName = lang + upperFirst(input.name);
             const setEditorValue = (value) => {
               values[inputName] = value;
             };
