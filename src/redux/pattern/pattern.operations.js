@@ -36,7 +36,7 @@ export const getAllPatterns = async (skip, limit) => {
       }
     `
   });
-  client.resetStore();
+  await client.resetStore();
 
   return result.data.getAllPatterns;
 };
@@ -92,7 +92,6 @@ export const getPatternById = async (id) => {
 
 export const deletePattern = async (id) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
   const result = await client.mutate({
     variables: { id },
     context: { headers: { token } },
@@ -123,7 +122,7 @@ export const deletePattern = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   if (result.data.deletePattern.message) {
     throw new Error(
@@ -138,11 +137,9 @@ export const deletePattern = async (id) => {
 
 export const createPattern = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
   const result = await client.mutate({
     context: { headers: { token } },
     variables: payload,
-
     mutation: gql`
       mutation($pattern: PatternInput!, $image: Upload!) {
         addPattern(pattern: $pattern, image: $image) {
@@ -171,7 +168,7 @@ export const createPattern = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   if (result.data.addPattern.message) {
     throw new Error(
@@ -186,7 +183,6 @@ export const createPattern = async (payload) => {
 
 export const updatePattern = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
   const result = await client.mutate({
     context: { headers: { token } },
     variables: payload,
@@ -218,7 +214,7 @@ export const updatePattern = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   if (result.data.updatePattern.message) {
     throw new Error(
