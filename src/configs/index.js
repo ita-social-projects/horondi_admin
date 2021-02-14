@@ -86,6 +86,11 @@ export const config = {
     limit: 5,
     countPerPage: 6
   },
+  sizesAvailableVariants: {
+    AVALIABLE_TEXT: 'Доступний',
+    UNAVALIABLE_TEXT: 'Відсутній'
+  },
+
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
   product: {
