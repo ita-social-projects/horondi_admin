@@ -4,9 +4,11 @@ import { Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import { useCommonStyles } from '../common.styles';
-import { getSizes } from '../../redux/sizes/sizes.actions';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import { getSizes, deleteSize } from '../../redux/sizes/sizes.actions';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { sizesSelectorWithPagination } from '../../redux/selectors/sizes.selector';
@@ -14,6 +16,7 @@ import { sizesSelectorWithPagination } from '../../redux/selectors/sizes.selecto
 const map = require('lodash/map');
 
 const tableTitles = config.tableHeadRowTitles.sizes.sizesPageTitles;
+const pathToAddSizePage = config.routes.pathToAddSize;
 const { CREATE_SIZE_TITLE } = config.buttonTitles;
 const { DELETE_SIZE_MESSAGE } = config.messages;
 const { AVALIABLE_TEXT, UNAVALIABLE_TEXT } = config.sizesAvailableVariants;
@@ -21,6 +24,7 @@ const { AVALIABLE_TEXT, UNAVALIABLE_TEXT } = config.sizesAvailableVariants;
 const Sizes = () => {
   const dispatch = useDispatch();
   const commonStyles = useCommonStyles();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const { sizesList, loading, itemsCount } = useSelector(
     sizesSelectorWithPagination
@@ -29,6 +33,17 @@ const Sizes = () => {
   useEffect(() => {
     dispatch(getSizes());
   }, [sizesList]);
+
+  const SizeDeleteHandler = (id) => {
+    const removeComment = () => {
+      dispatch(closeDialog());
+      dispatch(deleteSize(id));
+    };
+    openSuccessSnackbar(
+      removeComment,
+      'are you sure you want to delete this size?'
+    );
+  };
 
   if (loading) {
     return <LoadingBar />;
@@ -43,6 +58,9 @@ const Sizes = () => {
       available={size.available ? AVALIABLE_TEXT : UNAVALIABLE_TEXT}
       id={size._id}
       key={size._id}
+      deleteHandler={() => {
+        SizeDeleteHandler(size._id);
+      }}
     />
   ));
 
@@ -61,6 +79,7 @@ const Sizes = () => {
           component={Link}
           variant='contained'
           color='primary'
+          to={pathToAddSizePage}
         >
           {CREATE_SIZE_TITLE}
         </Button>
