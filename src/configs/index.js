@@ -5,6 +5,7 @@ import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
 import statuses from './statuses';
+import filterLabels from './filter-labels';
 import {
   loginErrorMessages,
   colorErrorMessages,
@@ -87,6 +88,11 @@ export const config = {
     limit: 5,
     countPerPage: 6
   },
+  sizesAvailableVariants: {
+    AVALIABLE_TEXT: 'Доступний',
+    UNAVALIABLE_TEXT: 'Відсутній'
+  },
+
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
   product: {
@@ -193,7 +199,8 @@ export const config = {
   constructorErrorMessages,
   sort,
   paginationInputErrorMessages,
-  commentErrorMessages
+  commentErrorMessages,
+  filterLabels
 };
 export const inputTypes = {
   button: 'button',

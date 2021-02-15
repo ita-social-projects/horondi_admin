@@ -33,6 +33,7 @@ const buttonTitles = {
   ANSWER: 'Відповісти',
   TO_SPAM: 'У СПАМ',
   MOVE_ALL_TO_SPAM: 'Перемістити у СПАМ',
+  CREATE_SIZE_TITLE: 'Створити розмір',
   CREATE_MATERIAL_TITLE: 'Створити матеріал',
   CREATE_COLOR_TITLE: 'Створити колір',
   UPDATE_COLOR_TITLE: 'Зберегти зміни',
@@ -53,6 +54,7 @@ const buttonTitles = {
   CREATE_CONSTRUCTOR_BASIC_TITLE: 'Додати основу',
   CREATE_CONSTRUCTOR_FRONT_POCKET_TITLE: 'Додати передню кишеню',
   CREATE_CONSTRUCTOR_BOTTOM_TITLE: 'Додати низ',
-  GO: 'Перейти'
+  GO: 'Перейти',
+  CATEGORY_TITLE: 'Категорія'
 };
 export default buttonTitles;

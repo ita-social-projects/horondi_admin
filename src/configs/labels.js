@@ -9,9 +9,18 @@ const labels = {
     guestUser: 'Гість'
   },
   news: {
-    authorsName: "Ім'я автора",
-    title: 'Заголовок',
-    text: 'Текст'
+    authorName: {
+      ua: "Ім'я автора",
+      en: 'Author name'
+    },
+    title: {
+      ua: 'Заголовок',
+      en: 'Title'
+    },
+    text: {
+      ua: 'Текст',
+      en: 'Text'
+    }
   },
   model: {
     name: {

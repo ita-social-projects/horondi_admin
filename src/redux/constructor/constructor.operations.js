@@ -35,7 +35,7 @@ const constructorElementRequest = `
 export const deleteConstructorBasic = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
-    variables: {id:payload.constructorElementID},
+    variables: { id: payload.constructorElementID },
     context: { headers: { token } },
     mutation: gql`
         mutation($id: ID!) {
@@ -69,10 +69,10 @@ export const createConstructorBasic = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: {constructorElement:payload.constructorElement},
+    variables: { constructorElement: payload.constructorElement, upload: payload.upload },
     mutation: gql`
-        mutation($constructorElement: ConstructorBasicInput!) {
-            addConstructorBasic(constructorElement: $constructorElement) {
+        mutation($constructorElement: ConstructorBasicInput!, $upload: Upload) {
+            addConstructorBasic(constructorElement: $constructorElement, upload: $upload) {
                 ... on ConstructorBasic {
                   ${constructorElementRequest}
                 }
@@ -102,13 +102,15 @@ export const updateConstructorBasic = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     variables: {
-      constructorElement:payload.constructorElement,
-      id:payload.id
+      constructorElement: payload.constructorElement,
+      id: payload.id,
+      upload: payload.upload
+
     },
     context: { headers: { token } },
     mutation: gql`
-        mutation($id: ID!, $constructorElement: ConstructorBasicInput!) {
-            updateConstructorBasic(id: $id, constructorElement: $constructorElement) {
+        mutation($id: ID!, $constructorElement: ConstructorBasicInput!, $upload: Upload) {
+            updateConstructorBasic(id: $id, constructorElement: $constructorElement, upload: $upload) {
                 ... on ConstructorBasic {
                     ${constructorElementRequest}
                 }
@@ -138,10 +140,10 @@ export const createConstructorBottom = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: {constructorElement:payload.constructorElement},
+    variables: { constructorElement: payload.constructorElement, upload: payload.upload },
     mutation: gql`
-        mutation($constructorElement: ConstructorBottomInput!) {
-            addConstructorBottom(constructorElement: $constructorElement) {
+        mutation($constructorElement: ConstructorBottomInput!, $upload: Upload) {
+            addConstructorBottom(constructorElement: $constructorElement, upload: $upload) {
                 ... on ConstructorBottom {
                     ${constructorElementRequest}
                 }
@@ -170,7 +172,7 @@ export const createConstructorBottom = async (payload) => {
 export const deleteConstructorBottom = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
-    variables: {id:payload.constructorElementID},
+    variables: { id: payload.constructorElementID },
     context: { headers: { token } },
     mutation: gql`
         mutation($id: ID!) {
@@ -204,13 +206,14 @@ export const updateConstructorBottom = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     variables: {
-      constructorElement:payload.constructorElement,
-      id:payload.id
+      constructorElement: payload.constructorElement,
+      id: payload.id,
+      upload: payload.upload
     },
     context: { headers: { token } },
     mutation: gql`
-        mutation($id: ID!, $constructorElement: ConstructorBottomInput!) {
-            updateConstructorBottom(id: $id, constructorElement: $constructorElement) {
+        mutation($id: ID!, $constructorElement: ConstructorBottomInput!, $upload: Upload) {
+            updateConstructorBottom(id: $id, constructorElement: $constructorElement, upload: $upload) {
                 ... on ConstructorBottom {
                     ${constructorElementRequest}
                 }
@@ -240,10 +243,10 @@ export const createConstructorFrontPocket = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: {constructorElement:payload.constructorElement},
+    variables: { constructorElement: payload.constructorElement, upload: payload.upload },
     mutation: gql`
-        mutation($constructorElement: ConstructorFrontPocketInput!) {
-            addConstructorFrontPocket(constructorElement: $constructorElement) {
+        mutation($constructorElement: ConstructorFrontPocketInput!, $upload: Upload) {
+            addConstructorFrontPocket(constructorElement: $constructorElement, upload: $upload) {
                 ... on ConstructorFrontPocket {
                     ${constructorElementRequest}
                 }
@@ -272,7 +275,7 @@ export const createConstructorFrontPocket = async (payload) => {
 export const deleteConstructorFrontPocket = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
-    variables: {id:payload.constructorElementID},
+    variables: { id: payload.constructorElementID },
     context: { headers: { token } },
     mutation: gql`
         mutation($id: ID!) {
@@ -306,13 +309,14 @@ export const updateConstructorFrontPocket = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     variables: {
-      constructorElement:payload.constructorElement,
-      id:payload.id
+      constructorElement: payload.constructorElement,
+      id: payload.id,
+      upload: payload.upload
     },
     context: { headers: { token } },
     mutation: gql`
-        mutation($id: ID!, $constructorElement: ConstructorFrontPocketInput!) {
-            updateConstructorFrontPocket(id: $id, constructorElement: $constructorElement) {
+        mutation($id: ID!, $constructorElement: ConstructorFrontPocketInput!, $upload: Upload) {
+            updateConstructorFrontPocket(id: $id, constructorElement: $constructorElement, upload: $upload) {
                 ... on ConstructorFrontPocket {
                     ${constructorElementRequest}
                 }
