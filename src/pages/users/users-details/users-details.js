@@ -49,7 +49,6 @@ const UsersDetails = (props) => {
     city,
     adress,
     postCode,
-    email,
     isBanned
   } = useUsersHandler(id);
 
@@ -105,7 +104,7 @@ const UsersDetails = (props) => {
           {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
         </Button>
         {showComments ? (
-          <CommentsSection value={email} commentsType={GET_USER_COMMENTS} />
+          <CommentsSection value={id} commentsType={GET_USER_COMMENTS} />
         ) : null}
       </Grid>
     </Grid>

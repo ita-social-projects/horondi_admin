@@ -20,7 +20,8 @@ import {
   homePageSlideErrorMessages,
   constructorErrorMessages,
   statsErrorMessages,
-  paginationInputErrorMessages
+  paginationInputErrorMessages,
+  commentErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -198,6 +199,7 @@ export const config = {
   constructorErrorMessages,
   sort,
   paginationInputErrorMessages,
+  commentErrorMessages,
   filterLabels
 };
 export const inputTypes = {

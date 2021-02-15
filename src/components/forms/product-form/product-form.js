@@ -38,6 +38,8 @@ import { BackButton } from '../../buttons';
 import ProductMaterialsContainer from '../../../containers/product-materials-container';
 import ProductAddImages from '../../../pages/products/product-add/product-add-images';
 import { selectSelectedProductAndDetails } from '../../../redux/selectors/products.selectors';
+import CommentsSection from '../../comments-section/comments-section';
+import { GET_PRODUCT_COMMENTS } from '../../../redux/comments/comments.types';
 
 const { priceLabel } = config.labels.product;
 
@@ -50,6 +52,8 @@ const {
   PRODUCT_MATERIALS
 } = productsTranslations;
 
+const { SHOW_COMMENTS_TITLE, HIDE_COMMENTS_TITLE } = config.buttonTitles;
+
 const ProductForm = ({ isEdit }) => {
   const styles = useStyles();
   const theme = useTheme();
@@ -61,6 +65,8 @@ const ProductForm = ({ isEdit }) => {
   const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
+
+  const [showComments, setShowComments] = useState(false);
 
   const formikPriceValue = {
     basePrice: Math.round(product?.basePrice[1]?.value / 100) || 0
@@ -239,6 +245,7 @@ const ProductForm = ({ isEdit }) => {
     );
   };
 
+  const showCommentsHandler = () => setShowComments(!showComments);
   return (
     <div className={styles.container}>
       <div className={styles.buttonContainer}>
@@ -365,6 +372,21 @@ const ProductForm = ({ isEdit }) => {
             </Box>
           </Paper>
         </Grid>
+      </Grid>
+      <Grid className={styles.showComments}>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={showCommentsHandler}
+        >
+          {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
+        </Button>
+        {showComments ? (
+          <CommentsSection
+            value={product._id}
+            commentsType={GET_PRODUCT_COMMENTS}
+          />
+        ) : null}
       </Grid>
       <div className={styles.controlsBlock}>
         <BackButton />
