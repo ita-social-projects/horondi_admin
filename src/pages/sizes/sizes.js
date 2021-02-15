@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@material-ui/core';
+import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 
 import { useCommonStyles } from '../common.styles';
@@ -60,6 +61,9 @@ const Sizes = () => {
       key={size._id}
       deleteHandler={() => {
         SizeDeleteHandler(size._id);
+      }}
+      editHandler={() => {
+        dispatch(push(`/sizes/${size._id}`));
       }}
     />
   ));
