@@ -6,11 +6,23 @@ import {
   REMOVE_CATEGORY_FROM_STORE,
   TOGGLE_CATEGORY_DELETE_DIALOG,
   SET_CATEGORY_DELETE_ID,
-  SET_CATEGORY_SWITCH_ID
+  SET_CATEGORY_SWITCH_ID,
+  SET_FILTER,
+  SET_SORT,
+  CLEAR_FILTERS
 } from './categories.types';
+
+const initialFilters = {
+  _id: [],
+  search: ''
+};
 
 export const initialState = {
   categories: [],
+  sort: {
+    name: 1
+  },
+  filters: initialFilters,
   category: null,
   categoryLoading: false,
   categoryError: null,
@@ -60,6 +72,26 @@ const categoryReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       switchId: action.payload
+    };
+  case SET_FILTER:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    };
+  case SET_SORT:
+    return {
+      ...state,
+      sort: {
+        ...action.payload
+      }
+    };
+  case CLEAR_FILTERS:
+    return {
+      ...state,
+      filters: initialFilters
     };
   default:
     return state;

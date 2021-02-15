@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ListItemText, MenuItem, Checkbox } from '@material-ui/core';
-import NavFilterComponent from '../../../../../components/filter-search-sort/nav-filter-component/nav-filter-component';
+import { map, findIndex } from 'lodash';
+import NavFilterComponent from '../nav-filter-component/nav-filter-component';
 
 const badgePosition = {
   vertical: 'top',
@@ -15,14 +16,30 @@ const NavFilterItem = ({
   filterList,
   filterHandler
 }) => {
-  const formGroupOptions = filterList.map((item, idx) => (
-    <MenuItem data-cy={`user-filters-list-${item}`} key={item} value={item}>
-      <Checkbox
-        checked={filterValues.findIndex((filter) => filter === item) !== -1}
-      />
-      <ListItemText primary={filterLabels.length ? filterLabels[idx] : item} />
-    </MenuItem>
-  ));
+  const formGroupOptions = useMemo(
+    () =>
+      map(filterList, (item, idx) => (
+        <MenuItem
+          data-cy={`filters-list-${item}`}
+          key={item._id}
+          value={item._id}
+        >
+          <Checkbox
+            checked={
+              findIndex(filterValues, (filter) => filter === item._id) !== -1
+            }
+          />
+          <ListItemText
+            primary={
+              filterLabels.length
+                ? filterLabels[idx].name[0].value
+                : item.name[0].value
+            }
+          />
+        </MenuItem>
+      )),
+    [filterList]
+  );
 
   const renderFilters = useMemo(() => (selected) => selected.join(', '), [
     filterList,
@@ -45,7 +62,7 @@ const NavFilterItem = ({
 
 NavFilterItem.propTypes = {
   buttonName: PropTypes.string.isRequired,
-  filterLabels: PropTypes.arrayOf(PropTypes.string),
+  filterLabels: PropTypes.arrayOf(PropTypes.object),
   filterValues: PropTypes.arrayOf(PropTypes.string).isRequired,
   filterList: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.string])
