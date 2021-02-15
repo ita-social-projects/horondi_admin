@@ -3,23 +3,43 @@ import { client, setItems } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { categoryTranslations } from '../../translations/category.translations';
 
-export const getAllCategories = async () => {
+export const getAllCategories = async (filter, pagination, sort) => {
   const result = await client.query({
     query: gql`
-      query {
-        getAllCategories {
-          _id
-          name {
-            lang
-            value
+      query(
+        $filter: FilterInputComponent
+        $pagination: Pagination
+        $sort: SortInputComponent
+      ) {
+        getAllCategories(
+          filter: $filter
+          pagination: $pagination
+          sort: $sort
+        ) {
+          items {
+            _id
+            code
+            name {
+              lang
+              value
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            available
           }
-          code
-          images {
-            thumbnail
-          }
+          count
         }
       }
-    `
+    `,
+    variables: {
+      filter,
+      pagination,
+      sort
+    }
   });
   client.resetStore();
 

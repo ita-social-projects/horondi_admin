@@ -29,7 +29,7 @@ const CommentsSection = ({ value, commentsType }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCommentsByType(value, commentsType));
+    dispatch(getCommentsByType({ value, commentsType }));
   }, [dispatch, value, commentsType]);
 
   const commentDeleteHandler = (id) => {

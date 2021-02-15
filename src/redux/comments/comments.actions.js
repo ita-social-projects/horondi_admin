@@ -7,12 +7,27 @@ import {
   SET_COMMENTS_CURRENT_PAGE,
   SET_COMMENTS_LOADING,
   SET_COMMENTS_ERROR,
-  REMOVE_COMMENT_FROM_STORE
+  REMOVE_COMMENT_FROM_STORE,
+  UPDATE_COMMENT,
+  SET_COMMENT,
+  GET_COMMENT,
+  GET_USER_COMMENTS,
+  GET_PRODUCT_COMMENTS
 } from './comments.types';
 
 const setComments = (comments) => ({
   type: SET_COMMENTS,
   payload: comments
+});
+
+const setComment = (payload) => ({
+  type: SET_COMMENT,
+  payload
+});
+
+const getComment = (payload) => ({
+  type: GET_COMMENT,
+  payload
 });
 
 const getComments = (payload) => ({
@@ -30,12 +45,19 @@ const getCommentsByProduct = (payload) => ({
   payload
 });
 
-const getCommentsByType = (value, commentsType) => ({
+const getUserComments = (payload) => ({
+  type: GET_USER_COMMENTS,
+  payload
+});
+
+const getProductComments = (payload) => ({
+  type: GET_PRODUCT_COMMENTS,
+  payload
+});
+
+const getCommentsByType = (payload) => ({
   type: GET_COMMENTS_BY_TYPE,
-  payload: {
-    value,
-    commentsType
-  }
+  payload
 });
 
 const setCommentsCurrentPage = (payload) => ({
@@ -58,6 +80,11 @@ const removeCommentFromStore = (payload) => ({
   payload
 });
 
+const updateComment = (payload) => ({
+  type: UPDATE_COMMENT,
+  payload
+});
+
 export {
   setComments,
   getComments,
@@ -67,5 +94,10 @@ export {
   deleteComment,
   setCommentError,
   setCommentsCurrentPage,
-  getCommentsByProduct
+  getCommentsByProduct,
+  updateComment,
+  setComment,
+  getComment,
+  getUserComments,
+  getProductComments
 };

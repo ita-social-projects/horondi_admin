@@ -47,18 +47,24 @@ describe('Categories reducer tests', () => {
   });
   it('should set category delete id', () => {
     expect(
-      categoriesReducer(initialState, setCategoryDeleteId(categories[0]._id))
+      categoriesReducer(
+        initialState,
+        setCategoryDeleteId(categories.items[0]._id)
+      )
     ).toEqual({
       ...initialState,
-      deleteId: categories[0]._id
+      deleteId: categories.items[0]._id
     });
   });
   it('should set category switch id', () => {
     expect(
-      categoriesReducer(initialState, setCategorySwitchId(categories[1]._id))
+      categoriesReducer(
+        initialState,
+        setCategorySwitchId(categories.items[1]._id)
+      )
     ).toEqual({
       ...initialState,
-      switchId: categories[1]._id
+      switchId: categories.items[1]._id
     });
   });
 });

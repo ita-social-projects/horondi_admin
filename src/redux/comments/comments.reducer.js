@@ -2,7 +2,8 @@ import {
   SET_COMMENTS_LOADING,
   SET_COMMENTS,
   REMOVE_COMMENT_FROM_STORE,
-  SET_COMMENTS_ERROR
+  SET_COMMENTS_ERROR,
+  SET_COMMENT
 } from './comments.types';
 
 const initialState = {
@@ -26,6 +27,11 @@ const commentsReducer = (state = initialState, action = {}) => {
       list: action.payload
     };
 
+  case SET_COMMENT:
+    return {
+      ...state,
+      comment: action.payload
+    };
   case SET_COMMENTS_LOADING:
     return {
       ...state,

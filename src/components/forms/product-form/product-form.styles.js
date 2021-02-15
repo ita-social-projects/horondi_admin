@@ -43,5 +43,22 @@ export const useStyles = makeStyles((theme) => ({
   controlsBlock: {
     display: 'flex',
     margin: '40px 10px 20px 0'
+  },
+  showComments: {
+    width: '60%',
+    padding: '15px',
+    marginTop: '5px',
+    paddingTop: '0',
+    '@media (max-width: 768px)': {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      margin: '0 5%',
+      width: 'auto',
+      paddingTop: '15px'
+    },
+    '@media (max-width: 320px)': {
+      margin: '0'
+    }
   }
 }));
