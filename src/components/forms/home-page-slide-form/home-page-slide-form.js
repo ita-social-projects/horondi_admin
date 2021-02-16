@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { AppBar, Grid, Paper, TextField, Typography } from '@material-ui/core';
+import { Grid, Paper, TextField, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
@@ -106,22 +106,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       handler: () => setFieldValue('show', !values.show)
     }
   ];
-  const tabPanelField = (language, textField) => (
-    <TextField
-      data-cy={`${language}${textField}`}
-      id={`${language}${textField}`}
-      className={styles.textField}
-      variant='outlined'
-      label={config.labels.homePageSlide.title[tabsValue].value}
-      multiline
-      value={values[`${language}${textField}`]}
-      onChange={handleChange}
-      error={
-        touched[`${language}${textField}`] &&
-        !!errors[`${language}${textField}`]
-      }
-    />
-  );
 
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {

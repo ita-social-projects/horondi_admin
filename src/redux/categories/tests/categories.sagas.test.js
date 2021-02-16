@@ -7,6 +7,7 @@ import {
   setCategory,
   removeCategoryFromStore
 } from '../categories.actions';
+import { setItemsCount } from '../../table/table.actions';
 import {
   getAllCategories,
   getCategoryById,
@@ -26,7 +27,11 @@ import {
   category,
   categoryId,
   deleteId,
-  switchId
+  switchId,
+  filter,
+  pagination,
+  sort,
+  count
 } from './category.variables';
 
 import { selectCategorySwitchAndDeleteId } from '../../selectors/category.selectors';
@@ -34,22 +39,24 @@ import categoriesReducer, { initialState } from '../categories.reducer';
 
 describe('categories sagas tests', () => {
   it('should handle categories load', () =>
-    expectSaga(handleCategoriesLoad)
+    expectSaga(handleCategoriesLoad, { payload: { filter, pagination, sort } })
       .withReducer(categoriesReducer)
-      .provide([[call(getAllCategories), categories]])
       .put(setCategoryLoading(true))
-      .put(setCategories(categories))
+      .provide([[call(getAllCategories, filter, pagination, sort), categories]])
+      .put(setItemsCount(categories.count))
+      .put(setCategories(categories.items))
+      .put(setCategoryLoading(false))
       .hasFinalState({
         ...initialState,
-        categories
+        categories: categories.items
       })
       .run()
       .then((res) => {
         const { allEffects: analysis } = res;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysis).toHaveLength(4);
-        expect(analysisPut).toHaveLength(3);
+        expect(analysis).toHaveLength(5);
+        expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
       }));
   it('should handle load category by id', () =>

@@ -15,7 +15,6 @@ const NavFilters = () => {
     const result = target.value.map(
       (item) => item !== statuses.USER_ACTIVE_STATUS
     );
-
     setStatusFilter(result);
   };
 

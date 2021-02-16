@@ -11,6 +11,7 @@ import RegisterDialog from '../register-dialog';
 import useFormDialog from '../../../../hooks/form-dialog/use-form-dialog';
 import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
+import UserNavbar from '../user-navbar';
 
 const tableHeaders = config.tableHeadRowTitles.users.adminTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
@@ -53,6 +54,7 @@ const AdminTab = (props) => {
 
   return (
     <>
+      <UserNavbar />
       <div className={styles.tableNav}>
         <div className={styles.button}>
           <Button

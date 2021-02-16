@@ -58,6 +58,18 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(
       getOrderList({
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        filter: {
+          orderStatus: 'CREATED'
+        }
+      })
+    );
+  }, [dispatch, rowsPerPage, currentPage]);
+
+  useEffect(() => {
+    dispatch(
+      getOrderList({
         filter: {
           orderStatus: 'CREATED'
         }

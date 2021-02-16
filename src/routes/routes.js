@@ -54,6 +54,7 @@ import NewsAdd from '../pages/news/news-add/news-add';
 import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
+import CommentEdit from '../pages/comments/comment-edit/comment-edit';
 
 const { routes } = config;
 
@@ -243,6 +244,11 @@ const Routes = () => {
             path={routes.pathToConstructorDetails}
             exact
             component={ConstructorDetails}
+          />
+          <Route
+            path={routes.pathToCommentsEdit}
+            exact
+            component={CommentEdit}
           />
           <Route component={ErrorPage} />
         </Switch>

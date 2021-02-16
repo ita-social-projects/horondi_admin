@@ -5,6 +5,7 @@ import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
 import statuses from './statuses';
+import filterLabels from './filter-labels';
 import {
   loginErrorMessages,
   colorErrorMessages,
@@ -19,7 +20,8 @@ import {
   homePageSlideErrorMessages,
   constructorErrorMessages,
   statsErrorMessages,
-  paginationInputErrorMessages
+  paginationInputErrorMessages,
+  commentErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -196,7 +198,9 @@ export const config = {
   homePageSlideErrorMessages,
   constructorErrorMessages,
   sort,
-  paginationInputErrorMessages
+  paginationInputErrorMessages,
+  commentErrorMessages,
+  filterLabels
 };
 export const inputTypes = {
   button: 'button',
