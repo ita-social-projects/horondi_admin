@@ -19,6 +19,10 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
+import LanguagePanel from '../language-panel';
+
+const { languages } = config;
+const { schedule, adress } = config.labels.contacts;
 
 const {
   PHONE_NUMBER_LENGTH_MESSAGE,
@@ -39,7 +43,7 @@ const {
   ENTER_EMAIL_MESSAGE
 } = config.loginErrorMessages;
 
-const { enAddressRegex } = config.formRegExp;
+const { enAddressRegex, uaRegex, enRegex } = config.formRegExp;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
@@ -82,12 +86,15 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .required(ENTER_PHONE_NUMBER_MESSAGE),
     uaSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
+      .matches(uaRegex, ENTER_UA_SCHEDULE_MESSAGE)
       .required(ENTER_UA_SCHEDULE_MESSAGE),
     enSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
+      // .matches(enRegex, ENTER_EN_SCHEDULE_MESSAGE)
       .required(ENTER_EN_SCHEDULE_MESSAGE),
     uaAddress: Yup.string()
       .min(8, INPUT_LENGTH_MESSAGE)
+      .matches(uaRegex, ENTER_UA_ADDRESS_MESSAGE)
       .required(ENTER_UA_ADDRESS_MESSAGE),
     enAddress: Yup.string()
       .min(8, INPUT_LENGTH_MESSAGE)
@@ -121,6 +128,19 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     }
   });
 
+  const inputs = [
+    { label: schedule, name: 'schedule' },
+    { label: adress, name: 'address' }
+  ];
+
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
+  console.log(errors);
   return (
     <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={handleSubmit}>
@@ -192,10 +212,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   error={touched.cartLink && !!errors.cartLink}
                   helperText={touched.cartLink && errors.cartLink}
                 />
-              </Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper className={classes.contactItemUpdate}>
                 <TextField
                   data-cy='phone-number'
                   id='phoneNumber'
@@ -214,6 +230,35 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.phoneNumber && errors.phoneNumber}
                 />
                 <TextField
+                  data-cy='email'
+                  id='email'
+                  className={classes.textField}
+                  variant='outlined'
+                  label='Email'
+                  InputLabelProps={{
+                    classes: {
+                      shrink: 'shrink'
+                    }
+                  }}
+                  value={values.email}
+                  onChange={handleChange}
+                  error={touched.email && !!errors.email}
+                  helperText={touched.email && errors.email}
+                />
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              {languages.map((lang) => (
+                <LanguagePanel
+                  lang={lang}
+                  inputOptions={inputOptions}
+                  key={lang}
+                />
+              ))}
+            </Grid>
+            {/* <Grid item xs={6}>
+              <Paper className={classes.contactItemUpdate}>
+                <TextField
                   data-cy='ua-schedule'
                   id='uaSchedule'
                   className={classes.textField}
@@ -229,8 +274,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   onChange={handleChange}
                   error={touched.uaSchedule && !!errors.uaSchedule}
                   helperText={touched.uaSchedule && errors.uaSchedule}
-                />
-                <TextField
+                /> */}
+            {/* <TextField
                   data-cy='en-schedule'
                   id='enSchedule'
                   className={classes.textField}
@@ -248,8 +293,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   helperText={touched.enSchedule && errors.enSchedule}
                 />
               </Paper>
-            </Grid>
-            <Grid item xs={6}>
+            </Grid> */}
+            {/* <Grid item xs={6}>
               <Paper className={classes.contactItemUpdate}>
                 <TextField
                   data-cy='ua-address'
@@ -285,24 +330,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   error={touched.enAddress && !!errors.enAddress}
                   helperText={touched.enAddress && errors.enAddress}
                 />
-                <TextField
-                  data-cy='email'
-                  id='email'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Email'
-                  InputLabelProps={{
-                    classes: {
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={values.email}
-                  onChange={handleChange}
-                  error={touched.email && !!errors.email}
-                  helperText={touched.email && errors.email}
-                />
               </Paper>
-            </Grid>
+            </Grid> */}
           </Grid>
         </FormControl>
         <BackButton data-cy='go-back-button' />

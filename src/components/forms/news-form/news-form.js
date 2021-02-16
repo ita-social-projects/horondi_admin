@@ -187,7 +187,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
           </div>
         </Box>
         {preferredLanguages.length > 0
-          ? preferredLanguages.map((lang, index) => (
+          ? preferredLanguages.map((lang) => (
             <LanguagePanel
               lang={lang}
               inputOptions={inputOptions}
