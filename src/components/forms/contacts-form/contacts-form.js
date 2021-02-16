@@ -90,7 +90,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .required(ENTER_UA_SCHEDULE_MESSAGE),
     enSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
-      // .matches(enRegex, ENTER_EN_SCHEDULE_MESSAGE)
+      .matches(enRegex, ENTER_EN_SCHEDULE_MESSAGE)
       .required(ENTER_EN_SCHEDULE_MESSAGE),
     uaAddress: Yup.string()
       .min(8, INPUT_LENGTH_MESSAGE)
@@ -140,7 +140,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     values,
     inputs
   };
-  console.log(errors);
+
   return (
     <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={handleSubmit}>
@@ -256,82 +256,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 />
               ))}
             </Grid>
-            {/* <Grid item xs={6}>
-              <Paper className={classes.contactItemUpdate}>
-                <TextField
-                  data-cy='ua-schedule'
-                  id='uaSchedule'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Розклад (укр.)'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={values.uaSchedule}
-                  onChange={handleChange}
-                  error={touched.uaSchedule && !!errors.uaSchedule}
-                  helperText={touched.uaSchedule && errors.uaSchedule}
-                /> */}
-            {/* <TextField
-                  data-cy='en-schedule'
-                  id='enSchedule'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Розклад (англ.)'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={values.enSchedule}
-                  onChange={handleChange}
-                  error={touched.enSchedule && !!errors.enSchedule}
-                  helperText={touched.enSchedule && errors.enSchedule}
-                />
-              </Paper>
-            </Grid> */}
-            {/* <Grid item xs={6}>
-              <Paper className={classes.contactItemUpdate}>
-                <TextField
-                  data-cy='ua-address'
-                  id='uaAddress'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Адреса (укр.)'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={values.uaAddress}
-                  onChange={handleChange}
-                  error={touched.uaAddress && !!errors.uaAddress}
-                  helperText={touched.uaAddress && errors.uaAddress}
-                />
-                <TextField
-                  data-cy='en-address'
-                  id='enAddress'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Адреса (англ.)'
-                  multiline
-                  InputLabelProps={{
-                    classes: {
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={values.enAddress}
-                  onChange={handleChange}
-                  error={touched.enAddress && !!errors.enAddress}
-                  helperText={touched.enAddress && errors.enAddress}
-                />
-              </Paper>
-            </Grid> */}
           </Grid>
         </FormControl>
         <BackButton data-cy='go-back-button' />

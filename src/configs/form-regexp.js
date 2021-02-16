@@ -6,7 +6,7 @@ const formRegExp = {
   unwrapHtml: /(<([^>]+)>)/gi,
   enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
   uaRegex: '[А-ЩЬЮЯҐЄІЇа-щьюяґєії]',
-  enRegex: '/[a-z]/i',
+  enRegex: /[a-z]/i,
   onlyPositiveDigits: /^[0-9]\d*$/,
   editorField: /^<p><br><\/p>|<p><\/p>$/,
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
