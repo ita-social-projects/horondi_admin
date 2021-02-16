@@ -37,54 +37,56 @@ const getAllProducts = async (productsState, tableState) => {
             purchasedCount: $purchasedCount
           }
         ) {
-          items {
-            _id
-            purchasedCount
-            name {
-              lang
-              value
-            }
-            basePrice {
-              value
-            }
-            model {
-              name {
-                value
-              }
-            }
-            rate
-            images {
-              primary {
-                large
-                medium
-                large
-                small
-              }
-            }
-            pattern {
+          ... on PaginatedProducts {
+            items {
+              _id
+              purchasedCount
               name {
                 lang
                 value
               }
-            }
-            mainMaterial {
-              material {
-                _id
+              basePrice {
+                value
+              }
+              model {
+                name {
+                  value
+                }
+              }
+              rate
+              images {
+                primary {
+                  large
+                  medium
+                  large
+                  small
+                }
+              }
+              pattern {
                 name {
                   lang
                   value
                 }
               }
-            }
-            category {
-              _id
-              name {
-                value
+              mainMaterial {
+                material {
+                  _id
+                  name {
+                    lang
+                    value
+                  }
+                }
               }
+              category {
+                _id
+                name {
+                  value
+                }
+              }
+              isHotItem
             }
-            isHotItem
+            count
           }
-          count
         }
       }
     `,
@@ -112,25 +114,27 @@ const getAllFilters = async () => {
     query: gql`
       query {
         getProducts {
-          items {
-            basePrice {
-              value
-            }
-            model {
-              name {
+          ... on PaginatedProducts {
+            items {
+              basePrice {
                 value
               }
-            }
-            pattern {
-              name {
-                lang
-                value
+              model {
+                name {
+                  value
+                }
               }
-            }
-            category {
-              _id
-              name {
-                value
+              pattern {
+                name {
+                  lang
+                  value
+                }
+              }
+              category {
+                _id
+                name {
+                  value
+                }
               }
             }
           }
