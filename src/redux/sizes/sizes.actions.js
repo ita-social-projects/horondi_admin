@@ -5,6 +5,7 @@ import {
   SET_SIZE,
   ADD_SIZE,
   ADD_SIZE_TO_STATE,
+  UPDATE_SIZE,
   DELETE_SIZE,
   REMOVE_SIZE_FROM_STATE,
   SET_SIZES_LOADING,
@@ -38,6 +39,11 @@ export const addSize = (payload) => ({
 
 export const addSizeToState = (payload) => ({
   type: ADD_SIZE_TO_STATE,
+  payload
+});
+
+export const updateSize = (payload) => ({
+  type: UPDATE_SIZE,
   payload
 });
 

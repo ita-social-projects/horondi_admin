@@ -3,6 +3,7 @@ export const SET_SIZES = 'SET_SIZES';
 export const GET_SIZE = 'GET_SIZE';
 export const SET_SIZE = 'SET_SIZE';
 export const ADD_SIZE = 'ADD_SIZE';
+export const UPDATE_SIZE = 'UPDATE_SIZE';
 export const ADD_SIZE_TO_STATE = 'ADD_SIZE_TO_STATE';
 export const DELETE_SIZE = 'DELETE_SIZE';
 export const REMOVE_SIZE_FROM_STATE = 'REMOVE_SIZE_FROM_STATE';

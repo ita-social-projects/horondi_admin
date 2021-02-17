@@ -1,22 +1,41 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { getAllSizes, deleteSize } from './sizes.operations';
+import { push } from 'connected-react-router';
+
+import {
+  getAllSizes,
+  deleteSize,
+  getSizeById,
+  addSize,
+  updateSize
+} from './sizes.operations';
 import {
   setSizes,
+  setSize,
   setSizesLoading,
   setSizesError,
   removeSizeFromState
 } from './sizes.actions';
 import { config } from '../../configs';
-import { GET_SIZES, DELETE_SIZE } from './sizes.types';
+import {
+  GET_SIZES,
+  GET_SIZE,
+  DELETE_SIZE,
+  ADD_SIZE,
+  UPDATE_SIZE
+} from './sizes.types';
 
 import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
-import { setItemsCount, updatePagination } from '../table/table.actions';
+import { updatePagination } from '../table/table.actions';
 
-const { SUCCESS_DELETE_STATUS } = config.statuses;
+const {
+  SUCCESS_DELETE_STATUS,
+  SUCCESS_ADD_STATUS,
+  SUCCESS_UPDATE_STATUS
+} = config.statuses;
 
 export function* handleSizesLoad() {
   try {
@@ -24,6 +43,41 @@ export function* handleSizesLoad() {
     const sizes = yield call(getAllSizes);
     yield put(setSizes(sizes));
     yield put(setSizesLoading(false));
+  } catch (error) {
+    yield call(handleSizesError, error);
+  }
+}
+
+export function* handleSizeById({ payload }) {
+  try {
+    yield put(setSizesLoading(true));
+    const size = yield call(getSizeById, payload);
+    yield put(setSize(size));
+    yield put(setSizesLoading(false));
+  } catch (error) {
+    yield call(handleSizesError, error);
+  }
+}
+
+export function* handleAddSize({ payload }) {
+  try {
+    yield put(setSizesLoading(true));
+    yield call(addSize, payload);
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+    yield put(push(config.routes.pathToSizes));
+  } catch (error) {
+    yield call(handleSizesError, error);
+  }
+}
+
+export function* handleSizeUpdate({ payload }) {
+  const { id, data } = payload;
+
+  try {
+    yield put(setSizesLoading(true));
+    yield call(updateSize(id, data));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    yield put(push(config.routes.pathToSizes));
   } catch (error) {
     yield call(handleSizesError, error);
   }
@@ -50,5 +104,8 @@ export function* handleSizesError(e) {
 
 export default function* sizesSaga() {
   yield takeEvery(GET_SIZES, handleSizesLoad);
+  yield takeEvery(GET_SIZE, handleSizeById);
   yield takeEvery(DELETE_SIZE, handleSizeDelete);
+  yield takeEvery(ADD_SIZE, handleAddSize);
+  yield takeEvery(UPDATE_SIZE, handleSizeUpdate);
 }

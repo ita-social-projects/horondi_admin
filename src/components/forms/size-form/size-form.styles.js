@@ -76,6 +76,10 @@ export const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
     padding: '0 5px'
   },
+  error: {
+    color: '#e60000',
+    marginLeft: '5px'
+  },
   colorImages: {
     display: 'flex'
   },

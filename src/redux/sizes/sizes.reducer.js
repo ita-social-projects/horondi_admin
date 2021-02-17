@@ -11,7 +11,7 @@ import {
 export const selectSizes = ({ Sizes }) => ({
   sizesList: Sizes.list,
   loading: Sizes.sizeLoading,
-  size: Sizes.list
+  size: Sizes.size
 });
 
 export const initialState = {

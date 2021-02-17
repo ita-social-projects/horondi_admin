@@ -88,6 +88,12 @@ export const materialErrorMessages = {
   VALIDATION_ERROR: 'Поле обовязкове',
   PRICE_VALIDATION_ERROR: 'Тільки цифри'
 };
+export const sizeErrorMessages = {
+  MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
+  MIN_LENGTH_MESSAGE: `Поле не може бути пустим`,
+  VALIDATION_ERROR: 'Поле обовязкове',
+  PRICE_VALIDATION_ERROR: 'Тільки цифри'
+};
 
 export const colorErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
