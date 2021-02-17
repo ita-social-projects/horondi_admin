@@ -13,7 +13,6 @@ import {
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
-import ProductsNav from './products-nav';
 
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
@@ -123,7 +122,6 @@ const ProductsPage = () => {
 
   return (
     <div className={common.container}>
-      <ProductsNav />
       {loading ? (
         <LoadingBar />
       ) : products.length ? (
