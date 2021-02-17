@@ -35,23 +35,23 @@ function SizeForm({ id, size }) {
 
     heightInCm: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(4, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
     widthInCm: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(4, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
     depthInCm: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(4, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
     volumeInLiters: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(4, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
     weightInKg: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(4, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
     available: Yup.bool().required(VALIDATION_ERROR),
 
@@ -161,8 +161,13 @@ function SizeForm({ id, size }) {
               type='number'
               value={values.widthInCm}
               onChange={handleChange}
-              error={touched.code && !!errors.code}
+              error={touched.widthInCm && !!errors.widthInCm}
             />
+            {touched.widthInCm && errors.widthInCm && (
+              <div data-cy='code-error' className={styles.error}>
+                {errors.widthInCm}
+              </div>
+            )}
             <TextField
               data-cy='depthInCm'
               id='depthInCm'
@@ -172,7 +177,13 @@ function SizeForm({ id, size }) {
               type='number'
               value={values.depthInCm}
               onChange={handleChange}
+              error={touched.depthInCm && !!errors.depthInCm}
             />
+            {touched.depthInCm && errors.depthInCm && (
+              <div data-cy='code-error' className={styles.error}>
+                {errors.depthInCm}
+              </div>
+            )}
             <TextField
               data-cy='volumeInLiters'
               id='volumeInLiters'
@@ -182,7 +193,13 @@ function SizeForm({ id, size }) {
               type='number'
               value={values.volumeInLiters}
               onChange={handleChange}
+              error={touched.volumeInLiters && !!errors.volumeInLiters}
             />
+            {touched.volumeInLiters && errors.volumeInLiters && (
+              <div data-cy='code-error' className={styles.error}>
+                {errors.volumeInLiters}
+              </div>
+            )}
             <TextField
               data-cy='weightInKg'
               id='weightInKg'
@@ -192,7 +209,13 @@ function SizeForm({ id, size }) {
               type='number'
               value={values.weightInKg}
               onChange={handleChange}
+              error={touched.weightInKg && !!errors.weightInKg}
             />
+            {touched.weightInKg && errors.weightInKg && (
+              <div data-cy='code-error' className={styles.error}>
+                {errors.weightInKg}
+              </div>
+            )}
             <TextField
               data-cy='additionalPrice'
               id='additionalPrice'
@@ -202,7 +225,13 @@ function SizeForm({ id, size }) {
               type='number'
               value={values.additionalPrice}
               onChange={handleChange}
+              error={touched.additionalPrice && !!errors.additionalPrice}
             />
+            {touched.additionalPrice && errors.additionalPrice && (
+              <div data-cy='code-error' className={styles.error}>
+                {errors.additionalPrice}
+              </div>
+            )}
           </Paper>
           <CheckboxOptions options={checkboxes} />
         </Grid>

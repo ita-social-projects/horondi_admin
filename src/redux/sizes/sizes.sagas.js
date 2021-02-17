@@ -72,7 +72,7 @@ export function* handleAddSize({ payload }) {
 
 export function* handleSizeUpdate({ payload }) {
   const { id, data } = payload;
-
+  console.log(payload);
   try {
     yield put(setSizesLoading(true));
     yield call(updateSize(id, data));
