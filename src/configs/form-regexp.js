@@ -5,6 +5,8 @@ const formRegExp = {
   pass: '^(?!.* )(?=.*[0-9])(?=.*[A-Z]).{8,30}$',
   unwrapHtml: /(<([^>]+)>)/gi,
   enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
+  uaRegex: '[А-ЩЬЮЯҐЄІЇа-щьюяґєії]',
+  enRegex: /[a-z]/i,
   onlyPositiveDigits: /^[0-9]\d*$/,
   editorField: /^<p><br><\/p>|<p><\/p>$/,
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
