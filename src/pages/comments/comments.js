@@ -18,6 +18,8 @@ import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { commentSelectorWithPagination } from '../../redux/selectors/comments.selectors';
 import getTime from '../../utils/getTime';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
+import useCommentFilters from '../../hooks/filters/use-comment-filters';
 
 const tableTitles = config.tableHeadRowTitles.comments.commentPageTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
@@ -29,20 +31,29 @@ const map = require('lodash/map');
 const Comments = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
+  const commentOptions = useCommentFilters();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
-    commentSelectorWithPagination
-  );
+  const {
+    filter,
+    list,
+    loading,
+    currentPage,
+    rowsPerPage,
+    itemsCount
+  } = useSelector(commentSelectorWithPagination);
   useEffect(() => {
     dispatch(
       getComments({
-        limit: rowsPerPage,
-        skip: currentPage * rowsPerPage
+        filter,
+        pagination: {
+          limit: rowsPerPage,
+          skip: currentPage * rowsPerPage
+        }
       })
     );
-  }, [dispatch, rowsPerPage, currentPage]);
+  }, [dispatch, filter, rowsPerPage, currentPage]);
 
   const commentDeleteHandler = (id) => {
     const removeComment = () => {
@@ -83,6 +94,9 @@ const Comments = () => {
         >
           {config.titles.commentTitles.mainPageTitle}
         </Typography>
+      </div>
+      <div>
+        <FilterNavbar options={commentOptions || {}} />
       </div>
       {!loading ? (
         <TableContainerGenerator

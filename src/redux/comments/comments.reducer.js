@@ -3,11 +3,19 @@ import {
   SET_COMMENTS,
   REMOVE_COMMENT_FROM_STORE,
   SET_COMMENTS_ERROR,
-  SET_COMMENT
+  SET_COMMENT,
+  SET_FILTER,
+  CLEAR_FILTERS
 } from './comments.types';
+
+const initialFilters = {
+  _id: [],
+  search: ''
+};
 
 const initialState = {
   list: [],
+  filters: initialFilters,
   comments: null,
   commentsLoading: false,
   commentsError: null
@@ -15,6 +23,7 @@ const initialState = {
 
 export const selectComment = ({ Comments }) => ({
   list: Comments.list,
+  filter: Comments.filters,
   loading: Comments.commentsLoading,
   comment: Comments.comment
 });
@@ -48,6 +57,20 @@ const commentsReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       commentsError: action.payload
+    };
+
+  case SET_FILTER:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    };
+  case CLEAR_FILTERS:
+    return {
+      ...state,
+      filters: initialFilters
     };
 
   default:
