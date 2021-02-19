@@ -22,6 +22,16 @@ const labels = {
       en: 'Text'
     }
   },
+  contacts: {
+    schedule: {
+      ua: 'Розклад',
+      en: 'Schedule'
+    },
+    adress: {
+      ua: 'Адреса',
+      en: 'Adress'
+    }
+  },
   model: {
     name: {
       ua: 'Назва',

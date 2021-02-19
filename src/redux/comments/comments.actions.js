@@ -12,7 +12,9 @@ import {
   SET_COMMENT,
   GET_COMMENT,
   GET_USER_COMMENTS,
-  GET_PRODUCT_COMMENTS
+  GET_PRODUCT_COMMENTS,
+  SET_FILTER,
+  CLEAR_FILTERS
 } from './comments.types';
 
 const setComments = (comments) => ({
@@ -85,6 +87,15 @@ const updateComment = (payload) => ({
   payload
 });
 
+const setFilter = (filter) => ({
+  type: SET_FILTER,
+  payload: filter
+});
+
+const clearFilters = () => ({
+  type: CLEAR_FILTERS
+});
+
 export {
   setComments,
   getComments,
@@ -99,5 +110,7 @@ export {
   setComment,
   getComment,
   getUserComments,
-  getProductComments
+  getProductComments,
+  setFilter,
+  clearFilters
 };
