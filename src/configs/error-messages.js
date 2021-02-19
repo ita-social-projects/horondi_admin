@@ -89,10 +89,14 @@ export const materialErrorMessages = {
   PRICE_VALIDATION_ERROR: 'Тільки цифри'
 };
 export const sizeErrorMessages = {
-  MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
-  MIN_LENGTH_MESSAGE: `Поле не може бути пустим`,
-  VALIDATION_ERROR: 'Поле обовязкове',
-  PRICE_VALIDATION_ERROR: 'Тільки цифри'
+  MAX_LENGTH_MESSAGE: `Не більше 20 символів`,
+  MIN_LENGTH_MESSAGE: `Не менше 1см`,
+  MAX_LENGTH_MESSAGE_SIZE: `Не більше 100см`,
+  MIN_LENGTH_MESSAGE_SIZE: `Не менше 2 символів`,
+  VALIDATION_ERROR: `Поле обовязкове`,
+  PRICE_VALIDATION_ERROR: `Тільки цифри`,
+  NOT_UA_INPUT_MESSAGE: `Введіть ім'я розміру українською`,
+  NOT_EN_INPUT_MESSAGE: `Введіть ім'я розміру англійською`
 };
 
 export const colorErrorMessages = {

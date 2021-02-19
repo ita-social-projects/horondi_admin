@@ -63,6 +63,7 @@ export function* handleAddSize({ payload }) {
   try {
     yield put(setSizesLoading(true));
     yield call(addSize, payload);
+    yield put(setSizesLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(config.routes.pathToSizes));
   } catch (error) {
@@ -71,13 +72,13 @@ export function* handleAddSize({ payload }) {
 }
 
 export function* handleSizeUpdate({ payload }) {
-  const { id, data } = payload;
-  console.log(payload);
+  const { id, size } = payload;
   try {
     yield put(setSizesLoading(true));
-    yield call(updateSize(id, data));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    yield call(updateSize, id, size);
+    yield put(setSizesLoading(false));
     yield put(push(config.routes.pathToSizes));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (error) {
     yield call(handleSizesError, error);
   }

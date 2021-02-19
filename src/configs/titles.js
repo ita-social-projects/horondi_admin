@@ -47,7 +47,8 @@ const titles = {
     createPageTitle: 'Створити посилання'
   },
   sizesTitles: {
-    mainPageTitle: 'Iнформація про розміри'
+    mainPageTitle: 'Iнформація про розміри',
+    selectTitle: 'Розмір'
   },
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',

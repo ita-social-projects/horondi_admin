@@ -13,6 +13,10 @@ export const getAllSizes = async () => {
         getAllSizes {
           _id
           name
+          simpleName {
+            lang
+            value
+          }
           heightInCm
           widthInCm
           depthInCm
@@ -34,6 +38,10 @@ export const getSizeById = async (id) => {
         getSizeById(id: $id) {
           ... on Size {
             name
+            simpleName {
+              lang
+              value
+            }
             heightInCm
             widthInCm
             depthInCm
@@ -119,7 +127,7 @@ export const updateSize = async (id, size) => {
       `${result.data.updateSize.statusCode} ${[result.data.updateSize.message]}`
     );
   }
-
+  console.log(result);
   return result.data.updateSize;
 };
 

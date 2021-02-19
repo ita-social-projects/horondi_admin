@@ -19,7 +19,7 @@ const map = require('lodash/map');
 const tableTitles = config.tableHeadRowTitles.sizes.sizesPageTitles;
 const pathToAddSizePage = config.routes.pathToAddSize;
 const { CREATE_SIZE_TITLE } = config.buttonTitles;
-const { DELETE_SIZE_MESSAGE } = config.messages;
+const { DELETE_SIZE_MESSAGE, NO_SIZES_MESSAGE } = config.messages;
 const { AVALIABLE_TEXT, UNAVALIABLE_TEXT } = config.sizesAvailableVariants;
 
 const Sizes = () => {
@@ -36,14 +36,11 @@ const Sizes = () => {
   }, [sizesList]);
 
   const SizeDeleteHandler = (id) => {
-    const removeComment = () => {
+    const removeSize = () => {
       dispatch(closeDialog());
       dispatch(deleteSize(id));
     };
-    openSuccessSnackbar(
-      removeComment,
-      'are you sure you want to delete this size?'
-    );
+    openSuccessSnackbar(removeSize, DELETE_SIZE_MESSAGE);
   };
 
   if (loading) {
@@ -54,7 +51,7 @@ const Sizes = () => {
       showAvatar={false}
       showEdit
       showDelete
-      name='Розмір для сумки'
+      name={size.simpleName[0].value}
       size={size.name}
       available={size.available ? AVALIABLE_TEXT : UNAVALIABLE_TEXT}
       id={size._id}
@@ -93,7 +90,7 @@ const Sizes = () => {
           pagination
           data-cy='sizesTable'
           count={itemsCount}
-          tableTitles={sizeItems ? tableTitles : DELETE_SIZE_MESSAGE}
+          tableTitles={sizeItems ? tableTitles : [NO_SIZES_MESSAGE]}
           tableItems={sizeItems}
         />
       ) : (

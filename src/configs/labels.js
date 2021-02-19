@@ -411,6 +411,18 @@ const labels = {
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
+  },
+  sizeLabels: {
+    name: "Ім'я",
+    heightInCm: 'Висота',
+    widthInCm: 'Ширина',
+    depthInCm: 'Глубина',
+    volumeInLiters: "Об'єм (літри)",
+    weightInKg: 'Вага',
+    available: 'Доступний',
+    additionalPrice: 'Додаткова ціна',
+    simpleNameUa: 'Назва(Укр)',
+    simpleNameEn: 'Назва(Eng)'
   }
 };
 export default labels;

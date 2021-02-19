@@ -4,9 +4,9 @@ export const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
-    marginTop: '15px'
+    marginTop: '20px'
   },
-  materialForm: {
+  sizeForm: {
     '& div': {
       '& div': {
         '& div': {
@@ -16,12 +16,14 @@ export const useStyles = makeStyles((theme) => ({
       }
     }
   },
-  materialItemAdd: {
+  sizeItemAdd: {
+    width: '400px',
     display: 'flex',
-    flexDirection: 'column',
+    flexWrap: 'wrap',
     margin: '20px 0 !important'
   },
   textField: {
+    width: '100%',
     margin: '10px !important',
     '& div': {
       '& textarea': {
@@ -29,11 +31,7 @@ export const useStyles = makeStyles((theme) => ({
       }
     }
   },
-  materialAdd: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
+
   saveButton: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -50,24 +48,10 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
     padding: 20,
-    marginTop: 70
+    marginTop: 10,
+    marginLeft: 20
   },
-  tabs: {
-    paddingLeft: 0,
-    paddingRight: 0,
-    backgroundColor: 'white',
-    '& button': {
-      '& span:before': {
-        backgroundColor: 'red !important'
-      }
-    },
-    '& span.MuiTab-wrapper': {
-      color: '#3F51B5'
-    },
-    '& span.MuiTabs-indicator': {
-      backgroundColor: '#3F51B5'
-    }
-  },
+
   controlsBlock: {
     display: 'flex',
     justifyContent: 'space-between'
@@ -80,16 +64,14 @@ export const useStyles = makeStyles((theme) => ({
     color: '#e60000',
     marginLeft: '5px'
   },
-  colorImages: {
-    display: 'flex'
-  },
   purposeSelect: {
-    width: '400px'
+    width: '390px'
   },
-  errorTab: {
-    backgroundColor: theme.palette.error.main,
-    '& span': {
-      color: 'white !important'
-    }
+  wrapper: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  nameBlok: {
+    marginLeft: '30px'
   }
 }));

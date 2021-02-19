@@ -21,7 +21,8 @@ import {
   constructorErrorMessages,
   statsErrorMessages,
   paginationInputErrorMessages,
-  commentErrorMessages
+  commentErrorMessages,
+  sizeErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -200,7 +201,8 @@ export const config = {
   sort,
   paginationInputErrorMessages,
   commentErrorMessages,
-  filterLabels
+  filterLabels,
+  sizeErrorMessages
 };
 export const inputTypes = {
   button: 'button',
