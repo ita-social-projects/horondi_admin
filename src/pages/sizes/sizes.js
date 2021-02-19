@@ -90,7 +90,7 @@ const Sizes = () => {
           pagination
           data-cy='sizesTable'
           count={itemsCount}
-          tableTitles={sizeItems ? tableTitles : [NO_SIZES_MESSAGE]}
+          tableTitles={tableTitles || NO_SIZES_MESSAGE}
           tableItems={sizeItems}
         />
       ) : (

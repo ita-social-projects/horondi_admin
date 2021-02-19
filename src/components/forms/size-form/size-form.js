@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
-import createSize from '../../../utils/use-size';
+import createSize from '../../../utils/create-size';
 import { useStyles } from './size-form.styles';
 import { addSize, updateSize } from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
@@ -102,17 +102,17 @@ function SizeForm({ id, size }) {
       additionalPrice: size.additionalPrice[1].value / 100 || 0
     },
     onSubmit: (data) => {
-      const size = createSize(data);
+      const newSize = createSize(data);
       if (id) {
         dispatch(
           updateSize({
             id,
-            size
+            newSize
           })
         );
         return;
       }
-      dispatch(addSize(size));
+      dispatch(addSize(newSize));
     }
   });
 

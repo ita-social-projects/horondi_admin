@@ -72,10 +72,10 @@ export function* handleAddSize({ payload }) {
 }
 
 export function* handleSizeUpdate({ payload }) {
-  const { id, size } = payload;
+  const { id, newSize } = payload;
   try {
     yield put(setSizesLoading(true));
-    yield call(updateSize, id, size);
+    yield call(updateSize, id, newSize);
     yield put(setSizesLoading(false));
     yield put(push(config.routes.pathToSizes));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);

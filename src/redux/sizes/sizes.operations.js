@@ -127,7 +127,6 @@ export const updateSize = async (id, size) => {
       `${result.data.updateSize.statusCode} ${[result.data.updateSize.message]}`
     );
   }
-  console.log(result);
   return result.data.updateSize;
 };
 
