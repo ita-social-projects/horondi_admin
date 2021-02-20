@@ -91,8 +91,10 @@ export const materialErrorMessages = {
 export const sizeErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 20 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 1см`,
-  MAX_LENGTH_MESSAGE_SIZE: `Не більше 100см`,
-  MIN_LENGTH_MESSAGE_SIZE: `Не менше 2 символів`,
+  MAX_LENGTH_MESSAGE_SIZE: `Не більше 35см`,
+  MIN_LENGTH_MESSAGE_SIZE: `Не менше 1 символу`,
+  MAX_WEIGHT_MESSAGE_SIZE: `Не більше 5 кг`,
+  MIN_WEIGHT_MESSAGE_SIZE: `Не менше 0.1 кг`,
   VALIDATION_ERROR: `Поле обовязкове`,
   PRICE_VALIDATION_ERROR: `Тільки цифри`,
   NOT_UA_INPUT_MESSAGE: `Введіть ім'я розміру українською`,

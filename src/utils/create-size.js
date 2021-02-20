@@ -2,7 +2,16 @@ import { config } from '../configs';
 
 const { languages } = config;
 
-const createSize = (data) => ({
+export const createSizeNamelist = () => [
+  'heightInCm',
+  'widthInCm',
+  'depthInCm',
+  'volumeInLiters',
+  'weightInKg',
+  'additionalPrice'
+];
+
+export const createSize = (data) => ({
   name: data.name,
   simpleName: [
     { lang: languages[0], value: data.simpleNameUa },
@@ -16,5 +25,3 @@ const createSize = (data) => ({
   available: data.available,
   additionalPrice: data.additionalPrice
 });
-
-export default createSize;

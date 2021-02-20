@@ -71,7 +71,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap'
   },
-  nameBlok: {
+  contentWrapper: {
     marginLeft: '30px'
   }
 }));

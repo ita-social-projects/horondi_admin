@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
-import createSize from '../../../utils/create-size';
+import { createSize, createSizeNamelist } from '../../../utils/create-size';
 import { useStyles } from './size-form.styles';
 import { addSize, updateSize } from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
@@ -23,6 +23,8 @@ const {
   MIN_LENGTH_MESSAGE,
   MAX_LENGTH_MESSAGE_SIZE,
   MIN_LENGTH_MESSAGE_SIZE,
+  MIN_WEIGHT_MESSAGE_SIZE,
+  MAX_WEIGHT_MESSAGE_SIZE,
   VALIDATION_ERROR,
   PRICE_VALIDATION_ERROR,
   NOT_UA_INPUT_MESSAGE,
@@ -35,6 +37,8 @@ const labels = config.labels.sizeLabels;
 function SizeForm({ id, size }) {
   const styles = useStyles();
   const dispatch = useDispatch();
+
+  const sizeList = createSizeNamelist();
 
   const { loading } = useSelector(sizesSelectorWithPagination);
 
@@ -54,23 +58,23 @@ function SizeForm({ id, size }) {
       .required(VALIDATION_ERROR),
     heightInCm: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(100, MAX_LENGTH_MESSAGE_SIZE)
+      .max(35, MAX_LENGTH_MESSAGE_SIZE)
       .required(VALIDATION_ERROR),
     widthInCm: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(100, MAX_LENGTH_MESSAGE_SIZE)
+      .max(35, MAX_LENGTH_MESSAGE_SIZE)
       .required(VALIDATION_ERROR),
     depthInCm: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(100, MAX_LENGTH_MESSAGE_SIZE)
+      .max(35, MAX_LENGTH_MESSAGE_SIZE)
       .required(VALIDATION_ERROR),
     volumeInLiters: Yup.number()
       .min(1, MIN_LENGTH_MESSAGE)
-      .max(100, MAX_LENGTH_MESSAGE_SIZE)
+      .max(35, MAX_LENGTH_MESSAGE_SIZE)
       .required(VALIDATION_ERROR),
     weightInKg: Yup.number()
-      .min(1, MIN_LENGTH_MESSAGE)
-      .max(100, MAX_LENGTH_MESSAGE_SIZE)
+      .min(0.1, MIN_WEIGHT_MESSAGE_SIZE)
+      .max(5, MAX_WEIGHT_MESSAGE_SIZE)
       .required(VALIDATION_ERROR),
     available: Yup.bool().required(VALIDATION_ERROR),
 
@@ -138,105 +142,28 @@ function SizeForm({ id, size }) {
           <div className={styles.wrapper}>
             <div className={styles.nameBlok}>
               <Paper className={styles.sizeItemAdd}>
-                <TextField
-                  data-cy='heightInCm'
-                  id='heightInCm'
-                  className={styles.textField}
-                  variant='outlined'
-                  label={labels.heightInCm}
-                  type='number'
-                  value={values.heightInCm}
-                  onChange={handleChange}
-                  error={touched.heightInCm && !!errors.heightInCm}
-                />
-                {touched.heightInCm && errors.heightInCm && (
-                  <div data-cy='code-error' className={styles.error}>
-                    {errors.heightInCm}
-                  </div>
-                )}
-                <TextField
-                  data-cy='widthInCm'
-                  id='widthInCm'
-                  className={styles.textField}
-                  variant='outlined'
-                  label={labels.widthInCm}
-                  type='number'
-                  value={values.widthInCm}
-                  onChange={handleChange}
-                  error={touched.widthInCm && !!errors.widthInCm}
-                />
-                {touched.widthInCm && errors.widthInCm && (
-                  <div data-cy='code-error' className={styles.error}>
-                    {errors.widthInCm}
-                  </div>
-                )}
-                <TextField
-                  data-cy='depthInCm'
-                  id='depthInCm'
-                  className={styles.textField}
-                  variant='outlined'
-                  label={labels.depthInCm}
-                  type='number'
-                  value={values.depthInCm}
-                  onChange={handleChange}
-                  error={touched.depthInCm && !!errors.depthInCm}
-                />
-                {touched.depthInCm && errors.depthInCm && (
-                  <div data-cy='code-error' className={styles.error}>
-                    {errors.depthInCm}
-                  </div>
-                )}
-                <TextField
-                  data-cy='volumeInLiters'
-                  id='volumeInLiters'
-                  className={styles.textField}
-                  variant='outlined'
-                  label={labels.volumeInLiters}
-                  type='number'
-                  value={values.volumeInLiters}
-                  onChange={handleChange}
-                  error={touched.volumeInLiters && !!errors.volumeInLiters}
-                />
-                {touched.volumeInLiters && errors.volumeInLiters && (
-                  <div data-cy='code-error' className={styles.error}>
-                    {errors.volumeInLiters}
-                  </div>
-                )}
-                <TextField
-                  data-cy='weightInKg'
-                  id='weightInKg'
-                  className={styles.textField}
-                  variant='outlined'
-                  label={labels.weightInKg}
-                  type='number'
-                  value={values.weightInKg}
-                  onChange={handleChange}
-                  error={touched.weightInKg && !!errors.weightInKg}
-                />
-                {touched.weightInKg && errors.weightInKg && (
-                  <div data-cy='code-error' className={styles.error}>
-                    {errors.weightInKg}
-                  </div>
-                )}
-                <TextField
-                  data-cy='additionalPrice'
-                  id='additionalPrice'
-                  className={styles.textField}
-                  variant='outlined'
-                  label={labels.additionalPrice}
-                  type='number'
-                  value={values.additionalPrice}
-                  onChange={handleChange}
-                  error={touched.additionalPrice && !!errors.additionalPrice}
-                />
-                {touched.additionalPrice && errors.additionalPrice && (
-                  <div data-cy='code-error' className={styles.error}>
-                    {errors.additionalPrice}
-                  </div>
-                )}
+                {sizeList.map((item) => (
+                  <>
+                    <TextField
+                      data-cy={item}
+                      id={item}
+                      className={styles.textField}
+                      variant='outlined'
+                      label={labels[item]}
+                      value={values[item]}
+                      onChange={handleChange}
+                      error={touched[item] && !!errors[item]}
+                    />
+                    {touched[item] && errors[item] && (
+                      <div data-cy='code-error' className={styles.error}>
+                        {errors[item]}
+                      </div>
+                    )}
+                  </>
+                ))}
               </Paper>
             </div>
-            <div className={styles.nameBlok}>
+            <div className={styles.contentWrapper}>
               <FormControl
                 variant='outlined'
                 className={`${styles.formControl} 
