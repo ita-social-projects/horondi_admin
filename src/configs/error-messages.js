@@ -98,7 +98,9 @@ export const sizeErrorMessages = {
   VALIDATION_ERROR: `Поле обовязкове`,
   PRICE_VALIDATION_ERROR: `Тільки цифри`,
   NOT_UA_INPUT_MESSAGE: `Введіть ім'я розміру українською`,
-  NOT_EN_INPUT_MESSAGE: `Введіть ім'я розміру англійською`
+  NOT_EN_INPUT_MESSAGE: `Введіть ім'я розміру англійською`,
+  NO_NUMBER_TYPE_MESSAGE: `Повинно містити число`,
+  NO_STRING_TYPE_MESSAGE: `Повинно містити букви`
 };
 
 export const colorErrorMessages = {
