@@ -23,6 +23,16 @@ export const useCommonStyles = makeStyles((theme) => ({
       fontSize: theme.spacing(2)
     }
   },
+  sizeTitle: {
+    marginBottom: '10px',
+    marginLeft: '25px',
+    fontSize: 24,
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold',
+    '@media (max-width: 375px)': {
+      fontSize: theme.spacing(2)
+    }
+  },
   tabs: {
     paddingLeft: 0,
     paddingRight: 0,

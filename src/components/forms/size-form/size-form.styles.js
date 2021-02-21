@@ -72,6 +72,10 @@ export const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap'
   },
   contentWrapper: {
-    marginLeft: '30px'
+    marginLeft: '25px',
+    marginRight: '25px'
+  },
+  buttonsWrapper: {
+    marginLeft: '25px'
   }
 }));

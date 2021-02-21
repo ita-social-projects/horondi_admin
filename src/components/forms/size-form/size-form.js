@@ -25,7 +25,7 @@ import purposeEnum from '../../../configs/sizes-enum';
 
 const { selectTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
-const {materialUiLabels} = config;
+const { materialUiLabels } = config;
 
 function SizeForm({ id, size }) {
   const styles = useStyles();
@@ -81,14 +81,14 @@ function SizeForm({ id, size }) {
     <div className={styles.container}>
       <Typography
         variant={materialUiLabels.typographyVariantH1}
-        className={commonStyles.materialTitle}
+        className={commonStyles.sizeTitle}
       >
         {config.titles.sizesTitles.sizeAdjustMenu}
       </Typography>
       <form className={styles.sizeForm} onSubmit={handleSubmit}>
         <Grid item xs={12}>
           <div className={styles.wrapper}>
-            <div className={styles.nameBlok}>
+            <div className={styles.contentWrapper}>
               <Paper className={styles.sizeItemAdd}>
                 {sizeList[0].map((item) => (
                   <>
@@ -167,23 +167,22 @@ function SizeForm({ id, size }) {
                 ))}
               </Paper>
               <CheckboxOptions options={checkboxes} />
-              <div className={styles.controlsBlock}>
-                <div>
-                  <BackButton />
-                  <SaveButton
-                    className={styles.saveButton}
-                    data-cy={materialUiLabels.save}
-                    type={materialUiLabels.types.submit}
-                    title={config.buttonTitles.SAVE_SIZE_TITLE}
-                    values={values}
-                    errors={errors}
-                  />
-                </div>
-              </div>
+              <div className={styles.controlsBlock} />
             </div>
           </div>
         </Grid>
       </form>
+      <div className={styles.buttonsWrapper}>
+        <BackButton />
+        <SaveButton
+          className={styles.saveButton}
+          data-cy={materialUiLabels.save}
+          type={materialUiLabels.types.submit}
+          title={config.buttonTitles.SAVE_SIZE_TITLE}
+          values={values}
+          errors={errors}
+        />
+      </div>
     </div>
   );
 }
