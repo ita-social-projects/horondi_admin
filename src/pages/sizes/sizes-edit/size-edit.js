@@ -20,7 +20,7 @@ const SizeEdit = ({ id }) => {
   if (loading) {
     return <LoadingBar />;
   }
-
+  console.log(size);
   return (
     <div className={styles.container}>
       {size !== null ? <SizeForm id={id} size={size} /> : null}

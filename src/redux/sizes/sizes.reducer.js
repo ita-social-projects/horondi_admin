@@ -10,7 +10,7 @@ import {
 
 export const selectSizes = ({ Sizes }) => ({
   sizesList: Sizes.list,
-  loading: Sizes.sizeLoading,
+  loading: Sizes.sizesLoading,
   size: Sizes.size
 });
 
@@ -18,7 +18,7 @@ export const initialState = {
   list: [],
   size: null,
   showSizeDialogWindow: false,
-  sizeLoading: false,
+  sizesLoading: false,
   sizeError: null
 };
 

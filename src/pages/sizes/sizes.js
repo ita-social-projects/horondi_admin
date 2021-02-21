@@ -4,6 +4,7 @@ import { Typography, Button } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 
+import _ from 'lodash';
 import { useCommonStyles } from '../common.styles';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { getSizes, deleteSize } from '../../redux/sizes/sizes.actions';
@@ -14,13 +15,13 @@ import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { sizesSelectorWithPagination } from '../../redux/selectors/sizes.selector';
 
-const map = require('lodash/map');
-
 const tableTitles = config.tableHeadRowTitles.sizes.sizesPageTitles;
+const {materialUiLabels} = config;
+const labels = config.labels.sizePageLabels;
 const pathToAddSizePage = config.routes.pathToAddSize;
 const { CREATE_SIZE_TITLE } = config.buttonTitles;
 const { DELETE_SIZE_MESSAGE, NO_SIZES_MESSAGE } = config.messages;
-const { AVALIABLE_TEXT, UNAVALIABLE_TEXT } = config.sizesAvailableVariants;
+const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.sizesAvailableVariants;
 
 const Sizes = () => {
   const dispatch = useDispatch();
@@ -46,14 +47,14 @@ const Sizes = () => {
   if (loading) {
     return <LoadingBar />;
   }
-  const sizeItems = map(sizesList, (size) => (
+  const sizeItems = _.map(sizesList, (size) => (
     <TableContainerRow
       showAvatar={false}
       showEdit
       showDelete
       name={size.simpleName[0].value}
       size={size.name}
-      available={size.available ? AVALIABLE_TEXT : UNAVALIABLE_TEXT}
+      available={size.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       id={size._id}
       key={size._id}
       deleteHandler={() => {
@@ -69,17 +70,17 @@ const Sizes = () => {
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
         <Typography
-          variant='h1'
+          variant={materialUiLabels.typographyVariantH1}
           className={commonStyles.materialTitle}
-          data-cy='sizes-header'
+          data-cy={labels.sizesHeader}
         >
           {config.titles.sizesTitles.mainPageTitle}
         </Typography>
         <Button
-          id='add-sizes'
+          id={labels.addSizes}
           component={Link}
-          variant='contained'
-          color='primary'
+          variant={materialUiLabels.contained}
+          color={materialUiLabels.primary}
           to={pathToAddSizePage}
         >
           {CREATE_SIZE_TITLE}
@@ -88,7 +89,7 @@ const Sizes = () => {
       {!loading ? (
         <TableContainerGenerator
           pagination
-          data-cy='sizesTable'
+          data-cy={labels.sizesTable}
           count={itemsCount}
           tableTitles={tableTitles || NO_SIZES_MESSAGE}
           tableItems={sizeItems}

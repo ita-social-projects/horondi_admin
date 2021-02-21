@@ -422,17 +422,38 @@ const labels = {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
   },
-  sizeLabels: {
-    heightInCm: 'Висота',
-    widthInCm: 'Ширина',
-    depthInCm: 'Глубина',
-    volumeInLiters: "Об'єм (літри)",
-    weightInKg: 'Вага',
-    additionalPrice: 'Додаткова ціна',
-    simpleNameUa: 'Назва(Укр)',
-    simpleNameEn: 'Назва(Eng)',
-    name: "Ім'я",
-    available: 'Доступний'
-  }
+
+  sizePageLabels: {
+    sizesHeader: 'sizes-header',
+    addSizes: 'add-sizes',
+    sizesTable: 'sizesTable'
+  },
+
+  sizeLabels: [
+    {
+      heightInCm: 'Висота',
+      widthInCm: 'Ширина',
+      depthInCm: 'Глубина',
+      volumeInLiters: "Об'єм (літри)",
+      weightInKg: 'Вага',
+      additionalPrice: 'Додаткова ціна',
+      simpleNameUa: 'Назва(Укр)',
+      simpleNameEn: 'Назва(Eng)',
+      name: "Ім'я",
+      available: 'Доступний'
+    },
+    {
+      heightInCm: 'heightInCm',
+      widthInCm: 'widthInCm',
+      depthInCm: 'depthInCm',
+      volumeInLiters: 'volumeInLiters',
+      weightInKg: 'weightInKg',
+      additionalPrice: 'additionalPrice',
+      simpleNameUa: 'simpleNameUa',
+      simpleNameEn: 'simpleNameUa',
+      name: 'name',
+      available: 'available'
+    }
+  ]
 };
 export default labels;

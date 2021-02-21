@@ -6,6 +6,7 @@ import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
 import statuses from './statuses';
 import filterLabels from './filter-labels';
+import materialUiLabels from './material-ui-labels';
 import {
   loginErrorMessages,
   colorErrorMessages,
@@ -90,8 +91,8 @@ export const config = {
     countPerPage: 6
   },
   sizesAvailableVariants: {
-    AVALIABLE_TEXT: 'Доступний',
-    UNAVALIABLE_TEXT: 'Відсутній'
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Відсутній'
   },
 
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
@@ -202,6 +203,7 @@ export const config = {
   paginationInputErrorMessages,
   commentErrorMessages,
   filterLabels,
+  materialUiLabels,
   sizeErrorMessages
 };
 export const inputTypes = {

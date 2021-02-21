@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Grid, Paper } from '@material-ui/core';
+import { TextField, Grid, Paper, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import { useFormik } from 'formik';
 
+import { useCommonStyles } from '../../../pages/common.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import {
@@ -24,9 +25,11 @@ import purposeEnum from '../../../configs/sizes-enum';
 
 const { selectTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
+const {materialUiLabels} = config;
 
 function SizeForm({ id, size }) {
   const styles = useStyles();
+  const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
   const sizeList = createSizeNamelist();
@@ -61,13 +64,13 @@ function SizeForm({ id, size }) {
 
   const checkboxes = [
     {
-      id: 'available',
-      dataCy: 'available',
+      id: labels[1].avaliable,
+      dataCy: labels[1].avaliable,
       value: values.available,
       checked: values.available,
-      color: 'primary',
-      label: labels.available,
-      handler: () => setFieldValue('available', !values.available)
+      color: materialUiLabels.primary,
+      label: labels[0].available,
+      handler: () => setFieldValue(labels[1].available, !values.available)
     }
   ];
 
@@ -76,6 +79,12 @@ function SizeForm({ id, size }) {
   }
   return (
     <div className={styles.container}>
+      <Typography
+        variant={materialUiLabels.typographyVariantH1}
+        className={commonStyles.materialTitle}
+      >
+        {config.titles.sizesTitles.sizeAdjustMenu}
+      </Typography>
       <form className={styles.sizeForm} onSubmit={handleSubmit}>
         <Grid item xs={12}>
           <div className={styles.wrapper}>
@@ -87,15 +96,18 @@ function SizeForm({ id, size }) {
                       data-cy={item}
                       id={item}
                       className={styles.textField}
-                      variant='outlined'
-                      type='number'
-                      label={labels[item]}
+                      variant={materialUiLabels.outlined}
+                      type={materialUiLabels.types.number}
+                      label={labels[0][item]}
                       value={values[item]}
                       onChange={handleChange}
                       error={touched[item] && !!errors[item]}
                     />
                     {touched[item] && errors[item] && (
-                      <div data-cy='code-error' className={styles.error}>
+                      <div
+                        data-cy={materialUiLabels.codeError}
+                        className={styles.error}
+                      >
                         {errors[item]}
                       </div>
                     )}
@@ -105,20 +117,22 @@ function SizeForm({ id, size }) {
             </div>
             <div className={styles.contentWrapper}>
               <FormControl
-                variant='outlined'
+                variant={materialUiLabels.outlined}
                 className={`${styles.formControl} 
                 ${styles.purposeSelect}`}
               >
-                <InputLabel htmlFor='outlined-age-native-simple'>
+                <InputLabel htmlFor={materialUiLabels.outlinedAgeNativeSimple}>
                   {selectTitle}
                 </InputLabel>
                 <Select
-                  data-cy='name'
-                  id='name'
+                  data-cy={labels[1].name}
+                  id={labels[1].name}
                   native
                   value={values.name}
-                  onChange={(e) => setFieldValue('name', e.target.value)}
-                  label={labels.name}
+                  onChange={(e) =>
+                    setFieldValue(labels[1].name, e.target.value)
+                  }
+                  label={selectTitle}
                 >
                   {Object.values(purposeEnum).map((value) => (
                     <option key={value} value={value}>
@@ -134,15 +148,18 @@ function SizeForm({ id, size }) {
                       data-cy={item}
                       id={item}
                       className={styles.textField}
-                      variant='outlined'
-                      type='string'
-                      label={labels[item]}
+                      variant={materialUiLabels.outlined}
+                      type={materialUiLabels.types.string}
+                      label={labels[0][item]}
                       value={values[item]}
                       onChange={handleChange}
                       error={touched[item] && !!errors[item]}
                     />
                     {touched[item] && errors[item] && (
-                      <div data-cy='code-error' className={styles.error}>
+                      <div
+                        data-cy={materialUiLabels.codeError}
+                        className={styles.error}
+                      >
                         {errors[item]}
                       </div>
                     )}
@@ -155,8 +172,8 @@ function SizeForm({ id, size }) {
                   <BackButton />
                   <SaveButton
                     className={styles.saveButton}
-                    data-cy='save'
-                    type='submit'
+                    data-cy={materialUiLabels.save}
+                    type={materialUiLabels.types.submit}
                     title={config.buttonTitles.SAVE_SIZE_TITLE}
                     values={values}
                     errors={errors}

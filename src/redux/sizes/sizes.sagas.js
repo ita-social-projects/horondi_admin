@@ -29,8 +29,6 @@ import {
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
-import { updatePagination } from '../table/table.actions';
-
 const {
   SUCCESS_DELETE_STATUS,
   SUCCESS_ADD_STATUS,
@@ -76,9 +74,8 @@ export function* handleSizeUpdate({ payload }) {
   try {
     yield put(setSizesLoading(true));
     yield call(updateSize, id, newSize);
-    yield put(setSizesLoading(false));
-    yield put(push(config.routes.pathToSizes));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    yield put(push(config.routes.pathToSizes));
   } catch (error) {
     yield call(handleSizesError, error);
   }
@@ -90,7 +87,6 @@ export function* handleSizeDelete({ payload }) {
 
     yield call(deleteSize, payload);
     yield put(removeSizeFromState(payload));
-    yield put(updatePagination());
     yield put(setSizesLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {

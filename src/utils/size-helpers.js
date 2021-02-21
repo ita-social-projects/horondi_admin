@@ -94,7 +94,7 @@ export const createSize = (data) => ({
 });
 
 export const getSizeInitialValues = (size) => ({
-  name: size.name || 'M',
+  name: size.name || '',
   simpleNameUa: size.simpleName[0].value || '',
   simpleNameEn: size.simpleName[1].value || '',
   heightInCm: size.heightInCm || '',
