@@ -13,6 +13,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import { selectModelAndTable } from '../../redux/selectors/model.selectors';
+import { getSizes } from '../../redux/sizes/sizes.actions';
 
 const map = require('lodash/map');
 
@@ -34,6 +35,10 @@ const ModelPage = () => {
   );
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSizes());
+  }, []);
 
   useEffect(() => {
     dispatch(

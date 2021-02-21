@@ -9,7 +9,8 @@ import {
   Select,
   FormControl,
   InputLabel,
-  Avatar, Button
+  Avatar,
+  Button
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Image } from '@material-ui/icons';
@@ -28,6 +29,8 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { getCategories } from '../../../redux/categories/categories.actions';
 import LanguagePanel from '../language-panel';
+import SizesFormModal from '../size-form/size-modal/index';
+// import { getSizes} from '../../../redux/sizes/sizes.actions';
 
 const { languages } = config;
 const {
@@ -46,7 +49,7 @@ const {
   priority
 } = config.labels.model;
 
-const {IMG_URL} = config;
+const { IMG_URL } = config;
 
 const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
 
@@ -63,10 +66,10 @@ const ModelForm = ({ model, id, isEdit }) => {
   } = useModelHandlers();
 
   useEffect(() => {
-    if(!isEdit){
-      dispatch(getCategories())
+    if (!isEdit) {
+      dispatch(getCategories());
     }
-  },[])
+  }, []);
 
   const modelValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
@@ -135,7 +138,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
-  const checkboxes =(checkBoxName, label)=>[
+  const checkboxes = (checkBoxName, label) => [
     {
       id: `${checkBoxName}`,
       dataCy: `${checkBoxName}`,
@@ -143,7 +146,8 @@ const ModelForm = ({ model, id, isEdit }) => {
       checked: values[`${checkBoxName}`],
       color: 'primary',
       label,
-      handler: () => setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
+      handler: () =>
+        setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
     }
   ];
 
@@ -158,13 +162,13 @@ const ModelForm = ({ model, id, isEdit }) => {
       setUpload(e.target.files[0]);
     }
   };
-  const handleConstructor=()=>{
+  const handleConstructor = () => {
     dispatch(push(`/constructor/${id}`));
-  }
+  };
 
   const inputs = [
     { label: name, name: 'name' },
-    { label: description, name: 'description', isEditor:true },
+    { label: description, name: 'description', isEditor: true }
   ];
   const inputOptions = {
     errors,
@@ -177,17 +181,20 @@ const ModelForm = ({ model, id, isEdit }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} autoComplete='off'>
-        <CheckboxOptions options={checkboxes('show', show )} />
-        <CheckboxOptions options={checkboxes('availableForConstructor', availableForConstructor )} />
+        <CheckboxOptions options={checkboxes('show', show)} />
+        <CheckboxOptions
+          options={checkboxes(
+            'availableForConstructor',
+            availableForConstructor
+          )}
+        />
 
         <Grid item xs={12}>
           <Paper className={styles.modelItemUpdate}>
-            <span className={styles.imageUpload}>
-              {avatarText}
-            </span>
+            <span className={styles.imageUpload}>{avatarText}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer handler={handleImageLoad} />
-              <Avatar src={modelImage || `${IMG_URL}${model.images.thumbnail}`} >
+              <Avatar src={modelImage || `${IMG_URL}${model.images.thumbnail}`}>
                 <Image />
               </Avatar>
             </div>
@@ -217,7 +224,6 @@ const ModelForm = ({ model, id, isEdit }) => {
                 <div className={styles.inputError}>{errors.category}</div>
               )}
             </FormControl>
-
             <TextField
               id='priority'
               type='number'
@@ -233,6 +239,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               <div className={styles.inputError}>{errors.priority}</div>
             )}
           </Paper>
+          <SizesFormModal />
         </Grid>
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
@@ -246,15 +253,17 @@ const ModelForm = ({ model, id, isEdit }) => {
           values={values}
           errors={errors}
         />
-        {isEdit?<Button
-          data-cy='constructor'
-          className={styles.saveButton}
-          onClick={handleConstructor}
-          color='secondary'
-          variant='contained'
-        >
-          {MODEL_CONSTRUCTOR}
-        </Button>:null}
+        {isEdit ? (
+          <Button
+            data-cy='constructor'
+            className={styles.saveButton}
+            onClick={handleConstructor}
+            color='secondary'
+            variant='contained'
+          >
+            {MODEL_CONSTRUCTOR}
+          </Button>
+        ) : null}
       </form>
     </div>
   );
