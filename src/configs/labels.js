@@ -433,7 +433,7 @@ const labels = {
     {
       heightInCm: 'Висота',
       widthInCm: 'Ширина',
-      depthInCm: 'Глубина',
+      depthInCm: 'Глибина',
       volumeInLiters: "Об'єм (літри)",
       weightInKg: 'Вага',
       additionalPrice: 'Додаткова ціна',
