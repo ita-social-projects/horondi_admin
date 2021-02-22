@@ -68,14 +68,7 @@ export const formSchema = Yup.object().shape({
 });
 
 export const createSizeNamelist = () => [
-  [
-    'heightInCm',
-    'widthInCm',
-    'depthInCm',
-    'volumeInLiters',
-    'weightInKg',
-    'additionalPrice'
-  ],
+  ['heightInCm', 'widthInCm', 'depthInCm', 'volumeInLiters', 'weightInKg'],
   ['simpleNameUa', 'simpleNameEn']
 ];
 

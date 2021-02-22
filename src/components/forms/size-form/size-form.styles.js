@@ -52,10 +52,6 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: 20
   },
 
-  controlsBlock: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
   inputError: {
     color: theme.palette.error.main,
     padding: '0 5px'

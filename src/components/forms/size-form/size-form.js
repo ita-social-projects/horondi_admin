@@ -167,8 +167,28 @@ function SizeForm({ id, size }) {
                   </>
                 ))}
               </Paper>
+              <Paper className={styles.sizeItemAdd}>
+                <TextField
+                  data-cy={labels[1].additionalPrice}
+                  id={labels[1].additionalPrice}
+                  className={styles.textField}
+                  variant={materialUiLabels.outlined}
+                  type={materialUiLabels.types.number}
+                  label={labels[1].additionalPrice}
+                  value={values.additionalPrice}
+                  onChange={handleChange}
+                  error={touched.additionalPrice && !!errors.additionalPrice}
+                />
+                {touched.additionalPrice && errors.additionalPrice && (
+                  <div
+                    data-cy={materialUiLabels.codeError}
+                    className={styles.error}
+                  >
+                    {errors.additionalPrice}
+                  </div>
+                )}
+              </Paper>
               <CheckboxOptions options={checkboxes} />
-              <div className={styles.controlsBlock} />
             </div>
           </div>
         </Grid>
