@@ -425,12 +425,22 @@ const labels = {
 
   sizePageLabels: {
     sizesHeader: 'sizes-header',
-    addSizes: 'add-sizes',
     sizesTable: 'sizesTable'
   },
 
-  sizeLabels: [
-    {
+  sizeInputData: {
+    sizeMetricData: [
+      'heightInCm',
+      'widthInCm',
+      'depthInCm',
+      'volumeInLiters',
+      'weightInKg'
+    ],
+    sizePricesData: ['simpleNameUa', 'simpleNameEn']
+  },
+
+  sizeLabels: {
+    ua: {
       heightInCm: 'Висота',
       widthInCm: 'Ширина',
       depthInCm: 'Глибина',
@@ -442,7 +452,7 @@ const labels = {
       name: "Ім'я",
       available: 'Доступний'
     },
-    {
+    en: {
       heightInCm: 'heightInCm',
       widthInCm: 'widthInCm',
       depthInCm: 'depthInCm',
@@ -454,6 +464,6 @@ const labels = {
       name: 'name',
       available: 'available'
     }
-  ]
+  }
 };
 export default labels;

@@ -11,12 +11,11 @@ import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import {
   createSize,
-  createSizeNamelist,
   getSizeInitialValues,
   sizePropTypes,
-  sizeDefaultProps,
-  formSchema
+  sizeDefaultProps
 } from '../../../utils/size-helpers';
+import { formSchema } from '../../../validations/sizes/size-form-validation';
 import { useStyles } from './size-form.styles';
 import { addSize, updateSize } from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
@@ -26,15 +25,13 @@ import purposeEnum from '../../../configs/sizes-enum';
 
 const { selectTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
-const { materialUiLabels } = config;
+const sizeInputs = config.labels.sizeInputData;
+const { materialUiConstants } = config;
 
 function SizeForm({ id, size }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
-
-  const sizeList = createSizeNamelist();
-
   const { loading } = useSelector(sizesSelectorWithPagination);
 
   const {
@@ -65,13 +62,13 @@ function SizeForm({ id, size }) {
 
   const checkboxes = [
     {
-      id: labels[1].avaliable,
-      dataCy: labels[1].avaliable,
+      id: 'avaliable',
+      dataCy: labels.en.avaliable,
       value: values.available,
       checked: values.available,
-      color: materialUiLabels.primary,
-      label: labels[0].available,
-      handler: () => setFieldValue(labels[1].available, !values.available)
+      color: materialUiConstants.primary,
+      label: labels.ua.available,
+      handler: () => setFieldValue(labels.en.available, !values.available)
     }
   ];
 
@@ -81,7 +78,7 @@ function SizeForm({ id, size }) {
   return (
     <div className={styles.container}>
       <Typography
-        variant={materialUiLabels.typographyVariantH1}
+        variant={materialUiConstants.typographyVariantH1}
         className={commonStyles.sizeTitle}
       >
         {config.titles.sizesTitles.sizeAdjustMenu}
@@ -91,22 +88,22 @@ function SizeForm({ id, size }) {
           <div className={styles.wrapper}>
             <div className={styles.contentWrapper}>
               <Paper className={styles.sizeItemAdd}>
-                {sizeList[0].map((item) => (
+                {sizeInputs.sizeMetricData.map((item) => (
                   <>
                     <TextField
                       data-cy={item}
                       id={item}
                       className={styles.textField}
-                      variant={materialUiLabels.outlined}
-                      type={materialUiLabels.types.number}
-                      label={labels[0][item]}
+                      variant={materialUiConstants.outlined}
+                      type={materialUiConstants.types.number}
+                      label={labels.ua[item]}
                       value={values[item]}
                       onChange={handleChange}
                       error={touched[item] && !!errors[item]}
                     />
                     {touched[item] && errors[item] && (
                       <div
-                        data-cy={materialUiLabels.codeError}
+                        data-cy={materialUiConstants.codeError}
                         className={styles.error}
                       >
                         {errors[item]}
@@ -118,20 +115,22 @@ function SizeForm({ id, size }) {
             </div>
             <div className={styles.contentWrapper}>
               <FormControl
-                variant={materialUiLabels.outlined}
+                variant={materialUiConstants.outlined}
                 className={`${styles.formControl} 
                 ${styles.purposeSelect}`}
               >
-                <InputLabel htmlFor={materialUiLabels.outlinedAgeNativeSimple}>
+                <InputLabel
+                  htmlFor={materialUiConstants.outlinedAgeNativeSimple}
+                >
                   {selectTitle}
                 </InputLabel>
                 <Select
-                  data-cy={labels[1].name}
-                  id={labels[1].name}
+                  data-cy={labels.en.name}
+                  id='name'
                   native
                   value={values.name}
                   onChange={(e) =>
-                    setFieldValue(labels[1].name, e.target.value)
+                    setFieldValue(labels.en.name, e.target.value)
                   }
                   label={selectTitle}
                 >
@@ -143,22 +142,22 @@ function SizeForm({ id, size }) {
                 </Select>
               </FormControl>
               <Paper className={styles.sizeItemAdd}>
-                {sizeList[1].map((item) => (
+                {sizeInputs.sizePricesData.map((item) => (
                   <>
                     <TextField
                       data-cy={item}
                       id={item}
                       className={styles.textField}
-                      variant={materialUiLabels.outlined}
-                      type={materialUiLabels.types.string}
-                      label={labels[0][item]}
+                      variant={materialUiConstants.outlined}
+                      type={materialUiConstants.types.string}
+                      label={labels.ua[item]}
                       value={values[item]}
                       onChange={handleChange}
                       error={touched[item] && !!errors[item]}
                     />
                     {touched[item] && errors[item] && (
                       <div
-                        data-cy={materialUiLabels.codeError}
+                        data-cy={materialUiConstants.codeError}
                         className={styles.error}
                       >
                         {errors[item]}
@@ -169,19 +168,19 @@ function SizeForm({ id, size }) {
               </Paper>
               <Paper className={styles.sizeItemAdd}>
                 <TextField
-                  data-cy={labels[1].additionalPrice}
-                  id={labels[1].additionalPrice}
+                  data-cy='additionalPrice'
+                  id={labels.en.additionalPrice}
                   className={styles.textField}
-                  variant={materialUiLabels.outlined}
-                  type={materialUiLabels.types.number}
-                  label={labels[1].additionalPrice}
+                  variant={materialUiConstants.outlined}
+                  type={materialUiConstants.types.number}
+                  label={labels.en.additionalPrice}
                   value={values.additionalPrice}
                   onChange={handleChange}
                   error={touched.additionalPrice && !!errors.additionalPrice}
                 />
                 {touched.additionalPrice && errors.additionalPrice && (
                   <div
-                    data-cy={materialUiLabels.codeError}
+                    data-cy={materialUiConstants.codeError}
                     className={styles.error}
                   >
                     {errors.additionalPrice}
@@ -196,8 +195,8 @@ function SizeForm({ id, size }) {
           <BackButton />
           <SaveButton
             className={styles.saveButton}
-            data-cy={materialUiLabels.save}
-            type={materialUiLabels.types.submit}
+            data-cy={materialUiConstants.save}
+            type={materialUiConstants.types.submit}
             title={config.buttonTitles.SAVE_SIZE_TITLE}
             values={values}
             errors={errors}

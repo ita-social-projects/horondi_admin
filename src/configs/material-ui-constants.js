@@ -1,4 +1,4 @@
-const materialUiLabels = {
+const materialUiConstants = {
   outlinedAgeNativeSimple: 'outlined-age-native-simple',
   typographyVariantH1: 'h1',
   contained: 'contained',
@@ -13,4 +13,4 @@ const materialUiLabels = {
   codeError: 'code-error'
 };
 
-export default materialUiLabels;
+export default materialUiConstants;

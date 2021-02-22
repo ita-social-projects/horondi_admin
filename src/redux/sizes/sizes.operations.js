@@ -17,11 +17,6 @@ export const getAllSizes = async () => {
             lang
             value
           }
-          heightInCm
-          widthInCm
-          depthInCm
-          volumeInLiters
-          weightInKg
           available
         }
       }
