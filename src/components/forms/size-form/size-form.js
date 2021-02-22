@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextField, Grid, Paper, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -14,6 +13,8 @@ import {
   createSize,
   createSizeNamelist,
   getSizeInitialValues,
+  sizePropTypes,
+  sizeDefaultProps,
   formSchema
 } from '../../../utils/size-helpers';
 import { useStyles } from './size-form.styles';
@@ -166,75 +167,48 @@ function SizeForm({ id, size }) {
                   </>
                 ))}
               </Paper>
+              <Paper className={styles.sizeItemAdd}>
+                <TextField
+                  data-cy={labels[1].additionalPrice}
+                  id={labels[1].additionalPrice}
+                  className={styles.textField}
+                  variant={materialUiLabels.outlined}
+                  type={materialUiLabels.types.number}
+                  label={labels[1].additionalPrice}
+                  value={values.additionalPrice}
+                  onChange={handleChange}
+                  error={touched.additionalPrice && !!errors.additionalPrice}
+                />
+                {touched.additionalPrice && errors.additionalPrice && (
+                  <div
+                    data-cy={materialUiLabels.codeError}
+                    className={styles.error}
+                  >
+                    {errors.additionalPrice}
+                  </div>
+                )}
+              </Paper>
               <CheckboxOptions options={checkboxes} />
-              <div className={styles.controlsBlock} />
             </div>
           </div>
         </Grid>
+        <div className={styles.buttonsWrapper}>
+          <BackButton />
+          <SaveButton
+            className={styles.saveButton}
+            data-cy={materialUiLabels.save}
+            type={materialUiLabels.types.submit}
+            title={config.buttonTitles.SAVE_SIZE_TITLE}
+            values={values}
+            errors={errors}
+          />
+        </div>
       </form>
-      <div className={styles.buttonsWrapper}>
-        <BackButton />
-        <SaveButton
-          className={styles.saveButton}
-          data-cy={materialUiLabels.save}
-          type={materialUiLabels.types.submit}
-          title={config.buttonTitles.SAVE_SIZE_TITLE}
-          values={values}
-          errors={errors}
-        />
-      </div>
     </div>
   );
 }
 
-SizeForm.propTypes = {
-  id: PropTypes.string,
-  size: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    heightInCm: PropTypes.number,
-    widthInCm: PropTypes.number,
-    depthInCm: PropTypes.number,
-    volumeInLiters: PropTypes.number,
-    weightInKg: PropTypes.number,
-    available: PropTypes.bool,
-    additionalPrice: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.number
-      })
-    ),
-    simpleName: PropTypes.arrayOf(
-      PropTypes.shape({
-        lang: PropTypes.string,
-        value: PropTypes.string
-      })
-    )
-  })
-};
-SizeForm.defaultProps = {
-  id: '',
-  size: {
-    _id: '',
-    name: '',
-    simpleName: [
-      { lang: '', value: '' },
-      { lang: '', value: '' }
-    ],
-    heightInCm: '',
-    widthInCm: '',
-    depthInCm: '',
-    volumeInLiters: '',
-    weightInKg: '',
-    available: '',
-    additionalPrice: [
-      {
-        value: 0
-      },
-      {
-        value: 0
-      }
-    ]
-  }
-};
+SizeForm.propTypes = sizePropTypes;
+SizeForm.defaultProps = sizeDefaultProps;
 
 export default SizeForm;
