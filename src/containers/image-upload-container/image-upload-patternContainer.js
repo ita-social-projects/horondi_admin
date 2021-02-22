@@ -9,7 +9,7 @@ const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
   return (
     <div>
       <label htmlFor={id} data-cy='pattern-image'>
-        <img className={style.image} src={src} alt='pattern' />
+        <img className={style.image} src={src || upload} alt='pattern' />
         <input
           style={{ display: 'none' }}
           id={id}
