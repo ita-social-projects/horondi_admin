@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { MenuItem, Select } from '@material-ui/core';
 import moment from 'moment';
 import { push } from 'connected-react-router';
 import Typography from '@material-ui/core/Typography';
-
+import Button from '@material-ui/core/Button';
 import { useStyles } from './orders-page.styles';
 import { useCommonStyles } from '../common.styles';
-import { getOrderList } from '../../redux/orders/orders.actions';
+import { getOrderList, deleteOrder } from '../../redux/orders/orders.actions';
 import Status from './Status/Status';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
-import StandardButton from '../../components/buttons/standard-button';
-
 import { config } from '../../configs';
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+
+const { ADD_ORDER } = config.buttonTitles;
+const pathToOrdersAddPage = config.routes.pathToOrderAdd;
+const { REMOVE_ORDER_MESSAGE } = config.messages;
 
 const OrdersPage = () => {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const [status, setStatus] = useState('All');
 
@@ -51,28 +57,34 @@ const OrdersPage = () => {
         }
       })
     );
-  }, [dispatch, rowsPerPage, currentPage, status]);
+  }, [dispatch, rowsPerPage, currentPage, status, orders]);
+
+  const ordersDeleteHandler = (id) => {
+    const removeOrders = () => {
+      dispatch(closeDialog());
+      dispatch(deleteOrder(id));
+    };
+    openSuccessSnackbar(removeOrders, REMOVE_ORDER_MESSAGE);
+  };
 
   const orderItems =
     orders &&
     orders.map((order) => (
       <TableContainerRow
         key={order._id}
-        orderId={order._id}
+        orderId={order.orderNumber}
         date={moment.unix(order.dateOfCreation / 1000).format(' DD.MM.YYYY ')}
         totalPrice={`${order.totalItemsPrice[0].value} ₴`}
         deliveryPrice={`${
           order.totalPriceToPay[0].value - order.totalItemsPrice[0].value
         } ₴`}
         status={<Status status={order.status} />}
-        button={
-          <StandardButton
-            title={config.buttonTitles.ORDER_DETAILS}
-            onClickHandler={() => dispatch(push(`/orders/${order._id}`))}
-          />
-        }
-        showDelete={false}
-        showEdit={false}
+        editHandler={() => {
+          dispatch(push(`/orders/${order._id}`));
+        }}
+        deleteHandler={() => {
+          ordersDeleteHandler(order._id);
+        }}
         showAvatar={false}
       />
     ));
@@ -87,6 +99,15 @@ const OrdersPage = () => {
           <Select value={status} onChange={(e) => setStatus(e.target.value)}>
             {statusList}
           </Select>
+          <Button
+            id='add-order'
+            component={Link}
+            to={pathToOrdersAddPage}
+            variant='contained'
+            color='primary'
+          >
+            {ADD_ORDER}
+          </Button>
         </div>
       </div>
       <div className={styles.orderCount}>

@@ -292,8 +292,8 @@ const labels = {
     city: 'Місто',
     zipcode: 'Поштовий індекс',
     street: 'Вулиця',
-    buildingNumber: 'Номер будинку',
-    appartment: 'Номер квартири'
+    house: 'Будинок',
+    flat: 'Квартира'
   },
   sizeValues: {
     heightInCm: 'Висота (см.)',
@@ -382,16 +382,18 @@ const labels = {
     invoiceNumberLabel: 'Номер накладної',
     warehouseNumberLabel: 'Номер відділення: ',
     sentAtLabel: 'Відправлено о:',
-    deliveryCostLabel: 'Вартість доставки'
+    deliveryCostLabel: 'Вартість доставки',
+    courierOfficeNameLabel: 'Номер відділення'
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
     paymentMethodLabel: 'Метод оплати:',
+    paymentStatusLabel: 'Статус оплати:',
     isPaidLabel: 'Оплачено:',
     cancellationReasonLabel: 'Причина скасування',
     creationDateLabel: 'Дата створення:',
     updateDateLabel: 'Дата оновлення:',
-    adminCommentLabel: 'Залишити коментар'
+    userCommentLabel: 'Коментар користувача'
   },
   productsLabels: {
     notListed: 'Не вказано',

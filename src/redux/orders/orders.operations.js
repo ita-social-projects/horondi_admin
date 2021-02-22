@@ -3,244 +3,180 @@ import { getItems, setItems, client } from '../../utils/client';
 
 export const getOrderById = (id) => {
   const query = `
-    query getOrder($id:ID!){
-  getOrderById(id: $id) {
-    ...on Order {
-      _id
-      status
-      user {
-        firstName
-        lastName
-        patronymicName
-        email
-        phoneNumber
-      }
-      dateOfCreation
-      lastUpdatedDate
-      adminComment
-      userComment
-      cancellationReason
-      delivery {
-        sentOn
-        sentBy
-        invoiceNumber
-        courierOffice
-        byCourier
-        cost {
-          currency
-          value
-        }
-      }
-      address {
-        country
-        region
-        city
-        zipcode
-        street
-        buildingNumber
-        appartment
-      }
-      items {
-        name {
-          lang
-          value
-        }
-        category{
-          lang
-          value
-        }
-        subcategory{
-          lang
-          value
-        }
-        model{
-          lang
-          value
-        }
-        colors{
-          lang
-          value
-        }
-        pattern{
-          lang
-          value
-        }
-        closure{
-          lang
-          value
-        }
-        closureColor
-        size{
-          heightInCm
-          widthInCm
-          depthInCm
-          volumeInLiters
-          weightInKg
-          available
-          additionalPrice {
-            value
-            currency
-          }
-          name
-        }
-        bottomMaterial{
-          lang
-          value
-        }
-        bottomColor{
-          lang
-          value
-        }
-        additions{
-          lang
-          value
-        }
-        actualPrice{
-          currency
-          value
-        }
-        quantity
-      }
-      totalItemsPrice {
-        currency
-        value
-      }
-      totalPriceToPay {
-        currency
-        value
-      }
-      isPaid
-      paymentMethod
-    }
-    ...on Error {
-      statusCode
-      message
-    }
-  }
-}
+		query ($id:ID!){
+			getOrderById(id: $id) {
+				...on Order {
+					status
+					user {
+						firstName
+						lastName
+						email
+						phoneNumber
+					}
+					userComment
+					delivery {
+						sentOn
+						sentBy
+						invoiceNumber
+						courierOffice
+						city
+						street
+						house
+						flat
+						byCourier
+						cost {
+							currency
+							value
+						}
+					}
+					items {
+						product {
+							_id
+							basePrice {
+								currency
+								value
+							}
+							name {
+								lang
+								value
+							}
+							description {
+								lang
+								value
+							}  
+						}
+						model {
+							_id
+							category {
+								_id
+								name {
+									value
+								}
+							}
+						}
+						options {
+							size {
+								_id
+								name
+							}
+							sidePocket
+						}
+						quantity
+						 constructorBasics {
+							_id
+							name {
+								lang
+								value
+							}
+						}
+						constructorPattern {
+							_id
+							name{
+								value
+							}
+						}
+						constructorFrontPocket {
+							_id
+							name {
+								value
+							}
+						}
+						constructorBottom {
+							_id
+							name {
+								value
+							}
+						}
+						isFromConstructor
+						fixedPrice {
+							currency
+							value
+						}
+					}
+					paymentMethod
+					paymentStatus
+					isPaid
+				}
+				...on Error {
+					statusCode
+					message
+				}
+			}
+		}
   `;
   return getItems(query, { id });
 };
 
-export const updateOrder = (order) => {
+export const updateOrder = (order, id) => {
   const query = `
-    mutation updateOrder($order:OrderInput!){
-  updateOrder(order:$order) {
-  ...on Order {
-      _id
-      status
-      user {
-        firstName
-        lastName
-        patronymicName
-        email
-        phoneNumber
-      }
-      dateOfCreation
-      lastUpdatedDate
-      adminComment
-      userComment
-      cancellationReason
-      delivery {
-        sentOn
-        sentBy
-        invoiceNumber
-        courierOffice
-        byCourier
-        cost {
-          currency
-          value
-        }
-      }
-      address {
-        country
-        region
-        city
-        zipcode
-        street
-        buildingNumber
-        appartment
-      }
-      items {
-        name {
-          lang
-          value
-        }
-        category{
-          lang
-          value
-        }
-        subcategory{
-          lang
-          value
-        }
-        model{
-          lang
-          value
-        }
-        colors{
-          lang
-          value
-        }
-        pattern{
-          lang
-          value
-        }
-        closure{
-          lang
-          value
-        }
-        closureColor
-        size{
-          heightInCm
-          widthInCm
-          depthInCm
-          volumeInLiters
-          weightInKg
-          available
-          additionalPrice {
-            value
-            currency
-          }
-          name
-        }
-        bottomMaterial{
-          lang
-          value
-        }
-        bottomColor{
-          lang
-          value
-        }
-        additions{
-          lang
-          value
-        }
-        actualPrice{
-          currency
-          value
-        }
-        quantity
-      }
-      totalItemsPrice {
-        currency
-        value
-      }
-      totalPriceToPay {
-        currency
-        value
-      }
-      isPaid
-      paymentMethod
-    }
-    ...on Error {
-      statusCode
-      message
-    }
-  }
-}
+	mutation ($order: OrderInput!, $id:ID!) {
+		updateOrder (order: $order, id: $id) {
+			...on Order {
+				_id
+				status
+				user {
+					firstName
+					lastName
+					email
+					phoneNumber
+				}
+				userComment
+				delivery {
+					sentOn
+					sentBy
+					invoiceNumber
+					courierOffice
+					city
+					street
+					house
+					flat
+					byCourier
+					cost {
+						currency
+						value
+					}
+				}
+				items {
+					product {
+						_id
+						basePrice {
+							currency
+							value
+						}
+						name {
+							lang
+							value
+						}
+						description {
+							lang
+							value
+						}  
+					}
+					quantity
+					options {
+						size {
+							_id
+						}
+						sidePocket
+					}
+					isFromConstructor
+					fixedPrice {
+						currency
+						value
+					}
+				}
+				paymentMethod
+				paymentStatus
+				isPaid
+			}
+			...on Error {
+				statusCode
+				message
+			}
+		}
+	}
   `;
-  return setItems(query, { order });
+  return setItems(query, { order, id });
 };
 
 export const getAllOrders = async (skip, limit, filter) => {
@@ -251,6 +187,7 @@ export const getAllOrders = async (skip, limit, filter) => {
           items {
             _id
             status
+            orderNumber
             dateOfCreation
             totalItemsPrice {
               currency
@@ -275,4 +212,35 @@ export const getAllOrders = async (skip, limit, filter) => {
   });
   const { data } = result;
   return data.getAllOrders;
+};
+
+export const deleteOrder = async (id) => {
+  const result = await client.mutate({
+    variables: { id },
+    mutation: gql`
+      mutation($id: ID!) {
+        deleteOrder(id: $id) {
+          ... on Order {
+            _id
+            orderNumber
+            status
+          }
+          ... on Error {
+            statusCode
+            message
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  await client.resetStore();
+
+  if (result.data.deleteOrder.message) {
+    throw new Error(
+      `${result.data.deleteOrder.statusCode} ${result.data.deleteOrder.message}`
+    );
+  }
+
+  return result.data.deleteOrder;
 };

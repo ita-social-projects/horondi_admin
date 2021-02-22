@@ -1,5 +1,6 @@
 const messages = {
   REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+  REMOVE_ORDER_MESSAGE: 'Ви впевнені, що хочете видалити це замовлення?',
   REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
   LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
   DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',

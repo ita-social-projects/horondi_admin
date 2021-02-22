@@ -28,6 +28,11 @@ const OrderItem = ({ id }) => {
     selectedOrder: Orders.selectedOrder,
     orderLoading: Orders.orderLoading
   }));
+
+  useEffect(() => {
+    id && dispatch(getOrder(id));
+  }, [dispatch, id]);
+
   const submitStatus = ['CREATED', 'CONFIRMED'];
 
   const handleTabChange = (e, newValue) => {
@@ -35,17 +40,37 @@ const OrderItem = ({ id }) => {
   };
 
   const handleFormSubmit = (order) => {
+    const items = order.items.map((item) => ({
+      product: item?.product._id,
+      quantity: item.quantity,
+      isFromConstructor: !item.product._id,
+      options: {
+        size: item.options.size._id,
+        sidePocket: item.options.sidePocket
+      }
+    }));
+    const newOrder = {
+      status: order.status,
+      user: order.user,
+      delivery: order.delivery,
+      items,
+      paymentMethod: order.paymentMethod,
+      userComment: order.userComment,
+      isPaid: order.isPaid,
+      paymentStatus: order.paymentStatus
+    };
+    console.log(newOrder);
     if (
-      order.status !== initialValues.status &&
-      !submitStatus.includes(order.status)
+      newOrder.status !== initialValues.status &&
+      !submitStatus.includes(newOrder.status)
     ) {
       const updateOrderSnackbar = () => {
         dispatch(closeDialog());
-        dispatch(updateOrder(order));
+        dispatch(updateOrder(newOrder, id));
       };
       openSuccessSnackbar(updateOrderSnackbar, dialogContent, dialogTitle);
     } else {
-      dispatch(updateOrder(order));
+      dispatch(updateOrder(newOrder, id));
     }
   };
 
@@ -61,12 +86,6 @@ const OrderItem = ({ id }) => {
     initialValues: {},
     onSubmit: handleFormSubmit
   });
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getOrder(id));
-    }
-  }, [dispatch, id]);
 
   useEffect(() => {
     if (selectedOrder) {

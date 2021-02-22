@@ -2,7 +2,8 @@ import {
   SET_ORDER,
   SET_ORDER_LOADING,
   SET_ORDER_ERROR,
-  SET_ORDER_LIST
+  SET_ORDER_LIST,
+  REMOVE_ORDER_FROM_STORE
 } from './orders.types';
 
 export const initialState = {
@@ -39,6 +40,11 @@ const ordersReducer = (state = initialState, action = {}) => {
       ...state,
       list: action.payload
     };
+  case REMOVE_ORDER_FROM_STORE:
+    const orders = state.list.items.filter(
+      (order) => order._id !== action.payload
+    );
+    return { ...state, list: orders };
   default:
     return state;
   }
