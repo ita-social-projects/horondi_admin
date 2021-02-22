@@ -30,7 +30,7 @@ import {
 import { getCategories } from '../../../redux/categories/categories.actions';
 import LanguagePanel from '../language-panel';
 import SizesFormModal from '../size-form/size-modal/index';
-// import { getSizes} from '../../../redux/sizes/sizes.actions';
+import { getSizes } from '../../../redux/sizes/sizes.actions';
 
 const { languages } = config;
 const {
@@ -66,10 +66,14 @@ const ModelForm = ({ model, id, isEdit }) => {
   } = useModelHandlers();
 
   useEffect(() => {
+    dispatch(getSizes());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (!isEdit) {
       dispatch(getCategories());
     }
-  }, []);
+  }, [dispatch]);
 
   const modelValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
