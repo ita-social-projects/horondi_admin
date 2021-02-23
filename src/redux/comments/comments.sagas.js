@@ -36,10 +36,10 @@ import { setItemsCount, updatePagination } from '../table/table.actions';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
-export function* handleCommentsLoad({ payload }) {
+export function* handleCommentsLoad({ payload: { filter, pagination } }) {
   try {
     yield put(setCommentsLoading(true));
-    const comments = yield call(getAllComments, payload.skip, payload.limit);
+    const comments = yield call(getAllComments, filter, pagination);
     yield put(setItemsCount(comments.count));
     yield put(setComments(comments.items));
     yield put(setCommentsLoading(false));

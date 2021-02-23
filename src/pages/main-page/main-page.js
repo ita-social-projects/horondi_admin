@@ -49,8 +49,10 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(
       getComments({
-        limit: rowsPerPage,
-        skip: currentPage * rowsPerPage
+        pagination: {
+          limit: rowsPerPage,
+          skip: currentPage * rowsPerPage
+        }
       })
     );
   }, [dispatch, rowsPerPage, currentPage]);
@@ -66,16 +68,6 @@ const MainPage = () => {
       })
     );
   }, [dispatch, rowsPerPage, currentPage]);
-
-  useEffect(() => {
-    dispatch(
-      getOrderList({
-        filter: {
-          orderStatus: 'CREATED'
-        }
-      })
-    );
-  }, [dispatch]);
 
   const comments = map(list, ({ date, text, user, _id }) => (
     <div key={_id} className={classes.comment}>

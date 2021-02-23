@@ -9,15 +9,15 @@ import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');
 
-const getAllComments = async (skip, limit) => {
+const getAllComments = async (filter, pagination) => {
   const result = await client.query({
     variables: {
-      skip,
-      limit
+      filter,
+      pagination
     },
     query: gql`
-      query($skip: Int, $limit: Int) {
-        getAllComments(skip: $skip, limit: $limit) {
+      query($filter: FilterInputComponent, $pagination: Pagination) {
+        getAllComments(filter: $filter, pagination: $pagination) {
           items {
             _id
             text
