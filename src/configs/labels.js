@@ -421,6 +421,49 @@ const labels = {
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
+  },
+
+  sizePageLabels: {
+    sizesHeader: 'sizes-header',
+    sizesTable: 'sizesTable'
+  },
+
+  sizeInputData: {
+    sizeMetricData: [
+      'heightInCm',
+      'widthInCm',
+      'depthInCm',
+      'volumeInLiters',
+      'weightInKg'
+    ],
+    sizePricesData: ['simpleNameUa', 'simpleNameEn']
+  },
+
+  sizeLabels: {
+    ua: {
+      heightInCm: 'Висота',
+      widthInCm: 'Ширина',
+      depthInCm: 'Глибина',
+      volumeInLiters: "Об'єм (літри)",
+      weightInKg: 'Вага',
+      additionalPrice: 'Додаткова ціна',
+      simpleNameUa: 'Назва(Укр)',
+      simpleNameEn: 'Назва(Eng)',
+      name: "Ім'я",
+      available: 'Доступний'
+    },
+    en: {
+      heightInCm: 'heightInCm',
+      widthInCm: 'widthInCm',
+      depthInCm: 'depthInCm',
+      volumeInLiters: 'volumeInLiters',
+      weightInKg: 'weightInKg',
+      additionalPrice: 'additionalPrice',
+      simpleNameUa: 'simpleNameUa',
+      simpleNameEn: 'simpleNameUa',
+      name: 'name',
+      available: 'available'
+    }
   }
 };
 export default labels;
