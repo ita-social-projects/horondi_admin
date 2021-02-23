@@ -33,7 +33,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const {
     slideImage,
     setSlideImage,
-    tabsValue,
     createSlide,
     upload,
     setUpload
