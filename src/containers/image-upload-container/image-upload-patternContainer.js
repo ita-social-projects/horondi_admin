@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import upload from '../../assets/images/upload.png';
-import { useStyles } from './image-upload-patterContainer.styles';
+import { useStyles } from './image-upload-patternContainer.styles';
 
 const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
   const style = useStyles();
