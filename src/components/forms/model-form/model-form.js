@@ -67,12 +67,7 @@ const ModelForm = ({ model, id, isEdit }) => {
 
   useEffect(() => {
     dispatch(getSizes());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!isEdit) {
-      dispatch(getCategories());
-    }
+    dispatch(getCategories({}));
   }, [dispatch]);
 
   const modelValidationSchema = Yup.object().shape({
