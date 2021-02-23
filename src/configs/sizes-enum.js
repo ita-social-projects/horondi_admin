@@ -1,5 +1,5 @@
 const sizesEnum = {
-  SIZE_XS: 'XSS',
+  SIZE_XS: 'XXS',
   SIZE_S: 'S',
   SIZE_M: 'M',
   SIZE_L: 'L',
