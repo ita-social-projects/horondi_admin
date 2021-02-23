@@ -221,38 +221,43 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           <Grid item xs={12}>
             <Paper className={styles.patternItemUpdate}>
               <div className={styles.imageUploadBlock}>
-                <span className={styles.imageUpload}>
-                  {config.labels.pattern.avatarText}
-                </span>
-                <div className={styles.imageUploadAvatar}>
-                  <ImageUploadPatternContainer
-                    handler={handleLoadMainImage}
-                    src={patternImage}
-                    id='patternImage'
-                  />
-                  {touched.patternImage && errors.patternImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternImage}
-                    </div>
-                  )}
+                <div>
+                  <span className={styles.imageUpload}>
+                    {config.labels.pattern.avatarText}
+                  </span>
+
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPatternContainer
+                      handler={handleLoadMainImage}
+                      src={patternImage}
+                      id='patternImage'
+                    />
+                    {touched.patternImage && errors.patternImage && (
+                      <div className={styles.inputError}>
+                        {errors.patternImage}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <span className={styles.imageUpload}>
-                  {config.labels.pattern.constructorImgText}
-                </span>
+                <div>
+                  <span className={styles.imageUpload}>
+                    {config.labels.pattern.constructorImgText}
+                  </span>
 
-                <div className={styles.imageUploadAvatar}>
-                  <ImageUploadPatternContainer
-                    handler={handleLoadConstructorImage}
-                    src={constructorImg}
-                    id='constructorImg'
-                  />
-                  {touched.patternConstructorImage &&
-                    errors.patternConstructorImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternConstructorImage}
-                    </div>
-                  )}
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPatternContainer
+                      handler={handleLoadConstructorImage}
+                      src={constructorImg}
+                      id='constructorImg'
+                    />
+                    {touched.patternConstructorImage &&
+                      errors.patternConstructorImage && (
+                      <div className={styles.inputError}>
+                        {errors.patternConstructorImage}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <FormControl
