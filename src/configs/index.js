@@ -6,6 +6,7 @@ import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
 import statuses from './statuses';
 import filterLabels from './filter-labels';
+import materialUiConstants from './material-ui-constants';
 import {
   loginErrorMessages,
   colorErrorMessages,
@@ -21,7 +22,8 @@ import {
   constructorErrorMessages,
   statsErrorMessages,
   paginationInputErrorMessages,
-  commentErrorMessages
+  commentErrorMessages,
+  sizeErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -89,8 +91,8 @@ export const config = {
     countPerPage: 6
   },
   sizesAvailableVariants: {
-    AVALIABLE_TEXT: 'Доступний',
-    UNAVALIABLE_TEXT: 'Відсутній'
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Відсутній'
   },
 
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
@@ -200,7 +202,9 @@ export const config = {
   sort,
   paginationInputErrorMessages,
   commentErrorMessages,
-  filterLabels
+  filterLabels,
+  materialUiConstants,
+  sizeErrorMessages
 };
 export const inputTypes = {
   button: 'button',
