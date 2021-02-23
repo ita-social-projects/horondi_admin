@@ -33,5 +33,7 @@ export const inputName = {
   sentByInput: 'delivery.sentBy',
   officeInput: 'delivery.office',
   costInput: 'delivery.cost[0].value',
-  courierInput: 'delivery.byCourier'
+  courierInput: 'delivery.byCourier',
+  isPaidInput: 'isPaid',
+  itemsName: 'items'
 };

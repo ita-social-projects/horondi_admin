@@ -6,6 +6,7 @@ import moment from 'moment';
 import { push } from 'connected-react-router';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+
 import { useStyles } from './orders-page.styles';
 import { useCommonStyles } from '../common.styles';
 import { getOrderList, deleteOrder } from '../../redux/orders/orders.actions';
@@ -13,7 +14,7 @@ import Status from './Status/Status';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
-import { config } from '../../configs';
+import { config, dateFormatOrder } from '../../configs';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
@@ -73,7 +74,7 @@ const OrdersPage = () => {
       <TableContainerRow
         key={order._id}
         orderId={order.orderNumber}
-        date={moment.unix(order.dateOfCreation / 1000).format(' DD.MM.YYYY ')}
+        date={moment.unix(order.dateOfCreation / 1000).format(dateFormatOrder)}
         totalPrice={`${order.totalItemsPrice[0].value} ₴`}
         deliveryPrice={`${
           order.totalPriceToPay[0].value - order.totalItemsPrice[0].value

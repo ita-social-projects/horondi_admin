@@ -7,11 +7,14 @@ import DeliveryDetails from './delivery-details';
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
 import { address, inputName } from '../../../utils/order';
+import materialUiConstants from '../../../configs/material-ui-constants';
+import { dateFormat } from '../../../configs';
 
 const Delivery = ({ data, handleChange }) => {
   const classes = useStyles();
   const { deliveryLabels } = labels;
   const { sentByInput, officeInput, costInput, courierInput } = inputName;
+
   const {
     deliveryMethodLabel,
     byCourierLabel,
@@ -29,20 +32,19 @@ const Delivery = ({ data, handleChange }) => {
         name={sentByInput}
         value={sentBy}
         onChange={handleChange}
-        variant='outlined'
+        variant={materialUiConstants.outlined}
       />
       <TextField
         label={courierOfficeNameLabel}
         name={officeInput}
         value={courierOffice}
         onChange={handleChange}
-        variant='outlined'
+        variant={materialUiConstants.outlined}
       />
       <div className={classes.dateContainer}>
         {sentOn ? (
           <p>
-            {sentAtLabel}{' '}
-            {moment.unix(sentOn / 1000).format(' HH:mm DD/MM/YYYY ')}
+            {sentAtLabel} {moment.unix(sentOn / 1000).format(dateFormat)}
           </p>
         ) : null}
       </div>
@@ -52,7 +54,7 @@ const Delivery = ({ data, handleChange }) => {
           name={costInput}
           value={cost[0].value}
           onChange={handleChange}
-          variant='outlined'
+          variant={materialUiConstants.outlined}
         />
       ) : null}
       <div className={classes.idContainer}>

@@ -109,72 +109,72 @@ export const getOrderById = (id) => {
 
 export const updateOrder = (order, id) => {
   const query = `
-	mutation ($order: OrderInput!, $id:ID!) {
-		updateOrder (order: $order, id: $id) {
-			...on Order {
-				_id
-				status
-				user {
-					firstName
-					lastName
-					email
-					phoneNumber
-				}
-				userComment
-				delivery {
-					sentOn
-					sentBy
-					invoiceNumber
-					courierOffice
-					city
-					street
-					house
-					flat
-					byCourier
-					cost {
-						currency
-						value
+		mutation ($order: OrderInput!, $id:ID!) {
+			updateOrder (order: $order, id: $id) {
+				...on Order {
+					_id
+					status
+					user {
+						firstName
+						lastName
+						email
+						phoneNumber
 					}
-				}
-				items {
-					product {
-						_id
-						basePrice {
+					userComment
+					delivery {
+						sentOn
+						sentBy
+						invoiceNumber
+						courierOffice
+						city
+						street
+						house
+						flat
+						byCourier
+						cost {
 							currency
 							value
 						}
-						name {
-							lang
-							value
-						}
-						description {
-							lang
-							value
-						}  
 					}
-					quantity
-					options {
-						size {
+					items {
+						product {
 							_id
+							basePrice {
+								currency
+								value
+							}
+							name {
+								lang
+								value
+							}
+							description {
+								lang
+								value
+							}  
 						}
-						sidePocket
+						quantity
+						options {
+							size {
+								_id
+							}
+							sidePocket
+						}
+						isFromConstructor
+						fixedPrice {
+							currency
+							value
+						}
 					}
-					isFromConstructor
-					fixedPrice {
-						currency
-						value
-					}
+					paymentMethod
+					paymentStatus
+					isPaid
 				}
-				paymentMethod
-				paymentStatus
-				isPaid
-			}
-			...on Error {
-				statusCode
-				message
+				...on Error {
+					statusCode
+					message
+				}
 			}
 		}
-	}
   `;
   return setItems(query, { order, id });
 };

@@ -1,9 +1,12 @@
 import React from 'react';
 import { Select, MenuItem, Checkbox } from '@material-ui/core';
 import PropTypes from 'prop-types';
+
 import { useStyles } from '../order-item.styles';
 import orders from '../../../configs/orders';
 import labels from '../../../configs/labels';
+import materialUiConstants from '../../../configs/material-ui-constants';
+import { inputName } from '../../../utils/order';
 
 const General = ({ data, handleChange }) => {
   const classes = useStyles();
@@ -49,7 +52,7 @@ const General = ({ data, handleChange }) => {
           name='status'
           value={status}
           onChange={handleChange}
-          variant='outlined'
+          variant={materialUiConstants.outlined}
           defaultValue={statusOptions[0].value}
         >
           {statusOptionElements}
@@ -63,7 +66,7 @@ const General = ({ data, handleChange }) => {
           name='paymentStatus'
           value={paymentStatus}
           onChange={handleChange}
-          variant='outlined'
+          variant={materialUiConstants.outlined}
           defaultValue={paymentStatus}
         >
           {paymentStatusOptionsElements}
@@ -77,7 +80,7 @@ const General = ({ data, handleChange }) => {
           name='paymentMethod'
           value={paymentMethod}
           onChange={handleChange}
-          variant='outlined'
+          variant={materialUiConstants.outlined}
           defaultValue={paymentOptions[0].value}
         >
           {paymentOptionsElements}
@@ -85,7 +88,11 @@ const General = ({ data, handleChange }) => {
       </div>
       <div className={classes.isPaid}>
         <label htmlFor='paymentMethod'>{isPaidLabel}</label>
-        <Checkbox checked={isPaid} name='isPaid' onChange={handleChange} />
+        <Checkbox
+          checked={isPaid}
+          name={inputName.isPaidInput}
+          onChange={handleChange}
+        />
       </div>
     </div>
   );

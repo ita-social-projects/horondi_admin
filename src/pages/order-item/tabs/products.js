@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Modal } from '@material-ui/core';
 import PropTypes from 'prop-types';
+
 import { useStyles } from '../order-item.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
 import tableHeadRowTitles from '../../../configs/table-head-row-titles';
+import { inputName } from '../../../utils/order';
 
 const Products = ({ data, setFieldValue }) => {
   const classes = useStyles();
-
+  const { itemsName } = inputName;
   const { items } = data;
   const { orderProductTitles } = tableHeadRowTitles;
 
@@ -23,7 +25,7 @@ const Products = ({ data, setFieldValue }) => {
 
   const deleteItemHendler = (indexItem) => {
     setFieldValue(
-      'items',
+      { itemsName },
       items.filter((item, index) => index !== indexItem)
     );
   };
