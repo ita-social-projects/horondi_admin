@@ -224,6 +224,7 @@ const Routes = () => {
             exact
             render={({ match }) => <OrderItem id={match.params.id} />}
           />
+          <Route path={routes.pathToOrderAdd} exact component={OrderItem} />
           <Route
             path={routes.pathToHomePageSlides}
             exact

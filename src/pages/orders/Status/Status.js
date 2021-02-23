@@ -11,7 +11,8 @@ const Status = ({ status }) => {
     color = styles.redStatus;
     break;
   }
-  case 'DELIVERED': {
+  case 'DELIVERED':
+  case 'CREATED': {
     color = styles.greenStatus;
     break;
   }
