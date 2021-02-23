@@ -413,9 +413,9 @@ const labels = {
   },
   homePageSlide: {
     image: 'Фото слайду',
-    title: mapToLanguages('Заголовок слайду', 'Slider title'),
+    title: { ua: 'Заголовок слайду', en: 'Slider title' },
     show: 'Доступний',
-    description: 'Опис слайду',
+    description: { ua: 'Опис слайду', en: 'Slide description' },
     link: 'Посилання для переходу'
   },
   lableTitle: {
