@@ -3,15 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: '120px',
     marginTop: '20px'
   },
   sizeForm: {
     '& div': {
       '& div': {
         '& div': {
-          paddingLeft: 0,
-          paddingRight: 0
+          paddingLeft: '0px',
+          paddingRight: '0px'
         }
       }
     }
@@ -20,14 +20,14 @@ export const useStyles = makeStyles((theme) => ({
     width: '400px',
     display: 'flex',
     flexWrap: 'wrap',
-    margin: '20px 0 !important'
+    margin: '20px 0'
   },
   textField: {
     width: '100%',
-    margin: '10px !important',
+    margin: '10px',
     '& div': {
       '& textarea': {
-        padding: '0 1rem !important'
+        padding: '0 1rem'
       }
     }
   },
@@ -47,9 +47,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   container: {
     width: '100%',
-    padding: 20,
-    marginTop: 10,
-    marginLeft: 20
+    padding: '20px',
+    marginTop: '10px',
+    marginLeft: '20px'
   },
 
   inputError: {

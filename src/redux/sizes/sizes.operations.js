@@ -3,8 +3,7 @@ import { gql } from '@apollo/client';
 import { config } from '../../configs';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { client } from '../../utils/client';
-
-const formError = (error) => error.message.replace('GraphQL error: ', '');
+import { sizeTranslations } from '../../translations/sizes.translations';
 
 export const getAllSizes = async () => {
   const result = await client.query({
@@ -17,11 +16,6 @@ export const getAllSizes = async () => {
             lang
             value
           }
-          heightInCm
-          widthInCm
-          depthInCm
-          volumeInLiters
-          weightInKg
           available
         }
       }
@@ -58,6 +52,14 @@ export const getSizeById = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
+
+  if (result.data.getSizeById.message) {
+    throw new Error(
+      `${result.data.getSizeById.statusCode} ${
+        sizeTranslations[result.data.getSizeById.message]
+      }`
+    );
+  }
 
   return result.data.getSizeById;
 };
@@ -124,40 +126,46 @@ export const updateSize = async (id, size) => {
 
   if (result.data.updateSize.message) {
     throw new Error(
-      `${result.data.updateSize.statusCode} ${[result.data.updateSize.message]}`
+      `${result.data.updateSize.statusCode} ${
+        sizeTranslations[result.data.updateSize.message]
+      }`
     );
   }
+
   return result.data.updateSize;
 };
 
 export const deleteSize = async (id) => {
   const token = getFromLocalStorage(config.tokenName);
-  const result = await client
-    .mutate({
-      context: { headers: { token } },
-      variables: { id },
-      mutation: gql`
-        mutation($id: ID!) {
-          deleteSize(id: $id) {
-            ... on Size {
-              _id
-              name
-              available
-            }
-            ... on Error {
-              statusCode
-              message
-            }
+  const result = await client.mutate({
+    context: { headers: { token } },
+    variables: { id },
+    mutation: gql`
+      mutation($id: ID!) {
+        deleteSize(id: $id) {
+          ... on Size {
+            _id
+            name
+            available
+          }
+          ... on Error {
+            statusCode
+            message
           }
         }
-      `,
-      fetchPolicy: 'no-cache'
-    })
-    .catch((error) => {
-      throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
-    });
-
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
   client.resetStore();
+
+  if (result.data.deleteSize.message) {
+    throw new Error(
+      `${result.data.deleteSize.statusCode} ${
+        sizeTranslations[result.data.deleteSize.message]
+      }`
+    );
+  }
 
   return result.data.deleteSize;
 };

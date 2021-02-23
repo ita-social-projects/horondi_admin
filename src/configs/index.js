@@ -6,7 +6,7 @@ import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
 import statuses from './statuses';
 import filterLabels from './filter-labels';
-import materialUiLabels from './material-ui-labels';
+import materialUiConstants from './material-ui-constants';
 import {
   loginErrorMessages,
   colorErrorMessages,
@@ -203,7 +203,7 @@ export const config = {
   paginationInputErrorMessages,
   commentErrorMessages,
   filterLabels,
-  materialUiLabels,
+  materialUiConstants,
   sizeErrorMessages
 };
 export const inputTypes = {

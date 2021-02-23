@@ -16,7 +16,7 @@ import { config } from '../../configs';
 import { sizesSelectorWithPagination } from '../../redux/selectors/sizes.selector';
 
 const tableTitles = config.tableHeadRowTitles.sizes.sizesPageTitles;
-const {materialUiLabels} = config;
+const { materialUiConstants } = config;
 const labels = config.labels.sizePageLabels;
 const pathToAddSizePage = config.routes.pathToAddSize;
 const { CREATE_SIZE_TITLE } = config.buttonTitles;
@@ -36,7 +36,7 @@ const Sizes = () => {
     dispatch(getSizes());
   }, [sizesList]);
 
-  const SizeDeleteHandler = (id) => {
+  const sizeDeleteHandler = (id) => {
     const removeSize = () => {
       dispatch(closeDialog());
       dispatch(deleteSize(id));
@@ -58,10 +58,10 @@ const Sizes = () => {
       id={size._id}
       key={size._id}
       deleteHandler={() => {
-        SizeDeleteHandler(size._id);
+        sizeDeleteHandler(size._id);
       }}
       editHandler={() => {
-        dispatch(push(`/sizes/${size._id}`));
+        dispatch(push(`${config.routes.pathToSizes}/${size._id}`));
       }}
     />
   ));
@@ -70,17 +70,17 @@ const Sizes = () => {
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
         <Typography
-          variant={materialUiLabels.typographyVariantH1}
+          variant={materialUiConstants.typographyVariantH1}
           className={commonStyles.materialTitle}
           data-cy={labels.sizesHeader}
         >
           {config.titles.sizesTitles.mainPageTitle}
         </Typography>
         <Button
-          id={labels.addSizes}
+          id='addSize'
           component={Link}
-          variant={materialUiLabels.contained}
-          color={materialUiLabels.primary}
+          variant={materialUiConstants.contained}
+          color={materialUiConstants.primary}
           to={pathToAddSizePage}
         >
           {CREATE_SIZE_TITLE}
