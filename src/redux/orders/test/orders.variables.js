@@ -256,6 +256,174 @@ export const fakeIdOrder = {
     }
   }
 };
+export const fakeIdOrderInput = {
+  _id: fakeId,
+  status: 'DELIVERED',
+  user: {
+    firstName: 'Аркадій',
+    lastName: 'Неплюєв',
+    email: 'rtxqg2sozo@meta.ua',
+    phoneNumber: '38068617237'
+  },
+  dateOfCreation: '1603980848358',
+  lastUpdatedDate: '1604326448358',
+  userComment: '',
+  cancellationReason: '',
+  delivery: {
+    sentBy: 'Nova Poshta',
+    invoiceNumber: '9664161',
+    courierOffice: 12,
+    byCourier: true,
+    ciry: '',
+    street: '',
+    house: '',
+    flat: '',
+    cost: [
+      {
+        currency: 'UAH',
+        value: 5000
+      },
+      {
+        currency: 'USD',
+        value: 180
+      }
+    ]
+  },
+  items: [
+    {
+      name: [
+        {
+          lang: 'ua',
+          value: 'Сумка з гобеленом синя'
+        },
+        {
+          lang: 'en',
+          value: 'Bag with a Pattern Blue'
+        }
+      ]
+    },
+    {
+      name: [
+        {
+          lang: 'ua',
+          value: 'Новий червоний 2'
+        },
+        {
+          lang: 'en',
+          value: 'New Red 2'
+        }
+      ]
+    }
+  ],
+  totalItemsPrice: [
+    {
+      currency: 'UAH',
+      value: 255000
+    },
+    {
+      currency: 'USD',
+      value: 9196
+    }
+  ],
+  totalPriceToPay: [
+    {
+      currency: 'UAH',
+      value: 260000
+    },
+    {
+      currency: 'USD',
+      value: 9376
+    }
+  ],
+  isPaid: true,
+  paymentMethod: 'CARD'
+};
+
+export const fakeIdOrderPayload = {
+  id: fakeId,
+  order: {
+    _id: fakeId,
+    status: 'DELIVERED',
+    user: {
+      firstName: 'Аркадій',
+      lastName: 'Неплюєв',
+      email: 'rtxqg2sozo@meta.ua',
+      phoneNumber: '38068617237'
+    },
+    dateOfCreation: '1603980848358',
+    lastUpdatedDate: '1604326448358',
+    userComment: '',
+    cancellationReason: '',
+    delivery: {
+      sentBy: 'Nova Poshta',
+      invoiceNumber: '9664161',
+      courierOffice: 12,
+      byCourier: true,
+      ciry: '',
+      street: '',
+      house: '',
+      flat: '',
+      cost: [
+        {
+          currency: 'UAH',
+          value: 5000
+        },
+        {
+          currency: 'USD',
+          value: 180
+        }
+      ]
+    },
+    items: [
+      {
+        name: [
+          {
+            lang: 'ua',
+            value: 'Сумка з гобеленом синя'
+          },
+          {
+            lang: 'en',
+            value: 'Bag with a Pattern Blue'
+          }
+        ]
+      },
+      {
+        name: [
+          {
+            lang: 'ua',
+            value: 'Новий червоний 2'
+          },
+          {
+            lang: 'en',
+            value: 'New Red 2'
+          }
+        ]
+      }
+    ],
+    totalItemsPrice: [
+      {
+        currency: 'UAH',
+        value: 255000
+      },
+      {
+        currency: 'USD',
+        value: 9196
+      }
+    ],
+    totalPriceToPay: [
+      {
+        currency: 'UAH',
+        value: 260000
+      },
+      {
+        currency: 'USD',
+        value: 9376
+      }
+    ],
+    isPaid: true,
+    paymentMethod: 'CARD'
+  }
+};
 
 export const fakeError = {
   message: 'ORDERS_NOT_FOUND'

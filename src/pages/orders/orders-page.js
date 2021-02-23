@@ -105,6 +105,7 @@ const OrdersPage = () => {
             to={pathToOrdersAddPage}
             variant='contained'
             color='primary'
+            className={styles.addButton}
           >
             {ADD_ORDER}
           </Button>

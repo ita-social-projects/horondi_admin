@@ -14,6 +14,7 @@ import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
 import { BackButton } from '../../components/buttons';
+import { newOrder, submitStatus } from '../../utils/order';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -33,44 +34,22 @@ const OrderItem = ({ id }) => {
     id && dispatch(getOrder(id));
   }, [dispatch, id]);
 
-  const submitStatus = ['CREATED', 'CONFIRMED'];
-
   const handleTabChange = (e, newValue) => {
     setTabValue(newValue);
   };
 
-  const handleFormSubmit = (order) => {
-    const items = order.items.map((item) => ({
-      product: item?.product._id,
-      quantity: item.quantity,
-      isFromConstructor: !item.product._id,
-      options: {
-        size: item.options.size._id,
-        sidePocket: item.options.sidePocket
-      }
-    }));
-    const newOrder = {
-      status: order.status,
-      user: order.user,
-      delivery: order.delivery,
-      items,
-      paymentMethod: order.paymentMethod,
-      userComment: order.userComment,
-      isPaid: order.isPaid,
-      paymentStatus: order.paymentStatus
-    };
-    console.log(newOrder);
+  const handleFormSubmit = (data) => {
     if (
       newOrder.status !== initialValues.status &&
-      !submitStatus.includes(newOrder.status)
+      !submitStatus.includes(newOrder(data).status)
     ) {
       const updateOrderSnackbar = () => {
         dispatch(closeDialog());
-        dispatch(updateOrder(newOrder, id));
+        dispatch(updateOrder(newOrder(data), id));
       };
       openSuccessSnackbar(updateOrderSnackbar, dialogContent, dialogTitle);
     } else {
-      dispatch(updateOrder(newOrder, id));
+      dispatch(updateOrder(newOrder(data), id));
     }
   };
 

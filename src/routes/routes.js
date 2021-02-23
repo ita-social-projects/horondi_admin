@@ -55,7 +55,6 @@ import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
-import OrdersAdd from '../pages/orders/orders-add/orders-add';
 
 const { routes } = config;
 
@@ -216,7 +215,7 @@ const Routes = () => {
             exact
             render={({ match }) => <OrderItem id={match.params.id} />}
           />
-          <Route path={routes.pathToOrderAdd} exact component={OrdersAdd} />
+          <Route path={routes.pathToOrderAdd} exact component={OrderItem} />
           <Route
             path={routes.pathToHomePageSlides}
             exact

@@ -2,13 +2,16 @@ import React from 'react';
 import { TextField, Checkbox } from '@material-ui/core';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+
 import DeliveryDetails from './delivery-details';
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
+import { address, inputName } from '../../../utils/order';
 
 const Delivery = ({ data, handleChange }) => {
   const classes = useStyles();
   const { deliveryLabels } = labels;
+  const { sentByInput, officeInput, costInput, courierInput } = inputName;
   const {
     deliveryMethodLabel,
     byCourierLabel,
@@ -19,25 +22,18 @@ const Delivery = ({ data, handleChange }) => {
   const { delivery } = data;
   const { sentOn, sentBy, byCourier, courierOffice, cost } = delivery;
 
-  const address = {
-    city: delivery.city,
-    street: delivery.street,
-    house: delivery.house,
-    flat: delivery.flat
-  };
-
   return (
     <div className={classes.delivery}>
       <TextField
         label={deliveryMethodLabel}
-        name='delivery.sentBy'
+        name={sentByInput}
         value={sentBy}
         onChange={handleChange}
         variant='outlined'
       />
       <TextField
         label={courierOfficeNameLabel}
-        name='delivery.office'
+        name={officeInput}
         value={courierOffice}
         onChange={handleChange}
         variant='outlined'
@@ -53,7 +49,7 @@ const Delivery = ({ data, handleChange }) => {
       {delivery?.cost[0]?.value ? (
         <TextField
           label={deliveryCostLabel}
-          name='delivery.cost[0].value'
+          name={costInput}
           value={cost[0].value}
           onChange={handleChange}
           variant='outlined'
@@ -64,12 +60,15 @@ const Delivery = ({ data, handleChange }) => {
         <Checkbox
           id='byCourier'
           checked={byCourier}
-          name='delivery.byCourier'
+          name={courierInput}
           onChange={handleChange}
         />
       </div>
       {byCourier && (
-        <DeliveryDetails address={address} handleChange={handleChange} />
+        <DeliveryDetails
+          address={address(delivery)}
+          handleChange={handleChange}
+        />
       )}
     </div>
   );

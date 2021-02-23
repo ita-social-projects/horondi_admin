@@ -36,14 +36,13 @@ const Products = ({ data, setFieldValue }) => {
         num={index + 1}
         name={item.product.name[0].value}
         quantity={item.quantity}
-        price={`${item.product.basePrice[0].value * item.quantity }₴`}
+        price={`${item.product.basePrice[0].value * item.quantity}₴`}
         showAvatar={false}
         deleteHandler={() => deleteItemHendler(index)}
         editHandler={() => setSelectedItem(item)}
       />
     ));
 
-  console.log(selectedItem);
   return (
     <div className={classes.products}>
       <TableContainerGenerator
