@@ -77,8 +77,7 @@ const Delivery = ({ data, handleChange }) => {
 };
 
 Delivery.defaultProps = {
-  data: {},
-  handleChange: () => {}
+  data: {}
 };
 
 Delivery.propTypes = {
@@ -95,7 +94,7 @@ Delivery.propTypes = {
       flat: PropTypes.string
     })
   ),
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func.isRequired
 };
 
 export default Delivery;

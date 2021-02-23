@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Modal } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
@@ -7,12 +8,15 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import TableContainerRow from '../../../containers/table-container-row';
 import tableHeadRowTitles from '../../../configs/table-head-row-titles';
 import { inputName } from '../../../utils/order';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { config } from '../../../configs';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 
 const Products = ({ data, setFieldValue }) => {
   const classes = useStyles();
-  const { itemsName } = inputName;
   const { items } = data;
   const { orderProductTitles } = tableHeadRowTitles;
+  const dispatch = useDispatch();
 
   const initialItem = {
     additions: [],
@@ -23,11 +27,18 @@ const Products = ({ data, setFieldValue }) => {
   };
   const [selectedItem, setSelectedItem] = useState(initialItem);
 
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+  const { REMOVE_ITEM } = config.messages;
+
   const deleteItemHendler = (indexItem) => {
-    setFieldValue(
-      { itemsName },
-      items.filter((item, index) => index !== indexItem)
-    );
+    const removeItem = () => {
+      dispatch(closeDialog());
+      setFieldValue(
+        inputName.itemsName,
+        items.filter((item, index) => index !== indexItem)
+      );
+    };
+    openSuccessSnackbar(removeItem, REMOVE_ITEM);
   };
 
   const productItems =
@@ -72,15 +83,14 @@ const Products = ({ data, setFieldValue }) => {
 };
 
 Products.defaultProps = {
-  data: {},
-  setFieldValue: () => {}
+  data: {}
 };
 
 Products.propTypes = {
   data: PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.string)
   }),
-  setFieldValue: PropTypes.func
+  setFieldValue: PropTypes.func.isRequired
 };
 
 export default Products;

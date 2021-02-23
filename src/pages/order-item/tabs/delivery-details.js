@@ -42,13 +42,12 @@ const DeliveryDetails = ({ address, handleChange }) => {
 };
 
 DeliveryDetails.defaultProps = {
-  address: '',
-  handleChange: () => {}
+  address: {}
 };
 
 DeliveryDetails.propTypes = {
-  address: PropTypes.string,
-  handleChange: PropTypes.func
+  address: PropTypes.objectOf(PropTypes.string),
+  handleChange: PropTypes.func.isRequired
 };
 
 export default DeliveryDetails;

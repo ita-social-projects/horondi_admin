@@ -10,15 +10,14 @@ import { inputName } from '../../../utils/order';
 
 const General = ({ data, handleChange }) => {
   const classes = useStyles();
-  const { status, isPaid, paymentMethod, paymentStatus } = data;
+  const { status, isPaid, paymentMethod } = data;
   const { generalLabels } = labels;
   const {
     deliveryStatusLabel,
     isPaidLabel,
-    paymentMethodLabel,
-    paymentStatusLabel
+    paymentMethodLabel
   } = generalLabels;
-  const { statusOptions, paymentOptions, paymentSatatusOptions } = orders;
+  const { statusOptions, paymentOptions } = orders;
 
   const statusOptionElements = statusOptions.map(({ label, value }, index) => (
     <MenuItem key={label} value={value} disabled={index === 0}>
@@ -27,14 +26,6 @@ const General = ({ data, handleChange }) => {
   ));
 
   const paymentOptionsElements = paymentOptions.map(
-    ({ label, value }, index) => (
-      <MenuItem key={label} value={value} disabled={index === 0}>
-        {label}
-      </MenuItem>
-    )
-  );
-
-  const paymentStatusOptionsElements = paymentSatatusOptions.map(
     ({ label, value }, index) => (
       <MenuItem key={label} value={value} disabled={index === 0}>
         {label}
@@ -56,20 +47,6 @@ const General = ({ data, handleChange }) => {
           defaultValue={statusOptions[0].value}
         >
           {statusOptionElements}
-        </Select>
-      </div>
-      <div>
-        <label htmlFor='paymentStatus'>{paymentStatusLabel}</label>
-        <Select
-          fullWidth
-          id='paymentStatus'
-          name='paymentStatus'
-          value={paymentStatus}
-          onChange={handleChange}
-          variant={materialUiConstants.outlined}
-          defaultValue={paymentStatus}
-        >
-          {paymentStatusOptionsElements}
         </Select>
       </div>
       <div>
@@ -99,8 +76,7 @@ const General = ({ data, handleChange }) => {
 };
 
 General.defaultProps = {
-  data: {},
-  handleChange: () => {}
+  data: {}
 };
 
 General.propTypes = {
@@ -113,7 +89,7 @@ General.propTypes = {
     city: PropTypes.string,
     street: PropTypes.string
   }),
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func.isRequired
 };
 
 export default General;
