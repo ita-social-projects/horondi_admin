@@ -210,6 +210,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     inputs
   };
 
+  const imageUploadPatternInputsId = {
+    patternImageInput: 'patternImageInput',
+    constructorImageInput: 'constructorImgInput'
+  };
+
   return (
     <div>
       {loading ? (
@@ -230,7 +235,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                     <ImageUploadPatternContainer
                       handler={handleLoadMainImage}
                       src={patternImage}
-                      id='patternImage'
+                      id={imageUploadPatternInputsId.patternImageInput}
                     />
                     {touched.patternImage && errors.patternImage && (
                       <div className={styles.inputError}>
@@ -249,7 +254,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                     <ImageUploadPatternContainer
                       handler={handleLoadConstructorImage}
                       src={constructorImg}
-                      id='constructorImg'
+                      id={imageUploadPatternInputsId.constructorImageInput}
                     />
                     {touched.patternConstructorImage &&
                       errors.patternConstructorImage && (

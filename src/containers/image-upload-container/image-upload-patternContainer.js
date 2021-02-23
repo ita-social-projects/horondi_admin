@@ -5,6 +5,7 @@ import { useStyles } from './image-upload-patternContainer.styles';
 
 const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
   const style = useStyles();
+  const uploadPhoto = 'upload-photo';
 
   return (
     <div>
@@ -13,7 +14,7 @@ const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
         <input
           style={{ display: 'none' }}
           id={id}
-          name='upload-photo'
+          name={uploadPhoto}
           type='file'
           multiple
           onChange={handler}
