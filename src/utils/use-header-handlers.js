@@ -10,23 +10,20 @@ const useHeaderHandlers = () => {
     setTabsValue(newValue);
   };
 
-  const createHeader = (values) => {
-    const newHeader = {
-      title: [
-        {
-          lang: languages[0],
-          value: values.uaName
-        },
-        {
-          lang: languages[1],
-          value: values.enName
-        }
-      ],
-      priority: values.priority,
-      link: values.link
-    };
-    return newHeader;
-  };
+  const createHeader = (values) => ({
+    title: [
+      {
+        lang: languages[0],
+        value: values.uaName
+      },
+      {
+        lang: languages[1],
+        value: values.enName
+      }
+    ],
+    priority: values.priority,
+    link: values.link
+  });
 
   return {
     tabsValue,

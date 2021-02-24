@@ -5,7 +5,9 @@ import {
   SET_ORDER_ERROR,
   GET_ORDER,
   GET_ORDER_LIST,
-  SET_ORDER_LIST
+  SET_ORDER_LIST,
+  DELETE_ORDER,
+  REMOVE_ORDER_FROM_STORE
 } from './orders.types';
 
 const getOrder = (payload) => ({
@@ -18,9 +20,12 @@ const setOrder = (payload) => ({
   payload
 });
 
-const updateOrder = (payload) => ({
+const updateOrder = (order, id) => ({
   type: UPDATE_ORDER,
-  payload
+  payload: {
+    order,
+    id
+  }
 });
 
 const getOrderList = (payload) => ({
@@ -43,6 +48,16 @@ const setOrderError = (error) => ({
   payload: error
 });
 
+const deleteOrder = (payload) => ({
+  type: DELETE_ORDER,
+  payload
+});
+
+const removeOrderFromStore = (payload) => ({
+  type: REMOVE_ORDER_FROM_STORE,
+  payload
+});
+
 export {
   getOrder,
   setOrder,
@@ -50,5 +65,7 @@ export {
   setOrderLoading,
   setOrderError,
   getOrderList,
-  setOrderList
+  setOrderList,
+  deleteOrder,
+  removeOrderFromStore
 };

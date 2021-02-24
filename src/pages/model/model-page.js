@@ -14,11 +14,16 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { selectModelAndTable } from '../../redux/selectors/model.selectors';
 
+const map = require('lodash/map');
+
 const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;
 const { CREATE_MODEL_TITLE } = config.buttonTitles;
 const pathToModelAddPage = routes.pathToAddModel;
 const tableTitles = config.tableHeadRowTitles.models;
+const pageTitle = config.titles.modelPageTitles.mainPageTitle;
+const { IMG_URL } = config;
+const { showEnable, showDisable } = config.labels.model;
 
 const ModelPage = () => {
   const commonStyles = useCommonStyles();
@@ -52,38 +57,27 @@ const ModelPage = () => {
     return <LoadingBar />;
   }
 
-  const modelItems =
-    list !== undefined
-      ? list.map((modelItem) => (
-        <TableContainerRow
-          image={
-            modelItem.images
-              ? `${config.IMG_URL}${modelItem.images.thumbnail}`
-              : ''
-          }
-          key={modelItem._id}
-          id={modelItem._id}
-          name={modelItem.name[0].value}
-          category={modelItem.category.name[0].value}
-          show={
-            modelItem.show
-              ? config.labels.model.showEnable
-              : config.labels.model.showDisable
-          }
-          priority={modelItem.priority}
-          deleteHandler={() => modelDeleteHandler(modelItem._id)}
-          editHandler={() => {
-            dispatch(push(`/models/${modelItem._id}`));
-          }}
-        />
-      ))
-      : null;
+  const modelItems = map(list, (modelItem) => (
+    <TableContainerRow
+      image={modelItem.images ? `${IMG_URL}${modelItem.images.thumbnail}` : ''}
+      key={modelItem._id}
+      id={modelItem._id}
+      name={modelItem.name[0].value}
+      category={modelItem.category?.name[0].value}
+      show={modelItem.show ? showEnable : showDisable}
+      priority={modelItem.priority}
+      deleteHandler={() => modelDeleteHandler(modelItem._id)}
+      editHandler={() => {
+        dispatch(push(`/models/${modelItem._id}`));
+      }}
+    />
+  ));
 
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
         <Typography variant='h1' className={commonStyles.materialTitle}>
-          {config.titles.modelPageTitles.mainPageTitle}
+          {pageTitle}
         </Typography>
         <Button
           data-cy='add-model'
@@ -97,6 +91,7 @@ const ModelPage = () => {
       </div>
       <TableContainerGenerator
         data-cy='modelTable'
+        pagination
         count={itemsCount}
         tableTitles={tableTitles}
         tableItems={modelItems}

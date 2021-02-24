@@ -1,40 +1,27 @@
 import React from 'react';
 
-import {
-  TextField,
-  Grid,
-  Tabs,
-  Tab,
-  AppBar,
-  Avatar,
-  Paper
-} from '@material-ui/core';
+import { TextField, Grid, Tabs, Tab, AppBar, Paper } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import { push } from 'connected-react-router';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import TabPanel from '../../tab-panel';
-import { BackButton, SaveButton, StandardButton } from '../../buttons';
+import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
+import ColorsBar from '../../colors-bar';
 import useMaterialHandlers from '../../../utils/use-material-handlers';
 import { useStyles } from './material-form.styles';
 import {
   addMaterial,
-  updateMaterial,
-  showColorDialogWindow,
-  setMaterialColor,
-  setEditMaterialId
+  updateMaterial
 } from '../../../redux/material/material.actions';
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
-import CreateColor from '../../../pages/material/create-color';
-import DialogWindowWrapper from '../../dialog-window-wrapper';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../../redux/snackbar/snackbar.actions';
+import { materialSelector } from '../../../redux/selectors/material.selectors';
+import purposeEnum from '../../../configs/purpose-enum';
 
 const { languages } = config;
 const {
@@ -43,24 +30,14 @@ const {
   MAX_LENGTH_MESSAGE,
   PRICE_VALIDATION_ERROR
 } = config.materialErrorMessages;
+
 function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { loading, colors } = useSelector(({ Material }) => ({
-    loading: Material.materialLoading,
-    colors: Material.colors
-  }));
+  const { loading } = useSelector(materialSelector);
 
-  const {
-    createMaterial,
-    tabsValue,
-    handleTabsChange,
-    colorImagesToUpload,
-    setColorImagesToUpload,
-    colorImages,
-    addNewColorImages
-  } = useMaterialHandlers();
+  const { createMaterial, tabsValue, handleTabsChange } = useMaterialHandlers();
 
   const formSchema = Yup.object().shape({
     uaName: Yup.string()
@@ -90,7 +67,9 @@ function MaterialForm({ material, id }) {
 
     additionalPrice: Yup.string()
       .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
-      .required(VALIDATION_ERROR)
+      .required(VALIDATION_ERROR),
+
+    colors: Yup.array().of(Yup.string()).required(VALIDATION_ERROR)
   });
 
   const {
@@ -108,18 +87,15 @@ function MaterialForm({ material, id }) {
       enName: material.name[1].value || '',
       uaDescription: material.description[0].value || '',
       enDescription: material.description[1].value || '',
-      purpose: material.purpose || '',
+      purpose: material.purpose || purposeEnum.MAIN,
       available: material.available || false,
-      additionalPrice: +material.additionalPrice[1].value / 100 || 0
+
+      additionalPrice: +material.additionalPrice[0].value / 100 || 0,
+      colors:
+        (material.colors && material.colors.map((color) => color._id)) || []
     },
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
-      if (!colors.length && !id) {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(config.errorMessages.NO_COLORS));
-        dispatch(setSnackBarStatus(true));
-        return;
-      }
       if (id) {
         dispatch(
           updateMaterial({
@@ -131,8 +107,7 @@ function MaterialForm({ material, id }) {
       }
       dispatch(
         addMaterial({
-          material: { ...newMaterial, colors },
-          images: colorImagesToUpload
+          material: { ...newMaterial }
         })
       );
     }
@@ -205,64 +180,51 @@ function MaterialForm({ material, id }) {
   if (loading) {
     return <LoadingBar />;
   }
-
-  const colorClickHandler = () => {
-    dispatch(showColorDialogWindow(true));
-    dispatch(setMaterialColor(''));
-    dispatch(setEditMaterialId(id));
-  };
-  const colorPaletteClickHandler = () => {
-    dispatch(push(`/materials/${id}/colors`));
-  };
-
-  const materialColorPaletteButton = id ? (
-    <StandardButton
-      className={styles.colorPaletteButton}
-      data-cy='go-to-color-palette'
-      type='button'
-      color='secondary'
-      title={config.buttonTitles.GO_TO_MATERIAL_COLOR_PALLET}
-      onClickHandler={colorPaletteClickHandler}
-    />
-  ) : null;
-
-  const createColorButton = !id ? (
-    <StandardButton
-      className={styles.saveButton}
-      data-cy='open-dialog'
-      type='button'
-      color='secondary'
-      title={config.buttonTitles.CREATE_COLOR_TITLE}
-      onClickHandler={colorClickHandler}
-    />
-  ) : null;
-
   return (
     <div className={styles.container}>
       <form className={styles.materialForm} onSubmit={handleSubmit}>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
-          <div className={styles.colorImages}>
-            {colorImages
-              ? colorImages.map((image, index) => (
-                <Avatar key={index} src={image} />
-              ))
-              : null}
-          </div>
+          <ColorsBar
+            onColorChange={(colors) => {
+              setFieldValue(
+                'colors',
+                colors.map((color) => color._id)
+              );
+            }}
+            colors={material.colors}
+          />
+          {errors.colors && (
+            <div className={styles.inputError}>{errors.colors}</div>
+          )}
           <Paper className={styles.materialItemAdd}>
-            <TextField
-              data-cy='purpose'
-              id='purpose'
-              className={styles.textField}
+            <FormControl
               variant='outlined'
-              label={config.labels.material.purpose[0].value}
-              value={values.purpose}
-              onChange={handleChange}
-              error={touched.purpose && !!errors.purpose}
-            />
+              className={`${styles.formControl} 
+              ${styles.purposeSelect}`}
+            >
+              <InputLabel htmlFor='outlined-age-native-simple'>
+                Застосування
+              </InputLabel>
+              <Select
+                data-cy='purpose'
+                id='purpose'
+                native
+                value={values.purpose}
+                onChange={(e) => setFieldValue('purpose', e.target.value)}
+                label='Застосування'
+              >
+                {Object.values(purposeEnum).map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
             {touched.purpose && errors.purpose && (
               <div className={styles.inputError}>{errors.purpose}</div>
             )}
+            <br />
             <TextField
               data-cy='additionalPrice'
               id='additionalPrice'
@@ -298,7 +260,6 @@ function MaterialForm({ material, id }) {
         <div className={styles.controlsBlock}>
           <div>
             <BackButton />
-            {createColorButton}
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
@@ -307,26 +268,13 @@ function MaterialForm({ material, id }) {
               values={values}
               errors={errors}
             />
-            {materialColorPaletteButton}
           </div>
         </div>
       </form>
-      <DialogWindowWrapper
-        buttonType='submit'
-        buttonTitle={config.buttonTitles.CLOSE_DIALOG_TITLE}
-        dialogTitle={config.titles.colorTitles.createColorTitle}
-        component={
-          <CreateColor
-            colorImages={colorImages}
-            addNewColorImages={addNewColorImages}
-            imagesToUpload={colorImagesToUpload}
-            setImagesToUpload={setColorImagesToUpload}
-          />
-        }
-      />
     </div>
   );
 }
+
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
@@ -337,12 +285,20 @@ MaterialForm.propTypes = {
     _id: PropTypes.string,
     name: PropTypes.arrayOf(valueShape),
     description: PropTypes.arrayOf(valueShape),
-    colors: PropTypes.arrayOf(valueShape),
     simpleName: PropTypes.arrayOf(valueShape),
-    additionalPrice: PropTypes.arrayOf(valueShape),
-    images: PropTypes.shape({
-      thumbnail: PropTypes.string
-    }),
+    additionalPrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.number
+      })
+    ),
+    colors: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        colorHex: PropTypes.string,
+        name: PropTypes.arrayOf(valueShape),
+        simpleName: PropTypes.arrayOf(valueShape)
+      })
+    ),
     purpose: PropTypes.string,
     available: PropTypes.bool
   }),
@@ -352,7 +308,8 @@ MaterialForm.propTypes = {
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
-    enDescription: PropTypes.string
+    enDescription: PropTypes.string,
+    colors: PropTypes.arrayOf(PropTypes.string)
   }),
   errors: PropTypes.shape({
     available: PropTypes.bool,
@@ -360,7 +317,8 @@ MaterialForm.propTypes = {
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
-    enDescription: PropTypes.string
+    enDescription: PropTypes.string,
+    colors: PropTypes.string
   }),
   touched: PropTypes.shape({
     available: PropTypes.bool,
@@ -401,9 +359,6 @@ MaterialForm.defaultProps = {
         value: ''
       }
     ],
-    images: {
-      thumbnail: ''
-    },
     available: false,
     purpose: '',
     additionalPrice: [
@@ -413,7 +368,8 @@ MaterialForm.defaultProps = {
       {
         value: 0
       }
-    ]
+    ],
+    colors: []
   }
 };
 

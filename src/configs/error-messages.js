@@ -29,7 +29,8 @@ export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
-  PHOTO_NOT_PROVIDED: 'Додайте фото для гобелену',
+  PHOTO_NOT_PROVIDED: "Фото гобелена є обов'язковим",
+  CONSTRUCTOR_PHOTO_NOT_PROVIDED: "Фото для конструктора є обов'язковим",
   PATTERN_UA_NAME_MESSAGE:
     'Поле може містити тільки українські літери та цифри',
   PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
@@ -49,10 +50,9 @@ export const headerErrorMessages = {
   HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
 export const newsErrorMessages = {
-  NAME_MAX_LENGTH_MESSAGE: `Ім'я автора повинне містити не більше 100 символів`,
-  NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 6 символів`,
-  TITLE_MAX_LENGTH_MESSAGE: 'Заголовок повинен містити не більше 100 символів',
-  TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів'
+  NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 2 символів`,
+  TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів',
+  TEXT_MIN_LENGTH_MESSAGE: 'Текстове поле повино містити не менше 10 символів'
 };
 export const modelErrorMessages = {
   MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',
@@ -86,16 +86,28 @@ export const materialErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
   VALIDATION_ERROR: 'Поле обовязкове',
-  PRICE_VALIDATION_ERROR: 'Тільки цифри. Число має бути більше нуля'
+  PRICE_VALIDATION_ERROR: 'Тільки цифри'
+};
+export const sizeErrorMessages = {
+  MAX_LENGTH_MESSAGE: `Не більше 20 символів`,
+  MIN_LENGTH_MESSAGE: `Не менше 1см`,
+  MAX_LENGTH_MESSAGE_SIZE: `Не більше 35см`,
+  MIN_LENGTH_MESSAGE_SIZE: `Не менше 1 символу`,
+  MAX_WEIGHT_MESSAGE_SIZE: `Не більше 5 кг`,
+  MIN_WEIGHT_MESSAGE_SIZE: `Не менше 0.1 кг`,
+  VALIDATION_ERROR: `Поле обовязкове`,
+  PRICE_VALIDATION_ERROR: `Тільки цифри`,
+  NOT_UA_INPUT_MESSAGE: `Введіть ім'я розміру українською`,
+  NOT_EN_INPUT_MESSAGE: `Введіть ім'я розміру англійською`,
+  NO_NUMBER_TYPE_MESSAGE: `Повинно містити число`,
+  NO_STRING_TYPE_MESSAGE: `Повинно містити букви`
 };
 
 export const colorErrorMessages = {
-  CODE_VALIDATION_ERROR: 'Тільки цифри',
-  MAX_CODE_LENGTH_MESSAGE: 'Не більше 10 символів',
-  MAX_LENGTH_MESSAGE: `Не більше 1000 символів`,
-  MIN_LENGTH_MESSAGE: `Не менше 1 символа`,
-  VALIDATION_ERROR: 'Поле обовязкове',
-  CODE_NOT_UNIQUE_ERROR: 'Такий код вже використовується'
+  MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
+  MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
+  COLOR_VALIDATION_ERROR: 'Неправильний формат кольору',
+  VALIDATION_ERROR: 'Поле обовязкове'
 };
 export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'
@@ -106,8 +118,21 @@ export const homePageSlideErrorMessages = {
   SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
 };
 
+export const constructorErrorMessages = {
+  CONSTRUCTOR_VALIDATION_ERROR: 'Мінімум 2 символи',
+  CONSTRUCTOR_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CONSTRUCTOR_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  PRICE_VALIDATION_ERROR: 'Тільки цифри',
+  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора'
+};
 export const paginationInputErrorMessages = {
   MUST_BE_NUMBER: 'Тільки цифри',
   MUST_BE_POSITIVE: 'Тільки більше нуля',
   PAGE_NOT_FOUND: 'Сторінку не знайдено'
+};
+
+export const commentErrorMessages = {
+  COMMENT_VALIDATION_ERROR: 'Мінімум 2 символи',
+  COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
 };

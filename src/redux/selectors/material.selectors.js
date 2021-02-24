@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { selectPagination } from '../table/table.reducer';
 import { selectMaterial } from '../material/material.reducer';
+import { selectColors } from '../color/color.reducer';
 
 export const materialSelector = createSelector(
   selectMaterial,
@@ -10,8 +11,10 @@ export const materialSelector = createSelector(
 export const materialSelectorWithPagination = createSelector(
   selectMaterial,
   selectPagination,
-  (material, table) => ({
+  selectColors,
+  (material, table, color) => ({
     ...material,
-    ...table
+    ...table,
+    ...color
   })
 );

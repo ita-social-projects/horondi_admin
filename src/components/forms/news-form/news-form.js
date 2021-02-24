@@ -1,97 +1,50 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Paper,
-  Tab,
-  Tabs,
-  TextField
-} from '@material-ui/core';
+import { Avatar, Box } from '@material-ui/core';
 import { Image } from '@material-ui/icons';
+import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useStyles } from './news-form.styles';
 import { SaveButton, StandardButton } from '../../buttons';
 import useNewsHandlers from '../../../utils/use-news-handlers';
-import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
-import {
-  addArticle,
-  getArticle,
-  updateArticle
-} from '../../../redux/news/news.actions';
+import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import Editor from '../../editor/editor';
-import LoadingBar from '../../loading-bar';
-import { newsSelector } from '../../../redux/selectors/news.selectors';
+import LanguagePanel from '../language-panel';
 
-const NewsForm = ({ id, editMode }) => {
+const {
+  MAIN_PHOTO,
+  AUTHOR_PHOTO,
+  SAVE_TITLE,
+  GO_BACK_TITLE
+} = config.buttonTitles;
+const {
+  NAME_MIN_LENGTH_MESSAGE,
+  TITLE_MIN_LENGTH_MESSAGE,
+  TEXT_MIN_LENGTH_MESSAGE
+} = config.newsErrorMessages;
+const { IMG_URL } = config;
+const { authorName, title, text } = config.labels.news;
+
+const NewsForm = ({ id, newsArticle, editMode }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { loading, newsArticle } = useSelector(newsSelector);
   const {
-    tabsValue,
     checkboxes,
     preferredLanguages,
-    handleTabsChange,
     setPreferredLanguages,
     languageCheckboxes,
     createArticle,
-    authorPhoto,
-    newsImage,
-    setNewsImage,
-    setAuthorPhoto,
-    uaSetAuthor,
-    uaSetText,
-    uaSetTitle,
-    enSetAuthor,
-    enSetText,
-    enSetTitle,
-    uaAuthorName,
-    enAuthorName,
-    uaTitle,
-    enTitle,
-    uaText,
-    enText
+    uploadAuthorImage,
+    setUploadAuthorImage,
+    uploadNewsImage,
+    setUploadNewsImage
   } = useNewsHandlers();
 
-  const languageTabs =
-    preferredLanguages.length > 0
-      ? preferredLanguages.map((lang, index) => (
-        <Tab label={lang} key={index} />
-      ))
-      : null;
-
-  useEffect(() => {
-    id && dispatch(getArticle(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    const isEditingReady = newsArticle && editMode;
-
-    setAuthorPhoto(isEditingReady ? newsArticle.author.image.small : '');
-    setNewsImage(isEditingReady ? newsArticle.images.primary.medium : '');
-    uaSetAuthor(isEditingReady ? newsArticle.author.name[0].value : '');
-    enSetAuthor(isEditingReady ? newsArticle.author.name[1].value : '');
-    uaSetTitle(isEditingReady ? newsArticle.title[0].value : '');
-    enSetTitle(isEditingReady ? newsArticle.title[1].value : '');
-    uaSetText(isEditingReady ? newsArticle.text[0].value : '');
-    enSetText(isEditingReady ? newsArticle.text[1].value : '');
-  }, [
-    editMode,
-    newsArticle,
-    setAuthorPhoto,
-    setNewsImage,
-    uaSetAuthor,
-    enSetAuthor,
-    uaSetText,
-    uaSetTitle,
-    enSetText,
-    enSetTitle
-  ]);
+  const [authorAvatar, setAuthorAvatar] = useState('');
+  const [newsAvatar, setNewsAvatar] = useState('');
 
   useEffect(() => {
     const prefLanguages = [];
@@ -103,69 +56,75 @@ const NewsForm = ({ id, editMode }) => {
     setPreferredLanguages(prefLanguages);
   }, [checkboxes, setPreferredLanguages]);
 
-  const formik = useFormik({
+  const selectFormSchema = () => {
+    const formObj = preferredLanguages.reduce((reducer, lang) => {
+      reducer[`${lang}AuthorName`] = Yup.string()
+        .min(2, NAME_MIN_LENGTH_MESSAGE)
+        .required(NAME_MIN_LENGTH_MESSAGE);
+      reducer[`${lang}Title`] = Yup.string()
+        .min(10, TITLE_MIN_LENGTH_MESSAGE)
+        .required(TITLE_MIN_LENGTH_MESSAGE);
+      reducer[`${lang}Text`] = Yup.string()
+        .min(10, TEXT_MIN_LENGTH_MESSAGE)
+        .required(TEXT_MIN_LENGTH_MESSAGE);
+
+      return reducer;
+    }, {});
+
+    return Yup.object().shape(formObj);
+  };
+
+  const formSchema = selectFormSchema();
+
+  const { values, handleSubmit, handleChange, touched, errors } = useFormik({
+    validationSchema: formSchema,
     initialValues: {
-      authorPhoto,
-      newsImage,
-      uaAuthorName,
-      enAuthorName,
-      uaTitle,
-      enTitle,
-      uaText,
-      enText
+      authorPhoto: newsArticle.author.image || '',
+      newsImage: newsArticle.image || '',
+      uaAuthorName: newsArticle.author.name[0].value || '',
+      enAuthorName: newsArticle.author.name[1].value || '',
+      uaTitle: newsArticle.title[0].value || '',
+      enTitle: newsArticle.title[1].value || '',
+      uaText: newsArticle.text[0].value || '',
+      enText: newsArticle.text[1].value || ''
     },
     onSubmit: () => {
+      const newArticle = createArticle(values);
       if (editMode) {
-        const newArticle = createArticle(formik.values);
-        dispatch(updateArticle({ id, newArticle }));
+        dispatch(
+          updateArticle({
+            id,
+            newArticle,
+            upload: [uploadAuthorImage, uploadNewsImage]
+          })
+        );
       } else {
-        const article = createArticle(formik.values);
-        dispatch(addArticle(article));
+        dispatch(
+          addArticle({
+            article: newArticle,
+            upload: [uploadAuthorImage, uploadNewsImage]
+          })
+        );
       }
     }
   });
 
-  useMemo(() => {
-    formik.values.authorPhoto = authorPhoto;
-    formik.values.newsImage = newsImage;
-    formik.values.uaAuthorName = uaAuthorName;
-    formik.values.enAuthorName = enAuthorName;
-    formik.values.uaTitle = uaTitle;
-    formik.values.enTitle = enTitle;
-    formik.values.uaText = uaText;
-    formik.values.enText = enText;
-  }, [
-    authorPhoto,
-    newsImage,
-    uaAuthorName,
-    enAuthorName,
-    uaTitle,
-    enTitle,
-    uaText,
-    enText
-  ]);
-
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
+      if (e.target.previousSibling.textContent === AUTHOR_PHOTO) {
+        reader.onload = (event) => {
+          setAuthorAvatar(event.target.result);
+        };
 
-      if (
-        e.target.previousSibling.textContent ===
-        config.buttonTitles.AUTHOR_PHOTO
-      ) {
+        setUploadAuthorImage(e.target.files[0]);
+      } else if (e.target.previousSibling.textContent === MAIN_PHOTO) {
         reader.onload = (event) => {
-          formik.setFieldValue('authorPhoto', event.target.result);
-          setAuthorPhoto(event.target.result);
+          setNewsAvatar(event.target.result);
         };
-      } else if (
-        e.target.previousSibling.textContent === config.buttonTitles.MAIN_PHOTO
-      ) {
-        reader.onload = (event) => {
-          formik.setFieldValue('newsImage', event.target.result);
-          setNewsImage(event.target.result);
-        };
+
+        setUploadNewsImage(e.target.files[0]);
       }
-
       reader.readAsDataURL(e.target.files[0]);
     }
   };
@@ -174,33 +133,41 @@ const NewsForm = ({ id, editMode }) => {
     dispatch(push(config.routes.pathToNews));
   };
 
-  if (loading) {
-    return <LoadingBar />;
-  }
+  const inputs = [
+    { label: authorName, name: 'authorName' },
+    { label: title, name: 'title' },
+    { label: text, name: 'text', isEditor: true }
+  ];
+
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
 
   return (
-    <div className={styles.formContainer}>
-      <form onSubmit={formik.handleSubmit}>
+    <div>
+      <form onSubmit={handleSubmit}>
         <div className={styles.controlsBlock}>
           <div>{languageCheckboxes}</div>
           <SaveButton
             className={styles.saveButton}
             data-cy='save'
             type='submit'
-            title={config.buttonTitles.SAVE_TITLE}
-            values={formik.values}
-            errors={formik.errors}
+            title={SAVE_TITLE}
           />
         </div>
         <Box my={3}>
           <div className={styles.imageUploadAvatar}>
             <ImageUploadContainer
               handler={handleImageLoad}
-              buttonLabel={config.buttonTitles.AUTHOR_PHOTO}
+              buttonLabel={AUTHOR_PHOTO}
             />
 
-            {authorPhoto && (
-              <Avatar src={authorPhoto}>
+            {authorAvatar && (
+              <Avatar src={authorAvatar}>
                 <Image />
               </Avatar>
             )}
@@ -210,66 +177,22 @@ const NewsForm = ({ id, editMode }) => {
           <div className={styles.imageUploadAvatar}>
             <ImageUploadContainer
               handler={handleImageLoad}
-              buttonLabel={config.buttonTitles.MAIN_PHOTO}
+              buttonLabel={MAIN_PHOTO}
             />
-            {newsImage && (
-              <Avatar src={newsImage}>
+            {newsAvatar && (
+              <Avatar src={newsAvatar}>
                 <Image />
               </Avatar>
             )}
           </div>
         </Box>
-
-        {preferredLanguages.length > 0 && (
-          <AppBar position='static'>
-            <Tabs
-              className={styles.tabs}
-              value={tabsValue}
-              onChange={handleTabsChange}
-              aria-label='simple tabs example'
-            >
-              {languageTabs}
-            </Tabs>
-          </AppBar>
-        )}
-
         {preferredLanguages.length > 0
-          ? preferredLanguages.map((lang, index) => (
-            <TabPanel key={index} value={tabsValue} index={index}>
-              <Paper className={styles.newsItemUpdate}>
-                <TextField
-                  data-cy={`${lang}AuthorName`}
-                  id={`${lang}AuthorName`}
-                  className={styles.textField}
-                  variant='outlined'
-                  label={config.labels.news.authorsName}
-                  multiline
-                  value={formik.values[`${lang}AuthorName`]}
-                  onChange={formik.handleChange}
-                />
-                <TextField
-                  data-cy={`${lang}Title`}
-                  id={`${lang}Title`}
-                  className={styles.textField}
-                  variant='outlined'
-                  label={config.labels.news.title}
-                  multiline
-                  value={formik.values[`${lang}Title`]}
-                  onChange={formik.handleChange}
-                  required
-                />
-                <Editor
-                  value={formik.values[`${lang}Text`]}
-                  placeholder={config.labels.news.text}
-                  id={`${lang}Text`}
-                  onEditorChange={(value) =>
-                    formik.setFieldValue(`${lang}Text`, value)
-                  }
-                  multiline
-                  required
-                />
-              </Paper>
-            </TabPanel>
+          ? preferredLanguages.map((lang) => (
+            <LanguagePanel
+              lang={lang}
+              inputOptions={inputOptions}
+              key={lang}
+            />
           ))
           : null}
       </form>
@@ -277,7 +200,7 @@ const NewsForm = ({ id, editMode }) => {
       <div className={styles.controlsBlock}>
         <StandardButton
           id='back-btn'
-          title={config.buttonTitles.GO_BACK_TITLE}
+          title={GO_BACK_TITLE}
           variant='outlined'
           onClickHandler={handleGoBack}
           data-cy='back-btn'
@@ -287,12 +210,67 @@ const NewsForm = ({ id, editMode }) => {
   );
 };
 
+const valueShape = PropTypes.shape({
+  lang: PropTypes.string,
+  value: PropTypes.string
+});
+
 NewsForm.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  newsArticle: PropTypes.shape({
+    author: PropTypes.shape({
+      image: PropTypes.string,
+      name: PropTypes.arrayOf(valueShape)
+    }),
+    title: PropTypes.arrayOf(valueShape),
+    text: PropTypes.arrayOf(valueShape),
+    languages: PropTypes.string,
+    date: PropTypes.string,
+    image: PropTypes.string
+  }),
   editMode: PropTypes.bool
 };
 
 NewsForm.defaultProps = {
+  id: '',
+  newsArticle: {
+    author: {
+      image: '',
+      name: [
+        {
+          lang: '',
+          value: ''
+        },
+        {
+          lang: '',
+          value: ''
+        }
+      ]
+    },
+    title: [
+      {
+        lang: '',
+        value: ''
+      },
+      {
+        lang: '',
+        value: ''
+      }
+    ],
+    text: [
+      {
+        lang: '',
+        value: ''
+      },
+      {
+        lang: '',
+        value: ''
+      }
+    ],
+    languages: '',
+    date: '',
+    image: ''
+  },
   editMode: false
 };
 

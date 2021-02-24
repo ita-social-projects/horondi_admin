@@ -23,7 +23,9 @@ import {
   mockArticle,
   statuses,
   mockError,
-  mockTableState
+  mockFile,
+  mockTableState,
+  mockAddNewsPayload
 } from './news.variables';
 
 import {
@@ -38,7 +40,8 @@ import {
   setNewsLoading,
   setNews,
   setArticle,
-  setNewsError
+  setNewsError,
+  removeArticleFromStore
 } from '../news.actions';
 
 import {
@@ -110,13 +113,19 @@ describe('Test news sagas', () => {
       }));
 
   it('should add news', () =>
-    expectSaga(handleAddNews, { payload: mockArticle })
+    expectSaga(handleAddNews, { payload: mockAddNewsPayload })
       .withReducer(combineReducers({ News }), {
         News: mockNewsState
       })
       .put(setNewsLoading(true))
       .provide([
-        [call(createArticle, mockArticle)],
+        [
+          call(
+            createArticle,
+            mockAddNewsPayload.article,
+            mockAddNewsPayload.upload
+          )
+        ],
         [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
       ])
       .put(push('/news'))
@@ -137,7 +146,8 @@ describe('Test news sagas', () => {
     expectSaga(handleNewsDelete, { payload: mockId })
       .withReducer(combineReducers({ News }), {
         News: {
-          ...mockNewsState
+          ...mockNewsState,
+          list: [mockArticle]
         }
       })
       .put(setNewsLoading(true))
@@ -145,6 +155,7 @@ describe('Test news sagas', () => {
         [call(deleteArticle, mockId)],
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
+      .put(removeArticleFromStore(mockId))
       .put(updatePagination())
       .put(setNewsLoading(false))
       .hasFinalState({
@@ -156,19 +167,19 @@ describe('Test news sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(4);
       }));
 
   it('should update article', () =>
     expectSaga(handleNewsUpdate, {
-      payload: { id: mockId, newArticle: mockArticle }
+      payload: { id: mockId, newArticle: mockArticle, upload: mockFile }
     })
       .withReducer(combineReducers({ News }), {
         News: mockNewsState
       })
       .put(setNewsLoading(true))
       .provide([
-        [call(updateArticle, mockId, mockArticle)],
+        [call(updateArticle, mockId, mockArticle, mockFile)],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
       .put(push('/news'))

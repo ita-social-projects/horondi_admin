@@ -1,67 +1,44 @@
 import {
-  GET_COMMENTS_BY_TYPE,
-  GET_RECENT_COMMENTS,
   SET_COMMENTS,
+  GET_COMMENTS,
   DELETE_COMMENT,
-  DELETE_COMMENT_LOCALLY,
+  GET_COMMENTS_BY_PRODUCTS,
+  GET_COMMENTS_BY_TYPE,
+  SET_COMMENTS_CURRENT_PAGE,
   SET_COMMENTS_LOADING,
   SET_COMMENTS_ERROR,
-  SET_COMMENTS_CURRENT_PAGE,
-  SET_COMMENTS_PER_PAGE,
-  SET_COMMENTS_PAGES_COUNT,
-  GET_COMMENTS_BY_PRODUCTS
+  REMOVE_COMMENT_FROM_STORE,
+  UPDATE_COMMENT,
+  SET_COMMENT,
+  GET_COMMENT,
+  GET_USER_COMMENTS,
+  GET_PRODUCT_COMMENTS,
+  SET_FILTER,
+  CLEAR_FILTERS
 } from './comments.types';
-
-const getCommentsByType = (value, commentsType) => ({
-  type: GET_COMMENTS_BY_TYPE,
-  payload: {
-    value,
-    commentsType
-  }
-});
-
-const getRecentComments = (payload) => ({
-  type: GET_RECENT_COMMENTS,
-  payload
-});
 
 const setComments = (comments) => ({
   type: SET_COMMENTS,
   payload: comments
 });
 
-const setCommentsLoading = (loading) => ({
-  type: SET_COMMENTS_LOADING,
-  payload: loading
+const setComment = (payload) => ({
+  type: SET_COMMENT,
+  payload
+});
+
+const getComment = (payload) => ({
+  type: GET_COMMENT,
+  payload
+});
+
+const getComments = (payload) => ({
+  type: GET_COMMENTS,
+  payload
 });
 
 const deleteComment = (payload) => ({
   type: DELETE_COMMENT,
-  payload
-});
-
-const deleteCommentLocally = (id) => ({
-  type: DELETE_COMMENT_LOCALLY,
-  payload: id
-});
-
-const setCommentError = (error) => ({
-  type: SET_COMMENTS_ERROR,
-  payload: error
-});
-
-const setCommentsCurrentPage = (payload) => ({
-  type: SET_COMMENTS_CURRENT_PAGE,
-  payload
-});
-
-const setCommentsPerPage = (payload) => ({
-  type: SET_COMMENTS_PER_PAGE,
-  payload
-});
-
-const setCommentsPagesCount = (payload) => ({
-  type: SET_COMMENTS_PAGES_COUNT,
   payload
 });
 
@@ -70,16 +47,70 @@ const getCommentsByProduct = (payload) => ({
   payload
 });
 
+const getUserComments = (payload) => ({
+  type: GET_USER_COMMENTS,
+  payload
+});
+
+const getProductComments = (payload) => ({
+  type: GET_PRODUCT_COMMENTS,
+  payload
+});
+
+const getCommentsByType = (payload) => ({
+  type: GET_COMMENTS_BY_TYPE,
+  payload
+});
+
+const setCommentsCurrentPage = (payload) => ({
+  type: SET_COMMENTS_CURRENT_PAGE,
+  payload
+});
+
+const setCommentsLoading = (payload) => ({
+  type: SET_COMMENTS_LOADING,
+  payload
+});
+
+const setCommentError = (payload) => ({
+  type: SET_COMMENTS_ERROR,
+  payload
+});
+
+const removeCommentFromStore = (payload) => ({
+  type: REMOVE_COMMENT_FROM_STORE,
+  payload
+});
+
+const updateComment = (payload) => ({
+  type: UPDATE_COMMENT,
+  payload
+});
+
+const setFilter = (filter) => ({
+  type: SET_FILTER,
+  payload: filter
+});
+
+const clearFilters = () => ({
+  type: CLEAR_FILTERS
+});
+
 export {
-  getCommentsByType,
-  getRecentComments,
   setComments,
+  getComments,
+  getCommentsByType,
+  removeCommentFromStore,
   setCommentsLoading,
   deleteComment,
-  deleteCommentLocally,
   setCommentError,
   setCommentsCurrentPage,
-  setCommentsPerPage,
-  setCommentsPagesCount,
-  getCommentsByProduct
+  getCommentsByProduct,
+  updateComment,
+  setComment,
+  getComment,
+  getUserComments,
+  getProductComments,
+  setFilter,
+  clearFilters
 };

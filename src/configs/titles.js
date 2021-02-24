@@ -12,6 +12,9 @@ const titles = {
     mainPageTitle: 'Інформація про гобелени',
     createPageTitle: 'Створити гобелен'
   },
+  commentTitles: {
+    mainPageTitle: 'Інформація про коментарі'
+  },
   productPageTitles: {
     mainPageTitle: 'Інформація про продукти'
   },
@@ -43,12 +46,18 @@ const titles = {
     mainPageTitle: 'Інформація про посилання',
     createPageTitle: 'Створити посилання'
   },
+  sizesTitles: {
+    mainPageTitle: 'Iнформація про розміри',
+    selectTitle: 'Розмір',
+    sizeAdjustMenu: 'Редагування розміром'
+  },
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
     createPageTitle: 'Створити матеріал'
   },
   colorTitles: {
-    createColorTitle: 'Створити колір'
+    createColorTitle: 'Створити колір',
+    alreadyUse: 'Колір вже використовується!'
   },
   businessPageTitles: {
     mainPageTitle: 'Інформація про бізнес сторінки',

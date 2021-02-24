@@ -33,6 +33,7 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { handleCategoriesLoad } from '../categories/categories.sagas';
 
 const { routes } = config;
 
@@ -58,6 +59,7 @@ export function* handleModelLoad({ payload }) {
   try {
     yield put(setModelLoading(true));
     const model = yield call(getModelById, payload);
+    yield call(handleCategoriesLoad);
     yield put(setModel(model));
     yield put(setModelLoading(false));
   } catch (error) {

@@ -5,6 +5,8 @@ import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
 import statuses from './statuses';
+import filterLabels from './filter-labels';
+import materialUiConstants from './material-ui-constants';
 import {
   loginErrorMessages,
   colorErrorMessages,
@@ -17,12 +19,16 @@ import {
   modelErrorMessages,
   headerErrorMessages,
   homePageSlideErrorMessages,
+  constructorErrorMessages,
   statsErrorMessages,
-  paginationInputErrorMessages
+  paginationInputErrorMessages,
+  commentErrorMessages,
+  sizeErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
+import { newsPaginationPayload, contactsPaginationPayload } from './pagination';
 import titles from './titles';
 import { sort } from './sort';
 import languages from './languages';
@@ -67,6 +73,10 @@ export const config = {
     SMALL_SIZE: 'small',
     DEFAULT_SIZE: 'default'
   },
+  colorCircleSizes: {
+    SMALL_CIRCLE: '25px',
+    DEFAULT_CIRCLE: '50px'
+  },
   theme: {
     DARK_THEME: 'dark',
     LIGHT_THEME: 'light'
@@ -80,6 +90,11 @@ export const config = {
     limit: 5,
     countPerPage: 6
   },
+  sizesAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Відсутній'
+  },
+
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
   product: {
@@ -177,12 +192,19 @@ export const config = {
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
+  newsPaginationPayload,
+  contactsPaginationPayload,
   modelErrorMessages,
   headerErrorMessages,
   statsErrorMessages,
   homePageSlideErrorMessages,
+  constructorErrorMessages,
   sort,
-  paginationInputErrorMessages
+  paginationInputErrorMessages,
+  commentErrorMessages,
+  filterLabels,
+  materialUiConstants,
+  sizeErrorMessages
 };
 export const inputTypes = {
   button: 'button',
@@ -193,3 +215,6 @@ export const badgePosition = {
   vertical: 'top',
   horizontal: 'left'
 };
+
+export const dateFormat = ' HH:mm DD/MM/YYYY ';
+export const dateFormatOrder = ' DD.MM.YYYY ';

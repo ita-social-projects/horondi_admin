@@ -1,27 +1,30 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import { config } from '../../configs';
 
 import {
-  getCommentsByType,
-  getRecentComments,
+  getAllComments,
   deleteComment,
-  getCommentsByProduct
+  updateComment,
+  getCommentById,
+  getCommentsByType
 } from './comments.operations';
 
 import {
   setComments,
   setCommentsLoading,
   setCommentError,
-  setCommentsPagesCount,
-  deleteCommentLocally
+  removeCommentFromStore,
+  setComment
 } from './comments.actions';
 
 import {
-  GET_COMMENTS_BY_TYPE,
-  GET_RECENT_COMMENTS,
+  GET_COMMENTS,
   DELETE_COMMENT,
-  GET_COMMENTS_BY_PRODUCTS
+  GET_COMMENT,
+  UPDATE_COMMENT,
+  GET_COMMENTS_BY_TYPE
 } from './comments.types';
 
 import {
@@ -29,40 +32,27 @@ import {
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
-const { SUCCESS_DELETE_STATUS } = config.statuses;
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
-export function* handleCommentsByTypeLoad({ payload }) {
+const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
+
+export function* handleCommentsLoad({ payload: { filter, pagination } }) {
   try {
     yield put(setCommentsLoading(true));
-    const comments = yield call(
-      getCommentsByType,
-      payload.value,
-      payload.commentsType
-    );
-    yield put(setComments(comments));
-
+    const comments = yield call(getAllComments, filter, pagination);
+    yield put(setItemsCount(comments.count));
+    yield put(setComments(comments.items));
     yield put(setCommentsLoading(false));
   } catch (error) {
     yield call(handleCommentsError, error);
   }
 }
 
-export function* handleRecentCommentsLoad({
-  payload = {
-    skip: 0,
-    limit: 20,
-    commentsPerPage: 10
-  }
-}) {
+export function* handleCommentLoad({ payload }) {
   try {
     yield put(setCommentsLoading(true));
-
-    const comments = yield call(getRecentComments, payload.skip, payload.limit);
-    yield put(
-      setCommentsPagesCount(Math.ceil(comments.count / payload.commentsPerPage))
-    );
-    yield put(setComments(comments.items));
-
+    const comment = yield call(getCommentById, payload);
+    yield put(setComment(comment));
     yield put(setCommentsLoading(false));
   } catch (error) {
     yield call(handleCommentsError, error);
@@ -74,8 +64,8 @@ export function* handleCommentDelete({ payload }) {
     yield put(setCommentsLoading(true));
 
     yield call(deleteComment, payload);
-    yield put(deleteCommentLocally(payload));
-
+    yield put(removeCommentFromStore(payload));
+    yield put(updatePagination());
     yield put(setCommentsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
@@ -83,38 +73,43 @@ export function* handleCommentDelete({ payload }) {
   }
 }
 
-export function* handleCommentsByProduct({
-  payload = {
-    skip: 0,
-    limit: 20,
-    commentsPerPage: 10
-  }
-}) {
+export function* handleCommentUpdate({ payload }) {
+  const { id, comment } = payload;
   try {
     yield put(setCommentsLoading(true));
+    yield call(updateComment, id, comment);
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    yield put(push(config.routes.pathToComments));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
 
-    const comments = yield call(getCommentsByProduct, payload);
-    yield put(
-      setCommentsPagesCount(Math.ceil(comments.count / payload.commentsPerPage))
+export function* handleCommentsByTypeLoad({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+    const comments = yield call(
+      getCommentsByType,
+      payload.value,
+      payload.commentsType
     );
-    yield put(setComments(comments.items));
-
+    yield put(setComments(comments));
     yield put(setCommentsLoading(false));
   } catch (error) {
     yield call(handleCommentsError, error);
   }
 }
 
-export function* handleCommentsError(error) {
+export function* handleCommentsError(e) {
   yield put(setCommentsLoading(false));
-  yield put(setCommentError({ error }));
-
-  yield call(handleErrorSnackbar, error.message);
+  yield put(setCommentError({ e }));
+  yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* commentsSaga() {
-  yield takeEvery(GET_COMMENTS_BY_TYPE, handleCommentsByTypeLoad);
-  yield takeEvery(GET_RECENT_COMMENTS, handleRecentCommentsLoad);
+  yield takeEvery(GET_COMMENTS, handleCommentsLoad);
   yield takeEvery(DELETE_COMMENT, handleCommentDelete);
-  yield takeEvery(GET_COMMENTS_BY_PRODUCTS, handleCommentsByProduct);
+  yield takeEvery(UPDATE_COMMENT, handleCommentUpdate);
+  yield takeEvery(GET_COMMENT, handleCommentLoad);
+  yield takeEvery(GET_COMMENTS_BY_TYPE, handleCommentsByTypeLoad);
 }

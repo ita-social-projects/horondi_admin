@@ -1,3 +1,4 @@
+import { noop } from 'lodash';
 import { CLOSE_DIALOG, SHOW_DIALOG } from './dialog-window.types';
 
 export const basicSelector = ({ DialogWindow }) => ({
@@ -11,7 +12,7 @@ export const initialState = {
   isOpen: false,
   dialogTitle: '',
   dialogContent: '',
-  onClickHandler: () => {}
+  onClickHandler: noop()
 };
 
 const dialogWindowReducer = (state = initialState, action = {}) => {

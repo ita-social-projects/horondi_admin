@@ -1,171 +1,59 @@
-import { useState, useMemo, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { config } from '../../configs';
-import useProductSpecies from './use-product-species';
 
-const selectAdditionsLength = ({ additions }) => additions.length;
-
-const selectOptionsLength = ({ options }) =>
-  options.find(selectAdditionsLength);
-
-const {
-  languages,
-  labels: {
-    product: { optionsValues }
-  }
-} = config;
+const { languages } = config;
 
 const useProductHandlers = () => {
-  const { filterData, productOptions, modelsForSelectedCategory } = useSelector(
-    ({ Products }) => ({
-      filterData: Products.filterData,
-      productOptions: Products.productOptions,
-      modelsForSelectedCategory:
-        Products.productSpecies.modelsForSelectedCategory
-    })
-  );
+  const getIdFromItem = (item) => item._id;
 
-  const [selectedOptions, setOptions] = useState(optionsValues);
+  const [models, setModels] = useState([]);
+  const [innerColors, setInnerColors] = useState([]);
+  const [mainColors, setMainColors] = useState([]);
+  const [bottomColors, setBottomColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [primaryImage, setPrimaryImage] = useState('');
   const [additionalImages, setAdditionalImages] = useState([]);
 
-  const { bottomMaterials: materials, sizes } = productOptions;
-
-  const {
-    categoriesNames,
-    categories,
-    colorsNames,
-    colors,
-    modelNames,
-    models,
-    patternsNames,
-    patterns
-  } = useProductSpecies();
-
-  const additions = useMemo(
-    () =>
-      filterData.length
-        ? filterData
-          .find(selectOptionsLength)
-          .options.find(selectAdditionsLength).additions
-        : null,
-    [filterData]
-  );
-
-  const sizeOptions = useMemo(
-    () =>
-      selectedOptions.sizes.map((size) =>
-        sizes.find(({ name }) => name === size)
-      ),
-    [selectedOptions.sizes, sizes]
-  );
-
-  const materialsOptions = useMemo(
-    () =>
-      selectedOptions.bottomMaterials.map((item) =>
-        materials.find(({ name }) => item === name[0].value)
-      ),
-    [selectedOptions.bottomMaterials, materials]
-  );
-
-  const options = useMemo(() => {
-    const sizeObj = {
-      items: sizeOptions,
-      name: 'size'
-    };
-    const materialsObj = {
-      items: materialsOptions,
-      name: 'bottomMaterial'
-    };
-    let objToMap;
-    let objToAggregate;
-
-    if (sizeOptions.length > materialsOptions.length) {
-      objToMap = sizeObj;
-      objToAggregate = materialsObj;
-    } else {
-      objToMap = materialsObj;
-      objToAggregate = sizeObj;
-    }
-
-    return objToMap.items.map((item, idx) => {
-      const { name: mappedName } = objToMap;
-      const { name: aggregatedName } = objToAggregate;
-      const aggregatedItem = objToAggregate.items[idx]
-        ? { [aggregatedName]: objToAggregate.items[idx]._id }
-        : {};
-      const additionsToSend = selectedOptions.additions ? { additions } : [];
-
-      return {
-        [mappedName]: !!item && item._id,
-        ...aggregatedItem,
-        ...additionsToSend
-      };
-    });
-  }, [sizeOptions, materialsOptions, additions, selectedOptions.additions]);
-
-  const getColorsToSend = (color) =>
-    colors.find((item) => item[0].simpleName[0].value === color);
-
-  const getPatternToSend = (pattern) =>
-    patterns.find((item) => pattern === item[0].value);
-
-  const getModelToSend = (model) =>
-    modelsForSelectedCategory.find(({ name }) => name[0].value === model);
-
   const createProductInfo = (values) => ({
     name: [
-      { lang: languages[0], value: values['ua-name'] },
-      { lang: languages[1], value: values['en-name'] }
-    ],
-    mainMaterial: [
-      { lang: languages[0], value: values['ua-mainMaterial'] },
-      { lang: languages[1], value: values['en-mainMaterial'] }
-    ],
-    innerMaterial: [
-      { lang: languages[0], value: values['ua-innerMaterial'] },
-      { lang: languages[1], value: values['en-innerMaterial'] }
-    ],
-    closure: [
-      { lang: languages[0], value: values['ua-closure'] },
-      { lang: languages[1], value: values['en-closure'] }
+      { lang: languages[0], value: values.uaName },
+      { lang: languages[1], value: values.enName }
     ],
     description: [
-      { lang: languages[0], value: values['ua-description'] },
-      { lang: languages[1], value: values['en-description'] }
+      { lang: languages[0], value: values.uaDescription },
+      { lang: languages[1], value: values.enDescription }
     ],
-    strapLengthInCm: values.strapLengthInCm
-      ? values.strapLengthInCm
-      : Number(values.strapLengthInCm)
+    mainMaterial: {
+      material: values.mainMaterial,
+      color: values.mainColor
+    },
+    innerMaterial: {
+      material: values.innerMaterial,
+      color: values.innerColor
+    },
+    bottomMaterial: {
+      material: values.bottomMaterial,
+      color: values.bottomColor
+    }
   });
 
-  const getSelectedCategory = useCallback(
-    (category) => categories.find(({ _id }) => category === _id),
-    [categories]
-  );
-
   return {
+    innerColors,
+    setInnerColors,
+    mainColors,
+    setMainColors,
+    bottomColors,
+    setBottomColors,
     models,
-    modelNames,
-    colors,
-    colorsNames,
-    categories,
-    categoriesNames,
-    patterns,
-    patternsNames,
-    selectedOptions,
-    setOptions,
-    additions,
-    options,
+    sizes,
+    setSizes,
+    getIdFromItem,
     primaryImage,
     setPrimaryImage,
     additionalImages,
     setAdditionalImages,
     createProductInfo,
-    getColorsToSend,
-    getModelToSend,
-    getPatternToSend,
-    getSelectedCategory
+    setModels
   };
 };
 

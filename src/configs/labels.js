@@ -9,21 +9,61 @@ const labels = {
     guestUser: 'Гість'
   },
   news: {
-    authorsName: "Ім'я автора",
-    title: 'Заголовок',
-    text: 'Текст'
+    authorName: {
+      ua: "Ім'я автора",
+      en: 'Author name'
+    },
+    title: {
+      ua: 'Заголовок',
+      en: 'Title'
+    },
+    text: {
+      ua: 'Текст',
+      en: 'Text'
+    }
+  },
+  contacts: {
+    schedule: {
+      ua: 'Розклад',
+      en: 'Schedule'
+    },
+    adress: {
+      ua: 'Адреса',
+      en: 'Adress'
+    }
   },
   model: {
-    name: mapToLanguages('Назва', 'Name'),
-    description: mapToLanguages('Опис', 'Description'),
+    name: {
+      ua: 'Назва',
+      en: 'Name'
+    },
+    description: {
+      ua: 'Опис',
+      en: 'Description'
+    },
     image: 'Фото моделі',
-    category: 'Категорія',
+    availableCategory: 'Категорія',
     available: 'Доступний',
     show: 'Показати',
+    defaultElement: 'За замовчуванням',
+    availableForConstructor: 'Доступний для конструктора',
+    constructorBasic: 'Основа',
+    constructorPattern: 'Гобелен',
+    constructorFrontPocket: 'Передня кишеня',
+    constructorBottom: 'Низ',
+    constructorPhoto: 'Фото для конструктора',
+    baseConstructorElementPrice: 'Базова ціна',
+    constructorMaterial: 'Матеріал',
+    constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
     showEnable: 'Так',
-    showDisable: 'Ні'
+    showDisable: 'Ні',
+    availablePatternsForConstructor: 'Доступні патерни для контсруктора',
+    constructorName: {
+      ua: 'Назва елементу конструктора',
+      en: 'Constructor element name'
+    }
   },
   categories: {
     switchCategory: "Категорія, на яку замінити пов'язані товари",
@@ -40,10 +80,15 @@ const labels = {
   },
   pattern: {
     image: 'Фото гобелена',
-    material: 'Код матеріалу',
+    material: 'Матеріал',
     available: 'Доступний',
     handmade: 'Зроблений вручну',
     avatarText: 'Фото',
+    constructorImgText: 'Фото для конструктора',
+    form: {
+      name: mapToLanguages("І'мя", 'Name'),
+      description: mapToLanguages('Опис', 'Description')
+    },
     patternName: {
       ua: 'Назва гобелену',
       en: 'Pattern name'
@@ -61,12 +106,16 @@ const labels = {
     description: mapToLanguages('Опис матеріалу', 'Material description'),
     additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
   },
-  colors: {
-    image: 'Фото кольору',
+  color: {
     name: 'Назва кольору',
     simpleName: 'Проста назва кольору',
-    code: 'Код кольору',
-    available: 'Доступний'
+    colorHex: '# Колір',
+    mainLabel: 'Колір'
+  },
+  comment: {
+    text: 'Текст коментаря',
+    show: 'Видимий',
+    productInfo: 'Інформація про продукт'
   },
   businessPage: [
     {
@@ -92,40 +141,58 @@ const labels = {
       'Введіть інформацію про продукт',
       'Оберіть категорію, підкатегорію, модель, колір, гобелен та ціну продукту',
       'Вкажіть ціну продукту',
-      'Оберіть опційні параметри',
+      'Оберіть матеріали та кольори до них',
       'Завантажте фото для продукту',
       'Підтвердження створення продукту'
     ],
     infoLabels: [
       {
-        label: mapToLanguages('Назва', 'Name'),
+        label: { ua: 'Назва', en: 'Name' },
         name: 'name',
         required: true
       },
       {
-        label: mapToLanguages('Основний матеріал', 'Primary material'),
-        name: 'mainMaterial',
-        required: true
-      },
-      {
-        label: mapToLanguages('Внутрішній матеріал', 'Inner material'),
-        name: 'innerMaterial',
-        required: false
-      },
-      {
-        label: mapToLanguages('Замок', 'Closure'),
-        name: 'closure',
-        required: false
-      },
-      {
-        label: mapToLanguages('Довжина лямок(см)', 'Strap length (cm)'),
-        name: 'strapLengthInCm',
-        required: false
-      },
-      {
-        label: mapToLanguages('Опис', 'Description'),
+        label: { ua: 'Опис', en: 'Description' },
         name: 'description',
-        required: false
+        isEditor: true
+      }
+    ],
+    materialLabels: [
+      {
+        label: 'Основний матеріал',
+        name: 'mainMaterial',
+        required: true,
+        validation: 'string'
+      },
+      {
+        label: 'Колір основного матеріалу',
+        name: 'mainColor',
+        required: true,
+        validation: 'string'
+      },
+      {
+        label: 'Нижній матеріал',
+        name: 'bottomMaterial',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір нижнього матеріалу',
+        name: 'bottomColor',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Внутрішній матеріал',
+        name: 'innerMaterial',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір внутрішнього матеріалу',
+        name: 'innerColor',
+        required: false,
+        validation: 'string'
       }
     ],
     selectsLabels: [
@@ -133,25 +200,49 @@ const labels = {
         label: 'Категорія ',
         name: 'category',
         type: 'select',
-        required: true
+        required: true,
+        multiple: false,
+        validation: 'string'
       },
       {
         label: 'Модель ',
         name: 'model',
         type: 'select',
-        required: true
+        required: true,
+        multiple: false,
+        validation: 'string'
       },
       {
-        label: 'Колір ',
-        name: 'colors',
+        label: 'Розміри ',
+        name: 'sizes',
         type: 'select',
-        required: true
+        required: true,
+        multiple: true,
+        validation: 'string'
       },
       {
         label: 'Гобелен ',
         name: 'pattern',
         type: 'select',
-        required: true
+        required: true,
+        multiple: false,
+        validation: 'string'
+      },
+      {
+        label: 'Замочок',
+        name: 'closure',
+        type: 'select',
+        required: true,
+        multiple: false,
+        validation: 'string'
+      },
+      {
+        label: 'Довжина лямок(см)',
+        name: 'strapLengthInCm',
+        type: 'number',
+        required: true,
+        multiple: false,
+        validation: 'number'
       }
     ],
     optionsLabels: [
@@ -201,8 +292,8 @@ const labels = {
     city: 'Місто',
     zipcode: 'Поштовий індекс',
     street: 'Вулиця',
-    buildingNumber: 'Номер будинку',
-    appartment: 'Номер квартири'
+    house: 'Будинок',
+    flat: 'Квартира'
   },
   sizeValues: {
     heightInCm: 'Висота (см.)',
@@ -291,16 +382,18 @@ const labels = {
     invoiceNumberLabel: 'Номер накладної',
     warehouseNumberLabel: 'Номер відділення: ',
     sentAtLabel: 'Відправлено о:',
-    deliveryCostLabel: 'Вартість доставки'
+    deliveryCostLabel: 'Вартість доставки',
+    courierOfficeNameLabel: 'Номер відділення'
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
     paymentMethodLabel: 'Метод оплати:',
+    paymentStatusLabel: 'Статус оплати:',
     isPaidLabel: 'Оплачено:',
     cancellationReasonLabel: 'Причина скасування',
     creationDateLabel: 'Дата створення:',
     updateDateLabel: 'Дата оновлення:',
-    adminCommentLabel: 'Залишити коментар'
+    userCommentLabel: 'Коментар користувача'
   },
   productsLabels: {
     notListed: 'Не вказано',
@@ -322,14 +415,57 @@ const labels = {
   },
   homePageSlide: {
     image: 'Фото слайду',
-    title: mapToLanguages('Заголовок слайду', 'Slider title'),
+    title: { ua: 'Заголовок слайду', en: 'Slider title' },
     show: 'Доступний',
-    description: 'Опис слайду',
+    description: { ua: 'Опис слайду', en: 'Slide description' },
     link: 'Посилання для переходу'
   },
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
+  },
+
+  sizePageLabels: {
+    sizesHeader: 'sizes-header',
+    sizesTable: 'sizesTable'
+  },
+
+  sizeInputData: {
+    sizeMetricData: [
+      'heightInCm',
+      'widthInCm',
+      'depthInCm',
+      'volumeInLiters',
+      'weightInKg'
+    ],
+    sizePricesData: ['simpleNameUa', 'simpleNameEn']
+  },
+
+  sizeLabels: {
+    ua: {
+      heightInCm: 'Висота',
+      widthInCm: 'Ширина',
+      depthInCm: 'Глибина',
+      volumeInLiters: "Об'єм (літри)",
+      weightInKg: 'Вага',
+      additionalPrice: 'Додаткова ціна',
+      simpleNameUa: 'Назва(Укр)',
+      simpleNameEn: 'Назва(Eng)',
+      name: "Ім'я",
+      available: 'Доступний'
+    },
+    en: {
+      heightInCm: 'heightInCm',
+      widthInCm: 'widthInCm',
+      depthInCm: 'depthInCm',
+      volumeInLiters: 'volumeInLiters',
+      weightInKg: 'weightInKg',
+      additionalPrice: 'additionalPrice',
+      simpleNameUa: 'simpleNameUa',
+      simpleNameEn: 'simpleNameUa',
+      name: 'name',
+      available: 'available'
+    }
   }
 };
 export default labels;

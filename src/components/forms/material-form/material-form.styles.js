@@ -1,6 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    marginTop: '15px'
+  },
   materialForm: {
     '& div': {
       '& div': {
@@ -73,6 +78,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   colorImages: {
     display: 'flex'
+  },
+  purposeSelect: {
+    width: '400px'
   },
   errorTab: {
     backgroundColor: theme.palette.error.main,

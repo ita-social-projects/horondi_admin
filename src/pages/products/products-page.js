@@ -13,7 +13,6 @@ import {
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
-import ProductsNav from './products-nav';
 
 import { config } from '../../configs';
 import { productsTranslations } from '../../translations/product.translations';
@@ -109,8 +108,8 @@ const ProductsPage = () => {
           image={`${imagePrefix}${images.primary.small}`}
           name={name[0].value}
           category={category.name[0].value}
-          model={model[0].value}
-          pattern={pattern[0].value}
+          model={model.name[0].value}
+          pattern={pattern.name[0].value}
           price={Math.round(basePrice[0].value / 100)}
           rate={rate.toFixed(2)}
           purchasedCount={purchasedCount}
@@ -123,7 +122,6 @@ const ProductsPage = () => {
 
   return (
     <div className={common.container}>
-      <ProductsNav />
       {loading ? (
         <LoadingBar />
       ) : products.length ? (

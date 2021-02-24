@@ -27,8 +27,6 @@ describe('Category tests', () => {
       expect(switchId).to.equal(2);
 
       categories = categories.filter((item) => item._id !== deleteId);
-
-      console.log(categories);
     }).as('deleteCategory');
 
     cy.login(Cypress.env('ADMIN_LOGIN'), Cypress.env('ADMIN_PASSWORD'));

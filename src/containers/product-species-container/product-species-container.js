@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
 import {
   FormControl,
@@ -9,7 +8,8 @@ import {
   TextField,
   MenuItem
 } from '@material-ui/core';
-import { useStyles } from './product-species-container.styles';
+import { map, noop } from 'lodash';
+import { useSharedStyles } from '../shared.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
 import { config } from '../../configs';
@@ -18,7 +18,6 @@ const { selectsLabels } = config.labels.product;
 const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations;
 
 const ProductSpeciesContainer = ({
-  colors,
   patterns,
   models,
   values,
@@ -27,21 +26,18 @@ const ProductSpeciesContainer = ({
   handleBlur,
   handleChange,
   handleSubmit,
+  setSizes,
+  categories,
   setFieldValue,
+  closures,
+  sizes,
   toggleFieldsChanged
 }) => {
-  const styles = useStyles();
-  const { categories, modelsForSelectedCategory } = useSelector(
-    ({ Products: { productSpecies, productToSend } }) => ({
-      categories: productSpecies.categories,
-      modelsForSelectedCategory: productSpecies.modelsForSelectedCategory,
-      productToSend
-    })
-  );
+  const styles = useSharedStyles();
 
   const categoriesOptions = useMemo(
     () =>
-      categories.map(({ name, _id }) => (
+      map(categories, ({ name, _id }) => (
         <MenuItem value={_id} key={_id}>
           {name[0].value}
         </MenuItem>
@@ -49,21 +45,11 @@ const ProductSpeciesContainer = ({
     [categories]
   );
 
-  const colorsOptions = useMemo(
-    () =>
-      colors.map(([{ simpleName }]) => (
-        <MenuItem value={simpleName[0].value} key={simpleName[1].value}>
-          {simpleName[0].value}
-        </MenuItem>
-      )),
-    [colors]
-  );
-
   const patternsOptions = useMemo(
     () =>
-      patterns.map((pattern) => (
-        <MenuItem value={pattern[0].value} key={pattern[1].value}>
-          {pattern[0].value}
+      map(patterns, (pattern) => (
+        <MenuItem value={pattern._id} key={pattern.name[1].value}>
+          {pattern.name[0].value}
         </MenuItem>
       )),
     [patterns]
@@ -71,28 +57,44 @@ const ProductSpeciesContainer = ({
 
   const modelsOptions = useMemo(
     () =>
-      (modelsForSelectedCategory.length
-        ? modelsForSelectedCategory
-        : models
-      ).map((model) => {
-        const value = modelsForSelectedCategory.length
-          ? model.name[0].value
-          : model[0].value;
+      map(models, (model) => {
+        const { value } = model.name[0];
 
         return (
-          <MenuItem value={value} key={value}>
+          <MenuItem value={model._id} key={value}>
             {value}
           </MenuItem>
         );
       }),
-    [modelsForSelectedCategory, models]
+    [models]
+  );
+
+  const sizesOptions = useMemo(
+    () =>
+      map(sizes, (size) => (
+        <MenuItem value={size._id} key={size.name}>
+          {size.name}
+        </MenuItem>
+      )),
+    [sizes]
+  );
+
+  const closuresOptions = useMemo(
+    () =>
+      map(closures, (closure) => (
+        <MenuItem value={closure._id} key={closure.name[1].value}>
+          {closure.name[0].value}
+        </MenuItem>
+      )),
+    [closures]
   );
 
   const options = [
     categoriesOptions,
     modelsOptions,
-    colorsOptions,
-    patternsOptions
+    sizesOptions,
+    patternsOptions,
+    closuresOptions
   ];
 
   const speciesErrors = useMemo(() => {
@@ -103,11 +105,14 @@ const ProductSpeciesContainer = ({
   const handleSelectChange = (e) => {
     if (e.target.name === selectsLabels[0].name) {
       setFieldValue(selectsLabels[1].name, '');
-      setFieldValue(selectsLabels[2].name, '');
+      setFieldValue(selectsLabels[2].name, []);
+      setSizes([]);
+    } else if (e.target.name === selectsLabels[1].name) {
+      setFieldValue(selectsLabels[2].name, []);
+      setSizes([]);
     }
     handleSpeciesChange(e);
   };
-
   const handleSpeciesChange = (e) => {
     handleChange(e);
     toggleFieldsChanged(true);
@@ -115,7 +120,7 @@ const ProductSpeciesContainer = ({
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      {selectsLabels.map(({ label, name, type, required }, idx) =>
+      {selectsLabels.map(({ label, name, type, required, multiple }, idx) =>
         type === 'select' ? (
           <FormControl className={styles.formControl} key={label}>
             <InputLabel htmlFor={label}>{`${label}${
@@ -124,9 +129,10 @@ const ProductSpeciesContainer = ({
             <Select
               name={name}
               error={touched[name] && !!errors[name]}
-              value={values[name]}
+              value={values[name] || []}
               onChange={handleSelectChange}
               onBlur={handleBlur}
+              multiple={multiple}
             >
               {options[idx]}
             </Select>
@@ -154,8 +160,9 @@ const ProductSpeciesContainer = ({
 };
 
 ProductSpeciesContainer.propTypes = {
-  colors: PropTypes.arrayOf(PropTypes.array).isRequired,
   patterns: PropTypes.arrayOf(PropTypes.array).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.array).isRequired,
+  closures: PropTypes.arrayOf(PropTypes.array).isRequired,
   models: PropTypes.arrayOf(PropTypes.array).isRequired,
   values: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -166,11 +173,13 @@ ProductSpeciesContainer.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  toggleFieldsChanged: PropTypes.func
+  toggleFieldsChanged: PropTypes.func,
+  setSizes: PropTypes.func.isRequired,
+  sizes: PropTypes.arrayOf(PropTypes.array).isRequired
 };
 
 ProductSpeciesContainer.defaultProps = {
-  toggleFieldsChanged: () => {}
+  toggleFieldsChanged: noop()
 };
 
 export default ProductSpeciesContainer;

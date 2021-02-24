@@ -13,13 +13,13 @@ import {
   setAllFilterData,
   setProductsError,
   setProductCategories,
-  setProductOptions,
   setModels,
   clearProductToSend,
   setProduct,
   setFilesToUpload,
   clearFilesToUpload,
-  setFilesToDelete
+  setFilesToDelete,
+  setProductDetails
 } from './products.actions';
 import { setItemsCount, updatePagination } from '../table/table.actions';
 
@@ -32,21 +32,21 @@ import {
   GET_PRODUCT,
   UPDATE_PRODUCT,
   DELETE_IMAGES,
-  GET_PRODUCT_OPTIONS,
-  GET_PRODUCT_SPECIES
+  GET_PRODUCT_SPECIES,
+  GET_PRODUCT_DETAILS
 } from './products.types';
 
 import {
   getAllProducts,
   getAllFilters,
   getProductCategories,
-  getProductOptions,
   getModelsByCategory,
   addProduct,
   deleteProduct,
   getProduct,
   updateProduct,
-  deleteImages
+  deleteImages,
+  getProductDetails
 } from './products.operations';
 
 import {
@@ -88,21 +88,23 @@ export function* handleGetFilters() {
   }
 }
 
+export function* handleProductDetailsLoad() {
+  try {
+    yield put(setProductsLoading(true));
+    const details = yield call(getProductDetails);
+    yield put(setProductDetails(details));
+    yield put(setProductsLoading(false));
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
 export function* handleProductSpeciesLoad() {
   try {
     const categories = yield call(getProductCategories);
     const species = yield call(getAllFilters);
     yield put(setProductCategories(categories));
     yield put(setAllFilterData(species));
-  } catch (e) {
-    yield call(handleProductsErrors, e);
-  }
-}
-
-export function* handleProductOptionsLoad() {
-  try {
-    const productOptions = yield call(getProductOptions);
-    yield put(setProductOptions(productOptions));
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -117,11 +119,11 @@ export function* handleModelsLoad({ payload }) {
   }
 }
 
-export function* handleProductAdd() {
+export function* handleProductAdd({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const productState = yield select(selectProducts);
-    const addedProduct = yield call(addProduct, productState);
+    const { upload } = yield select(selectProducts);
+    const addedProduct = yield call(addProduct, payload, upload);
     yield call(handleFilterLoad);
     yield put(clearProductToSend());
     yield put(setFilesToUpload([]));
@@ -151,14 +153,10 @@ export function* handleProductUpdate({ payload }) {
   try {
     yield put(setProductsLoading(true));
     const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
-    const productToUpdate = yield call(
-      updateProduct,
-      payload,
-      upload,
-      primaryImageUpload
-    );
-    yield put(setProduct(productToUpdate));
+    yield call(updateProduct, payload, upload, primaryImageUpload);
+    yield put(setProduct({}));
     yield put(clearFilesToUpload());
+    yield put(push(routes.pathToProducts));
     yield put(setProductsLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
@@ -169,8 +167,7 @@ export function* handleProductUpdate({ payload }) {
 export function* handleProductLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    yield call(handleProductOptionsLoad);
-    yield call(handleProductSpeciesLoad);
+    yield call(handleProductDetailsLoad);
     const product = yield call(getProduct, payload);
     yield put(setProduct(product));
     yield put(setProductsLoading(false));
@@ -210,6 +207,6 @@ export default function* productsSaga() {
   yield takeEvery(GET_PRODUCT, handleProductLoad);
   yield takeEvery(UPDATE_PRODUCT, handleProductUpdate);
   yield takeEvery(DELETE_IMAGES, handleImagesDelete);
-  yield takeEvery(GET_PRODUCT_OPTIONS, handleProductOptionsLoad);
   yield takeEvery(GET_PRODUCT_SPECIES, handleProductSpeciesLoad);
+  yield takeEvery(GET_PRODUCT_DETAILS, handleProductDetailsLoad);
 }

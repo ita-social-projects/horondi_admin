@@ -4,14 +4,13 @@ import { config } from '../configs';
 const { languages } = config;
 
 const useColorHandlers = () => {
-  const [available, setAvailable] = useState(false);
   const [tabsValue, setTabsValue] = useState(0);
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
   };
-  const createColor = (values) => {
-    const newColor = {
+  const createColor = (values) => ({
+    input: {
       name: [
         {
           lang: languages[0],
@@ -33,15 +32,12 @@ const useColorHandlers = () => {
           value: values.enSimpleName || null
         }
       ],
-      code: +values.code,
+      colorHex: values.colorHex,
       available: values.available
-    };
-    return newColor;
-  };
+    }
+  });
 
   return {
-    available,
-    setAvailable,
     createColor,
     handleTabsChange,
     tabsValue

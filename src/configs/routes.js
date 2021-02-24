@@ -6,7 +6,7 @@ const routes = {
   pathToAddPattern: '/patterns/add',
   pathToNews: '/news',
   pathToNewsDetails: '/news/:id',
-  pathToAddNews: '/newsadd',
+  pathToAddNews: '/news/add',
   pathToBusinessPages: '/business-pages',
   pathToAddBusinessPage: '/business-page-add',
   pathToBusinessPageDetails: '/business-pages/:id',
@@ -23,9 +23,14 @@ const routes = {
   pathToContacts: '/contacts',
   pathToContactsEdit: '/contacts/:id',
   pathToAddContact: '/contacts/add',
-  pathToOrders: '/orders',
   pathToComments: '/comments',
+  pathToCommentsEdit: '/comments/:id',
+  pathToSizes: '/sizes',
+  pathToAddSize: '/sizes/add',
+  pathToEditSize: '/sizes/:id',
+  pathToOrders: '/orders',
   pathToOrderItem: '/orders/:id',
+  pathToOrderAdd: '/orders/add',
   pathToHomePageEdit: '/home-page-edit',
   pathToEmailQuestions: '/email-questions',
   pathToEmailQuestionDetails: '/email-answer/:id',
@@ -42,6 +47,9 @@ const routes = {
   pathToHeaderDetails: '/headers/:id',
   pathToHomePageSlides: '/home-page-slides',
   pathToAddHomePageSlide: '/home-page-slides/add',
-  pathToHomePageSlideDetail: '/home-page-slides/:id'
+  pathToHomePageSlideDetail: '/home-page-slides/:id',
+  pathToConstructor: '/constructor/:id',
+  pathToAddConstructor: '/constructor/:id/add',
+  pathToConstructorDetails: '/constructor/:id/:elementId'
 };
 export default routes;

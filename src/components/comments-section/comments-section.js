@@ -16,7 +16,7 @@ import {
 } from '../../redux/comments/comments.actions';
 import { useStyles } from './comments-section.style';
 
-const tableHeaders = config.tableHeadRowTitles.comments;
+const tableHeaders = config.tableHeadRowTitles.comments.userPageTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 
 const CommentsSection = ({ value, commentsType }) => {
@@ -29,7 +29,7 @@ const CommentsSection = ({ value, commentsType }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCommentsByType(value, commentsType));
+    dispatch(getCommentsByType({ value, commentsType }));
   }, [dispatch, value, commentsType]);
 
   const commentDeleteHandler = (id) => {

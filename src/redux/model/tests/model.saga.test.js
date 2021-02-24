@@ -42,6 +42,8 @@ import {
   getModelById
 } from '../model.operations';
 
+import { handleCategoriesLoad } from '../../categories/categories.sagas';
+
 import {
   handleSuccessSnackbar,
   handleErrorSnackbar
@@ -100,7 +102,10 @@ describe('Test model sagas', () => {
     expectSaga(handleModelLoad, { payload: mockId })
       .withReducer(combineReducers({ Model }), { Model: mockModelState })
       .put(setModelLoading(true))
-      .provide([[call(getModelById, mockId), mockModel]])
+      .provide([
+        [call(getModelById, mockId), mockModel],
+        [call(handleCategoriesLoad)]
+      ])
       .put(setModel(mockModel))
       .put(setModelLoading(false))
       .hasFinalState({
@@ -115,7 +120,7 @@ describe('Test model sagas', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
+        expect(analysisCall).toHaveLength(2);
       }));
 
   it('should add model', () =>

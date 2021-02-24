@@ -1,3 +1,3 @@
-import { DialogWindowForComponent } from './dialog-window-wrapper';
+import DialogWindowWrapper from './dialog-window-wrapper';
 
-export default DialogWindowForComponent;
+export default DialogWindowWrapper;

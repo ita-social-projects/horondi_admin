@@ -9,6 +9,7 @@ import productsSaga from './products/products.sagas';
 import categorySaga from './categories/categories.sagas';
 import usersSaga from './users/users.saga';
 import commentsSaga from './comments/comments.sagas';
+import sizesSaga from './sizes/sizes.sagas';
 import contactsSaga from './contact/contact.sagas';
 import ordersSaga from './orders/orders.sagas';
 import modelSaga from './model/model.sagas';
@@ -17,6 +18,9 @@ import statsSaga from './stats/stats.sagas';
 import emailQuestionSaga from './email-questions/email-questions.sagas';
 import headerSaga from './header/header.sagas';
 import homePageSlideSaga from './home-page-slides/home-page-slides.sagas';
+import colorsSaga from './color/color.sagas';
+import constructorSaga from './constructor/constructor.sagas';
+import snackbarSaga from './snackbar/snackbar.sagas';
 
 export function* rootSaga() {
   yield all([
@@ -31,12 +35,16 @@ export function* rootSaga() {
     productsSaga(),
     contactsSaga(),
     commentsSaga(),
+    sizesSaga(),
     homePageSaga(),
     emailQuestionSaga(),
     statsSaga(),
     modelSaga(),
     headerSaga(),
     ordersSaga(),
-    homePageSlideSaga()
+    homePageSlideSaga(),
+    colorsSaga(),
+    constructorSaga(),
+    snackbarSaga()
   ]);
 }

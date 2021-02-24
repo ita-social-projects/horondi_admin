@@ -25,6 +25,9 @@ import ContactsEdit from '../pages/contacts-page/contacts-edit';
 import ContactsAdd from '../pages/contacts-page/contacts-add';
 import PatternPage from '../pages/pattern';
 import Comments from '../pages/comments/comments';
+import Sizes from '../pages/sizes/sizes';
+import SizeAdd from '../pages/sizes/sizes-add/size-add';
+import SizeEdit from '../pages/sizes/sizes-edit/size-edit';
 import PatternAdd from '../pages/pattern/pattern-add';
 import PatternDetails from '../pages/pattern/pattern-details';
 import RegisterUser from '../pages/users/register-user';
@@ -41,7 +44,6 @@ import HeaderAdd from '../pages/header/header-add';
 import HeaderDetails from '../pages/header/header-details';
 import ProductEdit from '../pages/products/product-edit';
 import MaterialDetails from '../pages/material/material-details/material-details';
-import MaterialColorPalette from '../pages/material/material-color-palette';
 import Orders from '../pages/orders/orders-page';
 import StatisticPage from '../pages/statistic';
 import SlidesPage from '../pages/home-page-slides';
@@ -49,7 +51,12 @@ import SlideAdd from '../pages/home-page-slides/slide-add';
 import SlideDetails from '../pages/home-page-slides/slide-details';
 import MainPage from '../pages/main-page';
 import ErrorBoundary from '../components/error-boundary/error-boundary';
-import NewsForm from '../components/forms/news-form';
+import NewsDetails from '../pages/news/news-details/news-details';
+import NewsAdd from '../pages/news/news-add/news-add';
+import ConstructorPage from '../pages/model/constructor/constructor-page';
+import ConstructorAdd from '../pages/model/constructor/constructor-add';
+import ConstructorDetails from '../pages/model/constructor/constructor-details';
+import CommentEdit from '../pages/comments/comment-edit/comment-edit';
 
 const { routes } = config;
 
@@ -103,11 +110,11 @@ const Routes = () => {
           <Route path={routes.pathToHeaders} exact component={HeaderPage} />
           <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
           <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
-          <Route path={routes.pathToAddNews} exact component={NewsForm} />
+          <Route path={routes.pathToAddNews} exact component={NewsAdd} />
           <Route
             path={routes.pathToNewsDetails}
             exact
-            render={({ match }) => <NewsForm id={match.params.id} editMode />}
+            component={NewsDetails}
           />
           <Route
             path={routes.pathToHeaderDetails}
@@ -125,12 +132,6 @@ const Routes = () => {
             exact
             component={MaterialDetails}
           />
-          <Route
-            path={routes.pathToMaterialsColorPalette}
-            exact
-            component={MaterialColorPalette}
-          />
-
           <Route
             path={routes.pathToPatternDetails}
             exact
@@ -175,6 +176,14 @@ const Routes = () => {
           />
           <Route path={routes.pathToCategories} exact component={Categories} />
           <Route path={routes.pathToComments} exact component={Comments} />
+          <Route path={routes.pathToSizes} exact component={Sizes} />
+          <Route path={routes.pathToAddSize} exact component={SizeAdd} />
+          <Route
+            path={routes.pathToEditSize}
+            exact
+            render={({ match }) => <SizeEdit id={match.params.id} />}
+          />
+
           <Route
             path={routes.pathToRegisterAdmin}
             exact
@@ -215,6 +224,7 @@ const Routes = () => {
             exact
             render={({ match }) => <OrderItem id={match.params.id} />}
           />
+          <Route path={routes.pathToOrderAdd} exact component={OrderItem} />
           <Route
             path={routes.pathToHomePageSlides}
             exact
@@ -229,6 +239,26 @@ const Routes = () => {
             path={routes.pathToHomePageSlideDetail}
             exact
             component={SlideDetails}
+          />
+          <Route
+            path={routes.pathToConstructor}
+            exact
+            component={ConstructorPage}
+          />
+          <Route
+            path={routes.pathToAddConstructor}
+            exact
+            component={ConstructorAdd}
+          />
+          <Route
+            path={routes.pathToConstructorDetails}
+            exact
+            component={ConstructorDetails}
+          />
+          <Route
+            path={routes.pathToCommentsEdit}
+            exact
+            component={CommentEdit}
           />
           <Route component={ErrorPage} />
         </Switch>

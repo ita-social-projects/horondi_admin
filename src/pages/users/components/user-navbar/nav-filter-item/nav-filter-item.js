@@ -1,17 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-
-import {
-  ListItemText,
-  FormControl,
-  InputLabel,
-  Select,
-  Input,
-  MenuItem,
-  Checkbox,
-  Badge
-} from '@material-ui/core';
-import { useStyles } from './nav-filter-item.styles';
+import { ListItemText, MenuItem, Checkbox } from '@material-ui/core';
+import NavFilterComponent from '../../../../../components/filter-search-sort/nav-filter-component/nav-filter-component';
 
 const badgePosition = {
   vertical: 'top',
@@ -25,8 +15,6 @@ const NavFilterItem = ({
   filterList,
   filterHandler
 }) => {
-  const styles = useStyles();
-
   const formGroupOptions = filterList.map((item, idx) => (
     <MenuItem data-cy={`user-filters-list-${item}`} key={item} value={item}>
       <Checkbox
@@ -42,28 +30,15 @@ const NavFilterItem = ({
   ]);
 
   return (
-    <div className={styles.container}>
-      <Badge
-        badgeContent={filterValues.length}
-        color='error'
-        anchorOrigin={badgePosition}
-      >
-        <FormControl className={styles.formControl}>
-          <InputLabel id='multiple-checkbox-label'>{buttonName}</InputLabel>
-          <Select
-            labelId='multiple-checkbox-label'
-            data-cy={`user-filters-${buttonName}`}
-            id='multiple-checkbox'
-            multiple
-            value={filterValues}
-            onChange={filterHandler}
-            input={<Input />}
-            renderValue={renderFilters}
-          >
-            {formGroupOptions}
-          </Select>
-        </FormControl>
-      </Badge>
+    <div>
+      <NavFilterComponent
+        buttonName={buttonName}
+        filterValues={filterValues}
+        filterHandler={filterHandler}
+        formGroupOptions={formGroupOptions}
+        badgePosition={badgePosition}
+        renderFilters={renderFilters}
+      />
     </div>
   );
 };

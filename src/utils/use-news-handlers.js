@@ -10,6 +10,9 @@ const useNewsHandlers = () => {
     {}
   );
 
+  const [uploadAuthorImage, setUploadAuthorImage] = useState(null);
+  const [uploadNewsImage, setUploadNewsImage] = useState(null);
+
   const [authorPhoto, setAuthorPhoto] = useState('');
   const [newsImage, setNewsImage] = useState('');
 
@@ -48,53 +51,44 @@ const useNewsHandlers = () => {
     />
   ));
 
-  const createArticle = (values) => {
-    const article = {
-      author: {
-        name: [
-          {
-            lang: languages[0],
-            value: values.uaAuthorName || null
-          },
-          {
-            lang: languages[1],
-            value: values.enAuthorName || null
-          }
-        ],
-        image: {
-          small: values.authorPhoto
-        }
-      },
-      title: [
+  const createArticle = (values) => ({
+    author: {
+      name: [
         {
           lang: languages[0],
-          value: values.uaTitle || null
+          value: values.uaAuthorName || null
         },
         {
           lang: languages[1],
-          value: values.enTitle || null
+          value: values.enAuthorName || null
         }
       ],
-      text: [
-        {
-          lang: languages[0],
-          value: values.uaText || null
-        },
-        {
-          lang: languages[1],
-          value: values.enText || null
-        }
-      ],
-      images: {
-        primary: {
-          medium: values.newsImage
-        }
+      image: values.authorPhoto
+    },
+    title: [
+      {
+        lang: languages[0],
+        value: values.uaTitle || null
       },
-      languages: preferredLanguages,
-      date: new Date().toISOString()
-    };
-    return article;
-  };
+      {
+        lang: languages[1],
+        value: values.enTitle || null
+      }
+    ],
+    image: values.newsImage,
+    text: [
+      {
+        lang: languages[0],
+        value: values.uaText || null
+      },
+      {
+        lang: languages[1],
+        value: values.enText || null
+      }
+    ],
+    languages: preferredLanguages,
+    date: new Date().toISOString()
+  });
 
   return {
     checkboxes,
@@ -122,7 +116,11 @@ const useNewsHandlers = () => {
     handleTabsChange,
     handleCheckboxChange,
     languageCheckboxes,
-    createArticle
+    createArticle,
+    uploadAuthorImage,
+    setUploadAuthorImage,
+    uploadNewsImage,
+    setUploadNewsImage
   };
 };
 

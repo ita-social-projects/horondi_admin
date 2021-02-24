@@ -1,50 +1,100 @@
 import React from 'react';
-import DeliveryDetails from './delivery-details';
 import { TextField, Checkbox } from '@material-ui/core';
-import {useStyles} from '../order-item.styles';
 import moment from 'moment';
-import labels from '../../../configs/labels';
+import PropTypes from 'prop-types';
 
-const Delivery = ({data,handleChange}) => {
-  const classes = useStyles()
-  const {deliveryLabels} = labels
-  const {deliveryMethodLabel,byCourierLabel,deliveryCostLabel,invoiceNumberLabel,sentAtLabel,warehouseNumberLabel} = deliveryLabels
-  const {delivery,address} = data
-  const {sentOn,sentBy,invoiceNumber,byCourier,courierOffice,cost} = delivery
+import DeliveryDetails from './delivery-details';
+import { useStyles } from '../order-item.styles';
+import labels from '../../../configs/labels';
+import { address, inputName } from '../../../utils/order';
+import materialUiConstants from '../../../configs/material-ui-constants';
+import { dateFormat } from '../../../configs';
+
+const Delivery = ({ data, handleChange }) => {
+  const classes = useStyles();
+  const { deliveryLabels } = labels;
+  const { sentByInput, officeInput, costInput, courierInput } = inputName;
+
+  const {
+    deliveryMethodLabel,
+    byCourierLabel,
+    deliveryCostLabel,
+    sentAtLabel,
+    courierOfficeNameLabel
+  } = deliveryLabels;
+  const { delivery } = data;
+  const { sentOn, sentBy, byCourier, courierOffice, cost } = delivery;
+
   return (
     <div className={classes.delivery}>
       <TextField
         label={deliveryMethodLabel}
-        name='delivery.sentBy'
+        name={sentByInput}
         value={sentBy}
         onChange={handleChange}
-        variant='outlined'
+        variant={materialUiConstants.outlined}
       />
-      <div className={classes.idContainer}>
-        <label htmlFor="byCourier">{byCourierLabel}</label>
-        <Checkbox id='byCourier' checked={byCourier} name='delivery.byCourier' onChange={handleChange}/>
-      </div>
       <TextField
-        label={invoiceNumberLabel}
-        name='delivery.invoiceNumber'
-        value={invoiceNumber}
+        label={courierOfficeNameLabel}
+        name={officeInput}
+        value={courierOffice}
         onChange={handleChange}
-        variant='outlined'
+        variant={materialUiConstants.outlined}
       />
       <div className={classes.dateContainer}>
-        <p>{warehouseNumberLabel} {courierOffice}</p>
-        <p>{sentAtLabel} {moment.unix(sentOn/1000).format(' HH:mm DD/MM/YYYY ')}</p>
+        {sentOn ? (
+          <p>
+            {sentAtLabel} {moment.unix(sentOn / 1000).format(dateFormat)}
+          </p>
+        ) : null}
       </div>
-      <TextField
-        label={deliveryCostLabel}
-        name='delivery.cost[0].value'
-        value={cost[0].value}
-        onChange={handleChange}
-        variant='outlined'
-      />
-      {byCourier && <DeliveryDetails address={address} handleChange={handleChange}/>}
+      {delivery?.cost[0]?.value ? (
+        <TextField
+          label={deliveryCostLabel}
+          name={costInput}
+          value={cost[0].value}
+          onChange={handleChange}
+          variant={materialUiConstants.outlined}
+        />
+      ) : null}
+      <div className={classes.idContainer}>
+        <label htmlFor='byCourier'>{byCourierLabel}</label>
+        <Checkbox
+          id='byCourier'
+          checked={byCourier}
+          name={courierInput}
+          onChange={handleChange}
+        />
+      </div>
+      {byCourier && (
+        <DeliveryDetails
+          address={address(delivery)}
+          handleChange={handleChange}
+        />
+      )}
     </div>
   );
+};
+
+Delivery.defaultProps = {
+  data: {}
+};
+
+Delivery.propTypes = {
+  data: PropTypes.objectOf(
+    PropTypes.shape({
+      sentOn: PropTypes.string,
+      sentBy: PropTypes.string,
+      byCourier: PropTypes.bool,
+      courierOffice: PropTypes.string,
+      cost: PropTypes.arrayOf(PropTypes.string),
+      city: PropTypes.string,
+      street: PropTypes.string,
+      house: PropTypes.string,
+      flat: PropTypes.string
+    })
+  ),
+  handleChange: PropTypes.func.isRequired
 };
 
 export default Delivery;

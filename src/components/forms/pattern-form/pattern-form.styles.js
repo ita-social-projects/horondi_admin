@@ -17,6 +17,13 @@ export const useStyles = makeStyles((theme) => {
     itemUpdate
   } = formStyles(theme);
   return {
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120
+    },
+    materialSelect: {
+      width: '550px'
+    },
     patternItemUpdate: {
       ...itemUpdate,
       padding: '10px'

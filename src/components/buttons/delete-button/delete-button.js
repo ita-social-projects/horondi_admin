@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
+import { noop } from 'lodash';
 import { useStyles } from './delete-button.styles';
 
 const DeleteButton = ({ children, onClickHandler, ...props }) => {
@@ -23,7 +24,7 @@ DeleteButton.propTypes = {
 
 DeleteButton.defaultProps = {
   size: 'medium',
-  onClickHandler: () => {}
+  onClickHandler: noop()
 };
 
 export default DeleteButton;

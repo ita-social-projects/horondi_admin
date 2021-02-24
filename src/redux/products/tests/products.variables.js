@@ -44,6 +44,16 @@ const productModel = {
 };
 
 const mockProductsState = {
+  details: {
+    categories: [],
+    closures: [],
+    materials: {
+      bottom: [],
+      inner: [],
+      main: []
+    },
+    models: []
+  },
   sorting: {
     sortByPrice: 0,
     sortByRate: 0,
@@ -64,10 +74,6 @@ const mockProductsState = {
   products: [],
   filesToDelete: [],
   primaryImageUpload: null,
-  productOptions: {
-    sizes: [],
-    bottomMaterials: []
-  },
   filters: {
     colorsFilter: [],
     patternsFilter: [],
@@ -151,54 +157,6 @@ const mockCategoriesList = [
     ]
   }
 ];
-
-const mockProductOptions = {
-  sizes: [
-    {
-      _id: '4cfa353a881b9fc17b3dce4f',
-      name: 'S',
-      heightInCm: 35,
-      widthInCm: 26,
-      depthInCm: 14,
-      volumeInLiters: 15,
-      additionalPrice: [
-        {
-          value: -5000,
-          currency: 'UAH'
-        },
-        {
-          value: -180,
-          currency: 'USD'
-        }
-      ]
-    }
-  ],
-  bottomMaterials: [
-    {
-      _id: '56ade69dd46eafc5968e5390',
-      name: [
-        {
-          lang: 'ua',
-          value: 'Мальмо'
-        },
-        {
-          lang: 'en',
-          value: 'Malmo'
-        }
-      ],
-      additionalPrice: [
-        {
-          value: 0,
-          currency: 'UAH'
-        },
-        {
-          value: 0,
-          currency: 'USD'
-        }
-      ]
-    }
-  ]
-};
 
 const mockCategoryId = mockCategoriesList[0]._id;
 
@@ -290,7 +248,6 @@ export {
   pagesCount,
   mockFiltersData,
   mockCategoriesList,
-  mockProductOptions,
   mockCategoryId,
   mockModels,
   mockProductsToAddState,
