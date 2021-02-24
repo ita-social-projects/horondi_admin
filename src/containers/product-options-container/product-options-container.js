@@ -20,6 +20,7 @@ import {
   Tooltip
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { noop } from 'lodash';
 import { useStyles } from './product-options-container.styles';
 
 import { config } from '../../configs';
@@ -235,7 +236,7 @@ ProductOptionsContainer.propTypes = {
 
 ProductOptionsContainer.defaultProps = {
   additions: [],
-  toggleFieldsChanged: () => {}
+  toggleFieldsChanged: noop()
 };
 
 export default ProductOptionsContainer;
