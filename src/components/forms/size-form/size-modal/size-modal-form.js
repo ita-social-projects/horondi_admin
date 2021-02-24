@@ -19,16 +19,13 @@ import TableContainerRow from '../../../../containers/table-container-row/table-
 import { config } from '../../../../configs';
 import labels from '../../../../configs/labels';
 import { useModalStyles } from './size-modal-form.styles';
-import { sizesSelectorWithPagination } from '../../../../redux/selectors/sizes.selector';
 
-const SizesFormModal = () => {
-  const { sizesList, loading } = useSelector(sizesSelectorWithPagination);
+const SizesFormModal = ({sizes}) => {
+
 
   const sizesTables = {
     sizesPageTitles: ['Обрати', 'Назва', 'Розмір', 'Доступно']
   };
-
-  console.log(sizesList);
   const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.sizesAvailableVariants;
   const styles = useModalStyles();
   const [open, setOpen] = useState(false);
@@ -43,17 +40,17 @@ const SizesFormModal = () => {
 
   const { handleSubmit } = useFormik({});
 
-  const sizeItems = _.map(sizesList, (size) => (
+  const sizeItems = _.map(sizes, (sizeItem) => (
     <TableContainerRow
       showAvatar={false}
       showEdit={false}
       showDelete={false}
       showCheckbox
-      name={size.simpleName[0].value}
-      size={size.name}
-      available={size.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
-      id={size._id}
-      key={size._id}
+      name={sizeItem.simpleName[0].value}
+      size={sizeItem.name}
+      available={sizeItem.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
+      id={sizeItem._id}
+      key={sizeItem._id}
     />
   ));
 

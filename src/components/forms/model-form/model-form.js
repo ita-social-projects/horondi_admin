@@ -31,6 +31,7 @@ import { getCategories } from '../../../redux/categories/categories.actions';
 import LanguagePanel from '../language-panel';
 import SizesFormModal from '../size-form/size-modal/index';
 import { getSizes } from '../../../redux/sizes/sizes.actions';
+import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
 
 const { languages } = config;
 const {
@@ -56,6 +57,9 @@ const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
 const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
+  const { sizesList, loading} = useSelector(
+    sizesSelectorWithPagination
+  );
   const inputLabel = React.useRef(null);
   const {
     createModel,
@@ -238,7 +242,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               <div className={styles.inputError}>{errors.priority}</div>
             )}
           </Paper>
-          <SizesFormModal />
+          <SizesFormModal sizes={sizesList} />
         </Grid>
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />

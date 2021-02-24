@@ -36,10 +36,6 @@ const ModelPage = () => {
 
   const dispatch = useDispatch();
 
-  /*   useEffect(() => {
-    dispatch(getSizes());
-  }, []);
- */
   useEffect(() => {
     dispatch(
       getModels({
