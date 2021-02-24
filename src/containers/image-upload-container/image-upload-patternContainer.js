@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import upload from '../../assets/images/upload.png';
 import { useStyles } from './image-upload-patternContainer.styles';
 import { utils } from '../../utils/image-upload';
 
@@ -9,12 +8,14 @@ const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
 
   return (
     <div>
-      <label htmlFor={id} data-cy={utils.dataCy.pattern}>
-        <img
-          className={style.image}
-          src={src || upload}
-          alt={utils.alt.pattern}
-        />
+      <label
+        className={style.label}
+        htmlFor={id}
+        data-cy={utils.dataCy.pattern}
+      >
+        {src && (
+          <img className={style.image} src={src} alt={utils.alt.pattern} />
+        )}
         <input
           className={style.input}
           id={id}
@@ -37,7 +38,7 @@ ImageUploadPatternContainer.propTypes = {
 
 ImageUploadPatternContainer.defaultProps = {
   multiple: false,
-  src: upload
+  src: null
 };
 
 export default ImageUploadPatternContainer;
