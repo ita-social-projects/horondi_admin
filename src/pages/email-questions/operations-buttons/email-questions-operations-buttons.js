@@ -3,6 +3,7 @@ import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { noop } from 'lodash';
 import { useStyles } from './email-questions-operations-buttons.styles';
 import { config } from '../../../configs/index';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
@@ -88,7 +89,7 @@ EmailQuestionsOperationsButtons.propTypes = {
 
 EmailQuestionsOperationsButtons.defaultProps = {
   questionsToOperate: [],
-  setQuestionsToOperate: () => {}
+  setQuestionsToOperate: noop()
 };
 
 export default EmailQuestionsOperationsButtons;

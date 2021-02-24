@@ -10,36 +10,33 @@ const useMaterialHandlers = () => {
     setTabsValue(newValue);
   };
 
-  const createMaterial = (values) => {
-    const newMaterial = {
-      name: [
-        {
-          lang: languages[0],
-          value: values.uaName || null
-        },
-        {
-          lang: languages[1],
-          value: values.enName || null
-        }
-      ],
+  const createMaterial = (values) => ({
+    name: [
+      {
+        lang: languages[0],
+        value: values.uaName || null
+      },
+      {
+        lang: languages[1],
+        value: values.enName || null
+      }
+    ],
 
-      description: [
-        {
-          lang: languages[0],
-          value: values.uaDescription || null
-        },
-        {
-          lang: languages[1],
-          value: values.enDescription || null
-        }
-      ],
-      available: values.available,
-      purpose: values.purpose,
-      additionalPrice: +values.additionalPrice,
-      colors: values.colors
-    };
-    return newMaterial;
-  };
+    description: [
+      {
+        lang: languages[0],
+        value: values.uaDescription || null
+      },
+      {
+        lang: languages[1],
+        value: values.enDescription || null
+      }
+    ],
+    available: values.available,
+    purpose: values.purpose,
+    additionalPrice: +values.additionalPrice,
+    colors: values.colors
+  });
 
   return {
     createMaterial,

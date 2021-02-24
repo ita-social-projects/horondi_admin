@@ -8,22 +8,19 @@ const useCategoryHandlers = () => {
   const [upload, setUpload] = useState({});
   const [imageName, setImageName] = useState('');
 
-  const createCategory = (values) => {
-    const newCategory = {
-      name: [
-        {
-          lang: languages[0],
-          value: values.uaName
-        },
-        {
-          lang: languages[1],
-          value: values.enName
-        }
-      ],
-      code: values.code
-    };
-    return newCategory;
-  };
+  const createCategory = (values) => ({
+    name: [
+      {
+        lang: languages[0],
+        value: values.uaName
+      },
+      {
+        lang: languages[1],
+        value: values.enName
+      }
+    ],
+    code: values.code
+  });
 
   return {
     categoryImage,

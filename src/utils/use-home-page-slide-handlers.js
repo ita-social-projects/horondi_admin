@@ -13,35 +13,32 @@ const useHomePageSlideHandlers = () => {
     setTabsValue(newValue);
   };
 
-  const createSlide = (values) => {
-    const newSlide = {
-      title: [
-        {
-          lang: languages[0],
-          value: values.uaTitle
-        },
-        {
-          lang: languages[1],
-          value: values.enTitle
-        }
-      ],
+  const createSlide = (values) => ({
+    title: [
+      {
+        lang: languages[0],
+        value: values.uaTitle
+      },
+      {
+        lang: languages[1],
+        value: values.enTitle
+      }
+    ],
 
-      description: [
-        {
-          lang: languages[0],
-          value: values.uaDescription
-        },
-        {
-          lang: languages[1],
-          value: values.enDescription
-        }
-      ],
-      order: values.order,
-      show: values.show,
-      link: values.link
-    };
-    return newSlide;
-  };
+    description: [
+      {
+        lang: languages[0],
+        value: values.uaDescription
+      },
+      {
+        lang: languages[1],
+        value: values.enDescription
+      }
+    ],
+    order: values.order,
+    show: values.show,
+    link: values.link
+  });
 
   return {
     slideImage,

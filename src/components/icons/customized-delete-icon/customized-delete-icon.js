@@ -3,6 +3,7 @@ import React from 'react';
 import { Tooltip, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 import { config } from '../../../configs';
 
 const { DELETE_TITLE } = config.buttonTitles;
@@ -29,7 +30,7 @@ CustomizedDeleteIcon.propTypes = {
 };
 
 CustomizedDeleteIcon.defaultProps = {
-  onClickHandler: () => {}
+  onClickHandler: noop()
 };
 
 export default CustomizedDeleteIcon;

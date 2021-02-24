@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Box, Button, Grid } from '@material-ui/core';
+import { noop } from 'lodash';
 import { useStyles } from './stepper-control-buttons.styles';
 
 import { config } from '../../../configs';
@@ -62,8 +63,8 @@ StepperControlButtons.propTypes = {
 };
 
 StepperControlButtons.defaultProps = {
-  handleNext: () => {},
-  handleBack: () => {},
+  handleNext: noop(),
+  handleBack: noop(),
   type: 'button'
 };
 
