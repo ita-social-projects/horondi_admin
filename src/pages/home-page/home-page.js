@@ -28,7 +28,6 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
   const { loading, photos } = useSelector(selectPhotosAndLoading);
-  console.log(photos);
 
   const [image, setImageUrl] = useState({});
 

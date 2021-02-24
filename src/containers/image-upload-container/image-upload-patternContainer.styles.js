@@ -8,5 +8,8 @@ export const useStyles = makeStyles(() => ({
       cursor: 'pointer',
       opacity: 0.7
     }
+  },
+  input: {
+    display: 'none'
   }
 }));

@@ -2,19 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import upload from '../../assets/images/upload.png';
 import { useStyles } from './image-upload-patternContainer.styles';
+import { utils } from '../../utils/image-upload';
 
 const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
   const style = useStyles();
-  const uploadPhoto = 'upload-photo';
 
   return (
     <div>
-      <label htmlFor={id} data-cy='pattern-image'>
-        <img className={style.image} src={src || upload} alt='pattern' />
+      <label htmlFor={id} data-cy={utils.dataCy.pattern}>
+        <img
+          className={style.image}
+          src={src || upload}
+          alt={utils.alt.pattern}
+        />
         <input
-          style={{ display: 'none' }}
+          className={style.input}
           id={id}
-          name={uploadPhoto}
+          name={utils.name}
           type='file'
           multiple
           onChange={handler}
