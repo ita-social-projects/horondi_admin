@@ -59,7 +59,6 @@ export function* handleModelLoad({ payload }) {
   try {
     yield put(setModelLoading(true));
     const model = yield call(getModelById, payload);
-    yield call(handleCategoriesLoad);
     yield put(setModel(model));
     yield put(setModelLoading(false));
   } catch (error) {
