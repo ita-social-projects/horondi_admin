@@ -33,7 +33,6 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
-import { handleCategoriesLoad } from '../categories/categories.sagas';
 
 const { routes } = config;
 
