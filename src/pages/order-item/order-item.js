@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab, Button } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
+
+import { noop } from 'lodash';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
 import { Delivery, Recipient, Products, General } from './tabs';
@@ -14,6 +16,7 @@ import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
 import { BackButton } from '../../components/buttons';
+import { newOrder, submitStatus } from '../../utils/order';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -28,24 +31,27 @@ const OrderItem = ({ id }) => {
     selectedOrder: Orders.selectedOrder,
     orderLoading: Orders.orderLoading
   }));
-  const submitStatus = ['CREATED', 'CONFIRMED'];
+
+  useEffect(() => {
+    id && dispatch(getOrder(id));
+  }, [dispatch, id]);
 
   const handleTabChange = (e, newValue) => {
     setTabValue(newValue);
   };
 
-  const handleFormSubmit = (order) => {
+  const handleFormSubmit = (data) => {
     if (
-      order.status !== initialValues.status &&
-      !submitStatus.includes(order.status)
+      newOrder.status !== initialValues.status &&
+      !submitStatus.includes(newOrder(data).status)
     ) {
       const updateOrderSnackbar = () => {
         dispatch(closeDialog());
-        dispatch(updateOrder(order));
+        dispatch(updateOrder(newOrder(data), id));
       };
       openSuccessSnackbar(updateOrderSnackbar, dialogContent, dialogTitle);
     } else {
-      dispatch(updateOrder(order));
+      dispatch(updateOrder(newOrder(data), id));
     }
   };
 
@@ -63,12 +69,6 @@ const OrderItem = ({ id }) => {
   });
 
   useEffect(() => {
-    if (id) {
-      dispatch(getOrder(id));
-    }
-  }, [dispatch, id]);
-
-  useEffect(() => {
     if (selectedOrder) {
       resetForm({ values: selectedOrder });
     }
@@ -78,7 +78,7 @@ const OrderItem = ({ id }) => {
     selectedOrder && selectedOrder.status
   )
     ? handleChange
-    : () => {};
+    : noop();
 
   if (orderLoading) {
     return <LoadingBar />;

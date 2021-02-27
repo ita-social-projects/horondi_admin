@@ -215,3 +215,6 @@ export const badgePosition = {
   vertical: 'top',
   horizontal: 'left'
 };
+
+export const dateFormat = ' HH:mm DD/MM/YYYY ';
+export const dateFormatOrder = ' DD.MM.YYYY ';

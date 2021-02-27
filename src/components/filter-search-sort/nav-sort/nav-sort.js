@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { FormControl, MenuItem, Select } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import _, { noop } from 'lodash';
 import { useStyles } from './nav-sort.styles';
 
 const NavSort = ({ sortOptions }) => {
@@ -55,6 +55,6 @@ NavSort.propTypes = {
 NavSort.defaultProps = {
   sortOptions: {},
   labels: [],
-  setSorting: () => {}
+  setSorting: noop()
 };
 export default NavSort;

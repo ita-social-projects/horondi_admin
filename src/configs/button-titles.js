@@ -56,6 +56,7 @@ const buttonTitles = {
   CREATE_CONSTRUCTOR_FRONT_POCKET_TITLE: 'Додати передню кишеню',
   CREATE_CONSTRUCTOR_BOTTOM_TITLE: 'Додати низ',
   GO: 'Перейти',
-  CATEGORY_TITLE: 'Категорія'
+  CATEGORY_TITLE: 'Категорія',
+  ADD_ORDER: 'Додати замовлення'
 };
 export default buttonTitles;
