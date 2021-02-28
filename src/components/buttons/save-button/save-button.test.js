@@ -55,6 +55,6 @@ describe('save button tests', () => {
     expect(SaveButton.propTypes.onClickHandler).toBeDefined();
   });
   it('should have default props', () => {
-    expect(SaveButton.defaultProps.onClickHandler).toEqual(mockCallBack());
+    expect(SaveButton.defaultProps.onClickHandler).toEqual(noop);
   });
 });

@@ -62,7 +62,7 @@ SaveButton.defaultProps = {
   color: 'primary',
   errors: {},
   values: {},
-  onClickHandler: noop()
+  onClickHandler: noop
 };
 
 export default SaveButton;

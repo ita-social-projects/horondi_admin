@@ -83,7 +83,7 @@ DialogWindow.defaultProps = {
   dialogTitle: DELETE_TITLE,
   dialogContent: '',
   showCancelButton: true,
-  onClickHandler: noop()
+  onClickHandler: noop
 };
 
 export default connect(mapStateToProps, null)(DialogWindow);

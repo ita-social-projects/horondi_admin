@@ -179,7 +179,7 @@ ProductSpeciesContainer.propTypes = {
 };
 
 ProductSpeciesContainer.defaultProps = {
-  toggleFieldsChanged: noop()
+  toggleFieldsChanged: noop
 };
 
 export default ProductSpeciesContainer;

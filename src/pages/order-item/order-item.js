@@ -78,7 +78,7 @@ const OrderItem = ({ id }) => {
     selectedOrder && selectedOrder.status
   )
     ? handleChange
-    : noop();
+    : noop;
 
   if (orderLoading) {
     return <LoadingBar />;

@@ -63,7 +63,7 @@ NavSearch.propTypes = {
 
 NavSearch.defaultProps = {
   searchOptions: {},
-  filters: noop(),
-  setSearchFilter: noop()
+  filters: noop,
+  setSearchFilter: noop
 };
 export default NavSearch;
