@@ -13,7 +13,7 @@ describe('save button tests', () => {
   const size = 'small';
   const title = SAVE_TITLE;
   const type = inputTypes.button;
-  const mockCallBack = jest.fn(noop);
+  const mockCallBack = jest.fn(noop());
   let component;
 
   beforeEach(() => {
@@ -55,6 +55,6 @@ describe('save button tests', () => {
     expect(SaveButton.propTypes.onClickHandler).toBeDefined();
   });
   it('should have default props', () => {
-    expect(SaveButton.defaultProps.onClickHandler).toEqual(mockCallBack());
+    expect(SaveButton.defaultProps.onClickHandler).toEqual(noop);
   });
 });
