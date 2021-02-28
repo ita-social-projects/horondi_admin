@@ -165,7 +165,7 @@ Editor.propTypes = {
 Editor.defaultProps = {
   value: '',
   placeholder: 'Текст',
-  setFiles: noop(),
+  setFiles: noop,
   id: ''
 };
 
