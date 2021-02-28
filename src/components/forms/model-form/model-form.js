@@ -79,15 +79,6 @@ const ModelForm = ({ model, id, isEdit }) => {
   const [sizes, setSizes] = useState(model.sizes || []);
   const [category, setCategory] = useState(model.category._id || '');
 
-  const handleCategory = (event) => {
-    values.category = event.target.value;
-    setCategory(event.target.value);
-  };
-  const onTagsChange = (event, value) => {
-    const sizeIdlist = value.map((size) => size._id);
-    values.sizes = sizeIdlist;
-    setSizes(value);
-  };
   const {
     values,
     handleSubmit,
@@ -129,6 +120,19 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
+  const handleCategory = (event) => {
+    setFieldValue('category', event.target.value);
+    setCategory(event.target.value);
+  };
+
+  const onTagsChange = (event, value) => {
+    setFieldValue(
+      'sizes',
+      value.map((size) => size._id)
+    );
+    setSizes(value);
+  };
+
   const checkboxes = (checkBoxName, label) => [
     {
       id: `${checkBoxName}`,
@@ -154,7 +158,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   };
   const handleConstructor = () => {
-    dispatch(push(`/constructor/${id}`));
+    dispatch(push(config.routes.pathToConstructor.replace(':id', id)));
   };
 
   const inputs = [
@@ -197,7 +201,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 {availableCategory}
               </InputLabel>
               <Select
-                id='category'
+                id={labelsEn.category}
                 data-cy={labelsEn.category}
                 native
                 value={category}
@@ -220,7 +224,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               )}
             </FormControl>
             <TextField
-              id='priority'
+              id={labelsEn.priority}
               type={materialUiConstants.types.string}
               data-cy={labelsEn.priority}
               className={styles.textField}
@@ -235,8 +239,9 @@ const ModelForm = ({ model, id, isEdit }) => {
             )}
           </Paper>
           <Autocomplete
-            multiple
             id={labelsEn.tagsFilled}
+            className={styles.autoComplete}
+            multiple
             freeSolo
             options={sizesList}
             getOptionLabel={(option) =>
@@ -247,7 +252,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                variant={labelsEn.standard}
+                variant={materialUiConstants.outlined}
                 label={chooseSizes.title}
                 placeholder={chooseSizes.inputTitle}
                 margin={labelsEn.normal}

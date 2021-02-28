@@ -60,7 +60,10 @@ const formStyles = (theme) => ({
   textField: {
     margin: '10px 5px'
   },
-
+  autoComplete: {
+    margin: '10px',
+    width: '25%'
+  },
   itemUpdate: {
     display: 'flex',
     flexDirection: 'column',

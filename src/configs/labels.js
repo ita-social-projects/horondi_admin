@@ -70,7 +70,7 @@ const labels = {
     constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
-    chooseSizes: { title: 'Обріти Розміри', inputTitle: 'Оберіть розміри' },
+    chooseSizes: { title: 'Обрати Розміри', inputTitle: 'Оберіть розміри' },
     showEnable: 'Так',
     showDisable: 'Ні',
     availablePatternsForConstructor: 'Доступні патерни для контсруктора',
