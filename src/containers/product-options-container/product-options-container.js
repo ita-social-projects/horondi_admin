@@ -236,7 +236,7 @@ ProductOptionsContainer.propTypes = {
 
 ProductOptionsContainer.defaultProps = {
   additions: [],
-  toggleFieldsChanged: noop()
+  toggleFieldsChanged: noop
 };
 
 export default ProductOptionsContainer;

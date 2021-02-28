@@ -89,7 +89,7 @@ EmailQuestionsOperationsButtons.propTypes = {
 
 EmailQuestionsOperationsButtons.defaultProps = {
   questionsToOperate: [],
-  setQuestionsToOperate: noop()
+  setQuestionsToOperate: noop
 };
 
 export default EmailQuestionsOperationsButtons;

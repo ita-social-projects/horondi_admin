@@ -24,7 +24,7 @@ DeleteButton.propTypes = {
 
 DeleteButton.defaultProps = {
   size: 'medium',
-  onClickHandler: noop()
+  onClickHandler: noop
 };
 
 export default DeleteButton;

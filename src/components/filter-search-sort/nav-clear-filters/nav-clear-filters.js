@@ -39,7 +39,7 @@ NavClearFilters.propTypes = {
 };
 NavClearFilters.defaultProps = {
   clearOptions: {},
-  filters: noop(),
-  clearAllFilters: noop()
+  filters: noop,
+  clearAllFilters: noop
 };
 export default NavClearFilters;

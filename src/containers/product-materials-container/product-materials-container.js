@@ -159,7 +159,7 @@ ProductMaterialsContainer.propTypes = {
 };
 
 ProductMaterialsContainer.defaultProps = {
-  toggleFieldsChanged: noop()
+  toggleFieldsChanged: noop
 };
 
 export default ProductMaterialsContainer;

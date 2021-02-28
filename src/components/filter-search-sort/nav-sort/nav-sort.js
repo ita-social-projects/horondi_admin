@@ -55,6 +55,6 @@ NavSort.propTypes = {
 NavSort.defaultProps = {
   sortOptions: {},
   labels: [],
-  setSorting: noop()
+  setSorting: noop
 };
 export default NavSort;

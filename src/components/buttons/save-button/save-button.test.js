@@ -13,7 +13,7 @@ describe('save button tests', () => {
   const size = 'small';
   const title = SAVE_TITLE;
   const type = inputTypes.button;
-  const mockCallBack = jest.fn(noop());
+  const mockCallBack = jest.fn(noop);
   let component;
 
   beforeEach(() => {
