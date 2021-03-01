@@ -62,7 +62,7 @@ const formStyles = (theme) => ({
   },
   autoComplete: {
     margin: '10px',
-    width: '25%'
+    width: '33%'
   },
   itemUpdate: {
     display: 'flex',
