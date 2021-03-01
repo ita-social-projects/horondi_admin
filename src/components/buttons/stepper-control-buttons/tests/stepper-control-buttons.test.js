@@ -4,7 +4,6 @@ import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 import { noop } from 'lodash';
-import toJson from 'enzyme-to-json';
 
 import StepperControlButtons from '../index';
 import { inputTypes, config } from '../../../../configs';
@@ -22,8 +21,8 @@ const mockStore = {
 
 describe('Stepper control buttons tests', () => {
   const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-  const mockHandleNext = jest.fn(noop());
-  const mockHandleBack = jest.fn(noop());
+  const mockHandleNext = jest.fn(noop);
+  const mockHandleBack = jest.fn(noop);
   const activeStep = stepsLabels.length - 1;
   let component;
 
@@ -46,9 +45,6 @@ describe('Stepper control buttons tests', () => {
     useSelectorMock.mockClear();
   });
 
-  it('Should match snapshot', () => {
-    expect(toJson(component)).toMatchSnapshot();
-  });
   it('Should render two buttons', () => {
     expect(component.find('button')).toHaveLength(2);
   });
