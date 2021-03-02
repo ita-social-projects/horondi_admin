@@ -9,7 +9,7 @@ const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
   return (
     <div>
       <label
-        className={style.label}
+        className={src ? style.labelWithoutBack : style.labelWithBack}
         htmlFor={id}
         data-cy={utils.dataCy.pattern}
       >

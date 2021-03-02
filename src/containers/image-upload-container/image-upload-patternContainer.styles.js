@@ -2,16 +2,26 @@ import { makeStyles } from '@material-ui/core/styles';
 import upload from '../../assets/images/upload.png';
 
 export const useStyles = makeStyles(() => ({
-  label: {
+  labelWithBack: {
     display: 'inline-block',
     width: '200px',
     height: '200px',
-    backgroundImage: `url(${upload})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
+    backgroundImage: `url(${upload})`,
     '&:hover': {
       cursor: 'pointer',
       opacity: 0.7
+    }
+  },
+  labelWithoutBack: {
+    display: 'inline-block',
+    width: '200px',
+    height: '200px',
+    '&:hover': {
+      backgroundImage: `url(${upload})`,
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat'
     },
     '&:hover > img': {
       opacity: 0,
@@ -20,8 +30,7 @@ export const useStyles = makeStyles(() => ({
   },
   image: {
     width: '200px',
-    height: '200px',
-    transition: '0.5s'
+    height: '200px'
   },
   input: {
     display: 'none'
