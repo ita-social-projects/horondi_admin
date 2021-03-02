@@ -107,15 +107,16 @@ const ConstructorPage = ({ match }) => {
   };
 
   const handleConstructorOpening = (label, createConstructorElement) => {
-    label === constructorPattern 
-      ? handleOpenDialog() 
+    label === constructorPattern
+      ? handleOpenDialog()
       : handleConstructorOptions(createConstructorElement)
   };
 
-  const handleConstructorTableItems = (label, constructorPattern, list, deleteConstructorElement, updateConstructorElement) => {
-    label === constructorPattern
-      ? patternItems(list, deleteConstructorElement)
-      : constructorItems(list, deleteConstructorElement, updateConstructorElement)
+  const handleConstructorTableItems = (label, pattern, list, deleteConstHandler, updateConstHandler) => {
+    if (label === pattern) {
+      return patternItems(list, deleteConstHandler);
+    }
+    return constructorItems(list, deleteConstHandler, updateConstHandler);
   };
 
   const handleListItemClick = (modelID, pattern) => {
