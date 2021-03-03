@@ -19,7 +19,7 @@ import {
   TranslAvailabilityHandler,
   isDraggableHandler,
   onDragEnterHandler
-} from '../../../utils/slides.order';
+} from '../../../utils/slides-order';
 
 const SlidesOrder = (props) => {
   const styles = useStyles();

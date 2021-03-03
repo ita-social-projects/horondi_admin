@@ -10,6 +10,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Image } from '@material-ui/icons';
+import map from 'lodash/map';
+
 import { useStyles } from './constructor-page.styles';
 import { useCommonStyles } from '../../../common.styles';
 import { config } from '../../../../configs';
@@ -41,8 +43,6 @@ import {
   listItemImages,
   isListItemAvailable
 } from '../../../../utils/constructor-page';
-
-const map = require('lodash/map');
 
 const {
   constructorBasic,
