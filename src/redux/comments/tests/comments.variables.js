@@ -1,13 +1,17 @@
-export const filter = {
+export const mockInitialFilters = {
   _id: [],
   search: ''
+};
+
+export const filter = {
+  search: 'плюси'
 };
 
 export const currentPage = 1;
 export const rowsPerPage = 10;
 export const rowsPerPageOptions = [10, 20, 30];
 export const commentsLoadingStatus = true;
-export const commentsError = 'COMMENT_LOADING_ERROR';
+export const commentsErrorExample = 'COMMENT_LOADING_ERROR';
 export const commentId = '92cb31bf8e5ea5af3914g342';
 export const productId = '601826s62b8fd28f3bc509e7';
 export const userId = '601d7907des7e48816a42a63';
@@ -17,6 +21,7 @@ export const pagination = {
   limit: 10
 };
 
+export const commentsList = [];
 export const comments = {
   list: [
     {
@@ -52,7 +57,7 @@ export const comments = {
   ]
 };
 
-export const comment = {
+export const singleComment = {
   _id: '601839e0e1cbb681a77265ac',
   text: 'Відтінок матеріалу на реальному виробі трохи відрізняється від фото',
   date: '1612200416386',

@@ -41,12 +41,12 @@ import {
   pagination,
   comments,
   commentId,
-  comment,
+  singleComment,
   productId,
   userId,
   currentPage,
   commentsLoadingStatus,
-  commentsError
+  commentsErrorExample
 } from './comments.variables';
 
 describe('comments action tests', () => {
@@ -72,9 +72,9 @@ describe('comments action tests', () => {
     });
   });
   it('should set a specific comment', () => {
-    expect(setComment(comment)).toEqual({
+    expect(setComment(singleComment)).toEqual({
       type: SET_COMMENT,
-      payload: comment
+      payload: singleComment
     });
   });
   it('should delete a specific comment', () => {
@@ -123,9 +123,9 @@ describe('comments action tests', () => {
     });
   });
   it('should set an error if there is any problem with loading comments', () => {
-    expect(setCommentError(commentsError)).toEqual({
+    expect(setCommentError(commentsErrorExample)).toEqual({
       type: SET_COMMENTS_ERROR,
-      payload: commentsError
+      payload: commentsErrorExample
     });
   });
   it('should remove the given comment from the current store', () => {
@@ -135,9 +135,9 @@ describe('comments action tests', () => {
     });
   });
   it('should update the given comment', () => {
-    expect(updateComment(comment)).toEqual({
+    expect(updateComment(singleComment)).toEqual({
       type: UPDATE_COMMENT,
-      payload: comment
+      payload: singleComment
     });
   });
   it('should set a filter to be applied to the given list of comments', () => {
