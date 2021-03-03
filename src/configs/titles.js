@@ -49,7 +49,7 @@ const titles = {
   sizesTitles: {
     mainPageTitle: 'Iнформація про розміри',
     selectTitle: 'Розмір',
-    sizeAdjustMenu: 'Редагування розміром'
+    sizeAdjustMenu: 'Редагування розміру'
   },
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',

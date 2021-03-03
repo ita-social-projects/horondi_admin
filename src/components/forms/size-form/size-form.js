@@ -81,7 +81,7 @@ function SizeForm({ id, size }) {
         variant={materialUiConstants.typographyVariantH1}
         className={commonStyles.sizeTitle}
       >
-        {config.titles.sizesTitles.sizeAdjustMenu}
+        {id ? config.titles.sizesTitles.sizeAdjustMenu : 'Додавання розміру'}
       </Typography>
       <form className={styles.sizeForm} onSubmit={handleSubmit}>
         <Grid item xs={12}>
@@ -173,7 +173,7 @@ function SizeForm({ id, size }) {
                   className={styles.textField}
                   variant={materialUiConstants.outlined}
                   type={materialUiConstants.types.number}
-                  label={labels.en.additionalPrice}
+                  label={labels.ua.additionalPrice}
                   value={values.additionalPrice}
                   onChange={handleChange}
                   error={touched.additionalPrice && !!errors.additionalPrice}
