@@ -1,0 +1,210 @@
+import { expectSaga } from 'redux-saga-test-plan';
+import { call } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
+import { combineReducers } from 'redux';
+
+import {
+  handleSizesLoad,
+  handleAddSize,
+  handleSizeUpdate,
+  handleSizeDelete,
+  handleSizesError,
+  handleSizeById
+} from '../sizes.sagas';
+
+import {
+  getAllSizes,
+  getSizeById,
+  addSize,
+  deleteSize
+} from '../sizes.operations';
+
+import Size from '../sizes.reducer';
+
+import {
+  mockSizes,
+  mockId,
+  mockSize,
+  mockError,
+  mockSizesState,
+  mockPayloadToUpdateSize
+} from './sizes.variables';
+
+import {
+  removeSizeFromState,
+  setSize,
+  setSizesLoading,
+  setSizes,
+  updateSize,
+  setSizesError
+} from '../sizes.actions';
+
+import { config } from '../../../configs';
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../../snackbar/snackbar.sagas';
+
+const {
+  SUCCESS_ADD_STATUS,
+  SUCCESS_UPDATE_STATUS,
+  SUCCESS_DELETE_STATUS
+} = config.statuses;
+
+describe('sizes sagas tests', () => {
+  it('should load all sizes', () => {
+    expectSaga(handleSizesLoad)
+      .withReducer(combineReducers({ Size }), { Size: mockSizesState })
+      .put(setSizesLoading(true))
+      .provide([[call(getAllSizes), mockSizes]])
+      .put(setSizes(mockSizes))
+      .put(setSizesLoading(false))
+      .hasFinalState({
+        Size: {
+          ...mockSizesState,
+          list: mockSizes
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
+      });
+  });
+  it('should handle one size load', () => {
+    expectSaga(handleSizeById, { payload: mockId })
+      .withReducer(combineReducers({ Size }), { Size: mockSizesState })
+      .put(setSizesLoading(true))
+      .provide([[call(getSizeById, mockId), mockSize]])
+      .put(setSize(mockSize))
+      .put(setSizesLoading(false))
+      .hasFinalState({
+        Size: {
+          ...mockSizesState,
+          size: mockSize
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
+      });
+  });
+  it('should add size', () => {
+    expectSaga(handleAddSize, { payload: mockSize })
+      .withReducer(combineReducers({ Size }), { Size: mockSizesState })
+      .put(setSizesLoading(true))
+      .provide([
+        [call(addSize, mockSize)],
+        [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
+      ])
+      .put(setSizesLoading(false))
+      .put(push(config.routes.pathToSizes))
+      .hasFinalState({
+        Size: {
+          ...mockSizesState,
+          sizeLoading: false
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
+      });
+  });
+  it('should delete size', () => {
+    expectSaga(handleSizeDelete, { payload: mockId })
+      .withReducer(combineReducers({ Size }), {
+        Size: mockSizesState
+      })
+      .put(setSizesLoading(true))
+      .provide([
+        [call(deleteSize, mockId)],
+        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
+      ])
+      .put(removeSizeFromState(mockId))
+      .put(setSizesLoading(false))
+      .hasFinalState({
+        Size: {
+          ...mockSizesState,
+          sizeLoading: false
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(2);
+      });
+  });
+
+  it('should update size', () => {
+    expectSaga(handleSizeUpdate, { payload: mockPayloadToUpdateSize })
+      .withReducer(combineReducers({ Size }), { Size: mockSizesState })
+      .put(setSizesLoading(true))
+      .provide([
+        [
+          call(
+            updateSize,
+            mockPayloadToUpdateSize.id,
+            mockPayloadToUpdateSize.size
+          )
+        ],
+        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
+      ])
+      .put(push('/sizes'))
+      .hasFinalState({
+        Size: {
+          ...mockSizesState,
+          sizeLoading: false
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(2);
+      });
+  });
+
+  it('should handle size error', () => {
+    expectSaga(handleSizesError, mockError)
+      .withReducer(combineReducers({ Size }), {
+        Size: {
+          ...mockSizesState,
+          sizeLoading: true
+        }
+      })
+      .provide([[call(handleErrorSnackbar, mockError.message)]])
+      .put(setSizesLoading(false))
+      .put(setSizesError({ e: mockError }))
+      .hasFinalState({
+        Size: {
+          ...mockSizesState,
+          sizeLoading: true,
+          sizeError: { e: mockError }
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(2);
+        expect(analysisCall).toHaveLength(1);
+      });
+  });
+});
