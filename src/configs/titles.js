@@ -49,7 +49,8 @@ const titles = {
   sizesTitles: {
     mainPageTitle: 'Iнформація про розміри',
     selectTitle: 'Розмір',
-    sizeAdjustMenu: 'Редагування розміру'
+    sizeEdit: 'Редагування розміру',
+    sizeAdd: 'Додавання розміру'
   },
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
