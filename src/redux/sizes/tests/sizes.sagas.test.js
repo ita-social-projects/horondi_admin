@@ -20,7 +20,7 @@ import {
   deleteSize
 } from '../sizes.operations';
 
-import Size, { initialState } from '../sizes.reducer';
+import Size from '../sizes.reducer';
 
 import {
   mockSizes,
@@ -51,6 +51,10 @@ const {
   SUCCESS_DELETE_STATUS
 } = config.statuses;
 
+const {
+  analysisMethodTypes: { PUT, CALL }
+} = require('../../../consts/method-types');
+
 describe('sizes sagas tests', () => {
   it('should load all sizes', () => {
     expectSaga(handleSizesLoad)
@@ -68,8 +72,8 @@ describe('sizes sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === PUT);
+        const analysisCall = analysis.filter((e) => e.type === CALL);
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
       });
@@ -90,8 +94,8 @@ describe('sizes sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === PUT);
+        const analysisCall = analysis.filter((e) => e.type === CALL);
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
       });
@@ -115,8 +119,8 @@ describe('sizes sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === PUT);
+        const analysisCall = analysis.filter((e) => e.type === CALL);
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
       });
@@ -142,8 +146,8 @@ describe('sizes sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === PUT);
+        const analysisCall = analysis.filter((e) => e.type === CALL);
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
       });
@@ -175,8 +179,8 @@ describe('sizes sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === PUT);
+        const analysisCall = analysis.filter((e) => e.type === CALL);
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
       });
@@ -203,8 +207,8 @@ describe('sizes sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === PUT);
+        const analysisCall = analysis.filter((e) => e.type === CALL);
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(1);
       });

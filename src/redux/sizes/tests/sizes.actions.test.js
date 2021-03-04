@@ -88,16 +88,7 @@ describe('size actions test', () => {
     const filteredSize = mockSizes.items.filter((item) => item._id === mockId);
     const updatedSize = {
       ...filteredSize,
-      name: [
-        {
-          lang: 'ua',
-          value: 'test'
-        },
-        {
-          lang: 'en',
-          value: 'test'
-        }
-      ]
+      name: mockSizes.items.name
     };
     expect(
       updateSize({
