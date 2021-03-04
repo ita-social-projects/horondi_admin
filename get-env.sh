@@ -1,4 +1,4 @@
-n#!/bin/bash
+#!/bin/bash
 if [ -f /usr/share/nginx/html/env.js ] ; then
     rm /usr/share/nginx/html/env.js
 fi
