@@ -31,6 +31,35 @@ const mockSizes = {
 
 const mockSize = mockSizes.items[0];
 
+const mockNewSize = {
+  items: [
+    {
+      _id: mockId,
+      name: [
+        {
+          lang: 'ua',
+          value: 'medium'
+        },
+        {
+          lang: 'en',
+          value: 'середній'
+        }
+      ],
+      description: [
+        {
+          lang: 'ua',
+          value: 'тест'
+        },
+        {
+          lang: 'en',
+          value: 'test'
+        }
+      ],
+      sizes: []
+    }
+  ]
+};
+
 const sizesArr = [mockSize];
 
 const mockError = {
@@ -49,8 +78,35 @@ const mockSizesState = {
 };
 
 const mockPayloadToUpdateSize = {
-  id: mockId,
-  size: mockSize
+  id: '88cb31bf8e5ea5af3014e785',
+  newSize: {
+    items: [
+      {
+        _id: mockId,
+        name: [
+          {
+            lang: 'ua',
+            value: 'medium'
+          },
+          {
+            lang: 'en',
+            value: 'середній'
+          }
+        ],
+        description: [
+          {
+            lang: 'ua',
+            value: 'тест'
+          },
+          {
+            lang: 'en',
+            value: 'test'
+          }
+        ],
+        sizes: []
+      }
+    ]
+  }
 };
 
 const statuses = {

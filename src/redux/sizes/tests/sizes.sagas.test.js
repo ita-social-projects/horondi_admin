@@ -15,11 +15,12 @@ import {
 import {
   getAllSizes,
   getSizeById,
+  updateSize,
   addSize,
   deleteSize
 } from '../sizes.operations';
 
-import Size from '../sizes.reducer';
+import Size, { initialState } from '../sizes.reducer';
 
 import {
   mockSizes,
@@ -35,7 +36,6 @@ import {
   setSize,
   setSizesLoading,
   setSizes,
-  updateSize,
   setSizesError
 } from '../sizes.actions';
 
@@ -74,7 +74,7 @@ describe('sizes sagas tests', () => {
         expect(analysisCall).toHaveLength(1);
       });
   });
-  it('should handle one size load', () => {
+  it('should handle one size load id', () => {
     expectSaga(handleSizeById, { payload: mockId })
       .withReducer(combineReducers({ Size }), { Size: mockSizesState })
       .put(setSizesLoading(true))
@@ -121,7 +121,7 @@ describe('sizes sagas tests', () => {
         expect(analysisCall).toHaveLength(2);
       });
   });
-  it('should delete size', () => {
+  it('should delete size by id', () => {
     expectSaga(handleSizeDelete, { payload: mockId })
       .withReducer(combineReducers({ Size }), {
         Size: mockSizesState
@@ -149,25 +149,27 @@ describe('sizes sagas tests', () => {
       });
   });
 
-  it('should update size', () => {
+  it('should update a specific size', () => {
     expectSaga(handleSizeUpdate, { payload: mockPayloadToUpdateSize })
-      .withReducer(combineReducers({ Size }), { Size: mockSizesState })
+      .withReducer(combineReducers({ Size }), {
+        Size: mockSizesState
+      })
       .put(setSizesLoading(true))
       .provide([
         [
           call(
             updateSize,
             mockPayloadToUpdateSize.id,
-            mockPayloadToUpdateSize.size
+            mockPayloadToUpdateSize.newSize
           )
         ],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
-      .put(push('/sizes'))
+      .put(push(config.routes.pathToSizes))
       .hasFinalState({
         Size: {
           ...mockSizesState,
-          sizeLoading: false
+          sizesLoading: true
         }
       })
       .run()
@@ -175,7 +177,7 @@ describe('sizes sagas tests', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(4);
+        expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
       });
   });
