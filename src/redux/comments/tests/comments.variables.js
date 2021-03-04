@@ -19,6 +19,9 @@ export const switchId = 'ed17f080d44d7r88740a4ad1';
 export const mockError = {
   message: 'COMMENT_LOADING_ERROR'
 };
+export const effectPutType = 'PUT';
+export const effectCallType = 'CALL';
+export const snackBarError = 'error';
 
 export const mockSnackbarState = {
   snackBarStatus: false,

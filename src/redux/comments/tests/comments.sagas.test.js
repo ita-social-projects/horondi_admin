@@ -43,7 +43,10 @@ import {
   singleComment,
   productId,
   mockError,
-  mockSnackbarState
+  mockSnackbarState,
+  effectCallType,
+  effectPutType,
+  snackBarError
 } from './comments.variables';
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
@@ -87,8 +90,8 @@ describe('comments sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === effectCallType);
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
         expect(analysis).toHaveLength(5);
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
@@ -108,8 +111,8 @@ describe('comments sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
+        const analysisCall = analysis.filter((e) => e.type === effectCallType);
         expect(analysis).toHaveLength(4);
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
@@ -132,8 +135,8 @@ describe('comments sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
+        const analysisCall = analysis.filter((e) => e.type === effectCallType);
         expect(analysis).toHaveLength(6);
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
@@ -157,8 +160,8 @@ describe('comments sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
+        const analysisCall = analysis.filter((e) => e.type === effectCallType);
         expect(analysis).toHaveLength(4);
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
@@ -185,8 +188,8 @@ describe('comments sagas tests', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
+        const analysisCall = analysis.filter((e) => e.type === effectCallType);
         expect(analysis).toHaveLength(4);
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
@@ -203,7 +206,7 @@ describe('comments sagas tests', () => {
       })
       .put(setCommentsLoading(false))
       .put(setCommentError({ e: mockError }))
-      .put(setSnackBarSeverity('error'))
+      .put(setSnackBarSeverity(snackBarError))
       .put(setSnackBarMessage(mockError.message))
       .put(setSnackBarStatus(true))
       .hasFinalState({
@@ -214,14 +217,14 @@ describe('comments sagas tests', () => {
         },
         Snackbar: {
           snackBarStatus: true,
-          snackBarSeverity: 'error',
+          snackBarSeverity: snackBarError,
           snackBarMessage: mockError.message
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
         expect(analysisPut).toHaveLength(5);
       });
   });
