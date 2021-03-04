@@ -31,35 +31,6 @@ const mockSizes = {
 
 const mockSize = mockSizes.items[0];
 
-const mockNewSize = {
-  items: [
-    {
-      _id: mockId,
-      name: [
-        {
-          lang: 'ua',
-          value: 'medium'
-        },
-        {
-          lang: 'en',
-          value: 'середній'
-        }
-      ],
-      description: [
-        {
-          lang: 'ua',
-          value: 'тест'
-        },
-        {
-          lang: 'en',
-          value: 'test'
-        }
-      ],
-      sizes: []
-    }
-  ]
-};
-
 const sizesArr = [mockSize];
 
 const mockError = {
