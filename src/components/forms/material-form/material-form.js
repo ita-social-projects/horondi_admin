@@ -88,18 +88,7 @@ function MaterialForm({ material, id }) {
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
-    initialValues: {
-      uaName: material.name[0].value || '',
-      enName: material.name[1].value || '',
-      uaDescription: material.description[0].value || '',
-      enDescription: material.description[1].value || '',
-      purpose: material.purpose || purposeEnum.MAIN,
-      available: material.available || false,
-
-      additionalPrice: +material.additionalPrice[0].value / 100 || 0,
-      colors:
-        (material.colors && material.colors.map((color) => color._id)) || []
-    },
+    initialValues: getMaterialFormInitValues(material, purposeEnum),
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
       onSubmitDispatchHandler(
