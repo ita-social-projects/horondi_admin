@@ -20,6 +20,17 @@ import TabPanel from '../../tab-panel';
 import LoadingBar from '../../loading-bar';
 
 import {
+  setCodeHandler,
+  uaSetTitleHandler,
+  uaSetTextHandler,
+  enSetTitleHandler,
+  enSetTextHandler,
+  helperTextHandler,
+  businessPageDispatchHandler,
+  indexFinder
+} from '../../../utils/business-page-form';
+
+import {
   addBusinessPage,
   getBusinessPageById,
   updateBusinessPage
@@ -68,11 +79,11 @@ const BusinessPageForm = ({ id, editMode }) => {
   useEffect(() => {
     const isEditingReady = businessPage && editMode;
 
-    setCode(isEditingReady ? businessPage.code : '');
-    uaSetTitle(isEditingReady ? businessPage.title[0].value : '');
-    uaSetText(isEditingReady ? businessPage.text[0].value : '');
-    enSetTitle(isEditingReady ? businessPage.title[1].value : '');
-    enSetText(isEditingReady ? businessPage.text[1].value : '');
+    setCode(setCodeHandler(isEditingReady, businessPage));
+    uaSetTitle(uaSetTitleHandler(isEditingReady, businessPage));
+    uaSetText(uaSetTextHandler(isEditingReady, businessPage));
+    enSetTitle(enSetTitleHandler(isEditingReady, businessPage));
+    enSetText(enSetTextHandler(isEditingReady, businessPage));
   }, [
     code,
     setCode,
@@ -108,9 +119,7 @@ const BusinessPageForm = ({ id, editMode }) => {
 
       const uniqueFiles = files.filter((file, i) => {
         const { name, size } = file;
-        return (
-          i === files.findIndex((obj) => obj.name === name && obj.size === size)
-        );
+        return indexFinder(i, files, name, size);
       });
 
       const newUaText = uaText.replace(/src="data:image.*?"/g, 'src=""');
@@ -121,9 +130,15 @@ const BusinessPageForm = ({ id, editMode }) => {
         uaText: newUaText,
         enText: newEnText
       });
-      editMode
-        ? dispatch(updateBusinessPage({ id, page, files: uniqueFiles }))
-        : dispatch(addBusinessPage({ page, files: uniqueFiles }));
+
+      businessPageDispatchHandler(
+        editMode,
+        dispatch,
+        updateBusinessPage,
+        addBusinessPage,
+        { id, page, files: uniqueFiles },
+        { page, files: uniqueFiles }
+      );
     }
   });
 
@@ -140,6 +155,14 @@ const BusinessPageForm = ({ id, editMode }) => {
   if (loading) {
     return <LoadingBar />;
   }
+
+  const isEnTextAndValidate =
+    (editorField.test(enText) || !enText) && shouldValidate;
+  const isEnTitleAndValidate = !formik.values.enTitle && shouldValidate;
+  const isUaTitleAndValidate = !formik.values.uaTitle && shouldValidate;
+  const isCodeAndValidate = !formik.values.code && shouldValidate;
+  const enterTitleMessage = 'Введіть заголовок';
+  const enterUniqueIdMessage = 'Введіть унікальний ідентифікатор для сторінки';
 
   return (
     <div className={common.container}>
@@ -163,12 +186,11 @@ const BusinessPageForm = ({ id, editMode }) => {
                 label='Код сторінки'
                 value={formik.values.code}
                 onChange={formik.handleChange}
-                error={!formik.values.code && shouldValidate}
-                helperText={
-                  !formik.values.code && shouldValidate
-                    ? 'Введіть унікальний ідентифікатор для сторінки'
-                    : ''
-                }
+                error={isCodeAndValidate}
+                helperText={helperTextHandler(
+                  isCodeAndValidate,
+                  enterUniqueIdMessage
+                )}
                 data-cy='page-code'
               />
             </Paper>
@@ -192,12 +214,11 @@ const BusinessPageForm = ({ id, editMode }) => {
                   multiline
                   value={formik.values.uaTitle}
                   onChange={formik.handleChange}
-                  error={!formik.values.uaTitle && shouldValidate}
-                  helperText={
-                    !formik.values.uaTitle && shouldValidate
-                      ? 'Введіть заголовок'
-                      : ''
-                  }
+                  error={isUaTitleAndValidate}
+                  helperText={helperTextHandler(
+                    isUaTitleAndValidate,
+                    enterTitleMessage
+                  )}
                   data-cy='page-header-ua'
                 />
                 <Editor
@@ -224,12 +245,11 @@ const BusinessPageForm = ({ id, editMode }) => {
                   multiline
                   value={formik.values.enTitle}
                   onChange={formik.handleChange}
-                  error={!formik.values.enTitle && shouldValidate}
-                  helperText={
-                    !formik.values.enTitle && shouldValidate
-                      ? labels[0].errorLabel[tabsValue].value
-                      : ''
-                  }
+                  error={isEnTitleAndValidate}
+                  helperText={helperTextHandler(
+                    isEnTitleAndValidate,
+                    labels[0].errorLabel[tabsValue].value
+                  )}
                   data-cy='page-header-en'
                 />
                 <Editor
@@ -238,7 +258,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   onEditorChange={(value) => enSetText(value)}
                   setFiles={setFiles}
                 />
-                {(editorField.test(enText) || !enText) && shouldValidate && (
+                {isEnTextAndValidate && (
                   <div className={classes.errorMessage} data-cy='editor-error'>
                     {labels[1].errorLabel[tabsValue].value}
                   </div>

@@ -190,7 +190,6 @@ describe('comments sagas tests', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === effectPutType);
         const analysisCall = analysis.filter((e) => e.type === effectCallType);
-        expect(analysis).toHaveLength(4);
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
       });

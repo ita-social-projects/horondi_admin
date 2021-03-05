@@ -13,6 +13,7 @@ import { SaveButton } from '../buttons';
 import { config } from '../../configs';
 import useColorHandlers from '../../utils/use-color-handlers';
 import { selectColorLoading } from '../../redux/selectors/color.selectors';
+import { handleNameInLanguageTabs } from '../../utils/create-color';
 
 const { languages, colorErrorMessages, buttonTitles } = config;
 const {
@@ -129,18 +130,25 @@ const CreateColor = () => {
 
   const languageTabs =
     languages.length > 0
-      ? languages.map((lang) => (
-        <Tab
-          className={
-            (touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`]) ||
-              (touched[`${lang}Name`] && errors[`${lang}Name`])
-              ? styles.errorTab
-              : styles.tabs
-          }
-          label={lang}
-          key={lang}
-        />
-      ))
+      ? languages.map((lang) => {
+        const touchedAndErrorsSimpName =
+            touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`];
+        const touchedAndErrorsName =
+            touched[`${lang}Name`] && errors[`${lang}Name`];
+        const tabConditionForStyles =
+            touchedAndErrorsSimpName || touchedAndErrorsName;
+
+        return (
+          <Tab
+            className={handleNameInLanguageTabs(
+              tabConditionForStyles,
+              styles
+            )}
+            label={lang}
+            key={lang}
+          />
+        );
+      })
       : null;
 
   return (

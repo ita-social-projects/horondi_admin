@@ -20,6 +20,10 @@ import {
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
+import {
+  setMapImageHandler,
+  avatarRenderHandler
+} from '../../../utils/contacts-form';
 
 const { languages } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -58,25 +62,11 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   });
 
   const uaSelectImageHandler = ({ target }) => {
-    if (target.files && target.files[0]) {
-      uaSetMapImage({
-        name: target.files[0].name,
-        imageUrl: URL.createObjectURL(target.files[0])
-      });
-
-      [values.uaCartImage] = target.files;
-    }
+    setMapImageHandler(target, uaSetMapImage, values, 'uaCartImage');
   };
 
   const enSelectImageHandler = ({ target }) => {
-    if (target.files && target.files[0]) {
-      enSetMapImage({
-        name: target.files[0].name,
-        imageUrl: URL.createObjectURL(target.files[0])
-      });
-
-      [values.enCartImage] = target.files;
-    }
+    setMapImageHandler(target, enSetMapImage, values, 'enCartImage');
   };
 
   const formSchema = Yup.object().shape({
@@ -153,15 +143,16 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 </span>
                 <div className={classes.imageUploadAvatar}>
                   <ImageUploadContainer handler={uaSelectImageHandler} />
-                  {uaMapImage.imageUrl ? (
+                  {avatarRenderHandler(
+                    uaMapImage,
+                    initialValues,
                     <Avatar
                       data-cy='ua-cart-image'
                       src={uaMapImage.imageUrl}
                       className={classes.large}
                     >
                       <Image />
-                    </Avatar>
-                  ) : initialValues.uaCartImage ? (
+                    </Avatar>,
                     <Avatar
                       data-cy='uaCartImage'
                       src={initialValues.uaCartImage}
@@ -169,7 +160,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     >
                       <Image />
                     </Avatar>
-                  ) : null}
+                  )}
                 </div>
                 <span className={classes.imageUpload}>
                   Зображення карти (Англ.)
