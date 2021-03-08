@@ -20,6 +20,7 @@ import {
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
+import { handleAvatar } from '../../../utils/handle-avatar';
 
 const { languages } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -161,15 +162,13 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     >
                       <Image />
                     </Avatar>
-                  ) : initialValues.uaCartImage ? (
-                    <Avatar
-                      data-cy='uaCartImage'
-                      src={initialValues.uaCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
-                  ) : null}
+                  ) : (
+                    handleAvatar(
+                      initialValues.uaCartImage,
+                      'uaCartImage',
+                      classes.large
+                    )
+                  )}
                 </div>
                 <span className={classes.imageUpload}>
                   Зображення карти (Англ.)
@@ -184,16 +183,12 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     >
                       <Image />
                     </Avatar>
-                  ) : initialValues.enCartImage ? (
-                    <Avatar
-                      data-cy='enCartImage'
-                      src={initialValues.enCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
                   ) : (
-                    <></>
+                    handleAvatar(
+                      initialValues.enCartImage,
+                      'enCartImage',
+                      classes.large
+                    )
                   )}
                 </div>
                 <TextField

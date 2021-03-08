@@ -14,8 +14,11 @@ import {
 } from '../../../redux/email-questions/email-questions.actions';
 import { config } from '../../../configs';
 import getTime from '../../../utils/getTime';
-import { emailQuestionsErrorMessages } from '../../../configs/error-messages';
 import buttonTitles from '../../../configs/button-titles';
+import {
+  handleEmailQuestionDetail,
+  handleHelperText
+} from '../../../utils/handle-email-question-detail';
 
 const { labels, titles, detailTitles, routes } = config;
 
@@ -105,19 +108,10 @@ const EmailQuestionDetails = ({ id }) => {
         <>
           <div className={styles.data}>
             <div className={styles.customer}>
-              {customerRenderData.map((item) => (
-                <Typography key={item.title} variant='body1'>
-                  <span>{item.title}</span> {item.value}
-                </Typography>
-              ))}
+              {handleEmailQuestionDetail(customerRenderData)}
             </div>
             <div className={styles.admin}>
-              {adminRenderData.map((item) => (
-                <Typography key={item.title} variant='body1'>
-                  <span>{item.title}</span> {item.value}
-                </Typography>
-              ))}
-
+              {handleEmailQuestionDetail(adminRenderData)}
               {question.status === labels.emailQuestionsLabels.en.PENDING && (
                 <TextField
                   id='filled-full-width'
@@ -135,11 +129,7 @@ const EmailQuestionDetails = ({ id }) => {
                   onChange={({ target: { value } }) => setAnswerValue(value)}
                   variant='filled'
                   error={!answerValue && shouldValidate}
-                  helperText={
-                    !answerValue && shouldValidate
-                      ? emailQuestionsErrorMessages.ANSWER_INPUT_MESSAGE
-                      : ''
-                  }
+                  helperText={handleHelperText(answerValue, shouldValidate)}
                 />
               )}
             </div>

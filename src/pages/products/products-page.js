@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import Typography from '@material-ui/core/Typography';
-
 import {
   getFiltredProducts,
   getAllFilters,
@@ -11,7 +9,6 @@ import {
 } from '../../redux/products/products.actions';
 
 import TableContainerRow from '../../containers/table-container-row';
-import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 
 import { config } from '../../configs';
@@ -20,6 +17,7 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { selectProductsAndTable } from '../../redux/selectors/multiple.selectors';
 import { useCommonStyles } from '../common.styles';
+import { handleProductsPage } from '../../utils/handle-products-page';
 
 const {
   PRODUCT_NOT_FOUND,
@@ -124,17 +122,15 @@ const ProductsPage = () => {
     <div className={common.container}>
       {loading ? (
         <LoadingBar />
-      ) : products.length ? (
-        <TableContainerGenerator
-          pagination
-          count={itemsCount}
-          tableTitles={tableTitles}
-          tableItems={productsItems}
-        />
       ) : (
-        <Typography variant='h1' className={common.materialTitle}>
-          {PRODUCT_NOT_FOUND}
-        </Typography>
+        handleProductsPage(
+          products,
+          itemsCount,
+          tableTitles,
+          productsItems,
+          common.materialTitle,
+          PRODUCT_NOT_FOUND
+        )
       )}
     </div>
   );

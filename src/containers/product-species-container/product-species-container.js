@@ -120,24 +120,27 @@ const ProductSpeciesContainer = ({
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      {selectsLabels.map(({ label, name, type, required, multiple }, idx) =>
-        type === 'select' ? (
-          <FormControl className={styles.formControl} key={label}>
-            <InputLabel htmlFor={label}>{`${label}${
-              required ? '*' : ''
-            }`}</InputLabel>
-            <Select
-              name={name}
-              error={touched[name] && !!errors[name]}
-              value={values[name] || []}
-              onChange={handleSelectChange}
-              onBlur={handleBlur}
-              multiple={multiple}
-            >
-              {options[idx]}
-            </Select>
-          </FormControl>
-        ) : (
+      {selectsLabels.map(({ label, name, type, required, multiple }, idx) => {
+        if (type === 'select') {
+          return (
+            <FormControl className={styles.formControl} key={label}>
+              <InputLabel htmlFor={label}>{`${label}${
+                required ? '*' : ''
+              }`}</InputLabel>
+              <Select
+                name={name}
+                error={touched[name] && !!errors[name]}
+                value={values[name] || []}
+                onChange={handleSelectChange}
+                onBlur={handleBlur}
+                multiple={multiple}
+              >
+                {options[idx]}
+              </Select>
+            </FormControl>
+          );
+        } 
+        return (
           <TextField
             className={styles.numberInputControl}
             label={`${label}${required ? '*' : ''}`}
@@ -150,8 +153,9 @@ const ProductSpeciesContainer = ({
             onChange={handleSpeciesChange}
             onBlur={handleBlur}
           />
-        )
-      )}
+        );
+        
+      })}
       <div className={styles.error}>
         {!!speciesErrors.length && ALL_FIELDS_ARE_REQUIRED}
       </div>
