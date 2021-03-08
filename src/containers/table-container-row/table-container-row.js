@@ -4,6 +4,7 @@ import { TableRow, TableCell, Avatar, Checkbox } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import PropTypes from 'prop-types';
 
+import { noop } from 'lodash';
 import {
   CustomizedEditIcon,
   CustomizedDeleteIcon
@@ -96,10 +97,10 @@ TableContainerRow.propTypes = {
 TableContainerRow.defaultProps = {
   id: '',
   image: '',
-  deleteHandler: () => {},
-  editHandler: () => {},
-  clickHandler: () => {},
-  checkboxChangeHandler: () => {},
+  deleteHandler: noop,
+  editHandler: noop,
+  clickHandler: noop,
+  checkboxChangeHandler: noop,
   showAvatar: true,
   showEdit: true,
   showDelete: true,

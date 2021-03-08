@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from '@material-ui/core';
+import { noop } from 'lodash';
 import { useStyles } from './color-circle.styles';
 
 const ColorCircle = ({ color, colorName, size, onDelete }) => {
@@ -21,7 +22,7 @@ ColorCircle.propTypes = {
 
 ColorCircle.defaultProps = {
   colorName: '',
-  onDelete: () => {}
+  onDelete: noop
 };
 
 export default ColorCircle;

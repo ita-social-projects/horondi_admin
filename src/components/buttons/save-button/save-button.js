@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 
 const SaveButton = ({
   title,
@@ -61,7 +62,7 @@ SaveButton.defaultProps = {
   color: 'primary',
   errors: {},
   values: {},
-  onClickHandler: () => {}
+  onClickHandler: noop
 };
 
 export default SaveButton;

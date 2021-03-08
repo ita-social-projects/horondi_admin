@@ -5,6 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 import { useStyles } from './nav-search.styles';
 import { config } from '../../../configs';
 
@@ -62,7 +63,7 @@ NavSearch.propTypes = {
 
 NavSearch.defaultProps = {
   searchOptions: {},
-  filters: () => {},
-  setSearchFilter: () => {}
+  filters: noop,
+  setSearchFilter: noop
 };
 export default NavSearch;

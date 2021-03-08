@@ -1,5 +1,7 @@
 const messages = {
   REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
+  REMOVE_ITEM: 'Ви впевнені, що хочете видалити цей продукт?',
+  REMOVE_ORDER_MESSAGE: 'Ви впевнені, що хочете видалити це замовлення?',
   REMOVE_BUSINESS_PAGE: 'Ви впевнені, що хочете видалити цю сторінку?',
   LOGOUT_MESSAGE: 'Ви впевнені, що хочете вийти?',
   DELETE_CATEGORY_MESSAGE: 'Ви впевнені, що хочете видалити цю категорію?',
@@ -11,6 +13,7 @@ const messages = {
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   DELETE_SIZE_MESSAGE: 'Ви впевнені, що хочете видалити цей розмір?',
+  NO_SIZES_MESSAGE: 'Розміри відсутні',
   REMOVE_MATERIAL_COLOR_MESSAGE: 'Ви впевнені, що хочете видалити цей колір?',
   EMAIL_QUESTION_REMOVE_MESSAGE:
     'Ви впевнені, що хочете видалити це запитання?',

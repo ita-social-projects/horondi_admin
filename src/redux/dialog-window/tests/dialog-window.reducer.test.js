@@ -1,3 +1,4 @@
+import { noop } from 'lodash';
 import dialogWindowReducer, { initialState } from '../dialog-window.reducer';
 import { closeDialog, showDialog } from '../dialog-window.actions';
 
@@ -22,8 +23,7 @@ describe('dialog window reducer tests', () => {
   it('should be defined', () => {
     expect(initialState.dialogTitle).toBeDefined();
     expect(initialState.dialogContent).toBeDefined();
-    expect(initialState.onClickHandler).toBeDefined();
+    expect(initialState.onClickHandler).toEqual(noop);
     expect(initialState.onClickHandler).not.toBeNull();
-    expect(initialState.onClickHandler).not.toThrow();
   });
 });

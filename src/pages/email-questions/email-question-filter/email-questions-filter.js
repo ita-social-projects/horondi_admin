@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
+import { noop } from 'lodash';
 import { useStyles, MenuProps } from './email-question-filter.styles';
 import { badgePosition, config } from '../../../configs';
 
@@ -69,7 +70,7 @@ EmailQuestionsFilter.propTypes = {
 
 EmailQuestionsFilter.defaultProps = {
   filterItems: [],
-  filterChangeHandler: () => {}
+  filterChangeHandler: noop
 };
 
 export default EmailQuestionsFilter;

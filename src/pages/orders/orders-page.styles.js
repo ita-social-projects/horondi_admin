@@ -11,5 +11,8 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     fontSize: 16
+  },
+  addButton: {
+    marginLeft: '20px'
   }
 }));

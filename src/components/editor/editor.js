@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import PropTypes from 'prop-types';
 import ImageIcon from '@material-ui/icons/Image';
+import { noop } from 'lodash';
 
 import { useSelector } from 'react-redux';
 import { useStyles } from './editor-styles.js';
@@ -164,7 +165,7 @@ Editor.propTypes = {
 Editor.defaultProps = {
   value: '',
   placeholder: 'Текст',
-  setFiles: () => {},
+  setFiles: noop,
   id: ''
 };
 

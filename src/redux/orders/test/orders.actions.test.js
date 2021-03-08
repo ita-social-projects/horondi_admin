@@ -5,7 +5,8 @@ import {
   SET_ORDER_ERROR,
   GET_ORDER_LIST,
   SET_ORDER_LIST,
-  UPDATE_ORDER
+  UPDATE_ORDER,
+  DELETE_ORDER
 } from '../orders.types';
 
 import {
@@ -15,12 +16,15 @@ import {
   setOrderList,
   setOrderLoading,
   setOrderError,
-  updateOrder
+  updateOrder,
+  deleteOrder
 } from '../orders.actions';
 import {
   getFakeOrderList,
   fakeOrderList,
-  fakeIdOrder
+  fakeIdOrderInput,
+  fakeId,
+  fakeIdOrderPayload
 } from './orders.variables';
 
 describe('orders actions', () => {
@@ -66,9 +70,15 @@ describe('orders actions', () => {
     });
   });
   it('should update order', () => {
-    expect(updateOrder(fakeIdOrder)).toEqual({
+    expect(updateOrder(fakeIdOrderInput, fakeId)).toEqual({
       type: UPDATE_ORDER,
-      payload: fakeIdOrder
+      payload: fakeIdOrderPayload
+    });
+  });
+  it('should delete order ', () => {
+    expect(deleteOrder(fakeId)).toEqual({
+      type: DELETE_ORDER,
+      payload: fakeId
     });
   });
 });

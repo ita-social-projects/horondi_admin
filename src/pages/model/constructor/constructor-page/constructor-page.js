@@ -10,6 +10,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Image } from '@material-ui/icons';
+import map from 'lodash/map';
+
 import { useStyles } from './constructor-page.styles';
 import { useCommonStyles } from '../../../common.styles';
 import { config } from '../../../../configs';
@@ -37,8 +39,10 @@ import { selectConstructorMethodAndMaterials } from '../../../../redux/selectors
 import { getPatterns } from '../../../../redux/pattern/pattern.actions';
 import { getMaterials } from '../../../../redux/material/material.actions';
 import LoadingBar from '../../../../components/loading-bar';
-
-const map = require('lodash/map');
+import {
+  listItemImages,
+  isListItemAvailable
+} from '../../../../utils/constructor-page';
 
 const {
   constructorBasic,
@@ -101,6 +105,20 @@ const ConstructorPage = ({ match }) => {
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
+
+  const handleConstructorOpening = (label, createConstructorElement) => {
+    label === constructorPattern
+      ? handleOpenDialog()
+      : handleConstructorOptions(createConstructorElement)
+  };
+
+  const handleConstructorTableItems = (label, pattern, list, deleteConstHandler, updateConstHandler) => {
+    if (label === pattern) {
+      return patternItems(list, deleteConstHandler);
+    }
+    return constructorItems(list, deleteConstHandler, updateConstHandler);
+  };
+
   const handleListItemClick = (modelID, pattern) => {
     setOpenDialog(false);
     dispatch(addConstructorPattern({ id: modelID, pattern }));
@@ -113,11 +131,7 @@ const ConstructorPage = ({ match }) => {
 
   const constructorItems = (list, deleteAction, editAction) => map(list, listItem => (
     <TableContainerRow
-      image={
-        listItem.images
-          ? `${IMG_URL}${listItem.images.thumbnail}`
-          : ''
-      }
+      image={listItemImages(IMG_URL, listItem)}
       showAvatar={listItem.label === constructorPattern}
       color={
         <ColorCircle
@@ -129,11 +143,7 @@ const ConstructorPage = ({ match }) => {
       id={listItem._id}
       name={listItem.name[0].value}
       material={listItem.material.name[0].value}
-      show={
-        listItem.available
-          ? showEnable
-          : showDisable
-      }
+      show={isListItemAvailable(listItem, showEnable, showDisable)}
       deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
       editHandler={() => handleUpdateConstructor(editAction, listItem._id, listItem)}
     />
@@ -141,20 +151,12 @@ const ConstructorPage = ({ match }) => {
 
   const patternItems = (list, deleteAction) => map(list, listItem => (
     <TableContainerRow
-      image={
-        listItem.images
-          ? `${IMG_URL}${listItem.images.thumbnail}`
-          : ''
-      }
+      image={listItemImages(IMG_URL, listItem)}
       key={listItem._id}
       id={listItem._id}
       name={listItem.name[0].value}
       material={listItem.material.name[0].value}
-      show={
-        listItem.available
-          ? showEnable
-          : showDisable
-      }
+      show={isListItemAvailable(listItem, showEnable, showDisable)}
       deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
       showEdit={false}
     />
@@ -224,9 +226,7 @@ const ConstructorPage = ({ match }) => {
           </Typography>
           <Button
             data-cy='add-constructor-element'
-            onClick={() => label === constructorPattern ?
-              handleOpenDialog() :
-              handleConstructorOptions(createConstructorElement)}
+            onClick={() => handleConstructorOpening(label, createConstructorElement)}
             variant='contained'
             color='primary'
           >
@@ -236,8 +236,7 @@ const ConstructorPage = ({ match }) => {
         <TableContainerGenerator
           data-cy='constructorTable'
           tableTitles={constructorTitles}
-          tableItems={label === constructorPattern ? patternItems(list, deleteConstructorElement) :
-            constructorItems(list, deleteConstructorElement, updateConstructorElement)}
+          tableItems={handleConstructorTableItems(label, constructorPattern, list, deleteConstructorElement, updateConstructorElement)}
         />
       </TabPanel>
     )

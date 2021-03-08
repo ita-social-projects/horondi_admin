@@ -1,6 +1,7 @@
 import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { noop } from 'lodash';
 import SaveButton from './save-button';
 import { config, inputTypes } from '../../../configs';
 
@@ -12,7 +13,7 @@ describe('save button tests', () => {
   const size = 'small';
   const title = SAVE_TITLE;
   const type = inputTypes.button;
-  const mockCallBack = jest.fn(() => {});
+  const mockCallBack = jest.fn(noop());
   let component;
 
   beforeEach(() => {
@@ -54,7 +55,6 @@ describe('save button tests', () => {
     expect(SaveButton.propTypes.onClickHandler).toBeDefined();
   });
   it('should have default props', () => {
-    expect(SaveButton.defaultProps.onClickHandler).toBeDefined();
-    expect(SaveButton.defaultProps.onClickHandler()).toEqual(mockCallBack());
+    expect(SaveButton.defaultProps.onClickHandler).toEqual(noop);
   });
 });

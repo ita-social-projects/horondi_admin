@@ -13,35 +13,33 @@ const useModelHandlers = () => {
     setTabsValue(newValue);
   };
 
-  const createModel = (values) => {
-    const newModel = {
-      name: [
-        {
-          lang: languages[0],
-          value: values.uaName
-        },
-        {
-          lang: languages[1],
-          value: values.enName
-        }
-      ],
-      priority: values.priority,
-      description: [
-        {
-          lang: languages[0],
-          value: values.uaDescription
-        },
-        {
-          lang: languages[1],
-          value: values.enDescription
-        }
-      ],
-      category: values.category,
-      show: values.show,
-      availableForConstructor: values.availableForConstructor
-    };
-    return newModel;
-  };
+  const createModel = (values) => ({
+    name: [
+      {
+        lang: languages[0],
+        value: values.uaName
+      },
+      {
+        lang: languages[1],
+        value: values.enName
+      }
+    ],
+    priority: values.priority,
+    description: [
+      {
+        lang: languages[0],
+        value: values.uaDescription
+      },
+      {
+        lang: languages[1],
+        value: values.enDescription
+      }
+    ],
+    category: values.category,
+    sizes: values.sizes,
+    show: values.show,
+    availableForConstructor: values.availableForConstructor
+  });
 
   return {
     modelImage,

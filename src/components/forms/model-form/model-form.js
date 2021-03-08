@@ -9,11 +9,13 @@ import {
   Select,
   FormControl,
   InputLabel,
-  Avatar, Button
+  Avatar,
+  Button
 } from '@material-ui/core';
-import * as Yup from 'yup';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Image } from '@material-ui/icons';
 import { push } from 'connected-react-router';
+
 import useModelHandlers from '../../../utils/use-model-handlers';
 import { useStyles } from './model-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -28,14 +30,14 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { getCategories } from '../../../redux/categories/categories.actions';
 import LanguagePanel from '../language-panel';
+import { modelValidationSchema } from '../../../validations/models/model-form-validation';
+import { getSizes } from '../../../redux/sizes/sizes.actions';
+import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
+import labels from '../../../configs/labels';
 
 const { languages } = config;
-const {
-  MODEL_VALIDATION_ERROR,
-  MODEL_ERROR_MESSAGE,
-  PHOTO_NOT_PROVIDED
-} = config.modelErrorMessages;
-
+const { materialUiConstants } = config;
+const { PHOTO_NOT_PROVIDED } = config.modelErrorMessages;
 const {
   availableForConstructor,
   show,
@@ -43,16 +45,17 @@ const {
   availableCategory,
   description,
   avatarText,
-  priority
+  priority,
+  labelsEn,
+  chooseSizes
 } = config.labels.model;
-
-const {IMG_URL} = config;
-
+const { IMG_URL } = config;
 const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
 
 const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
+
   const inputLabel = React.useRef(null);
   const {
     createModel,
@@ -63,37 +66,18 @@ const ModelForm = ({ model, id, isEdit }) => {
   } = useModelHandlers();
 
   useEffect(() => {
-    if(!isEdit){
-      dispatch(getCategories())
-    }
-  },[])
+    dispatch(getSizes());
+    dispatch(getCategories({}));
+  }, [dispatch]);
 
-  const modelValidationSchema = Yup.object().shape({
-    enDescription: Yup.string()
-      .min(2, MODEL_VALIDATION_ERROR)
-      .required(MODEL_ERROR_MESSAGE),
-    enName: Yup.string()
-      .min(2, MODEL_VALIDATION_ERROR)
-      .required(MODEL_ERROR_MESSAGE),
-    uaDescription: Yup.string()
-      .min(2, MODEL_VALIDATION_ERROR)
-      .required(MODEL_ERROR_MESSAGE),
-    uaName: Yup.string()
-      .min(2, MODEL_VALIDATION_ERROR)
-      .required(MODEL_ERROR_MESSAGE),
-    priority: Yup.number(),
-    category: Yup.string()
-  });
+  const { sizesList } = useSelector(sizesSelectorWithPagination);
+
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.categories
   }));
 
+  const [sizes, setSizes] = useState(model.sizes || []);
   const [category, setCategory] = useState(model.category._id || '');
-
-  const handleCategory = (event) => {
-    values.category = event.target.value;
-    setCategory(event.target.value);
-  };
 
   const {
     values,
@@ -112,6 +96,7 @@ const ModelForm = ({ model, id, isEdit }) => {
       enDescription: model.description[1].value || '',
       priority: model.priority || 1,
       category: category || '',
+      sizes: sizes || [],
       show: model.show || false,
       availableForConstructor: model.availableForConstructor || false
     },
@@ -129,21 +114,35 @@ const ModelForm = ({ model, id, isEdit }) => {
         dispatch(addModel({ model: newModel, image: upload }));
         return;
       }
-      dispatch(setSnackBarSeverity('error'));
+      dispatch(setSnackBarSeverity(materialUiConstants.codeError));
       dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
       dispatch(setSnackBarStatus(true));
     }
   });
 
-  const checkboxes =(checkBoxName, label)=>[
+  const handleCategory = (event) => {
+    setFieldValue('category', event.target.value);
+    setCategory(event.target.value);
+  };
+
+  const onTagsChange = (event, value) => {
+    setFieldValue(
+      'sizes',
+      value.map((size) => size._id)
+    );
+    setSizes(value);
+  };
+
+  const checkboxes = (checkBoxName, label) => [
     {
       id: `${checkBoxName}`,
       dataCy: `${checkBoxName}`,
       value: values[`${checkBoxName}`],
       checked: values[`${checkBoxName}`],
-      color: 'primary',
+      color: materialUiConstants.primary,
       label,
-      handler: () => setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
+      handler: () =>
+        setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
     }
   ];
 
@@ -151,20 +150,20 @@ const ModelForm = ({ model, id, isEdit }) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFieldValue('modelImage', event.target.result);
+        setFieldValue(labelsEn.modelImage, event.target.result);
         setModelImage(event.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
     }
   };
-  const handleConstructor=()=>{
-    dispatch(push(`/constructor/${id}`));
-  }
+  const handleConstructor = () => {
+    dispatch(push(config.routes.pathToConstructor.replace(':id', id)));
+  };
 
   const inputs = [
-    { label: name, name: 'name' },
-    { label: description, name: 'description', isEditor:true },
+    { label: name, name: labelsEn.name },
+    { label: description, name: labelsEn.description, isEditor: true }
   ];
   const inputOptions = {
     errors,
@@ -176,34 +175,41 @@ const ModelForm = ({ model, id, isEdit }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} autoComplete='off'>
-        <CheckboxOptions options={checkboxes('show', show )} />
-        <CheckboxOptions options={checkboxes('availableForConstructor', availableForConstructor )} />
+      <form onSubmit={handleSubmit} autoComplete={materialUiConstants.off}>
+        <CheckboxOptions options={checkboxes(materialUiConstants.show, show)} />
+        <CheckboxOptions
+          options={checkboxes(
+            labelsEn.availableForConstructor,
+            availableForConstructor
+          )}
+        />
 
         <Grid item xs={12}>
           <Paper className={styles.modelItemUpdate}>
-            <span className={styles.imageUpload}>
-              {avatarText}
-            </span>
+            <span className={styles.imageUpload}>{avatarText}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer handler={handleImageLoad} />
-              <Avatar src={modelImage || `${IMG_URL}${model.images.thumbnail}`} >
+              <Avatar src={modelImage || `${IMG_URL}${model.images.thumbnail}`}>
                 <Image />
               </Avatar>
             </div>
-            <FormControl variant='outlined' className={styles.textField}>
-              <InputLabel shrink ref={inputLabel} htmlFor='category-select'>
+            <FormControl
+              variant={materialUiConstants.outlined}
+              className={styles.textField}
+            >
+              <InputLabel ref={inputLabel} htmlFor={labelsEn.categorySelect}>
                 {availableCategory}
               </InputLabel>
               <Select
-                data-cy='category'
+                id={labelsEn.category}
+                data-cy={labelsEn.category}
                 native
                 value={category}
                 onChange={handleCategory}
                 label={availableCategory}
                 inputProps={{
-                  name: 'category',
-                  id: 'category-select'
+                  name: labelsEn.category,
+                  id: labels.categorySelect
                 }}
               >
                 <option value='' />
@@ -217,13 +223,12 @@ const ModelForm = ({ model, id, isEdit }) => {
                 <div className={styles.inputError}>{errors.category}</div>
               )}
             </FormControl>
-
             <TextField
-              id='priority'
-              type='number'
-              data-cy='priority'
+              id={labelsEn.priority}
+              type={materialUiConstants.types.string}
+              data-cy={labelsEn.priority}
               className={styles.textField}
-              variant='outlined'
+              variant={materialUiConstants.outlined}
               label={priority}
               value={values.priority}
               onChange={handleChange}
@@ -233,6 +238,28 @@ const ModelForm = ({ model, id, isEdit }) => {
               <div className={styles.inputError}>{errors.priority}</div>
             )}
           </Paper>
+          <Autocomplete
+            id={labelsEn.tagsFilled}
+            className={styles.autoComplete}
+            multiple
+            freeSolo
+            options={sizesList}
+            getOptionLabel={(option) =>
+              `${option.simpleName[0].value} | ${option.name}`
+            }
+            defaultValue={sizes}
+            onChange={onTagsChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant={materialUiConstants.outlined}
+                label={chooseSizes.title}
+                placeholder={chooseSizes.inputTitle}
+                margin={labelsEn.normal}
+                fullWidth
+              />
+            )}
+          />
         </Grid>
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
@@ -240,21 +267,23 @@ const ModelForm = ({ model, id, isEdit }) => {
         <BackButton />
         <SaveButton
           className={styles.saveButton}
-          data-cy='save'
-          type='submit'
+          data-cy={materialUiConstants.save}
+          type={materialUiConstants.types.submit}
           title={MODEL_SAVE_TITLE}
           values={values}
           errors={errors}
         />
-        {isEdit?<Button
-          data-cy='constructor'
-          className={styles.saveButton}
-          onClick={handleConstructor}
-          color='secondary'
-          variant='contained'
-        >
-          {MODEL_CONSTRUCTOR}
-        </Button>:null}
+        {isEdit ? (
+          <Button
+            data-cy={labelsEn.constructor}
+            className={styles.saveButton}
+            onClick={handleConstructor}
+            color={materialUiConstants.secondary}
+            variant={materialUiConstants.contained}
+          >
+            {MODEL_CONSTRUCTOR}
+          </Button>
+        ) : null}
       </form>
     </div>
   );
@@ -275,6 +304,7 @@ ModelForm.propTypes = {
       thumbnail: PropTypes.string
     }),
     category: PropTypes.string,
+    sizes: PropTypes.arrayOf(valueShape),
     name: PropTypes.arrayOf(valueShape)
   }),
   values: PropTypes.shape({
@@ -339,6 +369,7 @@ ModelForm.defaultProps = {
       thumbnail: ''
     },
     category: '',
+    sizes: [],
     show: false,
     availableForConstructor: false,
     priority: 1

@@ -15,6 +15,11 @@ import {
   updateSlidesOrder
 } from '../../../redux/home-page-slides/home-page-slides.actions';
 import { useCommonStyles } from '../../common.styles';
+import {
+  TranslAvailabilityHandler,
+  isDraggableHandler,
+  onDragEnterHandler
+} from '../../../utils/slides-order';
 
 const SlidesOrder = (props) => {
   const styles = useStyles();
@@ -135,17 +140,17 @@ const SlidesOrder = (props) => {
       <Card
         key={group.title}
         elevation={2}
-        onDragEnter={
-          dragging && !group.items.length
-            ? (e) => handleDragEnter(e, { groupIndex, itemIndex: 0 })
-            : null
-        }
+        onDragEnter={onDragEnterHandler(
+          dragging,
+          group,
+          handleDragEnter,
+          groupIndex,
+          0
+        )}
         className={styles.dndGroup}
       >
         <Typography variant='h1' className={styles.slideTitle}>
-          {group.title === 'available'
-            ? slidesTranslations.available
-            : slidesTranslations.nonAvailable}
+          {TranslAvailabilityHandler(group, slidesTranslations)}
         </Typography>
         {group.items.map((item, itemIndex) => (
           <Paper
@@ -202,7 +207,11 @@ const SlidesOrder = (props) => {
               className={styles.saveButton}
               color='secondary'
               data-cy='save'
-              title={draggable ? CANCEL_SLIDE_ORDER : OPEN_SLIDE_EDIT}
+              title={isDraggableHandler(
+                draggable,
+                CANCEL_SLIDE_ORDER,
+                OPEN_SLIDE_EDIT
+              )}
               onClickHandler={changeHandler}
               type='button'
             />

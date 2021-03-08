@@ -9,7 +9,7 @@ import {
   Grid
 } from '@material-ui/core';
 
-import { map } from 'lodash';
+import { map, noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './product-materials-container.styles';
 import { config } from '../../configs';
@@ -159,7 +159,7 @@ ProductMaterialsContainer.propTypes = {
 };
 
 ProductMaterialsContainer.defaultProps = {
-  toggleFieldsChanged: () => {}
+  toggleFieldsChanged: noop
 };
 
 export default ProductMaterialsContainer;

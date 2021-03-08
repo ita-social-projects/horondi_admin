@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 import { config } from '../../configs';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { StandardButton } from '../buttons';
@@ -82,7 +83,7 @@ DialogWindow.defaultProps = {
   dialogTitle: DELETE_TITLE,
   dialogContent: '',
   showCancelButton: true,
-  onClickHandler: () => {}
+  onClickHandler: noop
 };
 
 export default connect(mapStateToProps, null)(DialogWindow);

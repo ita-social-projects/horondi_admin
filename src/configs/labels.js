@@ -41,6 +41,19 @@ const labels = {
       ua: 'Опис',
       en: 'Description'
     },
+    labelsEn: {
+      modelImage: 'modelImage',
+      name: 'name',
+      description: 'description',
+      availableForConstructor: 'availableForConstructor',
+      categorySelect: 'category-select',
+      category: 'category',
+      priority: 'priority',
+      tagsFilled: 'tags-filled',
+      standard: 'standard',
+      normal: 'normal',
+      constructor: 'constructor'
+    },
     image: 'Фото моделі',
     availableCategory: 'Категорія',
     available: 'Доступний',
@@ -57,6 +70,7 @@ const labels = {
     constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
+    chooseSizes: { title: 'Список розмірів', inputTitle: 'Оберіть розміри' },
     showEnable: 'Так',
     showDisable: 'Ні',
     availablePatternsForConstructor: 'Доступні патерни для контсруктора',
@@ -292,8 +306,8 @@ const labels = {
     city: 'Місто',
     zipcode: 'Поштовий індекс',
     street: 'Вулиця',
-    buildingNumber: 'Номер будинку',
-    appartment: 'Номер квартири'
+    house: 'Будинок',
+    flat: 'Квартира'
   },
   sizeValues: {
     heightInCm: 'Висота (см.)',
@@ -382,16 +396,18 @@ const labels = {
     invoiceNumberLabel: 'Номер накладної',
     warehouseNumberLabel: 'Номер відділення: ',
     sentAtLabel: 'Відправлено о:',
-    deliveryCostLabel: 'Вартість доставки'
+    deliveryCostLabel: 'Вартість доставки',
+    courierOfficeNameLabel: 'Номер відділення'
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
     paymentMethodLabel: 'Метод оплати:',
+    paymentStatusLabel: 'Статус оплати:',
     isPaidLabel: 'Оплачено:',
     cancellationReasonLabel: 'Причина скасування',
     creationDateLabel: 'Дата створення:',
     updateDateLabel: 'Дата оновлення:',
-    adminCommentLabel: 'Залишити коментар'
+    userCommentLabel: 'Коментар користувача'
   },
   productsLabels: {
     notListed: 'Не вказано',
@@ -413,14 +429,57 @@ const labels = {
   },
   homePageSlide: {
     image: 'Фото слайду',
-    title: mapToLanguages('Заголовок слайду', 'Slider title'),
+    title: { ua: 'Заголовок слайду', en: 'Slider title' },
     show: 'Доступний',
-    description: 'Опис слайду',
+    description: { ua: 'Опис слайду', en: 'Slide description' },
     link: 'Посилання для переходу'
   },
   lableTitle: {
     ua: 'Заголовок ua',
     en: 'Заголовок en'
+  },
+
+  sizePageLabels: {
+    sizesHeader: 'sizes-header',
+    sizesTable: 'sizesTable'
+  },
+
+  sizeInputData: {
+    sizeMetricData: [
+      'heightInCm',
+      'widthInCm',
+      'depthInCm',
+      'volumeInLiters',
+      'weightInKg'
+    ],
+    sizePricesData: ['simpleNameUa', 'simpleNameEn']
+  },
+
+  sizeLabels: {
+    ua: {
+      heightInCm: 'Висота',
+      widthInCm: 'Ширина',
+      depthInCm: 'Глибина',
+      volumeInLiters: "Об'єм (літри)",
+      weightInKg: 'Вага',
+      additionalPrice: 'Додаткова ціна',
+      simpleNameUa: 'Назва(Укр)',
+      simpleNameEn: 'Назва(Eng)',
+      name: "Ім'я",
+      available: 'Доступний'
+    },
+    en: {
+      heightInCm: 'heightInCm',
+      widthInCm: 'widthInCm',
+      depthInCm: 'depthInCm',
+      volumeInLiters: 'volumeInLiters',
+      weightInKg: 'weightInKg',
+      additionalPrice: 'additionalPrice',
+      simpleNameUa: 'simpleNameUa',
+      simpleNameEn: 'simpleNameUa',
+      name: 'name',
+      available: 'available'
+    }
   }
 };
 export default labels;

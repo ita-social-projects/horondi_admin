@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 import { useStyles } from './nav-clear-filters.styles';
 import { config } from '../../../configs';
 
@@ -38,7 +39,7 @@ NavClearFilters.propTypes = {
 };
 NavClearFilters.defaultProps = {
   clearOptions: {},
-  filters: () => {},
-  clearAllFilters: () => {}
+  filters: noop,
+  clearAllFilters: noop
 };
 export default NavClearFilters;

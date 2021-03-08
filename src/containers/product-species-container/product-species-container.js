@@ -8,7 +8,7 @@ import {
   TextField,
   MenuItem
 } from '@material-ui/core';
-import { map } from 'lodash';
+import { map, noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
@@ -179,7 +179,7 @@ ProductSpeciesContainer.propTypes = {
 };
 
 ProductSpeciesContainer.defaultProps = {
-  toggleFieldsChanged: () => {}
+  toggleFieldsChanged: noop
 };
 
 export default ProductSpeciesContainer;

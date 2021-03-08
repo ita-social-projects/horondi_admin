@@ -51,47 +51,44 @@ const useNewsHandlers = () => {
     />
   ));
 
-  const createArticle = (values) => {
-    const article = {
-      author: {
-        name: [
-          {
-            lang: languages[0],
-            value: values.uaAuthorName || null
-          },
-          {
-            lang: languages[1],
-            value: values.enAuthorName || null
-          }
-        ],
-        image: values.authorPhoto
+  const createArticle = (values) => ({
+    author: {
+      name: [
+        {
+          lang: languages[0],
+          value: values.uaAuthorName || null
+        },
+        {
+          lang: languages[1],
+          value: values.enAuthorName || null
+        }
+      ],
+      image: values.authorPhoto
+    },
+    title: [
+      {
+        lang: languages[0],
+        value: values.uaTitle || null
       },
-      title: [
-        {
-          lang: languages[0],
-          value: values.uaTitle || null
-        },
-        {
-          lang: languages[1],
-          value: values.enTitle || null
-        }
-      ],
-      image: values.newsImage,
-      text: [
-        {
-          lang: languages[0],
-          value: values.uaText || null
-        },
-        {
-          lang: languages[1],
-          value: values.enText || null
-        }
-      ],
-      languages: preferredLanguages,
-      date: new Date().toISOString()
-    };
-    return article;
-  };
+      {
+        lang: languages[1],
+        value: values.enTitle || null
+      }
+    ],
+    image: values.newsImage,
+    text: [
+      {
+        lang: languages[0],
+        value: values.uaText || null
+      },
+      {
+        lang: languages[1],
+        value: values.enText || null
+      }
+    ],
+    languages: preferredLanguages,
+    date: new Date().toISOString()
+  });
 
   return {
     checkboxes,

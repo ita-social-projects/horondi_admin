@@ -34,6 +34,7 @@ const buttonTitles = {
   TO_SPAM: 'У СПАМ',
   MOVE_ALL_TO_SPAM: 'Перемістити у СПАМ',
   CREATE_SIZE_TITLE: 'Створити розмір',
+  SAVE_SIZE_TITLE: 'Зберегти розмір',
   CREATE_MATERIAL_TITLE: 'Створити матеріал',
   CREATE_COLOR_TITLE: 'Створити колір',
   UPDATE_COLOR_TITLE: 'Зберегти зміни',
@@ -55,6 +56,7 @@ const buttonTitles = {
   CREATE_CONSTRUCTOR_FRONT_POCKET_TITLE: 'Додати передню кишеню',
   CREATE_CONSTRUCTOR_BOTTOM_TITLE: 'Додати низ',
   GO: 'Перейти',
-  CATEGORY_TITLE: 'Категорія'
+  CATEGORY_TITLE: 'Категорія',
+  ADD_ORDER: 'Додати замовлення'
 };
 export default buttonTitles;

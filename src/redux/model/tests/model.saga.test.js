@@ -120,7 +120,7 @@ describe('Test model sagas', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(2);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should add model', () =>
