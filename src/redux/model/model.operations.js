@@ -94,6 +94,15 @@ export const getModelById = async (id) => {
               lang
             }
           }
+          sizes {
+            _id
+            name
+            simpleName {
+              lang
+              value
+            }
+            available
+          }
           images {
             large
             medium

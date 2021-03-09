@@ -41,6 +41,19 @@ const labels = {
       ua: 'Опис',
       en: 'Description'
     },
+    labelsEn: {
+      modelImage: 'modelImage',
+      name: 'name',
+      description: 'description',
+      availableForConstructor: 'availableForConstructor',
+      categorySelect: 'category-select',
+      category: 'category',
+      priority: 'priority',
+      tagsFilled: 'tags-filled',
+      standard: 'standard',
+      normal: 'normal',
+      constructor: 'constructor'
+    },
     image: 'Фото моделі',
     availableCategory: 'Категорія',
     available: 'Доступний',
@@ -57,6 +70,7 @@ const labels = {
     constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
+    chooseSizes: { title: 'Список розмірів', inputTitle: 'Оберіть розміри' },
     showEnable: 'Так',
     showDisable: 'Ні',
     availablePatternsForConstructor: 'Доступні патерни для контсруктора',

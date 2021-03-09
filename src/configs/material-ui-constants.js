@@ -3,8 +3,11 @@ const materialUiConstants = {
   typographyVariantH1: 'h1',
   contained: 'contained',
   outlined: 'outlined',
+  secondary: 'secondary',
   primary: 'primary',
   save: 'save',
+  show: 'show',
+  off: 'off',
   types: {
     number: 'number',
     string: 'string',

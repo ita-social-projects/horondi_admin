@@ -13,7 +13,7 @@ const initialFilters = {
   search: ''
 };
 
-const initialState = {
+export const initialState = {
   list: [],
   filters: initialFilters,
   comments: null,

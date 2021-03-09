@@ -72,12 +72,18 @@ const StatisticPage = () => {
     if (doughnutValue === doughnut.select[1].value) {
       dispatch(getAllOrdersStats(date));
     }
-    if (barValue === bar.select[1].value) {
+
+    switch (barValue) {
+    case barValue === bar.select[1].value:
       dispatch(getPaidOrdersStats(date));
-    }
-    if (barValue === bar.select[2].value) {
+      break;
+    case barValue === bar.select[2].value:
       dispatch(getUsersByDays(date));
+      break;
+    default:
+      break;
     }
+
     fetchedDoughnutStats.current.push(doughnutValue);
     fetchedBarStats.current.push(barValue);
   };
@@ -86,7 +92,9 @@ const StatisticPage = () => {
     const { value } = e.target;
     const { select } = doughnut;
     const isFetched = fetchedDoughnutStats.current.includes(value);
-    if (value === select[1].value && !isFetched) {
+    const selectEqualsFirstValue = value === select[1].value;
+    const firstValueAndNotFetched = selectEqualsFirstValue && !isFetched;
+    if (firstValueAndNotFetched) {
       dispatch(getAllOrdersStats(date));
       fetchedDoughnutStats.current.push(value);
     }
@@ -97,11 +105,15 @@ const StatisticPage = () => {
     const { value } = e.target;
     const { select } = bar;
     const isFetched = fetchedBarStats.current.includes(value);
-    if (value === select[1].value && !isFetched) {
+    const selectEqualsFirstValue = value === select[1].value;
+    const selectEqualsSecondValue = value === select[2].value;
+    const firstValueAndNotFetched = selectEqualsFirstValue && !isFetched;
+    const secondValueAndNotFetched = selectEqualsSecondValue && !isFetched;
+    if (firstValueAndNotFetched) {
       dispatch(getPaidOrdersStats(date));
       fetchedBarStats.current.push(value);
     }
-    if (value === select[2].value && !isFetched) {
+    if (secondValueAndNotFetched) {
       dispatch(getUsersByDays(date));
       fetchedBarStats.current.push(value);
     }

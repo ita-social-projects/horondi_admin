@@ -12,7 +12,7 @@ export const initialState = {
   isOpen: false,
   dialogTitle: '',
   dialogContent: '',
-  onClickHandler: noop()
+  onClickHandler: noop
 };
 
 const dialogWindowReducer = (state = initialState, action = {}) => {

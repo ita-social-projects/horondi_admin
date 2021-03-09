@@ -70,7 +70,7 @@ EmailQuestionsFilter.propTypes = {
 
 EmailQuestionsFilter.defaultProps = {
   filterItems: [],
-  filterChangeHandler: noop()
+  filterChangeHandler: noop
 };
 
 export default EmailQuestionsFilter;
