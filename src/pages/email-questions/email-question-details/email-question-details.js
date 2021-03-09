@@ -12,7 +12,7 @@ import {
   getEmailQuestionById,
   answerToEmailQuestion
 } from '../../../redux/email-questions/email-questions.actions';
-import { config } from '../../../configs';
+import { config, inputTypes, formConstants } from '../../../configs';
 import getTime from '../../../utils/getTime';
 import buttonTitles from '../../../configs/button-titles';
 import {
@@ -127,7 +127,7 @@ const EmailQuestionDetails = ({ id }) => {
                   }}
                   value={answerValue}
                   onChange={({ target: { value } }) => setAnswerValue(value)}
-                  variant='filled'
+                  variant={formConstants.textFieldFilled}
                   error={!answerValue && shouldValidate}
                   helperText={handleHelperText(answerValue, shouldValidate)}
                 />
@@ -140,7 +140,7 @@ const EmailQuestionDetails = ({ id }) => {
               <SaveButton
                 className={styles.controlButton}
                 id='save'
-                type='submit'
+                type={inputTypes.submit}
                 title={buttonTitles.ANSWER}
                 onClickHandler={onAnsweringQuestion}
               />

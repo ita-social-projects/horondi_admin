@@ -12,10 +12,11 @@ import { map, noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
-import { config } from '../../configs';
+import { config, formConstants } from '../../configs';
 
 const { selectsLabels } = config.labels.product;
 const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations;
+const { formTypeSelect, isRequired, notRequired } = formConstants;
 
 const ProductSpeciesContainer = ({
   patterns,
@@ -121,11 +122,11 @@ const ProductSpeciesContainer = ({
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
       {selectsLabels.map(({ label, name, type, required, multiple }, idx) => {
-        if (type === 'select') {
+        if (type === formTypeSelect) {
           return (
             <FormControl className={styles.formControl} key={label}>
               <InputLabel htmlFor={label}>{`${label}${
-                required ? '*' : ''
+                required ? isRequired : notRequired
               }`}</InputLabel>
               <Select
                 name={name}
@@ -139,11 +140,11 @@ const ProductSpeciesContainer = ({
               </Select>
             </FormControl>
           );
-        } 
+        }
         return (
           <TextField
             className={styles.numberInputControl}
-            label={`${label}${required ? '*' : ''}`}
+            label={`${label}${required ? isRequired : notRequired}`}
             key={name}
             type={type}
             name={name}
@@ -154,7 +155,6 @@ const ProductSpeciesContainer = ({
             onBlur={handleBlur}
           />
         );
-        
       })}
       <div className={styles.error}>
         {!!speciesErrors.length && ALL_FIELDS_ARE_REQUIRED}
