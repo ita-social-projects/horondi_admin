@@ -125,10 +125,6 @@ function MaterialForm({ material, id }) {
     inputs
   };
 
-  const tabPanels = languages.map((lang, index) => (
-    <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
-  ));
-
   const checkboxes = [
     {
       id: 'available',
