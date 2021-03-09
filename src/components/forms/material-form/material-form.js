@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextField, Grid, Tabs, Tab, AppBar, Paper } from '@material-ui/core';
+import { TextField, Grid, Tabs, AppBar, Paper } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import TabPanel from '../../tab-panel';
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import ColorsBar from '../../colors-bar';
@@ -22,6 +21,7 @@ import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
+import LanguagePanel from '../language-panel';
 
 const { languages } = config;
 const {
@@ -113,43 +113,20 @@ function MaterialForm({ material, id }) {
     }
   });
 
+  const inputs = [
+    { label: config.labels.material.name, name: 'name' },
+    { label: config.labels.material.description, name: 'description' }
+  ];
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
+
   const tabPanels = languages.map((lang, index) => (
-    <TabPanel key={lang} value={tabsValue} index={index}>
-      <Paper className={styles.materialItemAdd}>
-        <TextField
-          data-cy={`${lang}Name`}
-          id={`${lang}Name`}
-          className={styles.textField}
-          variant='outlined'
-          label={config.labels.material.name[tabsValue].value}
-          error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-          multiline
-          value={values[`${lang}Name`]}
-          onChange={handleChange}
-        />
-        {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-          <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-        )}
-        <TextField
-          data-cy={`${lang}Description`}
-          id={`${lang}Description`}
-          className={styles.textField}
-          variant='outlined'
-          label={config.labels.material.description[tabsValue].value}
-          multiline
-          error={
-            touched[`${lang}Description`] && !!errors[`${lang}Description`]
-          }
-          value={values[`${lang}Description`]}
-          onChange={handleChange}
-        />
-        {touched[`${lang}Description`] && errors[`${lang}Description`] && (
-          <div className={styles.inputError}>
-            {errors[`${lang}Description`]}
-          </div>
-        )}
-      </Paper>
-    </TabPanel>
+    <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
   ));
 
   const checkboxes = [
@@ -165,16 +142,7 @@ function MaterialForm({ material, id }) {
   ];
 
   const languageTabs = languages.map((lang) => (
-    <Tab
-      className={
-        (touched[`${lang}Description`] && errors[`${lang}Description`]) ||
-        (touched[`${lang}Name`] && errors[`${lang}Name`])
-          ? styles.errorTab
-          : styles.tabs
-      }
-      label={lang}
-      key={lang}
-    />
+    <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
   ));
 
   if (loading) {
@@ -254,7 +222,6 @@ function MaterialForm({ material, id }) {
                 {languageTabs}
               </Tabs>
             </AppBar>
-            {tabPanels}
           </div>
         ) : null}
         <div className={styles.controlsBlock}>

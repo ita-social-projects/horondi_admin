@@ -116,8 +116,8 @@ const labels = {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),
     available: mapToLanguages('Доступний', 'Available'),
-    name: mapToLanguages('Назва матеріалу', 'Material name'),
-    description: mapToLanguages('Опис матеріалу', 'Material description'),
+    name: { ua: 'Назва матеріалу', en: 'Material name' },
+    description: { ua: 'Опис матеріалу', en: 'Material description' },
     additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
   },
   color: {
