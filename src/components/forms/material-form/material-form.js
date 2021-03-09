@@ -23,6 +23,8 @@ import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
 import LanguagePanel from '../language-panel';
 
+const { name, description } = config.labels.material;
+
 const { languages } = config;
 const {
   VALIDATION_ERROR,
@@ -114,8 +116,8 @@ function MaterialForm({ material, id }) {
   });
 
   const inputs = [
-    { label: config.labels.material.name, name: 'name' },
-    { label: config.labels.material.description, name: 'description' }
+    { label: name, name: 'name' },
+    { label: description, name: 'description' }
   ];
   const inputOptions = {
     errors,
