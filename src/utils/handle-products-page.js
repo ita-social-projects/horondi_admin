@@ -10,16 +10,15 @@ export const handleProductsPage = (
   productsItems,
   style,
   message
-) =>
-  products.length ? (
-    <TableContainerGenerator
-      pagination
-      count={itemsCount}
-      tableTitles={tableTitles}
-      tableItems={productsItems}
-    />
-  ) : (
-    <Typography variant='h1' className={style}>
-      {message}
-    </Typography>
-  );
+) => products.length ? (
+  <TableContainerGenerator
+    pagination
+    count={itemsCount}
+    tableTitles={tableTitles}
+    tableItems={productsItems}
+  />
+) : (
+  <Typography variant='h1' className={style}>
+    {message}
+  </Typography>
+);
