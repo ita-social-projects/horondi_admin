@@ -21,19 +21,11 @@ export const onSubmitDispatchHandler = (
   );
 };
 
-export const descriptionAndNameHandler = (condition, styles) => {
-  if (condition) {
-    return styles.errorTab;
-  }
-  return styles.tabs;
-};
+export const descriptionAndNameHandler = (condition, styles) =>
+  condition ? styles.errorTab : styles.tabs;
 
-export const appBarRenderHandler = (languages, appBar) => {
-  if (languages.length > 0) {
-    return appBar;
-  }
-  return null;
-};
+export const appBarRenderHandler = (languages, appBar) =>
+  languages.length > 0 ? appBar : null;
 
 export const getMaterialFormInitValues = (material, purposeEnum) => ({
   uaName: material.name[0].value || '',

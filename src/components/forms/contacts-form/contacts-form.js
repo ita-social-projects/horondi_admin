@@ -20,10 +20,7 @@ import {
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
-import {
-  setMapImageHandler,
-  avatarRenderHandler
-} from '../../../utils/contacts-form';
+import { setMapImageHandler } from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
 
 const { languages } = config;

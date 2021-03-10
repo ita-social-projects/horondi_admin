@@ -131,12 +131,9 @@ const CreateColor = () => {
   const languageTabs =
     languages.length > 0
       ? languages.map((lang) => {
-        const touchedAndErrorsSimpName =
-            touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`];
-        const touchedAndErrorsName =
-            touched[`${lang}Name`] && errors[`${lang}Name`];
         const tabConditionForStyles =
-            touchedAndErrorsSimpName || touchedAndErrorsName;
+            (touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`]) ||
+            (touched[`${lang}Name`] && errors[`${lang}Name`]);
 
         return (
           <Tab

@@ -7,19 +7,3 @@ export const setMapImageHandler = (target, setMapFn, values, valuesKey) => {
   }
   [values[valuesKey]] = target.files;
 };
-
-export const avatarRenderHandler = (
-  uaMapImage,
-  initialValues,
-  mapLayout,
-  cartLayout
-) => {
-  if (uaMapImage.imageUrl) {
-    return mapLayout;
-  }
-
-  if (initialValues.uaCartImage) {
-    return cartLayout;
-  }
-  return null;
-};

@@ -153,12 +153,9 @@ function MaterialForm({ material, id }) {
   ];
 
   const languageTabs = languages.map((lang) => {
-    const touchedAndErrorsDescription =
-      touched[`${lang}Description`] && errors[`${lang}Description`];
-    const touchedAndErrorsName =
-      touched[`${lang}Name`] && errors[`${lang}Name`];
     const tabConditionForStyles =
-      touchedAndErrorsDescription || touchedAndErrorsName;
+      (touched[`${lang}Description`] && errors[`${lang}Description`]) ||
+      (touched[`${lang}Name`] && errors[`${lang}Name`]);
 
     return (
       <Tab

@@ -1,44 +1,19 @@
-export const setCodeHandler = (condition, businessPage) => {
-  if (condition) {
-    return businessPage.code;
-  }
-  return '';
-};
+export const setCodeHandler = (condition, businessPage) =>
+  condition ? businessPage.code : '';
 
-export const uaSetTitleHandler = (condition, businessPage) => {
-  if (condition) {
-    return businessPage.title[0].value;
-  }
-  return '';
-};
+export const uaSetTitleHandler = (condition, businessPage) =>
+  condition ? businessPage.title[0].value : '';
 
-export const uaSetTextHandler = (condition, businessPage) => {
-  if (condition) {
-    return businessPage.text[0].value;
-  }
-  return '';
-};
+export const uaSetTextHandler = (condition, businessPage) =>
+  condition ? businessPage.text[0].value : '';
 
-export const enSetTitleHandler = (condition, businessPage) => {
-  if (condition) {
-    return businessPage.title[1].value;
-  }
-  return '';
-};
+export const enSetTitleHandler = (condition, businessPage) =>
+  condition ? businessPage.title[1].value : '';
 
-export const enSetTextHandler = (condition, businessPage) => {
-  if (condition) {
-    return businessPage.text[1].value;
-  }
-  return '';
-};
+export const enSetTextHandler = (condition, businessPage) =>
+  condition ? businessPage.text[1].value : '';
 
-export const helperTextHandler = (condition, value) => {
-  if (condition) {
-    return value;
-  }
-  return '';
-};
+export const helperTextHandler = (condition, value) => (condition ? value : '');
 
 export const businessPageDispatchHandler = (
   mode,
