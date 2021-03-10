@@ -24,6 +24,7 @@ import {
   setMapImageHandler,
   avatarRenderHandler
 } from '../../../utils/contacts-form';
+import { handleAvatar } from '../../../utils/handle-avatar';
 
 const { languages } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -145,23 +146,20 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 </span>
                 <div className={classes.imageUploadAvatar}>
                   <ImageUploadContainer handler={uaSelectImageHandler} />
-                  {avatarRenderHandler(
-                    uaMapImage,
-                    initialValues,
+                  {uaMapImage.imageUrl ? (
                     <Avatar
                       data-cy='ua-cart-image'
                       src={uaMapImage.imageUrl}
                       className={classes.large}
                     >
                       <Image />
-                    </Avatar>,
-                    <Avatar
-                      data-cy='uaCartImage'
-                      src={initialValues.uaCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
                     </Avatar>
+                  ) : (
+                    handleAvatar(
+                      initialValues.uaCartImage,
+                      'uaCartImage',
+                      classes.large
+                    )
                   )}
                 </div>
                 <span className={classes.imageUpload}>
@@ -177,16 +175,12 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     >
                       <Image />
                     </Avatar>
-                  ) : initialValues.enCartImage ? (
-                    <Avatar
-                      data-cy='enCartImage'
-                      src={initialValues.enCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
                   ) : (
-                    <></>
+                    handleAvatar(
+                      initialValues.enCartImage,
+                      'enCartImage',
+                      classes.large
+                    )
                   )}
                 </div>
                 <TextField
