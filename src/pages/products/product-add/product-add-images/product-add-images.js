@@ -23,8 +23,9 @@ const ProductAddImages = ({
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setPrimaryImage(event.target.result);
+        // setPrimaryImage(event.target.result)
       };
+      setPrimaryImage(e.target.files[0]);
       reader.readAsDataURL(e.target.files[0]);
     }
   };
@@ -33,11 +34,12 @@ const ProductAddImages = ({
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setAdditionalImages((prevImages) => [
-          ...prevImages,
-          event.target.result
-        ]);
+        // setAdditionalImages((prevImages) => [
+        //   ...prevImages,
+        //   event.target.result
+        // ]);
       };
+      setAdditionalImages((prevImages) => [...prevImages, e.target.files[0]]);
       reader.readAsDataURL(e.target.files[0]);
     }
   };
