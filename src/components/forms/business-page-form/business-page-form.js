@@ -163,6 +163,7 @@ const BusinessPageForm = ({ id, editMode }) => {
   const isCodeAndValidate = !formik.values.code && shouldValidate;
   const enterTitleMessage = 'Введіть заголовок';
   const enterUniqueIdMessage = 'Введіть унікальний ідентифікатор для сторінки';
+  const enTitleErrorValue = labels[0].errorLabel[tabsValue].value;
 
   return (
     <div className={common.container}>
@@ -248,7 +249,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                   error={isEnTitleAndValidate}
                   helperText={helperTextHandler(
                     isEnTitleAndValidate,
-                    labels[0].errorLabel[tabsValue].value
+                    enTitleErrorValue
                   )}
                   data-cy='page-header-en'
                 />

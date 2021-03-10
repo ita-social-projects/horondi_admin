@@ -61,12 +61,14 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     imageUrl: ''
   });
 
+  const uaCartImageText = 'uaCartImage';
+  const enCartImageText = 'enCartImage';
   const uaSelectImageHandler = ({ target }) => {
-    setMapImageHandler(target, uaSetMapImage, values, 'uaCartImage');
+    setMapImageHandler(target, uaSetMapImage, values, uaCartImageText);
   };
 
   const enSelectImageHandler = ({ target }) => {
-    setMapImageHandler(target, enSetMapImage, values, 'enCartImage');
+    setMapImageHandler(target, enSetMapImage, values, enCartImageText);
   };
 
   const formSchema = Yup.object().shape({
