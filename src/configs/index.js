@@ -218,3 +218,10 @@ export const badgePosition = {
 
 export const dateFormat = ' HH:mm DD/MM/YYYY ';
 export const dateFormatOrder = ' DD.MM.YYYY ';
+
+export const formConstants = {
+  formTypeSelect: 'select',
+  isRequired: '*',
+  notRequired: '',
+  textFieldFilled: 'filled'
+};

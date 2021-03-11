@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { Bar } from 'react-chartjs-2';
 import {
   Box,
   Card,
@@ -15,8 +14,8 @@ import {
 } from '@material-ui/core';
 import useBarData from '../../../hooks/stats/use-bar-data';
 import { config } from '../../../configs';
-import StatisticError from '../statistic-error';
 import LoadingBar from '../../../components/loading-bar';
+import { handleStatisticBar } from '../../../utils/handle-statistic-bar';
 
 const { select, message } = config.labels.bar;
 
@@ -51,13 +50,7 @@ const StatisticBar = ({ onChangeBar, selectedValue, updating }) => {
       <Divider />
       <CardContent>
         <Box data-cy='bar-chart-box' height={400} position='relative'>
-          {updating ? (
-            <LoadingBar />
-          ) : mainData.datasets[0].data.length ? (
-            <Bar data={mainData} options={options} redraw />
-          ) : (
-            <StatisticError />
-          )}
+          {updating ? <LoadingBar /> : handleStatisticBar(mainData, options)}
         </Box>
       </CardContent>
       <Divider />

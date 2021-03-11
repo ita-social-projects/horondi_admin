@@ -65,6 +65,15 @@ import Snackbar from '../../snackbar/snackbar.reducer';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
+const testsPromiseResults = (result) => {
+  const { allEffects: analysis } = result;
+  const analysisPut = analysis.filter((e) => e.type === effectPutType);
+  const analysisCall = analysis.filter((e) => e.type === effectCallType);
+  expect(analysis).toHaveLength(4);
+  expect(analysisPut).toHaveLength(3);
+  expect(analysisCall).toHaveLength(1);
+};
+
 describe('comments sagas tests', () => {
   it('should handle comments load', () => {
     expectSaga(handleCommentsLoad, { payload: { filter, pagination } })
@@ -109,14 +118,7 @@ describe('comments sagas tests', () => {
         comment: singleComment
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === effectPutType);
-        const analysisCall = analysis.filter((e) => e.type === effectCallType);
-        expect(analysis).toHaveLength(4);
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
-      });
+      .then(testsPromiseResults);
   });
   it('should handle the delition of one comment by id', () => {
     expectSaga(handleCommentDelete, { payload: commentId })
@@ -186,14 +188,7 @@ describe('comments sagas tests', () => {
         list: singleComment
       })
       .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === effectPutType);
-        const analysisCall = analysis.filter((e) => e.type === effectCallType);
-        expect(analysis).toHaveLength(4);
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
-      });
+      .then(testsPromiseResults);
   });
   it('should handle comments error', () => {
     expectSaga(handleCommentsError, mockError)

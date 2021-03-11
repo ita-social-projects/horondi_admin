@@ -12,11 +12,11 @@ import { useCommonStyles } from '../common.styles';
 import { getOrderList, deleteOrder } from '../../redux/orders/orders.actions';
 import Status from './Status/Status';
 import LoadingBar from '../../components/loading-bar';
-import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
 import { config, dateFormatOrder } from '../../configs';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import { handleOrdersPage } from '../../utils/handle-orders-page';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
@@ -118,17 +118,13 @@ const OrdersPage = () => {
       <div className={commonStyles.table}>
         {orderLoading ? (
           <LoadingBar />
-        ) : orders && orders.length ? (
-          <TableContainerGenerator
-            pagination
-            count={itemsCount}
-            tableTitles={config.tableHeadRowTitles.orders}
-            tableItems={orderItems}
-          />
         ) : (
-          <Typography variant='h1' className={commonStyles.materialTitle}>
-            {config.titles.orderTitles.ORDER_NOT_FOUND}
-          </Typography>
+          handleOrdersPage(
+            orders,
+            itemsCount,
+            orderItems,
+            commonStyles.materialTitle
+          )
         )}
       </div>
     </div>
