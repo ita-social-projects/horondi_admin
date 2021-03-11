@@ -40,6 +40,7 @@ import ProductAddImages from '../../../pages/products/product-add/product-add-im
 import { selectSelectedProductAndDetails } from '../../../redux/selectors/products.selectors';
 import CommentsSection from '../../comments-section/comments-section';
 import { GET_PRODUCT_COMMENTS } from '../../../redux/comments/comments.types';
+import CheckboxOptions from '../../checkbox-options';
 
 const { priceLabel } = config.labels.product;
 
@@ -101,6 +102,8 @@ const ProductForm = ({ isEdit }) => {
     pattern: product?.pattern?._id || '',
     strapLengthInCm: product?.strapLengthInCm || 0,
     closure: product?.closure?._id || '',
+    available: product.available || false,
+    isHotItem: product.isHotItem || false,
     sizes: product?.sizes?.map((el) => getIdFromItem(el) || [])
   };
   const formikMaterialsValues = {
@@ -113,6 +116,7 @@ const ProductForm = ({ isEdit }) => {
   };
 
   const onSubmit = (formValues) => {
+    debugger;
     const {
       strapLengthInCm,
       pattern,
@@ -120,6 +124,8 @@ const ProductForm = ({ isEdit }) => {
       category,
       basePrice,
       closure,
+      available,
+      isHotItem,
       sizes: sizeToSend
     } = formValues;
 
@@ -140,7 +146,9 @@ const ProductForm = ({ isEdit }) => {
           model,
           category,
           basePrice,
-          strapLengthInCm
+          strapLengthInCm,
+          available,
+          isHotItem
         })
       );
       return;
@@ -244,6 +252,26 @@ const ProductForm = ({ isEdit }) => {
       DELETE_PRODUCT_TITLE
     );
   };
+  const checkboxes = [
+    {
+      id: 'isHotItem',
+      dataCy: 'isHotItem',
+      checked: values.isHotItem,
+      value: values.isHotItem,
+      color: 'primary',
+      label: 'Гарячий продукт',
+      handler: () => setFieldValue('isHotItem', !values.isHotItem)
+    },
+    {
+      id: 'available',
+      dataCy: 'available',
+      checked: values.available,
+      value: values.available,
+      color: 'primary',
+      label: config.labels.pattern.available,
+      handler: () => setFieldValue('available', !values.available)
+    }
+  ];
 
   const showCommentsHandler = () => setShowComments(!showComments);
   return (
@@ -273,6 +301,7 @@ const ProductForm = ({ isEdit }) => {
           </Grid>
         </Grid>
       </div>
+
       <Grid container justify='center' spacing={3}>
         <Grid item xs={12} md={5} xl={3}>
           <Paper className={styles.paper}>
@@ -290,6 +319,7 @@ const ProductForm = ({ isEdit }) => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={7} xl={9}>
+          <CheckboxOptions options={checkboxes} />
           <ProductInfoContainer
             shouldValidate={shouldValidate}
             values={values}
