@@ -17,6 +17,12 @@ export const useStyles = makeStyles((theme) => {
     itemUpdate
   } = formStyles(theme);
   return {
+    imageUploadBlock: {
+      display: 'flex',
+      '@media (max-width: 768px)': {
+        flexDirection: 'column'
+      }
+    },
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120
