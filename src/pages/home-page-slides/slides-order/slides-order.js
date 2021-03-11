@@ -18,7 +18,10 @@ import { useCommonStyles } from '../../common.styles';
 import {
   TranslAvailabilityHandler,
   isDraggableHandler,
-  onDragEnterHandler
+  onDragEnterHandler,
+  paperClassNameHandler,
+  handleDragEnter,
+  getStyles
 } from '../../../utils/slides-order';
 
 const SlidesOrder = (props) => {
@@ -57,24 +60,6 @@ const SlidesOrder = (props) => {
     setDragging(true);
   };
 
-  const handleDragEnter = (e, targetItem) => {
-    if (dragItemNode.current !== e.target) {
-      setList((oldList) => {
-        const newList = JSON.parse(JSON.stringify(oldList));
-        newList[targetItem.groupIndex].items.splice(
-          targetItem.itemIndex,
-          0,
-          newList[dragItem.current.groupIndex].items.splice(
-            dragItem.current.itemIndex,
-            1
-          )[0]
-        );
-        dragItem.current = targetItem;
-        return newList;
-      });
-    }
-  };
-
   const handleDragEnd = () => {
     setDragging(false);
     dragItem.current = null;
@@ -82,15 +67,6 @@ const SlidesOrder = (props) => {
     dragItemNode.current = null;
   };
 
-  const getStyles = (item) => {
-    if (
-      dragItem.current.groupIndex === item.groupIndex &&
-      dragItem.current.itemIndex === item.itemIndex
-    ) {
-      return `${styles.dndItem} ${styles.current}`;
-    }
-    return styles.dndItem;
-  };
   const changeHandler = () => {
     if (draggable) {
       setDraggable(false);
@@ -162,13 +138,22 @@ const SlidesOrder = (props) => {
             onDragEnter={
               dragging
                 ? (e) => {
-                  handleDragEnter(e, { groupIndex, itemIndex });
+                  handleDragEnter(
+                    e,
+                    { groupIndex, itemIndex },
+                    dragItemNode,
+                    setList,
+                    dragItem
+                  );
                 }
                 : null
             }
-            className={
-              dragging ? getStyles({ groupIndex, itemIndex }) : styles.dndItem
-            }
+            className={paperClassNameHandler(
+              dragging,
+              getStyles,
+              { groupIndex, itemIndex },
+              styles
+            )}
             key={item._id}
           >
             <Avatar
