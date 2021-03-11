@@ -55,8 +55,8 @@ const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const checkIsEdit = (isEdit) => {
-    if (isEdit) {
+  const checkIsEdit = (checkCondition) => {
+    if (checkCondition) {
       model.sizes.map((item) => item._id);
     }
   };
@@ -76,8 +76,6 @@ const ModelForm = ({ model, id, isEdit }) => {
   }, [dispatch]);
 
   const { sizesList } = useSelector(sizesSelectorWithPagination);
-
-  const sizesEdit = checkIsEdit(isEdit);
 
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.categories
@@ -103,7 +101,7 @@ const ModelForm = ({ model, id, isEdit }) => {
       enDescription: model.description[1].value || '',
       priority: model.priority || 1,
       category: category || '',
-      sizes: sizesEdit || [],
+      sizes: checkIsEdit(isEdit) || [],
       show: model.show || false,
       availableForConstructor: model.availableForConstructor || false
     },
