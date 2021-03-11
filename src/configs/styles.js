@@ -40,8 +40,10 @@ const formStyles = (theme) => ({
 
   imageUpload: {
     fontSize: 14,
-    marginLeft: '10px'
+    marginLeft: '10px',
+    paddingTop: '10px'
   },
+
   imageUploadAvatar: {
     padding: '10px',
     display: 'flex',
@@ -69,6 +71,7 @@ const formStyles = (theme) => ({
     flexDirection: 'column',
     margin: '20px 0'
   },
+
   imageName: {
     fontSize: '.9rem',
     marginLeft: '10px',
