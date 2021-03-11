@@ -21,6 +21,7 @@ import {
   setSnackBarMessage
 } from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
+import { onSubmitCategoryHandler } from '../../../utils/category-form';
 
 const {
   CATEGORY_VALIDATION_ERROR,
@@ -79,14 +80,17 @@ const CategoryForm = ({ category, id, edit }) => {
     },
     onSubmit: (data) => {
       const newCategory = createCategory(data);
-      if (edit) {
-        dispatch(updateCategory({ id, category: newCategory, upload }));
-        return;
-      }
-      if (upload instanceof File) {
-        dispatch(addCategory({ category: newCategory, upload }));
-        return;
-      }
+      const uploadCondition = upload instanceof File;
+      onSubmitCategoryHandler(edit, dispatch, updateCategory, {
+        id,
+        category: newCategory,
+        upload
+      });
+      onSubmitCategoryHandler(uploadCondition, dispatch, addCategory, {
+        category: newCategory,
+        upload
+      });
+
       dispatch(setSnackBarSeverity('error'));
       dispatch(setSnackBarMessage(CATEGORY_ERROR));
       dispatch(setSnackBarStatus(true));

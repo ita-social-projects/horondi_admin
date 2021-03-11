@@ -22,6 +22,12 @@ import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
+import {
+  onSubmitDispatchHandler,
+  descriptionAndNameHandler,
+  appBarRenderHandler,
+  getMaterialFormInitValues
+} from '../../../utils/material-form';
 
 const { languages } = config;
 const {
@@ -82,33 +88,15 @@ function MaterialForm({ material, id }) {
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
-    initialValues: {
-      uaName: material.name[0].value || '',
-      enName: material.name[1].value || '',
-      uaDescription: material.description[0].value || '',
-      enDescription: material.description[1].value || '',
-      purpose: material.purpose || purposeEnum.MAIN,
-      available: material.available || false,
-
-      additionalPrice: +material.additionalPrice[0].value / 100 || 0,
-      colors:
-        (material.colors && material.colors.map((color) => color._id)) || []
-    },
+    initialValues: getMaterialFormInitValues(material, purposeEnum),
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
-      if (id) {
-        dispatch(
-          updateMaterial({
-            id,
-            material: { ...newMaterial }
-          })
-        );
-        return;
-      }
-      dispatch(
-        addMaterial({
-          material: { ...newMaterial }
-        })
+      onSubmitDispatchHandler(
+        id,
+        dispatch,
+        updateMaterial,
+        addMaterial,
+        newMaterial
       );
     }
   });
@@ -164,18 +152,19 @@ function MaterialForm({ material, id }) {
     }
   ];
 
-  const languageTabs = languages.map((lang) => (
-    <Tab
-      className={
-        (touched[`${lang}Description`] && errors[`${lang}Description`]) ||
-        (touched[`${lang}Name`] && errors[`${lang}Name`])
-          ? styles.errorTab
-          : styles.tabs
-      }
-      label={lang}
-      key={lang}
-    />
-  ));
+  const languageTabs = languages.map((lang) => {
+    const tabConditionForStyles =
+      (touched[`${lang}Description`] && errors[`${lang}Description`]) ||
+      (touched[`${lang}Name`] && errors[`${lang}Name`]);
+
+    return (
+      <Tab
+        className={descriptionAndNameHandler(tabConditionForStyles, styles)}
+        label={lang}
+        key={lang}
+      />
+    );
+  });
 
   if (loading) {
     return <LoadingBar />;
@@ -240,7 +229,8 @@ function MaterialForm({ material, id }) {
             )}
           </Paper>
         </Grid>
-        {languages.length > 0 ? (
+        {appBarRenderHandler(
+          languages,
           <div>
             <AppBar position='static'>
               <Tabs
@@ -256,7 +246,7 @@ function MaterialForm({ material, id }) {
             </AppBar>
             {tabPanels}
           </div>
-        ) : null}
+        )}
         <div className={styles.controlsBlock}>
           <div>
             <BackButton />

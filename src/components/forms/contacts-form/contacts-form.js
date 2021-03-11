@@ -20,6 +20,7 @@ import {
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
+import { setMapImageHandler } from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
 
 const { languages } = config;
@@ -58,26 +59,14 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     imageUrl: ''
   });
 
+  const uaCartImageText = 'uaCartImage';
+  const enCartImageText = 'enCartImage';
   const uaSelectImageHandler = ({ target }) => {
-    if (target.files && target.files[0]) {
-      uaSetMapImage({
-        name: target.files[0].name,
-        imageUrl: URL.createObjectURL(target.files[0])
-      });
-
-      [values.uaCartImage] = target.files;
-    }
+    setMapImageHandler(target, uaSetMapImage, values, uaCartImageText);
   };
 
   const enSelectImageHandler = ({ target }) => {
-    if (target.files && target.files[0]) {
-      enSetMapImage({
-        name: target.files[0].name,
-        imageUrl: URL.createObjectURL(target.files[0])
-      });
-
-      [values.enCartImage] = target.files;
-    }
+    setMapImageHandler(target, enSetMapImage, values, enCartImageText);
   };
 
   const formSchema = Yup.object().shape({
