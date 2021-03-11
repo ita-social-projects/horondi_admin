@@ -23,8 +23,6 @@ import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
 import LanguagePanel from '../language-panel';
 
-const { name, description } = config.labels.material;
-
 const { languages } = config;
 const {
   VALIDATION_ERROR,
@@ -115,18 +113,6 @@ function MaterialForm({ material, id }) {
     }
   });
 
-  const inputs = [
-    { label: name, name: 'name' },
-    { label: description, name: 'description' }
-  ];
-  const inputOptions = {
-    errors,
-    touched,
-    handleChange,
-    values,
-    inputs
-  };
-
   const checkboxes = [
     {
       id: 'available',
@@ -138,6 +124,18 @@ function MaterialForm({ material, id }) {
       handler: () => setFieldValue('available', !values.available)
     }
   ];
+
+  const inputs = [
+    { label: config.labels.material.name, name: 'name' },
+    { label: config.labels.material.description, name: 'description' }
+  ];
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
 
   const languageTabs = languages.map((lang) => (
     <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
