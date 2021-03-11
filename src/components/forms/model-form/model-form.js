@@ -57,7 +57,7 @@ const ModelForm = ({ model, id, isEdit }) => {
 
   const checkIsEdit = (checkCondition) => {
     if (checkCondition) {
-      model.sizes.map((item) => item._id);
+      return model.sizes.map((item) => item._id);
     }
   };
 
