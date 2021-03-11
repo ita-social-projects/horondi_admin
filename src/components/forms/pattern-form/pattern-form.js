@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid, Avatar } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Image } from '@material-ui/icons';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,7 +17,7 @@ import {
   updatePattern
 } from '../../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../../checkbox-options';
-import ImageUploadContainer from '../../../containers/image-upload-container';
+import ImageUploadPatternContainer from '../../../containers/image-upload-container/image-upload-patternContainer';
 import LanguagePanel from '../language-panel';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
@@ -198,6 +197,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     inputs
   };
 
+  const imageUploadPatternInputsId = {
+    patternImageInput: 'patternImageInput',
+    constructorImageInput: 'constructorImgInput'
+  };
+
   return (
     <div>
       {loading ? (
@@ -208,40 +212,44 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
           <Grid item xs={12}>
             <Paper className={styles.patternItemUpdate}>
-              <div>
-                <span className={styles.imageUpload}>
-                  {config.labels.pattern.avatarText}
-                </span>
-                <div className={styles.imageUploadAvatar}>
-                  <ImageUploadContainer handler={handleLoadMainImage} />
-                  {patternImage && (
-                    <Avatar src={patternImage}>
-                      <Image />
-                    </Avatar>
-                  )}
-                  {touched.patternImage && errors.patternImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternImage}
-                    </div>
-                  )}
+              <div className={styles.imageUploadBlock}>
+                <div>
+                  <span className={styles.imageUpload}>
+                    {config.labels.pattern.avatarText}
+                  </span>
+
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPatternContainer
+                      handler={handleLoadMainImage}
+                      src={patternImage}
+                      id={imageUploadPatternInputsId.patternImageInput}
+                    />
+                    {touched.patternImage && errors.patternImage && (
+                      <div className={styles.inputError}>
+                        {errors.patternImage}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <span className={styles.imageUpload}>
-                  {config.labels.pattern.constructorImgText}
-                </span>
-                <div className={styles.imageUploadAvatar}>
-                  <ImageUploadContainer handler={handleLoadConstructorImage} />
-                  {constructorImg && (
-                    <Avatar src={constructorImg}>
-                      <Image />
-                    </Avatar>
-                  )}
-                  {touched.patternConstructorImage &&
-                    errors.patternConstructorImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternConstructorImage}
-                    </div>
-                  )}
+                <div>
+                  <span className={styles.imageUpload}>
+                    {config.labels.pattern.constructorImgText}
+                  </span>
+
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPatternContainer
+                      handler={handleLoadConstructorImage}
+                      src={constructorImg}
+                      id={imageUploadPatternInputsId.constructorImageInput}
+                    />
+                    {touched.patternConstructorImage &&
+                      errors.patternConstructorImage && (
+                      <div className={styles.inputError}>
+                        {errors.patternConstructorImage}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <FormControl
