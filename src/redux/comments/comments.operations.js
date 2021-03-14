@@ -42,6 +42,43 @@ const getAllComments = async (filter, pagination) => {
   return result.data.getAllComments;
 };
 
+const getRecentComments = async (id, commentDate) => {
+  const result = await client.query({
+    variables: {
+      id,
+      commentDate
+    },
+    query: gql`
+      query($id: ID!, $commentDate: date) {
+        getRecentComments(id: $id, date: $commentDate) {
+          ... on Comment {
+            _id
+            text
+            date
+            user {
+              _id
+              firstName
+              email
+            }
+            product {
+              _id
+            }
+            show
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+
+  return result.data.getRecentComments;
+};
+
 const deleteComment = async (id) => {
   const token = getFromLocalStorage(config.tokenName);
   const result = await client
@@ -250,5 +287,6 @@ export {
   getCommentById,
   getCommentsByUser,
   getCommentsByProduct,
-  getCommentsByType
+  getCommentsByType,
+  getRecentComments
 };
