@@ -116,7 +116,6 @@ const ProductForm = ({ isEdit }) => {
   };
 
   const onSubmit = (formValues) => {
-    debugger;
     const {
       strapLengthInCm,
       pattern,
@@ -163,7 +162,9 @@ const ProductForm = ({ isEdit }) => {
           model,
           category,
           basePrice,
-          strapLengthInCm
+          strapLengthInCm,
+          available,
+          isHotItem
         },
         id: product._id
       })
