@@ -7,7 +7,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
-import dataList from './variables';
+import dataList from './comments-variables';
 import { Comments as CommentsNoStore } from '../comments';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerRow from '../../../containers/table-container-row';
