@@ -164,7 +164,6 @@ export const getModelById = async (id) => {
       }`
     );
   }
-  console.log(result);
   return data.getModelById;
 };
 
