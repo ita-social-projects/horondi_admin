@@ -6,6 +6,8 @@ import {
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
+
+import dataList from './variables';
 import { Comments as CommentsNoStore } from '../comments';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -50,35 +52,7 @@ describe('Comments test', () => {
     useSelectorMock.mockReturnValue({
       filter: 'test',
       loading: false,
-      list: [
-        {
-          date: '1615278615760',
-          product: { _id: '6043c3303e06ad3edcdb7b34' },
-          show: true,
-          text:
-            'Допоможіть! Дитина помалювала фламастером, нічим не можу вивести.',
-          user: {
-            _id: '5fcfc2c5823c593d1c28c459',
-            firstName: 'Ivan',
-            email: 'vaaeking@gmail.com'
-          },
-          _id: '6047321793650236ddbfb841'
-        },
-
-        {
-          date: '1615278615760',
-          product: { _id: '6043c3303e06ad3edcdb7b345' },
-          show: true,
-          text:
-            'Допоможіть! Дитина помалювала фламастером, нічим не можу вивести.',
-          user: {
-            _id: '5fcfc2c5823c593d1c28c459',
-            firstName: 'Ivan',
-            email: 'vaaeking@gmail.com'
-          },
-          _id: '6047321793650236ddbfb841'
-        }
-      ]
+      list: dataList
     });
     wrapper = mount(<CommentsNoStore />);
     expect(wrapper.exists(TableContainerRow)).toBe(true);
@@ -90,35 +64,7 @@ describe('Comments test', () => {
     useSelectorMock.mockReturnValue({
       filter: 'test',
       loading: false,
-      list: [
-        {
-          date: '1615278615760',
-          product: { _id: '6043c3303e06ad3edcdb7b34' },
-          show: true,
-          text:
-            'Допоможіть! Дитина помалювала фламастером, нічим не можу вивести.',
-          user: {
-            _id: '5fcfc2c5823c593d1c28c459',
-            firstName: 'Ivan',
-            email: 'vaaeking@gmail.com'
-          },
-          _id: '6047321793650236ddbfb841'
-        },
-
-        {
-          date: '1615278615760',
-          product: { _id: '6043c3303e06ad3edcdb7b345' },
-          show: true,
-          text:
-            'Допоможіть! Дитина помалювала фламастером, нічим не можу вивести.',
-          user: {
-            _id: '5fcfc2c5823c593d1c28c459',
-            firstName: 'Ivan',
-            email: 'vaaeking@gmail.com'
-          },
-          _id: '6047321793650236ddbfb841'
-        }
-      ]
+      list: dataList
     });
     wrapper = mount(<CommentsNoStore />);
     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
@@ -131,35 +77,7 @@ describe('Comments test', () => {
     useSelectorMock.mockReturnValue({
       filter: 'test',
       loading: false,
-      list: [
-        {
-          date: '1615278615760',
-          product: { _id: '6043c3303e06ad3edcdb7b34' },
-          show: true,
-          text:
-            'Допоможіть! Дитина помалювала фламастером, нічим не можу вивести.',
-          user: {
-            _id: '5fcfc2c5823c593d1c28c459',
-            firstName: 'Ivan',
-            email: 'vaaeking@gmail.com'
-          },
-          _id: '6047321793650236ddbfb841'
-        },
-
-        {
-          date: '1615278615760',
-          product: { _id: '6043c3303e06ad3edcdb7b345' },
-          show: true,
-          text:
-            'Допоможіть! Дитина помалювала фламастером, нічим не можу вивести.',
-          user: {
-            _id: '5fcfc2c5823c593d1c28c459',
-            firstName: 'Ivan',
-            email: 'vaaeking@gmail.com'
-          },
-          _id: '6047321793650236ddbfb841'
-        }
-      ]
+      list: dataList
     });
     wrapper = mount(<CommentsNoStore />);
     wrapper.find(TableContainerRow).at(0).props().editHandler();
