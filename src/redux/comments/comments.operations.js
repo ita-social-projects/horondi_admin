@@ -42,15 +42,14 @@ const getAllComments = async (filter, pagination) => {
   return result.data.getAllComments;
 };
 
-const getRecentComments = async (id, commentDate) => {
+const getRecentComments = async (limit) => {
   const result = await client.query({
     variables: {
-      id,
-      commentDate
+      limit
     },
     query: gql`
-      query($id: ID!, $commentDate: date) {
-        getRecentComments(id: $id, date: $commentDate) {
+      query($limit: Int!) {
+        getRecentComments(limit: $limit) {
           ... on Comment {
             _id
             text
@@ -66,8 +65,8 @@ const getRecentComments = async (id, commentDate) => {
             show
           }
           ... on Error {
-            message
             statusCode
+            message
           }
         }
       }
@@ -75,6 +74,13 @@ const getRecentComments = async (id, commentDate) => {
     fetchPolicy: 'no-cache'
   });
   client.resetStore();
+  if (result.data.getRecentComments.message) {
+    throw new Error(
+      `${result.data.getRecentComments.statusCode} ${
+        commentsTranslations[result.data.getRecentComments.message]
+      }`
+    );
+  }
 
   return result.data.getRecentComments;
 };
