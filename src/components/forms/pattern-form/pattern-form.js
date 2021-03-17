@@ -122,21 +122,24 @@ const PatternForm = ({ pattern, id, isEdit }) => {
         isEdit &&
         upload instanceof File &&
         uploadConstructorImg instanceof File;
-      patternFormOnSubmit(
-        isEditAndUploadAndConstructor,
-        dispatch,
-        updatePattern,
-        {
-          id,
-          pattern: newPattern,
-          image: [upload, uploadConstructorImg]
-        },
-        isEdit,
-        {
-          id,
-          pattern: newPattern
-        }
-      );
+      if (isEditAndUploadAndConstructor || isEdit) {
+        patternFormOnSubmit(
+          isEditAndUploadAndConstructor,
+          dispatch,
+          updatePattern,
+          {
+            id,
+            pattern: newPattern,
+            image: [upload, uploadConstructorImg]
+          },
+          isEdit,
+          {
+            id,
+            pattern: newPattern
+          }
+        );
+        return;
+      }
       dispatch(
         addPattern({
           pattern: newPattern,

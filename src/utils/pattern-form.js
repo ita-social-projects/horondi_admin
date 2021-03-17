@@ -31,10 +31,11 @@ export const patternFormOnSubmit = (
   secondUpdateActionPayload
 ) => {
   if (condition) {
-    return dispatch(updateAction(updateActionPayload));
+    dispatch(updateAction(updateActionPayload));
+    return;
   }
   if (isEdit) {
-    return dispatch(updateAction(secondUpdateActionPayload));
+    dispatch(updateAction(secondUpdateActionPayload));
   }
 };
 
