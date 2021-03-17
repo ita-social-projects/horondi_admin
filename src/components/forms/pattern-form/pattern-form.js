@@ -134,8 +134,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
         isEdit,
         {
           id,
-          pattern: newPattern,
-          image: [upload, uploadConstructorImg]
+          pattern: newPattern
         }
       );
       dispatch(
