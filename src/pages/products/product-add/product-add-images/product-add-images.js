@@ -1,29 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Box, Grid, Avatar } from '@material-ui/core';
 import { Image } from '@material-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './product-add-images.styles';
 
 import { productsTranslations } from '../../../../translations/product.translations';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 
-const { MAIN_PHOTO, ADDITIONAL_PHOTOS, REQUIRED_PHOTOS } = productsTranslations;
+const { REQUIRED_PHOTOS } = productsTranslations;
 
 const ProductAddImages = ({
+  setProductImageDisplayed,
+  productImageDisplayed,
   setAdditionalImages,
   additionalImages,
   setPrimaryImage,
   primaryImage,
-  validate
+  validate,
+  displayed,
+  isEdit
 }) => {
   const styles = useStyles();
+  // const dispatch = useDispatch();
+  // const product = useSelector(({ Products }) => Products.selectedProduct);
+  // const [productImages, setProductImages] = useState([]);
+  //
+  // useEffect(() => {
+  //   if (product.images) {
+  //     const images = [
+  //       { url: encodeURIComponent(product.images.primary.large), prefix: true },
+  //       ...product.images.additional.map(({ large }) => ({
+  //         url: large,
+  //         prefix: true
+  //       }))
+  //     ];
+  //     setProductImages(images);
+  //   }
+  // }, [product.images, dispatch]);
+
+  const imgUrl = `https://horondi.blob.core.windows.net/horondi/images/${displayed}`;
+
+  const imageUploadInputsId = {
+    mainImageInput: 'mainImageInput',
+    imageInput: 'ImgInput'
+  };
 
   const handlePrimaryImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        // setPrimaryImage(event.target.result)
+        setProductImageDisplayed(event.target.result);
       };
       setPrimaryImage(e.target.files[0]);
       reader.readAsDataURL(e.target.files[0]);
@@ -39,11 +67,30 @@ const ProductAddImages = ({
         //   event.target.result
         // ]);
       };
+      e.persist();
       setAdditionalImages((prevImages) => [...prevImages, e.target.files[0]]);
       reader.readAsDataURL(e.target.files[0]);
     }
   };
-
+  // <div>
+  //   <label
+  //     className={src ? style.labelWithoutBack : style.labelWithBack}
+  //     htmlFor={id}
+  //     data-cy={utils.dataCy.pattern}
+  //   >
+  //     {src && (
+  //       <img className={style.image} src={src} alt={utils.alt.pattern} />
+  //     )}
+  //     <input
+  //       className={style.input}
+  //       id={id}
+  //       name={utils.name}
+  //       type='file'
+  //       multiple
+  //       onChange={handler}
+  //     />
+  //   </label>
+  // </div>
   return (
     <div className={styles.container}>
       <Box my={3}>
@@ -52,13 +99,13 @@ const ProductAddImages = ({
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 handler={handlePrimaryImageLoad}
-                buttonLabel={MAIN_PHOTO}
+                src={
+                  isEdit
+                    ? productImageDisplayed || imgUrl
+                    : productImageDisplayed
+                }
+                id={imageUploadInputsId.mainImageInput}
               />
-              {validate && primaryImage && (
-                <Avatar src={primaryImage}>
-                  <Image />
-                </Avatar>
-              )}
             </div>
           </Grid>
         </Grid>
@@ -72,15 +119,9 @@ const ProductAddImages = ({
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 handler={handleAdditionalImagesLoad}
-                buttonLabel={ADDITIONAL_PHOTOS}
+                src={additionalImages}
+                id={imageUploadInputsId.imageInput}
               />
-              <div className={styles.avatarWrapper}>
-                {additionalImages.map((e) => (
-                  <Avatar key={e} src={e}>
-                    <Image />
-                  </Avatar>
-                ))}
-              </div>
             </div>
           </Grid>
         </Grid>
@@ -90,6 +131,13 @@ const ProductAddImages = ({
 };
 
 ProductAddImages.propTypes = {
+  isEdit: PropTypes.bool,
+  displayed: PropTypes.string,
+  setProductImageDisplayed: PropTypes.func,
+  productImageDisplayed: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.object),
+    PropTypes.string
+  ]),
   setAdditionalImages: PropTypes.func.isRequired,
   setPrimaryImage: PropTypes.func.isRequired,
   additionalImages: PropTypes.arrayOf(PropTypes.string),
@@ -101,6 +149,10 @@ ProductAddImages.propTypes = {
 };
 
 ProductAddImages.defaultProps = {
+  isEdit: false,
+  displayed: '',
+  setProductImageDisplayed: '',
+  productImageDisplayed: '',
   primaryImage: '',
   additionalImages: []
 };

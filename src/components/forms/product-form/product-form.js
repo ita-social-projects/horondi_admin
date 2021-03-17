@@ -61,7 +61,9 @@ const ProductForm = ({ isEdit }) => {
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
 
-  const { product, details } = useSelector(selectSelectedProductAndDetails);
+  const { details } = useSelector(selectSelectedProductAndDetails);
+
+  const product = useSelector(({ Products }) => Products.selectedProduct);
 
   const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
 
@@ -91,7 +93,9 @@ const ProductForm = ({ isEdit }) => {
     setAdditionalImages,
     additionalImages,
     setPrimaryImage,
-    primaryImage
+    primaryImage,
+    setProductImageDisplayed,
+    productImageDisplayed
   } = useProductHandlers();
 
   const { categories, materials, patterns, closures } = details;
@@ -307,9 +311,21 @@ const ProductForm = ({ isEdit }) => {
         <Grid item xs={12} md={5} xl={3}>
           <Paper className={styles.paper}>
             {isEdit ? (
-              <ProductCarousel toggleFieldsChanged={toggleFieldsChanged} />
+              <ProductAddImages
+                isEdit={isEdit}
+                productImageDisplayed={productImageDisplayed}
+                setProductImageDisplayed={setProductImageDisplayed}
+                setAdditionalImages={setAdditionalImages}
+                additionalImages={additionalImages}
+                setPrimaryImage={setPrimaryImage}
+                primaryImage={primaryImage}
+                validate={shouldValidate}
+                displayed={product.images.primary.thumbnail}
+              />
             ) : (
               <ProductAddImages
+                productImageDisplayed={productImageDisplayed}
+                setProductImageDisplayed={setProductImageDisplayed}
                 setAdditionalImages={setAdditionalImages}
                 additionalImages={additionalImages}
                 setPrimaryImage={setPrimaryImage}

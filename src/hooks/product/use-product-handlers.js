@@ -13,6 +13,7 @@ const useProductHandlers = () => {
   const [sizes, setSizes] = useState([]);
   const [primaryImage, setPrimaryImage] = useState('');
   const [additionalImages, setAdditionalImages] = useState([]);
+  const [productImageDisplayed, setProductImageDisplayed] = useState('');
 
   const createProductInfo = (values) => ({
     name: [
@@ -53,7 +54,9 @@ const useProductHandlers = () => {
     additionalImages,
     setAdditionalImages,
     createProductInfo,
-    setModels
+    setModels,
+    setProductImageDisplayed,
+    productImageDisplayed
   };
 };
 
