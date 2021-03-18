@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { config } from '../../configs';
+import ProductAddImages from '../../pages/products/product-add/product-add-images';
 
 const { languages } = config;
 
@@ -14,6 +15,9 @@ const useProductHandlers = () => {
   const [primaryImage, setPrimaryImage] = useState('');
   const [additionalImages, setAdditionalImages] = useState([]);
   const [productImageDisplayed, setProductImageDisplayed] = useState('');
+  const [additionalImagesDisplayed, setAdditionalImagesDisplayed] = useState(
+    []
+  );
 
   const createProductInfo = (values) => ({
     name: [
@@ -56,7 +60,9 @@ const useProductHandlers = () => {
     createProductInfo,
     setModels,
     setProductImageDisplayed,
-    productImageDisplayed
+    productImageDisplayed,
+    setAdditionalImagesDisplayed,
+    additionalImagesDisplayed
   };
 };
 

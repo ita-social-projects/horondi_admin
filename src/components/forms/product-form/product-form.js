@@ -95,7 +95,9 @@ const ProductForm = ({ isEdit }) => {
     setPrimaryImage,
     primaryImage,
     setProductImageDisplayed,
-    productImageDisplayed
+    productImageDisplayed,
+    setAdditionalImagesDisplayed,
+    additionalImagesDisplayed
   } = useProductHandlers();
 
   const { categories, materials, patterns, closures } = details;
@@ -308,11 +310,13 @@ const ProductForm = ({ isEdit }) => {
       </div>
 
       <Grid container justify='center' spacing={3}>
-        <Grid item xs={12} md={5} xl={3}>
+        <Grid item xs={12}>
           <Paper className={styles.paper}>
             {isEdit ? (
               <ProductAddImages
                 isEdit={isEdit}
+                setAdditionalImagesDisplayed={setAdditionalImagesDisplayed}
+                additionalImagesDisplayed={additionalImagesDisplayed}
                 productImageDisplayed={productImageDisplayed}
                 setProductImageDisplayed={setProductImageDisplayed}
                 setAdditionalImages={setAdditionalImages}
@@ -324,6 +328,9 @@ const ProductForm = ({ isEdit }) => {
               />
             ) : (
               <ProductAddImages
+                isEdit={isEdit}
+                setAdditionalImagesDisplayed={setAdditionalImagesDisplayed}
+                additionalImagesDisplayed={additionalImagesDisplayed}
                 productImageDisplayed={productImageDisplayed}
                 setProductImageDisplayed={setProductImageDisplayed}
                 setAdditionalImages={setAdditionalImages}
@@ -335,7 +342,7 @@ const ProductForm = ({ isEdit }) => {
             )}
           </Paper>
         </Grid>
-        <Grid item xs={12} md={7} xl={9}>
+        <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <ProductInfoContainer
             shouldValidate={shouldValidate}

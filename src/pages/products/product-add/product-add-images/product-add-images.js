@@ -5,6 +5,7 @@ import { Box, Grid, Avatar } from '@material-ui/core';
 import { Image } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './product-add-images.styles';
+import { config } from '../../../../configs/index';
 
 import { productsTranslations } from '../../../../translations/product.translations';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
@@ -12,6 +13,8 @@ import ImageUploadContainer from '../../../../containers/image-upload-container'
 const { REQUIRED_PHOTOS } = productsTranslations;
 
 const ProductAddImages = ({
+  setAdditionalImagesDisplayed,
+  additionalImagesDisplayed,
   setProductImageDisplayed,
   productImageDisplayed,
   setAdditionalImages,
@@ -23,6 +26,7 @@ const ProductAddImages = ({
   isEdit
 }) => {
   const styles = useStyles();
+  const dispatch = useDispatch();
   // const dispatch = useDispatch();
   // const product = useSelector(({ Products }) => Products.selectedProduct);
   // const [productImages, setProductImages] = useState([]);
@@ -40,7 +44,7 @@ const ProductAddImages = ({
   //   }
   // }, [product.images, dispatch]);
 
-  const imgUrl = `https://horondi.blob.core.windows.net/horondi/images/${displayed}`;
+  const imgUrl = config.imagePrefix + displayed;
 
   const imageUploadInputsId = {
     mainImageInput: 'mainImageInput',
@@ -62,35 +66,17 @@ const ProductAddImages = ({
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        // setAdditionalImages((prevImages) => [
-        //   ...prevImages,
-        //   event.target.result
-        // ]);
+        setAdditionalImagesDisplayed((prevImages) => [
+          ...prevImages,
+          event.target.result
+        ]);
       };
       e.persist();
       setAdditionalImages((prevImages) => [...prevImages, e.target.files[0]]);
       reader.readAsDataURL(e.target.files[0]);
     }
   };
-  // <div>
-  //   <label
-  //     className={src ? style.labelWithoutBack : style.labelWithBack}
-  //     htmlFor={id}
-  //     data-cy={utils.dataCy.pattern}
-  //   >
-  //     {src && (
-  //       <img className={style.image} src={src} alt={utils.alt.pattern} />
-  //     )}
-  //     <input
-  //       className={style.input}
-  //       id={id}
-  //       name={utils.name}
-  //       type='file'
-  //       multiple
-  //       onChange={handler}
-  //     />
-  //   </label>
-  // </div>
+
   return (
     <div className={styles.container}>
       <Box my={3}>
@@ -119,7 +105,11 @@ const ProductAddImages = ({
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 handler={handleAdditionalImagesLoad}
-                src={additionalImages}
+                src={
+                  additionalImagesDisplayed.length !== 0
+                    ? additionalImagesDisplayed[0]
+                    : null
+                }
                 id={imageUploadInputsId.imageInput}
               />
             </div>
@@ -131,6 +121,11 @@ const ProductAddImages = ({
 };
 
 ProductAddImages.propTypes = {
+  additionalImagesDisplayed: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.object),
+    PropTypes.string
+  ]),
+  setAdditionalImagesDisplayed: PropTypes.func,
   isEdit: PropTypes.bool,
   displayed: PropTypes.string,
   setProductImageDisplayed: PropTypes.func,
@@ -149,6 +144,8 @@ ProductAddImages.propTypes = {
 };
 
 ProductAddImages.defaultProps = {
+  additionalImagesDisplayed: [],
+  setAdditionalImagesDisplayed: '',
   isEdit: false,
   displayed: '',
   setProductImageDisplayed: '',
