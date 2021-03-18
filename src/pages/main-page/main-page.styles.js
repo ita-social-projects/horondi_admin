@@ -73,7 +73,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between'
   },
   commentText: {
-    fontSize: '1.1em',
+    fontSize: '16px',
     marginBottom: 5
   },
   changesContainer: {

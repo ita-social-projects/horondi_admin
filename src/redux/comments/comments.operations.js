@@ -43,7 +43,9 @@ const getAllComments = async (filter, pagination) => {
 };
 
 const getRecentComments = async (limit) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.query({
+    context: { headers: { token } },
     variables: {
       limit
     },
