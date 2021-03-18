@@ -52,7 +52,7 @@ export default {
     lineHeight: '21px'
   },
   body2: {
-    fontSize: '12px',
+    fontSize: '16px',
     letterSpacing: '-0.04px',
     lineHeight: '18px'
   },
@@ -70,5 +70,19 @@ export default {
     letterSpacing: '0.33px',
     lineHeight: '13px',
     textTransform: 'uppercase'
-  }
+  },
+  fontFamily: [
+    '"Montserrat"',
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Segoe UI"',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    '"Helvetica Neue"',
+    'sans-serif'
+  ]
 };
