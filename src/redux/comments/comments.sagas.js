@@ -32,7 +32,7 @@ import {
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
-import { setItemsCount, updatePagination } from '../table/table.actions';
+import { updatePagination } from '../table/table.actions';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
