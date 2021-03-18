@@ -110,11 +110,12 @@ describe('Comment form tests', () => {
   it('Should have default props', () => {
     expect(CommentForm.defaultProps).toBeDefined();
     expect(CommentForm.defaultProps.id).toBe('');
-    expect(CommentForm.defaultProps.isEdit).toBe(false);
-  });
-
-  it('Should have appropriate prop types', () => {
-    expect(CommentForm.propTypes.id).toBe(PropTypes.string);
-    expect(CommentForm.propTypes.isEdit).toBe(PropTypes.bool);
+    expect(CommentForm.defaultProps.values).toEqual({});
+    expect(CommentForm.defaultProps.errors).toEqual({});
+    expect(CommentForm.defaultProps.touched).toEqual({});
+    expect(CommentForm.defaultProps.comment._id).toBe('');
+    expect(CommentForm.defaultProps.comment.text).toBe('');
+    expect(CommentForm.defaultProps.comment.show).toBeFalsy();
+    expect(CommentForm.defaultProps.isEdit).toBeFalsy();
   });
 });
