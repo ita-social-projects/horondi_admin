@@ -19,7 +19,8 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: 0
   },
   textField: {
-    margin: '10px 5px'
+    margin: '10px 5px',
+    padding: '10px'
   },
   tabs: {
     backgroundColor: 'white',

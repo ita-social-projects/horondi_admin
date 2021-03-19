@@ -33,6 +33,7 @@ const {
   INVALID_EMAIL_MESSAGE,
   PASSWORD_MIN_LENGTH_MESSAGE
 } = config.loginErrorMessages;
+
 const LoginPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -56,7 +57,14 @@ const LoginPage = () => {
       .required(ENTER_PASSWORD_MESSAGE)
   });
 
-  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    touched,
+    errors
+  } = useFormik({
     initialValues: adminValues,
     validationSchema: formSchema,
     validateOnBlur: true,
@@ -86,7 +94,6 @@ const LoginPage = () => {
           className={classes.input}
           variant='outlined'
           margin='normal'
-          required
           fullWidth
           id='email'
           data-cy='email'
@@ -97,7 +104,7 @@ const LoginPage = () => {
           autoFocus
           type='text'
           onChange={handleChange}
-          onBlur={handleChange}
+          onBlur={handleBlur}
         />
         {touched.email && errors.email && (
           <div className={classes.inputError}>{errors.email}</div>
@@ -116,8 +123,8 @@ const LoginPage = () => {
             error={touched.password && !!errors.password}
             name='password'
             data-cy='password'
-            required
             onChange={handleChange}
+            onBlur={handleBlur}
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
