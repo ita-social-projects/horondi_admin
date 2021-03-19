@@ -13,7 +13,7 @@ import CategoryDeleteDialog from '../category-delete-dialog';
 import useCategoryFilters from '../../../hooks/filters/use-category-filters';
 import TableContainerRow from '../../../containers/table-container-row';
 import { config } from '../../../configs';
-import mockStore from './categories.variables';
+import mockStore from './categories-variables';
 
 const { ADD_CATEGORY } = config.buttonTitles;
 const { mainPageTitle } = config.titles.categoryPageTitles;
