@@ -1,23 +1,21 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
-import * as reactRedux from 'react-redux';
 import { useDispatch as useDispatchMock } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
+import * as reactRedux from 'react-redux';
 import Categories from '../categories';
 import LoadingBar from '../../../components/loading-bar';
 import StandardButton from '../../../components/buttons/standard-button';
 import FilterNavbar from '../../../components/filter-search-sort';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import CategoryDeleteDialog from '../category-delete-dialog';
-import { config } from '../../../configs';
 import useCategoryFilters from '../../../hooks/filters/use-category-filters';
 import TableContainerRow from '../../../containers/table-container-row';
+import { config } from '../../../configs';
 
 const { ADD_CATEGORY } = config.buttonTitles;
 const { mainPageTitle } = config.titles.categoryPageTitles;
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const mockStore = {
   Categories: {
@@ -82,6 +80,7 @@ const mockStore = {
   }
 };
 
+Enzyme.configure({ adapter: new Adapter() });
 jest.mock('../../../hooks/filters/use-category-filters');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -91,37 +90,40 @@ jest.mock('react-redux', () => ({
 
 describe('Categories test', () => {
   jest.spyOn(reactRedux, 'useDispatch');
+  const mockHolder = jest.fn();
   let wrapper;
 
-  it('Should render Categories page', () => {
+  beforeEach(() => {
     wrapper = mount(<Categories />);
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  it('Should render Categories page', () => {
     expect(wrapper).toBeDefined();
   });
 
   it(`Should render Typography with "${mainPageTitle}" label`, () => {
-    wrapper = mount(<Categories />);
     expect(wrapper.exists(Typography)).toBe(true);
     expect(wrapper.find(Typography).text()).toBe(mainPageTitle);
   });
 
   it(`Should render add category button with "${ADD_CATEGORY}" label`, () => {
-    wrapper = mount(<Categories />);
     expect(wrapper.exists(StandardButton)).toBe(true);
     expect(wrapper.find(StandardButton).prop('title')).toBe(ADD_CATEGORY);
   });
 
   it('Should render FilterNavbar', () => {
-    wrapper = mount(<Categories />);
     expect(wrapper.exists(FilterNavbar)).toBe(true);
   });
 
   it('Should render TableContainerGenerator', () => {
-    wrapper = mount(<Categories />);
     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
   });
 
   it('Should render CategoryDeleteDialog', () => {
-    wrapper = mount(<Categories />);
     expect(wrapper.exists(CategoryDeleteDialog)).toBe(true);
   });
 
@@ -134,12 +136,10 @@ describe('Categories test', () => {
 
   it('Should render when category options equal null', () => {
     useCategoryFilters.mockImplementationOnce(() => null);
-    wrapper = mount(<Categories />);
     expect(wrapper).toBeDefined();
   });
 
   it('Should handle click the Add category button', () => {
-    const mockHolder = jest.fn();
     useDispatchMock.mockReturnValue(mockHolder);
     wrapper = mount(<Categories />);
     wrapper.find(StandardButton).simulate('click');
@@ -147,18 +147,14 @@ describe('Categories test', () => {
   });
 
   it('Should handle click the Delete category button', () => {
-    const mockHolder = jest.fn();
     useDispatchMock.mockReturnValue(mockHolder);
-    wrapper = mount(<Categories />);
     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
-    expect(mockHolder).toHaveBeenCalledTimes(3);
+    expect(mockHolder).toHaveBeenCalledTimes(5);
   });
 
   it('Should handle click the Edit category button', () => {
-    const mockHolder = jest.fn();
     useDispatchMock.mockReturnValue(mockHolder);
-    wrapper = mount(<Categories />);
     wrapper.find(TableContainerRow).at(0).props().editHandler();
-    expect(mockHolder).toHaveBeenCalledTimes(2);
+    expect(mockHolder).toHaveBeenCalledTimes(7);
   });
 });
