@@ -71,6 +71,7 @@ const CategoryForm = ({ category, id, edit }) => {
     values,
     handleSubmit,
     handleChange,
+    handleBlur,
     touched,
     errors,
     setFieldValue
@@ -119,6 +120,7 @@ const CategoryForm = ({ category, id, edit }) => {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
@@ -146,6 +148,7 @@ const CategoryForm = ({ category, id, edit }) => {
               placeholder={config.labels.categories.categoryCode}
               value={values.code}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.code && !!errors.code}
             />
             {touched.code && errors.code && (
