@@ -1,4 +1,4 @@
-export const useFormikInitialValues = (model, sizes, category) => ({
+export const useFormikInitialValues = (model, category, fn, isEdit) => ({
   modelImage: model.images.thumbnail || '',
   uaName: model.name[0].value || '',
   enName: model.name[1].value || '',
@@ -6,7 +6,7 @@ export const useFormikInitialValues = (model, sizes, category) => ({
   enDescription: model.description[1].value || '',
   priority: model.priority || 1,
   category: category || '',
-  sizes: sizes || [],
+  sizes: fn(isEdit) || [],
   show: model.show || false,
   availableForConstructor: model.availableForConstructor || false
 });
