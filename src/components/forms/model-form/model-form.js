@@ -35,7 +35,9 @@ import { getSizes } from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
 import {
   useFormikInitialValues,
-  modelFormOnSubmit
+  modelFormOnSubmit,
+  updateModelHandler,
+  loadHelper
 } from '../../../utils/model-form';
 
 const { languages } = config;
@@ -100,16 +102,24 @@ const ModelForm = ({ model, id, isEdit }) => {
     initialValues: useFormikInitialValues(model, category, checkIsEdit, isEdit),
     onSubmit: () => {
       const newModel = createModel(values);
-      if (upload instanceof File || model.images.thumbnail) {
+      const uploadOrModelCondition =
+        upload instanceof File || model.images.thumbnail;
+      const isEditAndUploadCondition = isEdit && upload instanceof File;
+      if (uploadOrModelCondition) {
+        updateModelHandler(isEditAndUploadCondition, dispatch, updateModel, {
+          id,
+          model: newModel,
+          image: upload
+        });
+
         modelFormOnSubmit(
-          upload,
           isEdit,
           dispatch,
           updateModel,
-          { id, model: newModel, image: upload },
-          { id, model: newModel }
+          addModel,
+          { id, model: newModel },
+          { model: newModel, image: upload }
         );
-        dispatch(addModel({ model: newModel, image: upload }));
         return;
       }
       dispatch(setSnackBarSeverity(materialUiConstants.codeError));
@@ -145,7 +155,7 @@ const ModelForm = ({ model, id, isEdit }) => {
   ];
 
   const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
+    if (loadHelper(e.target.files, e.target.files[0])) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setFieldValue(labelsEn.modelImage, event.target.result);

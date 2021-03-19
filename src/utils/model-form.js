@@ -12,17 +12,24 @@ export const useFormikInitialValues = (model, category, fn, isEdit) => ({
 });
 
 export const modelFormOnSubmit = (
-  upload,
-  isEdit,
+  condition,
   dispatch,
   updateAction,
+  addAction,
   updateActionPayload,
-  secondUpdateActionPayload
+  addActionPayload
 ) => {
-  if (isEdit && upload instanceof File) {
-    return dispatch(updateAction(updateActionPayload));
+  if (condition) {
+    dispatch(updateAction(updateActionPayload));
+    return;
   }
-  if (isEdit) {
-    return dispatch(updateAction(secondUpdateActionPayload));
+  dispatch(addAction(addActionPayload));
+};
+
+export const updateModelHandler = (condition, dispatch, updateFn, payload) => {
+  if (condition) {
+    dispatch(updateFn(payload));
   }
 };
+
+export const loadHelper = (targetFiles, targetFilesZero) => targetFiles && targetFilesZero;
