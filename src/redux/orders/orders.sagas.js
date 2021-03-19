@@ -6,13 +6,25 @@ import {
   GET_ORDER,
   UPDATE_ORDER,
   GET_ORDER_LIST,
-  DELETE_ORDER
+  DELETE_ORDER,
+  GET_NOVAPOSHTA_CITIES,
+  GET_NOVAPOSHTA_WAREHOUSES,
+  GET_UKRPOST_REGIONS,
+  GET_UKRPOST_DISTRICTS,
+  GET_UKRPOST_CITIES,
+  GET_UKRPOST_POSTOFFICES
 } from './orders.types';
 import {
   getOrderById,
   updateOrder,
   getAllOrders,
-  deleteOrder
+  deleteOrder,
+  getNovaPoshtaCities,
+  getNovaPoshtaWarehouses,
+  getUkrPoshtaCitiesByDistrictId,
+  getUkrPoshtaDistrictsByRegionId,
+  getUkrPoshtaPostOfficesByCityId,
+  getUkrPostRegions
 } from './orders.operations';
 import { setItemsCount, updatePagination } from '../table/table.actions';
 
@@ -21,7 +33,14 @@ import {
   setOrderError,
   setOrderLoading,
   setOrder,
-  removeOrderFromStore
+  removeOrderFromStore,
+  setNovaPoshtaCities,
+  setNovaPoshtaWarehouse,
+  setDeliveryLoading,
+  setUkrPostRegions,
+  setUkrPostDistricts,
+  setUkrPostCities,
+  setUkrPostPostOffices
 } from './orders.actions';
 
 import {
@@ -96,9 +115,99 @@ export function* handleOrdersDelete({ payload }) {
   }
 }
 
+export function* handleNovaPoshtaCities({ payload }) {
+  try {
+    yield put(setDeliveryLoading(true));
+
+    const cities = yield call(getNovaPoshtaCities, payload);
+
+    yield put(setNovaPoshtaCities(cities));
+    yield put(setDeliveryLoading(false));
+  } catch (error) {
+    yield put(setDeliveryLoading(false));
+    yield call(handleOrdersError, error);
+  }
+}
+
+export function* handleNovaPoshtaWarehouse({ payload }) {
+  try {
+    yield put(setDeliveryLoading(true));
+
+    const warehouses = yield call(getNovaPoshtaWarehouses, payload);
+
+    yield put(setNovaPoshtaWarehouse(warehouses));
+    yield put(setDeliveryLoading(false));
+  } catch (error) {
+    yield put(setDeliveryLoading(false));
+    yield call(handleOrdersError, error);
+  }
+}
+
+export function* handleUkrPostRegions() {
+  try {
+    yield put(setDeliveryLoading(true));
+
+    const regions = yield call(getUkrPostRegions);
+
+    yield put(setUkrPostRegions(regions));
+    yield put(setDeliveryLoading(false));
+  } catch (error) {
+    yield put(setDeliveryLoading(false));
+    yield call(handleOrdersError, error);
+  }
+}
+
+export function* handleUkrPostDistricts({ payload }) {
+  try {
+    yield put(setDeliveryLoading(true));
+
+    const districts = yield call(getUkrPoshtaDistrictsByRegionId, payload);
+
+    yield put(setUkrPostDistricts(districts));
+    yield put(setDeliveryLoading(false));
+  } catch (error) {
+    yield put(setDeliveryLoading(false));
+    yield call(handleOrdersError, error);
+  }
+}
+
+export function* handleUkrPostCities({ payload }) {
+  try {
+    yield put(setDeliveryLoading(true));
+
+    const cities = yield call(getUkrPoshtaCitiesByDistrictId, payload);
+
+    yield put(setUkrPostCities(cities));
+    yield put(setDeliveryLoading(false));
+  } catch (error) {
+    yield put(setDeliveryLoading(false));
+    yield call(handleOrdersError, error);
+  }
+}
+
+export function* handleUkrPostPostOffices({ payload }) {
+  try {
+    yield put(setDeliveryLoading(true));
+
+    const offices = yield call(getUkrPoshtaPostOfficesByCityId, payload);
+
+    yield put(setUkrPostPostOffices(offices));
+    yield put(setDeliveryLoading(false));
+  } catch (error) {
+    yield put(setDeliveryLoading(false));
+    yield call(handleOrdersError, error);
+  }
+}
+
 export default function* ordersSaga() {
   yield takeEvery(GET_ORDER_LIST, handleOrdersListLoad);
   yield takeEvery(GET_ORDER, handleOrderLoad);
   yield takeEvery(UPDATE_ORDER, handleOrderUpdate);
   yield takeEvery(DELETE_ORDER, handleOrdersDelete);
+  yield takeEvery(GET_NOVAPOSHTA_CITIES, handleNovaPoshtaCities);
+  yield takeEvery(GET_NOVAPOSHTA_WAREHOUSES, handleNovaPoshtaWarehouse);
+  yield takeEvery(GET_UKRPOST_REGIONS, handleUkrPostRegions);
+  yield takeEvery(GET_UKRPOST_DISTRICTS, handleUkrPostDistricts);
+  yield takeEvery(GET_UKRPOST_CITIES, handleUkrPostCities);
+  yield takeEvery(GET_UKRPOST_POSTOFFICES, handleUkrPostPostOffices);
 }

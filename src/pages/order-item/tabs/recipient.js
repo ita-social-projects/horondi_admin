@@ -10,25 +10,28 @@ const Recipient = ({ data, handleChange }) => {
   const classes = useStyles();
   return (
     <div className={classes.recipient}>
-      {Object.keys(user).map((item) => (
+      {user &&
+        Object.keys(user).map((item) => (
+          <TextField
+            name={`user.${item}`}
+            label={orderRecipient[item] || ''}
+            key={item}
+            variant='outlined'
+            onChange={handleChange}
+            value={user[item] || ''}
+          />
+        ))}
+      {user && (
         <TextField
-          name={`user.${item}`}
-          label={orderRecipient[item] || ''}
-          key={item}
-          variant='outlined'
+          name='userComment'
+          label={orderRecipient.commentary}
           onChange={handleChange}
-          value={user[item] || ''}
+          variant='outlined'
+          value={userComment || ''}
+          multiline
+          rows={4}
         />
-      ))}
-      <TextField
-        name='userComment'
-        label={orderRecipient.commentary}
-        onChange={handleChange}
-        variant='outlined'
-        value={userComment || ''}
-        multiline
-        rows={4}
-      />
+      )}
     </div>
   );
 };

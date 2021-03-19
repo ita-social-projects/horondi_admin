@@ -88,7 +88,7 @@ Products.defaultProps = {
 
 Products.propTypes = {
   data: PropTypes.shape({
-    items: PropTypes.arrayOf(PropTypes.string)
+    items: PropTypes.arrayOf(PropTypes.object)
   }),
   setFieldValue: PropTypes.func.isRequired
 };

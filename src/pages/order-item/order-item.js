@@ -4,7 +4,6 @@ import { Paper, Tabs, Tab, Button } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 
-import { noop } from 'lodash';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
 import { Delivery, Recipient, Products, General } from './tabs';
@@ -64,21 +63,31 @@ const OrderItem = ({ id }) => {
     initialValues,
     resetForm
   } = useFormik({
-    initialValues: {},
+    initialValues: {
+      paymentStatus: '',
+      paymentMethod: '',
+      isPaid: false,
+      user: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: ''
+      },
+      delivery: { sentBy: 'SELFPICKUP' },
+      userComment: '',
+      items: []
+    },
     onSubmit: handleFormSubmit
   });
 
+  useEffect(() => console.log(values));
   useEffect(() => {
-    if (selectedOrder) {
+    if (selectedOrder && id) {
       resetForm({ values: selectedOrder });
     }
   }, [selectedOrder, resetForm]);
 
-  const formikHandleChange = submitStatus.includes(
-    selectedOrder && selectedOrder.status
-  )
-    ? handleChange
-    : noop;
+  const formikHandleChange = handleChange;
 
   if (orderLoading) {
     return <LoadingBar />;
@@ -112,19 +121,19 @@ const OrderItem = ({ id }) => {
           <Delivery
             data={{ delivery: values.delivery, address: values.address }}
             handleChange={formikHandleChange}
+            setFieldValue={setFieldValue}
           />
         </TabPanel>
       </Paper>
-      {dirty && (
-        <Button
-          type='submit'
-          variant='contained'
-          color='primary'
-          className={classes.saveBtn}
-        >
-          {SAVE_ORDER}
-        </Button>
-      )}
+      <Button
+        type='submit'
+        variant='contained'
+        color='primary'
+        className={classes.saveBtn}
+        disabled={!dirty}
+      >
+        {SAVE_ORDER}
+      </Button>
       <div className={classes.controlsBlock}>
         <BackButton />
       </div>

@@ -23,6 +23,33 @@ const orders = {
     { label: 'Перенаправлено', value: 'REVERSED' },
     { label: 'В обробці', value: 'PROCESSING' }
   ],
+  deliveryTitles: {
+    deliveryAddress: 'Адреса доставки',
+    novaPostCourieru: "Новa Пошта кур'єр",
+    ukrPostCourier: "Укрпошта кур'єр",
+    novaPost: 'Нова пошта',
+    ukrPost: 'Укрпошта'
+  },
+  deliveryLabels: {
+    city: 'Місто',
+    department: 'Відділення',
+    region: 'Область',
+    district: 'Район'
+  },
+  deliveryAdditionalInfo: {
+    noOneCity: 'Жодного міста не знайдено',
+    noOneDepartment: 'Жодного відділення не знайдено',
+    noOneRegion: 'Жодної області не знайдено',
+    noOneDistrict: 'Жодного району не знайдено'
+  },
+  deliveryTypes: {
+    novaPost: 'NOVAPOST',
+    ukrPost: 'UKRPOST',
+    novaPostCourier: 'NOVAPOSTCOURIER',
+    ukrPostCourier: 'UKRPOSTCOURIER',
+    selfPickUp: 'SELFPICKUP'
+  },
+
   dialogTitle: 'Замовлення',
   dialogContent:
     'Зміна статусу "Замовлення створено" чи "Замовлення підтверджено" на інші унеможливить подальше редагування деталей замовлення. Ви дійсно хочете продовжити?',

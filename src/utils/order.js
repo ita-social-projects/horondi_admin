@@ -1,5 +1,5 @@
 const items = (order) =>
-  order.items.map((item) => ({
+  order.items?.map((item) => ({
     product: item?.product._id,
     quantity: item.quantity,
     isFromConstructor: !item.product._id,
@@ -31,9 +31,36 @@ export const address = (delivery) => ({
 
 export const inputName = {
   sentByInput: 'delivery.sentBy',
-  officeInput: 'delivery.office',
+  officeInput: 'delivery.courierOffice',
   costInput: 'delivery.cost[0].value',
   courierInput: 'delivery.byCourier',
   isPaidInput: 'isPaid',
-  itemsName: 'items'
+  itemsName: 'items',
+  cityInput: 'delivery.city'
 };
+
+export const courierInputLabels = () => [
+  {
+    name: 'delivery.city',
+    label: 'Місто',
+    value: 'city'
+  },
+  {
+    name: 'delivery.street',
+    label: 'Вулиця',
+    value: 'street'
+  },
+  {
+    name: 'delivery.house',
+    label: 'Будинок',
+    value: 'house'
+  },
+  {
+    name: 'delivery.flat',
+    label: 'Квартира',
+    value: 'flat'
+  }
+];
+
+export const POSTOMAT = 'Поштомат';
+export const POST_OFFICE_NUMBER = 'Відділення № ';

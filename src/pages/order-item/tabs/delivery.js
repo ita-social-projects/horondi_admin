@@ -1,76 +1,50 @@
 import React from 'react';
-import { TextField, Checkbox } from '@material-ui/core';
-import moment from 'moment';
 import PropTypes from 'prop-types';
+import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
-import DeliveryDetails from './delivery-details';
+import Courier from './delivery-details/courier';
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
-import { address, inputName } from '../../../utils/order';
-import materialUiConstants from '../../../configs/material-ui-constants';
-import { dateFormat } from '../../../configs';
+import { inputName } from '../../../utils/order';
+import NovaPost from './delivery-details/nova-post';
+import UkrPost from './delivery-details/ukrpost';
+import config from '../../../configs/orders';
 
-const Delivery = ({ data, handleChange }) => {
+const Delivery = ({ data, handleChange, setFieldValue }) => {
+  const { deliveryTypes } = config;
   const classes = useStyles();
   const { deliveryLabels } = labels;
-  const { sentByInput, officeInput, costInput, courierInput } = inputName;
-
-  const {
-    deliveryMethodLabel,
-    byCourierLabel,
-    deliveryCostLabel,
-    sentAtLabel,
-    courierOfficeNameLabel
-  } = deliveryLabels;
-  const { delivery } = data;
-  const { sentOn, sentBy, byCourier, courierOffice, cost } = delivery;
-
+  const radioButtons = Object.entries(deliveryLabels).map((type) => (
+    <FormControlLabel
+      value={type[0].toUpperCase()}
+      control={<Radio color='default' size='small' />}
+      label={type[1]}
+      key={type[0]}
+    />
+  ));
   return (
     <div className={classes.delivery}>
-      <TextField
-        label={deliveryMethodLabel}
-        name={sentByInput}
-        value={sentBy}
+      <RadioGroup
+        name={inputName.sentByInput}
+        value={data.delivery.sentBy}
         onChange={handleChange}
-        variant={materialUiConstants.outlined}
-      />
-      <TextField
-        label={courierOfficeNameLabel}
-        name={officeInput}
-        value={courierOffice}
-        onChange={handleChange}
-        variant={materialUiConstants.outlined}
-      />
-      <div className={classes.dateContainer}>
-        {sentOn ? (
-          <p>
-            {sentAtLabel} {moment.unix(sentOn / 1000).format(dateFormat)}
-          </p>
-        ) : null}
-      </div>
-      {delivery?.cost[0]?.value ? (
-        <TextField
-          label={deliveryCostLabel}
-          name={costInput}
-          value={cost[0].value}
-          onChange={handleChange}
-          variant={materialUiConstants.outlined}
-        />
-      ) : null}
-      <div className={classes.idContainer}>
-        <label htmlFor='byCourier'>{byCourierLabel}</label>
-        <Checkbox
-          id='byCourier'
-          checked={byCourier}
-          name={courierInput}
-          onChange={handleChange}
-        />
-      </div>
-      {byCourier && (
-        <DeliveryDetails
-          address={address(delivery)}
+      >
+        {radioButtons}
+      </RadioGroup>
+      {(data.delivery.sentBy === deliveryTypes.ukrPostCourier ||
+        data.delivery.sentBy === deliveryTypes.novaPostCourier) && (
+        <Courier
+          deliveryType={data.delivery.sentBy}
+          values={data.delivery}
           handleChange={handleChange}
         />
+      )}
+      {data.delivery.sentBy === deliveryTypes.novaPost && (
+        <NovaPost setFieldValue={setFieldValue} values={data.delivery} />
+      )}
+
+      {data.delivery.sentBy === deliveryTypes.ukrPost && (
+        <UkrPost setFieldValue={setFieldValue} values={data.delivery} />
       )}
     </div>
   );
@@ -87,14 +61,15 @@ Delivery.propTypes = {
       sentBy: PropTypes.string,
       byCourier: PropTypes.bool,
       courierOffice: PropTypes.string,
-      cost: PropTypes.arrayOf(PropTypes.string),
+      cost: PropTypes.arrayOf(PropTypes.object),
       city: PropTypes.string,
       street: PropTypes.string,
       house: PropTypes.string,
       flat: PropTypes.string
     })
   ),
-  handleChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired
 };
 
 export default Delivery;

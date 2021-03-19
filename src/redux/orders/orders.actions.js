@@ -7,7 +7,20 @@ import {
   GET_ORDER_LIST,
   SET_ORDER_LIST,
   DELETE_ORDER,
-  REMOVE_ORDER_FROM_STORE
+  REMOVE_ORDER_FROM_STORE,
+  SET_NOVAPOSHTA_CITIES,
+  GET_NOVAPOSHTA_CITIES,
+  GET_NOVAPOSHTA_WAREHOUSES,
+  SET_NOVAPOSHTA_WAREHOUSES,
+  SET_DELIVERY_LOADING,
+  SET_UKRPOST_REGIONS,
+  GET_UKRPOST_REGIONS,
+  SET_UKRPOST_DISTRICTS,
+  GET_UKRPOST_DISTRICTS,
+  SET_UKRPOST_CITIES,
+  GET_UKRPOST_CITIES,
+  SET_UKRPOST_POSTOFFICES,
+  GET_UKRPOST_POSTOFFICES
 } from './orders.types';
 
 const getOrder = (payload) => ({
@@ -58,6 +71,67 @@ const removeOrderFromStore = (payload) => ({
   payload
 });
 
+const setNovaPoshtaCities = (cities) => ({
+  type: SET_NOVAPOSHTA_CITIES,
+  payload: cities
+});
+
+const getNovaPoshtaCities = (payload) => ({
+  type: GET_NOVAPOSHTA_CITIES,
+  payload
+});
+
+const setNovaPoshtaWarehouse = (payload) => ({
+  type: SET_NOVAPOSHTA_WAREHOUSES,
+  payload
+});
+
+const getNovaPoshtaWarehouse = (payload) => ({
+  type: GET_NOVAPOSHTA_WAREHOUSES,
+  payload
+});
+
+const setUkrPostRegions = (payload) => ({
+  type: SET_UKRPOST_REGIONS,
+  payload
+});
+
+const getUkrPostRegions = () => ({
+  type: GET_UKRPOST_REGIONS
+});
+const setUkrPostDistricts = (payload) => ({
+  type: SET_UKRPOST_DISTRICTS,
+  payload
+});
+
+const getUkrPostDistricts = (payload) => ({
+  type: GET_UKRPOST_DISTRICTS,
+  payload
+});
+const setUkrPostCities = (payload) => ({
+  type: SET_UKRPOST_CITIES,
+  payload
+});
+
+const getUkrPostCities = (payload) => ({
+  type: GET_UKRPOST_CITIES,
+  payload
+});
+const setUkrPostPostOffices = (payload) => ({
+  type: SET_UKRPOST_POSTOFFICES,
+  payload
+});
+
+const getUkrPostPostOffices = (payload) => ({
+  type: GET_UKRPOST_POSTOFFICES,
+  payload
+});
+
+const setDeliveryLoading = (payload) => ({
+  type: SET_DELIVERY_LOADING,
+  payload
+});
+
 export {
   getOrder,
   setOrder,
@@ -67,5 +141,18 @@ export {
   getOrderList,
   setOrderList,
   deleteOrder,
-  removeOrderFromStore
+  removeOrderFromStore,
+  getNovaPoshtaCities,
+  setNovaPoshtaCities,
+  getNovaPoshtaWarehouse,
+  setNovaPoshtaWarehouse,
+  setDeliveryLoading,
+  getUkrPostCities,
+  setUkrPostCities,
+  getUkrPostDistricts,
+  setUkrPostDistricts,
+  getUkrPostPostOffices,
+  setUkrPostPostOffices,
+  getUkrPostRegions,
+  setUkrPostRegions
 };
