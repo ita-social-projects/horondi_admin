@@ -13,11 +13,12 @@ import CategoryDeleteDialog from '../category-delete-dialog';
 import useCategoryFilters from '../../../hooks/filters/use-category-filters';
 import TableContainerRow from '../../../containers/table-container-row';
 import { config } from '../../../configs';
-import mockStore from './categories-variables';
+import variables from './variables';
 
 const { ADD_CATEGORY } = config.buttonTitles;
 const { mainPageTitle } = config.titles.categoryPageTitles;
 
+const mockStore = variables;
 Enzyme.configure({ adapter: new Adapter() });
 jest.mock('../../../hooks/filters/use-category-filters');
 jest.mock('react-redux', () => ({

@@ -1,4 +1,4 @@
-const categoriesDates = {
+const variables = {
   Categories: {
     filter: { _id: [], search: '' },
     categoriesLoading: false,
@@ -31,4 +31,4 @@ const categoriesDates = {
   }
 };
 
-export default categoriesDates;
+export default variables;
