@@ -36,7 +36,9 @@ export const patternErrorMessages = {
   PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
 export const categoryErrorMessages = {
-  CATEGORY_VALIDATION_ERROR: 'Мінімум 2 символи',
+  CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
+  CATEGORY_VALIDATION_ERROR_CATEGORY_NAME:
+    'Назва повинна містити від 2 до 50 символів',
   CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім',
   CATEGORY_UA_NAME_MESSAGE:
     'Поле може містити тільки українські літери та цифри',
