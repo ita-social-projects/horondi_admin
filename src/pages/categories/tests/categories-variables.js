@@ -1,4 +1,4 @@
-const mockStore = {
+const categoriesDates = {
   Categories: {
     filter: { _id: [], search: '' },
     categoriesLoading: false,
@@ -31,4 +31,4 @@ const mockStore = {
   }
 };
 
-export default mockStore;
+export default categoriesDates;
