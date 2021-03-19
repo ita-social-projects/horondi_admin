@@ -118,10 +118,12 @@ const ContactsEdit = ({ match }) => {
     return <LoadingBar />;
   }
   return (
-    <ContactsForm
-      contactSaveHandler={contactSaveHandler}
-      initialValues={contactFormValues}
-    />
+    contactFormValues.email && (
+      <ContactsForm
+        contactSaveHandler={contactSaveHandler}
+        initialValues={contactFormValues}
+      />
+    )
   );
 };
 
