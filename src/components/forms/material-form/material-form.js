@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextField, Grid, Tabs, AppBar, Paper } from '@material-ui/core';
+import { TextField, Grid, Paper } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
@@ -37,7 +37,7 @@ function MaterialForm({ material, id }) {
 
   const { loading } = useSelector(materialSelector);
 
-  const { createMaterial, tabsValue, handleTabsChange } = useMaterialHandlers();
+  const { createMaterial } = useMaterialHandlers();
 
   const formSchema = Yup.object().shape({
     uaName: Yup.string()
@@ -204,22 +204,7 @@ function MaterialForm({ material, id }) {
             )}
           </Paper>
         </Grid>
-        {languages.length > 0 ? (
-          <div>
-            <AppBar position='static'>
-              <Tabs
-                indicatorColor='primary'
-                textColor='primary'
-                className={styles.tabs}
-                value={tabsValue}
-                onChange={handleTabsChange}
-                aria-label='tabs'
-              >
-                {languageTabs}
-              </Tabs>
-            </AppBar>
-          </div>
-        ) : null}
+        {languages.length > 0 ? <div>{languageTabs}</div> : null}
         <div className={styles.controlsBlock}>
           <div>
             <BackButton />

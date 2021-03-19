@@ -33,7 +33,6 @@ import LanguagePanel from '../language-panel';
 import { modelValidationSchema } from '../../../validations/models/model-form-validation';
 import { getSizes } from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
-import labels from '../../../configs/labels';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -55,6 +54,12 @@ const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
 const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
+
+  const checkIsEdit = (checkCondition) => {
+    if (checkCondition) {
+      return model.sizes.map((item) => item._id);
+    }
+  };
 
   const inputLabel = React.useRef(null);
   const {
@@ -96,7 +101,7 @@ const ModelForm = ({ model, id, isEdit }) => {
       enDescription: model.description[1].value || '',
       priority: model.priority || 1,
       category: category || '',
-      sizes: sizes || [],
+      sizes: checkIsEdit(isEdit) || [],
       show: model.show || false,
       availableForConstructor: model.availableForConstructor || false
     },
@@ -195,22 +200,25 @@ const ModelForm = ({ model, id, isEdit }) => {
             </div>
             <FormControl
               variant={materialUiConstants.outlined}
-              className={styles.textField}
+              className={styles.formControl}
             >
-              <InputLabel ref={inputLabel} htmlFor={labelsEn.categorySelect}>
+              <InputLabel
+                htmlFor={labelsEn.categorySelect}
+                ref={inputLabel}
+                id={labelsEn.labelId}
+                shrink
+              >
                 {availableCategory}
               </InputLabel>
               <Select
                 id={labelsEn.category}
+                labelId={labelsEn.labelId}
                 data-cy={labelsEn.category}
-                native
                 value={category}
+                native
                 onChange={handleCategory}
                 label={availableCategory}
-                inputProps={{
-                  name: labelsEn.category,
-                  id: labels.categorySelect
-                }}
+                variant={labelsEn.variantStandard}
               >
                 <option value='' />
                 {categories.map((cat) => (
@@ -225,7 +233,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             </FormControl>
             <TextField
               id={labelsEn.priority}
-              type={materialUiConstants.types.string}
+              type={materialUiConstants.types.number}
               data-cy={labelsEn.priority}
               className={styles.textField}
               variant={materialUiConstants.outlined}

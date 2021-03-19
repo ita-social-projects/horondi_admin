@@ -8,6 +8,20 @@ const formStyles = (theme) => ({
     marginLeft: '5px'
   },
 
+  inputLabel: {
+    marginTop: '7px'
+  },
+
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: '120px',
+    marginTop: '20px'
+  },
+
+  purposeSelect: {
+    width: '390px'
+  },
+
   returnButton: {
     margin: theme.spacing(2),
     marginRight: 0
