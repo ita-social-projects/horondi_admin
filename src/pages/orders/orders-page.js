@@ -20,7 +20,7 @@ import { handleOrdersPage } from '../../utils/handle-orders-page';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
-const {pathToOrderItem} = config.routes;
+const { pathToOrderItem } = config.routes;
 const { REMOVE_ORDER_MESSAGE } = config.messages;
 
 const OrdersPage = () => {
@@ -42,7 +42,6 @@ const OrdersPage = () => {
     orders: Orders.list.items,
     count: Orders.list.count
   }));
-
   const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
     rowsPerPage: Table.pagination.rowsPerPage,
