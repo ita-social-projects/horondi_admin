@@ -11,17 +11,17 @@ const Courier = ({ deliveryType, values, handleChange, touched, errors }) => {
   const styles = useStyles();
 
   return (
-    <div className={styles.courierContainer}>
+    <div>
       <h3 className={styles.courierTitle}>
         {deliveryType === deliveryTypes.novaPostCourier
           ? deliveryTitles.novaPostCourieru
           : deliveryTitles.ukrPostCourier}
       </h3>
-      <div className={styles.inputData}>
+      <div>
         <h4 className={styles.courierInputDataTitle}>
           {deliveryTitles.deliveryAddress}
         </h4>
-        <div className={styles.inputWrapper}>
+        <div>
           {courierInputLabels().map((field) => (
             <>
               <TextField
@@ -29,8 +29,9 @@ const Courier = ({ deliveryType, values, handleChange, touched, errors }) => {
                 name={field.name}
                 className={styles.textField}
                 label={field.label}
-                value={values[field.name]}
+                value={values[field.value]}
                 onChange={handleChange}
+                variant='outlined'
                 // error={touched[field.name] && !!errors[field.name]}
               />
               {/* {touched[field.name] && errors[field.name] && (

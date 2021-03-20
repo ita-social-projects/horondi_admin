@@ -179,6 +179,24 @@ export const updateOrder = (order, id) => {
   return setItems(query, { order, id });
 };
 
+export const addOrder = (order) => {
+  const query = `
+		mutation ($order: OrderInput!) {
+			addOrder (order: $order) {
+				...on Order {
+					orderNumber
+				}
+				...on Error {
+					statusCode
+					message
+				}
+			}
+		}
+  `;
+  console.log(order);
+  return setItems(query, { order });
+};
+
 export const getAllOrders = async (skip, limit, filter) => {
   const result = await client.query({
     query: gql`

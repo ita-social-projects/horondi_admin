@@ -40,7 +40,7 @@ const General = ({ data, handleChange }) => {
         <Select
           fullWidth
           id='status'
-          name='status'
+          name={inputName.status}
           value={status}
           onChange={handleChange}
           variant={materialUiConstants.outlined}

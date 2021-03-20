@@ -1,45 +1,25 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(() => ({
-  courierContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'flex-start',
-    width: '100%',
-    marginBottom: '2%',
-    marginLeft: '1%'
-  },
-  inputData: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%'
-  },
-  inputWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    marginBottom: '2%'
-  },
   error: {
     color: '#e60000',
     marginBottom: '2%'
   },
   textField: {
-    width: '80%',
-    marginBottom: '3%'
+    width: '100%',
+    marginBottom: '15px'
   },
   courierTitle: {
     fontWeight: 400,
     fontSize: 20,
     width: '100%',
-    color: '#242424',
+    color: 'rgba(0, 0, 0, 0.87)',
     margin: '20px 0 20px 0'
   },
   courierInputDataTitle: {
     fontWeight: 400,
     fontSize: 20,
-    color: '#242424',
+    color: 'rgba(0, 0, 0, 0.87)',
     margin: '0 0 20px 0'
   }
 }));

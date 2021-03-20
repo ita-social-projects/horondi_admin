@@ -35,16 +35,19 @@ const Delivery = ({ data, handleChange, setFieldValue }) => {
         data.delivery.sentBy === deliveryTypes.novaPostCourier) && (
         <Courier
           deliveryType={data.delivery.sentBy}
-          values={data.delivery}
+          values={data.delivery.courier}
           handleChange={handleChange}
         />
       )}
       {data.delivery.sentBy === deliveryTypes.novaPost && (
-        <NovaPost setFieldValue={setFieldValue} values={data.delivery} />
+        <NovaPost
+          setFieldValue={setFieldValue}
+          values={data.delivery.novaPost}
+        />
       )}
 
       {data.delivery.sentBy === deliveryTypes.ukrPost && (
-        <UkrPost setFieldValue={setFieldValue} values={data.delivery} />
+        <UkrPost setFieldValue={setFieldValue} values={data.delivery.ukrPost} />
       )}
     </div>
   );
@@ -55,19 +58,22 @@ Delivery.defaultProps = {
 };
 
 Delivery.propTypes = {
-  data: PropTypes.objectOf(
-    PropTypes.shape({
-      sentOn: PropTypes.string,
-      sentBy: PropTypes.string,
-      byCourier: PropTypes.bool,
-      courierOffice: PropTypes.string,
-      cost: PropTypes.arrayOf(PropTypes.object),
-      city: PropTypes.string,
-      street: PropTypes.string,
-      house: PropTypes.string,
-      flat: PropTypes.string
+  data: PropTypes.objectOf({
+    sentOn: PropTypes.string,
+    sentBy: PropTypes.string,
+    byCourier: PropTypes.bool,
+    courierOffice: PropTypes.string,
+    cost: PropTypes.arrayOf(PropTypes.object),
+    city: PropTypes.string,
+    street: PropTypes.string,
+    house: PropTypes.string,
+    flat: PropTypes.string,
+    delivery: PropTypes.objectOf({
+      courier: PropTypes.string.isRequired,
+      novaPost: PropTypes.string.isRequired,
+      ukrPost: PropTypes.string.isRequired
     })
-  ),
+  }),
   handleChange: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired
 };

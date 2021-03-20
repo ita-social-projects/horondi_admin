@@ -69,7 +69,7 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
   }, [dispatch, cityId]);
 
   return (
-    <div className={styles.ukrPostContainer}>
+    <div>
       <h3 className={styles.ukrPostTitle}>{deliveryTitles.ukrPost}</h3>
       <div className={styles.selectorInfo}>
         <Autocomplete
@@ -80,11 +80,13 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
           onChange={(event, value) => {
             if (value) {
               setRegionId(value.REGION_ID);
+              setFieldValue(inputName.ukrPost.region, value.REGION_UA);
             } else {
               setRegion('');
               setDistrict('');
               setCity('');
               setPostOffice('');
+              setFieldValue(inputName.ukrPost.region, '');
             }
           }}
           options={ukrPoshtaRegions}
@@ -123,11 +125,13 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
           onChange={(event, value) => {
             if (value) {
+              setFieldValue(inputName.ukrPost.district, value.DISTRICT_UA);
               setDistrictId(value.DISTRICT_ID);
             } else {
               setDistrictId('');
               setCity('');
               setPostOffice('');
+              setFieldValue(inputName.ukrPost.district, '');
             }
           }}
           disabled={!region}
@@ -170,11 +174,11 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
           onChange={(event, value) => {
             if (value) {
               setCityId(value.CITY_ID);
-              setFieldValue(inputName.city, value.CITY_UA);
+              setFieldValue(inputName.ukrPost.city, value.CITY_UA);
             } else {
               setCityId('');
               setPostOffice('');
-              setFieldValue(inputName.city, '');
+              setFieldValue(inputName.ukrPost.city, '');
             }
           }}
           disabled={!district}
@@ -216,15 +220,19 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
           onChange={(event, value) => {
             if (value) {
               setPostOffice(
-                `${POST_OFFICE_NUMBER} ${value.POSTCODE}, ${value?.STREET_UA_VPZ}`
+                `${POST_OFFICE_NUMBER} ${value.POSTCODE}, ${
+                  value.STREET_UA_VPZ || ''
+                }`
               );
               setFieldValue(
-                inputName.department,
-                `${POST_OFFICE_NUMBER} ${value.POSTCODE}, ${value?.STREET_UA_VPZ}`
+                inputName.ukrPost.courierOffice,
+                `${POST_OFFICE_NUMBER} ${value.POSTCODE}, ${
+                  value.STREET_UA_VPZ || ''
+                }`
               );
             } else {
               setPostOffice('');
-              setFieldValue(inputName.department, '');
+              setFieldValue(inputName.ukrPost.courierOffice, '');
             }
           }}
           onFocus={() => setDepartmentFocus(true)}

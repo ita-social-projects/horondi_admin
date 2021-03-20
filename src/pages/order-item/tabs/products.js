@@ -45,7 +45,7 @@ const Products = ({ data, setFieldValue }) => {
     items &&
     items.map((item, index) => (
       <TableContainerRow
-        key={item.product.name[0].value}
+        key={item.product._id}
         num={index + 1}
         name={item.product.name[0].value}
         quantity={item.quantity}

@@ -44,7 +44,7 @@ const NovaPost = ({ setFieldValue, values, errors, touched }) => {
   }, [dispatch, selectedCity]);
 
   return (
-    <div className={styles.novaPostContainer}>
+    <div>
       <h3 className={styles.novaPostTitle}>{deliveryTitles.novaPost}</h3>
       <div className={styles.novaPostData}>
         <div className={styles.selectorInfo}>
@@ -59,11 +59,11 @@ const NovaPost = ({ setFieldValue, values, errors, touched }) => {
             onChange={(event, value) => {
               if (value) {
                 setSelectedCity(value.description);
-                setFieldValue(inputName.cityInput, value.description);
+                setFieldValue(inputName.novaPost.city, value.description);
               } else {
                 setSelectedCity('');
                 setWarehouse('');
-                setFieldValue(inputName.cityInput, '');
+                setFieldValue(inputName.novaPost.city, '');
               }
             }}
             options={cities}
@@ -104,9 +104,12 @@ const NovaPost = ({ setFieldValue, values, errors, touched }) => {
             noOptionsText={deliveryAdditionalInfo.noOneDepartment}
             onChange={(event, value) => {
               if (value) {
-                setFieldValue(inputName.officeInput, value.description);
+                setFieldValue(
+                  inputName.novaPost.courierOffice,
+                  value.description
+                );
               } else {
-                setFieldValue(inputName.officeInput, '');
+                setFieldValue(inputName.novaPost.courierOffice, '');
                 setWarehouse('');
               }
             }}

@@ -1,6 +1,7 @@
 import {
   SET_ORDER,
   UPDATE_ORDER,
+  ADD_ORDER,
   SET_ORDER_LOADING,
   SET_ORDER_ERROR,
   GET_ORDER,
@@ -39,6 +40,11 @@ const updateOrder = (order, id) => ({
     order,
     id
   }
+});
+
+const addOrder = (payload) => ({
+  type: ADD_ORDER,
+  payload
 });
 
 const getOrderList = (payload) => ({
@@ -136,6 +142,7 @@ export {
   getOrder,
   setOrder,
   updateOrder,
+  addOrder,
   setOrderLoading,
   setOrderError,
   getOrderList,

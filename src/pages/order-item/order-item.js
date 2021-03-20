@@ -7,7 +7,11 @@ import PropTypes from 'prop-types';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
 import { Delivery, Recipient, Products, General } from './tabs';
-import { getOrder, updateOrder } from '../../redux/orders/orders.actions';
+import {
+  addOrder,
+  getOrder,
+  updateOrder
+} from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -15,7 +19,12 @@ import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
 import { BackButton } from '../../components/buttons';
-import { newOrder, submitStatus } from '../../utils/order';
+import {
+  newOrder,
+  submitStatus,
+  initialValues,
+  setFormValues
+} from '../../utils/order';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -40,18 +49,25 @@ const OrderItem = ({ id }) => {
   };
 
   const handleFormSubmit = (data) => {
-    if (
-      newOrder.status !== initialValues.status &&
-      !submitStatus.includes(newOrder(data).status)
-    ) {
-      const updateOrderSnackbar = () => {
-        dispatch(closeDialog());
-        dispatch(updateOrder(newOrder(data), id));
-      };
-      openSuccessSnackbar(updateOrderSnackbar, dialogContent, dialogTitle);
-    } else {
+    // if (
+    //   newOrder.status !== initialValues.status &&
+    //   !submitStatus.includes(newOrder(data).status)
+    // ) {
+    //   const updateOrderSnackbar = () => {
+    //     dispatch(closeDialog());
+    //     dispatch(updateOrder(newOrder(data), id));
+    //   };
+    //   openSuccessSnackbar(updateOrderSnackbar, dialogContent, dialogTitle);
+    // } else {
+    if (id) {
       dispatch(updateOrder(newOrder(data), id));
+      setTabValue(0);
+    } else {
+      dispatch(addOrder(newOrder(data)));
+      resetForm({ values: initialValues });
+      setTabValue(0);
     }
+    // }
   };
 
   const {
@@ -60,30 +76,16 @@ const OrderItem = ({ id }) => {
     handleSubmit,
     setFieldValue,
     dirty,
-    initialValues,
     resetForm
   } = useFormik({
-    initialValues: {
-      paymentStatus: '',
-      paymentMethod: '',
-      isPaid: false,
-      user: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: ''
-      },
-      delivery: { sentBy: 'SELFPICKUP' },
-      userComment: '',
-      items: []
-    },
+    initialValues,
     onSubmit: handleFormSubmit
   });
 
   useEffect(() => console.log(values));
   useEffect(() => {
     if (selectedOrder && id) {
-      resetForm({ values: selectedOrder });
+      resetForm({ values: setFormValues(selectedOrder) });
     }
   }, [selectedOrder, resetForm]);
 

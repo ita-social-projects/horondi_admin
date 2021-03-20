@@ -12,11 +12,13 @@ import {
   GET_UKRPOST_REGIONS,
   GET_UKRPOST_DISTRICTS,
   GET_UKRPOST_CITIES,
-  GET_UKRPOST_POSTOFFICES
+  GET_UKRPOST_POSTOFFICES,
+  ADD_ORDER
 } from './orders.types';
 import {
   getOrderById,
   updateOrder,
+  addOrder,
   getAllOrders,
   deleteOrder,
   getNovaPoshtaCities,
@@ -48,7 +50,11 @@ import {
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
-const { SUCCESS_DELETE_STATUS } = config.statuses;
+const {
+  SUCCESS_DELETE_STATUS,
+  SUCCESS_UPDATE_STATUS,
+  SUCCESS_CREATION_STATUS
+} = config.statuses;
 
 export function* handleOrderUpdate({ payload }) {
   try {
@@ -58,7 +64,22 @@ export function* handleOrderUpdate({ payload }) {
       throw new Error(order.errors[0].message);
     }
     yield put(setOrder(order.data.updateOrder));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (e) {
+    yield call(handleErrorSnackbar, e.message);
+    yield put(setOrderError(e));
+  } finally {
+    yield put(setOrderLoading(false));
+  }
+}
+
+export function* handleAddOrder({ payload }) {
+  try {
+    yield put(setOrderLoading(true));
+    yield call(addOrder, payload);
+    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
+  } catch (e) {
+    yield call(handleErrorSnackbar, e.message);
     yield put(setOrderError(e));
   } finally {
     yield put(setOrderLoading(false));
@@ -203,6 +224,7 @@ export default function* ordersSaga() {
   yield takeEvery(GET_ORDER_LIST, handleOrdersListLoad);
   yield takeEvery(GET_ORDER, handleOrderLoad);
   yield takeEvery(UPDATE_ORDER, handleOrderUpdate);
+  yield takeEvery(ADD_ORDER, handleAddOrder);
   yield takeEvery(DELETE_ORDER, handleOrdersDelete);
   yield takeEvery(GET_NOVAPOSHTA_CITIES, handleNovaPoshtaCities);
   yield takeEvery(GET_NOVAPOSHTA_WAREHOUSES, handleNovaPoshtaWarehouse);
