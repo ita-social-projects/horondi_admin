@@ -2,9 +2,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
-  const { saveButton, tabs, controlsBlock, itemUpdate, textField } = formStyles(
-    theme
-  );
+  const {
+    returnButton,
+    saveButton,
+    tabs,
+    controlsBlock,
+    itemUpdate,
+    textField,
+    imageUpload,
+    imageUploadAvatar
+  } = formStyles(theme);
   return {
     newsItemUpdate: {
       ...itemUpdate
@@ -13,22 +20,26 @@ export const useStyles = makeStyles((theme) => {
       color: '#e60000',
       marginLeft: '5px'
     },
+    inputBlock: {
+      margin: '10px 0'
+    },
     formContainer: {
       width: '100%',
       padding: 20,
       marginTop: 70
     },
-    imageUploadAvatar: {
-      padding: '10px',
+    imageUploadBlock: {
       display: 'flex',
-      alignItems: 'center',
-      '& div:nth-child(2)': {
-        marginLeft: '15px'
+      '@media (max-width: 768px)': {
+        flexDirection: 'column'
       }
     },
     textField,
     tabs,
     controlsBlock,
-    saveButton
+    returnButton,
+    saveButton,
+    imageUpload,
+    imageUploadAvatar
   };
 });
