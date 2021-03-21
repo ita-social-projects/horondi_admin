@@ -40,7 +40,7 @@ const AddProductForm = ({ items, setFieldValue }) => {
   }, [selectedProduct]);
 
   useEffect(() => {
-    sizes && setSize(sizes[0].name);
+    selectedProduct && sizes && setSize(sizes[0].name);
   }, [sizes]);
 
   const addProductHandler = () => {
@@ -119,7 +119,11 @@ const AddProductForm = ({ items, setFieldValue }) => {
       </div>
       <div>
         {productLabels.size}
-        <Select value={size} onChange={selectHandler}>
+        <Select
+          disabled={!selectedProduct}
+          value={size}
+          onChange={selectHandler}
+        >
           {sizeItems}
         </Select>
       </div>

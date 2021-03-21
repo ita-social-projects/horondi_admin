@@ -58,7 +58,8 @@ const orders = {
     product: 'Продукти',
     addProduct: 'Додати продукт',
     quantity: 'Кількість: ',
-    size: 'Розмір: '
+    size: 'Розмір: ',
+    saveProduct: 'Зберегти'
   },
   productAdditionalInfo: {
     noOneProduct: 'Жодного продукту не знайдено'

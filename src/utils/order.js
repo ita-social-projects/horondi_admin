@@ -209,8 +209,9 @@ export const mergeProducts = (selectedProduct, size, quantity, items) => {
       item.options.size._id === size._id
   );
   if (index !== -1) {
-    items[index].quantity += quantity;
-    return items;
+    const newItem = { ...items[index] };
+    newItem.quantity += quantity;
+    return [...items.slice(0, index), newItem, ...items.slice(index + 1)];
   }
   return [
     ...items,
