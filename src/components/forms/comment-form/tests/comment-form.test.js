@@ -8,20 +8,11 @@ import * as formik from 'formik';
 
 import CommentForm from '../index';
 import { config } from '../../../../configs';
+import { mockComment, mockId, mockIsEdit } from './comment-form.variables';
 
 configure({ adapter: new Adapter() });
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 const { productInfo } = config.labels.comment;
-
-const mockComment = {
-  text: 'Допоможіть! Дитина помалювала фламастером, нічим не можу вивести.',
-  show: true,
-  product: {
-    _id: 'UID'
-  }
-};
-const mockId = '6047321793650236ddbfb841';
-const mockIsEdit = true;
 
 const mockHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -61,7 +52,7 @@ describe('Comment form tests', () => {
   });
 
   it('Should render component form', () => {
-    expect(wrapper.find('form')).toBeDefined();
+    expect(wrapper.find('form')).toHaveLength(1);
   });
 
   it('Should update checkboxes checked value on click', () => {
