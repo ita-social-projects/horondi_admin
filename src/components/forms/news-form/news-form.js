@@ -1,41 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
-import { Avatar, Box } from '@material-ui/core';
-import { Image } from '@material-ui/icons';
+import { Grid, Paper } from '@material-ui/core';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useStyles } from './news-form.styles';
-import { SaveButton, StandardButton } from '../../buttons';
+import { SaveButton, BackButton } from '../../buttons';
 import useNewsHandlers from '../../../utils/use-news-handlers';
 import { config } from '../../../configs';
 import { addArticle, updateArticle } from '../../../redux/news/news.actions';
-import ImageUploadContainer from '../../../containers/image-upload-container';
+import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
 
-const {
-  MAIN_PHOTO,
-  AUTHOR_PHOTO,
-  SAVE_TITLE,
-  GO_BACK_TITLE
-} = config.buttonTitles;
+const map = require('lodash/map');
+
+const { languages } = config;
+const { MAIN_PHOTO, AUTHOR_PHOTO, SAVE_TITLE } = config.buttonTitles;
 const {
   NAME_MIN_LENGTH_MESSAGE,
   TITLE_MIN_LENGTH_MESSAGE,
   TEXT_MIN_LENGTH_MESSAGE
 } = config.newsErrorMessages;
-const { IMG_URL } = config;
+const { imagePrefix } = config;
 const { authorName, title, text } = config.labels.news;
+const imageUploadNewsInputsId = {
+  authorImageInput: 'authorImageInput',
+  newsImageInput: 'newsImageInput'
+};
 
 const NewsForm = ({ id, newsArticle, editMode }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
-    checkboxes,
-    preferredLanguages,
-    setPreferredLanguages,
-    languageCheckboxes,
     createArticle,
     uploadAuthorImage,
     setUploadAuthorImage,
@@ -43,21 +39,17 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     setUploadNewsImage
   } = useNewsHandlers();
 
-  const [authorAvatar, setAuthorAvatar] = useState('');
-  const [newsAvatar, setNewsAvatar] = useState('');
-
   useEffect(() => {
-    const prefLanguages = [];
-    Object.keys(checkboxes).forEach((key) => {
-      if (checkboxes[key]) {
-        prefLanguages.push(key);
-      }
-    });
-    setPreferredLanguages(prefLanguages);
-  }, [checkboxes, setPreferredLanguages]);
+    if (newsArticle.author.image) {
+      setUploadAuthorImage(`${imagePrefix}${newsArticle.author.image}`);
+    }
+    if (newsArticle.image.constructorImg) {
+      setUploadNewsImage(`${imagePrefix}${newsArticle.image.constructorImg}`);
+    }
+  }, [dispatch, newsArticle]);
 
   const selectFormSchema = () => {
-    const formObj = preferredLanguages.reduce((reducer, lang) => {
+    const formObj = languages.reduce((reducer, lang) => {
       reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
         .required(NAME_MIN_LENGTH_MESSAGE);
@@ -114,23 +106,19 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
       const reader = new FileReader();
       if (e.target.previousSibling.textContent === AUTHOR_PHOTO) {
         reader.onload = (event) => {
-          setAuthorAvatar(event.target.result);
+          setUploadAuthorImage(event.target.result);
         };
 
         setUploadAuthorImage(e.target.files[0]);
       } else if (e.target.previousSibling.textContent === MAIN_PHOTO) {
         reader.onload = (event) => {
-          setNewsAvatar(event.target.result);
+          setUploadNewsImage(event.target.result);
         };
 
         setUploadNewsImage(e.target.files[0]);
       }
       reader.readAsDataURL(e.target.files[0]);
     }
-  };
-
-  const handleGoBack = () => {
-    dispatch(push(config.routes.pathToNews));
   };
 
   const inputs = [
@@ -147,65 +135,71 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     inputs
   };
 
+  const navButtons = (
+    <>
+      <BackButton />
+      <SaveButton
+        className={styles.saveButton}
+        data-cy='save'
+        type='submit'
+        title={SAVE_TITLE}
+      />
+    </>
+  );
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className={styles.controlsBlock}>
-          <div>{languageCheckboxes}</div>
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save'
-            type='submit'
-            title={SAVE_TITLE}
-          />
-        </div>
-        <Box my={3}>
-          <div className={styles.imageUploadAvatar}>
-            <ImageUploadContainer
-              handler={handleImageLoad}
-              buttonLabel={AUTHOR_PHOTO}
-            />
+        {navButtons}
+        <Grid item xs={12}>
+          <Paper className={styles.inputBlock}>
+            <div className={styles.imageUploadBlock}>
+              <div>
+                <span className={styles.imageUpload}>
+                  {config.labels.news.avatarText}
+                </span>
 
-            {authorAvatar && (
-              <Avatar src={authorAvatar}>
-                <Image />
-              </Avatar>
-            )}
-          </div>
-        </Box>
-        <Box my={3}>
-          <div className={styles.imageUploadAvatar}>
-            <ImageUploadContainer
-              handler={handleImageLoad}
-              buttonLabel={MAIN_PHOTO}
-            />
-            {newsAvatar && (
-              <Avatar src={newsAvatar}>
-                <Image />
-              </Avatar>
-            )}
-          </div>
-        </Box>
-        {preferredLanguages.length > 0
-          ? preferredLanguages.map((lang) => (
-            <LanguagePanel
-              lang={lang}
-              inputOptions={inputOptions}
-              key={lang}
-            />
-          ))
-          : null}
+                <div className={styles.imageUploadAvatar}>
+                  <ImageUploadPreviewContainer
+                    handler={handleImageLoad}
+                    src={uploadAuthorImage}
+                    id={imageUploadNewsInputsId.authorImageInput}
+                  />
+                  {touched.uploadAuthorImage && errors.uploadAuthorImage && (
+                    <div className={styles.inputError}>
+                      {errors.uploadAuthorImage}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <span className={styles.imageUpload}>
+                  {config.labels.news.mainImgText}
+                </span>
+
+                <div className={styles.imageUploadAvatar}>
+                  <ImageUploadPreviewContainer
+                    handler={handleImageLoad}
+                    src={uploadNewsImage}
+                    id={imageUploadNewsInputsId.newsImageInput}
+                  />
+                  {touched.patternConstructorImage &&
+                    errors.patternConstructorImage && (
+                    <div className={styles.inputError}>
+                      {errors.patternConstructorImage}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Paper>
+        </Grid>
+        {map(languages, (lang) => (
+          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+        ))}
+        {navButtons}
       </form>
-
-      <div className={styles.controlsBlock}>
-        <StandardButton
-          id='back-btn'
-          title={GO_BACK_TITLE}
-          variant='outlined'
-          onClickHandler={handleGoBack}
-          data-cy='back-btn'
-        />
-      </div>
     </div>
   );
 };

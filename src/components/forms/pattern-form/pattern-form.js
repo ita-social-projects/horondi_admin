@@ -17,7 +17,7 @@ import {
   updatePattern
 } from '../../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../../checkbox-options';
-import ImageUploadPatternContainer from '../../../containers/image-upload-container/image-upload-patternContainer';
+import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
@@ -232,7 +232,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   </span>
 
                   <div className={styles.imageUploadAvatar}>
-                    <ImageUploadPatternContainer
+                    <ImageUploadPreviewContainer
                       handler={handleLoadMainImage}
                       src={patternImage}
                       id={imageUploadPatternInputsId.patternImageInput}
@@ -251,7 +251,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   </span>
 
                   <div className={styles.imageUploadAvatar}>
-                    <ImageUploadPatternContainer
+                    <ImageUploadPreviewContainer
                       handler={handleLoadConstructorImage}
                       src={constructorImg}
                       id={imageUploadPatternInputsId.constructorImageInput}
