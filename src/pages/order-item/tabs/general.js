@@ -36,10 +36,10 @@ const General = ({ data, handleChange }) => {
   return (
     <div className={classes.general}>
       <div>
-        <label htmlFor='status'>{deliveryStatusLabel}</label>
+        <label htmlFor={inputName.status}>{deliveryStatusLabel}</label>
         <Select
           fullWidth
-          id='status'
+          id={inputName.status}
           name={inputName.status}
           value={status}
           onChange={handleChange}

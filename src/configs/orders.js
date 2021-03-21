@@ -53,7 +53,16 @@ const orders = {
   dialogTitle: 'Замовлення',
   dialogContent:
     'Зміна статусу "Замовлення створено" чи "Замовлення підтверджено" на інші унеможливить подальше редагування деталей замовлення. Ви дійсно хочете продовжити?',
-  buttonTitle: 'Продовжити'
+  buttonTitle: 'Продовжити',
+  productLabels: {
+    product: 'Продукти',
+    addProduct: 'Додати продукт',
+    quantity: 'Кількість: ',
+    size: 'Розмір: '
+  },
+  productAdditionalInfo: {
+    noOneProduct: 'Жодного продукту не знайдено'
+  }
 };
 
 export default orders;

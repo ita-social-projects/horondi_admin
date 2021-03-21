@@ -11,6 +11,7 @@ import { inputName } from '../../../utils/order';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { config } from '../../../configs';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import AddProductForm from './add-product-form/add-product-form';
 
 const Products = ({ data, setFieldValue }) => {
   const classes = useStyles();
@@ -45,7 +46,7 @@ const Products = ({ data, setFieldValue }) => {
     items &&
     items.map((item, index) => (
       <TableContainerRow
-        key={item.product._id}
+        key={item.product._id + item.options.size._id}
         num={index + 1}
         name={item.product.name[0].value}
         quantity={item.quantity}
@@ -58,11 +59,14 @@ const Products = ({ data, setFieldValue }) => {
 
   return (
     <div className={classes.products}>
-      <TableContainerGenerator
-        id='contactTable'
-        tableTitles={orderProductTitles}
-        tableItems={productItems}
-      />
+      <AddProductForm items={items} setFieldValue={setFieldValue} />
+      {items.length && (
+        <TableContainerGenerator
+          id='contactTable'
+          tableTitles={orderProductTitles}
+          tableItems={productItems}
+        />
+      )}
       <Modal
         open={!!selectedItem?.product}
         onClose={() => setSelectedItem(initialItem)}

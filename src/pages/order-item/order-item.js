@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab, Button } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
@@ -31,7 +32,7 @@ const OrderItem = ({ id }) => {
   const dispatch = useDispatch();
   const { orderTabs } = labels;
   const { delivery, general, products, receiver } = orderTabs;
-  const { dialogTitle, dialogContent } = orders;
+  const { dialogContent, buttonTitle } = orders;
   const { SAVE_ORDER } = buttonTitles;
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -49,25 +50,27 @@ const OrderItem = ({ id }) => {
   };
 
   const handleFormSubmit = (data) => {
-    // if (
-    //   newOrder.status !== initialValues.status &&
-    //   !submitStatus.includes(newOrder(data).status)
-    // ) {
-    //   const updateOrderSnackbar = () => {
-    //     dispatch(closeDialog());
-    //     dispatch(updateOrder(newOrder(data), id));
-    //   };
-    //   openSuccessSnackbar(updateOrderSnackbar, dialogContent, dialogTitle);
-    // } else {
-    if (id) {
+    if (
+      newOrder.status !== initialValues.status &&
+      !submitStatus.includes(newOrder(data).status)
+    ) {
+      const updateOrderSnackbar = () => {
+        dispatch(closeDialog());
+        if (id) {
+          dispatch(updateOrder(newOrder(data), id));
+        } else {
+          dispatch(addOrder(newOrder(data)));
+          resetForm({ values: initialValues });
+        }
+      };
+      openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
+    } else if (id) {
       dispatch(updateOrder(newOrder(data), id));
-      setTabValue(0);
     } else {
       dispatch(addOrder(newOrder(data)));
       resetForm({ values: initialValues });
-      setTabValue(0);
     }
-    // }
+    setTabValue(0);
   };
 
   const {
@@ -82,14 +85,16 @@ const OrderItem = ({ id }) => {
     onSubmit: handleFormSubmit
   });
 
-  useEffect(() => console.log(values));
   useEffect(() => {
     if (selectedOrder && id) {
       resetForm({ values: setFormValues(selectedOrder) });
     }
   }, [selectedOrder, resetForm]);
 
-  const formikHandleChange = handleChange;
+  const formikHandleChange =
+    submitStatus.includes(selectedOrder && selectedOrder.status) || !id
+      ? handleChange
+      : noop;
 
   if (orderLoading) {
     return <LoadingBar />;
