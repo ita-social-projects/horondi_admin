@@ -3,7 +3,10 @@ import Typography from '@material-ui/core/Typography';
 
 import TableContainerGenerator from '../containers/table-container-generator';
 import { config } from '../configs';
-import orders from '../configs/orders';
+import order from '../configs/orders';
+import { newOrder, submitStatus, initialValues } from './order';
+import { addOrder, updateOrder } from '../redux/orders/orders.actions';
+import { closeDialog } from '../redux/dialog-window/dialog-window.actions';
 
 export const handleOrdersPage = (orders, itemsCount, orderItems, style) =>
   orders && orders.length ? (
@@ -19,16 +22,10 @@ export const handleOrdersPage = (orders, itemsCount, orderItems, style) =>
     </Typography>
   );
 
-const { dialogContent, buttonTitle } = orders;
+const { dialogContent, buttonTitle } = order;
 
 export const handleOrderSubmition = (
-  newOrder,
-  initialValues,
-  submitStatus,
   dispatch,
-  closeDialog,
-  updateOrder,
-  addOrder,
   resetForm,
   openSuccessSnackbar,
   data,

@@ -8,24 +8,13 @@ import { noop } from 'lodash';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
 import { Delivery, Recipient, Products, General } from './tabs';
-import {
-  addOrder,
-  getOrder,
-  updateOrder
-} from '../../redux/orders/orders.actions';
+import { getOrder } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
-import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
 import { BackButton } from '../../components/buttons';
-import {
-  newOrder,
-  submitStatus,
-  initialValues,
-  setFormValues
-} from '../../utils/order';
+import { submitStatus, initialValues, setFormValues } from '../../utils/order';
 import { validationSchema } from '../../validations/orders/order-form-validation';
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
 
@@ -34,7 +23,6 @@ const OrderItem = ({ id }) => {
   const dispatch = useDispatch();
   const { orderTabs } = labels;
   const { delivery, general, products, receiver } = orderTabs;
-  const { dialogContent, buttonTitle } = orders;
   const { SAVE_ORDER } = buttonTitles;
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -52,19 +40,7 @@ const OrderItem = ({ id }) => {
   };
 
   const handleFormSubmit = (data) => {
-    handleOrderSubmition(
-      newOrder,
-      initialValues,
-      submitStatus,
-      dispatch,
-      closeDialog,
-      updateOrder,
-      addOrder,
-      resetForm,
-      openSuccessSnackbar,
-      data,
-      id
-    );
+    handleOrderSubmition(dispatch, resetForm, openSuccessSnackbar, data, id);
     setTabValue(0);
   };
 
