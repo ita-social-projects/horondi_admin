@@ -14,7 +14,7 @@ import {
 } from '../../../../../redux/orders/orders.actions';
 import { inputName, POSTOMAT } from '../../../../../utils/order';
 
-const NovaPost = ({ setFieldValue, values, errors, touched }) => {
+const NovaPost = ({ setFieldValue, values }) => {
   const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = config;
   const dispatch = useDispatch();
   const styles = useStyles();
@@ -73,7 +73,6 @@ const NovaPost = ({ setFieldValue, values, errors, touched }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                // error={touched.city && !!errors.city}
                 label={deliveryLabels.city}
                 variant='outlined'
                 InputProps={{
@@ -88,11 +87,6 @@ const NovaPost = ({ setFieldValue, values, errors, touched }) => {
               />
             )}
           />
-          {/* {touched.city && errors.city && (
-            <div data-cy={CY_CODE_ERR} className={styles.error}>
-              {errors.city}
-            </div>
-          )} */}
         </div>
       </div>
       <div className={styles.novaPostData}>
@@ -126,7 +120,6 @@ const NovaPost = ({ setFieldValue, values, errors, touched }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                // error={touched.courierOffice && !!errors.courierOffice}
                 label={deliveryLabels.department}
                 variant='outlined'
                 InputProps={{
@@ -141,11 +134,6 @@ const NovaPost = ({ setFieldValue, values, errors, touched }) => {
               />
             )}
           />
-          {/* {touched.courierOffice && errors.courierOffice && (
-            <div data-cy={CY_CODE_ERR} className={styles.error}>
-              {errors.courierOffice}
-            </div>
-          )} */}
         </div>
       </div>
     </div>
@@ -157,9 +145,7 @@ NovaPost.propTypes = {
   values: PropTypes.shape({
     city: PropTypes.string,
     courierOffice: PropTypes.string
-  }).isRequired,
-  errors: PropTypes.string.isRequired,
-  touched: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default NovaPost;

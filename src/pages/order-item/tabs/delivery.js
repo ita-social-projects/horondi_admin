@@ -58,20 +58,12 @@ Delivery.defaultProps = {
 };
 
 Delivery.propTypes = {
-  data: PropTypes.objectOf({
-    sentOn: PropTypes.string,
-    sentBy: PropTypes.string,
-    byCourier: PropTypes.bool,
-    courierOffice: PropTypes.string,
-    cost: PropTypes.arrayOf(PropTypes.object),
-    city: PropTypes.string,
-    street: PropTypes.string,
-    house: PropTypes.string,
-    flat: PropTypes.string,
-    delivery: PropTypes.objectOf({
-      courier: PropTypes.string.isRequired,
-      novaPost: PropTypes.string.isRequired,
-      ukrPost: PropTypes.string.isRequired
+  data: PropTypes.shape({
+    delivery: PropTypes.shape({
+      courier: PropTypes.objectOf(PropTypes.string),
+      novaPost: PropTypes.objectOf(PropTypes.string),
+      ukrPost: PropTypes.objectOf(PropTypes.string),
+      sentBy: PropTypes.string
     })
   }),
   handleChange: PropTypes.func.isRequired,

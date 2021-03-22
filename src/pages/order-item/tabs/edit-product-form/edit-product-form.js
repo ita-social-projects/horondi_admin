@@ -29,7 +29,7 @@ const EditProductForm = ({
   useEffect(() => {
     if (selectedItem) {
       setQuantity(selectedItem.quantity);
-      setSize(selectedItem.options.size.name);
+      setSize(selectedItem.options.size._id);
     }
   }, [selectedItem]);
 
@@ -51,18 +51,17 @@ const EditProductForm = ({
     sizes
       .filter(({ available, name }) => available && name)
       .map((item) => (
-        <MenuItem key={item._id} value={item.name}>
+        <MenuItem key={item._id} value={item._id}>
           {item.name}
         </MenuItem>
       ));
 
   const confirmHandler = () => {
-    const newSize = sizes.find((item) => item.name === size);
     const index = items.findIndex(
       (item) => item.product._id === selectedItem.product._id
     );
     const newValue = { ...items[index], ...items[index].options };
-    newValue.options.size = { _id: newSize._id, name: newSize.name };
+    newValue.options.size = { _id: size };
     newValue.quantity = quantity;
     setFieldValue(inputName.itemsName, [
       ...items.slice(0, index),
@@ -113,12 +112,34 @@ const EditProductForm = ({
   );
 };
 
+EditProductForm.defaultProps = {
+  items: [],
+  selectedItem: {}
+};
+
 EditProductForm.propTypes = {
-  items: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      options: PropTypes.shape({
+        size: PropTypes.objectOf(PropTypes.string)
+      }),
+      quantity: PropTypes.number,
+      product: PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+        basePrice: PropTypes.arrayOf(
+          PropTypes.shape({
+            currency: PropTypes.string,
+            value: PropTypes.number
+          })
+        )
+      })
+    })
+  ),
   setFieldValue: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   onCloseHandler: PropTypes.func.isRequired,
-  selectedItem: PropTypes.string.isRequired
+  selectedItem: PropTypes.objectOf(PropTypes.string)
 };
 
 export default EditProductForm;

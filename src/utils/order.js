@@ -75,7 +75,9 @@ export const inputName = {
   },
   isPaidInput: 'isPaid',
   itemsName: 'items',
-  status: 'status'
+  status: 'status',
+  userComment: 'userComment',
+  paymentMethod: 'paymentMethod'
 };
 
 export const initialValues = {
@@ -110,29 +112,6 @@ export const initialValues = {
   userComment: '',
   items: []
 };
-
-// {
-//   constructorBasics: null,
-//   constructorBottom: null,
-//   constructorFrontPocket: null,
-//   constructorPattern: null,
-//   isFromConstructor: false,
-//   model: null,
-//   fixedPrice: [{ currency: 'UAH', value: 332903 }],
-//   options: {
-//     sidePocket: false,
-//     size: {
-//       name: 'M',
-//       _id: '604394cba7532c33dcb326d6'
-//     }
-//   },
-//   product: {
-//     basePrice: [{ currency: 'UAH', value: 194157 }],
-//     _id: '605654c1158e2fdb53498406',
-//     name: [{ lang: 'ua', value: 'Роллтоп червоний' }]
-//   },
-//   quantity: 1
-// }
 
 export const courierInputLabels = () => {
   const { city, street, house, flat } = inputName.courier;
@@ -198,15 +177,22 @@ export const setFormValues = (selectedOrder) => {
       }
     },
     userComment: selectedOrder.userComment,
-    items: selectedOrder.items
+    items: selectedOrder.items.map((item) => ({
+      options: { size: { _id: item.options.size._id } },
+      product: {
+        _id: item.product._id,
+        name: item.product.name,
+        basePrice: item.product.basePrice
+      },
+      quantity: item.quantity
+    }))
   };
 };
 
 export const mergeProducts = (selectedProduct, size, quantity, items) => {
   const index = items.findIndex(
     (item) =>
-      item.product._id === selectedProduct._id &&
-      item.options.size._id === size._id
+      item.product._id === selectedProduct._id && item.options.size._id === size
   );
   if (index !== -1) {
     const newItem = { ...items[index] };
@@ -217,7 +203,7 @@ export const mergeProducts = (selectedProduct, size, quantity, items) => {
     ...items,
     {
       options: {
-        size
+        size: { _id: size }
       },
       product: {
         basePrice: selectedProduct.basePrice,

@@ -6,7 +6,7 @@ import { useStyles } from './courier.styles';
 import { courierInputLabels } from '../../../../../utils/order';
 import config from '../../../../../configs/orders';
 
-const Courier = ({ deliveryType, values, handleChange, touched, errors }) => {
+const Courier = ({ deliveryType, values, handleChange }) => {
   const { deliveryTypes, deliveryTitles } = config;
   const styles = useStyles();
 
@@ -23,21 +23,15 @@ const Courier = ({ deliveryType, values, handleChange, touched, errors }) => {
         </h4>
         <div>
           {courierInputLabels().map((field) => (
-            <>
-              <TextField
-                key={field.name}
-                name={field.name}
-                className={styles.textField}
-                label={field.label}
-                value={values[field.value]}
-                onChange={handleChange}
-                variant='outlined'
-                // error={touched[field.name] && !!errors[field.name]}
-              />
-              {/* {touched[field.name] && errors[field.name] && (
-                <div className={styles.error}>{errors[field.name]}</div>
-              )} */}
-            </>
+            <TextField
+              key={`${field.name}${deliveryType}`}
+              name={field.name}
+              className={styles.textField}
+              label={field.label}
+              value={values[field.value]}
+              onChange={handleChange}
+              variant='outlined'
+            />
           ))}
         </div>
       </div>
@@ -47,10 +41,8 @@ const Courier = ({ deliveryType, values, handleChange, touched, errors }) => {
 
 Courier.propTypes = {
   deliveryType: PropTypes.string.isRequired,
-  values: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  touched: PropTypes.func.isRequired,
-  errors: PropTypes.string.isRequired
+  values: PropTypes.objectOf(PropTypes.string).isRequired,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default Courier;

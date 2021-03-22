@@ -15,7 +15,7 @@ import {
 import config from '../../../../../configs/orders';
 import { inputName, POST_OFFICE_NUMBER } from '../../../../../utils/order';
 
-const UkrPost = ({ values, setFieldValue, errors, touched }) => {
+const UkrPost = ({ values, setFieldValue }) => {
   const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = config;
 
   const dispatch = useDispatch();
@@ -96,7 +96,6 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              //   error={touched.region && !!errors.region}
               label={deliveryLabels.region}
               variant='outlined'
               InputProps={{
@@ -111,11 +110,6 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
             />
           )}
         />
-        {/* {touched.region && errors.region && (
-          <div data-cy={CY_CODE_ERR} className={styles.error}>
-            {errors.region}
-          </div>
-        )} */}
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
@@ -142,7 +136,6 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              //   error={touched.district && !!errors.district}
               label={deliveryLabels.district}
               variant='outlined'
               InputProps={{
@@ -157,11 +150,6 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
             />
           )}
         />
-        {/* {touched.district && errors.district && (
-          <div data-cy={CY_CODE_ERR} className={styles.error}>
-            {errors.district}
-          </div>
-        )} */}
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
@@ -189,7 +177,6 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              //   error={touched.city && !!errors.city}
               label={deliveryLabels.city}
               variant='outlined'
               InputProps={{
@@ -204,12 +191,6 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
             />
           )}
         />
-
-        {/* {touched.city && errors.city && (
-          <div data-cy={CY_CODE_ERR} className={styles.error}>
-            {errors.city}
-          </div>
-        )} */}
       </div>
       <div className={styles.selectorInfo}>
         <Autocomplete
@@ -249,7 +230,6 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              //   error={touched.courierOffice && !!errors.courierOffice}
               label={deliveryLabels.department}
               variant='outlined'
               InputProps={{
@@ -264,11 +244,6 @@ const UkrPost = ({ values, setFieldValue, errors, touched }) => {
             />
           )}
         />
-        {/* {touched.courierOffice && errors.courierOffice && (
-          <div data-cy={CY_CODE_ERR} className={styles.error}>
-            {errors.courierOffice}
-          </div>
-        )} */}
       </div>
     </div>
   );
@@ -279,9 +254,7 @@ UkrPost.propTypes = {
   values: PropTypes.shape({
     city: PropTypes.string,
     courierOffice: PropTypes.string
-  }).isRequired,
-  errors: PropTypes.string.isRequired,
-  touched: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default UkrPost;

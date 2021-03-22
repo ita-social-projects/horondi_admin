@@ -40,15 +40,14 @@ const AddProductForm = ({ items, setFieldValue }) => {
   }, [selectedProduct]);
 
   useEffect(() => {
-    selectedProduct && sizes && setSize(sizes[0].name);
+    selectedProduct && sizes && setSize(sizes[0]._id);
   }, [sizes]);
 
   const addProductHandler = () => {
     setQuantity(1);
-    const sizeObject = sizes.find((item) => item.name === size);
     setFieldValue(
       inputName.itemsName,
-      mergeProducts(selectedProduct, sizeObject, quantity, items)
+      mergeProducts(selectedProduct, size, quantity, items)
     );
   };
 
@@ -62,7 +61,7 @@ const AddProductForm = ({ items, setFieldValue }) => {
     sizes
       .filter(({ available, name }) => available && name)
       .map((item) => (
-        <MenuItem key={item._id} value={item.name}>
+        <MenuItem key={item._id} value={item._id}>
           {item.name}
         </MenuItem>
       ));
@@ -140,8 +139,29 @@ const AddProductForm = ({ items, setFieldValue }) => {
   );
 };
 
+AddProductForm.defaultProps = {
+  items: []
+};
+
 AddProductForm.propTypes = {
-  items: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      options: PropTypes.shape({
+        size: PropTypes.objectOf(PropTypes.string)
+      }),
+      quantity: PropTypes.number,
+      product: PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+        basePrice: PropTypes.arrayOf(
+          PropTypes.shape({
+            currency: PropTypes.string,
+            value: PropTypes.number
+          })
+        )
+      })
+    })
+  ),
   setFieldValue: PropTypes.func.isRequired
 };
 

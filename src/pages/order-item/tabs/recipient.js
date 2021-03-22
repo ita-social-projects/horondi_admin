@@ -3,6 +3,7 @@ import { TextField } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
+import { inputName } from '../../../utils/order';
 
 const Recipient = ({ data, handleChange }) => {
   const { user, userComment } = data;
@@ -23,7 +24,7 @@ const Recipient = ({ data, handleChange }) => {
         ))}
       {user && (
         <TextField
-          name='userComment'
+          name={inputName.userComment}
           label={orderRecipient.commentary}
           onChange={handleChange}
           variant='outlined'

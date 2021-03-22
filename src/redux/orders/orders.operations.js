@@ -193,7 +193,6 @@ export const addOrder = (order) => {
 			}
 		}
   `;
-  console.log(order);
   return setItems(query, { order });
 };
 

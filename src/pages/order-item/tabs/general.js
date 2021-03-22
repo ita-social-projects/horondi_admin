@@ -50,11 +50,11 @@ const General = ({ data, handleChange }) => {
         </Select>
       </div>
       <div>
-        <label htmlFor='paymentMethod'>{paymentMethodLabel}</label>
+        <label htmlFor={inputName.paymentMethod}>{paymentMethodLabel}</label>
         <Select
           fullWidth
-          id='paymentMethod'
-          name='paymentMethod'
+          id={inputName.paymentMethod}
+          name={inputName.paymentMethod}
           value={paymentMethod}
           onChange={handleChange}
           variant={materialUiConstants.outlined}
@@ -64,7 +64,7 @@ const General = ({ data, handleChange }) => {
         </Select>
       </div>
       <div className={classes.isPaid}>
-        <label htmlFor='paymentMethod'>{isPaidLabel}</label>
+        <label htmlFor={inputName.paymentMethod}>{isPaidLabel}</label>
         <Checkbox
           checked={isPaid}
           name={inputName.isPaidInput}

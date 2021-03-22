@@ -84,7 +84,7 @@ const OrderItem = ({ id }) => {
     initialValues,
     onSubmit: handleFormSubmit
   });
-
+  console.log(values);
   useEffect(() => {
     if (selectedOrder && id) {
       resetForm({ values: setFormValues(selectedOrder) });
@@ -126,7 +126,7 @@ const OrderItem = ({ id }) => {
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
           <Delivery
-            data={{ delivery: values.delivery, address: values.address }}
+            data={{ delivery: values.delivery }}
             handleChange={formikHandleChange}
             setFieldValue={setFieldValue}
           />
@@ -148,8 +148,12 @@ const OrderItem = ({ id }) => {
   );
 };
 
+OrderItem.defaultProps = {
+  id: ''
+};
+
 OrderItem.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string
 };
 
 export default OrderItem;
