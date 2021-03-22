@@ -275,18 +275,22 @@ export const setFormValues = (selectedOrder) => {
   };
 };
 
-export const mergeProducts = (selectedProduct, size, quantity, items) => {
-  const index = items.findIndex(
+export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
+  const index = orderItems.findIndex(
     (item) =>
       item.product._id === selectedProduct._id && item.options.size._id === size
   );
   if (index !== -1) {
-    const newItem = { ...items[index] };
+    const newItem = { ...orderItems[index] };
     newItem.quantity += quantity;
-    return [...items.slice(0, index), newItem, ...items.slice(index + 1)];
+    return [
+      ...orderItems.slice(0, index),
+      newItem,
+      ...orderItems.slice(index + 1)
+    ];
   }
   return [
-    ...items,
+    ...orderItems,
     {
       options: {
         size: { _id: size }

@@ -27,6 +27,7 @@ import {
   setFormValues
 } from '../../utils/order';
 import { validationSchema } from '../../validations/orders/order-form-validation';
+import { handleOrderSubmition } from '../../utils/handle-orders-page';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -51,26 +52,19 @@ const OrderItem = ({ id }) => {
   };
 
   const handleFormSubmit = (data) => {
-    if (
-      newOrder.status !== initialValues.status &&
-      !submitStatus.includes(newOrder(data).status)
-    ) {
-      const updateOrderSnackbar = () => {
-        dispatch(closeDialog());
-        if (id) {
-          dispatch(updateOrder(newOrder(data), id));
-        } else {
-          dispatch(addOrder(newOrder(data)));
-          resetForm({ values: initialValues });
-        }
-      };
-      openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
-    } else if (id) {
-      dispatch(updateOrder(newOrder(data), id));
-    } else {
-      dispatch(addOrder(newOrder(data)));
-      resetForm({ values: initialValues });
-    }
+    handleOrderSubmition(
+      newOrder,
+      initialValues,
+      submitStatus,
+      dispatch,
+      closeDialog,
+      updateOrder,
+      addOrder,
+      resetForm,
+      openSuccessSnackbar,
+      data,
+      id
+    );
     setTabValue(0);
   };
 
