@@ -29,7 +29,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
           {map(inputsTextfields, (input) => {
             const inputName = lang + upperFirst(input.name);
             return (
-              <React.Fragment key={input.name}>
+              <key={input.name}>
                 <TextField
                   data-cy={`${lang}-${input.name}`}
                   id={inputName}
@@ -51,7 +51,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                     {errors[inputName]}
                   </div>
                 )}
-              </React.Fragment>
+              </>
             );
           })}
           {map(inputsEditor, (input) => {
@@ -60,7 +60,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
               values[inputName] = value;
             };
             return (
-              <React.Fragment key={input.name}>
+              <key={input.name}>
                 <Editor
                   value={values[inputName]}
                   placeholder={input.label[lang]}
@@ -81,7 +81,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                     {errors[inputName]}
                   </div>
                 )}
-              </React.Fragment>
+              </>
             );
           })}
         </Paper>
