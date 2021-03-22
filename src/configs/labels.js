@@ -52,7 +52,9 @@ const labels = {
       tagsFilled: 'tags-filled',
       standard: 'standard',
       normal: 'normal',
-      constructor: 'constructor'
+      constructor: 'constructor',
+      labelId: 'controlled-open-select-label',
+      variantStandard: 'standard'
     },
     image: 'Фото моделі',
     availableCategory: 'Категорія',
