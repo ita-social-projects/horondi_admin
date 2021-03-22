@@ -40,6 +40,16 @@ import ProductAddImages from '../../../pages/products/product-add/product-add-im
 import { selectSelectedProductAndDetails } from '../../../redux/selectors/products.selectors';
 import CommentsSection from '../../comments-section/comments-section';
 import { GET_PRODUCT_COMMENTS } from '../../../redux/comments/comments.types';
+import {
+  actionDispatchHandler,
+  setModelsHandler,
+  setSizesHandler,
+  setInnerColorsHandler,
+  setBottomColorsHandler,
+  setMainColorsHandler,
+  sizeMatchesHandler,
+  getFormikMaterialsValues
+} from '../../../utils/product-form';
 
 const { priceLabel } = config.labels.product;
 
@@ -62,7 +72,7 @@ const ProductForm = ({ isEdit }) => {
 
   const { product, details } = useSelector(selectSelectedProductAndDetails);
 
-  const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
+  const buttonSize = useMemo(() => sizeMatchesHandler(matches), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
@@ -103,15 +113,7 @@ const ProductForm = ({ isEdit }) => {
     closure: product?.closure?._id || '',
     sizes: product?.sizes?.map((el) => getIdFromItem(el) || [])
   };
-  const formikMaterialsValues = {
-    innerMaterial: product?.innerMaterial?.material?._id || '',
-    innerColor: product?.innerMaterial?.color?._id || '',
-    mainMaterial: product?.mainMaterial?.material?._id || '',
-    mainColor: product?.mainMaterial?.color?._id || '',
-    bottomMaterial: product?.bottomMaterial?.material?._id || '',
-    bottomColor: product?.bottomMaterial?.color?._id || ''
-  };
-
+  const formikMaterialsValues = getFormikMaterialsValues(product);
   const onSubmit = (formValues) => {
     const {
       strapLengthInCm,
@@ -126,11 +128,13 @@ const ProductForm = ({ isEdit }) => {
     const productInfo = createProductInfo(formValues);
     if (!isEdit) {
       setShouldValidate(true);
-      if (primaryImage && additionalImages.length) {
-        dispatch(setFilesToUpload([primaryImage, ...additionalImages]));
-      } else if (primaryImage) {
-        dispatch(setFilesToUpload([primaryImage]));
-      }
+      actionDispatchHandler(
+        primaryImage && additionalImages.length,
+        dispatch,
+        setFilesToUpload,
+        primaryImage,
+        additionalImages
+      );
       dispatch(
         addProduct({
           closure,
@@ -185,38 +189,11 @@ const ProductForm = ({ isEdit }) => {
   );
 
   useEffect(() => {
-    if (values.category)
-      setModels(
-        find(categories, (category) => category._id === values.category)
-          ?.models || []
-      );
-    if (values.model) {
-      setSizes(
-        find(models, (model) => model._id === values.model)?.sizes || []
-      );
-    }
-    if (values.innerMaterial) {
-      setInnerColors(
-        find(
-          materials.inner,
-          (material) => material._id === values.innerMaterial
-        )?.colors || []
-      );
-    }
-    if (values.bottomMaterial) {
-      setBottomColors(
-        find(
-          materials.bottom,
-          (material) => material._id === values.bottomMaterial
-        )?.colors || []
-      );
-    }
-    if (values.mainMaterial) {
-      setMainColors(
-        find(materials.main, (material) => material._id === values.mainMaterial)
-          ?.colors || []
-      );
-    }
+    setModelsHandler(values, setModels, find, categories);
+    setSizesHandler(values, setSizes, find, models);
+    setInnerColorsHandler(values, setInnerColors, find, materials);
+    setBottomColorsHandler(values, setBottomColors, find, materials);
+    setMainColorsHandler(values, setMainColors, find, materials);
   }, [
     values.category,
     values.model,
