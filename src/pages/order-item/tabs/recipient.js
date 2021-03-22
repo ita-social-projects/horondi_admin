@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-import PropTypes from 'prop-types';
+
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
-import { inputName } from '../../../utils/order';
+import { inputName, recipientPropTypes } from '../../../utils/order';
 
 const Recipient = ({ data, handleChange }) => {
   const { user, userComment } = data;
@@ -41,12 +41,6 @@ Recipient.defaultProps = {
   data: {}
 };
 
-Recipient.propTypes = {
-  data: PropTypes.shape({
-    user: PropTypes.objectOf(PropTypes.string),
-    userComment: PropTypes.string
-  }),
-  handleChange: PropTypes.func.isRequired
-};
+Recipient.propTypes = recipientPropTypes;
 
 export default Recipient;

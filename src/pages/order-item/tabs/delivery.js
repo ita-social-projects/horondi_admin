@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
 import Courier from './delivery-details/courier';
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
-import { inputName } from '../../../utils/order';
+import { deliveryPropTypes, inputName } from '../../../utils/order';
 import NovaPost from './delivery-details/nova-post';
 import UkrPost from './delivery-details/ukrpost';
 import config from '../../../configs/orders';
@@ -57,17 +56,6 @@ Delivery.defaultProps = {
   data: {}
 };
 
-Delivery.propTypes = {
-  data: PropTypes.shape({
-    delivery: PropTypes.shape({
-      courier: PropTypes.objectOf(PropTypes.string),
-      novaPost: PropTypes.objectOf(PropTypes.string),
-      ukrPost: PropTypes.objectOf(PropTypes.string),
-      sentBy: PropTypes.string
-    })
-  }),
-  handleChange: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired
-};
+Delivery.propTypes = deliveryPropTypes;
 
 export default Delivery;

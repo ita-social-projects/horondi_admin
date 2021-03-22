@@ -26,6 +26,7 @@ import {
   initialValues,
   setFormValues
 } from '../../utils/order';
+import { validationSchema } from '../../validations/orders/order-form-validation';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -79,12 +80,16 @@ const OrderItem = ({ id }) => {
     handleSubmit,
     setFieldValue,
     dirty,
-    resetForm
+    resetForm,
+    isValid,
+    errors
   } = useFormik({
     initialValues,
+    validationSchema,
     onSubmit: handleFormSubmit
   });
   console.log(values);
+  console.log(errors);
   useEffect(() => {
     if (selectedOrder && id) {
       resetForm({ values: setFormValues(selectedOrder) });
@@ -137,7 +142,7 @@ const OrderItem = ({ id }) => {
         variant='contained'
         color='primary'
         className={classes.saveBtn}
-        disabled={!dirty}
+        disabled={!dirty || !isValid}
       >
         {SAVE_ORDER}
       </Button>

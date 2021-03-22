@@ -4,7 +4,6 @@ import { TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
-import PropTypes from 'prop-types';
 
 import { useStyles } from './nova-post.styles';
 import config from '../../../../../configs/orders';
@@ -12,7 +11,7 @@ import {
   getNovaPoshtaCities,
   getNovaPoshtaWarehouse
 } from '../../../../../redux/orders/orders.actions';
-import { inputName, POSTOMAT } from '../../../../../utils/order';
+import { inputName, POSTOMAT, postPropTypes } from '../../../../../utils/order';
 
 const NovaPost = ({ setFieldValue, values }) => {
   const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = config;
@@ -140,12 +139,6 @@ const NovaPost = ({ setFieldValue, values }) => {
   );
 };
 
-NovaPost.propTypes = {
-  setFieldValue: PropTypes.func.isRequired,
-  values: PropTypes.shape({
-    city: PropTypes.string,
-    courierOffice: PropTypes.string
-  }).isRequired
-};
+NovaPost.propTypes = postPropTypes;
 
 export default NovaPost;

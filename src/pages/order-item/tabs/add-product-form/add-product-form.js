@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Select from '@material-ui/core/Select';
-import PropTypes from 'prop-types';
 
 import { useStyles } from './add-product-form.styles';
 import {
@@ -15,7 +14,11 @@ import {
   getProduct
 } from '../../../../redux/products/products.actions';
 import configs from '../../../../configs/orders';
-import { mergeProducts, inputName } from '../../../../utils/order';
+import {
+  mergeProducts,
+  inputName,
+  addProductFormPropTypes
+} from '../../../../utils/order';
 
 const AddProductForm = ({ items, setFieldValue }) => {
   const styles = useStyles();
@@ -143,26 +146,6 @@ AddProductForm.defaultProps = {
   items: []
 };
 
-AddProductForm.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      options: PropTypes.shape({
-        size: PropTypes.objectOf(PropTypes.string)
-      }),
-      quantity: PropTypes.number,
-      product: PropTypes.shape({
-        _id: PropTypes.string,
-        name: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-        basePrice: PropTypes.arrayOf(
-          PropTypes.shape({
-            currency: PropTypes.string,
-            value: PropTypes.number
-          })
-        )
-      })
-    })
-  ),
-  setFieldValue: PropTypes.func.isRequired
-};
+AddProductForm.propTypes = addProductFormPropTypes;
 
 export default AddProductForm;

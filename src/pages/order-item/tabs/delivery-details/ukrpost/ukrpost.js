@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import PropTypes from 'prop-types';
 
 import { useStyles } from './ukrpost.styles';
 import {
@@ -13,7 +12,11 @@ import {
   getUkrPostRegions
 } from '../../../../../redux/orders/orders.actions';
 import config from '../../../../../configs/orders';
-import { inputName, POST_OFFICE_NUMBER } from '../../../../../utils/order';
+import {
+  inputName,
+  postPropTypes,
+  POST_OFFICE_NUMBER
+} from '../../../../../utils/order';
 
 const UkrPost = ({ values, setFieldValue }) => {
   const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = config;
@@ -249,12 +252,6 @@ const UkrPost = ({ values, setFieldValue }) => {
   );
 };
 
-UkrPost.propTypes = {
-  setFieldValue: PropTypes.func.isRequired,
-  values: PropTypes.shape({
-    city: PropTypes.string,
-    courierOffice: PropTypes.string
-  }).isRequired
-};
+UkrPost.propTypes = postPropTypes;
 
 export default UkrPost;

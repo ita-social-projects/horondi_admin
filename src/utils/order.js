@@ -1,4 +1,89 @@
+import PropTypes from 'prop-types';
 import config from '../configs/orders';
+
+export const recipientPropTypes = {
+  data: PropTypes.shape({
+    user: PropTypes.objectOf(PropTypes.string),
+    userComment: PropTypes.string
+  }),
+  handleChange: PropTypes.func.isRequired
+};
+
+export const productsPropTypes = {
+  data: PropTypes.shape({
+    items: PropTypes.arrayOf(PropTypes.object)
+  }),
+  setFieldValue: PropTypes.func.isRequired
+};
+
+export const generalPropTypes = {
+  data: PropTypes.shape({
+    status: PropTypes.string,
+    isPaid: PropTypes.bool,
+    courierOffice: PropTypes.string,
+    paymentMethod: PropTypes.string,
+    paymentStatus: PropTypes.string,
+    city: PropTypes.string,
+    street: PropTypes.string
+  }),
+  handleChange: PropTypes.func.isRequired
+};
+
+export const deliveryPropTypes = {
+  data: PropTypes.shape({
+    delivery: PropTypes.shape({
+      courier: PropTypes.objectOf(PropTypes.string),
+      novaPost: PropTypes.objectOf(PropTypes.string),
+      ukrPost: PropTypes.objectOf(PropTypes.string),
+      sentBy: PropTypes.string
+    })
+  }),
+  handleChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired
+};
+
+const itemPropType = PropTypes.shape({
+  options: PropTypes.shape({
+    size: PropTypes.objectOf(PropTypes.string)
+  }),
+  quantity: PropTypes.number,
+  product: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    basePrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        currency: PropTypes.string,
+        value: PropTypes.number
+      })
+    )
+  })
+});
+
+export const addProductFormPropTypes = {
+  items: PropTypes.arrayOf(itemPropType),
+  setFieldValue: PropTypes.func.isRequired
+};
+
+export const editProductFormPropTypes = {
+  ...addProductFormPropTypes,
+  open: PropTypes.bool.isRequired,
+  onCloseHandler: PropTypes.func.isRequired,
+  selectedItem: itemPropType
+};
+
+export const courierPropTypes = {
+  deliveryType: PropTypes.string.isRequired,
+  values: PropTypes.objectOf(PropTypes.string).isRequired,
+  handleChange: PropTypes.func.isRequired
+};
+
+export const postPropTypes = {
+  setFieldValue: PropTypes.func.isRequired,
+  values: PropTypes.shape({
+    city: PropTypes.string,
+    courierOffice: PropTypes.string
+  }).isRequired
+};
 
 const { deliveryTypes } = config;
 const items = (order) =>

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Select, MenuItem, Checkbox } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
 import { useStyles } from '../order-item.styles';
 import orders from '../../../configs/orders';
 import labels from '../../../configs/labels';
 import materialUiConstants from '../../../configs/material-ui-constants';
-import { inputName } from '../../../utils/order';
+import { generalPropTypes, inputName } from '../../../utils/order';
 
 const General = ({ data, handleChange }) => {
   const classes = useStyles();
@@ -79,17 +78,6 @@ General.defaultProps = {
   data: {}
 };
 
-General.propTypes = {
-  data: PropTypes.shape({
-    status: PropTypes.string,
-    isPaid: PropTypes.bool,
-    courierOffice: PropTypes.string,
-    paymentMethod: PropTypes.string,
-    paymentStatus: PropTypes.string,
-    city: PropTypes.string,
-    street: PropTypes.string
-  }),
-  handleChange: PropTypes.func.isRequired
-};
+General.propTypes = generalPropTypes;
 
 export default General;

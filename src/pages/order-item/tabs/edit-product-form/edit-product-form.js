@@ -5,10 +5,9 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import PropTypes from 'prop-types';
 
 import { useStyles } from './edit-product-form.styles';
-import { inputName } from '../../../../utils/order';
+import { editProductFormPropTypes, inputName } from '../../../../utils/order';
 import { getProduct } from '../../../../redux/products/products.actions';
 import configs from '../../../../configs/orders';
 
@@ -100,7 +99,7 @@ const EditProductForm = ({
           variant='contained'
           color='primary'
           disabled={
-            size === selectedItem?.options.size.name &&
+            size === selectedItem?.options.size._id &&
             quantity === selectedItem?.quantity
           }
           onClick={confirmHandler}
@@ -117,29 +116,6 @@ EditProductForm.defaultProps = {
   selectedItem: {}
 };
 
-EditProductForm.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      options: PropTypes.shape({
-        size: PropTypes.objectOf(PropTypes.string)
-      }),
-      quantity: PropTypes.number,
-      product: PropTypes.shape({
-        _id: PropTypes.string,
-        name: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-        basePrice: PropTypes.arrayOf(
-          PropTypes.shape({
-            currency: PropTypes.string,
-            value: PropTypes.number
-          })
-        )
-      })
-    })
-  ),
-  setFieldValue: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  onCloseHandler: PropTypes.func.isRequired,
-  selectedItem: PropTypes.objectOf(PropTypes.string)
-};
+EditProductForm.propTypes = editProductFormPropTypes;
 
 export default EditProductForm;

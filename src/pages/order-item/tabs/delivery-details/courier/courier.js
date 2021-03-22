@@ -1,9 +1,11 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
 import { useStyles } from './courier.styles';
-import { courierInputLabels } from '../../../../../utils/order';
+import {
+  courierInputLabels,
+  courierPropTypes
+} from '../../../../../utils/order';
 import config from '../../../../../configs/orders';
 
 const Courier = ({ deliveryType, values, handleChange }) => {
@@ -39,10 +41,6 @@ const Courier = ({ deliveryType, values, handleChange }) => {
   );
 };
 
-Courier.propTypes = {
-  deliveryType: PropTypes.string.isRequired,
-  values: PropTypes.objectOf(PropTypes.string).isRequired,
-  handleChange: PropTypes.func.isRequired
-};
+Courier.propTypes = courierPropTypes;
 
 export default Courier;

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { useStyles } from '../order-item.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
 import tableHeadRowTitles from '../../../configs/table-head-row-titles';
-import { inputName } from '../../../utils/order';
+import { inputName, productsPropTypes } from '../../../utils/order';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { config } from '../../../configs';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
@@ -79,11 +78,6 @@ Products.defaultProps = {
   data: {}
 };
 
-Products.propTypes = {
-  data: PropTypes.shape({
-    items: PropTypes.arrayOf(PropTypes.object)
-  }),
-  setFieldValue: PropTypes.func.isRequired
-};
+Products.propTypes = productsPropTypes;
 
 export default Products;
