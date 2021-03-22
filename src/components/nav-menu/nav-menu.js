@@ -62,7 +62,7 @@ const NavMenu = ({ width }) => {
       key={pathTitle}
       component={NavLink}
       to={pathTo}
-      className={nested || null}
+      className={pathTitle === 'Слайдер' ? classes.sliderTab : nested || null}
       activeClassName={classes.selectedCategory}
       isActive={(props) => (props ? props.url === pathTo : null)}
     >

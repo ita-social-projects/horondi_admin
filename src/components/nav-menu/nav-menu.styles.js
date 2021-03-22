@@ -27,5 +27,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   nested: {
     paddingLeft: theme.spacing(4)
+  },
+  sliderTab: {
+    paddingLeft: theme.spacing(8)
   }
 }));

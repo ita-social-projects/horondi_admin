@@ -16,9 +16,9 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import ErrorIcon from '@material-ui/icons/Error';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import LinkIcon from '@material-ui/icons/Link';
-import SettingsIcon from '@material-ui/icons/Settings';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import GradientIcon from '@material-ui/icons/Gradient';
 
 import routes from './routes';
 
@@ -42,7 +42,7 @@ export const catalogMenuCategories = [
   ['Продукти', routes.pathToProducts, LocalMallIcon],
   ['Розміри', routes.pathToSizes, LineWeight],
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
-  ['Гобелени', routes.pathToPatterns, SettingsIcon]
+  ['Гобелени', routes.pathToPatterns, GradientIcon]
 ];
 
 export const staticPagesCategories = [
