@@ -162,7 +162,8 @@ export const inputName = {
   itemsName: 'items',
   status: 'status',
   userComment: 'userComment',
-  paymentMethod: 'paymentMethod'
+  paymentMethod: 'paymentMethod',
+  sentBy: 'sentBy'
 };
 
 export const initialValues = {

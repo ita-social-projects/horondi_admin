@@ -81,15 +81,13 @@ const OrderItem = ({ id }) => {
     setFieldValue,
     dirty,
     resetForm,
-    isValid,
-    errors
+    isValid
   } = useFormik({
     initialValues,
     validationSchema,
     onSubmit: handleFormSubmit
   });
-  console.log(values);
-  console.log(errors);
+
   useEffect(() => {
     if (selectedOrder && id) {
       resetForm({ values: setFormValues(selectedOrder) });
