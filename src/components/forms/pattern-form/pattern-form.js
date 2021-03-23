@@ -22,6 +22,12 @@ import LanguagePanel from '../language-panel';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
 import LoadingBar from '../../loading-bar';
+import {
+  handleImageLoad,
+  patternUseEffectHandler,
+  patternFormOnSubmit,
+  useFormikInitialValues
+} from '../../../utils/pattern-form';
 
 const { patternName, material, patternDescription } = config.labels.pattern;
 const map = require('lodash/map');
@@ -65,12 +71,12 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   }, []);
 
   useEffect(() => {
-    if (pattern.images.thumbnail) {
-      setPatternImage(`${imagePrefix}${pattern.images.thumbnail}`);
-    }
-    if (pattern.constructorImg) {
-      setConstructorImg(`${imagePrefix}${pattern.constructorImg}`);
-    }
+    patternUseEffectHandler(
+      pattern,
+      setPatternImage,
+      setConstructorImg,
+      imagePrefix
+    );
   }, [dispatch, pattern]);
 
   const patternValidationSchema = Yup.object().shape({
@@ -109,36 +115,29 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     setFieldValue
   } = useFormik({
     validationSchema: patternValidationSchema,
-    initialValues: {
-      patternConstructorImage: pattern.constructorImg || '',
-      patternImage: pattern.images.thumbnail || '',
-      uaName: pattern.name[0].value || '',
-      enName: pattern.name[1].value || '',
-      uaDescription: pattern.description[0].value || '',
-      enDescription: pattern.description[1].value || '',
-      material: pattern.material._id || '',
-      available: pattern.available || false,
-      handmade: pattern.handmade || false
-    },
+    initialValues: useFormikInitialValues(pattern),
     onSubmit: () => {
       const newPattern = createPattern(values);
-
-      if (
+      const isEditAndUploadAndConstructor =
         isEdit &&
         upload instanceof File &&
-        uploadConstructorImg instanceof File
-      ) {
-        dispatch(
-          updatePattern({
+        uploadConstructorImg instanceof File;
+      if (isEditAndUploadAndConstructor || isEdit) {
+        patternFormOnSubmit(
+          isEditAndUploadAndConstructor,
+          dispatch,
+          updatePattern,
+          {
             id,
             pattern: newPattern,
             image: [upload, uploadConstructorImg]
-          })
+          },
+          isEdit,
+          {
+            id,
+            pattern: newPattern
+          }
         );
-        return;
-      }
-      if (isEdit) {
-        dispatch(updatePattern({ id, pattern: newPattern }));
         return;
       }
       dispatch(
@@ -170,16 +169,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       handler: () => setFieldValue('available', !values.available)
     }
   ];
-
-  const handleImageLoad = (e, callback) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        callback(event);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
 
   const handleLoadMainImage = (e) => {
     handleImageLoad(e, (event) => {

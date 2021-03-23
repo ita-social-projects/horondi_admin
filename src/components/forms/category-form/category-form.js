@@ -25,6 +25,7 @@ import { onSubmitCategoryHandler } from '../../../utils/category-form';
 
 const {
   CATEGORY_VALIDATION_ERROR,
+  CATEGORY_VALIDATION_ERROR_CATEGORY_NAME,
   CATEGORY_ERROR_MESSAGE,
   CATEGORY_UA_NAME_MESSAGE,
   CATEGORY_EN_NAME_MESSAGE,
@@ -49,24 +50,28 @@ const CategoryForm = ({ category, id, edit }) => {
   } = useCategoryHandlers();
 
   const categoryValidationSchema = Yup.object().shape({
-    enName: Yup.string()
-      .min(2, CATEGORY_VALIDATION_ERROR)
-      .required(CATEGORY_ERROR_MESSAGE)
-      .matches(enNameCreation, CATEGORY_EN_NAME_MESSAGE),
-    uaName: Yup.string()
-      .min(2, CATEGORY_VALIDATION_ERROR)
-      .required(CATEGORY_ERROR_MESSAGE)
-      .matches(uaNameCreation, CATEGORY_UA_NAME_MESSAGE),
     code: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
+      .max(30, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE)
-      .matches(categoryCode, CATEGORY_CODE_MESSAGE)
+      .matches(categoryCode, CATEGORY_CODE_MESSAGE),
+    uaName: Yup.string()
+      .min(2, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
+      .max(50, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
+      .required(CATEGORY_ERROR_MESSAGE)
+      .matches(uaNameCreation, CATEGORY_UA_NAME_MESSAGE),
+    enName: Yup.string()
+      .min(2, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
+      .max(50, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
+      .required(CATEGORY_ERROR_MESSAGE)
+      .matches(enNameCreation, CATEGORY_EN_NAME_MESSAGE)
   });
 
   const {
     values,
     handleSubmit,
     handleChange,
+    handleBlur,
     touched,
     errors,
     setFieldValue
@@ -115,6 +120,7 @@ const CategoryForm = ({ category, id, edit }) => {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
@@ -139,9 +145,10 @@ const CategoryForm = ({ category, id, edit }) => {
               name='code'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.categories.categoryCode}
+              placeholder={config.labels.categories.categoryCode}
               value={values.code}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.code && !!errors.code}
             />
             {touched.code && errors.code && (
