@@ -110,7 +110,10 @@ const ProductForm = ({ isEdit }) => {
     closure: product?.closure?._id || '',
     available: product.available || false,
     isHotItem: product.isHotItem || false,
-    sizes: product?.sizes?.map((el) => getIdFromItem(el) || [])
+    sizes: product?.sizes?.map((el) => getIdFromItem(el) || []),
+    images: {
+      primary: {}
+    }
   };
   const formikMaterialsValues = {
     innerMaterial: product?.innerMaterial?.material?._id || '',
@@ -131,6 +134,7 @@ const ProductForm = ({ isEdit }) => {
       closure,
       available,
       isHotItem,
+      images,
       sizes: sizeToSend
     } = formValues;
 
@@ -153,6 +157,7 @@ const ProductForm = ({ isEdit }) => {
           basePrice,
           strapLengthInCm,
           available,
+          images,
           isHotItem
         })
       );
@@ -170,7 +175,8 @@ const ProductForm = ({ isEdit }) => {
           basePrice,
           strapLengthInCm,
           available,
-          isHotItem
+          isHotItem,
+          images
         },
         id: product._id
       })

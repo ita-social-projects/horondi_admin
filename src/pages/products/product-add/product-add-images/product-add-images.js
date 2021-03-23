@@ -9,6 +9,11 @@ import { config } from '../../../../configs/index';
 
 import { productsTranslations } from '../../../../translations/product.translations';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
+import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
+import {
+  setFilesToUpload,
+  setPrimaryImageToUpload
+} from '../../../../redux/products/products.actions';
 
 const { REQUIRED_PHOTOS } = productsTranslations;
 
@@ -27,23 +32,79 @@ const ProductAddImages = ({
 }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  // const dispatch = useDispatch();
-  // const product = useSelector(({ Products }) => Products.selectedProduct);
-  // const [productImages, setProductImages] = useState([]);
-  //
-  // useEffect(() => {
-  //   if (product.images) {
-  //     const images = [
-  //       { url: encodeURIComponent(product.images.primary.large), prefix: true },
-  //       ...product.images.additional.map(({ large }) => ({
-  //         url: large,
-  //         prefix: true
-  //       }))
-  //     ];
-  //     setProductImages(images);
-  //   }
-  // }, [product.images, dispatch]);
+  const product = useSelector(({ Products }) => Products.selectedProduct);
 
+  const [productImages, setProductImages] = useState([]);
+  const [isFieldsChanged, toggleFieldsChanged] = useState(false);
+
+  useEffect(() => {
+    if (product.images) {
+      const images = [
+        { url: encodeURIComponent(product.images.primary.large), prefix: true },
+        ...product.images.additional.map(({ large }) => ({
+          url: large,
+          prefix: true
+        }))
+      ];
+      setProductImages(images);
+    }
+  }, [product.images, dispatch]);
+
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+
+  const filterImages = (images) => {
+    const imagesNames = productImages.map(({ url }) => url);
+    return Array.from(images).filter(({ name }) => !imagesNames.includes(name));
+  };
+
+  const convertToBase64 = (files) =>
+    files.map(
+      (file) =>
+        new Promise((res) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            res(e.target.result);
+          };
+        })
+    );
+
+  const handlePrimaryImageUpdate = async (e) => {
+    const { files } = e.target;
+    if (files[0]) {
+      toggleFieldsChanged(true);
+      const newImages = filterImages(files);
+      const results = await Promise.all(convertToBase64(newImages));
+      if (results[0]) {
+        setProductImages((oldImages) => [
+          { url: results[0], prefix: false, name: newImages[0].name },
+          ...oldImages.slice(1)
+        ]);
+        dispatch(setPrimaryImageToUpload(newImages));
+      }
+    }
+  };
+
+  const handleMultipleFilesLoad = async (e) => {
+    const { files } = e.target;
+    if (e.target.files && e.target.files[0]) {
+      toggleFieldsChanged(true);
+      const newImages = filterImages(files);
+      const results = await Promise.all(convertToBase64(newImages));
+
+      if (results.length) {
+        setProductImages((oldImages) => [
+          ...oldImages,
+          ...results.map((image, idx) => ({
+            url: image,
+            prefix: false,
+            name: newImages[idx].name
+          }))
+        ]);
+        dispatch(setFilesToUpload(newImages));
+      }
+    }
+  };
   const imgUrl = config.imagePrefix + displayed;
 
   const imageUploadInputsId = {
@@ -52,6 +113,7 @@ const ProductAddImages = ({
   };
 
   const handlePrimaryImageLoad = (e) => {
+    console.log(isEdit);
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -84,7 +146,9 @@ const ProductAddImages = ({
           <Grid item>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
-                handler={handlePrimaryImageLoad}
+                handler={
+                  isEdit ? handlePrimaryImageUpdate : handlePrimaryImageLoad
+                }
                 src={
                   isEdit
                     ? productImageDisplayed || imgUrl
@@ -104,7 +168,9 @@ const ProductAddImages = ({
           <Grid item>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
-                handler={handleAdditionalImagesLoad}
+                handler={
+                  isEdit ? handleMultipleFilesLoad : handleAdditionalImagesLoad
+                }
                 src={
                   additionalImagesDisplayed.length !== 0
                     ? additionalImagesDisplayed[0]
