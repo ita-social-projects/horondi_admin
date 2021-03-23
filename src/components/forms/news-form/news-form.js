@@ -11,6 +11,7 @@ import { config } from '../../../configs';
 import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
+import { useFormikInitialValues } from '../../../utils/news-form';
 
 const map = require('lodash/map');
 
@@ -70,16 +71,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const { values, handleSubmit, handleChange, touched, errors } = useFormik({
     validationSchema: formSchema,
-    initialValues: {
-      authorPhoto: newsArticle.author.image || '',
-      newsImage: newsArticle.image || '',
-      uaAuthorName: newsArticle.author.name[0].value || '',
-      enAuthorName: newsArticle.author.name[1].value || '',
-      uaTitle: newsArticle.title[0].value || '',
-      enTitle: newsArticle.title[1].value || '',
-      uaText: newsArticle.text[0].value || '',
-      enText: newsArticle.text[1].value || ''
-    },
+    initialValues: useFormikInitialValues(newsArticle),
     onSubmit: () => {
       const newArticle = createArticle(values);
       if (editMode) {

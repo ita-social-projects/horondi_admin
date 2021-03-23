@@ -31,7 +31,7 @@ const labels = {
     },
     adress: {
       ua: 'Адреса',
-      en: 'Adress'
+      en: 'Address'
     }
   },
   model: {

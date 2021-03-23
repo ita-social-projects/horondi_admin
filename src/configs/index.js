@@ -1,6 +1,11 @@
 import { colors } from '@material-ui/core';
 import routes from './routes';
-import menuCategories from './menu-categories';
+import {
+  menuCategories,
+  clientMenuCategories,
+  catalogMenuCategories,
+  staticPagesCategories
+} from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
@@ -178,6 +183,9 @@ export const config = {
   detailTitles,
   messages,
   menuCategories,
+  clientMenuCategories,
+  catalogMenuCategories,
+  staticPagesCategories,
   routes,
   statuses,
   tableHeadRowTitles,

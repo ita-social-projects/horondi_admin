@@ -33,6 +33,12 @@ import LanguagePanel from '../language-panel';
 import { modelValidationSchema } from '../../../validations/models/model-form-validation';
 import { getSizes } from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
+import {
+  useFormikInitialValues,
+  modelFormOnSubmit,
+  updateModelHandler,
+  loadHelper
+} from '../../../utils/model-form';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -93,30 +99,27 @@ const ModelForm = ({ model, id, isEdit }) => {
     setFieldValue
   } = useFormik({
     validationSchema: modelValidationSchema,
-    initialValues: {
-      modelImage: model.images.thumbnail || '',
-      uaName: model.name[0].value || '',
-      enName: model.name[1].value || '',
-      uaDescription: model.description[0].value || '',
-      enDescription: model.description[1].value || '',
-      priority: model.priority || 1,
-      category: category || '',
-      sizes: checkIsEdit(isEdit) || [],
-      show: model.show || false,
-      availableForConstructor: model.availableForConstructor || false
-    },
+    initialValues: useFormikInitialValues(model, category, checkIsEdit, isEdit),
     onSubmit: () => {
       const newModel = createModel(values);
-      if (upload instanceof File || model.images.thumbnail) {
-        if (isEdit && upload instanceof File) {
-          dispatch(updateModel({ id, model: newModel, image: upload }));
-          return;
-        }
-        if (isEdit) {
-          dispatch(updateModel({ id, model: newModel }));
-          return;
-        }
-        dispatch(addModel({ model: newModel, image: upload }));
+      const uploadOrModelCondition =
+        upload instanceof File || model.images.thumbnail;
+      const isEditAndUploadCondition = isEdit && upload instanceof File;
+      if (uploadOrModelCondition) {
+        updateModelHandler(isEditAndUploadCondition, dispatch, updateModel, {
+          id,
+          model: newModel,
+          image: upload
+        });
+
+        modelFormOnSubmit(
+          isEdit,
+          dispatch,
+          updateModel,
+          addModel,
+          { id, model: newModel },
+          { model: newModel, image: upload }
+        );
         return;
       }
       dispatch(setSnackBarSeverity(materialUiConstants.codeError));
@@ -152,7 +155,7 @@ const ModelForm = ({ model, id, isEdit }) => {
   ];
 
   const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
+    if (loadHelper(e.target.files, e.target.files[0])) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setFieldValue(labelsEn.modelImage, event.target.result);
