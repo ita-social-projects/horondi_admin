@@ -12,11 +12,12 @@ import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
+import { handleImageLoad } from '../../../utils/pattern-form';
 
 const map = require('lodash/map');
 
 const { languages } = config;
-const { MAIN_PHOTO, AUTHOR_PHOTO, SAVE_TITLE } = config.buttonTitles;
+const { SAVE_TITLE } = config.buttonTitles;
 const {
   NAME_MIN_LENGTH_MESSAGE,
   TITLE_MIN_LENGTH_MESSAGE,
@@ -34,6 +35,10 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   const dispatch = useDispatch();
   const {
     createArticle,
+    authorPhoto,
+    setAuthorPhoto,
+    newsImage,
+    setNewsImage,
     uploadAuthorImage,
     setUploadAuthorImage,
     uploadNewsImage,
@@ -42,10 +47,10 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   useEffect(() => {
     if (newsArticle.author.image) {
-      setUploadAuthorImage(`${imagePrefix}${newsArticle.author.image}`);
+      setAuthorPhoto(`${imagePrefix}${newsArticle.author.image}`);
     }
-    if (newsArticle.image.constructorImg) {
-      setUploadNewsImage(`${imagePrefix}${newsArticle.image.constructorImg}`);
+    if (newsArticle.image) {
+      setNewsImage(`${imagePrefix}${newsArticle.image}`);
     }
   }, [dispatch, newsArticle]);
 
@@ -69,7 +74,14 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const formSchema = selectFormSchema();
 
-  const { values, handleSubmit, handleChange, touched, errors } = useFormik({
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
     validationSchema: formSchema,
     initialValues: useFormikInitialValues(newsArticle),
     onSubmit: () => {
@@ -93,24 +105,20 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     }
   });
 
-  const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      if (e.target.previousSibling.textContent === AUTHOR_PHOTO) {
-        reader.onload = (event) => {
-          setUploadAuthorImage(event.target.result);
-        };
+  const handleLoadAuthorImage = (e) => {
+    handleImageLoad(e, (event) => {
+      setFieldValue('authorImage', event.target.result);
+      setAuthorPhoto(event.target.result);
+    });
+    setUploadAuthorImage(e.target.files[0]);
+  };
 
-        setUploadAuthorImage(e.target.files[0]);
-      } else if (e.target.previousSibling.textContent === MAIN_PHOTO) {
-        reader.onload = (event) => {
-          setUploadNewsImage(event.target.result);
-        };
-
-        setUploadNewsImage(e.target.files[0]);
-      }
-      reader.readAsDataURL(e.target.files[0]);
-    }
+  const handleLoadNewsImage = (e) => {
+    handleImageLoad(e, (event) => {
+      setFieldValue('newsImage', event.target.result);
+      setNewsImage(event.target.result);
+    });
+    setUploadNewsImage(e.target.files[0]);
   };
 
   const inputs = [
@@ -153,13 +161,13 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
                 <div className={styles.imageUploadAvatar}>
                   <ImageUploadPreviewContainer
-                    handler={handleImageLoad}
-                    src={uploadAuthorImage}
+                    handler={handleLoadAuthorImage}
+                    src={authorPhoto}
                     id={imageUploadNewsInputsId.authorImageInput}
                   />
-                  {touched.uploadAuthorImage && errors.uploadAuthorImage && (
+                  {touched.authorPhoto && errors.authorPhoto && (
                     <div className={styles.inputError}>
-                      {errors.uploadAuthorImage}
+                      {errors.authorPhoto}
                     </div>
                   )}
                 </div>
@@ -172,15 +180,12 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
                 <div className={styles.imageUploadAvatar}>
                   <ImageUploadPreviewContainer
-                    handler={handleImageLoad}
-                    src={uploadNewsImage}
+                    handler={handleLoadNewsImage}
+                    src={newsImage}
                     id={imageUploadNewsInputsId.newsImageInput}
                   />
-                  {touched.patternConstructorImage &&
-                    errors.patternConstructorImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternConstructorImage}
-                    </div>
+                  {touched.newsImage && errors.newsImage && (
+                    <div className={styles.inputError}>{errors.newsImage}</div>
                   )}
                 </div>
               </div>
@@ -210,7 +215,7 @@ NewsForm.propTypes = {
     }),
     title: PropTypes.arrayOf(valueShape),
     text: PropTypes.arrayOf(valueShape),
-    languages: PropTypes.string,
+    languages: PropTypes.arrayOf(PropTypes.string),
     date: PropTypes.string,
     image: PropTypes.string
   }),
@@ -253,7 +258,7 @@ NewsForm.defaultProps = {
         value: ''
       }
     ],
-    languages: '',
+    languages: [],
     date: '',
     image: ''
   },

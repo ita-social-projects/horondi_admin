@@ -7,6 +7,9 @@ const useNewsHandlers = () => {
   const [uploadAuthorImage, setUploadAuthorImage] = useState(null);
   const [uploadNewsImage, setUploadNewsImage] = useState(null);
 
+  const [authorPhoto, setAuthorPhoto] = useState('');
+  const [newsImage, setNewsImage] = useState('');
+
   const [uaAuthorName, uaSetAuthor] = useState('');
   const [uaText, uaSetText] = useState('');
   const [uaTitle, uaSetTitle] = useState('');
@@ -58,16 +61,20 @@ const useNewsHandlers = () => {
     uaAuthorName,
     uaText,
     uaTitle,
-    enAuthorName,
-    enText,
-    enTitle,
     uaSetAuthor,
     uaSetText,
     uaSetTitle,
+    enAuthorName,
+    enText,
+    enTitle,
     enSetAuthor,
     enSetText,
     enSetTitle,
     createArticle,
+    authorPhoto,
+    setAuthorPhoto,
+    newsImage,
+    setNewsImage,
     uploadAuthorImage,
     setUploadAuthorImage,
     uploadNewsImage,
