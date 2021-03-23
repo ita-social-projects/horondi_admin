@@ -1,41 +1,57 @@
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import CategoryIcon from '@material-ui/icons/Category';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
-import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
-import PaletteIcon from '@material-ui/icons/Palette';
-import PeopleIcon from '@material-ui/icons/People';
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import LiveHelpIcon from '@material-ui/icons/LiveHelp';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import SmsIcon from '@material-ui/icons/Sms';
-import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
-import LocalMallIcon from '@material-ui/icons/LocalMall';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import StyleIcon from '@material-ui/icons/Style';
-import LinkIcon from '@material-ui/icons/Link';
 import FilterIcon from '@material-ui/icons/Filter';
 import HomeIcon from '@material-ui/icons/Home';
 import LineWeight from '@material-ui/icons/LineWeight';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import HelpIcon from '@material-ui/icons/Help';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import DescriptionIcon from '@material-ui/icons/Description';
+import InfoIcon from '@material-ui/icons/Info';
+import ExtensionIcon from '@material-ui/icons/Extension';
+import ErrorIcon from '@material-ui/icons/Error';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import LinkIcon from '@material-ui/icons/Link';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import GradientIcon from '@material-ui/icons/Gradient';
+
 import routes from './routes';
 
-const menuCategories = [
+export const menuCategories = [
   ['Домашня сторінка', routes.pathToMainPage, HomeIcon],
+  ['Замовлення', routes.pathToOrders, ShoppingBasketIcon],
   ['Статистика', routes.pathToStatistic, BarChartIcon],
-  ['Продукти', routes.pathToProducts, ShoppingCart],
-  ['Категорії', routes.pathToCategories, CategoryIcon],
-  ['Користувачі', routes.pathToUsers, PeopleIcon],
-  ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
-  ['Коментарі', routes.pathToComments, SmsIcon],
-  ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
-  ['Гобелени', routes.pathToPatterns, PaletteIcon],
-  ['Матеріали', routes.pathToMaterials, LocalMallIcon],
-  ['Новини', routes.pathToNews, ImportContactsIcon],
-  ['Запитання покупців', routes.pathToEmailQuestions, LiveHelpIcon],
-  ['Розміри', routes.pathToSizes, LineWeight],
-  ['Моделі', routes.pathToModels, StyleIcon],
-  ['Посилання', routes.pathToHeaders, LinkIcon],
-  ['Замовлення', routes.pathToOrders, ListAltIcon],
-  ['Головна сторінка', routes.pathToHomePageEdit, ImageRoundedIcon],
-  ['Слайдер головна сторінка', routes.pathToHomePageSlides, FilterIcon]
+  ['Бізнес сторінки', routes.pathToAddBusinessPage, BusinessCenterIcon],
+  ['Посилання', routes.pathToHeaders, LinkIcon]
 ];
-export default menuCategories;
+
+export const clientMenuCategories = [
+  ['Користувачі', routes.pathToUsers, AccountCircleIcon],
+  ['Коментарі', routes.pathToComments, FormatListBulletedIcon],
+  ['Запитання покупців', routes.pathToEmailQuestions, HelpIcon]
+];
+
+export const catalogMenuCategories = [
+  ['Категорії', routes.pathToCategories, CategoryIcon],
+  ['Моделі', routes.pathToModels, StyleIcon],
+  ['Продукти', routes.pathToProducts, LocalMallIcon],
+  ['Розміри', routes.pathToSizes, LineWeight],
+  ['Матеріали', routes.pathToMaterials, LocalMallIcon],
+  ['Гобелени', routes.pathToPatterns, GradientIcon]
+];
+
+export const staticPagesCategories = [
+  ['Головна сторінка', routes.pathToHomePageEdit, AssignmentIcon],
+  ['Слайдер', routes.pathToHomePageSlides, FilterIcon],
+  ['Новини', routes.pathToNews, ImportContactsIcon],
+  ['Про оплату і доставку', routes.pathToBusinessPages, MonetizationOnIcon],
+  ['Умови', routes.pathToBusinessPages, DescriptionIcon],
+  ['Про нас', routes.pathToBusinessPages, InfoIcon],
+  ['Про матеріали', routes.pathToBusinessPages, ExtensionIcon],
+  ['Правила користування сайтом', routes.pathToBusinessPages, ErrorIcon]
+];
