@@ -6,10 +6,12 @@ import {
   courierInputLabels,
   courierPropTypes
 } from '../../../../../utils/order';
-import config from '../../../../../configs/orders';
+import configs from '../../../../../configs/orders';
+import { config } from '../../../../../configs';
 
 const Courier = ({ deliveryType, values, handleChange }) => {
-  const { deliveryTypes, deliveryTitles } = config;
+  const { deliveryTypes, deliveryTitles } = configs;
+  const { materialUiConstants } = config;
   const styles = useStyles();
 
   return (
@@ -32,7 +34,7 @@ const Courier = ({ deliveryType, values, handleChange }) => {
               label={field.label}
               value={values[field.value]}
               onChange={handleChange}
-              variant='outlined'
+              variant={materialUiConstants.outlined}
             />
           ))}
         </div>

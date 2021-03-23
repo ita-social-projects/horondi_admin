@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
+import { config } from '../../../../configs';
 import { useStyles } from './edit-product-form.styles';
 import { editProductFormPropTypes, inputName } from '../../../../utils/order';
 import { getProduct } from '../../../../redux/products/products.actions';
@@ -18,6 +19,7 @@ const EditProductForm = ({
   setFieldValue,
   items
 }) => {
+  const { materialUiConstants } = config;
   const { productLabels } = configs;
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -96,8 +98,8 @@ const EditProductForm = ({
         </div>
         <br />
         <Button
-          variant='contained'
-          color='primary'
+          variant={materialUiConstants.contained}
+          color={materialUiConstants.primary}
           disabled={
             size === selectedItem?.options.size._id &&
             quantity === selectedItem?.quantity
