@@ -88,6 +88,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     values,
     handleSubmit,
     handleChange,
+    handleBlur,
     touched,
     errors,
     setFieldValue
@@ -174,6 +175,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
@@ -270,7 +272,12 @@ const ModelForm = ({ model, id, isEdit }) => {
           />
         </Grid>
         {languages.map((lang) => (
-          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+          <LanguagePanel
+            lang={lang}
+            onBlur={handleBlur}
+            inputOptions={inputOptions}
+            key={lang}
+          />
         ))}
         <BackButton />
         <SaveButton

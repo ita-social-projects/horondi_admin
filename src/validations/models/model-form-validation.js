@@ -14,7 +14,7 @@ const {
 export const modelValidationSchema = Yup.object().shape({
   enDescription: Yup.string()
     .typeError(NO_STRING_TYPE_MESSAGE)
-    .matches(config.formRegExp.enNameCreation, NOT_EN_DESCRIPTION_MESSAGE)
+    .matches(config.formRegExp.enDescription, NOT_EN_DESCRIPTION_MESSAGE)
     .min(2, MODEL_VALIDATION_ERROR)
     .required(MODEL_ERROR_MESSAGE),
   enName: Yup.string()
