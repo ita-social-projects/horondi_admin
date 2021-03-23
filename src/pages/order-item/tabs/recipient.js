@@ -4,8 +4,10 @@ import { TextField } from '@material-ui/core';
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
 import { inputName, recipientPropTypes } from '../../../utils/order';
+import { config } from '../../../configs';
 
 const Recipient = ({ data, handleChange }) => {
+  const { materialUiConstants } = config;
   const { user, userComment } = data;
   const { orderRecipient } = labels;
   const classes = useStyles();
@@ -17,7 +19,7 @@ const Recipient = ({ data, handleChange }) => {
             name={`user.${item}`}
             label={orderRecipient[item] || ''}
             key={item}
-            variant='outlined'
+            variant={materialUiConstants.outlined}
             onChange={handleChange}
             value={user[item] || ''}
           />
@@ -27,7 +29,7 @@ const Recipient = ({ data, handleChange }) => {
           name={inputName.userComment}
           label={orderRecipient.commentary}
           onChange={handleChange}
-          variant='outlined'
+          variant={materialUiConstants.outlined}
           value={userComment || ''}
           multiline
           rows={4}

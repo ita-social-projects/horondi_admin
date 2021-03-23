@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 
+import { config } from '../../configs';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
 import { Delivery, Recipient, Products, General } from './tabs';
@@ -22,6 +23,7 @@ const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { orderTabs } = labels;
+  const { materialUiConstants } = config;
   const { delivery, general, products, receiver } = orderTabs;
   const { SAVE_ORDER } = buttonTitles;
   const [tabValue, setTabValue] = useState(0);
@@ -106,9 +108,9 @@ const OrderItem = ({ id }) => {
         </TabPanel>
       </Paper>
       <Button
-        type='submit'
-        variant='contained'
-        color='primary'
+        type={materialUiConstants.types.submit}
+        variant={materialUiConstants.contained}
+        color={materialUiConstants.primary}
         className={classes.saveBtn}
         disabled={!dirty || !isValid}
       >

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
 
+import { config } from '../../../../../configs';
 import { useStyles } from './ukrpost.styles';
 import {
   getUkrPostCities,
@@ -10,7 +11,7 @@ import {
   getUkrPostPostOffices,
   getUkrPostRegions
 } from '../../../../../redux/orders/orders.actions';
-import config from '../../../../../configs/orders';
+import configs from '../../../../../configs/orders';
 import { postPropTypes, POST_OFFICE_NUMBER } from '../../../../../utils/order';
 import {
   handleCircularProgress,
@@ -21,7 +22,8 @@ import {
 } from '../../../../../utils/handle-orders-page';
 
 const UkrPost = ({ values, setFieldValue }) => {
-  const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = config;
+  const { materialUiConstants } = config;
+  const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = configs;
 
   const dispatch = useDispatch();
   const styles = useStyles();
@@ -101,7 +103,7 @@ const UkrPost = ({ values, setFieldValue }) => {
             <TextField
               {...params}
               label={deliveryLabels.region}
-              variant='outlined'
+              variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -139,7 +141,7 @@ const UkrPost = ({ values, setFieldValue }) => {
             <TextField
               {...params}
               label={deliveryLabels.district}
-              variant='outlined'
+              variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -173,7 +175,7 @@ const UkrPost = ({ values, setFieldValue }) => {
             <TextField
               {...params}
               label={deliveryLabels.city}
-              variant='outlined'
+              variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -211,7 +213,7 @@ const UkrPost = ({ values, setFieldValue }) => {
             <TextField
               {...params}
               label={deliveryLabels.department}
-              variant='outlined'
+              variant={materialUiConstants.outlined}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (

@@ -5,8 +5,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 
+import { config } from '../../../../../configs';
 import { useStyles } from './nova-post.styles';
-import config from '../../../../../configs/orders';
+import configs from '../../../../../configs/orders';
 import {
   getNovaPoshtaCities,
   getNovaPoshtaWarehouse
@@ -14,7 +15,8 @@ import {
 import { inputName, POSTOMAT, postPropTypes } from '../../../../../utils/order';
 
 const NovaPost = ({ setFieldValue, values }) => {
-  const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = config;
+  const { materialUiConstants } = config;
+  const { deliveryTitles, deliveryAdditionalInfo, deliveryLabels } = configs;
   const dispatch = useDispatch();
   const styles = useStyles();
 
@@ -73,7 +75,7 @@ const NovaPost = ({ setFieldValue, values }) => {
               <TextField
                 {...params}
                 label={deliveryLabels.city}
-                variant='outlined'
+                variant={materialUiConstants.outlined}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (
@@ -120,7 +122,7 @@ const NovaPost = ({ setFieldValue, values }) => {
               <TextField
                 {...params}
                 label={deliveryLabels.department}
-                variant='outlined'
+                variant={materialUiConstants.outlined}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (

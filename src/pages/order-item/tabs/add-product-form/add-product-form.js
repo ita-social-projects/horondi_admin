@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Select from '@material-ui/core/Select';
 
+import { config } from '../../../../configs';
 import { useStyles } from './add-product-form.styles';
 import {
   getFiltredProducts,
@@ -21,6 +22,7 @@ import {
 } from '../../../../utils/order';
 
 const AddProductForm = ({ items, setFieldValue }) => {
+  const { materialUiConstants } = config;
   const styles = useStyles();
   const { productLabels, productAdditionalInfo } = configs;
   const dispatch = useDispatch();
@@ -90,7 +92,7 @@ const AddProductForm = ({ items, setFieldValue }) => {
           <TextField
             {...params}
             label={productLabels.product}
-            variant='outlined'
+            variant={materialUiConstants.outlined}
             InputProps={{
               ...params.InputProps,
               endAdornment: (
@@ -130,8 +132,8 @@ const AddProductForm = ({ items, setFieldValue }) => {
         </Select>
       </div>
       <Button
-        variant='contained'
-        color='primary'
+        variant={materialUiConstants.contained}
+        color={materialUiConstants.primary}
         disabled={!selectedProduct}
         className={styles.addBtn}
         onClick={addProductHandler}
