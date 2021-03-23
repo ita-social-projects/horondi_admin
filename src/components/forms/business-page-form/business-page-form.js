@@ -12,6 +12,7 @@ import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
+import * as Yup from 'yup';
 import useBusinessHandlers from '../../../utils/use-business-handlers';
 import Editor from '../../editor';
 import { useStyles } from './business-page-form.styles';
@@ -35,8 +36,10 @@ import {
   getBusinessPageById,
   updateBusinessPage
 } from '../../../redux/business-pages/business-pages.actions';
-import { config } from '../../../configs';
+
 import { useCommonStyles } from '../../../pages/common.styles';
+import LanguagePanel from '../language-panel';
+import { config } from '../../../configs';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -48,8 +51,11 @@ const BusinessPageForm = ({ id, editMode }) => {
 
   const classes = useStyles();
   const common = useCommonStyles();
-
-  const labels = config.labels.businessPage;
+  const {
+    labels: { businessPageLabel },
+    languages
+  } = config;
+  // const labels = config.labels.businessPage;
 
   const {
     tabsValue,
@@ -66,8 +72,8 @@ const BusinessPageForm = ({ id, editMode }) => {
     code,
     setCode,
     files,
-    setFiles,
-    languages
+    setFiles
+    // languages
   } = useBusinessHandlers();
 
   const { editorField } = config.formRegExp;
@@ -104,13 +110,32 @@ const BusinessPageForm = ({ id, editMode }) => {
       editorFields.every((field) => !editorField.test(field) || field)
     );
   };
+  console.log(enText);
+  const isEnTextAndValidate =
+    (editorField.test(enText) || !enText) && shouldValidate;
+
+  const enterTitleMessage = 'Введіть заголовок';
+  const enterUniqueIdMessage = 'Введіть унікальний ідентифікатор для сторінки';
+  const enterTextMessage = 'Введіть текст для сторінки';
+  // const enTitleErrorValue = labels[0].errorLabel[tabsValue].value;
+
+  const formSchema = Yup.object().shape({
+    code: Yup.string().required(enterUniqueIdMessage),
+    uaTitle: Yup.string().required(enterTitleMessage),
+    enTitle: Yup.string().required(enterTitleMessage),
+    uaText: Yup.string().required(enterTitleMessage),
+    enText: Yup.string().required(enterTitleMessage)
+  });
 
   const formik = useFormik({
     initialValues: {
       code,
       uaTitle,
-      enTitle
+      enTitle,
+      uaText,
+      enText
     },
+    validationSchema: formSchema,
     onSubmit: async (values) => {
       if (!checkValidation(values)) {
         setShouldValidate(true);
@@ -122,8 +147,8 @@ const BusinessPageForm = ({ id, editMode }) => {
         return indexFinder(i, files, name, size);
       });
 
-      const newUaText = uaText.replace(/src="data:image.*?"/g, 'src=""');
-      const newEnText = enText.replace(/src="data:image.*?"/g, 'src=""');
+      const newUaText = values.uaText.replace(/src="data:image.*?"/g, 'src=""');
+      const newEnText = values.enText.replace(/src="data:image.*?"/g, 'src=""');
 
       const page = createBusinessPage({
         ...values,
@@ -146,7 +171,9 @@ const BusinessPageForm = ({ id, editMode }) => {
     formik.values.code = code;
     formik.values.uaTitle = uaTitle;
     formik.values.enTitle = enTitle;
-  }, [code, uaTitle, enTitle]);
+    formik.values.enText = enText;
+    formik.values.uaText = uaText;
+  }, [code, uaTitle, enTitle, enText, uaText]);
 
   const languageTabs = languages.map((lang) => (
     <Tab label={lang} key={lang} data-cy={lang} />
@@ -156,14 +183,21 @@ const BusinessPageForm = ({ id, editMode }) => {
     return <LoadingBar />;
   }
 
-  const isEnTextAndValidate =
-    (editorField.test(enText) || !enText) && shouldValidate;
-  const isEnTitleAndValidate = !formik.values.enTitle && shouldValidate;
-  const isUaTitleAndValidate = !formik.values.uaTitle && shouldValidate;
+  // const isEnTitleAndValidate = !formik.values.enTitle && shouldValidate;
+  // const isUaTitleAndValidate = !formik.values.uaTitle && shouldValidate;
   const isCodeAndValidate = !formik.values.code && shouldValidate;
-  const enterTitleMessage = 'Введіть заголовок';
-  const enterUniqueIdMessage = 'Введіть унікальний ідентифікатор для сторінки';
-  const enTitleErrorValue = labels[0].errorLabel[tabsValue].value;
+
+  businessPageLabel[1].setFiles = setFiles;
+
+  console.log(formik.errors);
+
+  const inputOptions = {
+    errors: formik.errors,
+    touched: formik.touched,
+    handleChange: formik.handleChange,
+    values: formik.values,
+    inputs: businessPageLabel
+  };
 
   return (
     <div className={common.container}>
@@ -197,75 +231,87 @@ const BusinessPageForm = ({ id, editMode }) => {
             </Paper>
           </Grid>
           <Paper className={classes.tabField}>
-            <Tabs
-              className={common.tabs}
-              value={tabsValue}
-              onChange={handleTabsChange}
-              aria-label='simple tabs example'
-            >
-              {languageTabs}
-            </Tabs>
-            <TabPanel value={tabsValue} index={0}>
-              <Paper className={classes.businessPageForm}>
-                <TextField
-                  id='uaTitle'
-                  className={classes.textField}
-                  variant='outlined'
-                  label={config.labels.lableTitle.ua}
-                  multiline
-                  value={formik.values.uaTitle}
-                  onChange={formik.handleChange}
-                  error={isUaTitleAndValidate}
-                  helperText={helperTextHandler(
-                    isUaTitleAndValidate,
-                    enterTitleMessage
-                  )}
-                  data-cy='page-header-ua'
-                />
-                <Editor
-                  value={uaText}
-                  placeholder='Текст'
-                  onEditorChange={(value) => uaSetText(value)}
-                  setFiles={setFiles}
-                  data-cy='page-editor'
-                />
-                {(editorField.test(uaText) || !uaText) && shouldValidate && (
-                  <div className={classes.errorMessage} data-cy='editor-error'>
-                    Введіть текст для сторінки
-                  </div>
-                )}
-              </Paper>
-            </TabPanel>
-            <TabPanel value={tabsValue} index={1}>
-              <Paper className={classes.businessPageForm}>
-                <TextField
-                  id='enTitle'
-                  className={classes.textField}
-                  variant='outlined'
-                  label={config.labels.lableTitle.en}
-                  multiline
-                  value={formik.values.enTitle}
-                  onChange={formik.handleChange}
-                  error={isEnTitleAndValidate}
-                  helperText={helperTextHandler(
-                    isEnTitleAndValidate,
-                    enTitleErrorValue
-                  )}
-                  data-cy='page-header-en'
-                />
-                <Editor
-                  value={enText}
-                  placeholder={labels[1].label[tabsValue].value}
-                  onEditorChange={(value) => enSetText(value)}
-                  setFiles={setFiles}
-                />
-                {isEnTextAndValidate && (
-                  <div className={classes.errorMessage} data-cy='editor-error'>
-                    {labels[1].errorLabel[tabsValue].value}
-                  </div>
-                )}
-              </Paper>
-            </TabPanel>
+            {languages.map((lang) => (
+              <LanguagePanel
+                lang={lang}
+                inputOptions={inputOptions}
+                key={lang}
+              />
+            ))}
+            {isEnTextAndValidate && (
+              <div className={classes.errorMessage} data-cy='editor-error'>
+                {enterTextMessage}
+              </div>
+            )}
+            {/* <Tabs */}
+            {/*  className={common.tabs} */}
+            {/*  value={tabsValue} */}
+            {/*  onChange={handleTabsChange} */}
+            {/*  aria-label='simple tabs example' */}
+            {/* > */}
+            {/*  {languageTabs} */}
+            {/* </Tabs> */}
+            {/* <TabPanel value={tabsValue} index={0}> */}
+            {/*  <Paper className={classes.businessPageForm}> */}
+            {/*    <TextField */}
+            {/*      id='uaTitle' */}
+            {/*      className={classes.textField} */}
+            {/*      variant='outlined' */}
+            {/*      label={config.labels.lableTitle.ua} */}
+            {/*      multiline */}
+            {/*      value={formik.values.uaTitle} */}
+            {/*      onChange={formik.handleChange} */}
+            {/*      error={isUaTitleAndValidate} */}
+            {/*      helperText={helperTextHandler( */}
+            {/*        isUaTitleAndValidate, */}
+            {/*        enterTitleMessage */}
+            {/*      )} */}
+            {/*      data-cy='page-header-ua' */}
+            {/*    /> */}
+            {/*    <Editor */}
+            {/*      value={uaText} */}
+            {/*      placeholder='Текст' */}
+            {/*      onEditorChange={(value) => uaSetText(value)} */}
+            {/*      setFiles={setFiles} */}
+            {/*      data-cy='page-editor' */}
+            {/*    /> */}
+            {/*    {(editorField.test(uaText) || !uaText) && shouldValidate && ( */}
+            {/*      <div className={classes.errorMessage} data-cy='editor-error'> */}
+            {/*        Введіть текст для сторінки */}
+            {/*      </div> */}
+            {/*    )} */}
+            {/*  </Paper> */}
+            {/* </TabPanel> */}
+            {/* <TabPanel value={tabsValue} index={1}> */}
+            {/*  <Paper className={classes.businessPageForm}> */}
+            {/*    <TextField */}
+            {/*      id='enTitle' */}
+            {/*      className={classes.textField} */}
+            {/*      variant='outlined' */}
+            {/*      label={config.labels.lableTitle.en} */}
+            {/*      multiline */}
+            {/*      value={formik.values.enTitle} */}
+            {/*      onChange={formik.handleChange} */}
+            {/*      error={isEnTitleAndValidate} */}
+            {/*      helperText={helperTextHandler( */}
+            {/*        isEnTitleAndValidate, */}
+            {/*        enTitleErrorValue */}
+            {/*      )} */}
+            {/*      data-cy='page-header-en' */}
+            {/*    /> */}
+            {/*    <Editor */}
+            {/*      value={enText} */}
+            {/*      placeholder={labels[1].label[tabsValue].value} */}
+            {/*      onEditorChange={(value) => enSetText(value)} */}
+            {/*      setFiles={setFiles} */}
+            {/*    /> */}
+            {/*    {isEnTextAndValidate && ( */}
+            {/*      <div className={classes.errorMessage} data-cy='editor-error'> */}
+            {/*        {labels[1].errorLabel[tabsValue].value} */}
+            {/*      </div> */}
+            {/*    )} */}
+            {/*  </Paper> */}
+            {/* </TabPanel> */}
           </Paper>
         </div>
         <div className={classes.controlsBlock}>
