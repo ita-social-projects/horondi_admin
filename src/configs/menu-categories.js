@@ -19,6 +19,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import GradientIcon from '@material-ui/icons/Gradient';
+import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 
 import routes from './routes';
 
@@ -49,6 +50,7 @@ export const staticPagesCategories = [
   ['Головна сторінка', routes.pathToHomePageEdit, AssignmentIcon],
   ['Слайдер', routes.pathToHomePageSlides, FilterIcon],
   ['Новини', routes.pathToNews, ImportContactsIcon],
+  ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
   ['Про оплату і доставку', routes.pathToBusinessPages, MonetizationOnIcon],
   ['Умови', routes.pathToBusinessPages, DescriptionIcon],
   ['Про нас', routes.pathToBusinessPages, InfoIcon],
