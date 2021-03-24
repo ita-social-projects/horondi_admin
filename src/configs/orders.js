@@ -1,16 +1,16 @@
 const orders = {
   statusOptions: [
     { label: 'Статус замовлення', value: '' },
-    { label: 'Замовлення створено', value: 'CREATED' },
-    { label: 'Замовлення підтвердженно', value: 'CONFIRMED' },
-    { label: 'Замовлення виготовлено', value: 'PRODUCED' },
-    { label: 'Замовлення скасовано', value: 'CANCELLED' },
+    { label: 'Створено', value: 'CREATED' },
+    { label: 'Підтвердженно', value: 'CONFIRMED' },
+    { label: 'Виготовлено', value: 'PRODUCED' },
+    { label: 'Скасовано', value: 'CANCELLED' },
     { label: 'Повернення коштів', value: 'REFUNDED' },
-    { label: 'Замовлення відправлено', value: 'SENT' },
-    { label: 'Замовлення доставлено', value: 'DELIVERED' }
+    { label: 'Відправлено', value: 'SENT' },
+    { label: 'Доставлено', value: 'DELIVERED' }
   ],
   paymentOptions: [
-    { label: 'Спосіб оплати', value: '' },
+    { label: 'Метод оплати', value: '' },
     { label: 'Картка', value: 'CARD' },
     { label: 'Готівка', value: 'CASH' }
   ],
@@ -23,10 +23,47 @@ const orders = {
     { label: 'Перенаправлено', value: 'REVERSED' },
     { label: 'В обробці', value: 'PROCESSING' }
   ],
+  deliveryTitles: {
+    deliveryAddress: 'Адреса доставки',
+    novaPostCourieru: "Новa Пошта кур'єр",
+    ukrPostCourier: "Укрпошта кур'єр",
+    novaPost: 'Нова пошта',
+    ukrPost: 'Укрпошта'
+  },
+  deliveryLabels: {
+    city: 'Місто',
+    department: 'Відділення',
+    region: 'Область',
+    district: 'Район'
+  },
+  deliveryAdditionalInfo: {
+    noOneCity: 'Жодного міста не знайдено',
+    noOneDepartment: 'Жодного відділення не знайдено',
+    noOneRegion: 'Жодної області не знайдено',
+    noOneDistrict: 'Жодного району не знайдено'
+  },
+  deliveryTypes: {
+    novaPost: 'NOVAPOST',
+    ukrPost: 'UKRPOST',
+    novaPostCourier: 'NOVAPOSTCOURIER',
+    ukrPostCourier: 'UKRPOSTCOURIER',
+    selfPickUp: 'SELFPICKUP'
+  },
+
   dialogTitle: 'Замовлення',
   dialogContent:
     'Зміна статусу "Замовлення створено" чи "Замовлення підтверджено" на інші унеможливить подальше редагування деталей замовлення. Ви дійсно хочете продовжити?',
-  buttonTitle: 'Продовжити'
+  buttonTitle: 'Продовжити',
+  productLabels: {
+    product: 'Продукти',
+    addProduct: 'Додати продукт',
+    quantity: 'Кількість: ',
+    size: 'Розмір: ',
+    saveProduct: 'Зберегти'
+  },
+  productAdditionalInfo: {
+    noOneProduct: 'Жодного продукту не знайдено'
+  }
 };
 
 export default orders;

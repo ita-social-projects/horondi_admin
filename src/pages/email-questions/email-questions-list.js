@@ -23,6 +23,7 @@ import LoadingBar from '../../components/loading-bar';
 import getTime from '../../utils/getTime';
 import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
+import { answerTextHandler } from '../../utils/email-question-list';
 
 const { labels, titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
@@ -116,8 +117,7 @@ const EmailQuestionsList = () => {
         const { answer } = question;
 
         const questionToShow = `<b>Q:</b> ${question.text}`;
-        const answerToShow =
-            answer && answer.text ? `<br> <b>A:</b> ${answer.text}` : '';
+        const answerToShow = answerTextHandler(answer);
 
         return (
           <TableContainerRow
