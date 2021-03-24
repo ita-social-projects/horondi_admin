@@ -186,7 +186,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                 data-cy='page-code'
               />
             </Paper>
-            {touched.code && touched.code && (
+            {touched.code && errors.code && (
               <div data-cy='code-error' className={classes.errorMessage}>
                 {errors.code}
               </div>
