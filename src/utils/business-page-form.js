@@ -13,8 +13,6 @@ export const enSetTitleHandler = (condition, businessPage) =>
 export const enSetTextHandler = (condition, businessPage) =>
   condition ? businessPage.text[1].value : '';
 
-export const helperTextHandler = (condition, value) => (condition ? value : '');
-
 export const businessPageDispatchHandler = (
   mode,
   dispatch,
