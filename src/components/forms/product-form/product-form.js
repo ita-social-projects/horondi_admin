@@ -297,7 +297,6 @@ const ProductForm = ({ isEdit }) => {
               type='submit'
               variant='contained'
               color='primary'
-              disabled={!isFieldsChanged}
               onClick={handleProductValidate}
             >
               {SAVE}
