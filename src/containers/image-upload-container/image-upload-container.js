@@ -1,41 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
-import { AttachFile } from '@material-ui/icons';
+import { useStyles } from './image-upload-patternContainer.styles';
+import { utils } from '../../utils/image-upload';
 
-const ImageUploadContainer = ({ handler, multiple, buttonLabel }) => (
-  <div>
-    <label htmlFor='upload-photo' data-cy='pattern-image'>
-      <Button
-        variant='contained'
-        color='primary'
-        component='label'
-        data-cy='upload-photo'
+const ImageUploadContainer = ({ handler, multiple, src, id }) => {
+  const style = useStyles();
+
+  return (
+    <div>
+      <label
+        className={src ? style.labelWithoutBack : style.labelWithBack}
+        htmlFor={id}
+        data-cy={utils.dataCy.pattern}
       >
-        <AttachFile />
-        {buttonLabel}
+        {src && (
+          <img className={style.image} src={src} alt={utils.alt.pattern} />
+        )}
         <input
-          style={{ display: 'none' }}
-          id='upload-photo'
-          name='upload-photo'
+          className={style.input}
+          id={id}
+          name={utils.name}
           type='file'
           multiple
           onChange={handler}
         />
-      </Button>
-    </label>
-  </div>
-);
+      </label>
+    </div>
+  );
+};
 
 ImageUploadContainer.propTypes = {
   handler: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
-  buttonLabel: PropTypes.string
+  src: PropTypes.string,
+  id: PropTypes.string.isRequired
 };
 
 ImageUploadContainer.defaultProps = {
   multiple: false,
-  buttonLabel: 'Завантажити'
+  src: null
 };
 
 export default ImageUploadContainer;

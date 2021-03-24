@@ -400,7 +400,7 @@ const productQuery = `
       }
     }
   }
-
+  isHotItem
   available
 }
 `;

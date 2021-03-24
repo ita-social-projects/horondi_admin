@@ -7,6 +7,7 @@ export const useStyles = makeStyles((theme) => {
   return {
     imageUploadAvatar,
     container: {
+      display: 'flex',
       position: 'relative'
     },
     error: {

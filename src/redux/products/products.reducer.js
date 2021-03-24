@@ -42,6 +42,7 @@ export const productModel = {
   basePrice: 0,
   strapLengthInCm: 0,
   available: true,
+  isHotItem: false,
   options: []
 };
 
