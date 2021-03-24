@@ -78,6 +78,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     values,
     handleSubmit,
     handleChange,
+    handleBlur,
     touched,
     errors,
     setFieldValue
@@ -131,6 +132,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
