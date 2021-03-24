@@ -138,3 +138,9 @@ export const commentErrorMessages = {
   COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
   MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
 };
+
+export const businessPageErrorMessages = {
+  ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
+  ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
+  ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки'
+};
