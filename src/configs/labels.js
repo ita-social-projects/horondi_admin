@@ -393,13 +393,11 @@ const labels = {
     delivery: 'Доставка'
   },
   deliveryLabels: {
-    deliveryMethodLabel: 'Спосіб доставки',
-    byCourierLabel: "Доставка кур'єром:",
-    invoiceNumberLabel: 'Номер накладної',
-    warehouseNumberLabel: 'Номер відділення: ',
-    sentAtLabel: 'Відправлено о:',
-    deliveryCostLabel: 'Вартість доставки',
-    courierOfficeNameLabel: 'Номер відділення'
+    novaPost: 'Нова пошта',
+    ukrPost: 'Укрпошта',
+    selfPickup: 'Самовивіз',
+    novaPostCourier: "Кур'єр нової пошти",
+    ukrPostCourier: "Кур'єр укрпошти"
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',

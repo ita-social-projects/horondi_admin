@@ -20,6 +20,7 @@ import { handleOrdersPage } from '../../utils/handle-orders-page';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
+const { pathToOrderItem } = config.routes;
 const { REMOVE_ORDER_MESSAGE } = config.messages;
 
 const OrdersPage = () => {
@@ -41,7 +42,6 @@ const OrdersPage = () => {
     orders: Orders.list.items,
     count: Orders.list.count
   }));
-
   const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
     rowsPerPage: Table.pagination.rowsPerPage,
@@ -58,7 +58,7 @@ const OrdersPage = () => {
         }
       })
     );
-  }, [dispatch, rowsPerPage, currentPage, status, orders]);
+  }, [dispatch, rowsPerPage, currentPage, status]);
 
   const ordersDeleteHandler = (id) => {
     const removeOrders = () => {
@@ -81,7 +81,7 @@ const OrdersPage = () => {
         } ₴`}
         status={<Status status={order.status} />}
         editHandler={() => {
-          dispatch(push(`/orders/${order._id}`));
+          dispatch(push(pathToOrderItem.replace(':id', order._id)));
         }}
         deleteHandler={() => {
           ordersDeleteHandler(order._id);
