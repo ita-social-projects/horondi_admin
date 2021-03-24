@@ -110,7 +110,7 @@ const BusinessPageForm = ({ id, editMode }) => {
       enText
     },
     validationSchema: formSchema,
-    onSubmit: async (values) => {
+    onSubmit: async () => {
       const uniqueFiles = files.filter((file, i) => {
         const { name, size } = file;
         return indexFinder(i, files, name, size);
