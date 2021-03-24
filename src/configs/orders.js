@@ -1,16 +1,16 @@
 const orders = {
   statusOptions: [
     { label: 'Статус замовлення', value: '' },
-    { label: 'Замовлення створено', value: 'CREATED' },
-    { label: 'Замовлення підтвердженно', value: 'CONFIRMED' },
-    { label: 'Замовлення виготовлено', value: 'PRODUCED' },
-    { label: 'Замовлення скасовано', value: 'CANCELLED' },
+    { label: 'Створено', value: 'CREATED' },
+    { label: 'Підтвердженно', value: 'CONFIRMED' },
+    { label: 'Виготовлено', value: 'PRODUCED' },
+    { label: 'Скасовано', value: 'CANCELLED' },
     { label: 'Повернення коштів', value: 'REFUNDED' },
-    { label: 'Замовлення відправлено', value: 'SENT' },
-    { label: 'Замовлення доставлено', value: 'DELIVERED' }
+    { label: 'Відправлено', value: 'SENT' },
+    { label: 'Доставлено', value: 'DELIVERED' }
   ],
   paymentOptions: [
-    { label: 'Спосіб оплати', value: '' },
+    { label: 'Метод оплати', value: '' },
     { label: 'Картка', value: 'CARD' },
     { label: 'Готівка', value: 'CASH' }
   ],
