@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount, shallow } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
-import { Button, Typography } from '@material-ui/core/Typography';
+import { Button, Typography } from '@material-ui/core';
 import { variables } from './variables';
 
 import PatternPage from '../pattern-page';
@@ -25,24 +25,28 @@ describe('Pattern-page tests', () => {
   const mockHolder = jest.fn();
   let wrapper;
 
-  beforeAll(() => {
-    wrapper = shallow(<div>fffff</div>);
+  beforeEach(() => {
+    wrapper = mount(
+      <BrowserRouter>
+        <PatternPage />
+      </BrowserRouter>
+    );
   });
 
-  console.log(wrapper.debug());
-
-  // afterEach(() => {
-  //   wrapper.unmount();
-  // });
+  afterEach(() => {
+    wrapper.unmount();
+  });
 
   test('Does page render', () => {
     expect(wrapper).toBeDefined();
   });
 
-  // test(`Should render Typography with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
-  //   expect(wrapper.exists(Typography)).toBe(true);
-  //   expect(wrapper.find(Typography).text()).toBe(config.titles.patternTitles.mainPageTitle);
-  // });
+  test(`Should render Typography with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
+    expect(wrapper.exists(Typography)).toBe(true);
+    expect(wrapper.find(Typography).text()).toBe(
+      config.titles.patternTitles.mainPageTitle
+    );
+  });
 
   // test(`Should render CREATE_PATTERN_TITLE button with "${CREATE_PATTERN_TITLE}" label`, () => {
   //   expect(wrapper.exists(Button)).toBe(true);
