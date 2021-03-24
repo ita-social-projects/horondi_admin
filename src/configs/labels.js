@@ -145,19 +145,6 @@ const labels = {
       isEditor: true
     }
   ],
-  // businessPage: [
-  //   {
-  //     label: mapToLanguages('Заголовок', 'Title'),
-  //     errorLabel: mapToLanguages('Введіть заголовок', 'Pass title')
-  //   },
-  //   {
-  //     label: mapToLanguages('Текст', 'Text'),
-  //     errorLabel: mapToLanguages(
-  //       'Введіть текст для сторінки',
-  //       'Pass text for the page'
-  //     )
-  //   }
-  // ],
   product: {
     sortBySelectOptions: [
       { label: 'популярністю', value: 'popularity' },
