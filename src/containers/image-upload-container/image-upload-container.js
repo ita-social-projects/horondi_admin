@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AttachFile } from '@material-ui/icons';
-import Button from '@material-ui/core/Button';
 import { useStyles } from './image-upload-patternContainer.styles';
 import { utils } from '../../utils/image-upload';
 

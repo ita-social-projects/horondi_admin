@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { config } from '../../configs';
-import ProductAddImages from '../../pages/products/product-add/product-add-images';
 
 const { languages } = config;
 
