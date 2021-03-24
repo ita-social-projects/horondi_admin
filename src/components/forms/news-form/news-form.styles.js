@@ -14,7 +14,9 @@ export const useStyles = makeStyles((theme) => {
   } = formStyles(theme);
   return {
     newsItemUpdate: {
-      ...itemUpdate
+      ...itemUpdate,
+      marginTop: 0,
+      padding: '10px'
     },
     inputError: {
       color: '#e60000',
@@ -23,6 +25,7 @@ export const useStyles = makeStyles((theme) => {
     inputBlock: {
       margin: '10px 0'
     },
+
     formContainer: {
       width: '100%',
       padding: 20,
@@ -33,6 +36,24 @@ export const useStyles = makeStyles((theme) => {
       '@media (max-width: 768px)': {
         flexDirection: 'column'
       }
+    },
+    buttonContainer: {
+      position: 'relative',
+      width: '100%',
+      height: 60,
+      marginTop: -13,
+      '@media (max-width: 600px)': {
+        marginTop: -21
+      }
+    },
+    button: {
+      marginTop: theme.spacing(0.5)
+    },
+    fixedButtons: {
+      position: 'fixed',
+      height: 60,
+      zIndex: 1001,
+      backgroundColor: theme.palette.bodyColor
     },
     textField,
     tabs,

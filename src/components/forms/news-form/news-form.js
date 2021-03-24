@@ -135,24 +135,26 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     inputs
   };
 
-  const navButtons = (
-    <>
-      <BackButton />
-      <SaveButton
-        className={styles.saveButton}
-        data-cy='save'
-        type='submit'
-        title={SAVE_TITLE}
-      />
-    </>
-  );
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {navButtons}
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                className={styles.saveButton}
+                data-cy='save'
+                type='submit'
+                title={SAVE_TITLE}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <Grid item xs={12}>
-          <Paper className={styles.inputBlock}>
+          <Paper className={styles.newsItemUpdate}>
             <div className={styles.imageUploadBlock}>
               <div>
                 <span className={styles.imageUpload}>
@@ -195,7 +197,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         {map(languages, (lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        {navButtons}
       </form>
     </div>
   );
