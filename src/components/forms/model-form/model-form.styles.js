@@ -16,7 +16,10 @@ export const useStyles = makeStyles((theme) => {
     itemUpdate,
     inputError,
     imageUploadAvatar,
-    imageName
+    imageName,
+    inputLabel,
+    formControl,
+    purposeSelect
   } = formStyles(theme);
   return {
     modelItemUpdate: {
@@ -36,6 +39,9 @@ export const useStyles = makeStyles((theme) => {
     imageUpload,
     inputError,
     imageUploadAvatar,
-    imageName
+    imageName,
+    inputLabel,
+    formControl,
+    purposeSelect
   };
 });

@@ -13,6 +13,10 @@ import { config } from '../../../configs';
 import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
+import {
+  useFormikInitialValues,
+  pushPreferredLanguages
+} from '../../../utils/news-form';
 
 const {
   MAIN_PHOTO,
@@ -48,11 +52,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   useEffect(() => {
     const prefLanguages = [];
-    Object.keys(checkboxes).forEach((key) => {
-      if (checkboxes[key]) {
-        prefLanguages.push(key);
-      }
-    });
+    pushPreferredLanguages(checkboxes, prefLanguages);
     setPreferredLanguages(prefLanguages);
   }, [checkboxes, setPreferredLanguages]);
 
@@ -78,16 +78,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const { values, handleSubmit, handleChange, touched, errors } = useFormik({
     validationSchema: formSchema,
-    initialValues: {
-      authorPhoto: newsArticle.author.image || '',
-      newsImage: newsArticle.image || '',
-      uaAuthorName: newsArticle.author.name[0].value || '',
-      enAuthorName: newsArticle.author.name[1].value || '',
-      uaTitle: newsArticle.title[0].value || '',
-      enTitle: newsArticle.title[1].value || '',
-      uaText: newsArticle.text[0].value || '',
-      enText: newsArticle.text[1].value || ''
-    },
+    initialValues: useFormikInitialValues(newsArticle),
     onSubmit: () => {
       const newArticle = createArticle(values);
       if (editMode) {

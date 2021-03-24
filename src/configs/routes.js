@@ -29,7 +29,7 @@ const routes = {
   pathToAddSize: '/sizes/add',
   pathToEditSize: '/sizes/:id',
   pathToOrders: '/orders',
-  pathToOrderItem: '/orders/:id',
+  pathToOrderItem: '/orders/edit/:id',
   pathToOrderAdd: '/orders/add',
   pathToHomePageEdit: '/home-page-edit',
   pathToEmailQuestions: '/email-questions',

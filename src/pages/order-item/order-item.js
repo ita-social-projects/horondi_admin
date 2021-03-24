@@ -3,27 +3,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Tabs, Tab, Button } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
-
 import { noop } from 'lodash';
+
+import { config } from '../../configs';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
 import { Delivery, Recipient, Products, General } from './tabs';
-import { getOrder, updateOrder } from '../../redux/orders/orders.actions';
+import { getOrder } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
-import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import orders from '../../configs/orders';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
 import { BackButton } from '../../components/buttons';
-import { newOrder, submitStatus } from '../../utils/order';
+import { submitStatus, initialValues, setFormValues } from '../../utils/order';
+import { validationSchema } from '../../validations/orders/order-form-validation';
+import { handleOrderSubmition } from '../../utils/handle-orders-page';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { orderTabs } = labels;
+  const { materialUiConstants } = config;
   const { delivery, general, products, receiver } = orderTabs;
-  const { dialogTitle, dialogContent } = orders;
   const { SAVE_ORDER } = buttonTitles;
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -41,18 +42,8 @@ const OrderItem = ({ id }) => {
   };
 
   const handleFormSubmit = (data) => {
-    if (
-      newOrder.status !== initialValues.status &&
-      !submitStatus.includes(newOrder(data).status)
-    ) {
-      const updateOrderSnackbar = () => {
-        dispatch(closeDialog());
-        dispatch(updateOrder(newOrder(data), id));
-      };
-      openSuccessSnackbar(updateOrderSnackbar, dialogContent, dialogTitle);
-    } else {
-      dispatch(updateOrder(newOrder(data), id));
-    }
+    handleOrderSubmition(dispatch, resetForm, openSuccessSnackbar, data, id);
+    setTabValue(0);
   };
 
   const {
@@ -61,24 +52,24 @@ const OrderItem = ({ id }) => {
     handleSubmit,
     setFieldValue,
     dirty,
-    initialValues,
-    resetForm
+    resetForm,
+    isValid
   } = useFormik({
-    initialValues: {},
+    initialValues,
+    validationSchema,
     onSubmit: handleFormSubmit
   });
 
   useEffect(() => {
-    if (selectedOrder) {
-      resetForm({ values: selectedOrder });
+    if (selectedOrder && id) {
+      resetForm({ values: setFormValues(selectedOrder) });
     }
   }, [selectedOrder, resetForm]);
 
-  const formikHandleChange = submitStatus.includes(
-    selectedOrder && selectedOrder.status
-  )
-    ? handleChange
-    : noop;
+  const formikHandleChange =
+    submitStatus.includes(selectedOrder && selectedOrder.status) || !id
+      ? handleChange
+      : noop;
 
   if (orderLoading) {
     return <LoadingBar />;
@@ -110,21 +101,21 @@ const OrderItem = ({ id }) => {
         </TabPanel>
         <TabPanel value={tabValue} index={3}>
           <Delivery
-            data={{ delivery: values.delivery, address: values.address }}
+            data={{ delivery: values.delivery }}
             handleChange={formikHandleChange}
+            setFieldValue={setFieldValue}
           />
         </TabPanel>
       </Paper>
-      {dirty && (
-        <Button
-          type='submit'
-          variant='contained'
-          color='primary'
-          className={classes.saveBtn}
-        >
-          {SAVE_ORDER}
-        </Button>
-      )}
+      <Button
+        type={materialUiConstants.types.submit}
+        variant={materialUiConstants.contained}
+        color={materialUiConstants.primary}
+        className={classes.saveBtn}
+        disabled={!dirty || !isValid}
+      >
+        {SAVE_ORDER}
+      </Button>
       <div className={classes.controlsBlock}>
         <BackButton />
       </div>
@@ -132,8 +123,12 @@ const OrderItem = ({ id }) => {
   );
 };
 
+OrderItem.defaultProps = {
+  id: ''
+};
+
 OrderItem.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string
 };
 
 export default OrderItem;

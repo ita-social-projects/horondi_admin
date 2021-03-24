@@ -29,7 +29,7 @@ const labels = {
     },
     adress: {
       ua: 'Адреса',
-      en: 'Adress'
+      en: 'Address'
     }
   },
   model: {
@@ -52,7 +52,9 @@ const labels = {
       tagsFilled: 'tags-filled',
       standard: 'standard',
       normal: 'normal',
-      constructor: 'constructor'
+      constructor: 'constructor',
+      labelId: 'controlled-open-select-label',
+      variantStandard: 'standard'
     },
     image: 'Фото моделі',
     availableCategory: 'Категорія',
@@ -391,13 +393,11 @@ const labels = {
     delivery: 'Доставка'
   },
   deliveryLabels: {
-    deliveryMethodLabel: 'Спосіб доставки',
-    byCourierLabel: "Доставка кур'єром:",
-    invoiceNumberLabel: 'Номер накладної',
-    warehouseNumberLabel: 'Номер відділення: ',
-    sentAtLabel: 'Відправлено о:',
-    deliveryCostLabel: 'Вартість доставки',
-    courierOfficeNameLabel: 'Номер відділення'
+    novaPost: 'Нова пошта',
+    ukrPost: 'Укрпошта',
+    selfPickup: 'Самовивіз',
+    novaPostCourier: "Кур'єр нової пошти",
+    ukrPostCourier: "Кур'єр укрпошти"
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',

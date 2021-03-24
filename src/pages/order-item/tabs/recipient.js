@@ -1,34 +1,40 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-import PropTypes from 'prop-types';
+
 import { useStyles } from '../order-item.styles';
 import labels from '../../../configs/labels';
+import { inputName, recipientPropTypes } from '../../../utils/order';
+import { config } from '../../../configs';
 
 const Recipient = ({ data, handleChange }) => {
+  const { materialUiConstants } = config;
   const { user, userComment } = data;
   const { orderRecipient } = labels;
   const classes = useStyles();
   return (
     <div className={classes.recipient}>
-      {Object.keys(user).map((item) => (
+      {user &&
+        Object.keys(user).map((item) => (
+          <TextField
+            name={`user.${item}`}
+            label={orderRecipient[item] || ''}
+            key={item}
+            variant={materialUiConstants.outlined}
+            onChange={handleChange}
+            value={user[item] || ''}
+          />
+        ))}
+      {user && (
         <TextField
-          name={`user.${item}`}
-          label={orderRecipient[item] || ''}
-          key={item}
-          variant='outlined'
+          name={inputName.userComment}
+          label={orderRecipient.commentary}
           onChange={handleChange}
-          value={user[item] || ''}
+          variant={materialUiConstants.outlined}
+          value={userComment || ''}
+          multiline
+          rows={4}
         />
-      ))}
-      <TextField
-        name='userComment'
-        label={orderRecipient.commentary}
-        onChange={handleChange}
-        variant='outlined'
-        value={userComment || ''}
-        multiline
-        rows={4}
-      />
+      )}
     </div>
   );
 };
@@ -37,12 +43,6 @@ Recipient.defaultProps = {
   data: {}
 };
 
-Recipient.propTypes = {
-  data: PropTypes.shape({
-    user: PropTypes.objectOf(PropTypes.string),
-    userComment: PropTypes.string
-  }),
-  handleChange: PropTypes.func.isRequired
-};
+Recipient.propTypes = recipientPropTypes;
 
 export default Recipient;

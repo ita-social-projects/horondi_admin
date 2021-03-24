@@ -24,5 +24,11 @@ export const useStyles = makeStyles((theme) => ({
     '& .MuiListItemIcon-root': {
       color: colors.indigo[400]
     }
+  },
+  nested: {
+    paddingLeft: theme.spacing(4)
+  },
+  sliderTab: {
+    paddingLeft: theme.spacing(8)
   }
 }));
