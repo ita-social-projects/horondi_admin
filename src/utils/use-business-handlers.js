@@ -13,11 +13,6 @@ const useBusinessHandlers = () => {
   const [enText, enSetText] = useState('');
 
   const [files, setFiles] = useState([]);
-  const [tabsValue, setTabsValue] = useState(0);
-
-  const handleTabsChange = (event, newValue) => {
-    setTabsValue(newValue);
-  };
 
   const createBusinessPage = (values) => ({
     code: values.code,
@@ -50,14 +45,11 @@ const useBusinessHandlers = () => {
     uaTitle,
     enText,
     enTitle,
-    tabsValue,
     setCode,
     uaSetText,
     uaSetTitle,
     enSetText,
     enSetTitle,
-    setTabsValue,
-    handleTabsChange,
     languages,
     createBusinessPage,
     files,
