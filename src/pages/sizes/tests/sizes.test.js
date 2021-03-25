@@ -1,74 +1,26 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import * as reactRedux from 'react-redux';
 import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount, shallow } from 'enzyme';
-import { useSelector, useDispatch } from 'react-redux';
+import Enzyme, { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Typography, Button } from '@material-ui/core';
-import * as reactRedux from 'react-redux';
-import Sizes from '../sizes';
+
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { config } from '../../../configs';
+import Sizes from '../sizes';
+import mockReturner from './sizes.variables';
 
+const { CREATE_SIZE_TITLE } = config.buttonTitles;
 let mockLoading = true;
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const { CREATE_SIZE_TITLE } = config.buttonTitles;
-
-function mockReturner() {
-  return {
-    Sizes: {
-      list: [
-        {
-          _id: '604394cba7532c33dcb326d6',
-          name: 'M',
-          simpleName: [
-            {
-              lang: 'ua',
-              value: 'Роллтоп'
-            },
-            {
-              lang: 'en',
-              value: 'Rolltop'
-            }
-          ],
-          heightInCm: 30,
-          widthInCm: 27,
-          depthInCm: 13,
-          volumeInLiters: 22,
-          weightInKg: 1,
-          available: true,
-          additionalPrice: [
-            {
-              value: 138746,
-              currency: 'UAH'
-            },
-            {
-              value: 5000,
-              currency: 'USD'
-            }
-          ]
-        }
-      ],
-      sizesLoading: mockLoading,
-      size: null
-    },
-    Table: {
-      pagination: {
-        currentPage: 0,
-        rowsPerPage: 10
-      },
-      itemsCount: 1
-    }
-  };
-}
-
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useSelector: (selector) => selector(mockReturner()),
+  useSelector: (selector) => selector(mockReturner(mockLoading)),
   useDispatch: () => jest.fn()
 }));
 
