@@ -28,7 +28,8 @@ import {
   statsErrorMessages,
   paginationInputErrorMessages,
   commentErrorMessages,
-  sizeErrorMessages
+  sizeErrorMessages,
+  businessPageErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -212,7 +213,8 @@ export const config = {
   commentErrorMessages,
   filterLabels,
   materialUiConstants,
-  sizeErrorMessages
+  sizeErrorMessages,
+  businessPageErrorMessages
 };
 export const inputTypes = {
   button: 'button',

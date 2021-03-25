@@ -179,6 +179,23 @@ export const updateOrder = (order, id) => {
   return setItems(query, { order, id });
 };
 
+export const addOrder = (order) => {
+  const query = `
+		mutation ($order: OrderInput!) {
+			addOrder (order: $order) {
+				...on Order {
+					orderNumber
+				}
+				...on Error {
+					statusCode
+					message
+				}
+			}
+		}
+  `;
+  return setItems(query, { order });
+};
+
 export const getAllOrders = async (skip, limit, filter) => {
   const result = await client.query({
     query: gql`
@@ -208,7 +225,8 @@ export const getAllOrders = async (skip, limit, filter) => {
       filter: {
         orderStatus: filter.length ? filter : null
       }
-    }
+    },
+    fetchPolicy: 'no-cache'
   });
   const { data } = result;
   return data.getAllOrders;
@@ -243,4 +261,106 @@ export const deleteOrder = async (id) => {
   }
 
   return result.data.deleteOrder;
+};
+
+export const getNovaPoshtaCities = async (city) => {
+  const res = await client.query({
+    variables: {
+      city
+    },
+    query: gql`
+      query($city: String) {
+        getNovaPoshtaCities(city: $city) {
+          description
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  return res.data.getNovaPoshtaCities;
+};
+export const getNovaPoshtaWarehouses = async (city) => {
+  const result = await client.query({
+    variables: {
+      city
+    },
+    query: gql`
+      query($city: String) {
+        getNovaPoshtaWarehouses(city: $city) {
+          description
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+
+  return result.data.getNovaPoshtaWarehouses;
+};
+
+export const getUkrPostRegions = async () => {
+  const res = await client.query({
+    query: gql`
+      query {
+        getUkrPoshtaRegions {
+          REGION_UA
+          REGION_ID
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  return res.data.getUkrPoshtaRegions;
+};
+
+export const getUkrPoshtaDistrictsByRegionId = async (id) => {
+  const res = await client.query({
+    variables: {
+      id
+    },
+    query: gql`
+      query($id: ID!) {
+        getUkrPoshtaDistrictsByRegionId(id: $id) {
+          DISTRICT_UA
+          DISTRICT_ID
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  return res.data.getUkrPoshtaDistrictsByRegionId;
+};
+
+export const getUkrPoshtaCitiesByDistrictId = async (id) => {
+  const res = await client.query({
+    variables: {
+      id
+    },
+    query: gql`
+      query($id: ID!) {
+        getUkrPoshtaCitiesByDistrictId(id: $id) {
+          CITY_UA
+          CITY_ID
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  return res.data.getUkrPoshtaCitiesByDistrictId;
+};
+export const getUkrPoshtaPostOfficesByCityId = async (id) => {
+  const res = await client.query({
+    variables: {
+      id
+    },
+    query: gql`
+      query($id: ID!) {
+        getUkrPoshtaPostofficesCityId(id: $id) {
+          POSTCODE
+          STREET_UA_VPZ
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  return res.data.getUkrPoshtaPostofficesCityId;
 };

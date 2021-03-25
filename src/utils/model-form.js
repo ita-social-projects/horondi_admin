@@ -32,4 +32,5 @@ export const updateModelHandler = (condition, dispatch, updateFn, payload) => {
   }
 };
 
-export const loadHelper = (targetFiles, targetFilesZero) => targetFiles && targetFilesZero;
+export const loadHelper = (targetFiles, targetFilesZero) =>
+  targetFiles && targetFilesZero;

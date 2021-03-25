@@ -29,7 +29,7 @@ const labels = {
     },
     adress: {
       ua: 'Адреса',
-      en: 'Adress'
+      en: 'Address'
     }
   },
   model: {
@@ -133,17 +133,16 @@ const labels = {
     show: 'Видимий',
     productInfo: 'Інформація про продукт'
   },
-  businessPage: [
+  businessPageLabel: [
     {
-      label: mapToLanguages('Заголовок', 'Title'),
-      errorLabel: mapToLanguages('Введіть заголовок', 'Pass title')
+      label: { ua: 'Заголовок', en: 'Title' },
+      name: 'title',
+      required: true
     },
     {
-      label: mapToLanguages('Текст', 'Text'),
-      errorLabel: mapToLanguages(
-        'Введіть текст для сторінки',
-        'Pass text for the page'
-      )
+      label: { ua: 'Текст', en: 'Text' },
+      name: 'text',
+      isEditor: true
     }
   ],
   product: {
@@ -393,13 +392,11 @@ const labels = {
     delivery: 'Доставка'
   },
   deliveryLabels: {
-    deliveryMethodLabel: 'Спосіб доставки',
-    byCourierLabel: "Доставка кур'єром:",
-    invoiceNumberLabel: 'Номер накладної',
-    warehouseNumberLabel: 'Номер відділення: ',
-    sentAtLabel: 'Відправлено о:',
-    deliveryCostLabel: 'Вартість доставки',
-    courierOfficeNameLabel: 'Номер відділення'
+    novaPost: 'Нова пошта',
+    ukrPost: 'Укрпошта',
+    selfPickup: 'Самовивіз',
+    novaPostCourier: "Кур'єр нової пошти",
+    ukrPostCourier: "Кур'єр укрпошти"
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
