@@ -53,7 +53,6 @@ export function* handleAdminCheckByToken() {
     yield put(setAdminId(admin._id));
     yield put(setAuthLoading(false));
   } catch (error) {
-    console.error(error);
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
     setToLocalStorage('HORONDI_AUTH_TOKEN', null);

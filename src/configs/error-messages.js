@@ -36,7 +36,9 @@ export const patternErrorMessages = {
   PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
 export const categoryErrorMessages = {
-  CATEGORY_VALIDATION_ERROR: 'Мінімум 2 символи',
+  CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
+  CATEGORY_VALIDATION_ERROR_CATEGORY_NAME:
+    'Назва повинна містити від 2 до 50 символів',
   CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім',
   CATEGORY_UA_NAME_MESSAGE:
     'Поле може містити тільки українські літери та цифри',
@@ -57,8 +59,12 @@ export const newsErrorMessages = {
 export const modelErrorMessages = {
   MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',
   MODEL_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  MODEL_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
-  PHOTO_NOT_PROVIDED: 'Додайте фото для моделі'
+  PHOTO_NOT_PROVIDED: 'Додайте фото для моделі',
+  NOT_UA_NAME_MESSAGE: `Введіть ім'я моделі українською`,
+  NOT_EN_NAME_MESSAGE: `Введіть ім'я моделі англійською`,
+  NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис моделі англійською`,
+  NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис моделі українською`,
+  NO_STRING_TYPE_MESSAGE: `Повинно містити букви, цифри та спецсимволи`
 };
 export const contactErrorMessages = {
   INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
@@ -135,4 +141,10 @@ export const commentErrorMessages = {
   COMMENT_VALIDATION_ERROR: 'Мінімум 2 символи',
   COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
   MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
+};
+
+export const businessPageErrorMessages = {
+  ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
+  ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
+  ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки'
 };

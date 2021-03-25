@@ -42,6 +42,51 @@ const getAllComments = async (filter, pagination) => {
   return result.data.getAllComments;
 };
 
+const getRecentComments = async (limit) => {
+  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+  const result = await client.query({
+    context: { headers: { token } },
+    variables: {
+      limit
+    },
+    query: gql`
+      query($limit: Int!) {
+        getRecentComments(limit: $limit) {
+          ... on Comment {
+            _id
+            text
+            date
+            user {
+              _id
+              firstName
+              email
+            }
+            product {
+              _id
+            }
+            show
+          }
+          ... on Error {
+            statusCode
+            message
+          }
+        }
+      }
+    `,
+    fetchPolicy: 'no-cache'
+  });
+  client.resetStore();
+  if (result.data.getRecentComments.message) {
+    throw new Error(
+      `${result.data.getRecentComments.statusCode} ${
+        commentsTranslations[result.data.getRecentComments.message]
+      }`
+    );
+  }
+
+  return result.data.getRecentComments;
+};
+
 const deleteComment = async (id) => {
   const token = getFromLocalStorage(config.tokenName);
   const result = await client
@@ -250,5 +295,6 @@ export {
   getCommentById,
   getCommentsByUser,
   getCommentsByProduct,
-  getCommentsByType
+  getCommentsByType,
+  getRecentComments
 };

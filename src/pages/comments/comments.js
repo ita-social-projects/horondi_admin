@@ -29,7 +29,7 @@ const { pathToCommentsEdit } = config.routes;
 
 const map = require('lodash/map');
 
-const Comments = () => {
+export const Comments = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
   const commentOptions = useCommentFilters();
@@ -99,21 +99,18 @@ const Comments = () => {
       <div>
         <FilterNavbar options={commentOptions || {}} />
       </div>
-      {!loading ? (
-        <TableContainerGenerator
-          pagination
-          data-cy='commentTable'
-          count={itemsCount}
-          tableTitles={handleComments(
-            commentItems,
-            tableTitles,
-            NO_COMMENTS_MESSAGE
-          )}
-          tableItems={commentItems}
-        />
-      ) : (
-        <LoadingBar />
-      )}
+
+      <TableContainerGenerator
+        pagination
+        data-cy='commentTable'
+        count={itemsCount}
+        tableTitles={handleComments(
+          commentItems,
+          tableTitles,
+          NO_COMMENTS_MESSAGE
+        )}
+        tableItems={commentItems}
+      />
     </div>
   );
 };

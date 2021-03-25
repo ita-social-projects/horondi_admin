@@ -20,6 +20,7 @@ import {
 
 import { config } from '../../configs';
 import { useCommonStyles } from '../common.styles';
+import { getInitialStatsHandler } from '../../utils/statistic-page';
 
 const {
   titles: {
@@ -55,9 +56,7 @@ const StatisticPage = () => {
 
   useEffect(() => {
     const { categories } = doughnutData;
-    if (!categories.counts.length) {
-      dispatch(getIniitalStats());
-    }
+    getInitialStatsHandler(categories, dispatch, getIniitalStats);
   }, [dispatch, doughnutData]);
 
   if (loading) {

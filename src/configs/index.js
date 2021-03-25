@@ -1,6 +1,11 @@
 import { colors } from '@material-ui/core';
 import routes from './routes';
-import menuCategories from './menu-categories';
+import {
+  menuCategories,
+  clientMenuCategories,
+  catalogMenuCategories,
+  staticPagesCategories
+} from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
@@ -23,7 +28,8 @@ import {
   statsErrorMessages,
   paginationInputErrorMessages,
   commentErrorMessages,
-  sizeErrorMessages
+  sizeErrorMessages,
+  businessPageErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -178,6 +184,9 @@ export const config = {
   detailTitles,
   messages,
   menuCategories,
+  clientMenuCategories,
+  catalogMenuCategories,
+  staticPagesCategories,
   routes,
   statuses,
   tableHeadRowTitles,
@@ -204,7 +213,8 @@ export const config = {
   commentErrorMessages,
   filterLabels,
   materialUiConstants,
-  sizeErrorMessages
+  sizeErrorMessages,
+  businessPageErrorMessages
 };
 export const inputTypes = {
   button: 'button',

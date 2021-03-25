@@ -4,11 +4,11 @@ import { push } from 'connected-react-router';
 import { config } from '../../configs';
 
 import {
-  getAllComments,
   deleteComment,
   updateComment,
   getCommentById,
-  getCommentsByType
+  getCommentsByType,
+  getRecentComments
 } from './comments.operations';
 
 import {
@@ -32,16 +32,15 @@ import {
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
-import { setItemsCount, updatePagination } from '../table/table.actions';
+import { updatePagination } from '../table/table.actions';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
-export function* handleCommentsLoad({ payload: { filter, pagination } }) {
+export function* handleCommentsLoad({ payload }) {
   try {
     yield put(setCommentsLoading(true));
-    const comments = yield call(getAllComments, filter, pagination);
-    yield put(setItemsCount(comments.count));
-    yield put(setComments(comments.items));
+    const comments = yield call(getRecentComments, payload.pagination.limit);
+    yield put(setComments(comments));
     yield put(setCommentsLoading(false));
   } catch (error) {
     yield call(handleCommentsError, error);
