@@ -31,6 +31,8 @@ describe('Pattern-page tests', () => {
         <PatternPage />
       </BrowserRouter>
     );
+
+    console.log(wrapper.find(Button).props());
   });
 
   afterEach(() => {
@@ -48,10 +50,10 @@ describe('Pattern-page tests', () => {
     );
   });
 
-  // test(`Should render CREATE_PATTERN_TITLE button with "${CREATE_PATTERN_TITLE}" label`, () => {
-  //   expect(wrapper.exists(Button)).toBe(true);
-  //   expect(wrapper.find(Button).prop('title')).toBe(CREATE_PATTERN_TITLE);
-  // });
+  test(`Should render CREATE_PATTERN_TITLE button with "${CREATE_PATTERN_TITLE}" label`, () => {
+    expect(wrapper.exists(Button)).toBe(true);
+    expect(wrapper.find(Button).prop('children')).toBe(CREATE_PATTERN_TITLE);
+  });
 });
 
 // // describe('Categories test', () => {
