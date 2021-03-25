@@ -12,6 +12,7 @@ import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import ColorsBar from '../../colors-bar';
 import useMaterialHandlers from '../../../utils/use-material-handlers';
+import getMaterialFormInitValues from '../../../utils/material-form';
 import { useStyles } from './material-form.styles';
 import {
   addMaterial,
@@ -82,18 +83,7 @@ function MaterialForm({ material, id }) {
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
-    initialValues: {
-      uaName: material.name[0].value || '',
-      enName: material.name[1].value || '',
-      uaDescription: material.description[0].value || '',
-      enDescription: material.description[1].value || '',
-      purpose: material.purpose || purposeEnum.MAIN,
-      available: material.available || false,
-
-      additionalPrice: +material.additionalPrice[0].value / 100 || 0,
-      colors:
-        (material.colors && material.colors.map((color) => color._id)) || []
-    },
+    initialValues: getMaterialFormInitValues,
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
       if (id) {
