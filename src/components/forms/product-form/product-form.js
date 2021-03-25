@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Paper,
@@ -76,7 +76,9 @@ const ProductForm = ({ isEdit }) => {
 
   const buttonSize = useMemo(() => sizeMatchesHandler(matches), [matches]);
 
-  const [toggleFieldsChanged] = useState(false);
+  const [isFieldsChanged, toggleFieldsChanged] = useState(false);
+
+  const [isMountedFirst, setFirstMount] = useState(false);
 
   const [showComments, setShowComments] = useState(false);
 
@@ -208,6 +210,14 @@ const ProductForm = ({ isEdit }) => {
   );
 
   useEffect(() => {
+    if (isMountedFirst) {
+      toggleFieldsChanged(true);
+    } else {
+      setFirstMount(true);
+    }
+  }, [values]);
+
+  useEffect(() => {
     setModelsHandler(values, setModels, find, categories);
     setSizesHandler(values, setSizes, find, models);
     setInnerColorsHandler(values, setInnerColors, find, materials);
@@ -272,6 +282,7 @@ const ProductForm = ({ isEdit }) => {
               type='submit'
               variant='contained'
               color='primary'
+              disabled={!isFieldsChanged}
               onClick={handleProductValidate}
             >
               {SAVE}
@@ -304,6 +315,7 @@ const ProductForm = ({ isEdit }) => {
               primaryImage={primaryImage}
               validate={shouldValidate}
               displayed={product?.images?.primary?.thumbnail}
+              toggleFieldsChanged={toggleFieldsChanged}
             />
           </Paper>
         </Grid>

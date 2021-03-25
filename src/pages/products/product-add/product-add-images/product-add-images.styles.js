@@ -29,6 +29,19 @@ export const useStyles = makeStyles((theme) => {
       '& div': {
         margin: '5px 10px 0 0'
       }
+    },
+    text: {
+      marginLeft: '10px',
+      alignItems: 'center'
+    },
+    additionalImages: {
+      display: 'flex'
+    },
+    displayNone: {
+      display: 'none!important'
+    },
+    display: {
+      display: 'block'
     }
   };
 });
