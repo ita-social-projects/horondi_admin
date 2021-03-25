@@ -20,7 +20,9 @@ const labels = {
     text: {
       ua: 'Текст',
       en: 'Text'
-    }
+    },
+    avatarText: 'Фото автора',
+    mainImgText: 'Головне фото'
   },
   contacts: {
     schedule: {

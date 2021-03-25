@@ -1,9 +1,9 @@
 export const utils = {
   dataCy: {
-    pattern: 'pattern-image'
+    preview: 'preview-image'
   },
   alt: {
-    pattern: 'pattern'
+    preview: 'Image preview'
   },
   name: 'upload-photo'
 };

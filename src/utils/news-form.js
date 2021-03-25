@@ -8,11 +8,3 @@ export const useFormikInitialValues = (newsArticle) => ({
   uaText: newsArticle.text[0].value || '',
   enText: newsArticle.text[1].value || ''
 });
-
-export const pushPreferredLanguages = (checkboxes, langArray) => {
-  Object.keys(checkboxes).forEach((key) => {
-    if (checkboxes[key]) {
-      langArray.push(key);
-    }
-  });
-};

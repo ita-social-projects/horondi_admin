@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStyles } from './image-upload-patternContainer.styles';
+import { useStyles } from './image-upload-previewContainer.styles';
 import { utils } from '../../utils/image-upload';
 
-const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
+const ImageUploadPreviewContainer = ({ handler, multiple, src, id }) => {
   const style = useStyles();
 
   return (
@@ -11,10 +11,10 @@ const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
       <label
         className={src ? style.labelWithoutBack : style.labelWithBack}
         htmlFor={id}
-        data-cy={utils.dataCy.pattern}
+        data-cy={utils.dataCy.preview}
       >
         {src && (
-          <img className={style.image} src={src} alt={utils.alt.pattern} />
+          <img className={style.image} src={src} alt={utils.alt.preview} />
         )}
         <input
           className={style.input}
@@ -29,16 +29,16 @@ const ImageUploadPatternContainer = ({ handler, multiple, src, id }) => {
   );
 };
 
-ImageUploadPatternContainer.propTypes = {
+ImageUploadPreviewContainer.propTypes = {
   handler: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
   src: PropTypes.string,
   id: PropTypes.string.isRequired
 };
 
-ImageUploadPatternContainer.defaultProps = {
+ImageUploadPreviewContainer.defaultProps = {
   multiple: false,
   src: null
 };
 
-export default ImageUploadPatternContainer;
+export default ImageUploadPreviewContainer;
