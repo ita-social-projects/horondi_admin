@@ -97,7 +97,7 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles, id }) => {
   };
   const styles = useStyles(styleProps);
   return (
-    <div data-cy='editor'>
+    <div data-cy='editor' className={styles.editor}>
       <div
         id={id || 'toolbar'}
         className={`ql-toolbar ql-snow ${styles.editorBackground}`}
