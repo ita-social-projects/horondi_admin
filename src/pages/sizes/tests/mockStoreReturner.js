@@ -1,4 +1,4 @@
-const mockReturner = (mockLoading) => ({
+const mockStoreReturner = (mockLoading) => ({
   Sizes: {
     list: [
       {
@@ -44,4 +44,4 @@ const mockReturner = (mockLoading) => ({
   }
 });
 
-export default mockReturner;
+export default mockStoreReturner;
