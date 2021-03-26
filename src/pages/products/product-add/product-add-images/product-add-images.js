@@ -32,6 +32,7 @@ const ProductAddImages = ({
   const styles = useStyles();
   const dispatch = useDispatch();
   const product = useSelector(({ Products }) => Products.selectedProduct);
+  const products = useSelector(({ Products }) => Products);
 
   useEffect(() => {
     if (product?.images?.additional) {
@@ -40,6 +41,8 @@ const ProductAddImages = ({
       );
     }
   }, [product?.images]);
+
+  console.log(products);
 
   const imgUrl = config.imagePrefix + displayed;
 
@@ -62,12 +65,12 @@ const ProductAddImages = ({
   };
 
   const handlePrimaryImageLoad = (e) => {
+    toggleFieldsChanged(true);
     const reader = new FileReader();
     if (e.target.files && e.target.files[0]) {
       reader.onload = (event) => {
         setProductImageDisplayed(event.target.result);
       };
-      toggleFieldsChanged(true);
       setPrimaryImage(e.target.files[0]);
       reader.readAsDataURL(e.target.files[0]);
     }
@@ -75,7 +78,6 @@ const ProductAddImages = ({
       reader.onload = (event) => {
         setProductImageDisplayed(event.target.result);
       };
-      toggleFieldsChanged(true);
       dispatch(setPrimaryImageToUpload([e.target.files[0]]));
     }
   };
@@ -104,7 +106,7 @@ const ProductAddImages = ({
       };
       e.persist();
       toggleFieldsChanged(true);
-      const newArr = [...additionalImages];
+      const newArr = [...products?.upload];
       newArr[index] = file;
       dispatch(setFilesToUpload(newArr));
       reader.readAsDataURL(e.target.files[0]);
