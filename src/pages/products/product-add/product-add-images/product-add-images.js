@@ -40,7 +40,6 @@ const ProductAddImages = ({
       );
     }
   }, [product?.images]);
-  console.log(additionalImages);
 
   const imgUrl = config.imagePrefix + displayed;
 
