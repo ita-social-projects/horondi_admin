@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Box, Grid } from '@material-ui/core';
@@ -33,76 +33,27 @@ const ProductAddImages = ({
   const dispatch = useDispatch();
   const product = useSelector(({ Products }) => Products.selectedProduct);
 
-  const [productImages, setProductImages] = useState([]);
-
   useEffect(() => {
-    if (product.images) {
-      const images = [
-        { url: encodeURIComponent(product.images.primary.large), prefix: true },
-        ...product.images.additional.map(({ large }) => ({
-          url: large,
-          prefix: true
-        }))
-      ];
-      setProductImages(images);
+    if (product?.images?.additional) {
+      setAdditionalImagesDisplayed(
+        product?.images?.additional?.map((e) => config.imagePrefix + e?.large)
+      );
     }
-  }, [product.images, dispatch]);
-
-  const filterImages = (images) => {
-    const imagesNames = productImages.map(({ url }) => url);
-    return Array.from(images).filter(({ name }) => !imagesNames.includes(name));
-  };
-
-  const convertToBase64 = (files) =>
-    files.map(
-      (file) =>
-        new Promise((res) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = (e) => {
-            res(e.target.result);
-          };
-        })
-    );
-
-  const handlePrimaryImageUpdate = async (e) => {
-    const { files } = e.target;
-    if (files[0]) {
-      toggleFieldsChanged(true);
-      const newImages = filterImages(files);
-      const results = await Promise.all(convertToBase64(newImages));
-      if (results[0]) {
-        setProductImages((oldImages) => [
-          { url: results[0], prefix: false, name: newImages[0].name },
-          ...oldImages.slice(1)
-        ]);
-        dispatch(setPrimaryImageToUpload(newImages));
-      }
-    }
-  };
-
-  const handleAdditionalImagesLoadOnUpdating = async (e) => {
-    const { files } = e.target;
-    if (e.target.files && e.target.files[0]) {
-      toggleFieldsChanged(true);
-      const newImages = filterImages(files);
-      const results = await Promise.all(convertToBase64(newImages));
-
-      if (results.length) {
-        setProductImages((oldImages) => [
-          ...oldImages,
-          ...results.map((image, idx) => ({
-            url: image,
-            prefix: false,
-            name: newImages[idx].name
-          }))
-        ]);
-        dispatch(setFilesToUpload(newImages));
-      }
-    }
-  };
+  }, [product?.images]);
+  console.log(additionalImages);
 
   const imgUrl = config.imagePrefix + displayed;
+
+  const PRODUCT_PHOTO_TEXT = {
+    PRIMARY: 'Головне фото',
+    ADDITIONAL: 'Додаткові фото'
+  };
+
+  const IMAGES_INDEXES = {
+    FIRST_ADDITIONAL_IMAGE: 0,
+    SECOND_ADDITIONAL_IMAGE: 1,
+    THIRD_ADDITIONAL_IMAGE: 2
+  };
 
   const imageUploadInputsId = {
     mainImageInput: 'mainImageInput',
@@ -112,8 +63,8 @@ const ProductAddImages = ({
   };
 
   const handlePrimaryImageLoad = (e) => {
+    const reader = new FileReader();
     if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
       reader.onload = (event) => {
         setProductImageDisplayed(event.target.result);
       };
@@ -121,18 +72,19 @@ const ProductAddImages = ({
       setPrimaryImage(e.target.files[0]);
       reader.readAsDataURL(e.target.files[0]);
     }
+    if (isEdit) {
+      reader.onload = (event) => {
+        setProductImageDisplayed(event.target.result);
+      };
+      toggleFieldsChanged(true);
+      dispatch(setPrimaryImageToUpload([e.target.files[0]]));
+    }
   };
 
-  const IMAGES_INDEXES = {
-    FIRST_ADDITIONAL_IMAGE: 0,
-    SECOND_ADDITIONAL_IMAGE: 1,
-    THIRD_ADDITIONAL_IMAGE: 2
-  };
-
-  const handleAdditionalImagesLoadOnCreating = (e, index) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
+  const handleAdditionalImagesLoad = (e, index) => {
+    const file = e?.target?.files[0];
+    const reader = new FileReader();
+    if (e.target.files && e.target.files[0] && !isEdit) {
       reader.onload = (event) => {
         const newArr = [...additionalImagesDisplayed];
         newArr[index] = event.target.result;
@@ -145,55 +97,71 @@ const ProductAddImages = ({
       setAdditionalImages(newArr);
       reader.readAsDataURL(e.target.files[0]);
     }
+    if (isEdit) {
+      reader.onload = (event) => {
+        const newArr = [...additionalImagesDisplayed];
+        newArr[index] = event.target.result;
+        setAdditionalImagesDisplayed(newArr);
+      };
+      e.persist();
+      toggleFieldsChanged(true);
+      const newArr = [...additionalImages];
+      newArr[index] = file;
+      dispatch(setFilesToUpload(newArr));
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
 
-  const additionalFirstImageByIndex = (e) =>
-    handleAdditionalImagesLoadOnCreating(
-      e,
-      IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE
-    );
+  const additionalFirstImageByIndexLoad = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
+  const additionalFirstImageByIndexUpdate = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
 
-  const additionalSecondImageByIndex = (e) =>
-    handleAdditionalImagesLoadOnCreating(
-      e,
-      IMAGES_INDEXES.SECOND_ADDITIONAL_IMAGE
-    );
+  const additionalSecondImageByIndexLoad = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.SECOND_ADDITIONAL_IMAGE);
 
-  const additionalThirdImageByIndex = (e) =>
-    handleAdditionalImagesLoadOnCreating(
-      e,
-      IMAGES_INDEXES.THIRD_ADDITIONAL_IMAGE
-    );
+  const additionalSecondImageByIndexUpdate = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.SECOND_ADDITIONAL_IMAGE);
+
+  const additionalThirdImageByIndexLoad = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.THIRD_ADDITIONAL_IMAGE);
+
+  const additionalThirdImageByIndexUpdate = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.THIRD_ADDITIONAL_IMAGE);
 
   const additionalFirstImageHandler = isEdit
-    ? handleAdditionalImagesLoadOnUpdating
-    : additionalFirstImageByIndex;
+    ? additionalFirstImageByIndexUpdate
+    : additionalFirstImageByIndexLoad;
 
   const additionalSecondImageHandler = isEdit
-    ? handleAdditionalImagesLoadOnUpdating
-    : additionalSecondImageByIndex;
+    ? additionalSecondImageByIndexUpdate
+    : additionalSecondImageByIndexLoad;
 
   const additionalThirdImageHandler = isEdit
-    ? handleAdditionalImagesLoadOnUpdating
-    : additionalThirdImageByIndex;
-
-  const primaryImageHandler = isEdit
-    ? handlePrimaryImageUpdate
-    : handlePrimaryImageLoad;
+    ? additionalThirdImageByIndexUpdate
+    : additionalThirdImageByIndexLoad;
 
   const mainImageSrc = isEdit
     ? productImageDisplayed || imgUrl
     : productImageDisplayed;
+
+  const displaySecondImageLoad = additionalImagesDisplayed[0]
+    ? styles.display
+    : styles.displayNone;
+
+  const displayThirdImageLoad = additionalImagesDisplayed[1]
+    ? styles.display
+    : styles.displayNone;
 
   return (
     <div className={styles.container}>
       <Box my={3}>
         <Grid container spacing={1}>
           <Grid item>
-            <span className={styles.text}>Головне фото</span>
+            <span className={styles.text}>{PRODUCT_PHOTO_TEXT.PRIMARY}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
-                handler={primaryImageHandler}
+                handler={handlePrimaryImageLoad}
                 src={mainImageSrc}
                 id={imageUploadInputsId.mainImageInput}
               />
@@ -207,7 +175,7 @@ const ProductAddImages = ({
       <Box my={3}>
         <Grid container spacing={1}>
           <Grid item>
-            <span className={styles.text}>Додаткові фото</span>
+            <span className={styles.text}>{PRODUCT_PHOTO_TEXT.ADDITIONAL}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 handler={additionalFirstImageHandler}
@@ -220,12 +188,7 @@ const ProductAddImages = ({
       </Box>
       <Box my={3}>
         <Grid container spacing={1}>
-          <Grid
-            item
-            className={
-              additionalImagesDisplayed[0] ? styles.display : styles.displayNone
-            }
-          >
+          <Grid item className={displaySecondImageLoad}>
             <span className={styles.text} />
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
@@ -240,12 +203,7 @@ const ProductAddImages = ({
       </Box>
       <Box my={3}>
         <Grid container spacing={1}>
-          <Grid
-            item
-            className={
-              additionalImagesDisplayed[1] ? styles.display : styles.displayNone
-            }
-          >
+          <Grid item className={displayThirdImageLoad}>
             <span className={styles.text} />
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
