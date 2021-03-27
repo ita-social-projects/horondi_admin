@@ -53,45 +53,45 @@ const {
 } = statuses;
 
 describe('Test material sagas', () => {
-  // it('should load all materials', () =>
-  //   expectSaga(handleMaterialsLoad, { payload: mockMaterialsLoadPayload })
-  //     .withReducer(combineReducers({ Material, Table }), {
-  //       Material: mockMaterialState,
-  //       Table: mockTableState
-  //     })
-  //     .put(setMaterialLoading(true))
-  //     .provide([
-  //       [
-  //         call(
-  //           getAllMaterials,
-  //           mockMaterialsLoadPayload.filter,
-  //           mockMaterialsLoadPayload.skip,
-  //           mockMaterialsLoadPayload.limit
-  //         ),
-  //         mockMaterials
-  //       ]
-  //     ])
-  //     .put(setItemsCount(mockMaterials.count))
-  //     .put(setMaterials(mockMaterials.items))
-  //     .put(setMaterialLoading(false))
-  //     .hasFinalState({
-  //       Material: {
-  //         ...mockMaterialState,
-  //         list: mockMaterials.items
-  //       },
-  //       Table: {
-  //         ...mockTableState,
-  //         itemsCount: mockMaterials.count
-  //       }
-  //     })
-  //     .run()
-  //     .then((result) => {
-  //       const { allEffects: analysis } = result;
-  //       const analysisPut = analysis.filter((e) => e.type === 'PUT');
-  //       const analysisCall = analysis.filter((e) => e.type === 'CALL');
-  //       expect(analysisPut).toHaveLength(4);
-  //       expect(analysisCall).toHaveLength(1);
-  //     }));
+  it('should load all materials', () =>
+    expectSaga(handleMaterialsLoad, { payload: mockMaterialsLoadPayload })
+      .withReducer(combineReducers({ Material, Table }), {
+        Material: mockMaterialState,
+        Table: mockTableState
+      })
+      .put(setMaterialLoading(true))
+      .provide([
+        [
+          call(
+            getAllMaterials,
+            mockMaterialsLoadPayload.filter,
+            mockMaterialsLoadPayload.skip,
+            mockMaterialsLoadPayload.limit
+          ),
+          mockMaterials
+        ]
+      ])
+      .put(setItemsCount(mockMaterials.count))
+      .put(setMaterials(mockMaterials.items))
+      .put(setMaterialLoading(false))
+      .hasFinalState({
+        Material: {
+          ...mockMaterialState,
+          list: mockMaterials.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: mockMaterials.count
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(1);
+      }));
 
   it('should load material by id', () =>
     expectSaga(handleMaterialLoad, { payload: mockId })

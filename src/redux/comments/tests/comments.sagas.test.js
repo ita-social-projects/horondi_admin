@@ -75,7 +75,7 @@ const testsPromiseResults = (result) => {
 
 describe('comments sagas tests', () => {
   it('should handle comments load', () => {
-    expectSaga(handleCommentsLoad, { payload: { pagination } })
+    expectSaga(handleCommentsLoad, { payload: pagination })
       .withReducer(combineReducers({ Table, commentsReducer }), {
         commentsReducer: initialState,
         Table: mockTableState
