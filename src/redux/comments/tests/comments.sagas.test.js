@@ -87,11 +87,11 @@ describe('comments sagas tests', () => {
       .hasFinalState({
         commentsReducer: {
           ...initialState,
-          list: commentRes.items
+          list: commentRes.list
         },
         Table: {
           ...mockTableState,
-          itemsCount: commentRes.items
+          itemsCount: commentRes.count
         }
       })
       .run()
