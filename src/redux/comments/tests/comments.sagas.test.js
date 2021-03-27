@@ -82,16 +82,16 @@ describe('comments sagas tests', () => {
       })
       .put(setCommentsLoading(true))
       .provide([[call(getRecentComments, pagination), commentRes]])
-      .put(setComments(commentRes.value))
+      .put(setComments(commentRes))
       .put(setCommentsLoading(false))
       .hasFinalState({
         commentsReducer: {
           ...initialState,
-          list: commentRes.items
+          list: commentRes
         },
         Table: {
           ...mockTableState,
-          itemsCount: commentRes.count
+          itemsCount: commentRes
         }
       })
       .run()
