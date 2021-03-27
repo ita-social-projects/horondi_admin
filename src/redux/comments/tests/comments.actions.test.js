@@ -60,9 +60,9 @@ describe('comments action tests', () => {
     });
   });
   it('should set all comments', () => {
-    expect(setComments(comments)).toEqual({
+    expect(setComments(comments.list)).toEqual({
       type: SET_COMMENTS,
-      payload: comments
+      payload: comments.list
     });
   });
   it('should get a specific comment', () => {
