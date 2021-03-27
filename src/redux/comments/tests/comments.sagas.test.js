@@ -82,7 +82,7 @@ describe('comments sagas tests', () => {
       })
       .put(setCommentsLoading(true))
       .provide([[call(getRecentComments, pagination), commentRes]])
-      .put(setComments(commentRes))
+      .put(setComments(commentRes.value))
       .put(setCommentsLoading(false))
       .hasFinalState({
         commentsReducer: {
