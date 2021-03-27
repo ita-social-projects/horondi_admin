@@ -72,7 +72,7 @@ describe('Test material sagas', () => {
         ]
       ])
       .put(setItemsCount(mockMaterials.count))
-      .put(setMaterials(mockMaterials.items))
+      // .put(setMaterials(mockMaterials.items))
       .put(setMaterialLoading(false))
       .hasFinalState({
         Material: {
