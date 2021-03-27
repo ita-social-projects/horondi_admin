@@ -81,17 +81,17 @@ describe('comments sagas tests', () => {
         Table: mockTableState
       })
       .put(setCommentsLoading(true))
-      .provide([[call(getRecentComments, pagination), commentRes]])
-      .put(setComments(commentRes.pagination))
+      .provide([[call(getRecentComments, pagination), commentRes.list]])
+      .put(setComments(commentRes.list))
       .put(setCommentsLoading(false))
       .hasFinalState({
         commentsReducer: {
           ...initialState,
-          list: commentRes
+          list: commentRes.list
         },
         Table: {
           ...mockTableState,
-          itemsCount: commentRes
+          itemsCount: commentRes.list
         }
       })
       .run()
