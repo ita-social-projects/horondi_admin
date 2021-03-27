@@ -75,13 +75,13 @@ const testsPromiseResults = (result) => {
 
 describe('comments sagas tests', () => {
   it('should handle comments load', () => {
-    expectSaga(handleCommentsLoad, { payload: pagination })
+    expectSaga(handleCommentsLoad, { payload: { pagination } })
       .withReducer(combineReducers({ Table, commentsReducer }), {
         commentsReducer: initialState,
         Table: mockTableState
       })
       .put(setCommentsLoading(true))
-      .provide([[call(getRecentComments, pagination.limit), commentRes]])
+      .provide([[call(getRecentComments, pagination), commentRes]])
       .put(setComments(commentRes.list))
       .put(setCommentsLoading(false))
       .hasFinalState({
