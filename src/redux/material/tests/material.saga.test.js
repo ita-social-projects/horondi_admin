@@ -66,7 +66,7 @@ describe('Test material sagas', () => {
             getAllMaterials,
             mockMaterialsLoadPayload.filter,
             mockMaterialsLoadPayload.skip,
-            mockMaterialsLoadPayload.limit
+            mockMaterialsLoadPayload
           ),
           mockMaterials
         ]
