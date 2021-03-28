@@ -88,9 +88,9 @@ describe('Test material sagas', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        // const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
-        // expect(analysisCall).toHaveLength(1);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it('should load material by id', () =>
