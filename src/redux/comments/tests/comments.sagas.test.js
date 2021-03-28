@@ -48,7 +48,7 @@ import {
   snackBarError
 } from './comments.variables';
 
-import { updatePagination } from '../../table/table.actions';
+import { setItemsCount, updatePagination } from '../../table/table.actions';
 
 import Table from '../../table/table.reducer';
 
@@ -81,13 +81,14 @@ describe('comments sagas tests', () => {
         Table: mockTableState
       })
       .put(setCommentsLoading(true))
-      .provide([[call(getRecentComments, pagination), commentRes.comments]])
-      .put(setComments(commentRes.comments))
+      .provide([[call(getRecentComments, pagination), commentRes]])
+      .put(setItemsCount(commentRes.count))
+      .put(setComments(commentRes.items))
       .put(setCommentsLoading(false))
       .hasFinalState({
         commentsReducer: {
           ...initialState,
-          list: commentRes.list
+          list: commentRes.items
         },
         Table: {
           ...mockTableState,
