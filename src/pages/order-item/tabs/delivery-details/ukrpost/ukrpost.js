@@ -18,7 +18,8 @@ import {
   handleCity,
   handleDistrict,
   handlePostOffice,
-  handleRegion
+  handleRegion,
+  handleInputValue
 } from '../../../../../utils/handle-orders-page';
 
 const UkrPost = ({ values, setFieldValue }) => {
@@ -100,7 +101,7 @@ const UkrPost = ({ values, setFieldValue }) => {
             );
           }}
           options={ukrPoshtaRegions}
-          inputValue={regionFocus ? region : values.region}
+          inputValue={handleInputValue(regionFocus, region, values.region)}
           getOptionLabel={(option) => option?.REGION_UA || ''}
           className={styles.dataInput}
           renderInput={(params) => (
@@ -140,7 +141,11 @@ const UkrPost = ({ values, setFieldValue }) => {
           }}
           disabled={!region}
           options={ukrPoshtaDistricts}
-          inputValue={districtFocus ? district : values.district}
+          inputValue={handleInputValue(
+            districtFocus,
+            district,
+            values.district
+          )}
           getOptionLabel={(option) => option?.DISTRICT_UA || ''}
           className={styles.dataInput}
           renderInput={(params) => (
@@ -174,7 +179,7 @@ const UkrPost = ({ values, setFieldValue }) => {
           }}
           disabled={!district}
           options={ukrPoshtaCities}
-          inputValue={cityFocus ? city : values.city}
+          inputValue={handleInputValue(cityFocus, city, values.city)}
           getOptionLabel={(option) => option?.CITY_UA || ''}
           className={styles.dataInput}
           renderInput={(params) => (
@@ -208,7 +213,11 @@ const UkrPost = ({ values, setFieldValue }) => {
           onBlur={() => setDepartmentFocus(false)}
           disabled={!city}
           options={ukrPoshtaPostOffices}
-          inputValue={departmentFocus ? postOffice : values.courierOffice}
+          inputValue={handleInputValue(
+            departmentFocus,
+            postOffice,
+            values.courierOffice
+          )}
           getOptionLabel={(option) =>
             `${POST_OFFICE_NUMBER} ${option?.POSTCODE}, ${
               option?.STREET_UA_VPZ ? option?.STREET_UA_VPZ : ''

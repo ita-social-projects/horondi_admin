@@ -127,3 +127,6 @@ export const handlePostOffice = (value, setPostOffice, setFieldValue) => {
     setFieldValue(inputName.ukrPost.courierOffice, '');
   }
 };
+
+export const handleInputValue = (isFocused, focusedValue, bluredValue) =>
+  isFocused ? focusedValue : bluredValue;
