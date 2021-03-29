@@ -22,6 +22,9 @@ export const getOrderById = (id) => {
 						region
 						district
 						city
+						regionId
+						districtId
+						cityId
 						street
 						house
 						flat
@@ -128,6 +131,11 @@ export const updateOrder = (order, id) => {
 						sentBy
 						invoiceNumber
 						courierOffice
+						region
+						district
+						regionId
+						districtId
+						cityId
 						city
 						street
 						house

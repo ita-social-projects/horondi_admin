@@ -52,31 +52,27 @@ const UkrPost = ({ values, setFieldValue }) => {
     dispatch(getUkrPostRegions());
   }, []);
 
-  const [regionId, setRegionId] = useState('');
   const [region, setRegion] = useState('');
-  const [districtId, setDistrictId] = useState('');
   const [district, setDistrict] = useState('');
-  const [cityId, setCityId] = useState('');
   const [city, setCity] = useState('');
   const [postOffice, setPostOffice] = useState('');
+  useEffect(() => {
+    if (values.regionId) {
+      dispatch(getUkrPostDistricts(values.regionId));
+    }
+  }, [dispatch, values.regionId]);
 
   useEffect(() => {
-    if (regionId) {
-      dispatch(getUkrPostDistricts(regionId));
+    if (values.districtId) {
+      dispatch(getUkrPostCities(values.districtId));
     }
-  }, [dispatch, regionId]);
+  }, [dispatch, values.districtId]);
 
   useEffect(() => {
-    if (districtId) {
-      dispatch(getUkrPostCities(districtId));
+    if (values.cityId) {
+      dispatch(getUkrPostPostOffices(values.cityId));
     }
-  }, [dispatch, districtId]);
-
-  useEffect(() => {
-    if (cityId) {
-      dispatch(getUkrPostPostOffices(cityId));
-    }
-  }, [dispatch, cityId]);
+  }, [dispatch, values.cityId]);
 
   return (
     <div>
@@ -92,7 +88,6 @@ const UkrPost = ({ values, setFieldValue }) => {
           onChange={(event, value) => {
             handleRegion(
               value,
-              setRegionId,
               setFieldValue,
               setRegion,
               setDistrict,
@@ -131,15 +126,9 @@ const UkrPost = ({ values, setFieldValue }) => {
           onBlur={() => setDistrictFocus(false)}
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
           onChange={(event, value) => {
-            handleDistrict(
-              value,
-              setFieldValue,
-              setDistrictId,
-              setCity,
-              setPostOffice
-            );
+            handleDistrict(value, setFieldValue, setCity, setPostOffice);
           }}
-          disabled={!region}
+          disabled={!values.regionId}
           options={ukrPoshtaDistricts}
           inputValue={handleInputValue(
             districtFocus,
@@ -175,9 +164,9 @@ const UkrPost = ({ values, setFieldValue }) => {
           onBlur={() => setCityFocus(false)}
           noOptionsText={deliveryAdditionalInfo.noOneCity}
           onChange={(event, value) => {
-            handleCity(value, setCityId, setFieldValue, setPostOffice);
+            handleCity(value, setFieldValue, setPostOffice);
           }}
-          disabled={!district}
+          disabled={!values.districtId}
           options={ukrPoshtaCities}
           inputValue={handleInputValue(cityFocus, city, values.city)}
           getOptionLabel={(option) => option?.CITY_UA || ''}
@@ -211,7 +200,7 @@ const UkrPost = ({ values, setFieldValue }) => {
           }}
           onFocus={() => setDepartmentFocus(true)}
           onBlur={() => setDepartmentFocus(false)}
-          disabled={!city}
+          disabled={!values.cityId}
           options={ukrPoshtaPostOffices}
           inputValue={handleInputValue(
             departmentFocus,
