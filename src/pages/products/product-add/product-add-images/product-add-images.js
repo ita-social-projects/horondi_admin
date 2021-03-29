@@ -2,16 +2,18 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Box, Grid } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useStyles } from './product-add-images.styles';
 import { config } from '../../../../configs/index';
 
 import { productsTranslations } from '../../../../translations/product.translations';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
+import useProductAddImages from '../../../../hooks/product/use-product-addimages';
 import {
-  setFilesToUpload,
-  setPrimaryImageToUpload
-} from '../../../../redux/products/products.actions';
+  IMAGES_INDEXES,
+  imageUploadInputsId,
+  PRODUCT_PHOTO_TEXT
+} from '../../../../consts/const-addimages';
 
 const { REQUIRED_PHOTOS } = productsTranslations;
 
@@ -30,9 +32,7 @@ const ProductAddImages = ({
   isEdit
 }) => {
   const styles = useStyles();
-  const dispatch = useDispatch();
   const product = useSelector(({ Products }) => Products.selectedProduct);
-  const products = useSelector(({ Products }) => Products);
 
   useEffect(() => {
     if (product?.images?.additional) {
@@ -42,76 +42,21 @@ const ProductAddImages = ({
     }
   }, [product?.images]);
 
-  console.log(products);
-
   const imgUrl = config.imagePrefix + displayed;
 
-  const PRODUCT_PHOTO_TEXT = {
-    PRIMARY: 'Головне фото',
-    ADDITIONAL: 'Додаткові фото'
-  };
-
-  const IMAGES_INDEXES = {
-    FIRST_ADDITIONAL_IMAGE: 0,
-    SECOND_ADDITIONAL_IMAGE: 1,
-    THIRD_ADDITIONAL_IMAGE: 2
-  };
-
-  const imageUploadInputsId = {
-    mainImageInput: 'mainImageInput',
-    imageInput1: 'ImgInput1',
-    imageInput2: 'ImgInput2',
-    imageInput3: 'ImgInput3'
-  };
-
-  const handlePrimaryImageLoad = (e) => {
-    toggleFieldsChanged(true);
-    const reader = new FileReader();
-    if (e.target.files && e.target.files[0]) {
-      reader.onload = (event) => {
-        setProductImageDisplayed(event.target.result);
-      };
-      setPrimaryImage(e.target.files[0]);
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    if (isEdit) {
-      reader.onload = (event) => {
-        setProductImageDisplayed(event.target.result);
-      };
-      dispatch(setPrimaryImageToUpload([e.target.files[0]]));
-    }
-  };
-
-  const handleAdditionalImagesLoad = (e, index) => {
-    const file = e?.target?.files[0];
-    const reader = new FileReader();
-    if (e.target.files && e.target.files[0] && !isEdit) {
-      reader.onload = (event) => {
-        const newArr = [...additionalImagesDisplayed];
-        newArr[index] = event.target.result;
-        setAdditionalImagesDisplayed(newArr);
-      };
-      e.persist();
-      toggleFieldsChanged(true);
-      const newArr = [...additionalImages];
-      newArr[index] = file;
-      setAdditionalImages(newArr);
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    if (isEdit) {
-      reader.onload = (event) => {
-        const newArr = [...additionalImagesDisplayed];
-        newArr[index] = event.target.result;
-        setAdditionalImagesDisplayed(newArr);
-      };
-      e.persist();
-      toggleFieldsChanged(true);
-      const newArr = [...products?.upload];
-      newArr[index] = file;
-      dispatch(setFilesToUpload(newArr));
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
+  const {
+    handlePrimaryImageLoad,
+    handleAdditionalImagesLoad
+  } = useProductAddImages(
+    isEdit,
+    additionalImagesDisplayed,
+    setAdditionalImagesDisplayed,
+    toggleFieldsChanged,
+    additionalImages,
+    setAdditionalImages,
+    setProductImageDisplayed,
+    setPrimaryImage
+  );
 
   const additionalFirstImageByIndexLoad = (e) =>
     handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
@@ -245,7 +190,7 @@ ProductAddImages.propTypes = {
 };
 
 ProductAddImages.defaultProps = {
-  toggleFieldsChanged: () => {},
+  toggleFieldsChanged: '',
   additionalImagesDisplayed: [],
   setAdditionalImagesDisplayed: '',
   isEdit: false,

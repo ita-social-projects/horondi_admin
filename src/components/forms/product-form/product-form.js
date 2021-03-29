@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Paper,
@@ -114,7 +114,7 @@ const ProductForm = ({ isEdit }) => {
   const { categories, materials, patterns, closures } = details;
 
   const formikSpeciesValues = {
-    category: product?.category?._id || '',
+    category: product?.category?._id,
     model: product?.model?._id || '',
     pattern: product?.pattern?._id || '',
     strapLengthInCm: product?.strapLengthInCm || 0,
