@@ -128,6 +128,8 @@ export const address = (delivery) => {
     sentBy,
     courierOffice:
       delivery.novaPost.courierOffice || delivery.ukrPost.courierOffice || '',
+    region: delivery.ukrPost.region || '',
+    district: delivery.ukrPost.district || '',
     city:
       delivery.novaPost.city ||
       delivery.ukrPost.city ||
@@ -236,7 +238,9 @@ export const setFormValues = (selectedOrder) => {
     flat,
     house,
     street,
-    courierOffice
+    courierOffice,
+    district,
+    region
   } = selectedOrder.delivery;
   return {
     status: selectedOrder.status,
@@ -256,8 +260,8 @@ export const setFormValues = (selectedOrder) => {
         courierOffice: sentBy === deliveryTypes.novaPost ? courierOffice : ''
       },
       ukrPost: {
-        region: '',
-        district: '',
+        region: sentBy === deliveryTypes.ukrPost ? region : '',
+        district: sentBy === deliveryTypes.ukrPost ? district : '',
         city: sentBy === deliveryTypes.ukrPost ? city : '',
         courierOffice: sentBy === deliveryTypes.ukrPost ? courierOffice : ''
       }

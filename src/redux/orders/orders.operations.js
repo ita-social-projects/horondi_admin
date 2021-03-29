@@ -19,6 +19,8 @@ export const getOrderById = (id) => {
 						sentBy
 						invoiceNumber
 						courierOffice
+						region
+						district
 						city
 						street
 						house

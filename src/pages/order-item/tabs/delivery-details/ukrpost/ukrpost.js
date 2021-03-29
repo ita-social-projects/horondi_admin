@@ -28,6 +28,8 @@ const UkrPost = ({ values, setFieldValue }) => {
   const dispatch = useDispatch();
   const styles = useStyles();
 
+  const [regionFocus, setRegionFocus] = useState(false);
+  const [districtFocus, setDistrictFocus] = useState(false);
   const [cityFocus, setCityFocus] = useState(false);
   const [departmentFocus, setDepartmentFocus] = useState(false);
 
@@ -84,6 +86,8 @@ const UkrPost = ({ values, setFieldValue }) => {
             setRegion(value);
           }}
           noOptionsText={deliveryAdditionalInfo.noOneRegion}
+          onFocus={() => setRegionFocus(true)}
+          onBlur={() => setRegionFocus(false)}
           onChange={(event, value) => {
             handleRegion(
               value,
@@ -96,7 +100,7 @@ const UkrPost = ({ values, setFieldValue }) => {
             );
           }}
           options={ukrPoshtaRegions}
-          inputValue={region}
+          inputValue={regionFocus ? region : values.region}
           getOptionLabel={(option) => option?.REGION_UA || ''}
           className={styles.dataInput}
           renderInput={(params) => (
@@ -122,6 +126,8 @@ const UkrPost = ({ values, setFieldValue }) => {
           onInputChange={(e, value) => {
             setDistrict(value);
           }}
+          onFocus={() => setDistrictFocus(true)}
+          onBlur={() => setDistrictFocus(false)}
           noOptionsText={deliveryAdditionalInfo.noOneDistrict}
           onChange={(event, value) => {
             handleDistrict(
@@ -134,7 +140,7 @@ const UkrPost = ({ values, setFieldValue }) => {
           }}
           disabled={!region}
           options={ukrPoshtaDistricts}
-          inputValue={district}
+          inputValue={districtFocus ? district : values.district}
           getOptionLabel={(option) => option?.DISTRICT_UA || ''}
           className={styles.dataInput}
           renderInput={(params) => (
