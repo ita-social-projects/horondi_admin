@@ -53,7 +53,7 @@ const {
 } = statuses;
 
 describe('Test material sagas', () => {
-  it('should load all materials', () =>
+  it('should load all materials', async (done) => {
     expectSaga(handleMaterialsLoad, { payload: mockMaterialsLoadPayload })
       .withReducer(combineReducers({ Material, Table }), {
         Material: mockMaterialState,
@@ -91,7 +91,9 @@ describe('Test material sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
-      }));
+      });
+    done();
+  });
 
   it('should load material by id', () =>
     expectSaga(handleMaterialLoad, { payload: mockId })
