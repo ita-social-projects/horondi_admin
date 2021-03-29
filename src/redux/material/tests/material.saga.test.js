@@ -62,15 +62,7 @@ describe('Test material sagas', () => {
       })
       .put(setMaterialLoading(true))
       .provide([
-        [
-          await call(
-            getAllMaterials,
-            mockMaterialsLoadPayload.filter,
-            mockMaterialsLoadPayload.skip,
-            mockMaterialsLoadPayload.limit
-          ),
-          mockMaterials
-        ]
+        [await call(getAllMaterials, mockMaterialsLoadPayload), mockMaterials]
       ])
       .put(setItemsCount(mockMaterials.count))
       .put(setMaterials(mockMaterials.items))
