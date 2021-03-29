@@ -62,7 +62,7 @@ describe('Test material sagas', () => {
       .put(setMaterialLoading(true))
       .provide([
         [
-          call(
+          await call(
             getAllMaterials,
             mockMaterialsLoadPayload.filter,
             mockMaterialsLoadPayload.skip,
