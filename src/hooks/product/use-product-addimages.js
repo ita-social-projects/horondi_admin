@@ -47,9 +47,9 @@ const useProductAddImages = (
       };
       e.persist();
       toggleFieldsChanged(true);
-      const newArr = [...additionalImages];
-      newArr[index] = file;
-      setAdditionalImages(newArr);
+      const arr = [...additionalImages];
+      arr[index] = file;
+      setAdditionalImages(arr);
       reader.readAsDataURL(e.target.files[0]);
     }
     if (isEdit) {
