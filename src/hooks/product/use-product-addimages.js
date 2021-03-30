@@ -4,7 +4,7 @@ import {
   setPrimaryImageToUpload
 } from '../../redux/products/products.actions';
 
-function useProductAddImages(
+function useProductAddImages({
   isEdit,
   additionalImagesDisplayed,
   setAdditionalImagesDisplayed,
@@ -13,7 +13,7 @@ function useProductAddImages(
   setAdditionalImages,
   setProductImageDisplayed,
   setPrimaryImage
-) {
+}) {
   const dispatch = useDispatch();
 
   const products = useSelector(({ Products }) => Products);

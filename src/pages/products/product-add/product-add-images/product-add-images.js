@@ -47,7 +47,7 @@ function ProductAddImages({
   const {
     handlePrimaryImageLoad,
     handleAdditionalImagesLoad
-  } = useProductAddImages(
+  } = useProductAddImages({
     isEdit,
     additionalImagesDisplayed,
     setAdditionalImagesDisplayed,
@@ -56,7 +56,7 @@ function ProductAddImages({
     setAdditionalImages,
     setProductImageDisplayed,
     setPrimaryImage
-  );
+  });
 
   const additionalFirstImageByIndexLoad = (e) =>
     handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
