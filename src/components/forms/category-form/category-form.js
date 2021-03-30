@@ -95,7 +95,7 @@ const CategoryForm = ({ category, id, edit }) => {
         category: newCategory,
         upload
       });
-      if (!uploadCondition) {
+      if (!uploadCondition && !category.images.thumbnail) {
         dispatch(setSnackBarSeverity('error'));
         dispatch(setSnackBarMessage(CATEGORY_ERROR));
         dispatch(setSnackBarStatus(true));
