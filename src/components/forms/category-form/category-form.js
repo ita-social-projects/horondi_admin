@@ -95,10 +95,11 @@ const CategoryForm = ({ category, id, edit }) => {
         category: newCategory,
         upload
       });
-
-      dispatch(setSnackBarSeverity('error'));
-      dispatch(setSnackBarMessage(CATEGORY_ERROR));
-      dispatch(setSnackBarStatus(true));
+      if (!uploadCondition) {
+        dispatch(setSnackBarSeverity('error'));
+        dispatch(setSnackBarMessage(CATEGORY_ERROR));
+        dispatch(setSnackBarStatus(true));
+      }
     }
   });
 
@@ -168,7 +169,11 @@ const CategoryForm = ({ category, id, edit }) => {
           type='submit'
           title={SAVE_TITLE}
           errors={errors}
-          values={values}
+          values={{
+            uaName: values.uaName,
+            enName: values.enName,
+            code: values.code
+          }}
         />
       </form>
     </div>
