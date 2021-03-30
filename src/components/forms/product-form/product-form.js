@@ -51,6 +51,12 @@ import {
   getFormikMaterialsValues
 } from '../../../utils/product-form';
 
+import {
+  checkboxesValues,
+  productFormValues
+} from '../../../consts/product-form';
+import { TEMPORARY_WIDTHS } from '../../../consts/menu-categories';
+
 const { priceLabel } = config.labels.product;
 
 const {
@@ -67,7 +73,7 @@ const { SHOW_COMMENTS_TITLE, HIDE_COMMENTS_TITLE } = config.buttonTitles;
 const ProductForm = ({ isEdit }) => {
   const styles = useStyles();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('xs'));
+  const matches = useMediaQuery(theme.breakpoints.down(TEMPORARY_WIDTHS[1]));
   const dispatch = useDispatch();
 
   const { details } = useSelector(selectSelectedProductAndDetails);
@@ -85,7 +91,6 @@ const ProductForm = ({ isEdit }) => {
   const formikPriceValue = {
     basePrice: Math.round(product?.basePrice[1]?.value / 100) || 0
   };
-
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const {
@@ -204,7 +209,7 @@ const ProductForm = ({ isEdit }) => {
     {},
     onSubmit,
     formikSpeciesValues,
-    'selectedProduct',
+    productFormValues.selectedProduct,
     formikPriceValue,
     formikMaterialsValues
   );
@@ -252,22 +257,24 @@ const ProductForm = ({ isEdit }) => {
   };
   const checkboxes = [
     {
-      id: 'isHotItem',
-      dataCy: 'isHotItem',
+      id: checkboxesValues.isHotItem,
+      dataCy: checkboxesValues.isHotItem,
       checked: values.isHotItem,
       value: values.isHotItem,
-      color: 'primary',
-      label: 'Гарячий продукт',
-      handler: () => setFieldValue('isHotItem', !values.isHotItem)
+      color: checkboxesValues.primary,
+      label: checkboxesValues.hotItemUa,
+      handler: () =>
+        setFieldValue(checkboxesValues.isHotItem, !values.isHotItem)
     },
     {
-      id: 'available',
-      dataCy: 'available',
+      id: checkboxesValues.available,
+      dataCy: checkboxesValues.available,
       checked: values.available,
       value: values.available,
-      color: 'primary',
+      color: checkboxesValues.primary,
       label: config.labels.pattern.available,
-      handler: () => setFieldValue('available', !values.available)
+      handler: () =>
+        setFieldValue(checkboxesValues.available, !values.available)
     }
   ];
 
@@ -279,9 +286,9 @@ const ProductForm = ({ isEdit }) => {
           <Grid item className={styles.button}>
             <Button
               size={buttonSize}
-              type='submit'
-              variant='contained'
-              color='primary'
+              type={productFormValues.submit}
+              variant={productFormValues.contained}
+              color={checkboxesValues.primary}
               disabled={!isFieldsChanged}
               onClick={handleProductValidate}
             >
@@ -291,7 +298,7 @@ const ProductForm = ({ isEdit }) => {
           <Grid item className={styles.button}>
             <DeleteButton
               size={buttonSize}
-              variant='outlined'
+              variant={productFormValues.outlined}
               onClickHandler={handleProductDelete}
             >
               {DELETE_PRODUCT_TITLE}
@@ -300,7 +307,7 @@ const ProductForm = ({ isEdit }) => {
         </Grid>
       </div>
 
-      <Grid container justify='center' spacing={3}>
+      <Grid container justify={productFormValues.center} spacing={3}>
         <Grid item xs={12}>
           <Paper className={styles.paper}>
             <ProductAddImages
@@ -392,7 +399,7 @@ const ProductForm = ({ isEdit }) => {
               <TextField
                 className={styles.input}
                 label={`${priceLabel.label}*`}
-                type='number'
+                type={productFormValues.number}
                 name={priceLabel.name}
                 inputProps={{ min: 0 }}
                 error={touched[priceLabel.name] && !!errors[priceLabel.name]}
@@ -406,8 +413,8 @@ const ProductForm = ({ isEdit }) => {
       </Grid>
       <Grid className={styles.showComments}>
         <Button
-          variant='contained'
-          color='primary'
+          variant={productFormValues.contained}
+          color={checkboxesValues.primary}
           onClick={showCommentsHandler}
         >
           {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}

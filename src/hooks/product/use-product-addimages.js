@@ -32,7 +32,6 @@ const useProductAddImages = ({
   };
 
   const handleAdditionalImagesLoad = (e, index) => {
-    debugger;
     const file = e?.target?.files[0];
     const reader = new FileReader();
     toggleFieldsChanged(true);

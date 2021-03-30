@@ -13,7 +13,7 @@ import {
   IMAGES_INDEXES,
   imageUploadInputsId,
   PRODUCT_PHOTO_TEXT
-} from '../../../../consts/const-addimages';
+} from '../../../../consts/product-form';
 
 const { REQUIRED_PHOTOS } = productsTranslations;
 
