@@ -121,7 +121,6 @@ export function* handleModelsLoad({ payload }) {
 
 export function* handleProductAdd({ payload }) {
   try {
-    debugger;
     yield put(setProductsLoading(true));
     const { upload } = yield select(selectProducts);
     yield call(addProduct, payload, upload);
