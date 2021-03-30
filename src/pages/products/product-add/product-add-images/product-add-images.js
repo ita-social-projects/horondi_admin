@@ -60,32 +60,12 @@ const ProductAddImages = ({
 
   const additionalFirstImageByIndexLoad = (e) =>
     handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
-  const additionalFirstImageByIndexUpdate = (e) =>
-    handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
 
   const additionalSecondImageByIndexLoad = (e) =>
     handleAdditionalImagesLoad(e, IMAGES_INDEXES.SECOND_ADDITIONAL_IMAGE);
 
-  const additionalSecondImageByIndexUpdate = (e) =>
-    handleAdditionalImagesLoad(e, IMAGES_INDEXES.SECOND_ADDITIONAL_IMAGE);
-
   const additionalThirdImageByIndexLoad = (e) =>
     handleAdditionalImagesLoad(e, IMAGES_INDEXES.THIRD_ADDITIONAL_IMAGE);
-
-  const additionalThirdImageByIndexUpdate = (e) =>
-    handleAdditionalImagesLoad(e, IMAGES_INDEXES.THIRD_ADDITIONAL_IMAGE);
-
-  const additionalFirstImageHandler = isEdit
-    ? additionalFirstImageByIndexUpdate
-    : additionalFirstImageByIndexLoad;
-
-  const additionalSecondImageHandler = isEdit
-    ? additionalSecondImageByIndexUpdate
-    : additionalSecondImageByIndexLoad;
-
-  const additionalThirdImageHandler = isEdit
-    ? additionalThirdImageByIndexUpdate
-    : additionalThirdImageByIndexLoad;
 
   const mainImageSrc = isEdit
     ? productImageDisplayed || imgUrl
@@ -124,7 +104,7 @@ const ProductAddImages = ({
             <span className={styles.text}>{PRODUCT_PHOTO_TEXT.ADDITIONAL}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
-                handler={additionalFirstImageHandler}
+                handler={additionalFirstImageByIndexLoad}
                 src={additionalImagesDisplayed[0]}
                 id={imageUploadInputsId.imageInput1}
               />
@@ -139,7 +119,7 @@ const ProductAddImages = ({
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 className={styles.display}
-                handler={additionalSecondImageHandler}
+                handler={additionalSecondImageByIndexLoad}
                 src={additionalImagesDisplayed[1]}
                 id={imageUploadInputsId.imageInput2}
               />
@@ -153,7 +133,7 @@ const ProductAddImages = ({
             <span className={styles.text} />
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
-                handler={additionalThirdImageHandler}
+                handler={additionalThirdImageByIndexLoad}
                 src={additionalImagesDisplayed[2]}
                 id={imageUploadInputsId.imageInput3}
               />
