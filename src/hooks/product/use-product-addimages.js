@@ -4,7 +4,7 @@ import {
   setPrimaryImageToUpload
 } from '../../redux/products/products.actions';
 
-const useProductAddImages = (
+function useProductAddImages(
   isEdit,
   additionalImagesDisplayed,
   setAdditionalImagesDisplayed,
@@ -13,7 +13,7 @@ const useProductAddImages = (
   setAdditionalImages,
   setProductImageDisplayed,
   setPrimaryImage
-) => {
+) {
   const dispatch = useDispatch();
 
   const products = useSelector(({ Products }) => Products);
@@ -60,14 +60,14 @@ const useProductAddImages = (
       };
       e.persist();
       toggleFieldsChanged(true);
-      const newArr = [...products?.upload];
-      newArr[index] = file;
-      dispatch(setFilesToUpload(newArr));
+      const arr = [...products?.upload];
+      arr[index] = file;
+      dispatch(setFilesToUpload(arr));
       reader.readAsDataURL(e.target.files[0]);
     }
   };
 
   return { handleAdditionalImagesLoad, handlePrimaryImageLoad };
-};
+}
 
 export default useProductAddImages;
