@@ -17,7 +17,7 @@ import {
 
 const { REQUIRED_PHOTOS } = productsTranslations;
 
-const ProductAddImages = ({
+function ProductAddImages({
   setAdditionalImagesDisplayed,
   additionalImagesDisplayed,
   setProductImageDisplayed,
@@ -30,7 +30,7 @@ const ProductAddImages = ({
   validate,
   displayed,
   isEdit
-}) => {
+}) {
   const styles = useStyles();
   const product = useSelector(({ Products }) => Products.selectedProduct);
 
@@ -163,7 +163,7 @@ const ProductAddImages = ({
       </Box>
     </div>
   );
-};
+}
 
 ProductAddImages.propTypes = {
   toggleFieldsChanged: PropTypes.func,

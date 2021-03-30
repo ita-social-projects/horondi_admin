@@ -115,10 +115,10 @@ const ProductForm = ({ isEdit }) => {
 
   const formikSpeciesValues = {
     category: product?.category?._id,
-    model: product?.model?._id || '',
-    pattern: product?.pattern?._id || '',
+    model: product?.model?._id,
+    pattern: product?.pattern?._id,
     strapLengthInCm: product?.strapLengthInCm || 0,
-    closure: product?.closure?._id || '',
+    closure: product?.closure?._id,
     available: product.available || false,
     isHotItem: product.isHotItem || false,
     sizes: product?.sizes?.map((el) => getIdFromItem(el) || []),
