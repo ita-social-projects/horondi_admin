@@ -77,6 +77,8 @@ export const handleRegion = (
     setFieldValue(inputName.ukrPost.district, '');
     setFieldValue(inputName.ukrPost.city, '');
     setFieldValue(inputName.ukrPost.courierOffice, '');
+    setFieldValue(inputName.ukrPost.districtId, '');
+    setFieldValue(inputName.ukrPost.cityId, '');
   } else {
     setRegion('');
     setDistrict('');
@@ -97,6 +99,7 @@ export const handleDistrict = (
     setFieldValue(inputName.ukrPost.districtId, value.DISTRICT_ID);
     setFieldValue(inputName.ukrPost.city, '');
     setFieldValue(inputName.ukrPost.courierOffice, '');
+    setFieldValue(inputName.ukrPost.cityId, '');
   } else {
     setCity('');
     setPostOffice('');
