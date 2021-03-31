@@ -17,7 +17,7 @@ import {
   setSideMenuStatus
 } from '../../redux/theme/theme.actions';
 
-import { logoutUser , loginUser } from '../../redux/auth/auth.actions';
+import { logoutUser } from '../../redux/auth/auth.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
@@ -67,10 +67,12 @@ const NavBar = () => {
     </IconButton>
   );
 
+  const urlPage = window.location.pathname;
+
   return (
     <AppBar className={classes.appBar}>
       <Toolbar>
-        {loginUser ? null : menuToggle}
+        {urlPage === '/login' ? null : menuToggle}
         <Typography id='logo' variant='h4' className={classes.title}>
           {title}
         </Typography>
