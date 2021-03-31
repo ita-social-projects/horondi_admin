@@ -1,18 +1,21 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
-import { configure, mount, shallow } from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import { configure, mount } from 'enzyme';
+import { BrowserRouter, Link } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
 import { variables } from './variables';
 
 import PatternPage from '../pattern-page';
+import LoadingBar from '../../../components/loading-bar';
+import TableContainerGenerator from '../../../containers/table-container-generator';
+
 import { config } from '../../../configs';
 
 const { CREATE_PATTERN_TITLE } = config.buttonTitles;
+const pathToPatternAddPage = config.routes.pathToAddPattern;
 
 configure({ adapter: new Adapter() });
-
 const mockStore = variables;
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -31,8 +34,6 @@ describe('Pattern-page tests', () => {
         <PatternPage />
       </BrowserRouter>
     );
-
-    console.log(wrapper.find(Button).props());
   });
 
   afterEach(() => {
@@ -43,86 +44,32 @@ describe('Pattern-page tests', () => {
     expect(wrapper).toBeDefined();
   });
 
-  test(`Should render Typography with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
+  test(`Should render Typography component with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
     expect(wrapper.exists(Typography)).toBe(true);
     expect(wrapper.find(Typography).text()).toBe(
       config.titles.patternTitles.mainPageTitle
     );
   });
 
-  test(`Should render CREATE_PATTERN_TITLE button with "${CREATE_PATTERN_TITLE}" label`, () => {
+  test(`Should render button component`, () => {
     expect(wrapper.exists(Button)).toBe(true);
-    expect(wrapper.find(Button).prop('children')).toBe(CREATE_PATTERN_TITLE);
+    expect(wrapper.find(Button).text()).toBe(CREATE_PATTERN_TITLE);
+    expect(wrapper.find(Button).prop('component')).toEqual(Link);
+    expect(wrapper.find(Button).prop('to')).toBe(pathToPatternAddPage);
+  });
+
+  test('Should render LoadingBar', () => {
+    mockStore.Pattern.patternLoading = true;
+    wrapper = mount(
+      <BrowserRouter>
+        <PatternPage />
+      </BrowserRouter>
+    );
+    mockStore.Pattern.patternLoading = false;
+    expect(wrapper.exists(LoadingBar)).toBe(true);
+  });
+
+  test('Should render TableContainerGenerator', () => {
+    expect(wrapper.exists(TableContainerGenerator)).toBe(true);
   });
 });
-
-// // describe('Categories test', () => {
-// //   jest.spyOn(reactRedux, 'useDispatch');
-// //   const mockHolder = jest.fn();
-//   let wrapper;
-
-//   beforeEach(() => {
-//     wrapper = mount(<Categories />);
-//   });
-
-//   afterEach(() => {
-//     wrapper.unmount();
-//   });
-
-//   it('Should render Categories page', () => {
-//     expect(wrapper).toBeDefined();
-//   });
-
-//   it(`Should render Typography with "${mainPageTitle}" label`, () => {
-//     expect(wrapper.exists(Typography)).toBe(true);
-//     expect(wrapper.find(Typography).text()).toBe(mainPageTitle);
-//   });
-
-//   it(`Should render add category button with "${ADD_CATEGORY}" label`, () => {
-//     expect(wrapper.exists(StandardButton)).toBe(true);
-//     expect(wrapper.find(StandardButton).prop('title')).toBe(ADD_CATEGORY);
-//   });
-
-//   it('Should render FilterNavbar', () => {
-//     expect(wrapper.exists(FilterNavbar)).toBe(true);
-//   });
-
-//   it('Should render TableContainerGenerator', () => {
-//     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
-//   });
-
-//   it('Should render CategoryDeleteDialog', () => {
-//     expect(wrapper.exists(CategoryDeleteDialog)).toBe(true);
-//   });
-
-//   it('Should render LoadingBar', () => {
-//     mockStore.Categories.categoriesLoading = true;
-//     wrapper = mount(<Categories />);
-//     mockStore.Categories.categoriesLoading = false;
-//     expect(wrapper.exists(LoadingBar)).toBe(true);
-//   });
-
-//   it('Should render when category options equal null', () => {
-//     useCategoryFilters.mockImplementationOnce(() => null);
-//     expect(wrapper).toBeDefined();
-//   });
-
-//   it('Should handle click the Add category button', () => {
-//     useDispatchMock.mockReturnValue(mockHolder);
-//     wrapper = mount(<Categories />);
-//     wrapper.find(StandardButton).simulate('click');
-//     expect(mockHolder.mock.calls.length).toEqual(2);
-//   });
-
-//   it('Should handle click the Delete category button', () => {
-//     useDispatchMock.mockReturnValue(mockHolder);
-//     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
-//     expect(mockHolder).toHaveBeenCalledTimes(5);
-//   });
-
-//   it('Should handle click the Edit category button', () => {
-//     useDispatchMock.mockReturnValue(mockHolder);
-//     wrapper.find(TableContainerRow).at(0).props().editHandler();
-//     expect(mockHolder).toHaveBeenCalledTimes(7);
-//   });
-// });
