@@ -17,7 +17,8 @@ import {
   setSideMenuStatus
 } from '../../redux/theme/theme.actions';
 
-import { logoutUser } from '../../redux/auth/auth.actions';
+import { logoutUser , loginUser } from '../../redux/auth/auth.actions';
+
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -69,7 +70,7 @@ const NavBar = () => {
   return (
     <AppBar className={classes.appBar}>
       <Toolbar>
-        {menuToggle}
+        {loginUser ? null : menuToggle}
         <Typography id='logo' variant='h4' className={classes.title}>
           {title}
         </Typography>
