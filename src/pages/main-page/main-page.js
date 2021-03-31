@@ -74,7 +74,10 @@ const MainPage = () => {
       <div className={classes.commentText}>{text}</div>
       <div className={classes.commentInfo}>
         <div>{user.firstName || guestUser}</div>
-        <div>{moment.unix(date / 1000).format('HH:mm DD.MM.YYYY ')}</div>
+        <div>
+          <div>{moment.unix(date / 1000).format('HH:mm')}</div>
+          <div>{moment.unix(date / 1000).format('DD.MM.YYYY ')}</div>
+        </div>
       </div>
     </div>
   ));
