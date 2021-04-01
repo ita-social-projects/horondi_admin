@@ -7,7 +7,6 @@ import {
   getAllUsers,
   getUserById,
   deleteUser,
-  switchUserStatus,
   registerAdmin,
   completeAdminRegister,
   validateToken
@@ -17,7 +16,6 @@ import {
   handleUserLoad,
   handleUsersLoad,
   handleUsersDelete,
-  handleUserStatusSwitch,
   handleAdminRegister,
   handleAdminConfirm,
   handleTokenValidation,
@@ -46,8 +44,7 @@ import {
   setUsers,
   setUser,
   setUserError,
-  deleteUserLocally,
-  updateUserLocally
+  deleteUserLocally
 } from '../users.actions';
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
@@ -59,7 +56,6 @@ import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
 const {
   SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS,
   SUCCESS_CONFIRMATION_STATUS,
   SUCCESS_CREATION_STATUS
 } = statuses;
@@ -153,36 +149,6 @@ describe('Users saga test', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
-        expect(analysisCall).toHaveLength(2);
-      }));
-
-  it('should switch user status', () =>
-    expectSaga(handleUserStatusSwitch, { payload: mockUser._id })
-      .withReducer(combineReducers({ Users }), {
-        Users: {
-          ...mockUsersState,
-          user: mockUser
-        }
-      })
-      .put(setUsersLoading(true))
-      .provide([
-        [call(switchUserStatus, mockUser._id)],
-        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
-      ])
-      .put(updateUserLocally(mockUser._id))
-      .put(setUsersLoading(false))
-      .hasFinalState({
-        Users: {
-          ...mockUsersState,
-          user: { ...mockUser, banned: !mockUser.banned }
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
       }));
 
