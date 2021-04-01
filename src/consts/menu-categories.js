@@ -4,5 +4,6 @@ export const TEMPORARY_WIDTHS = ['sm', 'xs'];
 export const MENU_TABS = {
   CLIENTS: 'Клієнти',
   CATALOG: 'Каталог',
-  STATIC_PAGES: 'Статичні сторінки'
+  STATIC_PAGES: 'Статичні сторінки',
+  TEST: 'tEST'
 };
