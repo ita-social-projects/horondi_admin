@@ -41,10 +41,10 @@ const ProductAddImages = ({
 
   useEffect(() => {
     if (product?.images?.additional) {
-      const additionalImages = product?.images?.additional?.map(
+      const previousImages = product?.images?.additional?.map(
         (e) => config.imagePrefix + e?.large
       );
-      setAdditionalImagesDisplayed(additionalImages);
+      setAdditionalImagesDisplayed(previousImages);
       dispatch(setFilesToUpload(product?.images?.additional));
       dispatch(setPrimaryImageToUpload(product?.images?.primary));
     }
