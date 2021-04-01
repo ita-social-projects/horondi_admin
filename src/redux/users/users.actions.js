@@ -6,16 +6,16 @@ import {
   SET_USERS_ERROR,
   SET_USERS_LOADING,
   DELETE_USER,
-  UPDATE_USER_STATUS,
   DELETE_USER_LOCALLY,
-  UPDATE_USER_LOCALLY,
   REGISTER_ADMIN,
   CONFIRM_ADMIN,
   VALIDATE_TOKEN,
   SET_FILTER,
   SET_SORT,
   SET_TAB,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  BLOCK_USER,
+  UNLOCK_USER
 } from './users.types';
 
 const getUsers = (payload) => ({
@@ -47,19 +47,10 @@ const deleteUser = (payload) => ({
   type: DELETE_USER,
   payload
 });
-const updateUserStatus = (payload) => ({
-  type: UPDATE_USER_STATUS,
-  payload
-});
 
 const setUserError = (error) => ({
   type: SET_USERS_ERROR,
   payload: error
-});
-
-const updateUserLocally = (id) => ({
-  type: UPDATE_USER_LOCALLY,
-  payload: id
 });
 
 const deleteUserLocally = (id) => ({
@@ -100,6 +91,14 @@ const setTab = (tab) => ({
   type: SET_TAB,
   payload: tab
 });
+const blockUserByAdmin = (payload) => ({
+  type: BLOCK_USER,
+  payload
+});
+const unlockUserByAdmin = (payload) => ({
+  type: UNLOCK_USER,
+  payload
+});
 
 export {
   getUsers,
@@ -107,10 +106,8 @@ export {
   setUser,
   getUser,
   deleteUser,
-  updateUserStatus,
   setUserError,
   setUsersLoading,
-  updateUserLocally,
   deleteUserLocally,
   registerAdmin,
   confirmAdmin,
@@ -118,5 +115,7 @@ export {
   setTab,
   setFilter,
   setSort,
-  clearFilters
+  clearFilters,
+  blockUserByAdmin,
+  unlockUserByAdmin
 };

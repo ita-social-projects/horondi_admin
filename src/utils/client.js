@@ -47,17 +47,19 @@ export const getItems = (query, variables) => {
 
 export const setItems = (query, variables) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+
   return client
     .mutate({
       mutation: gql`
         ${query}
       `,
+      variables,
       context: {
         headers: {
           token
         }
       },
-      variables
+      fetchPolicy: 'no-cache'
     })
     .catch((err) => {
       throw new Error(`Помилка: ${config.errorMessages[formError(err)]}`);
