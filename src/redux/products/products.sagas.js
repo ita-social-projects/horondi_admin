@@ -123,11 +123,11 @@ export function* handleProductAdd({ payload }) {
   try {
     yield put(setProductsLoading(true));
     const { upload } = yield select(selectProducts);
-    const addedProduct = yield call(addProduct, payload, upload);
+    yield call(addProduct, payload, upload);
     yield call(handleFilterLoad);
     yield put(clearProductToSend());
     yield put(setFilesToUpload([]));
-    yield put(push(`/product/${addedProduct._id}`));
+    yield put(push(`/products`));
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);

@@ -1,62 +1,96 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { Box, Grid, Avatar } from '@material-ui/core';
-import { Image } from '@material-ui/icons';
+import { Box, Grid } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import { useStyles } from './product-add-images.styles';
+import { config } from '../../../../configs/index';
 
 import { productsTranslations } from '../../../../translations/product.translations';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
+import useProductAddImages from '../../../../hooks/product/use-product-addimages';
+import {
+  IMAGES_INDEXES,
+  imageUploadInputsId,
+  PRODUCT_PHOTO_TEXT
+} from '../../../../consts/product-form';
 
-const { MAIN_PHOTO, ADDITIONAL_PHOTOS, REQUIRED_PHOTOS } = productsTranslations;
+const { REQUIRED_PHOTOS } = productsTranslations;
 
 const ProductAddImages = ({
+  setAdditionalImagesDisplayed,
+  additionalImagesDisplayed,
+  setProductImageDisplayed,
+  productImageDisplayed,
   setAdditionalImages,
   additionalImages,
   setPrimaryImage,
   primaryImage,
-  validate
+  toggleFieldsChanged,
+  validate,
+  displayed,
+  isEdit
 }) => {
   const styles = useStyles();
+  const product = useSelector(({ Products }) => Products.selectedProduct);
 
-  const handlePrimaryImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setPrimaryImage(event.target.result);
-      };
-      reader.readAsDataURL(e.target.files[0]);
+  useEffect(() => {
+    if (product?.images?.additional) {
+      setAdditionalImagesDisplayed(
+        product?.images?.additional?.map((e) => config.imagePrefix + e?.large)
+      );
     }
-  };
+  }, [product?.images]);
 
-  const handleAdditionalImagesLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setAdditionalImages((prevImages) => [
-          ...prevImages,
-          event.target.result
-        ]);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
+  const imgUrl = config.imagePrefix + displayed;
+
+  const {
+    handlePrimaryImageLoad,
+    handleAdditionalImagesLoad
+  } = useProductAddImages({
+    isEdit,
+    additionalImagesDisplayed,
+    setAdditionalImagesDisplayed,
+    toggleFieldsChanged,
+    additionalImages,
+    setAdditionalImages,
+    setProductImageDisplayed,
+    setPrimaryImage
+  });
+
+  const additionalFirstImageByIndexLoad = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
+
+  const additionalSecondImageByIndexLoad = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.SECOND_ADDITIONAL_IMAGE);
+
+  const additionalThirdImageByIndexLoad = (e) =>
+    handleAdditionalImagesLoad(e, IMAGES_INDEXES.THIRD_ADDITIONAL_IMAGE);
+
+  const mainImageSrc = isEdit
+    ? productImageDisplayed || imgUrl
+    : productImageDisplayed;
+
+  const displaySecondImageLoad = additionalImagesDisplayed[0]
+    ? styles.display
+    : styles.displayNone;
+
+  const displayThirdImageLoad = additionalImagesDisplayed[1]
+    ? styles.display
+    : styles.displayNone;
 
   return (
     <div className={styles.container}>
       <Box my={3}>
         <Grid container spacing={1}>
           <Grid item>
+            <span className={styles.text}>{PRODUCT_PHOTO_TEXT.PRIMARY}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 handler={handlePrimaryImageLoad}
-                buttonLabel={MAIN_PHOTO}
+                src={mainImageSrc}
+                id={imageUploadInputsId.mainImageInput}
               />
-              {validate && primaryImage && (
-                <Avatar src={primaryImage}>
-                  <Image />
-                </Avatar>
-              )}
             </div>
           </Grid>
         </Grid>
@@ -67,18 +101,42 @@ const ProductAddImages = ({
       <Box my={3}>
         <Grid container spacing={1}>
           <Grid item>
+            <span className={styles.text}>{PRODUCT_PHOTO_TEXT.ADDITIONAL}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
-                handler={handleAdditionalImagesLoad}
-                buttonLabel={ADDITIONAL_PHOTOS}
+                handler={additionalFirstImageByIndexLoad}
+                src={additionalImagesDisplayed[0]}
+                id={imageUploadInputsId.imageInput1}
               />
-              <div className={styles.avatarWrapper}>
-                {additionalImages.map((e) => (
-                  <Avatar key={e} src={e}>
-                    <Image />
-                  </Avatar>
-                ))}
-              </div>
+            </div>
+          </Grid>
+        </Grid>
+      </Box>
+      <Box my={3}>
+        <Grid container spacing={1}>
+          <Grid item className={displaySecondImageLoad}>
+            <span className={styles.text} />
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer
+                className={styles.display}
+                handler={additionalSecondImageByIndexLoad}
+                src={additionalImagesDisplayed[1]}
+                id={imageUploadInputsId.imageInput2}
+              />
+            </div>
+          </Grid>
+        </Grid>
+      </Box>
+      <Box my={3}>
+        <Grid container spacing={1}>
+          <Grid item className={displayThirdImageLoad}>
+            <span className={styles.text} />
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer
+                handler={additionalThirdImageByIndexLoad}
+                src={additionalImagesDisplayed[2]}
+                id={imageUploadInputsId.imageInput3}
+              />
             </div>
           </Grid>
         </Grid>
@@ -88,6 +146,19 @@ const ProductAddImages = ({
 };
 
 ProductAddImages.propTypes = {
+  toggleFieldsChanged: PropTypes.func,
+  additionalImagesDisplayed: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.object),
+    PropTypes.string
+  ]),
+  setAdditionalImagesDisplayed: PropTypes.func,
+  isEdit: PropTypes.bool,
+  displayed: PropTypes.string,
+  setProductImageDisplayed: PropTypes.func,
+  productImageDisplayed: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.object),
+    PropTypes.string
+  ]),
   setAdditionalImages: PropTypes.func.isRequired,
   setPrimaryImage: PropTypes.func.isRequired,
   additionalImages: PropTypes.arrayOf(PropTypes.string),
@@ -99,6 +170,13 @@ ProductAddImages.propTypes = {
 };
 
 ProductAddImages.defaultProps = {
+  toggleFieldsChanged: '',
+  additionalImagesDisplayed: [],
+  setAdditionalImagesDisplayed: '',
+  isEdit: false,
+  displayed: '',
+  setProductImageDisplayed: '',
+  productImageDisplayed: '',
   primaryImage: '',
   additionalImages: []
 };

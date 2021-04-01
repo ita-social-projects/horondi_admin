@@ -93,7 +93,8 @@ const titles = {
   },
   productTitles: {
     filters: 'Фільтри',
-    deleteFilter: 'Очистити фільтр'
+    deleteFilter: 'Очистити фільтр',
+    mainPageTitle: 'Інформація про продукти'
   }
 };
 

@@ -2,6 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 
+import Typography from '@material-ui/core/Typography';
+
+import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import {
   getFiltredProducts,
   getAllFilters,
@@ -18,6 +22,8 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { selectProductsAndTable } from '../../redux/selectors/multiple.selectors';
 import { useCommonStyles } from '../common.styles';
 import { handleProductsPage } from '../../utils/handle-products-page';
+
+const pathToProductAddPage = config.routes.pathToAddProduct;
 
 const {
   PRODUCT_NOT_FOUND,
@@ -120,6 +126,24 @@ const ProductsPage = () => {
 
   return (
     <div className={common.container}>
+      <div className={common.adminHeader}>
+        <Typography
+          variant='h1'
+          className={common.materialTitle}
+          data-cy='product-header'
+        >
+          {config.titles.productTitles.mainPageTitle}
+        </Typography>
+        <Button
+          data-cy='add-product'
+          component={Link}
+          to={pathToProductAddPage}
+          variant='contained'
+          color='primary'
+        >
+          {productsTranslations.CREATE_PRODUCT}
+        </Button>
+      </div>
       {loading ? (
         <LoadingBar />
       ) : (
