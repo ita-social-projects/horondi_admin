@@ -10,9 +10,11 @@ const { USER_STATUS_TITLE } = buttonTitles;
 const NavFilters = () => {
   const filters = useSelector(({ Users }) => Users.filters);
   const { setStatusFilter } = useUsersFiltering();
-  console.log(filters);
+
   const handleStatusFilterChange = ({ target }) => {
-    const result = target.value.map((item) => item !== statuses.USER_ACTIVE_STATUS);
+    const result = target.value.map(
+      (item) => item !== statuses.USER_ACTIVE_STATUS
+    );
     setStatusFilter(result);
   };
 

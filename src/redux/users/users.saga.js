@@ -87,7 +87,7 @@ export function* handleBlockUser({ payload }) {
     yield put(setUsersLoading(true));
 
     const blockedUser = yield call(blockUser, payload);
-    console.log(blockedUser);
+
     yield put(setUser(blockedUser));
     yield put(setUsersLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
@@ -101,7 +101,7 @@ export function* handleUnlockUser({ payload }) {
     yield put(setUsersLoading(true));
 
     const unlockedUser = yield call(unlockUser, payload);
-    console.log(unlockedUser);
+
     yield put(setUser(unlockedUser));
     yield put(setUsersLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
