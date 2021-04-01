@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
 import { useStyles } from './admin-tab.styles';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
 import TableContainerRow from '../../../../containers/table-container-row';
@@ -12,14 +13,18 @@ import useFormDialog from '../../../../hooks/form-dialog/use-form-dialog';
 import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 import UserNavbar from '../user-navbar';
+import { UserBlockPeriod } from '../../../../consts/user-block-status';
+import { formatPhoneNumber } from '../../../../utils/format-phone-number';
 
-const tableHeaders = config.tableHeadRowTitles.users.adminTab;
+const tableHeaders = config.tableHeadRowTitles.users.userTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
 const { REGISTER_ADMIN } = config.dialogFormTitles;
 const { unknownAdmin } = config.labels.user;
 const { forbiddenRolesFromDeleting } = config;
+const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 
 const AdminTab = (props) => {
+  const dispatch = useDispatch();
   const { list, onDelete } = props;
   const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
 
@@ -44,10 +49,16 @@ const AdminTab = (props) => {
           ? `${userItem.firstName || ''} ${userItem.lastName || ''}`
           : unknownAdmin
       }
+      mobile={formatPhoneNumber(userItem.phoneNumber) || ''}
       email={userItem.email || ''}
       role={userRoleTranslations[userItem.role]}
+      banned={
+        userItem.banned.blockPeriod === UserBlockPeriod.UNLOCKED
+          ? USER_ACTIVE_STATUS
+          : USER_INACTIVE_STATUS
+      }
       deleteHandler={() => onDelete(userItem._id)}
-      showEdit={false}
+      editHandler={() => dispatch(push(`/users/${userItem._id}`))}
       showDelete={!forbiddenRolesFromDeleting.includes(userItem.role)}
     />
   ));

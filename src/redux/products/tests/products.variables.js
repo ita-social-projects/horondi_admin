@@ -39,6 +39,7 @@ const productModel = {
   pattern: [],
   basePrice: 0,
   strapLengthInCm: 0,
+  isHotItem: false,
   available: true,
   options: []
 };

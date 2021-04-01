@@ -18,7 +18,8 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   error: {
-    position: 'absolute',
+    marginTop: '3px',
+    position: 'relative',
     color: theme.palette.error.main,
     left: theme.spacing(1),
     bottom: 0.5

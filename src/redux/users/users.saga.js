@@ -7,10 +7,11 @@ import {
   getAllUsers,
   getUserById,
   deleteUser,
-  switchUserStatus,
   completeAdminRegister,
   registerAdmin,
-  validateToken
+  validateToken,
+  blockUser,
+  unlockUser
 } from './users.operations';
 
 import {
@@ -18,18 +19,18 @@ import {
   setUser,
   setUserError,
   setUsersLoading,
-  deleteUserLocally,
-  updateUserLocally
+  deleteUserLocally
 } from './users.actions';
 
 import {
   GET_USERS,
   GET_USER,
   DELETE_USER,
-  UPDATE_USER_STATUS,
   REGISTER_ADMIN,
   CONFIRM_ADMIN,
-  VALIDATE_TOKEN
+  VALIDATE_TOKEN,
+  BLOCK_USER,
+  UNLOCK_USER
 } from './users.types';
 
 import { setItemsCount, updatePagination } from '../table/table.actions';
@@ -81,11 +82,27 @@ export function* handleUsersDelete({ payload }) {
   }
 }
 
-export function* handleUserStatusSwitch({ payload }) {
+export function* handleBlockUser({ payload }) {
   try {
     yield put(setUsersLoading(true));
-    yield call(switchUserStatus, payload);
-    yield put(updateUserLocally(payload));
+
+    const blockedUser = yield call(blockUser, payload);
+
+    yield put(setUser(blockedUser));
+    yield put(setUsersLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+  } catch (err) {
+    yield call(handleUsersError, err);
+  }
+}
+
+export function* handleUnlockUser({ payload }) {
+  try {
+    yield put(setUsersLoading(true));
+
+    const unlockedUser = yield call(unlockUser, payload);
+
+    yield put(setUser(unlockedUser));
     yield put(setUsersLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (err) {
@@ -138,8 +155,9 @@ export default function* usersSaga() {
   yield takeEvery(GET_USERS, handleUsersLoad);
   yield takeEvery(GET_USER, handleUserLoad);
   yield takeEvery(DELETE_USER, handleUsersDelete);
-  yield takeEvery(UPDATE_USER_STATUS, handleUserStatusSwitch);
   yield takeEvery(REGISTER_ADMIN, handleAdminRegister);
   yield takeEvery(CONFIRM_ADMIN, handleAdminConfirm);
   yield takeEvery(VALIDATE_TOKEN, handleTokenValidation);
+  yield takeEvery(BLOCK_USER, handleBlockUser);
+  yield takeEvery(UNLOCK_USER, handleUnlockUser);
 }
