@@ -128,11 +128,16 @@ export const address = (delivery) => {
     sentBy,
     courierOffice:
       delivery.novaPost.courierOffice || delivery.ukrPost.courierOffice || '',
+    region: delivery.ukrPost.region || '',
+    regionId: delivery.ukrPost.regionId || '',
+    district: delivery.ukrPost.district || '',
+    districtId: delivery.ukrPost.districtId || '',
     city:
       delivery.novaPost.city ||
       delivery.ukrPost.city ||
       delivery.courier.city ||
       '',
+    cityId: delivery.ukrPost.cityId || '',
     street: delivery.courier.street || '',
     house: delivery.courier.house || '',
     flat: delivery.courier.flat || '',
@@ -154,8 +159,11 @@ export const inputName = {
   },
   ukrPost: {
     region: 'delivery.ukrPost.region',
+    regionId: 'delivery.ukrPost.regionId',
     district: 'delivery.ukrPost.district',
+    districtId: 'delivery.ukrPost.districtId',
     city: 'delivery.ukrPost.city',
+    cityId: 'delivery.ukrPost.cityId',
     courierOffice: 'delivery.ukrPost.courierOffice'
   },
   isPaidInput: 'isPaid',
@@ -190,8 +198,11 @@ export const initialValues = {
     },
     ukrPost: {
       region: '',
+      regionId: '',
       district: '',
+      districtId: '',
       city: '',
+      cityId: '',
       courierOffice: ''
     }
   },
@@ -236,7 +247,12 @@ export const setFormValues = (selectedOrder) => {
     flat,
     house,
     street,
-    courierOffice
+    courierOffice,
+    district,
+    region,
+    regionId,
+    districtId,
+    cityId
   } = selectedOrder.delivery;
   return {
     status: selectedOrder.status,
@@ -256,9 +272,12 @@ export const setFormValues = (selectedOrder) => {
         courierOffice: sentBy === deliveryTypes.novaPost ? courierOffice : ''
       },
       ukrPost: {
-        region: '',
-        district: '',
+        region: sentBy === deliveryTypes.ukrPost ? region : '',
+        regionId: sentBy === deliveryTypes.ukrPost ? regionId : '',
+        district: sentBy === deliveryTypes.ukrPost ? district : '',
+        districtId: sentBy === deliveryTypes.ukrPost ? districtId : '',
         city: sentBy === deliveryTypes.ukrPost ? city : '',
+        cityId: sentBy === deliveryTypes.ukrPost ? cityId : '',
         courierOffice: sentBy === deliveryTypes.ukrPost ? courierOffice : ''
       }
     },

@@ -65,7 +65,6 @@ export const handleCircularProgress = (loading) =>
 
 export const handleRegion = (
   value,
-  setRegionId,
   setFieldValue,
   setRegion,
   setDistrict,
@@ -73,8 +72,13 @@ export const handleRegion = (
   setPostOffice
 ) => {
   if (value) {
-    setRegionId(value.REGION_ID);
     setFieldValue(inputName.ukrPost.region, value.REGION_UA);
+    setFieldValue(inputName.ukrPost.regionId, value.REGION_ID);
+    setFieldValue(inputName.ukrPost.district, '');
+    setFieldValue(inputName.ukrPost.city, '');
+    setFieldValue(inputName.ukrPost.courierOffice, '');
+    setFieldValue(inputName.ukrPost.districtId, '');
+    setFieldValue(inputName.ukrPost.cityId, '');
   } else {
     setRegion('');
     setDistrict('');
@@ -87,27 +91,28 @@ export const handleRegion = (
 export const handleDistrict = (
   value,
   setFieldValue,
-  setDistrictId,
   setCity,
   setPostOffice
 ) => {
   if (value) {
     setFieldValue(inputName.ukrPost.district, value.DISTRICT_UA);
-    setDistrictId(value.DISTRICT_ID);
+    setFieldValue(inputName.ukrPost.districtId, value.DISTRICT_ID);
+    setFieldValue(inputName.ukrPost.city, '');
+    setFieldValue(inputName.ukrPost.courierOffice, '');
+    setFieldValue(inputName.ukrPost.cityId, '');
   } else {
-    setDistrictId('');
     setCity('');
     setPostOffice('');
     setFieldValue(inputName.ukrPost.district, '');
   }
 };
 
-export const handleCity = (value, setCityId, setFieldValue, setPostOffice) => {
+export const handleCity = (value, setFieldValue, setPostOffice) => {
   if (value) {
-    setCityId(value.CITY_ID);
     setFieldValue(inputName.ukrPost.city, value.CITY_UA);
+    setFieldValue(inputName.ukrPost.cityId, value.CITY_ID);
+    setFieldValue(inputName.ukrPost.courierOffice, '');
   } else {
-    setCityId('');
     setPostOffice('');
     setFieldValue(inputName.ukrPost.city, '');
   }
@@ -127,3 +132,6 @@ export const handlePostOffice = (value, setPostOffice, setFieldValue) => {
     setFieldValue(inputName.ukrPost.courierOffice, '');
   }
 };
+
+export const handleInputValue = (isFocused, focusedValue, bluredValue) =>
+  isFocused ? focusedValue : bluredValue;
