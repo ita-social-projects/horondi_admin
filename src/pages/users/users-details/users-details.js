@@ -7,7 +7,10 @@ import { withRouter } from 'react-router';
 import { useStyles } from './users-details.styles';
 import { useUsersHandler } from '../../../hooks/user/use-users-handlers';
 import LoadingBar from '../../../components/loading-bar';
-import { updateUserStatus } from '../../../redux/users/users.actions';
+import {
+  resendEmail,
+  updateUserStatus
+} from '../../../redux/users/users.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import UserDetailsCard from './containers/user-details-card';
@@ -49,7 +52,9 @@ const UsersDetails = (props) => {
     city,
     adress,
     postCode,
-    isBanned
+    isBanned,
+    confirmed,
+    email
   } = useUsersHandler(id);
 
   if (loading) {
@@ -65,6 +70,8 @@ const UsersDetails = (props) => {
   const status = isBanned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS;
   const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_INACTIVE_TITLE;
 
+  const buttonConfirmed = !confirmed && 'Підтвердити адміна';
+
   const userStatusHandler = (userId) => {
     const updateStatus = () => {
       dispatch(closeDialog());
@@ -75,6 +82,10 @@ const UsersDetails = (props) => {
       SWITCH_USER_STATUS_MESSAGE,
       SWITCH_USER_STATUS_TITLE
     );
+  };
+
+  const confirmationHandler = (data) => {
+    dispatch(resendEmail(data));
   };
 
   const showCommentsHandler = () => setShowComments(!showComments);
@@ -89,7 +100,9 @@ const UsersDetails = (props) => {
           primaryData={primaryData}
           secondaryData={secondaryData}
           buttonStatus={buttonStatus}
+          buttonConfirmed={buttonConfirmed}
           buttonHandler={() => userStatusHandler(id)}
+          buttonConfirmationHandler={() => confirmationHandler({ email })}
         />
         <div className={styles.controlsBlock}>
           <BackButton />

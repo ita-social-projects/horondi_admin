@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { push } from 'connected-react-router';
 import { useStyles } from './admin-tab.styles';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
 import TableContainerRow from '../../../../containers/table-container-row';
@@ -22,6 +23,8 @@ const { forbiddenRolesFromDeleting } = config;
 const AdminTab = (props) => {
   const { list, onDelete } = props;
   const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
+
+  const dispatch = useDispatch();
 
   const {
     isRegisterDialogOpen,
@@ -47,8 +50,9 @@ const AdminTab = (props) => {
       email={userItem.email || ''}
       role={userRoleTranslations[userItem.role]}
       deleteHandler={() => onDelete(userItem._id)}
-      showEdit={false}
+      showEdit
       showDelete={!forbiddenRolesFromDeleting.includes(userItem.role)}
+      editHandler={() => dispatch(push(`/users/${userItem._id}`))}
     />
   ));
 

@@ -21,7 +21,9 @@ const UserDetailsCard = ({
   primaryData,
   secondaryData,
   buttonStatus,
-  buttonHandler
+  buttonHandler,
+  buttonConfirmed,
+  buttonConfirmationHandler
 }) => {
   const styles = useStyles();
 
@@ -85,6 +87,16 @@ const UserDetailsCard = ({
             >
               {buttonStatus}
             </Button>
+            {buttonConfirmed && (
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={buttonConfirmationHandler}
+                data-cy='change-user-status-button'
+              >
+                {buttonConfirmed}
+              </Button>
+            )}
           </Grid>
         </Grid>
       </CardContent>
@@ -99,7 +111,9 @@ UserDetailsCard.propTypes = {
   primaryData: PropTypes.objectOf(PropTypes.object).isRequired,
   secondaryData: PropTypes.objectOf(PropTypes.object).isRequired,
   buttonStatus: PropTypes.string.isRequired,
-  buttonHandler: PropTypes.func.isRequired
+  buttonHandler: PropTypes.func.isRequired,
+  buttonConfirmed: PropTypes.string.isRequired,
+  buttonConfirmationHandler: PropTypes.func.isRequired
 };
 
 export default UserDetailsCard;

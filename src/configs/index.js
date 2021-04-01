@@ -67,7 +67,7 @@ export const config = {
     { role: 'admin', label: 'Адмін' },
     { role: 'superadmin', label: 'Суперадмін' }
   ],
-  allowedforRegistrationRoles: ['admin'],
+  allowedforRegistrationRoles: ['admin', 'superadmin'],
   tabNames: {
     users: ['Користувачі', 'Адміністратори']
   },

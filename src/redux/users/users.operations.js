@@ -19,7 +19,10 @@ query(
     email
     role
     phoneNumber
-    banned
+    confirmed
+    banned {
+      blockPeriod, blockCount, updatedAt
+    }
     }
     count
   }
@@ -33,6 +36,8 @@ query($id: ID!) {
       firstName
       lastName
       email
+      role
+      confirmed
       address {
         country
         city
@@ -41,7 +46,9 @@ query($id: ID!) {
         street
         zipcode
       }
-      banned
+      banned{
+      blockPeriod, blockCount, updatedAt
+    }
     }
   }
 }
@@ -79,6 +86,20 @@ mutation($id: ID!) {
 const registerAdminMutation = `
 mutation($user: AdminRegisterInput!) {
   registerAdmin(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
+const resendEmailToConfirmAdminMutation = `
+mutation($user: resendEmailToConfirmAdminInput!) {
+  resendEmailToConfirmAdmin(user:$user){
     ... on User {
       email
     }
@@ -181,6 +202,20 @@ const registerAdmin = async (user) => {
   return data.registerAdmin;
 };
 
+const resendEmailToConfirmAdmin = async (user) => {
+  const result = await setItems(resendEmailToConfirmAdminMutation, { user });
+
+  const { data } = result;
+
+  if (data.resendEmailToConfirmAdmin.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
+    );
+  }
+
+  return data.resendEmailToConfirmAdmin;
+};
+
 const completeAdminRegister = async ({ user, token }) => {
   const result = await setItems(completeAdminRegisterMutation, { user, token });
 
@@ -215,6 +250,7 @@ export {
   deleteUser,
   switchUserStatus,
   registerAdmin,
+  resendEmailToConfirmAdmin,
   completeAdminRegister,
   validateToken
 };

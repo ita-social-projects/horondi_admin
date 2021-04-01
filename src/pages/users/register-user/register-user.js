@@ -45,6 +45,7 @@ const RegisterUser = ({ handleClose }) => {
     validateOnBlur: true,
     onSubmit: (data) => {
       dispatch(registerAdmin(data));
+      handleClose();
     }
   });
 

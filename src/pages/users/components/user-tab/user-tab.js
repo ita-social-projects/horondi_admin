@@ -34,7 +34,11 @@ const UserTab = (props) => {
       mobile={formatPhoneNumber(userItem.phoneNumber) || ''}
       email={userItem.email || ''}
       role={userRoleTranslations[userItem.role]}
-      banned={userItem.banned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS}
+      banned={
+        userItem.banned.blockPeriod !== '0'
+          ? USER_INACTIVE_STATUS
+          : USER_ACTIVE_STATUS
+      }
       deleteHandler={() => onDelete(userItem._id)}
       editHandler={() => dispatch(push(`/users/${userItem._id}`))}
     />

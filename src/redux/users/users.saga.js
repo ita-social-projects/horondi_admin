@@ -10,7 +10,8 @@ import {
   switchUserStatus,
   completeAdminRegister,
   registerAdmin,
-  validateToken
+  validateToken,
+  resendEmailToConfirmAdmin
 } from './users.operations';
 
 import {
@@ -29,7 +30,8 @@ import {
   UPDATE_USER_STATUS,
   REGISTER_ADMIN,
   CONFIRM_ADMIN,
-  VALIDATE_TOKEN
+  VALIDATE_TOKEN,
+  RESEND_EMAIL
 } from './users.types';
 
 import { setItemsCount, updatePagination } from '../table/table.actions';
@@ -105,6 +107,18 @@ export function* handleAdminRegister({ payload }) {
   }
 }
 
+export function* handleResendEmail({ payload }) {
+  try {
+    yield put(setUsersLoading(true));
+    yield call(resendEmailToConfirmAdmin, payload);
+    yield put(setUsersLoading(false));
+    // yield put(push('/users'));
+    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
+  } catch (err) {
+    yield call(handleUsersError, err);
+  }
+}
+
 export function* handleAdminConfirm({ payload }) {
   try {
     yield put(setUsersLoading(true));
@@ -124,7 +138,7 @@ export function* handleTokenValidation({ payload }) {
     yield put(setUsersLoading(false));
   } catch (err) {
     yield call(handleUsersError, err);
-    yield put(push('/'));
+    // yield put(push('/'));
   }
 }
 
@@ -142,4 +156,5 @@ export default function* usersSaga() {
   yield takeEvery(REGISTER_ADMIN, handleAdminRegister);
   yield takeEvery(CONFIRM_ADMIN, handleAdminConfirm);
   yield takeEvery(VALIDATE_TOKEN, handleTokenValidation);
+  yield takeEvery(RESEND_EMAIL, handleResendEmail);
 }

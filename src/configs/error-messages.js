@@ -23,7 +23,8 @@ export const loginErrorMessages = {
   LASTNAME_MIN_LENGTH_MESSAGE: 'Прізвище повинно містити не менше 2 символів',
   FIRSTNAME_MAX_LENGTH_MESSAGE: "Ім'я повинно містити не більше 30 символів",
   LASTNAME_MAX_LENGTH_MESSAGE: 'Прізвище повинно містити не більше 30 символів',
-  SELECT_ROLE_MESSAGE: 'Оберіть роль'
+  SELECT_ROLE_MESSAGE: 'Оберіть роль',
+  WRONG_FORMAT: 'Не допускається використання спеціальних символів'
 };
 export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',

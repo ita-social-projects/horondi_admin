@@ -17,6 +17,8 @@ const formRegExp = {
   uaNameCreation: /^[а-яїієґ0-9\s]+$/i,
   enNameCreation: /^[a-z0-9\s]+$/i,
   enDescription: '[abc]',
-  categoryCode: /^[a-z0-9|-]/i
+  categoryCode: /^[a-z0-9|-]/i,
+  firstName: /^(?=.{2,30}$)[a-zA-Zа-яА-Яіїє]+(([',. -][a-zA-Zа-яА-Яіїє])?[a-zA-Zа-яА-Яіїє]*)*$/i,
+  lastName: /^(?=.{2,30}$)[a-zA-Zа-яА-Яіїє]+(([',. -][a-zA-Zа-яА-Яіїє])?[a-zA-Zа-яА-Яіїє]*)*$/i
 };
 export default formRegExp;

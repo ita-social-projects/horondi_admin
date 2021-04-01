@@ -15,7 +15,8 @@ import {
   SET_FILTER,
   SET_SORT,
   SET_TAB,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  RESEND_EMAIL
 } from './users.types';
 
 const getUsers = (payload) => ({
@@ -77,6 +78,11 @@ const confirmAdmin = (data) => ({
   payload: data
 });
 
+const resendEmail = (data) => ({
+  type: RESEND_EMAIL,
+  payload: data
+});
+
 const validateToken = (token) => ({
   type: VALIDATE_TOKEN,
   payload: token
@@ -118,5 +124,6 @@ export {
   setTab,
   setFilter,
   setSort,
-  clearFilters
+  clearFilters,
+  resendEmail
 };
