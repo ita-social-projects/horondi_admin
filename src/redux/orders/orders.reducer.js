@@ -58,7 +58,10 @@ const ordersReducer = (state = initialState, action = {}) => {
     const orders = state.list.items.filter(
       (order) => order._id !== action.payload
     );
-    return { ...state, list: { ...state.list, items: orders } };
+    return {
+      ...state,
+      list: { ...state.list, items: orders, count: state.list.count - 1 }
+    };
   case SET_UKRPOST_REGIONS:
     return {
       ...state,
