@@ -8,6 +8,9 @@ const statuses = {
   ERROR_BOUNDARY_STATUS: 'Сталася помилка!',
   USER_ACTIVE_STATUS: 'Активний(-a)',
   USER_INACTIVE_STATUS: 'Неактивний(-a)',
-  LOGIN_PAGE_STATUS: 'Невірний логін або пароль'
+  LOGIN_PAGE_STATUS: 'Невірний логін або пароль',
+  TIME_TO_FINISH_BLOCK_PERIOD_STATUS: (period) =>
+    `Користувач буде автоматично розблокований через ${period} днів `,
+  USER_INACTIVE_FOREVER_STATUS: 'Користувач деактивований назавжди'
 };
 export default statuses;

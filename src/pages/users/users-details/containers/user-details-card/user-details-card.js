@@ -67,7 +67,7 @@ const UserDetailsCard = ({
           <Grid item xs={12}>
             {nameSection}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={styles.status}>
             {statusSection}
           </Grid>
           <Grid xs={12} item container justify='space-around'>

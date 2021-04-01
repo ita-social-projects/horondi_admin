@@ -19,7 +19,11 @@ query(
     email
     role
     phoneNumber
-    banned
+    banned{
+      blockPeriod
+      blockCount
+      updatedAt
+    }
     }
     count
   }
@@ -41,7 +45,11 @@ query($id: ID!) {
         street
         zipcode
       }
-      banned
+     banned{
+      blockPeriod
+      blockCount
+      updatedAt
+    }
     }
   }
 }
@@ -57,20 +65,6 @@ mutation($id: ID!) {
     ... on Error {
     message
     statusCode
-    }
-  }
-}
-`;
-
-const switchUserStatusMutation = `
-mutation($id: ID!) {
-  switchUserStatus(id: $id) {
-    ... on SuccessfulResponse {
-      isSuccess
-    }
-    ... on Error {
-      message
-      statusCode
     }
   }
 }
@@ -117,6 +111,63 @@ query($token: String!){
   }
 }`;
 
+const blockUserMutation = `
+  mutation($userId:ID!){
+    blockUser(userId:$userId){
+      ...on User{
+          firstName
+          lastName
+          email
+          address {
+            country
+            city
+            buildingNumber
+            appartment
+            street
+            zipcode
+          }
+        banned{
+          blockPeriod
+          blockCount
+          updatedAt
+        }
+      }
+         ...on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;
+const unlockUserMutation = `
+  mutation($userId:ID!){
+    unlockUser(userId:$userId){
+      ...on User{
+          firstName
+          lastName
+          email
+          address {
+            country
+            city
+            buildingNumber
+            appartment
+            street
+            zipcode
+          }
+        banned{
+          blockPeriod
+          blockCount
+          updatedAt
+        }
+      }
+      ...on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;
+
 const getAllUsers = async (filter, pagination, sort) => {
   const options = {
     filter,
@@ -153,18 +204,27 @@ const deleteUser = async (id) => {
   return data.deleteUser;
 };
 
-const switchUserStatus = async (id) => {
-  const result = await setItems(switchUserStatusMutation, { id });
-
+const blockUser = async (userId) => {
+  const result = await setItems(blockUserMutation, { userId });
   const { data } = result;
 
-  if (data.switchUserStatus.message) {
+  if (data.blockUser.message) {
+    throw new Error(`Помилка: ${config.errorMessages[data.blockUser.message]}`);
+  }
+
+  return data.blockUser;
+};
+const unlockUser = async (userId) => {
+  const result = await setItems(unlockUserMutation, { userId });
+  const { data } = result;
+
+  if (data.unlockUser.message) {
     throw new Error(
-      `Помилка: ${config.errorMessages[data.switchUserStatus.message]}`
+      `Помилка: ${config.errorMessages[data.unlockUser.message]}`
     );
   }
 
-  return data.switchUserStatus;
+  return data.unlockUser;
 };
 
 const registerAdmin = async (user) => {
@@ -213,8 +273,9 @@ export {
   getAllUsers,
   getUserById,
   deleteUser,
-  switchUserStatus,
   registerAdmin,
   completeAdminRegister,
-  validateToken
+  validateToken,
+  blockUser,
+  unlockUser
 };

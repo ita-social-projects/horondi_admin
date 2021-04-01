@@ -7,7 +7,13 @@ export const errorMessages = {
   USER_ALREADY_EXIST: 'Користувач з такими даними вже існує',
   INVALID_ADMIN_INVITATIONAL_TOKEN:
     'Неправильне посилання на створення користувача',
-  NO_COLORS: 'Створіть колір'
+  NO_COLORS: 'Створіть колір',
+  USER_IS_ALREADY_BLOCKED: 'Цей користувач вже неактивний',
+  YOU_CANT_BLOCK_YOURSELF: 'Ви не можете деактивувати власний профіль',
+  ONLY_SUPER_ADMIN_CAN_BLOCK_ADMIN: 'У вас недостатньо прав',
+  USER_IS_ALREADY_UNLOCKED: 'Цей користувач вже активний',
+  YOU_CANT_UNLOCK_YOURSELF: 'Ви не можете активувати власний профіль',
+  ONLY_SUPER_ADMIN_CAN_UNLOCK_ADMIN: 'У вас недостатньо прав'
 };
 
 export const loginErrorMessages = {

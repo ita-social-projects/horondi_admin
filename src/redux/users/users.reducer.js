@@ -3,7 +3,6 @@ import {
   SET_USER,
   SET_USERS_LOADING,
   SET_USERS_ERROR,
-  UPDATE_USER_LOCALLY,
   DELETE_USER_LOCALLY,
   SET_TAB,
   SET_FILTER,
@@ -50,11 +49,6 @@ const usersReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       userError: action.payload
-    };
-  case UPDATE_USER_LOCALLY:
-    return {
-      ...state,
-      user: { ...state.user, banned: !state.user.banned }
     };
   case DELETE_USER_LOCALLY:
     return {
