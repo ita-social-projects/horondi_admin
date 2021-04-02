@@ -7,11 +7,11 @@ import {
   getAllUsers,
   getUserById,
   deleteUser,
-  switchUserStatus,
   completeAdminRegister,
   registerAdmin,
   validateToken,
-  resendEmailToConfirmAdmin
+  blockUser,
+  unlockUser
 } from './users.operations';
 
 import {
@@ -19,19 +19,18 @@ import {
   setUser,
   setUserError,
   setUsersLoading,
-  deleteUserLocally,
-  updateUserLocally
+  deleteUserLocally
 } from './users.actions';
 
 import {
   GET_USERS,
   GET_USER,
   DELETE_USER,
-  UPDATE_USER_STATUS,
   REGISTER_ADMIN,
   CONFIRM_ADMIN,
   VALIDATE_TOKEN,
-  RESEND_EMAIL
+  BLOCK_USER,
+  UNLOCK_USER
 } from './users.types';
 
 import { setItemsCount, updatePagination } from '../table/table.actions';
@@ -83,11 +82,27 @@ export function* handleUsersDelete({ payload }) {
   }
 }
 
-export function* handleUserStatusSwitch({ payload }) {
+export function* handleBlockUser({ payload }) {
   try {
     yield put(setUsersLoading(true));
-    yield call(switchUserStatus, payload);
-    yield put(updateUserLocally(payload));
+
+    const blockedUser = yield call(blockUser, payload);
+
+    yield put(setUser(blockedUser));
+    yield put(setUsersLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+  } catch (err) {
+    yield call(handleUsersError, err);
+  }
+}
+
+export function* handleUnlockUser({ payload }) {
+  try {
+    yield put(setUsersLoading(true));
+
+    const unlockedUser = yield call(unlockUser, payload);
+
+    yield put(setUser(unlockedUser));
     yield put(setUsersLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
   } catch (err) {
@@ -101,18 +116,6 @@ export function* handleAdminRegister({ payload }) {
     yield call(registerAdmin, payload);
     yield put(setUsersLoading(false));
     yield put(push('/users'));
-    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
-  } catch (err) {
-    yield call(handleUsersError, err);
-  }
-}
-
-export function* handleResendEmail({ payload }) {
-  try {
-    yield put(setUsersLoading(true));
-    yield call(resendEmailToConfirmAdmin, payload);
-    yield put(setUsersLoading(false));
-    // yield put(push('/users'));
     yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
   } catch (err) {
     yield call(handleUsersError, err);
@@ -138,7 +141,7 @@ export function* handleTokenValidation({ payload }) {
     yield put(setUsersLoading(false));
   } catch (err) {
     yield call(handleUsersError, err);
-    // yield put(push('/'));
+    yield put(push('/'));
   }
 }
 
@@ -152,9 +155,9 @@ export default function* usersSaga() {
   yield takeEvery(GET_USERS, handleUsersLoad);
   yield takeEvery(GET_USER, handleUserLoad);
   yield takeEvery(DELETE_USER, handleUsersDelete);
-  yield takeEvery(UPDATE_USER_STATUS, handleUserStatusSwitch);
   yield takeEvery(REGISTER_ADMIN, handleAdminRegister);
   yield takeEvery(CONFIRM_ADMIN, handleAdminConfirm);
   yield takeEvery(VALIDATE_TOKEN, handleTokenValidation);
-  yield takeEvery(RESEND_EMAIL, handleResendEmail);
+  yield takeEvery(BLOCK_USER, handleBlockUser);
+  yield takeEvery(UNLOCK_USER, handleUnlockUser);
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Box, Grid } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './product-add-images.styles';
 import { config } from '../../../../configs/index';
 
@@ -14,6 +14,10 @@ import {
   imageUploadInputsId,
   PRODUCT_PHOTO_TEXT
 } from '../../../../consts/product-form';
+import {
+  setFilesToUpload,
+  setPrimaryImageToUpload
+} from '../../../../redux/products/products.actions';
 
 const { REQUIRED_PHOTOS } = productsTranslations;
 
@@ -33,12 +37,16 @@ const ProductAddImages = ({
 }) => {
   const styles = useStyles();
   const product = useSelector(({ Products }) => Products.selectedProduct);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (product?.images?.additional) {
-      setAdditionalImagesDisplayed(
-        product?.images?.additional?.map((e) => config.imagePrefix + e?.large)
+      const previousImages = product?.images?.additional?.map(
+        (e) => config.imagePrefix + e?.large
       );
+      setAdditionalImagesDisplayed(previousImages);
+      dispatch(setFilesToUpload(product?.images?.additional));
+      dispatch(setPrimaryImageToUpload(product?.images?.primary));
     }
   }, [product?.images]);
 

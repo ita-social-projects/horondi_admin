@@ -19,9 +19,10 @@ query(
     email
     role
     phoneNumber
-    confirmed
-    banned {
-      blockPeriod, blockCount, updatedAt
+    banned{
+      blockPeriod
+      blockCount
+      updatedAt
     }
     }
     count
@@ -36,8 +37,6 @@ query($id: ID!) {
       firstName
       lastName
       email
-      role
-      confirmed
       address {
         country
         city
@@ -46,8 +45,10 @@ query($id: ID!) {
         street
         zipcode
       }
-      banned{
-      blockPeriod, blockCount, updatedAt
+     banned{
+      blockPeriod
+      blockCount
+      updatedAt
     }
     }
   }
@@ -69,37 +70,9 @@ mutation($id: ID!) {
 }
 `;
 
-const switchUserStatusMutation = `
-mutation($id: ID!) {
-  switchUserStatus(id: $id) {
-    ... on SuccessfulResponse {
-      isSuccess
-    }
-    ... on Error {
-      message
-      statusCode
-    }
-  }
-}
-`;
-
 const registerAdminMutation = `
 mutation($user: AdminRegisterInput!) {
   registerAdmin(user:$user){
-    ... on User {
-      email
-    }
-    ... on Error {
-      message
-      statusCode
-    }
-  }
-}
-`;
-
-const resendEmailToConfirmAdminMutation = `
-mutation($user: resendEmailToConfirmAdminInput!) {
-  resendEmailToConfirmAdmin(user:$user){
     ... on User {
       email
     }
@@ -138,6 +111,63 @@ query($token: String!){
   }
 }`;
 
+const blockUserMutation = `
+  mutation($userId:ID!){
+    blockUser(userId:$userId){
+      ...on User{
+          firstName
+          lastName
+          email
+          address {
+            country
+            city
+            buildingNumber
+            appartment
+            street
+            zipcode
+          }
+        banned{
+          blockPeriod
+          blockCount
+          updatedAt
+        }
+      }
+         ...on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;
+const unlockUserMutation = `
+  mutation($userId:ID!){
+    unlockUser(userId:$userId){
+      ...on User{
+          firstName
+          lastName
+          email
+          address {
+            country
+            city
+            buildingNumber
+            appartment
+            street
+            zipcode
+          }
+        banned{
+          blockPeriod
+          blockCount
+          updatedAt
+        }
+      }
+      ...on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;
+
 const getAllUsers = async (filter, pagination, sort) => {
   const options = {
     filter,
@@ -174,18 +204,27 @@ const deleteUser = async (id) => {
   return data.deleteUser;
 };
 
-const switchUserStatus = async (id) => {
-  const result = await setItems(switchUserStatusMutation, { id });
-
+const blockUser = async (userId) => {
+  const result = await setItems(blockUserMutation, { userId });
   const { data } = result;
 
-  if (data.switchUserStatus.message) {
+  if (data.blockUser.message) {
+    throw new Error(`Помилка: ${config.errorMessages[data.blockUser.message]}`);
+  }
+
+  return data.blockUser;
+};
+const unlockUser = async (userId) => {
+  const result = await setItems(unlockUserMutation, { userId });
+  const { data } = result;
+
+  if (data.unlockUser.message) {
     throw new Error(
-      `Помилка: ${config.errorMessages[data.switchUserStatus.message]}`
+      `Помилка: ${config.errorMessages[data.unlockUser.message]}`
     );
   }
 
-  return data.switchUserStatus;
+  return data.unlockUser;
 };
 
 const registerAdmin = async (user) => {
@@ -200,20 +239,6 @@ const registerAdmin = async (user) => {
   }
 
   return data.registerAdmin;
-};
-
-const resendEmailToConfirmAdmin = async (user) => {
-  const result = await setItems(resendEmailToConfirmAdminMutation, { user });
-
-  const { data } = result;
-
-  if (data.resendEmailToConfirmAdmin.message) {
-    throw new Error(
-      `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
-    );
-  }
-
-  return data.resendEmailToConfirmAdmin;
 };
 
 const completeAdminRegister = async ({ user, token }) => {
@@ -248,9 +273,9 @@ export {
   getAllUsers,
   getUserById,
   deleteUser,
-  switchUserStatus,
   registerAdmin,
-  resendEmailToConfirmAdmin,
   completeAdminRegister,
-  validateToken
+  validateToken,
+  blockUser,
+  unlockUser
 };

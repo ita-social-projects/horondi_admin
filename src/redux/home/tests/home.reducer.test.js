@@ -69,7 +69,7 @@ describe('Homepage reducer tests', () => {
       )
     ).toEqual({
       ...initialState,
-      photos: [mockUpdatePayload.upload]
+      photos: [{ _id: mockUpdatePayload.id, ...mockUpdatePayload.upload }]
     });
   });
 });
