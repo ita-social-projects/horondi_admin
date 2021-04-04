@@ -100,6 +100,7 @@ const HeaderForm = ({ header, id }) => {
             value={tabsValue}
             onChange={handleTabsChange}
             aria-label='simple tabs example'
+            variant='fullWidth'
           >
             {languageTabs}
           </Tabs>
