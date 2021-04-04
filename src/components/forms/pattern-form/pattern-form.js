@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid } from '@material-ui/core';
+import { TextField, Checkbox, Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -31,6 +34,9 @@ import {
 
 const { patternName, material, patternDescription } = config.labels.pattern;
 const map = require('lodash/map');
+
+const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
+const checkedIcon = <CheckBoxIcon fontSize='small' />;
 
 const {
   PATTERN_VALIDATION_ERROR,
@@ -259,20 +265,40 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                 className={`${styles.formControl} ${styles.materialSelect}`}
               >
                 <InputLabel variant='outlined'>{material}</InputLabel>
-                <Select
-                  label={material}
-                  data-cy='material'
-                  name='material'
-                  error={touched.material && !!errors.material}
-                  value={values.material || []}
+
+                <Autocomplete
+                  className={styles.root}
+                  multiple
+                  id='tags-3filled'
+                  options={materialsByPurpose}
+                  // copy from Select component and it blocks option from been selected
+                  // value={values.material || []}
+                  disableCloseOnSelect
+                  getOptionLabel={(option) => option.name[0].value}
+                  getOptionSelected={(option, value) =>
+                    option._id === value._id
+                  }
+                  renderOption={(option, { selected }) => (
+                    <div>
+                      <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.name[0].value}
+                    </div>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant='outlined'
+                      label={material}
+                      placeholder={material}
+                    />
+                  )}
                   onChange={handleChange}
-                >
-                  {materialsByPurpose.map(({ _id, name }) => (
-                    <MenuItem key={_id} value={_id}>
-                      {name[0].value}
-                    </MenuItem>
-                  ))}
-                </Select>
+                />
               </FormControl>
               {touched.material && errors.material && (
                 <div data-cy='material-error' className={styles.inputError}>

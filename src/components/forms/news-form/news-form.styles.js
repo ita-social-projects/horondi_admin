@@ -39,19 +39,12 @@ export const useStyles = makeStyles((theme) => {
     },
     buttonContainer: {
       position: 'relative',
-      width: '100%',
-      height: 60,
-      marginTop: -13,
-      '@media (max-width: 600px)': {
-        marginTop: -21
-      }
+      width: '100%'
     },
     button: {
       marginTop: theme.spacing(0.5)
     },
-    fixedButtons: {
-      position: 'fixed',
-      height: 60,
+    buttons: {
       zIndex: 1001,
       backgroundColor: theme.palette.bodyColor
     },
