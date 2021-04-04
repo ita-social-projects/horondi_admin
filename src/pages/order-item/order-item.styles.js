@@ -10,18 +10,23 @@ export const useStyles = makeStyles((theme) => ({
   },
   general: {
     display: 'grid',
-    gridGap: '5px',
-    padding: '0px 15px 10px'
+    gridGap: '15px',
+    padding: '20px 15px 10px'
   },
   delivery: {
     display: 'grid',
-    gridGap: '10px',
-    padding: '0px 15px 10px'
+    gridGap: '15px',
+    padding: '20px 15px 10px'
   },
   recipient: {
     display: 'grid',
-    gridGap: '25px',
-    padding: '0px 15px 10px'
+    gridGap: '15px',
+    padding: '20px 15px 10px'
+  },
+  products: {
+    display: 'grid',
+    gridGap: '15px',
+    padding: '20px 15px 10px'
   },
   selectedProduct: {
     backgroundColor: theme.palette.textColor,
