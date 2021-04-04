@@ -130,7 +130,7 @@ const HeaderForm = ({ header, id }) => {
           className={styles.saveButton}
           data-cy='save'
           type='submit'
-          title={config.buttonTitles.HEADER_SAVE_TITLE}
+          title='Зберегти'
           values={values}
           errors={errors}
         />

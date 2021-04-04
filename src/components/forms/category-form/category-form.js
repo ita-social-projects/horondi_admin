@@ -167,7 +167,7 @@ const CategoryForm = ({ category, id, edit }) => {
           className={styles.saveCategoryButton}
           data-cy='save'
           type='submit'
-          title={SAVE_TITLE}
+          title='Зберегти'
           errors={errors}
           values={{
             uaName: values.uaName,

@@ -240,6 +240,7 @@ function MaterialForm({ material, id }) {
                 value={tabsValue}
                 onChange={handleTabsChange}
                 aria-label='tabs'
+                variant='fullWidth'
               >
                 {languageTabs}
               </Tabs>
@@ -254,7 +255,7 @@ function MaterialForm({ material, id }) {
               className={styles.saveButton}
               data-cy='save'
               type='submit'
-              title={config.buttonTitles.SAVE_MATERIAL}
+              title='Зберегти'
               values={values}
               errors={errors}
             />

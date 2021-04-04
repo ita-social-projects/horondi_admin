@@ -14,7 +14,7 @@ import LoadingBar from '../../components/loading-bar';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
-import { BackButton } from '../../components/buttons';
+import { BackButton, SaveButton } from '../../components/buttons';
 import { submitStatus, initialValues, setFormValues } from '../../utils/order';
 import { validationSchema } from '../../validations/orders/order-form-validation';
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
@@ -109,15 +109,17 @@ const OrderItem = ({ id }) => {
       </Paper>
       <div className={classes.controlsBlock}>
         <BackButton />
-        <Button
-          type={materialUiConstants.types.submit}
-          variant={materialUiConstants.contained}
-          color={materialUiConstants.primary}
+        <SaveButton
           className={classes.saveBtn}
+          type='submit'
+          title='Зберегти'
+          values={{
+            code: values.code,
+            uaTitle: values.uaTitle,
+            enTitle: values.enTitle
+          }}
           disabled={!dirty || !isValid}
-        >
-          {SAVE_ORDER}
-        </Button>
+        />
       </div>
     </form>
   );

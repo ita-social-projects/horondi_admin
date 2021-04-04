@@ -199,7 +199,7 @@ function SizeForm({ id, size }) {
             className={styles.saveButton}
             data-cy={materialUiConstants.save}
             type={materialUiConstants.types.submit}
-            title={config.buttonTitles.SAVE_SIZE_TITLE}
+            title='Зберегти'
             values={values}
             errors={errors}
           />
