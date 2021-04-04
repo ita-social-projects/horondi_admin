@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '84px 20px 0px'
   },
   saveBtn: {
-    marginTop: 20
+    marginLeft: 20
   },
   general: {
     display: 'grid',

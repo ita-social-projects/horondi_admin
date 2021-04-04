@@ -107,17 +107,17 @@ const OrderItem = ({ id }) => {
           />
         </TabPanel>
       </Paper>
-      <Button
-        type={materialUiConstants.types.submit}
-        variant={materialUiConstants.contained}
-        color={materialUiConstants.primary}
-        className={classes.saveBtn}
-        disabled={!dirty || !isValid}
-      >
-        {SAVE_ORDER}
-      </Button>
       <div className={classes.controlsBlock}>
         <BackButton />
+        <Button
+          type={materialUiConstants.types.submit}
+          variant={materialUiConstants.contained}
+          color={materialUiConstants.primary}
+          className={classes.saveBtn}
+          disabled={!dirty || !isValid}
+        >
+          {SAVE_ORDER}
+        </Button>
       </div>
     </form>
   );
