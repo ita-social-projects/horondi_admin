@@ -37,6 +37,7 @@ const { languages } = config;
 const { CATEGORY_ERROR } = categoryTranslations;
 const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, categoryCode } = config.formRegExp;
+const { materialUiConstants } = config;
 
 const CategoryForm = ({ category, id, edit }) => {
   const styles = useStyles();
@@ -166,8 +167,8 @@ const CategoryForm = ({ category, id, edit }) => {
         <SaveButton
           className={styles.saveCategoryButton}
           data-cy='save'
-          type='submit'
-          title='Зберегти'
+          type={materialUiConstants.types.submit}
+          title={SAVE_TITLE}
           errors={errors}
           values={{
             uaName: values.uaName,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Tabs, Tab, Button } from '@material-ui/core';
+import { Paper, Tabs, Tab } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
@@ -24,8 +24,8 @@ const OrderItem = ({ id }) => {
   const dispatch = useDispatch();
   const { orderTabs } = labels;
   const { materialUiConstants } = config;
+  const { SAVE_TITLE } = buttonTitles;
   const { delivery, general, products, receiver } = orderTabs;
-  const { SAVE_ORDER } = buttonTitles;
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { selectedOrder, orderLoading } = useSelector(({ Orders }) => ({
@@ -111,8 +111,8 @@ const OrderItem = ({ id }) => {
         <BackButton />
         <SaveButton
           className={classes.saveBtn}
-          type='submit'
-          title='Зберегти'
+          type={materialUiConstants.types.submit}
+          title={SAVE_TITLE}
           values={{
             code: values.code,
             uaTitle: values.uaTitle,

@@ -10,6 +10,7 @@ import { BackButton, SaveButton } from '../../buttons';
 import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
+import buttonTitles from '../../../configs/button-titles';
 
 const {
   HEADER_VALIDATION_ERROR,
@@ -17,6 +18,8 @@ const {
 } = config.headerErrorMessages;
 
 const { languages } = config;
+const { SAVE_TITLE } = buttonTitles;
+const { materialUiConstants } = config;
 
 const HeaderForm = ({ header, id }) => {
   const styles = useStyles();
@@ -129,8 +132,8 @@ const HeaderForm = ({ header, id }) => {
         <SaveButton
           className={styles.saveButton}
           data-cy='save'
-          type='submit'
-          title='Зберегти'
+          type={materialUiConstants.types.submit}
+          title={SAVE_TITLE}
           values={values}
           errors={errors}
         />

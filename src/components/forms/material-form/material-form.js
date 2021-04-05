@@ -28,7 +28,10 @@ import {
   appBarRenderHandler,
   getMaterialFormInitValues
 } from '../../../utils/material-form';
+import buttonTitles from '../../../configs/button-titles';
 
+const { SAVE_TITLE } = buttonTitles;
+const { materialUiConstants } = config;
 const { languages } = config;
 const {
   VALIDATION_ERROR,
@@ -234,8 +237,6 @@ function MaterialForm({ material, id }) {
           <div>
             <AppBar position='static'>
               <Tabs
-                indicatorColor='primary'
-                textColor='primary'
                 className={styles.tabs}
                 value={tabsValue}
                 onChange={handleTabsChange}
@@ -254,8 +255,8 @@ function MaterialForm({ material, id }) {
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
-              type='submit'
-              title='Зберегти'
+              type={materialUiConstants.types.submit}
+              title={SAVE_TITLE}
               values={values}
               errors={errors}
             />
