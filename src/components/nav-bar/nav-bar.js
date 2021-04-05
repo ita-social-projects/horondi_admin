@@ -18,10 +18,10 @@ import {
 } from '../../redux/theme/theme.actions';
 
 import { logoutUser } from '../../redux/auth/auth.actions';
-
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import pathToLogin from '../../configs/routes';
 
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
@@ -72,7 +72,7 @@ const NavBar = () => {
   return (
     <AppBar className={classes.appBar}>
       <Toolbar>
-        {urlPage === '/login' ? null : menuToggle}
+        {urlPage === pathToLogin ? null : menuToggle}
         <Typography id='logo' variant='h4' className={classes.title}>
           {title}
         </Typography>
