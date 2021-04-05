@@ -67,7 +67,6 @@ const NavBar = () => {
       <MenuIcon />
     </IconButton>
   );
-  console.log(pathToLogin);
 
   const urlPage = window.location.pathname;
 
