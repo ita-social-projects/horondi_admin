@@ -10,6 +10,8 @@ import { BackButton, SaveButton } from '../../buttons';
 import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
+import { checkInitialValue } from '../../../utils/check-initial-value';
+import { getHeaderInitialValues } from '../../../utils/header-form';
 
 const {
   HEADER_VALIDATION_ERROR,
@@ -43,12 +45,7 @@ const HeaderForm = ({ header, id }) => {
 
   const { values, handleSubmit, handleChange, touched, errors } = useFormik({
     validationSchema: headerValidationSchema,
-    initialValues: {
-      uaName: header.title ? header.title[0].value : '',
-      enName: header.title ? header.title[1].value : '',
-      priority: header.priority || 1,
-      link: header.link || ''
-    },
+    initialValues: getHeaderInitialValues(header),
     onSubmit: () => {
       const newHeader = createHeader(values);
       if (header._id) {
@@ -58,6 +55,11 @@ const HeaderForm = ({ header, id }) => {
       dispatch(addHeader({ header: newHeader }));
     }
   });
+
+  const valueEquality = checkInitialValue(
+    getHeaderInitialValues(header),
+    values
+  );
 
   return (
     <div>
@@ -124,7 +126,7 @@ const HeaderForm = ({ header, id }) => {
             </Paper>
           </TabPanel>
         ))}
-        <BackButton />
+        <BackButton initial={!valueEquality} />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'

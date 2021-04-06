@@ -1,14 +1,14 @@
 export const useFormikInitialValues = (model, category, fn, isEdit) => ({
-  modelImage: model.images.thumbnail || '',
-  uaName: model.name[0].value || '',
-  enName: model.name[1].value || '',
-  uaDescription: model.description[0].value || '',
-  enDescription: model.description[1].value || '',
-  priority: model.priority || 1,
+  availableForConstructor: model.availableForConstructor || false,
   category: category || '',
-  sizes: fn(isEdit) || [],
+  enName: model.name[1].value || '',
+  enDescription: model.description[1].value || '',
+  modelImage: model.images.thumbnail || '',
+  priority: model.priority || 1,
   show: model.show || false,
-  availableForConstructor: model.availableForConstructor || false
+  sizes: fn(isEdit) || [],
+  uaDescription: model.description[0].value || '',
+  uaName: model.name[0].value || ''
 });
 
 export const modelFormOnSubmit = (

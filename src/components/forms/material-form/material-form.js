@@ -28,6 +28,7 @@ import {
   appBarRenderHandler,
   getMaterialFormInitValues
 } from '../../../utils/material-form';
+import { checkInitialValue } from '../../../utils/check-initial-value';
 
 const { languages } = config;
 const {
@@ -166,6 +167,11 @@ function MaterialForm({ material, id }) {
     );
   });
 
+  const valueEquality = checkInitialValue(
+    getMaterialFormInitValues(material, purposeEnum),
+    values
+  );
+
   if (loading) {
     return <LoadingBar />;
   }
@@ -249,7 +255,7 @@ function MaterialForm({ material, id }) {
         )}
         <div className={styles.controlsBlock}>
           <div>
-            <BackButton />
+            <BackButton initial={!valueEquality} />
             <SaveButton
               className={styles.saveButton}
               data-cy='save'

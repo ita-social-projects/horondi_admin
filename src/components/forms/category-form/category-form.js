@@ -21,7 +21,11 @@ import {
   setSnackBarMessage
 } from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
-import { onSubmitCategoryHandler } from '../../../utils/category-form';
+import {
+  getCategoryInitialValues,
+  onSubmitCategoryHandler
+} from '../../../utils/category-form';
+import { checkInitialValue } from '../../../utils/check-initial-value';
 
 const {
   CATEGORY_VALIDATION_ERROR,
@@ -77,12 +81,7 @@ const CategoryForm = ({ category, id, edit }) => {
     setFieldValue
   } = useFormik({
     validationSchema: categoryValidationSchema,
-    initialValues: {
-      categoryImage: edit ? IMG_URL + category.images.thumbnail : '',
-      uaName: category.name[0].value || '',
-      enName: category.name[1].value || '',
-      code: category.code || ''
-    },
+    initialValues: getCategoryInitialValues(edit, IMG_URL, category),
     onSubmit: (data) => {
       const newCategory = createCategory(data);
       const uploadCondition = upload instanceof File;
@@ -124,6 +123,11 @@ const CategoryForm = ({ category, id, edit }) => {
     values,
     inputs
   };
+
+  const valueEquality = checkInitialValue(
+    getCategoryInitialValues(edit, IMG_URL, category),
+    values
+  );
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -161,7 +165,7 @@ const CategoryForm = ({ category, id, edit }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton />
+        <BackButton initial={!valueEquality} />
         <SaveButton
           className={styles.saveCategoryButton}
           data-cy='save'

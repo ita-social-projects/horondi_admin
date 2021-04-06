@@ -22,6 +22,7 @@ import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import { setMapImageHandler } from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
+import { checkInitialValue } from '../../../utils/check-initial-value';
 
 const { languages } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -130,6 +131,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     values,
     inputs
   };
+
+  const valueEquality = checkInitialValue(initialValues, values);
 
   return (
     <div className={classes.detailsContainer}>
@@ -242,7 +245,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <BackButton data-cy='go-back-button' />
+        <BackButton data-cy='go-back-button' initial={!valueEquality} />
 
         <SaveButton
           id='save'

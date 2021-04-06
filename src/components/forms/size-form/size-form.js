@@ -22,13 +22,14 @@ import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.sele
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
+import { checkInitialValue } from '../../../utils/check-initial-value';
 
 const { selectTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
 
-function SizeForm({ id, size }) {
+function SizeForm({ id, size, edit }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
@@ -59,6 +60,8 @@ function SizeForm({ id, size }) {
       dispatch(addSize(newSize));
     }
   });
+
+  const valueEquality = checkInitialValue(getSizeInitialValues(size), values);
 
   const checkboxes = [
     {
@@ -194,7 +197,7 @@ function SizeForm({ id, size }) {
           </div>
         </Grid>
         <div className={styles.buttonsWrapper}>
-          <BackButton />
+          <BackButton initial={!valueEquality} />
           <SaveButton
             className={styles.saveButton}
             data-cy={materialUiConstants.save}

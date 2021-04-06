@@ -18,6 +18,8 @@ import {
   updateSlide
 } from '../../../redux/home-page-slides/home-page-slides.actions';
 import LanguagePanel from '../language-panel';
+import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
+import { checkInitialValue } from '../../../utils/check-initial-value';
 
 const { languages } = config;
 
@@ -55,16 +57,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     setFieldValue
   } = useFormik({
     validationSchema: slideValidationSchema,
-    initialValues: {
-      slideImage: slide.images.large || '',
-      uaTitle: slide.title[0].value || '',
-      enTitle: slide.title[1].value || '',
-      uaDescription: slide.description[0].value || '',
-      enDescription: slide.description[1].value || '',
-      link: slide.link || '',
-      show: slide.show || false,
-      order: slide.order || slideOrder
-    },
+    initialValues: getHomePageSlidesInitialValues(slide, slideOrder),
 
     onSubmit: () => {
       (() => {
@@ -130,6 +123,11 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     inputs
   };
 
+  const valueEquality = checkInitialValue(
+    getHomePageSlidesInitialValues(slide, slideOrder),
+    values
+  );
+
   return (
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit}>
@@ -168,7 +166,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         {languages.map((lang, index) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton />
+        <BackButton initial={!valueEquality} />
         <SaveButton
           className={styles.formButton}
           data-cy='save'

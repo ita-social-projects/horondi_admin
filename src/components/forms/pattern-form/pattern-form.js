@@ -28,6 +28,7 @@ import {
   patternFormOnSubmit,
   useFormikInitialValues
 } from '../../../utils/pattern-form';
+import { checkInitialValue } from '../../../utils/check-initial-value';
 
 const { patternName, material, patternDescription } = config.labels.pattern;
 const map = require('lodash/map');
@@ -199,6 +200,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     inputs
   };
 
+  const valueEquality = checkInitialValue(
+    useFormikInitialValues(pattern),
+    values
+  );
+
   const imageUploadPatternInputsId = {
     patternImageInput: 'patternImageInput',
     constructorImageInput: 'constructorImgInput'
@@ -284,7 +290,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton />
+          <BackButton initial={!valueEquality} />
           <SaveButton
             className={styles.saveButton}
             data-cy='save-btn'
