@@ -11,6 +11,7 @@ import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 import buttonTitles from '../../../configs/button-titles';
+import { useCommonStyles } from '../../../pages/common.styles';
 
 const {
   HEADER_VALIDATION_ERROR,
@@ -24,7 +25,7 @@ const { materialUiConstants } = config;
 const HeaderForm = ({ header, id }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-
+  const common = useCommonStyles();
   const { tabsValue, handleTabsChange, createHeader } = useHeaderHandlers();
   const languageTabs =
     languages.length > 0
@@ -99,7 +100,7 @@ const HeaderForm = ({ header, id }) => {
         </Grid>
         <AppBar position='static'>
           <Tabs
-            className={styles.tabs}
+            className={common.tabs}
             value={tabsValue}
             onChange={handleTabsChange}
             aria-label='simple tabs example'
