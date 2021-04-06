@@ -64,12 +64,6 @@ const mockTableState = {
   itemsCount: 0
 };
 
-const mockSnackbarState = {
-  snackBarStatus: false,
-  snackBarSeverity: '',
-  snackBarMessage: ''
-};
-
 const mockMaterialsLoadPayload = {
   filter: {
     colors: []

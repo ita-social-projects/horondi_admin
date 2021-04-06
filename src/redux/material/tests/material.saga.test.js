@@ -3,6 +3,7 @@ import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { combineReducers } from 'redux';
+import { Done } from '@material-ui/icons';
 import {
   handleMaterialLoad,
   handleMaterialsLoad,
@@ -53,7 +54,7 @@ const {
 } = statuses;
 
 describe('Test material sagas', () => {
-  it('should load all materials', () =>
+  it('should load all materials', async (done) => {
     expectSaga(handleMaterialsLoad, { payload: mockMaterialsLoadPayload })
       .withReducer(combineReducers({ Material, Table }), {
         Material: mockMaterialState,
@@ -62,7 +63,7 @@ describe('Test material sagas', () => {
       .put(setMaterialLoading(true))
       .provide([
         [
-          call(
+          await call(
             getAllMaterials,
             mockMaterialsLoadPayload.filter,
             mockMaterialsLoadPayload.skip,
@@ -91,9 +92,11 @@ describe('Test material sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
-      }));
+      });
+    done();
+  });
 
-  it('should load material by id', () =>
+  it('should load material by id', async (done) => {
     expectSaga(handleMaterialLoad, { payload: mockId })
       .withReducer(combineReducers({ Material }), {
         Material: mockMaterialState
@@ -115,9 +118,11 @@ describe('Test material sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
-      }));
+      });
+    done();
+  });
 
-  it('should add metarial', () =>
+  it('should add metarial', async (done) => {
     expectSaga(handleAddMaterial, { payload: mockMaterial })
       .withReducer(combineReducers({ Material }), {
         Material: mockMaterialState
@@ -141,9 +146,11 @@ describe('Test material sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('should delete material by id', () =>
+  it('should delete material by id', async (done) => {
     expectSaga(handleMaterialDelete, { payload: mockId })
       .withReducer(combineReducers({ Material }), {
         Material: {
@@ -172,9 +179,11 @@ describe('Test material sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('should update material', () =>
+  it('should update material', async (done) => {
     expectSaga(handleMaterialUpdate, { payload: mockPayloadToUpdateMaterial })
       .withReducer(combineReducers({ Material }), {
         Material: mockMaterialState
@@ -205,9 +214,11 @@ describe('Test material sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('should handle material error', () =>
+  it('should handle material error', async (done) => {
     expectSaga(handleMaterialError, mockError)
       .withReducer(combineReducers({ Material }), {
         Material: {
@@ -229,5 +240,7 @@ describe('Test material sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(5);
-      }));
+      });
+    done();
+  });
 });
