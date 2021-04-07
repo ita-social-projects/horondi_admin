@@ -39,7 +39,13 @@ export function* handleAdminLoad({ payload }) {
 export function* handleAdminCheckByToken() {
   try {
     const authToken = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+    const confirmation = sessionStorage.getItem('confirmation');
     yield put(setAuthLoading(true));
+
+    if (confirmation) {
+      yield put(setAuthLoading(false));
+      return;
+    }
 
     if (!authToken) {
       yield put(setAuthLoading(false));

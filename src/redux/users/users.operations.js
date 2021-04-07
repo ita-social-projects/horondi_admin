@@ -84,6 +84,34 @@ mutation($user: AdminRegisterInput!) {
 }
 `;
 
+const resendEmailToConfirmAdminMutation = `
+mutation($user: resendEmailToConfirmAdminInput!) {
+  resendEmailToConfirmAdmin(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
+const confirmSuperadminCreationMutation = `
+mutation($user: confirmSuperadminCreationInput!) {
+  confirmSuperadminCreation(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
 const completeAdminRegisterMutation = `
 mutation($user: AdminConfirmInput!,$token: String!){
   completeAdminRegister(user: $user,token: $token) {
@@ -241,6 +269,34 @@ const registerAdmin = async (user) => {
   return data.registerAdmin;
 };
 
+const resendEmailToConfirmAdmin = async (user) => {
+  const result = await setItems(resendEmailToConfirmAdminMutation, { user });
+
+  const { data } = result;
+
+  if (data.resendEmailToConfirmAdmin.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
+    );
+  }
+
+  return data.registerAdmin;
+};
+
+const confirmSuperadminCreation = async (user) => {
+  const result = await setItems(confirmSuperadminCreationMutation, { user });
+
+  const { data } = result;
+
+  if (data.confirmSuperadminCreation.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
+    );
+  }
+
+  return data.registerAdmin;
+};
+
 const completeAdminRegister = async ({ user, token }) => {
   const result = await setItems(completeAdminRegisterMutation, { user, token });
 
@@ -257,7 +313,6 @@ const completeAdminRegister = async ({ user, token }) => {
 
 const validateToken = async (token) => {
   const result = await getItems(validateTokenQuery, { token });
-
   const { data } = result;
 
   if (data.validateConfirmationToken.message) {
@@ -274,8 +329,10 @@ export {
   getUserById,
   deleteUser,
   registerAdmin,
+  resendEmailToConfirmAdmin,
   completeAdminRegister,
   validateToken,
   blockUser,
-  unlockUser
+  unlockUser,
+  confirmSuperadminCreation
 };

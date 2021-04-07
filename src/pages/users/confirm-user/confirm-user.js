@@ -46,9 +46,13 @@ const ConfirmUser = ({ match }) => {
   const { loading } = useSelector(({ Users }) => ({
     loading: Users.userLoading
   }));
+
   useEffect(() => {
+    sessionStorage.setItem('confirmation', token);
     dispatch(validateToken(token));
   }, [dispatch, token]);
+
+  sessionStorage.removeItem('confirmation');
 
   const formSchema = Yup.object().shape({
     firstName: Yup.string()

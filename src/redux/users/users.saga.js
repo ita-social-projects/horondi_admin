@@ -8,10 +8,12 @@ import {
   getUserById,
   deleteUser,
   completeAdminRegister,
+  resendEmailToConfirmAdmin,
   registerAdmin,
   validateToken,
   blockUser,
-  unlockUser
+  unlockUser,
+  confirmSuperadminCreation
 } from './users.operations';
 
 import {
@@ -27,10 +29,12 @@ import {
   GET_USER,
   DELETE_USER,
   REGISTER_ADMIN,
+  RESEND_EMAIL,
   CONFIRM_ADMIN,
   VALIDATE_TOKEN,
   BLOCK_USER,
-  UNLOCK_USER
+  UNLOCK_USER,
+  CONFIRM_SUPERADMIN_CREATION
 } from './users.types';
 
 import { setItemsCount, updatePagination } from '../table/table.actions';
@@ -43,8 +47,11 @@ const {
   SUCCESS_DELETE_STATUS,
   SUCCESS_UPDATE_STATUS,
   SUCCESS_CREATION_STATUS,
-  SUCCESS_CONFIRMATION_STATUS
+  SUCCESS_CONFIRMATION_STATUS,
+  SUCCESS_SEND_EMAIL
 } = config.statuses;
+
+const { pathToLogin } = config.routes;
 
 export function* handleUsersLoad({ payload: { filter, pagination, sort } }) {
   try {
@@ -122,12 +129,34 @@ export function* handleAdminRegister({ payload }) {
   }
 }
 
+export function* handleConfirmSuperadminCreation({ payload }) {
+  try {
+    yield put(setUsersLoading(true));
+    yield call(confirmSuperadminCreation, payload);
+    yield put(setUsersLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_SEND_EMAIL);
+  } catch (err) {
+    yield call(handleUsersError, err);
+  }
+}
+
+export function* handleResendEmailToConfirmAdmin({ payload }) {
+  try {
+    yield put(setUsersLoading(true));
+    yield call(resendEmailToConfirmAdmin, payload);
+    yield put(setUsersLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_SEND_EMAIL);
+  } catch (err) {
+    yield call(handleUsersError, err);
+  }
+}
+
 export function* handleAdminConfirm({ payload }) {
   try {
     yield put(setUsersLoading(true));
     yield call(completeAdminRegister, payload);
     yield put(setUsersLoading(false));
-    yield put(push('/'));
+    yield put(push(pathToLogin));
     yield call(handleSuccessSnackbar, SUCCESS_CONFIRMATION_STATUS);
   } catch (err) {
     yield call(handleUsersError, err);
@@ -156,8 +185,10 @@ export default function* usersSaga() {
   yield takeEvery(GET_USER, handleUserLoad);
   yield takeEvery(DELETE_USER, handleUsersDelete);
   yield takeEvery(REGISTER_ADMIN, handleAdminRegister);
+  yield takeEvery(RESEND_EMAIL, handleResendEmailToConfirmAdmin);
   yield takeEvery(CONFIRM_ADMIN, handleAdminConfirm);
   yield takeEvery(VALIDATE_TOKEN, handleTokenValidation);
   yield takeEvery(BLOCK_USER, handleBlockUser);
   yield takeEvery(UNLOCK_USER, handleUnlockUser);
+  yield takeEvery(CONFIRM_SUPERADMIN_CREATION, handleConfirmSuperadminCreation);
 }

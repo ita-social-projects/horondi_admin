@@ -13,13 +13,27 @@ import {
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
 import { useStyles } from './register-user.styles';
 import { config } from '../../../configs';
 import { SaveButton } from '../../../components/buttons';
-import { registerAdmin } from '../../../redux/users/users.actions';
+import {
+  registerAdmin,
+  confirmSuperadmin
+} from '../../../redux/users/users.actions';
 import LoadingBar from '../../../components/loading-bar';
 
-const { userRoles, allowedforRegistrationRoles, loginErrorMessages } = config;
+const {
+  userRoles,
+  allowedforRegistrationRoles,
+  loginErrorMessages: {
+    ENTER_EMAIL_MESSAGE,
+    INVALID_EMAIL_MESSAGE,
+    SELECT_ROLE_MESSAGE,
+    ENTER_CODE
+  },
+  buttonTitles: { SEND_CODE }
+} = config;
 
 const RegisterUser = ({ handleClose }) => {
   const styles = useStyles();
@@ -29,17 +43,26 @@ const RegisterUser = ({ handleClose }) => {
     loading: Users.userLoading
   }));
 
+  const { adminId } = useSelector(({ Auth }) => ({
+    adminId: Auth.adminId
+  }));
+
   const formSchema = Yup.object().shape({
     email: Yup.string()
-      .required(loginErrorMessages.ENTER_EMAIL_MESSAGE)
-      .email(loginErrorMessages.INVALID_EMAIL_MESSAGE),
-    role: Yup.string().required(loginErrorMessages.SELECT_ROLE_MESSAGE)
+      .required(ENTER_EMAIL_MESSAGE)
+      .email(INVALID_EMAIL_MESSAGE),
+    role: Yup.string().required(SELECT_ROLE_MESSAGE),
+    code: Yup.string().when('role', {
+      is: 'superadmin',
+      then: Yup.string().required(ENTER_CODE)
+    })
   });
 
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
-      role: '',
-      email: ''
+      role: 'admin',
+      email: '',
+      code: ''
     },
     validationSchema: formSchema,
     validateOnBlur: true,
@@ -52,6 +75,7 @@ const RegisterUser = ({ handleClose }) => {
   const roles = userRoles.filter((item) =>
     allowedforRegistrationRoles.includes(item.role)
   );
+
   if (loading) {
     return <LoadingBar />;
   }
@@ -61,6 +85,10 @@ const RegisterUser = ({ handleClose }) => {
       {item.label}
     </MenuItem>
   ));
+
+  const handleSendCode = () => {
+    dispatch(confirmSuperadmin({ _id: adminId }));
+  };
 
   return (
     <Grid className={styles.detailsContainer}>
@@ -110,13 +138,44 @@ const RegisterUser = ({ handleClose }) => {
                 {touched.role && errors.role}
               </FormHelperText>
             </FormControl>
+            {values.role !== 'admin' && (
+              <FormControl
+                className={styles.formControl}
+                error={touched.code && !!errors.code}
+              >
+                <Button
+                  id='send-code-button'
+                  data-cy='add-user-admin-button'
+                  onClick={handleSendCode}
+                  variant='contained'
+                  className={styles.sendButton}
+                  color='primary'
+                >
+                  {SEND_CODE}
+                </Button>
+                <TextField
+                  onChange={handleChange}
+                  value={values.code}
+                  id='code'
+                  variant='outlined'
+                  label='Код'
+                  name='code'
+                  data-cy='code'
+                  type='text'
+                  onBlur={handleChange}
+                  error={touched.code && !!errors.code}
+                />
+                <FormHelperText data-cy='code-error-label'>
+                  {touched.code && errors.code}
+                </FormHelperText>
+              </FormControl>
+            )}
             <FormControl className={styles.formControl}>
               <SaveButton
                 type='submit'
                 title='Створити'
                 data-cy='submit-admin-register'
                 className={styles.saveButton}
-                values={values}
                 errors={errors}
               />
             </FormControl>
