@@ -56,6 +56,7 @@ import {
   productFormValues
 } from '../../../consts/product-form';
 import { TEMPORARY_WIDTHS } from '../../../consts/menu-categories';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { priceLabel } = config.labels.product;
 
@@ -277,6 +278,13 @@ const ProductForm = ({ isEdit }) => {
         setFieldValue(checkboxesValues.available, !values.available)
     }
   ];
+
+  const valueEquality = checkInitialValue(
+    getFormikMaterialsValues(product),
+    values
+  );
+
+  console.log();
 
   const showCommentsHandler = () => setShowComments(!showComments);
   return (
