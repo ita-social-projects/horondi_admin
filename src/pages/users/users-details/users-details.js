@@ -86,7 +86,7 @@ const UsersDetails = (props) => {
     );
   };
 
-  const sendConfirmationHandler = (email) => {
+  const sendConfirmationHandler = () => {
     dispatch(resendEmail({ email }));
   };
 
