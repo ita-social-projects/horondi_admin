@@ -29,6 +29,7 @@ import {
   getMaterialFormInitValues
 } from '../../../utils/material-form';
 import buttonTitles from '../../../configs/button-titles';
+import LanguagePanel from '../language-panel';
 
 const { SAVE_TITLE } = buttonTitles;
 const { materialUiConstants } = config;
@@ -249,6 +250,7 @@ function MaterialForm({ material, id }) {
             {tabPanels}
           </div>
         )}
+        {languages.length > 0 ? <div>{languageTabs}</div> : null}
         <div className={styles.controlsBlock}>
           <div>
             <BackButton />
