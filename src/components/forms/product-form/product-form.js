@@ -56,7 +56,6 @@ import {
   productFormValues
 } from '../../../consts/product-form';
 import { TEMPORARY_WIDTHS } from '../../../consts/menu-categories';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { priceLabel } = config.labels.product;
 
