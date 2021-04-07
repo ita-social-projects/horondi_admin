@@ -279,13 +279,6 @@ const ProductForm = ({ isEdit }) => {
     }
   ];
 
-  const valueEquality = checkInitialValue(
-    getFormikMaterialsValues(product),
-    values
-  );
-
-  console.log();
-
   const showCommentsHandler = () => setShowComments(!showComments);
   return (
     <div className={styles.container}>
