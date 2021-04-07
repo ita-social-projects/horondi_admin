@@ -29,6 +29,7 @@ import {
   getMaterialFormInitValues
 } from '../../../utils/material-form';
 import { checkInitialValue } from '../../../utils/check-initial-value';
+import LanguagePanel from '../language-panel';
 
 const { languages } = config;
 const {
