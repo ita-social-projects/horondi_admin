@@ -107,7 +107,7 @@ const UsersDetails = (props) => {
               : USER_INACTIVE_TITLE
           }
           buttonConfirmed={!confirmed ? SEND_CONFIRM : null}
-          buttonConfirmationHandler={() => sendConfirmationHandler(email)}
+          buttonConfirmationHandler={() => sendConfirmationHandler()}
           buttonHandler={() => userStatusHandler(id)}
         />
         <div className={styles.controlsBlock}>
