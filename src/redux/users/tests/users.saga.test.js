@@ -187,7 +187,7 @@ describe('Users saga test', () => {
         [call(handleSuccessSnackbar, SUCCESS_CONFIRMATION_STATUS)]
       ])
       .put(setUsersLoading(false))
-      .put(push('/'))
+      .put(push('/login'))
       .hasFinalState({
         Users: mockUsersState
       })
