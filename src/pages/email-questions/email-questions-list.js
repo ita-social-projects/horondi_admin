@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Pagination } from '@material-ui/lab';
 import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
 
@@ -10,7 +9,6 @@ import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
-  setEmailQuestionsCurrentPage,
   deleteEmailQuestions,
   setEmailQuestionLoading
 } from '../../redux/email-questions/email-questions.actions';
@@ -71,9 +69,6 @@ const EmailQuestionsList = () => {
     };
     openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE);
   };
-
-  const changePaginationHandler = (e, value) =>
-    dispatch(setEmailQuestionsCurrentPage(value));
 
   const questionClickHandler = (id, status) => {
     if (status === labels.emailQuestionsLabels.en.SPAM) {
@@ -168,6 +163,8 @@ const EmailQuestionsList = () => {
       <div className={styles.tableList}>
         {questions.length ? (
           <TableContainerGenerator
+            pagination
+            count={pagesCount}
             tableTitles={tableTitles}
             tableItems={questions}
           />
@@ -176,15 +173,6 @@ const EmailQuestionsList = () => {
             {messages.EMPTY_LIST}
           </Typography>
         )}
-      </div>
-      <div className={commonStyles.pagination}>
-        <Pagination
-          count={pagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage + 1}
-          onChange={changePaginationHandler}
-        />
       </div>
     </div>
   );
