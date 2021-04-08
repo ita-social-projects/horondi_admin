@@ -30,6 +30,7 @@ import {
 import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -159,6 +160,11 @@ const BusinessPageForm = ({ id, editMode }) => {
     inputs: businessPageLabel
   };
 
+  const valueEquality = checkInitialValue(
+    { code, enText, enTitle, uaText, uaTitle },
+    values
+  );
+
   return (
     <div className={common.container}>
       <div className={common.adminHeader}>
@@ -203,7 +209,7 @@ const BusinessPageForm = ({ id, editMode }) => {
           </Paper>
         </div>
         <div className={classes.controlsBlock}>
-          <BackButton />
+          <BackButton initial={!valueEquality} />
           <SaveButton
             className={classes.controlButton}
             id='save'

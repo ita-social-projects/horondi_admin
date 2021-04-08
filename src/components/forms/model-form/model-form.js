@@ -39,6 +39,7 @@ import {
   updateModelHandler,
   loadHelper
 } from '../../../utils/model-form';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -183,6 +184,11 @@ const ModelForm = ({ model, id, isEdit }) => {
     inputs
   };
 
+  const valueEquality = checkInitialValue(
+    useFormikInitialValues(model, category, checkIsEdit, isEdit),
+    values
+  );
+
   return (
     <div>
       <form onSubmit={handleSubmit} autoComplete={materialUiConstants.off}>
@@ -282,7 +288,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             key={lang}
           />
         ))}
-        <BackButton />
+        <BackButton initial={!valueEquality} />
         <SaveButton
           className={styles.saveButton}
           data-cy={materialUiConstants.save}
