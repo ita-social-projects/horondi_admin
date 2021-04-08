@@ -36,6 +36,7 @@ query($id: ID!) {
     ... on User {
       firstName
       lastName
+      confirmed
       email
       address {
         country

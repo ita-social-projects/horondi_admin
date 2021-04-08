@@ -13,6 +13,9 @@ import { useStyles } from './user-details-card.styles';
 import { config } from '../../../../../configs';
 
 const userTitles = config.detailTitles.users;
+const {
+  materialUiConstants: { primary, contained }
+} = config;
 
 const UserDetailsCard = ({
   avatar,
@@ -78,10 +81,10 @@ const UserDetailsCard = ({
           <Grid item container xs={12} spacing={1} direction='column'>
             {secondarySection}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} container justify='space-around'>
             <Button
-              variant='contained'
-              color='primary'
+              variant={contained}
+              color={primary}
               onClick={buttonHandler}
               data-cy='change-user-status-button'
             >
@@ -89,8 +92,8 @@ const UserDetailsCard = ({
             </Button>
             {buttonConfirmed && (
               <Button
-                variant='contained'
-                color='primary'
+                variant={contained}
+                color={primary}
                 onClick={buttonConfirmationHandler}
                 data-cy='change-user-status-button'
               >
