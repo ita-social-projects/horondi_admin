@@ -62,6 +62,11 @@ export const config = {
       name: []
     }
   },
+  userRole: {
+    user: 'user',
+    admin: 'admin',
+    superadmin: 'superadmin'
+  },
   userRoles: [
     { role: 'user', label: 'Юзер' },
     { role: 'admin', label: 'Адмін' },

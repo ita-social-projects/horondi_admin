@@ -14,7 +14,7 @@ export const errorMessages = {
   USER_IS_ALREADY_UNLOCKED: 'Цей користувач вже активний',
   YOU_CANT_UNLOCK_YOURSELF: 'Ви не можете активувати власний профіль',
   ONLY_SUPER_ADMIN_CAN_UNLOCK_ADMIN: 'У вас недостатньо прав',
-  INVALID_CODE: 'Неправильний otp-код'
+  INVALID_OTP_CODE: 'Неправильний otp-код'
 };
 
 export const loginErrorMessages = {

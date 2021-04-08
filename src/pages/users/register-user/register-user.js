@@ -14,6 +14,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+
 import { useStyles } from './register-user.styles';
 import { config } from '../../../configs';
 import { SaveButton } from '../../../components/buttons';
@@ -32,7 +33,14 @@ const {
     SELECT_ROLE_MESSAGE,
     ENTER_CODE
   },
-  buttonTitles: { SEND_CODE }
+  buttonTitles: { SEND_CODE },
+  userRole: { admin, superadmin },
+  materialUiConstants: {
+    primary,
+    outlined,
+    contained,
+    types: { text, submit }
+  }
 } = config;
 
 const RegisterUser = ({ handleClose }) => {
@@ -52,17 +60,17 @@ const RegisterUser = ({ handleClose }) => {
       .required(ENTER_EMAIL_MESSAGE)
       .email(INVALID_EMAIL_MESSAGE),
     role: Yup.string().required(SELECT_ROLE_MESSAGE),
-    code: Yup.string().when('role', {
-      is: 'superadmin',
+    otp_code: Yup.string().when('role', {
+      is: superadmin,
       then: Yup.string().required(ENTER_CODE)
     })
   });
 
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
     initialValues: {
-      role: 'admin',
+      role: admin,
       email: '',
-      code: ''
+      otp_code: ''
     },
     validationSchema: formSchema,
     validateOnBlur: true,
@@ -103,11 +111,11 @@ const RegisterUser = ({ handleClose }) => {
                 onChange={handleChange}
                 value={values.email}
                 id='email'
-                variant='outlined'
+                variant={outlined}
                 label='Пошта'
                 name='email'
                 data-cy='email'
-                type='text'
+                type={text}
                 onBlur={handleChange}
                 error={touched.email && !!errors.email}
               />
@@ -124,7 +132,7 @@ const RegisterUser = ({ handleClose }) => {
                 labelId='role-label'
                 id='role'
                 name='role'
-                type='text'
+                type={text}
                 onBlur={handleChange}
                 value={values.role}
                 onChange={handleChange}
@@ -138,41 +146,41 @@ const RegisterUser = ({ handleClose }) => {
                 {touched.role && errors.role}
               </FormHelperText>
             </FormControl>
-            {values.role !== 'admin' && (
+            {values.role !== admin && (
               <FormControl
                 className={styles.formControl}
-                error={touched.code && !!errors.code}
+                error={touched.otp_code && !!errors.otp_code}
               >
                 <Button
-                  id='send-code-button'
+                  id='send-otp_code-button'
                   data-cy='add-user-admin-button'
                   onClick={handleSendCode}
-                  variant='contained'
+                  variant={contained}
                   className={styles.sendButton}
-                  color='primary'
+                  color={primary}
                 >
                   {SEND_CODE}
                 </Button>
                 <TextField
                   onChange={handleChange}
-                  value={values.code}
-                  id='code'
-                  variant='outlined'
+                  value={values.otp_code}
+                  id='otp_code'
+                  variant={outlined}
                   label='Код'
-                  name='code'
-                  data-cy='code'
-                  type='text'
+                  name='otp_code'
+                  data-cy='otp_code'
+                  type={text}
                   onBlur={handleChange}
-                  error={touched.code && !!errors.code}
+                  error={touched.otp_code && !!errors.otp_code}
                 />
-                <FormHelperText data-cy='code-error-label'>
-                  {touched.code && errors.code}
+                <FormHelperText data-cy='otp_code-error-label'>
+                  {touched.otp_code && errors.otp_code}
                 </FormHelperText>
               </FormControl>
             )}
             <FormControl className={styles.formControl}>
               <SaveButton
-                type='submit'
+                type={submit}
                 title='Створити'
                 data-cy='submit-admin-register'
                 className={styles.saveButton}

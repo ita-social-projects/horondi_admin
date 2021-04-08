@@ -53,12 +53,15 @@ import Users from '../users.reducer';
 import Table from '../../table/table.reducer';
 import Snackbar from '../../snackbar/snackbar.reducer';
 import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
+import { config } from '../../../configs';
 
 const {
   SUCCESS_DELETE_STATUS,
   SUCCESS_CONFIRMATION_STATUS,
   SUCCESS_CREATION_STATUS
 } = statuses;
+
+const { pathToLogin } = config.routes;
 
 describe('Users saga test', () => {
   it('should load all users', () =>
@@ -187,7 +190,7 @@ describe('Users saga test', () => {
         [call(handleSuccessSnackbar, SUCCESS_CONFIRMATION_STATUS)]
       ])
       .put(setUsersLoading(false))
-      .put(push('/login'))
+      .put(push(pathToLogin))
       .hasFinalState({
         Users: mockUsersState
       })
