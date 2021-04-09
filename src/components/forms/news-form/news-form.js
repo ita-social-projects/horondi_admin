@@ -192,7 +192,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         ))}
         <div className={styles.buttonContainer}>
           <Grid container className={styles.buttons}>
-            <BackButton />
+            <BackButton initial={!valueEquality} />
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
