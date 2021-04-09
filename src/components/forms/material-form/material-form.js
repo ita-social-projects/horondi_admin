@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextField, Grid, Tabs, Tab, AppBar, Paper } from '@material-ui/core';
+import { TextField, Grid, Paper } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import TabPanel from '../../tab-panel';
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import ColorsBar from '../../colors-bar';
 import useMaterialHandlers from '../../../utils/use-material-handlers';
+import getMaterialFormInitValues from '../../../utils/material-form';
 import { useStyles } from './material-form.styles';
 import {
   addMaterial,
@@ -22,12 +22,8 @@ import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
-import {
-  onSubmitDispatchHandler,
-  descriptionAndNameHandler,
-  appBarRenderHandler,
-  getMaterialFormInitValues
-} from '../../../utils/material-form';
+import LanguagePanel from '../language-panel';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { languages } = config;
 const {
@@ -43,7 +39,7 @@ function MaterialForm({ material, id }) {
 
   const { loading } = useSelector(materialSelector);
 
-  const { createMaterial, tabsValue, handleTabsChange } = useMaterialHandlers();
+  const { createMaterial } = useMaterialHandlers();
 
   const formSchema = Yup.object().shape({
     uaName: Yup.string()
@@ -88,57 +84,25 @@ function MaterialForm({ material, id }) {
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
-    initialValues: getMaterialFormInitValues(material, purposeEnum),
+    initialValues: getMaterialFormInitValues,
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
-      onSubmitDispatchHandler(
-        id,
-        dispatch,
-        updateMaterial,
-        addMaterial,
-        newMaterial
+      if (id) {
+        dispatch(
+          updateMaterial({
+            id,
+            material: { ...newMaterial }
+          })
+        );
+        return;
+      }
+      dispatch(
+        addMaterial({
+          material: { ...newMaterial }
+        })
       );
     }
   });
-
-  const tabPanels = languages.map((lang, index) => (
-    <TabPanel key={lang} value={tabsValue} index={index}>
-      <Paper className={styles.materialItemAdd}>
-        <TextField
-          data-cy={`${lang}Name`}
-          id={`${lang}Name`}
-          className={styles.textField}
-          variant='outlined'
-          label={config.labels.material.name[tabsValue].value}
-          error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-          multiline
-          value={values[`${lang}Name`]}
-          onChange={handleChange}
-        />
-        {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-          <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-        )}
-        <TextField
-          data-cy={`${lang}Description`}
-          id={`${lang}Description`}
-          className={styles.textField}
-          variant='outlined'
-          label={config.labels.material.description[tabsValue].value}
-          multiline
-          error={
-            touched[`${lang}Description`] && !!errors[`${lang}Description`]
-          }
-          value={values[`${lang}Description`]}
-          onChange={handleChange}
-        />
-        {touched[`${lang}Description`] && errors[`${lang}Description`] && (
-          <div className={styles.inputError}>
-            {errors[`${lang}Description`]}
-          </div>
-        )}
-      </Paper>
-    </TabPanel>
-  ));
 
   const checkboxes = [
     {
@@ -152,23 +116,31 @@ function MaterialForm({ material, id }) {
     }
   ];
 
-  const languageTabs = languages.map((lang) => {
-    const tabConditionForStyles =
-      (touched[`${lang}Description`] && errors[`${lang}Description`]) ||
-      (touched[`${lang}Name`] && errors[`${lang}Name`]);
+  const inputs = [
+    { label: config.labels.material.name, name: 'name' },
+    { label: config.labels.material.description, name: 'description' }
+  ];
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs
+  };
 
-    return (
-      <Tab
-        className={descriptionAndNameHandler(tabConditionForStyles, styles)}
-        label={lang}
-        key={lang}
-      />
-    );
-  });
+  const languageTabs = languages.map((lang) => (
+    <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+  ));
 
   if (loading) {
     return <LoadingBar />;
   }
+
+  const valueEquality = checkInitialValue(
+    getMaterialFormInitValues(material, purposeEnum),
+    values
+  );
+
   return (
     <div className={styles.container}>
       <form className={styles.materialForm} onSubmit={handleSubmit}>
@@ -229,27 +201,10 @@ function MaterialForm({ material, id }) {
             )}
           </Paper>
         </Grid>
-        {appBarRenderHandler(
-          languages,
-          <div>
-            <AppBar position='static'>
-              <Tabs
-                indicatorColor='primary'
-                textColor='primary'
-                className={styles.tabs}
-                value={tabsValue}
-                onChange={handleTabsChange}
-                aria-label='tabs'
-              >
-                {languageTabs}
-              </Tabs>
-            </AppBar>
-            {tabPanels}
-          </div>
-        )}
+        {languages.length > 0 ? <div>{languageTabs}</div> : null}
         <div className={styles.controlsBlock}>
           <div>
-            <BackButton />
+            <BackButton initial={!valueEquality} />
             <SaveButton
               className={styles.saveButton}
               data-cy='save'

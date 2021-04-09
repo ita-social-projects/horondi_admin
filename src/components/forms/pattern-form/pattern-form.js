@@ -205,6 +205,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     constructorImageInput: 'constructorImgInput'
   };
 
+  const valueEquality = checkInitialValue(
+    useFormikInitialValues(pattern),
+    values
+  );
+
   return (
     <div>
       {loading ? (
@@ -285,7 +290,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton />
+          <BackButton initial={!valueEquality} />
           <SaveButton
             className={styles.saveButton}
             data-cy='save-btn'

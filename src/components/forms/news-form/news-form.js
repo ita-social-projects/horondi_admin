@@ -13,6 +13,7 @@ import ImageUploadPreviewContainer from '../../../containers/image-upload-contai
 import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
 import { handleImageLoad } from '../../../utils/pattern-form';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const map = require('lodash/map');
 
@@ -136,6 +137,11 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     values,
     inputs
   };
+
+  const valueEquality = checkInitialValue(
+    useFormikInitialValues(newsArticle),
+    values
+  );
 
   return (
     <div>

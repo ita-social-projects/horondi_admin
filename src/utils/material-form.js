@@ -27,7 +27,7 @@ export const descriptionAndNameHandler = (condition, styles) =>
 export const appBarRenderHandler = (languages, appBar) =>
   languages.length > 0 ? appBar : null;
 
-export const getMaterialFormInitValues = (material, purposeEnum) => ({
+const getMaterialFormInitValues = (material, purposeEnum) => ({
   uaName: material.name[0].value || '',
   enName: material.name[1].value || '',
   uaDescription: material.description[0].value || '',
@@ -38,3 +38,5 @@ export const getMaterialFormInitValues = (material, purposeEnum) => ({
   additionalPrice: +material.additionalPrice[0].value / 100 || 0,
   colors: (material.colors && material.colors.map((color) => color._id)) || []
 });
+
+export default getMaterialFormInitValues;
