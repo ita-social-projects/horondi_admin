@@ -327,7 +327,14 @@ ModelForm.propTypes = {
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
-    category: PropTypes.string,
+    category: PropTypes.shape({
+      _id: PropTypes.string,
+      images: PropTypes.shape({
+        thumbnail: PropTypes.string
+      }),
+      name: PropTypes.arrayOf(valueShape),
+      code: PropTypes.string
+    }),
     sizes: PropTypes.arrayOf(valueShape),
     name: PropTypes.arrayOf(valueShape)
   }),
@@ -392,7 +399,7 @@ ModelForm.defaultProps = {
     images: {
       thumbnail: ''
     },
-    category: '',
+    category: {},
     sizes: [],
     show: false,
     availableForConstructor: false,
