@@ -41,7 +41,7 @@ export const getAllCategories = async (filter, pagination, sort) => {
       sort
     }
   });
-
+  client.resetStore();
   return result.data.getAllCategories;
 };
 
