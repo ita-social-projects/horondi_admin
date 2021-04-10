@@ -48,7 +48,7 @@ const RegisterUser = ({ handleClose }) => {
   const dispatch = useDispatch();
 
   const { loading } = useSelector(({ Users }) => ({
-    loading: Users.userLoading
+    loading: Users.adminLoading
   }));
 
   const { adminId } = useSelector(({ Auth }) => ({

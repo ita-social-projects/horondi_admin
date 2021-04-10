@@ -44,7 +44,9 @@ import {
   setUsers,
   setUser,
   setUserError,
-  deleteUserLocally
+  deleteUserLocally,
+  setAdminCreationLoading,
+  newRegisteredAdmin
 } from '../users.actions';
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
@@ -160,13 +162,14 @@ describe('Users saga test', () => {
       .withReducer(combineReducers({ Users }), {
         Users: mockUsersState
       })
-      .put(setUsersLoading(true))
+      .put(setAdminCreationLoading(true))
+      .put(newRegisteredAdmin(true))
       .provide([
         [call(registerAdmin, adminInput)],
         [call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS)]
       ])
-      .put(push('/users'))
-      .put(setUsersLoading(false))
+      .put(setAdminCreationLoading(false))
+      .put(newRegisteredAdmin(false))
       .hasFinalState({
         Users: mockUsersState
       })
@@ -176,7 +179,7 @@ describe('Users saga test', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisCall).toHaveLength(2);
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(4);
       }));
 
   it('should confirm admin', () =>

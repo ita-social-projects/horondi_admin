@@ -7,7 +7,9 @@ import {
   SET_TAB,
   SET_FILTER,
   SET_SORT,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  SET_ADMIN_CREATION_LOADING,
+  NEW_ADMIN_REGISTERED
 } from './users.types';
 
 const initialFilters = {
@@ -25,7 +27,9 @@ export const initialState = {
   tab: 0,
   user: null,
   userLoading: false,
-  userError: null
+  userError: null,
+  isNewAdminCreated: false,
+  adminLoading: false
 };
 
 const usersReducer = (state = initialState, action = {}) => {
@@ -44,6 +48,16 @@ const usersReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       userLoading: action.payload
+    };
+  case SET_ADMIN_CREATION_LOADING:
+    return {
+      ...state,
+      adminLoading: action.payload
+    };
+  case NEW_ADMIN_REGISTERED:
+    return {
+      ...state,
+      isNewAdminCreated: action.payload
     };
   case SET_USERS_ERROR:
     return {

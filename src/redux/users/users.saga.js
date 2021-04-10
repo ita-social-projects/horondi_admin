@@ -21,7 +21,9 @@ import {
   setUser,
   setUserError,
   setUsersLoading,
-  deleteUserLocally
+  setAdminCreationLoading,
+  deleteUserLocally,
+  newRegisteredAdmin
 } from './users.actions';
 
 import {
@@ -51,7 +53,7 @@ const {
   SUCCESS_SEND_EMAIL
 } = config.statuses;
 
-const { pathToLogin } = config.routes;
+const { pathToLogin, pathToMainPage } = config.routes;
 
 export function* handleUsersLoad({ payload: { filter, pagination, sort } }) {
   try {
@@ -119,11 +121,12 @@ export function* handleUnlockUser({ payload }) {
 
 export function* handleAdminRegister({ payload }) {
   try {
-    yield put(setUsersLoading(true));
+    yield put(setAdminCreationLoading(true));
     yield call(registerAdmin, payload);
-    yield put(setUsersLoading(false));
-    yield put(push('/users'));
+    yield put(newRegisteredAdmin(true));
+    yield put(setAdminCreationLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
+    yield put(newRegisteredAdmin(false));
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -131,9 +134,9 @@ export function* handleAdminRegister({ payload }) {
 
 export function* handleConfirmSuperadminCreation({ payload }) {
   try {
-    yield put(setUsersLoading(true));
+    yield put(setAdminCreationLoading(true));
     yield call(confirmSuperadminCreation, payload);
-    yield put(setUsersLoading(false));
+    yield put(setAdminCreationLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_SEND_EMAIL);
   } catch (err) {
     yield call(handleUsersError, err);
@@ -170,7 +173,7 @@ export function* handleTokenValidation({ payload }) {
     yield put(setUsersLoading(false));
   } catch (err) {
     yield call(handleUsersError, err);
-    yield put(push('/'));
+    yield put(push(pathToMainPage));
   }
 }
 

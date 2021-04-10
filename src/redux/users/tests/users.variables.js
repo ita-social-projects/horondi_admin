@@ -6,7 +6,9 @@ export const mockUsersState = {
   user: null,
   userError: null,
   userLoading: false,
-  usersCount: null
+  usersCount: null,
+  isNewAdminCreated: false,
+  adminLoading: false
 };
 
 const initialFilters = {

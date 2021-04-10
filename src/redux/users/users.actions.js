@@ -5,6 +5,8 @@ import {
   SET_USER,
   SET_USERS_ERROR,
   SET_USERS_LOADING,
+  SET_ADMIN_CREATION_LOADING,
+  NEW_ADMIN_REGISTERED,
   DELETE_USER,
   DELETE_USER_LOCALLY,
   REGISTER_ADMIN,
@@ -32,6 +34,11 @@ const setUsers = (users) => ({
 
 const setUsersLoading = (loading) => ({
   type: SET_USERS_LOADING,
+  payload: loading
+});
+
+const setAdminCreationLoading = (loading) => ({
+  type: SET_ADMIN_CREATION_LOADING,
   payload: loading
 });
 
@@ -63,6 +70,11 @@ const deleteUserLocally = (id) => ({
 const registerAdmin = (user) => ({
   type: REGISTER_ADMIN,
   payload: user
+});
+
+const newRegisteredAdmin = (payload) => ({
+  type: NEW_ADMIN_REGISTERED,
+  payload
 });
 
 const resendEmail = (user) => ({
@@ -120,6 +132,7 @@ export {
   deleteUser,
   setUserError,
   setUsersLoading,
+  setAdminCreationLoading,
   deleteUserLocally,
   registerAdmin,
   resendEmail,
@@ -131,5 +144,6 @@ export {
   clearFilters,
   blockUserByAdmin,
   unlockUserByAdmin,
-  confirmSuperadmin
+  confirmSuperadmin,
+  newRegisteredAdmin
 };
