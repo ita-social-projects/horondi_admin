@@ -1,7 +1,9 @@
 import React from 'react';
 import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { Provider } from 'react-redux';
 import ColorsBar from './colors-bar';
+import configureStore from '../../store/store';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -19,15 +21,21 @@ describe('should render colors-bar component', () => {
     return a;
   };
 
-  const store = {
-    foo: 'Foo',
-    bar: 'Bar'
-  };
+  const store = configureStore();
 
   let component;
 
   beforeEach(() => {
-    component = mount(<ColorsBar onColorChange={fu} colors={colors} />, store);
+    component = mount(
+      <Provider store={store}>
+        <ColorsBar />
+      </Provider>
+    );
+    console.log('///////////////////////////////////////////////////////////');
+    console.log(component.debug());
+
+    console.log('///////////////////////////////////////////////////////////');
+    console.log('///////////////////////////////////////////////////////////');
   });
 
   it('should exist', () => {
@@ -35,8 +43,8 @@ describe('should render colors-bar component', () => {
     expect(component.exists());
   });
 
-  it('should have props', () => {
+  /* it('should have props', () => {
     expect(component.props().onColorChange).toBeDefined();
     expect(component.props().colors).toBeDefined();
-  });
+  }); */
 });
