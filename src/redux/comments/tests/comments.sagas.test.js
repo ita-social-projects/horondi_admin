@@ -13,7 +13,7 @@ import {
 } from '../comments.sagas';
 
 import {
-  getAllComments,
+  getRecentComments,
   deleteComment,
   updateComment,
   getCommentById,
@@ -35,7 +35,6 @@ import { config } from '../../../configs';
 import commentsReducer, { initialState } from '../comments.reducer';
 
 import {
-  filter,
   pagination,
   mockTableState,
   commentRes,
@@ -76,13 +75,13 @@ const testsPromiseResults = (result) => {
 
 describe('comments sagas tests', () => {
   it('should handle comments load', () => {
-    expectSaga(handleCommentsLoad, { payload: { filter, pagination } })
+    expectSaga(handleCommentsLoad, { payload: { pagination } })
       .withReducer(combineReducers({ Table, commentsReducer }), {
         commentsReducer: initialState,
         Table: mockTableState
       })
       .put(setCommentsLoading(true))
-      .provide([[call(getAllComments, filter, pagination), commentRes]])
+      .provide([[call(getRecentComments, pagination), commentRes]])
       .put(setItemsCount(commentRes.count))
       .put(setComments(commentRes.items))
       .put(setCommentsLoading(false))

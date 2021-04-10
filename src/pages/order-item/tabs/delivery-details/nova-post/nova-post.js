@@ -27,7 +27,7 @@ const NovaPost = ({ setFieldValue, values }) => {
   }));
 
   const [inputValue, setInputValue] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState(values.city);
   const [wareHouse, setWarehouse] = useState('');
   const [cityFocus, setCityFocus] = useState(false);
   const [departmentFocus, setDepartmentFocus] = useState(false);
@@ -61,6 +61,7 @@ const NovaPost = ({ setFieldValue, values }) => {
               if (value) {
                 setSelectedCity(value.description);
                 setFieldValue(inputName.novaPost.city, value.description);
+                setFieldValue(inputName.novaPost.courierOffice, '');
               } else {
                 setSelectedCity('');
                 setWarehouse('');

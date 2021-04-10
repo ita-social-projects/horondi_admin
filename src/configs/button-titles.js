@@ -57,7 +57,8 @@ const buttonTitles = {
   CREATE_CONSTRUCTOR_BOTTOM_TITLE: 'Додати низ',
   GO: 'Перейти',
   CATEGORY_TITLE: 'Категорія',
+  LOOK: 'Переглянути',
   ADD_ORDER: 'Додати замовлення',
-  LOOK: 'Переглянути'
+  EXIT_WITHOUT_SAVING: 'Вийти без збереження'
 };
 export default buttonTitles;

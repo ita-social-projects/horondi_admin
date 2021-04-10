@@ -21,10 +21,12 @@ import { logoutUser } from '../../redux/auth/auth.actions';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import routes from '../../configs/routes';
 
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
 const { LOGOUT_MESSAGE } = config.messages;
+const {pathToLogin} = routes;
 
 const NavBar = () => {
   const classes = useStyles();
@@ -66,10 +68,12 @@ const NavBar = () => {
     </IconButton>
   );
 
+  const urlPage = window.location.pathname;
+
   return (
     <AppBar className={classes.appBar}>
       <Toolbar>
-        {menuToggle}
+        {urlPage === pathToLogin ? null : menuToggle}
         <Typography id='logo' variant='h4' className={classes.title}>
           {title}
         </Typography>
