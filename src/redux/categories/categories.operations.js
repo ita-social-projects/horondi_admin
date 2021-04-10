@@ -41,7 +41,6 @@ export const getAllCategories = async (filter, pagination, sort) => {
       sort
     }
   });
-  client.resetStore();
 
   return result.data.getAllCategories;
 };
@@ -126,7 +125,6 @@ export const createCategory = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
 
   if (result.data.addCategory.message) {
     throw new Error(
@@ -164,7 +162,6 @@ export const updateCategory = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
   if (result.data.updateCategory.message) {
     throw new Error(
       `${result.data.updateCategory.statusCode} ${
