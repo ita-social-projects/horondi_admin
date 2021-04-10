@@ -21,9 +21,11 @@ import homePageSlideSaga from './home-page-slides/home-page-slides.sagas';
 import colorsSaga from './color/color.sagas';
 import constructorSaga from './constructor/constructor.sagas';
 import snackbarSaga from './snackbar/snackbar.sagas';
+import historySaga from './history/history.sagas';
 
 export function* rootSaga() {
   yield all([
+    historySaga(),
     newsSaga(),
     authSaga(),
     themeSaga(),

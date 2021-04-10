@@ -5,6 +5,10 @@ const titles = {
     ordersTitle: 'Останні замовлення',
     changesTitle: 'Останні зміни'
   },
+  historyTitles: {
+    mainTitle: 'Останні зміни',
+    detailsTitle: 'Деталі зміни'
+  },
   categoriesTitles: {
     deleteTitle: 'Видалити категорію'
   },

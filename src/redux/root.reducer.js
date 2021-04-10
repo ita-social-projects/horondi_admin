@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
+
+import History from './history/history.reducer';
 import News from './news/news.reducer';
 import { contactsReducer } from './contact/contact.reducer';
 import Theme from './theme/theme.reducer';
@@ -53,5 +55,6 @@ export const rootReducer = (history) =>
     Slides,
     Error,
     Color,
-    Constructor
+    Constructor,
+    History
   });

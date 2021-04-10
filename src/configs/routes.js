@@ -1,4 +1,5 @@
 const routes = {
+  pathToHistory: '/history',
   pathToLogin: '/login',
   pathToMainPage: '/',
   pathToPatterns: '/patterns',

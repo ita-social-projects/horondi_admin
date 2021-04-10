@@ -57,6 +57,7 @@ import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
+import History from '../pages/history';
 
 const { routes } = config;
 
@@ -98,6 +99,7 @@ const Routes = () => {
       <ErrorBoundary>
         <Switch>
           <Route path={routes.pathToMainPage} exact component={MainPage} />
+          <Route path={routes.pathToHistory} exact component={History} />
           <Route path={routes.pathToUsers} exact component={UsersPage} />
           <Route
             path={routes.pathToUsersDetails}
