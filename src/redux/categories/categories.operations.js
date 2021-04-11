@@ -41,7 +41,6 @@ export const getAllCategories = async (filter, pagination, sort) => {
       sort
     }
   });
-  client.resetStore();
   return result.data.getAllCategories;
 };
 
@@ -133,7 +132,7 @@ export const createCategory = async (payload) => {
       }`
     );
   }
-
+  client.resetStore();
   return result.data.addCategory;
 };
 
@@ -169,6 +168,6 @@ export const updateCategory = async (payload) => {
       }`
     );
   }
-
+  client.resetStore();
   return result.data.updateCategory;
 };
