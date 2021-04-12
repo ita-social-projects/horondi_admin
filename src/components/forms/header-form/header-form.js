@@ -47,12 +47,6 @@ const HeaderForm = ({ header, id }) => {
 
   const { values, handleSubmit, handleChange, touched, errors } = useFormik({
     validationSchema: headerValidationSchema,
-    initialValues: {
-      uaName: header.title ? header.title[0].value : '',
-      enName: header.title ? header.title[1].value : '',
-      priority: header.priority || 1,
-      link: header.link || ''
-    },
     onSubmit: () => {
       const newHeader = createHeader(values);
       if (header._id) {
@@ -62,7 +56,6 @@ const HeaderForm = ({ header, id }) => {
       dispatch(addHeader({ header: newHeader }));
     }
   });
-
   return (
     <div>
       <form onSubmit={handleSubmit}>

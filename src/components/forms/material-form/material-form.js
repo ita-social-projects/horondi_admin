@@ -25,6 +25,7 @@ import purposeEnum from '../../../configs/purpose-enum';
 import LanguagePanel from '../language-panel';
 
 const { languages } = config;
+const { materialUiConstants } = config;
 const {
   VALIDATION_ERROR,
   MIN_LENGTH_MESSAGE,
@@ -201,7 +202,7 @@ function MaterialForm({ material, id }) {
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
-              type='submit'
+              type={materialUiConstants.types.submit}
               title={config.buttonTitles.SAVE_MATERIAL}
               values={values}
               errors={errors}

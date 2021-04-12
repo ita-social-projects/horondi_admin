@@ -61,7 +61,6 @@ function SizeForm({ id, size }) {
       dispatch(addSize(newSize));
     }
   });
-
   const checkboxes = [
     {
       id: 'avaliable',
