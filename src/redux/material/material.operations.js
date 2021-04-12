@@ -51,7 +51,7 @@ export const getAllMaterials = async (filter, skip, limit) => {
       }
     `
   });
-  client.resetStore();
+  await client.resetStore();
   return result.data.getAllMaterials;
 };
 export const getAllMaterialsByPatternPurpose = async () => {
@@ -123,7 +123,7 @@ export const deleteMaterial = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.deleteMaterial.message) {
@@ -155,7 +155,7 @@ export const createMaterial = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.addMaterial.message) {
@@ -196,7 +196,7 @@ export const updateMaterial = async (id, material) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.updateMaterial.message) {
