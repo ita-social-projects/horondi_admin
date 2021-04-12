@@ -4,15 +4,18 @@ const getAllHistoryRecordsQuery = `
 query(
   $limit: Int!
   $skip: Int!
+  $filter:HistoryFilterInput
 ) {
   getAllHistoryRecords(
     limit: $limit
     skip: $skip
+    filter:$filter
   ) {
   ...on History {
      items{
         action
         subject{
+          model
           name
           subjectId
         }
@@ -35,10 +38,11 @@ query(
 }
 `;
 
-const getAllHistoryRecords = async (limit, skip) => {
+const getAllHistoryRecords = async (limit, skip, filter) => {
   const options = {
     limit,
-    skip
+    skip,
+    filter
   };
 
   const { data } = await getItems(getAllHistoryRecordsQuery, options);

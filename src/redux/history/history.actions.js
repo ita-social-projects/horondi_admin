@@ -1,5 +1,7 @@
 import {
+  CLEAR_FILTERS,
   GET_HISTORY_RECORDS,
+  SET_FILTER,
   SET_HISTORY_ERROR,
   SET_HISTORY_LOADING,
   SET_HISTORY_RECORDS
@@ -22,9 +24,19 @@ const setHistoryError = (payload) => ({
   payload
 });
 
+const setHistoryFilter = (payload) => ({
+  type: SET_FILTER,
+  payload
+});
+const clearHistoryFilters = () => ({
+  type: CLEAR_FILTERS
+});
+
 export {
   getHistoryRecords,
   setHistoryRecords,
   setHistoryLoading,
-  setHistoryError
+  setHistoryError,
+  setHistoryFilter,
+  clearHistoryFilters
 };

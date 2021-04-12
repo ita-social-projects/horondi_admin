@@ -16,7 +16,8 @@ export function* handleHistoryRecordsLoad({ payload }) {
     const records = yield call(
       getAllHistoryRecords,
       payload.limit,
-      payload.skip
+      payload.skip,
+      payload.filter
     );
     yield put(setHistoryRecords(records.items));
     yield put(setItemsCount(records.count));
