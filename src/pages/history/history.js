@@ -84,6 +84,10 @@ const History = () => {
     />
   ));
 
+  if (historyLoading){
+    return <LoadingBar/>
+  }
+
   return (
     <div className={commonStyles.container}>
       <Typography
@@ -93,8 +97,9 @@ const History = () => {
         {config.titles.historyTitles.mainTitle}
       </Typography>
       <div>
-        {/*<FilterByDate/>*/}
+        <FilterByDate/>
         <FilterByMultipleValues
+          filters={filters}
           label={buttonTitles.EVENT_TITLE}
           selectItems={actionFilterObj()}
           setFilterHandler={filterOptions.setActionsFilter}

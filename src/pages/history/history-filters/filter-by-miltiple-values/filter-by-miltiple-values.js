@@ -33,6 +33,7 @@ const MenuProps = {
   }
 };
 const FilterByMultipleValues = ({
+  filters,
   setFilterHandler,
   label,
   selectItems,
