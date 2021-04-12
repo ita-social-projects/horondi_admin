@@ -23,6 +23,7 @@ import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
 import buttonTitles from '../../../configs/button-titles';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { selectTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
@@ -61,6 +62,9 @@ function SizeForm({ id, size }) {
       dispatch(addSize(newSize));
     }
   });
+
+  const valueEquality = checkInitialValue(getSizeInitialValues(size), values);
+
   const checkboxes = [
     {
       id: 'avaliable',
@@ -195,7 +199,7 @@ function SizeForm({ id, size }) {
           </div>
         </Grid>
         <div className={styles.buttonsWrapper}>
-          <BackButton />
+          <BackButton initial={!valueEquality} />
           <SaveButton
             className={styles.saveButton}
             data-cy={materialUiConstants.save}

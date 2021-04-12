@@ -10,8 +10,8 @@ import { BackButton, SaveButton } from '../../buttons';
 import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
-import buttonTitles from '../../../configs/button-titles';
-import { useCommonStyles } from '../../../pages/common.styles';
+import { getHeaderInitialValues } from '../../../utils/header-form';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const {
   HEADER_VALIDATION_ERROR,
@@ -19,13 +19,11 @@ const {
 } = config.headerErrorMessages;
 
 const { languages } = config;
-const { SAVE_TITLE } = buttonTitles;
-const { materialUiConstants } = config;
 
 const HeaderForm = ({ header, id }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const common = useCommonStyles();
+
   const { tabsValue, handleTabsChange, createHeader } = useHeaderHandlers();
   const languageTabs =
     languages.length > 0
@@ -47,6 +45,7 @@ const HeaderForm = ({ header, id }) => {
 
   const { values, handleSubmit, handleChange, touched, errors } = useFormik({
     validationSchema: headerValidationSchema,
+    initialValues: getHeaderInitialValues(header),
     onSubmit: () => {
       const newHeader = createHeader(values);
       if (header._id) {
@@ -56,6 +55,12 @@ const HeaderForm = ({ header, id }) => {
       dispatch(addHeader({ header: newHeader }));
     }
   });
+
+  const valueEquality = checkInitialValue(
+    getHeaderInitialValues(header),
+    values
+  );
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -93,11 +98,10 @@ const HeaderForm = ({ header, id }) => {
         </Grid>
         <AppBar position='static'>
           <Tabs
-            className={common.tabs}
+            className={styles.tabs}
             value={tabsValue}
             onChange={handleTabsChange}
             aria-label='simple tabs example'
-            variant='fullWidth'
           >
             {languageTabs}
           </Tabs>
@@ -122,12 +126,12 @@ const HeaderForm = ({ header, id }) => {
             </Paper>
           </TabPanel>
         ))}
-        <BackButton />
+        <BackButton initial={!valueEquality} />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'
-          type={materialUiConstants.types.submit}
-          title={SAVE_TITLE}
+          type='submit'
+          title={config.buttonTitles.HEADER_SAVE_TITLE}
           values={values}
           errors={errors}
         />

@@ -23,9 +23,9 @@ import CheckboxOptions from '../../checkbox-options';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
 import LanguagePanel from '../language-panel';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { languages } = config;
-const { materialUiConstants } = config;
 const {
   VALIDATION_ERROR,
   MIN_LENGTH_MESSAGE,
@@ -135,6 +135,12 @@ function MaterialForm({ material, id }) {
   if (loading) {
     return <LoadingBar />;
   }
+
+  const valueEquality = checkInitialValue(
+    getMaterialFormInitValues(material, purposeEnum),
+    values
+  );
+
   return (
     <div className={styles.container}>
       <form className={styles.materialForm} onSubmit={handleSubmit}>
@@ -198,11 +204,11 @@ function MaterialForm({ material, id }) {
         {languages.length > 0 ? <div>{languageTabs}</div> : null}
         <div className={styles.controlsBlock}>
           <div>
-            <BackButton />
+            <BackButton initial={!valueEquality} />
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
-              type={materialUiConstants.types.submit}
+              type='submit'
               title={config.buttonTitles.SAVE_MATERIAL}
               values={values}
               errors={errors}
