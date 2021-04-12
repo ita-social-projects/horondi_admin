@@ -4,9 +4,14 @@ import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Dialog, DialogContent, DialogTitle, Tooltip } from '@material-ui/core';
 import DialogWindowWrapper from '../dialog-window-wrapper';
-import testProps from './variables';
 
 Enzyme.configure({ adapter: new Adapter() });
+
+const testProps = {
+  isOpen: true,
+  handleClose: jest.fn(),
+  title: 'Title'
+};
 
 const setUp = (props) => shallow(<DialogWindowWrapper {...props} />);
 
@@ -23,11 +28,11 @@ describe('Dialog Window Wrapper component', () => {
     const dialogContent = component.find(DialogContent);
     expect(dialogContent.length).toBe(1);
   });
-  it('Should contain DialogContent', () => {
+  it('Should contain DialogTitle', () => {
     const dialogTitle = component.find(DialogTitle);
     expect(dialogTitle.length).toBe(1);
   });
-  it('Should contain DialogContent', () => {
+  it('Should contain Tooltip', () => {
     const tooltip = component.find(Tooltip);
     expect(tooltip.length).toBe(1);
   });
