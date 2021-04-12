@@ -22,14 +22,12 @@ import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.sele
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
-import buttonTitles from '../../../configs/button-titles';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { selectTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
-const { SAVE_TITLE } = buttonTitles;
 
 function SizeForm({ id, size }) {
   const styles = useStyles();
@@ -204,7 +202,7 @@ function SizeForm({ id, size }) {
             className={styles.saveButton}
             data-cy={materialUiConstants.save}
             type={materialUiConstants.types.submit}
-            title={SAVE_TITLE}
+            title={config.buttonTitles.SAVE_SIZE_TITLE}
             values={values}
             errors={errors}
           />
