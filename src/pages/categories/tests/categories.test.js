@@ -14,6 +14,7 @@ import useCategoryFilters from '../../../hooks/filters/use-category-filters';
 import TableContainerRow from '../../../containers/table-container-row';
 import { config } from '../../../configs';
 import variables from './variables';
+import configureStore from '../../../store/store';
 
 const { ADD_CATEGORY } = config.buttonTitles;
 const { mainPageTitle } = config.titles.categoryPageTitles;
