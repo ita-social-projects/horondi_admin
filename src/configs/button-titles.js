@@ -58,6 +58,8 @@ const buttonTitles = {
   GO: 'Перейти',
   CATEGORY_TITLE: 'Категорія',
   ADD_ORDER: 'Додати замовлення',
+  SEND_CONFIRM: 'Надіслати підтвердження',
+  SEND_CODE: 'Надіслати код для підтвердження',
   EXIT_WITHOUT_SAVING: 'Вийти без збереження'
 };
 export default buttonTitles;

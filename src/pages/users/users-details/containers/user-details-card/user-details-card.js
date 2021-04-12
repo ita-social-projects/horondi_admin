@@ -13,6 +13,9 @@ import { useStyles } from './user-details-card.styles';
 import { config } from '../../../../../configs';
 
 const userTitles = config.detailTitles.users;
+const {
+  materialUiConstants: { primary, contained }
+} = config;
 
 const UserDetailsCard = ({
   avatar,
@@ -21,7 +24,9 @@ const UserDetailsCard = ({
   primaryData,
   secondaryData,
   buttonStatus,
-  buttonHandler
+  buttonHandler,
+  buttonConfirmed,
+  buttonConfirmationHandler
 }) => {
   const styles = useStyles();
 
@@ -76,15 +81,25 @@ const UserDetailsCard = ({
           <Grid item container xs={12} spacing={1} direction='column'>
             {secondarySection}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} container justify='space-around'>
             <Button
-              variant='contained'
-              color='primary'
+              variant={contained}
+              color={primary}
               onClick={buttonHandler}
               data-cy='change-user-status-button'
             >
               {buttonStatus}
             </Button>
+            {buttonConfirmed && (
+              <Button
+                variant={contained}
+                color={primary}
+                onClick={buttonConfirmationHandler}
+                data-cy='change-user-status-button'
+              >
+                {buttonConfirmed}
+              </Button>
+            )}
           </Grid>
         </Grid>
       </CardContent>
@@ -99,7 +114,9 @@ UserDetailsCard.propTypes = {
   primaryData: PropTypes.objectOf(PropTypes.object).isRequired,
   secondaryData: PropTypes.objectOf(PropTypes.object).isRequired,
   buttonStatus: PropTypes.string.isRequired,
-  buttonHandler: PropTypes.func.isRequired
+  buttonHandler: PropTypes.func.isRequired,
+  buttonConfirmed: PropTypes.string.isRequired,
+  buttonConfirmationHandler: PropTypes.func.isRequired
 };
 
 export default UserDetailsCard;

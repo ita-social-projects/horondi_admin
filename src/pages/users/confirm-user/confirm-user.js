@@ -21,7 +21,22 @@ import {
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
-const { formRegExp, loginErrorMessages } = config;
+const {
+  formRegExp: { pass, firstName, lastName },
+  loginErrorMessages: {
+    FIRSTNAME_MAX_LENGTH_MESSAGE,
+    FIRSTNAME_MIN_LENGTH_MESSAGE,
+    LASTNAME_MAX_LENGTH_MESSAGE,
+    LASTNAME_MIN_LENGTH_MESSAGE,
+    ENTER_FIRSTNAME_MESSAGE,
+    ENTER_LASTNAME_MESSAGE,
+    PASSWORD_MIN_LENGTH_MESSAGE,
+    PASSWORD_MAX_LENGTH_MESSAGE,
+    PASSWORD_LANG_MESSAGE,
+    ENTER_PASSWORD_MESSAGE,
+    WRONG_FORMAT
+  }
+} = config;
 
 const ConfirmUser = ({ match }) => {
   const { token } = match.params;
@@ -31,24 +46,30 @@ const ConfirmUser = ({ match }) => {
   const { loading } = useSelector(({ Users }) => ({
     loading: Users.userLoading
   }));
+
   useEffect(() => {
+    sessionStorage.setItem('confirmation', token);
     dispatch(validateToken(token));
   }, [dispatch, token]);
 
+  sessionStorage.removeItem('confirmation');
+
   const formSchema = Yup.object().shape({
     firstName: Yup.string()
-      .min(2, loginErrorMessages.FIRSTNAME_MIN_LENGTH_MESSAGE)
-      .max(30, loginErrorMessages.FIRSTNAME_MAX_LENGTH_MESSAGE)
-      .required(loginErrorMessages.ENTER_FIRSTNAME_MESSAGE),
+      .min(2, FIRSTNAME_MIN_LENGTH_MESSAGE)
+      .max(30, FIRSTNAME_MAX_LENGTH_MESSAGE)
+      .matches(firstName, WRONG_FORMAT)
+      .required(ENTER_FIRSTNAME_MESSAGE),
     lastName: Yup.string()
-      .min(2, loginErrorMessages.LASTNAME_MIN_LENGTH_MESSAGE)
-      .max(30, loginErrorMessages.LASTNAME_MAX_LENGTH_MESSAGE)
-      .required(loginErrorMessages.ENTER_LASTNAME_MESSAGE),
+      .min(2, LASTNAME_MIN_LENGTH_MESSAGE)
+      .max(30, LASTNAME_MAX_LENGTH_MESSAGE)
+      .matches(lastName, WRONG_FORMAT)
+      .required(ENTER_LASTNAME_MESSAGE),
     password: Yup.string()
-      .min(8, loginErrorMessages.PASSWORD_MIN_LENGTH_MESSAGE)
-      .max(20, loginErrorMessages.PASSWORD_MAX_LENGTH_MESSAGE)
-      .matches(formRegExp.pass, loginErrorMessages.PASSWORD_LANG_MESSAGE)
-      .required(loginErrorMessages.ENTER_PASSWORD_MESSAGE)
+      .min(8, PASSWORD_MIN_LENGTH_MESSAGE)
+      .max(20, PASSWORD_MAX_LENGTH_MESSAGE)
+      .matches(pass, PASSWORD_LANG_MESSAGE)
+      .required(ENTER_PASSWORD_MESSAGE)
   });
 
   const { handleSubmit, handleChange, values, touched, errors } = useFormik({
