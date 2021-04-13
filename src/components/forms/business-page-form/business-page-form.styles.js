@@ -4,7 +4,8 @@ export const useStyles = makeStyles((theme) => ({
   businessPageForm: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '20px 0'
+    margin: '20px 0',
+    padding: '10px'
   },
   textField: {
     margin: '10px 5px'

@@ -21,7 +21,7 @@ const getHomePageLooksImages = async () => {
   });
 
   client.stop();
-  client.resetStore();
+  await client.resetStore();
 
   const { data } = result;
   return data.getHomePageLooksImages;
@@ -51,7 +51,7 @@ const updateHomePageLooksImage = async (id, upload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   const { data } = result;
 

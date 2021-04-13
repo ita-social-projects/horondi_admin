@@ -19,7 +19,7 @@ export const getAllHeaders = async (skip, limit) => {
       }
     `
   });
-  client.resetStore();
+  await client.resetStore();
 
   return result.data.getAllHeaders;
 };
@@ -81,7 +81,7 @@ export const deleteHeader = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.deleteHeader.message) {
@@ -123,7 +123,7 @@ export const createHeader = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.addHeader.message) {
@@ -164,7 +164,7 @@ export const updateHeader = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
   if (data.updateHeader.message) {
     throw new Error(

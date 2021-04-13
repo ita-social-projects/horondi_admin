@@ -36,7 +36,7 @@ export const getAllSlides = async (skip, limit) => {
       }
     `
   });
-  client.resetStore();
+  await client.resetStore();
   return result.data.getAllSlides;
 };
 
@@ -133,7 +133,7 @@ export const createSlide = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.addSlide.message) {
@@ -179,7 +179,7 @@ export const updateSlide = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   if (result.data.updateSlide.message) {
     throw new Error(
@@ -215,7 +215,7 @@ export const deleteSlide = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.deleteSlide.message) {

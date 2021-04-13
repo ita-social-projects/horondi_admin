@@ -5,10 +5,18 @@ export const useStyles = makeStyles((theme) => ({
     width: '95%',
     marginTop: 70,
     margin: theme.spacing(2),
-    padding: 25
+    padding: 25,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  userDetails: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   userInputPanel: {
-    width: '90%',
+    width: '500px',
     display: 'flex',
     flexDirection: 'column'
   },
@@ -20,9 +28,11 @@ export const useStyles = makeStyles((theme) => ({
     width: 150
   },
   registrationTitle: {
-    margin: '10px 0'
+    margin: '30px 0'
   },
   saveButton: {
-    height: 40
+    height: 40,
+    width: '50%',
+    alignSelf: 'center'
   }
 }));

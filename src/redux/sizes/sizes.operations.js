@@ -87,7 +87,7 @@ export const addSize = async (size) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   if (result.data.addSize.message) {
     throw new Error(
@@ -122,7 +122,7 @@ export const updateSize = async (id, size) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   if (result.data.updateSize.message) {
     throw new Error(
@@ -157,7 +157,7 @@ export const deleteSize = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   if (result.data.deleteSize.message) {
     throw new Error(

@@ -3,7 +3,8 @@ export const selectUsersAndTable = ({ Users, Table }) => ({
   filter: Users.filters,
   sort: Users.sort,
   currentPage: Table.pagination.currentPage,
-  rowsPerPage: Table.pagination.rowsPerPage
+  rowsPerPage: Table.pagination.rowsPerPage,
+  isNewAdminCreated: Users.isNewAdminCreated
 });
 
 export const selectUserLoadAndItemsCount = ({ Users, Table }) => ({
