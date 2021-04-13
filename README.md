@@ -60,9 +60,10 @@ $ npm install
 ### How to run local
 
 1. Open terminal.
-2. Run `npm run start` to start application.<sup>[*](#footnote)</sup>
+2. Run `npm run start` to start application.<sup>[\*](#footnote)</sup>
 3. Open http://localhost:3000 to view it in the browser.
-###### <a name="footnote">*</a> - to run the project you need an `.env` file in root folder
+
+###### <a name="footnote">\*</a> - to run the project you need an `.env` file in root folder
 
 ### How to run Docker
 
@@ -200,6 +201,7 @@ Command `npm run generate` is used to run [graphql code generator](https://graph
 #### Here is our [wiki](https://github.com/ita-social-projects/horondi_admin/wiki), where you can find guide about project running.
 
 ---
+
 You're encouraged to contribute to our project if you've found any issues or missing functionality that you would want to see. Here you can see [the list of issues](https://github.com/ita-social-projects/horondi_admin/issues) and here you can create [a new issue](https://github.com/ita-social-projects/horondi_admin/issues/new/choose).
 
 Before sending any pull request, please discuss requirements/changes to be implemented using an existing issue or by creating a new one. All pull requests should be done into `development` branch.
@@ -300,7 +302,6 @@ if issue is in work it should be placed in proper column on dashboard according 
 [![@Walleriy](https://avatars.githubusercontent.com/u/39501370?s=200)](https://github.com/Walleriy)
 [![@AndronShermeta](https://avatars.githubusercontent.com/u/73708298?s=200)](https://github.com/AndronShermeta)
 [![@khrystynaDm1307](https://avatars.githubusercontent.com/u/53223985?s=200)](https://github.com/khrystynaDm1307)
-[![@WhiteLight666](https://avatars.githubusercontent.com/u/74491712?s=200)](https://github.com/WhiteLight666)
 
 ### Quality control team
 
@@ -328,7 +329,6 @@ if issue is in work it should be placed in proper column on dashboard according 
 [![@Evgeniya-Volkova](https://avatars.githubusercontent.com/u/76967400?s=200)](https://github.com/Evgeniya-Volkova)
 [![@nadiya17](https://avatars.githubusercontent.com/u/47214428?s=200)](https://github.com/nadiya17)
 [YevgeniiSt](https://github.com/YevgeniiSt)
-
 
 ### Database team
 
