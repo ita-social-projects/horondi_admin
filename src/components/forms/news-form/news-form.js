@@ -157,6 +157,16 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 data-cy='save'
                 type='submit'
                 title={SAVE_TITLE}
+                values={{
+                  authorImage: values.authorImage,
+                  newsImage: values.newsImage,
+                  enAuthorName: values.enAuthorName,
+                  uaAuthorName: values.uaAuthorName,
+                  enTitle: values.enTitle,
+                  uaTitle: values.uaTitle,
+                  enText: values.enText,
+                  uaText: values.uaText
+                }}
               />
             </Grid>
           </Grid>
