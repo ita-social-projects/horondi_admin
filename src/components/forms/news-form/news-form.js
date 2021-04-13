@@ -110,6 +110,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   const handleLoadAuthorImage = (e) => {
     handleImageLoad(e, (event) => {
       setFieldValue('authorImage', event.target.result);
+      setFieldValue('authorPhoto', event.target.result);
       setAuthorPhoto(event.target.result);
     });
     setUploadAuthorImage(e.target.files[0]);
@@ -143,6 +144,27 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     values
   );
 
+  const checkValidData = (value) => {
+    if (
+      value.enAuthorName.length >= 2 &&
+      value.uaAuthorName.length >= 2 &&
+      value.enTitle.length >= 10 &&
+      value.uaTitle.length >= 10
+    ) {
+      return {
+        newsImage: value.newsImage,
+        enAuthorName: value.enAuthorName,
+        uaAuthorName: value.uaAuthorName,
+        enTitle: value.enTitle,
+        uaTitle: value.uaTitle,
+        enText: ' ',
+        uaText: ' '
+      };
+    } 
+    return { valid: '' };
+    
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -157,14 +179,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 data-cy='save'
                 type='submit'
                 title={SAVE_TITLE}
-                values={{
-                  authorImage: values.authorImage,
-                  newsImage: values.newsImage,
-                  enAuthorName: values.enAuthorName,
-                  uaAuthorName: values.uaAuthorName,
-                  enTitle: values.enTitle,
-                  uaTitle: values.uaTitle
-                }}
+                values={checkValidData(values)}
               />
             </Grid>
           </Grid>
