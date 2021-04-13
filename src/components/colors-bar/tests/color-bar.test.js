@@ -34,8 +34,8 @@ describe('Colors-Bar test', () => {
     component = mount(
       <ColorsBar
         onColorChange={mockOnColorChange}
-        store={store}
         colors={mockStore.Color.list}
+        store={store}
       />
     );
   });
@@ -76,6 +76,16 @@ describe('Colors-Bar test', () => {
     expect(mockHolder.mock.calls.length).toEqual(2);
   });
 
+  it('Button is working2', () => {
+    useDispatchMock.mockReturnValue(mockHolder);
+
+    const wrapper = component.find({ title: 'Створити колір' });
+    // console.log(wrapper.debug());
+    // console.log(instance);
+    wrapper.handleClose();
+    expect(mockHolder.mock.calls.length).toEqual(2);
+  });
+
   it('Should render DialogWindow', () => {
     mockStore.Color.showColorDialogWindow = true;
     const component2 = mount(
@@ -85,7 +95,6 @@ describe('Colors-Bar test', () => {
         colors={mockStore.Color.list}
       />
     );
-    // console.log(component2.debug());
     expect(component2.exists(DialogTitle)).toBe(true);
     mockStore.Color.showColorDialogWindow = false;
   });
