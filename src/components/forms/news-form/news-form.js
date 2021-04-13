@@ -163,9 +163,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                   enAuthorName: values.enAuthorName,
                   uaAuthorName: values.uaAuthorName,
                   enTitle: values.enTitle,
-                  uaTitle: values.uaTitle,
-                  enText: values.enText,
-                  uaText: values.uaText
+                  uaTitle: values.uaTitle
                 }}
               />
             </Grid>
