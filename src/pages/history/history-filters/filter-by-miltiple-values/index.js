@@ -1,3 +1,3 @@
-import FilterByMultipleValues from './filter-by-miltiple-values';
+import FilterByMultipleValues from './filter-by-values';
 
 export default FilterByMultipleValues;
