@@ -37,7 +37,7 @@ const getAllComments = async (filter, pagination) => {
       }
     `
   });
-  client.resetStore();
+  await client.resetStore();
 
   return result.data.getAllComments;
 };
@@ -75,7 +75,6 @@ const getRecentComments = async (limit) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
   if (result.data.getRecentComments.message) {
     throw new Error(
       `${result.data.getRecentComments.statusCode} ${
@@ -122,7 +121,7 @@ const deleteComment = async (id) => {
       throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
     });
 
-  client.resetStore();
+  await client.resetStore();
 
   return result.data.deleteComment;
 };
@@ -156,7 +155,7 @@ const getCommentById = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   if (result.data.getCommentById.message) {
     throw new Error(
       `${result.data.getCommentById.statusCode} ${
@@ -192,7 +191,7 @@ const updateComment = async (id, comment) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
 
   if (result.data.updateComment.message) {
     throw new Error(
@@ -216,7 +215,7 @@ const getCommentsByType = async (value, commentsType) => {
   } catch (error) {
     throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
   }
-  client.resetStore();
+  await client.resetStore();
 };
 
 const getCommentsByProduct = async (id) => {
@@ -248,7 +247,7 @@ const getCommentsByProduct = async (id) => {
     .catch((error) => {
       throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
     });
-  client.resetStore();
+  await client.resetStore();
 
   return result.data.getAllCommentsByProduct;
 };
@@ -284,7 +283,7 @@ const getCommentsByUser = async (userId) => {
     .catch((error) => {
       throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
     });
-  client.resetStore();
+  await client.resetStore();
   return result.data.getAllCommentsByUser;
 };
 
