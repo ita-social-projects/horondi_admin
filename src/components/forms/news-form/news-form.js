@@ -156,7 +156,9 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         uaTitle: value.uaTitle
       };
     }
-    return { valid: '' };
+    if (value.enText === '') delete value.enText;
+    if (value.uaText === '') delete value.uaText;
+    return value;
   };
 
   return (
