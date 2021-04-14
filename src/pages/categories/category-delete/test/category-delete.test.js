@@ -3,36 +3,37 @@ import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select
-} from '@material-ui/core';
-import * as reactRedux from 'react-redux';
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select
+  } from '@material-ui/core';
 import { StandardButton } from '../../../../components/buttons';
+import * as reactRedux from 'react-redux'
 import CategoryDelete from '../category-delete';
 import store from './store';
+
+
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const mockStore = store;
 
 jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: (selector) => selector(mockStore),
-  useDispatch: () => jest.fn()
-}));
+    ...jest.requireActual('react-redux'),
+    useSelector: (selector) => selector(mockStore),
+    useDispatch: () => jest.fn()
+  }));
 
 describe('Categories test', () => {
-  let store;
-  jest.spyOn(reactRedux);
-  const mockHolder = jest.fn();
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = mount(<CategoryDelete/>);
-  });
+    jest.spyOn(reactRedux, 'useDispatch');
+    const mockHolder = jest.fn();
+    let wrapper;
+    
+    beforeEach(() => {
+        wrapper = mount(<CategoryDelete/>);
+    });
 
   afterEach(() => {
     wrapper.unmount();
