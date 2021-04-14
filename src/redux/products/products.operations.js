@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { productsTranslations } from '../../translations/product.translations';
 import { client, setItems } from '../../utils/client';
 
 const getAllProducts = async (productsState, tableState) => {
