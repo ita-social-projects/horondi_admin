@@ -429,8 +429,7 @@ const addProduct = async (product, upload) => {
 };
 
 const deleteProduct = async (payload) => {
-  const result = await client.mutate({
-    mutation: gql`
+  const result = `
       mutation($id: ID!) {
         deleteProduct(id: $id) {
           ... on Product {
@@ -438,13 +437,11 @@ const deleteProduct = async (payload) => {
           }
         }
       }
-    `,
-    variables: {
-      id: payload
-    }
-  });
+    `;
   await client.resetStore();
-  return result.data.deleteProduct._id;
+  return setItems(result, {
+    id: payload
+  });
 };
 
 const getProduct = async (payload) => {
