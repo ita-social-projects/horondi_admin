@@ -26,6 +26,7 @@ jest.mock('react-redux', () => ({
 
 describe('Categories test', () => {
   let store;
+  jest.spyOn(reactRedux);
   const mockHolder = jest.fn();
   let wrapper;
 
@@ -56,7 +57,6 @@ describe('Categories test', () => {
     expect(wrapper.exists(StandardButton)).toBe(true);
   });
   it('Button is working', () => {
-    const wrapper = mount(<CategoryDelete/>)
     useDispatch.mockReturnValue(mockHolder);
     wrapper.find(StandardButton).simulate('click');
     expect(mockHolder.mock.calls.length).toEqual(1);
