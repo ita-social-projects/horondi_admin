@@ -33,9 +33,9 @@ describe('Back button tests', () => {
   });
   it('Should handle click the button', () => {
     useDispatchMock.mockReturnValue(mockHolder);
-    const wrapper = mount(<BackButton />);
+    const wrapper = mount(<BackButton onClick={mockHolder} />);
     wrapper.find('button').simulate('click');
-    expect(mockHolder.mock.calls.length).toBeDefined();
+    expect(mockHolder.mock.calls.length).toEqual(1);
   });
   it('Should openSuccessSnackbar exist', () => {
     const wrapper = mount(<BackButton {...testProps} />);
