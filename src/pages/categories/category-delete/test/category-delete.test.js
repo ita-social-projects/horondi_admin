@@ -59,6 +59,7 @@ describe('Categories test', () => {
   });
   it('Button is working', () => {
     useDispatch.mockReturnValue(mockHolder);
+    const wrapper = mount(<CategoryDelete/>);
     wrapper.find(StandardButton).simulate('click');
     expect(mockHolder.mock.calls.length).toEqual(1);
   });
