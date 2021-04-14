@@ -14,11 +14,18 @@ import {
   GET_USER_COMMENTS,
   GET_PRODUCT_COMMENTS,
   SET_FILTER,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  GET_RECENT_COMMENTS,
+  SET_RECENT_COMMENTS
 } from './comments.types';
 
 const setComments = (comments) => ({
   type: SET_COMMENTS,
+  payload: comments
+});
+
+const setRecentComments = (comments) => ({
+  type: SET_RECENT_COMMENTS,
   payload: comments
 });
 
@@ -34,6 +41,11 @@ const getComment = (payload) => ({
 
 const getComments = (payload) => ({
   type: GET_COMMENTS,
+  payload
+});
+
+const getRecentComments = (payload) => ({
+  type: GET_RECENT_COMMENTS,
   payload
 });
 
@@ -112,5 +124,7 @@ export {
   getUserComments,
   getProductComments,
   setFilter,
-  clearFilters
+  clearFilters,
+  setRecentComments,
+  getRecentComments
 };
