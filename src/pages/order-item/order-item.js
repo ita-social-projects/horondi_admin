@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Tabs, Tab, Button } from '@material-ui/core';
+import { Paper, Tabs, Tab } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
@@ -14,7 +14,7 @@ import LoadingBar from '../../components/loading-bar';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
-import { BackButton } from '../../components/buttons';
+import { BackButton, SaveButton } from '../../components/buttons';
 import { submitStatus, initialValues, setFormValues } from '../../utils/order';
 import { validationSchema } from '../../validations/orders/order-form-validation';
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
@@ -24,8 +24,8 @@ const OrderItem = ({ id }) => {
   const dispatch = useDispatch();
   const { orderTabs } = labels;
   const { materialUiConstants } = config;
+  const { SAVE_TITLE } = buttonTitles;
   const { delivery, general, products, receiver } = orderTabs;
-  const { SAVE_ORDER } = buttonTitles;
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { selectedOrder, orderLoading } = useSelector(({ Orders }) => ({
@@ -107,17 +107,19 @@ const OrderItem = ({ id }) => {
           />
         </TabPanel>
       </Paper>
-      <Button
-        type={materialUiConstants.types.submit}
-        variant={materialUiConstants.contained}
-        color={materialUiConstants.primary}
-        className={classes.saveBtn}
-        disabled={!dirty || !isValid}
-      >
-        {SAVE_ORDER}
-      </Button>
       <div className={classes.controlsBlock}>
         <BackButton />
+        <SaveButton
+          className={classes.saveBtn}
+          type={materialUiConstants.types.submit}
+          title={SAVE_TITLE}
+          values={{
+            code: values.code,
+            uaTitle: values.uaTitle,
+            enTitle: values.enTitle
+          }}
+          disabled={!dirty || !isValid}
+        />
       </div>
     </form>
   );

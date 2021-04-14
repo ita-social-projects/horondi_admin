@@ -6,6 +6,22 @@ export const useStyles = makeStyles((theme) => ({
     minWidth: 120,
     marginTop: '15px'
   },
+  tabs: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    backgroundColor: '#f5f5fa',
+    '& button': {
+      '& span:before': {
+        backgroundColor: 'red !important'
+      }
+    },
+    '& span.MuiTab-wrapper': {
+      color: '#3F51B5'
+    },
+    '& span.MuiTabs-indicator': {
+      backgroundColor: '#3F51B5'
+    }
+  },
   materialForm: {
     '& div': {
       '& div': {
@@ -37,7 +53,7 @@ export const useStyles = makeStyles((theme) => ({
   saveButton: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    marginLeft: '.5rem'
+    marginLeft: 20
   },
   colorPaletteButton: {
     marginTop: theme.spacing(2),
@@ -51,22 +67,6 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     padding: 20,
     marginTop: 70
-  },
-  tabs: {
-    paddingLeft: 0,
-    paddingRight: 0,
-    backgroundColor: 'white',
-    '& button': {
-      '& span:before': {
-        backgroundColor: 'red !important'
-      }
-    },
-    '& span.MuiTab-wrapper': {
-      color: '#3F51B5'
-    },
-    '& span.MuiTabs-indicator': {
-      backgroundColor: '#3F51B5'
-    }
   },
   controlsBlock: {
     display: 'flex',

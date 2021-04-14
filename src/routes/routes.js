@@ -57,6 +57,8 @@ import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
+import History from '../pages/history';
+import HistoryDetails from '../pages/history/history-details';
 
 const { routes } = config;
 
@@ -75,42 +77,47 @@ const Routes = () => {
   if (!isAuth) {
     return (
       <>
-        <NavBar />
+        <NavBar/>
         <Switch>
           <Route
             path={routes.pathToConfirmAdmin}
             exact
             component={ConfirmUser}
           />
-          <Route path={routes.pathToLogin} exact component={LoginPage} />
-          <Route component={ErrorPage} />
+          <Route path={routes.pathToLogin} exact component={LoginPage}/>
+          <Route component={ErrorPage}/>
         </Switch>
-        <DialogWindow />
-        <SnackbarItem />
+        <DialogWindow/>
+        <SnackbarItem/>
       </>
     );
   }
 
   return (
     <>
-      <NavBar />
-      <NavMenu />
+      <NavBar/>
+      <NavMenu/>
       <ErrorBoundary>
         <Switch>
-          <Route path={routes.pathToMainPage} exact component={MainPage} />
-          <Route path={routes.pathToUsers} exact component={UsersPage} />
+          <Route path={routes.pathToMainPage} exact component={MainPage}/>
+          <Route path={routes.pathToHistory} exact component={History}/>
+          <Route path={routes.pathToHistoryDetails}
+                 exact
+                 component={HistoryDetails}
+          />
+          <Route path={routes.pathToUsers} exact component={UsersPage}/>
           <Route
             path={routes.pathToUsersDetails}
             exact
             component={UsersDetails}
           />
-          <Route path={routes.pathToNews} exact component={NewsPage} />
-          <Route path={routes.pathToPatterns} exact component={PatternPage} />
-          <Route path={routes.pathToModels} exact component={ModelPage} />
-          <Route path={routes.pathToHeaders} exact component={HeaderPage} />
-          <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
-          <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
-          <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+          <Route path={routes.pathToNews} exact component={NewsPage}/>
+          <Route path={routes.pathToPatterns} exact component={PatternPage}/>
+          <Route path={routes.pathToModels} exact component={ModelPage}/>
+          <Route path={routes.pathToHeaders} exact component={HeaderPage}/>
+          <Route path={routes.pathToAddHeader} exact component={HeaderAdd}/>
+          <Route path={routes.pathToAddPattern} exact component={PatternAdd}/>
+          <Route path={routes.pathToAddNews} exact component={NewsAdd}/>
           <Route
             path={routes.pathToNewsDetails}
             exact
@@ -126,7 +133,7 @@ const Routes = () => {
             exact
             component={MaterialAdd}
           />
-          <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+          <Route path={routes.pathToMaterials} exact component={MaterialPage}/>
           <Route
             path={routes.pathToMaterialDetails}
             exact
@@ -151,37 +158,37 @@ const Routes = () => {
             path={routes.pathToBusinessPageDetails}
             exact
             render={({ match }) => (
-              <BusinessPageForm id={match.params.id} editMode />
+              <BusinessPageForm id={match.params.id} editMode/>
             )}
           />
-          <Route path={routes.pathToContacts} exact component={ContactsPage} />
-          <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
+          <Route path={routes.pathToContacts} exact component={ContactsPage}/>
+          <Route path={routes.pathToAddContact} exact component={ContactsAdd}/>
           <Route
             path={routes.pathToContactsEdit}
             exact
             component={ContactsEdit}
           />
-          <Route path={routes.pathToAddModel} exact component={ModelAdd} />
+          <Route path={routes.pathToAddModel} exact component={ModelAdd}/>
           <Route
             path={routes.pathToModelDetails}
             exact
             component={ModelDetails}
           />
-          <Route path={routes.pathToProducts} exact component={ProductsPage} />
-          <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
+          <Route path={routes.pathToProducts} exact component={ProductsPage}/>
+          <Route path={routes.pathToAddProduct} exact component={ProductsAdd}/>
           <Route
             path={routes.pathToEditProduct}
             exact
-            render={({ match }) => <ProductEdit id={match.params.id} />}
+            render={({ match }) => <ProductEdit id={match.params.id}/>}
           />
-          <Route path={routes.pathToCategories} exact component={Categories} />
-          <Route path={routes.pathToComments} exact component={Comments} />
-          <Route path={routes.pathToSizes} exact component={Sizes} />
-          <Route path={routes.pathToAddSize} exact component={SizeAdd} />
+          <Route path={routes.pathToCategories} exact component={Categories}/>
+          <Route path={routes.pathToComments} exact component={Comments}/>
+          <Route path={routes.pathToSizes} exact component={Sizes}/>
+          <Route path={routes.pathToAddSize} exact component={SizeAdd}/>
           <Route
             path={routes.pathToEditSize}
             exact
-            render={({ match }) => <SizeEdit id={match.params.id} />}
+            render={({ match }) => <SizeEdit id={match.params.id}/>}
           />
 
           <Route
@@ -189,7 +196,7 @@ const Routes = () => {
             exact
             component={RegisterUser}
           />
-          <Route path={routes.pathToHomePageEdit} exact component={HomePage} />
+          <Route path={routes.pathToHomePageEdit} exact component={HomePage}/>
           <Route
             path={routes.pathToAddCategory}
             exact
@@ -210,7 +217,7 @@ const Routes = () => {
             path={routes.pathToEmailQuestionDetails}
             exact
             render={({ match }) => (
-              <EmailQuestionsDetails id={match.params.id} />
+              <EmailQuestionsDetails id={match.params.id}/>
             )}
           />
           <Route
@@ -218,13 +225,13 @@ const Routes = () => {
             exact
             component={StatisticPage}
           />
-          <Route path={routes.pathToOrders} exact component={Orders} />
+          <Route path={routes.pathToOrders} exact component={Orders}/>
           <Route
             path={routes.pathToOrderItem}
             exact
-            render={({ match }) => <OrderItem id={match.params.id} />}
+            render={({ match }) => <OrderItem id={match.params.id}/>}
           />
-          <Route path={routes.pathToOrderAdd} exact component={OrderItem} />
+          <Route path={routes.pathToOrderAdd} exact component={OrderItem}/>
           <Route
             path={routes.pathToHomePageSlides}
             exact
@@ -260,11 +267,11 @@ const Routes = () => {
             exact
             component={CommentEdit}
           />
-          <Route component={ErrorPage} />
+          <Route component={ErrorPage}/>
         </Switch>
       </ErrorBoundary>
-      <DialogWindow />
-      <SnackbarItem />
+      <DialogWindow/>
+      <SnackbarItem/>
     </>
   );
 };
