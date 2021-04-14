@@ -11,6 +11,7 @@ const materialUiConstants = {
   types: {
     number: 'number',
     string: 'string',
+    text: 'text',
     submit: 'submit',
     datetimeLocal: 'datetime-local'
   },

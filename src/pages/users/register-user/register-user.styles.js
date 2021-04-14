@@ -23,5 +23,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   saveButton: {
     height: 40
+  },
+  sendButton: {
+    margin: '15px 25px'
   }
 }));

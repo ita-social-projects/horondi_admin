@@ -17,6 +17,7 @@ import { BackButton } from '../../../components/buttons';
 import { UserBlockPeriod } from '../../../consts/user-block-status';
 import {
   blockUserByAdmin,
+  resendEmail,
   unlockUserByAdmin
 } from '../../../redux/users/users.actions';
 import { getUserBlockStatus } from '../../../utils/user';
@@ -26,7 +27,8 @@ const {
   USER_INACTIVE_TITLE,
   SWITCH_USER_STATUS_TITLE,
   SHOW_COMMENTS_TITLE,
-  HIDE_COMMENTS_TITLE
+  HIDE_COMMENTS_TITLE,
+  SEND_CONFIRM
 } = config.buttonTitles;
 
 const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
@@ -53,7 +55,9 @@ const UsersDetails = (props) => {
     city,
     adress,
     postCode,
-    isBanned
+    isBanned,
+    confirmed,
+    email
   } = useUsersHandler(id);
 
   if (loading) {
@@ -82,6 +86,10 @@ const UsersDetails = (props) => {
     );
   };
 
+  const sendConfirmationHandler = () => {
+    dispatch(resendEmail({ email }));
+  };
+
   const showCommentsHandler = () => setShowComments(!showComments);
 
   return (
@@ -98,6 +106,8 @@ const UsersDetails = (props) => {
               ? USER_ACTIVE_TITLE
               : USER_INACTIVE_TITLE
           }
+          buttonConfirmed={!confirmed ? SEND_CONFIRM : null}
+          buttonConfirmationHandler={() => sendConfirmationHandler()}
           buttonHandler={() => userStatusHandler(id)}
         />
         <div className={styles.controlsBlock}>

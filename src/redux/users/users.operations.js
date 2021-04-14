@@ -36,6 +36,7 @@ query($id: ID!) {
     ... on User {
       firstName
       lastName
+      confirmed
       email
       address {
         country
@@ -73,6 +74,34 @@ mutation($id: ID!) {
 const registerAdminMutation = `
 mutation($user: AdminRegisterInput!) {
   registerAdmin(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
+const resendEmailToConfirmAdminMutation = `
+mutation($user: resendEmailToConfirmAdminInput!) {
+  resendEmailToConfirmAdmin(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
+const confirmSuperadminCreationMutation = `
+mutation($user: confirmSuperadminCreationInput!) {
+  confirmSuperadminCreation(user:$user){
     ... on User {
       email
     }
@@ -241,6 +270,34 @@ const registerAdmin = async (user) => {
   return data.registerAdmin;
 };
 
+const resendEmailToConfirmAdmin = async (user) => {
+  const result = await setItems(resendEmailToConfirmAdminMutation, { user });
+
+  const { data } = result;
+
+  if (data.resendEmailToConfirmAdmin.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
+    );
+  }
+
+  return data.registerAdmin;
+};
+
+const confirmSuperadminCreation = async (user) => {
+  const result = await setItems(confirmSuperadminCreationMutation, { user });
+
+  const { data } = result;
+
+  if (data.confirmSuperadminCreation.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
+    );
+  }
+
+  return data.registerAdmin;
+};
+
 const completeAdminRegister = async ({ user, token }) => {
   const result = await setItems(completeAdminRegisterMutation, { user, token });
 
@@ -257,7 +314,6 @@ const completeAdminRegister = async ({ user, token }) => {
 
 const validateToken = async (token) => {
   const result = await getItems(validateTokenQuery, { token });
-
   const { data } = result;
 
   if (data.validateConfirmationToken.message) {
@@ -274,8 +330,10 @@ export {
   getUserById,
   deleteUser,
   registerAdmin,
+  resendEmailToConfirmAdmin,
   completeAdminRegister,
   validateToken,
   blockUser,
-  unlockUser
+  unlockUser,
+  confirmSuperadminCreation
 };

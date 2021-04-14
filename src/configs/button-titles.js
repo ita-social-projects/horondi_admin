@@ -59,8 +59,10 @@ const buttonTitles = {
   CATEGORY_TITLE: 'Категорія',
   LOOK: 'Переглянути',
   ADD_ORDER: 'Додати замовлення',
-  EXIT_WITHOUT_SAVING: 'Вийти без збереження',
   USER_ROLE_TITLE: 'Роль',
-  EVENT_TITLE: 'Подія'
+  EVENT_TITLE: 'Подія',
+  SEND_CONFIRM: 'Надіслати підтвердження',
+  SEND_CODE: 'Надіслати код для підтвердження',
+  EXIT_WITHOUT_SAVING: 'Вийти без збереження'
 };
 export default buttonTitles;

@@ -26,7 +26,7 @@ import routes from '../../configs/routes';
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
 const { LOGOUT_MESSAGE } = config.messages;
-const {pathToLogin} = routes;
+const { pathToLogin } = routes;
 
 const NavBar = () => {
   const classes = useStyles();

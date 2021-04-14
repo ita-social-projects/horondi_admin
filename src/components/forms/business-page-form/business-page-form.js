@@ -198,15 +198,9 @@ const BusinessPageForm = ({ id, editMode }) => {
               </div>
             )}
           </Grid>
-          <Paper className={classes.tabField}>
-            {languages.map((lang) => (
-              <LanguagePanel
-                lang={lang}
-                inputOptions={inputOptions}
-                key={lang}
-              />
-            ))}
-          </Paper>
+          {languages.map((lang) => (
+            <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+          ))}
         </div>
         <div className={classes.controlsBlock}>
           <BackButton initial={!valueEquality} />

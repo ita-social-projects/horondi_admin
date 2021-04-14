@@ -17,7 +17,7 @@ const getAllBusinessPages = async () => {
       }
     `
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
   return data.getAllBusinessTexts;
 };
@@ -84,7 +84,7 @@ const createBusinessPage = async ({ page, files }) => {
       files
     }
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.addBusinessText.message) {
@@ -118,7 +118,7 @@ const deleteBusinessPage = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.deleteBusinessText.message) {
@@ -161,7 +161,7 @@ const updateBusinessPage = async ({ id, page, files }) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.updateBusinessText.message) {

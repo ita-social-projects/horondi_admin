@@ -89,12 +89,12 @@ const HistoryDetails = ({ match }) => {
               <TableCell className={styles.tableCell}>{
                 !recordItem?.valueBeforeChange.length ? <p>{titles.historyTitles.noChanges}</p> :
                   recordItem?.valueBeforeChange.map(value =>
-                    <p>{JSON.stringify(value)}</p>)
+                    <p key={value}>{JSON.stringify(value)}</p>)
               }</TableCell>
               <TableCell className={styles.tableCell}>{
                 !recordItem?.valueAfterChange.length ? <p>{titles.historyTitles.noChanges}</p> :
                   recordItem?.valueAfterChange.map(value =>
-                    <p>{JSON.stringify(value)}</p>)
+                    <p key={value}>{JSON.stringify(value)}</p>)
               }</TableCell>
             </TableRow>
           </TableBody>

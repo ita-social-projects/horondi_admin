@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { darkMode } from '../../../redux/theme/tests/theme.variables';
 
 export const useStyles = makeStyles(() => ({
   detailsTitle: ({ darkMode }) => ({

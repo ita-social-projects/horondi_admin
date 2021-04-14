@@ -5,9 +5,12 @@ import {
   SET_USER,
   SET_USERS_ERROR,
   SET_USERS_LOADING,
+  SET_ADMIN_CREATION_LOADING,
+  NEW_ADMIN_REGISTERED,
   DELETE_USER,
   DELETE_USER_LOCALLY,
   REGISTER_ADMIN,
+  RESEND_EMAIL,
   CONFIRM_ADMIN,
   VALIDATE_TOKEN,
   SET_FILTER,
@@ -15,7 +18,8 @@ import {
   SET_TAB,
   CLEAR_FILTERS,
   BLOCK_USER,
-  UNLOCK_USER
+  UNLOCK_USER,
+  CONFIRM_SUPERADMIN_CREATION
 } from './users.types';
 
 const getUsers = (payload) => ({
@@ -30,6 +34,11 @@ const setUsers = (users) => ({
 
 const setUsersLoading = (loading) => ({
   type: SET_USERS_LOADING,
+  payload: loading
+});
+
+const setAdminCreationLoading = (loading) => ({
+  type: SET_ADMIN_CREATION_LOADING,
   payload: loading
 });
 
@@ -60,6 +69,21 @@ const deleteUserLocally = (id) => ({
 
 const registerAdmin = (user) => ({
   type: REGISTER_ADMIN,
+  payload: user
+});
+
+const newRegisteredAdmin = (payload) => ({
+  type: NEW_ADMIN_REGISTERED,
+  payload
+});
+
+const resendEmail = (user) => ({
+  type: RESEND_EMAIL,
+  payload: user
+});
+
+const confirmSuperadmin = (user) => ({
+  type: CONFIRM_SUPERADMIN_CREATION,
   payload: user
 });
 
@@ -108,8 +132,10 @@ export {
   deleteUser,
   setUserError,
   setUsersLoading,
+  setAdminCreationLoading,
   deleteUserLocally,
   registerAdmin,
+  resendEmail,
   confirmAdmin,
   validateToken,
   setTab,
@@ -117,5 +143,7 @@ export {
   setSort,
   clearFilters,
   blockUserByAdmin,
-  unlockUserByAdmin
+  unlockUserByAdmin,
+  confirmSuperadmin,
+  newRegisteredAdmin
 };

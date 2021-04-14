@@ -13,7 +13,8 @@ export const errorMessages = {
   ONLY_SUPER_ADMIN_CAN_BLOCK_ADMIN: 'У вас недостатньо прав',
   USER_IS_ALREADY_UNLOCKED: 'Цей користувач вже активний',
   YOU_CANT_UNLOCK_YOURSELF: 'Ви не можете активувати власний профіль',
-  ONLY_SUPER_ADMIN_CAN_UNLOCK_ADMIN: 'У вас недостатньо прав'
+  ONLY_SUPER_ADMIN_CAN_UNLOCK_ADMIN: 'У вас недостатньо прав',
+  INVALID_OTP_CODE: 'Неправильний otp-код'
 };
 
 export const loginErrorMessages = {
@@ -29,7 +30,9 @@ export const loginErrorMessages = {
   LASTNAME_MIN_LENGTH_MESSAGE: 'Прізвище повинно містити не менше 2 символів',
   FIRSTNAME_MAX_LENGTH_MESSAGE: "Ім'я повинно містити не більше 30 символів",
   LASTNAME_MAX_LENGTH_MESSAGE: 'Прізвище повинно містити не більше 30 символів',
-  SELECT_ROLE_MESSAGE: 'Оберіть роль'
+  SELECT_ROLE_MESSAGE: 'Оберіть роль',
+  WRONG_FORMAT: 'Не допускається використання спеціальних символів',
+  ENTER_CODE: 'Введіть код'
 };
 export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',

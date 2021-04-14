@@ -29,12 +29,11 @@ const NavClearFilters = ({ clearOptions }) => {
 
 NavClearFilters.propTypes = {
   clearOptions: PropTypes.objectOf(PropTypes.object),
-  filters: PropTypes.func,
   clearAllFilters: PropTypes.func
 };
 NavClearFilters.defaultProps = {
   clearOptions: {},
-  filters: noop,
   clearAllFilters: noop
 };
+
 export default NavClearFilters;

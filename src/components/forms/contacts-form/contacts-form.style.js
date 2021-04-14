@@ -17,8 +17,7 @@ export const useStyles = makeStyles((theme) => {
     contactItemUpdate: {
       display: 'flex',
       flexDirection: 'column',
-      margin: theme.spacing(2),
-      paddingTop: 10
+      padding: 10
     },
     textField: {
       '&:first-letter': {
