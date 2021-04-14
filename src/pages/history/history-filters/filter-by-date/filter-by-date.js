@@ -1,42 +1,35 @@
-import 'date-fns';
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers';
-import { uk } from 'date-fns/locale';
+import TextField from '@material-ui/core/TextField';
 
-export default function MaterialUIPickers({
-  items
-}) {
-  // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+import { generateDateFormatForInputValue } from '../../../../utils/history';
+import materialUiConstants from '../../../../configs/material-ui-constants';
+import { useStyles } from './filter-by-date.styles';
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    console.log(selectedDate);
+const FilterByDate = ({ filters, setDateRangeFilter, title }) => {
+
+  const styles = useStyles();
+
+  const setDateHandler = ({ target }) => {
+    if (target.value) {
+      setDateRangeFilter(new Date(target.value).getTime());
+    }
   };
 
   return (
-    <MuiPickersUtilsProvider locale={uk} utils={DateFnsUtils}>
-      <Grid container justify="flex-start">
-
-        <KeyboardDatePicker
-          autoOk
-          margin="normal"
-          id="date-picker-dialog"
-          label="Від"
-          format="dd/MM/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date'
-          }}
-        />
-
-      </Grid>
-    </MuiPickersUtilsProvider>
+    <form className={styles.container} noValidate>
+      <TextField
+        id={materialUiConstants.types.datetimeLocal}
+        onBlur={setDateHandler}
+        label={title}
+        defaultValue={filters ? generateDateFormatForInputValue(filters) : ''}
+        type={materialUiConstants.types.datetimeLocal}
+        className={styles.textField}
+        InputLabelProps={{
+          shrink: true
+        }}
+      />
+    </form>
   );
-}
+};
+
+export default FilterByDate;

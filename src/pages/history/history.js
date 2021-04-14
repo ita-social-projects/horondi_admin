@@ -1,44 +1,39 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
+import { Typography } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { config } from '../../configs';
 import { useCommonStyles } from '../common.styles';
-import { Typography } from '@material-ui/core';
+import { useStyles } from './history.styles';
 import materialUiConstants from '../../configs/material-ui-constants';
 import { getHistoryRecords } from '../../redux/history/history.actions';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import {
-  handleHistory,
-  roleFilterObject,
-  filterInputToRender,
-  userRolesForFilter,
-  actionFilterObj
+  handleHistory
 } from '../../utils/history';
-import { useDispatch, useSelector } from 'react-redux';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerRow from '../../containers/table-container-row';
 import ReactHtmlParser from 'react-html-parser';
 import getTime from '../../utils/getTime';
 import { historySelector } from '../../redux/selectors/history';
 import { userRoleTranslations } from '../../translations/user.translations';
-import { NavLink } from 'react-router-dom';
 import { historyActions } from '../../consts/history-actions';
-import FilterNavbar from '../../components/filter-search-sort';
 import useHistoryFilters from '../../hooks/filters/use-history-filters';
-import FilterByMultipleValues from './history-filters/filter-by-miltiple-values/filter-by-miltiple-values';
-import buttonTitles from '../../configs/button-titles';
-import FilterByDate from './history-filters/filter-by-date';
+import routes from '../../configs/routes';
+import HistoryFilters from './history-filters';
 
 const History = () => {
-  const commonStyles = useCommonStyles();
-  const dispatch = useDispatch();
   const {
     searchOptions,
     clearOptions,
     filterOptions
   } = useHistoryFilters();
-  const filters = useSelector(({ History }) => History.filters);
+
   const {
+    darkMode,
+    filters,
     records,
     historyLoading,
     currentPage,
@@ -46,13 +41,17 @@ const History = () => {
     itemsCount
   } = useSelector(historySelector);
 
+  const commonStyles = useCommonStyles();
+  const styles = useStyles({ darkMode });
+  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(
       getHistoryRecords({
         limit: rowsPerPage,
         skip: currentPage * rowsPerPage,
         filter: {
-          date: { dateFrom: '', dateTo: '' },
+          date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
           role: filters.role,
           action: filters.action,
           fullName: filters.search
@@ -80,12 +79,13 @@ const History = () => {
           record.subject.name :
           `${record.subject.model}/${record.subject.name}`
       }
-      details={<NavLink to={'/'}>{config.buttonTitles.LOOK}</NavLink>}
+      details={<NavLink to={`${routes.pathToHistory}/${record._id}`} className={styles.detailsBtn}
+      >{config.buttonTitles.LOOK}</NavLink>}
     />
   ));
 
-  if (historyLoading){
-    return <LoadingBar/>
+  if (historyLoading) {
+    return <LoadingBar/>;
   }
 
   return (
@@ -96,28 +96,15 @@ const History = () => {
       >
         {config.titles.historyTitles.mainTitle}
       </Typography>
-      <div>
-        <FilterByDate/>
-        <FilterByMultipleValues
-          filters={filters}
-          label={buttonTitles.EVENT_TITLE}
-          selectItems={actionFilterObj()}
-          setFilterHandler={filterOptions.setActionsFilter}
-          renderFilterItems={filterInputToRender}
-          objForTranslateRenderItems={historyActions}
-        />
-
-        <FilterByMultipleValues
-          label={buttonTitles.USER_ROLE_TITLE}
-          selectItems={roleFilterObject}
-          setFilterHandler={filterOptions.setRolesFilter}
-          renderFilterItems={filterInputToRender}
-          objForTranslateRenderItems={userRolesForFilter}
-        />
-        <FilterNavbar options={{ clearOptions, searchOptions } || {}}/>
-      </div>
+      <HistoryFilters
+        filters={filters}
+        clearOptions={clearOptions}
+        filterOptions={filterOptions}
+        searchOptions={searchOptions}
+      />
       {
-        historyLoading ? <LoadingBar/> :
+        !records?.length ?
+          <p className={styles.noRecordsTitle}>{config.messages.NO_HISTORY_RECORDS_MESSAGE}</p> :
           <TableContainerGenerator
             pagination
             data-cy='historyTable'
@@ -130,6 +117,7 @@ const History = () => {
             tableItems={historyItems}
           />
       }
+
 
     </div>
   );

@@ -10,26 +10,21 @@ const { CLEAR_FILTERS } = config.buttonTitles;
 const NavClearFilters = ({ clearOptions }) => {
   const { clearAllFilters } = clearOptions;
   const styles = useStyles();
-  const { search, ...arrayFilters } = clearOptions.filters;
 
   const handleClearFilters = () => {
     clearAllFilters();
   };
 
-  return (
-    <Box ml={1}>
-      <Button
-        className={styles.clearButton}
-        disabled={
-          Object.values(arrayFilters).some((filter) => !filter.length) &&
-          !search.trim().length
-        }
-        onClick={handleClearFilters}
-      >
-        {CLEAR_FILTERS}
-      </Button>
-    </Box>
-  );
+    return (
+      <Box ml={1}>
+        <Button
+          className={styles.clearButton}
+          onClick={handleClearFilters}
+        >
+          {CLEAR_FILTERS}
+        </Button>
+      </Box>
+    );
 };
 
 NavClearFilters.propTypes = {

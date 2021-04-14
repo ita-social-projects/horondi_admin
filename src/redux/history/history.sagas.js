@@ -3,11 +3,11 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 import {
   setHistoryLoading,
   setHistoryRecords,
-  setHistoryError
+  setHistoryError, setRecordItemLoading, setRecordItem
 } from './history.actions';
-import { getAllHistoryRecords } from './history.operations';
+import { getAllHistoryRecords, getHistoryRecord } from './history.operations';
 import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
-import { GET_HISTORY_RECORDS } from './history.types';
+import { GET_HISTORY_RECORDS, GET_RECORD_ITEM } from './history.types';
 import { setItemsCount } from '../table/table.actions';
 
 export function* handleHistoryRecordsLoad({ payload }) {
@@ -27,6 +27,20 @@ export function* handleHistoryRecordsLoad({ payload }) {
   }
 }
 
+export function* handleHistoryRecordByIdLoad({ payload }) {
+  try {
+    yield put(setRecordItemLoading(true));
+    const record = yield call(
+      getHistoryRecord,
+      payload
+    );
+    yield put(setRecordItem(record));
+    yield put(setRecordItemLoading(false));
+  } catch (error) {
+    yield call(handleHistoryError, error);
+  }
+}
+
 function* handleHistoryError(e) {
   yield put(setHistoryLoading(false));
   yield put(setHistoryError({ e }));
@@ -35,4 +49,5 @@ function* handleHistoryError(e) {
 
 export default function* historySaga() {
   yield takeEvery(GET_HISTORY_RECORDS, handleHistoryRecordsLoad);
+  yield takeEvery(GET_RECORD_ITEM, handleHistoryRecordByIdLoad);
 }

@@ -1,3 +1,3 @@
-import FilterByDate from './filter-by-date';
+import FilterByDate  from './filter-by-date';
 
 export default FilterByDate;

@@ -13,6 +13,7 @@ query(
   ) {
   ...on History {
      items{
+        _id
         action
         subject{
           model
@@ -38,6 +39,41 @@ query(
 }
 `;
 
+const getHistoryRecordQuery = `
+query(
+  $id: ID!
+) {
+  getHistoryRecordById(
+    id: $id
+  ) {
+  ...on HistoryRecord {
+      _id
+      action
+        subject{
+          model
+          name
+          subjectId
+        }
+        valueBeforeChange
+        valueAfterChange
+        userId{
+          _id
+          email
+          firstName
+          lastName
+          role
+        }
+     valueBeforeChange
+     valueAfterChange
+  }
+    ...on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
 const getAllHistoryRecords = async (limit, skip, filter) => {
   const options = {
     limit,
@@ -50,4 +86,11 @@ const getAllHistoryRecords = async (limit, skip, filter) => {
   return data.getAllHistoryRecords;
 };
 
-export { getAllHistoryRecords };
+const getHistoryRecord = async (id) => {
+
+  const { data } = await getItems(getHistoryRecordQuery, { id });
+
+  return data.getHistoryRecordById;
+};
+
+export { getAllHistoryRecords, getHistoryRecord };

@@ -3,23 +3,23 @@ import {
   SET_FILTER,
   SET_HISTORY_ERROR,
   SET_HISTORY_LOADING,
-  SET_HISTORY_RECORDS
+  SET_HISTORY_RECORDS, SET_RECORD_ITEM, SET_RECORD_LOADING
 } from './history.types';
 
 const initialFilters = {
   action: [],
   role: [],
-  date: {
-    dateFrom: '',
-    dateTo: ''
-  },
+  dateFrom: '',
+  dateTo: '',
   search: ''
 };
 export const initialState = {
   filters: initialFilters,
   records: null,
   historyLoading: false,
-  historyError: null
+  historyError: null,
+  recordItem: null,
+  recordItemLoading: false
 };
 
 const historyReducer = (state = initialState, action = {}) => {
@@ -28,6 +28,16 @@ const historyReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       records: action.payload
+    };
+  case SET_RECORD_ITEM:
+    return {
+      ...state,
+      recordItem: action.payload
+    };
+  case SET_RECORD_LOADING:
+    return {
+      ...state,
+      recordItemLoading: action.payload
     };
   case SET_HISTORY_LOADING:
     return {

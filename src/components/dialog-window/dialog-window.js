@@ -26,7 +26,6 @@ const DialogWindow = ({
   showCancelButton,
   onClickHandler
 }) => {
-  console.log(isOpen);
   const styles = useStyles();
   const dispatch = useDispatch();
 

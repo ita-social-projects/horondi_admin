@@ -1,10 +1,10 @@
 import {
   CLEAR_FILTERS,
-  GET_HISTORY_RECORDS,
+  GET_HISTORY_RECORDS, GET_RECORD_ITEM,
   SET_FILTER,
   SET_HISTORY_ERROR,
   SET_HISTORY_LOADING,
-  SET_HISTORY_RECORDS
+  SET_HISTORY_RECORDS, SET_RECORD_ITEM, SET_RECORD_LOADING
 } from './history.types';
 
 const getHistoryRecords = (payload) => ({
@@ -28,8 +28,24 @@ const setHistoryFilter = (payload) => ({
   type: SET_FILTER,
   payload
 });
+
 const clearHistoryFilters = () => ({
   type: CLEAR_FILTERS
+});
+
+const getRecordItem = (payload) => ({
+  type: GET_RECORD_ITEM,
+  payload
+});
+
+const setRecordItem = (payload) => ({
+  type: SET_RECORD_ITEM,
+  payload
+});
+
+const setRecordItemLoading = (payload) => ({
+  type: SET_RECORD_LOADING,
+  payload
 });
 
 export {
@@ -38,5 +54,8 @@ export {
   setHistoryLoading,
   setHistoryError,
   setHistoryFilter,
-  clearHistoryFilters
+  clearHistoryFilters,
+  setRecordItem,
+  setRecordItemLoading,
+  getRecordItem
 };

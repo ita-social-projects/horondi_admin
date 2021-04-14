@@ -14,9 +14,8 @@ const { search: searchLabel } = labels;
 
 const NavSearch = ({ searchOptions }) => {
   const styles = useStyles();
-  const { filters } = searchOptions;
-  const { setSearchFilter } = searchOptions;
-  const { search } = filters;
+  const { filters: { search }, setSearchFilter, placeholderText = '' } = searchOptions;
+
   const [searchValue, setSearchValue] = useState(search);
 
   const handleSetSearchValue = (event) => {
@@ -37,7 +36,7 @@ const NavSearch = ({ searchOptions }) => {
     <div>
       <Paper className={styles.root}>
         <InputBase
-          placeholder={searchLabel}
+          placeholder={searchLabel(placeholderText)}
           value={searchValue}
           onChange={handleSetSearchValue}
           onKeyPress={handleSearchSubmit}
@@ -48,7 +47,7 @@ const NavSearch = ({ searchOptions }) => {
             aria-label='search'
             onClick={handleUserSearch}
           >
-            <SearchIcon />
+            <SearchIcon/>
           </IconButton>
         </Tooltip>
       </Paper>

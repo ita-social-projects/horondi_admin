@@ -7,7 +7,20 @@ const titles = {
   },
   historyTitles: {
     mainTitle: 'Останні зміни',
-    detailsTitle: 'Деталі зміни'
+    detailsTitle: 'Деталі зміни',
+    detailsTitleNumber: (number) => `Деталі зміни № ${number}`,
+    userInfo: 'Інформація про користувача',
+    id: 'Ідентифікатор:',
+    email: 'Електронна пошта:',
+    name: `Ім'я:`,
+    role: 'Роль:',
+    changesTitle: 'Інформація про зміни',
+    subject: 'Об’єкт дії',
+    before: 'До зміни',
+    after: 'Після зміни',
+    noChanges: 'N/A',
+    from: 'Від',
+    to: 'До'
   },
   categoriesTitles: {
     deleteTitle: 'Видалити категорію'
