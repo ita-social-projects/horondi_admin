@@ -55,7 +55,7 @@ const store = {
     showBoundMaterialsWindow: false,
     boundMaterials: [
       {
-        _id: '12',
+        key: '12hg',
         name: [
           {
             value: 'black'

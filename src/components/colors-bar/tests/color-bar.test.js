@@ -9,9 +9,6 @@ import ColorsBar from '../colors-bar';
 import ColorsAutocomplete from '../../colors-autocomplete';
 import DialogWindowWrapper from '../../dialog-window-wrapper';
 import store from './store';
-import Categories from '../../../pages/categories';
-import LoadingBar from '../../loading-bar';
-import DialogTitle from '../../../containers/form-dialog/components/dialog-title';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -60,6 +57,31 @@ describe('Colors-Bar test', () => {
     it('Should render 2 DialogWindowWrapper', () => {
       expect(component.find(DialogWindowWrapper)).toHaveLength(2);
     });
+
+    it('Should render MaterialItems if store->boundMaterials exists', () => {
+      expect(component.exists({ className: 'makeStyles-materialItem-4' })).toBe(
+        true
+      );
+    });
+
+    it('Should not render MaterialItems if store->boundMaterials is null', () => {
+      expect(component.exists({ className: 'makeStyles-materialItem-4' })).toBe(
+        true
+      );
+      const temp = mockStore.Color.boundMaterials;
+      mockStore.Color.boundMaterials = null;
+      const component2 = shallow(
+        <ColorsBar
+          onColorChange={mockOnColorChange}
+          colors={mockStore.Color.list}
+          store={store}
+        />
+      );
+      expect(
+        component2.exists({ className: 'makeStyles-materialItem-4' })
+      ).toBe(false);
+      mockStore.Color.boundMaterials = temp;
+    });
   });
 
   describe('props', () => {
@@ -80,7 +102,7 @@ describe('Colors-Bar test', () => {
   });
 
   describe('other', () => {
-    it('Button "Створити колір" is working', () => {
+    it('Button "Створити колір" operates onClick', () => {
       useDispatchMock.mockReturnValue(mockHolder);
       const wrapper = mount(
         <ColorsBar
@@ -94,28 +116,42 @@ describe('Colors-Bar test', () => {
       expect(mockHolder.mock.calls.length).toEqual(2);
     });
 
+    it('MaterialItem operates onClick', () => {
+      useDispatchMock.mockReturnValue(mockHolder);
+      const wrapper = shallow(
+        <ColorsBar
+          onColorChange={mockOnColorChange}
+          store={store}
+          colors={mockStore.Color.list}
+        />
+      );
+
+      expect(mockHolder.mock.calls.length).toEqual(2);
+      wrapper
+        .find({ className: 'makeStyles-materialItem-4' })
+        .props()
+        .onClick();
+      expect(mockHolder.mock.calls.length).toEqual(4);
+    });
+
     it('DialogWindow with title "Створити колір" operates handlesClose function', () => {
       useDispatchMock.mockReturnValue(mockHolder);
 
       const wrapper = component.find({ title: 'Створити колір' });
-      // console.log(wrapper.debug());
-      // console.log(component.props());
 
-      expect(mockHolder.mock.calls.length).toEqual(2);
+      expect(mockHolder.mock.calls.length).toEqual(4);
       wrapper.props().handleClose();
-      expect(mockHolder.mock.calls.length).toEqual(3);
+      expect(mockHolder.mock.calls.length).toEqual(5);
     });
 
     it('DialogWindow with title "Колір вже використовується!" operates handlesClose function', () => {
       useDispatchMock.mockReturnValue(mockHolder);
 
       const wrapper = component.find({ title: 'Колір вже використовується!' });
-      // console.log(wrapper.debug());
-      // console.log(component.props());
 
-      expect(mockHolder.mock.calls.length).toEqual(3);
+      expect(mockHolder.mock.calls.length).toEqual(5);
       wrapper.props().handleClose();
-      expect(mockHolder.mock.calls.length).toEqual(4);
+      expect(mockHolder.mock.calls.length).toEqual(6);
     });
 
     it('Should read showColorDialogWindow attr from store', () => {
@@ -153,17 +189,38 @@ describe('Colors-Bar test', () => {
       ).toBe(true);
       mockStore.Color.showBoundMaterialsWindow = false;
     });
+
+    it('Should update colorsSet for ColorsAutocomplete component, if handleChange function is called', () => {
+      const selectedColorsBefore = component.find(ColorsAutocomplete).props()
+        .selectedColors;
+      component
+        .find(ColorsAutocomplete)
+        .props()
+        .handleChange({ ...mockStore.Color.list[0], ...{ _id: 'fs2' } });
+      const selectedColorsAfter = component.find(ColorsAutocomplete).props()
+        .selectedColors;
+
+      expect(selectedColorsBefore === selectedColorsAfter).toBe(false);
+    });
   });
 
   it('test', () => {
-    useDispatchMock.mockReturnValue(mockHolder);
-
-    const wrapper = component.find({ title: 'Створити колір' });
-    // console.log(wrapper.debug());
+    const selectedColorsBefore = component.find(ColorsAutocomplete).props()
+      .selectedColors;
     // console.log(component.props());
+    // console.log(component.debug());
+    // expect(mockHolder.mock.calls.length).toEqual(6);
+    component
+      .find(ColorsAutocomplete)
+      .props()
+      .handleChange({ ...mockStore.Color.list[0], ...{ _id: 'fs2' } });
+    const selectedColorsAfter = component.find(ColorsAutocomplete).props()
+      .selectedColors;
 
-    expect(mockHolder.mock.calls.length).toEqual(4);
-    wrapper.props().handleClose();
-    expect(mockHolder.mock.calls.length).toEqual(5);
+    console.log(selectedColorsAfter);
+    expect(selectedColorsBefore === selectedColorsAfter).toBe(false);
+
+    // wrapper.props().handleClose();
+    // expect(mockHolder.mock.calls.length).toEqual(7);
   });
 });
