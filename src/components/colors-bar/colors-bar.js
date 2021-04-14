@@ -12,7 +12,7 @@ import {
 } from '../../redux/color/color.actions';
 import DialogWindowWrapper from '../dialog-window-wrapper';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
-import { useStyles } from './color-bar.styles';
+import { useStyles } from './colors-bar.styles';
 import CreateColor from '../create-color';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { config } from '../../configs';
