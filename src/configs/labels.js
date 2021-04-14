@@ -2,7 +2,7 @@ import { mapToLanguages } from '../utils/map-languages';
 
 const labels = {
   sort: 'Сортувати за',
-  search: 'Шукати',
+  search: (param) => !param ? 'Шукати' : `Шукати за ${param}`,
   goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
@@ -10,7 +10,7 @@ const labels = {
   },
   news: {
     authorName: {
-      ua: "Ім'я автора",
+      ua: 'Ім\'я автора',
       en: 'Author name'
     },
     title: {
@@ -84,7 +84,7 @@ const labels = {
     }
   },
   categories: {
-    switchCategory: "Категорія, на яку замінити пов'язані товари",
+    switchCategory: 'Категорія, на яку замінити пов\'язані товари',
     categoryCode: 'Код категорії',
     categoryName: {
       ua: 'Назва категорії',
@@ -92,7 +92,7 @@ const labels = {
     }
   },
   header: {
-    name: mapToLanguages("І'мя", 'Name'),
+    name: mapToLanguages('І\'мя', 'Name'),
     link: 'Посилання',
     priority: 'Пріорітет'
   },
@@ -104,7 +104,7 @@ const labels = {
     avatarText: 'Фото',
     constructorImgText: 'Фото для конструктора',
     form: {
-      name: mapToLanguages("І'мя", 'Name'),
+      name: mapToLanguages('І\'мя', 'Name'),
       description: mapToLanguages('Опис', 'Description')
     },
     patternName: {
@@ -296,7 +296,7 @@ const labels = {
     actualPrice: 'Ціна'
   },
   orderRecipient: {
-    firstName: "Ім'я",
+    firstName: 'Ім\'я',
     lastName: 'Прізвище',
     patronymicName: 'По-батькові',
     email: 'e-mail',
@@ -316,7 +316,7 @@ const labels = {
     heightInCm: 'Висота (см.)',
     widthInCm: 'Ширина (см.)',
     depthInCm: 'Глибина (см.)',
-    volumeInLiters: "Об'єм (л.)",
+    volumeInLiters: 'Об\'єм (л.)',
     weightInKg: 'Вага (кг.)'
   },
   emailQuestionsLabels: {
@@ -397,8 +397,8 @@ const labels = {
     novaPost: 'Нова пошта',
     ukrPost: 'Укрпошта',
     selfPickup: 'Самовивіз',
-    novaPostCourier: "Кур'єр нової пошти",
-    ukrPostCourier: "Кур'єр укрпошти"
+    novaPostCourier: 'Кур\'єр нової пошти',
+    ukrPostCourier: 'Кур\'єр укрпошти'
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
@@ -461,12 +461,12 @@ const labels = {
       heightInCm: 'Висота',
       widthInCm: 'Ширина',
       depthInCm: 'Глибина',
-      volumeInLiters: "Об'єм (літри)",
+      volumeInLiters: 'Об\'єм (літри)',
       weightInKg: 'Вага',
       additionalPrice: 'Додаткова ціна',
       simpleNameUa: 'Назва(Укр)',
       simpleNameEn: 'Назва(Eng)',
-      name: "Ім'я",
+      name: 'Ім\'я',
       available: 'Доступний'
     },
     en: {
