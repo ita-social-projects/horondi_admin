@@ -205,22 +205,11 @@ describe('Colors-Bar test', () => {
   });
 
   it('test', () => {
-    const selectedColorsBefore = component.find(ColorsAutocomplete).props()
-      .selectedColors;
-    // console.log(component.props());
-    // console.log(component.debug());
-    // expect(mockHolder.mock.calls.length).toEqual(6);
-    component
-      .find(ColorsAutocomplete)
-      .props()
-      .handleChange({ ...mockStore.Color.list[0], ...{ _id: 'fs2' } });
-    const selectedColorsAfter = component.find(ColorsAutocomplete).props()
-      .selectedColors;
-
-    console.log(selectedColorsAfter);
-    expect(selectedColorsBefore === selectedColorsAfter).toBe(false);
-
-    // wrapper.props().handleClose();
-    // expect(mockHolder.mock.calls.length).toEqual(7);
+    useDispatchMock.mockReturnValue(mockHolder);
+    const wrapper = component.find(ColorsAutocomplete);
+    expect(mockHolder.mock.calls.length).toEqual(6);
+    wrapper.prop('deleteHandler')('fs');
+    console.log(wrapper.prop('deleteHandler')('fs'));
+    expect(mockHolder.mock.calls.length).toEqual(8);
   });
 });
