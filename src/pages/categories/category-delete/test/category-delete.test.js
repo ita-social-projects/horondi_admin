@@ -56,7 +56,7 @@ describe('Categories test', () => {
     expect(wrapper.exists(StandardButton)).toBe(true);
   });
   it('Button is working', () => {
-    const wrapper = mount(<CategoryDelete/>
+    const wrapper = mount(<CategoryDelete/>)
     useDispatch.mockReturnValue(mockHolder);
     wrapper.find(StandardButton).simulate('click');
     expect(mockHolder.mock.calls.length).toEqual(1);
