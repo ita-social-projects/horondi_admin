@@ -41,8 +41,21 @@ export const filterInputToRender = (selectedValues, valueToRender) =>
     return selectedRenderValue;
   });
 
-export const generateDateFormatForInputValue = (date) =>
-  moment(date).format('YYYY-MM-DD, h:mm:ss').split(', ').join('T');
+export const generateDateFormatForInputValue = (date) => {
+  let [dateValue, timeValue] = moment(date)
+    .format('YYYY-MM-DD, h:mm:ss')
+    .split(', ');
+
+  const time = timeValue.split(':');
+
+  if (time[0] < 10) {
+    timeValue = `0${time[0]},`
+      .concat(time.slice(1, time.length))
+      .split(',')
+      .join(':');
+  }
+  return `${dateValue}T${timeValue}`;
+};
 
 export const MenuProps = {
   PaperProps: {
