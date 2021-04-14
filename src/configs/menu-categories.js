@@ -1,6 +1,7 @@
 import CategoryIcon from '@material-ui/icons/Category';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import HistoryIcon from '@material-ui/icons/History';
 import StyleIcon from '@material-ui/icons/Style';
 import FilterIcon from '@material-ui/icons/Filter';
 import HomeIcon from '@material-ui/icons/Home';
@@ -27,6 +28,7 @@ export const menuCategories = [
   ['Домашня сторінка', routes.pathToMainPage, HomeIcon],
   ['Замовлення', routes.pathToOrders, ShoppingBasketIcon],
   ['Статистика', routes.pathToStatistic, BarChartIcon],
+  ['Останні зміни', routes.pathToHistory, HistoryIcon],
   ['Бізнес сторінки', routes.pathToAddBusinessPage, BusinessCenterIcon],
   ['Посилання', routes.pathToHeaders, LinkIcon]
 ];

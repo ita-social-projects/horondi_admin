@@ -12,9 +12,13 @@ const materialUiConstants = {
     number: 'number',
     string: 'string',
     text: 'text',
-    submit: 'submit'
+    submit: 'submit',
+    datetimeLocal: 'datetime-local'
   },
-  codeError: 'code-error'
+  codeError: 'code-error',
+  styleError: 'error',
+  checkBoxLabel: 'demo-multiple-checkbox-label',
+  checkBoxId: 'demo-multiple-checkbox'
 };
 
 export default materialUiConstants;
