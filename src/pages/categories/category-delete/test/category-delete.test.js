@@ -26,12 +26,11 @@ jest.mock('react-redux', () => ({
 
 describe('Categories test', () => {
   let store;
-  jest.spyOn(reactRedux, 'useDispatch');
   const mockHolder = jest.fn();
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<CategoryDelete store={store} />);
+    wrapper = mount(<CategoryDelete/>);
   });
 
   afterEach(() => {
@@ -58,7 +57,6 @@ describe('Categories test', () => {
   });
   it('Button is working', () => {
     useDispatch.mockReturnValue(mockHolder);
-    const wrapper = mount(<CategoryDelete store={store} />);
     wrapper.find(StandardButton).simulate('click');
     expect(mockHolder.mock.calls.length).toEqual(1);
   });
