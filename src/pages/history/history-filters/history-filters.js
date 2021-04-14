@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { useStyles } from './history-filters.styles';
 import FilterByDate from './filter-by-date';
@@ -14,14 +15,12 @@ import { historyActions } from '../../../consts/history-actions';
 import FilterNavbar from '../../../components/filter-search-sort';
 import titles from '../../../configs/titles';
 
-const HistoryFilters = (
-  {
-    clearOptions,
-    searchOptions,
-    filters,
-    filterOptions
-  }
-) => {
+const HistoryFilters = ({
+  clearOptions,
+  searchOptions,
+  filters,
+  filterOptions
+}) => {
   const styles = useStyles();
 
   return (
@@ -63,10 +62,24 @@ const HistoryFilters = (
         />
       </div>
       <div className={styles.filterNavbar}>
-        <FilterNavbar options={{ clearOptions, searchOptions } || {}}/>
+        <FilterNavbar options={{ clearOptions, searchOptions } || {}} />
       </div>
     </div>
   );
+};
+
+HistoryFilters.propTypes = {
+  clearOptions: PropTypes.objectOf(PropTypes.object),
+  searchOptions: PropTypes.objectOf(PropTypes.object),
+  filters: PropTypes.objectOf(PropTypes.object),
+  filterOptions: PropTypes.objectOf(PropTypes.object)
+};
+
+HistoryFilters.defaultProps = {
+  clearOptions: {},
+  searchOptions: {},
+  filters: {},
+  filterOptions: {}
 };
 
 export default HistoryFilters;

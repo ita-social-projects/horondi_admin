@@ -4,18 +4,16 @@ import { Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import ReactHtmlParser from 'react-html-parser';
 import { config } from '../../configs';
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './history.styles';
 import materialUiConstants from '../../configs/material-ui-constants';
 import { getHistoryRecords } from '../../redux/history/history.actions';
 import TableContainerGenerator from '../../containers/table-container-generator';
-import {
-  handleHistory
-} from '../../utils/history';
+import { handleHistory } from '../../utils/history';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerRow from '../../containers/table-container-row';
-import ReactHtmlParser from 'react-html-parser';
 import getTime from '../../utils/getTime';
 import { historySelector } from '../../redux/selectors/history';
 import { userRoleTranslations } from '../../translations/user.translations';
@@ -25,11 +23,7 @@ import routes from '../../configs/routes';
 import HistoryFilters from './history-filters';
 
 const History = () => {
-  const {
-    searchOptions,
-    clearOptions,
-    filterOptions
-  } = useHistoryFilters();
+  const { searchOptions, clearOptions, filterOptions } = useHistoryFilters();
 
   const {
     darkMode,
@@ -75,17 +69,23 @@ const History = () => {
       userName={`${record.userId.firstName} ${record.userId.lastName}`}
       userRole={userRoleTranslations[record.userId.role]}
       subject={
-        !record.subject.model ?
-          record.subject.name :
-          `${record.subject.model}/${record.subject.name}`
+        !record.subject.model
+          ? record.subject.name
+          : `${record.subject.model}/${record.subject.name}`
       }
-      details={<NavLink to={`${routes.pathToHistory}/${record._id}`} className={styles.detailsBtn}
-      >{config.buttonTitles.LOOK}</NavLink>}
+      details={
+        <NavLink
+          to={`${routes.pathToHistory}/${record._id}`}
+          className={styles.detailsBtn}
+        >
+          {config.buttonTitles.LOOK}
+        </NavLink>
+      }
     />
   ));
 
   if (historyLoading) {
-    return <LoadingBar/>;
+    return <LoadingBar />;
   }
 
   return (
@@ -102,23 +102,23 @@ const History = () => {
         filterOptions={filterOptions}
         searchOptions={searchOptions}
       />
-      {
-        !records?.length ?
-          <p className={styles.noRecordsTitle}>{config.messages.NO_HISTORY_RECORDS_MESSAGE}</p> :
-          <TableContainerGenerator
-            pagination
-            data-cy='historyTable'
-            count={itemsCount}
-            tableTitles={handleHistory(
-              records,
-              config.tableHeadRowTitles.history,
-              config.messages.NO_HISTORY_RECORDS_MESSAGE
-            )}
-            tableItems={historyItems}
-          />
-      }
-
-
+      {!records?.length ? (
+        <p className={styles.noRecordsTitle}>
+          {config.messages.NO_HISTORY_RECORDS_MESSAGE}
+        </p>
+      ) : (
+        <TableContainerGenerator
+          pagination
+          data-cy='historyTable'
+          count={itemsCount}
+          tableTitles={handleHistory(
+            records,
+            config.tableHeadRowTitles.history,
+            config.messages.NO_HISTORY_RECORDS_MESSAGE
+          )}
+          tableItems={historyItems}
+        />
+      )}
     </div>
   );
 };
