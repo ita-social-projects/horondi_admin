@@ -9,7 +9,7 @@ import { TableCell, TableRow, Typography } from '@material-ui/core';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 
-import { getComments } from '../../redux/comments/comments.actions';
+import { getRecentComments } from '../../redux/comments/comments.actions';
 import { getOrderList } from '../../redux/orders/orders.actions';
 import { selectOrderList } from '../../redux/orders/orders.reducer';
 import { selectComment } from '../../redux/comments/comments.reducer';
@@ -39,7 +39,7 @@ const MainPage = () => {
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
-  const { list, loading } = useSelector(selectComment);
+  const { recentComments: list, loading } = useSelector(selectComment);
 
   const { orderLoading, ordersList } = useSelector(selectOrderList);
   const { rowsPerPage, currentPage } = useSelector(
@@ -48,7 +48,7 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(
-      getComments({
+      getRecentComments({
         pagination: {
           limit: rowsPerPage,
           skip: currentPage * rowsPerPage

@@ -8,7 +8,8 @@ import {
   updateComment,
   getCommentById,
   getCommentsByType,
-  getRecentComments
+  getRecentComments,
+  getAllComments
 } from './comments.operations';
 
 import {
@@ -16,7 +17,8 @@ import {
   setCommentsLoading,
   setCommentError,
   removeCommentFromStore,
-  setComment
+  setComment,
+  setRecentComments
 } from './comments.actions';
 
 import {
@@ -24,7 +26,8 @@ import {
   DELETE_COMMENT,
   GET_COMMENT,
   UPDATE_COMMENT,
-  GET_COMMENTS_BY_TYPE
+  GET_COMMENTS_BY_TYPE,
+  GET_RECENT_COMMENTS
 } from './comments.types';
 
 import {
@@ -32,15 +35,27 @@ import {
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
-import { updatePagination } from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
-export function* handleCommentsLoad({ payload }) {
+export function* handleCommentsLoad({ payload: { filter, pagination } }) {
+  try {
+    yield put(setCommentsLoading(true));
+    const comments = yield call(getAllComments, filter, pagination);
+    yield put(setItemsCount(comments.count));
+    yield put(setComments(comments.items));
+    yield put(setCommentsLoading(false));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleRecentCommentsLoad({ payload }) {
   try {
     yield put(setCommentsLoading(true));
     const comments = yield call(getRecentComments, payload.pagination.limit);
-    yield put(setComments(comments));
+    yield put(setRecentComments(comments));
     yield put(setCommentsLoading(false));
   } catch (error) {
     yield call(handleCommentsError, error);
@@ -107,6 +122,7 @@ export function* handleCommentsError(e) {
 
 export default function* commentsSaga() {
   yield takeEvery(GET_COMMENTS, handleCommentsLoad);
+  yield takeEvery(GET_RECENT_COMMENTS, handleRecentCommentsLoad);
   yield takeEvery(DELETE_COMMENT, handleCommentDelete);
   yield takeEvery(UPDATE_COMMENT, handleCommentUpdate);
   yield takeEvery(GET_COMMENT, handleCommentLoad);
