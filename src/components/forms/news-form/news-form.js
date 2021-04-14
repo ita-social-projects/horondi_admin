@@ -63,10 +63,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
         .required(TITLE_MIN_LENGTH_MESSAGE);
-      reducer[`${lang}Text`] = Yup.string()
-        .min(10, TEXT_MIN_LENGTH_MESSAGE)
-        .required(TEXT_MIN_LENGTH_MESSAGE);
-
+      reducer[`${lang}Text`] = Yup.string();
       return reducer;
     }, {});
 
@@ -156,13 +153,10 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         enAuthorName: value.enAuthorName,
         uaAuthorName: value.uaAuthorName,
         enTitle: value.enTitle,
-        uaTitle: value.uaTitle,
-        enText: ' ',
-        uaText: ' '
+        uaTitle: value.uaTitle
       };
-    } 
+    }
     return { valid: '' };
-    
   };
 
   return (
