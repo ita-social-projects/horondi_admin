@@ -53,7 +53,16 @@ const store = {
     color: null,
     showColorDialogWindow: false,
     showBoundMaterialsWindow: false,
-    boundMaterials: null,
+    boundMaterials: [
+      {
+        _id: '12',
+        name: [
+          {
+            value: 'black'
+          }
+        ]
+      }
+    ],
     colorLoading: false,
     colorError: null
   }
