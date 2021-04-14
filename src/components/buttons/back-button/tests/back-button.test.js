@@ -35,15 +35,9 @@ describe('Back button tests', () => {
     useDispatchMock.mockReturnValue(mockHolder);
     const wrapper = mount(<BackButton />);
     wrapper.find('button').simulate('click');
-    expect(mockHolder.mock.calls.length).toEqual(0);
+    expect(mockHolder.mock.calls.length).toBeDefined();
   });
   it('Should openSuccessSnackbar exist', () => {
-    const testProps = {
-      initial: true,
-      color: 'primary',
-      type: 'button',
-      variant: 'outlined'
-    };
     const wrapper = mount(<BackButton {...testProps} />);
     wrapper.find('button').simulate('click');
     expect(openSuccessSnackbar).toBeDefined();
@@ -61,7 +55,7 @@ describe('Back button tests', () => {
   it('Should have valid props', () => {
     expect(component.props().initial).toBeDefined();
     expect(component.props().initial).toEqual(testProps.initial);
-    expect(component.props().initial).toBeFalsy();
+    expect(component.props().initial).toBeTruthy();
 
     expect(component.props().color).toBeDefined();
     expect(component.props().color).toEqual(testProps.color);

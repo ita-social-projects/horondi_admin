@@ -1,5 +1,5 @@
 const variables = {
-  initial: false,
+  initial: true,
   color: 'primary',
   type: 'button',
   variant: 'outlined'
