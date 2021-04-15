@@ -1,4 +1,4 @@
-const store = {
+const mockStore = {
   Color: {
     list: [
       {
@@ -68,4 +68,4 @@ const store = {
   }
 };
 
-export default store;
+export default mockStore;

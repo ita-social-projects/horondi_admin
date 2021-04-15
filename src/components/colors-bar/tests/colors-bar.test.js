@@ -8,11 +8,9 @@ import * as reactRedux from 'react-redux';
 import ColorsBar from '../colors-bar';
 import ColorsAutocomplete from '../../colors-autocomplete';
 import DialogWindowWrapper from '../../dialog-window-wrapper';
-import store from './store';
+import mockStore from './colors-bar.variables';
 
 Enzyme.configure({ adapter: new Adapter() });
-
-const mockStore = store;
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -21,7 +19,6 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('Colors-Bar test', () => {
-  jest.spyOn(reactRedux, 'useDispatch');
   const mockHolder = jest.fn();
   let component;
   let store;
@@ -102,6 +99,8 @@ describe('Colors-Bar test', () => {
   });
 
   describe('other', () => {
+    jest.spyOn(reactRedux, 'useDispatch');
+
     it('Button "Створити колір" operates onClick', () => {
       useDispatchMock.mockReturnValue(mockHolder);
       const wrapper = mount(
