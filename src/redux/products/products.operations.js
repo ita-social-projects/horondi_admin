@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
-import { productsTranslations } from '../../translations/product.translations';
-import { client } from '../../utils/client';
+import { client, setItems } from '../../utils/client';
 
 const getAllProducts = async (productsState, tableState) => {
   const result = await client.query({
@@ -406,8 +405,7 @@ const productQuery = `
 `;
 
 const addProduct = async (product, upload) => {
-  const result = await client.mutate({
-    mutation: gql`
+  const result = `
       mutation($product: ProductInput!, $upload: Upload!) {
         addProduct(product: $product, upload: $upload) {
           ... on Product {
@@ -419,28 +417,18 @@ const addProduct = async (product, upload) => {
           }
         }
       }
-    `,
-    variables: {
-      product,
-      upload
-    }
-  });
+    `;
 
-  if (result.data.addProduct.message) {
-    throw new Error(
-      `${result.data.addProduct.statusCode} ${
-        productsTranslations[result.data.addProduct.message]
-      }`
-    );
-  }
   await client.resetStore();
 
-  return result.data.addProduct;
+  return setItems(result, {
+    product,
+    upload
+  });
 };
 
 const deleteProduct = async (payload) => {
-  const result = await client.mutate({
-    mutation: gql`
+  const result = `
       mutation($id: ID!) {
         deleteProduct(id: $id) {
           ... on Product {
@@ -448,13 +436,11 @@ const deleteProduct = async (payload) => {
           }
         }
       }
-    `,
-    variables: {
-      id: payload
-    }
-  });
+    `;
   await client.resetStore();
-  return result.data.deleteProduct._id;
+  return setItems(result, {
+    id: payload
+  });
 };
 
 const getProduct = async (payload) => {
@@ -474,8 +460,7 @@ const getProduct = async (payload) => {
 };
 
 const updateProduct = async (payload, upload, primaryImageUpload) => {
-  const result = await client.mutate({
-    mutation: gql`
+  const result = `
       mutation(
         $id: ID!
         $product: ProductInput!
@@ -497,22 +482,13 @@ const updateProduct = async (payload, upload, primaryImageUpload) => {
           }
         }
       }
-    `,
-    variables: {
-      id: payload.id,
-      product: payload.product,
-      upload: !!upload.length && upload,
-      primary: primaryImageUpload || undefined
-    }
+    `;
+  return setItems(result, {
+    id: payload.id,
+    product: payload.product,
+    upload: !!upload.length && upload,
+    primary: primaryImageUpload || undefined
   });
-  if (result.data.updateProduct.message) {
-    throw new Error(
-      `${result.data.updateProduct.statusCode} ${
-        productsTranslations[result.data.updateProduct.message]
-      }`
-    );
-  }
-  return result.data.updateProduct;
 };
 
 const deleteImages = async (payload, images) => {
