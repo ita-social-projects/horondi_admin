@@ -25,12 +25,14 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   ordersContainer: {
-    height: '50%',
+    height: '100%',
+    width: '49%',
     overflow: 'auto',
-    marginBottom: theme.spacing(3),
+    display: 'inline-block',
     '@media (max-width: 599px)': {
       minHeight: 'fit-content',
-      maxHeight: '100vh'
+      maxHeight: '100vh',
+      width: '100%'
     }
   },
   order: {
@@ -45,15 +47,19 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   commentsContainer: {
-    height: '50%',
+    height: '100%',
+    width: '49%',
     marginTop: theme.spacing(3),
+    marginLeft: '2%',
     paddingBottom: 15,
     overflow: 'auto',
+    display: 'inline-block',
     '@media (max-width: 599px)': {
       minHeight: 'fit-content',
       maxHeight: '100vh',
       width: '100%',
-      paddingBottom: 0
+      paddingBottom: 0,
+      marginLeft: '0'
     }
   },
   comments: {
