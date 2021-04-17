@@ -145,11 +145,6 @@ const MainPage = () => {
             <div className={classes.comments}>{comments}</div>
           </Paper>
         </div>
-        <Paper className={classes.changesContainer} data-cy='changes-container'>
-          <Typography variant='h5' className={classes.blockTitle}>
-            {changesTitle}
-          </Typography>
-        </Paper>
       </div>
     </div>
   );

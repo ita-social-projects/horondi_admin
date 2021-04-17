@@ -18,7 +18,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   commentsOrders: {
     height: 'calc(100vh - 179px)',
-    width: '50%',
+    width: '100%',
     '@media (max-width: 599px)': {
       width: '100%',
       height: 'fit-content'
