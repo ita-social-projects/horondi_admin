@@ -29,8 +29,7 @@ const MainPage = () => {
   const {
     mainTitle,
     commentsTitle,
-    ordersTitle,
-    changesTitle
+    ordersTitle
   } = titles.mainPageTitles;
   const ordersTableTitles = tableHeadRowTitles.mainPageOrders;
   const { guestUser } = labels.user;
