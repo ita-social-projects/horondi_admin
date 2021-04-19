@@ -27,7 +27,6 @@ jest.mock('react-redux', () => ({
   }));
 
 describe('Categories test', () => {
-    jest.spyOn(reactRedux, 'useDispatch');
     const mockHolder = jest.fn();
     let wrapper;
     
