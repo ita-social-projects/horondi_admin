@@ -29,6 +29,7 @@ jest.mock('react-redux', () => ({
 describe('Categories test', () => {
     const mockHolder = jest.fn();
     let wrapper;
+    jest.spyOn(reactRedux, 'useDispatch');
     
     beforeEach(() => {
         wrapper = mount(<CategoryDelete/>);
