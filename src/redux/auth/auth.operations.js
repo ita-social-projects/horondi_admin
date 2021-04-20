@@ -1,25 +1,25 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
 
-export const loginAdmin = async (loginInput) => {
-  const result = await client.mutate({
-    mutation: gql`
+const loginAdminMutation = `
       mutation($loginInput: LoginInput!) {
         loginAdmin(loginInput: $loginInput) {
           _id
           token
+          refreshToken
         }
       }
-    `,
-    variables: { loginInput }
-  });
-
-  return result.data.loginAdmin;
-};
-
-export const getUserByToken = async (token) => {
-  const result = await client.query({
-    query: gql`
+    `;
+const regenerateAuthTokenPairMutation = `
+      mutation($refreshToken:String!) {
+        regenerateAccessToken(refreshToken:$refreshToken) {
+          ... on Token {
+            token
+            refreshToken
+          }
+        }
+      }
+    `;
+const getUserByTokenQuery = `
       query {
         getUserByToken {
           ... on User {
@@ -28,19 +28,22 @@ export const getUserByToken = async (token) => {
           }
         }
       }
-    `,
-    context: {
-      headers: {
-        token
-      }
-    },
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
 
-  // костилі, чекають фікс на беку
-  if (data.getUserByToken.statusCode === 401) {
-    throw new Error('USER_NOT_AUTHORIZED');
-  }
+export const getUserByToken = async () => {
+  const { data } = await getItems(getUserByTokenQuery);
+
   return data.getUserByToken;
+};
+export const loginAdmin = async (loginInput) => {
+  const { data } = await setItems(loginAdminMutation, { loginInput });
+
+  return data.loginAdmin;
+};
+export const regenerateAuthTokenPair = async (refreshToken) => {
+  const { data } = await setItems(regenerateAuthTokenPairMutation, {
+    refreshToken
+  });
+
+  return data.regenerateAccessToken;
 };

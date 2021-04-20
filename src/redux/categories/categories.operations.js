@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
-import { client, setItems } from '../../utils/client';
+import { client, getItems, setItems } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { categoryTranslations } from '../../translations/category.translations';
+import { AUTH_ERRORS } from '../../error-messages/auth';
 
 export const getAllCategories = async (filter, pagination, sort) => {
-  const result = await client.query({
-    query: gql`
+  const getAllCategoriesQuery = `
       query(
         $filter: FilterInputComponent
         $pagination: Pagination
@@ -34,20 +34,19 @@ export const getAllCategories = async (filter, pagination, sort) => {
           count
         }
       }
-    `,
-    variables: {
-      filter,
-      pagination,
-      sort
-    }
+    `;
+
+  const { data } = await getItems(getAllCategoriesQuery, {
+    filter,
+    pagination,
+    sort
   });
-  return result.data.getAllCategories;
+
+  return data.getAllCategories;
 };
 
 export const getCategoryById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const getCategoryByIdQuery = `
       query($id: ID!) {
         getCategoryById(id: $id) {
           ... on Category {
@@ -67,24 +66,24 @@ export const getCategoryById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  if (result.data.getCategoryById.message) {
+  const { data } = await getItems(getCategoryByIdQuery, { id });
+
+  if (data.getCategoryById.message) {
     throw new Error(
-      `${result.data.getCategoryById.statusCode} ${
-        categoryTranslations[result.data.getCategoryById.message]
+      `${data.getCategoryById.statusCode} ${
+        categoryTranslations[data.getCategoryById.message]
       }`
     );
   }
 
-  return result.data.getCategoryById;
+  return data.getCategoryById;
 };
 
 export const deleteCategoryById = (deleteId, switchId) => {
-  const query = `
-        mutation deleteCategory($deleteId: ID!, $switchId: ID!){
+  const deleteCategoryByIdQuery = `
+     mutation deleteCategory($deleteId: ID!, $switchId: ID!){
       deleteCategory(
       deleteId: $deleteId
       switchId: $switchId
@@ -100,16 +99,14 @@ export const deleteCategoryById = (deleteId, switchId) => {
       }
     }
   `;
-  return setItems(query, { deleteId, switchId });
+
+  const { data } = setItems(deleteCategoryByIdQuery, { deleteId, switchId });
+
+  return data.deleteCategory;
 };
 
 export const createCategory = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-
-    mutation: gql`
+  const query = `
       mutation($category: CategoryInput!, $upload: Upload!) {
         addCategory(category: $category, upload: $upload) {
           ... on Category {
@@ -121,21 +118,21 @@ export const createCategory = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
+  const { data } = await setItems(query, payload);
 
-  if (result.data.addCategory.message) {
+  if (
+    data.addCategory.message &&
+    data.addCategory.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
+  ) {
     throw new Error(
-      `${result.data.addCategory.statusCode} ${
-        categoryTranslations[result.data.addCategory.message]
+      `${data.addCategory.statusCode} ${
+        categoryTranslations[data.addCategory.message]
       }`
     );
   }
-  client.resetStore();
-  return result.data.addCategory;
+  return data.addCategory;
 };
-
 export const updateCategory = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 

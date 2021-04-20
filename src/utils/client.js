@@ -1,7 +1,9 @@
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
+
 import { createUploadLink } from 'apollo-upload-client';
 import { getFromLocalStorage } from '../services/local-storage.service.js';
 import { config } from '../configs';
+import { LOCAL_STORAGE } from '../consts/local-storage';
 
 const { IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
 const introspectionResult = require('../fragmentTypes.json');
@@ -25,8 +27,8 @@ export const client = new ApolloClient({
 
 const formError = (err) => err.message.replace('GraphQL error: ', '');
 
-export const getItems = (query, variables) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+export const getItems = (query, variables = {}) => {
+  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
   return client
     .query({
       query: gql`
@@ -46,7 +48,7 @@ export const getItems = (query, variables) => {
 };
 
 export const setItems = (query, variables) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
 
   return client
     .mutate({

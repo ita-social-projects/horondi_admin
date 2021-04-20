@@ -32,6 +32,8 @@ import {
 import { config } from '../../configs';
 import { selectCategorySwitchAndDeleteId } from '../selectors/category.selectors';
 import { setItemsCount } from '../table/table.actions';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -67,9 +69,16 @@ export function* handleCategoryLoad({ payload }) {
 export function* handleAddCategory({ payload }) {
   try {
     yield put(setCategoryLoading(true));
-    yield call(createCategory, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(config.routes.pathToCategories));
+    const category = yield call(createCategory, payload);
+
+    if (category?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleAddCategory();
+    } else {
+      yield put(setCategoryLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(config.routes.pathToCategories));
+    }
   } catch (error) {
     yield call(handleCategoryError, error);
   }

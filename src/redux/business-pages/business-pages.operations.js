@@ -1,11 +1,9 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
 import { businessTranslations } from '../../translations/business.translations';
 import { newsTranslations } from '../../translations/news.translations';
+import { AUTH_ERRORS } from '../../error-messages/auth';
 
-const getAllBusinessPages = async () => {
-  const result = await client.query({
-    query: gql`
+const getAllBusinessPagesQuery = `
       query {
         getAllBusinessTexts {
           _id
@@ -15,17 +13,8 @@ const getAllBusinessPages = async () => {
           }
         }
       }
-    `
-  });
-  await client.resetStore();
-  const { data } = result;
-  return data.getAllBusinessTexts;
-};
-
-const getBusinessPageById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+    `;
+const getBusinessPageByIdQuery = `
       query($id: ID!) {
         getBusinessTextById(id: $id) {
           ... on BusinessText {
@@ -47,25 +36,8 @@ const getBusinessPageById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
-
-  if (data.getBusinessTextById.message) {
-    throw new Error(
-      `${data.getBusinessTextById.statusCode} ${
-        newsTranslations[data.getBusinessTextById.message]
-      }`
-    );
-  }
-
-  return data.getBusinessTextById;
-};
-
-const createBusinessPage = async ({ page, files }) => {
-  const result = await client.mutate({
-    mutation: gql`
+    `;
+const createBusinessPageMutation = `
       mutation($businessText: BusinessTextInput!, $files: [Upload]!) {
         addBusinessText(businessText: $businessText, files: $files) {
           ... on BusinessText {
@@ -77,31 +49,8 @@ const createBusinessPage = async ({ page, files }) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache',
-    variables: {
-      businessText: page,
-      files
-    }
-  });
-  await client.resetStore();
-  const { data } = result;
-
-  if (data.addBusinessText.message) {
-    throw new Error(
-      `${data.addBusinessText.statusCode} ${
-        businessTranslations[data.addBusinessText.message]
-      }`
-    );
-  }
-
-  return data.addBusinessText;
-};
-
-const deleteBusinessPage = async (id) => {
-  const result = await client.mutate({
-    variables: { id },
-    mutation: gql`
+    `;
+const deleteBusinessPageMutation = `
       mutation($id: ID!) {
         deleteBusinessText(id: $id) {
           ... on BusinessText {
@@ -115,31 +64,8 @@ const deleteBusinessPage = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
-
-  if (data.deleteBusinessText.message) {
-    throw new Error(
-      `${data.deleteBusinessText.statusCode} ${
-        newsTranslations[data.deleteBusinessText.message]
-      }`
-    );
-  }
-
-  return data.deleteBusinessText;
-};
-
-const updateBusinessPage = async ({ id, page, files }) => {
-  const result = await client.mutate({
-    variables: {
-      id,
-      businessText: page,
-      files
-    },
-    mutation: gql`
+    `;
+const updateBusinessPageMutation = `
       mutation($id: ID!, $businessText: BusinessTextInput!, $files: [Upload]!) {
         updateBusinessText(
           id: $id
@@ -158,13 +84,72 @@ const updateBusinessPage = async ({ id, page, files }) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.updateBusinessText.message) {
+export const getAllBusinessPages = async () => {
+  const { data } = await getItems(getAllBusinessPagesQuery);
+
+  return data.getAllBusinessTexts;
+};
+export const getBusinessPageById = async (id) => {
+  const { data } = await getItems(getBusinessPageByIdQuery, { id });
+
+  if (data.getBusinessTextById.message) {
+    throw new Error(
+      `${data.getBusinessTextById.statusCode} ${
+        newsTranslations[data.getBusinessTextById.message]
+      }`
+    );
+  }
+
+  return data.getBusinessTextById;
+};
+export const createBusinessPage = async ({ page, files }) => {
+  const { data } = await setItems(createBusinessPageMutation, {
+    businessText: page,
+    files
+  });
+
+  if (
+    data.addBusinessText.message &&
+    data.addBusinessText.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
+  ) {
+    throw new Error(
+      `${data.addBusinessText.statusCode} ${
+        businessTranslations[data.addBusinessText.message]
+      }`
+    );
+  }
+
+  return data.addBusinessText;
+};
+export const deleteBusinessPage = async (id) => {
+  const { data } = await setItems(deleteBusinessPageMutation, { id });
+
+  if (
+    data.deleteBusinessText.message &&
+    data.deleteBusinessText.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
+  ) {
+    throw new Error(
+      `${data.deleteBusinessText.statusCode} ${
+        newsTranslations[data.deleteBusinessText.message]
+      }`
+    );
+  }
+
+  return data.deleteBusinessText;
+};
+export const updateBusinessPage = async ({ id, page, files }) => {
+  const { data } = await setItems(updateBusinessPageMutation, {
+    id,
+    businessText: page,
+    files
+  });
+
+  if (
+    data.updateBusinessText.message &&
+    data.updateBusinessText.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
+  ) {
     throw new Error(
       `${data.updateBusinessText.statusCode} ${
         newsTranslations[data.updateBusinessText.message]
@@ -173,12 +158,4 @@ const updateBusinessPage = async ({ id, page, files }) => {
   }
 
   return data.updateBusinessText;
-};
-
-export {
-  getAllBusinessPages,
-  createBusinessPage,
-  deleteBusinessPage,
-  getBusinessPageById,
-  updateBusinessPage
 };

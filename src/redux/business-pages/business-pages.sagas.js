@@ -29,6 +29,8 @@ import {
   handleSuccessSnackbar,
   handleErrorSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -63,10 +65,15 @@ export function* handleCurrentBusinessPageLoad({ payload }) {
 export function* handleAddBusinessPage({ payload }) {
   try {
     yield put(setLoading(true));
-    yield call(createBusinessPage, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(setLoading(false));
-    yield put(push(routes.pathToBusinessPages));
+    const newBusinessPage = yield call(createBusinessPage, payload);
+    if (newBusinessPage?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleAddBusinessPage();
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(setLoading(false));
+      yield put(push(routes.pathToBusinessPages));
+    }
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
@@ -75,10 +82,16 @@ export function* handleAddBusinessPage({ payload }) {
 export function* handleBusinessPageDelete({ payload }) {
   try {
     yield put(setLoading(true));
-    yield call(deleteBusinessPage, payload);
-    yield put(removeBusinessPageFromStore(payload));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    yield put(setLoading(false));
+    const deletedItem = yield call(deleteBusinessPage, payload);
+
+    if (deletedItem?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleBusinessPageDelete();
+    } else {
+      yield put(removeBusinessPageFromStore(payload));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+      yield put(setLoading(false));
+    }
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
@@ -87,10 +100,16 @@ export function* handleBusinessPageDelete({ payload }) {
 export function* handleBusinessPageUpdate({ payload }) {
   try {
     yield put(setLoading(true));
-    yield call(updateBusinessPage, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(setLoading(false));
-    yield put(push(routes.pathToBusinessPages));
+    const updatedPage = yield call(updateBusinessPage, payload);
+
+    if (updatedPage?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleBusinessPageUpdate();
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(setLoading(false));
+      yield put(push(routes.pathToBusinessPages));
+    }
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
