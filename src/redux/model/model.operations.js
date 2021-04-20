@@ -15,20 +15,22 @@ const constructorElementRequest = `
      value
      lang
     }
-    material{
-      _id
-      name {
-        value
-        lang
+    features {
+      material{
+        _id
+        name {
+          value
+          lang
+        }
       }
-    }
-    color {
-       _id
-      colorHex
-      name {
-        value
-        lang
-    }
+      color {
+         _id
+        colorHex
+        name {
+          value
+          lang
+      }
+      }
     }
 `;
 
@@ -115,35 +117,41 @@ export const getModelById = async (id) => {
             value
             lang
           }
-          constructorBasic {
-            ${constructorElementRequest}
-          }
-          constructorPattern {
-            _id
-            name {
-              value
-              lang
+          eligibleOptions {
+            constructorBasic {
+              ${constructorElementRequest}
             }
-            images {
-              large
-              medium
-              small
-              thumbnail
-            }
-            material {
+            constructorPattern {
               _id
               name {
                 value
                 lang
               }
+              images {
+                large
+                medium
+                small
+                thumbnail
+              }
+              features {
+                material {
+                  _id
+                  name {
+                    value
+                    lang
+                  }
+                }
+                handmade 
+              }
+            }
+            constructorFrontPocket  {
+              ${constructorElementRequest}
+            }
+            constructorBottom{
+              ${constructorElementRequest}
             }
           }
-          constructorFrontPocket  {
-            ${constructorElementRequest}
-          }
-          constructorBottom{
-            ${constructorElementRequest}
-          }
+          
         }
         ... on Error {
           message
@@ -176,17 +184,19 @@ export const deleteModel = async (id) => {
         deleteModel(id: $id) {
           ... on Model {
             _id
-            constructorBasic {
-              _id
-            }
-            constructorPattern {
-              _id
-            }
-            constructorFrontPocket {
-              _id
-            }
-            constructorBottom {
-              _id
+            eligibleOptions {
+              constructorBasic {
+                _id
+              }
+              constructorPattern {
+                _id
+              }
+              constructorFrontPocket {
+                _id
+              }
+              constructorBottom {
+                _id
+              }
             }
           }
           ... on Error {

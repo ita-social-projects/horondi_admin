@@ -18,12 +18,15 @@ export const getAllPatterns = async (skip, limit) => {
               lang
               value
             }
-            material {
-              _id
-              name {
-                lang
-                value
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
               }
+              handmade
             }
             available
             constructorImg
@@ -55,14 +58,16 @@ export const getPatternById = async (id) => {
             description {
               value
             }
-            material {
-              _id
-              name {
-                lang
-                value
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
               }
+              handmade
             }
-            handmade
             available
             images {
               thumbnail
@@ -104,12 +109,15 @@ export const deletePattern = async (id) => {
               lang
               value
             }
-            material {
-              _id
-              name {
-                lang
-                value
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
               }
+              handmade
             }
             available
           }
@@ -149,12 +157,15 @@ export const createPattern = async (payload) => {
               lang
               value
             }
-            material {
-              _id
-              name {
-                lang
-                value
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
               }
+              handmade
             }
             available
             constructorImg
@@ -195,12 +206,15 @@ export const updatePattern = async (payload) => {
               lang
               value
             }
-            material {
-              _id
-              name {
-                lang
-                value
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
               }
+              handmade
             }
             available
             constructorImg
