@@ -12,14 +12,17 @@ export const useCommonStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '45px'
+    marginBottom: '45px',
+    '@media (max-width: 420px)': {
+      display: 'block'
+    }
   },
   materialTitle: {
     marginBottom: '10px',
     fontSize: 24,
     color: theme.palette.text.disabled,
     fontWeight: 'bold',
-    '@media (max-width: 375px)': {
+    '@media (max-width: 420px)': {
       fontSize: theme.spacing(2)
     }
   },

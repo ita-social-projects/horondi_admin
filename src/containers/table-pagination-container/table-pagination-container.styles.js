@@ -9,10 +9,29 @@ export const useStyles = makeStyles(() => ({
       padding: '10px'
     }
   },
+
   pagination: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    '@media (max-width: 420px)': {
+      width: '280px',
+      padding: 0,
+      '& .MuiTablePagination-toolbar': {
+        flexWrap: 'wrap',
+        padding: 0
+      },
+      '& .MuiTablePagination-selectRoot': {
+        'margin-right': 0
+      },
+      '& .makeStyles-root': {
+        'margin-left': 0
+      },
+      '& li': {
+        width: '30px'
+      }
+    }
   },
   goToPage: {
     display: 'flex',
