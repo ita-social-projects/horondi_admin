@@ -1,18 +1,8 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-
+import { setItems, getItems } from '../../utils/client';
 import { contactTranslations } from '../../translations/contact.translations';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-
-const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
 const getContacts = async (skip, limit) => {
-  const result = await client.query({
-    variables: {
-      skip,
-      limit
-    },
-    query: gql`
+  const query = `
       query($skip: Int, $limit: Int) {
         getContacts(skip: $skip, limit: $limit) {
           items {
@@ -32,16 +22,14 @@ const getContacts = async (skip, limit) => {
           count
         }
       }
-    `
-  });
-  const { data } = result;
+    `;
+  const { data } = await getItems(query, { skip, limit });
+
   return data.getContacts;
 };
 
 const getContactById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getContactById(id: $id) {
           ... on Contact {
@@ -69,12 +57,10 @@ const getContactById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
+  const { data } = await getItems(query, { id });
 
-  if (data.getContactById.message) {
+  if (Object.keys(contactTranslations).includes(data.getContactById?.message)) {
     throw new Error(
       `${data.getContactById.statusCode} ${
         contactTranslations[data.getContactById.message]
@@ -86,10 +72,7 @@ const getContactById = async (id) => {
 };
 
 const deleteContact = async (id) => {
-  const result = await client.mutate({
-    variables: { id },
-    context: { headers: { token } },
-    mutation: gql`
+  const query = `
       mutation($id: ID!) {
         deleteContact(id: $id) {
           ... on Contact {
@@ -107,12 +90,10 @@ const deleteContact = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
+  const { data } = await setItems(query, { id });
 
-  if (data.deleteContact.message) {
+  if (Object.keys(contactTranslations).includes(data.deleteContact?.message)) {
     throw new Error(
       `${data.deleteContact.statusCode} ${
         contactTranslations[data.deleteContact.message]
@@ -124,10 +105,7 @@ const deleteContact = async (id) => {
 };
 
 const addContact = async (contact, mapImages) => {
-  const result = await client.mutate({
-    variables: { contact, mapImages },
-    context: { headers: { token } },
-    mutation: gql`
+  const query = `
       mutation($contact: contactInput!, $mapImages: [MapImage]!) {
         addContact(contact: $contact, mapImages: $mapImages) {
           ... on Contact {
@@ -155,12 +133,10 @@ const addContact = async (contact, mapImages) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
+  const { data } = await setItems(query, { contact, mapImages });
 
-  if (data.addContact.message) {
+  if (Object.keys(contactTranslations).includes(data.addContact?.message)) {
     throw new Error(
       `${data.addContact.statusCode} ${
         contactTranslations[data.addContact.message]
@@ -172,14 +148,7 @@ const addContact = async (contact, mapImages) => {
 };
 
 const updateContact = async (id, contact, mapImages) => {
-  const result = await client.mutate({
-    variables: {
-      id,
-      contact,
-      mapImages
-    },
-    context: { headers: { token } },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $contact: contactInput!, $mapImages: [MapImage]!) {
         updateContact(id: $id, contact: $contact, mapImages: $mapImages) {
           ... on Contact {
@@ -196,13 +165,11 @@ const updateContact = async (id, contact, mapImages) => {
           }
         }
       }
-    `,
+    `;
 
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
-  if (data.updateContact.message) {
+  const { data } = await setItems(query, { id, contact, mapImages });
+
+  if (Object.keys(contactTranslations).includes(data.updateContact?.message)) {
     throw new Error(
       `${data.updateContact.statusCode} ${
         contactTranslations[data.updateContact.message]

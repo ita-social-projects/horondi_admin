@@ -167,12 +167,14 @@ export function* handleProductUpdate({ payload }) {
   try {
     yield put(setProductsLoading(true));
     const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
+
     const product = yield call(
       updateProduct,
       payload,
       upload,
       primaryImageUpload
     );
+
     if (product?.data.updateProduct?.message) {
       yield call(handleRefreshTokenPair);
       yield handleProductUpdate({ payload });
