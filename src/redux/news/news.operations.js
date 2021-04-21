@@ -1,15 +1,10 @@
 import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { client, getItems } from '../../utils/client';
 import { newsTranslations } from '../../translations/news.translations';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 
 const getAllNews = async (skip, limit) => {
-  const result = await client.query({
-    variables: {
-      skip,
-      limit
-    },
-    query: gql`
+  const query = `
       query($skip: Int, $limit: Int) {
         getAllNews(skip: $skip, limit: $limit) {
           items {
@@ -29,16 +24,17 @@ const getAllNews = async (skip, limit) => {
           count
         }
       }
-    `
-  });
+    `;
 
-  return result.data.getAllNews;
+  const { data } = await getItems(query, {
+    limit,
+    skip
+  });
+  return data.getAllNews;
 };
 
 const getArticleById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getNewsById(id: $id) {
           ... on News {
@@ -67,19 +63,19 @@ const getArticleById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  if (result.data.getNewsById.message) {
+  const { data } = await getItems(query, { id });
+
+  if (data.getNewsById.message) {
     throw new Error(
-      `${result.data.getNewsById.statusCode} ${
-        newsTranslations[result.data.getNewsById.message]
+      `${data.getNewsById.statusCode} ${
+        newsTranslations[data.getNewsById.message]
       }`
     );
   }
 
-  return result.data.getNewsById;
+  return data.getNewsById;
 };
 
 const deleteArticle = async (id) => {

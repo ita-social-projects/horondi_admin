@@ -1,6 +1,4 @@
-import { gql } from '@apollo/client';
-import { client, getItems, setItems } from '../../utils/client';
-import { getFromLocalStorage } from '../../services/local-storage.service';
+import { getItems, setItems } from '../../utils/client';
 import { categoryTranslations } from '../../translations/category.translations';
 import { AUTH_ERRORS } from '../../error-messages/auth';
 
@@ -81,7 +79,7 @@ export const getCategoryById = async (id) => {
   return data.getCategoryById;
 };
 
-export const deleteCategoryById = (deleteId, switchId) => {
+export const deleteCategoryById = async (deleteId, switchId) => {
   const deleteCategoryByIdQuery = `
      mutation deleteCategory($deleteId: ID!, $switchId: ID!){
       deleteCategory(
@@ -100,7 +98,10 @@ export const deleteCategoryById = (deleteId, switchId) => {
     }
   `;
 
-  const { data } = setItems(deleteCategoryByIdQuery, { deleteId, switchId });
+  const { data } = await setItems(deleteCategoryByIdQuery, {
+    deleteId,
+    switchId
+  });
 
   return data.deleteCategory;
 };
@@ -134,12 +135,7 @@ export const createCategory = async (payload) => {
   return data.addCategory;
 };
 export const updateCategory = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-    mutation: gql`
+  const query = `
       mutation updateCategory(
         $id: ID!
         $category: CategoryInput!
@@ -155,16 +151,18 @@ export const updateCategory = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  if (result.data.updateCategory.message) {
+    `;
+  const { data } = await setItems(query, payload);
+
+  if (
+    data.updateCategory.message &&
+    data.addCategory.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
+  ) {
     throw new Error(
-      `${result.data.updateCategory.statusCode} ${
-        categoryTranslations[result.data.updateCategory.message]
+      `${data.updateCategory.statusCode} ${
+        categoryTranslations[data.updateCategory.message]
       }`
     );
   }
-  client.resetStore();
-  return result.data.updateCategory;
+  return data.updateCategory;
 };

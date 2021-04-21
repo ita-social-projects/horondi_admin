@@ -73,7 +73,7 @@ export function* handleAddCategory({ payload }) {
 
     if (category?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
       yield call(handleRefreshTokenPair);
-      yield handleAddCategory();
+      yield handleAddCategory({ payload });
     } else {
       yield put(setCategoryLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
@@ -90,10 +90,16 @@ export function* handleDeleteCategory() {
     const { switchId, deleteId } = yield select(
       selectCategorySwitchAndDeleteId
     );
-    yield call(deleteCategoryById, deleteId, switchId);
-    yield put(removeCategoryFromStore(deleteId));
-    yield put(setCategoryLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const deletedCategory = yield call(deleteCategoryById, deleteId, switchId);
+
+    if (deletedCategory?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleDeleteCategory();
+    } else {
+      yield put(removeCategoryFromStore(deleteId));
+      yield put(setCategoryLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleCategoryError, error);
   }
@@ -102,9 +108,16 @@ export function* handleDeleteCategory() {
 export function* handleCategoryUpdate({ payload }) {
   try {
     yield put(setCategoryLoading(true));
-    yield call(updateCategory, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToCategories));
+
+    const updatedCategory = yield call(updateCategory, payload);
+
+    if (updatedCategory?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleCategoryUpdate({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(config.routes.pathToCategories));
+    }
   } catch (error) {
     yield call(handleCategoryError, error);
   }

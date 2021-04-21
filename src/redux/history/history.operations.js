@@ -1,6 +1,7 @@
 import { getItems } from '../../utils/client';
 
-const getAllHistoryRecordsQuery = `
+const getAllHistoryRecords = async (limit, skip, filter) => {
+  const getAllHistoryRecordsQuery = `
 query(
   $limit: Int!
   $skip: Int!
@@ -39,7 +40,17 @@ query(
 }
 `;
 
-const getHistoryRecordQuery = `
+  const { data } = await getItems(getAllHistoryRecordsQuery, {
+    limit,
+    skip,
+    filter
+  });
+
+  return data.getAllHistoryRecords;
+};
+
+const getHistoryRecord = async (id) => {
+  const getHistoryRecordQuery = `
 query(
   $id: ID!
 ) {
@@ -73,20 +84,6 @@ query(
   }
 }
 `;
-
-const getAllHistoryRecords = async (limit, skip, filter) => {
-  const options = {
-    limit,
-    skip,
-    filter
-  };
-
-  const { data } = await getItems(getAllHistoryRecordsQuery, options);
-
-  return data.getAllHistoryRecords;
-};
-
-const getHistoryRecord = async (id) => {
 
   const { data } = await getItems(getHistoryRecordQuery, { id });
 
