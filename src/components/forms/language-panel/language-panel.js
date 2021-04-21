@@ -9,14 +9,7 @@ import Editor from '../../editor';
 const LanguagePanel = ({ lang, inputOptions }) => {
   const styles = useStyles();
 
-  const {
-    values,
-    touched,
-    errors,
-    inputs,
-    handleChange,
-    handleBlur
-  } = inputOptions;
+  const { values, touched, errors, inputs, handleChange } = inputOptions;
   const inputsTextfields = inputs.filter((input) => !input.isEditor);
   const inputsEditor = inputs.filter((input) => input.isEditor);
   return (
@@ -40,7 +33,6 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                   multiline
                   value={values[inputName]}
                   onChange={handleChange}
-                  onBlur={handleBlur}
                   {...input.props}
                 />
                 {touched[inputName] && errors[inputName] && (
@@ -60,28 +52,17 @@ const LanguagePanel = ({ lang, inputOptions }) => {
               values[inputName] = value;
             };
             return (
-              <React.Fragment key={input.name}>
-                <Editor
-                  value={values[inputName]}
-                  placeholder={input.label[lang]}
-                  onChange={handleChange}
-                  onEditorChange={(value) => setEditorValue(value)}
-                  setFiles={input.setFiles}
-                  data-cy={`${lang}-${input.name}`}
-                  label={lang}
-                  error={touched[inputName] && !!errors[inputName]}
-                  id={`${lang}-${input.name}`}
-                  key={lang}
-                />
-                {touched[inputName] && errors[inputName] && (
-                  <div
-                    data-cy={`${lang}-${input.name}-error`}
-                    className={styles.error}
-                  >
-                    {errors[inputName]}
-                  </div>
-                )}
-              </React.Fragment>
+              <Editor
+                value={values[inputName]}
+                placeholder={input.label[lang]}
+                onChange={handleChange}
+                onEditorChange={(value) => setEditorValue(value)}
+                setFiles={input.setFiles}
+                data-cy={`${lang}-${input.name}`}
+                label={lang}
+                id={`${lang}-${input.name}`}
+                key={lang}
+              />
             );
           })}
         </Paper>

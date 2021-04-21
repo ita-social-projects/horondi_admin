@@ -34,7 +34,6 @@ const getContacts = async (skip, limit) => {
       }
     `
   });
-  client.resetStore();
   const { data } = result;
   return data.getContacts;
 };
@@ -111,7 +110,6 @@ const deleteContact = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
   const { data } = result;
 
   if (data.deleteContact.message) {
@@ -160,7 +158,6 @@ const addContact = async (contact, mapImages) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
   const { data } = result;
 
   if (data.addContact.message) {
@@ -203,7 +200,7 @@ const updateContact = async (id, contact, mapImages) => {
 
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
   if (data.updateContact.message) {
     throw new Error(

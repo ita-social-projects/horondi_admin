@@ -19,7 +19,11 @@ query(
     email
     role
     phoneNumber
-    banned
+    banned{
+      blockPeriod
+      blockCount
+      updatedAt
+    }
     }
     count
   }
@@ -32,6 +36,7 @@ query($id: ID!) {
     ... on User {
       firstName
       lastName
+      confirmed
       email
       address {
         country
@@ -41,7 +46,11 @@ query($id: ID!) {
         street
         zipcode
       }
-      banned
+     banned{
+      blockPeriod
+      blockCount
+      updatedAt
+    }
     }
   }
 }
@@ -62,11 +71,11 @@ mutation($id: ID!) {
 }
 `;
 
-const switchUserStatusMutation = `
-mutation($id: ID!) {
-  switchUserStatus(id: $id) {
-    ... on SuccessfulResponse {
-      isSuccess
+const registerAdminMutation = `
+mutation($user: AdminRegisterInput!) {
+  registerAdmin(user:$user){
+    ... on User {
+      email
     }
     ... on Error {
       message
@@ -76,9 +85,23 @@ mutation($id: ID!) {
 }
 `;
 
-const registerAdminMutation = `
-mutation($user: AdminRegisterInput!) {
-  registerAdmin(user:$user){
+const resendEmailToConfirmAdminMutation = `
+mutation($user: resendEmailToConfirmAdminInput!) {
+  resendEmailToConfirmAdmin(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
+
+const confirmSuperadminCreationMutation = `
+mutation($user: confirmSuperadminCreationInput!) {
+  confirmSuperadminCreation(user:$user){
     ... on User {
       email
     }
@@ -117,6 +140,63 @@ query($token: String!){
   }
 }`;
 
+const blockUserMutation = `
+  mutation($userId:ID!){
+    blockUser(userId:$userId){
+      ...on User{
+          firstName
+          lastName
+          email
+          address {
+            country
+            city
+            buildingNumber
+            appartment
+            street
+            zipcode
+          }
+        banned{
+          blockPeriod
+          blockCount
+          updatedAt
+        }
+      }
+         ...on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;
+const unlockUserMutation = `
+  mutation($userId:ID!){
+    unlockUser(userId:$userId){
+      ...on User{
+          firstName
+          lastName
+          email
+          address {
+            country
+            city
+            buildingNumber
+            appartment
+            street
+            zipcode
+          }
+        banned{
+          blockPeriod
+          blockCount
+          updatedAt
+        }
+      }
+      ...on Error {
+        message
+        statusCode
+      }
+    }
+  }
+`;
+
 const getAllUsers = async (filter, pagination, sort) => {
   const options = {
     filter,
@@ -153,18 +233,27 @@ const deleteUser = async (id) => {
   return data.deleteUser;
 };
 
-const switchUserStatus = async (id) => {
-  const result = await setItems(switchUserStatusMutation, { id });
-
+const blockUser = async (userId) => {
+  const result = await setItems(blockUserMutation, { userId });
   const { data } = result;
 
-  if (data.switchUserStatus.message) {
+  if (data.blockUser.message) {
+    throw new Error(`Помилка: ${config.errorMessages[data.blockUser.message]}`);
+  }
+
+  return data.blockUser;
+};
+const unlockUser = async (userId) => {
+  const result = await setItems(unlockUserMutation, { userId });
+  const { data } = result;
+
+  if (data.unlockUser.message) {
     throw new Error(
-      `Помилка: ${config.errorMessages[data.switchUserStatus.message]}`
+      `Помилка: ${config.errorMessages[data.unlockUser.message]}`
     );
   }
 
-  return data.switchUserStatus;
+  return data.unlockUser;
 };
 
 const registerAdmin = async (user) => {
@@ -175,6 +264,34 @@ const registerAdmin = async (user) => {
   if (data.registerAdmin.message) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.registerAdmin.message]}`
+    );
+  }
+
+  return data.registerAdmin;
+};
+
+const resendEmailToConfirmAdmin = async (user) => {
+  const result = await setItems(resendEmailToConfirmAdminMutation, { user });
+
+  const { data } = result;
+
+  if (data.resendEmailToConfirmAdmin.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
+    );
+  }
+
+  return data.registerAdmin;
+};
+
+const confirmSuperadminCreation = async (user) => {
+  const result = await setItems(confirmSuperadminCreationMutation, { user });
+
+  const { data } = result;
+
+  if (data.confirmSuperadminCreation.message) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
     );
   }
 
@@ -197,7 +314,6 @@ const completeAdminRegister = async ({ user, token }) => {
 
 const validateToken = async (token) => {
   const result = await getItems(validateTokenQuery, { token });
-
   const { data } = result;
 
   if (data.validateConfirmationToken.message) {
@@ -213,8 +329,11 @@ export {
   getAllUsers,
   getUserById,
   deleteUser,
-  switchUserStatus,
   registerAdmin,
+  resendEmailToConfirmAdmin,
   completeAdminRegister,
-  validateToken
+  validateToken,
+  blockUser,
+  unlockUser,
+  confirmSuperadminCreation
 };

@@ -16,7 +16,9 @@ const formRegExp = {
   hexString: /^#[0-9a-f]{3,6}$/i,
   uaNameCreation: /^[а-яїієґ0-9\s]+$/i,
   enNameCreation: /^[a-z0-9\s]+$/i,
-  enDescription: '[abc]',
-  categoryCode: /^[a-z0-9|-]/i
+  enDescription: /^[a-z0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
+  categoryCode: /^[a-z0-9|-]/i,
+  firstName: /^(?=.{2,30}$)[a-zA-Zа-яА-Яіїє]+(([',. -][a-zA-Zа-яА-Яіїє])?[a-zA-Zа-яА-Яіїє]*)*$/i,
+  lastName: /^(?=.{2,30}$)[a-zA-Zа-яА-Яіїє]+(([',. -][a-zA-Zа-яА-Яіїє])?[a-zA-Zа-яА-Яіїє]*)*$/i
 };
 export default formRegExp;

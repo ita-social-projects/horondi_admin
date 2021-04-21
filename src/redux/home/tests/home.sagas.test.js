@@ -25,7 +25,10 @@ import {
   initialState,
   mockImages,
   mockUpdatePayload,
-  mockError
+  mockError,
+  updatedPhotos,
+  effectPutType,
+  effectCallType
 } from './home.variables';
 
 import {
@@ -56,8 +59,8 @@ describe('Homapage sagas test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
+        const analysisCall = analysis.filter((e) => e.type === effectCallType);
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
       }));
@@ -77,29 +80,25 @@ describe('Homapage sagas test', () => {
             updateHomePageLooksImage,
             mockUpdatePayload.id,
             mockUpdatePayload.upload
-          )
+          ),
+          updatedPhotos
         ],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
-      .put(
-        updateHomePageImagesInStore(
-          mockUpdatePayload.id,
-          mockUpdatePayload.upload
-        )
-      )
+      .put(updateHomePageImagesInStore(mockUpdatePayload.id, updatedPhotos))
       .put(setHomePageDataLoading(false))
-      .put(push('/home-page-edit'))
+      .put(push(config.routes.pathToHomePageEdit))
       .hasFinalState({
         Home: {
           ...initialState,
-          photos: [mockUpdatePayload.upload]
+          photos: [{ _id: mockUpdatePayload.id, ...updatedPhotos }]
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
+        const analysisCall = analysis.filter((e) => e.type === effectCallType);
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
       }));
@@ -125,8 +124,8 @@ describe('Homapage sagas test', () => {
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+        const analysisPut = analysis.filter((e) => e.type === effectPutType);
+        const analysisCall = analysis.filter((e) => e.type === effectCallType);
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(1);
       }));

@@ -13,6 +13,7 @@ import ImageUploadPreviewContainer from '../../../containers/image-upload-contai
 import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
 import { handleImageLoad } from '../../../utils/pattern-form';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const map = require('lodash/map');
 
@@ -62,10 +63,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
         .required(TITLE_MIN_LENGTH_MESSAGE);
-      reducer[`${lang}Text`] = Yup.string()
-        .min(10, TEXT_MIN_LENGTH_MESSAGE)
-        .required(TEXT_MIN_LENGTH_MESSAGE);
-
+      reducer[`${lang}Text`] = Yup.string();
       return reducer;
     }, {});
 
@@ -109,6 +107,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   const handleLoadAuthorImage = (e) => {
     handleImageLoad(e, (event) => {
       setFieldValue('authorImage', event.target.result);
+      setFieldValue('authorPhoto', event.target.result);
       setAuthorPhoto(event.target.result);
     });
     setUploadAuthorImage(e.target.files[0]);
@@ -137,13 +136,38 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     inputs
   };
 
+  const valueEquality = checkInitialValue(
+    useFormikInitialValues(newsArticle),
+    values
+  );
+
+  const checkValidData = (value) => {
+    if (
+      value.enAuthorName.length >= 2 &&
+      value.uaAuthorName.length >= 2 &&
+      value.enTitle.length >= 10 &&
+      value.uaTitle.length >= 10
+    ) {
+      return {
+        newsImage: value.newsImage,
+        enAuthorName: value.enAuthorName,
+        uaAuthorName: value.uaAuthorName,
+        enTitle: value.enTitle,
+        uaTitle: value.uaTitle
+      };
+    }
+    if (value.enText === '') delete value.enText;
+    if (value.uaText === '') delete value.uaText;
+    return value;
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton />
+              <BackButton initial={!valueEquality} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
@@ -151,6 +175,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 data-cy='save'
                 type='submit'
                 title={SAVE_TITLE}
+                values={checkValidData(values)}
               />
             </Grid>
           </Grid>

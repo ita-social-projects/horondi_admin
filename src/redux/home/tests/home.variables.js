@@ -1,7 +1,7 @@
 export const id = '5c3c7929dd85de268bed4fe1';
 export const invalidId = '5c3c7929dd85de268bed4fe2';
 export const images = ['test'];
-export const updatedImage = 'update';
+export const updatedImage = 'some data';
 export const loading = false;
 export const error = false;
 export const updatedImages = { _id: '5c3c7929dd85de268bed4f23' };
@@ -17,8 +17,11 @@ export const mockError = {
 
 export const mockUpdatePayload = {
   id,
-  upload: ['some data']
+  upload: { images: updatedImage }
 };
+
+export const effectPutType = 'PUT';
+export const effectCallType = 'CALL';
 
 export const mockImages = [
   {
@@ -44,4 +47,8 @@ export const looksImageUpdateMock = {
       }
     }
   }
+};
+
+export const updatedPhotos = {
+  images: updatedImage
 };

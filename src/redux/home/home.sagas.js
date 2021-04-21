@@ -40,9 +40,8 @@ export function* handleHomePageImagesUpdate({ payload }) {
   try {
     yield put(setHomePageDataLoading(true));
 
-    yield call(updateHomePageLooksImage, id, upload);
-    yield put(updateHomePageImagesInStore(id, upload));
-
+    const data = yield call(updateHomePageLooksImage, id, upload);
+    yield put(updateHomePageImagesInStore(id, data));
     yield put(setHomePageDataLoading(false));
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push('/home-page-edit'));

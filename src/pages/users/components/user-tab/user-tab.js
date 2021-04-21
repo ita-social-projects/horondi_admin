@@ -10,6 +10,7 @@ import { config } from '../../../../configs';
 import UserNavbar from '../user-navbar';
 import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
+import { UserBlockPeriod } from '../../../../consts/user-block-status';
 
 const map = require('lodash/map');
 
@@ -34,7 +35,11 @@ const UserTab = (props) => {
       mobile={formatPhoneNumber(userItem.phoneNumber) || ''}
       email={userItem.email || ''}
       role={userRoleTranslations[userItem.role]}
-      banned={userItem.banned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS}
+      banned={
+        userItem.banned.blockPeriod === UserBlockPeriod.UNLOCKED
+          ? USER_ACTIVE_STATUS
+          : USER_INACTIVE_STATUS
+      }
       deleteHandler={() => onDelete(userItem._id)}
       editHandler={() => dispatch(push(`/users/${userItem._id}`))}
     />

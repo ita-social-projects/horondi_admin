@@ -9,7 +9,7 @@ import { TableCell, TableRow, Typography } from '@material-ui/core';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 
-import { getComments } from '../../redux/comments/comments.actions';
+import { getRecentComments } from '../../redux/comments/comments.actions';
 import { getOrderList } from '../../redux/orders/orders.actions';
 import { selectOrderList } from '../../redux/orders/orders.reducer';
 import { selectComment } from '../../redux/comments/comments.reducer';
@@ -29,8 +29,7 @@ const MainPage = () => {
   const {
     mainTitle,
     commentsTitle,
-    ordersTitle,
-    changesTitle
+    ordersTitle
   } = titles.mainPageTitles;
   const ordersTableTitles = tableHeadRowTitles.mainPageOrders;
   const { guestUser } = labels.user;
@@ -39,7 +38,7 @@ const MainPage = () => {
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
-  const { list, loading } = useSelector(selectComment);
+  const { recentComments: list, loading } = useSelector(selectComment);
 
   const { orderLoading, ordersList } = useSelector(selectOrderList);
   const { rowsPerPage, currentPage } = useSelector(
@@ -48,7 +47,7 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(
-      getComments({
+      getRecentComments({
         pagination: {
           limit: rowsPerPage,
           skip: currentPage * rowsPerPage
@@ -74,7 +73,10 @@ const MainPage = () => {
       <div className={classes.commentText}>{text}</div>
       <div className={classes.commentInfo}>
         <div>{user.firstName || guestUser}</div>
-        <div>{moment.unix(date / 1000).format('HH:mm DD.MM.YYYY ')}</div>
+        <div>
+          <div>{moment.unix(date / 1000).format('HH:mm')}</div>
+          <div>{moment.unix(date / 1000).format('DD.MM.YYYY ')}</div>
+        </div>
       </div>
     </div>
   ));
@@ -142,11 +144,6 @@ const MainPage = () => {
             <div className={classes.comments}>{comments}</div>
           </Paper>
         </div>
-        <Paper className={classes.changesContainer} data-cy='changes-container'>
-          <Typography variant='h5' className={classes.blockTitle}>
-            {changesTitle}
-          </Typography>
-        </Paper>
       </div>
     </div>
   );

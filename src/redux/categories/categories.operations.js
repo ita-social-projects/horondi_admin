@@ -41,8 +41,6 @@ export const getAllCategories = async (filter, pagination, sort) => {
       sort
     }
   });
-  client.resetStore();
-
   return result.data.getAllCategories;
 };
 
@@ -126,7 +124,6 @@ export const createCategory = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
 
   if (result.data.addCategory.message) {
     throw new Error(
@@ -135,7 +132,7 @@ export const createCategory = async (payload) => {
       }`
     );
   }
-
+  client.resetStore();
   return result.data.addCategory;
 };
 
@@ -164,7 +161,6 @@ export const updateCategory = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
   if (result.data.updateCategory.message) {
     throw new Error(
       `${result.data.updateCategory.statusCode} ${
@@ -172,6 +168,6 @@ export const updateCategory = async (payload) => {
       }`
     );
   }
-
+  client.resetStore();
   return result.data.updateCategory;
 };
