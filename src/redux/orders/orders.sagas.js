@@ -1,5 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
 import { config } from '../../configs';
 import routes from '../../configs/routes';
 import {
@@ -49,6 +50,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -63,8 +66,15 @@ export function* handleOrderUpdate({ payload }) {
     if (order.errors) {
       throw new Error(order.errors[0].message);
     }
-    yield put(setOrder(order.data.updateOrder));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    if (
+      order?.data.updateOrder?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
+    ) {
+      yield call(handleRefreshTokenPair);
+      yield handleOrderUpdate({ payload });
+    } else {
+      yield put(setOrder(order.data.updateOrder));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    }
   } catch (e) {
     yield call(handleErrorSnackbar, e.message);
     yield put(setOrderError(e));
@@ -95,8 +105,13 @@ export function* handleOrdersListLoad({ payload }) {
       payload.limit,
       payload.filter.orderStatus
     );
-    yield put(setItemsCount(orders.count));
-    yield put(setOrderList(orders));
+    if (orders?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleOrdersListLoad({ payload });
+    } else {
+      yield put(setItemsCount(orders.count));
+      yield put(setOrderList(orders));
+    }
   } catch (error) {
     yield call(handleOrdersError, error);
   } finally {
@@ -125,12 +140,18 @@ export function* handleOrdersError(e) {
 export function* handleOrdersDelete({ payload }) {
   try {
     yield put(setOrderLoading(true));
-    yield call(deleteOrder, payload);
-    yield put(removeOrderFromStore(payload));
-    yield put(setOrderLoading(false));
-    yield put(updatePagination());
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    yield put(push(routes.pathToOrders));
+    const order = yield call(deleteOrder, payload);
+
+    if (order?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleOrdersDelete({ payload });
+    } else {
+      yield put(removeOrderFromStore(payload));
+      yield put(setOrderLoading(false));
+      yield put(updatePagination());
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+      yield put(push(routes.pathToOrders));
+    }
   } catch (error) {
     yield call(handleOrdersError, error);
   }

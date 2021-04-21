@@ -1,7 +1,7 @@
 import { getItems } from '../../utils/client';
 
 const getPopularCategories = async () => {
-  const res = await getItems(`
+  const query = `
 	query {
 		getPopularCategories {
 			names
@@ -9,12 +9,14 @@ const getPopularCategories = async () => {
 			relations
 		}
 	}
- `);
-  return res.data.getPopularCategories;
+ `;
+  const { data } = await getItems(query);
+
+  return data.getPopularCategories;
 };
 
 const getPopularProducts = async () => {
-  const res = await getItems(`
+  const query = `
 		query {
 			getPopularProducts{
 				labels
@@ -22,13 +24,15 @@ const getPopularProducts = async () => {
 				total
 			}
 		}	
-	`);
-  return res.data.getPopularProducts;
+	`;
+
+  const { data } = await getItems(query);
+
+  return data.getPopularProducts;
 };
 
 const getUsersByDays = async (days) => {
-  const res = await getItems(
-    `
+  const query = `
 		query ($days: Int!) {
 			getUsersForStatistic(filter: {days: $days}) {
 				counts
@@ -36,15 +40,15 @@ const getUsersByDays = async (days) => {
 				total
 			}
 		}
-	`,
-    { days }
-  );
-  return res.data.getUsersForStatistic;
+	`;
+
+  const { data } = await getItems(query, { days });
+
+  return data.getUsersForStatistic;
 };
 
 const getOrdersStats = async (date) => {
-  const res = await getItems(
-    `
+  const query = `
 		query($date: Int!) {
 			getOrdersStatistic(date: $date) {
 				names
@@ -52,15 +56,15 @@ const getOrdersStats = async (date) => {
 				relations
 			}
 		}
-	`,
-    { date }
-  );
-  return res.data.getOrdersStatistic;
+	`;
+
+  const { data } = await getItems(query, { date });
+
+  return data.getOrdersStatistic;
 };
 
 const getPaidOrdersStats = async (date) => {
-  const res = await getItems(
-    `
+  const query = `
 		query($date: Int!) {
 			getPaidOrdersStatistic(date: $date) {
 				labels
@@ -68,10 +72,11 @@ const getPaidOrdersStats = async (date) => {
 				total
 			}
 		}
-	`,
-    { date }
-  );
-  return res.data.getPaidOrdersStatistic;
+	`;
+
+  const { data } = await getItems(query, { date });
+
+  return data.getPaidOrdersStatistic;
 };
 
 export {

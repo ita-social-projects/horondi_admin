@@ -68,7 +68,7 @@ export function* handleAddBusinessPage({ payload }) {
     const newBusinessPage = yield call(createBusinessPage, payload);
     if (newBusinessPage?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
       yield call(handleRefreshTokenPair);
-      yield handleAddBusinessPage();
+      yield handleAddBusinessPage({ payload });
     } else {
       yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
       yield put(setLoading(false));
@@ -86,7 +86,7 @@ export function* handleBusinessPageDelete({ payload }) {
 
     if (deletedItem?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
       yield call(handleRefreshTokenPair);
-      yield handleBusinessPageDelete();
+      yield handleBusinessPageDelete({ payload });
     } else {
       yield put(removeBusinessPageFromStore(payload));
       yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
@@ -104,7 +104,7 @@ export function* handleBusinessPageUpdate({ payload }) {
 
     if (updatedPage?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
       yield call(handleRefreshTokenPair);
-      yield handleBusinessPageUpdate();
+      yield handleBusinessPageUpdate({ payload });
     } else {
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
       yield put(setLoading(false));

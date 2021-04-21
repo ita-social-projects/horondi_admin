@@ -27,6 +27,8 @@ import {
   getPaidOrdersStats,
   getUsersByDays
 } from './stats.operations';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 export function* handleInitialStatsLoad() {
   try {
@@ -45,8 +47,14 @@ export function* handleOrdersStatisticLoad({ payload }) {
   try {
     yield put(setUpdatingDoughnutData(true));
     const orders = yield call(getOrdersStats, payload);
-    yield put(setAllOrdersStats(orders));
-    yield put(setUpdatingDoughnutData(false));
+
+    if (orders?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleOrdersStatisticLoad({ payload });
+    } else {
+      yield put(setAllOrdersStats(orders));
+      yield put(setUpdatingDoughnutData(false));
+    }
   } catch (e) {
     handleStatsErrors(e);
   }
@@ -56,8 +64,14 @@ export function* handlePaidOrdersLoad({ payload }) {
   try {
     yield put(setUpdatingBarData(true));
     const orders = yield call(getPaidOrdersStats, payload);
-    yield put(setPaidOrdersStats(orders));
-    yield put(setUpdatingBarData(false));
+
+    if (orders?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handlePaidOrdersLoad({ payload });
+    } else {
+      yield put(setPaidOrdersStats(orders));
+      yield put(setUpdatingBarData(false));
+    }
   } catch (e) {
     handleStatsErrors(e);
   }
@@ -67,8 +81,14 @@ export function* handleUsersStatisticLoad({ payload }) {
   try {
     yield put(setUpdatingBarData(true));
     const users = yield call(getUsersByDays, payload);
-    yield put(setUsersByDays(users));
-    yield put(setUpdatingBarData(false));
+
+    if (users?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleUsersStatisticLoad({ payload });
+    } else {
+      yield put(setUsersByDays(users));
+      yield put(setUpdatingBarData(false));
+    }
   } catch (e) {
     handleStatsErrors(e);
   }

@@ -34,6 +34,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -41,7 +43,7 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleMaterialsByPurposeLoad({ payload }) {
+export function* handleMaterialsByPurposeLoad() {
   try {
     yield put(setMaterialLoading(true));
     const materialsByPurpose = yield call(getAllMaterialsByPatternPurpose);
@@ -65,9 +67,15 @@ export function* handleMaterialsLoad({ payload }) {
       payload.skip,
       payload.limit
     );
-    yield put(setItemsCount(materials.count));
-    yield put(setMaterials(materials.items));
-    yield put(setMaterialLoading(false));
+
+    if (materials?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleMaterialsLoad({ payload });
+    } else {
+      yield put(setItemsCount(materials.count));
+      yield put(setMaterials(materials.items));
+      yield put(setMaterialLoading(false));
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -77,8 +85,13 @@ export function* handleMaterialLoad({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     const material = yield call(getMaterialById, payload);
-    yield put(setMaterial(material));
-    yield put(setMaterialLoading(false));
+    if (material?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleMaterialLoad({ payload });
+    } else {
+      yield put(setMaterial(material));
+      yield put(setMaterialLoading(false));
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -86,10 +99,17 @@ export function* handleMaterialLoad({ payload }) {
 
 export function* handleAddMaterial({ payload }) {
   try {
+    console.log(payload);
     yield put(setMaterialLoading(true));
-    yield call(createMaterial, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(config.routes.pathToMaterials));
+    const newMaterial = yield call(createMaterial, payload);
+
+    if (newMaterial?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleAddMaterial({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(config.routes.pathToMaterials));
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -98,23 +118,35 @@ export function* handleAddMaterial({ payload }) {
 export function* handleMaterialDelete({ payload }) {
   try {
     yield put(setMaterialLoading(true));
-    yield call(deleteMaterial, payload);
-    yield put(setMaterialLoading(false));
-    yield put(removeMaterialFromStore(payload));
-    yield put(updatePagination());
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const deletedMaterial = yield call(deleteMaterial, payload);
+
+    if (deletedMaterial?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleMaterialDelete({ payload });
+    } else {
+      yield put(setMaterialLoading(false));
+      yield put(removeMaterialFromStore(payload));
+      yield put(updatePagination());
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
 }
 
 export function* handleMaterialUpdate({ payload }) {
-  const { id, material, images } = payload;
+  const { id, material } = payload;
   try {
     yield put(setMaterialLoading(true));
-    yield call(updateMaterial, id, material, images);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToMaterials));
+    const updatedMaterial = yield call(updateMaterial, id, material);
+
+    if (updatedMaterial?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleMaterialUpdate({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(config.routes.pathToMaterials));
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }

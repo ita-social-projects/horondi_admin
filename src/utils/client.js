@@ -29,6 +29,7 @@ const formError = (err) => err.message.replace('GraphQL error: ', '');
 
 export const getItems = (query, variables = {}) => {
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
+
   return client
     .query({
       query: gql`

@@ -1,13 +1,8 @@
-import { gql } from '@apollo/client';
-
-import { config } from '../../configs';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-import { client } from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
 import { sizeTranslations } from '../../translations/sizes.translations';
 
 export const getAllSizes = async () => {
-  const result = await client.query({
-    query: gql`
+  const query = `
       query {
         getAllSizes {
           _id
@@ -19,15 +14,15 @@ export const getAllSizes = async () => {
           available
         }
       }
-    `
-  });
-  return result.data.getAllSizes;
+    `;
+
+  const { data } = await getItems(query);
+
+  return data.getAllSizes;
 };
 
 export const getSizeById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getSizeById(id: $id) {
           ... on Size {
@@ -49,29 +44,23 @@ export const getSizeById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  if (result.data.getSizeById.message) {
+  const { data } = await getItems(query, { id });
+
+  if (Object.keys(sizeTranslations).includes(data.getSizeById?.message)) {
     throw new Error(
-      `${result.data.getSizeById.statusCode} ${
-        sizeTranslations[result.data.getSizeById.message]
+      `${data.getSizeById.statusCode} ${
+        sizeTranslations[data.getSizeById.message]
       }`
     );
   }
 
-  return result.data.getSizeById;
+  return data.getSizeById;
 };
 
 export const addSize = async (size) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: {
-      size
-    },
-    mutation: gql`
+  const query = `
       mutation($size: SizeInput!) {
         addSize(size: $size) {
           ... on Size {
@@ -84,29 +73,15 @@ export const addSize = async (size) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.addSize.message) {
-    throw new Error(
-      `${result.data.addSize.statusCode} ${[result.data.addSize.message]}`
-    );
-  }
+  const { data } = await setItems(query, { size });
 
-  return result.data.addSize;
+  return data.addSize;
 };
 
 export const updateSize = async (id, size) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: {
-      id,
-      size
-    },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $size: SizeInput!) {
         updateSize(id: $id, size: $size) {
           ... on Size {
@@ -119,28 +94,23 @@ export const updateSize = async (id, size) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.updateSize.message) {
+  const { data } = await setItems(query, { id, size });
+
+  if (Object.keys(sizeTranslations).includes(data.updateSize?.message)) {
     throw new Error(
-      `${result.data.updateSize.statusCode} ${
-        sizeTranslations[result.data.updateSize.message]
+      `${data.updateSize.statusCode} ${
+        sizeTranslations[data.updateSize.message]
       }`
     );
   }
 
-  return result.data.updateSize;
+  return data.updateSize;
 };
 
 export const deleteSize = async (id) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id },
-    mutation: gql`
+  const query = `
       mutation($id: ID!) {
         deleteSize(id: $id) {
           ... on Size {
@@ -154,18 +124,17 @@ export const deleteSize = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.deleteSize.message) {
+  const { data } = await setItems(query, { id });
+
+  if (Object.keys(sizeTranslations).includes(data.deleteSize?.message)) {
     throw new Error(
-      `${result.data.deleteSize.statusCode} ${
-        sizeTranslations[result.data.deleteSize.message]
+      `${data.deleteSize.statusCode} ${
+        sizeTranslations[data.deleteSize.message]
       }`
     );
   }
 
-  return result.data.deleteSize;
+  return data.deleteSize;
 };

@@ -28,6 +28,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -60,10 +62,16 @@ export function* handleSizeById({ payload }) {
 export function* handleAddSize({ payload }) {
   try {
     yield put(setSizesLoading(true));
-    yield call(addSize, payload);
-    yield put(setSizesLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(config.routes.pathToSizes));
+    const size = yield call(addSize, payload);
+
+    if (size?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleAddSize({ payload });
+    } else {
+      yield put(setSizesLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(config.routes.pathToSizes));
+    }
   } catch (error) {
     yield call(handleSizesError, error);
   }
@@ -73,9 +81,15 @@ export function* handleSizeUpdate({ payload }) {
   const { id, newSize } = payload;
   try {
     yield put(setSizesLoading(true));
-    yield call(updateSize, id, newSize);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToSizes));
+    const size = yield call(updateSize, id, newSize);
+
+    if (size?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleSizeUpdate({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(config.routes.pathToSizes));
+    }
   } catch (error) {
     yield call(handleSizesError, error);
   }
@@ -85,14 +99,21 @@ export function* handleSizeDelete({ payload }) {
   try {
     yield put(setSizesLoading(true));
 
-    yield call(deleteSize, payload);
-    yield put(removeSizeFromState(payload));
-    yield put(setSizesLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const size = yield call(deleteSize, payload);
+
+    if (size?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleSizeDelete({ payload });
+    } else {
+      yield put(removeSizeFromState(payload));
+      yield put(setSizesLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleSizesError, error);
   }
 }
+
 export function* handleSizesError(e) {
   yield put(setSizesLoading(false));
   yield put(setSizesError({ e }));
