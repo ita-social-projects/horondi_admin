@@ -1,9 +1,9 @@
-import { getItems, setItems } from '../../utils/client';
-import { businessTranslations } from '../../translations/business.translations';
-import { newsTranslations } from '../../translations/news.translations';
-import { AUTH_ERRORS } from '../../error-messages/auth';
+import {getItems, setItems} from '../../utils/client';
+import {businessTranslations} from '../../translations/business.translations';
+import {newsTranslations} from '../../translations/news.translations';
 
-const getAllBusinessPagesQuery = `
+export const getAllBusinessPages = async () => {
+    const getAllBusinessPagesQuery = `
       query {
         getAllBusinessTexts {
           _id
@@ -14,7 +14,13 @@ const getAllBusinessPagesQuery = `
         }
       }
     `;
-const getBusinessPageByIdQuery = `
+
+    const {data} = await getItems(getAllBusinessPagesQuery);
+
+    return data.getAllBusinessTexts;
+};
+export const getBusinessPageById = async (id) => {
+    const getBusinessPageByIdQuery = `
       query($id: ID!) {
         getBusinessTextById(id: $id) {
           ... on BusinessText {
@@ -37,7 +43,21 @@ const getBusinessPageByIdQuery = `
         }
       }
     `;
-const createBusinessPageMutation = `
+
+    const {data} = await getItems(getBusinessPageByIdQuery, {id});
+
+    if (Object.keys(newsTranslations).includes(data.getBusinessTextById?.message)) {
+        throw new Error(
+            `${data.getBusinessTextById.statusCode} ${
+                newsTranslations[data.getBusinessTextById.message]
+            }`
+        );
+    }
+
+    return data.getBusinessTextById;
+};
+export const createBusinessPage = async ({page, files}) => {
+    const createBusinessPageMutation = `
       mutation($businessText: BusinessTextInput!, $files: [Upload]!) {
         addBusinessText(businessText: $businessText, files: $files) {
           ... on BusinessText {
@@ -50,7 +70,24 @@ const createBusinessPageMutation = `
         }
       }
     `;
-const deleteBusinessPageMutation = `
+
+    const {data} = await setItems(createBusinessPageMutation, {
+        businessText: page,
+        files
+    });
+
+    if (Object.keys(businessTranslations).includes(data.addBusinessText?.message)) {
+        throw new Error(
+            `${data.addBusinessText.statusCode} ${
+                businessTranslations[data.addBusinessText.message]
+            }`
+        );
+    }
+
+    return data.addBusinessText;
+};
+export const deleteBusinessPage = async (id) => {
+    const deleteBusinessPageMutation = `
       mutation($id: ID!) {
         deleteBusinessText(id: $id) {
           ... on BusinessText {
@@ -65,7 +102,21 @@ const deleteBusinessPageMutation = `
         }
       }
     `;
-const updateBusinessPageMutation = `
+
+    const {data} = await setItems(deleteBusinessPageMutation, {id});
+
+    if (Object.keys(newsTranslations).includes(data.deleteBusinessText?.message)) {
+        throw new Error(
+            `${data.deleteBusinessText.statusCode} ${
+                newsTranslations[data.deleteBusinessText.message]
+            }`
+        );
+    }
+
+    return data.deleteBusinessText;
+};
+export const updateBusinessPage = async ({id, page, files}) => {
+    const updateBusinessPageMutation = `
       mutation($id: ID!, $businessText: BusinessTextInput!, $files: [Upload]!) {
         updateBusinessText(
           id: $id
@@ -86,76 +137,19 @@ const updateBusinessPageMutation = `
       }
     `;
 
-export const getAllBusinessPages = async () => {
-  const { data } = await getItems(getAllBusinessPagesQuery);
+    const {data} = await setItems(updateBusinessPageMutation, {
+        id,
+        businessText: page,
+        files
+    });
 
-  return data.getAllBusinessTexts;
-};
-export const getBusinessPageById = async (id) => {
-  const { data } = await getItems(getBusinessPageByIdQuery, { id });
+    if (Object.keys(newsTranslations).includes(data.updateBusinessText?.message)) {
+        throw new Error(
+            `${data.updateBusinessText.statusCode} ${
+                newsTranslations[data.updateBusinessText.message]
+            }`
+        );
+    }
 
-  if (data.getBusinessTextById.message) {
-    throw new Error(
-      `${data.getBusinessTextById.statusCode} ${
-        newsTranslations[data.getBusinessTextById.message]
-      }`
-    );
-  }
-
-  return data.getBusinessTextById;
-};
-export const createBusinessPage = async ({ page, files }) => {
-  const { data } = await setItems(createBusinessPageMutation, {
-    businessText: page,
-    files
-  });
-
-  if (
-    data.addBusinessText.message &&
-    data.addBusinessText.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
-  ) {
-    throw new Error(
-      `${data.addBusinessText.statusCode} ${
-        businessTranslations[data.addBusinessText.message]
-      }`
-    );
-  }
-
-  return data.addBusinessText;
-};
-export const deleteBusinessPage = async (id) => {
-  const { data } = await setItems(deleteBusinessPageMutation, { id });
-
-  if (
-    data.deleteBusinessText.message &&
-    data.deleteBusinessText.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
-  ) {
-    throw new Error(
-      `${data.deleteBusinessText.statusCode} ${
-        newsTranslations[data.deleteBusinessText.message]
-      }`
-    );
-  }
-
-  return data.deleteBusinessText;
-};
-export const updateBusinessPage = async ({ id, page, files }) => {
-  const { data } = await setItems(updateBusinessPageMutation, {
-    id,
-    businessText: page,
-    files
-  });
-
-  if (
-    data.updateBusinessText.message &&
-    data.updateBusinessText.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
-  ) {
-    throw new Error(
-      `${data.updateBusinessText.statusCode} ${
-        newsTranslations[data.updateBusinessText.message]
-      }`
-    );
-  }
-
-  return data.updateBusinessText;
+    return data.updateBusinessText;
 };

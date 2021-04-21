@@ -1,9 +1,8 @@
-import { getItems, setItems } from '../../utils/client';
-import { categoryTranslations } from '../../translations/category.translations';
-import { AUTH_ERRORS } from '../../error-messages/auth';
+import {getItems, setItems} from '../../utils/client';
+import {categoryTranslations} from '../../translations/category.translations';
 
 export const getAllCategories = async (filter, pagination, sort) => {
-  const getAllCategoriesQuery = `
+    const getAllCategoriesQuery = `
       query(
         $filter: FilterInputComponent
         $pagination: Pagination
@@ -34,17 +33,16 @@ export const getAllCategories = async (filter, pagination, sort) => {
       }
     `;
 
-  const { data } = await getItems(getAllCategoriesQuery, {
-    filter,
-    pagination,
-    sort
-  });
+    const {data} = await getItems(getAllCategoriesQuery, {
+        filter,
+        pagination,
+        sort
+    });
 
-  return data.getAllCategories;
+    return data.getAllCategories;
 };
-
 export const getCategoryById = async (id) => {
-  const getCategoryByIdQuery = `
+    const getCategoryByIdQuery = `
       query($id: ID!) {
         getCategoryById(id: $id) {
           ... on Category {
@@ -66,21 +64,20 @@ export const getCategoryById = async (id) => {
       }
     `;
 
-  const { data } = await getItems(getCategoryByIdQuery, { id });
+    const {data} = await getItems(getCategoryByIdQuery, {id});
 
-  if (data.getCategoryById.message) {
-    throw new Error(
-      `${data.getCategoryById.statusCode} ${
-        categoryTranslations[data.getCategoryById.message]
-      }`
-    );
-  }
+    if (Object.keys(categoryTranslations).includes(data.getCategoryById?.message)) {
+        throw new Error(
+            `${data.getCategoryById.statusCode} ${
+                categoryTranslations[data.getCategoryById.message]
+            }`
+        );
+    }
 
-  return data.getCategoryById;
+    return data.getCategoryById;
 };
-
 export const deleteCategoryById = async (deleteId, switchId) => {
-  const deleteCategoryByIdQuery = `
+    const deleteCategoryByIdQuery = `
      mutation deleteCategory($deleteId: ID!, $switchId: ID!){
       deleteCategory(
       deleteId: $deleteId
@@ -98,16 +95,15 @@ export const deleteCategoryById = async (deleteId, switchId) => {
     }
   `;
 
-  const { data } = await setItems(deleteCategoryByIdQuery, {
-    deleteId,
-    switchId
-  });
+    const {data} = await setItems(deleteCategoryByIdQuery, {
+        deleteId,
+        switchId
+    });
 
-  return data.deleteCategory;
+    return data.deleteCategory;
 };
-
 export const createCategory = async (payload) => {
-  const query = `
+    const query = `
       mutation($category: CategoryInput!, $upload: Upload!) {
         addCategory(category: $category, upload: $upload) {
           ... on Category {
@@ -120,22 +116,19 @@ export const createCategory = async (payload) => {
         }
       }
     `;
-  const { data } = await setItems(query, payload);
+    const {data} = await setItems(query, payload);
 
-  if (
-    data.addCategory.message &&
-    data.addCategory.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
-  ) {
-    throw new Error(
-      `${data.addCategory.statusCode} ${
-        categoryTranslations[data.addCategory.message]
-      }`
-    );
-  }
-  return data.addCategory;
+    if (Object.keys(categoryTranslations).includes(data.addCategory?.message)) {
+        throw new Error(
+            `${data.addCategory.statusCode} ${
+                categoryTranslations[data.addCategory.message]
+            }`
+        );
+    }
+    return data.addCategory;
 };
 export const updateCategory = async (payload) => {
-  const query = `
+    const query = `
       mutation updateCategory(
         $id: ID!
         $category: CategoryInput!
@@ -152,17 +145,14 @@ export const updateCategory = async (payload) => {
         }
       }
     `;
-  const { data } = await setItems(query, payload);
+    const {data} = await setItems(query, payload);
 
-  if (
-    data.updateCategory.message &&
-    data.addCategory.message !== AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID
-  ) {
-    throw new Error(
-      `${data.updateCategory.statusCode} ${
-        categoryTranslations[data.updateCategory.message]
-      }`
-    );
-  }
-  return data.updateCategory;
+    if (Object.keys(categoryTranslations).includes(data.updateCategory?.message)) {
+        throw new Error(
+            `${data.updateCategory.statusCode} ${
+                categoryTranslations[data.updateCategory.message]
+            }`
+        );
+    }
+    return data.updateCategory;
 };
