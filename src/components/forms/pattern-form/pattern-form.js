@@ -119,6 +119,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     validationSchema: patternValidationSchema,
     initialValues: useFormikInitialValues(pattern),
     onSubmit: () => {
+      console.log('values', values);
+      console.log('pattern', pattern);
       const newPattern = createPattern(values);
       const isEditAndUploadAndConstructor =
         isEdit &&
@@ -315,8 +317,10 @@ PatternForm.propTypes = {
     _id: PropTypes.string,
     available: PropTypes.bool,
     description: PropTypes.arrayOf(valueShape),
-    material: PropTypes.string,
-    handmade: PropTypes.bool,
+    features: PropTypes.shape({
+      material: PropTypes.string,
+      handmade: PropTypes.bool
+    }),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
@@ -388,18 +392,19 @@ PatternForm.defaultProps = {
       thumbnail: ''
     },
     constructorImg: '',
-    material: {
-      name: [
-        {
-          value: ''
-        },
-        {
-          value: ''
-        }
-      ]
+    features: {
+      material: {
+        name: [
+          {
+            value: ''
+          },
+          {
+            value: ''
+          }
+        ]
+      },
+      handmade: false
     },
-    handmade: false,
-
     available: false
   },
   isEdit: false

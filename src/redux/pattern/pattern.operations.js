@@ -180,7 +180,7 @@ export const createPattern = async (payload) => {
     fetchPolicy: 'no-cache'
   });
   await client.resetStore();
-
+  console.log(result.data.addPattern.constructorImg);
   if (result.data.addPattern.message) {
     throw new Error(
       `${result.data.addPattern.statusCode} ${
@@ -229,7 +229,6 @@ export const updatePattern = async (payload) => {
     fetchPolicy: 'no-cache'
   });
   await client.resetStore();
-
   if (result.data.updatePattern.message) {
     throw new Error(
       `${result.data.updatePattern.statusCode} ${
