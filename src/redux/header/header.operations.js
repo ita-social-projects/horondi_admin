@@ -1,11 +1,8 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-import { getFromLocalStorage } from '../../services/local-storage.service';
+import { getItems, setItems } from '../../utils/client';
 import { headerTranslations } from '../../translations/header.translations';
 
-export const getAllHeaders = async (skip, limit) => {
-  const result = await client.query({
-    query: gql`
+export const getAllHeaders = async () => {
+  const query = `
       query {
         getAllHeaders {
           _id
@@ -17,17 +14,14 @@ export const getAllHeaders = async (skip, limit) => {
           priority
         }
       }
-    `
-  });
-  await client.resetStore();
+    `;
 
-  return result.data.getAllHeaders;
+  const { data } = await getItems(query);
+
+  return data.getAllHeaders;
 };
-
 export const getHeaderById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getHeaderById(id: $id) {
           ... on Header {
@@ -45,11 +39,11 @@ export const getHeaderById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
-  if (data.getHeaderById.message) {
+    `;
+
+  const { data } = await getItems(query, { id });
+
+  if (Object.keys(headerTranslations).includes(data.getHeaderById?.message)) {
     throw new Error(
       `${data.getHeaderById.statusCode} ${
         headerTranslations[data.getHeaderById.message]
@@ -59,14 +53,8 @@ export const getHeaderById = async (id) => {
 
   return data.getHeaderById;
 };
-
 export const deleteHeader = async (id) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    variables: { id },
-    context: { headers: { token } },
-    mutation: gql`
+  const query = `
       mutation($id: ID!) {
         deleteHeader(id: $id) {
           ... on Header {
@@ -78,13 +66,11 @@ export const deleteHeader = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.deleteHeader.message) {
+  const { data } = await setItems(query, { id });
+
+  if (Object.keys(headerTranslations).includes(data.deleteHeader?.message)) {
     throw new Error(
       `${data.deleteHeader.statusCode} ${
         headerTranslations[data.deleteHeader.message]
@@ -94,15 +80,8 @@ export const deleteHeader = async (id) => {
 
   return data.deleteHeader;
 };
-
 export const createHeader = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-
-    mutation: gql`
+  const query = `
       mutation($header: HeaderInput!) {
         addHeader(header: $header) {
           ... on Header {
@@ -120,13 +99,11 @@ export const createHeader = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addHeader.message) {
+  const { data } = await setItems(query, payload);
+
+  if (Object.keys(headerTranslations).includes(data.addHeader?.message)) {
     throw new Error(
       `${data.addHeader.statusCode} ${
         headerTranslations[data.addHeader.message]
@@ -136,14 +113,8 @@ export const createHeader = async (payload) => {
 
   return data.addHeader;
 };
-
-export const updateHeader = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, header, image } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, header, image },
-    mutation: gql`
+export const updateHeader = async ({ id, header, image }) => {
+  const query = `
       mutation($id: ID!, $header: HeaderInput!) {
         updateHeader(id: $id, header: $header) {
           ... on Header {
@@ -161,12 +132,11 @@ export const updateHeader = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
-  if (data.updateHeader.message) {
+    `;
+
+  const { data } = await setItems(query, { id, header, image });
+
+  if (Object.keys(headerTranslations).includes(data.updateHeader?.message)) {
     throw new Error(
       `${data.updateHeader.statusCode} ${
         headerTranslations[data.updateHeader.message]

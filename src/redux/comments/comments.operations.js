@@ -1,21 +1,12 @@
-import {gql} from '@apollo/client';
-import {client, getItems, setItems} from '../../utils/client';
-
-import {config} from '../../configs';
-import {getFromLocalStorage} from '../../services/local-storage.service';
-import {commentsTranslations} from '../../translations/comments.translations';
-
-import {GET_USER_COMMENTS, GET_PRODUCT_COMMENTS} from './comments.types';
+import { getItems, setItems } from '../../utils/client';
+import { config } from '../../configs';
+import { commentsTranslations } from '../../translations/comments.translations';
+import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');
 
 const getAllComments = async (filter, pagination) => {
-    const result = await client.query({
-        variables: {
-            filter,
-            pagination
-        },
-        query: gql`
+  const query = `
       query($filter: FilterInputComponent, $pagination: Pagination) {
         getAllComments(filter: $filter, pagination: $pagination) {
           items {
@@ -35,15 +26,14 @@ const getAllComments = async (filter, pagination) => {
           count
         }
       }
-    `
-    });
-    await client.resetStore();
+    `;
+  const { data } = await getItems(query, { filter, pagination });
 
-    return result.data.getAllComments;
+  return data.getAllComments;
 };
 
 const getRecentComments = async (limit) => {
-    const query = `
+  const query = `
       query($limit: Int!) {
         getRecentComments(limit: $limit) {
           ... on Comment {
@@ -67,26 +57,23 @@ const getRecentComments = async (limit) => {
         }
       }
     `;
-    const {data} = await getItems(query, {limit});
+  const { data } = await getItems(query, { limit });
 
-    if (Object.keys(commentsTranslations).includes(data.getRecentComments?.message)) {
-        throw new Error(
-            `${data.getRecentComments.statusCode} ${
-                commentsTranslations[data.getRecentComments.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(commentsTranslations).includes(data.getRecentComments?.message)
+  ) {
+    throw new Error(
+      `${data.getRecentComments.statusCode} ${
+        commentsTranslations[data.getRecentComments.message]
+      }`
+    );
+  }
 
-    return data.getRecentComments;
+  return data.getRecentComments;
 };
 
 const deleteComment = async (id) => {
-    const token = getFromLocalStorage(config.tokenName);
-    const result = await client
-        .mutate({
-            context: {headers: {token}},
-            variables: {id},
-            mutation: gql`
+  const query = `
         mutation($id: ID!) {
           deleteComment(id: $id) {
             ... on Comment {
@@ -108,22 +95,15 @@ const deleteComment = async (id) => {
             }
           }
         }
-      `,
-            fetchPolicy: 'no-cache'
-        })
-        .catch((error) => {
-            throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
-        });
+      `;
 
-    await client.resetStore();
+  const { data } = await setItems(query, { id });
 
-    return result.data.deleteComment;
+  return data.deleteComment;
 };
 
 const getCommentById = async (id) => {
-    const result = await client.query({
-        variables: {id},
-        query: gql`
+  const query = `
       query($id: ID!) {
         getCommentById(id: $id) {
           ... on Comment {
@@ -146,30 +126,25 @@ const getCommentById = async (id) => {
           }
         }
       }
-    `,
-        fetchPolicy: 'no-cache'
-    });
-    await client.resetStore();
-    if (result.data.getCommentById.message) {
-        throw new Error(
-            `${result.data.getCommentById.statusCode} ${
-                commentsTranslations[result.data.getCommentById.message]
-            }`
-        );
-    }
+    `;
 
-    return result.data.getCommentById;
+  const { data } = await getItems(query, { id });
+
+  if (
+    Object.keys(commentsTranslations).includes(data.getCommentById?.message)
+  ) {
+    throw new Error(
+      `${data.getCommentById.statusCode} ${
+        commentsTranslations[data.getCommentById.message]
+      }`
+    );
+  }
+
+  return data.getCommentById;
 };
 
 const updateComment = async (id, comment) => {
-    const token = getFromLocalStorage(config.tokenName);
-    const result = await client.mutate({
-        context: {headers: {token}},
-        variables: {
-            id,
-            comment
-        },
-        mutation: gql`
+  const query = `
       mutation($id: ID!, $comment: CommentUpdateInput!) {
         updateComment(id: $id, comment: $comment) {
           ... on Comment {
@@ -182,41 +157,36 @@ const updateComment = async (id, comment) => {
           }
         }
       }
-    `,
-        fetchPolicy: 'no-cache'
-    });
-    await client.resetStore();
+    `;
 
-    if (result.data.updateComment.message) {
-        throw new Error(
-            `${result.data.updateComment.statusCode} ${
-                commentsTranslations[result.data.updateComment.message]
-            }`
-        );
-    }
+  const { data } = await setItems(query, { id, comment });
 
-    return result.data.updateComment;
+  if (Object.keys(commentsTranslations).includes(data.updateComment?.message)) {
+    throw new Error(
+      `${data.updateComment.statusCode} ${
+        commentsTranslations[data.updateComment.message]
+      }`
+    );
+  }
+
+  return data.updateComment;
 };
 
 const getCommentsByType = async (value, commentsType) => {
-    try {
-        if (commentsType === GET_USER_COMMENTS) {
-            return await getCommentsByUser(value);
-        }
-        if (commentsType === GET_PRODUCT_COMMENTS) {
-            return await getCommentsByProduct(value);
-        }
-    } catch (error) {
-        throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+  try {
+    if (commentsType === GET_USER_COMMENTS) {
+      return await getCommentsByUser(value);
     }
-    await client.resetStore();
+    if (commentsType === GET_PRODUCT_COMMENTS) {
+      return await getCommentsByProduct(value);
+    }
+  } catch (error) {
+    throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+  }
 };
 
 const getCommentsByProduct = async (id) => {
-    const result = await client
-        .query({
-            variables: {productId: id},
-            query: gql`
+  const query = `
         query($productId: ID!) {
           getAllCommentsByProduct(
             productId: $productId
@@ -235,22 +205,15 @@ const getCommentsByProduct = async (id) => {
             }
           }
         }
-      `,
-            fetchPolicy: 'no-cache'
-        })
-        .catch((error) => {
-            throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
-        });
-    await client.resetStore();
+      `;
 
-    return result.data.getAllCommentsByProduct;
+  const { data } = await getItems(query, { productId: id });
+
+  return data.getAllCommentsByProduct;
 };
 
 const getCommentsByUser = async (userId) => {
-    const result = await client
-        .query({
-            variables: {userId},
-            query: gql`
+  const query = `
         query($userId: ID!) {
           getAllCommentsByUser(userId: $userId) {
             ... on Comment {
@@ -271,23 +234,19 @@ const getCommentsByUser = async (userId) => {
             }
           }
         }
-      `,
-            fetchPolicy: 'no-cache'
-        })
-        .catch((error) => {
-            throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
-        });
-    await client.resetStore();
-    return result.data.getAllCommentsByUser;
+      `;
+  const { data } = await getItems(query, { userId });
+
+  return data.getAllCommentsByUser;
 };
 
 export {
-    getAllComments,
-    deleteComment,
-    updateComment,
-    getCommentById,
-    getCommentsByUser,
-    getCommentsByProduct,
-    getCommentsByType,
-    getRecentComments
+  getAllComments,
+  deleteComment,
+  updateComment,
+  getCommentById,
+  getCommentsByUser,
+  getCommentsByProduct,
+  getCommentsByType,
+  getRecentComments
 };

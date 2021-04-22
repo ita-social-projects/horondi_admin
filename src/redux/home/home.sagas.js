@@ -20,6 +20,9 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
+import routes from '../../configs/routes';
 
 const { SUCCESS_UPDATE_STATUS } = config.statuses;
 
@@ -41,10 +44,16 @@ export function* handleHomePageImagesUpdate({ payload }) {
     yield put(setHomePageDataLoading(true));
 
     const data = yield call(updateHomePageLooksImage, id, upload);
-    yield put(updateHomePageImagesInStore(id, data));
-    yield put(setHomePageDataLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push('/home-page-edit'));
+
+    if (data?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      handleHomePageImagesUpdate({ payload });
+    } else {
+      yield put(updateHomePageImagesInStore(id, data));
+      yield put(setHomePageDataLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(routes.pathToHomePageEdit));
+    }
   } catch (error) {
     yield call(handleHomePageError, error);
   }

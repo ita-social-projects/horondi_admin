@@ -10,12 +10,12 @@ export const millisecondsToDays = (milliseconds) => {
 };
 
 export const getUserBlockStatus = (blockData) => {
-  if (blockData.blockPeriod === UserBlockPeriod.UNLOCKED) {
+  if (blockData?.blockPeriod === UserBlockPeriod.UNLOCKED) {
     return config.statuses.USER_ACTIVE_STATUS;
   }
   if (
-    blockData.blockPeriod === UserBlockPeriod.ONE_MONTH ||
-    blockData.blockPeriod === UserBlockPeriod.TWO_MONTH
+    blockData?.blockPeriod === UserBlockPeriod.ONE_MONTH ||
+    blockData?.blockPeriod === UserBlockPeriod.TWO_MONTH
   ) {
     const dateNow = new Date().getTime();
     const userBlockDate = new Date(blockData.updatedAt).getTime();
@@ -26,7 +26,7 @@ export const getUserBlockStatus = (blockData) => {
 
     return config.statuses.TIME_TO_FINISH_BLOCK_PERIOD_STATUS(timeToBlockEnd);
   }
-  if (blockData.blockPeriod === UserBlockPeriod.INFINITE) {
+  if (blockData?.blockPeriod === UserBlockPeriod.INFINITE) {
     return config.statuses.USER_INACTIVE_FOREVER_STATUS;
   }
 };

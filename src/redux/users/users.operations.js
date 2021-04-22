@@ -1,7 +1,8 @@
 import { getItems, setItems } from '../../utils/client';
 import { config } from '../../configs';
 
-const getAllUsersQuery = `
+const getAllUsers = async (filter, pagination, sort) => {
+  const getAllUsersQuery = `
 query(
   $filter: UserFilterInput
   $pagination: Pagination
@@ -30,7 +31,16 @@ query(
 }
 `;
 
-const getUserByIdQuery = `
+  const { data } = await getItems(getAllUsersQuery, {
+    filter,
+    pagination,
+    sort
+  });
+
+  return data.getAllUsers;
+};
+const getUserById = async (id) => {
+  const getUserByIdQuery = `
 query($id: ID!) {
   getUserById(id: $id) {
     ... on User {
@@ -56,7 +66,12 @@ query($id: ID!) {
 }
 `;
 
-const deleteUserMutation = `
+  const { data } = await getItems(getUserByIdQuery, { id });
+
+  return data.getUserById;
+};
+const deleteUser = async (id) => {
+  const deleteUserMutation = `
 mutation($id: ID!) {
   deleteUser(id: $id) {
    ... on User {
@@ -71,76 +86,18 @@ mutation($id: ID!) {
 }
 `;
 
-const registerAdminMutation = `
-mutation($user: AdminRegisterInput!) {
-  registerAdmin(user:$user){
-    ... on User {
-      email
-    }
-    ... on Error {
-      message
-      statusCode
-    }
-  }
-}
-`;
+  const { data } = await setItems(deleteUserMutation, { id });
 
-const resendEmailToConfirmAdminMutation = `
-mutation($user: resendEmailToConfirmAdminInput!) {
-  resendEmailToConfirmAdmin(user:$user){
-    ... on User {
-      email
-    }
-    ... on Error {
-      message
-      statusCode
-    }
+  if (Object.keys(config.errorMessages).includes(data.deleteUser?.message)) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[data.deleteUser.message]}`
+    );
   }
-}
-`;
 
-const confirmSuperadminCreationMutation = `
-mutation($user: confirmSuperadminCreationInput!) {
-  confirmSuperadminCreation(user:$user){
-    ... on User {
-      email
-    }
-    ... on Error {
-      message
-      statusCode
-    }
-  }
-}
-`;
-
-const completeAdminRegisterMutation = `
-mutation($user: AdminConfirmInput!,$token: String!){
-  completeAdminRegister(user: $user,token: $token) {
-    ... on SuccessfulResponse {
-    	isSuccess
-    }
-    ... on Error {
-      message
-      statusCode
-    }
-  }
-}
-`;
-
-const validateTokenQuery = `
-query($token: String!){
-  validateConfirmationToken(token: $token) {
-    ... on SuccessfulResponse {
-      isSuccess
-    }
-    ... on Error {
-      message
-      statusCode
-    }
-  }
-}`;
-
-const blockUserMutation = `
+  return data.deleteUser;
+};
+const blockUser = async (userId) => {
+  const blockUserMutation = `
   mutation($userId:ID!){
     blockUser(userId:$userId){
       ...on User{
@@ -168,7 +125,17 @@ const blockUserMutation = `
     }
   }
 `;
-const unlockUserMutation = `
+
+  const { data } = await setItems(blockUserMutation, { userId });
+
+  if (Object.keys(config.errorMessages).includes(data.blockUser?.message)) {
+    throw new Error(`Помилка: ${config.errorMessages[data.blockUser.message]}`);
+  }
+
+  return data.blockUser;
+};
+const unlockUser = async (userId) => {
+  const unlockUserMutation = `
   mutation($userId:ID!){
     unlockUser(userId:$userId){
       ...on User{
@@ -197,57 +164,9 @@ const unlockUserMutation = `
   }
 `;
 
-const getAllUsers = async (filter, pagination, sort) => {
-  const options = {
-    filter,
-    pagination,
-    sort
-  };
+  const { data } = await setItems(unlockUserMutation, { userId });
 
-  const result = await getItems(getAllUsersQuery, options);
-
-  const { data } = result;
-
-  return data.getAllUsers;
-};
-
-const getUserById = async (id) => {
-  const result = await getItems(getUserByIdQuery, { id });
-
-  const { data } = result;
-
-  return data.getUserById;
-};
-
-const deleteUser = async (id) => {
-  const result = await setItems(deleteUserMutation, { id });
-
-  const { data } = result;
-
-  if (data.deleteUser.message) {
-    throw new Error(
-      `Помилка: ${config.errorMessages[data.deleteUser.message]}`
-    );
-  }
-
-  return data.deleteUser;
-};
-
-const blockUser = async (userId) => {
-  const result = await setItems(blockUserMutation, { userId });
-  const { data } = result;
-
-  if (data.blockUser.message) {
-    throw new Error(`Помилка: ${config.errorMessages[data.blockUser.message]}`);
-  }
-
-  return data.blockUser;
-};
-const unlockUser = async (userId) => {
-  const result = await setItems(unlockUserMutation, { userId });
-  const { data } = result;
-
-  if (data.unlockUser.message) {
+  if (Object.keys(config.errorMessages).includes(data.unlockUser?.message)) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.unlockUser.message]}`
     );
@@ -255,13 +174,24 @@ const unlockUser = async (userId) => {
 
   return data.unlockUser;
 };
-
 const registerAdmin = async (user) => {
-  const result = await setItems(registerAdminMutation, { user });
+  const registerAdminMutation = `
+mutation($user: AdminRegisterInput!) {
+  registerAdmin(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
 
-  const { data } = result;
+  const { data } = await setItems(registerAdminMutation, { user });
 
-  if (data.registerAdmin.message) {
+  if (Object.keys(config.errorMessages).includes(data.registerAdmin?.message)) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.registerAdmin.message]}`
     );
@@ -269,13 +199,28 @@ const registerAdmin = async (user) => {
 
   return data.registerAdmin;
 };
-
 const resendEmailToConfirmAdmin = async (user) => {
-  const result = await setItems(resendEmailToConfirmAdminMutation, { user });
+  const resendEmailToConfirmAdminMutation = `
+mutation($user: resendEmailToConfirmAdminInput!) {
+  resendEmailToConfirmAdmin(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
 
-  const { data } = result;
+  const { data } = await setItems(resendEmailToConfirmAdminMutation, { user });
 
-  if (data.resendEmailToConfirmAdmin.message) {
+  if (
+    Object.keys(config.errorMessages).includes(
+      data.resendEmailToConfirmAdmin?.message
+    )
+  ) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
     );
@@ -283,13 +228,28 @@ const resendEmailToConfirmAdmin = async (user) => {
 
   return data.registerAdmin;
 };
-
 const confirmSuperadminCreation = async (user) => {
-  const result = await setItems(confirmSuperadminCreationMutation, { user });
+  const confirmSuperadminCreationMutation = `
+mutation($user: confirmSuperadminCreationInput!) {
+  confirmSuperadminCreation(user:$user){
+    ... on User {
+      email
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
 
-  const { data } = result;
+  const { data } = await setItems(confirmSuperadminCreationMutation, { user });
 
-  if (data.confirmSuperadminCreation.message) {
+  if (
+    Object.keys(config.errorMessages).includes(
+      data.confirmSuperadminCreation?.message
+    )
+  ) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.resendEmailToConfirmAdmin.message]}`
     );
@@ -297,13 +257,31 @@ const confirmSuperadminCreation = async (user) => {
 
   return data.registerAdmin;
 };
-
 const completeAdminRegister = async ({ user, token }) => {
-  const result = await setItems(completeAdminRegisterMutation, { user, token });
+  const completeAdminRegisterMutation = `
+mutation($user: AdminConfirmInput!,$token: String!){
+  completeAdminRegister(user: $user,token: $token) {
+    ... on SuccessfulResponse {
+    	isSuccess
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
+`;
 
-  const { data } = result;
+  const { data } = await setItems(completeAdminRegisterMutation, {
+    user,
+    token
+  });
 
-  if (data.completeAdminRegister.message) {
+  if (
+    Object.keys(config.errorMessages).includes(
+      data.completeAdminRegister?.message
+    )
+  ) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.completeAdminRegister.message]}`
     );
@@ -311,18 +289,33 @@ const completeAdminRegister = async ({ user, token }) => {
 
   return data.completeAdminRegister;
 };
-
 const validateToken = async (token) => {
-  const result = await getItems(validateTokenQuery, { token });
-  const { data } = result;
+  const validateTokenQuery = `
+        query($token: String!){
+          validateConfirmationToken(token: $token) {
+            ... on SuccessfulResponse {
+              isSuccess
+            }
+            ... on Error {
+              message
+              statusCode
+            }
+          }
+        }`;
 
-  if (data.validateConfirmationToken.message) {
+  const { data } = await getItems(validateTokenQuery, { token });
+
+  if (
+    Object.keys(config.errorMessages).includes(
+      data.validateConfirmationToken?.message
+    )
+  ) {
     throw new Error(
       `Помилка: ${config.errorMessages[data.validateConfirmationToken.message]}`
     );
   }
 
-  return data.validateToken;
+  return data.validateConfirmationToken;
 };
 
 export {

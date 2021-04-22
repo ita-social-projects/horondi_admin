@@ -44,6 +44,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -59,9 +61,15 @@ export function* handleUsersLoad({ payload: { filter, pagination, sort } }) {
   try {
     yield put(setUsersLoading(true));
     const result = yield call(getAllUsers, filter, pagination, sort);
-    yield put(setItemsCount(result.count));
-    yield put(setUsers(result.items));
-    yield put(setUsersLoading(false));
+
+    if (result?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleUsersLoad({ payload: { filter, pagination, sort } });
+    } else {
+      yield put(setItemsCount(result.count));
+      yield put(setUsers(result.items));
+      yield put(setUsersLoading(false));
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -71,8 +79,14 @@ export function* handleUserLoad({ payload }) {
   try {
     yield put(setUsersLoading(true));
     const user = yield call(getUserById, payload);
-    yield put(setUser(user));
-    yield put(setUsersLoading(false));
+
+    if (user?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleUserLoad({ payload });
+    } else {
+      yield put(setUser(user));
+      yield put(setUsersLoading(false));
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -81,11 +95,18 @@ export function* handleUserLoad({ payload }) {
 export function* handleUsersDelete({ payload }) {
   try {
     yield put(setUsersLoading(true));
-    yield call(deleteUser, payload);
-    yield put(deleteUserLocally(payload));
-    yield put(updatePagination());
-    yield put(setUsersLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+
+    const result = yield call(deleteUser, payload);
+
+    if (result?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleUsersDelete({ payload });
+    } else {
+      yield put(deleteUserLocally(payload));
+      yield put(updatePagination());
+      yield put(setUsersLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -97,9 +118,14 @@ export function* handleBlockUser({ payload }) {
 
     const blockedUser = yield call(blockUser, payload);
 
-    yield put(setUser(blockedUser));
-    yield put(setUsersLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    if (blockedUser?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleBlockUser({ payload });
+    } else {
+      yield put(setUser(blockedUser));
+      yield put(setUsersLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -111,9 +137,14 @@ export function* handleUnlockUser({ payload }) {
 
     const unlockedUser = yield call(unlockUser, payload);
 
-    yield put(setUser(unlockedUser));
-    yield put(setUsersLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    if (unlockedUser?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleUnlockUser({ payload });
+    } else {
+      yield put(setUser(unlockedUser));
+      yield put(setUsersLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -122,11 +153,17 @@ export function* handleUnlockUser({ payload }) {
 export function* handleAdminRegister({ payload }) {
   try {
     yield put(setAdminCreationLoading(true));
-    yield call(registerAdmin, payload);
-    yield put(newRegisteredAdmin(true));
-    yield put(setAdminCreationLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
-    yield put(newRegisteredAdmin(false));
+    const result = yield call(registerAdmin, payload);
+
+    if (result?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleAdminRegister({ payload });
+    } else {
+      yield put(newRegisteredAdmin(true));
+      yield put(setAdminCreationLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
+      yield put(newRegisteredAdmin(false));
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }

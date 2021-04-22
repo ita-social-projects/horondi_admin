@@ -1,15 +1,7 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
 
 const getAllEmailQuestions = async ({ filter, skip }) => {
-  const result = await client.query({
-    variables: {
-      filter: {
-        emailQuestionStatus: filter.length ? filter : null
-      },
-      skip
-    },
-    query: gql`
+  const query = `
       query($filter: FilterInput, $skip: Int) {
         getAllEmailQuestions(filter: $filter, skip: $skip) {
           questions {
@@ -27,32 +19,30 @@ const getAllEmailQuestions = async ({ filter, skip }) => {
           count
         }
       }
-    `
+    `;
+
+  const { data } = await getItems(query, {
+    filter: {
+      emailQuestionStatus: filter.length ? filter : null
+    },
+    skip
   });
 
-  const { data } = result;
   return data.getAllEmailQuestions;
 };
-
 const getPendingEmailQuestionsCount = async () => {
-  const result = await client.query({
-    query: gql`
+  const query = `
       query {
         getPendingEmailQuestionsCount
       }
-    `
-  });
+    `;
 
-  const { data } = result;
+  const { data } = await getItems(query);
+
   return data.getPendingEmailQuestionsCount;
 };
-
 const getEmailQuestionById = async (id) => {
-  const result = await client.query({
-    variables: {
-      id
-    },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getEmailQuestionById(id: $id) {
           ... on EmailQuestion {
@@ -79,45 +69,27 @@ const getEmailQuestionById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
 
-  if (data.getEmailQuestionById.message) {
-    throw new Error(
-      `${data.getEmailQuestionById.statusCode} ${data.getEmailQuestionById.message}`
-    );
-  }
+  const { data } = await getItems(query, { id });
 
   return data.getEmailQuestionById;
 };
-
 const deleteEmailQuestions = async (questionsToDelete) => {
-  const result = await client.mutate({
-    variables: { questionsToDelete },
-    mutation: gql`
+  const query = `
       mutation($questionsToDelete: [String]) {
         deleteEmailQuestions(questionsToDelete: $questionsToDelete) {
           _id
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  const { data } = result;
+  const { data } = await setItems(query, { questionsToDelete });
+
   return data.deleteEmailQuestions;
 };
-
 const answerEmailQuestion = async ({ questionId, adminId, text }) => {
-  const result = await client.mutate({
-    variables: {
-      questionId,
-      adminId,
-      text
-    },
-    mutation: gql`
+  const query = `
       mutation($questionId: ID!, $adminId: ID!, $text: String!) {
         answerEmailQuestion(
           questionId: $questionId
@@ -148,28 +120,14 @@ const answerEmailQuestion = async ({ questionId, adminId, text }) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  const { data } = result;
-
-  if (data.answerEmailQuestion.message) {
-    throw new Error(
-      `${data.answerEmailQuestion.statusCode} ${data.answerEmailQuestion.message}`
-    );
-  }
+  const { data } = await setItems(query, { questionId, adminId, text });
 
   return data.answerEmailQuestion;
 };
-
 const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
-  const result = await client.mutate({
-    variables: {
-      questionsToSpam,
-      adminId
-    },
-    mutation: gql`
+  const query = `
       mutation($questionsToSpam: [String], $adminId: ID!) {
         makeEmailQuestionsSpam(
           questionsToSpam: $questionsToSpam
@@ -193,11 +151,10 @@ const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  const { data } = result;
+  const { data } = await setItems(query, { questionsToSpam, adminId });
+
   return data.makeEmailQuestionsSpam;
 };
 

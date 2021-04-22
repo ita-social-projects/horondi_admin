@@ -30,6 +30,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 const { routes } = config;
 
@@ -64,10 +66,16 @@ export function* handleHeaderLoad({ payload }) {
 export function* handleAddHeader({ payload }) {
   try {
     yield put(setHeaderLoading(true));
-    yield call(createHeader, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(routes.pathToHeaders));
-    yield put(setHeaderLoading(false));
+    const header = yield call(createHeader, payload);
+
+    if (header?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleAddHeader({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(routes.pathToHeaders));
+      yield put(setHeaderLoading(false));
+    }
   } catch (error) {
     yield call(handleHeaderError, error);
   }
@@ -76,10 +84,16 @@ export function* handleAddHeader({ payload }) {
 export function* handleHeaderDelete({ payload }) {
   try {
     yield put(setHeaderLoading(true));
-    yield call(deleteHeader, payload);
-    yield put(removeHeaderFromStore(payload));
-    yield put(setHeaderLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const header = yield call(deleteHeader, payload);
+
+    if (header?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleHeaderDelete({ payload });
+    } else {
+      yield put(removeHeaderFromStore(payload));
+      yield put(setHeaderLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleHeaderError, error);
   }
@@ -88,9 +102,15 @@ export function* handleHeaderDelete({ payload }) {
 export function* handleHeaderUpdate({ payload }) {
   try {
     yield put(setHeaderLoading(true));
-    yield call(updateHeader, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(routes.pathToHeaders));
+    const header = yield call(updateHeader, payload);
+
+    if (header?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleHeaderUpdate({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(routes.pathToHeaders));
+    }
   } catch (error) {
     yield call(handleHeaderError, error);
   }

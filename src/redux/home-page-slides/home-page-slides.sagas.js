@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
 import { setItemsCount, updatePagination } from '../table/table.actions';
 import {
   removeSlideFromStore,
@@ -33,6 +34,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -89,9 +92,15 @@ export function* handleSlideLoad({ payload }) {
 export function* handleAddSlide({ payload }) {
   try {
     yield put(setSlideLoading(true));
-    yield call(createSlide, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(config.routes.pathToHomePageSlides));
+    const slide = yield call(createSlide, payload);
+
+    if (slide?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleAddSlide({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(config.routes.pathToHomePageSlides));
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
@@ -100,17 +109,30 @@ export function* handleAddSlide({ payload }) {
 export function* handleSlideUpdate({ payload }) {
   try {
     yield put(setSlideLoading(true));
-    yield call(updateSlide, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToHomePageSlides));
+    const slide = yield call(updateSlide, payload);
+
+    if (slide?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleSlideUpdate({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(config.routes.pathToHomePageSlides));
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
 }
+
 export function* handleUpdateSlideOrder({ payload }) {
   try {
-    yield call(updateSlide, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    const slide = yield call(updateSlide, payload);
+
+    if (slide?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleUpdateSlideOrder({ payload });
+    } else {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
@@ -119,11 +141,17 @@ export function* handleUpdateSlideOrder({ payload }) {
 export function* handleSlideDelete({ payload }) {
   try {
     yield put(setSlideLoading(true));
-    yield call(deleteSlide, payload);
-    yield put(removeSlideFromStore(payload));
-    yield put(updatePagination());
-    yield put(setSlideLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const slide = yield call(deleteSlide, payload);
+
+    if (slide?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
+      yield call(handleRefreshTokenPair);
+      yield handleSlideDelete({ payload });
+    } else {
+      yield put(removeSlideFromStore(payload));
+      yield put(updatePagination());
+      yield put(setSlideLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }

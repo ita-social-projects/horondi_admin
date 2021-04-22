@@ -93,7 +93,7 @@ export function* handleRefreshTokenPair() {
     const refreshToken = getFromLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN);
 
     const newTokenPair = yield call(regenerateAuthTokenPair, refreshToken);
-    console.log(newTokenPair);
+
     if (newTokenPair?.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
       setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, null);
       setToLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN, null);

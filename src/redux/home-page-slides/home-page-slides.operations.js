@@ -1,16 +1,8 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-import { config } from '../../configs';
+import { getItems, setItems } from '../../utils/client';
 import { slidesTranslations } from '../../translations/home-page-slides.translations';
 
 export const getAllSlides = async (skip, limit) => {
-  const result = await client.query({
-    variables: {
-      skip,
-      limit
-    },
-    query: gql`
+  const query = `
       query($skip: Int, $limit: Int) {
         getAllSlides(skip: $skip, limit: $limit) {
           items {
@@ -34,16 +26,13 @@ export const getAllSlides = async (skip, limit) => {
           count
         }
       }
-    `
-  });
-  await client.resetStore();
-  return result.data.getAllSlides;
-};
+    `;
+  const { data } = await getItems(query, { skip, limit });
 
+  return data.getAllSlides;
+};
 export const getSlideById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getSlideById(id: $id) {
           ... on HomePageSlide {
@@ -70,21 +59,18 @@ export const getSlideById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
 
-  if (data.getSlideById.message) {
+  const { data } = await getItems(query, { id });
+
+  if (Object.keys(slidesTranslations).includes(data.getSlideById?.message)) {
     throw new Error(`${slidesTranslations[data.getSlideById.message]}`);
   }
 
   return data.getSlideById;
 };
-
 export const getAllAvailableSlides = async () => {
-  const result = await client.query({
-    query: gql`
+  const query = `
       query {
         getAllSlides {
           items {
@@ -106,19 +92,13 @@ export const getAllAvailableSlides = async () => {
           }
         }
       }
-    `
-  });
-  return result.data.getAllSlides;
+    `;
+  const { data } = await getItems(query);
+
+  return data.getAllSlides;
 };
-
 export const createSlide = async (payload) => {
-  const token = getFromLocalStorage(config.tokenName);
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-
-    mutation: gql`
+  const query = `
       mutation($slide: HomePageSlideInput!, $upload: Upload) {
         addSlide(slide: $slide, upload: $upload) {
           ... on HomePageSlide {
@@ -130,26 +110,18 @@ export const createSlide = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addSlide.message) {
+  const { data } = await setItems(query, payload);
+
+  if (Object.keys(slidesTranslations).includes(data.addSlide?.message)) {
     throw new Error(`${slidesTranslations[data.addSlide.message]}`);
   }
 
   return data.addSlide;
 };
-
 export const updateSlide = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $slide: HomePageSlideInput!, $upload: Upload) {
         updateSlide(id: $id, slide: $slide, upload: $upload) {
           ... on HomePageSlide {
@@ -176,29 +148,22 @@ export const updateSlide = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.updateSlide.message) {
+  const { data } = await setItems(query, payload);
+
+  if (Object.keys(slidesTranslations).includes(data.updateSlide?.message)) {
     throw new Error(
-      `${result.data.updateSlide.statusCode} ${
-        slidesTranslations[result.data.updateSlide.message]
+      `${data.updateSlide.statusCode} ${
+        slidesTranslations[data.updateSlide.message]
       }`
     );
   }
 
-  return result.data.updateSlide;
+  return data.updateSlide;
 };
-
 export const deleteSlide = async (id) => {
-  const token = getFromLocalStorage(config.tokenName);
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id },
-    mutation: gql`
+  const query = `
       mutation($id: ID!) {
         deleteSlide(id: $id) {
           ... on HomePageSlide {
@@ -212,13 +177,11 @@ export const deleteSlide = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.deleteSlide.message) {
+  const { data } = await setItems(query, { id });
+
+  if (Object.keys(slidesTranslations).includes(data.deleteSlide?.message)) {
     throw new Error(`${slidesTranslations[data.deleteSlide.message]}`);
   }
 
