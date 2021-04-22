@@ -16,6 +16,7 @@ export const getUserByToken = async () => {
 
     return data.getUserByToken;
 };
+
 export const loginAdmin = async (loginInput) => {
     const loginAdminMutation = `
       mutation($loginInput: LoginInput!) {

@@ -230,17 +230,17 @@ mutation($user: resendEmailToConfirmAdminInput!) {
 };
 const confirmSuperadminCreation = async (user) => {
   const confirmSuperadminCreationMutation = `
-mutation($user: confirmSuperadminCreationInput!) {
-  confirmSuperadminCreation(user:$user){
-    ... on User {
-      email
+    mutation($user: confirmSuperadminCreationInput!) {
+      confirmSuperadminCreation(user:$user){
+        ... on User {
+          email
+        }
+        ... on Error {
+          message
+          statusCode
+        }
+      }
     }
-    ... on Error {
-      message
-      statusCode
-    }
-  }
-}
 `;
 
   const { data } = await setItems(confirmSuperadminCreationMutation, { user });

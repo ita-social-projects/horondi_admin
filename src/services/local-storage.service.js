@@ -2,8 +2,8 @@ import { LOCAL_STORAGE } from '../consts/local-storage';
 
 export const clearLocalStorage = () => {
   const horondiAdmin = {
-    auth_access_token: null,
-    auth_refresh_token: null,
+    auth_access_token: '',
+    auth_refresh_token: '',
     darkMode: null
   };
   localStorage.setItem(

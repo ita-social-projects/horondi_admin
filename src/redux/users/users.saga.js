@@ -170,6 +170,7 @@ export function* handleAdminRegister({ payload }) {
 }
 
 export function* handleConfirmSuperadminCreation({ payload }) {
+  console.log(payload);
   try {
     yield put(setAdminCreationLoading(true));
     yield call(confirmSuperadminCreation, payload);
