@@ -66,8 +66,8 @@ describe('auth sagas tests', () => {
         const analysisPut = analysis.filter((el) => el.type === 'PUT');
         const analysisCall = analysis.filter((el) => el.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
-        expect(analysisCall).toHaveLength(1);
-      })).skip();
+        expect(analysisCall).toHaveLength(3);
+      }));
 
   it('should handle admin logout', () =>
     expectSaga(handleAdminLogout, LOGOUT_USER)

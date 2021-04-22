@@ -94,7 +94,7 @@ describe('categories sagas tests', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysis).toHaveLength(8);
+        expect(analysis).toHaveLength(9);
         expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(3);
       }));
