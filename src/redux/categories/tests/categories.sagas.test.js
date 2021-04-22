@@ -95,7 +95,7 @@ describe('categories sagas tests', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysis).toHaveLength(9);
-        expect(analysisPut).toHaveLength(5);
+        expect(analysisPut).toHaveLength(6);
         expect(analysisCall).toHaveLength(3);
       }));
   it('should handle edit category', () =>
