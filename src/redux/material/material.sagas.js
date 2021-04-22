@@ -99,7 +99,6 @@ export function* handleMaterialLoad({ payload }) {
 
 export function* handleAddMaterial({ payload }) {
   try {
-    console.log(payload);
     yield put(setMaterialLoading(true));
     const newMaterial = yield call(createMaterial, payload);
 

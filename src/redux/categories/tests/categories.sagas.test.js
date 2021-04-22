@@ -87,7 +87,7 @@ describe('categories sagas tests', () => {
       .put(setCategoryLoading(true))
       .hasFinalState({
         ...initialState,
-        categoryLoading: true
+        categoryLoading: false
       })
       .run()
       .then((result) => {
