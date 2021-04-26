@@ -119,8 +119,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     validationSchema: patternValidationSchema,
     initialValues: useFormikInitialValues(pattern),
     onSubmit: () => {
-      console.log('values', values);
-      console.log('pattern', pattern);
       const newPattern = createPattern(values);
       const isEditAndUploadAndConstructor =
         isEdit &&
