@@ -96,12 +96,12 @@ const History = () => {
       >
         {config.titles.historyTitles.mainTitle}
       </Typography>
-      <HistoryFilters
-        filters={filters}
-        clearOptions={clearOptions}
-        filterOptions={filterOptions}
-        searchOptions={searchOptions}
-      />
+      {/*<HistoryFilters*/}
+      {/*  filters={filters}*/}
+      {/*  clearOptions={clearOptions}*/}
+      {/*  filterOptions={filterOptions}*/}
+      {/*  searchOptions={searchOptions}*/}
+      {/*/>*/}
       {!records?.length ? (
         <p className={styles.noRecordsTitle}>
           {config.messages.NO_HISTORY_RECORDS_MESSAGE}
