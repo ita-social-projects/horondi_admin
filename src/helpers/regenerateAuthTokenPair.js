@@ -1,31 +1,34 @@
-import {getFromLocalStorage, setToLocalStorage} from "../services/local-storage.service";
-import {LOCAL_STORAGE} from "../consts/local-storage";
-import {regenerateAuthTokenPair} from "../redux/auth/auth.operations";
-import {AUTH_ERRORS} from "../error-messages/auth";
-import {store} from "../index";
-import {logoutUser} from "../redux/auth/auth.actions";
+import { createBrowserHistory } from 'history';
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from '../services/local-storage.service';
+import { LOCAL_STORAGE } from '../consts/local-storage';
+import { regenerateAuthTokenPair } from '../redux/auth/auth.operations';
+import { AUTH_ERRORS } from '../error-messages/auth';
 
-const regenerateAuthTokens = async () => {
-    let isRegenerateTokens = false;
+export const history = createBrowserHistory();
 
-    const refreshToken = getFromLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN);
+const refreshAuthToken = async () => {
+  let isRegenerateTokens = false;
 
-    const newTokenPair = await regenerateAuthTokenPair(refreshToken);
+  const refreshToken = getFromLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN);
 
-    if (newTokenPair?.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
-        store.dispatch(logoutUser());
-    } else {
-        setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, newTokenPair.token);
-        setToLocalStorage(
-            LOCAL_STORAGE.AUTH_REFRESH_TOKEN,
-            newTokenPair.refreshToken
-        );
+  const newTokenPair = await regenerateAuthTokenPair(refreshToken);
 
-        isRegenerateTokens = true;
+  if (newTokenPair?.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+    return isRegenerateTokens;
+  } 
+  setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, newTokenPair.token);
+  setToLocalStorage(
+    LOCAL_STORAGE.AUTH_REFRESH_TOKEN,
+    newTokenPair.refreshToken
+  );
 
-        return isRegenerateTokens
-    }
+  isRegenerateTokens = true;
 
+  return isRegenerateTokens;
+  
 };
 
-export default regenerateAuthTokens;
+export default refreshAuthToken;

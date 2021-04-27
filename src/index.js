@@ -6,7 +6,7 @@ import configureStore from './store/store';
 
 import './index.css';
 
-export const store = configureStore();
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
