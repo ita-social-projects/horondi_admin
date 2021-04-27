@@ -21,6 +21,8 @@ import {
     handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 import routes from '../../configs/routes';
+import {AUTH_ERRORS} from "../../error-messages/auth";
+import {handleAdminLogout} from "../auth/auth.sagas";
 
 const {SUCCESS_UPDATE_STATUS} = config.statuses;
 
@@ -56,9 +58,13 @@ export function* handleHomePageImagesUpdate({payload: {id, upload}}) {
 }
 
 export function* handleHomePageError(e) {
-    yield put(setHomePageDataLoading(false));
-    yield put(setHomePageDataError({e}));
-    yield call(handleErrorSnackbar, e.message);
+    if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+        yield call(handleAdminLogout);
+    } else {
+        yield put(setHomePageDataLoading(false));
+        yield put(setHomePageDataError({e}));
+        yield call(handleErrorSnackbar, e.message);
+    }
 }
 
 export default function* homePageSaga() {

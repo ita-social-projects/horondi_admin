@@ -29,6 +29,8 @@ import {
     handleSuccessSnackbar,
     handleErrorSnackbar
 } from '../snackbar/snackbar.sagas';
+import {AUTH_ERRORS} from "../../error-messages/auth";
+import {handleAdminLogout} from "../auth/auth.sagas";
 
 const {
     SUCCESS_ADD_STATUS,
@@ -80,7 +82,7 @@ export function* handleBusinessPageDelete({payload}) {
     try {
         yield put(setLoading(true));
         const businessPage = yield call(deleteBusinessPage, payload);
-        
+
         if (businessPage) {
             yield put(removeBusinessPageFromStore(payload));
             yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
@@ -96,22 +98,26 @@ export function* handleBusinessPageUpdate({payload}) {
     try {
         yield put(setLoading(true));
         const businessPage = yield call(updateBusinessPage, payload);
-        
+
         if (businessPage) {
             yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
             yield put(setLoading(false));
             yield put(push(routes.pathToBusinessPages));
         }
-        
+
     } catch (error) {
         yield call(handleBusinessPageError, error);
     }
 }
 
 export function* handleBusinessPageError(e) {
-    yield put(setLoading(false));
-    yield put(setBusinessPagesError({e}));
-    yield call(handleErrorSnackbar, e.message);
+    if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+        yield call(handleAdminLogout);
+    } else {
+        yield put(setLoading(false));
+        yield put(setBusinessPagesError({e}));
+        yield call(handleErrorSnackbar, e.message);
+    }
 }
 
 export default function* businessPagesSaga() {

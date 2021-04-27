@@ -34,6 +34,8 @@ import {
     handleErrorSnackbar,
     handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import {AUTH_ERRORS} from "../../error-messages/auth";
+import {handleAdminLogout} from "../auth/auth.sagas";
 
 const {
     SUCCESS_ADD_STATUS,
@@ -136,9 +138,13 @@ export function* handleMaterialUpdate({payload}) {
 }
 
 export function* handleMaterialError(e) {
-    yield put(setMaterialLoading(false));
-    yield put(setMaterialError({e}));
-    yield call(handleErrorSnackbar, e.message);
+    if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+        yield call(handleAdminLogout);
+    } else {
+        yield put(setMaterialLoading(false));
+        yield put(setMaterialError({e}));
+        yield call(handleErrorSnackbar, e.message);
+    }
 }
 
 export default function* materialSaga() {

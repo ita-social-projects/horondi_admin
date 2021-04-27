@@ -27,6 +27,8 @@ import {
 } from '../snackbar/snackbar.sagas';
 
 import {config} from '../../configs';
+import {AUTH_ERRORS} from "../../error-messages/auth";
+import {handleAdminLogout} from "../auth/auth.sagas";
 
 const {SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS} = config.statuses;
 
@@ -92,9 +94,13 @@ export function* handleDeleteColor({payload}) {
 }
 
 export function* handleColorError(e) {
-    yield put(setColorsLoading(false));
-    yield put(setColorsError({e}));
-    yield call(handleErrorSnackbar, e.message);
+    if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+        yield call(handleAdminLogout);
+    } else {
+        yield put(setColorsLoading(false));
+        yield put(setColorsError({e}));
+        yield call(handleErrorSnackbar, e.message);
+    }
 }
 
 export default function* colorsSaga() {

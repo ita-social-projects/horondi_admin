@@ -56,6 +56,8 @@ import {
 } from '../snackbar/snackbar.sagas';
 
 import {config} from '../../configs';
+import {AUTH_ERRORS} from "../../error-messages/auth";
+import {handleAdminLogout} from "../auth/auth.sagas";
 
 const {
     SUCCESS_ADD_STATUS,
@@ -213,9 +215,13 @@ export function* handleProductLoad({payload}) {
 }
 
 export function* handleProductsErrors(e) {
-    yield put(setProductsLoading(false));
-    yield put(setProductsError({e}));
-    yield call(handleErrorSnackbar, e.message);
+    if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+        yield call(handleAdminLogout);
+    } else {
+        yield put(setProductsLoading(false));
+        yield put(setProductsError({e}));
+        yield call(handleErrorSnackbar, e.message);
+    }
 }
 
 export function* handleImagesDelete({payload}) {

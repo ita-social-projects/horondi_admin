@@ -34,6 +34,8 @@ import {
     handleErrorSnackbar,
     handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import {AUTH_ERRORS} from "../../error-messages/auth";
+import {handleAdminLogout} from "../auth/auth.sagas";
 
 const {
     SUCCESS_ADD_STATUS,
@@ -156,9 +158,13 @@ export function* handleSlideDelete({payload}) {
 }
 
 export function* handleSlideError(e) {
-    yield put(setSlideLoading(false));
-    yield put(setSlideError({e}));
-    yield call(handleErrorSnackbar, e.message);
+    if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+        yield call(handleAdminLogout);
+    } else {
+        yield put(setSlideLoading(false));
+        yield put(setSlideError({e}));
+        yield call(handleErrorSnackbar, e.message);
+    }
 }
 
 export default function* slideSaga() {
