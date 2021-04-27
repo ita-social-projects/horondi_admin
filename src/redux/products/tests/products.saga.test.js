@@ -266,7 +266,7 @@ describe('Test products saga', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisCall).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
       }));
 
   it.skip('should update product', () =>

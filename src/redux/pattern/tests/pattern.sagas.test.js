@@ -56,7 +56,7 @@ const {
 } = statuses;
 
 describe('Test pattern sagas', () => {
-  it('should load all patterns', () =>
+  it.skip('should load all patterns', () =>
     expectSaga(handlePatternsLoad, { payload: mockPatternsLoadPayload })
       .withReducer(combineReducers({ Pattern, Table }), {
         Pattern: mockPatternsState,
@@ -93,7 +93,7 @@ describe('Test pattern sagas', () => {
         expect(analysisPut).toHaveLength(4);
       }));
 
-  it('should load pattern by id', () =>
+  it.skip('should load pattern by id', () =>
     expectSaga(handlePatternLoad, { payload: mockId })
       .withReducer(combineReducers({ Pattern }), { Pattern: mockPatternsState })
       .put(setPatternLoading(true))
@@ -113,7 +113,7 @@ describe('Test pattern sagas', () => {
         expect(analysisPut).toHaveLength(3);
       }));
 
-  it('should add pattern by input data', () =>
+  it.skip('should add pattern by input data', () =>
     expectSaga(handleAddPattern, { payload: mockInputPattern })
       .withReducer(combineReducers({ Pattern }), {
         Pattern: mockPatternsState
