@@ -8,8 +8,7 @@ import {
 } from './auth.actions';
 import {
     loginAdmin,
-    getUserByToken,
-    regenerateAuthTokenPair
+    getUserByToken
 } from './auth.operations';
 import {LOGIN_USER, CHECK_USER_BY_TOKEN, LOGOUT_USER} from './auth.types';
 import {config} from '../../configs';
@@ -20,7 +19,6 @@ import {
 import {handleErrorSnackbar} from '../snackbar/snackbar.sagas';
 import routes from '../../configs/routes';
 import {LOCAL_STORAGE} from '../../consts/local-storage';
-import {AUTH_ERRORS} from '../../error-messages/auth';
 
 const {LOGIN_PAGE_STATUS} = config.statuses;
 const {pathToMainPage, pathToLogin} = routes;
@@ -29,13 +27,17 @@ export function* handleAdminLoad({payload}) {
     try {
         yield put(setAuthLoading(true));
         const admin = yield call(loginAdmin, payload);
-        setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, admin.token);
-        setToLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN, admin.refreshToken);
 
-        yield put(setAdminId(admin._id));
-        yield put(setAuth(true));
-        yield put(push(pathToMainPage));
-        yield put(setAuthLoading(false));
+        if (admin) {
+            setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, admin.token);
+            setToLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN, admin.refreshToken);
+
+            yield put(setAdminId(admin._id));
+            yield put(setAuth(true));
+            yield put(push(pathToMainPage));
+            yield put(setAuthLoading(false));
+        }
+
     } catch (error) {
         yield put(setAuthLoading(false));
         yield put(setAuthError(error));
@@ -64,15 +66,12 @@ export function* handleAdminCheckByToken() {
         yield put(setAuth(true));
 
         const admin = yield call(getUserByToken);
-
-        if (admin?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-            yield call(handleRefreshTokenPair);
-            yield handleAdminCheckByToken();
-        } else {
-            yield put(setAdminId(admin._id));
-            yield put(setAuthLoading(false));
+        
+        if (admin){
+            yield put(setAdminId(admin?._id));
+            yield put(setAuthLoading(false));  
         }
-
+        
     } catch (error) {
         yield put(setAuthLoading(false));
         yield put(setAuth(false));
@@ -87,40 +86,6 @@ export function* handleAdminLogout() {
     setToLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN, '');
     yield put(setAuth(false));
     yield put(push(pathToLogin));
-}
-
-export function* handleRefreshTokenPair() {
-    try {
-        yield put(setAuthLoading(true));
-
-        const refreshToken = getFromLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN);
-
-        const newTokenPair = yield call(regenerateAuthTokenPair, refreshToken);
-
-        if (newTokenPair?.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
-            setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, '');
-            setToLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN, '');
-
-            yield put(setAuth(false));
-            yield put(push(pathToLogin));
-        } else {
-            setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, newTokenPair.token);
-            setToLocalStorage(
-                LOCAL_STORAGE.AUTH_REFRESH_TOKEN,
-                newTokenPair.refreshToken
-            );
-
-            yield put(setAuth(true));
-        }
-        yield put(setAuthLoading(false));
-    } catch (e) {
-        setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, '');
-        setToLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN, '');
-
-        yield put(setAuth(false));
-        yield put(setAuthLoading(false));
-        yield put(push(pathToLogin));
-    }
 }
 
 export default function* authSaga() {

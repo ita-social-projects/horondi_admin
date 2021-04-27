@@ -1,7 +1,7 @@
-import { getItems } from '../../utils/client';
+import {getItems} from '../../utils/client';
 
 const getAllHistoryRecords = async (limit, skip, filter) => {
-  const getAllHistoryRecordsQuery = `
+    const getAllHistoryRecordsQuery = `
 query(
   $limit: Int!
   $skip: Int!
@@ -40,54 +40,54 @@ query(
 }
 `;
 
-  const { data } = await getItems(getAllHistoryRecordsQuery, {
-    limit,
-    skip,
-    filter
-  });
+    const result = await getItems(getAllHistoryRecordsQuery, {
+        limit,
+        skip,
+        filter
+    });
 
-  return data.getAllHistoryRecords;
+    return result?.data?.getAllHistoryRecords;
 };
 
 const getHistoryRecord = async (id) => {
-  const getHistoryRecordQuery = `
-query(
-  $id: ID!
-) {
-  getHistoryRecordById(
-    id: $id
-  ) {
-  ...on HistoryRecord {
-      _id
-      action
-        subject{
-          model
-          name
-          subjectId
-        }
-        valueBeforeChange
-        valueAfterChange
-        userId{
+    const getHistoryRecordQuery = `
+    query(
+      $id: ID!
+    ) {
+      getHistoryRecordById(
+        id: $id
+      ) {
+      ...on HistoryRecord {
           _id
-          email
-          firstName
-          lastName
-          role
+          action
+            subject{
+              model
+              name
+              subjectId
+            }
+            valueBeforeChange
+            valueAfterChange
+            userId{
+              _id
+              email
+              firstName
+              lastName
+              role
+            }
+         valueBeforeChange
+         valueAfterChange
+      }
+        ...on Error {
+          message
+          statusCode
         }
-     valueBeforeChange
-     valueAfterChange
-  }
-    ...on Error {
-      message
-      statusCode
+      }
     }
-  }
-}
 `;
 
-  const { data } = await getItems(getHistoryRecordQuery, { id });
+    const result = await getItems(getHistoryRecordQuery, {id});
 
-  return data.getHistoryRecordById;
+    return result?.data?.getHistoryRecordById;
 };
 
-export { getAllHistoryRecords, getHistoryRecord };
+export {getAllHistoryRecords, getHistoryRecord};

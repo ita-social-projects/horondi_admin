@@ -29,8 +29,6 @@ import {
     handleErrorSnackbar,
     handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
-import {AUTH_ERRORS} from "../../error-messages/auth";
-import {handleRefreshTokenPair} from "../auth/auth.sagas";
 
 const {
     SUCCESS_ADD_STATUS,
@@ -42,9 +40,13 @@ export function* handleNewsLoad({payload: {skip, limit}}) {
     try {
         yield put(setNewsLoading(true));
         const news = yield call(getAllNews, skip, limit);
-        yield put(setItemsCount(news.count));
-        yield put(setNews(news.items));
-        yield put(setNewsLoading(false));
+
+        if (news) {
+            yield put(setItemsCount(news?.count));
+            yield put(setNews(news?.items));
+            yield put(setNewsLoading(false));
+        }
+
     } catch (error) {
         yield call(handleNewsError, error);
     }
@@ -54,8 +56,12 @@ export function* handleArticleLoad({payload}) {
     try {
         yield put(setNewsLoading(true));
         const newsArticle = yield call(getArticleById, payload);
-        yield put(setArticle(newsArticle));
-        yield put(setNewsLoading(false));
+
+        if (newsArticle) {
+            yield put(setArticle(newsArticle));
+            yield put(setNewsLoading(false));
+        }
+
     } catch (error) {
         yield call(handleNewsError, error);
     }
@@ -65,16 +71,12 @@ export function* handleAddNews({payload}) {
     const {article: news, upload} = payload;
     try {
         yield put(setNewsLoading(true));
-        const article = yield call(createArticle, news, upload);
+        const newsArticle = yield call(createArticle, news, upload);
 
-        if (article?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-            yield call(handleRefreshTokenPair);
-            yield handleAddNews({payload})
-        } else {
+        if (newsArticle) {
             yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
             yield put(push(routes.pathToNews));
         }
-
     } catch (error) {
         yield call(handleNewsError, error);
     }
@@ -84,18 +86,14 @@ export function* handleNewsDelete({payload}) {
     try {
         yield put(setNewsLoading(true));
 
-        const deletedArticle = yield call(deleteArticle, payload);
+        const newsArticle = yield call(deleteArticle, payload);
 
-        if (deletedArticle?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-            yield call(handleRefreshTokenPair);
-            yield handleNewsDelete({payload})
-        } else {
+        if (newsArticle) {
             yield put(removeArticleFromStore(payload));
             yield put(setNewsLoading(false));
             yield put(updatePagination());
             yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
         }
-
     } catch (error) {
         yield call(handleNewsError, error);
     }
@@ -105,16 +103,12 @@ export function* handleNewsUpdate({payload}) {
     const {id, newArticle, upload} = payload;
     try {
         yield put(setNewsLoading(true));
-        const updatedArticle = yield call(updateArticle, id, newArticle, upload);
+        const newsArticle = yield call(updateArticle, id, newArticle, upload);
 
-        if (updatedArticle?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-            yield call(handleRefreshTokenPair);
-            yield handleNewsUpdate({payload})
-        } else {
+        if (newsArticle) {
             yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
             yield put(push(config.routes.pathToNews));
         }
-
     } catch (error) {
         yield call(handleNewsError, error);
     }

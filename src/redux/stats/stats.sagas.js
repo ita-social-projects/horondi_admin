@@ -1,107 +1,97 @@
-import { call, takeEvery, put } from 'redux-saga/effects';
+import {call, takeEvery, put} from 'redux-saga/effects';
 
 import {
-  GET_INITIAL_STATS,
-  GET_ALL_ORDERS_STATS,
-  GET_PAID_ORDERS_STATS,
-  GET_USERS_STATS
+    GET_INITIAL_STATS,
+    GET_ALL_ORDERS_STATS,
+    GET_PAID_ORDERS_STATS,
+    GET_USERS_STATS
 } from './stats.types';
 
 import {
-  setAllOrdersStats,
-  setPaidOrdersStats,
-  setPopularCategories,
-  setPopularProducts,
-  setStatsLoading,
-  setUpdatingBarData,
-  setUpdatingDoughnutData,
-  setUsersByDays
+    setAllOrdersStats,
+    setPaidOrdersStats,
+    setPopularCategories,
+    setPopularProducts,
+    setStatsLoading,
+    setUpdatingBarData,
+    setUpdatingDoughnutData,
+    setUsersByDays
 } from './stats.actions';
 
-import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
+import {handleErrorSnackbar} from '../snackbar/snackbar.sagas';
 
 import {
-  getPopularCategories,
-  getPopularProducts,
-  getOrdersStats,
-  getPaidOrdersStats,
-  getUsersByDays
+    getPopularCategories,
+    getPopularProducts,
+    getOrdersStats,
+    getPaidOrdersStats,
+    getUsersByDays
 } from './stats.operations';
-import { AUTH_ERRORS } from '../../error-messages/auth';
-import { handleRefreshTokenPair } from '../auth/auth.sagas';
 
 export function* handleInitialStatsLoad() {
-  try {
-    yield put(setStatsLoading(true));
-    const categories = yield call(getPopularCategories);
-    const products = yield call(getPopularProducts);
-    yield put(setPopularCategories(categories));
-    yield put(setPopularProducts(products));
-    yield put(setStatsLoading(false));
-  } catch (e) {
-    handleStatsErrors(e);
-  }
+    try {
+        yield put(setStatsLoading(true));
+        const categories = yield call(getPopularCategories);
+        const products = yield call(getPopularProducts);
+        yield put(setPopularCategories(categories));
+        yield put(setPopularProducts(products));
+        yield put(setStatsLoading(false));
+    } catch (e) {
+        handleStatsErrors(e);
+    }
 }
 
-export function* handleOrdersStatisticLoad({ payload }) {
-  try {
-    yield put(setUpdatingDoughnutData(true));
-    const orders = yield call(getOrdersStats, payload);
+export function* handleOrdersStatisticLoad({payload}) {
+    try {
+        yield put(setUpdatingDoughnutData(true));
+        const orders = yield call(getOrdersStats, payload);
 
-    if (orders?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-      yield call(handleRefreshTokenPair);
-      yield handleOrdersStatisticLoad({ payload });
-    } else {
-      yield put(setAllOrdersStats(orders));
-      yield put(setUpdatingDoughnutData(false));
+        if (orders) {
+            yield put(setAllOrdersStats(orders));
+            yield put(setUpdatingDoughnutData(false));
+        }
+
+    } catch (e) {
+        handleStatsErrors(e);
     }
-  } catch (e) {
-    handleStatsErrors(e);
-  }
 }
 
-export function* handlePaidOrdersLoad({ payload }) {
-  try {
-    yield put(setUpdatingBarData(true));
-    const orders = yield call(getPaidOrdersStats, payload);
+export function* handlePaidOrdersLoad({payload}) {
+    try {
+        yield put(setUpdatingBarData(true));
+        const orders = yield call(getPaidOrdersStats, payload);
 
-    if (orders?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-      yield call(handleRefreshTokenPair);
-      yield handlePaidOrdersLoad({ payload });
-    } else {
-      yield put(setPaidOrdersStats(orders));
-      yield put(setUpdatingBarData(false));
+        if (orders) {
+            yield put(setPaidOrdersStats(orders));
+            yield put(setUpdatingBarData(false));
+        }
+    } catch (e) {
+        handleStatsErrors(e);
     }
-  } catch (e) {
-    handleStatsErrors(e);
-  }
 }
 
-export function* handleUsersStatisticLoad({ payload }) {
-  try {
-    yield put(setUpdatingBarData(true));
-    const users = yield call(getUsersByDays, payload);
+export function* handleUsersStatisticLoad({payload}) {
+    try {
+        yield put(setUpdatingBarData(true));
+        const users = yield call(getUsersByDays, payload);
 
-    if (users?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-      yield call(handleRefreshTokenPair);
-      yield handleUsersStatisticLoad({ payload });
-    } else {
-      yield put(setUsersByDays(users));
-      yield put(setUpdatingBarData(false));
+        if (users) {
+            yield put(setUsersByDays(users));
+            yield put(setUpdatingBarData(false));
+        }
+    } catch (e) {
+        handleStatsErrors(e);
     }
-  } catch (e) {
-    handleStatsErrors(e);
-  }
 }
 
 export function* handleStatsErrors(e) {
-  yield put(setStatsLoading(false));
-  yield call(handleErrorSnackbar, e.message);
+    yield put(setStatsLoading(false));
+    yield call(handleErrorSnackbar, e.message);
 }
 
 export default function* statsSaga() {
-  yield takeEvery(GET_INITIAL_STATS, handleInitialStatsLoad);
-  yield takeEvery(GET_ALL_ORDERS_STATS, handleOrdersStatisticLoad);
-  yield takeEvery(GET_PAID_ORDERS_STATS, handlePaidOrdersLoad);
-  yield takeEvery(GET_USERS_STATS, handleUsersStatisticLoad);
+    yield takeEvery(GET_INITIAL_STATS, handleInitialStatsLoad);
+    yield takeEvery(GET_ALL_ORDERS_STATS, handleOrdersStatisticLoad);
+    yield takeEvery(GET_PAID_ORDERS_STATS, handlePaidOrdersLoad);
+    yield takeEvery(GET_USERS_STATS, handleUsersStatisticLoad);
 }

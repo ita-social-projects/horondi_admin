@@ -1,8 +1,8 @@
-import { getItems, setItems } from '../../utils/client';
-import { sizeTranslations } from '../../translations/sizes.translations';
+import {getItems, setItems} from '../../utils/client';
+import {sizeTranslations} from '../../translations/sizes.translations';
 
 export const getAllSizes = async () => {
-  const query = `
+    const query = `
       query {
         getAllSizes {
           _id
@@ -16,13 +16,13 @@ export const getAllSizes = async () => {
       }
     `;
 
-  const { data } = await getItems(query);
+    const result = await getItems(query);
 
-  return data.getAllSizes;
+    return result?.data?.getAllSizes;
 };
 
 export const getSizeById = async (id) => {
-  const query = `
+    const query = `
       query($id: ID!) {
         getSizeById(id: $id) {
           ... on Size {
@@ -46,21 +46,21 @@ export const getSizeById = async (id) => {
       }
     `;
 
-  const { data } = await getItems(query, { id });
+    const result = await getItems(query, {id});
 
-  if (Object.keys(sizeTranslations).includes(data.getSizeById?.message)) {
-    throw new Error(
-      `${data.getSizeById.statusCode} ${
-        sizeTranslations[data.getSizeById.message]
-      }`
-    );
-  }
+    if (Object.keys(sizeTranslations).includes(result?.data?.getSizeById.message)) {
+        throw new Error(
+            `${result.data.getSizeById.statusCode} ${
+                sizeTranslations[result.data.getSizeById.message]
+            }`
+        );
+    }
 
-  return data.getSizeById;
+    return result?.data?.getSizeById;
 };
 
 export const addSize = async (size) => {
-  const query = `
+    const query = `
       mutation($size: SizeInput!) {
         addSize(size: $size) {
           ... on Size {
@@ -75,13 +75,13 @@ export const addSize = async (size) => {
       }
     `;
 
-  const { data } = await setItems(query, { size });
+    const result = await setItems(query, {size});
 
-  return data.addSize;
+    return result?.data?.addSize;
 };
 
 export const updateSize = async (id, size) => {
-  const query = `
+    const query = `
       mutation($id: ID!, $size: SizeInput!) {
         updateSize(id: $id, size: $size) {
           ... on Size {
@@ -96,21 +96,21 @@ export const updateSize = async (id, size) => {
       }
     `;
 
-  const { data } = await setItems(query, { id, size });
+    const result = await setItems(query, {id, size});
 
-  if (Object.keys(sizeTranslations).includes(data.updateSize?.message)) {
-    throw new Error(
-      `${data.updateSize.statusCode} ${
-        sizeTranslations[data.updateSize.message]
-      }`
-    );
-  }
+    if (Object.keys(sizeTranslations).includes(result?.data?.updateSize?.message)) {
+        throw new Error(
+            `${result.data.updateSize.statusCode} ${
+                sizeTranslations[result.data.updateSize.message]
+            }`
+        );
+    }
 
-  return data.updateSize;
+    return result?.data?.updateSize;
 };
 
 export const deleteSize = async (id) => {
-  const query = `
+    const query = `
       mutation($id: ID!) {
         deleteSize(id: $id) {
           ... on Size {
@@ -126,15 +126,15 @@ export const deleteSize = async (id) => {
       }
     `;
 
-  const { data } = await setItems(query, { id });
+    const result = await setItems(query, {id});
 
-  if (Object.keys(sizeTranslations).includes(data.deleteSize?.message)) {
-    throw new Error(
-      `${data.deleteSize.statusCode} ${
-        sizeTranslations[data.deleteSize.message]
-      }`
-    );
-  }
+    if (Object.keys(sizeTranslations).includes(result?.data?.deleteSize?.message)) {
+        throw new Error(
+            `${result?.data?.deleteSize.statusCode} ${
+                sizeTranslations[result?.data?.deleteSize.message]
+            }`
+        );
+    }
 
-  return data.deleteSize;
+    return result?.data?.deleteSize;
 };

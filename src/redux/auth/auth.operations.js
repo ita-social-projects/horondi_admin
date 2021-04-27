@@ -12,9 +12,9 @@ export const getUserByToken = async () => {
       }
     `;
 
-    const {data} = await getItems(getUserByTokenQuery);
+    const result = await getItems(getUserByTokenQuery);
 
-    return data.getUserByToken;
+    return result?.data?.getUserByToken;
 };
 
 export const loginAdmin = async (loginInput) => {
@@ -27,9 +27,9 @@ export const loginAdmin = async (loginInput) => {
         }
       }
     `;
-    const {data} = await setItems(loginAdminMutation, {loginInput});
+    const result = await setItems(loginAdminMutation, {loginInput});
 
-    return data.loginAdmin;
+    return result?.data?.loginAdmin;
 };
 export const regenerateAuthTokenPair = async (refreshToken) => {
     const regenerateAuthTokenPairMutation = `
@@ -43,9 +43,9 @@ export const regenerateAuthTokenPair = async (refreshToken) => {
       }
     `;
 
-    const {data} = await setItems(regenerateAuthTokenPairMutation, {
+    const result = await setItems(regenerateAuthTokenPairMutation, {
         refreshToken
     });
 
-    return data.regenerateAccessToken;
+    return result?.data?.regenerateAccessToken;
 };
