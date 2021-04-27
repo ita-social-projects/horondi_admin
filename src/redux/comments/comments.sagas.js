@@ -107,9 +107,9 @@ export function* handleCommentUpdate({payload}) {
     const {id, comment} = payload;
     try {
         yield put(setCommentsLoading(true));
-        const comment = yield call(updateComment, id, comment);
+        const commentData = yield call(updateComment, id, comment);
 
-        if (comment) {
+        if (commentData) {
             yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
             yield put(push(config.routes.pathToComments));
         }
