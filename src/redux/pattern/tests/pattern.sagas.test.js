@@ -93,7 +93,7 @@ describe('Test pattern sagas', () => {
         expect(analysisPut).toHaveLength(4);
       }));
 
-  it.skip('should load pattern by id', () =>
+  it.skip('should get pattern by id', () =>
     expectSaga(handlePatternLoad, { payload: mockId })
       .withReducer(combineReducers({ Pattern }), { Pattern: mockPatternsState })
       .put(setPatternLoading(true))
