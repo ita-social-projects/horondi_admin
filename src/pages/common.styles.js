@@ -13,7 +13,7 @@ export const useCommonStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '45px',
-    '@media (max-width: 420px)': {
+    '@media (max-width: 450px)': {
       display: 'block'
     }
   },
@@ -22,7 +22,7 @@ export const useCommonStyles = makeStyles((theme) => ({
     fontSize: 24,
     color: theme.palette.text.disabled,
     fontWeight: 'bold',
-    '@media (max-width: 420px)': {
+    '@media (max-width: 450px)': {
       fontSize: theme.spacing(2)
     }
   },
@@ -32,7 +32,7 @@ export const useCommonStyles = makeStyles((theme) => ({
     fontSize: 24,
     color: theme.palette.text.disabled,
     fontWeight: 'bold',
-    '@media (max-width: 375px)': {
+    '@media (max-width: 450px)': {
       fontSize: theme.spacing(2)
     }
   },

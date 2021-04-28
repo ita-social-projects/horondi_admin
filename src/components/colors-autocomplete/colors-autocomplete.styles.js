@@ -8,7 +8,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   root: {
     width: '400px',
-    marginRight: '15px'
+    marginRight: '15px',
+    '@media (max-width: 450px)': {
+      width: '100%'
+    }
   },
   checkbox: {
     marginRight: 8

@@ -5,12 +5,20 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 10
+    marginBottom: 10,
+    flexWrap: 'wrap',
+    '@media (max-width: 450px)': {
+      width: '100%'
+    }
   },
   filterItems: {
     marginTop: '-20px',
     display: 'flex',
-    marginRight: 20
+    marginRight: 20,
+    flexWrap: 'wrap',
+    '@media (max-width: 450px)': {
+      marginRight: 0
+    }
   },
   detailsBtn: {
     color: '#3F51B5',
@@ -25,9 +33,15 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    marginBottom: 10
+    marginBottom: 10,
+    '@media (max-width: 450px)': {
+      width: '100%'
+    }
   },
   filterNavbar: {
-    marginTop: -75
+    marginTop: -75,
+    '@media (max-width: 450px)': {
+      marginTop: 0
+    }
   }
 }));
