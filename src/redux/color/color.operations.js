@@ -18,9 +18,9 @@ export const getAllColors = async () => {
         }
       }
     `;
-    const {data} = await getItems(query);
+    const result = await getItems(query);
 
-    return data.getAllColors;
+    return result?.data?.getAllColors;
 };
 export const getColorById = async (id) => {
     const query = `
@@ -45,13 +45,13 @@ export const getColorById = async (id) => {
         }
       }
     `;
-    const {data} = await getItems(query, {id});
+    const result = await getItems(query, {id});
 
-    if (Object.keys(colorsTranslations).includes(data.getColorById?.message)) {
-        throw new Error(`${data.getColorById.statusCode} ${colorsTranslations[data.getColorById.message]}`);
+    if (Object.keys(colorsTranslations).includes(result?.data?.getColorById?.message)) {
+        throw new Error(`${result.data.getColorById.statusCode} ${colorsTranslations[result.data.getColorById.message]}`);
     }
 
-    return data.getColorById;
+    return result?.data?.getColorById;
 };
 export const createColor = async (payload) => {
     const query = `
@@ -76,13 +76,13 @@ export const createColor = async (payload) => {
         }
       }
     `;
-    const {data} = await setItems(query, payload);
+    const result = await setItems(query, payload);
 
-    if (Object.keys(colorsTranslations).includes(data.addColor?.message)) {
-        throw new Error(`${data.addColor.statusCode} ${colorsTranslations[data.addColor.message]}`);
+    if (Object.keys(colorsTranslations).includes(result?.data?.addColor?.message)) {
+        throw new Error(`${result.data.addColor.statusCode} ${colorsTranslations[result.data.addColor.message]}`);
     }
 
-    return data.addColor;
+    return result?.data?.addColor;
 };
 export const deleteColor = async (id) => {
     const query = `
@@ -121,13 +121,13 @@ export const deleteColor = async (id) => {
       }
     `;
 
-    const {data} = await setItems(query, {id});
+    const result = await setItems(query, {id});
 
-    if (Object.keys(colorsTranslations).includes(data.deleteColor?.message)) {
-        throw new Error(`${data.deleteColor.statusCode} ${data.deleteColor[data.deleteColor.message]}`);
-    } else if (data.deleteColor.items) {
-        return data.deleteColor.items;
+    if (Object.keys(colorsTranslations).includes(result?.data?.deleteColor?.message)) {
+        throw new Error(`${result.data.deleteColor.statusCode} ${result.data.deleteColor[result.data.deleteColor.message]}`);
+    } else if (result.data?.deleteColor.items) {
+        return result.data?.deleteColor.items;
     }
 
-    return data.deleteColor;
+    return result?.data?.deleteColor;
 };

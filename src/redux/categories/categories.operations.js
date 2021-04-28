@@ -33,13 +33,13 @@ export const getAllCategories = async (filter, pagination, sort) => {
       }
     `;
 
-    const {data} = await getItems(getAllCategoriesQuery, {
+    const result = await getItems(getAllCategoriesQuery, {
         filter,
         pagination,
         sort
     });
 
-    return data.getAllCategories;
+    return result?.data?.getAllCategories;
 };
 export const getCategoryById = async (id) => {
     const getCategoryByIdQuery = `
@@ -64,17 +64,17 @@ export const getCategoryById = async (id) => {
       }
     `;
 
-    const {data} = await getItems(getCategoryByIdQuery, {id});
+    const result = await getItems(getCategoryByIdQuery, {id});
 
-    if (Object.keys(categoryTranslations).includes(data.getCategoryById?.message)) {
+    if (Object.keys(categoryTranslations).includes(result?.data?.getCategoryById?.message)) {
         throw new Error(
-            `${data.getCategoryById.statusCode} ${
-                categoryTranslations[data.getCategoryById.message]
+            `${result.data.getCategoryById.statusCode} ${
+                categoryTranslations[result.data.getCategoryById.message]
             }`
         );
     }
 
-    return data.getCategoryById;
+    return result?.data?.getCategoryById;
 };
 export const deleteCategoryById = async (deleteId, switchId) => {
     const deleteCategoryByIdQuery = `
@@ -95,12 +95,12 @@ export const deleteCategoryById = async (deleteId, switchId) => {
     }
   `;
 
-    const {data} = await setItems(deleteCategoryByIdQuery, {
+    const result = await setItems(deleteCategoryByIdQuery, {
         deleteId,
         switchId
     });
 
-    return data.deleteCategory;
+    return result?.data?.deleteCategory;
 };
 export const createCategory = async (payload) => {
     const query = `
@@ -116,16 +116,16 @@ export const createCategory = async (payload) => {
         }
       }
     `;
-    const {data} = await setItems(query, payload);
+    const result = await setItems(query, payload);
 
-    if (Object.keys(categoryTranslations).includes(data.addCategory?.message)) {
+    if (Object.keys(categoryTranslations).includes(result?.data?.addCategory?.message)) {
         throw new Error(
-            `${data.addCategory.statusCode} ${
-                categoryTranslations[data.addCategory.message]
+            `${result.data.addCategory.statusCode} ${
+                categoryTranslations[result.data.addCategory.message]
             }`
         );
     }
-    return data.addCategory;
+    return result?.data?.addCategory;
 };
 export const updateCategory = async (payload) => {
     const query = `
@@ -145,14 +145,14 @@ export const updateCategory = async (payload) => {
         }
       }
     `;
-    const {data} = await setItems(query, payload);
+    const result = await setItems(query, payload);
 
-    if (Object.keys(categoryTranslations).includes(data.updateCategory?.message)) {
+    if (Object.keys(categoryTranslations).includes(result?.data?.updateCategory?.message)) {
         throw new Error(
-            `${data.updateCategory.statusCode} ${
-                categoryTranslations[data.updateCategory.message]
+            `${result.data.updateCategory.statusCode} ${
+                categoryTranslations[result.data.updateCategory.message]
             }`
         );
     }
-    return data.updateCategory;
+    return result?.data?.updateCategory;
 };

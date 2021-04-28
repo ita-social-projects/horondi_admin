@@ -24,11 +24,11 @@ const getAllNews = async (skip, limit) => {
       }
     `;
 
-    const {data} = await getItems(query, {
+    const result = await getItems(query, {
         limit,
         skip
     });
-    return data.getAllNews;
+    return result?.data?.getAllNews;
 };
 const getArticleById = async (id) => {
     const query = `
@@ -62,17 +62,17 @@ const getArticleById = async (id) => {
       }
     `;
 
-    const {data} = await getItems(query, {id});
+    const result = await getItems(query, {id});
 
-    if (Object.keys(newsTranslations).includes(data.getNewsById?.message)) {
+    if (Object.keys(newsTranslations).includes(result?.data?.getNewsById?.message)) {
         throw new Error(
-            `${data.getNewsById.statusCode} ${
-                newsTranslations[data.getNewsById.message]
+            `${result.data.getNewsById.statusCode} ${
+                newsTranslations[result.data.getNewsById.message]
             }`
         );
     }
 
-    return data.getNewsById;
+    return result?.data?.getNewsById;
 };
 const deleteArticle = async (id) => {
 
@@ -94,17 +94,17 @@ const deleteArticle = async (id) => {
       }
     `;
 
-    const {data} = await setItems(query, {id});
+    const result = await setItems(query, {id});
 
-    if (Object.keys(newsTranslations).includes(data.deleteNews?.message)) {
+    if (Object.keys(newsTranslations).includes(result?.data?.deleteNews?.message)) {
         throw new Error(
-            `${data.deleteNews.statusCode} ${
-                newsTranslations[data.deleteNews.message]
+            `${result.data.deleteNews.statusCode} ${
+                newsTranslations[result.data.deleteNews.message]
             }`
         );
     }
 
-    return data.deleteNews;
+    return result?.data?.deleteNews;
 };
 const createArticle = async (news, upload) => {
     const query = `
@@ -125,18 +125,17 @@ const createArticle = async (news, upload) => {
       }
     `;
 
-    const {data} = await setItems(query, {news, upload});
+    const result = await setItems(query, {news, upload});
 
-
-    if (Object.keys(newsTranslations).includes(data.addNews?.message)) {
+    if (Object.keys(newsTranslations).includes(result?.data?.addNews?.message)) {
         throw new Error(
-            `${data.addNews.statusCode} ${
-                newsTranslations[data.addNews.message]
+            `${result.data.addNews.statusCode} ${
+                newsTranslations[result.data.addNews.message]
             }`
         );
     }
 
-    return data.addNews;
+    return result?.data?.addNews;
 };
 const updateArticle = async (id, news, upload) => {
     const query = `
@@ -156,17 +155,17 @@ const updateArticle = async (id, news, upload) => {
         }
       }
     `;
-    const {data} = await setItems(query, {id, news, upload});
+    const result = await setItems(query, {id, news, upload});
 
-    if (Object.keys(newsTranslations).includes(data.updateNews?.message)) {
+    if (Object.keys(newsTranslations).includes(result?.data?.updateNews?.message)) {
         throw new Error(
-            `${data.updateNews.statusCode} ${
-                newsTranslations[data.updateNews.message]
+            `${result.data.updateNews.statusCode} ${
+                newsTranslations[result.data.updateNews.message]
             }`
         );
     }
 
-    return data.updateNews;
+    return result?.data?.updateNews;
 };
 
 export {

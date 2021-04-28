@@ -1,8 +1,8 @@
-import { getItems, setItems } from '../../utils/client';
-import { headerTranslations } from '../../translations/header.translations';
+import {getItems, setItems} from '../../utils/client';
+import {headerTranslations} from '../../translations/header.translations';
 
 export const getAllHeaders = async () => {
-  const query = `
+    const query = `
       query {
         getAllHeaders {
           _id
@@ -16,12 +16,12 @@ export const getAllHeaders = async () => {
       }
     `;
 
-  const { data } = await getItems(query);
+    const result = await getItems(query);
 
-  return data.getAllHeaders;
+    return result?.data?.getAllHeaders;
 };
 export const getHeaderById = async (id) => {
-  const query = `
+    const query = `
       query($id: ID!) {
         getHeaderById(id: $id) {
           ... on Header {
@@ -41,20 +41,20 @@ export const getHeaderById = async (id) => {
       }
     `;
 
-  const { data } = await getItems(query, { id });
+    const result = await getItems(query, {id});
 
-  if (Object.keys(headerTranslations).includes(data.getHeaderById?.message)) {
-    throw new Error(
-      `${data.getHeaderById.statusCode} ${
-        headerTranslations[data.getHeaderById.message]
-      }`
-    );
-  }
+    if (Object.keys(headerTranslations).includes(result?.data?.getHeaderById?.message)) {
+        throw new Error(
+            `${result.data.getHeaderById.statusCode} ${
+                headerTranslations[result.data.getHeaderById.message]
+            }`
+        );
+    }
 
-  return data.getHeaderById;
+    return result?.data?.getHeaderById;
 };
 export const deleteHeader = async (id) => {
-  const query = `
+    const query = `
       mutation($id: ID!) {
         deleteHeader(id: $id) {
           ... on Header {
@@ -68,20 +68,20 @@ export const deleteHeader = async (id) => {
       }
     `;
 
-  const { data } = await setItems(query, { id });
+    const result = await setItems(query, {id});
 
-  if (Object.keys(headerTranslations).includes(data.deleteHeader?.message)) {
-    throw new Error(
-      `${data.deleteHeader.statusCode} ${
-        headerTranslations[data.deleteHeader.message]
-      }`
-    );
-  }
+    if (Object.keys(headerTranslations).includes(result?.data?.deleteHeader?.message)) {
+        throw new Error(
+            `${result.data.deleteHeader.statusCode} ${
+                headerTranslations[result.data.deleteHeader.message]
+            }`
+        );
+    }
 
-  return data.deleteHeader;
+    return result?.data?.deleteHeader;
 };
 export const createHeader = async (payload) => {
-  const query = `
+    const query = `
       mutation($header: HeaderInput!) {
         addHeader(header: $header) {
           ... on Header {
@@ -101,20 +101,20 @@ export const createHeader = async (payload) => {
       }
     `;
 
-  const { data } = await setItems(query, payload);
+    const result = await setItems(query, payload);
 
-  if (Object.keys(headerTranslations).includes(data.addHeader?.message)) {
-    throw new Error(
-      `${data.addHeader.statusCode} ${
-        headerTranslations[data.addHeader.message]
-      }`
-    );
-  }
+    if (Object.keys(headerTranslations).includes(result?.data?.addHeader?.message)) {
+        throw new Error(
+            `${result.data.addHeader.statusCode} ${
+                headerTranslations[result.data.addHeader.message]
+            }`
+        );
+    }
 
-  return data.addHeader;
+    return result?.data?.addHeader;
 };
-export const updateHeader = async ({ id, header, image }) => {
-  const query = `
+export const updateHeader = async ({id, header, image}) => {
+    const query = `
       mutation($id: ID!, $header: HeaderInput!) {
         updateHeader(id: $id, header: $header) {
           ... on Header {
@@ -134,15 +134,15 @@ export const updateHeader = async ({ id, header, image }) => {
       }
     `;
 
-  const { data } = await setItems(query, { id, header, image });
+    const result = await setItems(query, {id, header, image});
 
-  if (Object.keys(headerTranslations).includes(data.updateHeader?.message)) {
-    throw new Error(
-      `${data.updateHeader.statusCode} ${
-        headerTranslations[data.updateHeader.message]
-      }`
-    );
-  }
+    if (Object.keys(headerTranslations).includes(result?.data?.updateHeader?.message)) {
+        throw new Error(
+            `${result.data.updateHeader.statusCode} ${
+                headerTranslations[result.data.updateHeader.message]
+            }`
+        );
+    }
 
-  return data.updateHeader;
+    return result?.data?.updateHeader;
 };

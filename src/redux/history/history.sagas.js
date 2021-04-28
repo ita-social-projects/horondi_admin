@@ -12,23 +12,22 @@ import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
 import { GET_HISTORY_RECORDS, GET_RECORD_ITEM } from './history.types';
 import { setItemsCount } from '../table/table.actions';
 import { AUTH_ERRORS } from '../../error-messages/auth';
-import { handleRefreshTokenPair } from '../auth/auth.sagas';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 export function* handleHistoryRecordsLoad({ payload }) {
   try {
     yield put(setHistoryLoading(true));
+
     const records = yield call(
       getAllHistoryRecords,
       payload.limit,
       payload.skip,
       payload.filter
     );
-    if (records?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-      yield call(handleRefreshTokenPair);
-      yield handleHistoryRecordsLoad({ payload });
-    } else {
-      yield put(setHistoryRecords(records.items));
-      yield put(setItemsCount(records.count));
+
+    if (records) {
+      yield put(setHistoryRecords(records?.items));
+      yield put(setItemsCount(records?.count));
       yield put(setHistoryLoading(false));
     }
   } catch (error) {
@@ -40,10 +39,8 @@ export function* handleHistoryRecordByIdLoad({ payload }) {
   try {
     yield put(setRecordItemLoading(true));
     const record = yield call(getHistoryRecord, payload);
-    if (record?.message === AUTH_ERRORS.ACCESS_TOKEN_IS_NOT_VALID) {
-      yield call(handleRefreshTokenPair);
-      yield handleHistoryRecordByIdLoad({ payload });
-    } else {
+
+    if (record) {
       yield put(setRecordItem(record));
       yield put(setRecordItemLoading(false));
     }
@@ -53,9 +50,13 @@ export function* handleHistoryRecordByIdLoad({ payload }) {
 }
 
 function* handleHistoryError(e) {
-  yield put(setHistoryLoading(false));
-  yield put(setHistoryError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setHistoryLoading(false));
+    yield put(setHistoryError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* historySaga() {
