@@ -161,7 +161,7 @@ const EmailQuestionsList = () => {
         </div>
       </div>
       <div className={styles.tableList}>
-        {questions.length ? (
+        {questions?.length ? (
           <TableContainerGenerator
             pagination
             count={pagesCount}

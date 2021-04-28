@@ -13,7 +13,7 @@ import { setAuth, setAuthLoading, setAdminId } from '../auth.actions';
 
 import authReducer, { initialState } from '../auth.reducer';
 
-jest.mock('../../../services/local-storage.service');
+// jest.mock('../../../services/local-storage.service');
 
 describe('auth sagas tests', () => {
   it('should login', () =>
@@ -49,7 +49,7 @@ describe('auth sagas tests', () => {
   it('shouls check admin by token', () =>
     expectSaga(handleAdminCheckByToken)
       .withReducer(authReducer)
-      .provide([[call(getUserByToken, token), { _id: userId, email }]])
+      .provide([[call(getUserByToken), { _id: userId, email }]])
       .put(setAuthLoading(true))
       .put(setAdminId(userId))
       .put(setAuth(true))

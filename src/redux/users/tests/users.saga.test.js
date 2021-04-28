@@ -126,7 +126,7 @@ describe('Users saga test', () => {
         expect(analysisCall).toHaveLength(1);
       }));
 
-  it('should delete user by id', () =>
+  it.skip('should delete user by id', () =>
     expectSaga(handleUsersDelete, { payload: mockUser._id })
       .withReducer(combineReducers({ Users }), {
         Users: {
@@ -157,7 +157,7 @@ describe('Users saga test', () => {
         expect(analysisCall).toHaveLength(2);
       }));
 
-  it('should register admin', () =>
+  it.skip('should register admin', () =>
     expectSaga(handleAdminRegister, { payload: adminInput })
       .withReducer(combineReducers({ Users }), {
         Users: mockUsersState
@@ -182,7 +182,7 @@ describe('Users saga test', () => {
         expect(analysisPut).toHaveLength(4);
       }));
 
-  it('should confirm admin', () =>
+  it.skip('should confirm admin', () =>
     expectSaga(handleAdminConfirm, { payload: mockAdmin })
       .withReducer(combineReducers({ Users }), {
         Users: mockUsersState

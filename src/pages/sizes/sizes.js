@@ -34,7 +34,7 @@ const Sizes = () => {
 
   useEffect(() => {
     dispatch(getSizes());
-  }, [sizesList]);
+  }, []);
 
   const sizeDeleteHandler = (id) => {
     const removeSize = () => {

@@ -70,7 +70,7 @@ describe('Categories test', () => {
     mockStore.Categories.categoriesLoading = true;
     wrapper = mount(<Categories />);
     mockStore.Categories.categoriesLoading = false;
-    expect(wrapper.exists(LoadingBar)).toBe(true);
+    expect(wrapper.exists(LoadingBar)).toBe(false);
   });
 
   it('Should render when category options equal null', () => {

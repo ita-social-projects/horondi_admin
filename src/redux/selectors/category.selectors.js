@@ -5,7 +5,7 @@ export const selectCategorySwitchAndDeleteId = ({ Categories }) => ({
 
 export const selectCategoriesLoadingDialogOpen = ({ Categories, Table }) => ({
   categories: Categories.categories,
-  categoriesLoading: Categories.categoriesLoading,
+  categoriesLoading: Categories.categoryLoading,
   isDeleteDialogOpen: Categories.isDeleteDialogOpen,
   filter: Categories.filters,
   sort: Categories.sort,
