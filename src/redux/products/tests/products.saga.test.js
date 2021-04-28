@@ -269,7 +269,7 @@ describe('Test products saga', () => {
         expect(analysisCall).toHaveLength(1);
       }));
 
-  it.skip('should update product', () =>
+  it('should update product', () =>
     expectSaga(handleProductUpdate, { payload: mockProductToUpdatePayload })
       .withReducer(combineReducers({ Products }), {
         Products: mockProductToUpload
@@ -312,7 +312,7 @@ describe('Test products saga', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisSelect).toHaveLength(1);
         expect(analysisCall).toHaveLength(2);
-        expect(analysisPut).toHaveLength(4);
+        expect(analysisPut).toHaveLength(5);
       }));
 
   it.skip('should load product by id', () =>

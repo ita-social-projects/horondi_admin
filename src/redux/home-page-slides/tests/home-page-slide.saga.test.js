@@ -151,7 +151,7 @@ describe('Test home page slider saga', () => {
         expect(analysisCall).toHaveLength(1);
       }));
 
-  it.skip('should add slide', () =>
+  it('should add slide', () =>
     expectSaga(handleAddSlide, { payload: mockSlideToAdd })
       .withReducer(combineReducers({ Slides }), { Slides: mockSlidesState })
       .put(setSlideLoading(true))
@@ -159,7 +159,6 @@ describe('Test home page slider saga', () => {
         [call(createSlide, mockSlideToAdd)],
         [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
       ])
-      .put(push(config.routes.pathToHomePageSlides))
       .hasFinalState({
         Slides: {
           ...mockSlidesState,
@@ -171,11 +170,11 @@ describe('Test home page slider saga', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(2);
-        expect(analysisCall).toHaveLength(2);
+        expect(analysisPut).toHaveLength(1);
+        expect(analysisCall).toHaveLength(1);
       }));
 
-  it.skip('should update slide', () =>
+  it('should update slide', () =>
     expectSaga(handleSlideUpdate, { payload: mockSlideUpdate })
       .withReducer(combineReducers({ Slides }), { Slides: mockSlidesState })
       .put(setSlideLoading(true))
@@ -183,7 +182,6 @@ describe('Test home page slider saga', () => {
         [call(updateSlide, mockSlideUpdate)],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
-      .put(push(config.routes.pathToHomePageSlides))
       .hasFinalState({
         Slides: {
           ...mockSlidesState,
@@ -195,8 +193,8 @@ describe('Test home page slider saga', () => {
         const { allEffects: analysis } = result;
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisCall).toHaveLength(2);
-        expect(analysisPut).toHaveLength(2);
+        expect(analysisCall).toHaveLength(1);
+        expect(analysisPut).toHaveLength(1);
       }));
 
   it('should update slide order', () =>

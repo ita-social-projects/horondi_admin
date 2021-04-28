@@ -188,7 +188,7 @@ export function* handleProductUpdate({payload}) {
         );
 
         if (product) {
-            yield put(setProduct({}));
+            yield put(setProduct(product));
             yield put(clearFilesToUpload());
             yield put(push(routes.pathToProducts));
             yield put(setProductsLoading(false));
