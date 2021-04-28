@@ -30,7 +30,7 @@ export const client = new ApolloClient({
 export const getItems = async (query, variables = {}) => {
     try {
         const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
-        console.log('токен'+" "+token);
+
         const queryResult = await client.query({
             query: gql`
         ${query}
