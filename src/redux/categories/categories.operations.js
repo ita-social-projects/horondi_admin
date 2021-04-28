@@ -1,11 +1,8 @@
-import { gql } from '@apollo/client';
-import { client, setItems } from '../../utils/client';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-import { categoryTranslations } from '../../translations/category.translations';
+import {getItems, setItems} from '../../utils/client';
+import {categoryTranslations} from '../../translations/category.translations';
 
 export const getAllCategories = async (filter, pagination, sort) => {
-  const result = await client.query({
-    query: gql`
+    const getAllCategoriesQuery = `
       query(
         $filter: FilterInputComponent
         $pagination: Pagination
@@ -34,20 +31,18 @@ export const getAllCategories = async (filter, pagination, sort) => {
           count
         }
       }
-    `,
-    variables: {
-      filter,
-      pagination,
-      sort
-    }
-  });
-  return result.data.getAllCategories;
-};
+    `;
 
+    const result = await getItems(getAllCategoriesQuery, {
+        filter,
+        pagination,
+        sort
+    });
+
+    return result?.data?.getAllCategories;
+};
 export const getCategoryById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+    const getCategoryByIdQuery = `
       query($id: ID!) {
         getCategoryById(id: $id) {
           ... on Category {
@@ -67,24 +62,23 @@ export const getCategoryById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  if (result.data.getCategoryById.message) {
-    throw new Error(
-      `${result.data.getCategoryById.statusCode} ${
-        categoryTranslations[result.data.getCategoryById.message]
-      }`
-    );
-  }
+    const result = await getItems(getCategoryByIdQuery, {id});
 
-  return result.data.getCategoryById;
+    if (Object.keys(categoryTranslations).includes(result?.data?.getCategoryById?.message)) {
+        throw new Error(
+            `${result.data.getCategoryById.statusCode} ${
+                categoryTranslations[result.data.getCategoryById.message]
+            }`
+        );
+    }
+
+    return result?.data?.getCategoryById;
 };
-
-export const deleteCategoryById = (deleteId, switchId) => {
-  const query = `
-        mutation deleteCategory($deleteId: ID!, $switchId: ID!){
+export const deleteCategoryById = async (deleteId, switchId) => {
+    const deleteCategoryByIdQuery = `
+     mutation deleteCategory($deleteId: ID!, $switchId: ID!){
       deleteCategory(
       deleteId: $deleteId
       switchId: $switchId
@@ -100,16 +94,16 @@ export const deleteCategoryById = (deleteId, switchId) => {
       }
     }
   `;
-  return setItems(query, { deleteId, switchId });
+
+    const result = await setItems(deleteCategoryByIdQuery, {
+        deleteId,
+        switchId
+    });
+
+    return result?.data?.deleteCategory;
 };
-
 export const createCategory = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-
-    mutation: gql`
+    const query = `
       mutation($category: CategoryInput!, $upload: Upload!) {
         addCategory(category: $category, upload: $upload) {
           ... on Category {
@@ -121,28 +115,20 @@ export const createCategory = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
+    const result = await setItems(query, payload);
 
-  if (result.data.addCategory.message) {
-    throw new Error(
-      `${result.data.addCategory.statusCode} ${
-        categoryTranslations[result.data.addCategory.message]
-      }`
-    );
-  }
-  client.resetStore();
-  return result.data.addCategory;
+    if (Object.keys(categoryTranslations).includes(result?.data?.addCategory?.message)) {
+        throw new Error(
+            `${result.data.addCategory.statusCode} ${
+                categoryTranslations[result.data.addCategory.message]
+            }`
+        );
+    }
+    return result?.data?.addCategory;
 };
-
 export const updateCategory = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-    mutation: gql`
+    const query = `
       mutation updateCategory(
         $id: ID!
         $category: CategoryInput!
@@ -158,16 +144,15 @@ export const updateCategory = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  if (result.data.updateCategory.message) {
-    throw new Error(
-      `${result.data.updateCategory.statusCode} ${
-        categoryTranslations[result.data.updateCategory.message]
-      }`
-    );
-  }
-  client.resetStore();
-  return result.data.updateCategory;
+    `;
+    const result = await setItems(query, payload);
+
+    if (Object.keys(categoryTranslations).includes(result?.data?.updateCategory?.message)) {
+        throw new Error(
+            `${result.data.updateCategory.statusCode} ${
+                categoryTranslations[result.data.updateCategory.message]
+            }`
+        );
+    }
+    return result?.data?.updateCategory;
 };

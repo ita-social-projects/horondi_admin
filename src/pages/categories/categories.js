@@ -70,9 +70,9 @@ const Categories = () => {
           key={category._id}
           id={category._id}
           image={
-            category.images.thumbnail
-              ? IMG_URL + category.images.thumbnail
-              : ''
+              category?.images?.thumbnail
+                ? IMG_URL + category.images.thumbnail
+                : ''
           }
           name={category.name.length ? category.name[0].value : ''}
           deleteHandler={() => handleDeleteCategory(category._id)}
