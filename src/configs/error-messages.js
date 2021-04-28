@@ -1,6 +1,5 @@
 export const errorMessages = {
   USER_NOT_FOUND: 'Користувач не знайдений!',
-  USER_NOT_AUTHORIZED: 'Користувач не отримав прав доступу',
   INVALID_PERMISSIONS: 'Недостатньо прав користувача',
   WRONG_CREDENTIALS: 'Неправильно вказані вхідні дані',
   INPUT_NOT_VALID: 'Неправильні ввідні дані',

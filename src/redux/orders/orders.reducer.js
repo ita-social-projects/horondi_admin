@@ -29,7 +29,7 @@ export const initialState = {
 
 export const selectOrderList = ({ Orders }) => ({
   orderLoading: Orders.orderLoading,
-  ordersList: Orders.list.items
+  ordersList: Orders.list?.items
 });
 
 const ordersReducer = (state = initialState, action = {}) => {

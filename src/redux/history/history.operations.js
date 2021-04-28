@@ -1,6 +1,7 @@
-import { getItems } from '../../utils/client';
+import {getItems} from '../../utils/client';
 
-const getAllHistoryRecordsQuery = `
+const getAllHistoryRecords = async (limit, skip, filter) => {
+    const getAllHistoryRecordsQuery = `
 query(
   $limit: Int!
   $skip: Int!
@@ -39,58 +40,54 @@ query(
 }
 `;
 
-const getHistoryRecordQuery = `
-query(
-  $id: ID!
-) {
-  getHistoryRecordById(
-    id: $id
-  ) {
-  ...on HistoryRecord {
-      _id
-      action
-        subject{
-          model
-          name
-          subjectId
-        }
-        valueBeforeChange
-        valueAfterChange
-        userId{
-          _id
-          email
-          firstName
-          lastName
-          role
-        }
-     valueBeforeChange
-     valueAfterChange
-  }
-    ...on Error {
-      message
-      statusCode
-    }
-  }
-}
-`;
+    const result = await getItems(getAllHistoryRecordsQuery, {
+        limit,
+        skip,
+        filter
+    });
 
-const getAllHistoryRecords = async (limit, skip, filter) => {
-  const options = {
-    limit,
-    skip,
-    filter
-  };
-
-  const { data } = await getItems(getAllHistoryRecordsQuery, options);
-
-  return data.getAllHistoryRecords;
+    return result?.data?.getAllHistoryRecords;
 };
 
 const getHistoryRecord = async (id) => {
+    const getHistoryRecordQuery = `
+    query(
+      $id: ID!
+    ) {
+      getHistoryRecordById(
+        id: $id
+      ) {
+      ...on HistoryRecord {
+          _id
+          action
+            subject{
+              model
+              name
+              subjectId
+            }
+            valueBeforeChange
+            valueAfterChange
+            userId{
+              _id
+              email
+              firstName
+              lastName
+              role
+            }
+         valueBeforeChange
+         valueAfterChange
+      }
+        ...on Error {
+          message
+          statusCode
+        }
+      }
+    }
+`;
 
-  const { data } = await getItems(getHistoryRecordQuery, { id });
+    const result = await getItems(getHistoryRecordQuery, {id});
 
-  return data.getHistoryRecordById;
+    return result?.data?.getHistoryRecordById;
 };
 
-export { getAllHistoryRecords, getHistoryRecord };
+export {getAllHistoryRecords, getHistoryRecord};

@@ -1,8 +1,7 @@
-import { gql } from '@apollo/client';
-import { getItems, setItems, client } from '../../utils/client';
+import {getItems, setItems} from '../../utils/client';
 
 export const getOrderById = (id) => {
-  const query = `
+    const query = `
 		query ($id:ID!){
 			getOrderById(id: $id) {
 				...on Order {
@@ -109,11 +108,11 @@ export const getOrderById = (id) => {
 			}
 		}
   `;
-  return getItems(query, { id });
+    return getItems(query, {id});
 };
 
 export const updateOrder = (order, id) => {
-  const query = `
+    const query = `
 		mutation ($order: OrderInput!, $id:ID!) {
 			updateOrder (order: $order, id: $id) {
 				...on Order {
@@ -186,11 +185,11 @@ export const updateOrder = (order, id) => {
 			}
 		}
   `;
-  return setItems(query, { order, id });
+    return setItems(query, {order, id});
 };
 
 export const addOrder = (order) => {
-  const query = `
+    const query = `
 		mutation ($order: OrderInput!) {
 			addOrder (order: $order) {
 				...on Order {
@@ -203,12 +202,11 @@ export const addOrder = (order) => {
 			}
 		}
   `;
-  return setItems(query, { order });
+    return setItems(query, {order});
 };
 
 export const getAllOrders = async (skip, limit, filter) => {
-  const result = await client.query({
-    query: gql`
+    const query = `
       query($limit: Int, $skip: Int, $filter: FilterInput) {
         getAllOrders(limit: $limit, skip: $skip, filter: $filter) {
           items {
@@ -228,24 +226,21 @@ export const getAllOrders = async (skip, limit, filter) => {
           count
         }
       }
-    `,
-    variables: {
-      skip,
-      limit,
-      filter: {
-        orderStatus: filter.length ? filter : null
-      }
-    },
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
-  return data.getAllOrders;
+    `;
+
+    const result = await getItems(query, {
+        skip,
+        limit,
+        filter: {
+            orderStatus: filter.length ? filter : null
+        }
+    });
+
+    return result?.data?.getAllOrders;
 };
 
 export const deleteOrder = async (id) => {
-  const result = await client.mutate({
-    variables: { id },
-    mutation: gql`
+    const query = `
       mutation($id: ID!) {
         deleteOrder(id: $id) {
           ... on Order {
@@ -259,118 +254,90 @@ export const deleteOrder = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.deleteOrder.message) {
-    throw new Error(
-      `${result.data.deleteOrder.statusCode} ${result.data.deleteOrder.message}`
-    );
-  }
+    const result = await setItems(query, {id});
 
-  return result.data.deleteOrder;
+    return result?.data?.deleteOrder;
 };
 
 export const getNovaPoshtaCities = async (city) => {
-  const res = await client.query({
-    variables: {
-      city
-    },
-    query: gql`
+    const query = `
       query($city: String) {
         getNovaPoshtaCities(city: $city) {
           description
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  return res.data.getNovaPoshtaCities;
+    `;
+    const result = await getItems(query, {city});
+
+    return result?.data?.getNovaPoshtaCities;
 };
 export const getNovaPoshtaWarehouses = async (city) => {
-  const result = await client.query({
-    variables: {
-      city
-    },
-    query: gql`
+    const query = `
       query($city: String) {
         getNovaPoshtaWarehouses(city: $city) {
           description
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  return result.data.getNovaPoshtaWarehouses;
+    const result = await getItems(query, city);
+
+    return result?.data?.getNovaPoshtaWarehouses;
 };
 
 export const getUkrPostRegions = async () => {
-  const res = await client.query({
-    query: gql`
+    const query = `
       query {
         getUkrPoshtaRegions {
           REGION_UA
           REGION_ID
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  return res.data.getUkrPoshtaRegions;
+    `;
+    const result = await getItems(query);
+
+    return result?.data?.getUkrPoshtaRegions;
 };
 
 export const getUkrPoshtaDistrictsByRegionId = async (id) => {
-  const res = await client.query({
-    variables: {
-      id
-    },
-    query: gql`
+    const query = `
       query($id: ID!) {
         getUkrPoshtaDistrictsByRegionId(id: $id) {
           DISTRICT_UA
           DISTRICT_ID
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  return res.data.getUkrPoshtaDistrictsByRegionId;
+    `;
+    const result = await getItems(query, {id});
+
+    return result?.data?.getUkrPoshtaDistrictsByRegionId;
 };
 
 export const getUkrPoshtaCitiesByDistrictId = async (id) => {
-  const res = await client.query({
-    variables: {
-      id
-    },
-    query: gql`
+    const query = `
       query($id: ID!) {
         getUkrPoshtaCitiesByDistrictId(id: $id) {
           CITY_UA
           CITY_ID
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  return res.data.getUkrPoshtaCitiesByDistrictId;
+    `;
+    const result = await getItems(query, {id});
+
+    return result?.data?.getUkrPoshtaCitiesByDistrictId;
 };
 export const getUkrPoshtaPostOfficesByCityId = async (id) => {
-  const res = await client.query({
-    variables: {
-      id
-    },
-    query: gql`
+    const query = `
       query($id: ID!) {
         getUkrPoshtaPostofficesCityId(id: $id) {
           POSTCODE
           STREET_UA_VPZ
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  return res.data.getUkrPoshtaPostofficesCityId;
+    `;
+    const result = await getItems(query, {id});
+
+    return result?.data?.getUkrPoshtaPostofficesCityId;
 };
