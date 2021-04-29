@@ -13,11 +13,15 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   formControl: {
-    margin: '15px 20px',
-    minWidth: 120
+    margin: '0px 0px 15px',
+    width: '100%'
   },
   formSelect: {
-    width: 300
+    width: 300,
+    marginTop: '27px !important',
+    '@media (max-width: 450px)': {
+      width: 'inherit'
+    }
   },
   saveButton: {
     height: 40

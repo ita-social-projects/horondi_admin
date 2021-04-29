@@ -20,7 +20,11 @@ export const useStyles = makeStyles((theme) => ({
     width: '400px',
     display: 'flex',
     flexWrap: 'wrap',
-    margin: '20px 0'
+    margin: '20px 0',
+    '@media (max-width: 450px)': {
+      width: '300px',
+      margin: '20px auto 20px'
+    }
   },
   textField: {
     width: '100%',
@@ -49,7 +53,11 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     padding: '20px',
     marginTop: '10px',
-    marginLeft: '20px'
+    marginLeft: '20px',
+    '@media (max-width: 450px)': {
+      padding: '0px',
+      marginLeft: '0px'
+    }
   },
 
   inputError: {
@@ -61,7 +69,22 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: '5px'
   },
   purposeSelect: {
-    width: '390px'
+    width: '390px',
+    '@media (max-width: 450px)': {
+      width: '300px',
+      display: 'block',
+      margin: 'auto'
+    }
+  },
+  select: {
+    '@media (max-width: 450px)': {
+      width: '100%'
+    }
+  },
+  checkboxes: {
+    '@media (max-width: 450px)': {
+      marginLeft: '15px'
+    }
   },
   wrapper: {
     display: 'flex',
@@ -69,7 +92,15 @@ export const useStyles = makeStyles((theme) => ({
   },
   contentWrapper: {
     marginLeft: '25px',
-    marginRight: '25px'
+    marginRight: '25px',
+    '@media (max-width: 450px)': {
+      padding: '0px',
+      margin: '0px',
+      width: '100%',
+      '& .MuiFormControlLabel-root': {
+        marginLeft: '15px'
+      }
+    }
   },
   buttonsWrapper: {
     marginLeft: '25px'
