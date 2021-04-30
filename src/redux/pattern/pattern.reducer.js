@@ -3,17 +3,31 @@ import {
   SET_PATTERN_LOADING,
   SET_PATTERN,
   SET_PATTERN_ERROR,
-  REMOVE_PATTERN_FROM_STORE
+  REMOVE_PATTERN_FROM_STORE,
+  SET_FILTER,
+  SET_SORT,
+  CLEAR_FILTERS
 } from './pattern.types';
 
 export const selectPattern = ({ Pattern }) => ({
   list: Pattern.list,
   loading: Pattern.patternLoading,
-  pattern: Pattern.pattern
+  pattern: Pattern.pattern,
+  filter: Pattern.filters,
+  sort: Pattern.sort
 });
+
+const initialFilters = {
+  _id: [],
+  search: ''
+};
 
 export const initialState = {
   list: [],
+  sort: {
+    name: 1
+  },
+  filters: initialFilters,
   pattern: null,
   patternLoading: false,
   patternError: null
@@ -45,8 +59,30 @@ const patternReducer = (state = initialState, action = {}) => {
     const patterns = state.list.filter(
       (pattern) => pattern._id !== action.payload
     );
-    return { ...state, list: patterns };
-
+    return {
+      ...state,
+      list: patterns
+    };
+  case SET_FILTER:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    };
+  case SET_SORT:
+    return {
+      ...state,
+      sort: {
+        ...action.payload
+      }
+    };
+  case CLEAR_FILTERS:
+    return {
+      ...state,
+      filters: initialFilters
+    };
   default:
     return state;
   }
