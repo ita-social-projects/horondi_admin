@@ -2,7 +2,6 @@ import { getItems, setItems } from '../../utils/client';
 import { patternTranslations } from '../../translations/pattern.translations';
 
 export const getAllPatterns = async (filter, pagination, sort) => {
-  console.log(filter);
   const getAllPatternsQuery = `
       query(
         $filter: FilterInputComponent

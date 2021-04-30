@@ -45,7 +45,6 @@ export function* handlePatternsLoad({ payload: { filter, pagination, sort } }) {
   try {
     yield put(setPatternLoading(true));
     const patterns = yield call(getAllPatterns, filter, pagination, sort);
-    console.log(patterns);
     yield put(setItemsCount(patterns?.count));
     yield put(setPatterns(patterns?.items));
     yield put(setPatternLoading(false));

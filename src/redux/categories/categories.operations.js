@@ -2,7 +2,6 @@ import { getItems, setItems } from '../../utils/client';
 import { categoryTranslations } from '../../translations/category.translations';
 
 export const getAllCategories = async (filter, pagination, sort) => {
-  console.log(filter);
   const getAllCategoriesQuery = `
       query(
         $filter: FilterInputComponent
