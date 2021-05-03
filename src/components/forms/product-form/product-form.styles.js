@@ -48,7 +48,7 @@ export const useStyles = makeStyles((theme) => ({
   showComments: {
     width: '60%',
     padding: '15px',
-    marginTop: '5px',
+    marginTop: '15px',
     paddingTop: '0',
     '@media (max-width: 768px)': {
       display: 'flex',

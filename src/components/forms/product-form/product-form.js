@@ -411,21 +411,25 @@ const ProductForm = ({ isEdit }) => {
           </Paper>
         </Grid>
       </Grid>
-      <Grid className={styles.showComments}>
-        <Button
-          variant={productFormValues.contained}
-          color={checkboxesValues.primary}
-          onClick={showCommentsHandler}
-        >
-          {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
-        </Button>
-        {showComments ? (
-          <CommentsSection
-            value={product._id}
-            commentsType={GET_PRODUCT_COMMENTS}
-          />
-        ) : null}
-      </Grid>
+      {product._id ? (
+        <Grid className={styles.showComments}>
+          <Button
+            variant={productFormValues.contained}
+            color={checkboxesValues.primary}
+            onClick={showCommentsHandler}
+          >
+            {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
+          </Button>
+          {showComments ? (
+            <CommentsSection
+              value={product._id}
+              commentsType={GET_PRODUCT_COMMENTS}
+            />
+          ) : null}
+        </Grid>
+      ) : (
+        ''
+      )}
       <div className={styles.controlsBlock}>
         <BackButton />
       </div>
