@@ -297,9 +297,7 @@ const ProductForm = ({ isEdit }) => {
           ) : null}
         </Grid>
       );
-    } 
-    return '';
-    
+    }
   };
 
   const showCommentsHandler = () => setShowComments(!showComments);
