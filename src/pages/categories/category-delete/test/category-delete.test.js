@@ -1,12 +1,11 @@
 import React from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import {
     FormControl,
     Grid,
     InputLabel,
-    MenuItem,
     Select
   } from '@material-ui/core';
 import { StandardButton } from '../../../../components/buttons';
