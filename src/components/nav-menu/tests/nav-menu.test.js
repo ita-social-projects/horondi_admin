@@ -99,10 +99,10 @@ describe('Nav menu test', () => {
 
   it('Should handle click on ListItem component', () => {
     wrapper.find(ListItem).at(0).invoke('onClick')();
-    expect(mockHandleDrawerToggle).toHaveBeenCalled();
+    expect(mockHandleDrawerToggle).toHaveBeenCalledTimes(2);
   });
   it('Should handle close Drawer', () => {
-    wrapper.find(Drawer).prop('onClose');
-    expect(mockHandleDrawerToggle).toBeCalled();
+    wrapper.find(Drawer).prop('onClose')();
+    expect(mockHandleDrawerToggle).toHaveBeenCalledTimes(3);
   });
 });
