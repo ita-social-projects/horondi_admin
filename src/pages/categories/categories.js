@@ -76,7 +76,9 @@ const Categories = () => {
           }
           name={category.name.length ? category.name[0].value : ''}
           deleteHandler={() => handleDeleteCategory(category._id)}
-          editHandler={() => dispatch(push(`/add-category/${category._id}`))}
+          editHandler={() =>
+            dispatch(push(`/categories/add-category/${category._id}`))
+          }
         />
       ))
     : null;
