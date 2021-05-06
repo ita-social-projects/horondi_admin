@@ -28,7 +28,7 @@ const mockSetFieldValue = jest.fn();
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({
-    values: {},
+    values: { colorHex: '#f65656' },
     handleSubmit: jest.fn(),
     handleChange: jest.fn(),
     touched: {},
