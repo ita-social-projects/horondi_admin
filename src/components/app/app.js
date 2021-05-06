@@ -11,9 +11,9 @@ import { checkUserByToken } from '../../redux/auth/auth.actions';
 import { getEmailQuestionsPendingCount } from '../../redux/email-questions/email-questions.actions';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { history } from '../../store/store';
+import { LOCAL_STORAGE } from '../../consts/local-storage';
 
 const { DARK_THEME, LIGHT_THEME } = config.theme;
-const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
 const App = () => {
   const darkMode = useSelector(({ Theme }) => Theme.darkMode);
@@ -21,11 +21,15 @@ const App = () => {
   const themeValue = theme(themeMode);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
 
   useEffect(() => {
-    dispatch(checkUserByToken(token));
-    dispatch(getEmailQuestionsPendingCount());
-  }, [dispatch]);
+    dispatch(checkUserByToken());
+
+    if (token) {
+      dispatch(getEmailQuestionsPendingCount());
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={themeValue}>

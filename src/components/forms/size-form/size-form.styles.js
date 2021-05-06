@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
   saveButton: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    marginLeft: '.5rem'
+    marginLeft: 20
   },
   colorPaletteButton: {
     marginTop: theme.spacing(2),

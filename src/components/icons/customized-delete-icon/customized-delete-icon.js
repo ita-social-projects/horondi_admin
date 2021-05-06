@@ -30,7 +30,7 @@ CustomizedDeleteIcon.propTypes = {
 };
 
 CustomizedDeleteIcon.defaultProps = {
-  onClickHandler: noop()
+  onClickHandler: noop
 };
 
 export default CustomizedDeleteIcon;

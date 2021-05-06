@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, {useEffect} from 'react';
+import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 import UsersPage from '../pages/users';
 import NewsPage from '../pages/news';
 import NavBar from '../components/nav-bar';
@@ -11,7 +11,7 @@ import LoginPage from '../pages/login';
 import BusinessPageList from '../pages/business-pages';
 import BusinessPageForm from '../components/forms/business-page-form';
 import ErrorPage from '../pages/error-page';
-import { config } from '../configs';
+import {config} from '../configs';
 import MaterialPage from '../pages/material';
 import MaterialAdd from '../pages/material/material-add';
 import ProductsPage from '../pages/products';
@@ -57,216 +57,224 @@ import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
+import History from '../pages/history';
+import HistoryDetails from '../pages/history/history-details';
 
-const { routes } = config;
+const {routes} = config;
 
 const Routes = () => {
-  const location = useLocation();
-  const history = useHistory();
-  useEffect(() => {
-    if (location.pathname !== history.location.pathname) {
-      history.push(location.pathname);
+    const location = useLocation();
+    const history = useHistory();
+
+    useEffect(() => {
+        if (location.pathname !== history.location.pathname) {
+            history.push(location.pathname);
+        }
+    }, [location, history]);
+    const {isAuth} = useSelector(({Auth}) => ({
+        isAuth: Auth.isAuth
+    }));
+
+    if (!isAuth) {
+        return (
+            <>
+                <NavBar/>
+                <Switch>
+                    <Route
+                        path={routes.pathToConfirmAdmin}
+                        exact
+                        component={ConfirmUser}
+                    />
+                    <Route path={routes.pathToLogin} exact component={LoginPage}/>
+                    <Route component={ErrorPage}/>
+                </Switch>
+                <DialogWindow/>
+                <SnackbarItem/>
+            </>
+        );
     }
-  }, [location, history]);
-  const { isAuth } = useSelector(({ Auth }) => ({
-    isAuth: Auth.isAuth
-  }));
 
-  if (!isAuth) {
     return (
-      <>
-        <NavBar />
-        <Switch>
-          <Route
-            path={routes.pathToConfirmAdmin}
-            exact
-            component={ConfirmUser}
-          />
-          <Route path={routes.pathToLogin} exact component={LoginPage} />
-          <Route component={ErrorPage} />
-        </Switch>
-        <DialogWindow />
-        <SnackbarItem />
-      </>
+        <>
+            <NavBar/>
+            <NavMenu/>
+            <ErrorBoundary>
+                <Switch>
+                    <Route path={routes.pathToMainPage} exact component={MainPage}/>
+                    <Route path={routes.pathToHistory} exact component={History}/>
+                    <Route path={routes.pathToHistoryDetails}
+                           exact
+                           component={HistoryDetails}
+                    />
+                    <Route path={routes.pathToUsers} exact component={UsersPage}/>
+                    <Route
+                        path={routes.pathToUsersDetails}
+                        exact
+                        component={UsersDetails}
+                    />
+                    <Route path={routes.pathToNews} exact component={NewsPage}/>
+                    <Route path={routes.pathToPatterns} exact component={PatternPage}/>
+                    <Route path={routes.pathToModels} exact component={ModelPage}/>
+                    <Route path={routes.pathToHeaders} exact component={HeaderPage}/>
+                    <Route path={routes.pathToAddHeader} exact component={HeaderAdd}/>
+                    <Route path={routes.pathToAddPattern} exact component={PatternAdd}/>
+                    <Route path={routes.pathToAddNews} exact component={NewsAdd}/>
+                    <Route
+                        path={routes.pathToNewsDetails}
+                        exact
+                        component={NewsDetails}
+                    />
+                    <Route
+                        path={routes.pathToHeaderDetails}
+                        exact
+                        component={HeaderDetails}
+                    />
+                    <Route
+                        path={routes.pathToAddMaterial}
+                        exact
+                        component={MaterialAdd}
+                    />
+                    <Route path={routes.pathToMaterials} exact component={MaterialPage}/>
+                    <Route
+                        path={routes.pathToMaterialDetails}
+                        exact
+                        component={MaterialDetails}
+                    />
+                    <Route
+                        path={routes.pathToPatternDetails}
+                        exact
+                        component={PatternDetails}
+                    />
+                    <Route
+                        path={routes.pathToBusinessPages}
+                        exact
+                        component={BusinessPageList}
+                    />
+                    <Route
+                        path={routes.pathToAddBusinessPage}
+                        exact
+                        component={BusinessPageForm}
+                    />
+                    <Route
+                        path={routes.pathToBusinessPageDetails}
+                        exact
+                        render={({match}) => (
+                            <BusinessPageForm id={match.params.id} editMode/>
+                        )}
+                    />
+                    <Route path={routes.pathToContacts} exact component={ContactsPage}/>
+                    <Route path={routes.pathToAddContact} exact component={ContactsAdd}/>
+                    <Route
+                        path={routes.pathToContactsEdit}
+                        exact
+                        component={ContactsEdit}
+                    />
+                    <Route path={routes.pathToAddModel} exact component={ModelAdd}/>
+                    <Route
+                        path={routes.pathToModelDetails}
+                        exact
+                        component={ModelDetails}
+                    />
+                    <Route path={routes.pathToProducts} exact component={ProductsPage}/>
+                    <Route path={routes.pathToAddProduct} exact component={ProductsAdd}/>
+                    <Route
+                        path={routes.pathToEditProduct}
+                        exact
+                        render={({match}) => <ProductEdit id={match.params.id}/>}
+                    />
+                    <Route path={routes.pathToCategories} exact component={Categories}/>
+                    <Route path={routes.pathToComments} exact component={Comments}/>
+                    <Route path={routes.pathToSizes} exact component={Sizes}/>
+                    <Route path={routes.pathToAddSize} exact component={SizeAdd}/>
+                    <Route
+                        path={routes.pathToEditSize}
+                        exact
+                        render={({match}) => <SizeEdit id={match.params.id}/>}
+                    />
+
+                    <Route
+                        path={routes.pathToRegisterAdmin}
+                        exact
+                        component={RegisterUser}
+                    />
+                    <Route path={routes.pathToHomePageEdit} exact component={HomePage}/>
+                    <Route
+                        path={routes.pathToAddCategory}
+                        exact
+                        component={CategoriesAdd}
+                    />
+                    <Route
+                        path={routes.pathToEditCategory}
+                        exact
+                        component={CategoryDetails}
+                    />
+
+                    <Route
+                        path={routes.pathToEmailQuestions}
+                        exact
+                        component={EmailQuestionsList}
+                    />
+                    <Route
+                        path={routes.pathToEmailQuestionDetails}
+                        exact
+                        render={({match}) => (
+                            <EmailQuestionsDetails id={match.params.id}/>
+                        )}
+                    />
+                    <Route
+                        path={routes.pathToStatistic}
+                        exact
+                        component={StatisticPage}
+                    />
+                    <Route path={routes.pathToOrders} exact component={Orders}/>
+                    <Route
+                        path={routes.pathToOrderItem}
+                        exact
+                        render={({match}) => <OrderItem id={match.params.id}/>}
+                    />
+                    <Route path={routes.pathToOrderAdd} exact component={OrderItem}/>
+                    <Route
+                        path={routes.pathToHomePageSlides}
+                        exact
+                        component={SlidesPage}
+                    />
+                    <Route
+                        path={routes.pathToAddHomePageSlide}
+                        exact
+                        component={SlideAdd}
+                    />
+                    <Route
+                        path={routes.pathToHomePageSlideDetail}
+                        exact
+                        component={SlideDetails}
+                    />
+                    <Route
+                        path={routes.pathToConstructor}
+                        exact
+                        component={ConstructorPage}
+                    />
+                    <Route
+                        path={routes.pathToAddConstructor}
+                        exact
+                        component={ConstructorAdd}
+                    />
+                    <Route
+                        path={routes.pathToConstructorDetails}
+                        exact
+                        component={ConstructorDetails}
+                    />
+                    <Route
+                        path={routes.pathToCommentsEdit}
+                        exact
+                        component={CommentEdit}
+                    />
+                    <Route component={ErrorPage}/>
+                </Switch>
+            </ErrorBoundary>
+            <DialogWindow/>
+            <SnackbarItem/>
+        </>
     );
-  }
-
-  return (
-    <>
-      <NavBar />
-      <NavMenu />
-      <ErrorBoundary>
-        <Switch>
-          <Route path={routes.pathToMainPage} exact component={MainPage} />
-          <Route path={routes.pathToUsers} exact component={UsersPage} />
-          <Route
-            path={routes.pathToUsersDetails}
-            exact
-            component={UsersDetails}
-          />
-          <Route path={routes.pathToNews} exact component={NewsPage} />
-          <Route path={routes.pathToPatterns} exact component={PatternPage} />
-          <Route path={routes.pathToModels} exact component={ModelPage} />
-          <Route path={routes.pathToHeaders} exact component={HeaderPage} />
-          <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
-          <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
-          <Route path={routes.pathToAddNews} exact component={NewsAdd} />
-          <Route
-            path={routes.pathToNewsDetails}
-            exact
-            component={NewsDetails}
-          />
-          <Route
-            path={routes.pathToHeaderDetails}
-            exact
-            component={HeaderDetails}
-          />
-          <Route
-            path={routes.pathToAddMaterial}
-            exact
-            component={MaterialAdd}
-          />
-          <Route path={routes.pathToMaterials} exact component={MaterialPage} />
-          <Route
-            path={routes.pathToMaterialDetails}
-            exact
-            component={MaterialDetails}
-          />
-          <Route
-            path={routes.pathToPatternDetails}
-            exact
-            component={PatternDetails}
-          />
-          <Route
-            path={routes.pathToBusinessPages}
-            exact
-            component={BusinessPageList}
-          />
-          <Route
-            path={routes.pathToAddBusinessPage}
-            exact
-            component={BusinessPageForm}
-          />
-          <Route
-            path={routes.pathToBusinessPageDetails}
-            exact
-            render={({ match }) => (
-              <BusinessPageForm id={match.params.id} editMode />
-            )}
-          />
-          <Route path={routes.pathToContacts} exact component={ContactsPage} />
-          <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
-          <Route
-            path={routes.pathToContactsEdit}
-            exact
-            component={ContactsEdit}
-          />
-          <Route path={routes.pathToAddModel} exact component={ModelAdd} />
-          <Route
-            path={routes.pathToModelDetails}
-            exact
-            component={ModelDetails}
-          />
-          <Route path={routes.pathToProducts} exact component={ProductsPage} />
-          <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
-          <Route
-            path={routes.pathToEditProduct}
-            exact
-            render={({ match }) => <ProductEdit id={match.params.id} />}
-          />
-          <Route path={routes.pathToCategories} exact component={Categories} />
-          <Route path={routes.pathToComments} exact component={Comments} />
-          <Route path={routes.pathToSizes} exact component={Sizes} />
-          <Route path={routes.pathToAddSize} exact component={SizeAdd} />
-          <Route
-            path={routes.pathToEditSize}
-            exact
-            render={({ match }) => <SizeEdit id={match.params.id} />}
-          />
-
-          <Route
-            path={routes.pathToRegisterAdmin}
-            exact
-            component={RegisterUser}
-          />
-          <Route path={routes.pathToHomePageEdit} exact component={HomePage} />
-          <Route
-            path={routes.pathToAddCategory}
-            exact
-            component={CategoriesAdd}
-          />
-          <Route
-            path={routes.pathToEditCategory}
-            exact
-            component={CategoryDetails}
-          />
-
-          <Route
-            path={routes.pathToEmailQuestions}
-            exact
-            component={EmailQuestionsList}
-          />
-          <Route
-            path={routes.pathToEmailQuestionDetails}
-            exact
-            render={({ match }) => (
-              <EmailQuestionsDetails id={match.params.id} />
-            )}
-          />
-          <Route
-            path={routes.pathToStatistic}
-            exact
-            component={StatisticPage}
-          />
-          <Route path={routes.pathToOrders} exact component={Orders} />
-          <Route
-            path={routes.pathToOrderItem}
-            exact
-            render={({ match }) => <OrderItem id={match.params.id} />}
-          />
-          <Route path={routes.pathToOrderAdd} exact component={OrderItem} />
-          <Route
-            path={routes.pathToHomePageSlides}
-            exact
-            component={SlidesPage}
-          />
-          <Route
-            path={routes.pathToAddHomePageSlide}
-            exact
-            component={SlideAdd}
-          />
-          <Route
-            path={routes.pathToHomePageSlideDetail}
-            exact
-            component={SlideDetails}
-          />
-          <Route
-            path={routes.pathToConstructor}
-            exact
-            component={ConstructorPage}
-          />
-          <Route
-            path={routes.pathToAddConstructor}
-            exact
-            component={ConstructorAdd}
-          />
-          <Route
-            path={routes.pathToConstructorDetails}
-            exact
-            component={ConstructorDetails}
-          />
-          <Route
-            path={routes.pathToCommentsEdit}
-            exact
-            component={CommentEdit}
-          />
-          <Route component={ErrorPage} />
-        </Switch>
-      </ErrorBoundary>
-      <DialogWindow />
-      <SnackbarItem />
-    </>
-  );
 };
 
 export default Routes;

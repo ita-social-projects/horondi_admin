@@ -20,6 +20,9 @@ import {
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
+import { setMapImageHandler } from '../../../utils/contacts-form';
+import { handleAvatar } from '../../../utils/handle-avatar';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { languages } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -57,26 +60,14 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     imageUrl: ''
   });
 
+  const uaCartImageText = 'uaCartImage';
+  const enCartImageText = 'enCartImage';
   const uaSelectImageHandler = ({ target }) => {
-    if (target.files && target.files[0]) {
-      uaSetMapImage({
-        name: target.files[0].name,
-        imageUrl: URL.createObjectURL(target.files[0])
-      });
-
-      [values.uaCartImage] = target.files;
-    }
+    setMapImageHandler(target, uaSetMapImage, values, uaCartImageText);
   };
 
   const enSelectImageHandler = ({ target }) => {
-    if (target.files && target.files[0]) {
-      enSetMapImage({
-        name: target.files[0].name,
-        imageUrl: URL.createObjectURL(target.files[0])
-      });
-
-      [values.enCartImage] = target.files;
-    }
+    setMapImageHandler(target, enSetMapImage, values, enCartImageText);
   };
 
   const formSchema = Yup.object().shape({
@@ -141,6 +132,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     inputs
   };
 
+  const valueEquality = checkInitialValue(initialValues, values);
+
   return (
     <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={handleSubmit}>
@@ -161,15 +154,13 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     >
                       <Image />
                     </Avatar>
-                  ) : initialValues.uaCartImage ? (
-                    <Avatar
-                      data-cy='uaCartImage'
-                      src={initialValues.uaCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
-                  ) : null}
+                  ) : (
+                    handleAvatar(
+                      initialValues.uaCartImage,
+                      'uaCartImage',
+                      classes.large
+                    )
+                  )}
                 </div>
                 <span className={classes.imageUpload}>
                   Зображення карти (Англ.)
@@ -184,16 +175,12 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     >
                       <Image />
                     </Avatar>
-                  ) : initialValues.enCartImage ? (
-                    <Avatar
-                      data-cy='enCartImage'
-                      src={initialValues.enCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
                   ) : (
-                    <></>
+                    handleAvatar(
+                      initialValues.enCartImage,
+                      'enCartImage',
+                      classes.large
+                    )
                   )}
                 </div>
                 <TextField
@@ -258,7 +245,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <BackButton data-cy='go-back-button' />
+        <BackButton data-cy='go-back-button' initial={!valueEquality} />
 
         <SaveButton
           id='save'

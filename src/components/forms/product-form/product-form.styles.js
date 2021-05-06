@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
-    height: '100%'
+    height: '100%',
+    maxWidth: '100%'
   },
   container: {
     padding: theme.spacing(2.5),
@@ -47,7 +48,7 @@ export const useStyles = makeStyles((theme) => ({
   showComments: {
     width: '60%',
     padding: '15px',
-    marginTop: '5px',
+    marginTop: '15px',
     paddingTop: '0',
     '@media (max-width: 768px)': {
       display: 'flex',

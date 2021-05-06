@@ -22,6 +22,7 @@ import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.sele
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { selectTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
@@ -60,6 +61,8 @@ function SizeForm({ id, size }) {
     }
   });
 
+  const valueEquality = checkInitialValue(getSizeInitialValues(size), values);
+
   const checkboxes = [
     {
       id: 'avaliable',
@@ -81,7 +84,9 @@ function SizeForm({ id, size }) {
         variant={materialUiConstants.typographyVariantH1}
         className={commonStyles.sizeTitle}
       >
-        {config.titles.sizesTitles.sizeAdjustMenu}
+        {id
+          ? config.titles.sizesTitles.sizeEdit
+          : config.titles.sizesTitles.sizeAdd}
       </Typography>
       <form className={styles.sizeForm} onSubmit={handleSubmit}>
         <Grid item xs={12}>
@@ -173,7 +178,7 @@ function SizeForm({ id, size }) {
                   className={styles.textField}
                   variant={materialUiConstants.outlined}
                   type={materialUiConstants.types.number}
-                  label={labels.en.additionalPrice}
+                  label={labels.ua.additionalPrice}
                   value={values.additionalPrice}
                   onChange={handleChange}
                   error={touched.additionalPrice && !!errors.additionalPrice}
@@ -192,7 +197,7 @@ function SizeForm({ id, size }) {
           </div>
         </Grid>
         <div className={styles.buttonsWrapper}>
-          <BackButton />
+          <BackButton initial={!valueEquality} />
           <SaveButton
             className={styles.saveButton}
             data-cy={materialUiConstants.save}

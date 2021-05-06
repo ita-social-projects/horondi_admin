@@ -57,6 +57,12 @@ const buttonTitles = {
   CREATE_CONSTRUCTOR_BOTTOM_TITLE: 'Додати низ',
   GO: 'Перейти',
   CATEGORY_TITLE: 'Категорія',
-  ADD_ORDER: 'Додати замовлення'
+  LOOK: 'Переглянути',
+  ADD_ORDER: 'Додати замовлення',
+  USER_ROLE_TITLE: 'Роль',
+  EVENT_TITLE: 'Подія',
+  SEND_CONFIRM: 'Надіслати підтвердження',
+  SEND_CODE: 'Надіслати код для підтвердження',
+  EXIT_WITHOUT_SAVING: 'Вийти без збереження'
 };
 export default buttonTitles;

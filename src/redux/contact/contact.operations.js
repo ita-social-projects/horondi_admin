@@ -1,18 +1,8 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-
-import { contactTranslations } from '../../translations/contact.translations';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-
-const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+import {setItems, getItems} from '../../utils/client';
+import {contactTranslations} from '../../translations/contact.translations';
 
 const getContacts = async (skip, limit) => {
-  const result = await client.query({
-    variables: {
-      skip,
-      limit
-    },
-    query: gql`
+    const query = `
       query($skip: Int, $limit: Int) {
         getContacts(skip: $skip, limit: $limit) {
           items {
@@ -32,17 +22,14 @@ const getContacts = async (skip, limit) => {
           count
         }
       }
-    `
-  });
-  client.resetStore();
-  const { data } = result;
-  return data.getContacts;
+    `;
+    const result = await getItems(query, {skip, limit});
+
+    return result?.data?.getContacts;
 };
 
 const getContactById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+    const query = `
       query($id: ID!) {
         getContactById(id: $id) {
           ... on Contact {
@@ -70,27 +57,22 @@ const getContactById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
+    const result = await getItems(query, {id});
 
-  if (data.getContactById.message) {
-    throw new Error(
-      `${data.getContactById.statusCode} ${
-        contactTranslations[data.getContactById.message]
-      }`
-    );
-  }
+    if (Object.keys(contactTranslations).includes(result?.data?.getContactById?.message)) {
+        throw new Error(
+            `${result.data?.getContactById.statusCode} ${
+                contactTranslations[result.data?.getContactById.message]
+            }`
+        );
+    }
 
-  return data.getContactById;
+    return result?.data?.getContactById;
 };
 
 const deleteContact = async (id) => {
-  const result = await client.mutate({
-    variables: { id },
-    context: { headers: { token } },
-    mutation: gql`
+    const query = `
       mutation($id: ID!) {
         deleteContact(id: $id) {
           ... on Contact {
@@ -108,28 +90,22 @@ const deleteContact = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
+    `;
+    const result = await setItems(query, {id});
 
-  if (data.deleteContact.message) {
-    throw new Error(
-      `${data.deleteContact.statusCode} ${
-        contactTranslations[data.deleteContact.message]
-      }`
-    );
-  }
+    if (Object.keys(contactTranslations).includes(result?.data?.deleteContact?.message)) {
+        throw new Error(
+            `${result.data.deleteContact.statusCode} ${
+                contactTranslations[result.data.deleteContact.message]
+            }`
+        );
+    }
 
-  return data.deleteContact;
+    return result?.data?.deleteContact;
 };
 
 const addContact = async (contact, mapImages) => {
-  const result = await client.mutate({
-    variables: { contact, mapImages },
-    context: { headers: { token } },
-    mutation: gql`
+    const query = `
       mutation($contact: contactInput!, $mapImages: [MapImage]!) {
         addContact(contact: $contact, mapImages: $mapImages) {
           ... on Contact {
@@ -157,32 +133,22 @@ const addContact = async (contact, mapImages) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
+    `;
+    const result = await setItems(query, {contact, mapImages});
 
-  if (data.addContact.message) {
-    throw new Error(
-      `${data.addContact.statusCode} ${
-        contactTranslations[data.addContact.message]
-      }`
-    );
-  }
+    if (Object.keys(contactTranslations).includes(result?.data?.addContact?.message)) {
+        throw new Error(
+            `${result.data.addContact.statusCode} ${
+                contactTranslations[result.data.addContact.message]
+            }`
+        );
+    }
 
-  return data.addContact;
+    return result?.data?.addContact;
 };
 
 const updateContact = async (id, contact, mapImages) => {
-  const result = await client.mutate({
-    variables: {
-      id,
-      contact,
-      mapImages
-    },
-    context: { headers: { token } },
-    mutation: gql`
+    const query = `
       mutation($id: ID!, $contact: contactInput!, $mapImages: [MapImage]!) {
         updateContact(id: $id, contact: $contact, mapImages: $mapImages) {
           ... on Contact {
@@ -199,27 +165,25 @@ const updateContact = async (id, contact, mapImages) => {
           }
         }
       }
-    `,
+    `;
 
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
-  if (data.updateContact.message) {
-    throw new Error(
-      `${data.updateContact.statusCode} ${
-        contactTranslations[data.updateContact.message]
-      }`
-    );
-  }
+    const result = await setItems(query, {id, contact, mapImages});
 
-  return data.updateContact;
+    if (Object.keys(contactTranslations).includes(result?.data?.updateContact?.message)) {
+        throw new Error(
+            `${result.data.updateContact.statusCode} ${
+                contactTranslations[result.data.updateContact.message]
+            }`
+        );
+    }
+
+    return result?.data?.updateContact;
 };
 
 export {
-  getContacts,
-  deleteContact,
-  getContactById,
-  addContact,
-  updateContact
+    getContacts,
+    deleteContact,
+    getContactById,
+    addContact,
+    updateContact
 };

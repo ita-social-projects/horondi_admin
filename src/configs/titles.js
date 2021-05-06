@@ -5,6 +5,23 @@ const titles = {
     ordersTitle: 'Останні замовлення',
     changesTitle: 'Останні зміни'
   },
+  historyTitles: {
+    mainTitle: 'Останні зміни',
+    detailsTitle: 'Деталі зміни',
+    detailsTitleNumber: (number) => `Деталі зміни № ${number}`,
+    userInfo: 'Інформація про користувача',
+    id: 'Ідентифікатор:',
+    email: 'Електронна пошта:',
+    name: `Ім'я:`,
+    role: 'Роль:',
+    changesTitle: 'Інформація про зміни',
+    subject: 'Об’єкт дії',
+    before: 'До зміни',
+    after: 'Після зміни',
+    noChanges: 'N/A',
+    from: 'Від',
+    to: 'До'
+  },
   categoriesTitles: {
     deleteTitle: 'Видалити категорію'
   },
@@ -49,7 +66,8 @@ const titles = {
   sizesTitles: {
     mainPageTitle: 'Iнформація про розміри',
     selectTitle: 'Розмір',
-    sizeAdjustMenu: 'Редагування розміром'
+    sizeEdit: 'Редагування розміру',
+    sizeAdd: 'Додавання розміру'
   },
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
@@ -92,7 +110,8 @@ const titles = {
   },
   productTitles: {
     filters: 'Фільтри',
-    deleteFilter: 'Очистити фільтр'
+    deleteFilter: 'Очистити фільтр',
+    mainPageTitle: 'Інформація про продукти'
   }
 };
 

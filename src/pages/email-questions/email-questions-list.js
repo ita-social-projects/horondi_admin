@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Pagination } from '@material-ui/lab';
 import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
 
@@ -10,7 +9,6 @@ import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
-  setEmailQuestionsCurrentPage,
   deleteEmailQuestions,
   setEmailQuestionLoading
 } from '../../redux/email-questions/email-questions.actions';
@@ -23,6 +21,7 @@ import LoadingBar from '../../components/loading-bar';
 import getTime from '../../utils/getTime';
 import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
+import { answerTextHandler } from '../../utils/email-question-list';
 
 const { labels, titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
@@ -71,9 +70,6 @@ const EmailQuestionsList = () => {
     openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE);
   };
 
-  const changePaginationHandler = (e, value) =>
-    dispatch(setEmailQuestionsCurrentPage(value));
-
   const questionClickHandler = (id, status) => {
     if (status === labels.emailQuestionsLabels.en.SPAM) {
       const handler = () => dispatch(closeDialog());
@@ -116,8 +112,7 @@ const EmailQuestionsList = () => {
         const { answer } = question;
 
         const questionToShow = `<b>Q:</b> ${question.text}`;
-        const answerToShow =
-            answer && answer.text ? `<br> <b>A:</b> ${answer.text}` : '';
+        const answerToShow = answerTextHandler(answer);
 
         return (
           <TableContainerRow
@@ -166,8 +161,10 @@ const EmailQuestionsList = () => {
         </div>
       </div>
       <div className={styles.tableList}>
-        {questions.length ? (
+        {questions?.length ? (
           <TableContainerGenerator
+            pagination
+            count={pagesCount}
             tableTitles={tableTitles}
             tableItems={questions}
           />
@@ -176,15 +173,6 @@ const EmailQuestionsList = () => {
             {messages.EMPTY_LIST}
           </Typography>
         )}
-      </div>
-      <div className={commonStyles.pagination}>
-        <Pagination
-          count={pagesCount}
-          variant='outlined'
-          shape='rounded'
-          page={currentPage + 1}
-          onChange={changePaginationHandler}
-        />
       </div>
     </div>
   );

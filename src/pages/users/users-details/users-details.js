@@ -7,7 +7,6 @@ import { withRouter } from 'react-router';
 import { useStyles } from './users-details.styles';
 import { useUsersHandler } from '../../../hooks/user/use-users-handlers';
 import LoadingBar from '../../../components/loading-bar';
-import { updateUserStatus } from '../../../redux/users/users.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import UserDetailsCard from './containers/user-details-card';
@@ -15,16 +14,23 @@ import CommentsSection from '../../../components/comments-section/comments-secti
 import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
 import { config } from '../../../configs';
 import { BackButton } from '../../../components/buttons';
+import { UserBlockPeriod } from '../../../consts/user-block-status';
+import {
+  blockUserByAdmin,
+  resendEmail,
+  unlockUserByAdmin
+} from '../../../redux/users/users.actions';
+import { getUserBlockStatus } from '../../../utils/user';
 
 const {
   USER_ACTIVE_TITLE,
   USER_INACTIVE_TITLE,
   SWITCH_USER_STATUS_TITLE,
   SHOW_COMMENTS_TITLE,
-  HIDE_COMMENTS_TITLE
+  HIDE_COMMENTS_TITLE,
+  SEND_CONFIRM
 } = config.buttonTitles;
 
-const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
 
 const UsersDetails = (props) => {
@@ -49,7 +55,9 @@ const UsersDetails = (props) => {
     city,
     adress,
     postCode,
-    isBanned
+    isBanned,
+    confirmed,
+    email
   } = useUsersHandler(id);
 
   if (loading) {
@@ -62,19 +70,24 @@ const UsersDetails = (props) => {
   const primaryData = { country, city };
   const secondaryData = { adress, postCode };
 
-  const status = isBanned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS;
-  const buttonStatus = isBanned ? USER_ACTIVE_TITLE : USER_INACTIVE_TITLE;
+  const status = getUserBlockStatus(isBanned);
 
   const userStatusHandler = (userId) => {
     const updateStatus = () => {
       dispatch(closeDialog());
-      dispatch(updateUserStatus(userId));
+      isBanned?.blockPeriod !== UserBlockPeriod.UNLOCKED
+        ? dispatch(unlockUserByAdmin(userId))
+        : dispatch(blockUserByAdmin(userId));
     };
     openSuccessSnackbar(
       updateStatus,
       SWITCH_USER_STATUS_MESSAGE,
       SWITCH_USER_STATUS_TITLE
     );
+  };
+
+  const sendConfirmationHandler = () => {
+    dispatch(resendEmail({ email }));
   };
 
   const showCommentsHandler = () => setShowComments(!showComments);
@@ -88,7 +101,13 @@ const UsersDetails = (props) => {
           status={status}
           primaryData={primaryData}
           secondaryData={secondaryData}
-          buttonStatus={buttonStatus}
+          buttonStatus={
+            isBanned?.blockPeriod !== UserBlockPeriod.UNLOCKED
+              ? USER_ACTIVE_TITLE
+              : USER_INACTIVE_TITLE
+          }
+          buttonConfirmed={!confirmed ? SEND_CONFIRM : null}
+          buttonConfirmationHandler={() => sendConfirmationHandler()}
           buttonHandler={() => userStatusHandler(id)}
         />
         <div className={styles.controlsBlock}>

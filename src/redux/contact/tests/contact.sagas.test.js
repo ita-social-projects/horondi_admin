@@ -54,7 +54,7 @@ const {
 } = config.statuses;
 
 describe('Contact sagas tests', () => {
-  it('Should receive all contacts and set them to store', () =>
+  it('Should receive all contacts and set them to store', async (done) => {
     expectSaga(handleContactsLoad, { payload })
       .withReducer(combineReducers({ Contact, Table }), {
         Contact: initialState,
@@ -82,9 +82,11 @@ describe('Contact sagas tests', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
-      }));
+      });
+    done();
+  });
 
-  it('Should receive single contact and set to store', () =>
+  it('Should receive single contact and set to store', async (done) => {
     expectSaga(handleContactLoad, { payload: contact._id })
       .withReducer(combineReducers({ Contact }), {
         Contact: initialState
@@ -106,9 +108,11 @@ describe('Contact sagas tests', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(1);
-      }));
+      });
+    done();
+  });
 
-  it('Should add single contact and set to store', () =>
+  it('Should add single contact and set to store', async (done) => {
     expectSaga(handleAddContact, { payload: newContact })
       .withReducer(combineReducers({ Contact }), {
         Contact: initialState
@@ -134,9 +138,11 @@ describe('Contact sagas tests', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('Should delete contact and remove it from store', () =>
+  it('Should delete contact and remove it from store', async (done) => {
     expectSaga(handleContactDelete, { payload: contact._id })
       .withReducer(combineReducers({ Contact }), {
         Contact: initialState
@@ -162,9 +168,11 @@ describe('Contact sagas tests', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('Should update contact', () =>
+  it('Should update contact', async (done) => {
     expectSaga(handleContactUpdate, {
       payload: { id: contact._id, updatedContact, mapImages: [] }
     })
@@ -191,9 +199,11 @@ describe('Contact sagas tests', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('Should handle error', () =>
+  it('Should handle error', async (done) => {
     expectSaga(handleContactsError, error)
       .withReducer(combineReducers({ Contact }), {
         Contact: initialState
@@ -215,5 +225,7 @@ describe('Contact sagas tests', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 });

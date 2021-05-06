@@ -5,7 +5,8 @@ import {
   SET_COMMENTS_ERROR,
   SET_COMMENT,
   SET_FILTER,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  SET_RECENT_COMMENTS
 } from './comments.types';
 
 const initialFilters = {
@@ -13,8 +14,9 @@ const initialFilters = {
   search: ''
 };
 
-const initialState = {
+export const initialState = {
   list: [],
+  recentComments: [],
   filters: initialFilters,
   comments: null,
   commentsLoading: false,
@@ -23,6 +25,7 @@ const initialState = {
 
 export const selectComment = ({ Comments }) => ({
   list: Comments.list,
+  recentComments: Comments.recentComments,
   filter: Comments.filters,
   loading: Comments.commentsLoading,
   comment: Comments.comment
@@ -34,6 +37,11 @@ const commentsReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       list: action.payload
+    };
+  case SET_RECENT_COMMENTS:
+    return {
+      ...state,
+      recentComments: action.payload
     };
 
   case SET_COMMENT:

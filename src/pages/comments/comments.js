@@ -20,6 +20,7 @@ import { commentSelectorWithPagination } from '../../redux/selectors/comments.se
 import getTime from '../../utils/getTime';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useCommentFilters from '../../hooks/filters/use-comment-filters';
+import { handleComments } from '../../utils/handle-comments';
 
 const tableTitles = config.tableHeadRowTitles.comments.commentPageTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
@@ -28,7 +29,7 @@ const { pathToCommentsEdit } = config.routes;
 
 const map = require('lodash/map');
 
-const Comments = () => {
+export const Comments = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
   const commentOptions = useCommentFilters();
@@ -98,17 +99,18 @@ const Comments = () => {
       <div>
         <FilterNavbar options={commentOptions || {}} />
       </div>
-      {!loading ? (
-        <TableContainerGenerator
-          pagination
-          data-cy='commentTable'
-          count={itemsCount}
-          tableTitles={commentItems ? tableTitles : [NO_COMMENTS_MESSAGE]}
-          tableItems={commentItems}
-        />
-      ) : (
-        <LoadingBar />
-      )}
+
+      <TableContainerGenerator
+        pagination
+        data-cy='commentTable'
+        count={itemsCount}
+        tableTitles={handleComments(
+          commentItems,
+          tableTitles,
+          NO_COMMENTS_MESSAGE
+        )}
+        tableItems={commentItems}
+      />
     </div>
   );
 };

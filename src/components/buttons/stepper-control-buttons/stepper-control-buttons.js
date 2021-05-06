@@ -63,8 +63,8 @@ StepperControlButtons.propTypes = {
 };
 
 StepperControlButtons.defaultProps = {
-  handleNext: noop(),
-  handleBack: noop(),
+  handleNext: noop,
+  handleBack: noop,
   type: 'button'
 };
 

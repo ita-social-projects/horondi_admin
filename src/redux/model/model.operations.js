@@ -71,7 +71,6 @@ export const getAllModels = async (skip, limit) => {
       }
     `
   });
-  await client.resetStore();
   return result.data.getAllModels;
 };
 
@@ -93,6 +92,15 @@ export const getModelById = async (id) => {
               value
               lang
             }
+          }
+          sizes {
+            _id
+            name
+            simpleName {
+              lang
+              value
+            }
+            available
           }
           images {
             large
@@ -146,17 +154,15 @@ export const getModelById = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  const { data } = result;
-  await client.resetStore();
-  if (data.getModelById.message) {
+
+  if (result.data.getModelById.message) {
     throw new Error(
-      `${data.getModelById.statusCode} ${
-        modelTranslations[data.getModelById.message]
+      `${result.data.getModelById.statusCode} ${
+        modelTranslations[result.data.getModelById.message]
       }`
     );
   }
-
-  return data.getModelById;
+  return result.data.getModelById;
 };
 
 export const deleteModel = async (id) => {
@@ -192,7 +198,7 @@ export const deleteModel = async (id) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.deleteModel.message) {
@@ -212,7 +218,6 @@ export const createModel = async (payload) => {
   const result = await client.mutate({
     context: { headers: { token } },
     variables: payload,
-
     mutation: gql`
       mutation($model: ModelInput!, $image: Upload) {
         addModel(model: $model, upload: $image) {
@@ -250,7 +255,7 @@ export const createModel = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
 
   if (data.addModel.message) {
@@ -305,7 +310,7 @@ export const updateModel = async (payload) => {
     `,
     fetchPolicy: 'no-cache'
   });
-  client.resetStore();
+  await client.resetStore();
   const { data } = result;
   if (data.updateModel.message) {
     throw new Error(

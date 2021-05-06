@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-
 import _ from 'lodash';
+
 import { useCommonStyles } from '../common.styles';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { getSizes, deleteSize } from '../../redux/sizes/sizes.actions';
@@ -34,7 +34,7 @@ const Sizes = () => {
 
   useEffect(() => {
     dispatch(getSizes());
-  }, [sizesList]);
+  }, []);
 
   const sizeDeleteHandler = (id) => {
     const removeSize = () => {

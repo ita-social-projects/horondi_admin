@@ -17,7 +17,8 @@ export const useStyles = makeStyles((theme) => {
     slideItemUpdate: {
       display: 'flex',
       flexDirection: 'column',
-      margin: '20px 0px'
+      margin: '20px 0px',
+      padding: '10px'
     },
     formButton: {
       margin: theme.spacing(2),

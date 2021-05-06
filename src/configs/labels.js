@@ -2,7 +2,7 @@ import { mapToLanguages } from '../utils/map-languages';
 
 const labels = {
   sort: 'Сортувати за',
-  search: 'Шукати',
+  search: (param) => !param ? 'Шукати' : `Шукати за ${param}`,
   goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
@@ -10,7 +10,7 @@ const labels = {
   },
   news: {
     authorName: {
-      ua: "Ім'я автора",
+      ua: 'Ім\'я автора',
       en: 'Author name'
     },
     title: {
@@ -20,7 +20,9 @@ const labels = {
     text: {
       ua: 'Текст',
       en: 'Text'
-    }
+    },
+    avatarText: 'Фото автора',
+    mainImgText: 'Головне фото'
   },
   contacts: {
     schedule: {
@@ -29,7 +31,7 @@ const labels = {
     },
     adress: {
       ua: 'Адреса',
-      en: 'Adress'
+      en: 'Address'
     }
   },
   model: {
@@ -40,6 +42,21 @@ const labels = {
     description: {
       ua: 'Опис',
       en: 'Description'
+    },
+    labelsEn: {
+      modelImage: 'modelImage',
+      name: 'name',
+      description: 'description',
+      availableForConstructor: 'availableForConstructor',
+      categorySelect: 'category-select',
+      category: 'category',
+      priority: 'priority',
+      tagsFilled: 'tags-filled',
+      standard: 'standard',
+      normal: 'normal',
+      constructor: 'constructor',
+      labelId: 'controlled-open-select-label',
+      variantStandard: 'standard'
     },
     image: 'Фото моделі',
     availableCategory: 'Категорія',
@@ -57,6 +74,7 @@ const labels = {
     constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
+    chooseSizes: { title: 'Список розмірів', inputTitle: 'Оберіть розміри' },
     showEnable: 'Так',
     showDisable: 'Ні',
     availablePatternsForConstructor: 'Доступні патерни для контсруктора',
@@ -66,7 +84,7 @@ const labels = {
     }
   },
   categories: {
-    switchCategory: "Категорія, на яку замінити пов'язані товари",
+    switchCategory: 'Категорія, на яку замінити пов\'язані товари',
     categoryCode: 'Код категорії',
     categoryName: {
       ua: 'Назва категорії',
@@ -74,7 +92,7 @@ const labels = {
     }
   },
   header: {
-    name: mapToLanguages("І'мя", 'Name'),
+    name: mapToLanguages('І\'мя', 'Name'),
     link: 'Посилання',
     priority: 'Пріорітет'
   },
@@ -86,7 +104,7 @@ const labels = {
     avatarText: 'Фото',
     constructorImgText: 'Фото для конструктора',
     form: {
-      name: mapToLanguages("І'мя", 'Name'),
+      name: mapToLanguages('І\'мя', 'Name'),
       description: mapToLanguages('Опис', 'Description')
     },
     patternName: {
@@ -102,8 +120,8 @@ const labels = {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),
     available: mapToLanguages('Доступний', 'Available'),
-    name: mapToLanguages('Назва матеріалу', 'Material name'),
-    description: mapToLanguages('Опис матеріалу', 'Material description'),
+    name: { ua: 'Назва матеріалу', en: 'Material name' },
+    description: { ua: 'Опис матеріалу', en: 'Material description' },
     additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
   },
   color: {
@@ -117,17 +135,16 @@ const labels = {
     show: 'Видимий',
     productInfo: 'Інформація про продукт'
   },
-  businessPage: [
+  businessPageLabel: [
     {
-      label: mapToLanguages('Заголовок', 'Title'),
-      errorLabel: mapToLanguages('Введіть заголовок', 'Pass title')
+      label: { ua: 'Заголовок', en: 'Title' },
+      name: 'title',
+      required: true
     },
     {
-      label: mapToLanguages('Текст', 'Text'),
-      errorLabel: mapToLanguages(
-        'Введіть текст для сторінки',
-        'Pass text for the page'
-      )
+      label: { ua: 'Текст', en: 'Text' },
+      name: 'text',
+      isEditor: true
     }
   ],
   product: {
@@ -279,7 +296,7 @@ const labels = {
     actualPrice: 'Ціна'
   },
   orderRecipient: {
-    firstName: "Ім'я",
+    firstName: 'Ім\'я',
     lastName: 'Прізвище',
     patronymicName: 'По-батькові',
     email: 'e-mail',
@@ -299,7 +316,7 @@ const labels = {
     heightInCm: 'Висота (см.)',
     widthInCm: 'Ширина (см.)',
     depthInCm: 'Глибина (см.)',
-    volumeInLiters: "Об'єм (л.)",
+    volumeInLiters: 'Об\'єм (л.)',
     weightInKg: 'Вага (кг.)'
   },
   emailQuestionsLabels: {
@@ -377,13 +394,11 @@ const labels = {
     delivery: 'Доставка'
   },
   deliveryLabels: {
-    deliveryMethodLabel: 'Спосіб доставки',
-    byCourierLabel: "Доставка кур'єром:",
-    invoiceNumberLabel: 'Номер накладної',
-    warehouseNumberLabel: 'Номер відділення: ',
-    sentAtLabel: 'Відправлено о:',
-    deliveryCostLabel: 'Вартість доставки',
-    courierOfficeNameLabel: 'Номер відділення'
+    novaPost: 'Нова пошта',
+    ukrPost: 'Укрпошта',
+    selfPickup: 'Самовивіз',
+    novaPostCourier: 'Кур\'єр нової пошти',
+    ukrPostCourier: 'Кур\'єр укрпошти'
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
@@ -446,12 +461,12 @@ const labels = {
       heightInCm: 'Висота',
       widthInCm: 'Ширина',
       depthInCm: 'Глибина',
-      volumeInLiters: "Об'єм (літри)",
+      volumeInLiters: 'Об\'єм (літри)',
       weightInKg: 'Вага',
       additionalPrice: 'Додаткова ціна',
       simpleNameUa: 'Назва(Укр)',
       simpleNameEn: 'Назва(Eng)',
-      name: "Ім'я",
+      name: 'Ім\'я',
       available: 'Доступний'
     },
     en: {

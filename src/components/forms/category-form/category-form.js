@@ -21,9 +21,15 @@ import {
   setSnackBarMessage
 } from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
+import {
+  getCategoryInitialValues,
+  onSubmitCategoryHandler
+} from '../../../utils/category-form';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const {
   CATEGORY_VALIDATION_ERROR,
+  CATEGORY_VALIDATION_ERROR_CATEGORY_NAME,
   CATEGORY_ERROR_MESSAGE,
   CATEGORY_UA_NAME_MESSAGE,
   CATEGORY_EN_NAME_MESSAGE,
@@ -35,6 +41,7 @@ const { languages } = config;
 const { CATEGORY_ERROR } = categoryTranslations;
 const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, categoryCode } = config.formRegExp;
+const { materialUiConstants } = config;
 
 const CategoryForm = ({ category, id, edit }) => {
   const styles = useStyles();
@@ -48,48 +55,51 @@ const CategoryForm = ({ category, id, edit }) => {
   } = useCategoryHandlers();
 
   const categoryValidationSchema = Yup.object().shape({
-    enName: Yup.string()
-      .min(2, CATEGORY_VALIDATION_ERROR)
-      .required(CATEGORY_ERROR_MESSAGE)
-      .matches(enNameCreation, CATEGORY_EN_NAME_MESSAGE),
-    uaName: Yup.string()
-      .min(2, CATEGORY_VALIDATION_ERROR)
-      .required(CATEGORY_ERROR_MESSAGE)
-      .matches(uaNameCreation, CATEGORY_UA_NAME_MESSAGE),
     code: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
+      .max(30, CATEGORY_VALIDATION_ERROR)
       .required(CATEGORY_ERROR_MESSAGE)
-      .matches(categoryCode, CATEGORY_CODE_MESSAGE)
+      .matches(categoryCode, CATEGORY_CODE_MESSAGE),
+    uaName: Yup.string()
+      .min(2, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
+      .max(50, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
+      .required(CATEGORY_ERROR_MESSAGE)
+      .matches(uaNameCreation, CATEGORY_UA_NAME_MESSAGE),
+    enName: Yup.string()
+      .min(2, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
+      .max(50, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
+      .required(CATEGORY_ERROR_MESSAGE)
+      .matches(enNameCreation, CATEGORY_EN_NAME_MESSAGE)
   });
 
   const {
     values,
     handleSubmit,
     handleChange,
+    handleBlur,
     touched,
     errors,
     setFieldValue
   } = useFormik({
     validationSchema: categoryValidationSchema,
-    initialValues: {
-      categoryImage: edit ? IMG_URL + category.images.thumbnail : '',
-      uaName: category.name[0].value || '',
-      enName: category.name[1].value || '',
-      code: category.code || ''
-    },
+    initialValues: getCategoryInitialValues(edit, IMG_URL, category),
     onSubmit: (data) => {
       const newCategory = createCategory(data);
-      if (edit) {
-        dispatch(updateCategory({ id, category: newCategory, upload }));
-        return;
+      const uploadCondition = upload instanceof File;
+      onSubmitCategoryHandler(edit, dispatch, updateCategory, {
+        id,
+        category: newCategory,
+        upload
+      });
+      onSubmitCategoryHandler(uploadCondition, dispatch, addCategory, {
+        category: newCategory,
+        upload
+      });
+      if (!uploadCondition && !category.images.thumbnail) {
+        dispatch(setSnackBarSeverity('error'));
+        dispatch(setSnackBarMessage(CATEGORY_ERROR));
+        dispatch(setSnackBarStatus(true));
       }
-      if (upload instanceof File) {
-        dispatch(addCategory({ category: newCategory, upload }));
-        return;
-      }
-      dispatch(setSnackBarSeverity('error'));
-      dispatch(setSnackBarMessage(CATEGORY_ERROR));
-      dispatch(setSnackBarStatus(true));
     }
   });
 
@@ -111,9 +121,16 @@ const CategoryForm = ({ category, id, edit }) => {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
+
+  const valueEquality = checkInitialValue(
+    getCategoryInitialValues(edit, IMG_URL, category),
+    values
+  );
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -135,9 +152,10 @@ const CategoryForm = ({ category, id, edit }) => {
               name='code'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.categories.categoryCode}
+              placeholder={config.labels.categories.categoryCode}
               value={values.code}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.code && !!errors.code}
             />
             {touched.code && errors.code && (
@@ -150,14 +168,18 @@ const CategoryForm = ({ category, id, edit }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton />
+        <BackButton initial={!valueEquality} />
         <SaveButton
           className={styles.saveCategoryButton}
           data-cy='save'
-          type='submit'
+          type={materialUiConstants.types.submit}
           title={SAVE_TITLE}
           errors={errors}
-          values={values}
+          values={{
+            uaName: values.uaName,
+            enName: values.enName,
+            code: values.code
+          }}
         />
       </form>
     </div>

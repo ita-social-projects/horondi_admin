@@ -8,6 +8,20 @@ const formStyles = (theme) => ({
     marginLeft: '5px'
   },
 
+  inputLabel: {
+    marginTop: '7px'
+  },
+
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: '120px',
+    marginTop: '20px'
+  },
+
+  purposeSelect: {
+    width: '390px'
+  },
+
   returnButton: {
     margin: theme.spacing(2),
     marginRight: 0
@@ -40,8 +54,10 @@ const formStyles = (theme) => ({
 
   imageUpload: {
     fontSize: 14,
-    marginLeft: '10px'
+    marginLeft: '10px',
+    paddingTop: '10px'
   },
+
   imageUploadAvatar: {
     padding: '10px',
     display: 'flex',
@@ -60,12 +76,16 @@ const formStyles = (theme) => ({
   textField: {
     margin: '10px 5px'
   },
-
+  autoComplete: {
+    margin: '10px',
+    width: '33%'
+  },
   itemUpdate: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
   },
+
   imageName: {
     fontSize: '.9rem',
     marginLeft: '10px',

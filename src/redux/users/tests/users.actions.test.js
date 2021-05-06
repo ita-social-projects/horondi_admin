@@ -10,8 +10,6 @@ import {
   setUsersLoading,
   deleteUser,
   deleteUserLocally,
-  updateUserLocally,
-  updateUserStatus,
   clearFilters,
   confirmAdmin,
   validateToken,
@@ -26,9 +24,7 @@ import {
   SET_USERS_ERROR,
   SET_USERS_LOADING,
   DELETE_USER,
-  UPDATE_USER_STATUS,
   DELETE_USER_LOCALLY,
-  UPDATE_USER_LOCALLY,
   REGISTER_ADMIN,
   CONFIRM_ADMIN,
   VALIDATE_TOKEN,
@@ -92,24 +88,10 @@ describe('Test users actions', () => {
     });
   });
 
-  it('should update user status by id', () => {
-    expect(updateUserStatus(mockId)).toEqual({
-      type: UPDATE_USER_STATUS,
-      payload: mockId
-    });
-  });
-
   it('should set user error', () => {
     expect(setUserError(mockError)).toEqual({
       type: SET_USERS_ERROR,
       payload: mockError
-    });
-  });
-
-  it('should update user locally', () => {
-    expect(updateUserLocally(mockId)).toEqual({
-      type: UPDATE_USER_LOCALLY,
-      payload: mockId
     });
   });
 

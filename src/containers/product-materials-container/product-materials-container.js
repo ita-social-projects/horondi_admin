@@ -1,18 +1,13 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem,
-  Grid
-} from '@material-ui/core';
+import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
 
-import { map, noop } from 'lodash';
+import { noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './product-materials-container.styles';
 import { config } from '../../configs';
+import { handleMenuItem } from '../../utils/handle-menu-item';
 
 const { materialLabels } = config.labels.product;
 
@@ -50,62 +45,26 @@ const ProductMaterialsContainer = ({
     toggleFieldsChanged(true);
   };
 
-  const mainMaterialOptions = useMemo(
-    () =>
-      map(mainMaterials, (material) => (
-        <MenuItem value={material._id} key={material.name[1].value}>
-          {material.name[0].value}
-        </MenuItem>
-      )),
-    [mainMaterials]
-  );
-  const mainColorOptions = useMemo(
-    () =>
-      map(mainColors, (color) => (
-        <MenuItem value={color._id} key={color.name[1].value}>
-          {color.name[0].value}
-        </MenuItem>
-      )),
-    [mainColors]
-  );
-  const bottomMaterialOptions = useMemo(
-    () =>
-      map(bottomMaterials, (material) => (
-        <MenuItem value={material._id} key={material.name[1].value}>
-          {material.name[0].value}
-        </MenuItem>
-      )),
-    [bottomMaterials]
-  );
-  const bottomColorOptions = useMemo(
-    () =>
-      map(bottomColors, (color) => (
-        <MenuItem value={color._id} key={color.name[1].value}>
-          {color.name[0].value}
-        </MenuItem>
-      )),
-    [bottomColors]
-  );
+  const mainMaterialOptions = useMemo(() => handleMenuItem(mainMaterials), [
+    mainMaterials
+  ]);
+  const mainColorOptions = useMemo(() => handleMenuItem(mainColors), [
+    mainColors
+  ]);
+  const bottomMaterialOptions = useMemo(() => handleMenuItem(bottomMaterials), [
+    bottomMaterials
+  ]);
+  const bottomColorOptions = useMemo(() => handleMenuItem(bottomColors), [
+    bottomColors
+  ]);
 
-  const innerMaterialOptions = useMemo(
-    () =>
-      map(innerMaterials, (material) => (
-        <MenuItem value={material._id} key={material.name[1].value}>
-          {material.name[0].value}
-        </MenuItem>
-      )),
-    [innerMaterials]
-  );
+  const innerMaterialOptions = useMemo(() => handleMenuItem(innerMaterials), [
+    innerMaterials
+  ]);
 
-  const innerColorOptions = useMemo(
-    () =>
-      map(innerColors, (color) => (
-        <MenuItem value={color._id} key={color.name[1].value}>
-          {color.name[0].value}
-        </MenuItem>
-      )),
-    [innerColors]
-  );
+  const innerColorOptions = useMemo(() => handleMenuItem(innerColors), [
+    innerColors
+  ]);
   const options = [
     mainMaterialOptions,
     mainColorOptions,
@@ -159,7 +118,7 @@ ProductMaterialsContainer.propTypes = {
 };
 
 ProductMaterialsContainer.defaultProps = {
-  toggleFieldsChanged: noop()
+  toggleFieldsChanged: noop
 };
 
 export default ProductMaterialsContainer;

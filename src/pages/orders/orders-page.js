@@ -2,24 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MenuItem, Select } from '@material-ui/core';
-import moment from 'moment';
 import { push } from 'connected-react-router';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import ReactHtmlParser from 'react-html-parser';
 
+import getTime from '../../utils/getTime';
 import { useStyles } from './orders-page.styles';
 import { useCommonStyles } from '../common.styles';
 import { getOrderList, deleteOrder } from '../../redux/orders/orders.actions';
 import Status from './Status/Status';
 import LoadingBar from '../../components/loading-bar';
-import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
-import { config, dateFormatOrder } from '../../configs';
+import { config } from '../../configs';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import { handleOrdersPage } from '../../utils/handle-orders-page';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
+const { pathToOrderItem } = config.routes;
 const { REMOVE_ORDER_MESSAGE } = config.messages;
 
 const OrdersPage = () => {
@@ -41,7 +43,6 @@ const OrdersPage = () => {
     orders: Orders.list.items,
     count: Orders.list.count
   }));
-
   const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
     rowsPerPage: Table.pagination.rowsPerPage,
@@ -58,7 +59,7 @@ const OrdersPage = () => {
         }
       })
     );
-  }, [dispatch, rowsPerPage, currentPage, status, orders]);
+  }, [dispatch, rowsPerPage, currentPage, status]);
 
   const ordersDeleteHandler = (id) => {
     const removeOrders = () => {
@@ -74,14 +75,14 @@ const OrdersPage = () => {
       <TableContainerRow
         key={order._id}
         orderId={order.orderNumber}
-        date={moment.unix(order.dateOfCreation / 1000).format(dateFormatOrder)}
+        data={ReactHtmlParser(getTime(order.dateOfCreation, true))}
         totalPrice={`${order.totalItemsPrice[0].value} ₴`}
         deliveryPrice={`${
           order.totalPriceToPay[0].value - order.totalItemsPrice[0].value
         } ₴`}
         status={<Status status={order.status} />}
         editHandler={() => {
-          dispatch(push(`/orders/${order._id}`));
+          dispatch(push(pathToOrderItem.replace(':id', order._id)));
         }}
         deleteHandler={() => {
           ordersDeleteHandler(order._id);
@@ -118,17 +119,13 @@ const OrdersPage = () => {
       <div className={commonStyles.table}>
         {orderLoading ? (
           <LoadingBar />
-        ) : orders && orders.length ? (
-          <TableContainerGenerator
-            pagination
-            count={itemsCount}
-            tableTitles={config.tableHeadRowTitles.orders}
-            tableItems={orderItems}
-          />
         ) : (
-          <Typography variant='h1' className={commonStyles.materialTitle}>
-            {config.titles.orderTitles.ORDER_NOT_FOUND}
-          </Typography>
+          handleOrdersPage(
+            orders,
+            itemsCount,
+            orderItems,
+            commonStyles.materialTitle
+          )
         )}
       </div>
     </div>

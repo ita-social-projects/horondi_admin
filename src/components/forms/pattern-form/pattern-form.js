@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid, Avatar } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Image } from '@material-ui/icons';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,11 +17,18 @@ import {
   updatePattern
 } from '../../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../../checkbox-options';
-import ImageUploadContainer from '../../../containers/image-upload-container';
+import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
 import LoadingBar from '../../loading-bar';
+import {
+  handleImageLoad,
+  patternUseEffectHandler,
+  patternFormOnSubmit,
+  useFormikInitialValues
+} from '../../../utils/pattern-form';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { patternName, material, patternDescription } = config.labels.pattern;
 const map = require('lodash/map');
@@ -66,12 +72,12 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   }, []);
 
   useEffect(() => {
-    if (pattern.images.thumbnail) {
-      setPatternImage(`${imagePrefix}${pattern.images.thumbnail}`);
-    }
-    if (pattern.constructorImg) {
-      setConstructorImg(`${imagePrefix}${pattern.constructorImg}`);
-    }
+    patternUseEffectHandler(
+      pattern,
+      setPatternImage,
+      setConstructorImg,
+      imagePrefix
+    );
   }, [dispatch, pattern]);
 
   const patternValidationSchema = Yup.object().shape({
@@ -110,36 +116,29 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     setFieldValue
   } = useFormik({
     validationSchema: patternValidationSchema,
-    initialValues: {
-      patternConstructorImage: pattern.constructorImg || '',
-      patternImage: pattern.images.thumbnail || '',
-      uaName: pattern.name[0].value || '',
-      enName: pattern.name[1].value || '',
-      uaDescription: pattern.description[0].value || '',
-      enDescription: pattern.description[1].value || '',
-      material: pattern.material._id || '',
-      available: pattern.available || false,
-      handmade: pattern.handmade || false
-    },
+    initialValues: useFormikInitialValues(pattern),
     onSubmit: () => {
       const newPattern = createPattern(values);
-
-      if (
+      const isEditAndUploadAndConstructor =
         isEdit &&
         upload instanceof File &&
-        uploadConstructorImg instanceof File
-      ) {
-        dispatch(
-          updatePattern({
+        uploadConstructorImg instanceof File;
+      if (isEditAndUploadAndConstructor || isEdit) {
+        patternFormOnSubmit(
+          isEditAndUploadAndConstructor,
+          dispatch,
+          updatePattern,
+          {
             id,
             pattern: newPattern,
             image: [upload, uploadConstructorImg]
-          })
+          },
+          isEdit,
+          {
+            id,
+            pattern: newPattern
+          }
         );
-        return;
-      }
-      if (isEdit) {
-        dispatch(updatePattern({ id, pattern: newPattern }));
         return;
       }
       dispatch(
@@ -172,16 +171,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   ];
 
-  const handleImageLoad = (e, callback) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        callback(event);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-
   const handleLoadMainImage = (e) => {
     handleImageLoad(e, (event) => {
       setFieldValue('patternImage', event.target.result);
@@ -211,6 +200,16 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     inputs
   };
 
+  const imageUploadPatternInputsId = {
+    patternImageInput: 'patternImageInput',
+    constructorImageInput: 'constructorImgInput'
+  };
+
+  const valueEquality = checkInitialValue(
+    useFormikInitialValues(pattern),
+    values
+  );
+
   return (
     <div>
       {loading ? (
@@ -221,40 +220,44 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
           <Grid item xs={12}>
             <Paper className={styles.patternItemUpdate}>
-              <div>
-                <span className={styles.imageUpload}>
-                  {config.labels.pattern.avatarText}
-                </span>
-                <div className={styles.imageUploadAvatar}>
-                  <ImageUploadContainer handler={handleLoadMainImage} />
-                  {patternImage && (
-                    <Avatar src={patternImage}>
-                      <Image />
-                    </Avatar>
-                  )}
-                  {touched.patternImage && errors.patternImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternImage}
-                    </div>
-                  )}
+              <div className={styles.imageUploadBlock}>
+                <div>
+                  <span className={styles.imageUpload}>
+                    {config.labels.pattern.avatarText}
+                  </span>
+
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPreviewContainer
+                      handler={handleLoadMainImage}
+                      src={patternImage}
+                      id={imageUploadPatternInputsId.patternImageInput}
+                    />
+                    {touched.patternImage && errors.patternImage && (
+                      <div className={styles.inputError}>
+                        {errors.patternImage}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <span className={styles.imageUpload}>
-                  {config.labels.pattern.constructorImgText}
-                </span>
-                <div className={styles.imageUploadAvatar}>
-                  <ImageUploadContainer handler={handleLoadConstructorImage} />
-                  {constructorImg && (
-                    <Avatar src={constructorImg}>
-                      <Image />
-                    </Avatar>
-                  )}
-                  {touched.patternConstructorImage &&
-                    errors.patternConstructorImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternConstructorImage}
-                    </div>
-                  )}
+                <div>
+                  <span className={styles.imageUpload}>
+                    {config.labels.pattern.constructorImgText}
+                  </span>
+
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPreviewContainer
+                      handler={handleLoadConstructorImage}
+                      src={constructorImg}
+                      id={imageUploadPatternInputsId.constructorImageInput}
+                    />
+                    {touched.patternConstructorImage &&
+                      errors.patternConstructorImage && (
+                      <div className={styles.inputError}>
+                        {errors.patternConstructorImage}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <FormControl
@@ -287,7 +290,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton />
+          <BackButton initial={!valueEquality} />
           <SaveButton
             className={styles.saveButton}
             data-cy='save-btn'

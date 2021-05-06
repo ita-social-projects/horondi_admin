@@ -15,6 +15,7 @@ import {
 } from '../../services/local-storage.service';
 import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
 import routes from '../../configs/routes';
+import { LOCAL_STORAGE } from '../../consts/local-storage';
 
 const { LOGIN_PAGE_STATUS } = config.statuses;
 const { pathToMainPage, pathToLogin } = routes;
@@ -22,13 +23,20 @@ const { pathToMainPage, pathToLogin } = routes;
 export function* handleAdminLoad({ payload }) {
   try {
     yield put(setAuthLoading(true));
-    const admin = yield call(loginAdmin, payload);
-    setToLocalStorage('HORONDI_AUTH_TOKEN', admin.token);
+    const adminData = yield call(loginAdmin, payload);
 
-    yield put(setAdminId(admin._id));
-    yield put(setAuth(true));
-    yield put(push(pathToMainPage));
-    yield put(setAuthLoading(false));
+    if (adminData) {
+      setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, adminData.token);
+      setToLocalStorage(
+        LOCAL_STORAGE.AUTH_REFRESH_TOKEN,
+        adminData.refreshToken
+      );
+
+      yield put(setAdminId(adminData._id));
+      yield put(setAuth(true));
+      yield put(push(pathToMainPage));
+      yield put(setAuthLoading(false));
+    }
   } catch (error) {
     yield put(setAuthLoading(false));
     yield put(setAuthError(error));
@@ -38,8 +46,14 @@ export function* handleAdminLoad({ payload }) {
 
 export function* handleAdminCheckByToken() {
   try {
-    const authToken = getFromLocalStorage('HORONDI_AUTH_TOKEN');
+    const authToken = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
+    const confirmation = sessionStorage.getItem(LOCAL_STORAGE.CONFIRMATION);
     yield put(setAuthLoading(true));
+
+    if (confirmation) {
+      yield put(setAuthLoading(false));
+      return;
+    }
 
     if (!authToken) {
       yield put(setAuthLoading(false));
@@ -47,22 +61,27 @@ export function* handleAdminCheckByToken() {
       yield put(push(pathToLogin));
       return;
     }
+
     yield put(setAuth(true));
 
-    const admin = yield call(getUserByToken, authToken);
-    yield put(setAdminId(admin._id));
-    yield put(setAuthLoading(false));
+    const admin = yield call(getUserByToken);
+
+    if (admin) {
+      yield put(setAdminId(admin?._id));
+      yield put(setAuthLoading(false));
+    }
   } catch (error) {
-    console.error(error);
     yield put(setAuthLoading(false));
     yield put(setAuth(false));
-    setToLocalStorage('HORONDI_AUTH_TOKEN', null);
+    setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, '');
+    setToLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN, '');
     yield put(push(pathToLogin));
   }
 }
 
 export function* handleAdminLogout() {
-  setToLocalStorage('HORONDI_AUTH_TOKEN', null);
+  setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, '');
+  setToLocalStorage(LOCAL_STORAGE.AUTH_REFRESH_TOKEN, '');
   yield put(setAuth(false));
   yield put(push(pathToLogin));
 }
