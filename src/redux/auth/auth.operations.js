@@ -1,5 +1,4 @@
 import { getItems, setItems } from '../../utils/client';
-import { materialTranslations } from '../../translations/material.translations';
 import { userTranslations } from '../../translations/user.translations';
 
 export const getUserByToken = async () => {
