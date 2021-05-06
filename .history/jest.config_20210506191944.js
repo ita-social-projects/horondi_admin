@@ -14,14 +14,18 @@ module.exports = {
   testResultsProcessor: 'jest-sonar-reporter',
   collectCoverage: true,
   coveragePathIgnorePatterns: ['/node_modules/', 'cypress'],
-  clearMocks: true,
-  snapshotSerializers: ['./node_modules/enzyme-to-json/serializer'],
-  transform: {
-    '^.+\\.js$': 'babel-jest'
-  },
-  moduleNameMapper: {
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      './__mocks__/fileMock.js',
-    '\\.(css|scss)$': 'identity-obj-proxy'
+  verbose": true,
+    "clearMocks": true,
+    "collectCoverage": true,
+    "snapshotSerializers": [
+      "./node_modules/enzyme-to-json/serializer"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./__mocks__/fileMock.js",
+      "\\.(css|scss)$": "identity-obj-proxy"
+    }
   }
 };
