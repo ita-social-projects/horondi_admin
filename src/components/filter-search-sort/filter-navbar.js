@@ -2,7 +2,6 @@ import React from 'react';
 import {Grid} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import {useStyles} from './filter-navbar.styles';
-import NavFilters from './nav-filters';
 import NavSort from './nav-sort';
 import NavSearch from './nav-search';
 import NavClearFilters from './nav-clear-filters';
@@ -13,7 +12,6 @@ const FilterNavbar = ({options}) => {
     const styles = useStyles();
     const {
         sortOptions,
-        filterOptions,
         searchOptions,
         clearOptions,
         filterByDateOptions,
@@ -22,26 +20,21 @@ const FilterNavbar = ({options}) => {
 
     return (
         <Grid className={styles.container}>
-            {filterByDateOptions ? (
-                <Grid item>
-                    <NavFilterByDate filterByDateOptions={filterByDateOptions}/>
-                </Grid>
-            ) : null}
+            {filterByDateOptions?.length ? <div className={styles.dateRange}>{
+                filterByDateOptions.map(filterItem => (<Grid className={styles.dateRangeItem} key={filterItem} item>
+                    <NavFilterByDate filterByDateOptions={filterItem}/>
+                </Grid>))
+            }</div> : null}
             {sortOptions ? (
-                <Grid item>
+                <Grid className={styles.sortItem} item>
                     <NavSort sortOptions={sortOptions}/>
                 </Grid>
             ) : null}
-            {filterByMultipleOptions ? (
-                <Grid item>
-                    <NavFilterByValues filterByMultipleOptions={filterByMultipleOptions}/>
+            {filterByMultipleOptions?.length ? filterByMultipleOptions.map(filterItem => (
+                <Grid key={filterItem} className={styles.multipleValues} item >
+                    <NavFilterByValues filterByMultipleOptions={filterItem}/>
                 </Grid>
-            ) : null}
-            {filterOptions ? (
-                <Grid item>
-                    <NavFilters filterOptions={filterOptions}/>
-                </Grid>
-            ) : null}
+            )) : null}
             {searchOptions ? (
                 <Grid item>
                     <NavSearch searchOptions={searchOptions}/>
@@ -59,7 +52,6 @@ const FilterNavbar = ({options}) => {
 FilterNavbar.propTypes = {
     options: PropTypes.objectOf(PropTypes.object),
     sortOptions: PropTypes.objectOf(PropTypes.object),
-    filterOptions: PropTypes.objectOf(PropTypes.object),
     searchOptions: PropTypes.objectOf(PropTypes.object),
     clearOptions: PropTypes.objectOf(PropTypes.object)
 };
@@ -67,7 +59,7 @@ FilterNavbar.propTypes = {
 FilterNavbar.defaultProps = {
     options: {},
     sortOptions: {},
-    filterOptions: {},
+    filterByDateOptions: [],
     searchOptions: {},
     clearOptions: {}
 };

@@ -1,27 +1,23 @@
 import {useDispatch, useSelector} from 'react-redux';
-
-import {
-    clearFilters,
-    setFilter,
-} from '../../redux/categories/categories.actions';
 import {setCurrentPage} from '../../redux/table/table.actions';
+import {clearNewsFilter, setNewsFilter} from "../../redux/news/news.actions";
 
-const useCategoryFilters = () => {
+const useNewsFilters = () => {
     const dispatch = useDispatch();
-    const filters = useSelector(({Categories}) => Categories.filters);
+    const filters = useSelector(({News}) => News.filters);
 
-    const setSearchFilter = (searchString) => {
+    const setSearchFilter = (search) => {
         dispatch(setCurrentPage(0));
         dispatch(
-            setFilter({
-                search: searchString
+            setNewsFilter({
+                search
             })
         );
     };
 
     const clearAllFilters = () => {
         dispatch(setCurrentPage(0));
-        dispatch(clearFilters());
+        dispatch(clearNewsFilter());
     };
     return {
         searchOptions: {
@@ -30,10 +26,9 @@ const useCategoryFilters = () => {
         },
         clearOptions: {
             filters,
-            search: filters.search,
             clearAllFilters
         }
     };
 };
 
-export default useCategoryFilters;
+export default useNewsFilters;

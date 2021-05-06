@@ -5,12 +5,25 @@ import {
     clearHistoryFilters
 } from '../../redux/history/history.actions';
 import {setCurrentPage} from '../../redux/table/table.actions';
-import {placeholderText} from '../../utils/history';
+import {
+    actionFilterObj,
+    placeholderText,
+    roleFilterObject,
+    userRolesForFilter
+} from '../../utils/history';
 import titles from "../../configs/titles";
+import buttonTitles from "../../configs/button-titles";
+import React, {useState} from "react";
+import {historyActions} from "../../consts/history-actions";
 
 const useHistoryFilters = () => {
     const dispatch = useDispatch();
     const filters = useSelector(({History}) => History.filters);
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSetSearchValue = (event) => {
+        setSearchValue(event?.target?.value);
+    };
 
     const setDateFromRangeFilter = (dateFrom) => {
         dispatch(setCurrentPage(0));
@@ -78,11 +91,22 @@ const useHistoryFilters = () => {
         filterByMultipleOptions: [
             {
                 filters: filters.action,
+                label: buttonTitles.EVENT_TITLE,
+                selectItems: actionFilterObj(),
+                setFilterHandler: setActionsFilter,
+                objForTranslateRenderItems: historyActions
             },
-            {}
+            {
+                filters: filters.role,
+                label: buttonTitles.USER_ROLE_TITLE,
+                selectItems: roleFilterObject,
+                setFilterHandler: setRolesFilter,
+                objForTranslateRenderItems: userRolesForFilter
+            }
         ],
         searchOptions: {
-            search: filters.search,
+            search:filters.search,
+            handleSetSearchValue,
             placeholderText,
             setSearchFilter
         },

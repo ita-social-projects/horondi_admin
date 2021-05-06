@@ -36,7 +36,6 @@ import formRegExp from './form-regexp';
 import labels from './labels';
 import {newsPaginationPayload, contactsPaginationPayload} from './pagination';
 import titles from './titles';
-import {sort} from './sort';
 import languages from './languages';
 
 export const config = {
@@ -214,7 +213,6 @@ export const config = {
     statsErrorMessages,
     homePageSlideErrorMessages,
     constructorErrorMessages,
-    sort,
     paginationInputErrorMessages,
     commentErrorMessages,
     filterLabels,

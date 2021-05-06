@@ -16,6 +16,7 @@ import {useStyles} from './filter-by-multiple-values.styles';
 import materialUiConstants from "../../../configs/material-ui-constants";
 import {MenuProps} from "../../../pages/email-questions/email-question-filter/email-question-filter.styles";
 import {badgePosition} from "../../../configs";
+import {filterInputToRender} from "../../../utils/history";
 
 
 const NavFilterByValues = (
@@ -26,7 +27,6 @@ const NavFilterByValues = (
             label,
             selectItems,
             objForTranslateRenderItems,
-            renderFilterItems
         }
     }
 ) => {
@@ -45,7 +45,7 @@ const NavFilterByValues = (
                 color={materialUiConstants.styleError}
                 anchorOrigin={badgePosition}
             >
-                <FormControl className={styles.formControl}>
+                <FormControl style={{minWidth: 170}} className={styles.formControl}>
                     <InputLabel id={materialUiConstants.checkBoxLabel}>
                         {label}
                     </InputLabel>
@@ -57,8 +57,9 @@ const NavFilterByValues = (
                         onChange={handleChangeMultiple}
                         input={<Input/>}
                         renderValue={(selected) =>
-                            renderFilterItems(selected, objForTranslateRenderItems)
+                            filterInputToRender(selected, objForTranslateRenderItems)
                         }
+                        autoWidth={true}
                         MenuProps={MenuProps}
                     >
                         {selectItems.map((item) => (

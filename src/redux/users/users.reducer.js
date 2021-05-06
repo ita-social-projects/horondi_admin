@@ -20,9 +20,7 @@ const initialFilters = {
 
 export const initialState = {
   list: [],
-  sort: {
-    name: 1
-  },
+  sort: {},
   filters: initialFilters,
   tab: 0,
   user: null,

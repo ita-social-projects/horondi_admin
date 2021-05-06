@@ -30,6 +30,7 @@ import {
 } from '../snackbar/snackbar.sagas';
 import {AUTH_ERRORS} from "../../error-messages/auth";
 import {handleAdminLogout} from "../auth/auth.sagas";
+import {setItemsCount} from "../table/table.actions";
 
 const {
     SUCCESS_DELETE_STATUS,
@@ -37,13 +38,14 @@ const {
     SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleSizesLoad() {
+export function* handleSizesLoad({payload}) {
     try {
         yield put(setSizesLoading(true));
-        const sizes = yield call(getAllSizes);
+        const sizes = yield call(getAllSizes, payload.limit, payload.skip, payload.filter);
 
         if (sizes) {
             yield put(setSizes(sizes));
+            yield put(setItemsCount(sizes?.count));
             yield put(setSizesLoading(false));
         }
 

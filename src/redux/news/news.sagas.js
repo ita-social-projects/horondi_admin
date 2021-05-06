@@ -38,10 +38,10 @@ const {
     SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleNewsLoad({payload: {skip, limit}}) {
+export function* handleNewsLoad({payload: {skip, limit, filter}}) {
     try {
         yield put(setNewsLoading(true));
-        const news = yield call(getAllNews, skip, limit);
+        const news = yield call(getAllNews, skip, limit, filter);
 
         if (news) {
             yield put(setItemsCount(news?.count));

@@ -27,9 +27,9 @@ export const loginAdmin = async (loginInput) => {
         }
       }
     `;
-    const result = await setItems(loginAdminMutation, {loginInput});
+    const admin = await setItems(loginAdminMutation, {loginInput});
 
-    return result?.data?.loginAdmin;
+    return admin?.data?.loginAdmin;
 };
 export const regenerateAuthTokenPair = async (refreshToken) => {
     const regenerateAuthTokenPairMutation = `

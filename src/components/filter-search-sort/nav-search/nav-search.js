@@ -22,7 +22,6 @@ const NavSearch = (
     }) => {
 
     const styles = useStyles();
-
     const [searchValue, setSearchValue] = useState(search);
 
     const handleSetSearchValue = (event) => {
