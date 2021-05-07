@@ -2,6 +2,7 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import {
+  selectProductsAndTable,
   selectProducts,
   selectProductsToUpload,
   selectFilesToDeleteAndProduct
@@ -93,7 +94,7 @@ export function* handleGetFilters() {
   try {
     yield put(setProductsLoading(true));
     const products = yield call(getAllFilters);
-    console.log(products);
+
     if (products) {
       yield put(setItemsCount(products?.count));
       yield put(setAllProducts(products?.items));
@@ -219,7 +220,10 @@ export function* handleProductLoad({ payload }) {
 }
 
 export function* handleProductsErrors(e) {
-  if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
     yield call(handleAdminLogout);
   } else {
     yield put(setProductsLoading(false));
