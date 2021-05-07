@@ -4,7 +4,7 @@ import { configure, shallow, mount, to, be } from 'enzyme';
 import { Link, BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
-import mockStore from './__mock__';
+import mockStore from './mockStore';
 
 import PatternPage from '../pattern-page';
 import LoadingBar from '../../../components/loading-bar';
