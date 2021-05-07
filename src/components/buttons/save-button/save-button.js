@@ -18,7 +18,7 @@ const SaveButton = ({
     if (typeof el === 'boolean') {
       return true;
     }
-    if (el) {
+    if (el || el === 0) {
       return true;
     }
     return false;

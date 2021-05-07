@@ -84,7 +84,7 @@ function MaterialForm({ material, id }) {
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
-    initialValues: getMaterialFormInitValues,
+    initialValues: getMaterialFormInitValues(material, purposeEnum),
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
       if (id) {
