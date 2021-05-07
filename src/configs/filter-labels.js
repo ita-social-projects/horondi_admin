@@ -15,7 +15,7 @@ const filterLabels = {
       }
     ]
   },
-  orders:{
+  orders: {
     users: [
       {
         value: 'sortByNameAsc',
@@ -42,31 +42,59 @@ const filterLabels = {
         type: 'desc'
       }
     ],
-    sortLabels:[
+    sortLabels: [
       {
         value: 'sortByTotalPriceToPayAsc',
-        label: "за вартістю товару (по зростанню)",
+        label: 'за вартістю товару (по зростанню)',
         key: 'totalPriceToPay.0.value',
         type: 'asc'
       },
       {
         value: 'sortByTotalPriceToPayDesc',
-        label: "за вартістю товару (по спаданню)",
+        label: 'за вартістю товару (по спаданню)',
         key: 'totalPriceToPay.0.value',
         type: 'desc'
       },
       {
         value: 'sortByCreatedAtAsc',
-        label: "від старих до нових",
+        label: 'від старих до нових',
         key: 'dateOfCreation',
         type: 'asc'
       },
       {
         value: 'sortByCreatedDesc',
-        label: "від нових до старих",
+        label: 'від нових до старих',
         key: 'dateOfCreation',
         type: 'desc'
+      }
+    ]
+  },
+  products: {
+    sortLabels: [
+      {
+        value: 'sortByRateAsc',
+        label: 'за рейтингом (по зростанню)',
+        key: 'rate',
+        type: 'asc'
       },
+      {
+        value: 'sortByRateDesc',
+        label: 'за рейтингом (по спаданню)',
+        key: 'rate',
+        type: 'desc'
+      },
+      {
+        value: 'sortByPurchasedCountAsc',
+        label: 'за кількістю покупок (по зростанню)',
+        key: 'purchasedCount',
+        type: 'asc'
+      },
+      {
+        value: 'sortByPurchasedCountDesc',
+        label: 'за кількістю покупок (по спаданню)',
+        key: 'purchasedCount',
+        type: 'desc'
+      }
     ]
   }
 };

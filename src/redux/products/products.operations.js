@@ -1,38 +1,20 @@
-import {setItems, getItems} from '../../utils/client';
+import { setItems, getItems } from '../../utils/client';
 
-const getAllProducts = async (productsState, tableState) => {
-    const query = `
+const getAllProducts = async (limit, skip, filter, sort, search) => {
+  const query = `
       query(
-        $search: String
-        $price: [Int]
-        $colors: [String]
-        $patterns: [String]
-        $isHotItem: Boolean
         $skip: Int
         $limit: Int
-        $rate: Int
-        $basePrice: Int
-        $purchasedCount: Int
-        $category: [String]
-        $models: [String]
+        $filter: FilterInput
+        $sort: SortInput
+        $search:String
       ) {
         getProducts(
-          filter: {
-            colors: $colors
-            pattern: $patterns
-            price: $price
-            category: $category
-            isHotItem: $isHotItem
-            models: $models
-          }
+          filter: $filter
           skip: $skip
           limit: $limit
-          search: $search
-          sort: {
-            rate: $rate
-            basePrice: $basePrice
-            purchasedCount: $purchasedCount
-          }
+          sort: $sort
+          search:$search
         ) {
           ... on PaginatedProducts {
             items {
@@ -88,25 +70,19 @@ const getAllProducts = async (productsState, tableState) => {
       }
     `;
 
-    const result = await getItems(query, {
-        search: productsState.filters.searchFilter,
-        colors: productsState.filters.colorsFilter,
-        patterns: productsState.filters.patternsFilter,
-        price: productsState.filters.priceFilter,
-        category: productsState.filters.categoryFilter,
-        models: productsState.filters.modelsFilter,
-        skip: tableState.pagination.currentPage * tableState.pagination.rowsPerPage,
-        limit: tableState.pagination.rowsPerPage,
-        basePrice: productsState.sorting.sortByPrice || undefined,
-        rate: productsState.sorting.sortByRate || undefined,
-        purchasedCount: productsState.sorting.sortByPopularity || undefined
-    });
+  const result = await getItems(query, {
+    limit,
+    sort,
+    skip,
+    filter,
+    search
+  });
 
-    return result?.data?.getProducts;
+  return result?.data?.getProducts;
 };
 
 const getAllFilters = async () => {
-    const query = `
+  const query = `
       query {
         getProducts {
           ... on PaginatedProducts {
@@ -132,18 +108,49 @@ const getAllFilters = async () => {
                 }
               }
             }
+         count
+
           }
         }
       }
     `;
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getProducts.items;
+  return result?.data?.getProducts.items;
 };
 
 const getProductDetails = async () => {
-    const query = `
+  const query = `
+   
       query {
+          getAllModels {
+          items {
+            _id
+            name {
+              lang
+              value
+            }
+            category {
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
+            description {
+              value
+              lang
+            }
+          }
+          count
+        }
         getAllClosure {
           items {
             _id
@@ -217,18 +224,19 @@ const getProductDetails = async () => {
       }
     `;
 
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return {
-        closures: result?.data?.getAllClosure.items,
-        patterns: result?.data?.getAllPatterns.items,
-        categories: result?.data?.getCategoriesWithModels,
-        materials: result?.data?.getMaterialsByPurpose
-    };
+  return {
+    closures: result?.data?.getAllClosure.items,
+    patterns: result?.data?.getAllPatterns.items,
+    categories: result?.data?.getCategoriesWithModels,
+    materials: result?.data?.getMaterialsByPurpose,
+    models: result?.data?.getAllModels.items
+  };
 };
 
 const getProductCategories = async () => {
-    const query = `
+  const query = `
       query {
         getAllCategories {
           _id
@@ -239,13 +247,13 @@ const getProductCategories = async () => {
         }
       }
     `;
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getAllCategories;
+  return result?.data?.getAllCategories;
 };
 
 const getModelsByCategory = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getModelsByCategory(id: $id) {
           _id
@@ -257,13 +265,13 @@ const getModelsByCategory = async (id) => {
       }
     `;
 
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    return result?.data?.getModelsByCategory;
+  return result?.data?.getModelsByCategory;
 };
 
 const addProduct = async (product, upload) => {
-    const result = `
+  const result = `
       mutation($product: ProductInput!, $upload: Upload!) {
         addProduct(product: $product, upload: $upload) {
           ... on Product {
@@ -277,14 +285,14 @@ const addProduct = async (product, upload) => {
       }
     `;
 
-    return setItems(result, {
-        product,
-        upload
-    });
+  return setItems(result, {
+    product,
+    upload
+  });
 };
 
 const deleteProduct = async (payload) => {
-    const result = `
+  const result = `
       mutation($id: ID!) {
         deleteProduct(id: $id) {
           ... on Product {
@@ -294,13 +302,13 @@ const deleteProduct = async (payload) => {
       }
     `;
 
-    return setItems(result, {
-        id: payload
-    });
+  return setItems(result, {
+    id: payload
+  });
 };
 
 const getProduct = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getProductById(id: $id) {
           ... on Product {
@@ -441,13 +449,13 @@ const getProduct = async (id) => {
         }
     }`;
 
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    return result?.data?.getProductById;
+  return result?.data?.getProductById;
 };
 
 const updateProduct = async (payload, upload, primaryImageUpload) => {
-    const result = `
+  const result = `
       mutation(
         $id: ID!
         $product: ProductInput!
@@ -470,16 +478,16 @@ const updateProduct = async (payload, upload, primaryImageUpload) => {
         }
       }
     `;
-    return setItems(result, {
-        id: payload.id,
-        product: payload.product,
-        upload: !!upload.length && upload,
-        primary: primaryImageUpload || undefined
-    });
+  return setItems(result, {
+    id: payload.id,
+    product: payload.product,
+    upload: !!upload.length && upload,
+    primary: primaryImageUpload || undefined
+  });
 };
 
 const deleteImages = async (id, images) => {
-    const query = `
+  const query = `
       mutation($id: ID!, $images: [String!]!) {
         deleteImages(id: $id, images: $images) {
           primary {
@@ -498,20 +506,20 @@ const deleteImages = async (id, images) => {
       }
     `;
 
-    const result = await setItems(query, {id, images});
+  const result = await setItems(query, { id, images });
 
-    return result?.data?.deleteImages;
+  return result?.data?.deleteImages;
 };
 
 export {
-    getAllProducts,
-    getAllFilters,
-    getProductCategories,
-    getModelsByCategory,
-    addProduct,
-    deleteProduct,
-    getProduct,
-    updateProduct,
-    deleteImages,
-    getProductDetails
+  getAllProducts,
+  getAllFilters,
+  getProductCategories,
+  getModelsByCategory,
+  addProduct,
+  deleteProduct,
+  getProduct,
+  updateProduct,
+  deleteImages,
+  getProductDetails
 };

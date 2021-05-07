@@ -2,10 +2,6 @@ import { config } from '../../configs';
 import {
   SET_ALL_PRODUCTS,
   SET_ALL_FILTER_DATA,
-  SET_SORT_BY_PRICE,
-  SET_SORT_BY_DATE,
-  SET_SORT_BY_RATE,
-  SET_SORT_BY_POPULARITY,
   SET_PRODUCTS_LOADING,
   SET_CATEGORY_FILTER,
   SET_PRICE_FILTER,
@@ -24,7 +20,10 @@ import {
   SET_FILES_TO_DELETE,
   REMOVE_IMAGES_TO_UPLOAD,
   SET_PRIMARY_IMAGE_TO_UPLOAD,
-  SET_PRODUCT_DETAILS
+  SET_PRODUCT_DETAILS,
+  SET_PRODUCT_SORT,
+  SET_PRODUCT_FILTER,
+  CLEAR_PRODUCT_FILTER
 } from './products.types';
 
 const { initialLanguageValues } = config;
@@ -46,20 +45,16 @@ export const productModel = {
   options: []
 };
 
+const initialFilters = {
+  pattern: [],
+  category: [],
+  models: [],
+  search: ''
+};
 export const initialState = {
   loading: false,
-  sorting: {
-    sortByPrice: 0,
-    sortByRate: 0,
-    sortByPopularity: -1
-  },
-  filters: {
-    colorsFilter: [],
-    patternsFilter: [],
-    categoryFilter: [],
-    searchFilter: '',
-    modelsFilter: []
-  },
+  sort: {},
+  filters: initialFilters,
   filterData: [],
   selectedProduct: productModel,
   productToSend: {
@@ -75,29 +70,31 @@ export const initialState = {
     categories: [],
     modelsForSelectedCategory: []
   },
-  details: {
-    categories: [],
-    models: [],
-    closures: [],
-    materials: {
-      inner: [],
-      bottom: [],
-      main: []
-    }
-  }
+  details: {}
 };
-export const setSort = ({
-  sortByPrice = 0,
-  sortByRate = 0,
-  sortByPopularity = 0
-}) => ({
-  sortByPrice,
-  sortByRate,
-  sortByPopularity
-});
 
 const productsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
+  case SET_PRODUCT_SORT:
+    return {
+      ...state,
+      sort: {
+        ...action.payload
+      }
+    };
+  case SET_PRODUCT_FILTER:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    };
+  case CLEAR_PRODUCT_FILTER:
+    return {
+      ...state,
+      filters: initialFilters
+    };
   case SET_ALL_PRODUCTS:
     return {
       ...state,
@@ -163,26 +160,7 @@ const productsReducer = (state = initialState, action = {}) => {
         searchFilter: action.payload
       }
     };
-  case SET_SORT_BY_PRICE:
-    return {
-      ...state,
-      sorting: { ...setSort({ sortByPrice: action.payload }) }
-    };
-  case SET_SORT_BY_DATE:
-    return {
-      ...state,
-      sorting: { ...setSort({ sortByDate: action.payload }) }
-    };
-  case SET_SORT_BY_RATE:
-    return {
-      ...state,
-      sorting: { ...setSort({ sortByRate: action.payload }) }
-    };
-  case SET_SORT_BY_POPULARITY:
-    return {
-      ...state,
-      sorting: { ...setSort({ sortByPopularity: action.payload }) }
-    };
+
   case SET_PRODUCTS_LOADING:
     return {
       ...state,
