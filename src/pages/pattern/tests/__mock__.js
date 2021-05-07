@@ -39,10 +39,10 @@ const mockStore = {
       _id: '6043b8c53e06ad3edcdb7b1a'
     },
     {
-      available: true,
+      available: false,
       constructorImg: 'small_id73cf0klxzofg1_гобелен-4.png',
       images: {
-        thumbnail: 'thumbnail_id73cf0klxzoa3x_156-min.jpg'
+        thumbnail: ''
       },
       material: {
         name: [

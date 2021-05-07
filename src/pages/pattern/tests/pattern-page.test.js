@@ -20,84 +20,84 @@ const tableTitles = config.tableHeadRowTitles.patterns;
 
 configure({ adapter: new Adapter() });
 
-// describe('Pattern-page render tests', () => {
-//   let spyOnUseSelector;
-//   let spyOnUseDispatch;
-//   let mockDispatch;
-//   let wrapper;
-//   let typography;
-//   let button;
-//   let tableContainerGenerator;
-//   let getState;
+describe('Pattern-page render tests', () => {
+  let spyOnUseSelector;
+  let spyOnUseDispatch;
+  let mockDispatch;
+  let wrapper;
+  let typography;
+  let button;
+  let tableContainerGenerator;
+  let getState;
 
-// beforeEach(() => {
-//   // Mock useSelector hook
-//   spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-//   spyOnUseSelector.mockImplementation(()=> mockStore);
+  beforeEach(() => {
+    // Mock useSelector hook
+    spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
+    spyOnUseSelector.mockImplementation(() => mockStore);
 
-//   // Mock useEffect
+    // Mock useEffect
 
-//   // Mock useDispatch hook
-//   spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
-//   // Mock dispatch function returned from useDispatch
-//   mockDispatch = jest.fn();
-//   spyOnUseDispatch.mockReturnValue(mockDispatch);
+    // Mock useDispatch hook
+    spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
+    // Mock dispatch function returned from useDispatch
+    mockDispatch = jest.fn();
+    spyOnUseDispatch.mockReturnValue(mockDispatch);
 
-//   wrapper = shallow(<PatternPage />);
-//   typography = wrapper.find(Typography);
-//   button = wrapper.find(Button);
-//   tableContainerGenerator = wrapper.find(TableContainerGenerator);
-// });
+    wrapper = shallow(<PatternPage />);
+    typography = wrapper.find(Typography);
+    button = wrapper.find(Button);
+    tableContainerGenerator = wrapper.find(TableContainerGenerator);
+  });
 
-//   afterEach(() => {
-//     jest.restoreAllMocks();
-//     spyOnUseSelector.mockClear();
-//   });
+  afterEach(() => {
+    jest.restoreAllMocks();
+    spyOnUseSelector.mockClear();
+  });
 
-//   test('Should render pattern-page', () => {
-//     expect(wrapper).toBeDefined();
-//     expect(wrapper).toHaveLength(1);
-//     expect(wrapper).toMatchSnapshot();
-//   });
+  test('Should render pattern-page', () => {
+    expect(wrapper).toBeDefined();
+    expect(wrapper).toHaveLength(1);
+    expect(wrapper).toMatchSnapshot();
+  });
 
-//   test(`Should render Typography wrapper with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
-//     expect(wrapper.exists(Typography)).toBe(true);
-//     expect(typography).toHaveLength(1);
-//     expect(typography.text()).toBe(config.titles.patternTitles.mainPageTitle);
-//   });
+  test(`Should render Typography wrapper with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
+    expect(wrapper.exists(Typography)).toBe(true);
+    expect(typography).toHaveLength(1);
+    expect(typography.text()).toBe(config.titles.patternTitles.mainPageTitle);
+  });
 
-//   test(`Should render button wrapper`, () => {
-//     expect(wrapper.exists(Button)).toBe(true);
-//     expect(button).toHaveLength(1);
-//     expect(button.text()).toBe(CREATE_PATTERN_TITLE);
-//     expect(button.prop('component')).toEqual(Link);
-//     expect(button.prop('to')).toBe(pathToPatternAddPage);
-//   });
+  test(`Should render button wrapper`, () => {
+    expect(wrapper.exists(Button)).toBe(true);
+    expect(button).toHaveLength(1);
+    expect(button.text()).toBe(CREATE_PATTERN_TITLE);
+    expect(button.prop('component')).toEqual(Link);
+    expect(button.prop('to')).toBe(pathToPatternAddPage);
+  });
 
-//   test('Should render TableContainerGenerator', () => {
-//     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
-//     expect(tableContainerGenerator).toHaveLength(1);
-//     expect(wrapper.exists(LoadingBar)).toBe(false);
-//     expect(tableContainerGenerator.prop('tableTitles')).toBe(tableTitles);
-//   });
+  test('Should render TableContainerGenerator', () => {
+    expect(wrapper.exists(TableContainerGenerator)).toBe(true);
+    expect(tableContainerGenerator).toHaveLength(1);
+    expect(wrapper.exists(LoadingBar)).toBe(false);
+    expect(tableContainerGenerator.prop('tableTitles')).toBe(tableTitles);
+  });
 
-//   test('Should render LoadingBar', () => {
-//     mockStore.loading = true;
-//     wrapper = shallow(<PatternPage />);
-//     const loadingBar = wrapper.find(LoadingBar);
-//     expect(wrapper.exists(LoadingBar)).toBeDefined();
-//     expect(wrapper.exists(LoadingBar)).toBe(true);
-//     expect(loadingBar).toHaveLength(1);
-//     expect(wrapper.exists(TableContainerGenerator)).toBe(false);
-//     mockStore.loading = false;
-//   });
+  test('Should render LoadingBar', () => {
+    mockStore.loading = true;
+    wrapper = shallow(<PatternPage />);
+    const loadingBar = wrapper.find(LoadingBar);
+    expect(wrapper.exists(LoadingBar)).toBeDefined();
+    expect(wrapper.exists(LoadingBar)).toBe(true);
+    expect(loadingBar).toHaveLength(1);
+    expect(wrapper.exists(TableContainerGenerator)).toBe(false);
+    mockStore.loading = false;
+  });
 
-//   test('useSelector hook should be called', () => {
-//     getState = reactRedux.useSelector(mockStore);
-//     expect(getState).toEqual(mockStore);
-//     expect(spyOnUseSelector).toHaveBeenCalled();
-//   })
-// });
+  test('useSelector hook should be called', () => {
+    getState = reactRedux.useSelector(mockStore);
+    expect(getState).toEqual(mockStore);
+    expect(spyOnUseSelector).toHaveBeenCalled();
+  });
+});
 
 describe('useEffect tests', () => {
   let spyOnUseSelector;
@@ -105,8 +105,6 @@ describe('useEffect tests', () => {
   let mockDispatch;
   let wrapper;
   let patternPage;
-  let instance;
-
   let tableContainerRow;
   let tableContainerRowFirst;
   let tableContainerRowSecond;
@@ -130,8 +128,6 @@ describe('useEffect tests', () => {
     );
 
     patternPage = wrapper.find(PatternPage);
-    instance = patternPage.instance();
-    console.log(instance);
 
     tableContainerRow = patternPage.find(TableContainerRow);
     tableContainerRowFirst = patternPage.find({
@@ -151,37 +147,21 @@ describe('useEffect tests', () => {
     spyOnUseSelector.mockClear();
   });
 
-  // test('UseEffect hook shoud work out', () => {
-  //   expect(spyOnUseDispatch).toHaveBeenCalledTimes(2);
-  // })
-
-  // test('Should render TableContainerRow', () => {
-  //   expect(patternPage.exists(TableContainerRow)).toBe(true);
-  //   expect(tableContainerRow).toHaveLength(3);
-  //   expect(tableContainerRowFirst.prop('available')).toBe('Так');
-  //   expect(tableContainerRowSecond.prop('available')).toBe('Так');
-  //   expect(tableContainerRowThird.prop('available')).toBe('Так');
-  //   expect(tableContainerRowFirst.prop('name')).toBe('Червоний');
-  //   expect(tableContainerRowSecond.prop('name')).toBe('Сірий квадрат');
-  //   expect(tableContainerRowThird.prop('name')).toBe('Голуба стрічка');
-  // });
-
-  test('aaaa', () => {
-    expect(instance).to.be.instanceOf(PatternPage);
+  test('UseEffect hook shoud work out', () => {
+    expect(spyOnUseDispatch).toHaveBeenCalledTimes(2);
   });
-  // test('Should handle click the Delete pattern button', () => {
-  // useDispatchMock.mockReturnValue(mockDispatch);
-  // patternPage.find(TableContainerRow).at(0).props().deleteHandler();
-  // expect(mockDispatch).toHaveBeenCalledTimes(4);
-  // });
 
-  // test('Should handle click the Edit pattern button', () => {
-  //   patternPage.find(TableContainerRow).at(0).props().editHandler();
-  //   expect(spyOnUseDispatch).toHaveBeenCalledTimes(3);
-  // });
-  // test('useEffect should work', () => {
-  // console.log(wrapper.find('PatternPage').find('TableContainerRow').debug());
-  //   let spyOnUseEffect = jest.spyOn(React, 'useEffect');
-  //   expect(spyOnUseEffect).toHaveBeenCalled();
-  // })
+  test('Should render TableContainerRow', () => {
+    expect(patternPage.exists(TableContainerRow)).toBe(true);
+    expect(tableContainerRow).toHaveLength(3);
+    expect(tableContainerRowFirst.prop('available')).toBe('Так');
+    expect(tableContainerRowSecond.prop('available')).toBe('Так');
+    expect(tableContainerRowThird.prop('available')).toBe('Ні');
+    expect(tableContainerRowFirst.prop('name')).toBe('Червоний');
+    expect(tableContainerRowSecond.prop('name')).toBe('Сірий квадрат');
+    expect(tableContainerRowThird.prop('name')).toBe('Голуба стрічка');
+    expect(tableContainerRowFirst.prop('image')).toBeTruthy();
+    expect(tableContainerRowSecond.prop('image')).toBeTruthy();
+    expect(tableContainerRowThird.prop('image')).toBe('');
+  });
 });
