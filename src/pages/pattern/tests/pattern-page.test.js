@@ -3,7 +3,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import { configure, shallow, mount, to, be } from 'enzyme';
 import { Link, BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
-import { useDispatch as useDispatchMock } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
 import mockStore from './__mock__';
 
