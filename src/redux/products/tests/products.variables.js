@@ -45,21 +45,8 @@ const productModel = {
 };
 
 const mockProductsState = {
-  details: {
-    categories: [],
-    closures: [],
-    materials: {
-      bottom: [],
-      inner: [],
-      main: []
-    },
-    models: []
-  },
-  sorting: {
-    sortByPrice: 0,
-    sortByRate: 0,
-    sortByPopularity: -1
-  },
+  details: {},
+  sort: {},
   loading: false,
   filterData: [],
   upload: [],
@@ -76,11 +63,10 @@ const mockProductsState = {
   filesToDelete: [],
   primaryImageUpload: null,
   filters: {
-    colorsFilter: [],
-    patternsFilter: [],
-    categoryFilter: [],
-    searchFilter: '',
-    modelsFilter: []
+    pattern: [],
+    category: [],
+    search: '',
+    models: []
   },
   productsError: null
 };

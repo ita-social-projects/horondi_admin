@@ -7,10 +7,6 @@ import {
   setModelsFilter,
   setCategoryFilter,
   setSearchFilter,
-  setSortByPrice,
-  setSortByDate,
-  setSortByRate,
-  setSortByPopularity,
   setProductToSend,
   clearProductToSend,
   setProductsError,
@@ -38,7 +34,7 @@ import {
   mockUploadToRemoveImages
 } from './products.variables';
 
-import productsReducer, { initialState, setSort } from '../products.reducer';
+import productsReducer, { initialState } from '../products.reducer';
 
 describe('Test products reducers', () => {
   it('should redurn default state', () => {
@@ -124,34 +120,6 @@ describe('Test products reducers', () => {
         ...initialState.filters,
         searchFilter: ['search']
       }
-    });
-  });
-
-  it('should set sorting by price into state', () => {
-    expect(productsReducer(initialState, setSortByPrice(1))).toEqual({
-      ...initialState,
-      sorting: { ...setSort({ sortByPrice: 1 }) }
-    });
-  });
-
-  it('should set sorting by date into state', () => {
-    expect(productsReducer(initialState, setSortByDate(1))).toEqual({
-      ...initialState,
-      sorting: { ...setSort({ sortByDate: 1 }) }
-    });
-  });
-
-  it('should set sorting by rate into state', () => {
-    expect(productsReducer(initialState, setSortByRate(1))).toEqual({
-      ...initialState,
-      sorting: { ...setSort({ sortByRate: 1 }) }
-    });
-  });
-
-  it('should set sorting by popularity into state', () => {
-    expect(productsReducer(initialState, setSortByPopularity(1))).toEqual({
-      ...initialState,
-      sorting: { ...setSort({ sortByPopularity: 1 }) }
     });
   });
 
