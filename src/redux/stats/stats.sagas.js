@@ -39,7 +39,7 @@ export function* handleInitialStatsLoad() {
     yield put(setPopularProducts(products));
     yield put(setStatsLoading(false));
   } catch (e) {
-    handleStatsErrors(e);
+    yield call(handleStatsErrors, e);
   }
 }
 
@@ -53,7 +53,7 @@ export function* handleOrdersStatisticLoad({ payload }) {
       yield put(setUpdatingDoughnutData(false));
     }
   } catch (e) {
-    handleStatsErrors(e);
+    yield call(handleStatsErrors, e);
   }
 }
 
@@ -67,7 +67,7 @@ export function* handlePaidOrdersLoad({ payload }) {
       yield put(setUpdatingBarData(false));
     }
   } catch (e) {
-    handleStatsErrors(e);
+    yield call(handleStatsErrors, e);
   }
 }
 
@@ -81,7 +81,7 @@ export function* handleUsersStatisticLoad({ payload }) {
       yield put(setUpdatingBarData(false));
     }
   } catch (e) {
-    handleStatsErrors(e);
+    yield call(handleStatsErrors, e);
   }
 }
 
