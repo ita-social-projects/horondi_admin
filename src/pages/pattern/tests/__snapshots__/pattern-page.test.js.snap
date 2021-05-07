@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pattern-page render tests Should render pattern-page 1`] = `
+<div
+  className="makeStyles-container-1"
+>
+  <div
+    className="makeStyles-adminHeader-2"
+  >
+    <WithStyles(ForwardRef(Typography))
+      className="makeStyles-materialTitle-3"
+      data-cy="pattern-header"
+      variant="h1"
+    >
+      Інформація про гобелени
+    </WithStyles(ForwardRef(Typography))>
+    <WithStyles(ForwardRef(Button))
+      color="primary"
+      component={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "displayName": "Link",
+          "propTypes": Object {
+            "innerRef": [Function],
+            "onClick": [Function],
+            "replace": [Function],
+            "target": [Function],
+            "to": [Function],
+          },
+          "render": [Function],
+        }
+      }
+      data-cy="add-pattern"
+      to="/patterns/add"
+      variant="contained"
+    >
+      Додати гобелен
+    </WithStyles(ForwardRef(Button))>
+  </div>
+  <TableContainerGenerator
+    count={7}
+    data-cy="patternTable"
+    pagination={true}
+    tableItems={
+      Array [
+        <TableContainerRow
+          available="Так"
+          checkboxChangeHandler={[Function]}
+          clickHandler={[Function]}
+          deleteHandler={[Function]}
+          editHandler={[Function]}
+          id=""
+          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxzl60n_149-min.jpg"
+          material="Нитки для шиття"
+          name="Червоний"
+          showAvatar={true}
+          showCheckbox={false}
+          showDelete={true}
+          showEdit={true}
+        />,
+        <TableContainerRow
+          available="Так"
+          checkboxChangeHandler={[Function]}
+          clickHandler={[Function]}
+          deleteHandler={[Function]}
+          editHandler={[Function]}
+          id=""
+          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxzmqds_155-min.jpg"
+          material="Нитки для шиття"
+          name="Сірий квадрат"
+          showAvatar={true}
+          showCheckbox={false}
+          showDelete={true}
+          showEdit={true}
+        />,
+        <TableContainerRow
+          available="Так"
+          checkboxChangeHandler={[Function]}
+          clickHandler={[Function]}
+          deleteHandler={[Function]}
+          editHandler={[Function]}
+          id=""
+          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxzoa3x_156-min.jpg"
+          material="Нитки для шиття"
+          name="Голуба стрічка"
+          showAvatar={true}
+          showCheckbox={false}
+          showDelete={true}
+          showEdit={true}
+        />,
+      ]
+    }
+    tableTitles={
+      Array [
+        "Фото",
+        "Назва",
+        "Код матеріалу",
+        "Доступний",
+        "Дії",
+      ]
+    }
+  />
+</div>
+`;
