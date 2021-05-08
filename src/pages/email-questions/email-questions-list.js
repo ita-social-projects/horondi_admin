@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Accordion, AccordionSummary, Typography } from '@material-ui/core';
+import { push } from 'connected-react-router';
+import { Typography } from '@material-ui/core';
+import ReactHtmlParser from 'react-html-parser';
 
+import { useStyles } from './email-questions-list.styles';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
-  deleteEmailQuestions
+  deleteEmailQuestions,
+  setEmailQuestionLoading
 } from '../../redux/email-questions/email-questions.actions';
 
-import { useStyles } from './email-questions-list.styles';
-import { useStyles as us2 } from './email-questions-item/email-questions-item.styles';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import TableContainerRow from '../../containers/table-container-row';
+import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
+import getTime from '../../utils/getTime';
 import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
+import { answerTextHandler } from '../../utils/email-question-list';
 import EmailQuestionItem from './email-questions-item';
 
-const { titles, messages } = config;
+const { labels, titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
+
+const tableTitles = tableHeadRowTitles.emailQuestions;
 
 const EmailQuestionsList = () => {
   const styles = useStyles();
-  const classes = us2();
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -64,6 +71,17 @@ const EmailQuestionsList = () => {
     openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE);
   };
 
+  const questionClickHandler = (id, status) => {
+    if (status === labels.emailQuestionsLabels.en.SPAM) {
+      const handler = () => dispatch(closeDialog());
+
+      openSuccessSnackbar(handler, EMAIL_QUESTION_SPAM_DETAILS, messages.ERROR);
+    } else {
+      dispatch(setEmailQuestionLoading(true));
+      dispatch(push(`/email-answer/${id}`));
+    }
+  };
+
   const filterChangeHandler = (id) => {
     if (id === 'ALL') {
       setFilter([id]);
@@ -89,15 +107,48 @@ const EmailQuestionsList = () => {
     }
   };
 
+  const questions2 =
+    list !== undefined
+      ? list.map((question) => {
+        const { answer } = question;
+
+        const questionToShow = `<b>Q:</b> ${question.text}`;
+        const answerToShow = answerTextHandler(answer);
+
+        return (
+          <TableContainerRow
+            key={question._id}
+            id={question._id}
+            senderName={question.senderName}
+            email={question.email}
+            qA={ReactHtmlParser(questionToShow + answerToShow)}
+            date={ReactHtmlParser(getTime(question.date, true))}
+            status={labels.emailQuestionsLabels.ua[question.status]}
+            showAvatar={false}
+            showEdit={false}
+            showCheckbox
+            checkboxChangeHandler={checkboxChangeHandler}
+            deleteHandler={(e) => questionDeleteHandler(question._id, e)}
+            clickHandler={() =>
+              questionClickHandler(question._id, question.status)
+            }
+          />
+        );
+      })
+      : null;
+
   const questions =
     list !== undefined
       ? list.map((question) => (
-        <EmailQuestionItem
-          key={question._id}
-          question={question}
-          checkboxChangeHandler={checkboxChangeHandler}
-          deleteHandler={(e) => questionDeleteHandler(question._id, e)}
-        />
+        <tr key={question._id}>
+          <td colSpan={10}>
+            <EmailQuestionItem
+              question={question}
+              checkboxChangeHandler={checkboxChangeHandler}
+              deleteHandler={(e) => questionDeleteHandler(question._id, e)}
+            />
+          </td>
+        </tr>
       ))
       : null;
 
@@ -127,42 +178,12 @@ const EmailQuestionsList = () => {
       </div>
       <div className={styles.tableList}>
         {questions?.length ? (
-          <>
-            <Accordion>
-              <AccordionSummary>
-                <div className={classes.column}>
-                  <Typography className={classes.heading}>Номер</Typography>
-                </div>
-                <div className={classes.column}>
-                  <Typography className={classes.heading}>Ігор</Typography>
-                </div>
-                <div className={classes.column}>
-                  <Typography className={classes.heading}>
-                    igor@gmail.com
-                  </Typography>
-                </div>
-                <div className={classes.column}>
-                  <Typography className={classes.heading}>
-                    Q: Як купити новий товар
-                  </Typography>
-                </div>
-                <div className={classes.column}>
-                  <Typography className={classes.heading}>
-                    17:17 09/09/21
-                  </Typography>
-                </div>
-                <div className={classes.column}>
-                  <Typography className={classes.heading}>
-                    Очікує відповідь
-                  </Typography>
-                </div>
-                <div className={classes.column}>
-                  <Typography className={classes.heading}>Видалити</Typography>
-                </div>
-              </AccordionSummary>
-            </Accordion>
-            {questions}
-          </>
+          <TableContainerGenerator
+            pagination
+            count={pagesCount}
+            tableTitles={tableTitles}
+            tableItems={questions}
+          />
         ) : (
           <Typography variant='h1' className={commonStyles.materialTitle}>
             {messages.EMPTY_LIST}

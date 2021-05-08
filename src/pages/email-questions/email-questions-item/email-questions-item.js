@@ -21,7 +21,6 @@ import { useStyles } from './email-questions-item.styles';
 import { config } from '../../../configs';
 
 const EmailQuestionItem = ({
-  key,
   question,
   checkboxChangeHandler,
   deleteHandler
@@ -34,7 +33,7 @@ const EmailQuestionItem = ({
   const iconSize = config.iconSizes.DEFAULT_SIZE;
 
   return (
-    <div className={classes.root} key={key} id={question._id}>
+    <div className={classes.root} id={question._id}>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -80,10 +79,11 @@ const EmailQuestionItem = ({
           </div>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
-          <input
-            type='text'
-            placeholder='Відповідь'
+          <textarea
             className={classes.input}
+            placeholder='Відповідь'
+            rows={5}
+            aria-label='dsd'
           />
         </AccordionDetails>
         <Divider />
@@ -99,14 +99,12 @@ const EmailQuestionItem = ({
 };
 
 EmailQuestionItem.propTypes = {
-  key: PropTypes.string,
   question: PropTypes.func,
   checkboxChangeHandler: PropTypes.func,
   deleteHandler: PropTypes.func
 };
 
 EmailQuestionItem.defaultProps = {
-  key: 'someKey',
   question: {},
   checkboxChangeHandler: {},
   deleteHandler: {}
