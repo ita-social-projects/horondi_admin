@@ -35,6 +35,7 @@ const SaveButton = ({
       color={color}
       type={type}
       onClick={() => {
+        onClickHandler();
         setTimeout(() => {
           if (!error) {
             setDisabled(true);
