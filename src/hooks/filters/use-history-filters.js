@@ -13,17 +13,12 @@ import {
 } from '../../utils/history';
 import titles from "../../configs/titles";
 import buttonTitles from "../../configs/button-titles";
-import React, {useState} from "react";
+import React from "react";
 import {historyActions} from "../../consts/history-actions";
 
 const useHistoryFilters = () => {
     const dispatch = useDispatch();
     const filters = useSelector(({History}) => History.filters);
-    const [searchValue, setSearchValue] = useState('');
-
-    const handleSetSearchValue = (event) => {
-        setSearchValue(event?.target?.value);
-    };
 
     const setDateFromRangeFilter = (dateFrom) => {
         dispatch(setCurrentPage(0));
@@ -105,8 +100,7 @@ const useHistoryFilters = () => {
             }
         ],
         searchOptions: {
-            search:filters.search,
-            handleSetSearchValue,
+            search: filters.search,
             placeholderText,
             setSearchFilter
         },

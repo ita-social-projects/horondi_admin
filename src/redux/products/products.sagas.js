@@ -2,7 +2,6 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import {
-  selectProductsAndTable,
   selectProducts,
   selectProductsToUpload,
   selectFilesToDeleteAndProduct

@@ -9,7 +9,7 @@ import buttonTitles from "../../configs/button-titles";
 import sizesEnum, {availableEnum} from "../../configs/sizes-enum";
 import {sizeAvailableObj, sizeFilterObj, sizePlaceholderSearch} from "../../utils/size-helpers";
 
-const useSizeFilters = () => {
+const useSizesFilters = () => {
     const dispatch = useDispatch();
     const filters = useSelector(({Sizes}) => Sizes.filters);
 
@@ -74,4 +74,4 @@ const useSizeFilters = () => {
     };
 };
 
-export default useSizeFilters;
+export default useSizesFilters;

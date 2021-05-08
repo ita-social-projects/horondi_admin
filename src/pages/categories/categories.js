@@ -91,9 +91,11 @@ const Categories = () => {
             <div>
                 <FilterNavbar options={categoryOptions || {}}/>
             </div>
-            {
-                categoriesLoading? <LoadingBar/>:
-                categoriesList?.length ?
+            {categoriesLoading && <LoadingBar/>}
+
+            {!categoriesLoading &&
+            <>
+                {categoriesList?.length ?
                     <>
                         <TableContainerGenerator
                             tableTitles={config.tableHeadRowTitles.categories}
@@ -102,7 +104,10 @@ const Categories = () => {
                         <CategoryDeleteDialog/>
                     </> :
                     <p className={commonStyles.noRecords}>{messages.NO_CATEGORY_MESSAGE}</p>
+                }
+            </>
             }
+
 
         </div>
     );
