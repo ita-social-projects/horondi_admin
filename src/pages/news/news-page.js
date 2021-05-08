@@ -97,19 +97,20 @@ const NewsPage = () => {
                 </Button>
             </div>
             <FilterNavbar options={newsFilters || {}}/>
-            {
-                loading ? <LoadingBar/> :
-                newsItems?.length ?
-                    <TableContainerGenerator
-                        pagination
-                        id='newsTable'
-                        count={itemsCount}
-                        tableTitles={tableTitles}
-                        tableItems={newsItems}
-                    /> :
-                    <p className={commonStyles.noRecords}>{messages.NO_NEWS_MESSAGE}</p>
-            }
-
+            {loading && <LoadingBar/>}
+            {!loading && <>
+                {
+                    newsItems?.length ?
+                        <TableContainerGenerator
+                            pagination
+                            id='newsTable'
+                            count={itemsCount}
+                            tableTitles={tableTitles}
+                            tableItems={newsItems}
+                        /> :
+                        <p className={commonStyles.noRecords}>{messages.NO_NEWS_MESSAGE}</p>
+                }
+            </>}
         </div>
     );
 };

@@ -105,9 +105,12 @@ export const Comments = () => {
             <div>
                 <FilterNavbar options={commentOptions || {}}/>
             </div>
+            {loading && <LoadingBar/>}
+
             {
-                loading ? <LoadingBar/> :
-                    commentItems?.length ?
+                !loading && <>
+                    {
+                        commentItems?.length ?
                         <TableContainerGenerator
                             pagination
                             data-cy='commentTable'
@@ -120,7 +123,9 @@ export const Comments = () => {
                             tableItems={commentItems}
                         /> :
                         <p className={commonStyles.noRecords}>{NO_COMMENTS_MESSAGE}</p>
-            }
+                    }
+                </>}
+
 
         </div>
     );

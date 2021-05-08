@@ -124,18 +124,18 @@ const OrdersPage = () => {
                 searchOptions
             } || {}}/>
 
-            {
-                orderLoading ? <LoadingBar/> :
-                    <div className={commonStyles.table}>
-                        {
-                            handleOrdersPage(
-                                ordersList,
-                                itemsCount,
-                                orderItems,
-                                commonStyles.noRecords
-                            )
-                        }
-                    </div>
+            {orderLoading && <LoadingBar/>}
+
+            {!orderLoading && <div className={commonStyles.table}>
+                {
+                    handleOrdersPage(
+                        ordersList,
+                        itemsCount,
+                        orderItems,
+                        commonStyles.noRecords
+                    )
+                }
+            </div>
             }
         </div>
     );

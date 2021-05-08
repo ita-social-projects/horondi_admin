@@ -136,17 +136,19 @@ const MaterialPage = () => {
                 <FilterNavbar options={materialFilters || {}}/>
             </div>
             <div>
-                {
-                    loading ? <LoadingBar/> :
-                    materialItems?.length ?
-                        <TableContainerGenerator
-                            pagination
-                            count={itemsCount}
-                            tableTitles={tableTitles}
-                            tableItems={materialItems}
-                        /> :
-                        <p className={commonStyles.noRecords}>{messages.NO_MATERIAL_MESSAGE}</p>
-                }
+                {loading && <LoadingBar/>}
+                {!loading && <>
+                    {
+                        materialItems?.length ?
+                            <TableContainerGenerator
+                                pagination
+                                count={itemsCount}
+                                tableTitles={tableTitles}
+                                tableItems={materialItems}
+                            /> :
+                            <p className={commonStyles.noRecords}>{messages.NO_MATERIAL_MESSAGE}</p>
+                    }
+                </>}
 
             </div>
         </div>

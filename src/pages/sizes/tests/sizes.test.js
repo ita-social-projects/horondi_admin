@@ -16,7 +16,7 @@ const { CREATE_SIZE_TITLE } = config.buttonTitles;
 let mockLoading = true;
 
 Enzyme.configure({ adapter: new Adapter() });
-jest.mock('../../../hooks/filters/use-size-filter');
+jest.mock('../../../hooks/filters/use-sizes-filter');
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
