@@ -223,7 +223,10 @@ export const config = {
   filterLabels,
   materialUiConstants,
   sizeErrorMessages,
-  businessPageErrorMessages
+  businessPageErrorMessages,
+  imageUploadNewsInputsId,
+  valueKeys,
+  inputNames
 };
 export const inputTypes = {
   button: 'button',
