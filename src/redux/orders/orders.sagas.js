@@ -97,7 +97,7 @@ export function* handleOrdersListLoad({ payload }) {
       getAllOrders,
       payload.skip,
       payload.limit,
-      payload.filter.orderStatus
+      payload.filter
     );
 
     if (orders) {

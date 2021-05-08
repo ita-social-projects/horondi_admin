@@ -60,7 +60,8 @@ import {
   mockSnackarState,
   mockError,
   mockProductsStateToDeleteImages,
-  mockId
+  mockId,
+  mockPayload
 } from './products.variables';
 
 import {
@@ -91,7 +92,7 @@ const {
 
 describe('Test products saga', () => {
   it('should load filter', () =>
-    expectSaga(handleFilterLoad)
+    expectSaga(handleFilterLoad, { payload: mockPayload })
       .withReducer(combineReducers({ Products, Table }), {
         Products: mockProductsState,
         Table: mockTableState
@@ -106,7 +107,14 @@ describe('Test products saga', () => {
           }
         ],
         [
-          call(getAllProducts, mockProductsState, mockTableState),
+          call(
+            getAllProducts,
+            mockPayload.limit,
+            mockPayload.skip,
+            mockPayload.filter,
+            mockPayload.sort,
+            mockPayload.search
+          ),
           mockProductsList
         ]
       ])
@@ -132,10 +140,8 @@ describe('Test products saga', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
-        expect(analysisSelect).toHaveLength(1);
       }));
 
   it('should get filters', () =>
@@ -147,18 +153,12 @@ describe('Test products saga', () => {
       .provide([[call(getAllFilters), mockFiltersData]])
       .put(setAllFilterData(mockFiltersData))
       .put(setProductsLoading(false))
-      .hasFinalState({
-        Products: {
-          ...mockProductsState,
-          filterData: mockFiltersData
-        }
-      })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(1);
       }));
 

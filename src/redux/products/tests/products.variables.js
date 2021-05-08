@@ -224,7 +224,16 @@ const mockUploadToRemoveImages = [{ name: 'image' }];
 
 const mockId = '5fa034049a59a906d0640e42';
 
+const mockPayload = {
+  limit: 5,
+  skip: 0,
+  filter: {},
+  sort: {},
+  search: 'hello'
+};
+
 export {
+  mockPayload,
   mockUploadToRemoveImages,
   mockPrimaryImage,
   mockCategory,

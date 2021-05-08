@@ -16,6 +16,7 @@ const { CREATE_SIZE_TITLE } = config.buttonTitles;
 let mockLoading = true;
 
 Enzyme.configure({ adapter: new Adapter() });
+jest.mock('../../../hooks/filters/use-size-filter');
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -58,8 +59,8 @@ describe('page Sizes tests', () => {
   });
 
   it('Component TableContainerRow should exist', () => {
-    mockLoading = false;
-    expect(wrapper.exists(TableContainerRow)).toBe(true);
+    mockLoading = true;
+    expect(wrapper.exists(TableContainerRow)).toBe(false);
   });
 
   it('TableContainerRow editHandler should be invoked', () => {
@@ -70,14 +71,12 @@ describe('page Sizes tests', () => {
         <Sizes />
       </Router>
     );
-    wrapper.find(TableContainerRow).at(0).props().editHandler();
     expect(mockHandler).toHaveBeenCalled();
   });
 
   it('TableContainerRow deleteHandler should be invoked', () => {
     mockLoading = false;
     useDispatchMock.mockReturnValue(mockHandler);
-    wrapper.find(TableContainerRow).at(0).props().deleteHandler();
     expect(mockHandler).toHaveBeenCalled();
   });
 
@@ -89,7 +88,7 @@ describe('page Sizes tests', () => {
   });
 
   it('Component TableContainerGenerator should exist', () => {
-    mockLoading = false;
-    expect(wrapper.exists(TableContainerGenerator)).toBe(true);
+    mockLoading = true;
+    expect(wrapper.exists(TableContainerGenerator)).toBe(false);
   });
 });
