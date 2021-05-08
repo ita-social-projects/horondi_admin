@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Accordion,
   AccordionActions,
@@ -21,10 +21,7 @@ import buttonTitles from '../../../configs/button-titles';
 import { answerTextHandler } from '../../../utils/email-question-list';
 import { useStyles } from './email-questions-item.styles';
 import { config, inputTypes } from '../../../configs';
-import {
-  answerToEmailQuestion,
-  getEmailQuestionById
-} from '../../../redux/email-questions/email-questions.actions';
+import { answerToEmailQuestion } from '../../../redux/email-questions/email-questions.actions';
 import routes from '../../../configs/routes';
 import { SaveButton } from '../../../components/buttons';
 

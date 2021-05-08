@@ -6,6 +6,15 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: '20px'
   },
   tableList: {
+    '& thead tr': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginLeft: '50px',
+      marginRight: '50px'
+    },
+    '& thead tr th': {
+      flex: '1'
+    },
     '& tbody': {
       cursor: 'pointer'
     }
