@@ -4,11 +4,14 @@ import { config } from '../configs';
 const { languages } = config;
 
 const useNewsHandlers = () => {
-  const [uploadAuthorImage, setUploadAuthorImage] = useState(null);
-  const [uploadNewsImage, setUploadNewsImage] = useState(null);
-
-  const [authorPhoto, setAuthorPhoto] = useState('');
-  const [newsImage, setNewsImage] = useState('');
+  const [uploadAuthorImage, setUploadAuthorImage] = useState({
+    name: '',
+    imageUrl: ''
+  });
+  const [uploadNewsImage, setUploadNewsImage] = useState({
+    name: '',
+    imageUrl: ''
+  });
 
   const [uaAuthorName, uaSetAuthor] = useState('');
   const [uaText, uaSetText] = useState('');
@@ -71,10 +74,6 @@ const useNewsHandlers = () => {
     enSetText,
     enSetTitle,
     createArticle,
-    authorPhoto,
-    setAuthorPhoto,
-    newsImage,
-    setNewsImage,
     uploadAuthorImage,
     setUploadAuthorImage,
     uploadNewsImage,
