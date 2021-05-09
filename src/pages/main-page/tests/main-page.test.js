@@ -5,7 +5,6 @@ import {
   useSelector as useSelectorMock,
   useDispatch as useDispatchMock
 } from 'react-redux';
-
 import MainPage from '../index';
 import titles from '../../../configs/titles';
 import LoadingBar from '../../../components/loading-bar';
@@ -23,8 +22,6 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementationOnce((selector) => selector()),
   useDispatch: jest.fn()
 }));
-
-const mockHistoryPush = jest.fn();
 
 configure({ adapter: new Adapter() });
 

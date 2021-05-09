@@ -15,11 +15,7 @@ const variables = {
         }
       ]
     }
-  ],
-  pagination: {
-    limit: 10,
-    skip: 10
-  }
+  ]
 };
 
 export default variables;
