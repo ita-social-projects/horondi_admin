@@ -116,7 +116,7 @@ const ProductsPage = () => {
         )
         : null;
 
-    if (loading){
+    if (loading || detailLoading){
         return <LoadingBar/>
     }
 
