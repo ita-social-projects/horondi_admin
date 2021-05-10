@@ -11,7 +11,7 @@ import {
     SET_UKRPOST_DISTRICTS,
     SET_UKRPOST_CITIES,
     SET_UKRPOST_POSTOFFICES,
-    CLEAR_FILTERS, SET_FILTER, SET_SORT
+    CLEAR_FILTERS, SET_FILTER, SET_SORT, SET_ORDER_SORT_LABEL
 } from './orders.types';
 
 const initialFilters = {
@@ -35,7 +35,8 @@ export const initialState = {
     ukrPoshtaCities: [],
     ukrPoshtaRegions: [],
     ukrPoshtaDistricts: [],
-    ukrPoshtaPostOffices: []
+    ukrPoshtaPostOffices: [],
+    sortLabel:''
 };
 
 export const selectOrderList = ({Orders}) => ({
@@ -49,6 +50,11 @@ const ordersReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 selectedOrder: action.payload
+            };
+        case SET_ORDER_SORT_LABEL:
+            return {
+                ...state,
+                sortLabel: action.payload
             };
         case SET_ORDER_LOADING:
             return {

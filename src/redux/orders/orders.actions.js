@@ -24,7 +24,7 @@ import {
   GET_UKRPOST_POSTOFFICES,
   SET_FILTER,
   CLEAR_FILTERS,
-  SET_SORT
+  SET_SORT, SET_ORDER_SORT_LABEL
 } from './orders.types';
 
 const getOrder = (payload) => ({
@@ -155,6 +155,11 @@ const setOrderSort = (sort) => ({
   payload: sort
 });
 
+const setOrderSortLabel = (payload) => ({
+  type: SET_ORDER_SORT_LABEL,
+  payload
+});
+
 export {
   getOrder,
   setOrder,
@@ -181,5 +186,6 @@ export {
   setUkrPostRegions,
   setOrderFilter,
   clearOrderFilters,
-  setOrderSort
+  setOrderSort,
+  setOrderSortLabel
 };

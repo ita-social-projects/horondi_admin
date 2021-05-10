@@ -91,6 +91,9 @@ export const Comments = () => {
         />
     ));
 
+    if (loading) {
+        return <LoadingBar/>
+    }
     return (
         <div className={commonStyles.container}>
             <div className={commonStyles.adminHeader + ' ' + styles.title}>
@@ -105,28 +108,22 @@ export const Comments = () => {
             <div>
                 <FilterNavbar options={commentOptions || {}}/>
             </div>
-            {loading && <LoadingBar/>}
 
             {
-                !loading && <>
-                    {
-                        commentItems?.length ?
-                        <TableContainerGenerator
-                            pagination
-                            data-cy='commentTable'
-                            count={itemsCount}
-                            tableTitles={handleComments(
-                                commentItems,
-                                tableTitles,
-                                NO_COMMENTS_MESSAGE
-                            )}
-                            tableItems={commentItems}
-                        /> :
-                        <p className={commonStyles.noRecords}>{NO_COMMENTS_MESSAGE}</p>
-                    }
-                </>}
-
-
+                commentItems?.length ?
+                    <TableContainerGenerator
+                        pagination
+                        data-cy='commentTable'
+                        count={itemsCount}
+                        tableTitles={handleComments(
+                            commentItems,
+                            tableTitles,
+                            NO_COMMENTS_MESSAGE
+                        )}
+                        tableItems={commentItems}
+                    /> :
+                    <p className={commonStyles.noRecords}>{NO_COMMENTS_MESSAGE}</p>
+            }
         </div>
     );
 };

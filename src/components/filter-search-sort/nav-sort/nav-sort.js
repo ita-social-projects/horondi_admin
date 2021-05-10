@@ -8,9 +8,8 @@ import materialUiConstants from "../../../configs/material-ui-constants";
 import {sortLabel} from "../../../configs/sort";
 
 const NavSort = ({sortOptions}) => {
-    const [sortValue, setSortValue] = useState('');
     const styles = useStyles();
-    const {setSorting} = sortOptions;
+    const {setSorting, sortLabel: sortLabelValue} = sortOptions;
 
     const selectOptions = _.map(sortOptions.labels, ({label, value}) => (
         <MenuItem key={label} value={value}>
@@ -24,8 +23,7 @@ const NavSort = ({sortOptions}) => {
             const result = sortOptions.labels.find((item) => item.value === value);
 
             if (result) {
-                setSortValue(result.value);
-                setSorting(result.key, result.type);
+                setSorting(result);
             }
         },
         [sortOptions.label]
@@ -41,7 +39,7 @@ const NavSort = ({sortOptions}) => {
                     data-cy='user-sorting'
                     labelId='checkbox-label'
                     id='checkbox'
-                    value={sortValue}
+                    value={sortLabelValue}
                     onChange={selectHandler}
                     defaultValue={0}
                 >

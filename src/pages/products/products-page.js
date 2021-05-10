@@ -116,6 +116,10 @@ const ProductsPage = () => {
         )
         : null;
 
+    if (loading){
+        return <LoadingBar/>
+    }
+
     return (
         <div className={common.container}>
             <div className={common.adminHeader}>
@@ -137,14 +141,12 @@ const ProductsPage = () => {
                 </Button>
             </div>
             <FilterNavbar options={productFilters}/>
-            {(loading || detailLoading) && <LoadingBar/>}
-            {!loading && <>
-                {products?.length ? (
-                    handleProductsPage(products, itemsCount, tableTitles, productsItems)
-                ) : (
-                    <p className={common.noRecords}>{PRODUCT_NOT_FOUND}</p>
-                )}
-            </>}
+
+            {products?.length ? (
+                handleProductsPage(products, itemsCount, tableTitles, productsItems)
+            ) : (
+                <p className={common.noRecords}>{PRODUCT_NOT_FOUND}</p>
+            )}
         </div>
     );
 };

@@ -65,6 +65,10 @@ const AdminTab = (props) => {
         />
     ));
 
+    if (userLoading){
+        return <LoadingBar/>
+    }
+
     return (
         <>
             <div className={styles.filters}>
@@ -83,17 +87,14 @@ const AdminTab = (props) => {
                     </Button>
                 </div>
             </div>
-            {userLoading ? (
-                <LoadingBar/>
-            ) : (
-                <TableContainerGenerator
-                    pagination
-                    count={itemsCount}
-                    id='adminsTable'
-                    tableTitles={tableHeaders}
-                    tableItems={adminItems}
-                />
-            )}
+
+            <TableContainerGenerator
+                pagination
+                count={itemsCount}
+                id='adminsTable'
+                tableTitles={tableHeaders}
+                tableItems={adminItems}
+            />
             <RegisterDialog
                 data-cy='register-dialog'
                 isOpen={isRegisterDialogOpen}

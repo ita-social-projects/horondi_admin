@@ -19,3 +19,4 @@ export const SET_SORT = 'SET_USER_SORT';
 export const CLEAR_FILTERS = 'CLEAR_USER_FILTERS';
 export const BLOCK_USER = 'BLOCK_USER';
 export const UNLOCK_USER = 'UNLOCK_USER';
+export const USER_SORT_LABEL = 'USER_SORT_LABEL';

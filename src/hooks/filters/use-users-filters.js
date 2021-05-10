@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   clearFilters,
   setFilter,
-  setSort
+  setSort, setUserSortLabel
 } from '../../redux/users/users.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import {sortDirection} from "../../configs/sort";
@@ -15,6 +15,7 @@ const useUsersFilters = () => {
   const dispatch = useDispatch();
   const {
     filter,
+    sortLabel
   } = useSelector(selectUsersAndTable);
 
   const setRolesFilter = (roles) => {
@@ -48,19 +49,21 @@ const useUsersFilters = () => {
     dispatch(clearFilters());
   };
 
-  const setSorting = (key, type) => {
+  const setSorting = ({key, type, value}) => {
     dispatch(setCurrentPage(0));
     dispatch(
         setSort({
           [key]: sortDirection[type]
         })
     );
+    dispatch(setUserSortLabel(value))
   };
 
   return {
     sortOptions: {
       labels: filterLabels.orders.users,
-      setSorting
+      setSorting,
+      sortLabel
     },
     filterByMultipleOptions: [
       {

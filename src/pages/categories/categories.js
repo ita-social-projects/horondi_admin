@@ -77,6 +77,11 @@ const Categories = () => {
                 />
             ))
         : null;
+
+    if (categoriesLoading) {
+        return <LoadingBar/>
+    }
+
     return (
         <div className={commonStyles.container}>
             <div className={commonStyles.adminHeader}>
@@ -91,24 +96,17 @@ const Categories = () => {
             <div>
                 <FilterNavbar options={categoryOptions || {}}/>
             </div>
-            {categoriesLoading && <LoadingBar/>}
 
-            {!categoriesLoading &&
-            <>
-                {categoriesList?.length ?
-                    <>
-                        <TableContainerGenerator
-                            tableTitles={config.tableHeadRowTitles.categories}
-                            tableItems={categoriesList}
-                        />
-                        <CategoryDeleteDialog/>
-                    </> :
-                    <p className={commonStyles.noRecords}>{messages.NO_CATEGORY_MESSAGE}</p>
-                }
-            </>
+            {categoriesList?.length ?
+                <>
+                    <TableContainerGenerator
+                        tableTitles={config.tableHeadRowTitles.categories}
+                        tableItems={categoriesList}
+                    />
+                    <CategoryDeleteDialog/>
+                </> :
+                <p className={commonStyles.noRecords}>{messages.NO_CATEGORY_MESSAGE}</p>
             }
-
-
         </div>
     );
 };

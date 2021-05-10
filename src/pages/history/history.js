@@ -84,6 +84,10 @@ const History = () => {
         />
     ));
 
+    if (historyLoading){
+        return <LoadingBar/>
+    }
+
     return (
         <div className={commonStyles.container}>
             <Typography
@@ -95,30 +99,24 @@ const History = () => {
 
             <FilterNavbar options={{filterByMultipleOptions, filterByDateOptions, clearOptions, searchOptions} || {}}/>
 
-            {historyLoading && <LoadingBar/>}
             {
-                !historyLoading && <>
-                    {
-                        !records?.length ? (
-                            <p className={styles.noRecordsTitle}>
-                                {config.messages.NO_HISTORY_RECORDS_MESSAGE}
-                            </p>
-                        ) : (
-                            <TableContainerGenerator
-                                pagination
-                                data-cy='historyTable'
-                                count={itemsCount}
-                                tableTitles={handleHistory(
-                                    records,
-                                    config.tableHeadRowTitles.history,
-                                    config.messages.NO_HISTORY_RECORDS_MESSAGE
-                                )}
-                                tableItems={historyItems}
-                            />
+                !records?.length ? (
+                    <p className={styles.noRecordsTitle}>
+                        {config.messages.NO_HISTORY_RECORDS_MESSAGE}
+                    </p>
+                ) : (
+                    <TableContainerGenerator
+                        pagination
+                        data-cy='historyTable'
+                        count={itemsCount}
+                        tableTitles={handleHistory(
+                            records,
+                            config.tableHeadRowTitles.history,
+                            config.messages.NO_HISTORY_RECORDS_MESSAGE
                         )}
-                </>
-            }
-
+                        tableItems={historyItems}
+                    />
+                )}
         </div>
     );
 };

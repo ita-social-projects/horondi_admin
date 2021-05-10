@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
     setOrderSort,
     setOrderFilter,
-    clearOrderFilters
+    clearOrderFilters, setOrderSortLabel
 } from '../../redux/orders/orders.actions';
 import {setCurrentPage} from '../../redux/table/table.actions';
 import titles from "../../configs/titles";
@@ -17,17 +17,19 @@ import {sortDirection} from "../../configs/sort";
 const useOrderFilters = () => {
     const dispatch = useDispatch();
 
-    const {filters} = useSelector(({Orders}) => ({
+    const {filters, sortLabel} = useSelector(({Orders}) => ({
         filters: Orders.filters,
+        sortLabel: Orders.sortLabel
     }));
 
-    const setSorting = (key, type) => {
+    const setSorting = ({key, type, value}) => {
         dispatch(setCurrentPage(0));
         dispatch(
             setOrderSort({
                 [key]: sortDirection[type]
             })
         );
+        dispatch(setOrderSortLabel(value))
     };
 
     const setDateFromRangeFilter = (dateFrom) => {
@@ -83,7 +85,8 @@ const useOrderFilters = () => {
     return {
         sortOptions: {
             labels: filterLabels.orders.sortLabels,
-            setSorting
+            setSorting,
+            sortLabel
         },
         filterByDateOptions: [
             {

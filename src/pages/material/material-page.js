@@ -109,6 +109,10 @@ const MaterialPage = () => {
         />
     ));
 
+    if (loading){
+        return <LoadingBar/>
+    }
+
     return (
         <div className={commonStyles.container}>
             <div className={commonStyles.adminHeader}>
@@ -136,19 +140,16 @@ const MaterialPage = () => {
                 <FilterNavbar options={materialFilters || {}}/>
             </div>
             <div>
-                {loading && <LoadingBar/>}
-                {!loading && <>
-                    {
-                        materialItems?.length ?
-                            <TableContainerGenerator
-                                pagination
-                                count={itemsCount}
-                                tableTitles={tableTitles}
-                                tableItems={materialItems}
-                            /> :
-                            <p className={commonStyles.noRecords}>{messages.NO_MATERIAL_MESSAGE}</p>
-                    }
-                </>}
+                {
+                    materialItems?.length ?
+                        <TableContainerGenerator
+                            pagination
+                            count={itemsCount}
+                            tableTitles={tableTitles}
+                            tableItems={materialItems}
+                        /> :
+                        <p className={commonStyles.noRecords}>{messages.NO_MATERIAL_MESSAGE}</p>
+                }
 
             </div>
         </div>

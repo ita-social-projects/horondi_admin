@@ -33,7 +33,7 @@ import {
   SET_PRODUCT_DETAILS,
   GET_PRODUCT_DETAILS,
   SET_PRODUCT_FILTER,
-  CLEAR_PRODUCT_FILTER
+  CLEAR_PRODUCT_FILTER, SET_PRODUCT_SORT_LABEL
 } from './products.types';
 
 export const getProduct = (id) => ({
@@ -205,5 +205,9 @@ export const removeImagesToUpload = (payload) => ({
 
 export const setPrimaryImageToUpload = (payload) => ({
   type: SET_PRIMARY_IMAGE_TO_UPLOAD,
+  payload
+});
+export const setProductSortLabel = (payload) => ({
+  type: SET_PRODUCT_SORT_LABEL,
   payload
 });

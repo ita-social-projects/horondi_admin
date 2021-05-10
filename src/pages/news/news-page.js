@@ -80,6 +80,10 @@ const NewsPage = () => {
         />
     ));
 
+    if (loading){
+        return <LoadingBar/>
+    }
+
     return (
         <div className={commonStyles.container}>
             <div className={commonStyles.adminHeader + ' ' + styles.title}>
@@ -97,20 +101,17 @@ const NewsPage = () => {
                 </Button>
             </div>
             <FilterNavbar options={newsFilters || {}}/>
-            {loading && <LoadingBar/>}
-            {!loading && <>
-                {
-                    newsItems?.length ?
-                        <TableContainerGenerator
-                            pagination
-                            id='newsTable'
-                            count={itemsCount}
-                            tableTitles={tableTitles}
-                            tableItems={newsItems}
-                        /> :
-                        <p className={commonStyles.noRecords}>{messages.NO_NEWS_MESSAGE}</p>
-                }
-            </>}
+            {
+                newsItems?.length ?
+                    <TableContainerGenerator
+                        pagination
+                        id='newsTable'
+                        count={itemsCount}
+                        tableTitles={tableTitles}
+                        tableItems={newsItems}
+                    /> :
+                    <p className={commonStyles.noRecords}>{messages.NO_NEWS_MESSAGE}</p>
+            }
         </div>
     );
 };

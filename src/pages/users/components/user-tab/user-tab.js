@@ -49,23 +49,23 @@ const UserTab = (props) => {
         />
     ));
 
+    if (userLoading){
+        return <LoadingBar/>
+    }
+
     return (
         <>
             <div className={tabStyles.filters}>
                 <FilterNavbar options={usersFilters || {}}/>
             </div>
             <div>
-                {userLoading ? (
-                    <LoadingBar/>
-                ) : (
-                    <TableContainerGenerator
-                        pagination
-                        count={itemsCount}
-                        id='usersTable'
-                        tableTitles={tableTitles}
-                        tableItems={usersItems}
-                    />
-                )}
+                <TableContainerGenerator
+                    pagination
+                    count={itemsCount}
+                    id='usersTable'
+                    tableTitles={tableTitles}
+                    tableItems={usersItems}
+                />
             </div>
         </>
     );
