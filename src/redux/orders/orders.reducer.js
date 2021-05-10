@@ -132,7 +132,9 @@ const ordersReducer = (state = initialState, action = {}) => {
         case CLEAR_FILTERS:
             return {
                 ...state,
-                filters: initialFilters
+                filters: initialFilters,
+                sortLabel: "",
+                sort: {}
             };
         default:
             return state;

@@ -96,7 +96,9 @@ const usersReducer = (state = initialState, action = {}) => {
         case CLEAR_FILTERS:
             return {
                 ...state,
-                filters: initialFilters
+                filters: initialFilters,
+                sort: {},
+                sortLabel: ""
             };
         default:
             return state;

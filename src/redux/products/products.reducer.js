@@ -94,7 +94,9 @@ const productsReducer = (state = initialState, action = {}) => {
         case CLEAR_PRODUCT_FILTER:
             return {
                 ...state,
-                filters: initialFilters
+                filters: initialFilters,
+                sort: {},
+                sortLabel: ""
             };
         case SET_PRODUCT_SORT_LABEL:
             return {
