@@ -6,7 +6,7 @@ import NavSort from './nav-sort';
 import NavSearch from './nav-search';
 import NavClearFilters from './nav-clear-filters';
 import NavFilterByDate from "./filter-by-date";
-import NavFilterByValues from "./filter-by-miltiple-values";
+import NavFilterByValues from "./filter-by-multiple-values";
 
 const FilterNavbar = ({options}) => {
     const styles = useStyles();

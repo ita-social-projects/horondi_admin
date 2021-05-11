@@ -73,7 +73,11 @@ const ProductsPage = () => {
     const handleProductDelete = (id) => {
         const removeProduct = () => {
             dispatch(closeDialog());
-            dispatch(deleteProduct({id, request: true}));
+            dispatch(deleteProduct({
+                id,
+                request: true,
+                limit: rowsPerPage
+            }));
         };
         openSuccessSnackbar(
             removeProduct,
@@ -116,7 +120,7 @@ const ProductsPage = () => {
         )
         : null;
 
-    if (loading || detailLoading){
+    if (loading || detailLoading) {
         return <LoadingBar/>
     }
 

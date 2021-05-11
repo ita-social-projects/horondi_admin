@@ -1,15 +1,15 @@
 import {
-  SET_USERS,
-  SET_USER,
-  SET_USERS_LOADING,
-  SET_USERS_ERROR,
-  DELETE_USER_LOCALLY,
-  SET_TAB,
-  SET_FILTER,
-  SET_SORT,
-  CLEAR_FILTERS,
-  SET_ADMIN_CREATION_LOADING,
-  NEW_ADMIN_REGISTERED, USER_SORT_LABEL
+    SET_USERS,
+    SET_USER,
+    SET_USERS_LOADING,
+    SET_USERS_ERROR,
+    DELETE_USER_LOCALLY,
+    SET_TAB,
+    SET_FILTER,
+    SET_SORT,
+    CLEAR_FILTERS,
+    SET_ADMIN_CREATION_LOADING,
+    NEW_ADMIN_REGISTERED, USER_SORT_LABEL
 } from './users.types';
 
 const initialFilters = {
@@ -96,9 +96,14 @@ const usersReducer = (state = initialState, action = {}) => {
         case CLEAR_FILTERS:
             return {
                 ...state,
-                filters: initialFilters,
                 sort: {},
-                sortLabel: ""
+                sortLabel: "",
+                filters: {
+                    ...state.filters,
+                    banned: initialFilters.banned,
+                    search: initialFilters.search
+                },
+
             };
         default:
             return state;

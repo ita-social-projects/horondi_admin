@@ -143,14 +143,17 @@ export function* handleModelsLoad({ payload }) {
   }
 }
 
-export function* handleProductAdd({ payload }) {
+export function* handleProductAdd({ payload:productData }) {
   try {
+    const payload={
+      limit : 10
+    };
     yield put(setProductsLoading(true));
     const { upload } = yield select(selectProducts);
-    const product = yield call(addProduct, payload, upload);
+    const product = yield call(addProduct, productData, upload);
 
     if (product) {
-      yield call(handleFilterLoad);
+      yield call(handleFilterLoad, payload);
       yield put(clearProductToSend());
       yield put(setFilesToUpload([]));
       yield put(push(routes.pathToProducts));
@@ -163,15 +166,18 @@ export function* handleProductAdd({ payload }) {
 
 export function* handleProductDelete({ payload }) {
   try {
-    const product = yield call(deleteProduct, payload.id);
+    yield put(setProductsLoading(true));
+
+    const product = yield call(deleteProduct, payload?.id);
 
     if (product) {
       if (payload.request) {
-        yield call(handleFilterLoad);
+        yield call(handleFilterLoad,payload.limit);
       } else {
         yield put(push(routes.pathToProducts));
       }
       yield put(updatePagination());
+      yield put(setProductsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
     }
   } catch (e) {
@@ -181,6 +187,7 @@ export function* handleProductDelete({ payload }) {
 
 export function* handleProductUpdate({ payload }) {
   try {
+
     yield put(setProductsLoading(true));
     const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
 
