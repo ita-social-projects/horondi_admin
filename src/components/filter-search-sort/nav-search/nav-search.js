@@ -62,13 +62,15 @@ const NavSearch = (
 };
 NavSearch.propTypes = {
     searchOptions: PropTypes.objectOf(PropTypes.object),
-    filters: PropTypes.func,
-    setSearchFilter: PropTypes.func
+    search: PropTypes.string,
+    setSearchFilter: PropTypes.func,
+    placeholderText:PropTypes.string
 };
 
 NavSearch.defaultProps = {
     searchOptions: {},
-    filters: noop,
+    search: '',
+    placeholderText:'',
     setSearchFilter: noop
 };
 export default NavSearch;

@@ -259,9 +259,6 @@ describe('Test products saga', () => {
         [call(handleFilterLoad)],
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
-      .hasFinalState({
-        Products: mockProductsState
-      })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;

@@ -35,7 +35,8 @@ const NavFilterByDate = ({filterByDateOptions: {filters, dateHandler, title}}) =
 
 NavFilterByDate.propTypes = {
     filters: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.string,
+    setDateRangeFilter: PropTypes.func
 };
 
 NavFilterByDate.defaultProps = {
