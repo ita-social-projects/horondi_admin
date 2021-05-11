@@ -1,12 +1,12 @@
 const buttonTitles = {
-  DELETE_TITLE: 'Видалити',
+  DELETE_TITLE: 'Так',
   EDIT_TITLE: 'Редагувати',
   CREATE_NEWS_TITLE: 'Додати новину',
   CREATE_PATTERN_TITLE: 'Додати гобелен',
   CREATE_MODEL_TITLE: 'Додати модель',
   MODEL_SAVE_TITLE: 'Зберегти',
   MODEL_CONSTRUCTOR: 'Конструктор',
-  CANCEL_TITLE: 'Відмінити',
+  CANCEL_TITLE: 'Ні',
   LOGOUT_TITLE: 'Вихід',
   CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку',
   CREATE_CONTACT_TITLE: 'Додати контакти',
@@ -63,6 +63,7 @@ const buttonTitles = {
   EVENT_TITLE: 'Подія',
   SEND_CONFIRM: 'Надіслати підтвердження',
   SEND_CODE: 'Надіслати код для підтвердження',
-  EXIT_WITHOUT_SAVING: 'Вийти без збереження'
+  EXIT_WITHOUT_SAVING: 'Вийти без збереження',
+  CONFIRM: 'Так'
 };
 export default buttonTitles;

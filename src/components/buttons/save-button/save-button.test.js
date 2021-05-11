@@ -9,6 +9,12 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const { SAVE_TITLE } = config.buttonTitles;
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: (selector) => selector(),
+  useDispatch: () => jest.fn()
+}));
+
 describe('save button tests', () => {
   const size = 'small';
   const title = SAVE_TITLE;
