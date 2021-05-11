@@ -10,7 +10,7 @@ import LoadingBar from '../../../components/loading-bar';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
 import BusinessPageList from '../index';
-import mockBusinessPage from './variables';
+import mockBusinessPage from './mockBusinessPage';
 
 Enzyme.configure({ adapter: new Adapter() });
 
