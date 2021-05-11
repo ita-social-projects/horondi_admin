@@ -55,6 +55,7 @@ describe('Home page tests', () => {
   it('Should display loading bar', () => {
     state.loading = true;
     store.dispatch({ type: 'ANY_ACTION' });
+    
     expect(wrapper.find('LoadingBar').length).toEqual(0);
   });
 });
