@@ -176,7 +176,8 @@ const pagesCount = Math.ceil(
 
 const mockProductToDelete = {
     id: mockId,
-    request: true
+    request: true,
+    limit:10
 };
 
 const mockProductToUpdatePayload = {
