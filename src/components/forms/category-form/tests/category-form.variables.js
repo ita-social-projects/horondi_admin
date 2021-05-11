@@ -1,11 +1,11 @@
 const mockCategory = {
-  _id: '',
+  _id: '1322315645648',
   name: [
     {
-      value: ''
+      value: 'гаманець'
     },
     {
-      value: ''
+      value: 'purse'
     }
   ],
   code: '',
