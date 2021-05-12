@@ -1,22 +1,20 @@
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   clearFilters,
   setFilter,
-  setSort, setUserSortLabel
+  setSort,
+  setUserSortLabel
 } from '../../redux/users/users.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
-import {sortDirection} from "../../configs/sort";
-import filterLabels from "../../configs/filter-labels";
-import buttonTitles from "../../configs/button-titles";
-import {selectUsersAndTable} from "../../redux/selectors/users.selectors";
-import {userStatus, userStatusFilterObj} from "../../utils/user";
+import { sortDirection } from '../../configs/sort';
+import filterLabels from '../../configs/filter-labels';
+import buttonTitles from '../../configs/button-titles';
+import { selectUsersAndTable } from '../../redux/selectors/users.selectors';
+import { userStatus, userStatusFilterObj } from '../../utils/user';
 
 const useUsersFilters = () => {
   const dispatch = useDispatch();
-  const {
-    filter,
-    sortLabel
-  } = useSelector(selectUsersAndTable);
+  const { filter, sortLabel } = useSelector(selectUsersAndTable);
 
   const setRolesFilter = (roles) => {
     dispatch(
@@ -30,7 +28,7 @@ const useUsersFilters = () => {
     dispatch(setCurrentPage(0));
     dispatch(
       setFilter({
-        banned: statuses.map((item) => !!item)
+        banned: statuses
       })
     );
   };
@@ -49,14 +47,14 @@ const useUsersFilters = () => {
     dispatch(clearFilters());
   };
 
-  const setSorting = ({key, type, value}) => {
+  const setSorting = ({ key, type, value }) => {
     dispatch(setCurrentPage(0));
     dispatch(
-        setSort({
-          [key]: sortDirection[type]
-        })
+      setSort({
+        [key]: sortDirection[type]
+      })
     );
-    dispatch(setUserSortLabel(value))
+    dispatch(setUserSortLabel(value));
   };
 
   return {
@@ -72,7 +70,7 @@ const useUsersFilters = () => {
         selectItems: userStatusFilterObj(),
         setFilterHandler: setStatusFilter,
         objForTranslateRenderItems: userStatus
-      },
+      }
     ],
     setRolesFilter,
     searchOptions: {
@@ -84,7 +82,6 @@ const useUsersFilters = () => {
       clearAllFilters
     }
   };
-
 };
 
 export default useUsersFilters;

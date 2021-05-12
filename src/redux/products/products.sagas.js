@@ -72,11 +72,11 @@ export function* handleFilterLoad({ payload }) {
 
     const products = yield call(
       getAllProducts,
-      payload.limit,
-      payload.skip,
-      payload.filter,
-      payload.sort,
-      payload.search
+      payload?.limit,
+      payload?.skip,
+      payload?.filter,
+      payload?.sort,
+      payload?.search
     );
 
     if (products) {
@@ -84,6 +84,25 @@ export function* handleFilterLoad({ payload }) {
       yield put(setAllProducts(products?.items));
       yield put(setProductsLoading(false));
     }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
+export function* handleProductDelete({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
+
+    yield call(deleteProduct, payload?.id);
+
+    if (payload.request) {
+      yield call(handleFilterLoad, payload);
+    } else {
+      yield put(push(routes.pathToProducts));
+    }
+    yield put(updatePagination());
+    yield put(setProductsLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -143,10 +162,10 @@ export function* handleModelsLoad({ payload }) {
   }
 }
 
-export function* handleProductAdd({ payload:productData }) {
+export function* handleProductAdd({ payload: productData }) {
   try {
-    const payload={
-      limit : 10
+    const payload = {
+      limit: 10
     };
     yield put(setProductsLoading(true));
     const { upload } = yield select(selectProducts);
@@ -164,30 +183,8 @@ export function* handleProductAdd({ payload:productData }) {
   }
 }
 
-export function* handleProductDelete({ payload }) {
-  try {
-    yield put(setProductsLoading(true));
-
-    const product = yield call(deleteProduct, payload?.id);
-
-    if (product) {
-      if (payload.request) {
-        yield call(handleFilterLoad,payload.limit);
-      } else {
-        yield put(push(routes.pathToProducts));
-      }
-      yield put(updatePagination());
-      yield put(setProductsLoading(false));
-      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    }
-  } catch (e) {
-    yield call(handleProductsErrors, e);
-  }
-}
-
 export function* handleProductUpdate({ payload }) {
   try {
-
     yield put(setProductsLoading(true));
     const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
 
