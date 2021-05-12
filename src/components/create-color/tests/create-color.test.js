@@ -10,7 +10,6 @@ import CreateColor from '../create-color';
 import LoadingBar from '../../loading-bar';
 import SaveButton from '../../buttons/save-button';
 import ColorCircle from '../../color-circle';
-import 'jest-canvas-mock';
 
 import { config } from '../../../configs';
 

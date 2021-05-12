@@ -63,7 +63,16 @@ const buttonTitles = {
   EVENT_TITLE: 'Подія',
   SEND_CONFIRM: 'Надіслати підтвердження',
   SEND_CODE: 'Надіслати код для підтвердження',
+  CONFIRM: 'Так',
   EXIT_WITHOUT_SAVING: 'Вийти без збереження',
-  CONFIRM: 'Так'
+  STATUS: 'Статус замовлення',
+  PAYMENT_STATUS: 'Статус оплати',
+  SIZE_NAME: 'Розмір',
+  AVAILABLE: 'Доступність',
+  PURPOSE: 'Застосування',
+  CATEGORY: 'Категорії',
+  PATTERN: 'Гобелени',
+  MODEL: 'Моделі'
 };
+
 export default buttonTitles;
