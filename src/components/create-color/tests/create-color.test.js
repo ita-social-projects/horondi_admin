@@ -12,8 +12,9 @@ import ColorCircle from '../../color-circle';
 import 'jest-canvas-mock';
 
 import { config } from '../../../configs';
-import mockColorHex from './mockstore';
+import mockStore from './mockStore';
 
+const { mockColorHex } = mockStore;
 const componentLabels = config.labels.color;
 
 Enzyme.configure({ adapter: new Adapter() });
