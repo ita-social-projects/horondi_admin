@@ -47,8 +47,6 @@ const EmailQuestionItem = ({
   const [shouldValidate, setShouldValidate] = useState(false);
 
   const onAnsweringQuestion = () => {
-    console.log('answering//');
-    debugger;
     if (answerValue) {
       dispatch(
         answerToEmailQuestion({
