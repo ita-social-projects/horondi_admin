@@ -2,7 +2,6 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
-import { useSelector as useSelectorMock } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import { TextField } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,6 +12,7 @@ import ColorCircle from '../../color-circle';
 import 'jest-canvas-mock';
 
 import { config } from '../../../configs';
+import mockColorHex from './mockstore';
 
 const componentLabels = config.labels.color;
 
@@ -20,17 +20,17 @@ Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useDispatch: () => jest.fn()
+  useDispatch: () => jest.fn(),
+  useSelector: () => ({ loading: false })
 }));
 
-jest.spyOn(reactRedux, 'useSelector').mockReturnValue({ loading: false });
-
 const mockSetFieldValue = jest.fn();
+const mockSubmit = jest.fn();
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({
-    values: { colorHex: '#f65656' },
-    handleSubmit: jest.fn(),
+    values: { colorHex: mockColorHex },
+    handleSubmit: mockSubmit,
     handleChange: jest.fn(),
     touched: {},
     errors: {},
@@ -106,12 +106,17 @@ describe('CreateColor test', () => {
 
   it('Should handle ChromePicker onChange', () => {
     wrapper.find(TextField).at(0).invoke('onFocus')();
-    wrapper.find(ChromePicker).invoke('onChange')('#f65656');
+    wrapper.find(ChromePicker).invoke('onChange')(mockColorHex);
     expect(mockSetFieldValue).toHaveBeenCalledTimes(1);
   });
 
+  it('Should handle Submit form', () => {
+    wrapper.find('form').simulate('submit');
+    expect(mockSubmit).toHaveBeenCalledTimes(1);
+  });
+
   it('Should render LoadingBar', () => {
-    useSelectorMock.mockReturnValue({ loading: true });
+    jest.spyOn(reactRedux, 'useSelector').mockReturnValue({ loading: true });
     wrapper = mount(<CreateColor />);
     expect(wrapper.exists(LoadingBar)).toBe(true);
   });
