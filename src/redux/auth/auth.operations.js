@@ -1,25 +1,8 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
+import { userTranslations } from '../../translations/user.translations';
 
-export const loginAdmin = async (loginInput) => {
-  const result = await client.mutate({
-    mutation: gql`
-      mutation($loginInput: LoginInput!) {
-        loginAdmin(loginInput: $loginInput) {
-          _id
-          token
-        }
-      }
-    `,
-    variables: { loginInput }
-  });
-
-  return result.data.loginAdmin;
-};
-
-export const getUserByToken = async (token) => {
-  const result = await client.query({
-    query: gql`
+export const getUserByToken = async () => {
+  const getUserByTokenQuery = `
       query {
         getUserByToken {
           ... on User {
@@ -28,19 +11,49 @@ export const getUserByToken = async (token) => {
           }
         }
       }
-    `,
-    context: {
-      headers: {
-        token
-      }
-    },
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
 
-  // костилі, чекають фікс на беку
-  if (data.getUserByToken.statusCode === 401) {
-    throw new Error('USER_NOT_AUTHORIZED');
+  const result = await getItems(getUserByTokenQuery);
+
+  return result?.data?.getUserByToken;
+};
+
+export const loginAdmin = async (loginInput) => {
+  const loginAdminMutation = `
+      mutation($loginInput: LoginInput!) {
+        loginAdmin(loginInput: $loginInput) {
+          _id
+          token
+          refreshToken
+        }
+      }
+    `;
+
+  const result = await setItems(loginAdminMutation, { loginInput });
+
+  if (
+    Object.keys(userTranslations).includes(result?.data?.loginAdmin?.message)
+  ) {
+    throw new Error(`${userTranslations[result.data.loginAdmin.message]}`);
   }
-  return data.getUserByToken;
+
+  return result?.data?.loginAdmin;
+};
+export const regenerateAuthTokenPair = async (refreshToken) => {
+  const regenerateAuthTokenPairMutation = `
+      mutation($refreshToken:String!) {
+        regenerateAccessToken(refreshToken:$refreshToken) {
+          ... on Token {
+            token
+            refreshToken
+          }
+        }
+      }
+    `;
+
+  const result = await setItems(regenerateAuthTokenPairMutation, {
+    refreshToken
+  });
+
+  return result?.data?.regenerateAccessToken;
 };

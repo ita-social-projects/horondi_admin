@@ -1,22 +1,13 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-
-import { config } from '../../configs';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-import { commentsTranslations } from '../../translations/comments.translations';
-
-import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
+import {getItems, setItems} from '../../utils/client';
+import {config} from '../../configs';
+import {commentsTranslations} from '../../translations/comments.translations';
+import {GET_USER_COMMENTS, GET_PRODUCT_COMMENTS} from './comments.types';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');
 
 const getAllComments = async (filter, pagination) => {
-  const result = await client.query({
-    variables: {
-      filter,
-      pagination
-    },
-    query: gql`
-      query($filter: FilterInputComponent, $pagination: Pagination) {
+    const query = `
+      query($filter: CommentFilterInput, $pagination: Pagination) {
         getAllComments(filter: $filter, pagination: $pagination) {
           items {
             _id
@@ -35,21 +26,14 @@ const getAllComments = async (filter, pagination) => {
           count
         }
       }
-    `
-  });
-  await client.resetStore();
+    `;
+    const result = await getItems(query, {filter, pagination});
 
-  return result.data.getAllComments;
+    return result?.data?.getAllComments;
 };
 
 const getRecentComments = async (limit) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client.query({
-    context: { headers: { token } },
-    variables: {
-      limit
-    },
-    query: gql`
+    const query = `
       query($limit: Int!) {
         getRecentComments(limit: $limit) {
           ... on Comment {
@@ -72,27 +56,24 @@ const getRecentComments = async (limit) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  if (result.data.getRecentComments.message) {
-    throw new Error(
-      `${result.data.getRecentComments.statusCode} ${
-        commentsTranslations[result.data.getRecentComments.message]
-      }`
-    );
-  }
+    `;
+    const result = await getItems(query, {limit});
 
-  return result.data.getRecentComments;
+    if (
+        Object.keys(commentsTranslations).includes(result?.data?.getRecentComments?.message)
+    ) {
+        throw new Error(
+            `${result.data.getRecentComments.statusCode} ${
+                commentsTranslations[result.data.getRecentComments.message]
+            }`
+        );
+    }
+
+    return result?.data?.getRecentComments;
 };
 
 const deleteComment = async (id) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client
-    .mutate({
-      context: { headers: { token } },
-      variables: { id },
-      mutation: gql`
+    const query = `
         mutation($id: ID!) {
           deleteComment(id: $id) {
             ... on Comment {
@@ -114,22 +95,15 @@ const deleteComment = async (id) => {
             }
           }
         }
-      `,
-      fetchPolicy: 'no-cache'
-    })
-    .catch((error) => {
-      throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
-    });
+      `;
 
-  await client.resetStore();
+    const result = await setItems(query, {id});
 
-  return result.data.deleteComment;
+    return result?.data?.deleteComment;
 };
 
 const getCommentById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+    const query = `
       query($id: ID!) {
         getCommentById(id: $id) {
           ... on Comment {
@@ -152,30 +126,25 @@ const getCommentById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  if (result.data.getCommentById.message) {
-    throw new Error(
-      `${result.data.getCommentById.statusCode} ${
-        commentsTranslations[result.data.getCommentById.message]
-      }`
-    );
-  }
+    `;
 
-  return result.data.getCommentById;
+    const result = await getItems(query, {id});
+
+    if (
+        Object.keys(commentsTranslations).includes(result?.data?.getCommentById?.message)
+    ) {
+        throw new Error(
+            `${result.data.getCommentById.statusCode} ${
+                commentsTranslations[result.data.getCommentById.message]
+            }`
+        );
+    }
+
+    return result?.data?.getCommentById;
 };
 
 const updateComment = async (id, comment) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: {
-      id,
-      comment
-    },
-    mutation: gql`
+    const query = `
       mutation($id: ID!, $comment: CommentUpdateInput!) {
         updateComment(id: $id, comment: $comment) {
           ... on Comment {
@@ -188,41 +157,36 @@ const updateComment = async (id, comment) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.updateComment.message) {
-    throw new Error(
-      `${result.data.updateComment.statusCode} ${
-        commentsTranslations[result.data.updateComment.message]
-      }`
-    );
-  }
+    const result = await setItems(query, {id, comment});
 
-  return result.data.updateComment;
+    if (Object.keys(commentsTranslations).includes(result?.data?.updateComment?.message)) {
+        throw new Error(
+            `${result.data.updateComment.statusCode} ${
+                commentsTranslations[result.data.updateComment.message]
+            }`
+        );
+    }
+
+    return result?.data?.updateComment;
 };
 
 const getCommentsByType = async (value, commentsType) => {
-  try {
-    if (commentsType === GET_USER_COMMENTS) {
-      return await getCommentsByUser(value);
+    try {
+        if (commentsType === GET_USER_COMMENTS) {
+            return await getCommentsByUser(value);
+        }
+        if (commentsType === GET_PRODUCT_COMMENTS) {
+            return await getCommentsByProduct(value);
+        }
+    } catch (error) {
+        throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
     }
-    if (commentsType === GET_PRODUCT_COMMENTS) {
-      return await getCommentsByProduct(value);
-    }
-  } catch (error) {
-    throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
-  }
-  await client.resetStore();
 };
 
 const getCommentsByProduct = async (id) => {
-  const result = await client
-    .query({
-      variables: { productId: id },
-      query: gql`
+    const query = `
         query($productId: ID!) {
           getAllCommentsByProduct(
             productId: $productId
@@ -241,22 +205,15 @@ const getCommentsByProduct = async (id) => {
             }
           }
         }
-      `,
-      fetchPolicy: 'no-cache'
-    })
-    .catch((error) => {
-      throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
-    });
-  await client.resetStore();
+      `;
 
-  return result.data.getAllCommentsByProduct;
+    const result = await getItems(query, {productId: id});
+
+    return result?.data?.getAllCommentsByProduct;
 };
 
 const getCommentsByUser = async (userId) => {
-  const result = await client
-    .query({
-      variables: { userId },
-      query: gql`
+    const query = `
         query($userId: ID!) {
           getAllCommentsByUser(userId: $userId) {
             ... on Comment {
@@ -277,23 +234,19 @@ const getCommentsByUser = async (userId) => {
             }
           }
         }
-      `,
-      fetchPolicy: 'no-cache'
-    })
-    .catch((error) => {
-      throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
-    });
-  await client.resetStore();
-  return result.data.getAllCommentsByUser;
+      `;
+    const result = await getItems(query, {userId});
+
+    return result?.data?.getAllCommentsByUser;
 };
 
 export {
-  getAllComments,
-  deleteComment,
-  updateComment,
-  getCommentById,
-  getCommentsByUser,
-  getCommentsByProduct,
-  getCommentsByType,
-  getRecentComments
+    getAllComments,
+    deleteComment,
+    updateComment,
+    getCommentById,
+    getCommentsByUser,
+    getCommentsByProduct,
+    getCommentsByType,
+    getRecentComments
 };

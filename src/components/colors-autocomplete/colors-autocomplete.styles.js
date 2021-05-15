@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   root: {
-    width: '400px',
+    width: '250px',
     marginRight: '15px'
   },
   checkbox: {

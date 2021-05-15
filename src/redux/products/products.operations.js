@@ -1,40 +1,20 @@
-import { gql } from '@apollo/client';
-import { client, setItems } from '../../utils/client';
+import { setItems, getItems } from '../../utils/client';
 
-const getAllProducts = async (productsState, tableState) => {
-  const result = await client.query({
-    query: gql`
+const getAllProducts = async (limit=10, skip=0, filter={}, sort={}, search="") => {
+  const query = `
       query(
-        $search: String
-        $price: [Int]
-        $colors: [String]
-        $patterns: [String]
-        $isHotItem: Boolean
         $skip: Int
         $limit: Int
-        $rate: Int
-        $basePrice: Int
-        $purchasedCount: Int
-        $category: [String]
-        $models: [String]
+        $filter: FilterInput
+        $sort: SortInput
+        $search:String
       ) {
         getProducts(
-          filter: {
-            colors: $colors
-            pattern: $patterns
-            price: $price
-            category: $category
-            isHotItem: $isHotItem
-            models: $models
-          }
+          filter: $filter
           skip: $skip
           limit: $limit
-          search: $search
-          sort: {
-            rate: $rate
-            basePrice: $basePrice
-            purchasedCount: $purchasedCount
-          }
+          sort: $sort
+          search:$search
         ) {
           ... on PaginatedProducts {
             items {
@@ -88,29 +68,21 @@ const getAllProducts = async (productsState, tableState) => {
           }
         }
       }
-    `,
-    variables: {
-      search: productsState.filters.searchFilter,
-      colors: productsState.filters.colorsFilter,
-      patterns: productsState.filters.patternsFilter,
-      price: productsState.filters.priceFilter,
-      category: productsState.filters.categoryFilter,
-      models: productsState.filters.modelsFilter,
-      skip:
-        tableState.pagination.currentPage * tableState.pagination.rowsPerPage,
-      limit: tableState.pagination.rowsPerPage,
-      basePrice: productsState.sorting.sortByPrice || undefined,
-      rate: productsState.sorting.sortByRate || undefined,
-      purchasedCount: productsState.sorting.sortByPopularity || undefined
-    },
-    fetchPolicy: 'no-cache'
+    `;
+
+  const result = await getItems(query, {
+    limit,
+    sort,
+    skip,
+    filter,
+    search
   });
-  return result.data.getProducts;
+
+  return result?.data?.getProducts;
 };
 
 const getAllFilters = async () => {
-  const result = await client.query({
-    query: gql`
+  const query = `
       query {
         getProducts {
           ... on PaginatedProducts {
@@ -136,18 +108,49 @@ const getAllFilters = async () => {
                 }
               }
             }
+         count
+
           }
         }
       }
-    `
-  });
-  return result.data.getProducts.items;
+    `;
+  const result = await getItems(query);
+
+  return result?.data?.getProducts.items;
 };
 
 const getProductDetails = async () => {
-  const { data } = await client.query({
-    query: gql`
+  const query = `
+   
       query {
+          getAllModels {
+          items {
+            _id
+            name {
+              lang
+              value
+            }
+            category {
+              name {
+                value
+                lang
+              }
+            }
+            images {
+              large
+              medium
+              small
+              thumbnail
+            }
+            priority
+            show
+            description {
+              value
+              lang
+            }
+          }
+          count
+        }
         getAllClosure {
           items {
             _id
@@ -219,19 +222,21 @@ const getProductDetails = async () => {
           }
         }
       }
-    `
-  });
+    `;
+
+  const result = await getItems(query);
+
   return {
-    closures: data.getAllClosure.items,
-    patterns: data.getAllPatterns.items,
-    categories: data.getCategoriesWithModels,
-    materials: data.getMaterialsByPurpose
+    closures: result?.data?.getAllClosure.items,
+    patterns: result?.data?.getAllPatterns.items,
+    categories: result?.data?.getCategoriesWithModels,
+    materials: result?.data?.getMaterialsByPurpose,
+    models: result?.data?.getAllModels.items
   };
 };
 
 const getProductCategories = async () => {
-  const result = await client.query({
-    query: gql`
+  const query = `
       query {
         getAllCategories {
           _id
@@ -241,14 +246,14 @@ const getProductCategories = async () => {
           }
         }
       }
-    `
-  });
-  return result.data.getAllCategories;
+    `;
+  const result = await getItems(query);
+
+  return result?.data?.getAllCategories;
 };
 
-const getModelsByCategory = async (payload) => {
-  const result = await client.query({
-    query: gql`
+const getModelsByCategory = async (id) => {
+  const query = `
       query($id: ID!) {
         getModelsByCategory(id: $id) {
           _id
@@ -258,151 +263,12 @@ const getModelsByCategory = async (payload) => {
           }
         }
       }
-    `,
-    variables: {
-      id: payload
-    }
-  });
-  return result.data.getModelsByCategory;
-};
+    `;
 
-const productQuery = `
-... on Product {
-  _id
-  category {
-    _id
-    name {
-      lang
-      value
-    }
-  }
-  model {
-    _id
-    name {
-      value
-    }
-  }
-  name {
-    lang
-    value
-  }
-  description {
-    lang
-    value
-  }
-  mainMaterial {
-    material {
-      _id
-      name {
-        lang
-        value
-      }
-    }
-    color {
-      _id
-      colorHex
-      simpleName {
-        value
-        lang
-      }
-      name {
-        value
-        lang
-      }
-    }
-  }
-  innerMaterial {
-    material {
-      _id
-      name {
-        lang
-        value
-      }
-    }
-    color {
-      _id
-      colorHex
-      simpleName {
-        value
-        lang
-      }
-      name {
-        value
-        lang
-      }
-    }
-  }
-  strapLengthInCm
-  images {
-    primary {
-      large
-      medium
-      small
-      thumbnail
-    }
-    additional {
-      large
-      medium
-      small
-      thumbnail
-    }
-  }
-  pattern {
-    _id
-    name {
-      lang
-      value
-    }
-  }
-  closure {
-    _id
-    name {
-      lang
-      value
-    }
-  }
-  basePrice {
-    value
-    currency
-  }
-  sizes {
-    _id
-    name
-    heightInCm
-    widthInCm
-    depthInCm
-    volumeInLiters
-    available
-    additionalPrice {
-      value
-      currency
-    }
-  }
-  bottomMaterial {
-    material {
-      _id
-      name {
-        lang
-        value
-      }
-    }
-    color {
-      _id
-      colorHex
-      simpleName {
-        value
-        lang
-      }
-      name {
-        value
-        lang
-      }
-    }
-  }
-  isHotItem
-  available
-}
-`;
+  const result = await getItems(query, { id });
+
+  return result?.data?.getModelsByCategory;
+};
 
 const addProduct = async (product, upload) => {
   const result = `
@@ -418,8 +284,6 @@ const addProduct = async (product, upload) => {
         }
       }
     `;
-
-  await client.resetStore();
 
   return setItems(result, {
     product,
@@ -437,26 +301,157 @@ const deleteProduct = async (payload) => {
         }
       }
     `;
-  await client.resetStore();
+
   return setItems(result, {
     id: payload
   });
 };
 
-const getProduct = async (payload) => {
-  const result = await client.query({
-    query: gql`
+const getProduct = async (id) => {
+  const query = `
       query($id: ID!) {
         getProductById(id: $id) {
-          ${productQuery}
+          ... on Product {
+              _id
+              category {
+                _id
+                name {
+                  lang
+                  value
+                }
+              }
+              model {
+                _id
+                name {
+                  value
+                }
+              }
+              name {
+                lang
+                value
+              }
+              description {
+                lang
+                value
+              }
+              mainMaterial {
+                material {
+                  _id
+                  name {
+                    lang
+                    value
+                  }
+                }
+                color {
+                  _id
+                  colorHex
+                  simpleName {
+                    value
+                    lang
+                  }
+                  name {
+                    value
+                    lang
+                  }
+                }
+              }
+              innerMaterial {
+                material {
+                  _id
+                  name {
+                    lang
+                    value
+                  }
+                }
+                color {
+                  _id
+                  colorHex
+                  simpleName {
+                    value
+                    lang
+                  }
+                  name {
+                    value
+                    lang
+                  }
+                }
+              }
+              strapLengthInCm
+              images {
+                primary {
+                  large
+                  medium
+                  small
+                  thumbnail
+                }
+                additional {
+                  large
+                  medium
+                  small
+                  thumbnail
+                }
+              }
+              pattern {
+                _id
+                name {
+                  lang
+                  value
+                }
+              }
+              closure {
+                _id
+                name {
+                  lang
+                  value
+                }
+              }
+              basePrice {
+                value
+                currency
+              }
+              sizes {
+                _id
+                name
+                heightInCm
+                widthInCm
+                depthInCm
+                volumeInLiters
+                available
+                additionalPrice {
+                  value
+                  currency
+                }
+              }
+              bottomMaterial {
+                material {
+                  _id
+                  name {
+                    lang
+                    value
+                  }
+                }
+                color {
+                  _id
+                  colorHex
+                  simpleName {
+                    value
+                    lang
+                  }
+                  name {
+                    value
+                    lang
+                  }
+                }
+              }
+              isHotItem
+              available
+            }
         }
-    }`,
-    variables: {
-      id: payload
-    },
-    fetchPolicy: 'no-cache'
-  });
-  return result.data.getProductById;
+    }`;
+
+  const result = await getItems(query, { id });
+
+  return result?.data?.getProductById;
 };
 
 const updateProduct = async (payload, upload, primaryImageUpload) => {
@@ -491,9 +486,8 @@ const updateProduct = async (payload, upload, primaryImageUpload) => {
   });
 };
 
-const deleteImages = async (payload, images) => {
-  const result = await client.mutate({
-    mutation: gql`
+const deleteImages = async (id, images) => {
+  const query = `
       mutation($id: ID!, $images: [String!]!) {
         deleteImages(id: $id, images: $images) {
           primary {
@@ -510,13 +504,11 @@ const deleteImages = async (payload, images) => {
           }
         }
       }
-    `,
-    variables: {
-      id: payload,
-      images
-    }
-  });
-  return result.data.deleteImages;
+    `;
+
+  const result = await setItems(query, { id, images });
+
+  return result?.data?.deleteImages;
 };
 
 export {

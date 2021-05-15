@@ -75,7 +75,7 @@ const UsersDetails = (props) => {
   const userStatusHandler = (userId) => {
     const updateStatus = () => {
       dispatch(closeDialog());
-      isBanned.blockPeriod !== UserBlockPeriod.UNLOCKED
+      isBanned?.blockPeriod !== UserBlockPeriod.UNLOCKED
         ? dispatch(unlockUserByAdmin(userId))
         : dispatch(blockUserByAdmin(userId));
     };
@@ -102,7 +102,7 @@ const UsersDetails = (props) => {
           primaryData={primaryData}
           secondaryData={secondaryData}
           buttonStatus={
-            isBanned.blockPeriod !== UserBlockPeriod.UNLOCKED
+            isBanned?.blockPeriod !== UserBlockPeriod.UNLOCKED
               ? USER_ACTIVE_TITLE
               : USER_INACTIVE_TITLE
           }

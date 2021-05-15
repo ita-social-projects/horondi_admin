@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
+
+import { createBrowserHistory } from 'history';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import messages from '../../../configs/messages';
 
 const SaveButton = ({
   title,
@@ -18,7 +24,7 @@ const SaveButton = ({
     if (typeof el === 'boolean') {
       return true;
     }
-    if (el) {
+    if (el || el === 0) {
       return true;
     }
     return false;
@@ -29,12 +35,27 @@ const SaveButton = ({
     setDisabled(!disable);
   }, [disable, values, error]);
 
+  const dispatch = useDispatch();
+  const history = createBrowserHistory();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+
+  const { SAVE_MESSAGE, SAVE_CHANGES } = messages;
+
+  const saveButtonHandler = () => {
+    const backAction = () => {
+      dispatch(closeDialog());
+      history.goBack();
+    };
+    openSuccessSnackbar(backAction, SAVE_MESSAGE, SAVE_CHANGES);
+  };
+
   return (
     <Button
       variant='contained'
       color={color}
       type={type}
       onClick={() => {
+        saveButtonHandler();
         setTimeout(() => {
           if (!error) {
             setDisabled(true);

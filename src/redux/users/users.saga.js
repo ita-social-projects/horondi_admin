@@ -44,6 +44,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const {
   SUCCESS_DELETE_STATUS,
@@ -59,9 +61,12 @@ export function* handleUsersLoad({ payload: { filter, pagination, sort } }) {
   try {
     yield put(setUsersLoading(true));
     const result = yield call(getAllUsers, filter, pagination, sort);
-    yield put(setItemsCount(result.count));
-    yield put(setUsers(result.items));
-    yield put(setUsersLoading(false));
+
+    if (result) {
+      yield put(setItemsCount(result?.count));
+      yield put(setUsers(result?.items));
+      yield put(setUsersLoading(false));
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -71,8 +76,11 @@ export function* handleUserLoad({ payload }) {
   try {
     yield put(setUsersLoading(true));
     const user = yield call(getUserById, payload);
-    yield put(setUser(user));
-    yield put(setUsersLoading(false));
+
+    if (user) {
+      yield put(setUser(user));
+      yield put(setUsersLoading(false));
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -81,11 +89,15 @@ export function* handleUserLoad({ payload }) {
 export function* handleUsersDelete({ payload }) {
   try {
     yield put(setUsersLoading(true));
-    yield call(deleteUser, payload);
-    yield put(deleteUserLocally(payload));
-    yield put(updatePagination());
-    yield put(setUsersLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+
+    const result = yield call(deleteUser, payload);
+
+    if (result) {
+      yield put(deleteUserLocally(payload));
+      yield put(updatePagination());
+      yield put(setUsersLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -97,9 +109,11 @@ export function* handleBlockUser({ payload }) {
 
     const blockedUser = yield call(blockUser, payload);
 
-    yield put(setUser(blockedUser));
-    yield put(setUsersLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    if (blockedUser) {
+      yield put(setUser(blockedUser));
+      yield put(setUsersLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -111,9 +125,11 @@ export function* handleUnlockUser({ payload }) {
 
     const unlockedUser = yield call(unlockUser, payload);
 
-    yield put(setUser(unlockedUser));
-    yield put(setUsersLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    if (unlockedUser) {
+      yield put(setUser(unlockedUser));
+      yield put(setUsersLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -122,11 +138,14 @@ export function* handleUnlockUser({ payload }) {
 export function* handleAdminRegister({ payload }) {
   try {
     yield put(setAdminCreationLoading(true));
-    yield call(registerAdmin, payload);
-    yield put(newRegisteredAdmin(true));
-    yield put(setAdminCreationLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
-    yield put(newRegisteredAdmin(false));
+    const admin = yield call(registerAdmin, payload);
+
+    if (admin) {
+      yield put(newRegisteredAdmin(true));
+      yield put(setAdminCreationLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_CREATION_STATUS);
+      yield put(newRegisteredAdmin(false));
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -135,9 +154,12 @@ export function* handleAdminRegister({ payload }) {
 export function* handleConfirmSuperadminCreation({ payload }) {
   try {
     yield put(setAdminCreationLoading(true));
-    yield call(confirmSuperadminCreation, payload);
-    yield put(setAdminCreationLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_SEND_EMAIL);
+    const result = yield call(confirmSuperadminCreation, payload);
+
+    if (result) {
+      yield put(setAdminCreationLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_SEND_EMAIL);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -146,9 +168,12 @@ export function* handleConfirmSuperadminCreation({ payload }) {
 export function* handleResendEmailToConfirmAdmin({ payload }) {
   try {
     yield put(setUsersLoading(true));
-    yield call(resendEmailToConfirmAdmin, payload);
-    yield put(setUsersLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_SEND_EMAIL);
+    const result = yield call(resendEmailToConfirmAdmin, payload);
+
+    if (result) {
+      yield put(setUsersLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_SEND_EMAIL);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -157,10 +182,13 @@ export function* handleResendEmailToConfirmAdmin({ payload }) {
 export function* handleAdminConfirm({ payload }) {
   try {
     yield put(setUsersLoading(true));
-    yield call(completeAdminRegister, payload);
-    yield put(setUsersLoading(false));
-    yield put(push(pathToLogin));
-    yield call(handleSuccessSnackbar, SUCCESS_CONFIRMATION_STATUS);
+    const result = yield call(completeAdminRegister, payload);
+
+    if (result) {
+      yield put(setUsersLoading(false));
+      yield put(push(pathToLogin));
+      yield call(handleSuccessSnackbar, SUCCESS_CONFIRMATION_STATUS);
+    }
   } catch (err) {
     yield call(handleUsersError, err);
   }
@@ -178,9 +206,16 @@ export function* handleTokenValidation({ payload }) {
 }
 
 export function* handleUsersError(e) {
-  yield put(setUsersLoading(false));
-  yield put(setUserError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setUsersLoading(false));
+    yield put(setUserError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* usersSaga() {

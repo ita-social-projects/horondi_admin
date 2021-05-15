@@ -1,62 +1,51 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import {getItems, setItems} from '../../utils/client';
+import {materialTranslations} from '../../translations/material.translations';
 
-import { materialTranslations } from '../../translations/material.translations';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-import { config } from '../../configs';
-
-const materialRequest = `
-  _id
-  name {
-    value
-  }
-  description {
-    lang
-    value
-  }
-  available
-  additionalPrice {
-    value
-  }
-  purpose
-  colors {
-    _id
-    name {
-      lang
-      value
-    }
-    simpleName {
-      lang
-      value
-    }
-    colorHex
-  }
-`;
-
-export const getAllMaterials = async (filter, skip, limit) => {
-  const result = await client.query({
-    variables: {
-      filter,
-      skip,
-      limit
-    },
-    query: gql`
+export const getAllMaterials = async (skip, limit, filter) => {
+    const query = `
       query($filter: MaterialFilterInput, $skip: Int, $limit: Int) {
         getAllMaterials(filter: $filter, skip: $skip, limit: $limit) {
           items {
-            ${materialRequest}
+            _id
+            name {
+              value
+            }
+            description {
+              lang
+              value
+            }
+            available
+            additionalPrice {
+              value
+            }
+            purpose
+            colors {
+              _id
+              name {
+                lang
+                value
+              }
+              simpleName {
+                lang
+                value
+              }
+              colorHex
+            }
           }
           count
         }
       }
-    `
-  });
-  await client.resetStore();
-  return result.data.getAllMaterials;
+    `;
+    const result = await getItems(query, {
+        skip,
+        limit,
+        filter
+    });
+
+    return result?.data?.getAllMaterials;
 };
 export const getAllMaterialsByPatternPurpose = async () => {
-  const result = await client.query({
-    query: gql`
+    const query = `
       query {
         getMaterialsByPurpose(purposes: PATTERN) {
           pattern {
@@ -68,20 +57,43 @@ export const getAllMaterialsByPatternPurpose = async () => {
           }
         }
       }
-    `
-  });
+    `;
 
-  return result.data.getMaterialsByPurpose;
+    const result = await getItems(query);
+
+    return result?.data?.getMaterialsByPurpose;
 };
 
 export const getMaterialById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+    const query = `
       query($id: ID!) {
         getMaterialById(id: $id) {
           ... on Material {
-            ${materialRequest}
+            _id
+            name {
+              value
+            }
+            description {
+              lang
+              value
+            }
+            available
+            additionalPrice {
+              value
+            }
+            purpose
+            colors {
+              _id
+              name {
+                lang
+                value
+              }
+              simpleName {
+                lang
+                value
+              }
+              colorHex
+            }
           }
           ... on Error {
             message
@@ -89,24 +101,20 @@ export const getMaterialById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
 
-  if (data.getMaterialById.message) {
-    throw new Error(`${materialTranslations[data.getMaterialById.message]}`);
-  }
+    const result = await getItems(query, {id});
 
-  return data.getMaterialById;
+    if (
+        Object.keys(materialTranslations).includes(result?.data?.getMaterialById?.message)
+    ) {
+        throw new Error(`${materialTranslations[result.data.getMaterialById.message]}`);
+    }
+
+    return result?.data?.getMaterialById;
 };
 export const deleteMaterial = async (id) => {
-  const token = getFromLocalStorage(config.tokenName);
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id },
-    mutation: gql`
+    const query = `
       mutation($id: ID!) {
         deleteMaterial(id: $id) {
           ... on Material {
@@ -120,27 +128,19 @@ export const deleteMaterial = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
+    const result = await setItems(query, {id});
 
-  if (data.deleteMaterial.message) {
-    throw new Error(`${materialTranslations[data.deleteMaterial.message]}`);
-  }
+    if (
+        Object.keys(materialTranslations).includes(result?.data?.deleteMaterial?.message)
+    ) {
+        throw new Error(`${materialTranslations[result.data.deleteMaterial.message]}`);
+    }
 
-  return data.deleteMaterial;
+    return result?.data?.deleteMaterial;
 };
-
 export const createMaterial = async (payload) => {
-  const token = getFromLocalStorage(config.tokenName);
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-
-    mutation: gql`
+    const query = `
       mutation($material: MaterialInput!) {
         addMaterial(material: $material) {
           ... on Material {
@@ -152,28 +152,19 @@ export const createMaterial = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addMaterial.message) {
-    throw new Error(`${materialTranslations[data.addMaterial.message]}`);
-  }
+    const result = await setItems(query, payload);
 
-  return data.addMaterial;
+    if (Object.keys(materialTranslations).includes(result?.data?.addMaterial?.message)) {
+        throw new Error(`${materialTranslations[result.data.addMaterial.message]}`);
+    }
+
+    return result?.data?.addMaterial;
 };
 
 export const updateMaterial = async (id, material) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: {
-      id,
-      material
-    },
-    mutation: gql`
+    const query = `
       mutation($id: ID!, $material: MaterialInput!) {
         updateMaterial(id: $id, material: $material) {
           ... on Material {
@@ -193,15 +184,15 @@ export const updateMaterial = async (id, material) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.updateMaterial.message) {
-    throw new Error(`${materialTranslations[data.updateMaterial.message]}`);
-  }
+    const result = await getItems(query, {id, material});
 
-  return data.updateMaterial;
+    if (
+        Object.keys(materialTranslations).includes(result?.data?.updateMaterial?.message)
+    ) {
+        throw new Error(`${materialTranslations[result.data.updateMaterial.message]}`);
+    }
+
+    return result?.data?.updateMaterial;
 };

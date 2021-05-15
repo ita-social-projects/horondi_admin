@@ -34,6 +34,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -41,11 +43,11 @@ const {
   SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-export function* handleMaterialsByPurposeLoad({ payload }) {
+export function* handleMaterialsByPurposeLoad() {
   try {
     yield put(setMaterialLoading(true));
     const materialsByPurpose = yield call(getAllMaterialsByPatternPurpose);
-    yield put(setMaterialsByPurpose(materialsByPurpose.pattern));
+    yield put(setMaterialsByPurpose(materialsByPurpose?.pattern));
     yield put(setMaterialLoading(false));
   } catch (error) {
     yield call(handleMaterialError, error);
@@ -61,13 +63,16 @@ export function* handleMaterialsLoad({ payload }) {
     yield put(setMaterialLoading(true));
     const materials = yield call(
       getAllMaterials,
-      filter,
       payload.skip,
-      payload.limit
+      payload.limit,
+      filter
     );
-    yield put(setItemsCount(materials.count));
-    yield put(setMaterials(materials.items));
-    yield put(setMaterialLoading(false));
+
+    if (materials) {
+      yield put(setItemsCount(materials?.count));
+      yield put(setMaterials(materials?.items));
+      yield put(setMaterialLoading(false));
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -77,8 +82,11 @@ export function* handleMaterialLoad({ payload }) {
   try {
     yield put(setMaterialLoading(true));
     const material = yield call(getMaterialById, payload);
-    yield put(setMaterial(material));
-    yield put(setMaterialLoading(false));
+
+    if (material) {
+      yield put(setMaterial(material));
+      yield put(setMaterialLoading(false));
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -87,9 +95,12 @@ export function* handleMaterialLoad({ payload }) {
 export function* handleAddMaterial({ payload }) {
   try {
     yield put(setMaterialLoading(true));
-    yield call(createMaterial, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(config.routes.pathToMaterials));
+    const material = yield call(createMaterial, payload);
+
+    if (material) {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(config.routes.pathToMaterials));
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
@@ -98,32 +109,45 @@ export function* handleAddMaterial({ payload }) {
 export function* handleMaterialDelete({ payload }) {
   try {
     yield put(setMaterialLoading(true));
-    yield call(deleteMaterial, payload);
-    yield put(setMaterialLoading(false));
-    yield put(removeMaterialFromStore(payload));
-    yield put(updatePagination());
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const material = yield call(deleteMaterial, payload);
+
+    if (material) {
+      yield put(setMaterialLoading(false));
+      yield put(removeMaterialFromStore(payload));
+      yield put(updatePagination());
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
 }
 
 export function* handleMaterialUpdate({ payload }) {
-  const { id, material, images } = payload;
+  const { id, material } = payload;
   try {
     yield put(setMaterialLoading(true));
-    yield call(updateMaterial, id, material, images);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToMaterials));
+    const materialData = yield call(updateMaterial, id, material);
+
+    if (materialData) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(config.routes.pathToMaterials));
+    }
   } catch (error) {
     yield call(handleMaterialError, error);
   }
 }
 
 export function* handleMaterialError(e) {
-  yield put(setMaterialLoading(false));
-  yield put(setMaterialError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setMaterialLoading(false));
+    yield put(setMaterialError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* materialSaga() {

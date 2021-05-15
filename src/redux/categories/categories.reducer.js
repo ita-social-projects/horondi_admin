@@ -8,20 +8,15 @@ import {
   SET_CATEGORY_DELETE_ID,
   SET_CATEGORY_SWITCH_ID,
   SET_FILTER,
-  SET_SORT,
   CLEAR_FILTERS
 } from './categories.types';
 
 const initialFilters = {
-  _id: [],
   search: ''
 };
 
 export const initialState = {
   categories: [],
-  sort: {
-    name: 1
-  },
   filters: initialFilters,
   category: null,
   categoryLoading: false,
@@ -78,13 +73,6 @@ const categoryReducer = (state = initialState, action = {}) => {
       ...state,
       filters: {
         ...state.filters,
-        ...action.payload
-      }
-    };
-  case SET_SORT:
-    return {
-      ...state,
-      sort: {
         ...action.payload
       }
     };

@@ -1,6 +1,8 @@
 export const mockInitialFilters = {
-  _id: [],
-  search: ''
+  search: '',
+  dateFrom: '',
+  dateTo: '',
+  show: []
 };
 
 export const filter = {

@@ -19,7 +19,7 @@ import {
   CLEAR_FILTERS,
   BLOCK_USER,
   UNLOCK_USER,
-  CONFIRM_SUPERADMIN_CREATION
+  CONFIRM_SUPERADMIN_CREATION, USER_SORT_LABEL
 } from './users.types';
 
 const getUsers = (payload) => ({
@@ -123,8 +123,13 @@ const unlockUserByAdmin = (payload) => ({
   type: UNLOCK_USER,
   payload
 });
+const setUserSortLabel = (payload) => ({
+  type: USER_SORT_LABEL,
+  payload
+});
 
 export {
+  setUserSortLabel,
   getUsers,
   setUsers,
   setUser,

@@ -1,5 +1,4 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import TableContainerGenerator from '../containers/table-container-generator';
@@ -24,9 +23,9 @@ export const handleOrdersPage = (orders, itemsCount, orderItems, style) =>
       tableItems={orderItems}
     />
   ) : (
-    <Typography variant='h1' className={style}>
+    <p className={style}>
       {config.titles.orderTitles.ORDER_NOT_FOUND}
-    </Typography>
+    </p>
   );
 
 const { dialogContent, buttonTitle } = order;

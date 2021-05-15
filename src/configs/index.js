@@ -36,10 +36,15 @@ import formRegExp from './form-regexp';
 import labels from './labels';
 import { newsPaginationPayload, contactsPaginationPayload } from './pagination';
 import titles from './titles';
-import { sort } from './sort';
 import languages from './languages';
+import {
+  imageUploadNewsInputsId,
+  valueKeys,
+  inputNames
+} from './news-form-helpers';
 
 export const config = {
+  fetchPolicy: 'no-cache',
   app: {
     title: 'Horondi Admin Portal',
     serverUrl: 'http://localhost:5000/',
@@ -213,13 +218,15 @@ export const config = {
   statsErrorMessages,
   homePageSlideErrorMessages,
   constructorErrorMessages,
-  sort,
   paginationInputErrorMessages,
   commentErrorMessages,
   filterLabels,
   materialUiConstants,
   sizeErrorMessages,
-  businessPageErrorMessages
+  businessPageErrorMessages,
+  imageUploadNewsInputsId,
+  valueKeys,
+  inputNames
 };
 export const inputTypes = {
   button: 'button',

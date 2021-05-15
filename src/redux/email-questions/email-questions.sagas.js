@@ -33,6 +33,9 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import routes from '../../configs/routes';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
@@ -41,10 +44,11 @@ export function* handleEmailQuestionsLoad({ payload }) {
     yield put(setEmailQuestionLoading(true));
     const response = yield call(getAllEmailQuestions, payload);
 
-    yield put(setEmailQuestionsPagesCount(Math.ceil(response.count / 10)));
-    yield put(setAllEmailQuestion(response.questions));
-
-    yield put(setEmailQuestionLoading(false));
+    if (response) {
+      yield put(setEmailQuestionsPagesCount(Math.ceil(response?.count / 10)));
+      yield put(setAllEmailQuestion(response?.questions));
+      yield put(setEmailQuestionLoading(false));
+    }
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
@@ -53,7 +57,10 @@ export function* handleEmailQuestionsLoad({ payload }) {
 export function* handlePendingEmailQuestionsCount() {
   try {
     const count = yield call(getPendingEmailQuestionsCount);
-    yield put(setEmailQuestionsPendingCount(count));
+
+    if (count) {
+      yield put(setEmailQuestionsPendingCount(count));
+    }
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
@@ -64,9 +71,11 @@ export function* handleCurrentEmailQuestionLoad({ payload }) {
     yield put(setEmailQuestionLoading(true));
 
     const question = yield call(getEmailQuestionById, payload);
-    yield put(setCurrentEmailQuestion(question));
 
-    yield put(setEmailQuestionLoading(false));
+    if (question) {
+      yield put(setCurrentEmailQuestion(question));
+      yield put(setEmailQuestionLoading(false));
+    }
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
@@ -77,19 +86,22 @@ export function* handleMoveEmailQuestionsToSpam({ payload }) {
     yield put(setEmailQuestionLoading(true));
 
     const updatedQuestions = yield call(makeEmailQuestionsSpam, payload);
-    const emailQuestions = yield call(handleGettingQuestionFromStore);
-    const newQuestionsToStore = emailQuestions.map((item) => {
-      const spammedQuestion = updatedQuestions.find(
-        (val) => val._id === item._id
-      );
-      return spammedQuestion || item;
-    });
 
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(setAllEmailQuestion(newQuestionsToStore));
+    if (updatedQuestions) {
+      const emailQuestions = yield call(handleGettingQuestionFromStore);
+      const newQuestionsToStore = emailQuestions.map((item) => {
+        const spammedQuestion = updatedQuestions.find(
+          (val) => val._id === item._id
+        );
+        return spammedQuestion || item;
+      });
 
-    yield put(setEmailQuestionLoading(false));
-    yield put(push('/email-questions'));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(setAllEmailQuestion(newQuestionsToStore));
+
+      yield put(setEmailQuestionLoading(false));
+      yield put(push(routes.pathToEmailQuestions));
+    }
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
@@ -100,24 +112,26 @@ export function* handleAnswerEmailQuestion({ payload }) {
     yield put(setEmailQuestionLoading(true));
     const answeredQuestion = yield call(answerEmailQuestion, payload);
 
-    const emailQuestions = yield call(handleGettingQuestionFromStore);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    if (answeredQuestion) {
+      const emailQuestions = yield call(handleGettingQuestionFromStore);
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
 
-    yield put(
-      setAllEmailQuestion(
-        emailQuestions.map((item) => {
-          if (item._id === answeredQuestion._id) {
-            return answeredQuestion;
-          }
-          return item;
-        })
-      )
-    );
+      yield put(
+        setAllEmailQuestion(
+          emailQuestions.map((item) => {
+            if (item._id === answeredQuestion._id) {
+              return answeredQuestion;
+            }
+            return item;
+          })
+        )
+      );
 
-    yield call(handleReloadingPendingQuestionsCount, emailQuestions);
+      yield call(handleReloadingPendingQuestionsCount, emailQuestions);
 
-    yield put(setEmailQuestionLoading(false));
-    yield put(push('/email-questions'));
+      yield put(setEmailQuestionLoading(false));
+      yield put(push(routes.pathToEmailQuestions));
+    }
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
@@ -126,20 +140,22 @@ export function* handleAnswerEmailQuestion({ payload }) {
 export function* handleEmailQuestionsDelete({ payload }) {
   try {
     yield put(setEmailQuestionLoading(true));
-    yield call(deleteEmailQuestions, payload);
+    const question = yield call(deleteEmailQuestions, payload);
 
-    const emailQuestions = yield call(handleGettingQuestionFromStore);
+    if (question) {
+      const emailQuestions = yield call(handleGettingQuestionFromStore);
 
-    yield put(
-      setAllEmailQuestion(
-        emailQuestions.filter(
-          (item) => !payload.find((val) => val === item._id)
+      yield put(
+        setAllEmailQuestion(
+          emailQuestions.filter(
+            (item) => !payload.find((val) => val === item._id)
+          )
         )
-      )
-    );
+      );
 
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    yield put(setEmailQuestionLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+      yield put(setEmailQuestionLoading(false));
+    }
   } catch (error) {
     yield call(handleEmailQuestionError, error);
   }
@@ -155,9 +171,16 @@ export function* handleGettingQuestionFromStore() {
 }
 
 export function* handleEmailQuestionError(e) {
-  yield put(setEmailQuestionLoading(false));
-  yield put(setEmailQuestionsError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setEmailQuestionLoading(false));
+    yield put(setEmailQuestionsError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* emailQuestionSaga() {

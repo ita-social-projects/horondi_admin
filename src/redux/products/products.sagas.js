@@ -1,7 +1,7 @@
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
 import {
-  selectProductsAndTable,
   selectProducts,
   selectProductsToUpload,
   selectFilesToDeleteAndProduct
@@ -55,6 +55,8 @@ import {
 } from '../snackbar/snackbar.sagas';
 
 import { config } from '../../configs';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -64,14 +66,43 @@ const {
 
 const { routes } = config;
 
-export function* handleFilterLoad() {
+export function* handleFilterLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const { productsState, tableState } = yield select(selectProductsAndTable);
-    const products = yield call(getAllProducts, productsState, tableState);
-    yield put(setItemsCount(products.count));
-    yield put(setAllProducts(products.items));
+
+    const products = yield call(
+      getAllProducts,
+      payload?.limit,
+      payload?.skip,
+      payload?.filter,
+      payload?.sort,
+      payload?.search
+    );
+
+    if (products) {
+      yield put(setItemsCount(products?.count));
+      yield put(setAllProducts(products?.items));
+      yield put(setProductsLoading(false));
+    }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
+export function* handleProductDelete({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
+
+    yield call(deleteProduct, payload?.id);
+
+    if (payload.request) {
+      yield call(handleFilterLoad, payload);
+    } else {
+      yield put(push(routes.pathToProducts));
+    }
+    yield put(updatePagination());
     yield put(setProductsLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -80,9 +111,14 @@ export function* handleFilterLoad() {
 export function* handleGetFilters() {
   try {
     yield put(setProductsLoading(true));
-    const filter = yield call(getAllFilters);
-    yield put(setAllFilterData(filter));
-    yield put(setProductsLoading(false));
+    const products = yield call(getAllFilters);
+
+    if (products) {
+      yield put(setItemsCount(products?.count));
+      yield put(setAllProducts(products?.items));
+      yield put(setAllFilterData(products));
+      yield put(setProductsLoading(false));
+    }
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -92,8 +128,11 @@ export function* handleProductDetailsLoad() {
   try {
     yield put(setProductsLoading(true));
     const details = yield call(getProductDetails);
-    yield put(setProductDetails(details));
-    yield put(setProductsLoading(false));
+
+    if (details) {
+      yield put(setProductDetails(details));
+      yield put(setProductsLoading(false));
+    }
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -103,6 +142,7 @@ export function* handleProductSpeciesLoad() {
   try {
     const categories = yield call(getProductCategories);
     const species = yield call(getAllFilters);
+
     yield put(setProductCategories(categories));
     yield put(setAllFilterData(species));
   } catch (e) {
@@ -113,37 +153,31 @@ export function* handleProductSpeciesLoad() {
 export function* handleModelsLoad({ payload }) {
   try {
     const models = yield call(getModelsByCategory, payload);
-    yield put(setModels(models));
+
+    if (models) {
+      yield put(setModels(models));
+    }
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
 }
 
-export function* handleProductAdd({ payload }) {
+export function* handleProductAdd({ payload: productData }) {
   try {
+    const payload = {
+      limit: 10
+    };
     yield put(setProductsLoading(true));
     const { upload } = yield select(selectProducts);
-    yield call(addProduct, payload, upload);
-    yield call(handleFilterLoad);
-    yield put(clearProductToSend());
-    yield put(setFilesToUpload([]));
-    yield put(push(`/products`));
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-  } catch (e) {
-    yield call(handleProductsErrors, e);
-  }
-}
+    const product = yield call(addProduct, productData, upload);
 
-export function* handleProductDelete({ payload }) {
-  try {
-    yield call(deleteProduct, payload.id);
-    if (payload.request) {
-      yield call(handleFilterLoad);
-    } else {
+    if (product) {
+      yield call(handleFilterLoad, payload);
+      yield put(clearProductToSend());
+      yield put(setFilesToUpload([]));
       yield put(push(routes.pathToProducts));
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     }
-    yield put(updatePagination());
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -153,12 +187,21 @@ export function* handleProductUpdate({ payload }) {
   try {
     yield put(setProductsLoading(true));
     const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
-    yield call(updateProduct, payload, upload, primaryImageUpload);
-    yield put(setProduct({}));
-    yield put(clearFilesToUpload());
-    yield put(push(routes.pathToProducts));
-    yield put(setProductsLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+
+    const product = yield call(
+      updateProduct,
+      payload,
+      upload,
+      primaryImageUpload
+    );
+
+    if (product) {
+      yield put(setProduct(product));
+      yield put(clearFilesToUpload());
+      yield put(push(routes.pathToProducts));
+      yield put(setProductsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    }
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
@@ -169,17 +212,27 @@ export function* handleProductLoad({ payload }) {
     yield put(setProductsLoading(true));
     yield call(handleProductDetailsLoad);
     const product = yield call(getProduct, payload);
-    yield put(setProduct(product));
-    yield put(setProductsLoading(false));
+
+    if (product) {
+      yield put(setProduct(product));
+      yield put(setProductsLoading(false));
+    }
   } catch (e) {
     yield call(handleProductsErrors, e);
   }
 }
 
 export function* handleProductsErrors(e) {
-  yield put(setProductsLoading(false));
-  yield put(setProductsError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setProductsLoading(false));
+    yield put(setProductsError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export function* handleImagesDelete({ payload }) {
@@ -189,10 +242,13 @@ export function* handleImagesDelete({ payload }) {
       selectFilesToDeleteAndProduct
     );
     const newImages = yield call(deleteImages, payload, images);
-    yield put(setProduct({ ...selectedProduct, images: newImages }));
-    yield put(setFilesToDelete([]));
-    yield put(setProductsLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+
+    if (newImages) {
+      yield put(setProduct({ ...selectedProduct, images: newImages }));
+      yield put(setFilesToDelete([]));
+      yield put(setProductsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (e) {
     yield call(handleProductsErrors, e);
   }

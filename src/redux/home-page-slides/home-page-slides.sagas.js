@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
+
 import { setItemsCount, updatePagination } from '../table/table.actions';
 import {
   removeSlideFromStore,
@@ -33,6 +34,8 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -44,9 +47,12 @@ export function* handleSlidesLoad({ payload }) {
   try {
     yield put(setSlideLoading(true));
     const slides = yield call(getAllSlides, payload.skip, payload.limit);
-    yield put(setItemsCount(slides.count));
-    yield put(setSlides(slides.items));
-    yield put(setSlideLoading(false));
+
+    if (slides) {
+      yield put(setItemsCount(slides?.count));
+      yield put(setSlides(slides?.items));
+      yield put(setSlideLoading(false));
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
@@ -56,20 +62,23 @@ export function* handleAvailableSlides() {
   try {
     yield put(setSlideLoading(true));
     const availableSlides = yield call(getAllAvailableSlides);
-    yield put(setAvailableSlides(availableSlides.items));
-    yield put(
-      setSlidesDrugAndDropList([
-        {
-          title: 'available',
-          items: availableSlides.items.filter((el) => el.show)
-        },
-        {
-          title: 'nonAvailable',
-          items: availableSlides.items.filter((el) => !el.show)
-        }
-      ])
-    );
-    yield put(setSlideLoading(false));
+
+    if (availableSlides) {
+      yield put(setAvailableSlides(availableSlides?.items));
+      yield put(
+        setSlidesDrugAndDropList([
+          {
+            title: 'available',
+            items: availableSlides.items.filter((el) => el.show)
+          },
+          {
+            title: 'nonAvailable',
+            items: availableSlides.items.filter((el) => !el.show)
+          }
+        ])
+      );
+      yield put(setSlideLoading(false));
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
@@ -79,8 +88,11 @@ export function* handleSlideLoad({ payload }) {
   try {
     yield put(setSlideLoading(true));
     const slide = yield call(getSlideById, payload);
-    yield put(setSlide(slide));
-    yield put(setSlideLoading(false));
+
+    if (slide) {
+      yield put(setSlide(slide));
+      yield put(setSlideLoading(false));
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
@@ -89,9 +101,12 @@ export function* handleSlideLoad({ payload }) {
 export function* handleAddSlide({ payload }) {
   try {
     yield put(setSlideLoading(true));
-    yield call(createSlide, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(config.routes.pathToHomePageSlides));
+    const slide = yield call(createSlide, payload);
+
+    if (slide) {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(config.routes.pathToHomePageSlides));
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
@@ -100,17 +115,24 @@ export function* handleAddSlide({ payload }) {
 export function* handleSlideUpdate({ payload }) {
   try {
     yield put(setSlideLoading(true));
-    yield call(updateSlide, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToHomePageSlides));
+    const slide = yield call(updateSlide, payload);
+
+    if (slide) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(config.routes.pathToHomePageSlides));
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
 }
+
 export function* handleUpdateSlideOrder({ payload }) {
   try {
-    yield call(updateSlide, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    const slide = yield call(updateSlide, payload);
+
+    if (slide) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
@@ -119,20 +141,30 @@ export function* handleUpdateSlideOrder({ payload }) {
 export function* handleSlideDelete({ payload }) {
   try {
     yield put(setSlideLoading(true));
-    yield call(deleteSlide, payload);
-    yield put(removeSlideFromStore(payload));
-    yield put(updatePagination());
-    yield put(setSlideLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const slide = yield call(deleteSlide, payload);
+
+    if (slide) {
+      yield put(removeSlideFromStore(payload));
+      yield put(updatePagination());
+      yield put(setSlideLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleSlideError, error);
   }
 }
 
 export function* handleSlideError(e) {
-  yield put(setSlideLoading(false));
-  yield put(setSlideError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setSlideLoading(false));
+    yield put(setSlideError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* slideSaga() {

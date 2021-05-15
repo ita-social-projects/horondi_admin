@@ -22,15 +22,12 @@ import routes from '../../configs/routes';
 
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
+import { getEmailQuestionsPendingCount } from '../../redux/email-questions/email-questions.actions';
 
 const map = require('lodash/map');
 
 const MainPage = () => {
-  const {
-    mainTitle,
-    commentsTitle,
-    ordersTitle
-  } = titles.mainPageTitles;
+  const { mainTitle, commentsTitle, ordersTitle } = titles.mainPageTitles;
   const ordersTableTitles = tableHeadRowTitles.mainPageOrders;
   const { guestUser } = labels.user;
   const { EMPTY_LIST } = messages;
@@ -40,7 +37,7 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const { recentComments: list, loading } = useSelector(selectComment);
 
-  const { orderLoading, ordersList } = useSelector(selectOrderList);
+  const { orderLoading, ordersList, sort } = useSelector(selectOrderList);
   const { rowsPerPage, currentPage } = useSelector(
     commentSelectorWithPagination
   );
@@ -61,18 +58,24 @@ const MainPage = () => {
       getOrderList({
         limit: rowsPerPage,
         skip: currentPage * rowsPerPage,
-        filter: {
-          orderStatus: 'CREATED'
-        }
+        sort
       })
     );
   }, [dispatch, rowsPerPage, currentPage]);
+
+  useEffect(() => {
+    dispatch(getEmailQuestionsPendingCount());
+  }, []);
+
+  if (orderLoading || loading) {
+    return <LoadingBar />;
+  }
 
   const comments = map(list, ({ date, text, user, _id }) => (
     <div key={_id} className={classes.comment}>
       <div className={classes.commentText}>{text}</div>
       <div className={classes.commentInfo}>
-        <div>{user.firstName || guestUser}</div>
+        <div>{user?.firstName || guestUser}</div>
         <div>
           <div>{moment.unix(date / 1000).format('HH:mm')}</div>
           <div>{moment.unix(date / 1000).format('DD.MM.YYYY ')}</div>
@@ -83,29 +86,28 @@ const MainPage = () => {
 
   const orders =
     ordersList && ordersList.length
-      ? map(ordersList, ({ dateOfCreation, totalItemsPrice, _id }) => (
-        <TableRow
-          key={_id}
-          onClick={() => dispatch(push(`${pathToOrders}/${_id}`))}
-          className={classes.order}
-          data-cy='order'
-        >
-          <TableCell>
-            {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
-          </TableCell>
-          <TableCell>
-            {totalItemsPrice[0].value}
-            {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
-            {totalItemsPrice[1].currency}
-          </TableCell>
-          <TableCell>{_id}</TableCell>
-        </TableRow>
-      ))
+      ? map(
+        ordersList,
+        ({ dateOfCreation, totalItemsPrice, _id, orderNumber }) => (
+          <TableRow
+            key={_id}
+            onClick={() => dispatch(push(`${pathToOrders}/edit/${_id}`))}
+            className={classes.order}
+            data-cy='order'
+          >
+            <TableCell>
+              {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
+            </TableCell>
+            <TableCell>
+              {totalItemsPrice[0].value}
+              {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
+              {totalItemsPrice[1].currency}
+            </TableCell>
+            <TableCell>{orderNumber}</TableCell>
+          </TableRow>
+        )
+      )
       : null;
-
-  if (orderLoading || loading) {
-    return <LoadingBar />;
-  }
 
   return (
     <div className={`${commonClasses.container} ${classes.root}`}>

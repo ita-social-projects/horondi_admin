@@ -36,6 +36,8 @@ import {
 } from '../snackbar/snackbar.sagas';
 
 import { setItemsCount, updatePagination } from '../table/table.actions';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
@@ -43,9 +45,12 @@ export function* handleCommentsLoad({ payload: { filter, pagination } }) {
   try {
     yield put(setCommentsLoading(true));
     const comments = yield call(getAllComments, filter, pagination);
-    yield put(setItemsCount(comments.count));
-    yield put(setComments(comments.items));
-    yield put(setCommentsLoading(false));
+
+    if (comments) {
+      yield put(setItemsCount(comments?.count));
+      yield put(setComments(comments?.items));
+      yield put(setCommentsLoading(false));
+    }
   } catch (error) {
     yield call(handleCommentsError, error);
   }
@@ -54,9 +59,13 @@ export function* handleCommentsLoad({ payload: { filter, pagination } }) {
 export function* handleRecentCommentsLoad({ payload }) {
   try {
     yield put(setCommentsLoading(true));
+
     const comments = yield call(getRecentComments, payload.pagination.limit);
-    yield put(setRecentComments(comments));
-    yield put(setCommentsLoading(false));
+
+    if (comments) {
+      yield put(setRecentComments(comments));
+      yield put(setCommentsLoading(false));
+    }
   } catch (error) {
     yield call(handleCommentsError, error);
   }
@@ -66,8 +75,11 @@ export function* handleCommentLoad({ payload }) {
   try {
     yield put(setCommentsLoading(true));
     const comment = yield call(getCommentById, payload);
-    yield put(setComment(comment));
-    yield put(setCommentsLoading(false));
+
+    if (comment) {
+      yield put(setComment(comment));
+      yield put(setCommentsLoading(false));
+    }
   } catch (error) {
     yield call(handleCommentsError, error);
   }
@@ -77,11 +89,14 @@ export function* handleCommentDelete({ payload }) {
   try {
     yield put(setCommentsLoading(true));
 
-    yield call(deleteComment, payload);
-    yield put(removeCommentFromStore(payload));
-    yield put(updatePagination());
-    yield put(setCommentsLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const comment = yield call(deleteComment, payload);
+
+    if (comment) {
+      yield put(removeCommentFromStore(payload));
+      yield put(updatePagination());
+      yield put(setCommentsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleCommentsError, error);
   }
@@ -91,9 +106,12 @@ export function* handleCommentUpdate({ payload }) {
   const { id, comment } = payload;
   try {
     yield put(setCommentsLoading(true));
-    yield call(updateComment, id, comment);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToComments));
+    const commentData = yield call(updateComment, id, comment);
+
+    if (commentData) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(config.routes.pathToComments));
+    }
   } catch (error) {
     yield call(handleCommentsError, error);
   }
@@ -107,17 +125,27 @@ export function* handleCommentsByTypeLoad({ payload }) {
       payload.value,
       payload.commentsType
     );
-    yield put(setComments(comments));
-    yield put(setCommentsLoading(false));
+
+    if (comments) {
+      yield put(setComments(comments));
+      yield put(setCommentsLoading(false));
+    }
   } catch (error) {
     yield call(handleCommentsError, error);
   }
 }
 
 export function* handleCommentsError(e) {
-  yield put(setCommentsLoading(false));
-  yield put(setCommentError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setCommentsLoading(false));
+    yield put(setCommentError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* commentsSaga() {

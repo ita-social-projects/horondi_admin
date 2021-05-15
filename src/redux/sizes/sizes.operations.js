@@ -1,15 +1,15 @@
-import { gql } from '@apollo/client';
+import {getItems, setItems} from '../../utils/client';
+import {sizeTranslations} from '../../translations/sizes.translations';
 
-import { config } from '../../configs';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-import { client } from '../../utils/client';
-import { sizeTranslations } from '../../translations/sizes.translations';
-
-export const getAllSizes = async () => {
-  const result = await client.query({
-    query: gql`
-      query {
-        getAllSizes {
+export const getAllSizes = async (limit,skip,filter) => {
+    const query = `
+      query (
+      $limit: Int
+      $skip: Int
+      $filter:SizeFilterInput
+    ){
+        getAllSizes(limit: $limit, skip: $skip, filter: $filter) {
+        items{
           _id
           name
           simpleName {
@@ -17,17 +17,19 @@ export const getAllSizes = async () => {
             value
           }
           available
+          }
+          count
         }
       }
-    `
-  });
-  return result.data.getAllSizes;
+    `;
+
+    const result = await getItems(query, {limit,skip,filter});
+
+    return result?.data?.getAllSizes;
 };
 
 export const getSizeById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+    const query = `
       query($id: ID!) {
         getSizeById(id: $id) {
           ... on Size {
@@ -49,29 +51,23 @@ export const getSizeById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  if (result.data.getSizeById.message) {
-    throw new Error(
-      `${result.data.getSizeById.statusCode} ${
-        sizeTranslations[result.data.getSizeById.message]
-      }`
-    );
-  }
+    const result = await getItems(query, {id});
 
-  return result.data.getSizeById;
+    if (Object.keys(sizeTranslations).includes(result?.data?.getSizeById.message)) {
+        throw new Error(
+            `${result.data.getSizeById.statusCode} ${
+                sizeTranslations[result.data.getSizeById.message]
+            }`
+        );
+    }
+
+    return result?.data?.getSizeById;
 };
 
 export const addSize = async (size) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: {
-      size
-    },
-    mutation: gql`
+    const query = `
       mutation($size: SizeInput!) {
         addSize(size: $size) {
           ... on Size {
@@ -84,29 +80,15 @@ export const addSize = async (size) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.addSize.message) {
-    throw new Error(
-      `${result.data.addSize.statusCode} ${[result.data.addSize.message]}`
-    );
-  }
+    const result = await setItems(query, {size});
 
-  return result.data.addSize;
+    return result?.data?.addSize;
 };
 
 export const updateSize = async (id, size) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: {
-      id,
-      size
-    },
-    mutation: gql`
+    const query = `
       mutation($id: ID!, $size: SizeInput!) {
         updateSize(id: $id, size: $size) {
           ... on Size {
@@ -119,28 +101,23 @@ export const updateSize = async (id, size) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.updateSize.message) {
-    throw new Error(
-      `${result.data.updateSize.statusCode} ${
-        sizeTranslations[result.data.updateSize.message]
-      }`
-    );
-  }
+    const result = await setItems(query, {id, size});
 
-  return result.data.updateSize;
+    if (Object.keys(sizeTranslations).includes(result?.data?.updateSize?.message)) {
+        throw new Error(
+            `${result.data.updateSize.statusCode} ${
+                sizeTranslations[result.data.updateSize.message]
+            }`
+        );
+    }
+
+    return result?.data?.updateSize;
 };
 
 export const deleteSize = async (id) => {
-  const token = getFromLocalStorage(config.tokenName);
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id },
-    mutation: gql`
+    const query = `
       mutation($id: ID!) {
         deleteSize(id: $id) {
           ... on Size {
@@ -154,18 +131,17 @@ export const deleteSize = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.deleteSize.message) {
-    throw new Error(
-      `${result.data.deleteSize.statusCode} ${
-        sizeTranslations[result.data.deleteSize.message]
-      }`
-    );
-  }
+    const result = await setItems(query, {id});
 
-  return result.data.deleteSize;
+    if (Object.keys(sizeTranslations).includes(result?.data?.deleteSize?.message)) {
+        throw new Error(
+            `${result?.data?.deleteSize.statusCode} ${
+                sizeTranslations[result?.data?.deleteSize.message]
+            }`
+        );
+    }
+
+    return result?.data?.deleteSize;
 };

@@ -29,6 +29,8 @@ import {
   handleSuccessSnackbar,
   handleErrorSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const {
   SUCCESS_ADD_STATUS,
@@ -63,10 +65,13 @@ export function* handleCurrentBusinessPageLoad({ payload }) {
 export function* handleAddBusinessPage({ payload }) {
   try {
     yield put(setLoading(true));
-    yield call(createBusinessPage, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(setLoading(false));
-    yield put(push(routes.pathToBusinessPages));
+    const businessPage = yield call(createBusinessPage, payload);
+
+    if (businessPage) {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(setLoading(false));
+      yield put(push(routes.pathToBusinessPages));
+    }
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
@@ -75,10 +80,13 @@ export function* handleAddBusinessPage({ payload }) {
 export function* handleBusinessPageDelete({ payload }) {
   try {
     yield put(setLoading(true));
-    yield call(deleteBusinessPage, payload);
-    yield put(removeBusinessPageFromStore(payload));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    yield put(setLoading(false));
+    const businessPage = yield call(deleteBusinessPage, payload);
+
+    if (businessPage) {
+      yield put(removeBusinessPageFromStore(payload));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+      yield put(setLoading(false));
+    }
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
@@ -87,19 +95,29 @@ export function* handleBusinessPageDelete({ payload }) {
 export function* handleBusinessPageUpdate({ payload }) {
   try {
     yield put(setLoading(true));
-    yield call(updateBusinessPage, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(setLoading(false));
-    yield put(push(routes.pathToBusinessPages));
+    const businessPage = yield call(updateBusinessPage, payload);
+
+    if (businessPage) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(setLoading(false));
+      yield put(push(routes.pathToBusinessPages));
+    }
   } catch (error) {
     yield call(handleBusinessPageError, error);
   }
 }
 
 export function* handleBusinessPageError(e) {
-  yield put(setLoading(false));
-  yield put(setBusinessPagesError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setLoading(false));
+    yield put(setBusinessPagesError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* businessPagesSaga() {
