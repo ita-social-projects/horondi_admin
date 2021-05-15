@@ -61,6 +61,7 @@ const SaveButton = ({
             setDisabled(true);
           }
         }, 10);
+        onClickHandler();
       }}
       disabled={disabled}
       {...props}
