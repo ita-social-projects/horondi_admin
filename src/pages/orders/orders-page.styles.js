@@ -1,11 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  orderCount: {
-    fontSize: 16,
-    textAlign: 'left',
-    marginBottom: '10px'
-  },
   filterBy: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -14,5 +9,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     marginLeft: '20px'
+  },
+  title:{
+    marginBottom: '5px'
   }
 }));

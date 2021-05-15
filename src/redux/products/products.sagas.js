@@ -2,7 +2,6 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import {
-  selectProductsAndTable,
   selectProducts,
   selectProductsToUpload,
   selectFilesToDeleteAndProduct
@@ -67,11 +66,18 @@ const {
 
 const { routes } = config;
 
-export function* handleFilterLoad() {
+export function* handleFilterLoad({ payload }) {
   try {
     yield put(setProductsLoading(true));
-    const { productsState, tableState } = yield select(selectProductsAndTable);
-    const products = yield call(getAllProducts, productsState, tableState);
+
+    const products = yield call(
+      getAllProducts,
+      payload?.limit,
+      payload?.skip,
+      payload?.filter,
+      payload?.sort,
+      payload?.search
+    );
 
     if (products) {
       yield put(setItemsCount(products?.count));
@@ -83,13 +89,34 @@ export function* handleFilterLoad() {
   }
 }
 
+export function* handleProductDelete({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
+
+    yield call(deleteProduct, payload?.id);
+
+    if (payload.request) {
+      yield call(handleFilterLoad, payload);
+    } else {
+      yield put(push(routes.pathToProducts));
+    }
+    yield put(updatePagination());
+    yield put(setProductsLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
 export function* handleGetFilters() {
   try {
     yield put(setProductsLoading(true));
-    const filter = yield call(getAllFilters);
+    const products = yield call(getAllFilters);
 
-    if (filter) {
-      yield put(setAllFilterData(filter));
+    if (products) {
+      yield put(setItemsCount(products?.count));
+      yield put(setAllProducts(products?.items));
+      yield put(setAllFilterData(products));
       yield put(setProductsLoading(false));
     }
   } catch (e) {
@@ -135,36 +162,21 @@ export function* handleModelsLoad({ payload }) {
   }
 }
 
-export function* handleProductAdd({ payload }) {
+export function* handleProductAdd({ payload: productData }) {
   try {
+    const payload = {
+      limit: 10
+    };
     yield put(setProductsLoading(true));
     const { upload } = yield select(selectProducts);
-    const product = yield call(addProduct, payload, upload);
+    const product = yield call(addProduct, productData, upload);
 
     if (product) {
-      yield call(handleFilterLoad);
+      yield call(handleFilterLoad, payload);
       yield put(clearProductToSend());
       yield put(setFilesToUpload([]));
       yield put(push(routes.pathToProducts));
       yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    }
-  } catch (e) {
-    yield call(handleProductsErrors, e);
-  }
-}
-
-export function* handleProductDelete({ payload }) {
-  try {
-    const product = yield call(deleteProduct, payload.id);
-
-    if (product) {
-      if (payload.request) {
-        yield call(handleFilterLoad);
-      } else {
-        yield put(push(routes.pathToProducts));
-      }
-      yield put(updatePagination());
-      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
     }
   } catch (e) {
     yield call(handleProductsErrors, e);

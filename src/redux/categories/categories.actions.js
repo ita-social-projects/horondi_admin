@@ -13,7 +13,6 @@ import {
   SET_CATEGORY_DELETE_ID,
   SET_CATEGORY_SWITCH_ID,
   SET_FILTER,
-  SET_SORT,
   CLEAR_FILTERS
 } from './categories.types';
 
@@ -78,11 +77,6 @@ export const setCategoryDeleteId = (payload) => ({
 export const setCategorySwitchId = (payload) => ({
   type: SET_CATEGORY_SWITCH_ID,
   payload
-});
-
-export const setSort = (sort) => ({
-  type: SET_SORT,
-  payload: sort
 });
 
 export const setFilter = (filter) => ({

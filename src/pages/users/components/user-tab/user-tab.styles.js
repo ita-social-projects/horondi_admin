@@ -7,5 +7,8 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(2)
+  },
+  filters: {
+    margin:'30px 0'
   }
 }));

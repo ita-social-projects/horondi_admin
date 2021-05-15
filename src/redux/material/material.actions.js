@@ -9,9 +9,8 @@ import {
   SET_MATERIAL_LOADING,
   ADD_MATERIAL,
   REMOVE_MATERIAL_FROM_STORE,
-  SET_COLOR_FILTER,
   GET_MATERIALS_BY_PURPOSE,
-  SET_MATERIALS_BY_PURPOSE
+  SET_MATERIALS_BY_PURPOSE, SET_MATERIAL_FILTER, CLEAR_MATERIAL_FILTERS
 } from './material.types';
 
 export const getMaterials = (payload) => ({
@@ -64,8 +63,8 @@ export const removeMaterialFromStore = (payload) => ({
   payload
 });
 
-export const setColorFilter = (payload) => ({
-  type: SET_COLOR_FILTER,
+export const setMaterialFilter = (payload) => ({
+  type: SET_MATERIAL_FILTER,
   payload
 });
 
@@ -76,4 +75,8 @@ export const getMaterialsByPurpose = () => ({
 export const setMaterialsByPurpose = (payload) => ({
   type: SET_MATERIALS_BY_PURPOSE,
   payload
+});
+
+export const clearMaterialFilters = () => ({
+  type: CLEAR_MATERIAL_FILTERS,
 });

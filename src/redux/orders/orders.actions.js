@@ -21,7 +21,10 @@ import {
   SET_UKRPOST_CITIES,
   GET_UKRPOST_CITIES,
   SET_UKRPOST_POSTOFFICES,
-  GET_UKRPOST_POSTOFFICES
+  GET_UKRPOST_POSTOFFICES,
+  SET_FILTER,
+  CLEAR_FILTERS,
+  SET_SORT, SET_ORDER_SORT_LABEL
 } from './orders.types';
 
 const getOrder = (payload) => ({
@@ -138,6 +141,25 @@ const setDeliveryLoading = (payload) => ({
   payload
 });
 
+const setOrderFilter = (payload) => ({
+  type: SET_FILTER,
+  payload
+});
+
+const clearOrderFilters = () => ({
+  type: CLEAR_FILTERS
+});
+
+const setOrderSort = (sort) => ({
+  type: SET_SORT,
+  payload: sort
+});
+
+const setOrderSortLabel = (payload) => ({
+  type: SET_ORDER_SORT_LABEL,
+  payload
+});
+
 export {
   getOrder,
   setOrder,
@@ -161,5 +183,9 @@ export {
   getUkrPostPostOffices,
   setUkrPostPostOffices,
   getUkrPostRegions,
-  setUkrPostRegions
+  setUkrPostRegions,
+  setOrderFilter,
+  clearOrderFilters,
+  setOrderSort,
+  setOrderSortLabel
 };
