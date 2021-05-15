@@ -46,7 +46,7 @@ const tableHeadRowTitles = {
     commentPageTitles: ['Пошта користувача', 'Дата', 'Текст', 'Дії'],
     userPageTitles: ['Дата', 'Текст', 'Дії']
   },
-  emailQuestions: ['Користувач', 'Email', 'Q/A', 'Дата', 'Статус', 'Дії'],
+  emailQuestions: ['#', 'Користувач', 'Email', 'Q/A', 'Дата', 'Статус', 'Дії'],
   sizes: {
     sizesPageTitles: ['Назва', 'Розмір', 'Доступно', 'Дії']
   },
