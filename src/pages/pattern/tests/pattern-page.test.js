@@ -1,6 +1,6 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
-import { configure, shallow, mount, to, be } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import { Link, BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
@@ -33,8 +33,6 @@ describe('Pattern-page render tests', () => {
     // Mock useSelector hook
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
     spyOnUseSelector.mockImplementation(() => mockStore);
-
-    // Mock useEffect
 
     // Mock useDispatch hook
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
@@ -101,7 +99,7 @@ describe('Pattern-page render tests', () => {
 describe('useEffect tests', () => {
   let spyOnUseSelector;
   let spyOnUseDispatch;
-  let mockDispatch;
+  let mockDispatchFn;
   let wrapper;
   let patternPage;
   let tableContainerRow;
@@ -114,11 +112,10 @@ describe('useEffect tests', () => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
     spyOnUseSelector.mockImplementation(() => mockStore);
 
-    // Mock useDispatch hook
-    spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
     // Mock dispatch function returned from useDispatch
-    mockDispatch = jest.fn();
-    spyOnUseDispatch.mockReturnValue(mockDispatch);
+    mockDispatchFn = jest.fn();
+    reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
+    // spyOnUseDispatch.mockReturnValue(mockDispatchFn);
 
     wrapper = mount(
       <BrowserRouter>
@@ -147,7 +144,7 @@ describe('useEffect tests', () => {
   });
 
   test('UseEffect hook shoud work out', () => {
-    expect(spyOnUseDispatch).toHaveBeenCalledTimes(2);
+    expect(mockDispatchFn).toHaveBeenCalledTimes(1);
   });
 
   test('Should render TableContainerRow', () => {
@@ -162,5 +159,15 @@ describe('useEffect tests', () => {
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
     expect(tableContainerRowSecond.prop('image')).toBeTruthy();
     expect(tableContainerRowThird.prop('image')).toBe('');
+  });
+
+  test('11', () => {
+    tableContainerRowFirst.at(0).props().deleteHandler();
+    expect(mockDispatchFn).toHaveBeenCalledTimes(2);
+  });
+
+  test('11', () => {
+    tableContainerRowFirst.at(0).props().editHandler();
+    expect(mockDispatchFn).toHaveBeenCalledTimes(2);
   });
 });
