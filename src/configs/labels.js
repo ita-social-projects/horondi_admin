@@ -2,7 +2,7 @@ import { mapToLanguages } from '../utils/map-languages';
 
 const labels = {
   sort: 'Сортувати за',
-  search: (param) => !param ? 'Шукати' : `Шукати за ${param}`,
+  search: (param) => !param ? 'Шукати' : `Шукати ${param}`,
   goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
@@ -133,6 +133,9 @@ const labels = {
   comment: {
     text: 'Текст коментаря',
     show: 'Видимий',
+    hidden:'Прихований',
+    yes:'Так',
+    no:'Ні',
     productInfo: 'Інформація про продукт'
   },
   businessPageLabel: [
@@ -418,14 +421,13 @@ const labels = {
   },
   orders: {
     select: [
-      { label: 'Створені', value: 'CREATED' },
-      { label: 'Виконані', value: 'CONFIRMED' },
-      { label: 'Оброблені', value: 'PRODUCED' },
-      { label: 'Скасовані', value: 'CANCELLED' },
-      { label: 'Повернені', value: 'REFUNDED' },
-      { label: 'Надіслані', value: 'SENT' },
-      { label: 'Доставлені', value: 'DELIVERED' },
-      { label: 'Всі', value: 'All' }
+      { label: 'Створено', value: 'CREATED' },
+      { label: 'Підтвердженно', value: 'CONFIRMED' },
+      { label: 'Виготовлено', value: 'PRODUCED' },
+      { label: 'Скасовано', value: 'CANCELLED' },
+      { label: 'Повернення коштів', value: 'REFUNDED' },
+      { label: 'Відправлено', value: 'SENT' },
+      { label: 'Доставлено', value: 'DELIVERED' },
     ]
   },
   homePageSlide: {

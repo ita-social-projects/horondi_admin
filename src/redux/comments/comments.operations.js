@@ -7,7 +7,7 @@ const formError = (error) => error.message.replace('GraphQL error: ', '');
 
 const getAllComments = async (filter, pagination) => {
     const query = `
-      query($filter: FilterInputComponent, $pagination: Pagination) {
+      query($filter: CommentFilterInput, $pagination: Pagination) {
         getAllComments(filter: $filter, pagination: $pagination) {
           items {
             _id

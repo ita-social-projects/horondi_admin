@@ -1,258 +1,268 @@
-import {takeEvery, call, put, select} from 'redux-saga/effects';
-import {push} from 'connected-react-router';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import {
-    selectProductsAndTable,
-    selectProducts,
-    selectProductsToUpload,
-    selectFilesToDeleteAndProduct
+  selectProducts,
+  selectProductsToUpload,
+  selectFilesToDeleteAndProduct
 } from '../selectors/products.selectors';
 
 import {
-    setAllProducts,
-    setProductsLoading,
-    setAllFilterData,
-    setProductsError,
-    setProductCategories,
-    setModels,
-    clearProductToSend,
-    setProduct,
-    setFilesToUpload,
-    clearFilesToUpload,
-    setFilesToDelete,
-    setProductDetails
+  setAllProducts,
+  setProductsLoading,
+  setAllFilterData,
+  setProductsError,
+  setProductCategories,
+  setModels,
+  clearProductToSend,
+  setProduct,
+  setFilesToUpload,
+  clearFilesToUpload,
+  setFilesToDelete,
+  setProductDetails
 } from './products.actions';
-import {setItemsCount, updatePagination} from '../table/table.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
 import {
-    GET_ALL_FILTERS,
-    GET_FILTRED_PRODUCTS,
-    GET_MODELS_BY_CATEGORY,
-    ADD_PRODUCT,
-    DELETE_PRODUCT,
-    GET_PRODUCT,
-    UPDATE_PRODUCT,
-    DELETE_IMAGES,
-    GET_PRODUCT_SPECIES,
-    GET_PRODUCT_DETAILS
+  GET_ALL_FILTERS,
+  GET_FILTRED_PRODUCTS,
+  GET_MODELS_BY_CATEGORY,
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  GET_PRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_IMAGES,
+  GET_PRODUCT_SPECIES,
+  GET_PRODUCT_DETAILS
 } from './products.types';
 
 import {
-    getAllProducts,
-    getAllFilters,
-    getProductCategories,
-    getModelsByCategory,
-    addProduct,
-    deleteProduct,
-    getProduct,
-    updateProduct,
-    deleteImages,
-    getProductDetails
+  getAllProducts,
+  getAllFilters,
+  getProductCategories,
+  getModelsByCategory,
+  addProduct,
+  deleteProduct,
+  getProduct,
+  updateProduct,
+  deleteImages,
+  getProductDetails
 } from './products.operations';
 
 import {
-    handleErrorSnackbar,
-    handleSuccessSnackbar
+  handleErrorSnackbar,
+  handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
-import {config} from '../../configs';
-import {AUTH_ERRORS} from "../../error-messages/auth";
-import {handleAdminLogout} from "../auth/auth.sagas";
+import { config } from '../../configs';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const {
-    SUCCESS_ADD_STATUS,
-    SUCCESS_DELETE_STATUS,
-    SUCCESS_UPDATE_STATUS
+  SUCCESS_ADD_STATUS,
+  SUCCESS_DELETE_STATUS,
+  SUCCESS_UPDATE_STATUS
 } = config.statuses;
 
-const {routes} = config;
+const { routes } = config;
 
-export function* handleFilterLoad() {
-    try {
-        yield put(setProductsLoading(true));
-        const {productsState, tableState} = yield select(selectProductsAndTable);
-        const products = yield call(getAllProducts, productsState, tableState);
+export function* handleFilterLoad({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
 
-        if (products) {
-            yield put(setItemsCount(products?.count));
-            yield put(setAllProducts(products?.items));
-            yield put(setProductsLoading(false));
-        }
+    const products = yield call(
+      getAllProducts,
+      payload?.limit,
+      payload?.skip,
+      payload?.filter,
+      payload?.sort,
+      payload?.search
+    );
 
-    } catch (e) {
-        yield call(handleProductsErrors, e);
+    if (products) {
+      yield put(setItemsCount(products?.count));
+      yield put(setAllProducts(products?.items));
+      yield put(setProductsLoading(false));
     }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
+}
+
+export function* handleProductDelete({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
+
+    yield call(deleteProduct, payload?.id);
+
+    if (payload.request) {
+      yield call(handleFilterLoad, payload);
+    } else {
+      yield put(push(routes.pathToProducts));
+    }
+    yield put(updatePagination());
+    yield put(setProductsLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
 export function* handleGetFilters() {
-    try {
-        yield put(setProductsLoading(true));
-        const filter = yield call(getAllFilters);
+  try {
+    yield put(setProductsLoading(true));
+    const products = yield call(getAllFilters);
 
-        if (filter) {
-            yield put(setAllFilterData(filter));
-            yield put(setProductsLoading(false));
-        }
-
-    } catch (e) {
-        yield call(handleProductsErrors, e);
+    if (products) {
+      yield put(setItemsCount(products?.count));
+      yield put(setAllProducts(products?.items));
+      yield put(setAllFilterData(products));
+      yield put(setProductsLoading(false));
     }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
 export function* handleProductDetailsLoad() {
-    try {
-        yield put(setProductsLoading(true));
-        const details = yield call(getProductDetails);
+  try {
+    yield put(setProductsLoading(true));
+    const details = yield call(getProductDetails);
 
-        if (details) {
-            yield put(setProductDetails(details));
-            yield put(setProductsLoading(false));
-        }
-
-    } catch (e) {
-        yield call(handleProductsErrors, e);
+    if (details) {
+      yield put(setProductDetails(details));
+      yield put(setProductsLoading(false));
     }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
 export function* handleProductSpeciesLoad() {
-    try {
-        const categories = yield call(getProductCategories);
-        const species = yield call(getAllFilters);
+  try {
+    const categories = yield call(getProductCategories);
+    const species = yield call(getAllFilters);
 
-        yield put(setProductCategories(categories));
-        yield put(setAllFilterData(species));
-    } catch (e) {
-        yield call(handleProductsErrors, e);
-    }
+    yield put(setProductCategories(categories));
+    yield put(setAllFilterData(species));
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
-export function* handleModelsLoad({payload}) {
-    try {
-        const models = yield call(getModelsByCategory, payload);
+export function* handleModelsLoad({ payload }) {
+  try {
+    const models = yield call(getModelsByCategory, payload);
 
-        if (models) {
-            yield put(setModels(models));
-
-        }
-    } catch (e) {
-        yield call(handleProductsErrors, e);
+    if (models) {
+      yield put(setModels(models));
     }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
-export function* handleProductAdd({payload}) {
-    try {
-        yield put(setProductsLoading(true));
-        const {upload} = yield select(selectProducts);
-        const product = yield call(addProduct, payload, upload);
+export function* handleProductAdd({ payload: productData }) {
+  try {
+    const payload = {
+      limit: 10
+    };
+    yield put(setProductsLoading(true));
+    const { upload } = yield select(selectProducts);
+    const product = yield call(addProduct, productData, upload);
 
-        if (product) {
-            yield call(handleFilterLoad);
-            yield put(clearProductToSend());
-            yield put(setFilesToUpload([]));
-            yield put(push(routes.pathToProducts));
-            yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-        }
-    } catch (e) {
-        yield call(handleProductsErrors, e);
+    if (product) {
+      yield call(handleFilterLoad, payload);
+      yield put(clearProductToSend());
+      yield put(setFilesToUpload([]));
+      yield put(push(routes.pathToProducts));
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
-export function* handleProductDelete({payload}) {
-    try {
-        const product = yield call(deleteProduct, payload.id);
+export function* handleProductUpdate({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
+    const { upload, primaryImageUpload } = yield select(selectProductsToUpload);
 
-        if (product) {
-            if (payload.request) {
-                yield call(handleFilterLoad);
-            } else {
-                yield put(push(routes.pathToProducts));
-            }
-            yield put(updatePagination());
-            yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-        }
-    } catch (e) {
-        yield call(handleProductsErrors, e);
+    const product = yield call(
+      updateProduct,
+      payload,
+      upload,
+      primaryImageUpload
+    );
+
+    if (product) {
+      yield put(setProduct(product));
+      yield put(clearFilesToUpload());
+      yield put(push(routes.pathToProducts));
+      yield put(setProductsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
-export function* handleProductUpdate({payload}) {
-    try {
-        yield put(setProductsLoading(true));
-        const {upload, primaryImageUpload} = yield select(selectProductsToUpload);
+export function* handleProductLoad({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
+    yield call(handleProductDetailsLoad);
+    const product = yield call(getProduct, payload);
 
-        const product = yield call(
-            updateProduct,
-            payload,
-            upload,
-            primaryImageUpload
-        );
-
-        if (product) {
-            yield put(setProduct(product));
-            yield put(clearFilesToUpload());
-            yield put(push(routes.pathToProducts));
-            yield put(setProductsLoading(false));
-            yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-        }
-    } catch (e) {
-        yield call(handleProductsErrors, e);
+    if (product) {
+      yield put(setProduct(product));
+      yield put(setProductsLoading(false));
     }
-}
-
-export function* handleProductLoad({payload}) {
-    try {
-        yield put(setProductsLoading(true));
-        yield call(handleProductDetailsLoad);
-        const product = yield call(getProduct, payload);
-
-        if (product) {
-            yield put(setProduct(product));
-            yield put(setProductsLoading(false));
-        }
-    } catch (e) {
-        yield call(handleProductsErrors, e);
-    }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
 export function* handleProductsErrors(e) {
-    if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
-        yield call(handleAdminLogout);
-    } else {
-        yield put(setProductsLoading(false));
-        yield put(setProductsError({e}));
-        yield call(handleErrorSnackbar, e.message);
-    }
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setProductsLoading(false));
+    yield put(setProductsError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
-export function* handleImagesDelete({payload}) {
-    try {
-        yield put(setProductsLoading(true));
-        const {images, selectedProduct} = yield select(
-            selectFilesToDeleteAndProduct
-        );
-        const newImages = yield call(deleteImages, payload, images);
+export function* handleImagesDelete({ payload }) {
+  try {
+    yield put(setProductsLoading(true));
+    const { images, selectedProduct } = yield select(
+      selectFilesToDeleteAndProduct
+    );
+    const newImages = yield call(deleteImages, payload, images);
 
-        if (newImages) {
-            yield put(setProduct({...selectedProduct, images: newImages}));
-            yield put(setFilesToDelete([]));
-            yield put(setProductsLoading(false));
-            yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-        }
-
-    } catch (e) {
-        yield call(handleProductsErrors, e);
+    if (newImages) {
+      yield put(setProduct({ ...selectedProduct, images: newImages }));
+      yield put(setFilesToDelete([]));
+      yield put(setProductsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
     }
+  } catch (e) {
+    yield call(handleProductsErrors, e);
+  }
 }
 
 export default function* productsSaga() {
-    yield takeEvery(GET_ALL_FILTERS, handleGetFilters);
-    yield takeEvery(GET_FILTRED_PRODUCTS, handleFilterLoad);
-    yield takeEvery(GET_MODELS_BY_CATEGORY, handleModelsLoad);
-    yield takeEvery(ADD_PRODUCT, handleProductAdd);
-    yield takeEvery(DELETE_PRODUCT, handleProductDelete);
-    yield takeEvery(GET_PRODUCT, handleProductLoad);
-    yield takeEvery(UPDATE_PRODUCT, handleProductUpdate);
-    yield takeEvery(DELETE_IMAGES, handleImagesDelete);
-    yield takeEvery(GET_PRODUCT_SPECIES, handleProductSpeciesLoad);
-    yield takeEvery(GET_PRODUCT_DETAILS, handleProductDetailsLoad);
+  yield takeEvery(GET_ALL_FILTERS, handleGetFilters);
+  yield takeEvery(GET_FILTRED_PRODUCTS, handleFilterLoad);
+  yield takeEvery(GET_MODELS_BY_CATEGORY, handleModelsLoad);
+  yield takeEvery(ADD_PRODUCT, handleProductAdd);
+  yield takeEvery(DELETE_PRODUCT, handleProductDelete);
+  yield takeEvery(GET_PRODUCT, handleProductLoad);
+  yield takeEvery(UPDATE_PRODUCT, handleProductUpdate);
+  yield takeEvery(DELETE_IMAGES, handleImagesDelete);
+  yield takeEvery(GET_PRODUCT_SPECIES, handleProductSpeciesLoad);
+  yield takeEvery(GET_PRODUCT_DETAILS, handleProductDetailsLoad);
 }

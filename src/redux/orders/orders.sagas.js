@@ -50,8 +50,8 @@ import {
     handleErrorSnackbar,
     handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
-import {AUTH_ERRORS} from "../../error-messages/auth";
-import {handleAdminLogout} from "../auth/auth.sagas";
+import {AUTH_ERRORS} from '../../error-messages/auth';
+import {handleAdminLogout} from '../auth/auth.sagas';
 
 const {
     SUCCESS_DELETE_STATUS,
@@ -69,7 +69,6 @@ export function* handleOrderUpdate({payload}) {
 
         yield put(setOrder(order?.data?.updateOrder));
         yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-
     } catch (e) {
         yield call(handleErrorSnackbar, e.message);
         yield put(setOrderError(e));
@@ -98,14 +97,14 @@ export function* handleOrdersListLoad({payload}) {
             getAllOrders,
             payload.skip,
             payload.limit,
-            payload.filter.orderStatus
+            payload.filter,
+            payload.sort
         );
 
         if (orders) {
             yield put(setItemsCount(orders?.count));
             yield put(setOrderList(orders));
         }
-
     } catch (error) {
         yield call(handleOrdersError, error);
     } finally {
@@ -165,7 +164,6 @@ export function* handleNovaPoshtaCities({payload}) {
             yield put(setNovaPoshtaCities(cities));
             yield put(setDeliveryLoading(false));
         }
-
     } catch (error) {
         yield put(setDeliveryLoading(false));
         yield call(handleOrdersError, error);
@@ -182,7 +180,6 @@ export function* handleNovaPoshtaWarehouse({payload}) {
             yield put(setNovaPoshtaWarehouse(warehouses));
             yield put(setDeliveryLoading(false));
         }
-
     } catch (error) {
         yield put(setDeliveryLoading(false));
         yield call(handleOrdersError, error);
@@ -199,7 +196,6 @@ export function* handleUkrPostRegions() {
             yield put(setUkrPostRegions(regions));
             yield put(setDeliveryLoading(false));
         }
-
     } catch (error) {
         yield put(setDeliveryLoading(false));
         yield call(handleOrdersError, error);
@@ -216,7 +212,6 @@ export function* handleUkrPostDistricts({payload}) {
             yield put(setUkrPostDistricts(districts));
             yield put(setDeliveryLoading(false));
         }
-
     } catch (error) {
         yield put(setDeliveryLoading(false));
         yield call(handleOrdersError, error);
@@ -249,7 +244,6 @@ export function* handleUkrPostPostOffices({payload}) {
             yield put(setUkrPostPostOffices(offices));
             yield put(setDeliveryLoading(false));
         }
-
     } catch (error) {
         yield put(setDeliveryLoading(false));
         yield call(handleOrdersError, error);

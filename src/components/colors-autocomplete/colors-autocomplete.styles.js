@@ -7,11 +7,16 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   root: {
+<<<<<<< HEAD
     width: '400px',
     marginRight: '15px',
     '@media (max-width: 450px)': {
       width: '100%'
     }
+=======
+    width: '250px',
+    marginRight: '15px'
+>>>>>>> c56feb8898d4f0aa6ed9758162002f9f116bf709
   },
   checkbox: {
     marginRight: 8

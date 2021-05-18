@@ -9,7 +9,6 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import LoadingBar from '../loading-bar';
 import { config } from '../../configs';
-
 import {
   getCommentsByType,
   deleteComment
@@ -22,10 +21,12 @@ const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
 const CommentsSection = ({ value, commentsType }) => {
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
+
   const { loading, list } = useSelector(({ Comments }) => ({
     list: Comments.list,
     loading: Comments.commentsLoading
   }));
+
   const dispatch = useDispatch();
 
   useEffect(() => {

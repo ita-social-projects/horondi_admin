@@ -96,7 +96,7 @@ const titles = {
   orderTitles: {
     mainPageTitle: 'Інформація про замовлення',
     filterBy: 'Фільтрувати',
-    ORDER_NOT_FOUND: 'Замовлень за заданим фільтром не знайдено',
+    ORDER_NOT_FOUND: 'Замовлення відсутні',
     orders: 'замовлень'
   },
   homePageSliderTitle: {

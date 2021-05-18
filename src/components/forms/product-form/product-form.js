@@ -278,6 +278,28 @@ const ProductForm = ({ isEdit }) => {
     }
   ];
 
+  const showCommentsPanel = () => {
+    if (product._id) {
+      return (
+        <Grid className={styles.showComments}>
+          <Button
+            variant={productFormValues.contained}
+            color={checkboxesValues.primary}
+            onClick={showCommentsHandler}
+          >
+            {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
+          </Button>
+          {showComments ? (
+            <CommentsSection
+              value={product._id}
+              commentsType={GET_PRODUCT_COMMENTS}
+            />
+          ) : null}
+        </Grid>
+      );
+    }
+  };
+
   const showCommentsHandler = () => setShowComments(!showComments);
   return (
     <div className={styles.container}>
@@ -411,21 +433,7 @@ const ProductForm = ({ isEdit }) => {
           </Paper>
         </Grid>
       </Grid>
-      <Grid className={styles.showComments}>
-        <Button
-          variant={productFormValues.contained}
-          color={checkboxesValues.primary}
-          onClick={showCommentsHandler}
-        >
-          {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
-        </Button>
-        {showComments ? (
-          <CommentsSection
-            value={product._id}
-            commentsType={GET_PRODUCT_COMMENTS}
-          />
-        ) : null}
-      </Grid>
+      {showCommentsPanel()}
       <div className={styles.controlsBlock}>
         <BackButton />
       </div>
