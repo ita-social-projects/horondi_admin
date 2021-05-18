@@ -26,9 +26,7 @@ const mockSubmit = jest.fn();
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({
-    values: {
-      purpose: 'CLOSURE'
-    },
+    values: {},
     handleSubmit: mockSubmit,
     handleChange: jest.fn(),
     touched: {},
@@ -81,10 +79,6 @@ describe('Material form tests', () => {
   it('Should simulate click event on ColorBar', () => {
     wrapper.find('ColorsBar').props().onColorChange(material.colors);
     expect(mockSetFieldValue).toHaveBeenCalledTimes(2);
-  });
-
-  it(`Should have ${material.purpose} purpose value props`, () => {
-    expect(wrapper.find(Select).props().value).toBe(material.purpose);
   });
 
   it('Should simulate onchange click event on Select', () => {
