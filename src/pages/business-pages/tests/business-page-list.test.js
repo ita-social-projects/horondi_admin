@@ -71,14 +71,14 @@ describe('BusinessPageList tests', () => {
       </Router>
     );
     wrapper.find(TableContainerRow).at(0).props().editHandler();
-    expect(mockHandler).toHaveBeenCalled();
+    expect(mockHandler).toHaveBeenCalledTimes(2);
   });
 
   it('TableContainerRow deleteHandler should be invoked', () => {
     mockLoading = false;
     useDispatchMock.mockReturnValue(mockHandler);
     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
-    expect(mockHandler).toHaveBeenCalled();
+    expect(mockHandler).toHaveBeenCalledTimes(4);
   });
 
   it('Button addBusinessPage should exist and be clicked', () => {
