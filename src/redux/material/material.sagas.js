@@ -63,9 +63,9 @@ export function* handleMaterialsLoad({ payload }) {
     yield put(setMaterialLoading(true));
     const materials = yield call(
       getAllMaterials,
-      filter,
       payload.skip,
-      payload.limit
+      payload.limit,
+      filter
     );
 
     if (materials) {

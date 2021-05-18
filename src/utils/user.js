@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { UserBlockPeriod } from '../consts/user-block-status';
 import { config } from '../configs';
 
@@ -29,4 +30,19 @@ export const getUserBlockStatus = (blockData) => {
   if (blockData?.blockPeriod === UserBlockPeriod.INFINITE) {
     return config.statuses.USER_INACTIVE_FOREVER_STATUS;
   }
+};
+
+export const userStatus = {
+  false: 'Активний(-a)',
+  true: 'Неактивний(-a)'
+};
+
+export const userStatusFilterObj = () => {
+  const arrToFilter = [];
+
+  _.forEach(userStatus, (value, key) => {
+    arrToFilter.push({ key, value });
+  });
+
+  return arrToFilter;
 };

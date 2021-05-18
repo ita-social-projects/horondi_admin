@@ -68,7 +68,12 @@ describe('Test news sagas', () => {
       .put(setNewsLoading(true))
       .provide([
         [
-          call(getAllNews, mockNewsLoadPayload.skip, mockNewsLoadPayload.limit),
+          call(
+            getAllNews,
+            mockNewsLoadPayload.skip,
+            mockNewsLoadPayload.limit,
+            mockNewsLoadPayload.filter
+          ),
           mockNews
         ]
       ])

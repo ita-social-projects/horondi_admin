@@ -33,7 +33,7 @@ const AddProductForm = ({ items, setFieldValue }) => {
   }));
   const [productInput, setProductInput] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [size, setSize] = useState('');
+  const [size, setSize] = useState({ id: '', name: '' });
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -45,7 +45,12 @@ const AddProductForm = ({ items, setFieldValue }) => {
   }, [selectedProduct]);
 
   useEffect(() => {
-    selectedProduct && sizes && setSize(sizes[0]._id);
+    selectedProduct &&
+      sizes &&
+      setSize({
+        id: sizes[0]._id,
+        name: sizes.filter(({ _id }) => _id === sizes[0]._id)[0].name
+      });
   }, [sizes]);
 
   const addProductHandler = () => {
@@ -57,7 +62,10 @@ const AddProductForm = ({ items, setFieldValue }) => {
   };
 
   const selectHandler = (e) => {
-    setSize(e.target.value);
+    setSize({
+      id: e.target.value,
+      name: sizes.filter(({ _id }) => _id === e.target.value)[0].name
+    });
   };
 
   const sizeItems =
@@ -125,7 +133,7 @@ const AddProductForm = ({ items, setFieldValue }) => {
         {productLabels.size}
         <Select
           disabled={!selectedProduct}
-          value={size}
+          value={size.id}
           onChange={selectHandler}
         >
           {sizeItems}

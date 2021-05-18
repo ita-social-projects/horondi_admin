@@ -10,11 +10,27 @@ import {
   SET_UKRPOST_REGIONS,
   SET_UKRPOST_DISTRICTS,
   SET_UKRPOST_CITIES,
-  SET_UKRPOST_POSTOFFICES
+  SET_UKRPOST_POSTOFFICES,
+  CLEAR_FILTERS,
+  SET_FILTER,
+  SET_SORT,
+  SET_ORDER_SORT_LABEL
 } from './orders.types';
+
+const initialFilters = {
+  status: [],
+  paymentStatus: [],
+  dateFrom: '',
+  dateTo: '',
+  search: ''
+};
 
 export const initialState = {
   list: [],
+  filters: initialFilters,
+  sort: {
+    dateOfCreation: -1
+  },
   selectedOrder: null,
   orderLoading: false,
   orderError: null,
@@ -24,12 +40,14 @@ export const initialState = {
   ukrPoshtaCities: [],
   ukrPoshtaRegions: [],
   ukrPoshtaDistricts: [],
-  ukrPoshtaPostOffices: []
+  ukrPoshtaPostOffices: [],
+  sortLabel: ''
 };
 
 export const selectOrderList = ({ Orders }) => ({
   orderLoading: Orders.orderLoading,
-  ordersList: Orders.list?.items
+  ordersList: Orders.list?.items,
+  sort: Orders.sort
 });
 
 const ordersReducer = (state = initialState, action = {}) => {
@@ -38,6 +56,11 @@ const ordersReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       selectedOrder: action.payload
+    };
+  case SET_ORDER_SORT_LABEL:
+    return {
+      ...state,
+      sortLabel: action.payload
     };
   case SET_ORDER_LOADING:
     return {
@@ -96,6 +119,28 @@ const ordersReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       deliveryLoading: action.payload
+    };
+  case SET_FILTER:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    };
+  case SET_SORT:
+    return {
+      ...state,
+      sort: {
+        ...action.payload
+      }
+    };
+  case CLEAR_FILTERS:
+    return {
+      ...state,
+      filters: initialFilters,
+      sortLabel: '',
+      sort: {}
     };
   default:
     return state;
