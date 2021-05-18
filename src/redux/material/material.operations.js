@@ -1,7 +1,7 @@
 import {getItems, setItems} from '../../utils/client';
 import {materialTranslations} from '../../translations/material.translations';
 
-export const getAllMaterials = async (filter, skip, limit) => {
+export const getAllMaterials = async (skip, limit, filter) => {
     const query = `
       query($filter: MaterialFilterInput, $skip: Int, $limit: Int) {
         getAllMaterials(filter: $filter, skip: $skip, limit: $limit) {
@@ -37,9 +37,9 @@ export const getAllMaterials = async (filter, skip, limit) => {
       }
     `;
     const result = await getItems(query, {
-        filter,
         skip,
-        limit
+        limit,
+        filter
     });
 
     return result?.data?.getAllMaterials;
