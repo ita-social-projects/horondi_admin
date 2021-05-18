@@ -9,7 +9,8 @@ export const useStyles = makeStyles((theme) => ({
     padding: 25,
     '@media (max-width: 768px)': {
       flexDirection: 'column',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      padding: 0
     }
   },
   userDetails: {
