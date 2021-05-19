@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import { useDispatch } from 'react-redux';
-
 import { FormControl, Paper, TextField, Grid, Avatar } from '@material-ui/core';
-
 import { useFormik } from 'formik';
-
 import * as Yup from 'yup';
-
 import { Image } from '@material-ui/icons';
+
 import { config } from '../../../configs';
 import { BackButton, SaveButton } from '../../buttons';
 import {
