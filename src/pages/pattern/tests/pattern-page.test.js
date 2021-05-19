@@ -115,7 +115,6 @@ describe('useEffect tests', () => {
     // Mock dispatch function returned from useDispatch
     mockDispatchFn = jest.fn();
     reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
-    // spyOnUseDispatch.mockReturnValue(mockDispatchFn);
 
     wrapper = mount(
       <BrowserRouter>
