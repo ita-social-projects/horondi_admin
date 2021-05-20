@@ -16,7 +16,9 @@ import { useStyles } from './dialog-window.styles';
 import DeleteButton from '../buttons/delete-button';
 import { basicSelector } from '../../redux/dialog-window/dialog-window.reducer';
 
-const { CANCEL_TITLE, CONFIRM } = config.buttonTitles;
+const { NO_BUTTON_TITLE, YES_BUTTON_TITLE } = config.buttonTitles;
+
+const { DELETE_TITLE } = config.buttonTitles;
 
 const DialogWindow = ({
   isOpen,
@@ -44,14 +46,14 @@ const DialogWindow = ({
             <StandardButton
               data-cy='dialog-cancel'
               variant='outlined'
-              title={CANCEL_TITLE}
+              title={NO_BUTTON_TITLE}
               onClickHandler={handleClose}
             />
             <DeleteButton
               data-cy='dialog-confirm'
               onClickHandler={onClickHandler}
             >
-              {CONFIRM}
+              {YES_BUTTON_TITLE}
             </DeleteButton>
           </>
         ) : (
@@ -79,7 +81,7 @@ DialogWindow.propTypes = {
 
 DialogWindow.defaultProps = {
   isOpen: false,
-  dialogTitle: CONFIRM,
+  dialogTitle: DELETE_TITLE,
   dialogContent: '',
   showCancelButton: true,
   onClickHandler: noop

@@ -21,6 +21,7 @@ import ColorsAutocomplete from '../colors-autocomplete';
 
 const { SMALL_SIZE } = config.iconSizes;
 const { REMOVE_COLOR_MESSAGE } = config.messages;
+const { REMOVE_COLOR_DIALOG_TITLE } = config.messages;
 const { CREATE_COLOR_TITLE } = config.buttonTitles;
 const { createColorTitle, alreadyUse } = config.titles.colorTitles;
 const { pathToMaterials } = config.routes;
@@ -46,7 +47,11 @@ function ColorsBar({ onColorChange, colors }) {
       dispatch(closeDialog());
       dispatch(deleteColor(id));
     };
-    openSuccessSnackbar(removeColor, REMOVE_COLOR_MESSAGE, 'danger');
+    openSuccessSnackbar(
+      removeColor,
+      REMOVE_COLOR_MESSAGE,
+      REMOVE_COLOR_DIALOG_TITLE
+    );
   };
 
   return (
