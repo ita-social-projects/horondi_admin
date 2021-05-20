@@ -81,11 +81,11 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .matches(enRegex, ENTER_EN_SCHEDULE_MESSAGE)
       .required(ENTER_EN_SCHEDULE_MESSAGE),
     uaAddress: Yup.string()
-      .min(8, INPUT_LENGTH_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
       .matches(uaRegex, ENTER_UA_ADDRESS_MESSAGE)
       .required(ENTER_UA_ADDRESS_MESSAGE),
     enAddress: Yup.string()
-      .min(8, INPUT_LENGTH_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
       .matches(enAddressRegex, ENTER_EN_ADDRESS_MESSAGE)
       .required(ENTER_EN_ADDRESS_MESSAGE),
     email: Yup.string()
