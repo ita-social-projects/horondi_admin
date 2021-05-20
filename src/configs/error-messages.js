@@ -35,6 +35,9 @@ export const loginErrorMessages = {
 };
 export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
+  PATTERN_VALIDATION_ERROR_NAME: 'Назва повинна містити від 3 до 50 символів',
+  PATTERN_VALIDATION_ERROR_DESCRIPTION:
+    'Опис повинний містити від 3 до 1000 символів',
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото гобелена є обов'язковим",

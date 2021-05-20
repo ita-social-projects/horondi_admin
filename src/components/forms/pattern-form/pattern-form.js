@@ -35,6 +35,8 @@ const map = require('lodash/map');
 
 const {
   PATTERN_VALIDATION_ERROR,
+  PATTERN_VALIDATION_ERROR_NAME,
+  PATTERN_VALIDATION_ERROR_DESCRIPTION,
   PATTERN_ERROR_MESSAGE,
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
@@ -82,19 +84,27 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
   const patternValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(3, PATTERN_VALIDATION_ERROR_DESCRIPTION)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(1000, PATTERN_VALIDATION_ERROR_DESCRIPTION)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(3, PATTERN_VALIDATION_ERROR_NAME)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(50, PATTERN_VALIDATION_ERROR_NAME)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
     uaDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(3, PATTERN_VALIDATION_ERROR_DESCRIPTION)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(1000, PATTERN_VALIDATION_ERROR_DESCRIPTION)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(3, PATTERN_VALIDATION_ERROR_NAME)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(50, PATTERN_VALIDATION_ERROR_NAME)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
     material: Yup.string()
