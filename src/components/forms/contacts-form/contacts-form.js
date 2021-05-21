@@ -16,12 +16,15 @@ import {
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
-import { setMapImageHandler } from '../../../utils/contacts-form';
+import {
+  setMapImageHandler,
+  setInputsContactHandler
+} from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { languages, materialUiConstants } = config;
-const { schedule, adress } = config.labels.contacts;
+const { schedule, address } = config.labels.contacts;
 
 const {
   ENTER_PHONE_NUMBER_MESSAGE,
@@ -39,12 +42,7 @@ const {
 const { INVALID_EMAIL_MESSAGE, ENTER_EMAIL_MESSAGE } =
   config.loginErrorMessages;
 
-const {
-  enAddressRegex,
-  uaRegex,
-  enRegex,
-  phoneNumber
-} = config.formRegExp;
+const { enAddressRegex, uaRegex, enRegex, phoneNumber } = config.formRegExp;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
@@ -117,10 +115,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       }
     });
 
-  const inputs = [
-    { label: schedule, name: 'schedule' },
-    { label: adress, name: 'address' }
-  ];
+  const inputs = setInputsContactHandler(schedule, address);
 
   const inputOptions = {
     errors,
