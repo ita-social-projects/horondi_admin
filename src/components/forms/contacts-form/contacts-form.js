@@ -20,7 +20,7 @@ import { setMapImageHandler } from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
-const { languages } = config;
+const { languages, materialUiConstants } = config;
 const { schedule, adress } = config.labels.contacts;
 
 const {
@@ -110,7 +110,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
         ) {
           contactSaveHandler(formValues);
         } else {
-          dispatch(setSnackBarSeverity('error'));
+          dispatch(setSnackBarSeverity(materialUiConstants.styleError));
           dispatch(setSnackBarMessage(SELECT_IMAGES_MESSAGE));
           dispatch(setSnackBarStatus(true));
         }
