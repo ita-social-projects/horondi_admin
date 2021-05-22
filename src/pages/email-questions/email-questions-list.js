@@ -94,7 +94,7 @@ const EmailQuestionsList = () => {
     list !== undefined
       ? list.map((question) => (
         <tr key={question._id}>
-          <td colSpan={10}>
+          <td>
             <EmailQuestionItem
               question={question}
               checkboxChangeHandler={checkboxChangeHandler}

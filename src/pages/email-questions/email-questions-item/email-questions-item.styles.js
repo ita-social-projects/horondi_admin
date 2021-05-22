@@ -20,7 +20,8 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   column: {
-    flexBasis: '33.33%'
+    flexBasis: '33.33%',
+    margin: 'auto'
   },
   helper: {
     borderLeft: `2px solid ${theme.palette.divider}`,
@@ -36,5 +37,35 @@ export const useStyles = makeStyles((theme) => ({
   input: {
     width: '100%',
     border: 'none'
+  },
+  question: {
+    maxWidth: '18%',
+    visibility: 'visible',
+    transition: 'opacity 150ms linear, visibility 0s linear 150ms'
+  },
+  detailedQuestion: {
+    transition: 'opacity 150ms linear, visibility 0s linear 150ms'
+  },
+  questionText: {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    paddingRight: '0.5rem'
+  },
+  delete: {
+    display: 'inline-flex',
+    flex: '0',
+    marginRight: '22px',
+    marginLeft: '18px'
+  },
+  buttons: {
+    justifyContent: 'flex-start',
+    marginLeft: '5px'
+  },
+  hidden: {
+    visibility: 'hidden'
+  },
+  visible: {
+    visibility: 'visible'
   }
 }));

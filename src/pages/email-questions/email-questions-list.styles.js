@@ -9,11 +9,14 @@ export const useStyles = makeStyles((theme) => ({
     '& thead tr': {
       display: 'flex',
       justifyContent: 'space-between',
-      marginLeft: '50px',
-      marginRight: '50px'
+      marginLeft: '48px',
+      marginRight: '52px'
     },
     '& thead tr th': {
-      flex: '1'
+      flex: '1',
+      '&:last-child': {
+        flex: '0'
+      }
     },
     '& tbody': {
       cursor: 'pointer'

@@ -43,8 +43,15 @@ const EmailQuestionItem = ({
     adminId: Auth.adminId
   }));
 
-  const [answerValue, setAnswerValue] = useState('');
+  const [answerValue, setAnswerValue] = useState(answer?.text);
   const [shouldValidate, setShouldValidate] = useState(false);
+
+  const [visibility, setVisibility] = useState('classes.visible');
+  const onExpandHideQA = () => {
+    setVisibility(
+      visibility === classes.hidden ? classes.visible : classes.hidden
+    );
+  };
 
   const onAnsweringQuestion = () => {
     if (answerValue) {
@@ -63,7 +70,7 @@ const EmailQuestionItem = ({
 
   return (
     <div className={classes.root} id={question._id}>
-      <Accordion>
+      <Accordion onChange={onExpandHideQA}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls='panel1c-content'
@@ -85,8 +92,12 @@ const EmailQuestionItem = ({
               {question.email}
             </Typography>
           </div>
-          <div className={classes.column}>
-            <Typography className={classes.heading}>
+          <div
+            className={`${classes.column} ${classes.question} ${visibility}`}
+          >
+            <Typography
+              className={`${classes.heading} ${classes.questionText}`}
+            >
               {ReactHtmlParser(questionToShow + answerToShow)}
             </Typography>
           </div>
@@ -100,7 +111,7 @@ const EmailQuestionItem = ({
               {config.labels.emailQuestionsLabels.ua[question.status]}
             </Typography>
           </div>
-          <div className={classes.column}>
+          <div className={`${classes.column} ${classes.delete}`}>
             <CustomizedDeleteIcon
               size={iconSize}
               onClickHandler={deleteHandler}
@@ -108,10 +119,17 @@ const EmailQuestionItem = ({
           </div>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
+          <Typography
+            className={`${classes.heading} ${classes.detailedQuestion}`}
+          >
+            {ReactHtmlParser(questionToShow + answerToShow)}
+          </Typography>
+        </AccordionDetails>
+        <AccordionDetails className={classes.details}>
           <TextField
             className={classes.input}
             placeholder={config.labels.emailQuestionsLabels.placeholder}
-            rows={6}
+            rows={1}
             multiline
             aria-label='dsd'
             value={answerValue}
@@ -120,7 +138,7 @@ const EmailQuestionItem = ({
           />
         </AccordionDetails>
         <Divider />
-        <AccordionActions>
+        <AccordionActions className={classes.buttons}>
           <SaveButton
             id='save'
             type={inputTypes.submit}
