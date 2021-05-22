@@ -1,5 +1,5 @@
 const buttonTitles = {
-  DELETE_TITLE: 'Так',
+  DELETE_TITLE: 'Видалити',
   EDIT_TITLE: 'Редагувати',
   CREATE_NEWS_TITLE: 'Додати новину',
   CREATE_PATTERN_TITLE: 'Додати гобелен',
@@ -73,8 +73,8 @@ const buttonTitles = {
   CATEGORY: 'Категорії',
   PATTERN: 'Гобелени',
   MODEL: 'Моделі',
-  YES_BUTTON_TITLE: 'Так',
-  NO_BUTTON_TITLE: 'Ні'
+  YES_BUTTON: 'Так',
+  NO_BUTTON: 'Ні'
 };
 
 export default buttonTitles;
