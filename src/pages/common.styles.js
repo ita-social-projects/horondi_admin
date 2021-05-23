@@ -6,7 +6,13 @@ export const useCommonStyles = makeStyles((theme) => ({
     marginTop: 65,
     position: 'static',
     padding: 20,
-    textAlign: 'left'
+    textAlign: 'left',
+    '@media (max-width: 450px)': {
+      '& .MuiGrid-grid-xs-3': {
+        flexBasis: '50%',
+        maxWidth: '50%'
+      },
+    },
   },
   adminHeader: {
     display: 'flex',

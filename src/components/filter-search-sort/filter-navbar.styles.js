@@ -13,13 +13,16 @@ export const useStyles = makeStyles(() => ({
       width: '100%',
       '& .MuiGrid-item': {
         width: '100%',
-        marginTop: '10px'
+        marginTop: '10px',
       }
     }
   },
   dateRange: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    '@media (max-width: 900px)':{
+      width:'100%'
+    }
   },
   dateRangeItem: {
     marginTop: -10,
@@ -28,9 +31,15 @@ export const useStyles = makeStyles(() => ({
   },
   multipleValues: {
     marginTop: -20,
-    marginRight: 10
+    marginRight: 10,
+    '@media (max-width: 900px)':{
+    }
   },
   sortItem: {
-    marginRight: 15
+    marginRight: 15,
+    '@media (max-width: 900px)':{
+      marginLeft:'8px',
+      marginRight:'8px',
+    }
   }
 }));

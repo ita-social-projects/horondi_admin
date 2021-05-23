@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     margin: '20px 0',
-    '@media (max-width: 450px)': {
+    '@media (max-width: 900px)': {
       width: '300px',
       margin: '20px auto 20px'
     }
@@ -54,7 +54,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '20px',
     marginTop: '10px',
     marginLeft: '20px',
-    '@media (max-width: 450px)': {
+    '@media (max-width: 900px)': {
       padding: '0px',
       marginLeft: '0px'
     }
@@ -70,19 +70,19 @@ export const useStyles = makeStyles((theme) => ({
   },
   purposeSelect: {
     width: '390px',
-    '@media (max-width: 450px)': {
+    '@media (max-width: 900px)': {
       width: '300px',
       display: 'block',
       margin: 'auto'
     }
   },
   select: {
-    '@media (max-width: 450px)': {
+    '@media (max-width: 900px)': {
       width: '100%'
     }
   },
   checkboxes: {
-    '@media (max-width: 450px)': {
+    '@media (max-width: 900px)': {
       marginLeft: '15px'
     }
   },
@@ -93,7 +93,7 @@ export const useStyles = makeStyles((theme) => ({
   contentWrapper: {
     marginLeft: '25px',
     marginRight: '25px',
-    '@media (max-width: 450px)': {
+    '@media (max-width: 900px)': {
       padding: '0px',
       margin: '0px',
       width: '100%',
