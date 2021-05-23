@@ -53,9 +53,8 @@ export const getItems = async (query, variables = {}) => {
 
       if (tokenResult) {
         return await getItems(query, variables);
-      } 
+      }
       throw new Error(AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID);
-      
     } else if (
       queryResult.data &&
       Object.values(queryResult.data)[0]?.message ===
@@ -96,9 +95,8 @@ export const setItems = async (query, variables) => {
 
       if (tokenResult) {
         return await setItems(query, variables);
-      } 
+      }
       throw new Error(AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID);
-      
     } else if (
       mutationResult.data &&
       Object.values(mutationResult.data)[0]?.message ===

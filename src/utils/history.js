@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { config } from '../configs';
 import { historyActions } from '../consts/history-actions';
 
-export const placeholderText = 'іменем';
+export const placeholderText = 'за іменем';
 export const userRolesForFilter = {
   user: 'Юзер',
   admin: 'Адмін',
@@ -29,17 +29,19 @@ export const actionFilterObj = () => {
   return arrToFilter;
 };
 
-export const filterInputToRender = (selectedValues, valueToRender) =>
-  selectedValues.map((selectedValue, inx, values) => {
-    let selectedRenderValue;
+export const filterInputToRender = (selectedValues, valueToRender) =>   {
+    return   selectedValues.map((selectedValue, inx, values) => {
+        let selectedRenderValue;
 
-    if (inx !== values.length - 1) {
-      selectedRenderValue = `${valueToRender[selectedValue]}, `;
-    } else {
-      selectedRenderValue = valueToRender[selectedValue];
-    }
-    return selectedRenderValue;
-  });
+        if (inx !== values.length - 1) {
+            selectedRenderValue = `${valueToRender[selectedValue]}, `;
+        } else {
+            selectedRenderValue = valueToRender[selectedValue];
+        }
+        return selectedRenderValue;
+    });
+
+};
 
 export const generateDateFormatForInputValue = (date) => {
   let [dateValue, timeValue] = moment(date)
@@ -55,13 +57,4 @@ export const generateDateFormatForInputValue = (date) => {
       .join(':');
   }
   return `${dateValue}T${timeValue}`;
-};
-
-export const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: 48 * 4.5 + 8,
-      width: 250
-    }
-  }
 };

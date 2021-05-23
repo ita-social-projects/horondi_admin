@@ -205,13 +205,22 @@ export const addOrder = (order) => {
     return setItems(query, {order});
 };
 
-export const getAllOrders = async (skip, limit, filter) => {
+export const getAllOrders = async (skip, limit, filter, sort) => {
+
     const query = `
-      query($limit: Int, $skip: Int, $filter: FilterInput) {
-        getAllOrders(limit: $limit, skip: $skip, filter: $filter) {
+      query($limit: Int, $skip: Int, $filter: OrderFilterInput, $sort:JSONObject) {
+        getAllOrders(limit: $limit, skip: $skip, filter: $filter, sort:$sort) {
           items {
             _id
+                user 
+                {
+                firstName
+                lastName
+                email
+                phoneNumber
+            }
             status
+            paymentStatus
             orderNumber
             dateOfCreation
             totalItemsPrice {
@@ -231,9 +240,8 @@ export const getAllOrders = async (skip, limit, filter) => {
     const result = await getItems(query, {
         skip,
         limit,
-        filter: {
-            orderStatus: filter.length ? filter : null
-        }
+        filter,
+        sort
     });
 
     return result?.data?.getAllOrders;

@@ -10,7 +10,9 @@ import {
 } from './comments.types';
 
 const initialFilters = {
-  _id: [],
+  show: [],
+  dateFrom: '',
+  dateTo: '',
   search: ''
 };
 
