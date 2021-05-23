@@ -247,3 +247,5 @@ export const formConstants = {
   notRequired: '',
   textFieldFilled: 'filled'
 };
+
+export const linkPrefix = 'horondi.net/';
