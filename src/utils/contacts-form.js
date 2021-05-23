@@ -8,9 +8,9 @@ export const setMapImageHandler = (target, setMapFn, values, valuesKey) => {
   [values[valuesKey]] = target.files;
 };
 
-export const setInputsContactHandler = (schedule, adress) => {
+export const setInputsContactHandler = (schedule, address) => {
   return [
     { label: schedule, name: 'schedule' },
-    { label: adress, name: 'address' }
+    { label: address, name: 'address' }
   ];
 };

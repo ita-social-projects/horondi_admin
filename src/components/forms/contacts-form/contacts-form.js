@@ -24,7 +24,7 @@ import { handleAvatar } from '../../../utils/handle-avatar';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const { languages, materialUiConstants } = config;
-const { schedule, address } = config.labels.contacts;
+const { schedule, adress } = config.labels.contacts;
 
 const {
   ENTER_PHONE_NUMBER_MESSAGE,
@@ -115,7 +115,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       }
     });
 
-  const inputs = setInputsContactHandler(schedule, address);
+  const inputs = setInputsContactHandler(schedule, adress);
 
   const inputOptions = {
     errors,
