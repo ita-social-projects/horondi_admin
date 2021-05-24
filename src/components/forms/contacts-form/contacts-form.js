@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import { useDispatch } from 'react-redux';
-
 import { FormControl, Paper, TextField, Grid, Avatar } from '@material-ui/core';
-
 import { useFormik } from 'formik';
-
 import * as Yup from 'yup';
-
 import { Image } from '@material-ui/icons';
+
 import { config } from '../../../configs';
 import { BackButton, SaveButton } from '../../buttons';
 import {
@@ -20,16 +16,17 @@ import {
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
-import { setMapImageHandler } from '../../../utils/contacts-form';
+import {
+  setMapImageHandler,
+  setInputsContactHandler
+} from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
-const { languages } = config;
+const { languages, materialUiConstants } = config;
 const { schedule, adress } = config.labels.contacts;
 
 const {
-  PHONE_NUMBER_LENGTH_MESSAGE,
-  PHONE_NUMBER_TYPE_MESSAGE,
   ENTER_PHONE_NUMBER_MESSAGE,
   INPUT_LENGTH_MESSAGE,
   ENTER_UA_SCHEDULE_MESSAGE,
@@ -38,15 +35,14 @@ const {
   ENTER_EN_ADDRESS_MESSAGE,
   IMAGE_FORMAT_MESSAGE,
   ENTER_LINK_MESSAGE,
-  SELECT_IMAGES_MESSAGE
+  SELECT_IMAGES_MESSAGE,
+  INVALID_PHONE_MESSAGE
 } = config.contactErrorMessages;
 
-const {
-  INVALID_EMAIL_MESSAGE,
-  ENTER_EMAIL_MESSAGE
-} = config.loginErrorMessages;
+const { INVALID_EMAIL_MESSAGE, ENTER_EMAIL_MESSAGE } =
+  config.loginErrorMessages;
 
-const { enAddressRegex, uaRegex, enRegex } = config.formRegExp;
+const { enAddressRegex, uaRegex, enRegex, phoneNumber } = config.formRegExp;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
@@ -71,9 +67,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   };
 
   const formSchema = Yup.object().shape({
-    phoneNumber: Yup.number()
-      .min(12, PHONE_NUMBER_LENGTH_MESSAGE)
-      .typeError(PHONE_NUMBER_TYPE_MESSAGE)
+    phoneNumber: Yup.string()
+      .matches(phoneNumber, INVALID_PHONE_MESSAGE)
       .required(ENTER_PHONE_NUMBER_MESSAGE),
     uaSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
@@ -84,11 +79,11 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .matches(enRegex, ENTER_EN_SCHEDULE_MESSAGE)
       .required(ENTER_EN_SCHEDULE_MESSAGE),
     uaAddress: Yup.string()
-      .min(8, INPUT_LENGTH_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
       .matches(uaRegex, ENTER_UA_ADDRESS_MESSAGE)
       .required(ENTER_UA_ADDRESS_MESSAGE),
     enAddress: Yup.string()
-      .min(8, INPUT_LENGTH_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
       .matches(enAddressRegex, ENTER_EN_ADDRESS_MESSAGE)
       .required(ENTER_EN_ADDRESS_MESSAGE),
     email: Yup.string()
@@ -100,34 +95,33 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .required(ENTER_LINK_MESSAGE)
   });
 
-  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
-    initialValues,
-    validationSchema: formSchema,
-    validateOnBlur: true,
-    onSubmit: (formValues) => {
-      if (
-        formValues.uaCartImage &&
-        formValues.enCartImage &&
-        typeof formValues.uaCartImage === typeof formValues.enCartImage
-      ) {
-        contactSaveHandler(formValues);
-      } else {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(SELECT_IMAGES_MESSAGE));
-        dispatch(setSnackBarStatus(true));
+  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      validateOnBlur: true,
+      onSubmit: (formValues) => {
+        if (
+          formValues.uaCartImage &&
+          formValues.enCartImage &&
+          typeof formValues.uaCartImage === typeof formValues.enCartImage
+        ) {
+          contactSaveHandler(formValues);
+        } else {
+          dispatch(setSnackBarSeverity(materialUiConstants.styleError));
+          dispatch(setSnackBarMessage(SELECT_IMAGES_MESSAGE));
+          dispatch(setSnackBarStatus(true));
+        }
       }
-    }
-  });
+    });
 
-  const inputs = [
-    { label: schedule, name: 'schedule' },
-    { label: adress, name: 'address' }
-  ];
+  const inputs = setInputsContactHandler(schedule, adress);
 
   const inputOptions = {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
@@ -196,6 +190,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   }}
                   value={values.cartLink}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   error={touched.cartLink && !!errors.cartLink}
                   helperText={touched.cartLink && errors.cartLink}
                 />
@@ -213,6 +208,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   }}
                   value={values.phoneNumber}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   error={touched.phoneNumber && !!errors.phoneNumber}
                   helperText={touched.phoneNumber && errors.phoneNumber}
                 />
@@ -229,6 +225,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   }}
                   value={values.email}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   error={touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
                 />
