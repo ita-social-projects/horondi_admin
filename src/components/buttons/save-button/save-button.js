@@ -55,6 +55,7 @@ const SaveButton = ({
       color={color}
       type={type}
       onClick={() => {
+        onClickHandler();
         saveButtonHandler();
         setTimeout(() => {
           if (!error) {
