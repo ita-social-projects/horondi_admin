@@ -59,7 +59,7 @@ const EmailQuestionsOperationsButtons = ({
   };
 
   return (
-    <>
+    <div>
       <Button
         className={styles.spamBtn}
         variant='contained'
@@ -78,7 +78,7 @@ const EmailQuestionsOperationsButtons = ({
       >
         {buttonTitles.DELETE_TITLE}
       </Button>
-    </>
+    </div>
   );
 };
 

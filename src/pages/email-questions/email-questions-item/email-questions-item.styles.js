@@ -39,7 +39,7 @@ export const useStyles = makeStyles((theme) => ({
     border: 'none'
   },
   question: {
-    maxWidth: '18%',
+    minWidth: '0',
     visibility: 'visible',
     transition: 'opacity 150ms linear, visibility 0s linear 150ms'
   },

@@ -84,6 +84,11 @@ const EmailQuestionItem = ({
           />
           <div className={classes.column}>
             <Typography className={classes.heading}>
+              {ReactHtmlParser(getTime(question.date, true))}
+            </Typography>
+          </div>
+          <div className={classes.column}>
+            <Typography className={classes.heading}>
               {question.senderName}
             </Typography>
           </div>
@@ -99,11 +104,6 @@ const EmailQuestionItem = ({
               className={`${classes.heading} ${classes.questionText}`}
             >
               {ReactHtmlParser(questionToShow + answerToShow)}
-            </Typography>
-          </div>
-          <div className={classes.column}>
-            <Typography className={classes.heading}>
-              {ReactHtmlParser(getTime(question.date, true))}
             </Typography>
           </div>
           <div className={classes.column}>
@@ -129,7 +129,6 @@ const EmailQuestionItem = ({
           <TextField
             className={classes.input}
             placeholder={config.labels.emailQuestionsLabels.placeholder}
-            rows={1}
             multiline
             aria-label='dsd'
             value={answerValue}
