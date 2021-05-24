@@ -3,7 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   colorBar: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    '@media (max-width: 450px)': {
+      flexDirection:'column-reverse',
+    },
   },
 
   selectOptionRow: {
@@ -13,13 +16,16 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     '& div': {
       display: 'flex',
-      alignItems: 'center'
-    }
+      alignItems: 'center',
+    },
   },
 
   root: {
     width: '400px',
-    marginRight: '15px'
+    marginRight: '152px',
+    '@media (max-width: 450px)': {
+      margin:'15px 0px 15px',
+    },
   },
 
   materialItem: {

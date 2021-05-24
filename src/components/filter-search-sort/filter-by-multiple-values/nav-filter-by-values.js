@@ -39,7 +39,7 @@ const NavFilterByValues = (
     };
 
     return (
-        <div>
+        <div className={styles.formblock}>
             <Badge
                 badgeContent={filters.length}
                 color={materialUiConstants.styleError}

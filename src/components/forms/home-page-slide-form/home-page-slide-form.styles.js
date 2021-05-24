@@ -12,7 +12,10 @@ export const useStyles = makeStyles((theme) => {
   return {
     formContainer: {
       width: '100%',
-      padding: '20px'
+      padding: '20px',
+      '@media (max-width: 450px)': {
+        padding: 0
+      }
     },
     slideItemUpdate: {
       display: 'flex',

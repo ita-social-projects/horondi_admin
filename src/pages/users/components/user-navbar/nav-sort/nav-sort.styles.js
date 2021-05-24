@@ -12,8 +12,6 @@ export const useStyles = makeStyles((theme) => ({
     '@media (max-width: 450px)': {
       marginLeft: 0,
       width: '100%'
-    },
-    marginTop: -11,
-    width: 120
+    }
   }
 }));

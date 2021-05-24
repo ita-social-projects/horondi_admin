@@ -9,8 +9,7 @@ import Editor from '../../editor';
 const LanguagePanel = ({ lang, inputOptions }) => {
   const styles = useStyles();
 
-  const { values, touched, errors, inputs, handleChange, handleBlur } =
-    inputOptions;
+  const { values, touched, errors, inputs, handleChange, handleBlur } = inputOptions;
   const inputsTextfields = inputs.filter((input) => !input.isEditor);
   const inputsEditor = inputs.filter((input) => input.isEditor);
   return (

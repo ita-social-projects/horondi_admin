@@ -43,6 +43,9 @@ export const useStyles = makeStyles((theme) => ({
     padding: '10px',
     display: 'flex',
     alignItems: 'center',
+    '@media (max-width: 450px)': {
+      margin: 'auto'
+    },
     '& div:nth-child(2)': {
       marginLeft: '15px'
     }
