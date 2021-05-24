@@ -6,7 +6,11 @@ export const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    '@media (max-width: 450px)': {
+      fontSize: '16px',
+      lineHeight: '20px'
+    }
   },
   menuButton: {
     marginRight: theme.spacing(2),

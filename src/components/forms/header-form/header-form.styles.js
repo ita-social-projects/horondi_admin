@@ -8,7 +8,6 @@ export const useStyles = makeStyles((theme) => {
     tabs,
     itemUpdate,
     details,
-    saveButton,
     returnButton,
     textField,
     inputError
@@ -20,7 +19,14 @@ export const useStyles = makeStyles((theme) => {
     headerDetails: {
       ...details
     },
-    saveButton,
+    saveButton: {
+      '@media (max-width: 350px)': {
+        margin: '10px 0 10px',
+      },
+      '@media (min-width: 350px)': {
+        margin: '10px 10px 10px',
+      },
+    },
     returnButton,
     large,
     controlsBlock,
