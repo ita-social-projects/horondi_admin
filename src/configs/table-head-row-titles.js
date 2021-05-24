@@ -41,7 +41,7 @@ const tableHeadRowTitles = {
     adminTab: ['Аватар', "Ім'я", 'Пошта', 'Роль', 'Дії']
   },
   contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
-  orderProductTitles: ['№', 'Назва', 'Кількість', 'Ціна', 'Деталі'],
+  orderProductTitles: ['№', 'Назва', 'Кількість', 'Розмір', 'Ціна', 'Деталі'],
   comments: {
     commentPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії'],
     userPageTitles: ['Дата', 'Текст', 'Дії']
