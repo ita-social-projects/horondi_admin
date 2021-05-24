@@ -2,7 +2,7 @@ import { mapToLanguages } from '../utils/map-languages';
 
 const labels = {
   sort: 'Сортувати за',
-  search: (param) => !param ? 'Шукати' : `Шукати ${param}`,
+  search: (param) => (!param ? 'Шукати' : `Шукати ${param}`),
   goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
@@ -10,7 +10,7 @@ const labels = {
   },
   news: {
     authorName: {
-      ua: 'Ім\'я автора',
+      ua: "Ім'я автора",
       en: 'Author name'
     },
     title: {
@@ -84,7 +84,7 @@ const labels = {
     }
   },
   categories: {
-    switchCategory: 'Категорія, на яку замінити пов\'язані товари',
+    switchCategory: "Категорія, на яку замінити пов'язані товари",
     categoryCode: 'Код категорії',
     categoryName: {
       ua: 'Назва категорії',
@@ -92,7 +92,7 @@ const labels = {
     }
   },
   header: {
-    name: mapToLanguages('І\'мя', 'Name'),
+    name: mapToLanguages("І'мя", 'Name'),
     link: 'Посилання',
     priority: 'Пріорітет'
   },
@@ -104,7 +104,7 @@ const labels = {
     avatarText: 'Фото',
     constructorImgText: 'Фото для конструктора',
     form: {
-      name: mapToLanguages('І\'мя', 'Name'),
+      name: mapToLanguages("І'мя", 'Name'),
       description: mapToLanguages('Опис', 'Description')
     },
     patternName: {
@@ -133,9 +133,9 @@ const labels = {
   comment: {
     text: 'Текст коментаря',
     show: 'Видимий',
-    hidden:'Прихований',
-    yes:'Так',
-    no:'Ні',
+    hidden: 'Прихований',
+    yes: 'Так',
+    no: 'Ні',
     productInfo: 'Інформація про продукт'
   },
   businessPageLabel: [
@@ -299,7 +299,7 @@ const labels = {
     actualPrice: 'Ціна'
   },
   orderRecipient: {
-    firstName: 'Ім\'я',
+    firstName: "Ім'я",
     lastName: 'Прізвище',
     patronymicName: 'По-батькові',
     email: 'e-mail',
@@ -319,7 +319,7 @@ const labels = {
     heightInCm: 'Висота (см.)',
     widthInCm: 'Ширина (см.)',
     depthInCm: 'Глибина (см.)',
-    volumeInLiters: 'Об\'єм (л.)',
+    volumeInLiters: "Об'єм (л.)",
     weightInKg: 'Вага (кг.)'
   },
   emailQuestionsLabels: {
@@ -400,8 +400,8 @@ const labels = {
     novaPost: 'Нова пошта',
     ukrPost: 'Укрпошта',
     selfPickup: 'Самовивіз',
-    novaPostCourier: 'Кур\'єр нової пошти',
-    ukrPostCourier: 'Кур\'єр укрпошти'
+    novaPostCourier: "Кур'єр нової пошти",
+    ukrPostCourier: "Кур'єр укрпошти"
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
@@ -427,7 +427,7 @@ const labels = {
       { label: 'Скасовано', value: 'CANCELLED' },
       { label: 'Повернення коштів', value: 'REFUNDED' },
       { label: 'Відправлено', value: 'SENT' },
-      { label: 'Доставлено', value: 'DELIVERED' },
+      { label: 'Доставлено', value: 'DELIVERED' }
     ]
   },
   homePageSlide: {
@@ -435,7 +435,7 @@ const labels = {
     title: { ua: 'Заголовок слайду', en: 'Slider title' },
     show: 'Доступний',
     description: { ua: 'Опис слайду', en: 'Slide description' },
-    link: 'Посилання для переходу'
+    link: 'Відносне посилання для переходу (без домену)'
   },
   lableTitle: {
     ua: 'Заголовок ua',
@@ -463,12 +463,12 @@ const labels = {
       heightInCm: 'Висота',
       widthInCm: 'Ширина',
       depthInCm: 'Глибина',
-      volumeInLiters: 'Об\'єм (літри)',
+      volumeInLiters: "Об'єм (літри)",
       weightInKg: 'Вага',
       additionalPrice: 'Додаткова ціна',
       simpleNameUa: 'Назва(Укр)',
       simpleNameEn: 'Назва(Eng)',
-      name: 'Ім\'я',
+      name: "Ім'я",
       available: 'Доступний'
     },
     en: {

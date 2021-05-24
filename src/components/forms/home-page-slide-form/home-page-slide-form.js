@@ -1,12 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-  InputAdornment
-} from '@material-ui/core';
+import { Grid, Paper, TextField, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
@@ -14,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 import { Image } from '@material-ui/icons';
 import { useStyles } from './home-page-slide-form.styles';
-import { config, linkPrefix } from '../../../configs';
+import { config } from '../../../configs';
 import useHomePageSlideHandlers from '../../../utils/use-home-page-slide-handlers';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadContainer from '../../../containers/image-upload-container';
@@ -161,9 +155,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
               value={values.link}
               onChange={handleChange}
               error={touched.link && !!errors.link}
-              InputProps={{
-                startAdornment: <InputAdornment>{linkPrefix}</InputAdornment>
-              }}
             />
             {touched.link && errors.link && (
               <div data-cy='slide-error' className={styles.inputError}>
