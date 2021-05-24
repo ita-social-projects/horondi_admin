@@ -8,7 +8,6 @@ export const useStyles = makeStyles((theme) => {
     tabs,
     itemUpdate,
     details,
-    saveButton,
     returnButton,
     textField,
     inputError
