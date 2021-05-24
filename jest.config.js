@@ -14,5 +14,8 @@ module.exports = {
   snapshotSerializers: ['enzyme-to-json/serializer'],
   testResultsProcessor: 'jest-sonar-reporter',
   collectCoverage: true,
-  coveragePathIgnorePatterns: ['/node_modules/', 'cypress']
+  coveragePathIgnorePatterns: ['/node_modules/', 'cypress'],
+  moduleNameMapper: {
+    '\\.(css|scss)$': 'identity-obj-proxy'
+  }
 };
