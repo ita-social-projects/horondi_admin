@@ -92,7 +92,8 @@ export const contactErrorMessages = {
   IMAGE_FORMAT_MESSAGE:
     'Введіть коректний формат, наприклад: https://example.com/',
   ENTER_LINK_MESSAGE: 'Введіть посилання',
-  SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт'
+  SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт',
+  INVALID_PHONE_MESSAGE: 'Введіть коректний формат, наприклад: 380(XX)-XXX-XX-XX',
 };
 
 export const emailQuestionsErrorMessages = {
