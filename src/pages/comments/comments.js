@@ -41,14 +41,8 @@ export const Comments = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const {
-    filter,
-    list,
-    loading,
-    currentPage,
-    rowsPerPage,
-    itemsCount
-  } = useSelector(commentSelectorWithPagination);
+  const { filter, list, loading, currentPage, rowsPerPage, itemsCount } =
+    useSelector(commentSelectorWithPagination);
 
   useEffect(() => {
     dispatch(

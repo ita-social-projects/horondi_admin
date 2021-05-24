@@ -92,7 +92,8 @@ LanguagePanel.propTypes = {
         isEditor: PropTypes.bool
       })
     ),
-    handleChange: PropTypes.func
+    handleChange: PropTypes.func,
+    handleBlur: PropTypes.func
   })
 };
 
@@ -113,6 +114,7 @@ LanguagePanel.defaultProps = {
         isEditor: false
       })
     ),
-    handleChange: noop
+    handleChange: noop,
+    handleBlur: noop
   })
 };
