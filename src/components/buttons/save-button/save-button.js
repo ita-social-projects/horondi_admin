@@ -21,10 +21,10 @@ const SaveButton = ({
 }) => {
   const error = !!Object.keys(errors).length;
   const disable = Object.values(values).every((el) => {
-    if (typeof el === 'boolean') {
+    if (typeof el === 'boolean' && !error) {
       return true;
     }
-    if (el || el === 0) {
+    if ((el || el === 0) && !error) {
       return true;
     }
     return false;
