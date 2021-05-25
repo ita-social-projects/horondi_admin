@@ -1,5 +1,5 @@
 const buttonTitles = {
-  DELETE_TITLE: 'Так',
+  DELETE_TITLE: 'Видалити',
   EDIT_TITLE: 'Редагувати',
   CREATE_NEWS_TITLE: 'Додати новину',
   CREATE_PATTERN_TITLE: 'Додати гобелен',
@@ -63,16 +63,17 @@ const buttonTitles = {
   EVENT_TITLE: 'Подія',
   SEND_CONFIRM: 'Надіслати підтвердження',
   SEND_CODE: 'Надіслати код для підтвердження',
-  CONFIRM: 'Так',
   EXIT_WITHOUT_SAVING: 'Вийти без збереження',
-  STATUS: 'Статус замовлення',
+  ORDER_STATUS: 'Статус замовлення',
   PAYMENT_STATUS: 'Статус оплати',
   SIZE_NAME: 'Розмір',
   AVAILABLE: 'Доступність',
   PURPOSE: 'Застосування',
   CATEGORY: 'Категорії',
   PATTERN: 'Гобелени',
-  MODEL: 'Моделі'
+  MODEL: 'Моделі',
+  YES_BUTTON: 'Так',
+  NO_BUTTON: 'Ні'
 };
 
 export default buttonTitles;

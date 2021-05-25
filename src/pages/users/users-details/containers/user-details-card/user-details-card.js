@@ -81,26 +81,28 @@ const UserDetailsCard = ({
           <Grid item container xs={12} spacing={1} direction='column'>
             {secondarySection}
           </Grid>
-          <Grid item xs={12} container justify='space-around'>
-            <Button
-              variant={contained}
-              color={primary}
-              onClick={buttonHandler}
-              data-cy='change-user-status-button'
-            >
-              {buttonStatus}
-            </Button>
-            {buttonConfirmed && (
+          <div className={styles.buttons}>
+            <Grid item xs={12} container justify='space-around'>
               <Button
                 variant={contained}
                 color={primary}
-                onClick={buttonConfirmationHandler}
+                onClick={buttonHandler}
                 data-cy='change-user-status-button'
               >
-                {buttonConfirmed}
+                {buttonStatus}
               </Button>
-            )}
-          </Grid>
+              {buttonConfirmed && (
+                <Button
+                  variant={contained}
+                  color={primary}
+                  onClick={buttonConfirmationHandler}
+                  data-cy='change-user-status-button'
+                >
+                  {buttonConfirmed}
+                </Button>
+              )}
+            </Grid>
+          </div>
         </Grid>
       </CardContent>
     </Card>

@@ -124,6 +124,7 @@
     "jest-canvas-mock": "^2.3.1",
     "jest-dom": "^4.0.0",
     "jest-sonar-reporter": "^2.0.0",
+    "mutationobserver-shim": "^0.3.7",
     "prettier": "^2.0.5",
     "prettier-eslint": "^10.1.1",
     "react-test-render": "^1.1.2",
@@ -157,10 +158,6 @@
     ],
     "transform": {
       "^.+\\.js$": "babel-jest"
-    },
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./__mocks__/fileMock.js",
-      "\\.(css|scss)$": "identity-obj-proxy"
     }
   }
 }

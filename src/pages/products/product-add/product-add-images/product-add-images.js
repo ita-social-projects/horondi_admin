@@ -89,7 +89,7 @@ const ProductAddImages = ({
 
   return (
     <div className={styles.container}>
-      <Box my={3}>
+      <Box my={3} className={styles.box}>
         <Grid container spacing={1}>
           <Grid item>
             <span className={styles.text}>{PRODUCT_PHOTO_TEXT.PRIMARY}</span>
@@ -106,7 +106,7 @@ const ProductAddImages = ({
           <div className={styles.error}>{REQUIRED_PHOTOS}</div>
         )}
       </Box>
-      <Box my={3}>
+      <Box my={3} className={styles.box}>
         <Grid container spacing={1}>
           <Grid item>
             <span className={styles.text}>{PRODUCT_PHOTO_TEXT.ADDITIONAL}</span>

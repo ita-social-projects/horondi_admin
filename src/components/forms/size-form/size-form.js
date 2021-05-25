@@ -130,6 +130,7 @@ function SizeForm({ id, size }) {
                   {selectTitle}
                 </InputLabel>
                 <Select
+                  className={styles.select}
                   data-cy={labels.en.name}
                   id='name'
                   native

@@ -12,7 +12,14 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     width: 230,
-    height: '36px'
+    height: '36px',
+    '@media (max-width: 450px)': {
+      width: '95%',
+      margin:'auto'
+    },
+    '& div':{
+      width:'100%'
+    },
   },
   iconButton: {
     padding: 10

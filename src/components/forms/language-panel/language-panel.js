@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
-import { upperFirst } from 'lodash';
+import { upperFirst, noop } from 'lodash';
 import { useStyles } from './language-panel.styles';
 import Editor from '../../editor';
 
@@ -77,24 +77,44 @@ export default LanguagePanel;
 
 LanguagePanel.propTypes = {
   lang: PropTypes.string,
-  inputOptions: [
-    {
-      name: PropTypes.string,
-      label: PropTypes.string,
-      isEditor: PropTypes.string
-    }
-  ]
+  inputOptions: PropTypes.shape({
+    values: PropTypes.objectOf(PropTypes.string),
+    touched: PropTypes.objectOf(PropTypes.string),
+    errors: PropTypes.objectOf(PropTypes.string),
+    inputs: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.shape({
+          ua: PropTypes.string,
+          en: PropTypes.string
+        }),
+        name: PropTypes.string,
+        required: PropTypes.bool,
+        isEditor: PropTypes.bool
+      })
+    ),
+    handleChange: PropTypes.func,
+    handleBlur: PropTypes.func
+  })
 };
 
 LanguagePanel.defaultProps = {
   lang: '',
-  inputOptions: {
-    inputs: [
-      {
+  inputOptions: PropTypes.shape({
+    values: {},
+    touched: {},
+    errors: {},
+    inputs: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.shape({
+          ua: '',
+          en: ''
+        }),
         name: '',
-        label: '',
+        required: false,
         isEditor: false
-      }
-    ]
-  }
+      })
+    ),
+    handleChange: noop,
+    handleBlur: noop
+  })
 };
