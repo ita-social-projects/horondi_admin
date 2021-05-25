@@ -10,10 +10,9 @@ import {
   showFilterObj
 } from '../../utils/comment';
 
-debugger;
-const useCommentFilters = () => {
+const useEmailQuestionFilters = () => {
   const dispatch = useDispatch();
-  const filters = useSelector(({ Comments }) => Comments.filters);
+  const filters = useSelector(({ EmailQuestions }) => EmailQuestions.filters);
 
   const setCommentDateFromRangeFilter = (dateFrom) => {
     dispatch(setCurrentPage(0));
@@ -88,4 +87,4 @@ const useCommentFilters = () => {
   };
 };
 
-export default useCommentFilters;
+export default useEmailQuestionFilters;

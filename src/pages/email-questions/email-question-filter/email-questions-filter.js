@@ -13,7 +13,7 @@ import { noop } from 'lodash';
 import { useStyles, MenuProps } from './email-question-filter.styles';
 import { badgePosition, config } from '../../../configs';
 import FilterNavbar from '../../../components/filter-search-sort';
-import useQuestionFilters from '../../../hooks/filters/use-question-filters';
+import useEmailQuestionFilters from '../../../hooks/filters/use-email-question-filters';
 
 const {
   labels: { emailQuestionsLabels }
@@ -31,7 +31,7 @@ const EmailQuestionsFilter = ({ filterItems, filterChangeHandler }) => {
       .map((item) => emailQuestionsLabels.ua[item])
       .join(', ');
   };
-  const questionFilters = useQuestionFilters();
+  const questionFilters = useEmailQuestionFilters();
 
   return (
     <div className={styles.container}>

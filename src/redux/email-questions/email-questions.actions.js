@@ -11,7 +11,9 @@ import {
   SET_EMAIL_QUESTIONS_PENDING_COUNT,
   GET_EMAIL_QUESTIONS_PENDING_COUNT,
   SET_EMAIL_QUESTIONS_PAGES_COUNT,
-  SET_EMAIL_QUESTION_CURRENT_PAGE
+  SET_EMAIL_QUESTION_CURRENT_PAGE,
+  CLEAR_FILTERS,
+  SET_FILTER
 } from './email-questions.types';
 
 const setAllEmailQuestion = (questionsList) => ({
@@ -78,6 +80,15 @@ const setEmailQuestionsPendingCount = (count) => ({
   payload: count
 });
 
+const setFilter = (filter) => ({
+  type: SET_FILTER,
+  payload: filter
+});
+
+const clearFilters = () => ({
+  type: CLEAR_FILTERS
+});
+
 export {
   setAllEmailQuestion,
   getAllEmailQuestions,
@@ -91,5 +102,7 @@ export {
   setEmailQuestionsPendingCount,
   getEmailQuestionsPendingCount,
   setEmailQuestionsCurrentPage,
-  setEmailQuestionsPagesCount
+  setEmailQuestionsPagesCount,
+  setFilter,
+  clearFilters
 };

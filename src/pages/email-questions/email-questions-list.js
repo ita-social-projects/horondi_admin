@@ -28,19 +28,14 @@ const EmailQuestionsList = () => {
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const {
-    list,
-    loading,
-    pagesCount,
-    currentPage,
-    questionsPerPage
-  } = useSelector(({ EmailQuestions }) => ({
-    list: EmailQuestions.list,
-    loading: EmailQuestions.loading,
-    pagesCount: EmailQuestions.pagination.pagesCount,
-    currentPage: EmailQuestions.pagination.currentPage,
-    questionsPerPage: EmailQuestions.pagination.questionsPerPage
-  }));
+  const { list, loading, pagesCount, currentPage, questionsPerPage } =
+    useSelector(({ EmailQuestions }) => ({
+      list: EmailQuestions.list,
+      loading: EmailQuestions.loading,
+      pagesCount: EmailQuestions.pagination.pagesCount,
+      currentPage: EmailQuestions.pagination.currentPage,
+      questionsPerPage: EmailQuestions.pagination.questionsPerPage
+    }));
 
   const dispatch = useDispatch();
 
@@ -110,7 +105,7 @@ const EmailQuestionsList = () => {
   }
 
   return (
-    <div className={commonStyles.container}>
+    <div className={`${commonStyles.container} ${styles.container}`}>
       <div
         className={commonStyles.adminHeader}
         style={{ flexDirection: 'column', alignItems: 'flex-start' }}

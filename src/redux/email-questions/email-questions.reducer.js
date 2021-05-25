@@ -7,6 +7,14 @@ import {
   SET_EMAIL_QUESTIONS_PENDING_COUNT,
   SET_EMAIL_QUESTION_CURRENT_PAGE
 } from './email-questions.types';
+import { CLEAR_FILTERS, SET_FILTER } from '../comments/comments.types';
+
+const initialFilters = {
+  show: [],
+  dateFrom: '',
+  dateTo: '',
+  search: ''
+};
 
 export const initialState = {
   list: [],
@@ -15,6 +23,7 @@ export const initialState = {
     questionsPerPage: 10,
     pagesCount: 1
   },
+  filters: initialFilters,
   pendingCount: 0,
   currentQuestion: null,
   loading: false,
@@ -63,6 +72,19 @@ const emailQuestionsReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       pendingCount: action.payload
+    };
+  case SET_FILTER:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    };
+  case CLEAR_FILTERS:
+    return {
+      ...state,
+      filters: initialFilters
     };
   default:
     return state;
