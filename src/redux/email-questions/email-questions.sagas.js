@@ -42,11 +42,7 @@ const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 export function* handleEmailQuestionsLoad({ payload: { filter, pagination } }) {
   try {
     yield put(setEmailQuestionLoading(true));
-    const emailQuestions = yield call(
-      getAllEmailQuestions,
-      { emailQuestionStatus: filter.show },
-      pagination.skip
-    );
+    const emailQuestions = yield call(getAllEmailQuestions, filter, pagination);
 
     if (emailQuestions) {
       yield put(setEmailQuestionsPagesCount(emailQuestions?.count));
