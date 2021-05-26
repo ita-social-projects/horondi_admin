@@ -28,6 +28,7 @@ export const client = new ApolloClient({
 });
 
 export const getItems = async (query, variables = {}) => {
+  debugger;
   try {
     const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
 

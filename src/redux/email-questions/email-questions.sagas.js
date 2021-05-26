@@ -39,14 +39,18 @@ import { handleAdminLogout } from '../auth/auth.sagas';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
-export function* handleEmailQuestionsLoad({ payload }) {
+export function* handleEmailQuestionsLoad({ payload: { filter, pagination } }) {
   try {
     yield put(setEmailQuestionLoading(true));
-    const response = yield call(getAllEmailQuestions, payload);
+    const emailQuestions = yield call(
+      getAllEmailQuestions,
+      { emailQuestionStatus: filter.show },
+      pagination.skip
+    );
 
-    if (response) {
-      yield put(setEmailQuestionsPagesCount(Math.ceil(response?.count / 10)));
-      yield put(setAllEmailQuestion(response?.questions));
+    if (emailQuestions) {
+      yield put(setEmailQuestionsPagesCount(emailQuestions?.count));
+      yield put(setAllEmailQuestion(emailQuestions?.questions));
       yield put(setEmailQuestionLoading(false));
     }
   } catch (error) {

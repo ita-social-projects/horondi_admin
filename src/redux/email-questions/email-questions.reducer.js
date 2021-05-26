@@ -5,9 +5,10 @@ import {
   SET_CURRENT_EMAIL_QUESTION,
   SET_EMAIL_QUESTIONS_PAGES_COUNT,
   SET_EMAIL_QUESTIONS_PENDING_COUNT,
-  SET_EMAIL_QUESTION_CURRENT_PAGE
+  SET_EMAIL_QUESTION_CURRENT_PAGE,
+  CLEAR_FILTERS,
+  SET_FILTER
 } from './email-questions.types';
-import { CLEAR_FILTERS, SET_FILTER } from '../comments/comments.types';
 
 const initialFilters = {
   show: [],
@@ -18,17 +19,19 @@ const initialFilters = {
 
 export const initialState = {
   list: [],
-  pagination: {
-    currentPage: 0,
-    questionsPerPage: 10,
-    pagesCount: 1
-  },
   filters: initialFilters,
   pendingCount: 0,
   currentQuestion: null,
   loading: false,
   error: null
 };
+
+export const selectEmailQuestion = ({ EmailQuestions }) => ({
+  list: EmailQuestions.list,
+  filter: EmailQuestions.filters,
+  loading: EmailQuestions.commentsLoading,
+  comment: EmailQuestions.comment
+});
 
 const emailQuestionsReducer = (state = initialState, action = {}) => {
   switch (action.type) {

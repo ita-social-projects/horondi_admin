@@ -17,6 +17,9 @@ import LoadingBar from '../../components/loading-bar';
 import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
 import EmailQuestionItem from './email-questions-item';
+import FilterNavbar from '../../components/filter-search-sort';
+import useEmailQuestionFilters from '../../hooks/filters/use-email-question-filters';
+import { emailQuestionSelectorWithPagination } from '../../redux/selectors/email-questions.selectors';
 
 const { titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE } = messages;
@@ -28,28 +31,31 @@ const EmailQuestionsList = () => {
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading, pagesCount, currentPage, questionsPerPage } =
-    useSelector(({ EmailQuestions }) => ({
-      list: EmailQuestions.list,
-      loading: EmailQuestions.loading,
-      pagesCount: EmailQuestions.pagination.pagesCount,
-      currentPage: EmailQuestions.pagination.currentPage,
-      questionsPerPage: EmailQuestions.pagination.questionsPerPage
-    }));
 
   const dispatch = useDispatch();
 
-  const [filter, setFilter] = useState(['ALL']);
+  const questionFilters = useEmailQuestionFilters();
+
+  const { filter, list, loading, currentPage, rowsPerPage, itemsCount } =
+    useSelector(emailQuestionSelectorWithPagination);
+
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
-        filter: filter.slice(1),
-        skip: currentPage * questionsPerPage
+        filter: {
+          date: { dateFrom: filter.dateFrom, dateTo: filter.dateTo },
+          show: filter.show,
+          search: filter.search
+        },
+        pagination: {
+          limit: rowsPerPage,
+          skip: currentPage * rowsPerPage
+        }
       })
     );
-  }, [dispatch, currentPage, filter, questionsPerPage]);
+  }, [dispatch, filter, rowsPerPage, currentPage]);
 
   const questionDeleteHandler = (id, e) => {
     e.stopPropagation();
@@ -58,20 +64,6 @@ const EmailQuestionsList = () => {
       dispatch(deleteEmailQuestions([id]));
     };
     openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE);
-  };
-
-  const filterChangeHandler = (id) => {
-    if (id === 'ALL') {
-      setFilter([id]);
-      return;
-    }
-
-    const possibleFilter = filter.find((item) => item === id);
-    if (possibleFilter) {
-      setFilter(filter.filter((item) => item !== id));
-    } else {
-      setFilter([...filter, id]);
-    }
   };
 
   const checkboxChangeHandler = (e, id) => {
@@ -114,10 +106,7 @@ const EmailQuestionsList = () => {
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
         <div className={styles.operations}>
-          <EmailQuestionsFilter
-            filterItems={filter}
-            filterChangeHandler={filterChangeHandler}
-          />
+          <FilterNavbar options={questionFilters} />
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
             setQuestionsToOperate={setQuestionsToOperate}
@@ -128,7 +117,7 @@ const EmailQuestionsList = () => {
         {questions?.length ? (
           <TableContainerGenerator
             pagination
-            count={pagesCount}
+            count={itemsCount}
             tableTitles={tableTitles}
             tableItems={questions}
           />

@@ -12,8 +12,6 @@ import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 import { useStyles, MenuProps } from './email-question-filter.styles';
 import { badgePosition, config } from '../../../configs';
-import FilterNavbar from '../../../components/filter-search-sort';
-import useEmailQuestionFilters from '../../../hooks/filters/use-email-question-filters';
 
 const {
   labels: { emailQuestionsLabels }
@@ -21,7 +19,7 @@ const {
 
 const EmailQuestionsFilter = ({ filterItems, filterChangeHandler }) => {
   const styles = useStyles();
-
+  debugger;
   const handleSelected = (selected) => {
     if (selected.length === 1) {
       return emailQuestionsLabels.ua[selected[0]];
@@ -31,7 +29,6 @@ const EmailQuestionsFilter = ({ filterItems, filterChangeHandler }) => {
       .map((item) => emailQuestionsLabels.ua[item])
       .join(', ');
   };
-  const questionFilters = useEmailQuestionFilters();
 
   return (
     <div className={styles.container}>
@@ -62,7 +59,6 @@ const EmailQuestionsFilter = ({ filterItems, filterChangeHandler }) => {
           </Select>
         </FormControl>
       </Badge>
-      <FilterNavbar options={questionFilters} />
     </div>
   );
 };

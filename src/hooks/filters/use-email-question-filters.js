@@ -1,20 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { clearFilters, setFilter } from '../../redux/comments/comments.actions';
+import {
+  clearFilters,
+  setFilter
+} from '../../redux/email-questions/email-questions.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import titles from '../../configs/titles';
 import buttonTitles from '../../configs/button-titles';
 import {
-  placeholderCommentSearch,
-  showCommentOptions,
+  placeholderEmailQuestionSearch,
+  showEmailQuestionStatusOptions,
   showFilterObj
-} from '../../utils/comment';
+} from '../../utils/email-question-list';
 
 const useEmailQuestionFilters = () => {
   const dispatch = useDispatch();
   const filters = useSelector(({ EmailQuestions }) => EmailQuestions.filters);
 
-  const setCommentDateFromRangeFilter = (dateFrom) => {
+  const setEmailQuestionDateFromRangeFilter = (dateFrom) => {
     dispatch(setCurrentPage(0));
     dispatch(
       setFilter({
@@ -23,7 +26,7 @@ const useEmailQuestionFilters = () => {
     );
   };
 
-  const setCommentDateToRangeFilter = (dateTo) => {
+  const setEmailQuestionDateToRangeFilter = (dateTo) => {
     dispatch(setCurrentPage(0));
     dispatch(
       setFilter({
@@ -57,12 +60,12 @@ const useEmailQuestionFilters = () => {
     filterByDateOptions: [
       {
         title: titles.historyTitles.from,
-        dateHandler: setCommentDateFromRangeFilter,
+        dateHandler: setEmailQuestionDateFromRangeFilter,
         filters: filters.dateFrom
       },
       {
         title: titles.historyTitles.to,
-        dateHandler: setCommentDateToRangeFilter,
+        dateHandler: setEmailQuestionDateToRangeFilter,
         filters: filters.dateTo
       }
     ],
@@ -72,12 +75,12 @@ const useEmailQuestionFilters = () => {
         label: buttonTitles.USER_STATUS_TITLE,
         selectItems: showFilterObj(),
         setFilterHandler: setShowFilter,
-        objForTranslateRenderItems: showCommentOptions
+        objForTranslateRenderItems: showEmailQuestionStatusOptions
       }
     ],
     searchOptions: {
       search: filters.search,
-      placeholderText: placeholderCommentSearch,
+      placeholderText: placeholderEmailQuestionSearch,
       setSearchFilter
     },
     clearOptions: {

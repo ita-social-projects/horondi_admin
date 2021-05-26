@@ -10,7 +10,6 @@ import {
   showFilterObj
 } from '../../utils/comment';
 
-debugger;
 const useCommentFilters = () => {
   const dispatch = useDispatch();
   const filters = useSelector(({ Comments }) => Comments.filters);
