@@ -91,7 +91,7 @@ const ProductsPage = () => {
   };
 
   const handleProductEdit = (id) => {
-    dispatch(push(`/products/product/${id}`));
+    dispatch(push(`${pathToProductAddPage}${id}`));
   };
 
   const productsItems = products

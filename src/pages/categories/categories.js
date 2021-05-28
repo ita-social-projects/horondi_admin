@@ -18,6 +18,8 @@ import StandardButton from '../../components/buttons/standard-button';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useCategoryFilters from '../../hooks/filters/use-category-filters';
 
+const pathToAddCategoryPage = config.routes.pathToAddCategory;
+
 const Categories = () => {
   const { IMG_URL } = config;
   const { ADD_CATEGORY } = config.buttonTitles;
@@ -41,7 +43,7 @@ const Categories = () => {
   };
 
   const handleAddCategory = () => {
-    dispatch(push(config.routes.pathToAddCategory));
+    dispatch(push(pathToAddCategoryPage));
   };
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const Categories = () => {
           name={category.name.length ? category.name[0].value : ''}
           deleteHandler={() => handleDeleteCategory(category._id)}
           editHandler={() =>
-            dispatch(push(`/categories/add-category/${category._id}`))
+            dispatch(push(`${pathToAddCategoryPage}${category._id}`))
           }
         />
       ))
