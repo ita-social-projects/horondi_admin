@@ -1,10 +1,15 @@
 import {getItems, setItems} from '../../utils/client';
 import {sizeTranslations} from '../../translations/sizes.translations';
 
-export const getAllSizes = async () => {
+export const getAllSizes = async (limit,skip,filter) => {
     const query = `
-      query {
-        getAllSizes {
+      query (
+      $limit: Int
+      $skip: Int
+      $filter:SizeFilterInput
+    ){
+        getAllSizes(limit: $limit, skip: $skip, filter: $filter) {
+        items{
           _id
           name
           simpleName {
@@ -12,11 +17,13 @@ export const getAllSizes = async () => {
             value
           }
           available
+          }
+          count
         }
       }
     `;
 
-    const result = await getItems(query);
+    const result = await getItems(query, {limit,skip,filter});
 
     return result?.data?.getAllSizes;
 };

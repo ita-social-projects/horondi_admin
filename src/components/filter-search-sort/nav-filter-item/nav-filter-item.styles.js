@@ -10,6 +10,9 @@ export const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 100,
-    maxWidth: 150
+    maxWidth: 150,
+    '@media (max-width: 450px)': {
+      margin: 0
+    }
   }
 }));

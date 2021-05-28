@@ -11,7 +11,13 @@ module.exports = {
       statements: 0
     }
   },
+  snapshotSerializers: ['enzyme-to-json/serializer'],
   testResultsProcessor: 'jest-sonar-reporter',
   collectCoverage: true,
-  coveragePathIgnorePatterns: ['/node_modules/', 'cypress']
+  coveragePathIgnorePatterns: ['/node_modules/', 'cypress'],
+  moduleNameMapper: {
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+      './__mocks__/fileMock.js',
+    '\\.(css|scss)$': 'identity-obj-proxy'
+  }
 };

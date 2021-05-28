@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { MenuItem, Select } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ReactHtmlParser from 'react-html-parser';
 
+import orders from '../../configs/orders';
 import getTime from '../../utils/getTime';
 import { useStyles } from './orders-page.styles';
 import { useCommonStyles } from '../common.styles';
@@ -18,6 +18,8 @@ import { config } from '../../configs';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { handleOrdersPage } from '../../utils/handle-orders-page';
+import useOrderFilters from '../../hooks/filters/use-order-filters';
+import FilterNavbar from '../../components/filter-search-sort';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
@@ -30,19 +32,23 @@ const OrdersPage = () => {
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const [status, setStatus] = useState('All');
+  const {
+    searchOptions,
+    clearOptions,
+    filterByMultipleOptions,
+    filterByDateOptions,
+    sortOptions
+  } = useOrderFilters();
 
-  const statusList = config.labels.orders.select.map(({ label, value }) => (
-    <MenuItem key={value} value={value}>
-      {label}
-    </MenuItem>
-  ));
+  const { orderLoading, orders: ordersList, filters, sort } = useSelector(
+    ({ Orders }) => ({
+      orderLoading: Orders.orderLoading,
+      orders: Orders.list.items,
+      filters: Orders.filters,
+      sort: Orders.sort
+    })
+  );
 
-  const { orderLoading, orders, count } = useSelector(({ Orders }) => ({
-    orderLoading: Orders.orderLoading,
-    orders: Orders.list.items,
-    count: Orders.list.count
-  }));
   const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
     rowsPerPage: Table.pagination.rowsPerPage,
@@ -55,11 +61,15 @@ const OrdersPage = () => {
         limit: rowsPerPage,
         skip: currentPage * rowsPerPage,
         filter: {
-          orderStatus: status === 'All' ? '' : status
-        }
+          date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
+          status: filters.status,
+          paymentStatus: filters.paymentStatus,
+          search: filters.search
+        },
+        sort
       })
     );
-  }, [dispatch, rowsPerPage, currentPage, status]);
+  }, [dispatch, rowsPerPage, currentPage, filters, sort]);
 
   const ordersDeleteHandler = (id) => {
     const removeOrders = () => {
@@ -70,17 +80,20 @@ const OrdersPage = () => {
   };
 
   const orderItems =
-    orders &&
-    orders.map((order) => (
+    ordersList &&
+    ordersList.map((order) => (
       <TableContainerRow
         key={order._id}
-        orderId={order.orderNumber}
         data={ReactHtmlParser(getTime(order.dateOfCreation, true))}
-        totalPrice={`${order.totalItemsPrice[0].value} ₴`}
-        deliveryPrice={`${
-          order.totalPriceToPay[0].value - order.totalItemsPrice[0].value
-        } ₴`}
-        status={<Status status={order.status} />}
+        orderId={order.orderNumber}
+        customer={`${order?.user?.firstName} ${order?.user?.lastName}`}
+        totalPrice={`${order?.totalPriceToPay[0]?.value} ₴`}
+        paymentStatus={
+          <Status
+            status={orders.paymentStatusTranslation[order?.paymentStatus]}
+          />
+        }
+        status={<Status status={orders.orderTableStatus[order.status]} />}
         editHandler={() => {
           dispatch(push(pathToOrderItem.replace(':id', order._id)));
         }}
@@ -90,17 +103,16 @@ const OrdersPage = () => {
         showAvatar={false}
       />
     ));
-
+  if (orderLoading) {
+    return <LoadingBar />;
+  }
   return (
     <div className={commonStyles.container}>
-      <div className={commonStyles.adminHeader}>
+      <div className={`${commonStyles.adminHeader} ${styles.title}`}>
         <Typography variant='h1' className={commonStyles.materialTitle}>
           {config.titles.orderTitles.mainPageTitle}
         </Typography>
         <div className={styles.filterBy}>
-          <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-            {statusList}
-          </Select>
           <Button
             id='add-order'
             component={Link}
@@ -113,19 +125,24 @@ const OrdersPage = () => {
           </Button>
         </div>
       </div>
-      <div className={styles.orderCount}>
-        {count} {config.titles.orderTitles.orders}
-      </div>
+      <FilterNavbar
+        options={
+          {
+            sortOptions,
+            filterByMultipleOptions,
+            filterByDateOptions,
+            clearOptions,
+            searchOptions
+          } || {}
+        }
+      />
+
       <div className={commonStyles.table}>
-        {orderLoading ? (
-          <LoadingBar />
-        ) : (
-          handleOrdersPage(
-            orders,
-            itemsCount,
-            orderItems,
-            commonStyles.materialTitle
-          )
+        {handleOrdersPage(
+          ordersList,
+          itemsCount,
+          orderItems,
+          commonStyles.noRecords
         )}
       </div>
     </div>

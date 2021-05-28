@@ -18,7 +18,11 @@ export const useStyles = makeStyles((theme) => {
     },
     container: {
       width: '360px',
-      padding: 20
+      padding: 20,
+      '@media (max-width: 450px)': {
+        width: '100%',
+        padding: 0
+      }
     },
     errorTab: {
       backgroundColor: theme.palette.error.main,

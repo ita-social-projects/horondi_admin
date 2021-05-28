@@ -5,17 +5,27 @@ import {
   REMOVE_SIZE_FROM_STATE,
   SET_SIZES_LOADING,
   SET_SIZES_ERROR,
-  SHOW_SIZE_DIALOG_WINDOW
+  SHOW_SIZE_DIALOG_WINDOW,
+  SET_FILTER,
+  CLEAR_FILTERS
 } from './sizes.types';
 
 export const selectSizes = ({ Sizes }) => ({
-  sizesList: Sizes.list,
+  sizesList: Sizes.list?.items,
   loading: Sizes.sizesLoading,
-  size: Sizes.size
+  size: Sizes.size,
+  filters: Sizes.filters
 });
+
+const initialFilters = {
+  available: [],
+  searchBySimpleName: '',
+  name: []
+};
 
 export const initialState = {
   list: [],
+  filters: initialFilters,
   size: null,
   showSizeDialogWindow: false,
   sizesLoading: false,
@@ -24,6 +34,19 @@ export const initialState = {
 
 const sizeReducer = (state = initialState, action = {}) => {
   switch (action.type) {
+  case CLEAR_FILTERS:
+    return {
+      ...state,
+      filters: initialFilters
+    };
+  case SET_FILTER:
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    };
   case SET_SIZES:
     return {
       ...state,

@@ -20,7 +20,7 @@ import { patternSelectorWithPagination } from '../../redux/selectors/pattern.sel
 const map = require('lodash/map');
 
 const { PATTERN_REMOVE_MESSAGE } = config.messages;
-const { CREATE_PATTERN_TITLE } = config.buttonTitles;
+const { CREATE_PATTERN_TITLE, EXIT_WITHOUT_SAVING } = config.buttonTitles;
 
 const pathToPatternAddPage = config.routes.pathToAddPattern;
 const tableTitles = config.tableHeadRowTitles.patterns;
@@ -50,7 +50,11 @@ const PatternPage = () => {
       dispatch(closeDialog());
       dispatch(deletePattern(id));
     };
-    openSuccessSnackbar(removePattern, PATTERN_REMOVE_MESSAGE);
+    openSuccessSnackbar(
+      removePattern,
+      EXIT_WITHOUT_SAVING,
+      PATTERN_REMOVE_MESSAGE
+    );
   };
 
   const patternItems = map(list, (patternItem) => (
@@ -61,7 +65,7 @@ const PatternPage = () => {
           : ''
       }
       key={patternItem._id}
-      id={patternItem.id}
+      id={patternItem._id}
       name={patternItem.name[0].value}
       material={patternItem.material.name[0].value}
       available={patternItem.available ? 'Так' : 'Ні'}

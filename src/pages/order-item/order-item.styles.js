@@ -3,7 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   orderContainer: {
     width: '100%',
-    padding: '84px 20px 0px'
+    padding: '84px 20px 0px',
+    '@media (max-width: 450px)': {
+      '& button': {
+        'font-size': '11px'
+      }
+    }
   },
   saveBtn: {
     marginLeft: 20

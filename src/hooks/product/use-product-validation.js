@@ -72,7 +72,7 @@ const useProductValidation = (
           .required(REQUIRED_FIELD),
         [`${lang}${capitalize(infoLabels[1].name)}`]: Yup.string()
           .min(2, NAME_TOO_SHORT_MESSAGE)
-          .max(150, NAME_TOO_LONG_MESSAGE)
+          .max(1000, NAME_TOO_LONG_MESSAGE)
           .required(REQUIRED_FIELD)
       }))
     )

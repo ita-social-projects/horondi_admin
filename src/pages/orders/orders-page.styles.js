@@ -1,11 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  orderCount: {
-    fontSize: 16,
-    textAlign: 'left',
-    marginBottom: '10px'
-  },
   filterBy: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -13,6 +8,13 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 16
   },
   addButton: {
-    marginLeft: '20px'
+    marginLeft: '20px',
+    '@media (max-width: 450px)': {
+      margin:'auto',
+    },
+  },
+  title:{
+    marginBottom: '5px',
+    textAlign:'center'
   }
 }));

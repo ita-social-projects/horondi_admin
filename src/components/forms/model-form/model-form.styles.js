@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
+
   const {
     details,
     returnButton,
@@ -22,6 +23,14 @@ export const useStyles = makeStyles((theme) => {
     purposeSelect
   } = formStyles(theme);
   return {
+    constructorButton:{
+      display:'inline',
+      '@media (max-width: 450px)': {
+        '& button':{
+          margin:'10px 0px 10px'
+        },
+      },
+    },
     modelItemUpdate: {
       ...itemUpdate
     },

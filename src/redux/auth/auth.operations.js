@@ -1,7 +1,8 @@
-import {getItems, setItems} from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
+import { userTranslations } from '../../translations/user.translations';
 
 export const getUserByToken = async () => {
-    const getUserByTokenQuery = `
+  const getUserByTokenQuery = `
       query {
         getUserByToken {
           ... on User {
@@ -12,13 +13,13 @@ export const getUserByToken = async () => {
       }
     `;
 
-    const result = await getItems(getUserByTokenQuery);
+  const result = await getItems(getUserByTokenQuery);
 
-    return result?.data?.getUserByToken;
+  return result?.data?.getUserByToken;
 };
 
 export const loginAdmin = async (loginInput) => {
-    const loginAdminMutation = `
+  const loginAdminMutation = `
       mutation($loginInput: LoginInput!) {
         loginAdmin(loginInput: $loginInput) {
           _id
@@ -27,12 +28,19 @@ export const loginAdmin = async (loginInput) => {
         }
       }
     `;
-    const result = await setItems(loginAdminMutation, {loginInput});
 
-    return result?.data?.loginAdmin;
+  const result = await setItems(loginAdminMutation, { loginInput });
+
+  if (
+    Object.keys(userTranslations).includes(result?.data?.loginAdmin?.message)
+  ) {
+    throw new Error(`${userTranslations[result.data.loginAdmin.message]}`);
+  }
+
+  return result?.data?.loginAdmin;
 };
 export const regenerateAuthTokenPair = async (refreshToken) => {
-    const regenerateAuthTokenPairMutation = `
+  const regenerateAuthTokenPairMutation = `
       mutation($refreshToken:String!) {
         regenerateAccessToken(refreshToken:$refreshToken) {
           ... on Token {
@@ -43,9 +51,9 @@ export const regenerateAuthTokenPair = async (refreshToken) => {
       }
     `;
 
-    const result = await setItems(regenerateAuthTokenPairMutation, {
-        refreshToken
-    });
+  const result = await setItems(regenerateAuthTokenPairMutation, {
+    refreshToken
+  });
 
-    return result?.data?.regenerateAccessToken;
+  return result?.data?.regenerateAccessToken;
 };

@@ -1,10 +1,5 @@
 export const selectProductsAndTable = ({
-  Products: {
-    loading,
-    products,
-    filters,
-    sorting: { sortByPopularity, sortByPrice, sortByRate }
-  },
+  Products: { loading, products, filters, sort },
   Table: {
     pagination: { rowsPerPage, currentPage },
     itemsCount
@@ -12,10 +7,8 @@ export const selectProductsAndTable = ({
 }) => ({
   loading,
   products,
-  sortByRate,
-  sortByPrice,
+  sort,
   filters,
-  sortByPopularity,
   rowsPerPage,
   currentPage,
   itemsCount

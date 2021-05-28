@@ -298,15 +298,17 @@ const ModelForm = ({ model, id, isEdit }) => {
           errors={errors}
         />
         {isEdit ? (
-          <Button
-            data-cy={labelsEn.constructor}
-            className={styles.saveButton}
-            onClick={handleConstructor}
-            color={materialUiConstants.secondary}
-            variant={materialUiConstants.contained}
-          >
-            {MODEL_CONSTRUCTOR}
-          </Button>
+          <div className={styles.constructorButton}>
+            <Button
+              data-cy={labelsEn.constructor}
+              className={styles.saveButton}
+              onClick={handleConstructor}
+              color={materialUiConstants.secondary}
+              variant={materialUiConstants.contained}
+            >
+              {MODEL_CONSTRUCTOR}
+            </Button>
+          </div>
         ) : null}
       </form>
     </div>

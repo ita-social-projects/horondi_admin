@@ -28,7 +28,10 @@ export const useStyles = makeStyles((theme) => {
       minWidth: 120
     },
     materialSelect: {
-      width: '550px'
+      width: '550px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
     },
     patternItemUpdate: {
       ...itemUpdate,

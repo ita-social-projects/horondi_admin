@@ -1,4 +1,8 @@
 import PropTypes from 'prop-types';
+import { MenuItem } from '@material-ui/core';
+import React from 'react';
+import _ from 'lodash';
+import { config as configs } from '../configs';
 import config from '../configs/orders';
 
 export const recipientPropTypes = {
@@ -297,7 +301,8 @@ export const setFormValues = (selectedOrder) => {
 export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
   const index = orderItems.findIndex(
     (item) =>
-      item.product._id === selectedProduct._id && item.options.size._id === size
+      item.product._id === selectedProduct._id &&
+      item.options.size._id === size.id
   );
   if (index !== -1) {
     const newItem = { ...orderItems[index] };
@@ -312,7 +317,7 @@ export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
     ...orderItems,
     {
       options: {
-        size: { _id: size }
+        size: { _id: size.id, name: size.name }
       },
       product: {
         basePrice: selectedProduct.basePrice,
@@ -322,4 +327,28 @@ export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
       quantity
     }
   ];
+};
+
+export const statusList = configs.labels.orders.select.map(
+  ({ label, value }) => (
+    <MenuItem key={value} value={value}>
+      {label}
+    </MenuItem>
+  )
+);
+export const statusFilterObject = configs.labels.orders.select.map(
+  ({ value, label }) => ({
+    key: value,
+    value: label
+  })
+);
+
+export const paymentStatusFilterObj = () => {
+  const arrToFilter = [];
+
+  _.forEach(config.paymentStatusTranslation, (value, key) => {
+    arrToFilter.push({ key, value });
+  });
+
+  return arrToFilter;
 };

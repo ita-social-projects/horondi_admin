@@ -33,7 +33,12 @@ const mockStoreReturner = (mockLoading) => ({
       }
     ],
     sizesLoading: mockLoading,
-    size: null
+    size: null,
+    filters: {
+      available: [],
+      searchBySimpleName: '',
+      name: []
+    }
   },
   Table: {
     pagination: {

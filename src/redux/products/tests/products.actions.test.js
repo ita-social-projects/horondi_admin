@@ -22,10 +22,6 @@ import {
   setProductsError,
   setProductsLoading,
   setSearchFilter,
-  setSortByDate,
-  setSortByPopularity,
-  setSortByPrice,
-  setSortByRate,
   clearFilesToUpload,
   clearProductToSend,
   addProduct,
@@ -40,10 +36,6 @@ import {
   SET_ALL_PRODUCTS,
   GET_ALL_FILTERS,
   SET_ALL_FILTER_DATA,
-  SET_SORT_BY_PRICE,
-  SET_SORT_BY_DATE,
-  SET_SORT_BY_RATE,
-  SET_SORT_BY_POPULARITY,
   GET_FILTRED_PRODUCTS,
   SET_PRODUCTS_LOADING,
   SET_CATEGORY_FILTER,
@@ -100,34 +92,6 @@ describe('Test products actions', () => {
     expect(setAllFilterData(mockFiltersData)).toEqual({
       type: SET_ALL_FILTER_DATA,
       payload: mockFiltersData
-    });
-  });
-
-  it('should set sort by price', () => {
-    expect(setSortByPrice(1)).toEqual({
-      type: SET_SORT_BY_PRICE,
-      payload: 1
-    });
-  });
-
-  it('should set sort by date', () => {
-    expect(setSortByDate(1)).toEqual({
-      type: SET_SORT_BY_DATE,
-      payload: 1
-    });
-  });
-
-  it('should set sort by rate', () => {
-    expect(setSortByRate(1)).toEqual({
-      type: SET_SORT_BY_RATE,
-      payload: 1
-    });
-  });
-
-  it('should set sort by popularity', () => {
-    expect(setSortByPopularity(1)).toEqual({
-      type: SET_SORT_BY_POPULARITY,
-      payload: 1
     });
   });
 

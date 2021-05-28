@@ -6,7 +6,7 @@ const buttonTitles = {
   CREATE_MODEL_TITLE: 'Додати модель',
   MODEL_SAVE_TITLE: 'Зберегти',
   MODEL_CONSTRUCTOR: 'Конструктор',
-  CANCEL_TITLE: 'Відмінити',
+  CANCEL_TITLE: 'Ні',
   LOGOUT_TITLE: 'Вихід',
   CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку',
   CREATE_CONTACT_TITLE: 'Додати контакти',
@@ -63,6 +63,17 @@ const buttonTitles = {
   EVENT_TITLE: 'Подія',
   SEND_CONFIRM: 'Надіслати підтвердження',
   SEND_CODE: 'Надіслати код для підтвердження',
-  EXIT_WITHOUT_SAVING: 'Вийти без збереження'
+  EXIT_WITHOUT_SAVING: 'Вийти без збереження',
+  ORDER_STATUS: 'Статус замовлення',
+  PAYMENT_STATUS: 'Статус оплати',
+  SIZE_NAME: 'Розмір',
+  AVAILABLE: 'Доступність',
+  PURPOSE: 'Застосування',
+  CATEGORY: 'Категорії',
+  PATTERN: 'Гобелени',
+  MODEL: 'Моделі',
+  YES_BUTTON: 'Так',
+  NO_BUTTON: 'Ні'
 };
+
 export default buttonTitles;
