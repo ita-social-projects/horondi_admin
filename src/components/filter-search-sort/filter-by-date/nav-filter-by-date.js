@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
 
@@ -8,13 +7,14 @@ const NavFilterByDate = ({
   filterByDateOptions: { dateFrom, dateTo, dateHandler }
 }) => {
   const { afterToday } = DateRangePicker;
+
   const from = dateFrom || new Date();
   const to = dateTo || new Date();
 
   const [value, setValue] = useState([from, to]);
-  const setDateHandler = (value) => {
-    setValue(value);
-    dateHandler(value);
+  const setDateHandler = (e) => {
+    setValue(e);
+    dateHandler(e);
   };
   return (
     <DateRangePicker
