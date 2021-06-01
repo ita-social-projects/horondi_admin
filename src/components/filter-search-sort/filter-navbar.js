@@ -20,11 +20,6 @@ const FilterNavbar = ({ options }) => {
 
   return (
     <Grid className={styles.container}>
-      {/* {filterByDateOptions?.length ? <div className={styles.dateRange}>{ */}
-      {/*    filterByDateOptions.map(filterItem => (<Grid className={styles.dateRangeItem} key={filterItem} item> */}
-      {/*        <NavFilterByDate filterByDateOptions={filterItem}/> */}
-      {/*    </Grid>)) */}
-      {/* }</div> : null} */}
       {filterByDateOptions ? (
         <Grid className={styles.dateRangeItem} item>
           <NavFilterByDate filterByDateOptions={filterByDateOptions} />
@@ -66,7 +61,6 @@ FilterNavbar.propTypes = {
 FilterNavbar.defaultProps = {
   options: {},
   sortOptions: {},
-  //   filterByDateOptions: [],
   searchOptions: {},
   clearOptions: {}
 };
