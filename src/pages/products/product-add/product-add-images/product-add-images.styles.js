@@ -8,7 +8,11 @@ export const useStyles = makeStyles((theme) => {
     imageUploadAvatar,
     container: {
       display: 'flex',
-      position: 'relative'
+      position: 'relative',
+      flexWrap: 'wrap'
+    },
+    box: {
+      margin: '24px auto 24px'
     },
     error: {
       color: theme.palette.error.main,

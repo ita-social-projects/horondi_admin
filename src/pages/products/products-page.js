@@ -8,7 +8,6 @@ import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import {
   getFiltredProducts,
-  getAllFilters,
   deleteProduct
 } from '../../redux/products/products.actions';
 
@@ -22,6 +21,9 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { selectProductsAndTable } from '../../redux/selectors/multiple.selectors';
 import { useCommonStyles } from '../common.styles';
 import { handleProductsPage } from '../../utils/handle-products-page';
+import useProductFilters from '../../hooks/filters/use-product-filters';
+import FilterNavbar from '../../components/filter-search-sort';
+import { selectProductsLoadingAndDetails } from '../../redux/selectors/products.selectors';
 
 const pathToProductAddPage = config.routes.pathToAddProduct;
 
@@ -37,51 +39,48 @@ const ProductsPage = () => {
   const common = useCommonStyles();
 
   const dispatch = useDispatch();
+  const productFilters = useProductFilters();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     loading,
     products,
     currentPage,
     rowsPerPage,
-    sortByRate,
-    sortByPrice,
     filters,
-    sortByPopularity,
+    sort,
     itemsCount
   } = useSelector(selectProductsAndTable);
-
-  const {
-    categoryFilter,
-    colorsFilter,
-    patternsFilter,
-    modelsFilter,
-    isHotItemFilter
-  } = filters;
+  const { loading: detailLoading } = useSelector(
+    selectProductsLoadingAndDetails
+  );
 
   useEffect(() => {
-    dispatch(getAllFilters());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getFiltredProducts({}));
-  }, [
-    dispatch,
-    sortByRate,
-    sortByPrice,
-    sortByPopularity,
-    rowsPerPage,
-    currentPage,
-    categoryFilter,
-    colorsFilter,
-    modelsFilter,
-    isHotItemFilter,
-    patternsFilter
-  ]);
+    dispatch(
+      getFiltredProducts({
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        filter: {
+          pattern: filters.pattern,
+          category: filters.category,
+          models: filters.models
+        },
+        sort,
+        search: filters.search
+      })
+    );
+  }, [dispatch, sort, rowsPerPage, currentPage, filters]);
 
   const handleProductDelete = (id) => {
     const removeProduct = () => {
       dispatch(closeDialog());
-      dispatch(deleteProduct({ id, request: true }));
+      dispatch(
+        deleteProduct({
+          id,
+          request: true,
+          limit: rowsPerPage,
+          skip: rowsPerPage * currentPage
+        })
+      );
     };
     openSuccessSnackbar(
       removeProduct,
@@ -91,7 +90,7 @@ const ProductsPage = () => {
   };
 
   const handleProductEdit = (id) => {
-    dispatch(push(`/product/${id}`));
+    dispatch(push(`${pathToProductAddPage}${id}`));
   };
 
   const productsItems = products
@@ -124,6 +123,10 @@ const ProductsPage = () => {
     )
     : null;
 
+  if (loading || detailLoading) {
+    return <LoadingBar />;
+  }
+
   return (
     <div className={common.container}>
       <div className={common.adminHeader}>
@@ -144,17 +147,12 @@ const ProductsPage = () => {
           {productsTranslations.CREATE_PRODUCT}
         </Button>
       </div>
-      {loading ? (
-        <LoadingBar />
+      <FilterNavbar options={productFilters} />
+
+      {products?.length ? (
+        handleProductsPage(products, itemsCount, tableTitles, productsItems)
       ) : (
-        handleProductsPage(
-          products,
-          itemsCount,
-          tableTitles,
-          productsItems,
-          common.materialTitle,
-          PRODUCT_NOT_FOUND
-        )
+        <p className={common.noRecords}>{PRODUCT_NOT_FOUND}</p>
       )}
     </div>
   );

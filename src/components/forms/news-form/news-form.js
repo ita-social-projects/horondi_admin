@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Grid, Paper } from '@material-ui/core';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+
 import { useStyles } from './news-form.styles';
 import { SaveButton, BackButton } from '../../buttons';
 import useNewsHandlers from '../../../utils/use-news-handlers';
@@ -12,8 +13,8 @@ import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
-import { handleImageLoad } from '../../../utils/pattern-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
 
 const map = require('lodash/map');
 
@@ -21,25 +22,21 @@ const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
 const {
   NAME_MIN_LENGTH_MESSAGE,
-  TITLE_MIN_LENGTH_MESSAGE,
-  TEXT_MIN_LENGTH_MESSAGE
+  TITLE_MIN_LENGTH_MESSAGE
 } = config.newsErrorMessages;
 const { imagePrefix } = config;
 const { authorName, title, text } = config.labels.news;
-const imageUploadNewsInputsId = {
-  authorImageInput: 'authorImageInput',
-  newsImageInput: 'newsImageInput'
-};
+const {
+  imageUploadNewsInputsId: { authorImageInput, newsImageInput },
+  valueKeys: { authorPhoto, newsImage },
+  inputNames: { authorNameInput, titleInput, textInput }
+} = config;
 
 const NewsForm = ({ id, newsArticle, editMode }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const {
     createArticle,
-    authorPhoto,
-    setAuthorPhoto,
-    newsImage,
-    setNewsImage,
     uploadAuthorImage,
     setUploadAuthorImage,
     uploadNewsImage,
@@ -48,10 +45,16 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   useEffect(() => {
     if (newsArticle.author.image) {
-      setAuthorPhoto(`${imagePrefix}${newsArticle.author.image}`);
+      setUploadAuthorImage({
+        name: newsArticle.image,
+        imageUrl: `${imagePrefix}${newsArticle.author.image}`
+      });
     }
     if (newsArticle.image) {
-      setNewsImage(`${imagePrefix}${newsArticle.image}`);
+      setUploadNewsImage({
+        name: newsArticle.image,
+        imageUrl: `${imagePrefix}${newsArticle.image}`
+      });
     }
   }, [dispatch, newsArticle]);
 
@@ -78,8 +81,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     handleChange,
     handleBlur,
     touched,
-    errors,
-    setFieldValue
+    errors
   } = useFormik({
     validationSchema: formSchema,
     initialValues: useFormikInitialValues(newsArticle),
@@ -90,41 +92,32 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
           updateArticle({
             id,
             newArticle,
-            upload: [uploadAuthorImage, uploadNewsImage]
+            upload: [values.authorPhoto, values.newsImage]
           })
         );
       } else {
         dispatch(
           addArticle({
             article: newArticle,
-            upload: [uploadAuthorImage, uploadNewsImage]
+            upload: [values.authorPhoto, values.newsImage]
           })
         );
       }
     }
   });
 
-  const handleLoadAuthorImage = (e) => {
-    handleImageLoad(e, (event) => {
-      setFieldValue('authorImage', event.target.result);
-      setFieldValue('authorPhoto', event.target.result);
-      setAuthorPhoto(event.target.result);
-    });
-    setUploadAuthorImage(e.target.files[0]);
+  const handleLoadAuthorImage = ({ target }) => {
+    imageHandler(target, setUploadAuthorImage, values, authorPhoto);
   };
 
-  const handleLoadNewsImage = (e) => {
-    handleImageLoad(e, (event) => {
-      setFieldValue('newsImage', event.target.result);
-      setNewsImage(event.target.result);
-    });
-    setUploadNewsImage(e.target.files[0]);
+  const handleLoadNewsImage = ({ target }) => {
+    imageHandler(target, setUploadNewsImage, values, newsImage);
   };
 
   const inputs = [
-    { label: authorName, name: 'authorName' },
-    { label: title, name: 'title' },
-    { label: text, name: 'text', isEditor: true }
+    { label: authorName, name: authorNameInput },
+    { label: title, name: titleInput },
+    { label: text, name: textInput, isEditor: true }
   ];
 
   const inputOptions = {
@@ -191,8 +184,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 <div className={styles.imageUploadAvatar}>
                   <ImageUploadPreviewContainer
                     handler={handleLoadAuthorImage}
-                    src={authorPhoto}
-                    id={imageUploadNewsInputsId.authorImageInput}
+                    src={uploadAuthorImage.imageUrl}
+                    id={authorImageInput}
                   />
                   {touched.authorPhoto && errors.authorPhoto && (
                     <div className={styles.inputError}>
@@ -210,8 +203,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 <div className={styles.imageUploadAvatar}>
                   <ImageUploadPreviewContainer
                     handler={handleLoadNewsImage}
-                    src={newsImage}
-                    id={imageUploadNewsInputsId.newsImageInput}
+                    src={uploadNewsImage.imageUrl}
+                    id={newsImageInput}
                   />
                   {touched.newsImage && errors.newsImage && (
                     <div className={styles.inputError}>{errors.newsImage}</div>

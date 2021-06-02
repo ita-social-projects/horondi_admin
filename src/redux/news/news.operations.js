@@ -1,10 +1,10 @@
 import {getItems, setItems} from '../../utils/client';
 import {newsTranslations} from '../../translations/news.translations';
 
-const getAllNews = async (skip, limit) => {
+const getAllNews = async (skip, limit,filter) => {
     const query = `
-      query($skip: Int, $limit: Int) {
-        getAllNews(skip: $skip, limit: $limit) {
+      query($skip: Int, $limit: Int, $filter:NewsFilterInput) {
+        getAllNews(skip: $skip, limit: $limit, filter:$filter) {
           items {
             _id
             author {
@@ -26,7 +26,8 @@ const getAllNews = async (skip, limit) => {
 
     const result = await getItems(query, {
         limit,
-        skip
+        skip,
+        filter
     });
     return result?.data?.getAllNews;
 };

@@ -1,4 +1,6 @@
 const messages = {
+  SAVE_CHANGES: 'Зберегти зміни',
+  SAVE_MESSAGE: 'Ви впевнені, що хочете зберегти зміни?',
   REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю новину?',
   REMOVE_ITEM: 'Ви впевнені, що хочете видалити цей продукт?',
   REMOVE_ORDER_MESSAGE: 'Ви впевнені, що хочете видалити це замовлення?',
@@ -14,6 +16,9 @@ const messages = {
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   DELETE_SIZE_MESSAGE: 'Ви впевнені, що хочете видалити цей розмір?',
   NO_SIZES_MESSAGE: 'Розміри відсутні',
+  NO_CATEGORY_MESSAGE: 'Категорії відсутні',
+  NO_MATERIAL_MESSAGE: 'Матеріали відсутні',
+  NO_NEWS_MESSAGE: 'Новини відсутні',
   REMOVE_MATERIAL_COLOR_MESSAGE: 'Ви впевнені, що хочете видалити цей колір?',
   EMAIL_QUESTION_REMOVE_MESSAGE:
     'Ви впевнені, що хочете видалити це запитання?',
@@ -32,6 +37,7 @@ const messages = {
   REMOVE_COLOR_MESSAGE: 'Ви впевнені, що хочете видалити цей колір?',
   BACK_BUTTON_WARNING_MESSAGE: 'Ви впевнені, що хочете відмінити нові зміни?',
   REMOVE_CONSTRUCTOR_MESSAGE: 'Ви впевнені, що хочете видалити цей елемент?',
-  NO_HISTORY_RECORDS_MESSAGE: 'Записи останніх змін відсутні'
+  NO_HISTORY_RECORDS_MESSAGE: 'Записи останніх змін відсутні',
+  REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору'
 };
 export default messages;

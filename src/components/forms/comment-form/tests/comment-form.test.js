@@ -4,7 +4,6 @@ import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import { render, fireEvent, act } from '@testing-library/react';
-import * as formik from 'formik';
 
 import CommentForm from '../index';
 import { config } from '../../../../configs';
@@ -81,7 +80,7 @@ describe('Comment form tests', () => {
     fireEvent.click(getAllByRole('button')[0]);
     expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush).toHaveBeenCalledWith(
-      `/product/${mockComment.product._id}`
+      `/products/product/${mockComment.product._id}`
     );
   });
 

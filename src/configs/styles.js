@@ -78,7 +78,10 @@ const formStyles = (theme) => ({
   },
   autoComplete: {
     margin: '10px',
-    width: '33%'
+    width: '33%',
+    '@media (max-width: 450px)': {
+      width: 'inherit'
+    }
   },
   itemUpdate: {
     display: 'flex',

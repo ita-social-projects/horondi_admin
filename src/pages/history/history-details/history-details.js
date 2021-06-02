@@ -71,53 +71,55 @@ const HistoryDetails = ({ match }) => {
           </p>
         </div>
       </Paper>
-      <Paper>
-        <h3 className={styles.userInfoTitle}>
-          {titles.historyTitles.changesTitle}
-        </h3>
-        <Table>
-          <TableHead className={tableHeadStyles.tableHead}>
-            <TableRow>
-              <TableCell className={styles.tableCell}>
-                {titles.historyTitles.subject}
-              </TableCell>
-              <TableCell className={styles.tableCell}>
-                {titles.historyTitles.before}
-              </TableCell>
-              <TableCell className={styles.tableCell}>
-                {titles.historyTitles.after}
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell className={styles.tableCell}>
-                {!recordItem?.subject.model
-                  ? recordItem?.subject.name
-                  : `${recordItem?.subject.model}/${recordItem?.subject.name}`}
-              </TableCell>
-              <TableCell className={styles.tableCell}>
-                {!recordItem?.valueBeforeChange.length ? (
-                  <p>{titles.historyTitles.noChanges}</p>
-                ) : (
-                  recordItem?.valueBeforeChange.map((value) => (
-                    <p key={value}>{JSON.stringify(value)}</p>
-                  ))
-                )}
-              </TableCell>
-              <TableCell className={styles.tableCell}>
-                {!recordItem?.valueAfterChange.length ? (
-                  <p>{titles.historyTitles.noChanges}</p>
-                ) : (
-                  recordItem?.valueAfterChange.map((value) => (
-                    <p key={value}>{JSON.stringify(value)}</p>
-                  ))
-                )}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Paper>
+      <h3 className={styles.userInfoTitle}>
+        {titles.historyTitles.changesTitle}
+      </h3>
+      <div className={styles.table}>
+        <Paper>
+          <Table>
+            <TableHead className={tableHeadStyles.tableHead}>
+              <TableRow>
+                <TableCell className={styles.tableCell}>
+                  {titles.historyTitles.subject}
+                </TableCell>
+                <TableCell className={styles.tableCell}>
+                  {titles.historyTitles.before}
+                </TableCell>
+                <TableCell className={styles.tableCell}>
+                  {titles.historyTitles.after}
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell className={styles.tableCell}>
+                  {!recordItem?.subject.model
+                    ? recordItem?.subject.name
+                    : `${recordItem?.subject.model}/${recordItem?.subject.name}`}
+                </TableCell>
+                <TableCell className={styles.tableCell}>
+                  {!recordItem?.valueBeforeChange.length ? (
+                    <p>{titles.historyTitles.noChanges}</p>
+                  ) : (
+                    recordItem?.valueBeforeChange.map((value) => (
+                      <p key={value}>{JSON.stringify(value)}</p>
+                    ))
+                  )}
+                </TableCell>
+                <TableCell className={styles.tableCell}>
+                  {!recordItem?.valueAfterChange.length ? (
+                    <p>{titles.historyTitles.noChanges}</p>
+                  ) : (
+                    recordItem?.valueAfterChange.map((value) => (
+                      <p key={value}>{JSON.stringify(value)}</p>
+                    ))
+                  )}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
+      </div>
     </div>
   );
 };

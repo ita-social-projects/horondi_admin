@@ -14,5 +14,11 @@ export const useStyles = makeStyles((theme) => ({
   },
   status: {
     textAlign: 'center'
+  },
+  buttons: {
+    '& button': {
+      width: '100%',
+      marginBottom: '15px'
+    }
   }
 }));
