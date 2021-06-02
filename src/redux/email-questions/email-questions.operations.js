@@ -20,7 +20,7 @@ const getAllEmailQuestions = async (filter, pagination) => {
         }
       }
     `;
-  debugger;
+
   const result = await getItems(query, { filter, pagination });
 
   return result?.data?.getAllEmailQuestions;
