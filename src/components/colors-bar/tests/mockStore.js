@@ -1,8 +1,3 @@
-import ReactHtmlParser from 'react-html-parser';
-import React from 'react';
-import TableContainerRow from '../../../containers/table-container-row';
-import getTime from '../../../utils/getTime';
-
 const mockStore = {
   Color: {
     list: [
