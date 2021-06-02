@@ -27,11 +27,8 @@ import { selectProductsLoadingAndDetails } from '../../redux/selectors/products.
 
 const pathToProductAddPage = config.routes.pathToAddProduct;
 
-const {
-  PRODUCT_NOT_FOUND,
-  DELETE_PRODUCT_MESSAGE,
-  DELETE_PRODUCT_TITLE
-} = productsTranslations;
+const { PRODUCT_NOT_FOUND, DELETE_PRODUCT_MESSAGE, DELETE_PRODUCT_TITLE } =
+  productsTranslations;
 const tableTitles = config.tableHeadRowTitles.products;
 const { imagePrefix } = config;
 
@@ -90,7 +87,7 @@ const ProductsPage = () => {
   };
 
   const handleProductEdit = (id) => {
-    dispatch(push(`/product/${id}`));
+    dispatch(push(`${pathToProductAddPage}${id}`));
   };
 
   const productsItems = products

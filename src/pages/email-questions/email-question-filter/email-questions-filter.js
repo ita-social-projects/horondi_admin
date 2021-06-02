@@ -19,7 +19,7 @@ const {
 
 const EmailQuestionsFilter = ({ filterItems, filterChangeHandler }) => {
   const styles = useStyles();
-  debugger;
+
   const handleSelected = (selected) => {
     if (selected.length === 1) {
       return emailQuestionsLabels.ua[selected[0]];
