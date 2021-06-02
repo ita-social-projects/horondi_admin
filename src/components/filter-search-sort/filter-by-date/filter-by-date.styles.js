@@ -5,6 +5,10 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap'
   },
+  datePicker: {
+    width: 240,
+    '& span': { color: 'grey !important' }
+  },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
