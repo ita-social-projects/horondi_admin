@@ -51,6 +51,8 @@ const {
   imagePrefix
 } = config;
 
+const { pathToPatterns } = config.routes;
+
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -107,48 +109,42 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     )
   });
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    touched,
-    errors,
-    setFieldValue
-  } = useFormik({
-    validationSchema: patternValidationSchema,
-    initialValues: useFormikInitialValues(pattern),
-    onSubmit: () => {
-      const newPattern = createPattern(values);
-      const isEditAndUploadAndConstructor =
-        isEdit &&
-        upload instanceof File &&
-        uploadConstructorImg instanceof File;
-      if (isEditAndUploadAndConstructor || isEdit) {
-        patternFormOnSubmit(
-          isEditAndUploadAndConstructor,
-          dispatch,
-          updatePattern,
-          {
-            id,
+  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
+    useFormik({
+      validationSchema: patternValidationSchema,
+      initialValues: useFormikInitialValues(pattern),
+      onSubmit: () => {
+        const newPattern = createPattern(values);
+        const isEditAndUploadAndConstructor =
+          isEdit &&
+          upload instanceof File &&
+          uploadConstructorImg instanceof File;
+        if (isEditAndUploadAndConstructor || isEdit) {
+          patternFormOnSubmit(
+            isEditAndUploadAndConstructor,
+            dispatch,
+            updatePattern,
+            {
+              id,
+              pattern: newPattern,
+              image: [upload, uploadConstructorImg]
+            },
+            isEdit,
+            {
+              id,
+              pattern: newPattern
+            }
+          );
+          return;
+        }
+        dispatch(
+          addPattern({
             pattern: newPattern,
             image: [upload, uploadConstructorImg]
-          },
-          isEdit,
-          {
-            id,
-            pattern: newPattern
-          }
+          })
         );
-        return;
       }
-      dispatch(
-        addPattern({
-          pattern: newPattern,
-          image: [upload, uploadConstructorImg]
-        })
-      );
-    }
-  });
+    });
 
   const checkboxes = [
     {
@@ -290,7 +286,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton initial={!valueEquality} />
+          <BackButton initial={!valueEquality} pathBack={pathToPatterns} />
           <SaveButton
             className={styles.saveButton}
             data-cy='save-btn'

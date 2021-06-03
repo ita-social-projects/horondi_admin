@@ -57,6 +57,7 @@ const {
 } = config.labels.model;
 const { IMG_URL } = config;
 const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
+const { pathToModels } = config.routes;
 
 const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
@@ -69,13 +70,8 @@ const ModelForm = ({ model, id, isEdit }) => {
   };
 
   const inputLabel = React.useRef(null);
-  const {
-    createModel,
-    setUpload,
-    upload,
-    modelImage,
-    setModelImage
-  } = useModelHandlers();
+  const { createModel, setUpload, upload, modelImage, setModelImage } =
+    useModelHandlers();
 
   useEffect(() => {
     dispatch(getSizes());
@@ -288,7 +284,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             key={lang}
           />
         ))}
-        <BackButton initial={!valueEquality} />
+        <BackButton initial={!valueEquality} pathBack={pathToModels} />
         <SaveButton
           className={styles.saveButton}
           data-cy={materialUiConstants.save}
