@@ -94,10 +94,7 @@ describe('Email questions reducer tests', () => {
       emailQuestionsReducer(initialState, setEmailQuestionsPagesCount(count))
     ).toEqual({
       ...initialState,
-      pagination: {
-        ...initialState.pagination,
-        pagesCount: count
-      }
+      count
     });
   });
 });
