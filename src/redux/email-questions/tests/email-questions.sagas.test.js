@@ -27,7 +27,10 @@ import {
   mockMoveQuestionToSpam,
   mockMoveQuestionToSpamPayload,
   mockQuestion,
-  mockQuestions
+  mockQuestions,
+  pagination,
+  filters,
+  allQuestionsRes
 } from './email-questions.variables';
 
 import emailQuestionsReducer from '../email-questions.reducer';
@@ -56,16 +59,18 @@ describe('email questions sagas test', () => {
   });
 
   it('should load all email questions', () => {
-    expectSaga(handleEmailQuestionsLoad, { payload: emailQuestionsPayload })
+    expectSaga(handleEmailQuestionsLoad, {
+      payload: { filter: filters, pagination }
+    })
       .withReducer(combineReducers({ emailQuestionsReducer }), {
         emailQuestionsReducer: emailQuestionsState
       })
       .put(setEmailQuestionLoading(true))
       .provide([
-        [call(getAllEmailQuestions, emailQuestionsPayload), mockQuestions]
+        [call(getAllEmailQuestions, filters, pagination), allQuestionsRes]
       ])
-      .put(setEmailQuestionsPagesCount(mockQuestions.count))
-      .put(setAllEmailQuestion(mockQuestions.questions))
+      .put(setEmailQuestionsPagesCount(allQuestionsRes.count))
+      .put(setAllEmailQuestion(allQuestionsRes.questions))
       .put(setEmailQuestionLoading(false))
       .hasFinalState({
         emailQuestionsReducer: {

@@ -58,10 +58,7 @@ const emailQuestionsReducer = (state = initialState, action = {}) => {
   case SET_EMAIL_QUESTIONS_PAGES_COUNT:
     return {
       ...state,
-      pagination: {
-        ...state.pagination,
-        pagesCount: action.payload
-      }
+      count: action.payload
     };
   case SET_EMAIL_QUESTION_CURRENT_PAGE:
     return {

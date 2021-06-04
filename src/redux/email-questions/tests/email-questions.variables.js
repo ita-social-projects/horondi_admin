@@ -1,5 +1,17 @@
 export const skip = 1;
 export const filter = 'ALL';
+export const currentPage = 1;
+export const rowsPerPage = 10;
+
+export const mockTableState = {
+  dense: false,
+  pagination: {
+    currentPage: 0,
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 20, 30]
+  },
+  itemsCount: 0
+};
 
 export const mockQuestions = {
   questions: [
@@ -64,15 +76,15 @@ export const mockAnswerEmailQuestionPayload = {
 
 export const emailQuestionsState = {
   list: [],
-  pagination: {
-    currentPage: 0,
-    questionsPerPage: 10,
-    pagesCount: 1
-  },
   pendingCount: 0,
   currentQuestion: null,
   loading: false,
-  error: null
+  error: null,
+  count: 1,
+  pagination: {
+    skip: 0,
+    limit: 0
+  }
 };
 
 export const id = '5fb27d2f671b230024b455a9';
@@ -82,6 +94,23 @@ export const emailQuestionsPayload = {
     emailQuestionStatus: 'ANSWERED'
   },
   skip: 0
+};
+
+export const pagination = {
+  skip: currentPage * rowsPerPage,
+  limit: 10
+};
+
+export const allQuestionsRes = {
+  ...mockQuestions,
+  pagination
+};
+
+export const filters = {
+  search: '',
+  dateFrom: '',
+  dateTo: '',
+  show: []
 };
 
 export const answer = 'OK';
