@@ -18,8 +18,12 @@ export const selectPattern = ({ Pattern }) => ({
 });
 
 const initialFilters = {
-  _id: [],
-  search: ''
+  name: '',
+  description: '',
+  model: [],
+  available: [],
+  material: [],
+  handmade: []
 };
 
 export const initialState = {

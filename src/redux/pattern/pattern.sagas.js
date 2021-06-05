@@ -35,16 +35,13 @@ import {
 import { AUTH_ERRORS } from '../../error-messages/auth';
 import { handleAdminLogout } from '../auth/auth.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
-export function* handlePatternsLoad({ payload: { filter, pagination, sort } }) {
+export function* handlePatternsLoad({ payload: { limit, skip, filter } }) {
   try {
     yield put(setPatternLoading(true));
-    const patterns = yield call(getAllPatterns, filter, pagination, sort);
+    const patterns = yield call(getAllPatterns, limit, skip, filter);
     yield put(setItemsCount(patterns?.count));
     yield put(setPatterns(patterns?.items));
     yield put(setPatternLoading(false));

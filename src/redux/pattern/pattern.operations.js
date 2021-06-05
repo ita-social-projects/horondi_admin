@@ -1,49 +1,65 @@
 import { getItems, setItems } from '../../utils/client';
 import { patternTranslations } from '../../translations/pattern.translations';
 
-export const getAllPatterns = async (filter, pagination, sort) => {
+export const getAllPatterns = async (limit, skip, filter) => {
   const getAllPatternsQuery = `
-      query(
-        $filter: FilterInputComponent
-        $pagination: Pagination
-        $sort: SortInputComponent
-        ) {
-        getAllPatterns(
-          filter: $filter
-          pagination: $pagination
-          sort: $sort
-        ) {
-          items {
-            _id
-            name {
-              lang
-              value
-            }
-            features {
-              material {
-                _id
-                name {
-                  lang
-                  value
-                }
-              }
-              handmade
-            }
-            available
-            constructorImg
-            images {
-              thumbnail
-            }
-          }
-          count
+query ($limit: Int!, $skip: Int!, $filter: PatternFilterInput) {
+  getAllPatterns(limit: $limit, skip: $skip, filter: $filter) {
+    count
+    items {
+      _id
+      name {
+        lang
+        value
+      }
+      optionType
+      model {
+        _id
+        category {
+          _id
+          code
+        }
+        name {
+          lang
+        }
+        description {
+          lang
+          value
         }
       }
-    `;
+      features {
+        material {
+          name {
+            lang
+            value
+          }
+        }
+        handmade
+      }
+      description {
+        lang
+        value
+      }
+      images {
+        thumbnail
+        medium
+        small
+        large
+      }
+      constructorImg
+      additionalPrice {
+        value
+      }
+      available
+      customizable
+    }
+  }
+}`;
 
   const result = await getItems(getAllPatternsQuery, {
-    filter,
-    pagination,
-    sort
+    skip,
+    limit,
+    filter
   });
 
   return result?.data?.getAllPatterns;

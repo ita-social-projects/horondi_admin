@@ -30,30 +30,20 @@ const PatternPage = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const {
-    list,
-    loading,
-    currentPage,
-    rowsPerPage,
-    itemsCount,
-    filter,
-    sort
-  } = useSelector(patternSelectorWithPagination);
+  const { list, loading, currentPage, rowsPerPage, itemsCount, filter } =
+    useSelector(patternSelectorWithPagination);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
       getPatterns({
-        filter,
-        pagination: {
-          skip: currentPage * rowsPerPage,
-          limit: rowsPerPage
-        },
-        sort
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        filter
       })
     );
-  }, [dispatch, filter, sort, currentPage, rowsPerPage]);
+  }, [dispatch, currentPage, rowsPerPage]);
 
   const patternDeleteHandler = (id) => {
     const removePattern = () => {
