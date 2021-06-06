@@ -17,7 +17,7 @@ import { selectCategoriesLoadingDialogOpen } from '../../redux/selectors/categor
 import StandardButton from '../../components/buttons/standard-button';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useCategoryFilters from '../../hooks/filters/use-category-filters';
-import messages from "../../configs/messages";
+import messages from '../../configs/messages';
 
 const pathToAddCategoryPage = config.routes.pathToAddCategory;
 
@@ -76,7 +76,7 @@ const Categories = () => {
           name={category.name.length ? category.name[0].value : ''}
           deleteHandler={() => handleDeleteCategory(category._id)}
           editHandler={() =>
-            dispatch(push(`${pathToAddCategoryPage}${category._id}`))
+            dispatch(push(`${pathToAddCategoryPage}/${category._id}`))
           }
         />
       ))
