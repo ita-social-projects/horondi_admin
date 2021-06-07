@@ -49,11 +49,8 @@ import {
   handleErrorSnackbar
 } from '../../snackbar/snackbar.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  statuses;
 
 describe('Test pattern sagas', () => {
   it.skip('should load all patterns', () =>
@@ -93,7 +90,7 @@ describe('Test pattern sagas', () => {
         expect(analysisPut).toHaveLength(4);
       }));
 
-  it.skip('should get pattern by id', () =>
+  it('should get pattern by id', () =>
     expectSaga(handlePatternLoad, { payload: mockId })
       .withReducer(combineReducers({ Pattern }), { Pattern: mockPatternsState })
       .put(setPatternLoading(true))
@@ -113,7 +110,7 @@ describe('Test pattern sagas', () => {
         expect(analysisPut).toHaveLength(3);
       }));
 
-  it.skip('should add pattern by input data', () =>
+  it('should add pattern by input data', () =>
     expectSaga(handleAddPattern, { payload: mockInputPattern })
       .withReducer(combineReducers({ Pattern }), {
         Pattern: mockPatternsState
@@ -137,7 +134,7 @@ describe('Test pattern sagas', () => {
         expect(analysisPut).toHaveLength(2);
       }));
 
-  it.skip('should delete pattern by id', () =>
+  it('should delete pattern by id', () =>
     expectSaga(handlePatternDelete, { payload: mockId })
       .withReducer(combineReducers({ Pattern }), {
         Pattern: {
@@ -166,7 +163,7 @@ describe('Test pattern sagas', () => {
         expect(analysisPut).toHaveLength(4);
       }));
 
-  it.skip('should update pattern by input data', () =>
+  it('should update pattern by input data', () =>
     expectSaga(handlePatternUpdate, { payload: mockInputPattern })
       .withReducer(combineReducers({ Pattern }), {
         Pattern: mockPatternsState
@@ -190,7 +187,7 @@ describe('Test pattern sagas', () => {
         expect(analysisPut).toHaveLength(2);
       }));
 
-  it.skip('should handle pattern errors', () =>
+  it('should handle pattern errors', () =>
     expectSaga(handlePatternError, mockError)
       .withReducer(combineReducers({ Pattern }), {
         Pattern: {
