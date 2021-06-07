@@ -16,7 +16,7 @@ const routes = {
   pathToUsersDetails: '/users/:id',
   pathToProducts: '/products',
   pathToAddProduct: '/products/add-product',
-  pathToEditProduct: '/products/:id',
+  pathToEditProduct: '/products/add-product/:id',
   pathToCategories: '/categories',
   pathToAddCategory: '/categories/add-category',
   pathToEditCategory: '/categories/add-category/:id',
