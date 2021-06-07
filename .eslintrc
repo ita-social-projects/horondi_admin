@@ -90,7 +90,6 @@
     "lines-between-class-members": [1, "always"],
     "consistent-return": 0,
     "no-this-before-super": 2,
-    "indent": "off",
     "no-return-await": 2,
     "react/jsx-no-duplicate-props": 2,
     "camelcase": 2,
@@ -135,8 +134,6 @@
         "ignoreNonDOM": true
       }
     ],
-    "react/jsx-indent": "off",
-    "react/jsx-indent-props": "off",
     "react/jsx-uses-vars": 2,
     "react/jsx-props-no-spreading": 0,
     "react/prop-types": 2,
