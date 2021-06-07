@@ -41,6 +41,8 @@ import {
 } from '../../../utils/model-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
+const b = 0;
+
 const { languages } = config;
 const { materialUiConstants } = config;
 const { PHOTO_NOT_PROVIDED } = config.modelErrorMessages;
