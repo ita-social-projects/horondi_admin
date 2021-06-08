@@ -343,6 +343,12 @@ export const statusFilterObject = configs.labels.orders.select.map(
   })
 );
 
+export const statusPatternFilterObject = configs.labels.patterns.select.map(
+  ({ value, label }) => ({
+    key: value,
+    value: label
+  })
+);
 export const paymentStatusFilterObj = () => {
   const arrToFilter = [];
 

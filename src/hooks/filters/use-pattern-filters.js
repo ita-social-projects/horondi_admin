@@ -11,7 +11,11 @@ import { setCurrentPage } from '../../redux/table/table.actions';
 import titles from '../../configs/titles';
 import buttonTitles from '../../configs/button-titles';
 import patterns from '../../configs/patterns';
-import { paymentStatusFilterObj, statusFilterObject } from '../../utils/order';
+import {
+  paymentStatusFilterObj,
+  statusFilterObject,
+  statusPatternFilterObject
+} from '../../utils/order';
 import filterLabels from '../../configs/filter-labels';
 import { sortDirection } from '../../configs/sort';
 import orders from '../../configs/orders';
@@ -43,11 +47,12 @@ const usePatternFilters = () => {
     );
   };
 
-  const setStatusFilter = (status) => {
+  const setStatusFilter = (available) => {
+    console.log(available);
     dispatch(setCurrentPage(0));
     dispatch(
       setPatternFilter({
-        status
+        available
       })
     );
   };
@@ -62,7 +67,7 @@ const usePatternFilters = () => {
       {
         filters: filters.available,
         label: buttonTitles.PATTERN_AVAILABLE,
-        selectItems: statusFilterObject,
+        selectItems: statusPatternFilterObject,
         setFilterHandler: setStatusFilter,
         objForTranslateRenderItems: patterns.patternTableStatus
       }

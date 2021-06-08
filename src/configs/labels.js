@@ -483,6 +483,12 @@ const labels = {
       name: 'name',
       available: 'available'
     }
+  },
+  patterns: {
+    select: [
+      { label: 'Так', value: 'true' },
+      { label: 'Ні', value: 'false' }
+    ]
   }
 };
 export default labels;
