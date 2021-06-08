@@ -4,13 +4,14 @@ import {
   SET_PATTERN,
   SET_PATTERN_ERROR,
   REMOVE_PATTERN_FROM_STORE,
-  SET_FILTER,
-  SET_SORT,
-  CLEAR_FILTERS
+  SET_PATTERN_FILTER,
+  SET_PATTERN_SORT,
+  CLEAR_PATTERN_FILTERS,
+  SET_PATTERN_SORT_LABEL
 } from './pattern.types';
 
 export const selectPattern = ({ Pattern }) => ({
-  list: Pattern.list,
+  items: Pattern.items,
   loading: Pattern.patternLoading,
   pattern: Pattern.pattern,
   filter: Pattern.filters,
@@ -27,7 +28,8 @@ const initialFilters = {
 };
 
 export const initialState = {
-  list: [],
+  items: [],
+  // list: [],
   sort: {
     name: 1
   },
@@ -42,13 +44,19 @@ const patternReducer = (state = initialState, action = {}) => {
   case SET_PATTERNS:
     return {
       ...state,
-      list: action.payload
+      items: action.payload
     };
   case SET_PATTERN:
     return {
       ...state,
       pattern: action.payload
     };
+  case SET_PATTERN_SORT_LABEL:
+    return {
+      ...state,
+      sortLabel: action.payload
+    };
+
   case SET_PATTERN_LOADING:
     return {
       ...state,
@@ -67,7 +75,7 @@ const patternReducer = (state = initialState, action = {}) => {
       ...state,
       list: patterns
     };
-  case SET_FILTER:
+  case SET_PATTERN_FILTER:
     return {
       ...state,
       filters: {
@@ -75,17 +83,19 @@ const patternReducer = (state = initialState, action = {}) => {
         ...action.payload
       }
     };
-  case SET_SORT:
+  case SET_PATTERN_SORT:
     return {
       ...state,
       sort: {
         ...action.payload
       }
     };
-  case CLEAR_FILTERS:
+  case CLEAR_PATTERN_FILTERS:
     return {
       ...state,
-      filters: initialFilters
+      filters: initialFilters,
+      sortLabel: '',
+      sort: {}
     };
   default:
     return state;

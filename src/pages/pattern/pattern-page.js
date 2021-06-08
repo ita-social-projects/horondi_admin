@@ -16,6 +16,8 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
+import FilterNavbar from '../../components/filter-search-sort';
+import usePatternFilters from '../../hooks/filters/use-pattern-filters';
 
 const map = require('lodash/map');
 
@@ -28,9 +30,17 @@ const tableTitles = config.tableHeadRowTitles.patterns;
 const PatternPage = () => {
   const common = useCommonStyles();
 
+  const {
+    searchOptions,
+    clearOptions,
+    filterByMultipleOptions,
+    filterByDateOptions,
+    sortOptions
+  } = usePatternFilters();
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { list, loading, currentPage, rowsPerPage, itemsCount, filter } =
+  const { items, loading, currentPage, rowsPerPage, itemsCount, filter } =
     useSelector(patternSelectorWithPagination);
 
   const dispatch = useDispatch();
@@ -43,7 +53,7 @@ const PatternPage = () => {
         filter
       })
     );
-  }, [dispatch, currentPage, rowsPerPage]);
+  }, [dispatch, currentPage, rowsPerPage, filter]);
 
   const patternDeleteHandler = (id) => {
     const removePattern = () => {
@@ -57,7 +67,7 @@ const PatternPage = () => {
     );
   };
 
-  const patternItems = map(list, (patternItem) => (
+  const patternItems = map(items, (patternItem) => (
     <TableContainerRow
       image={
         patternItem.images.thumbnail
@@ -95,6 +105,19 @@ const PatternPage = () => {
         >
           {CREATE_PATTERN_TITLE}
         </Button>
+      </div>
+      <div>
+        <FilterNavbar
+          options={
+            {
+              sortOptions,
+              filterByMultipleOptions,
+              //   filterByDateOptions,
+              clearOptions,
+              searchOptions
+            } || {}
+          }
+        />
       </div>
       {!loading ? (
         <TableContainerGenerator
