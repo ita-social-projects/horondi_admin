@@ -73,7 +73,8 @@ const buttonTitles = {
   PATTERN: 'Гобелени',
   MODEL: 'Моделі',
   YES_BUTTON: 'Так',
-  NO_BUTTON: 'Ні'
+  NO_BUTTON: 'Ні',
+  PATTERN_AVAILABLE: 'Доступний'
 };
 
 export default buttonTitles;

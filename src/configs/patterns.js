@@ -34,6 +34,10 @@ const patterns = {
     REVERSED: 'Перенаправлено',
     PROCESSING: 'В обробці',
     PAID: 'Оплачено'
+  },
+  patternTableStatus: {
+    AVAILABLE: 'Доступний',
+    NOT_AVAILABLE: 'Немає в наявності'
   }
 };
 

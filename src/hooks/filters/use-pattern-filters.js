@@ -14,6 +14,7 @@ import patterns from '../../configs/patterns';
 import { paymentStatusFilterObj, statusFilterObject } from '../../utils/order';
 import filterLabels from '../../configs/filter-labels';
 import { sortDirection } from '../../configs/sort';
+import orders from '../../configs/orders';
 
 const usePatternFilters = () => {
   const dispatch = useDispatch();
@@ -57,27 +58,16 @@ const usePatternFilters = () => {
   };
 
   return {
-    sortOptions: {
-      labels: filterLabels.orders.sortLabels,
-      setSorting,
-      sortLabel
-    },
-    // filterByMultipleOptions: [
-    //     {
-    //         filters: filters.paymentStatus,
-    //         label: buttonTitles.PAYMENT_STATUS,
-    //       selectItems: paymentStatusFilterObj(),
-    //     setFilterHandler: setPaymentStatusFilter,
-    //   objForTranslateRenderItems: orders.orderTableStatus
-    // },
-    // {
-    //     filters: filters.status,
-    //     label: buttonTitles.STATUS,
-    //     selectItems: statusFilterObject,
-    //     setFilterHandler: setStatusFilter,
-    //   objForTranslateRenderItems: orders.orderTableStatus
-    //     }
-    // ],
+    filterByMultipleOptions: [
+      {
+        filters: filters.available,
+        label: buttonTitles.PATTERN_AVAILABLE,
+        selectItems: statusFilterObject,
+        setFilterHandler: setStatusFilter,
+        objForTranslateRenderItems: patterns.patternTableStatus
+      }
+    ],
+
     searchOptions: {
       name: filters.search,
       setSearchFilter
