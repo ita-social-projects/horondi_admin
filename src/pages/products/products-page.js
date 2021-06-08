@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 
@@ -92,32 +92,32 @@ const ProductsPage = () => {
 
   const productsItems = products
     ? products.map(
-      ({
-        _id,
-        name,
-        category,
-        basePrice,
-        model,
-        purchasedCount,
-        pattern,
-        rate,
-        images
-      }) => (
-        <TableContainerRow
-          key={_id}
-          image={`${imagePrefix}${images.primary.small}`}
-          name={name[0].value}
-          category={category.name[0].value}
-          model={model.name[0].value}
-          pattern={pattern.name[0].value}
-          price={Math.round(basePrice[0].value / 100)}
-          rate={rate.toFixed(2)}
-          purchasedCount={purchasedCount}
-          editHandler={() => handleProductEdit(_id)}
-          deleteHandler={() => handleProductDelete(_id)}
-        />
+        ({
+          _id,
+          name,
+          category,
+          basePrice,
+          model,
+          purchasedCount,
+          pattern,
+          rate,
+          images
+        }) => (
+          <TableContainerRow
+            key={_id}
+            image={`${imagePrefix}${images.primary.small}`}
+            name={name[0].value}
+            category={category.name[0].value}
+            model={model.name[0].value}
+            pattern={pattern.name[0].value}
+            price={Math.round(basePrice[0].value / 100)}
+            rate={rate.toFixed(2)}
+            purchasedCount={purchasedCount}
+            editHandler={() => handleProductEdit(_id)}
+            deleteHandler={() => handleProductDelete(_id)}
+          />
+        )
       )
-    )
     : null;
 
   if (loading || detailLoading) {
