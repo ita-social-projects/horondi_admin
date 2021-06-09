@@ -78,7 +78,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
 
   const [materialColors, setMaterialColors] = useState([]);
   const [constructorAvatar, setConstructorAvatar] = useState('');
-  console.log("filter", filter)
+  console.log("list", list)
   useEffect(() => {
     if (isEdit) {
       setConstructorAvatar(`${IMG_URL}${editableConstructorElement.image}`);
