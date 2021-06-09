@@ -78,16 +78,16 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
 
   const [materialColors, setMaterialColors] = useState([]);
   const [constructorAvatar, setConstructorAvatar] = useState('');
-
+  console.log("filter", filter)
   useEffect(() => {
     if (isEdit) {
       setConstructorAvatar(`${IMG_URL}${editableConstructorElement.image}`);
-      setMaterialColors(
-        filter(
-          list,
-          (el) => el._id === editableConstructorElement.material._id
-        )[0].colors
-      );
+      // setMaterialColors(
+        // filter(
+        //   list,
+        //   (el) => el._id === editableConstructorElement.features.material._id
+        // )[0].colors
+
     }
   }, [dispatch]);
 
@@ -119,8 +119,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       image: editableConstructorElement.image || '',
       uaName: editableConstructorElement.name[0].value || '',
       enName: editableConstructorElement.name[1].value || '',
-      material: editableConstructorElement.material._id || '',
-      color: editableConstructorElement.color._id || '',
+      material: editableConstructorElement.features.material._id || '',
+      color: editableConstructorElement.features.color._id || '',
       available: editableConstructorElement.available || false,
       default: editableConstructorElement.default || false,
       basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
