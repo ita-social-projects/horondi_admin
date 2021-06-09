@@ -21,6 +21,8 @@ import messages from '../../configs/messages';
 
 const pathToAddCategoryPage = config.routes.pathToAddCategory;
 
+const pathToEditCategoryPage = config.routes.pathToCategories;
+
 const Categories = () => {
   const { IMG_URL } = config;
   const { ADD_CATEGORY } = config.buttonTitles;
@@ -62,24 +64,24 @@ const Categories = () => {
 
   const categoriesList = categories.length
     ? categories
-      .slice()
-      .filter((category) => category)
-      .map((category) => (
-        <TableContainerRow
-          key={category._id}
-          id={category._id}
-          image={
+        .slice()
+        .filter((category) => category)
+        .map((category) => (
+          <TableContainerRow
+            key={category._id}
+            id={category._id}
+            image={
               category?.images?.thumbnail
                 ? IMG_URL + category.images.thumbnail
                 : ''
-          }
-          name={category.name.length ? category.name[0].value : ''}
-          deleteHandler={() => handleDeleteCategory(category._id)}
-          editHandler={() =>
-            dispatch(push(`${pathToAddCategoryPage}/${category._id}`))
-          }
-        />
-      ))
+            }
+            name={category.name.length ? category.name[0].value : ''}
+            deleteHandler={() => handleDeleteCategory(category._id)}
+            editHandler={() =>
+              dispatch(push(`${pathToEditCategoryPage}/${category._id}`))
+            }
+          />
+        ))
     : null;
 
   if (categoriesLoading) {

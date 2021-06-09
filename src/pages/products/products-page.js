@@ -26,6 +26,7 @@ import FilterNavbar from '../../components/filter-search-sort';
 import { selectProductsLoadingAndDetails } from '../../redux/selectors/products.selectors';
 
 const pathToProductAddPage = config.routes.pathToAddProduct;
+const pathToProductEditPage = config.routes.pathToProducts;
 
 const { PRODUCT_NOT_FOUND, DELETE_PRODUCT_MESSAGE, DELETE_PRODUCT_TITLE } =
   productsTranslations;
@@ -87,7 +88,7 @@ const ProductsPage = () => {
   };
 
   const handleProductEdit = (id) => {
-    dispatch(push(`${pathToProductAddPage}/${id}`));
+    dispatch(push(`${pathToProductEditPage}/${id}`));
   };
 
   const productsItems = products
