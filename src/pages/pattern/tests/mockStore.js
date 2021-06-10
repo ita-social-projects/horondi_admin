@@ -1,61 +1,80 @@
 const mockStore = {
   list: [
     {
-      available: true,
+      _id: '6043b87c3e06ad3edcdb7b19',
+      name: [
+        {
+          lang: 'ua',
+          value: 'Червоний'
+        },
+        {
+          lang: 'en',
+          value: 'Red'
+        }
+      ],
+      optionType: 'PATTERN',
+      model: {
+        _id: '6043bf9e3e06ad3edcdb7b30',
+        category: {
+          _id: '6043bdeb3e06ad3edcdb7b2d',
+          code: 'backpacks'
+        },
+        name: [
+          {
+            lang: 'ua'
+          },
+          {
+            lang: 'en'
+          }
+        ],
+        description: [
+          {
+            lang: 'ua',
+            value:
+              '<p>Крутий рюкзак який класно підійде для прогулянки містом та подорожей</p>'
+          },
+          {
+            lang: 'en',
+            value:
+              '<p>A cool backpack that is great for walking around the city and traveling</p>'
+          }
+        ]
+      },
+      features: {
+        material: {
+          name: [
+            {
+              lang: 'ua',
+              value: 'Нитки для шиття'
+            },
+            {
+              lang: 'en',
+              value: 'Threads for sewing'
+            }
+          ]
+        },
+        handmade: false
+      },
+      description: [
+        {
+          lang: 'ua',
+          value: 'Даний гобелен чудово підійде під ваш стиль'
+        },
+        {
+          lang: 'en',
+          value: 'This tapestry will perfectly suit your style'
+        }
+      ],
+      images: {
+        thumbnail: 'thumbnail_id73cf0klxzl60n_149-min.jpg',
+        medium: 'medium_id73cf0klxzl60n_149-min.jpg',
+        small: 'small_id73cf0klxzl60n_149-min.jpg',
+        large: 'large_id73cf0klxzl60n_149-min.jpg'
+      },
       constructorImg: 'small_id73cf0klxzlbi8_гобелен-2.png',
-      images: {
-        thumbnail: 'thumbnail_id73cf0klxzl60n_149-min.jpg'
-      },
-      material: {
-        name: [
-          { lang: 'ua', value: 'Нитки для шиття' },
-          { lang: 'en', value: 'Threads for sewing' }
-        ],
-        _id: '6043b2ec3e06ad3edcdb7b17'
-      },
-      name: [
-        { lang: 'ua', value: 'Червоний' },
-        { lang: 'en', value: 'Red' }
-      ],
-      _id: '6043b87c3e06ad3edcdb7b19'
-    },
-    {
+      additionalPrice: [],
       available: true,
-      constructorImg: 'small_id73cf0klxzmvrg_гобелен-3.png',
-      images: {
-        thumbnail: 'thumbnail_id73cf0klxzmqds_155-min.jpg'
-      },
-      material: {
-        name: [
-          { lang: 'ua', value: 'Нитки для шиття' },
-          { lang: 'en', value: 'Threads for sewing' }
-        ],
-        _id: '6043b2ec3e06ad3edcdb7b17'
-      },
-      name: [
-        { lang: 'ua', value: 'Сірий квадрат' },
-        { lang: 'en', value: 'Gray square' }
-      ],
-      _id: '6043b8c53e06ad3edcdb7b1a'
-    },
-    {
-      available: false,
-      constructorImg: 'small_id73cf0klxzofg1_гобелен-4.png',
-      images: {
-        thumbnail: ''
-      },
-      material: {
-        name: [
-          { lang: 'ua', value: 'Нитки для шиття' },
-          { lang: 'en', value: 'Threads for sewing' }
-        ],
-        _id: '6043b2ec3e06ad3edcdb7b17'
-      },
-      name: [
-        { lang: 'ua', value: 'Голуба стрічка' },
-        { lang: 'en', value: 'Blue ribbon' }
-      ],
-      _id: '6043b90d3e06ad3edcdb7b1b'
+      customizable: true
     }
   ],
   loading: false,

@@ -16,20 +16,22 @@ const constructorElementRequest = `
    lang
   }
   image
-  material{
-    _id
-  name {
-    value
-    lang
-  }
-  }
-  color{
-     _id
-    colorHex
+  features {
+    material{
+      _id
     name {
-    value
-    lang
-  }
+      value
+      lang
+     }
+    }
+    color{
+       _id
+      colorHex
+      name {
+      value
+      lang
+     }
+    }
   }
 `;
 export const deleteConstructorBasic = async (payload) => {
