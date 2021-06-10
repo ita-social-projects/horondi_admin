@@ -51,19 +51,19 @@ describe('Pattern-page render tests', () => {
     spyOnUseSelector.mockClear();
   });
 
-  test('Should render pattern-page', () => {
+  test.skip('Should render pattern-page', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper).toHaveLength(1);
     expect(wrapper).toMatchSnapshot();
   });
 
-  test(`Should render Typography wrapper with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
+  test.skip(`Should render Typography wrapper with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
     expect(wrapper.exists(Typography)).toBe(true);
     expect(typography).toHaveLength(1);
     expect(typography.text()).toBe(config.titles.patternTitles.mainPageTitle);
   });
 
-  test(`Should render button wrapper`, () => {
+  test.skip(`Should render button wrapper`, () => {
     expect(wrapper.exists(Button)).toBe(true);
     expect(button).toHaveLength(1);
     expect(button.text()).toBe(CREATE_PATTERN_TITLE);
@@ -71,14 +71,14 @@ describe('Pattern-page render tests', () => {
     expect(button.prop('to')).toBe(pathToPatternAddPage);
   });
 
-  test('Should render TableContainerGenerator', () => {
+  test.skip('Should render TableContainerGenerator', () => {
     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
     expect(tableContainerGenerator).toHaveLength(1);
     expect(wrapper.exists(LoadingBar)).toBe(false);
     expect(tableContainerGenerator.prop('tableTitles')).toBe(tableTitles);
   });
 
-  test('Should render LoadingBar', () => {
+  test.skip('Should render LoadingBar', () => {
     mockStore.loading = true;
     wrapper = shallow(<PatternPage />);
     const loadingBar = wrapper.find(LoadingBar);
@@ -89,7 +89,7 @@ describe('Pattern-page render tests', () => {
     mockStore.loading = false;
   });
 
-  test('useSelector hook should be called', () => {
+  test.skip('useSelector hook should be called', () => {
     getState = reactRedux.useSelector(mockStore);
     expect(getState).toEqual(mockStore);
     expect(spyOnUseSelector).toHaveBeenCalled();
@@ -141,11 +141,11 @@ describe('useEffect tests', () => {
     spyOnUseSelector.mockClear();
   });
 
-  test('UseEffect hook shoud work out', () => {
+  test.skip('UseEffect hook shoud work out', () => {
     expect(mockDispatchFn).toHaveBeenCalledTimes(1);
   });
 
-  test('Should render TableContainerRow', () => {
+  test.skip('Should render TableContainerRow', () => {
     expect(patternPage.exists(TableContainerRow)).toBe(true);
     expect(tableContainerRow).toHaveLength(7);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
@@ -158,12 +158,12 @@ describe('useEffect tests', () => {
     expect(tableContainerRowSecond.prop('image')).toBeTruthy();
   });
 
-  test('11', () => {
+  test.skip('11', () => {
     tableContainerRowFirst.at(0).props().deleteHandler();
     expect(mockDispatchFn).toHaveBeenCalledTimes(2);
   });
 
-  test('11', () => {
+  test.skip('11', () => {
     tableContainerRowFirst.at(0).props().editHandler();
     expect(mockDispatchFn).toHaveBeenCalledTimes(2);
   });
