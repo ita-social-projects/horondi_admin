@@ -484,10 +484,16 @@ const labels = {
       available: 'available'
     }
   },
-  patterns: {
+  statusPatterns: {
     select: [
       { label: 'Так', value: 'true' },
       { label: 'Ні', value: 'false' }
+    ]
+  },
+  materialPatterns: {
+    select: [
+      { label: 'Нитка для шиття', value: '6043b2ec3e06ad3edcdb7b17' },
+      { label: 'Мальмо', value: '6043a1f33e06ad3edcdb7b09' }
     ]
   }
 };
