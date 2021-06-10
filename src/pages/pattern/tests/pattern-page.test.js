@@ -127,12 +127,6 @@ describe('useEffect tests', () => {
     tableContainerRowFirst = patternPage.find({
       id: '6043b87c3e06ad3edcdb7b19'
     });
-    tableContainerRowSecond = patternPage.find({
-      id: '6043b8c53e06ad3edcdb7b1a'
-    });
-    tableContainerRowThird = patternPage.find({
-      id: '6043b90d3e06ad3edcdb7b1b'
-    });
   });
 
   afterEach(() => {
@@ -147,15 +141,10 @@ describe('useEffect tests', () => {
 
   test.skip('Should render TableContainerRow', () => {
     expect(patternPage.exists(TableContainerRow)).toBe(true);
-    expect(tableContainerRow).toHaveLength(7);
+    expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
-    expect(tableContainerRowSecond.prop('available')).toBe('Так');
-    expect(tableContainerRowThird.prop('available')).toBe('Так');
     expect(tableContainerRowFirst.prop('name')).toBe('Червоний');
-    expect(tableContainerRowSecond.prop('name')).toBe('Сірий квадрат');
-    expect(tableContainerRowThird.prop('name')).toBe('Голуба стрічка');
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
-    expect(tableContainerRowSecond.prop('image')).toBeTruthy();
   });
 
   test.skip('11', () => {

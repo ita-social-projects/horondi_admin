@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import React from 'react';
 import {
   setOrderSort,
   setOrderFilter,
@@ -8,7 +7,6 @@ import {
   setOrderSortLabel
 } from '../../redux/orders/orders.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
-import titles from '../../configs/titles';
 import buttonTitles from '../../configs/button-titles';
 import orders from '../../configs/orders';
 import { paymentStatusFilterObj, statusFilterObject } from '../../utils/order';
@@ -33,20 +31,12 @@ const useOrderFilters = () => {
     dispatch(setOrderSortLabel(value));
   };
 
-  const setDateFromRangeFilter = (dateFrom) => {
+  const setDateRangeFilter = (date) => {
     dispatch(setCurrentPage(0));
     dispatch(
       setOrderFilter({
-        dateFrom
-      })
-    );
-  };
-
-  const setDateToRangeFilter = (dateTo) => {
-    dispatch(setCurrentPage(0));
-    dispatch(
-      setOrderFilter({
-        dateTo
+        dateFrom: date[0],
+        dateTo: date[1]
       })
     );
   };
@@ -89,18 +79,11 @@ const useOrderFilters = () => {
       setSorting,
       sortLabel
     },
-    filterByDateOptions: [
-      {
-        title: titles.historyTitles.from,
-        dateHandler: setDateFromRangeFilter,
-        filters: filters.dateFrom
-      },
-      {
-        title: titles.historyTitles.to,
-        dateHandler: setDateToRangeFilter,
-        filters: filters.dateTo
-      }
-    ],
+    filterByDateOptions: {
+      dateHandler: setDateRangeFilter,
+      dateFrom: filters.dateFrom,
+      dateTo: filters.dateTo
+    },
     filterByMultipleOptions: [
       {
         filters: filters.paymentStatus,
@@ -111,7 +94,7 @@ const useOrderFilters = () => {
       },
       {
         filters: filters.status,
-        label: buttonTitles.ORDER_STATUS,
+        label: buttonTitles.STATUS,
         selectItems: statusFilterObject,
         setFilterHandler: setStatusFilter,
         objForTranslateRenderItems: orders.orderTableStatus
