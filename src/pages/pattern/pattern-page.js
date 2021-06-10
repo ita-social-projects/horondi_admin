@@ -30,13 +30,8 @@ const tableTitles = config.tableHeadRowTitles.patterns;
 const PatternPage = () => {
   const common = useCommonStyles();
 
-  const {
-    searchOptions,
-    clearOptions,
-    filterByMultipleOptions,
-    filterByDateOptions,
-    sortOptions
-  } = usePatternFilters();
+  const { searchOptions, clearOptions, filterByMultipleOptions, sortOptions } =
+    usePatternFilters();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -112,7 +107,6 @@ const PatternPage = () => {
             {
               sortOptions,
               filterByMultipleOptions,
-              //   filterByDateOptions,
               clearOptions,
               searchOptions
             } || {}
