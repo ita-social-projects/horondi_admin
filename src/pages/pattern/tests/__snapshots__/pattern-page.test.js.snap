@@ -58,103 +58,13 @@ exports[`Pattern-page render tests Should render pattern-page 1`] = `
           showDelete={true}
           showEdit={true}
         />,
-        <TableContainerRow
-          available="Так"
-          checkboxChangeHandler={[Function]}
-          clickHandler={[Function]}
-          deleteHandler={[Function]}
-          editHandler={[Function]}
-          id="6043b8c53e06ad3edcdb7b1a"
-          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxzmqds_155-min.jpg"
-          material="Нитки для шиття"
-          name="Сірий квадрат"
-          showAvatar={true}
-          showCheckbox={false}
-          showDelete={true}
-          showEdit={true}
-        />,
-        <TableContainerRow
-          available="Так"
-          checkboxChangeHandler={[Function]}
-          clickHandler={[Function]}
-          deleteHandler={[Function]}
-          editHandler={[Function]}
-          id="6043b90d3e06ad3edcdb7b1b"
-          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxzoa3x_156-min.jpg"
-          material="Нитки для шиття"
-          name="Голуба стрічка"
-          showAvatar={true}
-          showCheckbox={false}
-          showDelete={true}
-          showEdit={true}
-        />,
-        <TableContainerRow
-          available="Так"
-          checkboxChangeHandler={[Function]}
-          clickHandler={[Function]}
-          deleteHandler={[Function]}
-          editHandler={[Function]}
-          id="6043b9723e06ad3edcdb7b1c"
-          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxzqgmj_158-min.jpg"
-          material="Нитки для шиття"
-          name="Червона стрічка"
-          showAvatar={true}
-          showCheckbox={false}
-          showDelete={true}
-          showEdit={true}
-        />,
-        <TableContainerRow
-          available="Так"
-          checkboxChangeHandler={[Function]}
-          clickHandler={[Function]}
-          deleteHandler={[Function]}
-          editHandler={[Function]}
-          id="6043b9f73e06ad3edcdb7b1d"
-          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxztd3u_161-min.jpg"
-          material="Нитки для шиття"
-          name="Оранжева стрічка"
-          showAvatar={true}
-          showCheckbox={false}
-          showDelete={true}
-          showEdit={true}
-        />,
-        <TableContainerRow
-          available="Так"
-          checkboxChangeHandler={[Function]}
-          clickHandler={[Function]}
-          deleteHandler={[Function]}
-          editHandler={[Function]}
-          id="6043ba373e06ad3edcdb7b1e"
-          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxzuq49_163-min.jpg"
-          material="Нитки для шиття"
-          name="Сіра стрічка"
-          showAvatar={true}
-          showCheckbox={false}
-          showDelete={true}
-          showEdit={true}
-        />,
-        <TableContainerRow
-          available="Так"
-          checkboxChangeHandler={[Function]}
-          clickHandler={[Function]}
-          deleteHandler={[Function]}
-          editHandler={[Function]}
-          id="6048f667fc3c0b3b34fd497f"
-          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73bp0km3plxxt_147-min.jpg"
-          material="Нитки для шиття"
-          name="Рожево голубий"
-          showAvatar={true}
-          showCheckbox={false}
-          showDelete={true}
-          showEdit={true}
-        />,
       ]
     }
     tableTitles={
       Array [
         "Фото",
         "Назва",
-        "Код матеріалу",
+        "Матеріал",
         "Доступний",
         "Дії",
       ]
