@@ -7,7 +7,10 @@ import {
 } from '../../redux/pattern/pattern.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import buttonTitles from '../../configs/button-titles';
-import patterns from '../../configs/patterns';
+import {
+  materialPatternTableAction,
+  patternStatusTableAction
+} from '../../configs/patterns';
 import {
   statusPatternFilterObject,
   materialPatternFilterObject
@@ -30,7 +33,6 @@ const usePatternFilters = () => {
   };
 
   const setStatusFilter = (available) => {
-    console.log(available);
     dispatch(setCurrentPage(0));
     dispatch(
       setPatternFilter({
@@ -60,14 +62,14 @@ const usePatternFilters = () => {
         label: buttonTitles.PATTERN_MATERIAL,
         selectItems: materialPatternFilterObject,
         setFilterHandler: setMaterialFilter,
-        objForTranslateRenderItems: patterns.patternTableStatus
+        objForTranslateRenderItems: materialPatternTableAction
       },
       {
         filters: filters.available,
         label: buttonTitles.PATTERN_AVAILABLE,
         selectItems: statusPatternFilterObject,
         setFilterHandler: setStatusFilter,
-        objForTranslateRenderItems: patterns.patternTableStatus
+        objForTranslateRenderItems: patternStatusTableAction
       }
     ],
 

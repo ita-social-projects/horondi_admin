@@ -493,7 +493,11 @@ const labels = {
   materialPatterns: {
     select: [
       { label: 'Нитка для шиття', value: '6043b2ec3e06ad3edcdb7b17' },
-      { label: 'Мальмо', value: '6043a1f33e06ad3edcdb7b09' }
+      { label: 'Мальмо', value: '6043a1f33e06ad3edcdb7b09' },
+      { label: 'Шкірзамінник', value: '6043aaab3e06ad3edcdb7b11' },
+      { label: 'Кордура', value: '6043ab033e06ad3edcdb7b12' },
+      { label: 'Оксфорд 135', value: '6043acc83e06ad3edcdb7b14' },
+      { label: 'Защіпка', value: '6043c2d13e06ad3edcdb7b33' }
     ]
   }
 };

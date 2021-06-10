@@ -1,8 +1,8 @@
-const patterns = {
-  patternTableStatus: {
-    MATERIAL: 'Нитка для шиття',
-    NOT_AVAILABLE: 'Немає в наявності'
-  }
+export const materialPatternTableAction = {
+  SEWING_THREAD: 'Нитка для шиття',
+  MALMO: 'Мальмо'
 };
-
-export default patterns;
+export const patternStatusTableAction = {
+  SEWING_THREAD: 'Так',
+  MALMO: 'Мальмо'
+};
