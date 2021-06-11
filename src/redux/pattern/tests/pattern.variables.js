@@ -63,7 +63,15 @@ const mockInputPattern = {
 
 const mockPatternsLoadPayload = {
   skip: 0,
-  limit: 6,
+  limit: 10,
+  filter: {
+    name: '',
+    description: '',
+    model: [],
+    available: [],
+    material: [],
+    handmade: []
+  },
   patternsPerPage: 6
 };
 

@@ -135,14 +135,14 @@ const ConstructorPage = ({ match }) => {
       showAvatar={listItem.label === constructorPattern}
       color={
         <ColorCircle
-          color={listItem.color.colorHex}
+          color={listItem.features.color.colorHex}
           size={DEFAULT_CIRCLE}
         />
       }
       key={listItem._id}
       id={listItem._id}
       name={listItem.name[0].value}
-      material={listItem.material.name[0].value}
+      material={listItem.features.material.name[0].value}
       show={isListItemAvailable(listItem, showEnable, showDisable)}
       deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
       editHandler={() => handleUpdateConstructor(editAction, listItem._id, listItem)}
@@ -155,7 +155,7 @@ const ConstructorPage = ({ match }) => {
       key={listItem._id}
       id={listItem._id}
       name={listItem.name[0].value}
-      material={listItem.material.name[0].value}
+      material={listItem.features.material.name[0].value}
       show={isListItemAvailable(listItem, showEnable, showDisable)}
       deleteHandler={() => constructorElementDeleteHandler(listItem._id, deleteAction, id)}
       showEdit={false}
@@ -164,7 +164,7 @@ const ConstructorPage = ({ match }) => {
 
   const constructorOptions = {
     constructorBasic: {
-      list: model.constructorBasic,
+      list: model.eligibleOptions.constructorBasic,
       label: constructorBasic,
       buttonTitle: CREATE_CONSTRUCTOR_BASIC_TITLE,
       createConstructorElement: addConstructorBasic,
@@ -172,13 +172,13 @@ const ConstructorPage = ({ match }) => {
       updateConstructorElement: updateConstructorBasic
     },
     constructorPattern: {
-      list: model.constructorPattern,
+      list: model.eligibleOptions.constructorPattern,
       label: constructorPattern,
       buttonTitle: CREATE_PATTERN_TITLE,
       deleteConstructorElement: deleteConstructorPattern
     },
     constructorFrontPocket: {
-      list: model.constructorFrontPocket,
+      list: model.eligibleOptions.constructorFrontPocket,
       label: constructorFrontPocket,
       buttonTitle: CREATE_CONSTRUCTOR_FRONT_POCKET_TITLE,
       createConstructorElement: addConstructorFrontPocket,
@@ -186,7 +186,7 @@ const ConstructorPage = ({ match }) => {
       updateConstructorElement: updateConstructorFrontPocket
     },
     constructorBottom: {
-      list: model.constructorBottom,
+      list: model.eligibleOptions.constructorBottom,
       label: constructorBottom,
       buttonTitle: CREATE_CONSTRUCTOR_BOTTOM_TITLE,
       createConstructorElement: addConstructorBottom,

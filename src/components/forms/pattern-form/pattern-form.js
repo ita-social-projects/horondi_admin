@@ -103,6 +103,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(PATTERN_ERROR_MESSAGE),
+    handmade: Yup.boolean(),
     patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
     patternConstructorImage: Yup.string().required(
       CONSTRUCTOR_PHOTO_NOT_PROVIDED
@@ -310,17 +311,20 @@ PatternForm.propTypes = {
     _id: PropTypes.string,
     available: PropTypes.bool,
     description: PropTypes.arrayOf(valueShape),
-    handmade: PropTypes.bool,
+    features: PropTypes.shape({
+      material: PropTypes.string,
+      handmade: PropTypes.bool
+    }),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
     constructorImg: PropTypes.string,
-    material: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
   }),
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -330,6 +334,7 @@ PatternForm.propTypes = {
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -339,6 +344,7 @@ PatternForm.propTypes = {
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -380,18 +386,20 @@ PatternForm.defaultProps = {
       thumbnail: ''
     },
     constructorImg: '',
-    material: {
-      name: [
-        {
-          value: ''
-        },
-        {
-          value: ''
-        }
-      ]
+    features: {
+      material: {
+        name: [
+          {
+            value: ''
+          },
+          {
+            value: ''
+          }
+        ]
+      },
+      handmade: false
     },
-    available: false,
-    handmade: false
+    available: false
   },
   isEdit: false
 };

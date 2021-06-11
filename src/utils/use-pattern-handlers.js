@@ -33,9 +33,11 @@ const usePatternHandlers = () => {
       }
     ],
     constructorImg: values.patternConstructorImage,
-    material: values.material,
-    available: values.available,
-    handmade: values.handmade
+    features: {
+      material: values.material,
+      handmade: values.handmade
+    },
+    available: values.available
   });
 
   return {
