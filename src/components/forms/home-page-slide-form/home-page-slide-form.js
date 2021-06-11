@@ -28,17 +28,12 @@ const { preview } = config.titles.homePageSliderTitle;
 const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const {
-    discoverMoreTitle,
-    discoverMoreSymbol
-  } = config.titles.homePageSliderTitle;
-  const {
-    slideImage,
-    setSlideImage,
-    createSlide,
-    upload,
-    setUpload
-  } = useHomePageSlideHandlers();
+  const { discoverMoreTitle, discoverMoreSymbol } =
+    config.titles.homePageSliderTitle;
+  const { slideImage, setSlideImage, createSlide, upload, setUpload } =
+    useHomePageSlideHandlers();
+
+  const { pathToHomePageSlides } = config.routes;
 
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
@@ -48,44 +43,38 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     link: Yup.string().min(2, SLIDE_VALIDATION_ERROR)
   });
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    touched,
-    errors,
-    setFieldValue
-  } = useFormik({
-    validationSchema: slideValidationSchema,
-    initialValues: getHomePageSlidesInitialValues(slide, slideOrder),
+  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
+    useFormik({
+      validationSchema: slideValidationSchema,
+      initialValues: getHomePageSlidesInitialValues(slide, slideOrder),
 
-    onSubmit: () => {
-      (() => {
-        if (values.show && slide.show) {
-          values.order = slide.order;
+      onSubmit: () => {
+        (() => {
+          if (values.show && slide.show) {
+            values.order = slide.order;
+            return;
+          }
+          if (values.show) {
+            values.order = slideOrder;
+            return;
+          }
+          if (!values.show) {
+            values.order = 0;
+          }
+        })();
+        const newSlide = createSlide(values);
+
+        if (id && upload.name) {
+          dispatch(updateSlide({ id, slide: newSlide, upload }));
           return;
         }
-        if (values.show) {
-          values.order = slideOrder;
+        if (id) {
+          dispatch(updateSlide({ id, slide: newSlide }));
           return;
         }
-        if (!values.show) {
-          values.order = 0;
-        }
-      })();
-      const newSlide = createSlide(values);
-
-      if (id && upload.name) {
-        dispatch(updateSlide({ id, slide: newSlide, upload }));
-        return;
+        dispatch(addSlide({ slide: newSlide, upload }));
       }
-      if (id) {
-        dispatch(updateSlide({ id, slide: newSlide }));
-        return;
-      }
-      dispatch(addSlide({ slide: newSlide, upload }));
-    }
-  });
+    });
 
   const checkboxes = [
     {
@@ -166,7 +155,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         {languages.map((lang, index) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton initial={!valueEquality} />
+        <BackButton initial={!valueEquality} pathBack={pathToHomePageSlides} />
         <SaveButton
           className={styles.formButton}
           data-cy='save'

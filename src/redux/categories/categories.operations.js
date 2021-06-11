@@ -1,8 +1,8 @@
-import {getItems, setItems} from '../../utils/client';
-import {categoryTranslations} from '../../translations/category.translations';
+import { getItems, setItems } from '../../utils/client';
+import { categoryTranslations } from '../../translations/category.translations';
 
 export const getAllCategories = async (filter, pagination, sort) => {
-    const getAllCategoriesQuery = `
+  const getAllCategoriesQuery = `
       query(
         $filter: FilterInputComponent
         $pagination: Pagination
@@ -33,16 +33,16 @@ export const getAllCategories = async (filter, pagination, sort) => {
       }
     `;
 
-    const result = await getItems(getAllCategoriesQuery, {
-        filter,
-        pagination,
-        sort
-    });
+  const result = await getItems(getAllCategoriesQuery, {
+    filter,
+    pagination,
+    sort
+  });
 
-    return result?.data?.getAllCategories;
+  return result?.data?.getAllCategories;
 };
 export const getCategoryById = async (id) => {
-    const getCategoryByIdQuery = `
+  const getCategoryByIdQuery = `
       query($id: ID!) {
         getCategoryById(id: $id) {
           ... on Category {
@@ -64,20 +64,24 @@ export const getCategoryById = async (id) => {
       }
     `;
 
-    const result = await getItems(getCategoryByIdQuery, {id});
+  const result = await getItems(getCategoryByIdQuery, { id });
 
-    if (Object.keys(categoryTranslations).includes(result?.data?.getCategoryById?.message)) {
-        throw new Error(
-            `${result.data.getCategoryById.statusCode} ${
-                categoryTranslations[result.data.getCategoryById.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(categoryTranslations).includes(
+      result?.data?.getCategoryById?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getCategoryById.statusCode} ${
+        categoryTranslations[result.data.getCategoryById.message]
+      }`
+    );
+  }
 
-    return result?.data?.getCategoryById;
+  return result?.data?.getCategoryById;
 };
 export const deleteCategoryById = async (deleteId, switchId) => {
-    const deleteCategoryByIdQuery = `
+  const deleteCategoryByIdQuery = `
      mutation deleteCategory($deleteId: ID!, $switchId: ID!){
       deleteCategory(
       deleteId: $deleteId
@@ -95,15 +99,15 @@ export const deleteCategoryById = async (deleteId, switchId) => {
     }
   `;
 
-    const result = await setItems(deleteCategoryByIdQuery, {
-        deleteId,
-        switchId
-    });
+  const result = await setItems(deleteCategoryByIdQuery, {
+    deleteId,
+    switchId
+  });
 
-    return result?.data?.deleteCategory;
+  return result?.data?.deleteCategory;
 };
 export const createCategory = async (payload) => {
-    const query = `
+  const query = `
       mutation($category: CategoryInput!, $upload: Upload!) {
         addCategory(category: $category, upload: $upload) {
           ... on Category {
@@ -116,19 +120,23 @@ export const createCategory = async (payload) => {
         }
       }
     `;
-    const result = await setItems(query, payload);
+  const result = await setItems(query, payload);
 
-    if (Object.keys(categoryTranslations).includes(result?.data?.addCategory?.message)) {
-        throw new Error(
-            `${result.data.addCategory.statusCode} ${
-                categoryTranslations[result.data.addCategory.message]
-            }`
-        );
-    }
-    return result?.data?.addCategory;
+  if (
+    Object.keys(categoryTranslations).includes(
+      result?.data?.addCategory?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.addCategory.statusCode} ${
+        categoryTranslations[result.data.addCategory.message]
+      }`
+    );
+  }
+  return result?.data?.addCategory;
 };
 export const updateCategory = async (payload) => {
-    const query = `
+  const query = `
       mutation updateCategory(
         $id: ID!
         $category: CategoryInput!
@@ -145,14 +153,18 @@ export const updateCategory = async (payload) => {
         }
       }
     `;
-    const result = await setItems(query, payload);
+  const result = await setItems(query, payload);
 
-    if (Object.keys(categoryTranslations).includes(result?.data?.updateCategory?.message)) {
-        throw new Error(
-            `${result.data.updateCategory.statusCode} ${
-                categoryTranslations[result.data.updateCategory.message]
-            }`
-        );
-    }
-    return result?.data?.updateCategory;
+  if (
+    Object.keys(categoryTranslations).includes(
+      result?.data?.updateCategory?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.updateCategory.statusCode} ${
+        categoryTranslations[result.data.updateCategory.message]
+      }`
+    );
+  }
+  return result?.data?.updateCategory;
 };
