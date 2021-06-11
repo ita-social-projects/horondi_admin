@@ -26,12 +26,10 @@ import FilterNavbar from '../../components/filter-search-sort';
 import { selectProductsLoadingAndDetails } from '../../redux/selectors/products.selectors';
 
 const pathToProductAddPage = config.routes.pathToAddProduct;
+const pathToProductEditPage = config.routes.pathToProducts;
 
-const {
-  PRODUCT_NOT_FOUND,
-  DELETE_PRODUCT_MESSAGE,
-  DELETE_PRODUCT_TITLE
-} = productsTranslations;
+const { PRODUCT_NOT_FOUND, DELETE_PRODUCT_MESSAGE, DELETE_PRODUCT_TITLE } =
+  productsTranslations;
 const tableTitles = config.tableHeadRowTitles.products;
 const { imagePrefix } = config;
 
@@ -90,37 +88,37 @@ const ProductsPage = () => {
   };
 
   const handleProductEdit = (id) => {
-    dispatch(push(`${pathToProductAddPage}${id}`));
+    dispatch(push(`${pathToProductEditPage}/${id}`));
   };
 
   const productsItems = products
     ? products.map(
-      ({
-        _id,
-        name,
-        category,
-        basePrice,
-        model,
-        purchasedCount,
-        pattern,
-        rate,
-        images
-      }) => (
-        <TableContainerRow
-          key={_id}
-          image={`${imagePrefix}${images.primary.small}`}
-          name={name[0].value}
-          category={category.name[0].value}
-          model={model.name[0].value}
-          pattern={pattern.name[0].value}
-          price={Math.round(basePrice[0].value / 100)}
-          rate={rate.toFixed(2)}
-          purchasedCount={purchasedCount}
-          editHandler={() => handleProductEdit(_id)}
-          deleteHandler={() => handleProductDelete(_id)}
-        />
+        ({
+          _id,
+          name,
+          category,
+          basePrice,
+          model,
+          purchasedCount,
+          pattern,
+          rate,
+          images
+        }) => (
+          <TableContainerRow
+            key={_id}
+            image={`${imagePrefix}${images.primary.small}`}
+            name={name[0].value}
+            category={category.name[0].value}
+            model={model.name[0].value}
+            pattern={pattern.name[0].value}
+            price={Math.round(basePrice[0].value / 100)}
+            rate={rate.toFixed(2)}
+            purchasedCount={purchasedCount}
+            editHandler={() => handleProductEdit(_id)}
+            deleteHandler={() => handleProductDelete(_id)}
+          />
+        )
       )
-    )
     : null;
 
   if (loading || detailLoading) {

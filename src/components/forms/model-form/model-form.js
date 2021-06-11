@@ -74,7 +74,8 @@ const ModelForm = ({ model, id, isEdit }) => {
     useModelHandlers();
 
   useEffect(() => {
-    dispatch(getSizes());
+    dispatch(getSizes({ limit: null }));
+
     dispatch(getCategories({}));
   }, [dispatch]);
 
