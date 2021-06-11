@@ -56,6 +56,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     imageUrl: ''
   });
 
+  const { pathToContacts } = config.routes;
+
   const uaCartImageText = 'uaCartImage';
   const enCartImageText = 'enCartImage';
   const uaSelectImageHandler = ({ target }) => {
@@ -242,7 +244,11 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <BackButton data-cy='go-back-button' initial={!valueEquality} />
+        <BackButton
+          data-cy='go-back-button'
+          initial={!valueEquality}
+          pathBack={pathToContacts}
+        />
 
         <SaveButton
           id='save'

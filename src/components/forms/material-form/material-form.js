@@ -37,6 +37,8 @@ function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
+  const { pathToMaterials } = config.routes;
+
   const { loading } = useSelector(materialSelector);
 
   const { createMaterial } = useMaterialHandlers();
@@ -74,35 +76,29 @@ function MaterialForm({ material, id }) {
     colors: Yup.array().of(Yup.string()).required(VALIDATION_ERROR)
   });
 
-  const {
-    values,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched,
-    setFieldValue
-  } = useFormik({
-    validationSchema: formSchema,
-    validateOnBlur: true,
-    initialValues: getMaterialFormInitValues(material, purposeEnum),
-    onSubmit: (data) => {
-      const newMaterial = createMaterial(data);
-      if (id) {
+  const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
+    useFormik({
+      validationSchema: formSchema,
+      validateOnBlur: true,
+      initialValues: getMaterialFormInitValues(material, purposeEnum),
+      onSubmit: (data) => {
+        const newMaterial = createMaterial(data);
+        if (id) {
+          dispatch(
+            updateMaterial({
+              id,
+              material: { ...newMaterial }
+            })
+          );
+          return;
+        }
         dispatch(
-          updateMaterial({
-            id,
+          addMaterial({
             material: { ...newMaterial }
           })
         );
-        return;
       }
-      dispatch(
-        addMaterial({
-          material: { ...newMaterial }
-        })
-      );
-    }
-  });
+    });
 
   const checkboxes = [
     {
@@ -204,7 +200,7 @@ function MaterialForm({ material, id }) {
         {languages.length > 0 ? <div>{languageTabs}</div> : null}
         <div className={styles.controlsBlock}>
           <div>
-            <BackButton initial={!valueEquality} />
+            <BackButton initial={!valueEquality} pathBack={pathToMaterials} />
             <SaveButton
               className={styles.saveButton}
               data-cy='save'
