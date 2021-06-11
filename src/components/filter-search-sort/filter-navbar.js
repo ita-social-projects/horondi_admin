@@ -32,10 +32,10 @@ const FilterNavbar = ({ options }) => {
       ) : null}
       {filterByMultipleOptions?.length
         ? filterByMultipleOptions.map((filterItem) => (
-            <Grid key={filterItem} className={styles.multipleValues} item>
-              <NavFilterByValues filterByMultipleOptions={filterItem} />
-            </Grid>
-          ))
+          <Grid key={filterItem} className={styles.multipleValues} item>
+            <NavFilterByValues filterByMultipleOptions={filterItem} />
+          </Grid>
+        ))
         : null}
       {searchOptions ? (
         <Grid item>
