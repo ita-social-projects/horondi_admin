@@ -69,16 +69,12 @@ const ModelForm = ({ model, id, isEdit }) => {
   };
 
   const inputLabel = React.useRef(null);
-  const {
-    createModel,
-    setUpload,
-    upload,
-    modelImage,
-    setModelImage
-  } = useModelHandlers();
+  const { createModel, setUpload, upload, modelImage, setModelImage } =
+    useModelHandlers();
 
   useEffect(() => {
-    dispatch(getSizes());
+    dispatch(getSizes({ limit: null }));
+
     dispatch(getCategories({}));
   }, [dispatch]);
 

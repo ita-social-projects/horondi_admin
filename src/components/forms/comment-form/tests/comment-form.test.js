@@ -80,7 +80,7 @@ describe('Comment form tests', () => {
     fireEvent.click(getAllByRole('button')[0]);
     expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush).toHaveBeenCalledWith(
-      `/products/product/${mockComment.product._id}`
+      `/products/${mockComment.product._id}`
     );
   });
 
