@@ -8,12 +8,10 @@ import {
 import { setCurrentPage } from '../../redux/table/table.actions';
 import buttonTitles from '../../configs/button-titles';
 import {
+  statusPatternFilterObject,
+  materialPatternFilterObject,
   materialPatternTableAction,
   patternStatusTableAction
-} from '../../configs/patterns';
-import {
-  statusPatternFilterObject,
-  materialPatternFilterObject
 } from '../../utils/pattern';
 
 const usePatternFilters = () => {
@@ -41,7 +39,6 @@ const usePatternFilters = () => {
     );
   };
   const setMaterialFilter = (material) => {
-    console.log(material);
     dispatch(setCurrentPage(0));
     dispatch(
       setPatternFilter({
@@ -58,7 +55,7 @@ const usePatternFilters = () => {
   return {
     filterByMultipleOptions: [
       {
-        filters: filters.available,
+        filters: filters.material,
         label: buttonTitles.PATTERN_MATERIAL,
         selectItems: materialPatternFilterObject,
         setFilterHandler: setMaterialFilter,
