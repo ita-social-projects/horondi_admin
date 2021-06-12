@@ -12,8 +12,7 @@ const NavFilterByDate = ({
   const styles = useStyles();
   const { afterToday } = DateRangePicker;
 
-  const from =
-    dateFrom || new Date(new Date().getFullYear(), new Date().getMonth() - 1);
+  const from = dateFrom || new Date();
   const to = dateTo || new Date();
 
   const [value, setValue] = useState([from, to]);
