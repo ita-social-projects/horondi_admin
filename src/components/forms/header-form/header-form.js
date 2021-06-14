@@ -13,12 +13,12 @@ import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 import { getHeaderInitialValues } from '../../../utils/header-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
-const {
-  HEADER_VALIDATION_ERROR,
-  HEADER_ERROR_MESSAGE
-} = config.headerErrorMessages;
+const { HEADER_VALIDATION_ERROR, HEADER_ERROR_MESSAGE } =
+  config.headerErrorMessages;
 
 const { languages } = config;
+
+const { pathToHeaders } = config.routes;
 
 const HeaderForm = ({ header, id }) => {
   const styles = useStyles();
@@ -126,7 +126,7 @@ const HeaderForm = ({ header, id }) => {
             </Paper>
           </TabPanel>
         ))}
-        <BackButton initial={!valueEquality} />
+        <BackButton initial={!valueEquality} pathBack={pathToHeaders} />
         <SaveButton
           className={styles.saveButton}
           data-cy='save'

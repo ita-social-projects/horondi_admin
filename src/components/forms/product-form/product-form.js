@@ -70,6 +70,8 @@ const {
 
 const { SHOW_COMMENTS_TITLE, HIDE_COMMENTS_TITLE } = config.buttonTitles;
 
+const { pathToProducts } = config.routes;
+
 const ProductForm = ({ isEdit }) => {
   const styles = useStyles();
   const theme = useTheme();
@@ -435,7 +437,7 @@ const ProductForm = ({ isEdit }) => {
       </Grid>
       {showCommentsPanel()}
       <div className={styles.controlsBlock}>
-        <BackButton />
+        <BackButton pathBack={pathToProducts} />
       </div>
     </div>
   );

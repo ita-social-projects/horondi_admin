@@ -20,10 +20,8 @@ const map = require('lodash/map');
 
 const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
-const {
-  NAME_MIN_LENGTH_MESSAGE,
-  TITLE_MIN_LENGTH_MESSAGE
-} = config.newsErrorMessages;
+const { NAME_MIN_LENGTH_MESSAGE, TITLE_MIN_LENGTH_MESSAGE } =
+  config.newsErrorMessages;
 const { imagePrefix } = config;
 const { authorName, title, text } = config.labels.news;
 const {
@@ -31,6 +29,7 @@ const {
   valueKeys: { authorPhoto, newsImage },
   inputNames: { authorNameInput, titleInput, textInput }
 } = config;
+const { pathToNews } = config.routes;
 
 const NewsForm = ({ id, newsArticle, editMode }) => {
   const styles = useStyles();
@@ -75,36 +74,30 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const formSchema = selectFormSchema();
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    touched,
-    errors
-  } = useFormik({
-    validationSchema: formSchema,
-    initialValues: useFormikInitialValues(newsArticle),
-    onSubmit: () => {
-      const newArticle = createArticle(values);
-      if (editMode) {
-        dispatch(
-          updateArticle({
-            id,
-            newArticle,
-            upload: [values.authorPhoto, values.newsImage]
-          })
-        );
-      } else {
-        dispatch(
-          addArticle({
-            article: newArticle,
-            upload: [values.authorPhoto, values.newsImage]
-          })
-        );
+  const { values, handleSubmit, handleChange, handleBlur, touched, errors } =
+    useFormik({
+      validationSchema: formSchema,
+      initialValues: useFormikInitialValues(newsArticle),
+      onSubmit: () => {
+        const newArticle = createArticle(values);
+        if (editMode) {
+          dispatch(
+            updateArticle({
+              id,
+              newArticle,
+              upload: [values.authorPhoto, values.newsImage]
+            })
+          );
+        } else {
+          dispatch(
+            addArticle({
+              article: newArticle,
+              upload: [values.authorPhoto, values.newsImage]
+            })
+          );
+        }
       }
-    }
-  });
+    });
 
   const handleLoadAuthorImage = ({ target }) => {
     imageHandler(target, setUploadAuthorImage, values, authorPhoto);
@@ -160,7 +153,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} />
+              <BackButton initial={!valueEquality} pathBack={pathToNews} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
