@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pattern-page render tests Should render pattern-page 1`] = `
+<div
+  className="makeStyles-container-1"
+>
+  <div
+    className="makeStyles-adminHeader-2"
+  >
+    <WithStyles(ForwardRef(Typography))
+      className="makeStyles-materialTitle-3"
+      data-cy="pattern-header"
+      variant="h1"
+    >
+      Інформація про гобелени
+    </WithStyles(ForwardRef(Typography))>
+    <WithStyles(ForwardRef(Button))
+      color="primary"
+      component={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "displayName": "Link",
+          "propTypes": Object {
+            "innerRef": [Function],
+            "onClick": [Function],
+            "replace": [Function],
+            "target": [Function],
+            "to": [Function],
+          },
+          "render": [Function],
+        }
+      }
+      data-cy="add-pattern"
+      to="/patterns/add"
+      variant="contained"
+    >
+      Додати гобелен
+    </WithStyles(ForwardRef(Button))>
+  </div>
+  <div>
+    <FilterNavbar
+      clearOptions={Object {}}
+      options={
+        Object {
+          "clearOptions": Object {
+            "clearAllFilters": [Function],
+            "filters": undefined,
+          },
+          "filterByMultipleOptions": Array [
+            Object {
+              "filters": undefined,
+              "label": "Матеріал",
+              "objForTranslateRenderItems": Object {},
+              "selectItems": Array [],
+              "setFilterHandler": [Function],
+            },
+            Object {
+              "filters": undefined,
+              "label": "Доступний",
+              "objForTranslateRenderItems": Object {
+                "false": "Hi",
+                "true": "Так",
+              },
+              "selectItems": Array [
+                Object {
+                  "key": "true",
+                  "value": "Так",
+                },
+                Object {
+                  "key": "false",
+                  "value": "Ні",
+                },
+              ],
+              "setFilterHandler": [Function],
+            },
+          ],
+          "searchOptions": Object {
+            "name": undefined,
+            "setSearchFilter": [Function],
+          },
+          "sortOptions": undefined,
+        }
+      }
+      searchOptions={Object {}}
+      sortOptions={Object {}}
+    />
+  </div>
+  <TableContainerGenerator
+    count={7}
+    data-cy="patternTable"
+    pagination={true}
+    tableItems={Array []}
+    tableTitles={
+      Array [
+        "Фото",
+        "Назва",
+        "Матеріал",
+        "Доступний",
+        "Дії",
+      ]
+    }
+  />
+</div>
+`;

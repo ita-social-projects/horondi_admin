@@ -21,14 +21,14 @@ const usePatternFilters = () => {
     items: Pattern.items
   }));
 
-  const meterialForGobelen = items.map((item) => {
+  const meterialForGobelen = items?.map((item) => {
     const id = item.features.material._id;
     const name = item.features.material.name[0].value;
     return { label: name, value: id };
   });
 
   const sortMaterial = [
-    ...new Map(meterialForGobelen.map((item) => [item.value, item])).values()
+    ...new Map(meterialForGobelen?.map((item) => [item.value, item])).values()
   ];
 
   const setSearchFilter = (name) => {
@@ -65,14 +65,14 @@ const usePatternFilters = () => {
   return {
     filterByMultipleOptions: [
       {
-        filters: filters.material,
+        filters: filters?.material,
         label: buttonTitles.PATTERN_MATERIAL,
         selectItems: materialPatternFilterObject(sortMaterial),
         setFilterHandler: setMaterialFilter,
         objForTranslateRenderItems: materialPatternTableAction(sortMaterial)
       },
       {
-        filters: filters.available,
+        filters: filters?.available,
         label: buttonTitles.PATTERN_AVAILABLE,
         selectItems: statusPatternFilterObject,
         setFilterHandler: setStatusFilter,
@@ -81,7 +81,7 @@ const usePatternFilters = () => {
     ],
 
     searchOptions: {
-      name: filters.search,
+      name: filters?.search,
       setSearchFilter
     },
     clearOptions: {

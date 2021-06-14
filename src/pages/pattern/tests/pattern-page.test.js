@@ -53,107 +53,106 @@ describe('Pattern-page render tests', () => {
 
   test('Should render pattern-page', () => {
     expect(wrapper).toBeDefined();
-    // expect(wrapper).toHaveLength(1);
-    // expect(wrapper).toMatchSnapshot();
+    expect(wrapper).toHaveLength(1);
+    expect(wrapper).toMatchSnapshot();
   });
 
-  // test(`Should render Typography wrapper with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
-  //   expect(wrapper.exists(Typography)).toBe(true);
-  //   expect(typography).toHaveLength(1);
-  //   expect(typography.text()).toBe(config.titles.patternTitles.mainPageTitle);
-  // });
-  //
-  // test(`Should render button wrapper`, () => {
-  //   expect(wrapper.exists(Button)).toBe(true);
-  //   expect(button).toHaveLength(1);
-  //   expect(button.text()).toBe(CREATE_PATTERN_TITLE);
-  //   expect(button.prop('component')).toEqual(Link);
-  //   expect(button.prop('to')).toBe(pathToPatternAddPage);
-  // });
-  //
-  // test('Should render TableContainerGenerator', () => {
-  //   expect(wrapper.exists(TableContainerGenerator)).toBe(true);
-  //   expect(tableContainerGenerator).toHaveLength(1);
-  //   expect(wrapper.exists(LoadingBar)).toBe(false);
-  //   expect(tableContainerGenerator.prop('tableTitles')).toBe(tableTitles);
-  // });
-  //
-  // test('Should render LoadingBar', () => {
-  //   mockStore.loading = true;
-  //   wrapper = shallow(<PatternPage />);
-  //   const loadingBar = wrapper.find(LoadingBar);
-  //   expect(wrapper.exists(LoadingBar)).toBeDefined();
-  //   expect(wrapper.exists(LoadingBar)).toBe(true);
-  //   expect(loadingBar).toHaveLength(1);
-  //   expect(wrapper.exists(TableContainerGenerator)).toBe(false);
-  //   mockStore.loading = false;
-  // });
-  //
-  // test('useSelector hook should be called', () => {
-  //   getState = reactRedux.useSelector(mockStore);
-  //   expect(getState).toEqual(mockStore);
-  //   expect(spyOnUseSelector).toHaveBeenCalled();
-  // });
+  test(`Should render Typography wrapper with "${config.titles.patternTitles.mainPageTitle}" label`, () => {
+    expect(wrapper.exists(Typography)).toBe(true);
+    expect(typography).toHaveLength(1);
+    expect(typography.text()).toBe(config.titles.patternTitles.mainPageTitle);
+  });
+
+  test(`Should render button wrapper`, () => {
+    expect(wrapper.exists(Button)).toBe(true);
+    expect(button).toHaveLength(1);
+    expect(button.text()).toBe(CREATE_PATTERN_TITLE);
+    expect(button.prop('component')).toEqual(Link);
+    expect(button.prop('to')).toBe(pathToPatternAddPage);
+  });
+
+  test('Should render TableContainerGenerator', () => {
+    expect(wrapper.exists(TableContainerGenerator)).toBe(true);
+    expect(tableContainerGenerator).toHaveLength(1);
+    expect(wrapper.exists(LoadingBar)).toBe(false);
+    expect(tableContainerGenerator.prop('tableTitles')).toBe(tableTitles);
+  });
+
+  test('Should render LoadingBar', () => {
+    mockStore.loading = true;
+    wrapper = shallow(<PatternPage />);
+    const loadingBar = wrapper.find(LoadingBar);
+    expect(wrapper.exists(LoadingBar)).toBeDefined();
+    expect(wrapper.exists(LoadingBar)).toBe(true);
+    expect(loadingBar).toHaveLength(1);
+    expect(wrapper.exists(TableContainerGenerator)).toBe(false);
+    mockStore.loading = false;
+  });
+
+  test('useSelector hook should be called', () => {
+    getState = reactRedux.useSelector(mockStore);
+    expect(getState).toEqual(mockStore);
+    expect(spyOnUseSelector).toHaveBeenCalled();
+  });
 });
 
-// describe('useEffect tests', () => {
-//   let spyOnUseSelector;
-//   let spyOnUseDispatch;
-//   let mockDispatchFn;
-//   let wrapper;
-//   let patternPage;
-//   let tableContainerRow;
-//   let tableContainerRowFirst;
-//   let tableContainerRowSecond;
-//   let tableContainerRowThird;
-//
-//   beforeEach(() => {
-//     // Mock useSelector hook
-//     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-//     spyOnUseSelector.mockImplementation(() => mockStore);
-//
-//     // Mock dispatch function returned from useDispatch
-//     mockDispatchFn = jest.fn();
-//     reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
-//
-//     wrapper = mount(
-//       <BrowserRouter>
-//         <PatternPage />
-//       </BrowserRouter>
-//     );
-//
-//     patternPage = wrapper.find(PatternPage);
-//     tableContainerRow = patternPage.find(TableContainerRow);
-//     tableContainerRowFirst = patternPage.find({
-//       id: '6043b87c3e06ad3edcdb7b19'
-//     });
-//   });
-//
-//   afterEach(() => {
-//     wrapper.unmount();
-//     jest.restoreAllMocks();
-//     spyOnUseSelector.mockClear();
-//   });
-//
-//   test('UseEffect hook shoud work out', () => {
-//     expect(mockDispatchFn).toHaveBeenCalledTimes(1);
-//   });
-//
-//   test('Should render TableContainerRow', () => {
-//     expect(patternPage.exists(TableContainerRow)).toBe(true);
-//     expect(tableContainerRow).toHaveLength(1);
-//     expect(tableContainerRowFirst.prop('available')).toBe('Так');
-//     expect(tableContainerRowFirst.prop('name')).toBe('Червоний');
-//     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
-//   });
-//
-//   test('11', () => {
-//     tableContainerRowFirst.at(0).props().deleteHandler();
-//     expect(mockDispatchFn).toHaveBeenCalledTimes(2);
-//   });
-//
-//   test('11', () => {
-//     tableContainerRowFirst.at(0).props().editHandler();
-//     expect(mockDispatchFn).toHaveBeenCalledTimes(2);
-//   });
-// });
+describe('useEffect tests', () => {
+  let spyOnUseSelector;
+  let spyOnUseDispatch;
+  let mockDispatchFn;
+  let wrapper;
+  let patternPage;
+  let tableContainerRow;
+  let tableContainerRowFirst;
+  let tableContainerRowSecond;
+  let tableContainerRowThird;
+
+  beforeEach(() => {
+    // Mock useSelector hook
+    spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
+    spyOnUseSelector.mockImplementation(() => mockStore);
+
+    // Mock dispatch function returned from useDispatch
+    mockDispatchFn = jest.fn();
+    reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
+
+    wrapper = mount(
+      <BrowserRouter>
+        <PatternPage />
+      </BrowserRouter>
+    );
+    patternPage = wrapper.find(PatternPage);
+    tableContainerRow = patternPage.find(TableContainerRow);
+    tableContainerRowFirst = patternPage.find({
+      id: '6043b87c3e06ad3edcdb7b19'
+    });
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+    jest.restoreAllMocks();
+    spyOnUseSelector.mockClear();
+  });
+
+  test.skip('UseEffect hook shoud work out', () => {
+    expect(mockDispatchFn).toHaveBeenCalledTimes(1);
+  });
+
+  test.skip('Should render TableContainerRow', () => {
+    expect(patternPage.exists(TableContainerRow)).toBe(true);
+    expect(tableContainerRow).toHaveLength(1);
+    expect(tableContainerRowFirst.prop('available')).toBe('Так');
+    expect(tableContainerRowFirst.prop('name')).toBe('Червоний');
+    expect(tableContainerRowFirst.prop('image')).toBeTruthy();
+  });
+
+  test.skip('11', () => {
+    tableContainerRowFirst.at(0).props().deleteHandler();
+    expect(mockDispatchFn).toHaveBeenCalledTimes(2);
+  });
+
+  test.skip('11', () => {
+    tableContainerRowFirst.at(0).props().editHandler();
+    expect(mockDispatchFn).toHaveBeenCalledTimes(2);
+  });
+});
