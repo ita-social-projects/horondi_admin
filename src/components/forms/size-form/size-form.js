@@ -28,6 +28,7 @@ const { selectTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
+const { pathToSizes } = config.routes;
 
 function SizeForm({ id, size }) {
   const styles = useStyles();
@@ -35,31 +36,25 @@ function SizeForm({ id, size }) {
   const dispatch = useDispatch();
   const { loading } = useSelector(sizesSelectorWithPagination);
 
-  const {
-    values,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched,
-    setFieldValue
-  } = useFormik({
-    validateOnBlur: true,
-    validationSchema: formSchema,
-    initialValues: getSizeInitialValues(size),
-    onSubmit: (data) => {
-      const newSize = createSize(data);
-      if (id) {
-        dispatch(
-          updateSize({
-            id,
-            newSize
-          })
-        );
-        return;
+  const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
+    useFormik({
+      validateOnBlur: true,
+      validationSchema: formSchema,
+      initialValues: getSizeInitialValues(size),
+      onSubmit: (data) => {
+        const newSize = createSize(data);
+        if (id) {
+          dispatch(
+            updateSize({
+              id,
+              newSize
+            })
+          );
+          return;
+        }
+        dispatch(addSize(newSize));
       }
-      dispatch(addSize(newSize));
-    }
-  });
+    });
 
   const valueEquality = checkInitialValue(getSizeInitialValues(size), values);
 
@@ -198,7 +193,7 @@ function SizeForm({ id, size }) {
           </div>
         </Grid>
         <div className={styles.buttonsWrapper}>
-          <BackButton initial={!valueEquality} />
+          <BackButton initial={!valueEquality} pathBack={pathToSizes} />
           <SaveButton
             className={styles.saveButton}
             data-cy={materialUiConstants.save}
