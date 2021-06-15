@@ -37,6 +37,10 @@ const EmailQuestionsList = () => {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
 
+  const [answerValue, setAnswerValue] = useState('');
+  const [shouldValidate, setShouldValidate] = useState(false);
+  const [questionsToOperate, setQuestionsToOperate] = useState([]);
+
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, pagesCount, currentPage, questionsPerPage, filters } =
     useSelector(({ EmailQuestions }) => ({
@@ -51,13 +55,10 @@ const EmailQuestionsList = () => {
   const dispatch = useDispatch();
   const { filterByDateOptions, searchOptions, clearOptions, filterByStatus } =
     useQuestionFilter();
-  const [filter, setFilter] = useState(['ALL']);
-  const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
-        // filter: filter.slice(1),
         filter: {
           date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
           filter: filterByStatus.filters.slice(1),
@@ -83,29 +84,10 @@ const EmailQuestionsList = () => {
     openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE);
   };
 
-  const questionClickHandler = (id, status) => {
-    if (status === labels.emailQuestionsLabels.en.SPAM) {
-      const handler = () => dispatch(closeDialog());
-
-      openSuccessSnackbar(handler, EMAIL_QUESTION_SPAM_DETAILS, messages.ERROR);
-    } else {
-      dispatch(setEmailQuestionLoading(true));
-      dispatch(push(`/email-answer/${id}`));
-    }
-  };
-
-  // functionality concerning answering questions
-  const [answerValue, setAnswerValue] = useState('');
-  const [shouldValidate, setShouldValidate] = useState(false);
-
-  const { question, adminId } = useSelector(({ EmailQuestions, Auth }) => ({
+  const { adminId } = useSelector(({ EmailQuestions, Auth }) => ({
     adminId: Auth.adminId,
     question: EmailQuestions.currentQuestion
   }));
-
-  // useEffect(() => {
-  //   dispatch(getEmailQuestionById(id));
-  // }, [dispatch, id]);
 
   const onAnsweringQuestion = (id) => {
     if (answerValue) {
@@ -173,9 +155,6 @@ const EmailQuestionsList = () => {
               checkboxChangeHandler={checkboxChangeHandler}
               deleteHandler={(e) => questionDeleteHandler(question._id, e)}
               onAnswer={onAnsweringQuestion}
-              clickHandler={() =>
-                questionClickHandler(question._id, question.status)
-              }
             />
           );
         })

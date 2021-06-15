@@ -42,7 +42,6 @@ const TableContainerCollapsableRow = ({
   deleteHandler,
   setAnswerValue,
   answerValue,
-  clickHandler,
   checkboxChangeHandler,
   onAnswer,
   shouldValidate,
@@ -157,14 +156,6 @@ const TableContainerCollapsableRow = ({
             </Box>
             <Box display='flex' justifyContent='flex-end' m={2}>
               {!properties.qA[5] && (
-                // <Button
-                //   style={{ marginLeft: 8 }}
-                //   variant='contained'
-                //   color='primary'
-                //   onClick={handleSaveButtonAction}
-                // >
-                //   Save
-                // </Button>
                 <SaveButton
                   className={classes.controlButton}
                   id='save'
@@ -191,7 +182,6 @@ TableContainerCollapsableRow.propTypes = {
   collapsable: PropTypes.bool,
   deleteHandler: PropTypes.func,
   onAnswer: PropTypes.func,
-  clickHandler: PropTypes.func,
   checkboxChangeHandler: PropTypes.func,
   id: PropTypes.string,
   showAvatar: PropTypes.bool,
@@ -211,7 +201,6 @@ TableContainerCollapsableRow.defaultProps = {
   setAnswerValue: noop,
   deleteHandler: noop,
   editHandler: noop,
-  clickHandler: noop,
   checkboxChangeHandler: noop,
   showAvatar: true,
   showEdit: true,
