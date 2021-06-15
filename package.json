@@ -107,7 +107,7 @@
     "cypress": "^5.6.0",
     "cypress-file-upload": "^4.1.1",
     "enzyme-to-json": "^3.6.1",
-    "eslint": "^6.8.0",
+    "eslint": "^7.28.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -143,8 +143,8 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --write",
-      "eslint --fix"
+      "prettier .  --embedded-language-formatting=auto --write",
+      "eslint . --fix"
     ]
   },
   "jest": {

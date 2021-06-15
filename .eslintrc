@@ -28,24 +28,14 @@
   },
   "extends": [
     "airbnb",
-    "prettier",
-    "prettier/react",
     "plugin:cypress/recommended",
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "semi": "off",
     "no-var": "warn",
-    "no-unused-vars": [
-      1,
-      {
-        "vars": "all",
-        "args": "none",
-        "ignoreSiblings": true,
-        "argsIgnorePattern": "res|next|^err"
-      }
-    ],
     "no-debugger": 0,
     "no-alert": 0,
     "no-use-before-define": "off",
@@ -134,6 +124,20 @@
         "ignoreNonDOM": true
       }
     ],
+    "indent": [
+      2,
+      2,
+      {
+        "ignoreComments": true,
+        "SwitchCase": 1,
+        "VariableDeclarator": {
+          "var": 2,
+          "let": 2,
+          "const": 3
+        }
+      }
+    ],
+    
     "react/jsx-uses-vars": 2,
     "react/jsx-props-no-spreading": 0,
     "react/prop-types": 2,
