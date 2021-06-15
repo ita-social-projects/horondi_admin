@@ -3,19 +3,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
-
+import NavFilterByDate from '../../components/filter-search-sort/filter-by-date';
+import NavSearch from '../../components/filter-search-sort/nav-search';
+import NavClearFilters from '../../components/filter-search-sort/nav-clear-filters';
 import { useStyles } from './email-questions-list.styles';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
   deleteEmailQuestions,
-  setEmailQuestionLoading
+  setEmailQuestionLoading,
+  answerToEmailQuestion
 } from '../../redux/email-questions/email-questions.actions';
+
+import useQuestionFilter from '../../hooks/filters/use-email-questions-filter';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import TableContainerRow from '../../containers/table-container-row';
+import TableContainerCollapsableRow from '../../containers/table-container-collapsable-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import getTime from '../../utils/getTime';
@@ -33,33 +38,41 @@ const EmailQuestionsList = () => {
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const {
-    list,
-    loading,
-    pagesCount,
-    currentPage,
-    questionsPerPage
-  } = useSelector(({ EmailQuestions }) => ({
-    list: EmailQuestions.list,
-    loading: EmailQuestions.loading,
-    pagesCount: EmailQuestions.pagination.pagesCount,
-    currentPage: EmailQuestions.pagination.currentPage,
-    questionsPerPage: EmailQuestions.pagination.questionsPerPage
-  }));
+  const { list, loading, pagesCount, currentPage, questionsPerPage, filters } =
+    useSelector(({ EmailQuestions }) => ({
+      list: EmailQuestions.list,
+      loading: EmailQuestions.loading,
+      pagesCount: EmailQuestions.pagination.pagesCount,
+      currentPage: EmailQuestions.pagination.currentPage,
+      questionsPerPage: EmailQuestions.pagination.questionsPerPage,
+      filters: EmailQuestions.filters
+    }));
 
   const dispatch = useDispatch();
-
+  const { filterByDateOptions, searchOptions, clearOptions, filterByStatus } =
+    useQuestionFilter();
   const [filter, setFilter] = useState(['ALL']);
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
-        filter: filter.slice(1),
+        // filter: filter.slice(1),
+        filter: {
+          date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
+          filter: filterByStatus.filters.slice(1),
+          search: filters.search
+        },
         skip: currentPage * questionsPerPage
       })
     );
-  }, [dispatch, currentPage, filter, questionsPerPage]);
+  }, [
+    dispatch,
+    currentPage,
+    filters,
+    filterByStatus.filters,
+    questionsPerPage
+  ]);
 
   const questionDeleteHandler = (id, e) => {
     e.stopPropagation();
@@ -81,17 +94,43 @@ const EmailQuestionsList = () => {
     }
   };
 
+  // functionality concerning answering questions
+  const [answerValue, setAnswerValue] = useState('');
+  const [shouldValidate, setShouldValidate] = useState(false);
+
+  const { question, adminId } = useSelector(({ EmailQuestions, Auth }) => ({
+    adminId: Auth.adminId,
+    question: EmailQuestions.currentQuestion
+  }));
+
+  // useEffect(() => {
+  //   dispatch(getEmailQuestionById(id));
+  // }, [dispatch, id]);
+
+  const onAnsweringQuestion = (id) => {
+    if (answerValue) {
+      dispatch(
+        answerToEmailQuestion({ questionId: id, adminId, text: answerValue })
+      );
+    } else {
+      setShouldValidate(true);
+    }
+  };
+
   const filterChangeHandler = (id) => {
+    console.log('ID ... filters filter', id, filterByStatus.filters);
     if (id === 'ALL') {
-      setFilter([id]);
+      filterByStatus.setFiltersFilter([id]);
       return;
     }
 
-    const possibleFilter = filter.find((item) => item === id);
+    const possibleFilter = filterByStatus.filters.find((item) => item === id);
     if (possibleFilter) {
-      setFilter(filter.filter((item) => item !== id));
+      filterByStatus.setFiltersFilter(
+        filterByStatus.filters.filter((item) => item !== id)
+      );
     } else {
-      setFilter([...filter, id]);
+      filterByStatus.setFiltersFilter([...filterByStatus.filters, id]);
     }
   };
 
@@ -109,31 +148,37 @@ const EmailQuestionsList = () => {
   const questions =
     list !== undefined
       ? list.map((question) => {
-        const { answer } = question;
+          const { answer } = question;
 
-        const questionToShow = `<b>Q:</b> ${question.text}`;
-        const answerToShow = answerTextHandler(answer);
+          const questionToShow = `<b>Q:</b> ${question.text}`;
+          const answerToShow = answerTextHandler(answer);
 
-        return (
-          <TableContainerRow
-            key={question._id}
-            id={question._id}
-            senderName={question.senderName}
-            email={question.email}
-            qA={ReactHtmlParser(questionToShow + answerToShow)}
-            date={ReactHtmlParser(getTime(question.date, true))}
-            status={labels.emailQuestionsLabels.ua[question.status]}
-            showAvatar={false}
-            showEdit={false}
-            showCheckbox
-            checkboxChangeHandler={checkboxChangeHandler}
-            deleteHandler={(e) => questionDeleteHandler(question._id, e)}
-            clickHandler={() =>
-              questionClickHandler(question._id, question.status)
-            }
-          />
-        );
-      })
+          return (
+            <TableContainerCollapsableRow
+              key={question._id}
+              id={question._id}
+              date={ReactHtmlParser(getTime(question.date, true))}
+              senderName={question.senderName}
+              email={question.email}
+              qA={ReactHtmlParser(questionToShow + answerToShow)}
+              status={labels.emailQuestionsLabels.ua[question.status]}
+              showAvatar={false}
+              showEdit={false}
+              showCheckbox
+              showCollapse
+              collapsable
+              shouldValidate
+              answerValue={answerValue}
+              setAnswerValue={setAnswerValue}
+              checkboxChangeHandler={checkboxChangeHandler}
+              deleteHandler={(e) => questionDeleteHandler(question._id, e)}
+              onAnswer={onAnsweringQuestion}
+              clickHandler={() =>
+                questionClickHandler(question._id, question.status)
+              }
+            />
+          );
+        })
       : null;
 
   if (loading) {
@@ -150,10 +195,14 @@ const EmailQuestionsList = () => {
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
         <div className={styles.operations}>
+          <NavFilterByDate filterByDateOptions={filterByDateOptions || {}} />
           <EmailQuestionsFilter
-            filterItems={filter}
+            filterItems={filterByStatus.filters}
             filterChangeHandler={filterChangeHandler}
           />
+
+          <NavSearch searchOptions={searchOptions} />
+          <NavClearFilters clearOptions={clearOptions} />
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
             setQuestionsToOperate={setQuestionsToOperate}

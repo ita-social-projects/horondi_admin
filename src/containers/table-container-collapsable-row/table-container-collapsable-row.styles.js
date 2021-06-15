@@ -14,5 +14,8 @@ export const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis'
+  },
+  controlButton: {
+    margin: '20px 10px 20px 0'
   }
 }));
