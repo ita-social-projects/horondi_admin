@@ -71,7 +71,7 @@ const TableContainerCollapsableRow = ({
   const avatarSize = dense ? classes.small : classes.medium;
   return (
     <>
-      <TableRow key={id} hover onClick={() => setOpen(!open)}>
+      <TableRow className={classes.tableRowCursor} key={id} hover>
         {showCheckbox && (
           <TableCell>
             <Checkbox
@@ -117,11 +117,11 @@ const TableContainerCollapsableRow = ({
         )}
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box margin={1}>
               <Typography variant='h5' gutterBottom component='div'>
-                Question:
+                Q:
               </Typography>
               <Typography gutterBottom component='div'>
                 {properties.qA[1]}
@@ -129,7 +129,7 @@ const TableContainerCollapsableRow = ({
               {properties.qA[5] && (
                 <>
                   <Typography variant='h5' gutterBottom component='div'>
-                    Answer:
+                    A:
                   </Typography>
                   <Typography gutterBottom component='div'>
                     {properties.qA[5]}

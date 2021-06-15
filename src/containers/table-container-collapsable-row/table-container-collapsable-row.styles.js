@@ -17,5 +17,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   controlButton: {
     margin: '20px 10px 20px 0'
+  },
+  tableRowCursor: {
+    cursor: 'default'
   }
 }));
