@@ -1,10 +1,12 @@
 import { getItems, setItems } from '../../utils/client';
 
-const getAllEmailQuestions = async ({ filter, skip }) => {
-  console.log(filter);
+const getAllEmailQuestions = async ({
+  filter,
+  pagination: { skip, limit }
+}) => {
   const query = `
-      query($filter: QuestionsInput, $skip: Int) {
-        getAllEmailQuestions(filter: $filter, skip: $skip) {
+      query($filter: QuestionsInput, $pagination: Pagination) {
+        getAllEmailQuestions(filter: $filter, pagination: $pagination) {
           questions {
             _id
             senderName
@@ -27,7 +29,10 @@ const getAllEmailQuestions = async ({ filter, skip }) => {
       search: filter.search,
       date: filter.date
     },
-    skip
+    pagination: {
+      skip,
+      limit
+    }
   });
 
   return result?.data?.getAllEmailQuestions;
