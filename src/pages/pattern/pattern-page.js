@@ -30,9 +30,8 @@ const PatternPage = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
-    patternSelectorWithPagination
-  );
+  const { list, loading, currentPage, rowsPerPage, itemsCount, filter } =
+    useSelector(patternSelectorWithPagination);
 
   const dispatch = useDispatch();
 
@@ -40,10 +39,11 @@ const PatternPage = () => {
     dispatch(
       getPatterns({
         limit: rowsPerPage,
-        skip: currentPage * rowsPerPage
+        skip: currentPage * rowsPerPage,
+        filter
       })
     );
-  }, [dispatch, rowsPerPage, currentPage]);
+  }, [dispatch, currentPage, rowsPerPage]);
 
   const patternDeleteHandler = (id) => {
     const removePattern = () => {
@@ -67,7 +67,7 @@ const PatternPage = () => {
       key={patternItem._id}
       id={patternItem._id}
       name={patternItem.name[0].value}
-      material={patternItem.material.name[0].value}
+      material={patternItem.features.material.name[0].value}
       available={patternItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => patternDeleteHandler(patternItem._id)}
       editHandler={() => {

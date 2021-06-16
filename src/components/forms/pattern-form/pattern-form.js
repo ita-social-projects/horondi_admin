@@ -51,6 +51,8 @@ const {
   imagePrefix
 } = config;
 
+const { pathToPatterns } = config.routes;
+
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -101,54 +103,49 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(PATTERN_ERROR_MESSAGE),
+    handmade: Yup.boolean(),
     patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
     patternConstructorImage: Yup.string().required(
       CONSTRUCTOR_PHOTO_NOT_PROVIDED
     )
   });
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    touched,
-    errors,
-    setFieldValue
-  } = useFormik({
-    validationSchema: patternValidationSchema,
-    initialValues: useFormikInitialValues(pattern),
-    onSubmit: () => {
-      const newPattern = createPattern(values);
-      const isEditAndUploadAndConstructor =
-        isEdit &&
-        upload instanceof File &&
-        uploadConstructorImg instanceof File;
-      if (isEditAndUploadAndConstructor || isEdit) {
-        patternFormOnSubmit(
-          isEditAndUploadAndConstructor,
-          dispatch,
-          updatePattern,
-          {
-            id,
+  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
+    useFormik({
+      validationSchema: patternValidationSchema,
+      initialValues: useFormikInitialValues(pattern),
+      onSubmit: () => {
+        const newPattern = createPattern(values);
+        const isEditAndUploadAndConstructor =
+          isEdit &&
+          upload instanceof File &&
+          uploadConstructorImg instanceof File;
+        if (isEditAndUploadAndConstructor || isEdit) {
+          patternFormOnSubmit(
+            isEditAndUploadAndConstructor,
+            dispatch,
+            updatePattern,
+            {
+              id,
+              pattern: newPattern,
+              image: [upload, uploadConstructorImg]
+            },
+            isEdit,
+            {
+              id,
+              pattern: newPattern
+            }
+          );
+          return;
+        }
+        dispatch(
+          addPattern({
             pattern: newPattern,
             image: [upload, uploadConstructorImg]
-          },
-          isEdit,
-          {
-            id,
-            pattern: newPattern
-          }
+          })
         );
-        return;
       }
-      dispatch(
-        addPattern({
-          pattern: newPattern,
-          image: [upload, uploadConstructorImg]
-        })
-      );
-    }
-  });
+    });
 
   const checkboxes = [
     {
@@ -290,7 +287,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton initial={!valueEquality} />
+          <BackButton initial={!valueEquality} pathBack={pathToPatterns} />
           <SaveButton
             className={styles.saveButton}
             data-cy='save-btn'
@@ -314,17 +311,20 @@ PatternForm.propTypes = {
     _id: PropTypes.string,
     available: PropTypes.bool,
     description: PropTypes.arrayOf(valueShape),
-    handmade: PropTypes.bool,
+    features: PropTypes.shape({
+      material: PropTypes.string,
+      handmade: PropTypes.bool
+    }),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
     constructorImg: PropTypes.string,
-    material: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
   }),
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -334,6 +334,7 @@ PatternForm.propTypes = {
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -343,6 +344,7 @@ PatternForm.propTypes = {
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -384,18 +386,20 @@ PatternForm.defaultProps = {
       thumbnail: ''
     },
     constructorImg: '',
-    material: {
-      name: [
-        {
-          value: ''
-        },
-        {
-          value: ''
-        }
-      ]
+    features: {
+      material: {
+        name: [
+          {
+            value: ''
+          },
+          {
+            value: ''
+          }
+        ]
+      },
+      handmade: false
     },
-    available: false,
-    handmade: false
+    available: false
   },
   isEdit: false
 };

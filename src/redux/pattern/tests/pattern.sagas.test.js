@@ -49,11 +49,8 @@ import {
   handleErrorSnackbar
 } from '../../snackbar/snackbar.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  statuses;
 
 describe('Test pattern sagas', () => {
   it.skip('should load all patterns', () =>
