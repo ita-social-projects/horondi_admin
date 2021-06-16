@@ -26,7 +26,10 @@ import LoadingBar from '../../components/loading-bar';
 import getTime from '../../utils/getTime';
 import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
-import { answerTextHandler } from '../../utils/email-question-list';
+import {
+  answerTextHandler,
+  answerShowHandler
+} from '../../utils/email-question-list';
 
 const { labels, titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
@@ -137,11 +140,13 @@ const EmailQuestionsList = () => {
 
           const questionToShow = `<b>Запитання:</b> ${question.text}`;
           const answerToShow = answerTextHandler(answer);
-
+          const plainAnswer = answerShowHandler(answer);
           return (
             <TableContainerCollapsableRow
               key={question._id}
               id={question._id}
+              question={question.text}
+              answer={plainAnswer}
               date={ReactHtmlParser(getTime(question.date, true))}
               senderName={question.senderName}
               email={question.email}
