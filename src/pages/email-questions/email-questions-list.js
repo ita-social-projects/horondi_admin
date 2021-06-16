@@ -64,7 +64,10 @@ const EmailQuestionsList = () => {
           filter: filterByStatus.filters.slice(1),
           search: filters.search
         },
-        skip: currentPage * questionsPerPage
+        pagination: {
+          limit: questionsPerPage,
+          skip: currentPage * questionsPerPage
+        }
       })
     );
   }, [
@@ -132,7 +135,7 @@ const EmailQuestionsList = () => {
       ? list.map((question) => {
           const { answer } = question;
 
-          const questionToShow = `<b>Q:</b> ${question.text}`;
+          const questionToShow = `<b>Запитання:</b> ${question.text}`;
           const answerToShow = answerTextHandler(answer);
 
           return (
