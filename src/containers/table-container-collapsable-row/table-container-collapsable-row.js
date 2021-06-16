@@ -129,7 +129,7 @@ const TableContainerCollapsableRow = ({
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box margin={1}>
               <Typography variant='h5' gutterBottom component='div'>
-                Q:
+                Запитання:
               </Typography>
               <Typography gutterBottom component='div'>
                 {question}
@@ -137,7 +137,7 @@ const TableContainerCollapsableRow = ({
               {answer && (
                 <>
                   <Typography variant='h5' gutterBottom component='div'>
-                    A:
+                    Відповідь:
                   </Typography>
                   <Typography gutterBottom component='div'>
                     {answer}
