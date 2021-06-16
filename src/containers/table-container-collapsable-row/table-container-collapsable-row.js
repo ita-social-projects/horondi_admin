@@ -57,6 +57,7 @@ const TableContainerCollapsableRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
+
   const tableCells = Object.keys(properties).map((property) => (
     <TableCell key={property} data-cy='table-cell'>
       <Typography className={classes.pageTruncateTableControl}>
@@ -73,7 +74,12 @@ const TableContainerCollapsableRow = ({
   const avatarSize = dense ? classes.small : classes.medium;
   return (
     <>
-      <TableRow className={classes.tableRowCursor} key={id} hover>
+      <TableRow
+        className={classes.tableRowCursor}
+        key={id}
+        onClick={() => setOpen(!open)}
+        hover
+      >
         {showCheckbox && (
           <TableCell>
             <Checkbox

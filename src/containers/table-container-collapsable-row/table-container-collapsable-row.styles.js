@@ -21,6 +21,6 @@ export const useStyles = makeStyles((theme) => ({
     margin: '20px 10px 20px 0'
   },
   tableRowCursor: {
-    cursor: 'default'
+    cursor: 'pointer'
   }
 }));
