@@ -17,19 +17,19 @@ export const initialState = {
 
 const dialogWindowReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SHOW_DIALOG:
-    return {
-      ...state,
-      ...action.payload
-    };
+    case SHOW_DIALOG:
+      return {
+        ...state,
+        ...action.payload
+      };
 
-  case CLOSE_DIALOG:
-    return {
-      ...state,
-      isOpen: false
-    };
-  default:
-    return state;
+    case CLOSE_DIALOG:
+      return {
+        ...state,
+        isOpen: false
+      };
+    default:
+      return state;
   }
 };
 

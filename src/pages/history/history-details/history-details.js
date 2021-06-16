@@ -22,9 +22,8 @@ import BackButton from '../../../components/buttons/back-button';
 const HistoryDetails = ({ match }) => {
   const { id } = match.params;
 
-  const { recordItem, darkMode, recordItemLoading } = useSelector(
-    historySelector
-  );
+  const { recordItem, darkMode, recordItemLoading } =
+    useSelector(historySelector);
 
   const styles = useStyles({ darkMode });
   const commonStyles = useCommonStyles();

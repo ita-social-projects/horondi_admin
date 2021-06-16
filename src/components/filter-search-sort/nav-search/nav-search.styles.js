@@ -15,11 +15,11 @@ export const useStyles = makeStyles((theme) => ({
     height: '36px',
     '@media (max-width: 450px)': {
       width: '95%',
-      margin:'auto'
+      margin: 'auto'
     },
-    '& div':{
-      width:'100%'
-    },
+    '& div': {
+      width: '100%'
+    }
   },
   iconButton: {
     padding: 10

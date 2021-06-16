@@ -11,8 +11,8 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: '15px',
     '@media (max-width: 450px)': {
       width: '100%',
-      marginTop:'15px',
-      marginRight:0,
+      marginTop: '15px',
+      marginRight: 0
     }
   },
   checkbox: {

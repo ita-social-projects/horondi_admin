@@ -1,8 +1,8 @@
-import {getItems, setItems} from '../../utils/client';
-import {materialTranslations} from '../../translations/material.translations';
+import { getItems, setItems } from '../../utils/client';
+import { materialTranslations } from '../../translations/material.translations';
 
 export const getAllMaterials = async (skip, limit, filter) => {
-    const query = `
+  const query = `
       query($filter: MaterialFilterInput, $skip: Int, $limit: Int) {
         getAllMaterials(filter: $filter, skip: $skip, limit: $limit) {
           items {
@@ -36,16 +36,16 @@ export const getAllMaterials = async (skip, limit, filter) => {
         }
       }
     `;
-    const result = await getItems(query, {
-        skip,
-        limit,
-        filter
-    });
+  const result = await getItems(query, {
+    skip,
+    limit,
+    filter
+  });
 
-    return result?.data?.getAllMaterials;
+  return result?.data?.getAllMaterials;
 };
 export const getAllMaterialsByPatternPurpose = async () => {
-    const query = `
+  const query = `
       query {
         getMaterialsByPurpose(purposes: PATTERN) {
           pattern {
@@ -59,13 +59,13 @@ export const getAllMaterialsByPatternPurpose = async () => {
       }
     `;
 
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getMaterialsByPurpose;
+  return result?.data?.getMaterialsByPurpose;
 };
 
 export const getMaterialById = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getMaterialById(id: $id) {
           ... on Material {
@@ -103,18 +103,22 @@ export const getMaterialById = async (id) => {
       }
     `;
 
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    if (
-        Object.keys(materialTranslations).includes(result?.data?.getMaterialById?.message)
-    ) {
-        throw new Error(`${materialTranslations[result.data.getMaterialById.message]}`);
-    }
+  if (
+    Object.keys(materialTranslations).includes(
+      result?.data?.getMaterialById?.message
+    )
+  ) {
+    throw new Error(
+      `${materialTranslations[result.data.getMaterialById.message]}`
+    );
+  }
 
-    return result?.data?.getMaterialById;
+  return result?.data?.getMaterialById;
 };
 export const deleteMaterial = async (id) => {
-    const query = `
+  const query = `
       mutation($id: ID!) {
         deleteMaterial(id: $id) {
           ... on Material {
@@ -129,18 +133,22 @@ export const deleteMaterial = async (id) => {
         }
       }
     `;
-    const result = await setItems(query, {id});
+  const result = await setItems(query, { id });
 
-    if (
-        Object.keys(materialTranslations).includes(result?.data?.deleteMaterial?.message)
-    ) {
-        throw new Error(`${materialTranslations[result.data.deleteMaterial.message]}`);
-    }
+  if (
+    Object.keys(materialTranslations).includes(
+      result?.data?.deleteMaterial?.message
+    )
+  ) {
+    throw new Error(
+      `${materialTranslations[result.data.deleteMaterial.message]}`
+    );
+  }
 
-    return result?.data?.deleteMaterial;
+  return result?.data?.deleteMaterial;
 };
 export const createMaterial = async (payload) => {
-    const query = `
+  const query = `
       mutation($material: MaterialInput!) {
         addMaterial(material: $material) {
           ... on Material {
@@ -154,17 +162,21 @@ export const createMaterial = async (payload) => {
       }
     `;
 
-    const result = await setItems(query, payload);
+  const result = await setItems(query, payload);
 
-    if (Object.keys(materialTranslations).includes(result?.data?.addMaterial?.message)) {
-        throw new Error(`${materialTranslations[result.data.addMaterial.message]}`);
-    }
+  if (
+    Object.keys(materialTranslations).includes(
+      result?.data?.addMaterial?.message
+    )
+  ) {
+    throw new Error(`${materialTranslations[result.data.addMaterial.message]}`);
+  }
 
-    return result?.data?.addMaterial;
+  return result?.data?.addMaterial;
 };
 
 export const updateMaterial = async (id, material) => {
-    const query = `
+  const query = `
       mutation($id: ID!, $material: MaterialInput!) {
         updateMaterial(id: $id, material: $material) {
           ... on Material {
@@ -186,13 +198,17 @@ export const updateMaterial = async (id, material) => {
       }
     `;
 
-    const result = await getItems(query, {id, material});
+  const result = await getItems(query, { id, material });
 
-    if (
-        Object.keys(materialTranslations).includes(result?.data?.updateMaterial?.message)
-    ) {
-        throw new Error(`${materialTranslations[result.data.updateMaterial.message]}`);
-    }
+  if (
+    Object.keys(materialTranslations).includes(
+      result?.data?.updateMaterial?.message
+    )
+  ) {
+    throw new Error(
+      `${materialTranslations[result.data.updateMaterial.message]}`
+    );
+  }
 
-    return result?.data?.updateMaterial;
+  return result?.data?.updateMaterial;
 };

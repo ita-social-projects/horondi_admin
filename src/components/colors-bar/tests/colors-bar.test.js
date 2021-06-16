@@ -181,14 +181,16 @@ describe('Colors-Bar test', () => {
     });
 
     it('Should update colorsSet for ColorsAutocomplete component, if handleChange function is called', () => {
-      const selectedColorsBefore = component.find(ColorsAutocomplete).props()
-        .selectedColors;
+      const selectedColorsBefore = component
+        .find(ColorsAutocomplete)
+        .props().selectedColors;
       component
         .find(ColorsAutocomplete)
         .props()
         .handleChange({ ...mockStore.Color.list[0], ...{ _id: 'fs2' } });
-      const selectedColorsAfter = component.find(ColorsAutocomplete).props()
-        .selectedColors;
+      const selectedColorsAfter = component
+        .find(ColorsAutocomplete)
+        .props().selectedColors;
 
       expect(selectedColorsBefore === selectedColorsAfter).toBe(false);
     });

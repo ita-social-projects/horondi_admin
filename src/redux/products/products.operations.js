@@ -1,6 +1,12 @@
 import { setItems, getItems } from '../../utils/client';
 
-const getAllProducts = async (limit=10, skip=0, filter={}, sort={}, search="") => {
+const getAllProducts = async (
+  limit = 10,
+  skip = 0,
+  filter = {},
+  sort = {},
+  search = ''
+) => {
   const query = `
       query(
         $skip: Int

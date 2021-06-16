@@ -44,7 +44,7 @@ describe('order sagas tests', () => {
             getFakeOrderList.skip,
             getFakeOrderList.limit,
             getFakeOrderList.filter,
-              getFakeOrderList.sort
+            getFakeOrderList.sort
           ),
           fakeOrderList
         ]

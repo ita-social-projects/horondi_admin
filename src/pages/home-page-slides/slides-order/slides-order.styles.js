@@ -74,21 +74,21 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '13px',
         margin: '0px',
         '@media (max-width: 450px)': {
-          fontSize:'10px'
+          fontSize: '10px'
         },
         '@media (max-width: 375px)': {
-          display:'none'
-        },
+          display: 'none'
+        }
       },
       '& p': {
         fontSize: '10px',
         wordWrap: 'initial',
         '@media (max-width: 375px)': {
-          display:'none'
+          display: 'none'
         },
         '@media (max-width: 450px)': {
-          fontSize:'8px'
-        },
+          fontSize: '8px'
+        }
       }
     }
   },
@@ -97,7 +97,7 @@ export const useStyles = makeStyles((theme) => ({
     bottom: '0px',
     fontSize: '11px',
     '@media (max-width: 375px)': {
-      display:'none'
+      display: 'none'
     },
     '& span': {
       paddingLeft: '3px'
@@ -109,12 +109,12 @@ export const useStyles = makeStyles((theme) => ({
       zoom: '80%'
     },
     '@media (max-width: 375px)': {
-      width:'100%',
-      marginBottom:'15px'
+      width: '100%',
+      marginBottom: '15px'
     },
     '@media (max-width: 450px)': {
-      width:'100%',
-      marginBottom:'15px'
+      width: '100%',
+      marginBottom: '15px'
     }
   }
 }));

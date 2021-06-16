@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     '@media (max-width: 768px)': {
       flexDirection: 'column',
       justifyContent: 'center',
-      margin: '30px 0 16px',
+      margin: '30px 0 16px'
     }
   },
   userDetails: {
@@ -34,7 +34,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     margin: '40px 10px 20px 0',
     '@media (max-width: 768px)': {
-      margin: '20px 10px 20px 0',
+      margin: '20px 10px 20px 0'
     }
   },
   showComments: {
@@ -51,7 +51,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     '@media (max-width: 450px)': {
       margin: '0',
-      padding:'0',
+      padding: '0'
     }
   }
 }));

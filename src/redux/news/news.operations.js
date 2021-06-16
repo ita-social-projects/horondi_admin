@@ -1,8 +1,8 @@
-import {getItems, setItems} from '../../utils/client';
-import {newsTranslations} from '../../translations/news.translations';
+import { getItems, setItems } from '../../utils/client';
+import { newsTranslations } from '../../translations/news.translations';
 
-const getAllNews = async (skip, limit,filter) => {
-    const query = `
+const getAllNews = async (skip, limit, filter) => {
+  const query = `
       query($skip: Int, $limit: Int, $filter:NewsFilterInput) {
         getAllNews(skip: $skip, limit: $limit, filter:$filter) {
           items {
@@ -24,15 +24,15 @@ const getAllNews = async (skip, limit,filter) => {
       }
     `;
 
-    const result = await getItems(query, {
-        limit,
-        skip,
-        filter
-    });
-    return result?.data?.getAllNews;
+  const result = await getItems(query, {
+    limit,
+    skip,
+    filter
+  });
+  return result?.data?.getAllNews;
 };
 const getArticleById = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getNewsById(id: $id) {
           ... on News {
@@ -63,21 +63,22 @@ const getArticleById = async (id) => {
       }
     `;
 
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    if (Object.keys(newsTranslations).includes(result?.data?.getNewsById?.message)) {
-        throw new Error(
-            `${result.data.getNewsById.statusCode} ${
-                newsTranslations[result.data.getNewsById.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(newsTranslations).includes(result?.data?.getNewsById?.message)
+  ) {
+    throw new Error(
+      `${result.data.getNewsById.statusCode} ${
+        newsTranslations[result.data.getNewsById.message]
+      }`
+    );
+  }
 
-    return result?.data?.getNewsById;
+  return result?.data?.getNewsById;
 };
 const deleteArticle = async (id) => {
-
-    const query = `
+  const query = `
       mutation($id: ID!) {
         deleteNews(id: $id) {
           ... on News {
@@ -95,20 +96,22 @@ const deleteArticle = async (id) => {
       }
     `;
 
-    const result = await setItems(query, {id});
+  const result = await setItems(query, { id });
 
-    if (Object.keys(newsTranslations).includes(result?.data?.deleteNews?.message)) {
-        throw new Error(
-            `${result.data.deleteNews.statusCode} ${
-                newsTranslations[result.data.deleteNews.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(newsTranslations).includes(result?.data?.deleteNews?.message)
+  ) {
+    throw new Error(
+      `${result.data.deleteNews.statusCode} ${
+        newsTranslations[result.data.deleteNews.message]
+      }`
+    );
+  }
 
-    return result?.data?.deleteNews;
+  return result?.data?.deleteNews;
 };
 const createArticle = async (news, upload) => {
-    const query = `
+  const query = `
       mutation($news: NewsInput!, $upload: Upload) {
         addNews(news: $news, upload: $upload) {
           ... on News {
@@ -126,20 +129,20 @@ const createArticle = async (news, upload) => {
       }
     `;
 
-    const result = await setItems(query, {news, upload});
+  const result = await setItems(query, { news, upload });
 
-    if (Object.keys(newsTranslations).includes(result?.data?.addNews?.message)) {
-        throw new Error(
-            `${result.data.addNews.statusCode} ${
-                newsTranslations[result.data.addNews.message]
-            }`
-        );
-    }
+  if (Object.keys(newsTranslations).includes(result?.data?.addNews?.message)) {
+    throw new Error(
+      `${result.data.addNews.statusCode} ${
+        newsTranslations[result.data.addNews.message]
+      }`
+    );
+  }
 
-    return result?.data?.addNews;
+  return result?.data?.addNews;
 };
 const updateArticle = async (id, news, upload) => {
-    const query = `
+  const query = `
       mutation($id: ID!, $news: NewsInput!, $upload: Upload) {
         updateNews(id: $id, news: $news, upload: $upload) {
           ... on News {
@@ -156,23 +159,25 @@ const updateArticle = async (id, news, upload) => {
         }
       }
     `;
-    const result = await setItems(query, {id, news, upload});
+  const result = await setItems(query, { id, news, upload });
 
-    if (Object.keys(newsTranslations).includes(result?.data?.updateNews?.message)) {
-        throw new Error(
-            `${result.data.updateNews.statusCode} ${
-                newsTranslations[result.data.updateNews.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(newsTranslations).includes(result?.data?.updateNews?.message)
+  ) {
+    throw new Error(
+      `${result.data.updateNews.statusCode} ${
+        newsTranslations[result.data.updateNews.message]
+      }`
+    );
+  }
 
-    return result?.data?.updateNews;
+  return result?.data?.updateNews;
 };
 
 export {
-    getAllNews,
-    deleteArticle,
-    getArticleById,
-    createArticle,
-    updateArticle
+  getAllNews,
+  deleteArticle,
+  getArticleById,
+  createArticle,
+  updateArticle
 };

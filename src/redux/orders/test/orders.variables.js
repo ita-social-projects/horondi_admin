@@ -159,7 +159,7 @@ export const getFakeOrderList = {
   filter: {
     orderStatus: 'DELIVERED'
   },
-  sort:{}
+  sort: {}
 };
 
 const inputObj = {
