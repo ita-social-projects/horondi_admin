@@ -30,6 +30,7 @@ import {
   answerTextHandler,
   answerShowHandler
 } from '../../utils/email-question-list';
+import { questionSelector } from '../../redux/selectors/email-questions.selectors';
 
 const { labels, titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
@@ -46,14 +47,7 @@ const EmailQuestionsList = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, pagesCount, currentPage, questionsPerPage, filters } =
-    useSelector(({ EmailQuestions }) => ({
-      list: EmailQuestions.list,
-      loading: EmailQuestions.loading,
-      pagesCount: EmailQuestions.pagination.pagesCount,
-      currentPage: EmailQuestions.pagination.currentPage,
-      questionsPerPage: EmailQuestions.pagination.questionsPerPage,
-      filters: EmailQuestions.filters
-    }));
+    useSelector(questionSelector);
 
   const dispatch = useDispatch();
   const { filterByDateOptions, searchOptions, clearOptions, filterByStatus } =

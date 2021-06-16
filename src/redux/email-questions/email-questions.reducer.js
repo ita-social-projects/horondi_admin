@@ -31,6 +31,15 @@ export const initialState = {
   error: null
 };
 
+export const selectQuestion = ({ EmailQuestions }) => ({
+  list: EmailQuestions.list,
+  loading: EmailQuestions.loading,
+  pagesCount: EmailQuestions.pagination.pagesCount,
+  currentPage: EmailQuestions.pagination.currentPage,
+  questionsPerPage: EmailQuestions.pagination.questionsPerPage,
+  filters: EmailQuestions.filters
+});
+
 const emailQuestionsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_ALL_EMAIL_QUESTIONS:
