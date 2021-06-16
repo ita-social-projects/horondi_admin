@@ -21,6 +21,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import LayersIcon from '@material-ui/icons/Layers';
+import TuneIcon from '@material-ui/icons/Tune';
 
 import { useStyles } from './nav-menu.styles';
 
@@ -44,6 +45,7 @@ const NavMenu = ({ width }) => {
   const [clientTab, setClientTab] = useState(false);
   const [catalogTab, setCatalogTab] = useState(false);
   const [staticTab, setStaticTab] = useState(false);
+  const [constructorTab, setConstructorTab] = useState(false);
 
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
@@ -92,6 +94,11 @@ const NavMenu = ({ width }) => {
     returnedList(category[0], category[1], category[2], classes.nested)
   );
 
+  const constructorPagesMenuItems = config.constructorMenuCategories.map(
+    (category) =>
+      returnedList(category[0], category[1], category[2], classes.nested)
+  );
+
   const parentMenuTabsProperties = [
     [
       () => setClientTab(!clientTab),
@@ -113,6 +120,13 @@ const NavMenu = ({ width }) => {
       staticPagesMenuItems,
       MENU_TABS.STATIC_PAGES,
       LayersIcon
+    ],
+    [
+      () => setConstructorTab(!constructorTab),
+      constructorTab,
+      constructorPagesMenuItems,
+      MENU_TABS.CONSTRUCTOR,
+      TuneIcon
     ]
   ];
 
