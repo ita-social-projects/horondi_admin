@@ -45,6 +45,8 @@ const TableContainerCollapsableRow = ({
   checkboxChangeHandler,
   onAnswer,
   shouldValidate,
+  answer,
+  question,
   collapsable = false,
   ...rest
 }) => {
@@ -57,7 +59,7 @@ const TableContainerCollapsableRow = ({
   const properties = { ...rest };
   const tableCells = Object.keys(properties).map((property) => (
     <TableCell key={property} data-cy='table-cell'>
-      <Typography className={classes.ellipsis} variant='h6'>
+      <Typography className={classes.pageTruncateTableControl}>
         {properties[property]}
       </Typography>
     </TableCell>
@@ -124,19 +126,19 @@ const TableContainerCollapsableRow = ({
                 Q:
               </Typography>
               <Typography gutterBottom component='div'>
-                {properties.qA[1]}
+                {question}
               </Typography>
-              {properties.qA[5] && (
+              {answer && (
                 <>
                   <Typography variant='h5' gutterBottom component='div'>
                     A:
                   </Typography>
                   <Typography gutterBottom component='div'>
-                    {properties.qA[5]}
+                    {answer}
                   </Typography>
                 </>
               )}
-              {!properties.qA[5] && (
+              {!answer && (
                 <TextField
                   id='filled-full-width'
                   fullWidth
@@ -155,7 +157,7 @@ const TableContainerCollapsableRow = ({
               )}
             </Box>
             <Box display='flex' justifyContent='flex-end' m={2}>
-              {!properties.qA[5] && (
+              {!answer && (
                 <SaveButton
                   className={classes.controlButton}
                   id='save'
@@ -173,6 +175,8 @@ const TableContainerCollapsableRow = ({
 };
 
 TableContainerCollapsableRow.propTypes = {
+  answer: PropTypes.string,
+  question: PropTypes.string,
   showCollapse: PropTypes.bool,
   image: PropTypes.string,
   editHandler: PropTypes.func,
@@ -193,6 +197,8 @@ TableContainerCollapsableRow.propTypes = {
 TableContainerCollapsableRow.defaultProps = {
   id: '',
   image: '',
+  answer: '',
+  question: '',
   showCollapse: false,
   collapsable: false,
   onAnswer: noop,

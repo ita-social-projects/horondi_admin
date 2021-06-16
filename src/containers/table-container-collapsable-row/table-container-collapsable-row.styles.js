@@ -9,11 +9,13 @@ export const useStyles = makeStyles((theme) => ({
     width: theme.spacing(5),
     height: theme.spacing(5)
   },
-  ellipsis: {
+  pageTruncateTableControl: {
     maxWidth: 200,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    fontSize: '16px',
+    fontWeight: 400
   },
   controlButton: {
     margin: '20px 10px 20px 0'
