@@ -157,7 +157,7 @@ const EmailQuestionsList = () => {
               showCheckbox
               showCollapse
               collapsable
-              shouldValidate
+              shouldValidate={shouldValidate}
               answerValue={answerValue}
               setAnswerValue={setAnswerValue}
               checkboxChangeHandler={checkboxChangeHandler}
