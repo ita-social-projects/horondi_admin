@@ -10,7 +10,6 @@ import { showQuestionOptions, showFilterObj } from '../../utils/questions';
 const useQuestionFilter = () => {
   const dispatch = useDispatch();
   const filters = useSelector(({ EmailQuestions }) => EmailQuestions.filters);
-  console.log('filters', filters);
   const setCommentDateRangeFilter = (date) => {
     dispatch(setCurrentPage(0));
     dispatch(
@@ -42,7 +41,7 @@ const useQuestionFilter = () => {
     dispatch(setCurrentPage(0));
     dispatch(clearFilters());
   };
-  console.log('aasdasd', filters.filters);
+
   return {
     filterByDateOptions: {
       dateFrom: filters.dateFrom,

@@ -142,8 +142,6 @@ const EmailQuestionsList = () => {
     return <LoadingBar />;
   }
 
-  console.log(questionOptions.filterByMultipleOptions);
-
   return (
     <div className={commonStyles.container}>
       <div

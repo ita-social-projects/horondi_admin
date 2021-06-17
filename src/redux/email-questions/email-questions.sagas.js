@@ -40,7 +40,6 @@ import { handleAdminLogout } from '../auth/auth.sagas';
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
 export function* handleEmailQuestionsLoad({ payload }) {
-  console.log('payload:', payload);
   try {
     yield put(setEmailQuestionLoading(true));
     const response = yield call(getAllEmailQuestions, payload);
