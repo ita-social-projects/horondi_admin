@@ -7,7 +7,8 @@ import {
   Checkbox,
   Typography,
   TextField,
-  IconButton
+  IconButton,
+  Divider
 } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -128,14 +129,20 @@ const TableContainerCollapsableRow = ({
         <TableCell className={classes.tableCell} colSpan={7}>
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box margin={1}>
-              <Typography variant='h5' gutterBottom component='div'>
-                {`Запитання від ${properties.senderName} (${properties.email}):`}
+              <Typography variant='h5' gutterBottom display='inline'>
+                Запитання від {properties.senderName}:
               </Typography>
+              <Typography
+                variant='caption'
+                component='div'
+                style={{ marginBottom: '10px' }}
+              >{`${properties.email}`}</Typography>
               <Typography
                 style={{ width: '100%' }}
                 gutterBottom
                 component='div'
                 align='justify'
+                variant='h6'
               >
                 {question}
               </Typography>
