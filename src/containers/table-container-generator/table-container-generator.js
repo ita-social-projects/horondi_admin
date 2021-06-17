@@ -20,12 +20,7 @@ const TableContainerGenerator = ({
 }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
   const dense = useSelector(selectTableDense);
-  console.log(
-    'pagination, count, maxItemsPerpage',
-    pagination,
-    count,
-    maxItemsPerPage
-  );
+
   return (
     <>
       <TableContainer component={Paper}>
