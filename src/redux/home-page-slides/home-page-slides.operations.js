@@ -1,8 +1,8 @@
-import {getItems, setItems} from '../../utils/client';
-import {slidesTranslations} from '../../translations/home-page-slides.translations';
+import { getItems, setItems } from '../../utils/client';
+import { slidesTranslations } from '../../translations/home-page-slides.translations';
 
 export const getAllSlides = async (skip, limit) => {
-    const query = `
+  const query = `
       query($skip: Int, $limit: Int) {
         getAllSlides(skip: $skip, limit: $limit) {
           items {
@@ -27,12 +27,12 @@ export const getAllSlides = async (skip, limit) => {
         }
       }
     `;
-    const result = await getItems(query, {skip, limit});
+  const result = await getItems(query, { skip, limit });
 
-    return result?.data?.getAllSlides;
+  return result?.data?.getAllSlides;
 };
 export const getSlideById = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getSlideById(id: $id) {
           ... on HomePageSlide {
@@ -61,16 +61,20 @@ export const getSlideById = async (id) => {
       }
     `;
 
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    if (Object.keys(slidesTranslations).includes(result?.data?.getSlideById?.message)) {
-        throw new Error(`${slidesTranslations[result.data.getSlideById.message]}`);
-    }
+  if (
+    Object.keys(slidesTranslations).includes(
+      result?.data?.getSlideById?.message
+    )
+  ) {
+    throw new Error(`${slidesTranslations[result.data.getSlideById.message]}`);
+  }
 
-    return result?.data?.getSlideById;
+  return result?.data?.getSlideById;
 };
 export const getAllAvailableSlides = async () => {
-    const query = `
+  const query = `
       query {
         getAllSlides {
           items {
@@ -93,12 +97,12 @@ export const getAllAvailableSlides = async () => {
         }
       }
     `;
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getAllSlides;
+  return result?.data?.getAllSlides;
 };
 export const createSlide = async (payload) => {
-    const query = `
+  const query = `
       mutation($slide: HomePageSlideInput!, $upload: Upload) {
         addSlide(slide: $slide, upload: $upload) {
           ... on HomePageSlide {
@@ -112,16 +116,18 @@ export const createSlide = async (payload) => {
       }
     `;
 
-    const result = await setItems(query, payload);
+  const result = await setItems(query, payload);
 
-    if (Object.keys(slidesTranslations).includes(result?.data?.addSlide?.message)) {
-        throw new Error(`${slidesTranslations[result.data.addSlide.message]}`);
-    }
+  if (
+    Object.keys(slidesTranslations).includes(result?.data?.addSlide?.message)
+  ) {
+    throw new Error(`${slidesTranslations[result.data.addSlide.message]}`);
+  }
 
-    return result?.data?.addSlide;
+  return result?.data?.addSlide;
 };
 export const updateSlide = async (payload) => {
-    const query = `
+  const query = `
       mutation($id: ID!, $slide: HomePageSlideInput!, $upload: Upload) {
         updateSlide(id: $id, slide: $slide, upload: $upload) {
           ... on HomePageSlide {
@@ -150,20 +156,22 @@ export const updateSlide = async (payload) => {
       }
     `;
 
-    const result = await setItems(query, payload);
+  const result = await setItems(query, payload);
 
-    if (Object.keys(slidesTranslations).includes(result?.data?.updateSlide?.message)) {
-        throw new Error(
-            `${result.data.updateSlide.statusCode} ${
-                slidesTranslations[result.data.updateSlide.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(slidesTranslations).includes(result?.data?.updateSlide?.message)
+  ) {
+    throw new Error(
+      `${result.data.updateSlide.statusCode} ${
+        slidesTranslations[result.data.updateSlide.message]
+      }`
+    );
+  }
 
-    return result?.data?.updateSlide;
+  return result?.data?.updateSlide;
 };
 export const deleteSlide = async (id) => {
-    const query = `
+  const query = `
       mutation($id: ID!) {
         deleteSlide(id: $id) {
           ... on HomePageSlide {
@@ -179,11 +187,13 @@ export const deleteSlide = async (id) => {
       }
     `;
 
-    const result = await setItems(query, {id});
+  const result = await setItems(query, { id });
 
-    if (Object.keys(slidesTranslations).includes(result?.data?.deleteSlide?.message)) {
-        throw new Error(`${slidesTranslations[result.data.deleteSlide.message]}`);
-    }
+  if (
+    Object.keys(slidesTranslations).includes(result?.data?.deleteSlide?.message)
+  ) {
+    throw new Error(`${slidesTranslations[result.data.deleteSlide.message]}`);
+  }
 
-    return result?.data?.deleteSlide;
+  return result?.data?.deleteSlide;
 };

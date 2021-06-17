@@ -1,15 +1,15 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-import {materialTranslations} from "../translations/material.translations";
+import { materialTranslations } from '../translations/material.translations';
 
 export const purposeFilterObj = () => {
-    const arrToFilter = [];
+  const arrToFilter = [];
 
-    _.forEach(materialTranslations.purpose, (value, key) => {
-        arrToFilter.push({key, value});
-    });
+  _.forEach(materialTranslations.purpose, (value, key) => {
+    arrToFilter.push({ key, value });
+  });
 
-    return arrToFilter;
+  return arrToFilter;
 };
 
 export const placeholderMaterialText = 'за назвою';

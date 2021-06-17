@@ -1,7 +1,7 @@
-import {getItems, setItems} from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
 
-const getAllEmailQuestions = async ({filter, skip}) => {
-    const query = `
+const getAllEmailQuestions = async ({ filter, skip }) => {
+  const query = `
       query($filter: FilterInput, $skip: Int) {
         getAllEmailQuestions(filter: $filter, skip: $skip) {
           questions {
@@ -21,28 +21,28 @@ const getAllEmailQuestions = async ({filter, skip}) => {
       }
     `;
 
-    const result = await getItems(query, {
-        filter: {
-            emailQuestionStatus: filter.length ? filter : null
-        },
-        skip
-    });
+  const result = await getItems(query, {
+    filter: {
+      emailQuestionStatus: filter.length ? filter : null
+    },
+    skip
+  });
 
-    return result?.data?.getAllEmailQuestions;
+  return result?.data?.getAllEmailQuestions;
 };
 const getPendingEmailQuestionsCount = async () => {
-    const query = `
+  const query = `
       query {
         getPendingEmailQuestionsCount
       }
     `;
 
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getPendingEmailQuestionsCount;
+  return result?.data?.getPendingEmailQuestionsCount;
 };
 const getEmailQuestionById = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getEmailQuestionById(id: $id) {
           ... on EmailQuestion {
@@ -71,12 +71,12 @@ const getEmailQuestionById = async (id) => {
       }
     `;
 
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    return result?.data?.getEmailQuestionById;
+  return result?.data?.getEmailQuestionById;
 };
 const deleteEmailQuestions = async (questionsToDelete) => {
-    const query = `
+  const query = `
       mutation($questionsToDelete: [String]) {
         deleteEmailQuestions(questionsToDelete: $questionsToDelete) {
           _id
@@ -84,12 +84,12 @@ const deleteEmailQuestions = async (questionsToDelete) => {
       }
     `;
 
-    const result = await setItems(query, {questionsToDelete});
+  const result = await setItems(query, { questionsToDelete });
 
-    return result?.data?.deleteEmailQuestions;
+  return result?.data?.deleteEmailQuestions;
 };
-const answerEmailQuestion = async ({questionId, adminId, text}) => {
-    const query = `
+const answerEmailQuestion = async ({ questionId, adminId, text }) => {
+  const query = `
       mutation($questionId: ID!, $adminId: ID!, $text: String!) {
         answerEmailQuestion(
           questionId: $questionId
@@ -122,12 +122,12 @@ const answerEmailQuestion = async ({questionId, adminId, text}) => {
       }
     `;
 
-    const result = await setItems(query, {questionId, adminId, text});
+  const result = await setItems(query, { questionId, adminId, text });
 
-    return result?.data?.answerEmailQuestion;
+  return result?.data?.answerEmailQuestion;
 };
-const makeEmailQuestionsSpam = async ({questionsToSpam, adminId}) => {
-    const query = `
+const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
+  const query = `
       mutation($questionsToSpam: [String], $adminId: ID!) {
         makeEmailQuestionsSpam(
           questionsToSpam: $questionsToSpam
@@ -153,16 +153,16 @@ const makeEmailQuestionsSpam = async ({questionsToSpam, adminId}) => {
       }
     `;
 
-    const result = await setItems(query, {questionsToSpam, adminId});
+  const result = await setItems(query, { questionsToSpam, adminId });
 
-    return result?.data?.makeEmailQuestionsSpam;
+  return result?.data?.makeEmailQuestionsSpam;
 };
 
 export {
-    getAllEmailQuestions,
-    getEmailQuestionById,
-    deleteEmailQuestions,
-    makeEmailQuestionsSpam,
-    answerEmailQuestion,
-    getPendingEmailQuestionsCount
+  getAllEmailQuestions,
+  getEmailQuestionById,
+  deleteEmailQuestions,
+  makeEmailQuestionsSpam,
+  answerEmailQuestion,
+  getPendingEmailQuestionsCount
 };

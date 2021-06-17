@@ -20,21 +20,21 @@ export const useStyles = makeStyles((theme) => {
     constructorItemUpdate: {
       ...itemUpdate
     },
-    selectBox:{
-      display:'flex',
-      flexDirection:'row',
-      alignItems:'center',
-      height:30
+    selectBox: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      height: 30
     },
-    avatar:{
+    avatar: {
       width: theme.spacing(8),
       height: theme.spacing(8),
-      padding:'5px',
-      backgroundColor:'#ceded2'
+      padding: '5px',
+      backgroundColor: '#ceded2'
     },
-    formControl:{
+    formControl: {
       margin: theme.spacing(1),
-      width: '48%',
+      width: '48%'
     },
     imageName,
     inputError,

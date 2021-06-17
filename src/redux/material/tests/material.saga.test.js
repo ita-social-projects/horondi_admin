@@ -1,9 +1,8 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-
 import { combineReducers } from 'redux';
-import { Done } from '@material-ui/icons';
+
 import {
   handleMaterialLoad,
   handleMaterialsLoad,
@@ -47,11 +46,8 @@ import Table from '../../table/table.reducer';
 
 import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  statuses;
 
 describe('Test material sagas', () => {
   it('should load all materials', async (done) => {

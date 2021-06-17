@@ -2,9 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formStyles } from '../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
-  const { tabs, textField, inputError, saveButton, controlsBlock } = formStyles(
-    theme
-  );
+  const { tabs, textField, inputError, saveButton, controlsBlock } =
+    formStyles(theme);
   return {
     materialItemAdd: {
       display: 'flex',

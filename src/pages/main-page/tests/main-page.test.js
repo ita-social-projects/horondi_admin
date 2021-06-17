@@ -5,10 +5,10 @@ import {
   useSelector as useSelectorMock,
   useDispatch as useDispatchMock
 } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 import MainPage from '../index';
 import titles from '../../../configs/titles';
 import LoadingBar from '../../../components/loading-bar';
-import Typography from '@material-ui/core/Typography';
 import messages from '../../../configs/messages';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import variables from './variables';

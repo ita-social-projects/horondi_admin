@@ -57,21 +57,15 @@ const LoginPage = () => {
       .required(ENTER_PASSWORD_MESSAGE)
   });
 
-  const {
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    touched,
-    errors
-  } = useFormik({
-    initialValues: adminValues,
-    validationSchema: formSchema,
-    validateOnBlur: true,
-    onSubmit: ({ email, password }) => {
-      dispatch(loginUser({ email, password }));
-    }
-  });
+  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
+    useFormik({
+      initialValues: adminValues,
+      validationSchema: formSchema,
+      validateOnBlur: true,
+      onSubmit: ({ email, password }) => {
+        dispatch(loginUser({ email, password }));
+      }
+    });
 
   const handleClickShowPassword = () => {
     setAdminValues({ ...adminValues, showPassword: !adminValues.showPassword });

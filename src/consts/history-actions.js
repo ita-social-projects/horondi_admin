@@ -32,4 +32,3 @@ export const historyActions = {
   UNLOCK_USER: 'Активовано користувача ',
   REGISTER_ADMIN: 'Зареєстровано адміністратора'
 };
-

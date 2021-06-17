@@ -29,19 +29,17 @@ export const actionFilterObj = () => {
   return arrToFilter;
 };
 
-export const filterInputToRender = (selectedValues, valueToRender) =>   {
-    return   selectedValues.map((selectedValue, inx, values) => {
-        let selectedRenderValue;
+export const filterInputToRender = (selectedValues, valueToRender) =>
+  selectedValues.map((selectedValue, inx, values) => {
+    let selectedRenderValue;
 
-        if (inx !== values.length - 1) {
-            selectedRenderValue = `${valueToRender[selectedValue]}, `;
-        } else {
-            selectedRenderValue = valueToRender[selectedValue];
-        }
-        return selectedRenderValue;
-    });
-
-};
+    if (inx !== values.length - 1) {
+      selectedRenderValue = `${valueToRender[selectedValue]}, `;
+    } else {
+      selectedRenderValue = valueToRender[selectedValue];
+    }
+    return selectedRenderValue;
+  });
 
 export const generateDateFormatForInputValue = (date) => {
   let [dateValue, timeValue] = moment(date)

@@ -40,14 +40,17 @@ const OrdersPage = () => {
     sortOptions
   } = useOrderFilters();
 
-  const { orderLoading, orders: ordersList, filters, sort } = useSelector(
-    ({ Orders }) => ({
-      orderLoading: Orders.orderLoading,
-      orders: Orders.list.items,
-      filters: Orders.filters,
-      sort: Orders.sort
-    })
-  );
+  const {
+    orderLoading,
+    orders: ordersList,
+    filters,
+    sort
+  } = useSelector(({ Orders }) => ({
+    orderLoading: Orders.orderLoading,
+    orders: Orders.list.items,
+    filters: Orders.filters,
+    sort: Orders.sort
+  }));
 
   const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,

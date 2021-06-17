@@ -54,15 +54,15 @@ const ContactsAdd = () => {
     const mapImages =
       !!uaCartImage && !!enCartImage
         ? [
-          {
-            lang: languages[0],
-            image: uaCartImage
-          },
-          {
-            lang: languages[1],
-            image: enCartImage
-          }
-        ]
+            {
+              lang: languages[0],
+              image: uaCartImage
+            },
+            {
+              lang: languages[1],
+              image: enCartImage
+            }
+          ]
         : [];
 
     dispatch(addContact(newContact, mapImages));

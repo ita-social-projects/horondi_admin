@@ -150,15 +150,15 @@ const ProductOptionsContainer = ({
     [bottomMaterials]
   );
 
-  const optionsToMap = useMemo(() => [sizesOptions, bottomMaterialsOptions], [
-    sizesOptions,
-    bottomMaterialsOptions
-  ]);
+  const optionsToMap = useMemo(
+    () => [sizesOptions, bottomMaterialsOptions],
+    [sizesOptions, bottomMaterialsOptions]
+  );
   const cardLabels = useMemo(() => [sizeCardsLabels, materialsLabels], []);
-  const cardOptions = useMemo(() => [sizes, formattedMaterials], [
-    sizes,
-    formattedMaterials
-  ]);
+  const cardOptions = useMemo(
+    () => [sizes, formattedMaterials],
+    [sizes, formattedMaterials]
+  );
 
   return (
     <div>

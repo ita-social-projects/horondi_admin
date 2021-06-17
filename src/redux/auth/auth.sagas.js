@@ -8,7 +8,6 @@ import {
 } from './auth.actions';
 import { loginAdmin, getUserByToken } from './auth.operations';
 import { LOGIN_USER, CHECK_USER_BY_TOKEN, LOGOUT_USER } from './auth.types';
-import { config } from '../../configs';
 import {
   setToLocalStorage,
   getFromLocalStorage
@@ -19,7 +18,6 @@ import { LOCAL_STORAGE } from '../../consts/local-storage';
 import { AUTH_ERRORS } from '../../error-messages/auth';
 import { userTranslations } from '../../translations/user.translations';
 
-const { LOGIN_PAGE_STATUS } = config.statuses;
 const { pathToMainPage, pathToLogin } = routes;
 
 export function* handleAdminLoad({ payload }) {

@@ -53,27 +53,27 @@ const EmailQuestionDetails = ({ id }) => {
     () =>
       question
         ? [
-          {
-            title: detailTitles.emailQuestions.customer.date,
-            value: getTime(question.date)
-          },
-          {
-            title: detailTitles.emailQuestions.customer.status,
-            value: labels.emailQuestionsLabels.ua[question.status]
-          },
-          {
-            title: detailTitles.emailQuestions.customer.sender,
-            value: question.senderName
-          },
-          {
-            title: detailTitles.emailQuestions.customer.email,
-            value: question.email
-          },
-          {
-            title: detailTitles.emailQuestions.customer.question,
-            value: question.text
-          }
-        ]
+            {
+              title: detailTitles.emailQuestions.customer.date,
+              value: getTime(question.date)
+            },
+            {
+              title: detailTitles.emailQuestions.customer.status,
+              value: labels.emailQuestionsLabels.ua[question.status]
+            },
+            {
+              title: detailTitles.emailQuestions.customer.sender,
+              value: question.senderName
+            },
+            {
+              title: detailTitles.emailQuestions.customer.email,
+              value: question.email
+            },
+            {
+              title: detailTitles.emailQuestions.customer.question,
+              value: question.text
+            }
+          ]
         : [],
     [question]
   );
@@ -82,19 +82,19 @@ const EmailQuestionDetails = ({ id }) => {
     () =>
       question && question.answer
         ? [
-          {
-            title: detailTitles.emailQuestions.admin.date,
-            value: getTime(question.answer.date)
-          },
-          {
-            title: detailTitles.emailQuestions.admin.admin,
-            value: `${question.answer.admin.firstName} ${question.answer.admin.lastName}`
-          },
-          {
-            title: detailTitles.emailQuestions.admin.answer,
-            value: question.answer.text
-          }
-        ]
+            {
+              title: detailTitles.emailQuestions.admin.date,
+              value: getTime(question.answer.date)
+            },
+            {
+              title: detailTitles.emailQuestions.admin.admin,
+              value: `${question.answer.admin.firstName} ${question.answer.admin.lastName}`
+            },
+            {
+              title: detailTitles.emailQuestions.admin.answer,
+              value: question.answer.text
+            }
+          ]
         : [],
     [question]
   );

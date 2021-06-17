@@ -33,19 +33,14 @@ const EmailQuestionsList = () => {
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const {
-    list,
-    loading,
-    pagesCount,
-    currentPage,
-    questionsPerPage
-  } = useSelector(({ EmailQuestions }) => ({
-    list: EmailQuestions.list,
-    loading: EmailQuestions.loading,
-    pagesCount: EmailQuestions.pagination.pagesCount,
-    currentPage: EmailQuestions.pagination.currentPage,
-    questionsPerPage: EmailQuestions.pagination.questionsPerPage
-  }));
+  const { list, loading, pagesCount, currentPage, questionsPerPage } =
+    useSelector(({ EmailQuestions }) => ({
+      list: EmailQuestions.list,
+      loading: EmailQuestions.loading,
+      pagesCount: EmailQuestions.pagination.pagesCount,
+      currentPage: EmailQuestions.pagination.currentPage,
+      questionsPerPage: EmailQuestions.pagination.questionsPerPage
+    }));
 
   const dispatch = useDispatch();
 
@@ -109,31 +104,31 @@ const EmailQuestionsList = () => {
   const questions =
     list !== undefined
       ? list.map((question) => {
-        const { answer } = question;
+          const { answer } = question;
 
-        const questionToShow = `<b>Q:</b> ${question.text}`;
-        const answerToShow = answerTextHandler(answer);
+          const questionToShow = `<b>Q:</b> ${question.text}`;
+          const answerToShow = answerTextHandler(answer);
 
-        return (
-          <TableContainerRow
-            key={question._id}
-            id={question._id}
-            senderName={question.senderName}
-            email={question.email}
-            qA={ReactHtmlParser(questionToShow + answerToShow)}
-            date={ReactHtmlParser(getTime(question.date, true))}
-            status={labels.emailQuestionsLabels.ua[question.status]}
-            showAvatar={false}
-            showEdit={false}
-            showCheckbox
-            checkboxChangeHandler={checkboxChangeHandler}
-            deleteHandler={(e) => questionDeleteHandler(question._id, e)}
-            clickHandler={() =>
-              questionClickHandler(question._id, question.status)
-            }
-          />
-        );
-      })
+          return (
+            <TableContainerRow
+              key={question._id}
+              id={question._id}
+              senderName={question.senderName}
+              email={question.email}
+              qA={ReactHtmlParser(questionToShow + answerToShow)}
+              date={ReactHtmlParser(getTime(question.date, true))}
+              status={labels.emailQuestionsLabels.ua[question.status]}
+              showAvatar={false}
+              showEdit={false}
+              showCheckbox
+              checkboxChangeHandler={checkboxChangeHandler}
+              deleteHandler={(e) => questionDeleteHandler(question._id, e)}
+              clickHandler={() =>
+                questionClickHandler(question._id, question.status)
+              }
+            />
+          );
+        })
       : null;
 
   if (loading) {

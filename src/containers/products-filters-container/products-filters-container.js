@@ -68,11 +68,11 @@ const ProductsFiltersContainer = ({
     () => (selected) =>
       buttonName === CATEGORIES
         ? list
-          .filter(({ _id }) =>
-            categoryFilter.some((category) => category === _id)
-          )
-          .map(({ name }) => name[0].value)
-          .join(', ')
+            .filter(({ _id }) =>
+              categoryFilter.some((category) => category === _id)
+            )
+            .map(({ name }) => name[0].value)
+            .join(', ')
         : selected.join(', '),
     [categoryFilter, list, buttonName]
   );

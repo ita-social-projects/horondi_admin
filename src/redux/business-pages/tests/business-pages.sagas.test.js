@@ -41,11 +41,8 @@ import {
 } from '../../snackbar/snackbar.sagas';
 import businessPagesReducer from '../business-pages.reducer';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 describe('business pages sagas test', () => {
   it('#1 should receive all business pages and set to store', () =>
