@@ -135,6 +135,7 @@ const TableContainerCollapsableRow = ({
                 style={{ width: '100%' }}
                 gutterBottom
                 component='div'
+                align='justify'
               >
                 {question}
               </Typography>
@@ -148,17 +149,21 @@ const TableContainerCollapsableRow = ({
                   </Typography>
                 </>
               )}
-              <Box display='flex' alignItems='center'>
+              <Box
+                display='flex'
+                flexDirection='column'
+                justifyContent='space-between'
+              >
                 {!answer && (
                   <TextField
                     id='filled-full-width'
-                    style={{ width: '88%' }}
+                    style={{ width: '100%' }}
                     multiline
-                    rows={3}
+                    rows={6}
                     margin='normal'
                     placeholder={labels.emailQuestionsLabels.placeholder}
                     InputLabelProps={{ shrink: true }}
-                    label='Enter your answer'
+                    label='Введіть вашу відповідь'
                     value={answerValue}
                     variant={formConstants.textFieldFilled}
                     error={!answerValue && shouldValidate}
@@ -167,7 +172,7 @@ const TableContainerCollapsableRow = ({
                   />
                 )}
                 {!answer && (
-                  <Box style={{ margin: '0 auto' }}>
+                  <Box style={{}}>
                     <SaveButton
                       className={classes.controlButton}
                       id='save'

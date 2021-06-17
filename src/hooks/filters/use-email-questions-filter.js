@@ -9,7 +9,9 @@ import { showQuestionOptions, showFilterObj } from '../../utils/questions';
 
 const useQuestionFilter = () => {
   const dispatch = useDispatch();
-  const filters = useSelector(({ EmailQuestions }) => EmailQuestions.filters);
+  const selctedFilters = useSelector(
+    ({ EmailQuestions }) => EmailQuestions.filters
+  );
   const setCommentDateRangeFilter = (date) => {
     dispatch(setCurrentPage(0));
     dispatch(
@@ -44,17 +46,17 @@ const useQuestionFilter = () => {
 
   return {
     filterByDateOptions: {
-      dateFrom: filters.dateFrom,
-      dateTo: filters.dateTo,
+      dateFrom: selctedFilters.dateFrom,
+      dateTo: selctedFilters.dateTo,
       dateHandler: setCommentDateRangeFilter
     },
     filterByStatus: {
-      filters: filters.filters,
+      filters: selctedFilters.filters,
       setFiltersFilter
     },
     filterByMultipleOptions: [
       {
-        filters: filters.filters,
+        filters: selctedFilters.filters,
         label: buttonTitles.USER_STATUS_TITLE,
         selectItems: showFilterObj(),
         setFilterHandler: setFiltersFilter,
@@ -62,12 +64,12 @@ const useQuestionFilter = () => {
       }
     ],
     searchOptions: {
-      search: filters.search,
+      search: selctedFilters.search,
       placeholderText: '',
       setSearchFilter
     },
     clearOptions: {
-      filters,
+      filters: selctedFilters,
       clearAllFilters
     }
   };
