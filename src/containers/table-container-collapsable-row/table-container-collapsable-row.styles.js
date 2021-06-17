@@ -22,5 +22,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   tableRowCursor: {
     cursor: 'pointer'
+  },
+  collapseRowCursor: {
+    cursor: 'default'
+  },
+  tableCell: {
+    paddingBottom: 0,
+    paddingTop: 0
   }
 }));

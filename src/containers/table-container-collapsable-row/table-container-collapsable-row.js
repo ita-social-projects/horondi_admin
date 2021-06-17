@@ -124,8 +124,8 @@ const TableContainerCollapsableRow = ({
           </TableCell>
         )}
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+      <TableRow className={classes.collapseRowCursor}>
+        <TableCell className={classes.tableCell} colSpan={7}>
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box margin={1}>
               <Typography variant='h5' gutterBottom component='div'>
