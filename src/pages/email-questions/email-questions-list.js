@@ -155,17 +155,6 @@ const EmailQuestionsList = () => {
         </Typography>
         <div className={styles.operations}>
           <FilterNavbar options={questionOptions || {}} />
-          {/* <NavFilterByDate filterByDateOptions={filterByDateOptions || {}} />
-          <NavSearch searchOptions={searchOptions} />
-          <NavClearFilters clearOptions={clearOptions} />
-          {filterByMultipleOptions?.length
-            ? filterByMultipleOptions.map((filterItem) => (
-                <NavFilterByValues
-                  key={filterItem}
-                  filterByMultipleOptions={filterItem}
-                />
-              ))
-            : null} */}
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
             setQuestionsToOperate={setQuestionsToOperate}
