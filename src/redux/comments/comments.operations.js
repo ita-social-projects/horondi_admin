@@ -1,12 +1,12 @@
-import {getItems, setItems} from '../../utils/client';
-import {config} from '../../configs';
-import {commentsTranslations} from '../../translations/comments.translations';
-import {GET_USER_COMMENTS, GET_PRODUCT_COMMENTS} from './comments.types';
+import { getItems, setItems } from '../../utils/client';
+import { config } from '../../configs';
+import { commentsTranslations } from '../../translations/comments.translations';
+import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');
 
 const getAllComments = async (filter, pagination) => {
-    const query = `
+  const query = `
       query($filter: CommentFilterInput, $pagination: Pagination) {
         getAllComments(filter: $filter, pagination: $pagination) {
           items {
@@ -27,13 +27,13 @@ const getAllComments = async (filter, pagination) => {
         }
       }
     `;
-    const result = await getItems(query, {filter, pagination});
+  const result = await getItems(query, { filter, pagination });
 
-    return result?.data?.getAllComments;
+  return result?.data?.getAllComments;
 };
 
 const getRecentComments = async (limit) => {
-    const query = `
+  const query = `
       query($limit: Int!) {
         getRecentComments(limit: $limit) {
           ... on Comment {
@@ -57,23 +57,25 @@ const getRecentComments = async (limit) => {
         }
       }
     `;
-    const result = await getItems(query, {limit});
+  const result = await getItems(query, { limit });
 
-    if (
-        Object.keys(commentsTranslations).includes(result?.data?.getRecentComments?.message)
-    ) {
-        throw new Error(
-            `${result.data.getRecentComments.statusCode} ${
-                commentsTranslations[result.data.getRecentComments.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(commentsTranslations).includes(
+      result?.data?.getRecentComments?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getRecentComments.statusCode} ${
+        commentsTranslations[result.data.getRecentComments.message]
+      }`
+    );
+  }
 
-    return result?.data?.getRecentComments;
+  return result?.data?.getRecentComments;
 };
 
 const deleteComment = async (id) => {
-    const query = `
+  const query = `
         mutation($id: ID!) {
           deleteComment(id: $id) {
             ... on Comment {
@@ -97,13 +99,13 @@ const deleteComment = async (id) => {
         }
       `;
 
-    const result = await setItems(query, {id});
+  const result = await setItems(query, { id });
 
-    return result?.data?.deleteComment;
+  return result?.data?.deleteComment;
 };
 
 const getCommentById = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getCommentById(id: $id) {
           ... on Comment {
@@ -128,23 +130,25 @@ const getCommentById = async (id) => {
       }
     `;
 
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    if (
-        Object.keys(commentsTranslations).includes(result?.data?.getCommentById?.message)
-    ) {
-        throw new Error(
-            `${result.data.getCommentById.statusCode} ${
-                commentsTranslations[result.data.getCommentById.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(commentsTranslations).includes(
+      result?.data?.getCommentById?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getCommentById.statusCode} ${
+        commentsTranslations[result.data.getCommentById.message]
+      }`
+    );
+  }
 
-    return result?.data?.getCommentById;
+  return result?.data?.getCommentById;
 };
 
 const updateComment = async (id, comment) => {
-    const query = `
+  const query = `
       mutation($id: ID!, $comment: CommentUpdateInput!) {
         updateComment(id: $id, comment: $comment) {
           ... on Comment {
@@ -159,34 +163,38 @@ const updateComment = async (id, comment) => {
       }
     `;
 
-    const result = await setItems(query, {id, comment});
+  const result = await setItems(query, { id, comment });
 
-    if (Object.keys(commentsTranslations).includes(result?.data?.updateComment?.message)) {
-        throw new Error(
-            `${result.data.updateComment.statusCode} ${
-                commentsTranslations[result.data.updateComment.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(commentsTranslations).includes(
+      result?.data?.updateComment?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.updateComment.statusCode} ${
+        commentsTranslations[result.data.updateComment.message]
+      }`
+    );
+  }
 
-    return result?.data?.updateComment;
+  return result?.data?.updateComment;
 };
 
 const getCommentsByType = async (value, commentsType) => {
-    try {
-        if (commentsType === GET_USER_COMMENTS) {
-            return await getCommentsByUser(value);
-        }
-        if (commentsType === GET_PRODUCT_COMMENTS) {
-            return await getCommentsByProduct(value);
-        }
-    } catch (error) {
-        throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+  try {
+    if (commentsType === GET_USER_COMMENTS) {
+      return await getCommentsByUser(value);
     }
+    if (commentsType === GET_PRODUCT_COMMENTS) {
+      return await getCommentsByProduct(value);
+    }
+  } catch (error) {
+    throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+  }
 };
 
 const getCommentsByProduct = async (id) => {
-    const query = `
+  const query = `
         query($productId: ID!) {
           getAllCommentsByProduct(
             productId: $productId
@@ -207,13 +215,13 @@ const getCommentsByProduct = async (id) => {
         }
       `;
 
-    const result = await getItems(query, {productId: id});
+  const result = await getItems(query, { productId: id });
 
-    return result?.data?.getAllCommentsByProduct;
+  return result?.data?.getAllCommentsByProduct;
 };
 
 const getCommentsByUser = async (userId) => {
-    const query = `
+  const query = `
         query($userId: ID!) {
           getAllCommentsByUser(userId: $userId) {
             ... on Comment {
@@ -235,18 +243,18 @@ const getCommentsByUser = async (userId) => {
           }
         }
       `;
-    const result = await getItems(query, {userId});
+  const result = await getItems(query, { userId });
 
-    return result?.data?.getAllCommentsByUser;
+  return result?.data?.getAllCommentsByUser;
 };
 
 export {
-    getAllComments,
-    deleteComment,
-    updateComment,
-    getCommentById,
-    getCommentsByUser,
-    getCommentsByProduct,
-    getCommentsByType,
-    getRecentComments
+  getAllComments,
+  deleteComment,
+  updateComment,
+  getCommentById,
+  getCommentsByUser,
+  getCommentsByProduct,
+  getCommentsByType,
+  getRecentComments
 };

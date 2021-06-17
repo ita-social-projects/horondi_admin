@@ -33,7 +33,8 @@ import {
   SET_PRODUCT_DETAILS,
   GET_PRODUCT_DETAILS,
   SET_PRODUCT_FILTER,
-  CLEAR_PRODUCT_FILTER, SET_PRODUCT_SORT_LABEL
+  CLEAR_PRODUCT_FILTER,
+  SET_PRODUCT_SORT_LABEL
 } from './products.types';
 
 export const getProduct = (id) => ({

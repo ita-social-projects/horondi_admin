@@ -52,19 +52,17 @@ const ProductAddImages = ({
 
   const imgUrl = config.imagePrefix + displayed;
 
-  const {
-    handlePrimaryImageLoad,
-    handleAdditionalImagesLoad
-  } = useProductAddImages({
-    isEdit,
-    additionalImagesDisplayed,
-    setAdditionalImagesDisplayed,
-    toggleFieldsChanged,
-    additionalImages,
-    setAdditionalImages,
-    setProductImageDisplayed,
-    setPrimaryImage
-  });
+  const { handlePrimaryImageLoad, handleAdditionalImagesLoad } =
+    useProductAddImages({
+      isEdit,
+      additionalImagesDisplayed,
+      setAdditionalImagesDisplayed,
+      toggleFieldsChanged,
+      additionalImages,
+      setAdditionalImages,
+      setProductImageDisplayed,
+      setPrimaryImage
+    });
 
   const additionalFirstImageByIndexLoad = (e) =>
     handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);

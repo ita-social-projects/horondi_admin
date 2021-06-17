@@ -23,9 +23,7 @@ export const handleOrdersPage = (orders, itemsCount, orderItems, style) =>
       tableItems={orderItems}
     />
   ) : (
-    <p className={style}>
-      {config.titles.orderTitles.ORDER_NOT_FOUND}
-    </p>
+    <p className={style}>{config.titles.orderTitles.ORDER_NOT_FOUND}</p>
   );
 
 const { dialogContent, buttonTitle } = order;

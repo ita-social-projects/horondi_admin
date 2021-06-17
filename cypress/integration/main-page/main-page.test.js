@@ -3,12 +3,8 @@
 import { config } from '../../../src/configs';
 import { getAllOrders, orders } from './main-page.variables';
 
-const {
-  mainTitle,
-  ordersTitle,
-  commentsTitle,
-  changesTitle
-} = config.titles.mainPageTitles;
+const { mainTitle, ordersTitle, commentsTitle, changesTitle } =
+  config.titles.mainPageTitles;
 const { pathToMainPage, pathToOrders } = config.routes;
 const id = orders.items[0]._id;
 

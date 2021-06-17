@@ -17,7 +17,7 @@ import {
   pageCode
 } from './business-pages.variables';
 
-const { labels, titles, tableHeadRowTitles } = config;
+const { titles, tableHeadRowTitles } = config;
 
 describe('Business pages test ', () => {
   beforeEach(() => {

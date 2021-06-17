@@ -33,7 +33,7 @@ const { pathToCommentsEdit } = config.routes;
 
 const map = require('lodash/map');
 
-export const Comments = () => {
+const Comments = () => {
   const commonStyles = useCommonStyles();
   const styles = useStyles();
   const dispatch = useDispatch();

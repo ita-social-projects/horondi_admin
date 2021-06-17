@@ -11,11 +11,8 @@ const General = ({ data, handleChange }) => {
   const classes = useStyles();
   const { status, isPaid, paymentMethod } = data;
   const { generalLabels } = labels;
-  const {
-    deliveryStatusLabel,
-    isPaidLabel,
-    paymentMethodLabel
-  } = generalLabels;
+  const { deliveryStatusLabel, isPaidLabel, paymentMethodLabel } =
+    generalLabels;
   const { statusOptions, paymentOptions } = orders;
 
   const statusOptionElements = statusOptions.map(({ label, value }, index) => (

@@ -52,11 +52,8 @@ import {
 import News from '../news.reducer';
 import Table from '../../table/table.reducer';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  statuses;
 
 describe('Test news sagas', () => {
   it('should load news', () =>

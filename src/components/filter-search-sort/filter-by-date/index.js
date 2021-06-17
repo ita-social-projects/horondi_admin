@@ -1,3 +1,3 @@
-import NavFilterByDate  from './nav-filter-by-date';
+import NavFilterByDate from './nav-filter-by-date';
 
 export default NavFilterByDate;

@@ -20,14 +20,8 @@ const UsersPage = () => {
   const common = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const {
-    list,
-    filter,
-    sort,
-    currentPage,
-    rowsPerPage,
-    isNewAdminCreated
-  } = useSelector(selectUsersAndTable);
+  const { list, filter, sort, currentPage, rowsPerPage, isNewAdminCreated } =
+    useSelector(selectUsersAndTable);
   const dispatch = useDispatch();
 
   useEffect(() => {

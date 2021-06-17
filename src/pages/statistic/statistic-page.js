@@ -73,14 +73,14 @@ const StatisticPage = () => {
     }
 
     switch (barValue) {
-    case barValue === bar.select[1].value:
-      dispatch(getPaidOrdersStats(date));
-      break;
-    case barValue === bar.select[2].value:
-      dispatch(getUsersByDays(date));
-      break;
-    default:
-      break;
+      case barValue === bar.select[1].value:
+        dispatch(getPaidOrdersStats(date));
+        break;
+      case barValue === bar.select[2].value:
+        dispatch(getUsersByDays(date));
+        break;
+      default:
+        break;
     }
 
     fetchedDoughnutStats.current.push(doughnutValue);

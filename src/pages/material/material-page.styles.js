@@ -21,6 +21,6 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     marginBottom: '15px',
-    marginTop: '-25px',
+    marginTop: '-25px'
   }
 }));

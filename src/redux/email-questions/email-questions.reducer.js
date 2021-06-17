@@ -97,6 +97,7 @@ const emailQuestionsReducer = (state = initialState, action = {}) => {
         ...state,
         filters: initialFilters
       };
+
     default:
       return state;
   }

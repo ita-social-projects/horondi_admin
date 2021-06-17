@@ -35,11 +35,8 @@ import { handleAdminLogout } from '../auth/auth.sagas';
 
 const { routes } = config;
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 export function* handleHeadersLoad() {
   try {

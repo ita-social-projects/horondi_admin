@@ -84,11 +84,8 @@ import {
 } from '../../selectors/products.selectors';
 import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  statuses;
 
 describe('Test products saga', () => {
   it('should load filter', () =>
