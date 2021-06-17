@@ -5,8 +5,8 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     margin: theme.spacing(1),
     '@media (max-width: 450px)': {
-      padding: 0,
-    },
+      padding: 0
+    }
   },
   deletePanel: {
     width: '90%',

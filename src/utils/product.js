@@ -10,4 +10,5 @@ export const dataFilterObj = (data) => {
   return arrToFilter;
 };
 
-export const dataRenderObj = (data) => _.mapValues(_.keyBy(data, '_id'), 'name[0].value');
+export const dataRenderObj = (data) =>
+  _.mapValues(_.keyBy(data, '_id'), 'name[0].value');

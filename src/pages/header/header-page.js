@@ -46,19 +46,19 @@ const HeaderPage = () => {
   const headerItems =
     list !== undefined
       ? list.map((headerItem) => (
-        <TableContainerRow
-          key={headerItem._id}
-          id={headerItem._id}
-          title={headerItem.title[0].value}
-          priority={headerItem.priority}
-          link={headerItem.link}
-          showAvatar={false}
-          deleteHandler={() => headerDeleteHandler(headerItem._id)}
-          editHandler={() => {
-            dispatch(push(`/headers/${headerItem._id}`));
-          }}
-        />
-      ))
+          <TableContainerRow
+            key={headerItem._id}
+            id={headerItem._id}
+            title={headerItem.title[0].value}
+            priority={headerItem.priority}
+            link={headerItem.link}
+            showAvatar={false}
+            deleteHandler={() => headerDeleteHandler(headerItem._id)}
+            editHandler={() => {
+              dispatch(push(`/headers/${headerItem._id}`));
+            }}
+          />
+        ))
       : null;
 
   if (loading) {

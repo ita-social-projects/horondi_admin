@@ -40,17 +40,17 @@ export const deleteConstructorBasic = async (payload) => {
     variables: { id: payload.constructorElementID },
     context: { headers: { token } },
     mutation: gql`
-        mutation($id: ID!) {
-            deleteConstructorBasic(id: $id) {
-                ... on ConstructorBasic {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation ($id: ID!) {
+        deleteConstructorBasic(id: $id) {
+          ... on ConstructorBasic {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -71,7 +71,10 @@ export const createConstructorBasic = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: { constructorElement: payload.constructorElement, upload: payload.upload },
+    variables: {
+      constructorElement: payload.constructorElement,
+      upload: payload.upload
+    },
     mutation: gql`
         mutation($constructorElement: ConstructorBasicInput!, $upload: Upload) {
             addConstructorBasic(constructorElement: $constructorElement, upload: $upload) {
@@ -107,7 +110,6 @@ export const updateConstructorBasic = async (payload) => {
       constructorElement: payload.constructorElement,
       id: payload.id,
       upload: payload.upload
-
     },
     context: { headers: { token } },
     mutation: gql`
@@ -142,7 +144,10 @@ export const createConstructorBottom = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: { constructorElement: payload.constructorElement, upload: payload.upload },
+    variables: {
+      constructorElement: payload.constructorElement,
+      upload: payload.upload
+    },
     mutation: gql`
         mutation($constructorElement: ConstructorBottomInput!, $upload: Upload) {
             addConstructorBottom(constructorElement: $constructorElement, upload: $upload) {
@@ -177,17 +182,17 @@ export const deleteConstructorBottom = async (payload) => {
     variables: { id: payload.constructorElementID },
     context: { headers: { token } },
     mutation: gql`
-        mutation($id: ID!) {
-            deleteConstructorBottom(id: $id) {
-                ... on ConstructorBottom {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation ($id: ID!) {
+        deleteConstructorBottom(id: $id) {
+          ... on ConstructorBottom {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });
@@ -245,7 +250,10 @@ export const createConstructorFrontPocket = async (payload) => {
   const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
   const result = await client.mutate({
     context: { headers: { token } },
-    variables: { constructorElement: payload.constructorElement, upload: payload.upload },
+    variables: {
+      constructorElement: payload.constructorElement,
+      upload: payload.upload
+    },
     mutation: gql`
         mutation($constructorElement: ConstructorFrontPocketInput!, $upload: Upload) {
             addConstructorFrontPocket(constructorElement: $constructorElement, upload: $upload) {
@@ -280,17 +288,17 @@ export const deleteConstructorFrontPocket = async (payload) => {
     variables: { id: payload.constructorElementID },
     context: { headers: { token } },
     mutation: gql`
-        mutation($id: ID!) {
-            deleteConstructorFrontPocket(id: $id) {
-                ... on ConstructorFrontPocket {
-                    _id
-                }
-                ... on Error {
-                    message
-                    statusCode
-                }
-            }
+      mutation ($id: ID!) {
+        deleteConstructorFrontPocket(id: $id) {
+          ... on ConstructorFrontPocket {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
         }
+      }
     `,
     fetchPolicy: 'no-cache'
   });

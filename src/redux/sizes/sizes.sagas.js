@@ -32,11 +32,8 @@ import { AUTH_ERRORS } from '../../error-messages/auth';
 import { handleAdminLogout } from '../auth/auth.sagas';
 import { setItemsCount } from '../table/table.actions';
 
-const {
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_ADD_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_DELETE_STATUS, SUCCESS_ADD_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 export function* handleSizesLoad({ payload }) {
   try {

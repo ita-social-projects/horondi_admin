@@ -5,10 +5,9 @@ import {
 } from 'react-redux';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
-import configureStore from 'redux-mock-store';
 
 import dataList from './dataList';
-import { Comments as CommentsNoStore } from '../comments';
+import Comments from '../comments';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerRow from '../../../containers/table-container-row';
 import useCommentFilters from '../../../hooks/filters/use-comment-filters';
@@ -23,18 +22,12 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Comments test', () => {
   let wrapper;
-  const state = { loading: false };
-
-  const mockStore = configureStore([]);
-  const store = mockStore(() => ({
-    Comments: { ...state }
-  }));
 
   it('Should render Comments page', () => {
     const mockedDispatch = jest.fn();
     useDispatchMock.mockReturnValue(mockedDispatch);
     useSelectorMock.mockReturnValue({ filter: 'test' });
-    wrapper = mount(<CommentsNoStore />);
+    wrapper = mount(<Comments />);
     expect(wrapper).toBeDefined();
   });
 
@@ -42,7 +35,7 @@ describe('Comments test', () => {
     const mockedDispatch = jest.fn();
     useDispatchMock.mockReturnValue(mockedDispatch);
     useSelectorMock.mockReturnValue({ filter: 'test', loading: true });
-    wrapper = mount(<CommentsNoStore />);
+    wrapper = mount(<Comments />);
     expect(wrapper.exists(LoadingBar)).toBe(true);
   });
 
@@ -54,7 +47,7 @@ describe('Comments test', () => {
       loading: false,
       list: dataList
     });
-    wrapper = mount(<CommentsNoStore />);
+    wrapper = mount(<Comments />);
     expect(wrapper.exists(TableContainerRow)).toBe(true);
   });
 
@@ -66,7 +59,7 @@ describe('Comments test', () => {
       loading: false,
       list: dataList
     });
-    wrapper = mount(<CommentsNoStore />);
+    wrapper = mount(<Comments />);
     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
     expect(mockedDispatch).toHaveBeenCalled();
   });
@@ -79,7 +72,7 @@ describe('Comments test', () => {
       loading: false,
       list: dataList
     });
-    wrapper = mount(<CommentsNoStore />);
+    wrapper = mount(<Comments />);
     wrapper.find(TableContainerRow).at(0).props().editHandler();
     expect(mockedDispatch).toHaveBeenCalled();
   });
@@ -89,7 +82,7 @@ describe('Comments test', () => {
     const mockedDispatch = jest.fn();
     useDispatchMock.mockReturnValue(mockedDispatch);
     useSelectorMock.mockReturnValue({ filter: 'test' });
-    wrapper = mount(<CommentsNoStore />);
+    wrapper = mount(<Comments />);
     expect(wrapper).toBeDefined();
   });
 });

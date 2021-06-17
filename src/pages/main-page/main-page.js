@@ -87,26 +87,26 @@ const MainPage = () => {
   const orders =
     ordersList && ordersList.length
       ? map(
-        ordersList,
-        ({ dateOfCreation, totalItemsPrice, _id, orderNumber }) => (
-          <TableRow
-            key={_id}
-            onClick={() => dispatch(push(`${pathToOrders}/edit/${_id}`))}
-            className={classes.order}
-            data-cy='order'
-          >
-            <TableCell>
-              {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
-            </TableCell>
-            <TableCell>
-              {totalItemsPrice[0].value}
-              {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
-              {totalItemsPrice[1].currency}
-            </TableCell>
-            <TableCell>{orderNumber}</TableCell>
-          </TableRow>
+          ordersList,
+          ({ dateOfCreation, totalItemsPrice, _id, orderNumber }) => (
+            <TableRow
+              key={_id}
+              onClick={() => dispatch(push(`${pathToOrders}/edit/${_id}`))}
+              className={classes.order}
+              data-cy='order'
+            >
+              <TableCell>
+                {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
+              </TableCell>
+              <TableCell>
+                {totalItemsPrice[0].value}
+                {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
+                {totalItemsPrice[1].currency}
+              </TableCell>
+              <TableCell>{orderNumber}</TableCell>
+            </TableRow>
+          )
         )
-      )
       : null;
 
   return (

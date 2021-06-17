@@ -10,11 +10,11 @@ export const useStyles = makeStyles((theme) => ({
   addButton: {
     marginLeft: '20px',
     '@media (max-width: 450px)': {
-      margin:'auto',
-    },
+      margin: 'auto'
+    }
   },
-  title:{
+  title: {
     marginBottom: '5px',
-    textAlign:'center'
+    textAlign: 'center'
   }
 }));

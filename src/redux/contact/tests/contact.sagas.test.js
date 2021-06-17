@@ -47,11 +47,8 @@ import { contactsReducer as Contact } from '../contact.reducer';
 import Table from '../../table/table.reducer';
 import { config } from '../../../configs';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 describe('Contact sagas tests', () => {
   it('Should receive all contacts and set them to store', async (done) => {

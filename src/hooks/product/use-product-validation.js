@@ -10,17 +10,17 @@ import { productsTranslations } from '../../translations/product.translations';
 const selectName = ({ name, validation, required }) =>
   required
     ? [
-      name,
-      validation === 'number'
-        ? Yup[validation]().min(1, REQUIRED_FIELD).required()
-        : Yup[validation]().required()
-    ]
+        name,
+        validation === 'number'
+          ? Yup[validation]().min(1, REQUIRED_FIELD).required()
+          : Yup[validation]().required()
+      ]
     : [
-      name,
-      validation === 'number'
-        ? Yup[validation]().min(1, REQUIRED_FIELD)
-        : Yup[validation]()
-    ];
+        name,
+        validation === 'number'
+          ? Yup[validation]().min(1, REQUIRED_FIELD)
+          : Yup[validation]()
+      ];
 
 const {
   labels: {
@@ -29,11 +29,8 @@ const {
   languages
 } = config;
 
-const {
-  REQUIRED_FIELD,
-  NAME_TOO_LONG_MESSAGE,
-  NAME_TOO_SHORT_MESSAGE
-} = productsTranslations;
+const { REQUIRED_FIELD, NAME_TOO_LONG_MESSAGE, NAME_TOO_SHORT_MESSAGE } =
+  productsTranslations;
 
 const useProductValidation = (
   formikInfo,
@@ -56,26 +53,26 @@ const useProductValidation = (
 
   const formikInfoValues = formikInfo
     ? Object.assign(
-      ...languages.map((lang, idx) => ({
-        [`${lang}${capitalize(infoLabels[0].name)}`]: name[idx].value,
-        [`${lang}${capitalize(infoLabels[1].name)}`]: description[idx].value
-      }))
-    )
+        ...languages.map((lang, idx) => ({
+          [`${lang}${capitalize(infoLabels[0].name)}`]: name[idx].value,
+          [`${lang}${capitalize(infoLabels[1].name)}`]: description[idx].value
+        }))
+      )
     : {};
 
   const yupInfoSchema = formikInfo
     ? Object.assign(
-      ...languages.map((lang) => ({
-        [`${lang}${capitalize(infoLabels[0].name)}`]: Yup.string()
-          .min(6, NAME_TOO_SHORT_MESSAGE)
-          .max(50, NAME_TOO_LONG_MESSAGE)
-          .required(REQUIRED_FIELD),
-        [`${lang}${capitalize(infoLabels[1].name)}`]: Yup.string()
-          .min(2, NAME_TOO_SHORT_MESSAGE)
-          .max(1000, NAME_TOO_LONG_MESSAGE)
-          .required(REQUIRED_FIELD)
-      }))
-    )
+        ...languages.map((lang) => ({
+          [`${lang}${capitalize(infoLabels[0].name)}`]: Yup.string()
+            .min(6, NAME_TOO_SHORT_MESSAGE)
+            .max(50, NAME_TOO_LONG_MESSAGE)
+            .required(REQUIRED_FIELD),
+          [`${lang}${capitalize(infoLabels[1].name)}`]: Yup.string()
+            .min(2, NAME_TOO_SHORT_MESSAGE)
+            .max(1000, NAME_TOO_LONG_MESSAGE)
+            .required(REQUIRED_FIELD)
+        }))
+      )
     : {};
   const yupMaterialsSchema = formikMaterialsValues
     ? Object.fromEntries(materialLabels.map(selectName))

@@ -98,14 +98,11 @@ describe('Pattern-page render tests', () => {
 
 describe('useEffect tests', () => {
   let spyOnUseSelector;
-  let spyOnUseDispatch;
   let mockDispatchFn;
   let wrapper;
   let patternPage;
   let tableContainerRow;
   let tableContainerRowFirst;
-  let tableContainerRowSecond;
-  let tableContainerRowThird;
 
   beforeEach(() => {
     // Mock useSelector hook

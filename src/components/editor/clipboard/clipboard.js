@@ -30,17 +30,17 @@ class Clipboard extends QuillClipboard {
               let url;
               for (const node of this.getMetaTagElements(payload)) {
                 switch (node.getAttribute('property')) {
-                case 'og:title':
-                  title = node.getAttribute('content');
-                  break;
-                case 'og:image':
-                  image = node.getAttribute('content');
-                  break;
-                case 'og:url':
-                  url = node.getAttribute('content');
-                  break;
-                default:
-                  break;
+                  case 'og:title':
+                    title = node.getAttribute('content');
+                    break;
+                  case 'og:image':
+                    image = node.getAttribute('content');
+                    break;
+                  case 'og:url':
+                    url = node.getAttribute('content');
+                    break;
+                  default:
+                    break;
                 }
               }
 

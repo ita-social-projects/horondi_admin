@@ -11,8 +11,8 @@ export const useCommonStyles = makeStyles((theme) => ({
       '& .MuiGrid-grid-xs-3': {
         flexBasis: '50%',
         maxWidth: '50%'
-      },
-    },
+      }
+    }
   },
   adminHeader: {
     display: 'flex',

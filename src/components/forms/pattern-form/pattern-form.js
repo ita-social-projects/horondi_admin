@@ -250,10 +250,10 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                     />
                     {touched.patternConstructorImage &&
                       errors.patternConstructorImage && (
-                      <div className={styles.inputError}>
-                        {errors.patternConstructorImage}
-                      </div>
-                    )}
+                        <div className={styles.inputError}>
+                          {errors.patternConstructorImage}
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>
