@@ -4,6 +4,12 @@ import {
   setFilter
 } from '../../redux/email-questions/email-questions.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
+import buttonTitles from '../../configs/button-titles';
+import {
+  placeholderQuestionSearch,
+  showQuestionOptions,
+  showFilterObj
+} from '../../utils/questions';
 
 const useQuestionFilter = () => {
   const dispatch = useDispatch();
@@ -51,7 +57,15 @@ const useQuestionFilter = () => {
       filters: filters.filters,
       setFiltersFilter
     },
-    filterByMultipleOptions: [],
+    filterByMultipleOptions: [
+      {
+        filters: filters.filters,
+        label: buttonTitles.USER_STATUS_TITLE,
+        selectItems: showFilterObj(),
+        setFilterHandler: setFiltersFilter,
+        objForTranslateRenderItems: showQuestionOptions
+      }
+    ],
     searchOptions: {
       search: filters.search,
       placeholderText: '',

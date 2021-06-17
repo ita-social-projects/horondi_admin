@@ -144,34 +144,38 @@ const TableContainerCollapsableRow = ({
                   </Typography>
                 </>
               )}
-              {!answer && (
-                <TextField
-                  id='filled-full-width'
-                  fullWidth
-                  multiline
-                  rows={10}
-                  margin='normal'
-                  placeholder={labels.emailQuestionsLabels.placeholder}
-                  InputLabelProps={{ shrink: true }}
-                  label='Enter your answer'
-                  value={answerValue}
-                  variant={formConstants.textFieldFilled}
-                  error={!answerValue && shouldValidate}
-                  onChange={(e) => setAnswerValue(e.target.value)}
-                  helperText={handleHelperText(answerValue, shouldValidate)}
-                />
-              )}
-            </Box>
-            <Box display='flex' justifyContent='flex-end' m={2}>
-              {!answer && (
-                <SaveButton
-                  className={classes.controlButton}
-                  id='save'
-                  type={inputTypes.submit}
-                  title={buttonTitles.ANSWER}
-                  onClickHandler={handleSaveButtonAction}
-                />
-              )}
+              <Box
+                display='flex'
+                justifyContent='space-evenly'
+                alignItems='center'
+              >
+                {!answer && (
+                  <TextField
+                    id='filled-full-width'
+                    style={{ width: '85%' }}
+                    multiline
+                    rows={3}
+                    margin='normal'
+                    placeholder={labels.emailQuestionsLabels.placeholder}
+                    InputLabelProps={{ shrink: true }}
+                    label='Enter your answer'
+                    value={answerValue}
+                    variant={formConstants.textFieldFilled}
+                    error={!answerValue && shouldValidate}
+                    onChange={(e) => setAnswerValue(e.target.value)}
+                    helperText={handleHelperText(answerValue, shouldValidate)}
+                  />
+                )}
+                {!answer && (
+                  <SaveButton
+                    className={classes.controlButton}
+                    id='save'
+                    type={inputTypes.submit}
+                    title={buttonTitles.ANSWER}
+                    onClickHandler={handleSaveButtonAction}
+                  />
+                )}
+              </Box>
             </Box>
           </Collapse>
         </TableCell>

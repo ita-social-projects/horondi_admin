@@ -5,7 +5,9 @@ import {
   Input,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Checkbox,
+  ListItemText
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
@@ -24,10 +26,7 @@ const EmailQuestionsFilter = ({ filterItems, filterChangeHandler }) => {
     if (selected.length === 1) {
       return emailQuestionsLabels.ua[selected[0]];
     }
-    return selected
-      .slice(1)
-      .map((item) => emailQuestionsLabels.ua[item])
-      .join(', ');
+    return selected.map((item) => emailQuestionsLabels.ua[item]).join(', ');
   };
 
   return (
@@ -48,12 +47,13 @@ const EmailQuestionsFilter = ({ filterItems, filterChangeHandler }) => {
             value={filterItems}
             onChange={(_, data) => filterChangeHandler(data.props.value)}
             input={<Input />}
-            renderValue={handleSelected}
+            renderValue={(selected) => handleSelected(selected)}
             MenuProps={MenuProps}
           >
             {Object.entries(emailQuestionsLabels.ua).map((status) => (
               <MenuItem key={status[0]} value={status[0]}>
-                {status[1]}
+                <Checkbox checked={filterItems.indexOf(status[0]) > -1} />
+                <ListItemText primary={status[0]} />
               </MenuItem>
             ))}
           </Select>

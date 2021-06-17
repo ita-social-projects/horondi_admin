@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
 import NavFilterByDate from '../../components/filter-search-sort/filter-by-date';
 import NavSearch from '../../components/filter-search-sort/nav-search';
+import NavFilterByValues from '../../components/filter-search-sort/filter-by-multiple-values';
 import NavClearFilters from '../../components/filter-search-sort/nav-clear-filters';
 import { useStyles } from './email-questions-list.styles';
 import { useCommonStyles } from '../common.styles';
@@ -50,8 +51,13 @@ const EmailQuestionsList = () => {
     useSelector(questionSelector);
 
   const dispatch = useDispatch();
-  const { filterByDateOptions, searchOptions, clearOptions, filterByStatus } =
-    useQuestionFilter();
+  const {
+    filterByDateOptions,
+    searchOptions,
+    clearOptions,
+    filterByStatus,
+    filterByMultipleOptions
+  } = useQuestionFilter();
 
   useEffect(() => {
     dispatch(
@@ -184,6 +190,14 @@ const EmailQuestionsList = () => {
 
           <NavSearch searchOptions={searchOptions} />
           <NavClearFilters clearOptions={clearOptions} />
+          {filterByMultipleOptions?.length
+            ? filterByMultipleOptions.map((filterItem) => (
+                <NavFilterByValues
+                  key={filterItem}
+                  filterByMultipleOptions={filterItem}
+                />
+              ))
+            : null}
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
             setQuestionsToOperate={setQuestionsToOperate}
