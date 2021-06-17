@@ -1,10 +1,9 @@
 import _ from 'lodash';
 
 export const showQuestionOptions = {
-  all: 'Всі',
-  pending: 'Очікує відповіді',
-  spam: 'Спам',
-  answered: 'Відповідь надано'
+  PENDING: 'Очікує відповіді',
+  SPAM: 'Спам',
+  ANSWERED: 'Відповідь надано'
 };
 export const placeholderQuestionSearch = 'по тексту';
 export const showFilterObj = () => {

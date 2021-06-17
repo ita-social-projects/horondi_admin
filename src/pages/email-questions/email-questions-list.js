@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
 import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
-import NavFilterByDate from '../../components/filter-search-sort/filter-by-date';
-import NavSearch from '../../components/filter-search-sort/nav-search';
-import NavFilterByValues from '../../components/filter-search-sort/filter-by-multiple-values';
-import NavClearFilters from '../../components/filter-search-sort/nav-clear-filters';
 import { useStyles } from './email-questions-list.styles';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
   deleteEmailQuestions,
-  setEmailQuestionLoading,
   answerToEmailQuestion
 } from '../../redux/email-questions/email-questions.actions';
-
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useQuestionFilter from '../../hooks/filters/use-email-questions-filter';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
@@ -25,7 +19,6 @@ import TableContainerCollapsableRow from '../../containers/table-container-colla
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import getTime from '../../utils/getTime';
-import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
 import {
   answerTextHandler,
@@ -34,7 +27,7 @@ import {
 import { questionSelector } from '../../redux/selectors/email-questions.selectors';
 
 const { labels, titles, messages, tableHeadRowTitles } = config;
-const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
+const { EMAIL_QUESTION_REMOVE_MESSAGE } = messages;
 
 const tableTitles = tableHeadRowTitles.emailQuestions;
 
@@ -51,20 +44,14 @@ const EmailQuestionsList = () => {
     useSelector(questionSelector);
 
   const dispatch = useDispatch();
-  const {
-    filterByDateOptions,
-    searchOptions,
-    clearOptions,
-    filterByStatus,
-    filterByMultipleOptions
-  } = useQuestionFilter();
+  const questionOptions = useQuestionFilter();
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
         filter: {
           date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
-          filter: filterByStatus.filters.slice(1),
+          filter: questionOptions.filterByStatus.filters,
           search: filters.search
         },
         pagination: {
@@ -77,7 +64,7 @@ const EmailQuestionsList = () => {
     dispatch,
     currentPage,
     filters,
-    filterByStatus.filters,
+    questionOptions.filterByStatus.filters,
     questionsPerPage
   ]);
 
@@ -102,23 +89,6 @@ const EmailQuestionsList = () => {
       );
     } else {
       setShouldValidate(true);
-    }
-  };
-
-  const filterChangeHandler = (id) => {
-    console.log('ID ... filters filter', id, filterByStatus.filters);
-    if (id === 'ALL') {
-      filterByStatus.setFiltersFilter([id]);
-      return;
-    }
-
-    const possibleFilter = filterByStatus.filters.find((item) => item === id);
-    if (possibleFilter) {
-      filterByStatus.setFiltersFilter(
-        filterByStatus.filters.filter((item) => item !== id)
-      );
-    } else {
-      filterByStatus.setFiltersFilter([...filterByStatus.filters, id]);
     }
   };
 
@@ -172,6 +142,8 @@ const EmailQuestionsList = () => {
     return <LoadingBar />;
   }
 
+  console.log(questionOptions.filterByMultipleOptions);
+
   return (
     <div className={commonStyles.container}>
       <div
@@ -182,12 +154,8 @@ const EmailQuestionsList = () => {
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
         <div className={styles.operations}>
-          <NavFilterByDate filterByDateOptions={filterByDateOptions || {}} />
-          <EmailQuestionsFilter
-            filterItems={filterByStatus.filters}
-            filterChangeHandler={filterChangeHandler}
-          />
-
+          <FilterNavbar options={questionOptions || {}} />
+          {/* <NavFilterByDate filterByDateOptions={filterByDateOptions || {}} />
           <NavSearch searchOptions={searchOptions} />
           <NavClearFilters clearOptions={clearOptions} />
           {filterByMultipleOptions?.length
@@ -197,7 +165,7 @@ const EmailQuestionsList = () => {
                   filterByMultipleOptions={filterItem}
                 />
               ))
-            : null}
+            : null} */}
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
             setQuestionsToOperate={setQuestionsToOperate}

@@ -5,11 +5,7 @@ import {
 } from '../../redux/email-questions/email-questions.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import buttonTitles from '../../configs/button-titles';
-import {
-  placeholderQuestionSearch,
-  showQuestionOptions,
-  showFilterObj
-} from '../../utils/questions';
+import { showQuestionOptions, showFilterObj } from '../../utils/questions';
 
 const useQuestionFilter = () => {
   const dispatch = useDispatch();
@@ -46,7 +42,7 @@ const useQuestionFilter = () => {
     dispatch(setCurrentPage(0));
     dispatch(clearFilters());
   };
-
+  console.log('aasdasd', filters.filters);
   return {
     filterByDateOptions: {
       dateFrom: filters.dateFrom,

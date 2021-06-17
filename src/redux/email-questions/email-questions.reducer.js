@@ -11,7 +11,7 @@ import {
 } from './email-questions.types';
 
 const initialFilters = {
-  filters: ['ALL'],
+  filters: [],
   dateFrom: '',
   dateTo: '',
   search: ''
