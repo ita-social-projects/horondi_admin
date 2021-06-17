@@ -24,6 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   collapseRowCursor: {
+    justifyContent: 'space-between',
     cursor: 'default'
   },
   tableCell: {

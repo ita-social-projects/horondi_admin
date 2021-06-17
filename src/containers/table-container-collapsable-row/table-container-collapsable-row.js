@@ -129,9 +129,13 @@ const TableContainerCollapsableRow = ({
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box margin={1}>
               <Typography variant='h5' gutterBottom component='div'>
-                Запитання:
+                {`Запитання від ${properties.senderName} (${properties.email}):`}
               </Typography>
-              <Typography gutterBottom component='div'>
+              <Typography
+                style={{ width: '100%' }}
+                gutterBottom
+                component='div'
+              >
                 {question}
               </Typography>
               {answer && (
@@ -144,15 +148,11 @@ const TableContainerCollapsableRow = ({
                   </Typography>
                 </>
               )}
-              <Box
-                display='flex'
-                justifyContent='space-evenly'
-                alignItems='center'
-              >
+              <Box display='flex' alignItems='center'>
                 {!answer && (
                   <TextField
                     id='filled-full-width'
-                    style={{ width: '85%' }}
+                    style={{ width: '88%' }}
                     multiline
                     rows={3}
                     margin='normal'
@@ -167,13 +167,15 @@ const TableContainerCollapsableRow = ({
                   />
                 )}
                 {!answer && (
-                  <SaveButton
-                    className={classes.controlButton}
-                    id='save'
-                    type={inputTypes.submit}
-                    title={buttonTitles.ANSWER}
-                    onClickHandler={handleSaveButtonAction}
-                  />
+                  <Box style={{ margin: '0 auto' }}>
+                    <SaveButton
+                      className={classes.controlButton}
+                      id='save'
+                      type={inputTypes.submit}
+                      title={buttonTitles.ANSWER}
+                      onClickHandler={handleSaveButtonAction}
+                    />
+                  </Box>
                 )}
               </Box>
             </Box>
