@@ -24,7 +24,7 @@ import {
   answerTextHandler,
   answerShowHandler
 } from '../../utils/email-question-list';
-import { questionSelector } from '../../redux/selectors/email-questions.selectors';
+import { questionSelectorWithPagination } from '../../redux/selectors/email-questions.selectors';
 
 const { labels, titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE } = messages;
@@ -40,8 +40,8 @@ const EmailQuestionsList = () => {
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading, pagesCount, currentPage, questionsPerPage, filters } =
-    useSelector(questionSelector);
+  const { list, loading, filters, currentPage, rowsPerPage, itemsCount } =
+    useSelector(questionSelectorWithPagination);
 
   const dispatch = useDispatch();
   const questionOptions = useQuestionFilter();
@@ -55,8 +55,8 @@ const EmailQuestionsList = () => {
           search: filters.search
         },
         pagination: {
-          limit: questionsPerPage,
-          skip: currentPage * questionsPerPage
+          limit: rowsPerPage,
+          skip: currentPage * rowsPerPage
         }
       })
     );
@@ -65,9 +65,8 @@ const EmailQuestionsList = () => {
     currentPage,
     filters,
     questionOptions.filterByStatus.filters,
-    questionsPerPage
+    rowsPerPage
   ]);
-
   const questionDeleteHandler = (id, e) => {
     e.stopPropagation();
     const removeQuestion = () => {
@@ -163,7 +162,7 @@ const EmailQuestionsList = () => {
         {questions?.length ? (
           <TableContainerGenerator
             pagination
-            count={pagesCount}
+            count={itemsCount}
             tableTitles={tableTitles}
             tableItems={questions}
           />
