@@ -6,7 +6,6 @@ import {
   setEmailQuestionLoading,
   setEmailQuestionsError,
   setCurrentEmailQuestion,
-  setEmailQuestionsPagesCount,
   setEmailQuestionsPendingCount
 } from './email-questions.actions';
 import {

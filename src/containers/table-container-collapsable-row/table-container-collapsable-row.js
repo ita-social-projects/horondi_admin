@@ -7,8 +7,7 @@ import {
   Checkbox,
   Typography,
   TextField,
-  IconButton,
-  Divider
+  IconButton
 } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -138,9 +137,9 @@ const TableContainerCollapsableRow = ({
                 style={{ marginBottom: '10px' }}
               >{`${properties.email}`}</Typography>
               <Typography
-                style={{ width: '100%' }}
+                style={{ maxWidth: '100%' }}
                 gutterBottom
-                component='div'
+                component='span'
                 align='justify'
                 variant='h6'
               >
