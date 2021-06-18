@@ -22,6 +22,7 @@ import { handleOrderSubmition } from '../../utils/handle-orders-page';
 const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { pathToOrders } = config.routes;
   const { orderTabs } = labels;
   const { materialUiConstants } = config;
   const { SAVE_TITLE } = buttonTitles;
@@ -108,7 +109,7 @@ const OrderItem = ({ id }) => {
         </TabPanel>
       </Paper>
       <div className={classes.controlsBlock}>
-        <BackButton />
+        <BackButton pathBack={pathToOrders} />
         <SaveButton
           className={classes.saveBtn}
           type={materialUiConstants.types.submit}
