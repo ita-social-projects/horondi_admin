@@ -11,7 +11,7 @@ import {
   answerToEmailQuestion
 } from '../../redux/email-questions/email-questions.actions';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
-import useQuestionFilter from '../../hooks/filters/use-email-questions-filter';
+import useQuestionFilter from '../../hooks/filters/use-questions-filter';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
