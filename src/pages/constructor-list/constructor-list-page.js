@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Button, Typography } from '@material-ui/core';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import { getModels, deleteModel } from '../../redux/model/model.actions';
-
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
@@ -13,14 +17,12 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { selectModelAndTable } from '../../redux/selectors/model.selectors';
 import { useStyles } from '../../components/forms/model-form/model-form.styles';
-import DropDownModelList from './drop-down-component';
 
 const { labelsEn } = config.labels.model;
 const { materialUiConstants } = config;
-const { MODEL_CONSTRUCTOR, CREATE_CONSTRUCTOR } = config.buttonTitles;
+const { CREATE_CONSTRUCTOR } = config.buttonTitles;
 const map = require('lodash/map');
 
-const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;
 
 const tableTitles = config.tableHeadRowTitles.models;
@@ -29,7 +31,13 @@ const { IMG_URL } = config;
 const { showEnable, showDisable } = config.labels.model;
 
 const ConstructorListPage = () => {
-  const id = '6043bf9e3e06ad3edcdb7b30';
+  const [value, setValue] = useState('');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+  const id = value;
+  console.log(id);
   const commonStyles = useCommonStyles();
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -63,7 +71,7 @@ const ConstructorListPage = () => {
   if (loading) {
     return <LoadingBar />;
   }
-
+  // console.log(list)
   const modelItems = map(list, (modelItem) => (
     <TableContainerRow
       image={modelItem.images ? `${IMG_URL}${modelItem.images.thumbnail}` : ''}
@@ -79,6 +87,34 @@ const ConstructorListPage = () => {
       }}
     />
   ));
+
+  const DropDownModelList = () => (
+      <FormControl required className={styles.formControl}>
+        <InputLabel shrink>Оберіть модель для конструктора</InputLabel>
+        <Select
+          // labelId='select-demo'
+          // id='florida_select'
+          // displayEmpty
+          value={value}
+          onChange={handleChange}
+          autoWidth
+          className={styles.selectedEmpty}
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem value='' disabled>
+            Модель
+          </MenuItem>
+          {list.map((modelItem) => (
+            <MenuItem key={modelItem._id} value={modelItem._id}>
+              {modelItem.name[0].value}
+            </MenuItem>
+          ))}
+        </Select>
+        <FormHelperText>
+          Після вибору моделі настисніть кнопку створити новий
+        </FormHelperText>
+      </FormControl>
+    );
 
   return (
     <div className={commonStyles.container}>
@@ -103,13 +139,13 @@ const ConstructorListPage = () => {
       <div>
         <DropDownModelList />
       </div>
-      {/* <TableContainerGenerator */}
-      {/*    data-cy='modelTable' */}
-      {/*    pagination */}
-      {/*    count={itemsCount} */}
-      {/*    tableTitles={tableTitles} */}
-      {/*    tableItems={modelItems} */}
-      {/* /> */}
+      <TableContainerGenerator
+        data-cy='modelTable'
+        pagination
+        count={itemsCount}
+        tableTitles={tableTitles}
+        tableItems={modelItems}
+      />
     </div>
   );
 };
