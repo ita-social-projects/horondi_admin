@@ -2,11 +2,8 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import DeleteButton from './delete-button';
-import { config } from '../../../configs';
 
 Enzyme.configure({ adapter: new Adapter() });
-
-const { DELETE_TITLE } = config.buttonTitles;
 
 describe('delete button tests', () => {
   const size = 'small';

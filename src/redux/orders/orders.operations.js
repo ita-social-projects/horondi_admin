@@ -1,7 +1,7 @@
-import {getItems, setItems} from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
 
 export const getOrderById = (id) => {
-    const query = `
+  const query = `
 		query ($id:ID!){
 			getOrderById(id: $id) {
 				...on Order {
@@ -108,11 +108,11 @@ export const getOrderById = (id) => {
 			}
 		}
   `;
-    return getItems(query, {id});
+  return getItems(query, { id });
 };
 
 export const updateOrder = (order, id) => {
-    const query = `
+  const query = `
 		mutation ($order: OrderInput!, $id:ID!) {
 			updateOrder (order: $order, id: $id) {
 				...on Order {
@@ -185,11 +185,11 @@ export const updateOrder = (order, id) => {
 			}
 		}
   `;
-    return setItems(query, {order, id});
+  return setItems(query, { order, id });
 };
 
 export const addOrder = (order) => {
-    const query = `
+  const query = `
 		mutation ($order: OrderInput!) {
 			addOrder (order: $order) {
 				...on Order {
@@ -202,12 +202,11 @@ export const addOrder = (order) => {
 			}
 		}
   `;
-    return setItems(query, {order});
+  return setItems(query, { order });
 };
 
 export const getAllOrders = async (skip, limit, filter, sort) => {
-
-    const query = `
+  const query = `
       query($limit: Int, $skip: Int, $filter: OrderFilterInput, $sort:JSONObject) {
         getAllOrders(limit: $limit, skip: $skip, filter: $filter, sort:$sort) {
           items {
@@ -237,18 +236,18 @@ export const getAllOrders = async (skip, limit, filter, sort) => {
       }
     `;
 
-    const result = await getItems(query, {
-        skip,
-        limit,
-        filter,
-        sort
-    });
+  const result = await getItems(query, {
+    skip,
+    limit,
+    filter,
+    sort
+  });
 
-    return result?.data?.getAllOrders;
+  return result?.data?.getAllOrders;
 };
 
 export const deleteOrder = async (id) => {
-    const query = `
+  const query = `
       mutation($id: ID!) {
         deleteOrder(id: $id) {
           ... on Order {
@@ -264,25 +263,25 @@ export const deleteOrder = async (id) => {
       }
     `;
 
-    const result = await setItems(query, {id});
+  const result = await setItems(query, { id });
 
-    return result?.data?.deleteOrder;
+  return result?.data?.deleteOrder;
 };
 
 export const getNovaPoshtaCities = async (city) => {
-    const query = `
+  const query = `
       query($city: String) {
         getNovaPoshtaCities(city: $city) {
           description
         }
       }
     `;
-    const result = await getItems(query, {city});
+  const result = await getItems(query, { city });
 
-    return result?.data?.getNovaPoshtaCities;
+  return result?.data?.getNovaPoshtaCities;
 };
 export const getNovaPoshtaWarehouses = async (city) => {
-    const query = `
+  const query = `
       query($city: String) {
         getNovaPoshtaWarehouses(city: $city) {
           description
@@ -290,13 +289,13 @@ export const getNovaPoshtaWarehouses = async (city) => {
       }
     `;
 
-    const result = await getItems(query, city);
+  const result = await getItems(query, city);
 
-    return result?.data?.getNovaPoshtaWarehouses;
+  return result?.data?.getNovaPoshtaWarehouses;
 };
 
 export const getUkrPostRegions = async () => {
-    const query = `
+  const query = `
       query {
         getUkrPoshtaRegions {
           REGION_UA
@@ -304,13 +303,13 @@ export const getUkrPostRegions = async () => {
         }
       }
     `;
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getUkrPoshtaRegions;
+  return result?.data?.getUkrPoshtaRegions;
 };
 
 export const getUkrPoshtaDistrictsByRegionId = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getUkrPoshtaDistrictsByRegionId(id: $id) {
           DISTRICT_UA
@@ -318,13 +317,13 @@ export const getUkrPoshtaDistrictsByRegionId = async (id) => {
         }
       }
     `;
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    return result?.data?.getUkrPoshtaDistrictsByRegionId;
+  return result?.data?.getUkrPoshtaDistrictsByRegionId;
 };
 
 export const getUkrPoshtaCitiesByDistrictId = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getUkrPoshtaCitiesByDistrictId(id: $id) {
           CITY_UA
@@ -332,12 +331,12 @@ export const getUkrPoshtaCitiesByDistrictId = async (id) => {
         }
       }
     `;
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    return result?.data?.getUkrPoshtaCitiesByDistrictId;
+  return result?.data?.getUkrPoshtaCitiesByDistrictId;
 };
 export const getUkrPoshtaPostOfficesByCityId = async (id) => {
-    const query = `
+  const query = `
       query($id: ID!) {
         getUkrPoshtaPostofficesCityId(id: $id) {
           POSTCODE
@@ -345,7 +344,7 @@ export const getUkrPoshtaPostOfficesByCityId = async (id) => {
         }
       }
     `;
-    const result = await getItems(query, {id});
+  const result = await getItems(query, { id });
 
-    return result?.data?.getUkrPoshtaPostofficesCityId;
+  return result?.data?.getUkrPoshtaPostofficesCityId;
 };

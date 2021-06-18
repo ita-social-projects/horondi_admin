@@ -39,56 +39,56 @@ export const initialState = {
 
 const patternReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_PATTERNS:
-    return {
-      ...state,
-      list: action.payload
-    };
-  case SET_PATTERN:
-    return {
-      ...state,
-      pattern: action.payload
-    };
-  case SET_PATTERN_LOADING:
-    return {
-      ...state,
-      patternLoading: action.payload
-    };
-  case SET_PATTERN_ERROR:
-    return {
-      ...state,
-      patternError: action.payload
-    };
-  case REMOVE_PATTERN_FROM_STORE:
-    const patterns = state.list.filter(
-      (pattern) => pattern._id !== action.payload
-    );
-    return {
-      ...state,
-      list: patterns
-    };
-  case SET_FILTER:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        ...action.payload
-      }
-    };
-  case SET_SORT:
-    return {
-      ...state,
-      sort: {
-        ...action.payload
-      }
-    };
-  case CLEAR_FILTERS:
-    return {
-      ...state,
-      filters: initialFilters
-    };
-  default:
-    return state;
+    case SET_PATTERNS:
+      return {
+        ...state,
+        list: action.payload
+      };
+    case SET_PATTERN:
+      return {
+        ...state,
+        pattern: action.payload
+      };
+    case SET_PATTERN_LOADING:
+      return {
+        ...state,
+        patternLoading: action.payload
+      };
+    case SET_PATTERN_ERROR:
+      return {
+        ...state,
+        patternError: action.payload
+      };
+    case REMOVE_PATTERN_FROM_STORE:
+      const patterns = state.list.filter(
+        (pattern) => pattern._id !== action.payload
+      );
+      return {
+        ...state,
+        list: patterns
+      };
+    case SET_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload
+        }
+      };
+    case SET_SORT:
+      return {
+        ...state,
+        sort: {
+          ...action.payload
+        }
+      };
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: initialFilters
+      };
+    default:
+      return state;
   }
 };
 

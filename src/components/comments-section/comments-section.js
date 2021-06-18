@@ -48,22 +48,22 @@ const CommentsSection = ({ value, commentsType }) => {
   const commentsItems =
     list && list.length >= 1
       ? list.map((commentItem) => {
-        const createdAt = new Date(
-          parseInt(commentItem.date, 10)
-        ).toLocaleString();
+          const createdAt = new Date(
+            parseInt(commentItem.date, 10)
+          ).toLocaleString();
 
-        return (
-          <TableContainerRow
-            key={commentItem._id}
-            id={commentItem._id}
-            date={createdAt}
-            text={commentItem.text}
-            showAvatar={false}
-            showEdit={false}
-            deleteHandler={() => commentDeleteHandler(commentItem._id)}
-          />
-        );
-      })
+          return (
+            <TableContainerRow
+              key={commentItem._id}
+              id={commentItem._id}
+              date={createdAt}
+              text={commentItem.text}
+              showAvatar={false}
+              showEdit={false}
+              deleteHandler={() => commentDeleteHandler(commentItem._id)}
+            />
+          );
+        })
       : null;
 
   return (

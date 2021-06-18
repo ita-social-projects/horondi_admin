@@ -5,8 +5,8 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     '@media (max-width: 450px)': {
-      flexDirection:'column-reverse',
-    },
+      flexDirection: 'column-reverse'
+    }
   },
 
   selectOptionRow: {
@@ -16,16 +16,16 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     '& div': {
       display: 'flex',
-      alignItems: 'center',
-    },
+      alignItems: 'center'
+    }
   },
 
   root: {
     width: '400px',
     marginRight: '152px',
     '@media (max-width: 450px)': {
-      margin:'15px 0px 15px',
-    },
+      margin: '15px 0px 15px'
+    }
   },
 
   materialItem: {

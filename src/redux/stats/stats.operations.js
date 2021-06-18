@@ -1,7 +1,7 @@
-import {getItems} from '../../utils/client';
+import { getItems } from '../../utils/client';
 
 const getPopularCategories = async () => {
-    const query = `
+  const query = `
 	query {
 		getPopularCategories {
 			names
@@ -10,13 +10,13 @@ const getPopularCategories = async () => {
 		}
 	}
  `;
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getPopularCategories;
+  return result?.data?.getPopularCategories;
 };
 
 const getPopularProducts = async () => {
-    const query = `
+  const query = `
 		query {
 			getPopularProducts{
 				labels
@@ -26,13 +26,13 @@ const getPopularProducts = async () => {
 		}	
 	`;
 
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getPopularProducts;
+  return result?.data?.getPopularProducts;
 };
 
 const getUsersByDays = async (days) => {
-    const query = `
+  const query = `
 		query ($days: Int!) {
 			getUsersForStatistic(filter: {days: $days}) {
 				counts
@@ -42,13 +42,13 @@ const getUsersByDays = async (days) => {
 		}
 	`;
 
-    const result = await getItems(query, {days});
+  const result = await getItems(query, { days });
 
-    return result?.data?.getUsersForStatistic;
+  return result?.data?.getUsersForStatistic;
 };
 
 const getOrdersStats = async (date) => {
-    const query = `
+  const query = `
 		query($date: Int!) {
 			getOrdersStatistic(date: $date) {
 				names
@@ -58,13 +58,13 @@ const getOrdersStats = async (date) => {
 		}
 	`;
 
-    const result = await getItems(query, {date});
+  const result = await getItems(query, { date });
 
-    return result?.data?.getOrdersStatistic;
+  return result?.data?.getOrdersStatistic;
 };
 
 const getPaidOrdersStats = async (date) => {
-    const query = `
+  const query = `
 		query($date: Int!) {
 			getPaidOrdersStatistic(date: $date) {
 				labels
@@ -74,15 +74,15 @@ const getPaidOrdersStats = async (date) => {
 		}
 	`;
 
-    const result = await getItems(query, {date});
+  const result = await getItems(query, { date });
 
-    return result?.data?.getPaidOrdersStatistic;
+  return result?.data?.getPaidOrdersStatistic;
 };
 
 export {
-    getPopularCategories,
-    getPopularProducts,
-    getOrdersStats,
-    getPaidOrdersStats,
-    getUsersByDays
+  getPopularCategories,
+  getPopularProducts,
+  getOrdersStats,
+  getPaidOrdersStats,
+  getUsersByDays
 };

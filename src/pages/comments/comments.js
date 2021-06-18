@@ -33,7 +33,7 @@ const { pathToCommentsEdit } = config.routes;
 
 const map = require('lodash/map');
 
-export const Comments = () => {
+const Comments = () => {
   const commonStyles = useCommonStyles();
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -92,7 +92,7 @@ export const Comments = () => {
   }
   return (
     <div className={commonStyles.container}>
-      <div className={`${commonStyles.adminHeader } ${ styles.title}`}>
+      <div className={`${commonStyles.adminHeader} ${styles.title}`}>
         <Typography
           variant={materialUiConstants.typographyVariantH1}
           className={commonStyles.materialTitle}

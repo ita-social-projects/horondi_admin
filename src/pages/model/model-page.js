@@ -29,9 +29,8 @@ const ModelPage = () => {
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
-    selectModelAndTable
-  );
+  const { list, loading, currentPage, rowsPerPage, itemsCount } =
+    useSelector(selectModelAndTable);
 
   const dispatch = useDispatch();
 

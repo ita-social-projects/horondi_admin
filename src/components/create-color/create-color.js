@@ -131,21 +131,21 @@ const CreateColor = () => {
   const languageTabs =
     languages.length > 0
       ? languages.map((lang) => {
-        const tabConditionForStyles =
+          const tabConditionForStyles =
             (touched[`${lang}SimpleName`] && errors[`${lang}SimpleName`]) ||
             (touched[`${lang}Name`] && errors[`${lang}Name`]);
 
-        return (
-          <Tab
-            className={handleNameInLanguageTabs(
-              tabConditionForStyles,
-              styles
-            )}
-            label={lang}
-            key={lang}
-          />
-        );
-      })
+          return (
+            <Tab
+              className={handleNameInLanguageTabs(
+                tabConditionForStyles,
+                styles
+              )}
+              label={lang}
+              key={lang}
+            />
+          );
+        })
       : null;
 
   return (

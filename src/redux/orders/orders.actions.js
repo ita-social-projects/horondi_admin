@@ -24,7 +24,8 @@ import {
   GET_UKRPOST_POSTOFFICES,
   SET_FILTER,
   CLEAR_FILTERS,
-  SET_SORT, SET_ORDER_SORT_LABEL
+  SET_SORT,
+  SET_ORDER_SORT_LABEL
 } from './orders.types';
 
 const getOrder = (payload) => ({

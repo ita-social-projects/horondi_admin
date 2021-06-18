@@ -9,6 +9,6 @@ export const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2)
   },
   filters: {
-    margin:'30px 0'
+    margin: '30px 0'
   }
 }));

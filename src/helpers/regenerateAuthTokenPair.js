@@ -18,7 +18,7 @@ const refreshAuthToken = async () => {
 
   if (newTokenPair?.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
     return isRegenerateTokens;
-  } 
+  }
   setToLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN, newTokenPair.token);
   setToLocalStorage(
     LOCAL_STORAGE.AUTH_REFRESH_TOKEN,
@@ -28,7 +28,6 @@ const refreshAuthToken = async () => {
   isRegenerateTokens = true;
 
   return isRegenerateTokens;
-  
 };
 
 export default refreshAuthToken;
