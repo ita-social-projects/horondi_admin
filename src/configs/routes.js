@@ -52,6 +52,7 @@ const routes = {
   pathToHomePageSlideDetail: '/home-page-slides/:id',
   pathToConstructor: '/constructor/:id',
   pathToAddConstructor: '/constructor/:id/add',
-  pathToConstructorDetails: '/constructor/:id/:elementId'
+  pathToConstructorDetails: '/constructor/:id/:elementId',
+  pathToConstructorList: '/constructor-list'
 };
 export default routes;
