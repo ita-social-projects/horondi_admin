@@ -22,6 +22,16 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import GradientIcon from '@material-ui/icons/Gradient';
 import ImportLocationOnIcon from '@material-ui/icons/LocationOn';
 
+import ViewDayIcon from '@material-ui/icons/ViewDay';
+import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
+import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import PictureInPictureIcon from '@material-ui/icons/PictureInPicture';
+import PanoramaVerticalIcon from '@material-ui/icons/PanoramaVertical';
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
+import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+
 import routes from './routes';
 
 export const menuCategories = [
@@ -58,4 +68,16 @@ export const staticPagesCategories = [
   ['Про нас', routes.pathToBusinessPages, InfoIcon],
   ['Про матеріали', routes.pathToBusinessPages, ExtensionIcon],
   ['Правила користування сайтом', routes.pathToBusinessPages, ErrorIcon]
+];
+
+export const constructorMenuCategories = [
+  ['Список конструкторів', routes.pathToModels, ViewHeadlineIcon],
+  ['Основа', routes.pathToPatterns, ViewDayIcon],
+  ['Низ', routes.pathToPatterns, GetAppIcon],
+  ['Передня кишеня', routes.pathToPatterns, PictureInPictureIcon],
+  ['Бокові кишені', routes.pathToPatterns, SwapHorizIcon],
+  ['Потаємні кишені', routes.pathToPatterns, VisibilityOffIcon],
+  ['Спинка', routes.pathToPatterns, PanoramaVerticalIcon],
+  ['Ремінці', routes.pathToPatterns, ConfirmationNumberIcon],
+  ['Застібки', routes.pathToPatterns, AllInclusiveIcon]
 ];
