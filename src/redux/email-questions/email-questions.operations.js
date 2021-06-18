@@ -1,12 +1,11 @@
 import { getItems, setItems } from '../../utils/client';
 
-
 const getAllEmailQuestions = async ({
   filter,
   pagination: { skip, limit }
 }) => {
   const query = `
-      query($filter: QuestionsInput, $pagination: Pagination) {
+      query($filter: QuestionsFilterInput, $pagination: Pagination) {
         getAllEmailQuestions(filter: $filter, pagination: $pagination) {
           questions {
             _id
