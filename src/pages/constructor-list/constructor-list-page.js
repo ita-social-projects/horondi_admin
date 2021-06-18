@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
@@ -13,26 +12,35 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import { selectModelAndTable } from '../../redux/selectors/model.selectors';
+import { useStyles } from '../../components/forms/model-form/model-form.styles';
+import DropDownModelList from './drop-down-component';
 
+const { labelsEn } = config.labels.model;
+const { materialUiConstants } = config;
+const { MODEL_CONSTRUCTOR, CREATE_CONSTRUCTOR } = config.buttonTitles;
 const map = require('lodash/map');
 
 const { routes } = config;
 const { MODEL_REMOVE_MESSAGE } = config.messages;
-const { CREATE_MODEL_TITLE } = config.buttonTitles;
-const pathToModelAddPage = routes.pathToAddModel;
+
 const tableTitles = config.tableHeadRowTitles.models;
-const pageTitle = config.titles.modelPageTitles.mainPageTitle;
+const pageTitle = config.titles.constructorListPageTitles.mainPageTitle;
 const { IMG_URL } = config;
 const { showEnable, showDisable } = config.labels.model;
 
 const ConstructorListPage = () => {
+  const id = '6043bf9e3e06ad3edcdb7b30';
   const commonStyles = useCommonStyles();
-
+  const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(selectModelAndTable);
 
   const dispatch = useDispatch();
+
+  const handleConstructor = () => {
+    dispatch(push(config.routes.pathToConstructor.replace(':id', id)));
+  };
 
   useEffect(() => {
     dispatch(
@@ -78,23 +86,30 @@ const ConstructorListPage = () => {
         <Typography variant='h1' className={commonStyles.materialTitle}>
           {pageTitle}
         </Typography>
-        <Button
-          data-cy='add-model'
-          component={Link}
-          to={pathToModelAddPage}
-          variant='contained'
-          color='primary'
-        >
-          {CREATE_MODEL_TITLE}
-        </Button>
+
+        <div className={styles.constructorButton}>
+          <Button
+            data-cy={labelsEn.constructor}
+            className={styles.saveButton}
+            onClick={handleConstructor}
+            color={materialUiConstants.secondary}
+            variant={materialUiConstants.contained}
+          >
+            {/* {MODEL_CONSTRUCTOR} */}
+            {CREATE_CONSTRUCTOR}
+          </Button>
+        </div>
       </div>
-      <TableContainerGenerator
-        data-cy='modelTable'
-        pagination
-        count={itemsCount}
-        tableTitles={tableTitles}
-        tableItems={modelItems}
-      />
+      <div>
+        <DropDownModelList />
+      </div>
+      {/* <TableContainerGenerator */}
+      {/*    data-cy='modelTable' */}
+      {/*    pagination */}
+      {/*    count={itemsCount} */}
+      {/*    tableTitles={tableTitles} */}
+      {/*    tableItems={modelItems} */}
+      {/* /> */}
     </div>
   );
 };
