@@ -7,3 +7,5 @@ export const patternStatusTableAction = {
   true: 'Так',
   false: 'Hi'
 };
+
+export const patternPlaceholderSearch = 'за назвою';

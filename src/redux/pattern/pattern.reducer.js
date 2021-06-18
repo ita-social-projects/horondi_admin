@@ -94,7 +94,8 @@ const patternReducer = (state = initialState, action = {}) => {
         ...state,
         filters: initialFilters,
         sortLabel: '',
-        sort: {}
+        sort: {},
+        name: ''
       };
     default:
       return state;

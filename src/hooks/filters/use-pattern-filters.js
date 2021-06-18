@@ -11,7 +11,10 @@ import {
   materialPatternFilterObject,
   materialPatternTableAction
 } from '../../utils/pattern';
-import { patternStatusTableAction } from '../../consts/pattern-status';
+import {
+  patternStatusTableAction,
+  patternPlaceholderSearch
+} from '../../consts/pattern-status';
 
 const usePatternFilters = () => {
   const dispatch = useDispatch();
@@ -81,6 +84,7 @@ const usePatternFilters = () => {
     ],
 
     searchOptions: {
+      placeholderText: patternPlaceholderSearch,
       name: filters?.search,
       setSearchFilter
     },
