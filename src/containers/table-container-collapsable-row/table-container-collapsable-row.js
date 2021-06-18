@@ -126,7 +126,7 @@ const TableContainerCollapsableRow = ({
       </TableRow>
       <TableRow className={classes.collapseRowCursor}>
         <TableCell className={classes.tableCell} colSpan={7}>
-          <Collapse in={open} timeout='auto' unmountOnExit>
+          <Collapse in={open} timeout='auto'>
             <Box margin={1}>
               <Typography variant='h5' gutterBottom display='inline'>
                 Запитання від {properties.senderName}:
