@@ -43,13 +43,11 @@ describe('pattern form tests', () => {
   let getState;
 
   beforeEach(() => {
-    // Mock useSelector hook
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
     spyOnUseSelector.mockImplementation(() => mockStore);
 
-    // Mock useDispatch hook
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
-    // Mock dispatch function returned from useDispatch
+
     mockDispatch = jest.fn();
     spyOnUseDispatch.mockReturnValue(mockDispatch);
     component = mount(<PatternForm />);
@@ -59,8 +57,6 @@ describe('pattern form tests', () => {
     spyOnUseSelector.mockClear();
     component.unmount();
   });
-
-  // Testing rendering components
 
   it('should render form component', () => {
     const wrapper = component.find('form');
@@ -154,7 +150,6 @@ describe('pattern form tests', () => {
     expect(component).toHaveLength(1);
   });
 
-  // Testing Redux
   it('useSelector hook should be called', () => {
     getState = reactRedux.useSelector(mockStore);
     expect(getState).toEqual(mockStore);
@@ -164,8 +159,6 @@ describe('pattern form tests', () => {
   it('useEffect hook shoud work out', () => {
     expect(mockDispatch).toHaveBeenCalledTimes(1);
   });
-
-  // Testing formik
 
   it('Should update checkboxes checked value on click', () => {
     const { getAllByRole } = render(<PatternForm />);
@@ -180,14 +173,10 @@ describe('pattern form tests', () => {
     expect(mockSetFieldValue).toHaveBeenCalled();
   });
 
-  // Checking PropTypes
-
   it('Should have appropriate prop types', () => {
     expect(PatternForm.propTypes.id).toBe(PropTypes.string);
     expect(PatternForm.propTypes.isEdit).toBe(PropTypes.bool);
   });
-
-  // Testing loading bar
 
   it('Loading bar should be not vissible', () => {
     expect(component.exists(LoadingBar)).toBe(false);
