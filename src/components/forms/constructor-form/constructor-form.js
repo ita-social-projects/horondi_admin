@@ -66,11 +66,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const dispatch = useDispatch();
   const history = createBrowserHistory();
 
-  const {
-    createConstructor,
-    setUploadConstructorImg,
-    uploadConstructorImg
-  } = useConstructorHandlers();
+  const { createConstructor, setUploadConstructorImg, uploadConstructorImg } =
+    useConstructorHandlers();
 
   const { list, model, constructorElementMethod } = useSelector(
     selectConstructorMethodAndMaterials
@@ -106,46 +103,40 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       .required(CONSTRUCTOR_ERROR_MESSAGE)
   });
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    touched,
-    errors,
-    setFieldValue
-  } = useFormik({
-    validationSchema: constructorValidationSchema,
-    initialValues: {
-      image: editableConstructorElement.image || '',
-      uaName: editableConstructorElement.name[0].value || '',
-      enName: editableConstructorElement.name[1].value || '',
-      material: editableConstructorElement.material._id || '',
-      color: editableConstructorElement.color._id || '',
-      available: editableConstructorElement.available || false,
-      default: editableConstructorElement.default || false,
-      basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
-    },
-    onSubmit: (formValues) => {
-      const constructorElement = createConstructor(formValues);
-      history.goBack();
-      if (isEdit) {
+  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
+    useFormik({
+      validationSchema: constructorValidationSchema,
+      initialValues: {
+        image: editableConstructorElement.image || '',
+        uaName: editableConstructorElement.name[0].value || '',
+        enName: editableConstructorElement.name[1].value || '',
+        material: editableConstructorElement.material._id || '',
+        color: editableConstructorElement.color._id || '',
+        available: editableConstructorElement.available || false,
+        default: editableConstructorElement.default || false,
+        basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
+      },
+      onSubmit: (formValues) => {
+        const constructorElement = createConstructor(formValues);
+        history.goBack();
+        if (isEdit) {
+          return dispatch(
+            constructorElementMethod({
+              constructorElement,
+              id: editableConstructorElement._id,
+              upload: uploadConstructorImg
+            })
+          );
+        }
         return dispatch(
           constructorElementMethod({
             constructorElement,
-            id: editableConstructorElement._id,
+            id: model._id,
             upload: uploadConstructorImg
           })
         );
       }
-      return dispatch(
-        constructorElementMethod({
-          constructorElement,
-          id: model._id,
-          upload: uploadConstructorImg
-        })
-      );
-    }
-  });
+    });
 
   const handleMaterial = (e) => {
     setFieldValue('material', e.target.value);

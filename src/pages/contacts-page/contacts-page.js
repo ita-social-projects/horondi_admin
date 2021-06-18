@@ -35,13 +35,8 @@ const ContactsPage = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const {
-    contacts,
-    loading,
-    itemsCount,
-    currentPage,
-    rowsPerPage
-  } = useSelector(contactSelectorWithPagination);
+  const { contacts, loading, itemsCount, currentPage, rowsPerPage } =
+    useSelector(contactSelectorWithPagination);
 
   const dispatch = useDispatch();
 

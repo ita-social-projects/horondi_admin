@@ -4,7 +4,8 @@ import {
   menuCategories,
   clientMenuCategories,
   catalogMenuCategories,
-  staticPagesCategories
+  staticPagesCategories,
+  constructorMenuCategories
 } from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
@@ -196,6 +197,7 @@ export const config = {
   menuCategories,
   clientMenuCategories,
   catalogMenuCategories,
+  constructorMenuCategories,
   staticPagesCategories,
   routes,
   statuses,

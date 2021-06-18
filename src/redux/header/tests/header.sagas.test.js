@@ -34,11 +34,8 @@ import {
 import { config } from '../../../configs';
 
 const { routes } = config;
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_UPDATE_STATUS,
-  SUCCESS_DELETE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_UPDATE_STATUS, SUCCESS_DELETE_STATUS } =
+  config.statuses;
 
 describe('header sagas tests', () => {
   it('should load all headers', () => {

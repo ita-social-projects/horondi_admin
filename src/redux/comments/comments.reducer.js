@@ -35,56 +35,56 @@ export const selectComment = ({ Comments }) => ({
 
 const commentsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_COMMENTS:
-    return {
-      ...state,
-      list: action.payload
-    };
-  case SET_RECENT_COMMENTS:
-    return {
-      ...state,
-      recentComments: action.payload
-    };
+    case SET_COMMENTS:
+      return {
+        ...state,
+        list: action.payload
+      };
+    case SET_RECENT_COMMENTS:
+      return {
+        ...state,
+        recentComments: action.payload
+      };
 
-  case SET_COMMENT:
-    return {
-      ...state,
-      comment: action.payload
-    };
-  case SET_COMMENTS_LOADING:
-    return {
-      ...state,
-      commentsLoading: action.payload
-    };
+    case SET_COMMENT:
+      return {
+        ...state,
+        comment: action.payload
+      };
+    case SET_COMMENTS_LOADING:
+      return {
+        ...state,
+        commentsLoading: action.payload
+      };
 
-  case REMOVE_COMMENT_FROM_STORE:
-    return {
-      ...state,
-      list: state.list.filter((item) => item._id !== action.payload)
-    };
+    case REMOVE_COMMENT_FROM_STORE:
+      return {
+        ...state,
+        list: state.list.filter((item) => item._id !== action.payload)
+      };
 
-  case SET_COMMENTS_ERROR:
-    return {
-      ...state,
-      commentsError: action.payload
-    };
+    case SET_COMMENTS_ERROR:
+      return {
+        ...state,
+        commentsError: action.payload
+      };
 
-  case SET_FILTER:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        ...action.payload
-      }
-    };
-  case CLEAR_FILTERS:
-    return {
-      ...state,
-      filters: initialFilters
-    };
+    case SET_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload
+        }
+      };
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: initialFilters
+      };
 
-  default:
-    return state;
+    default:
+      return state;
   }
 };
 

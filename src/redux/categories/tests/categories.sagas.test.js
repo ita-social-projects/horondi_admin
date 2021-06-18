@@ -30,8 +30,7 @@ import {
   switchId,
   filter,
   pagination,
-  sort,
-  count
+  sort
 } from './category.variables';
 
 import { selectCategorySwitchAndDeleteId } from '../../selectors/category.selectors';

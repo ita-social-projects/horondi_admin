@@ -45,26 +45,32 @@ const ProductMaterialsContainer = ({
     toggleFieldsChanged(true);
   };
 
-  const mainMaterialOptions = useMemo(() => handleMenuItem(mainMaterials), [
-    mainMaterials
-  ]);
-  const mainColorOptions = useMemo(() => handleMenuItem(mainColors), [
-    mainColors
-  ]);
-  const bottomMaterialOptions = useMemo(() => handleMenuItem(bottomMaterials), [
-    bottomMaterials
-  ]);
-  const bottomColorOptions = useMemo(() => handleMenuItem(bottomColors), [
-    bottomColors
-  ]);
+  const mainMaterialOptions = useMemo(
+    () => handleMenuItem(mainMaterials),
+    [mainMaterials]
+  );
+  const mainColorOptions = useMemo(
+    () => handleMenuItem(mainColors),
+    [mainColors]
+  );
+  const bottomMaterialOptions = useMemo(
+    () => handleMenuItem(bottomMaterials),
+    [bottomMaterials]
+  );
+  const bottomColorOptions = useMemo(
+    () => handleMenuItem(bottomColors),
+    [bottomColors]
+  );
 
-  const innerMaterialOptions = useMemo(() => handleMenuItem(innerMaterials), [
-    innerMaterials
-  ]);
+  const innerMaterialOptions = useMemo(
+    () => handleMenuItem(innerMaterials),
+    [innerMaterials]
+  );
 
-  const innerColorOptions = useMemo(() => handleMenuItem(innerColors), [
-    innerColors
-  ]);
+  const innerColorOptions = useMemo(
+    () => handleMenuItem(innerColors),
+    [innerColors]
+  );
   const options = [
     mainMaterialOptions,
     mainColorOptions,

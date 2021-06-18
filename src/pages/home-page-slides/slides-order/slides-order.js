@@ -35,16 +35,10 @@ const SlidesOrder = (props) => {
   const [dragging, setDragging] = useState(false);
   const [draggable, setDraggable] = useState(false);
   const { IMG_URL } = config;
-  const {
-    discoverMoreTitle,
-    slideOrderTitle,
-    discoverMoreSymbol
-  } = config.titles.homePageSliderTitle;
-  const {
-    OPEN_SLIDE_EDIT,
-    SAVE_SLIDE_ORDER,
-    CANCEL_SLIDE_ORDER
-  } = config.buttonTitles;
+  const { discoverMoreTitle, slideOrderTitle, discoverMoreSymbol } =
+    config.titles.homePageSliderTitle;
+  const { OPEN_SLIDE_EDIT, SAVE_SLIDE_ORDER, CANCEL_SLIDE_ORDER } =
+    config.buttonTitles;
 
   const { rowsPerPage } = useSelector(({ Table }) => ({
     rowsPerPage: Table.pagination.rowsPerPage
@@ -113,72 +107,72 @@ const SlidesOrder = (props) => {
   };
   const drugAndDropContainer = drugAndDropList.length
     ? list.map((group, groupIndex) => (
-      <Card
-        key={group.title}
-        elevation={2}
-        onDragEnter={onDragEnterHandler(
-          dragging,
-          group,
-          handleDragEnter,
-          groupIndex,
-          0
-        )}
-        className={styles.dndGroup}
-      >
-        <Typography variant='h1' className={styles.slideTitle}>
-          {TranslAvailabilityHandler(group, slidesTranslations)}
-        </Typography>
-        {group.items.map((item, itemIndex) => (
-          <Paper
-            draggable={draggable}
-            elevation={5}
-            onDragStart={(e) =>
-              handlerDragStart(e, { groupIndex, itemIndex })
-            }
-            onDragEnter={
-              dragging
-                ? (e) => {
-                  handleDragEnter(
-                    e,
-                    { groupIndex, itemIndex },
-                    dragItemNode,
-                    setList,
-                    dragItem
-                  );
-                }
-                : null
-            }
-            className={paperClassNameHandler(
-              dragging,
-              getStyles,
-              { groupIndex, itemIndex },
-              styles
-            )}
-            key={item._id}
-          >
-            <Avatar
-              variant='square'
-              className={styles.square}
-              src={`${IMG_URL}${item.images.small}`}
-              color='primary'
+        <Card
+          key={group.title}
+          elevation={2}
+          onDragEnter={onDragEnterHandler(
+            dragging,
+            group,
+            handleDragEnter,
+            groupIndex,
+            0
+          )}
+          className={styles.dndGroup}
+        >
+          <Typography variant='h1' className={styles.slideTitle}>
+            {TranslAvailabilityHandler(group, slidesTranslations)}
+          </Typography>
+          {group.items.map((item, itemIndex) => (
+            <Paper
+              draggable={draggable}
+              elevation={5}
+              onDragStart={(e) =>
+                handlerDragStart(e, { groupIndex, itemIndex })
+              }
+              onDragEnter={
+                dragging
+                  ? (e) => {
+                      handleDragEnter(
+                        e,
+                        { groupIndex, itemIndex },
+                        dragItemNode,
+                        setList,
+                        dragItem
+                      );
+                    }
+                  : null
+              }
+              className={paperClassNameHandler(
+                dragging,
+                getStyles,
+                { groupIndex, itemIndex },
+                styles
+              )}
+              key={item._id}
             >
-              <ImageIcon />
-            </Avatar>
-            <div className={styles.slideContent}>
-              <div>
-                <h3>{item.title[0].value}</h3>
-                <p>{item.description[0].value}</p>
+              <Avatar
+                variant='square'
+                className={styles.square}
+                src={`${IMG_URL}${item.images.small}`}
+                color='primary'
+              >
+                <ImageIcon />
+              </Avatar>
+              <div className={styles.slideContent}>
+                <div>
+                  <h3>{item.title[0].value}</h3>
+                  <p>{item.description[0].value}</p>
+                </div>
+                <p className={styles.discoverMore}>
+                  {' '}
+                  {discoverMoreTitle}
+                  <span>{discoverMoreSymbol}</span>
+                </p>
               </div>
-              <p className={styles.discoverMore}>
-                {' '}
-                {discoverMoreTitle}
-                <span>{discoverMoreSymbol}</span>
-              </p>
-            </div>
-          </Paper>
-        ))}
-      </Card>
-    ))
+            </Paper>
+          ))}
+        </Card>
+      ))
     : null;
   return (
     <Paper elevation={3}>

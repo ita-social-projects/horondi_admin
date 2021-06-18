@@ -23,51 +23,51 @@ const initialState = {
 
 export const contactsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_CONTACTS:
-    return {
-      ...state,
-      contacts: action.payload
-    };
+    case SET_CONTACTS:
+      return {
+        ...state,
+        contacts: action.payload
+      };
 
-  case SET_CONTACT:
-    return {
-      ...state,
-      contact: action.payload
-    };
+    case SET_CONTACT:
+      return {
+        ...state,
+        contact: action.payload
+      };
 
-  case SET_CONTACTS_LOADING:
-    return {
-      ...state,
-      contactsLoading: action.payload
-    };
+    case SET_CONTACTS_LOADING:
+      return {
+        ...state,
+        contactsLoading: action.payload
+      };
 
-  case SET_CONTACTS_ERROR:
-    return {
-      ...state,
-      contactsError: action.payload
-    };
-  case ADD_CONTACT_IN_STORE:
-    return {
-      ...state,
-      contacts: [...state.contacts, action.payload]
-    };
-  case DELETE_CONTACT_IN_STORE:
-    return {
-      ...state,
-      contacts: state.contacts.filter(
-        (contact) => contact._id !== action.payload
-      )
-    };
-  case UPDATE_CONTACT_IN_STORE:
-    return {
-      ...state,
-      contacts: state.contacts.map((contact) =>
-        contact._id === action.payload._id
-          ? action.payload.updatedContact
-          : contact
-      )
-    };
-  default:
-    return state;
+    case SET_CONTACTS_ERROR:
+      return {
+        ...state,
+        contactsError: action.payload
+      };
+    case ADD_CONTACT_IN_STORE:
+      return {
+        ...state,
+        contacts: [...state.contacts, action.payload]
+      };
+    case DELETE_CONTACT_IN_STORE:
+      return {
+        ...state,
+        contacts: state.contacts.filter(
+          (contact) => contact._id !== action.payload
+        )
+      };
+    case UPDATE_CONTACT_IN_STORE:
+      return {
+        ...state,
+        contacts: state.contacts.map((contact) =>
+          contact._id === action.payload._id
+            ? action.payload.updatedContact
+            : contact
+        )
+      };
+    default:
+      return state;
   }
 };

@@ -28,11 +28,11 @@
   },
   "extends": [
     "airbnb",
-    "prettier",
-    "prettier/react",
     "plugin:cypress/recommended",
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react"
   ],
   "rules": {
     "semi": "off",
@@ -75,6 +75,7 @@
     "no-nested-ternary": 0,
     "no-unneeded-ternary": 2,
     "react/no-unescaped-entities": 2,
+    "react/forbid-foreign-prop-types": 0,
     "prefer-arrow-callback": 1,
     "prefer-spread": 1,
     "prefer-template": 1,

@@ -1,6 +1,5 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
 
 import { combineReducers } from 'redux';
 import {
@@ -59,11 +58,8 @@ import { config } from '../../../configs';
 import Slides from '../home-page-slides.reducer';
 import Table from '../../table/table.reducer';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 describe('Test home page slider saga', () => {
   it('should load slides', () =>

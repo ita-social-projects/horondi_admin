@@ -3,9 +3,4 @@ import Products from './products';
 import Recipient from './recipient';
 import Delivery from './delivery';
 
-export {
-  General,
-  Products,
-  Recipient,
-  Delivery,
-};
+export { General, Products, Recipient, Delivery };

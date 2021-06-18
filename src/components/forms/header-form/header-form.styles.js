@@ -21,11 +21,11 @@ export const useStyles = makeStyles((theme) => {
     },
     saveButton: {
       '@media (max-width: 350px)': {
-        margin: '10px 0 10px',
+        margin: '10px 0 10px'
       },
       '@media (min-width: 350px)': {
-        margin: '10px 10px 10px',
-      },
+        margin: '10px 10px 10px'
+      }
     },
     returnButton,
     large,
