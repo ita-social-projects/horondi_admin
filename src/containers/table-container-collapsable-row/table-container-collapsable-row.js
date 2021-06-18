@@ -7,7 +7,8 @@ import {
   Checkbox,
   Typography,
   TextField,
-  IconButton
+  IconButton,
+  Button
 } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -17,7 +18,6 @@ import Collapse from '@material-ui/core/Collapse';
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
-import { SaveButton } from '../../components/buttons';
 import {
   CustomizedEditIcon,
   CustomizedDeleteIcon
@@ -25,8 +25,7 @@ import {
 
 import { handleHelperText } from '../../utils/handle-email-question-detail';
 import { useStyles } from './table-container-collapsable-row.styles';
-import { config, inputTypes, formConstants } from '../../configs';
-import buttonTitles from '../../configs/button-titles';
+import { config, formConstants } from '../../configs';
 
 const { labels } = config;
 
@@ -147,7 +146,12 @@ const TableContainerCollapsableRow = ({
               </Typography>
               {answer && (
                 <>
-                  <Typography variant='h5' gutterBottom component='div'>
+                  <Typography
+                    style={{ margin: '20px 0 5px' }}
+                    variant='h5'
+                    gutterBottom
+                    component='div'
+                  >
                     Відповідь:
                   </Typography>
                   <Typography gutterBottom component='div'>
@@ -178,14 +182,14 @@ const TableContainerCollapsableRow = ({
                   />
                 )}
                 {!answer && (
-                  <Box style={{}}>
-                    <SaveButton
-                      className={classes.controlButton}
-                      id='save'
-                      type={inputTypes.submit}
-                      title={buttonTitles.ANSWER}
-                      onClickHandler={handleSaveButtonAction}
-                    />
+                  <Box>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={handleSaveButtonAction}
+                    >
+                      Відповісти
+                    </Button>
                   </Box>
                 )}
               </Box>
