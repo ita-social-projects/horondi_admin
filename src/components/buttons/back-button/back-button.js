@@ -23,11 +23,10 @@ const BackButton = ({ type, variant, color, initial, pathBack, ...props }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  console.log(pathBack);
   const backButtonHandler = () => {
     const backAction = () => {
       dispatch(closeDialog());
-      pathBack ? history.push(pathBack) : history.goBack();
+      history.push(pathBack);
     };
     if (initial) {
       openSuccessSnackbar(
@@ -36,7 +35,7 @@ const BackButton = ({ type, variant, color, initial, pathBack, ...props }) => {
         EXIT_WITHOUT_SAVING
       );
     } else {
-      pathBack ? history.push(pathBack) : history.goBack();
+      history.push(pathBack);
     }
   };
 
