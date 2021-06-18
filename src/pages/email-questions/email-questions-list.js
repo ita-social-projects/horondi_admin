@@ -44,7 +44,6 @@ const EmailQuestionsList = () => {
   const { list, loading, filters, currentPage, rowsPerPage, itemsCount } =
     useSelector(questionSelectorWithPagination);
 
-
   const dispatch = useDispatch();
   const questionOptions = useQuestionFilter();
 
@@ -108,7 +107,6 @@ const EmailQuestionsList = () => {
     list !== undefined
       ? list.map((question) => {
           const { answer } = question;
-
 
           const questionToShow = `<b>Запитання:</b> ${question.text}`;
           const answerToShow = answerTextHandler(answer);
