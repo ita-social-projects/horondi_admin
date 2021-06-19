@@ -4,6 +4,7 @@ import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 import CategoryForm from '../index';
+import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { config } from '../../../../configs';
 import { mockCategory, mockId, mockIsEdit } from './category-form.variables';
 
@@ -90,6 +91,32 @@ describe('test СategoryForm', () => {
     wrapper.find('button').at(0).simulate('click');
     expect(mockChange).toHaveBeenCalledTimes(1);
   });
+
+  it('should render ImageUploadContainer component', () => {
+    const wrap = wrapper.find(ImageUploadContainer);
+    expect(wrap.exists(ImageUploadContainer)).toBeDefined();
+    expect(wrap.exists(ImageUploadContainer)).toBe(true);
+  });
+
+  // it('should call onChange prop', () => {
+  //     const event = {
+  //         preventDefault() {
+  //         },
+  //         target: {value: 'the-value'}
+  //     };
+  //     wrapper.find(ImageUploadContainer).prop('handler');
+  //     expect(handler).toHaveBeenCalledTimes(1);
+  // });
+
+  // it('should call handleImageLoad', () => {
+  //     const event = {
+  //         preventDefault() {
+  //         },
+  //         target: {value: 'the-value'}
+  //     };
+  //     wrapper.find(ImageUploadContainer).find('input').props().onChange(event);;
+  //     expect(handleImageLoad).toHaveBeenCalledTimes(1);
+  // });
 
   it('Should have appropriate prop types', () => {
     expect(CategoryForm.propTypes.id).toBe(PropTypes.string);
