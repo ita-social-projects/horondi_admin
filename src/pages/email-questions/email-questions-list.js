@@ -108,7 +108,7 @@ const EmailQuestionsList = () => {
       ? list.map((question) => {
           const { answer } = question;
 
-          const questionToShow = `<b>Запитання:</b> ${question.text}`;
+          const questionToShow = `<b>${labels.emailQuestionsLabels.rowPlaceholder.question}:</b> ${question.text}`;
           const answerToShow = answerTextHandler(answer);
           const plainAnswer = answerShowHandler(answer);
           return (

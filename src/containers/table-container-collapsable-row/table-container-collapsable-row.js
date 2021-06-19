@@ -128,7 +128,9 @@ const TableContainerCollapsableRow = ({
           <Collapse in={open} timeout='auto'>
             <Box margin={1}>
               <Typography variant='h5' gutterBottom display='inline'>
-                Запитання від {properties.senderName}:
+                {labels.emailQuestionsLabels.questionFrom +
+                  properties.senderName}
+                :
               </Typography>
               <Typography
                 variant='caption'
@@ -152,7 +154,7 @@ const TableContainerCollapsableRow = ({
                     gutterBottom
                     component='div'
                   >
-                    Відповідь:
+                    {labels.emailQuestionsLabels.rowPlaceholder.answer}:
                   </Typography>
                   <Typography gutterBottom component='div'>
                     {answer}
@@ -173,7 +175,7 @@ const TableContainerCollapsableRow = ({
                     margin='normal'
                     placeholder={labels.emailQuestionsLabels.placeholder}
                     InputLabelProps={{ shrink: true }}
-                    label='Введіть вашу відповідь'
+                    label={labels.emailQuestionsLabels.textFieldPlaceholder}
                     value={answerValue}
                     variant={formConstants.textFieldFilled}
                     error={!answerValue && shouldValidate}
@@ -188,7 +190,7 @@ const TableContainerCollapsableRow = ({
                       color='primary'
                       onClick={handleSaveButtonAction}
                     >
-                      Відповісти
+                      {labels.emailQuestionsLabels.answer}
                     </Button>
                   </Box>
                 )}
