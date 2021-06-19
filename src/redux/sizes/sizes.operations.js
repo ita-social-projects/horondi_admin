@@ -27,7 +27,6 @@ export const getAllSizes = async (limit, skip, filter) => {
     `;
 
   const result = await getItems(query, { limit, skip, filter });
-  console.log('result', result);
   return result?.data?.getAllSizes;
 };
 

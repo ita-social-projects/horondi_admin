@@ -261,7 +261,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             freeSolo
             options={sizesList}
             getOptionLabel={(option) =>
-              `${option.simpleName[0].value} | ${option.name}`
+              `${option.model.name[0].value} | ${option.name}`
             }
             defaultValue={sizes}
             onChange={onTagsChange}
