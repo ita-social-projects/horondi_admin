@@ -27,7 +27,7 @@ import { handleHelperText } from '../../utils/handle-email-question-detail';
 import { useStyles } from './table-container-collapsable-row.styles';
 import { config, formConstants } from '../../configs';
 
-const { labels } = config;
+const { labels, materialUiConstants } = config;
 
 const TableContainerCollapsableRow = ({
   id,
@@ -83,7 +83,9 @@ const TableContainerCollapsableRow = ({
           <TableCell>
             <Checkbox
               color='default'
-              inputProps={{ 'aria-label': 'checkbox with default color' }}
+              inputProps={{
+                'aria-label': materialUiConstants.checkboxDefaultColor
+              }}
               onClick={(e) => checkboxChangeHandler(e, id)}
             />
           </TableCell>
