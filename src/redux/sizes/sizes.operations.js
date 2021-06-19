@@ -9,13 +9,16 @@ export const getAllSizes = async (limit, skip, filter) => {
       $filter:SizeFilterInput
     ){
         getAllSizes(limit: $limit, skip: $skip, filter: $filter) {
-        items{
+        items {
           _id
           name
-          simpleName {
-            lang
-            value
-          }
+          model { 
+            _id
+            name { 
+              value
+              lang
+            }
+          } 
           available
           }
           count
@@ -24,7 +27,7 @@ export const getAllSizes = async (limit, skip, filter) => {
     `;
 
   const result = await getItems(query, { limit, skip, filter });
-
+  console.log('result', result);
   return result?.data?.getAllSizes;
 };
 
