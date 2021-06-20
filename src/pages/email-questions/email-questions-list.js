@@ -22,7 +22,8 @@ import getTime from '../../utils/getTime';
 import EmailQuestionsOperationsButtons from './operations-buttons';
 import {
   answerTextHandler,
-  answerShowHandler
+  answerShowHandler,
+  questionShowHandler
 } from '../../utils/email-question-list';
 import { questionSelectorWithPagination } from '../../redux/selectors/email-questions.selectors';
 
@@ -101,7 +102,7 @@ const EmailQuestionsList = () => {
   const questions = map(list, (question) => {
     const { answer } = question;
 
-    const questionToShow = `<b>${labels.emailQuestionsLabels.rowPlaceholder.question}:</b> ${question.text}`;
+    const questionToShow = questionShowHandler(question);
     const answerToShow = answerTextHandler(answer);
     const plainAnswer = answerShowHandler(answer);
     return (
