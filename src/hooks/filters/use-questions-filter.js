@@ -12,6 +12,7 @@ const useQuestionFilter = () => {
   const selctedFilters = useSelector(
     ({ EmailQuestions }) => EmailQuestions.filters
   );
+
   const setCommentDateRangeFilter = (date) => {
     dispatch(setCurrentPage(0));
     dispatch(

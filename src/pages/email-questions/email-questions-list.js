@@ -26,6 +26,8 @@ import {
 } from '../../utils/email-question-list';
 import { questionSelectorWithPagination } from '../../redux/selectors/email-questions.selectors';
 
+const map = require('lodash/map');
+
 const { labels, titles, messages, tableHeadRowTitles } = config;
 const { EMAIL_QUESTION_REMOVE_MESSAGE } = messages;
 
@@ -34,25 +36,24 @@ const tableTitles = tableHeadRowTitles.emailQuestions;
 const EmailQuestionsList = () => {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
+  const dispatch = useDispatch();
 
   const [answerValue, setAnswerValue] = useState('');
   const [shouldValidate, setShouldValidate] = useState(false);
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-
-  const { list, loading, filters, currentPage, rowsPerPage, itemsCount } =
-    useSelector(questionSelectorWithPagination);
-
-  const dispatch = useDispatch();
   const questionOptions = useQuestionFilter();
+
+  const { filters, loading, list, currentPage, rowsPerPage, itemsCount } =
+    useSelector(questionSelectorWithPagination);
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
         filter: {
           date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
-          filter: questionOptions.filterByStatus.filters,
+          filter: filters.filters,
           search: filters.search
         },
         pagination: {
@@ -61,13 +62,7 @@ const EmailQuestionsList = () => {
         }
       })
     );
-  }, [
-    dispatch,
-    currentPage,
-    filters,
-    questionOptions.filterByStatus.filters,
-    rowsPerPage
-  ]);
+  }, [dispatch, currentPage, filters, rowsPerPage]);
   const questionDeleteHandler = (id, e) => {
     e.stopPropagation();
     const removeQuestion = () => {
@@ -103,40 +98,37 @@ const EmailQuestionsList = () => {
     }
   };
 
-  const questions =
-    list !== undefined
-      ? list.map((question) => {
-          const { answer } = question;
+  const questions = map(list, (question) => {
+    const { answer } = question;
 
-          const questionToShow = `<b>${labels.emailQuestionsLabels.rowPlaceholder.question}:</b> ${question.text}`;
-          const answerToShow = answerTextHandler(answer);
-          const plainAnswer = answerShowHandler(answer);
-          return (
-            <TableContainerCollapsableRow
-              key={question._id}
-              id={question._id}
-              question={question.text}
-              answer={plainAnswer}
-              date={ReactHtmlParser(getTime(question.date, true))}
-              senderName={question.senderName}
-              email={question.email}
-              qA={ReactHtmlParser(questionToShow + answerToShow)}
-              status={labels.emailQuestionsLabels.ua[question.status]}
-              showAvatar={false}
-              showEdit={false}
-              showCheckbox
-              showCollapse
-              collapsable
-              shouldValidate={shouldValidate}
-              answerValue={answerValue}
-              setAnswerValue={setAnswerValue}
-              checkboxChangeHandler={checkboxChangeHandler}
-              deleteHandler={(e) => questionDeleteHandler(question._id, e)}
-              onAnswer={onAnsweringQuestion}
-            />
-          );
-        })
-      : null;
+    const questionToShow = `<b>${labels.emailQuestionsLabels.rowPlaceholder.question}:</b> ${question.text}`;
+    const answerToShow = answerTextHandler(answer);
+    const plainAnswer = answerShowHandler(answer);
+    return (
+      <TableContainerCollapsableRow
+        key={question._id}
+        id={question._id}
+        question={question.text}
+        answer={plainAnswer}
+        date={ReactHtmlParser(getTime(question.date, true))}
+        senderName={question.senderName}
+        email={question.email}
+        qA={ReactHtmlParser(questionToShow + answerToShow)}
+        status={labels.emailQuestionsLabels.ua[question.status]}
+        showAvatar={false}
+        showEdit={false}
+        showCheckbox
+        showCollapse
+        collapsable
+        shouldValidate={shouldValidate}
+        answerValue={answerValue}
+        setAnswerValue={setAnswerValue}
+        checkboxChangeHandler={checkboxChangeHandler}
+        deleteHandler={(e) => questionDeleteHandler(question._id, e)}
+        onAnswer={onAnsweringQuestion}
+      />
+    );
+  });
 
   if (loading) {
     return <LoadingBar />;
