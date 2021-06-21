@@ -85,7 +85,7 @@ const usePatternFilters = () => {
 
     searchOptions: {
       placeholderText: patternPlaceholderSearch,
-      name: filters?.search,
+      search: filters?.name,
       setSearchFilter
     },
     clearOptions: {
