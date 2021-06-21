@@ -40,7 +40,6 @@ function SizeForm({ id, size }) {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
-  const sizeFilters = useSizeFilters();
   const { sizesList, loading, itemsCount, filters, rowsPerPage, currentPage } =
     useSelector(sizesSelectorWithPagination);
   useEffect(() => {
@@ -52,10 +51,12 @@ function SizeForm({ id, size }) {
     );
   }, [dispatch, rowsPerPage, currentPage, filters]);
 
-  const modelSet = [
-    ...new Set(sizesList?.map((item) => item.modelId.name[0].value))
+  const uniqueModelMap = [
+    ...new Map(
+      sizesList?.map((item) => [item.modelId.name[0].value, item])
+    ).values()
   ];
-
+  console.log(uniqueModelMap);
   const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
     useFormik({
       validateOnBlur: true,
@@ -198,18 +199,18 @@ function SizeForm({ id, size }) {
                   </InputLabel>
                   <Select
                     className={styles.select}
-                    data-cy={labels.en.name}
-                    id='name'
+                    data-cy={labels.en.modelName}
+                    id='modelName'
                     native
-                    value={values.name}
+                    value={values.modelName}
                     onChange={(e) =>
-                      setFieldValue(labels.en.name, e.target.value)
+                      setFieldValue(labels.en.modelName, e.target.value)
                     }
                     label={selectTitle}
                   >
-                    {modelSet?.map((value) => (
-                      <option key={value} value={value}>
-                        {value}
+                    {uniqueModelMap.map((value) => (
+                      <option key={value.modelId._id} value={value.modelId._id}>
+                        {value.modelId.name[0].value}
                       </option>
                     ))}
                   </Select>
