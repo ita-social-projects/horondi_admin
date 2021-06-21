@@ -80,7 +80,9 @@ const PatternPage = () => {
       }}
     />
   ));
-
+  if (loading) {
+    return <LoadingBar />;
+  }
   return (
     <div className={common.container}>
       <div className={common.adminHeader}>
@@ -113,17 +115,13 @@ const PatternPage = () => {
           }
         />
       </div>
-      {!loading ? (
-        <TableContainerGenerator
-          pagination
-          data-cy='patternTable'
-          count={itemsCount}
-          tableTitles={tableTitles}
-          tableItems={patternItems}
-        />
-      ) : (
-        <LoadingBar />
-      )}
+      <TableContainerGenerator
+        pagination
+        data-cy='patternTable'
+        count={itemsCount}
+        tableTitles={tableTitles}
+        tableItems={patternItems}
+      />
     </div>
   );
 };
