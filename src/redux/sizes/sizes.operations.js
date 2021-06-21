@@ -12,13 +12,13 @@ export const getAllSizes = async (limit, skip, filter) => {
         items {
           _id
           name
-          model { 
+          modelId { 
             _id
             name { 
               value
               lang
             }
-          } 
+          }
           available
           }
           count
