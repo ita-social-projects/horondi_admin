@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextField, Grid, Paper, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
@@ -17,14 +17,19 @@ import {
 } from '../../../utils/size-helpers';
 import { formSchema } from '../../../validations/sizes/size-form-validation';
 import { useStyles } from './size-form.styles';
-import { addSize, updateSize } from '../../../redux/sizes/sizes.actions';
+import {
+  getSizes,
+  addSize,
+  updateSize
+} from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import useSizeFilters from '../../../hooks/filters/useSizesFilters';
 
-const { selectTitle } = config.titles.sizesTitles;
+const { selectTitle, modelTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
@@ -34,7 +39,22 @@ function SizeForm({ id, size }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
-  const { loading } = useSelector(sizesSelectorWithPagination);
+
+  const sizeFilters = useSizeFilters();
+  const { sizesList, loading, itemsCount, filters, rowsPerPage, currentPage } =
+    useSelector(sizesSelectorWithPagination);
+  useEffect(() => {
+    dispatch(
+      getSizes({
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage
+      })
+    );
+  }, [dispatch, rowsPerPage, currentPage, filters]);
+
+  const modelSet = [
+    ...new Set(sizesList?.map((item) => item.modelId.name[0].value))
+  ];
 
   const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
     useFormik({
@@ -143,7 +163,7 @@ function SizeForm({ id, size }) {
                 </Select>
               </FormControl>
               <Paper className={styles.sizeItemAdd}>
-                {sizeInputs.sizePricesData.map((item) => (
+                {/* {sizeInputs.sizePricesData.map((item) => (
                   <>
                     <TextField
                       data-cy={item}
@@ -165,7 +185,35 @@ function SizeForm({ id, size }) {
                       </div>
                     )}
                   </>
-                ))}
+                ))} */}
+                <FormControl
+                  variant={materialUiConstants.outlined}
+                  className={`${styles.formControl} 
+                ${styles.purposeSelect}`}
+                >
+                  <InputLabel
+                    htmlFor={materialUiConstants.outlinedAgeNativeSimple}
+                  >
+                    {modelTitle}
+                  </InputLabel>
+                  <Select
+                    className={styles.select}
+                    data-cy={labels.en.name}
+                    id='name'
+                    native
+                    value={values.name}
+                    onChange={(e) =>
+                      setFieldValue(labels.en.name, e.target.value)
+                    }
+                    label={selectTitle}
+                  >
+                    {modelSet?.map((value) => (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
               </Paper>
               <Paper className={styles.sizeItemAdd}>
                 <TextField

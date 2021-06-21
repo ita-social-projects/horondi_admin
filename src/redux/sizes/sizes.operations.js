@@ -36,9 +36,12 @@ export const getSizeById = async (id) => {
         getSizeById(id: $id) {
           ... on Size {
             name
-            simpleName {
-              lang
-              value
+            modelId { 
+              _id
+              name { 
+                value
+                lang
+              }
             }
             heightInCm
             widthInCm
