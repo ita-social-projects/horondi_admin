@@ -75,7 +75,8 @@ exports[`Pattern-page render tests Should render pattern-page 1`] = `
             },
           ],
           "searchOptions": Object {
-            "name": undefined,
+            "placeholderText": "за назвою",
+            "search": undefined,
             "setSearchFilter": [Function],
           },
           "sortOptions": undefined,
