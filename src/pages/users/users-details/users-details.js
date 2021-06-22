@@ -33,6 +33,8 @@ const {
 
 const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
 
+const { pathToUsers } = config.routes;
+
 const UsersDetails = (props) => {
   const { match } = props;
 
@@ -111,7 +113,7 @@ const UsersDetails = (props) => {
           buttonHandler={() => userStatusHandler(id)}
         />
         <div className={styles.controlsBlock}>
-          <BackButton />
+          <BackButton pathBack={pathToUsers} />
         </div>
       </Grid>
       <Grid className={styles.showComments}>
