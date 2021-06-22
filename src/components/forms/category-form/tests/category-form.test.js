@@ -30,6 +30,22 @@ jest.mock('formik', () => ({
   })
 }));
 
+const mockSetUpload = jest.fn();
+const mockSetCategoryImage = jest.fn();
+
+jest.mock('../../../../utils/use-category-handlers', () => ({
+  __esModule: true,
+  default: () => ({
+    setUpload: mockSetUpload,
+    setCategoryImage: mockSetCategoryImage
+  })
+}));
+
+jest.spyOn(global, 'FileReader').mockImplementation(function () {
+  this.readAsDataURL = jest.fn();
+  this.onload = jest.fn();
+});
+
 describe('test СategoryForm', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
   let wrapper;
@@ -98,25 +114,44 @@ describe('test СategoryForm', () => {
     expect(wrap.exists(ImageUploadContainer)).toBe(true);
   });
 
-  // it('should call onChange prop', () => {
-  //     const event = {
-  //         preventDefault() {
-  //         },
-  //         target: {value: 'the-value'}
-  //     };
-  //     wrapper.find(ImageUploadContainer).prop('handler');
-  //     expect(handler).toHaveBeenCalledTimes(1);
-  // });
+  it('Should  ', () => {
+    const imageContainer = wrapper.find(ImageUploadContainer);
+    const handler = imageContainer.prop('handler');
+    const event = {
+      target: {
+        files: [new File([], 'foo,png', { type: 'image' })]
+      }
+    };
+    handler(event);
+    expect(mockSetUpload).toHaveBeenCalledTimes(1);
+    expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
+  });
 
-  // it('should call handleImageLoad', () => {
-  //     const event = {
-  //         preventDefault() {
-  //         },
-  //         target: {value: 'the-value'}
-  //     };
-  //     wrapper.find(ImageUploadContainer).find('input').props().onChange(event);;
-  //     expect(handleImageLoad).toHaveBeenCalledTimes(1);
-  // });
+  it('Should test FileReader ', () => {
+    const event = {
+      target: {
+        files: [new File([], 'foo,png', { type: 'image' })]
+      }
+    };
+    const reader = FileReader.mock.instances[0];
+    reader.onload({ target: { result: 'foo' } });
+    expect(reader.readAsDataURL).toHaveBeenCalled();
+    expect(reader.readAsDataURL).toHaveBeenCalledWith(event.target.files[0]);
+  });
+
+  it('Should test CategoryImage', () => {
+    const reader = FileReader.mock.instances[0];
+    reader.onload({ target: { result: 'foo' } });
+    expect(mockSetCategoryImage).toHaveBeenCalled();
+    expect(mockSetCategoryImage).toHaveBeenCalledWith('foo');
+  });
+
+  it('Should test FieldValue', () => {
+    const reader = FileReader.mock.instances[0];
+    reader.onload({ target: { result: 'foo' } });
+    expect(mockSetFieldValue).toHaveBeenCalled();
+    expect(mockSetFieldValue).toHaveBeenCalledWith('categoryImage', 'foo');
+  });
 
   it('Should have appropriate prop types', () => {
     expect(CategoryForm.propTypes.id).toBe(PropTypes.string);
