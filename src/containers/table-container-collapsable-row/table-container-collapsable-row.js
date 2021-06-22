@@ -171,7 +171,7 @@ const TableContainerCollapsableRow = ({
                 {!answer && (
                   <TextField
                     id='filled-full-width'
-                    style={{ width: '100%' }}
+                    className={classes.textField}
                     multiline
                     rows={6}
                     margin='normal'

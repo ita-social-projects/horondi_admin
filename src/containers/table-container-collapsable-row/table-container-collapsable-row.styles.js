@@ -29,5 +29,8 @@ export const useStyles = makeStyles((theme) => ({
   tableCell: {
     paddingBottom: 0,
     paddingTop: 0
+  },
+  textField: {
+    maxWidth: '1000px'
   }
 }));
