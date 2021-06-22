@@ -6,13 +6,11 @@ import { config } from '../../../configs';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const { DELETE_TITLE } = config.buttonTitles;
-
 describe('delete button tests', () => {
   const size = 'small';
   const id = '5f62f5386d3d7c14710c0111';
   const mockCallBack = jest.fn(() => id);
-  const text = DELETE_TITLE;
+  const text = 'Delete';
   let component;
   beforeEach(() => {
     component = mount(
@@ -64,7 +62,7 @@ describe('delete button tests', () => {
   it('should have title text (children)', () => {
     const component = shallow(<DeleteButton>{text}</DeleteButton>);
     expect(component.text()).toBeDefined();
-    expect(component.text()).toEqual(DELETE_TITLE);
+    expect(component.text()).toEqual('Delete');
     expect(component.text()).toBeTruthy();
   });
   it('should have className', () => {
