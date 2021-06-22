@@ -6,7 +6,13 @@ import * as reactRedux from 'react-redux';
 import CategoryForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { config } from '../../../../configs';
-import { mockCategory, mockId, mockIsEdit } from './category-form.variables';
+import {
+  mockCategory,
+  mockId,
+  mockIsEdit,
+  event,
+  target
+} from './category-form.variables';
 
 configure({ adapter: new Adapter() });
 
@@ -117,38 +123,28 @@ describe('test СategoryForm', () => {
   it('Should upload image', () => {
     const imageContainer = wrapper.find(ImageUploadContainer);
     const handler = imageContainer.prop('handler');
-    const event = {
-      target: {
-        files: [new File([], 'foo,png', { type: 'image' })]
-      }
-    };
     handler(event);
     expect(mockSetUpload).toHaveBeenCalledTimes(1);
     expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
   });
 
   it('Should test FileReader ', () => {
-    const event = {
-      target: {
-        files: [new File([], 'foo,png', { type: 'image' })]
-      }
-    };
     const reader = FileReader.mock.instances[0];
-    reader.onload({ target: { result: 'foo' } });
+    reader.onload(target);
     expect(reader.readAsDataURL).toHaveBeenCalled();
     expect(reader.readAsDataURL).toHaveBeenCalledWith(event.target.files[0]);
   });
 
   it('Should test CategoryImage', () => {
     const reader = FileReader.mock.instances[0];
-    reader.onload({ target: { result: 'foo' } });
+    reader.onload(target);
     expect(mockSetCategoryImage).toHaveBeenCalled();
     expect(mockSetCategoryImage).toHaveBeenCalledWith('foo');
   });
 
   it('Should test FieldValue', () => {
     const reader = FileReader.mock.instances[0];
-    reader.onload({ target: { result: 'foo' } });
+    reader.onload(target);
     expect(mockSetFieldValue).toHaveBeenCalled();
     expect(mockSetFieldValue).toHaveBeenCalledWith('categoryImage', 'foo');
   });

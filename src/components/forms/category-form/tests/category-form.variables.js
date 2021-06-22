@@ -16,9 +16,17 @@ const mockCategory = {
 };
 const mockId = '6047321793650236ddbfb841';
 const mockIsEdit = false;
+const event = {
+  target: {
+    files: [new File([], 'foo,png', { type: 'image' })]
+  }
+};
+const target = { target: { result: 'foo' } };
 
 module.exports = {
   mockCategory,
   mockId,
-  mockIsEdit
+  mockIsEdit,
+  event,
+  target
 };
