@@ -114,7 +114,7 @@ describe('test СategoryForm', () => {
     expect(wrap.exists(ImageUploadContainer)).toBe(true);
   });
 
-  it('Should  ', () => {
+  it('Should upload image', () => {
     const imageContainer = wrapper.find(ImageUploadContainer);
     const handler = imageContainer.prop('handler');
     const event = {
