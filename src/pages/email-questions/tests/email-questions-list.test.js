@@ -70,6 +70,25 @@ describe('EmailQuestions test', () => {
     expect(mockedDispatch).toHaveBeenCalled();
   });
 
+  it('should call checkboxChangeHandler', () => {
+    const mockedDispatch = jest.fn();
+    const stopPropagation = () => {};
+    const mockedEvent = { stopPropagation };
+    useDispatchMock.mockReturnValue(mockedDispatch);
+    useSelectorMock.mockReturnValue({
+      filters: 'test',
+      loading: false,
+      list: dataList
+    });
+    wrapper = mount(<EmailQuestionsList />);
+    wrapper
+      .find(TableContainerCollapsableRow)
+      .at(0)
+      .props()
+      .checkboxChangeHandler(mockedEvent);
+    expect(mockedDispatch).toHaveBeenCalled();
+  });
+
   it('should call answer handler', () => {
     const mockedDispatch = jest.fn();
     useDispatchMock.mockReturnValue(mockedDispatch);
