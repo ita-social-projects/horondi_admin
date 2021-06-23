@@ -49,7 +49,7 @@ const CategoryForm = ({ category, id, edit }) => {
   const { createCategory, setUpload, upload, categoryImage, setCategoryImage } =
     useCategoryHandlers();
 
-  const { pathToComments } = config.routes;
+  const { pathToCategories } = config.routes;
 
   const categoryValidationSchema = Yup.object().shape({
     code: Yup.string()
@@ -165,7 +165,7 @@ const CategoryForm = ({ category, id, edit }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton initial={!valueEquality} pathBack={pathToComments} />
+        <BackButton initial={!valueEquality} pathBack={pathToCategories} />
         <SaveButton
           className={styles.saveCategoryButton}
           data-cy='save'
