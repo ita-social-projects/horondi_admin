@@ -9,12 +9,14 @@ import buttonTitles from '../../configs/button-titles';
 import {
   statusPatternFilterObject,
   materialPatternFilterObject,
-  materialPatternTableAction
+  materialPatternTableAction,
+  dataFilterObj
 } from '../../utils/pattern';
 import {
   patternStatusTableAction,
   patternPlaceholderSearch
 } from '../../consts/pattern-status';
+import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
 
 const usePatternFilters = () => {
   const dispatch = useDispatch();
@@ -24,14 +26,17 @@ const usePatternFilters = () => {
     items: Pattern.items
   }));
 
+  const { material } = useSelector(patternSelectorWithPagination);
+  console.log(material);
+
   const meterialForGobelen = items?.map((item) => {
     const id = item.features.material._id;
     const name = item.features.material.name[0].value;
-    return { label: name, value: id };
+    return { id, name };
   });
 
   const sortMaterial = [
-    ...new Map(meterialForGobelen?.map((item) => [item.value, item])).values()
+    ...new Map(meterialForGobelen?.map((item) => [item.id, item])).values()
   ];
 
   const setSearchFilter = (name) => {
@@ -70,7 +75,7 @@ const usePatternFilters = () => {
       {
         filters: filters?.material,
         label: buttonTitles.PATTERN_MATERIAL,
-        selectItems: materialPatternFilterObject(sortMaterial),
+        selectItems: dataFilterObj(sortMaterial),
         setFilterHandler: setMaterialFilter,
         objForTranslateRenderItems: materialPatternTableAction(sortMaterial)
       },
