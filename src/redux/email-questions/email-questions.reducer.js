@@ -5,8 +5,17 @@ import {
   SET_CURRENT_EMAIL_QUESTION,
   SET_EMAIL_QUESTIONS_PAGES_COUNT,
   SET_EMAIL_QUESTIONS_PENDING_COUNT,
-  SET_EMAIL_QUESTION_CURRENT_PAGE
+  SET_EMAIL_QUESTION_CURRENT_PAGE,
+  SET_FILTER,
+  CLEAR_FILTERS
 } from './email-questions.types';
+
+const initialFilters = {
+  filters: [],
+  dateFrom: '',
+  dateTo: '',
+  search: ''
+};
 
 export const initialState = {
   list: [],
@@ -16,10 +25,20 @@ export const initialState = {
     pagesCount: 1
   },
   pendingCount: 0,
+  filters: initialFilters,
   currentQuestion: null,
   loading: false,
   error: null
 };
+
+export const selectQuestion = ({ EmailQuestions }) => ({
+  list: EmailQuestions.list,
+  loading: EmailQuestions.loading,
+  pagesCount: EmailQuestions.pagination.pagesCount,
+  currentPage: EmailQuestions.pagination.currentPage,
+  questionsPerPage: EmailQuestions.pagination.questionsPerPage,
+  filters: EmailQuestions.filters
+});
 
 const emailQuestionsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -64,6 +83,21 @@ const emailQuestionsReducer = (state = initialState, action = {}) => {
         ...state,
         pendingCount: action.payload
       };
+
+    case SET_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload
+        }
+      };
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: initialFilters
+      };
+
     default:
       return state;
   }
