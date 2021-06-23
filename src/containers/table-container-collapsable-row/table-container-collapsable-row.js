@@ -67,6 +67,7 @@ const TableContainerCollapsableRow = ({
 
   const handleSaveButtonAction = () => {
     onAnswer(id);
+    setAnswerValue('');
   };
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
