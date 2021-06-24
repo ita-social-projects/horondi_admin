@@ -9,6 +9,7 @@ import {
   title,
   status
 } from './delete-button-variables';
+
 import buttonTitles from '../../../../configs/button-titles';
 import statuses from '../../../../configs/statuses';
 
