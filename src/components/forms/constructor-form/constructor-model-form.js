@@ -11,7 +11,6 @@ import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import { getCategories } from '../../../redux/categories/categories.actions';
 import { getSizes } from '../../../redux/sizes/sizes.actions';
-import ModelForm from '../model-form';
 
 const { materialUiConstants } = config;
 const { MODEL_SAVE_TITLE } = config.buttonTitles;
@@ -19,7 +18,6 @@ const { pathToModels } = config.routes;
 const pageTitle = config.titles.constructorModelTitles.mainPageTitle;
 
 const ConstructorModelForm = ({ model, id, isEdit }) => {
-  console.log(model);
   const classes = useStyles();
 
   const dispatch = useDispatch();
