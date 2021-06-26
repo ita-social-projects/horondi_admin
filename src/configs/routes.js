@@ -53,6 +53,7 @@ const routes = {
   pathToConstructor: '/constructor/:id',
   pathToAddConstructor: '/constructor/:id/add',
   pathToConstructorDetails: '/constructor/:id/:elementId',
-  pathToConstructorList: '/constructor-list'
+  pathToConstructorList: '/constructor-list',
+  pathToConstructorModelDetails: '/constructor-model/:id'
 };
 export default routes;

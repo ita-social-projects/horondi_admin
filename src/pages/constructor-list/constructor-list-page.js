@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
-import { getModels, deleteModel } from '../../redux/model/model.actions';
+import { getModels, deleteModel , setModel } from '../../redux/model/model.actions';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
@@ -31,12 +31,11 @@ const { IMG_URL } = config;
 const { showEnable, showDisable } = config.labels.model;
 
 const ConstructorListPage = () => {
-  const [value, setValue] = useState('');
+  const [id, setId] = useState('');
 
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setId(event.target.value);
   };
-  const id = value;
   console.log(id);
   const commonStyles = useCommonStyles();
   const styles = useStyles();
@@ -47,7 +46,9 @@ const ConstructorListPage = () => {
   const dispatch = useDispatch();
 
   const handleConstructor = () => {
-    dispatch(push(config.routes.pathToConstructor.replace(':id', id)));
+    //   dispatch(setModel(list[0]));
+    // dispatch(push(config.routes.pathToConstructor.replace(':id', id)));
+    dispatch(push(`/constructor-model/${id}`));
   };
 
   useEffect(() => {
@@ -60,61 +61,45 @@ const ConstructorListPage = () => {
     );
   }, [dispatch, rowsPerPage, currentPage]);
 
-  const modelDeleteHandler = (id) => {
-    const removeModel = () => {
-      dispatch(closeDialog());
-      dispatch(deleteModel(id));
-    };
-    openSuccessSnackbar(removeModel, MODEL_REMOVE_MESSAGE);
-  };
+  // const modelDeleteHandler = (id) => {
+  //   const removeModel = () => {
+  //     dispatch(closeDialog());
+  //     dispatch(deleteModel(id));
+  //   };
+  //   openSuccessSnackbar(removeModel, MODEL_REMOVE_MESSAGE);
+  // };
 
   if (loading) {
     return <LoadingBar />;
   }
-  // console.log(list)
-  const modelItems = map(list, (modelItem) => (
-    <TableContainerRow
-      image={modelItem.images ? `${IMG_URL}${modelItem.images.thumbnail}` : ''}
-      key={modelItem._id}
-      id={modelItem._id}
-      name={modelItem.name[0].value}
-      category={modelItem.category?.name[0].value}
-      show={modelItem.show ? showEnable : showDisable}
-      priority={modelItem.priority}
-      deleteHandler={() => modelDeleteHandler(modelItem._id)}
-      editHandler={() => {
-        dispatch(push(`/models/${modelItem._id}`));
-      }}
-    />
-  ));
 
   const DropDownModelList = () => (
-      <FormControl required className={styles.formControl}>
-        <InputLabel shrink>Оберіть модель для конструктора</InputLabel>
-        <Select
-          // labelId='select-demo'
-          // id='florida_select'
-          // displayEmpty
-          value={value}
-          onChange={handleChange}
-          autoWidth
-          className={styles.selectedEmpty}
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value='' disabled>
-            Модель
+    <FormControl required className={styles.formControl}>
+      <InputLabel shrink>Оберіть модель для конструктора</InputLabel>
+      <Select
+        // labelId='select-demo'
+        // id='florida_select'
+        // displayEmpty
+        value={id}
+        onChange={handleChange}
+        autoWidth
+        className={styles.selectedEmpty}
+        inputProps={{ 'aria-label': 'Without label' }}
+      >
+        <MenuItem value='' disabled>
+          Модель
+        </MenuItem>
+        {list.map((modelItem) => (
+          <MenuItem key={modelItem._id} value={modelItem._id}>
+            {modelItem.name[0].value}
           </MenuItem>
-          {list.map((modelItem) => (
-            <MenuItem key={modelItem._id} value={modelItem._id}>
-              {modelItem.name[0].value}
-            </MenuItem>
-          ))}
-        </Select>
-        <FormHelperText>
-          Після вибору моделі настисніть кнопку створити новий
-        </FormHelperText>
-      </FormControl>
-    );
+        ))}
+      </Select>
+      <FormHelperText>
+        Після вибору моделі настисніть кнопку створити новий
+      </FormHelperText>
+    </FormControl>
+  );
 
   return (
     <div className={commonStyles.container}>
@@ -139,13 +124,6 @@ const ConstructorListPage = () => {
       <div>
         <DropDownModelList />
       </div>
-      <TableContainerGenerator
-        data-cy='modelTable'
-        pagination
-        count={itemsCount}
-        tableTitles={tableTitles}
-        tableItems={modelItems}
-      />
     </div>
   );
 };

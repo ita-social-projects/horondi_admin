@@ -59,6 +59,7 @@ import CommentEdit from '../pages/comments/comment-edit/comment-edit';
 import History from '../pages/history';
 import HistoryDetails from '../pages/history/history-details';
 import ConstructorListPage from '../pages/constructor-list';
+import ConstructorModelDetails from '../pages/constructor-list/constructor-details';
 
 const { routes } = config;
 
@@ -266,6 +267,11 @@ const Routes = () => {
             path={routes.pathToConstructorList}
             exact
             component={ConstructorListPage}
+          />
+          <Route
+            path={routes.pathToConstructorModelDetails}
+            exact
+            component={ConstructorModelDetails}
           />
           <Route component={ErrorPage} />
         </Switch>
