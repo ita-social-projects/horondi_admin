@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { TextField, Grid, Paper, Typography } from '@material-ui/core';
+import {
+  TextField,
+  Grid,
+  Paper,
+  Typography,
+  MenuItem
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -11,23 +17,19 @@ import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import {
   createSize,
+  updateExistingSize,
   getSizeInitialValues,
   sizePropTypes,
   sizeDefaultProps
 } from '../../../utils/size-helpers';
 import { formSchema } from '../../../validations/sizes/size-form-validation';
 import { useStyles } from './size-form.styles';
-import {
-  getSizes,
-  addSize,
-  updateSize
-} from '../../../redux/sizes/sizes.actions';
+import { addSize, updateSize } from '../../../redux/sizes/sizes.actions';
 import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.selector';
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
 import { checkInitialValue } from '../../../utils/check-initial-values';
-import useSizeFilters from '../../../hooks/filters/useSizesFilters';
 
 const { selectTitle, modelTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
@@ -40,35 +42,27 @@ function SizeForm({ id, size }) {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
-  const { sizesList, loading, itemsCount, filters, rowsPerPage, currentPage } =
-    useSelector(sizesSelectorWithPagination);
-  useEffect(() => {
-    dispatch(
-      getSizes({
-        limit: rowsPerPage,
-        skip: currentPage * rowsPerPage
-      })
-    );
-  }, [dispatch, rowsPerPage, currentPage, filters]);
+  const { sizesList, loading } = useSelector(sizesSelectorWithPagination);
 
   const uniqueModelMap = [
     ...new Map(
-      sizesList?.map((item) => [item.modelId.name[0].value, item])
+      sizesList?.map((item) => [item.modelId?.name[0].value, item])
     ).values()
   ];
-  console.log(uniqueModelMap);
+
   const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
     useFormik({
       validateOnBlur: true,
       validationSchema: formSchema,
-      initialValues: getSizeInitialValues(size),
+      initialValues: getSizeInitialValues(size, sizesList[0]),
       onSubmit: (data) => {
         const newSize = createSize(data);
         if (id) {
+          const updatedSize = updateExistingSize(data);
           dispatch(
             updateSize({
               id,
-              newSize
+              updatedSize
             })
           );
           return;
@@ -135,58 +129,36 @@ function SizeForm({ id, size }) {
               </Paper>
             </div>
             <div className={styles.contentWrapper}>
-              <FormControl
-                variant={materialUiConstants.outlined}
-                className={`${styles.formControl} 
-                ${styles.purposeSelect}`}
-              >
-                <InputLabel
-                  htmlFor={materialUiConstants.outlinedAgeNativeSimple}
-                >
-                  {selectTitle}
-                </InputLabel>
-                <Select
-                  className={styles.select}
-                  data-cy={labels.en.name}
-                  id='name'
-                  native
-                  value={values.name}
-                  onChange={(e) =>
-                    setFieldValue(labels.en.name, e.target.value)
-                  }
-                  label={selectTitle}
-                >
-                  {Object.values(purposeEnum).map((value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
               <Paper className={styles.sizeItemAdd}>
-                {/* {sizeInputs.sizePricesData.map((item) => (
-                  <>
-                    <TextField
-                      data-cy={item}
-                      id={item}
-                      className={styles.textField}
-                      variant={materialUiConstants.outlined}
-                      type={materialUiConstants.types.string}
-                      label={labels.ua[item]}
-                      value={values[item]}
-                      onChange={handleChange}
-                      error={touched[item] && !!errors[item]}
-                    />
-                    {touched[item] && errors[item] && (
-                      <div
-                        data-cy={materialUiConstants.codeError}
-                        className={styles.error}
-                      >
-                        {errors[item]}
-                      </div>
-                    )}
-                  </>
-                ))} */}
+                <FormControl
+                  variant={materialUiConstants.outlined}
+                  className={`${styles.formControl} 
+                ${styles.purposeSelect}`}
+                >
+                  <InputLabel
+                    htmlFor={materialUiConstants.outlinedAgeNativeSimple}
+                  >
+                    {selectTitle}
+                  </InputLabel>
+                  <Select
+                    className={styles.select}
+                    data-cy={labels.en.name}
+                    id='name'
+                    value={values.name}
+                    onChange={(e) =>
+                      setFieldValue(labels.en.name, e.target.value)
+                    }
+                    label={selectTitle}
+                  >
+                    {Object.values(purposeEnum).map((value) => (
+                      <MenuItem key={value} value={value}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Paper>
+              <Paper className={styles.sizeItemAdd}>
                 <FormControl
                   variant={materialUiConstants.outlined}
                   className={`${styles.formControl} 
@@ -198,20 +170,23 @@ function SizeForm({ id, size }) {
                     {modelTitle}
                   </InputLabel>
                   <Select
-                    className={styles.select}
-                    data-cy={labels.en.modelName}
-                    id='modelName'
-                    native
-                    value={values.modelName}
+                    className={styles.selectStyle}
+                    data-cy={labels.en.modelId}
+                    id='modelId'
+                    value={values.modelId}
                     onChange={(e) =>
                       setFieldValue(labels.en.modelName, e.target.value)
                     }
                     label={selectTitle}
                   >
                     {uniqueModelMap.map((value) => (
-                      <option key={value.modelId._id} value={value.modelId._id}>
-                        {value.modelId.name[0].value}
-                      </option>
+                      <MenuItem
+                        className={styles.selectStyle}
+                        key={value.modelId._id}
+                        value={value.modelId._id}
+                      >
+                        {value.modelId?.name[0]?.value}
+                      </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
