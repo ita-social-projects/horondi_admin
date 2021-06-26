@@ -1,61 +1,69 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
 import { Typography } from '@material-ui/core';
 import ReactHtmlParser from 'react-html-parser';
-
 import { useStyles } from './email-questions-list.styles';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import {
   getAllEmailQuestions,
   deleteEmailQuestions,
-  setEmailQuestionLoading
+  answerToEmailQuestion
 } from '../../redux/email-questions/email-questions.actions';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
+import useQuestionFilter from '../../hooks/filters/use-questions-filter';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import TableContainerRow from '../../containers/table-container-row';
+import TableContainerCollapsableRow from '../../containers/table-container-collapsable-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import getTime from '../../utils/getTime';
-import EmailQuestionsFilter from './email-question-filter';
 import EmailQuestionsOperationsButtons from './operations-buttons';
-import { answerTextHandler } from '../../utils/email-question-list';
+import {
+  answerTextHandler,
+  answerShowHandler,
+  questionShowHandler
+} from '../../utils/email-question-list';
+import { questionSelectorWithPagination } from '../../redux/selectors/email-questions.selectors';
+
+const map = require('lodash/map');
 
 const { labels, titles, messages, tableHeadRowTitles } = config;
-const { EMAIL_QUESTION_REMOVE_MESSAGE, EMAIL_QUESTION_SPAM_DETAILS } = messages;
+const { EMAIL_QUESTION_REMOVE_MESSAGE } = messages;
 
 const tableTitles = tableHeadRowTitles.emailQuestions;
 
 const EmailQuestionsList = () => {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
-
-  const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading, pagesCount, currentPage, questionsPerPage } =
-    useSelector(({ EmailQuestions }) => ({
-      list: EmailQuestions.list,
-      loading: EmailQuestions.loading,
-      pagesCount: EmailQuestions.pagination.pagesCount,
-      currentPage: EmailQuestions.pagination.currentPage,
-      questionsPerPage: EmailQuestions.pagination.questionsPerPage
-    }));
-
   const dispatch = useDispatch();
 
-  const [filter, setFilter] = useState(['ALL']);
+  const [answerValue, setAnswerValue] = useState('');
+  const [shouldValidate, setShouldValidate] = useState(false);
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
+
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+  const questionOptions = useQuestionFilter();
+
+  const { filters, loading, list, currentPage, rowsPerPage, itemsCount } =
+    useSelector(questionSelectorWithPagination);
 
   useEffect(() => {
     dispatch(
       getAllEmailQuestions({
-        filter: filter.slice(1),
-        skip: currentPage * questionsPerPage
+        filter: {
+          date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
+          filter: filters.filters,
+          search: filters.search
+        },
+        pagination: {
+          limit: rowsPerPage,
+          skip: currentPage * rowsPerPage
+        }
       })
     );
-  }, [dispatch, currentPage, filter, questionsPerPage]);
-
+  }, [dispatch, currentPage, filters, rowsPerPage]);
   const questionDeleteHandler = (id, e) => {
     e.stopPropagation();
     const removeQuestion = () => {
@@ -65,28 +73,18 @@ const EmailQuestionsList = () => {
     openSuccessSnackbar(removeQuestion, EMAIL_QUESTION_REMOVE_MESSAGE);
   };
 
-  const questionClickHandler = (id, status) => {
-    if (status === labels.emailQuestionsLabels.en.SPAM) {
-      const handler = () => dispatch(closeDialog());
+  const { adminId } = useSelector(({ EmailQuestions, Auth }) => ({
+    adminId: Auth.adminId,
+    question: EmailQuestions.currentQuestion
+  }));
 
-      openSuccessSnackbar(handler, EMAIL_QUESTION_SPAM_DETAILS, messages.ERROR);
+  const onAnsweringQuestion = (id) => {
+    if (answerValue) {
+      dispatch(
+        answerToEmailQuestion({ questionId: id, adminId, text: answerValue })
+      );
     } else {
-      dispatch(setEmailQuestionLoading(true));
-      dispatch(push(`/email-answer/${id}`));
-    }
-  };
-
-  const filterChangeHandler = (id) => {
-    if (id === 'ALL') {
-      setFilter([id]);
-      return;
-    }
-
-    const possibleFilter = filter.find((item) => item === id);
-    if (possibleFilter) {
-      setFilter(filter.filter((item) => item !== id));
-    } else {
-      setFilter([...filter, id]);
+      setShouldValidate(true);
     }
   };
 
@@ -101,35 +99,37 @@ const EmailQuestionsList = () => {
     }
   };
 
-  const questions =
-    list !== undefined
-      ? list.map((question) => {
-          const { answer } = question;
+  const questions = map(list, (question) => {
+    const { answer } = question;
 
-          const questionToShow = `<b>Q:</b> ${question.text}`;
-          const answerToShow = answerTextHandler(answer);
-
-          return (
-            <TableContainerRow
-              key={question._id}
-              id={question._id}
-              senderName={question.senderName}
-              email={question.email}
-              qA={ReactHtmlParser(questionToShow + answerToShow)}
-              date={ReactHtmlParser(getTime(question.date, true))}
-              status={labels.emailQuestionsLabels.ua[question.status]}
-              showAvatar={false}
-              showEdit={false}
-              showCheckbox
-              checkboxChangeHandler={checkboxChangeHandler}
-              deleteHandler={(e) => questionDeleteHandler(question._id, e)}
-              clickHandler={() =>
-                questionClickHandler(question._id, question.status)
-              }
-            />
-          );
-        })
-      : null;
+    const questionToShow = questionShowHandler(question);
+    const answerToShow = answerTextHandler(answer);
+    const plainAnswer = answerShowHandler(answer);
+    return (
+      <TableContainerCollapsableRow
+        key={question._id}
+        id={question._id}
+        question={question.text}
+        answer={plainAnswer}
+        date={ReactHtmlParser(getTime(question.date, true))}
+        senderName={question.senderName}
+        email={question.email}
+        qA={ReactHtmlParser(questionToShow + answerToShow)}
+        status={labels.emailQuestionsLabels.ua[question.status]}
+        showAvatar={false}
+        showEdit={false}
+        showCheckbox
+        showCollapse
+        collapsable
+        shouldValidate={shouldValidate}
+        answerValue={answerValue}
+        setAnswerValue={setAnswerValue}
+        checkboxChangeHandler={checkboxChangeHandler}
+        deleteHandler={(e) => questionDeleteHandler(question._id, e)}
+        onAnswer={onAnsweringQuestion}
+      />
+    );
+  });
 
   if (loading) {
     return <LoadingBar />;
@@ -145,10 +145,7 @@ const EmailQuestionsList = () => {
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
         <div className={styles.operations}>
-          <EmailQuestionsFilter
-            filterItems={filter}
-            filterChangeHandler={filterChangeHandler}
-          />
+          <FilterNavbar options={questionOptions || {}} />
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
             setQuestionsToOperate={setQuestionsToOperate}
@@ -159,7 +156,7 @@ const EmailQuestionsList = () => {
         {questions?.length ? (
           <TableContainerGenerator
             pagination
-            count={pagesCount}
+            count={itemsCount}
             tableTitles={tableTitles}
             tableItems={questions}
           />
