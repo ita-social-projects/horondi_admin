@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { config } from '../configs';
 import sizesEnum, { availableEnum } from '../configs/sizes-enum';
-
-const { languages } = config;
 
 export const createSize = (data) => ({
   name: data.name,
@@ -14,12 +11,25 @@ export const createSize = (data) => ({
   weightInKg: data.weightInKg,
   available: data.available,
   additionalPrice: data.additionalPrice,
-  modelId: data.modelName
+  modelId: data.modelId
 });
 
-export const getSizeInitialValues = (size) => ({
+export const updateExistingSize = (data) => ({
+  name: data.name,
+  heightInCm: data.heightInCm,
+  widthInCm: data.widthInCm,
+  depthInCm: data.depthInCm,
+  volumeInLiters: data.volumeInLiters,
+  weightInKg: data.weightInKg,
+  available: data.available,
+  additionalPrice: data.additionalPrice,
+  modelId: data.modelId
+});
+
+export const getSizeInitialValues = (size, defaultSize) => ({
   name: size.name || 'M',
-  modelName: '',
+  modelId: size.modelId._id || '',
+  model: size.modelId || {},
   heightInCm: size.heightInCm || '',
   widthInCm: size.widthInCm || '',
   depthInCm: size.depthInCm || '',
@@ -45,12 +55,7 @@ export const sizePropTypes = {
         value: PropTypes.number
       })
     ),
-    modelName: PropTypes.arrayOf(
-      PropTypes.shape({
-        lang: PropTypes.string,
-        value: PropTypes.string
-      })
-    )
+    modelId: PropTypes.string
   })
 };
 export const sizeDefaultProps = {
@@ -58,10 +63,7 @@ export const sizeDefaultProps = {
   size: {
     _id: '',
     name: '',
-    modelName: [
-      { lang: '', value: '' },
-      { lang: '', value: '' }
-    ],
+    modelId: '',
     heightInCm: '',
     widthInCm: '',
     depthInCm: '',
