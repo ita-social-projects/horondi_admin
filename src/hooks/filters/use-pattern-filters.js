@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useEffect, useState, useRef } from 'react';
 import {
   setPatternFilter,
   clearPatternFilters
@@ -9,14 +10,12 @@ import buttonTitles from '../../configs/button-titles';
 import {
   statusPatternFilterObject,
   materialPatternFilterObject,
-  materialPatternTableAction,
-  dataFilterObj
+  materialPatternTableAction
 } from '../../utils/pattern';
 import {
   patternStatusTableAction,
   patternPlaceholderSearch
 } from '../../consts/pattern-status';
-import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
 
 const usePatternFilters = () => {
   const dispatch = useDispatch();
@@ -25,9 +24,6 @@ const usePatternFilters = () => {
     filters: Pattern.filters,
     items: Pattern.items
   }));
-
-  const { material } = useSelector(patternSelectorWithPagination);
-  console.log(material);
 
   const meterialForGobelen = items?.map((item) => {
     const id = item.features.material._id;
@@ -75,7 +71,7 @@ const usePatternFilters = () => {
       {
         filters: filters?.material,
         label: buttonTitles.PATTERN_MATERIAL,
-        selectItems: dataFilterObj(sortMaterial),
+        selectItems: materialPatternFilterObject(sortMaterial),
         setFilterHandler: setMaterialFilter,
         objForTranslateRenderItems: materialPatternTableAction(sortMaterial)
       },

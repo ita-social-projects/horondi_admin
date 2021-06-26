@@ -13,24 +13,11 @@ export const statusPatternFilterObject = statusPatterns.map(
   })
 );
 
-export const materialPatternFilterObject = (material) =>
-  material.map(({ id, name }) => ({
-    key: id,
-    value: name
-  }));
-
-export const placeholderPatternSearch = 'за назвою';
-export const dataFilterObj = (data) => {
-  const test = [
-    { id: '6043a1f33e06ad3edcdb7b09', name: 'Мальмо' },
-    { id: '6043b2ec3e06ad3edcdb7b17', name: 'Нитки для шиття' }
-  ];
+export const materialPatternFilterObject = (data) => {
   const arrToFilter = [];
-  console.log();
-  _.forEach(test, ({ id, name }) => {
+  _.forEach(data, ({ id, name }) => {
     arrToFilter.push({ key: id, value: name });
   });
-
   return arrToFilter;
 };
 
