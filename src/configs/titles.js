@@ -115,6 +115,9 @@ const titles = {
   },
   constructorListPageTitles: {
     mainPageTitle: 'Список конструкторів'
+  },
+  constructorModelTitles: {
+    mainPageTitle: 'Опції конструктора'
   }
 };
 
