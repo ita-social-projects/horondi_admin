@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   TextField,
   Grid,
@@ -54,7 +54,7 @@ function SizeForm({ id, size }) {
     useFormik({
       validateOnBlur: true,
       validationSchema: formSchema,
-      initialValues: getSizeInitialValues(size, sizesList[0]),
+      initialValues: getSizeInitialValues(size),
       onSubmit: (data) => {
         const newSize = createSize(data);
         if (id) {

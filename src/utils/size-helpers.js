@@ -26,7 +26,7 @@ export const updateExistingSize = (data) => ({
   modelId: data.modelId
 });
 
-export const getSizeInitialValues = (size, defaultSize) => ({
+export const getSizeInitialValues = (size) => ({
   name: size.name || 'M',
   modelId: size.modelId._id || '',
   model: size.modelId || {},
