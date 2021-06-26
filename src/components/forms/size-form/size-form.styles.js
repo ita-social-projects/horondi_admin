@@ -10,7 +10,6 @@ export const useStyles = makeStyles((theme) => ({
     '& div': {
       '& div': {
         '& div': {
-          paddingLeft: '0px',
           paddingRight: '0px'
         }
       }
@@ -59,7 +58,7 @@ export const useStyles = makeStyles((theme) => ({
       marginLeft: '0px'
     }
   },
-
+  selectStyle: {},
   inputError: {
     color: theme.palette.error.main,
     padding: '0 5px'
@@ -70,6 +69,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   purposeSelect: {
     width: '390px',
+    margin: '10px',
     '@media (max-width: 900px)': {
       width: '300px',
       display: 'block',
