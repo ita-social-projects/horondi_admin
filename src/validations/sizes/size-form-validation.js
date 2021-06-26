@@ -18,7 +18,7 @@ const {
 
 export const formSchema = Yup.object().shape({
   name: Yup.string().required(VALIDATION_ERROR),
-  modelName: Yup.string().required(VALIDATION_ERROR),
+  modelId: Yup.string().required(VALIDATION_ERROR),
   heightInCm: Yup.number()
     .typeError(NO_NUMBER_TYPE_MESSAGE)
     .min(1, MIN_LENGTH_MESSAGE)
