@@ -477,7 +477,7 @@ const labels = {
       volumeInLiters: 'volumeInLiters',
       weightInKg: 'weightInKg',
       additionalPrice: 'additionalPrice',
-      modelName: 'modelName',
+      modelName: 'modelId',
       name: 'name',
       available: 'available'
     }
