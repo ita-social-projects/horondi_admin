@@ -18,7 +18,7 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
 import {
-  // getPocketsInitialValues,
+  getPocketsInitialValues,
   onSubmitPocketsHandler
 } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
@@ -35,12 +35,12 @@ const {
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
 const { POCKETS_ERROR } = pocketsTranslations;
-// const { IMG_URL } = config;
+const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
   config.formRegExp;
 const { materialUiConstants } = config;
 
-const PocketsForm = () => {
+const PocketsForm = ({ pocket, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const { createPockets, setUpload, upload, pocketsImage, setPocketsImage } =
@@ -75,7 +75,9 @@ const PocketsForm = () => {
     setFieldValue
   } = useFormik({
     validationSchema: pocketsValidationSchema,
+    initialValues: getPocketsInitialValues(edit, IMG_URL, pocket),
     onSubmit: (data) => {
+      console.log('data', data);
       const newPocket = createPockets(data);
       const uploadCondition = upload instanceof File;
       onSubmitPocketsHandler(uploadCondition, dispatch, addPockets, {
@@ -83,7 +85,7 @@ const PocketsForm = () => {
         upload
       });
 
-      if (!uploadCondition) {
+      if (!uploadCondition && !pocket.images.thumbnail) {
         dispatch(setSnackBarSeverity('error'));
         dispatch(setSnackBarMessage(POCKETS_ERROR));
         dispatch(setSnackBarStatus(true));
@@ -114,6 +116,8 @@ const PocketsForm = () => {
       handler: () => setFieldValue('restriction', !values.restriction)
     }
   ];
+
+  console.log('values', values);
 
   const inputs = [{ label: labels.pocketsName, name: 'name' }];
 
@@ -155,7 +159,10 @@ const PocketsForm = () => {
               {config.labels.avatarText}
             </span>
             <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
+              <ImageUploadContainer
+                handler={handleImageLoad}
+                src={edit ? values.pocketsImage : pocketsImage}
+              />
             </div>
             {touched.code && errors.code && (
               <div data-cy='code-error' className={styles.error}>
@@ -199,33 +206,58 @@ const PocketsForm = () => {
 };
 
 PocketsForm.propTypes = {
+  id: PropTypes.string,
+  pocket: PropTypes.shape({
+    images: PropTypes.shape({
+      thumbnail: PropTypes.string
+    })
+  }),
   values: PropTypes.shape({
     pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    typeOptions: PropTypes.string
+    type: PropTypes.string
   }),
   errors: PropTypes.shape({
     pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    typeOptions: PropTypes.string
+    type: PropTypes.string
   }),
   touched: PropTypes.shape({
     pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    typeOptions: PropTypes.string
-  })
+    type: PropTypes.string
+  }),
+  edit: PropTypes.bool
 };
 
 PocketsForm.defaultProps = {
+  id: '',
   values: {},
   errors: {},
-  touched: {}
+  touched: {},
+  pocket: {
+    _id: '',
+    name: [
+      {
+        value: ''
+      },
+      {
+        value: ''
+      }
+    ],
+    images: {
+      thumbnail: ''
+    },
+    restrictions: false,
+    type: null
+  },
+  edit: false
 };
 
 export default PocketsForm;
