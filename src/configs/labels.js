@@ -483,6 +483,17 @@ const labels = {
       name: 'name',
       available: 'available'
     }
+  },
+  pocketsPageLabel: {
+    pocketsHeader: 'pockets-header',
+    pocketsTable: 'sidePocketsTable',
+    pocketsName: {
+      ua: 'Назва кишені',
+      en: 'Pocket name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    avaliable: 'Додати до обмежень'
   }
 };
 export default labels;

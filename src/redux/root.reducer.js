@@ -27,6 +27,7 @@ import Slides from './home-page-slides/home-page-slides.reducer';
 import Error from './error/error.reducer';
 import Color from './color/color.reducer';
 import Constructor from './constructor/constructor.reducer';
+import pocketsReducer from './pockets/pockets.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
@@ -56,5 +57,6 @@ export const rootReducer = (history) =>
     Error,
     Color,
     Constructor,
-    History
+    History,
+    pocketsReducer
   });

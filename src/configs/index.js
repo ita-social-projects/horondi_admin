@@ -30,7 +30,8 @@ import {
   paginationInputErrorMessages,
   commentErrorMessages,
   sizeErrorMessages,
-  businessPageErrorMessages
+  businessPageErrorMessages,
+  pocketsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -190,7 +191,6 @@ export const config = {
   },
   UAH: 'грн',
   maxItemsPerPage: 10,
-
   buttonTitles,
   detailTitles,
   messages,
@@ -228,7 +228,8 @@ export const config = {
   businessPageErrorMessages,
   imageUploadNewsInputsId,
   valueKeys,
-  inputNames
+  inputNames,
+  pocketsErrorMessages
 };
 export const inputTypes = {
   button: 'button',
