@@ -3,6 +3,8 @@ import {
   SET_MODEL_LOADING,
   SET_MODEL,
   SET_MODEL_ERROR,
+  SET_FILTER,
+  CLEAR_FILTERS,
   REMOVE_MODEL_FROM_STORE,
   ADD_CONSTRUCTOR_BASIC_TO_STORE,
   REMOVE_CONSTRUCTOR_BASIC_FROM_STORE,
@@ -17,12 +19,27 @@ import {
   REMOVE_CONSTRUCTOR_PATTERN_FROM_STORE
 } from './model.types';
 
+const initialFilters = {
+  available: [],
+  category: [],
+  availableForConstructor: [],
+  search: ''
+};
+
 export const initialState = {
   list: [],
+  filters: initialFilters,
   model: null,
   modelLoading: false,
   modelError: null
 };
+
+export const selectModel = ({ Model }) => ({
+  list: Model.list,
+  loading: Model.modelLoading,
+  filter: Model.filters,
+  model: Model.model
+});
 
 const modelReducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -35,6 +52,19 @@ const modelReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         model: action.payload
+      };
+    case SET_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload
+        }
+      };
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: initialFilters
       };
     case SET_MODEL_LOADING:
       return {

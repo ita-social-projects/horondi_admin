@@ -45,6 +45,7 @@ const buttonTitles = {
   CLOSE_DIALOG_TITLE: 'Закрити вікно',
   ORDER_DETAILS: 'Деталі',
   USER_STATUS_TITLE: 'Статус',
+  AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор',
   CLEAR_FILTERS: 'Очистити фільтри',
   CREATE_SLIDE_TITLE: 'Створити слайд',
   OPEN_SLIDE_EDIT: 'Увімкнути редагування',

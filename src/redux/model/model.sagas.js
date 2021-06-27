@@ -42,10 +42,10 @@ const { routes } = config;
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-export function* handleModelsLoad({ payload }) {
+export function* handleModelsLoad({ payload: { filter, pagination } }) {
   try {
     yield put(setModelLoading(true));
-    const models = yield call(getAllModels, payload.skip, payload.limit);
+    const models = yield call(getAllModels, filter, pagination);
     yield put(setItemsCount(models.count));
     yield put(setModels(models.items));
     yield put(setModelLoading(false));
