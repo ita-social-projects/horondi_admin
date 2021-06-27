@@ -126,13 +126,6 @@ const PocketsForm = () => {
     inputs
   };
 
-  // const valueEquality = checkInitialValue(
-  //   getPocketsInitialValues(edit, IMG_URL, pocket),
-  //   values
-  // );
-
-  // console.log('edit', edit)
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
