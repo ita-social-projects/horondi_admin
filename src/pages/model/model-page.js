@@ -27,13 +27,13 @@ const tableTitles = config.tableHeadRowTitles.models;
 const pageTitle = config.titles.modelPageTitles.mainPageTitle;
 const { IMG_URL } = config;
 const { showEnable, showDisable } = config.labels.model;
-const { NO_CATEGORY_MESSAGE } = config.messages;
+const { NO_MODEL_MESSAGE } = config.messages;
 const ModelPage = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
   const modelOptions = useModelFilters();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { filter, list, loading, currentPage, rowsPerPage, itemsCount } =
+  const { filter, list, sort, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(modelSelectorWithPagination);
 
   useEffect(() => {
@@ -48,7 +48,8 @@ const ModelPage = () => {
         pagination: {
           limit: rowsPerPage,
           skip: currentPage * rowsPerPage
-        }
+        },
+        sort
       })
     );
     dispatch(
@@ -59,7 +60,7 @@ const ModelPage = () => {
         }
       })
     );
-  }, [dispatch, filter, rowsPerPage, currentPage]);
+  }, [dispatch, filter, sort, rowsPerPage, currentPage]);
 
   const modelDeleteHandler = (id) => {
     const removeModel = () => {
@@ -117,7 +118,7 @@ const ModelPage = () => {
           tableItems={modelItems}
         />
       ) : (
-        <p className={commonStyles.noRecords}>{NO_CATEGORY_MESSAGE}</p>
+        <p className={commonStyles.noRecords}>{NO_MODEL_MESSAGE}</p>
       )}
     </div>
   );

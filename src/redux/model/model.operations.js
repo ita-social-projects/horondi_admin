@@ -32,10 +32,10 @@ const constructorElementRequest = `
     }
 `;
 
-export const getAllModels = async (filter, pagination) => {
+export const getAllModels = async (filter, pagination, sort) => {
   const getAllModelsQuery = `
-      query($filter: ModelFilterInput, $pagination: Pagination) {
-        getAllModels(filter: $filter, pagination: $pagination) {
+      query($filter: ModelFilterInput, $pagination: Pagination,  $sort: ModelSortInput) {
+        getAllModels(filter: $filter, pagination: $pagination, sort: $sort) {
           items {
             _id
             name {
@@ -66,7 +66,11 @@ export const getAllModels = async (filter, pagination) => {
       }
     `;
 
-  const result = await getItems(getAllModelsQuery, { filter, pagination });
+  const result = await getItems(getAllModelsQuery, {
+    filter,
+    pagination,
+    sort
+  });
 
   return result?.data?.getAllModels;
 };

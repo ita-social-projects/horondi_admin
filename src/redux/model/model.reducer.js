@@ -4,7 +4,9 @@ import {
   SET_MODEL,
   SET_MODEL_ERROR,
   SET_FILTER,
+  SET_SORT,
   CLEAR_FILTERS,
+  MODEL_SORT_LABEL,
   REMOVE_MODEL_FROM_STORE,
   ADD_CONSTRUCTOR_BASIC_TO_STORE,
   REMOVE_CONSTRUCTOR_BASIC_FROM_STORE,
@@ -31,10 +33,14 @@ export const initialState = {
   filters: initialFilters,
   model: null,
   modelLoading: false,
-  modelError: null
+  modelError: null,
+  sort: {},
+  sortLabel: ''
 };
 
 export const selectModel = ({ Model }) => ({
+  sort: Model.sort,
+  sortLabel: Model.sortLabel,
   list: Model.list,
   loading: Model.modelLoading,
   filter: Model.filters,
@@ -61,9 +67,23 @@ const modelReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
+    case SET_SORT:
+      return {
+        ...state,
+        sort: {
+          ...action.payload
+        }
+      };
+    case MODEL_SORT_LABEL:
+      return {
+        ...state,
+        sortLabel: action.payload
+      };
     case CLEAR_FILTERS:
       return {
         ...state,
+        sort: {},
+        sortLabel: '',
         filters: initialFilters
       };
     case SET_MODEL_LOADING:

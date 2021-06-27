@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-
-import { clearFilters, setFilter } from '../../redux/model/model.actions';
+import { sortDirection } from '../../configs/sort';
+import filterLabels from '../../configs/filter-labels';
+import {
+  clearFilters,
+  setFilter,
+  setSort,
+  setModelSortLabel
+} from '../../redux/model/model.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import buttonTitles from '../../configs/button-titles';
 import {
@@ -17,6 +23,7 @@ import {
 const useModelFilters = () => {
   const dispatch = useDispatch();
   const filters = useSelector(({ Model }) => Model.filters);
+  const sortLabel = useSelector(({ Model }) => Model.sortLabel);
   convertToCatOptions(useSelector(({ Categories }) => Categories.categories));
 
   const setCategoryFilter = (category) => {
@@ -55,12 +62,27 @@ const useModelFilters = () => {
     );
   };
 
+  const setSorting = ({ key, type, value }) => {
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setSort({
+        [key]: sortDirection[type]
+      })
+    );
+    dispatch(setModelSortLabel(value));
+  };
+
   const clearAllFilters = () => {
     dispatch(setCurrentPage(0));
     dispatch(clearFilters());
   };
 
   return {
+    sortOptions: {
+      labels: filterLabels.models.sortLabels,
+      setSorting,
+      sortLabel
+    },
     filterByMultipleOptions: [
       {
         filters: filters.category,
