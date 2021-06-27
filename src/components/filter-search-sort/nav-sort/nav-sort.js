@@ -28,7 +28,6 @@ const NavSort = ({ sortOptions }) => {
     },
     [sortOptions.label]
   );
-
   return (
     <div className={styles.sort}>
       <FormControl className={styles.formControl}>
@@ -51,8 +50,10 @@ const NavSort = ({ sortOptions }) => {
 };
 
 NavSort.propTypes = {
-  sortOptions: PropTypes.objectOf(PropTypes.object),
-  labels: PropTypes.arrayOf(PropTypes.array),
+  sortOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.string])
+  ),
+  labels: PropTypes.arrayOf(PropTypes.object),
   setSorting: PropTypes.func
 };
 

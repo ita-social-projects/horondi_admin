@@ -79,7 +79,6 @@ const ProductMaterialsContainer = ({
     innerMaterialOptions,
     innerColorOptions
   ];
-
   return (
     <form onSubmit={handleSubmit} className={sharedStyles.container}>
       <Grid container spacing={1} xs={12} justify='flex-start'>
@@ -105,14 +104,20 @@ const ProductMaterialsContainer = ({
 };
 
 ProductMaterialsContainer.propTypes = {
-  innerMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  innerColors: PropTypes.arrayOf(PropTypes.array).isRequired,
-  bottomMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  bottomColors: PropTypes.arrayOf(PropTypes.array).isRequired,
-  mainMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  mainColors: PropTypes.arrayOf(PropTypes.array).isRequired,
+  innerMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  innerColors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bottomMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bottomColors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  mainMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  mainColors: PropTypes.arrayOf(PropTypes.object).isRequired,
   values: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.array,
+      PropTypes.object
+    ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
