@@ -84,7 +84,7 @@ const ConstructorPage = ({ match }) => {
   const { model, constructorTabs, patternList, filter, loading } = useSelector(
     selectConstructorMethodAndMaterials
   );
-
+  console.log(model);
   useEffect(() => {
     dispatch(
       getMaterials({
@@ -188,7 +188,7 @@ const ConstructorPage = ({ match }) => {
 
   const constructorOptions = {
     constructorBasic: {
-      list: model.eligibleOptions.constructorBasic,
+      list: model?.eligibleOptions?.constructorBasic,
       label: constructorBasic,
       buttonTitle: CREATE_CONSTRUCTOR_BASIC_TITLE,
       createConstructorElement: addConstructorBasic,
