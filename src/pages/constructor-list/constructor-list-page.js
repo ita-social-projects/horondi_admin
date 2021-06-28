@@ -29,7 +29,7 @@ const ConstructorListPage = () => {
   console.log(id);
   const commonStyles = useCommonStyles();
   const styles = useStyles();
-  const { list, loading, currentPage, rowsPerPage, itemsCount } =
+  const { list, loading, currentPage, rowsPerPage } =
     useSelector(selectModelAndTable);
 
   const dispatch = useDispatch();

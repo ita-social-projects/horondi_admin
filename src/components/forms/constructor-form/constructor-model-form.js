@@ -41,7 +41,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       </Typography>
 
       <div className={classes.root}>
-        <Accordion onChange={handleChange('panel1')}>
+        <Accordion expanded={expanded} onChange={handleChange('panel1')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1bh-content'
@@ -57,7 +57,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion onChange={handleChange('panel2')}>
+        <Accordion expanded={expanded} onChange={handleChange('panel2')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel2bh-content'
@@ -74,7 +74,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion onChange={handleChange('panel3')}>
+        <Accordion expanded={expanded} onChange={handleChange('panel3')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel3bh-content'
@@ -90,7 +90,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion onChange={handleChange('panel4')}>
+        <Accordion expanded={expanded} onChange={handleChange('panel4')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel4bh-content'
@@ -105,7 +105,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion onChange={handleChange('panel5')}>
+        <Accordion expanded={expanded} onChange={handleChange('panel5')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1bh-content'
@@ -121,7 +121,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion onChange={handleChange('panel6')}>
+        <Accordion expanded={expanded} onChange={handleChange('panel6')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel6bh-content'
@@ -137,7 +137,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion onChange={handleChange('panel7')}>
+        <Accordion expanded={expanded} onChange={handleChange('panel7')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel7bh-content'
