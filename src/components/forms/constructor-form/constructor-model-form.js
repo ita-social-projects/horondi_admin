@@ -191,7 +191,6 @@ const valueShape = PropTypes.shape({
 
 ConstructorModelForm.propTypes = {
   isEdit: PropTypes.bool,
-  id: PropTypes.string,
   model: PropTypes.shape({
     _id: PropTypes.string,
     description: PropTypes.arrayOf(valueShape),
@@ -211,7 +210,8 @@ ConstructorModelForm.propTypes = {
     }),
     sizes: PropTypes.arrayOf(valueShape),
     name: PropTypes.arrayOf(valueShape)
-  })
+  }),
+  id: PropTypes.string
 };
 
 ConstructorModelForm.defaultProps = {
