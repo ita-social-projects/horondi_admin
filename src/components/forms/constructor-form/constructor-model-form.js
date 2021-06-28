@@ -19,9 +19,7 @@ const pageTitle = config.titles.constructorModelTitles.mainPageTitle;
 
 const ConstructorModelForm = ({ model, id, isEdit }) => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
-
   const [expanded, setExpanded] = useState('');
 
   const handleChange = (panel) => (event, isExpanded) => {
