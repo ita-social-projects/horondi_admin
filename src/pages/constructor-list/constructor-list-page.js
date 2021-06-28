@@ -9,11 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
-import { getModels, deleteModel , setModel } from '../../redux/model/model.actions';
-import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
-import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import TableContainerRow from '../../containers/table-container-row';
-import TableContainerGenerator from '../../containers/table-container-generator';
+import { getModels } from '../../redux/model/model.actions';
 import LoadingBar from '../../components/loading-bar';
 import { selectModelAndTable } from '../../redux/selectors/model.selectors';
 import { useStyles } from '../../components/forms/model-form/model-form.styles';
@@ -21,14 +17,8 @@ import { useStyles } from '../../components/forms/model-form/model-form.styles';
 const { labelsEn } = config.labels.model;
 const { materialUiConstants } = config;
 const { CREATE_CONSTRUCTOR } = config.buttonTitles;
-const map = require('lodash/map');
 
-const { MODEL_REMOVE_MESSAGE } = config.messages;
-
-const tableTitles = config.tableHeadRowTitles.models;
 const pageTitle = config.titles.constructorListPageTitles.mainPageTitle;
-const { IMG_URL } = config;
-const { showEnable, showDisable } = config.labels.model;
 
 const ConstructorListPage = () => {
   const [id, setId] = useState('');
@@ -39,15 +29,12 @@ const ConstructorListPage = () => {
   console.log(id);
   const commonStyles = useCommonStyles();
   const styles = useStyles();
-  const { openSuccessSnackbar } = useSuccessSnackbar();
   const { list, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(selectModelAndTable);
 
   const dispatch = useDispatch();
 
   const handleConstructor = () => {
-    //   dispatch(setModel(list[0]));
-    // dispatch(push(config.routes.pathToConstructor.replace(':id', id)));
     dispatch(push(`/constructor-model/${id}`));
   };
 
@@ -61,14 +48,6 @@ const ConstructorListPage = () => {
     );
   }, [dispatch, rowsPerPage, currentPage]);
 
-  // const modelDeleteHandler = (id) => {
-  //   const removeModel = () => {
-  //     dispatch(closeDialog());
-  //     dispatch(deleteModel(id));
-  //   };
-  //   openSuccessSnackbar(removeModel, MODEL_REMOVE_MESSAGE);
-  // };
-
   if (loading) {
     return <LoadingBar />;
   }
@@ -77,9 +56,6 @@ const ConstructorListPage = () => {
     <FormControl required className={styles.formControl}>
       <InputLabel shrink>Оберіть модель для конструктора</InputLabel>
       <Select
-        // labelId='select-demo'
-        // id='florida_select'
-        // displayEmpty
         value={id}
         onChange={handleChange}
         autoWidth
@@ -116,7 +92,6 @@ const ConstructorListPage = () => {
             color={materialUiConstants.secondary}
             variant={materialUiConstants.contained}
           >
-            {/* {MODEL_CONSTRUCTOR} */}
             {CREATE_CONSTRUCTOR}
           </Button>
         </div>
