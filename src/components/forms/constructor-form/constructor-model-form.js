@@ -22,7 +22,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
 
   const dispatch = useDispatch();
 
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState('');
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -41,7 +41,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       </Typography>
 
       <div className={classes.root}>
-        <Accordion expanded={expanded} onChange={handleChange('panel1')}>
+        <Accordion
+          expanded={expanded === 'panel1'}
+          onChange={handleChange('panel1')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1bh-content'
@@ -57,7 +60,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion expanded={expanded} onChange={handleChange('panel2')}>
+        <Accordion
+          expanded={expanded === 'panel2'}
+          onChange={handleChange('panel2')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel2bh-content'
@@ -74,7 +80,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion expanded={expanded} onChange={handleChange('panel3')}>
+        <Accordion
+          expanded={expanded === 'panel3'}
+          onChange={handleChange('panel3')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel3bh-content'
@@ -90,7 +99,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion expanded={expanded} onChange={handleChange('panel4')}>
+        <Accordion
+          expanded={expanded === 'panel4'}
+          onChange={handleChange('panel4')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel4bh-content'
@@ -105,7 +117,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion expanded={expanded} onChange={handleChange('panel5')}>
+        <Accordion
+          expanded={expanded === 'panel5'}
+          onChange={handleChange('panel5')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1bh-content'
@@ -121,7 +136,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion expanded={expanded} onChange={handleChange('panel6')}>
+        <Accordion
+          expanded={expanded === 'panel6'}
+          onChange={handleChange('panel6')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel6bh-content'
@@ -137,7 +155,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-        <Accordion expanded={expanded} onChange={handleChange('panel7')}>
+        <Accordion
+          expanded={expanded === 'panel7'}
+          onChange={handleChange('panel7')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel7bh-content'
