@@ -1,11 +1,6 @@
 import _ from 'lodash';
 import { statusPatterns } from '../consts/pattern-status';
 
-export const materialPatternTableAction = (material) => {
-  const materialTable = material.map((item) => [item.id, item.name]);
-  return Object.fromEntries(materialTable);
-};
-
 export const statusPatternFilterObject = statusPatterns.map(
   ({ value, label }) => ({
     key: value,
@@ -13,13 +8,23 @@ export const statusPatternFilterObject = statusPatterns.map(
   })
 );
 
-export const materialPatternFilterObject = (data) => {
+export const materialOptions = {};
+
+export const convertToCatOptions = (items) => {
+  if (items) {
+    items.map((item) =>
+      Object.assign(materialOptions, {
+        [item.features.material._id]: item.features.material.name[0].value
+      })
+    );
+    return materialOptions;
+  }
+};
+
+export const materialFilterObj = () => {
   const arrToFilter = [];
-  _.forEach(data, ({ id, name }) => {
-    arrToFilter.push({ key: id, value: name });
+  _.forEach(materialOptions, (value, key) => {
+    arrToFilter.push({ key, value });
   });
   return arrToFilter;
 };
-
-export const dataRenderObj = (data) =>
-  _.mapValues(_.keyBy(data, '_id'), 'name[0].value');
