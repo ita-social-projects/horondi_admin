@@ -188,6 +188,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
+
 ConstructorModelForm.propTypes = {
   id: PropTypes.string,
   model: PropTypes.shape({
