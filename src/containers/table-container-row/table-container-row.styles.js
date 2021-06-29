@@ -8,5 +8,11 @@ export const useStyles = makeStyles((theme) => ({
   medium: {
     width: theme.spacing(5),
     height: theme.spacing(5)
+  },
+  ellipsis: {
+    maxWidth: 200,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
 }));
