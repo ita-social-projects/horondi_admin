@@ -73,7 +73,8 @@ const buttonTitles = {
   PATTERN: 'Гобелени',
   MODEL: 'Моделі',
   YES_BUTTON: 'Так',
-  NO_BUTTON: 'Ні'
+  NO_BUTTON: 'Ні',
+  CREATE_BACK_TITLE: 'Додати спинку'
 };
 
 export default buttonTitles;

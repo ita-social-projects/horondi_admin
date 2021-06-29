@@ -77,7 +77,7 @@ export const constructorMenuCategories = [
   ['Передня кишеня', routes.pathToPatterns, PictureInPictureIcon],
   ['Бокові кишені', routes.pathToPatterns, SwapHorizIcon],
   ['Потаємні кишені', routes.pathToPatterns, VisibilityOffIcon],
-  ['Спинка', routes.pathToPatterns, PanoramaVerticalIcon],
+  ['Спинка', routes.pathToBacks, PanoramaVerticalIcon],
   ['Ремінці', routes.pathToPatterns, ConfirmationNumberIcon],
   ['Застібки', routes.pathToPatterns, AllInclusiveIcon]
 ];

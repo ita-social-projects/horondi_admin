@@ -58,6 +58,7 @@ import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
 import History from '../pages/history';
 import HistoryDetails from '../pages/history/history-details';
+import BackPage from '../pages/back';
 
 const { routes } = config;
 
@@ -261,6 +262,9 @@ const Routes = () => {
             exact
             component={CommentEdit}
           />
+          <Route path={routes.pathToBacks} exact component={BackPage} />
+          <Route path={routes.pathToAddBacks} exact component={BackPage} />
+          <Route path={routes.pathToBacksEdit} exact component={BackPage} />
           <Route component={ErrorPage} />
         </Switch>
       </ErrorBoundary>

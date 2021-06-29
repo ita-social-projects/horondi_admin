@@ -38,6 +38,7 @@ const messages = {
   BACK_BUTTON_WARNING_MESSAGE: 'Ви впевнені, що хочете відмінити нові зміни?',
   REMOVE_CONSTRUCTOR_MESSAGE: 'Ви впевнені, що хочете видалити цей елемент?',
   NO_HISTORY_RECORDS_MESSAGE: 'Записи останніх змін відсутні',
-  REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору'
+  REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору',
+  BACK_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?'
 };
 export default messages;
