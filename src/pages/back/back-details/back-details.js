@@ -2,21 +2,21 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { useStyles } from './pattern-details.styles';
+import { useStyles } from './back-details.styles';
 import LoadingBar from '../../../components/loading-bar';
 import PatternForm from '../../../components/forms/pattern-form';
-import { getPattern } from '../../../redux/pattern/pattern.actions';
-import { patternSelector } from '../../../redux/selectors/pattern.selectors';
+import { getBack } from '../../../redux/back/back.actions';
+import { backSelector } from '../../../redux/selectors/back.selectors';
 
-const PatternDetails = ({ match }) => {
+const BackDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
-  const { loading, pattern } = useSelector(patternSelector);
+  const { loading, back } = useSelector(backSelector);
   const styles = useStyles();
 
   useEffect(() => {
-    dispatch(getPattern(id));
+    dispatch(getBack(id));
   }, [dispatch, id]);
 
   if (loading) {
@@ -25,9 +25,7 @@ const PatternDetails = ({ match }) => {
 
   return (
     <div className={styles.detailsContainer}>
-      {pattern !== null ? (
-        <PatternForm id={id} pattern={pattern} isEdit />
-      ) : null}
+      {back !== null ? <PatternForm id={id} back={back} isEdit /> : null}
     </div>
   );
 };
@@ -35,28 +33,28 @@ const PatternDetails = ({ match }) => {
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
-PatternDetails.propTypes = {
+BackDetails.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
   }).isRequired,
-  pattern: PropTypes.shape({
+  back: PropTypes.shape({
     _id: PropTypes.string,
     available: PropTypes.bool,
-    description: PropTypes.arrayOf(valueShape),
-    handmade: PropTypes.bool,
+    // description: PropTypes.arrayOf(valueShape),
+    // handmade: PropTypes.bool,
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
     material: PropTypes.string,
-    name: PropTypes.arrayOf(valueShape),
-    constructorImg: PropTypes.string
+    name: PropTypes.arrayOf(valueShape)
+    // constructorImg: PropTypes.string
   })
 };
 
-PatternDetails.defaultProps = {
-  pattern: {}
+BackDetails.defaultProps = {
+  back: {}
 };
 
-export default withRouter(PatternDetails);
+export default withRouter(BackDetails);

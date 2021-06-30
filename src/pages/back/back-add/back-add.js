@@ -1,14 +1,14 @@
 import React from 'react';
-import { useStyles } from './pattern-add.styles';
+import { useStyles } from './back-add.styles';
 import PatternForm from '../../../components/forms/pattern-form';
 import { config } from '../../../configs';
 
-const PatternAdd = () => {
+const BackAdd = () => {
   const styles = useStyles();
 
   return (
     <div className={styles.container}>
-      <span className={styles.patternTitle}>
+      <span className={styles.backTitle}>
         {config.titles.patternTitles.createPageTitle}
       </span>
       <PatternForm />
@@ -16,4 +16,4 @@ const PatternAdd = () => {
   );
 };
 
-export default PatternAdd;
+export default BackAdd;

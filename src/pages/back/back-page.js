@@ -75,12 +75,12 @@ const BackPage = () => {
         <Typography
           variant='h1'
           className={common.materialTitle}
-          data-cy='pattern-header'
+          data-cy='back-header'
         >
           {config.titles.backTitles.mainPageTitle}
         </Typography>
         <Button
-          data-cy='add-pattern'
+          data-cy='add-back'
           component={Link}
           to={pathToBackAddPage}
           variant='contained'
@@ -92,7 +92,7 @@ const BackPage = () => {
       {!loading ? (
         <TableContainerGenerator
           pagination
-          data-cy='patternTable'
+          data-cy='backTable'
           count={itemsCount}
           tableTitles={tableTitles}
           tableItems={backItems}

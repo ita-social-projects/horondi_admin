@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  patternItemUpdate: {
+  backItemUpdate: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
   },
-  patternDetails: {
+  backDetails: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
