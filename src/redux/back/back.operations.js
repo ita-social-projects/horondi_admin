@@ -150,9 +150,9 @@ export const deleteBack = async (id) => {
 
 export const createBack = async (payload) => {
   const createBackQuery = `
-      mutation($pattern: PatternInput!, $image: Upload!) {
-        addPattern(pattern: $pattern, image: $image) {
-          ... on Pattern {
+  mutation($back: BackInput!, $image: Upload!) {
+        addBack(back: $back, image: $image) {
+          ... on Back {
             _id
             name {
               lang
@@ -166,10 +166,9 @@ export const createBack = async (payload) => {
                   value
                 }
               }
-              handmade
-            }
+                }
             available
-            constructorImg
+            customizable
           }
           ... on Error {
             message

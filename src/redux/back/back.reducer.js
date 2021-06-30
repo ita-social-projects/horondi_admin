@@ -11,8 +11,8 @@ import {
 
 export const selectBack = ({ Back }) => ({
   list: Back.list,
-  loading: Back.patternLoading,
-  pattern: Back.pattern,
+  loading: Back.backLoading,
+  back: Back.back,
   filter: Back.filters,
   sort: Back.sort
 });
@@ -32,9 +32,9 @@ export const initialState = {
     name: 1
   },
   filters: initialFilters,
-  pattern: null,
-  patternLoading: false,
-  patternError: null
+  back: null,
+  backLoading: false,
+  backError: null
 };
 
 const backReducer = (state = initialState, action = {}) => {
@@ -47,17 +47,17 @@ const backReducer = (state = initialState, action = {}) => {
     case SET_BACK:
       return {
         ...state,
-        pattern: action.payload
+        back: action.payload
       };
     case SET_BACK_LOADING:
       return {
         ...state,
-        patternLoading: action.payload
+        backLoading: action.payload
       };
     case SET_BACK_ERROR:
       return {
         ...state,
-        patternError: action.payload
+        backError: action.payload
       };
     case REMOVE_BACK_FROM_STORE:
       const backs = state.list.filter((back) => back._id !== action.payload);

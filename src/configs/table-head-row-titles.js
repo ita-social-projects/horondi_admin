@@ -71,7 +71,8 @@ const tableHeadRowTitles = {
   ],
   homePageSlides: ['Порядок', 'Назва', 'Доступний', 'Дії'],
   actionLabel: 'Дії',
-  constructor: ['Колір', 'Назва', 'Матеріал', 'Доступний', 'Дії']
+  constructor: ['Колір', 'Назва', 'Матеріал', 'Доступний', 'Дії'],
+  backs: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії']
 };
 
 export default tableHeadRowTitles;

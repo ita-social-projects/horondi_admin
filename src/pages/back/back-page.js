@@ -4,14 +4,7 @@ import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { useCommonStyles } from '../common.styles';
-// import {
-//     getPatterns,
-//     deletePattern
-// } from '../../redux/pattern/pattern.actions';
-import {
-  getPatterns,
-  deletePattern
-} from '../../redux/pattern/pattern.actions';
+import { getBacks, deleteBack } from '../../redux/back/back.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -19,15 +12,15 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
-import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
+import { backSelectorWithPagination } from '../../redux/selectors/back.selectors';
 
 const map = require('lodash/map');
 
 const { BACK_REMOVE_MESSAGE } = config.messages;
 const { CREATE_BACK_TITLE, EXIT_WITHOUT_SAVING } = config.buttonTitles;
 
-const pathToPatternAddPage = config.routes.pathToAddPattern;
-const tableTitles = config.tableHeadRowTitles.patterns;
+const pathToBackAddPage = config.routes.pathToAddBacks;
+const tableTitles = config.tableHeadRowTitles.backs;
 
 const BackPage = () => {
   const common = useCommonStyles();
@@ -35,13 +28,13 @@ const BackPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const { list, loading, currentPage, rowsPerPage, itemsCount, filter } =
-    useSelector(patternSelectorWithPagination);
+    useSelector(backSelectorWithPagination);
   console.log(list);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
-      getPatterns({
+      getBacks({
         limit: rowsPerPage,
         skip: currentPage * rowsPerPage,
         filter
@@ -49,33 +42,29 @@ const BackPage = () => {
     );
   }, [dispatch, currentPage, rowsPerPage]);
 
-  const patternDeleteHandler = (id) => {
-    const removePattern = () => {
+  const backDeleteHandler = (id) => {
+    const removeBack = () => {
       dispatch(closeDialog());
-      dispatch(deletePattern(id));
+      dispatch(deleteBack(id));
     };
-    openSuccessSnackbar(
-      removePattern,
-      EXIT_WITHOUT_SAVING,
-      BACK_REMOVE_MESSAGE
-    );
+    openSuccessSnackbar(removeBack, EXIT_WITHOUT_SAVING, BACK_REMOVE_MESSAGE);
   };
 
-  const patternItems = map(list, (patternItem) => (
+  const backItems = map(list, (backItem) => (
     <TableContainerRow
       image={
-        patternItem.images.thumbnail
-          ? `${config.imagePrefix}${patternItem.images.thumbnail}`
+        backItem.images.thumbnail
+          ? `${config.imagePrefix}${backItem.images.thumbnail}`
           : ''
       }
-      key={patternItem._id}
-      id={patternItem._id}
-      name={patternItem.name[0].value}
-      material={patternItem.features.material.name[0].value}
-      available={patternItem.available ? 'Так' : 'Ні'}
-      deleteHandler={() => patternDeleteHandler(patternItem._id)}
+      key={backItem._id}
+      id={backItem._id}
+      name={backItem.name[0].value}
+      material={backItem.features.material.name[0].value}
+      available={backItem.available ? 'Так' : 'Ні'}
+      deleteHandler={() => backDeleteHandler(backItem._id)}
       editHandler={() => {
-        dispatch(push(`/patterns/${patternItem._id}`));
+        dispatch(push(`/patterns/${backItem._id}`));
       }}
     />
   ));
@@ -93,7 +82,7 @@ const BackPage = () => {
         <Button
           data-cy='add-pattern'
           component={Link}
-          to={pathToPatternAddPage}
+          to={pathToBackAddPage}
           variant='contained'
           color='primary'
         >
@@ -106,7 +95,7 @@ const BackPage = () => {
           data-cy='patternTable'
           count={itemsCount}
           tableTitles={tableTitles}
-          tableItems={patternItems}
+          tableItems={backItems}
         />
       ) : (
         <LoadingBar />
