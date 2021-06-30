@@ -5,7 +5,7 @@ export const getAllBacks = async (limit, skip, filter) => {
   const getAllBacksQuery = `
 query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
   getAllBacks(limit: $limit, skip: $skip, filter: $filter) {
-    count
+     count
     items {
       _id
       name {
@@ -13,20 +13,6 @@ query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
         value
       }
       optionType
-      model {
-        _id
-        category {
-          _id
-          code
-        }
-        name {
-          lang
-        }
-        description {
-          lang
-          value
-        }
-      }
       features {
         material {
           name {
@@ -41,7 +27,12 @@ query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
           }
         }
       }
-      image 
+      images {
+        thumbnail
+        medium
+        small
+        large
+      }
       additionalPrice {
         currency
         value

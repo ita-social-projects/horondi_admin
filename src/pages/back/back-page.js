@@ -27,8 +27,9 @@ const BackPage = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { list, loading, currentPage, rowsPerPage, itemsCount, filter } =
-    useSelector(backSelectorWithPagination);
+  const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
+    backSelectorWithPagination
+  );
   console.log(list);
   const dispatch = useDispatch();
 
@@ -36,8 +37,7 @@ const BackPage = () => {
     dispatch(
       getBacks({
         limit: rowsPerPage,
-        skip: currentPage * rowsPerPage,
-        filter
+        skip: currentPage * rowsPerPage
       })
     );
   }, [dispatch, currentPage, rowsPerPage]);
