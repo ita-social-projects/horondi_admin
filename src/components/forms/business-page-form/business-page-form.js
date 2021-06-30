@@ -193,24 +193,6 @@ const BusinessPageForm = ({ id, editMode }) => {
           </Grid>
         </Grid>
       </div>
-      {/* <div className={classes.buttonContainer}>
-          <div className={classes.fixedButtons}>
-            <BackButton initial={!valueEquality} pathBack={pathToBusinessPages} />
-            <SaveButton
-              className={classes.controlButton}
-              id='save'
-              type='submit'
-              title='Зберегти'
-              data-cy='save-btn'
-              values={{
-                code: values.code,
-                uaTitle: values.uaTitle,
-                enTitle: values.enTitle
-              }}
-              errors={errors}
-            />
-          </div>
-        </div> */}
       <div className={common.adminHeader}>
         <Typography
           variant='h1'
