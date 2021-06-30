@@ -131,6 +131,29 @@ const CategoryForm = ({ category, id, edit }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton
+                initial={!valueEquality}
+                pathBack={pathToCategories}
+              />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                type={materialUiConstants.types.submit}
+                title={SAVE_TITLE}
+                errors={errors}
+                values={{
+                  uaName: values.uaName,
+                  enName: values.enName,
+                  code: values.code
+                }}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <Grid item xs={12}>
           <Paper className={styles.categoryItemUpdate}>
             <span className={styles.imageUpload}>
@@ -165,19 +188,6 @@ const CategoryForm = ({ category, id, edit }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton initial={!valueEquality} pathBack={pathToCategories} />
-        <SaveButton
-          className={styles.saveCategoryButton}
-          data-cy='save'
-          type={materialUiConstants.types.submit}
-          title={SAVE_TITLE}
-          errors={errors}
-          values={{
-            uaName: values.uaName,
-            enName: values.enName,
-            code: values.code
-          }}
-        />
       </form>
     </div>
   );

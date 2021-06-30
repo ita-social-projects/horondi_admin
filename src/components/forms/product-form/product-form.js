@@ -308,6 +308,9 @@ const ProductForm = ({ isEdit }) => {
       <div className={styles.buttonContainer}>
         <Grid container spacing={2} className={styles.fixedButtons}>
           <Grid item className={styles.button}>
+            <BackButton pathBack={pathToProducts} />
+          </Grid>
+          <Grid item className={styles.button}>
             <Button
               size={buttonSize}
               type={productFormValues.submit}
@@ -436,9 +439,6 @@ const ProductForm = ({ isEdit }) => {
         </Grid>
       </Grid>
       {showCommentsPanel()}
-      <div className={styles.controlsBlock}>
-        <BackButton pathBack={pathToProducts} />
-      </div>
     </div>
   );
 };
