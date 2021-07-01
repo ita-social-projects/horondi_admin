@@ -54,7 +54,7 @@ const routes = {
   pathToAddConstructor: '/constructor/:id/add',
   pathToConstructorDetails: '/constructor/:id/:elementId',
   pathToBacks: '/backs',
-  pathToBacksEdit: '/backs/:id',
-  pathToAddBacks: '/backs/add'
+  pathToAddBacks: '/backs/add',
+  pathToBackDetails: '/backs/:id'
 };
 export default routes;

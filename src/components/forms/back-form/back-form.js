@@ -8,14 +8,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import usePatternHandlers from '../../../utils/use-pattern-handlers';
-import { useStyles } from './pattern-form.styles';
+import useBackHandlers from '../../../utils/use-back-handlers';
+import { useStyles } from './back-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
-import {
-  addPattern,
-  updatePattern
-} from '../../../redux/pattern/pattern.actions';
+import { addBack, updateBack } from '../../../redux/back/back.actions';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
@@ -24,24 +21,24 @@ import { getMaterialsByPurpose } from '../../../redux/material/material.actions'
 import LoadingBar from '../../loading-bar';
 import {
   handleImageLoad,
-  patternUseEffectHandler,
-  patternFormOnSubmit,
+  backUseEffectHandler,
+  backFormOnSubmit,
   useFormikInitialValues
-} from '../../../utils/pattern-form';
+} from '../../../utils/back-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
-const { patternName, material, patternDescription } = config.labels.pattern;
+const { backName, material, backDescription } = config.labels.back;
 const map = require('lodash/map');
 
 const {
-  PATTERN_VALIDATION_ERROR,
-  PATTERN_ERROR_MESSAGE,
-  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
+  BACK_VALIDATION_ERROR,
+  BACK_ERROR_MESSAGE,
+  BACK_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
   CONSTRUCTOR_PHOTO_NOT_PROVIDED,
-  PATTERN_EN_NAME_MESSAGE,
-  PATTERN_UA_NAME_MESSAGE
-} = config.patternErrorMessages;
+  BACK_EN_NAME_MESSAGE,
+  BACK_UA_NAME_MESSAGE
+} = config.backErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -51,59 +48,54 @@ const {
   imagePrefix
 } = config;
 
-const { pathToPatterns } = config.routes;
+const { pathToBacks } = config.routes;
 
-const PatternForm = ({ pattern, id, isEdit }) => {
-  console.log(pattern);
+const BackForm = ({ back, id, isEdit }) => {
+  console.log(back);
   const styles = useStyles();
   const dispatch = useDispatch();
   const { materialsByPurpose, loading } = useSelector(materialSelector);
   const {
-    createPattern,
+    createBack,
     setUpload,
     upload,
-    patternImage,
-    setPatternImage,
+    backImage,
+    setBackImage,
     constructorImg,
     setConstructorImg,
     uploadConstructorImg,
     setUploadConstructorImg
-  } = usePatternHandlers();
+  } = useBackHandlers();
 
   useEffect(() => {
     dispatch(getMaterialsByPurpose());
   }, []);
 
   useEffect(() => {
-    patternUseEffectHandler(
-      pattern,
-      setPatternImage,
-      setConstructorImg,
-      imagePrefix
-    );
-  }, [dispatch, pattern]);
+    backUseEffectHandler(back, setBackImage, setConstructorImg, imagePrefix);
+  }, [dispatch, back]);
 
-  const patternValidationSchema = Yup.object().shape({
+  const backValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE)
-      .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
+      .min(2, BACK_VALIDATION_ERROR)
+      .required(BACK_ERROR_MESSAGE)
+      .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE)
-      .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
+      .min(2, BACK_VALIDATION_ERROR)
+      .required(BACK_ERROR_MESSAGE)
+      .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
     uaDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE)
-      .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
+      .min(2, BACK_VALIDATION_ERROR)
+      .required(BACK_ERROR_MESSAGE)
+      .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE)
-      .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
+      .min(2, BACK_VALIDATION_ERROR)
+      .required(BACK_ERROR_MESSAGE)
+      .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(PATTERN_ERROR_MESSAGE),
+      .min(2, BACK_VALIDATION_ERROR)
+      .matches(patternMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(BACK_ERROR_MESSAGE),
     handmade: Yup.boolean(),
     patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
     patternConstructorImage: Yup.string().required(
@@ -113,35 +105,35 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
   const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
     useFormik({
-      validationSchema: patternValidationSchema,
-      initialValues: useFormikInitialValues(pattern),
+      validationSchema: backValidationSchema,
+      initialValues: useFormikInitialValues(back),
       onSubmit: () => {
-        const newPattern = createPattern(values);
+        const newBack = createBack(values);
         const isEditAndUploadAndConstructor =
           isEdit &&
           upload instanceof File &&
           uploadConstructorImg instanceof File;
         if (isEditAndUploadAndConstructor || isEdit) {
-          patternFormOnSubmit(
+          backFormOnSubmit(
             isEditAndUploadAndConstructor,
             dispatch,
-            updatePattern,
+            updateBack,
             {
               id,
-              pattern: newPattern,
+              back: newBack,
               image: [upload, uploadConstructorImg]
             },
             isEdit,
             {
               id,
-              pattern: newPattern
+              back: newBack
             }
           );
           return;
         }
         dispatch(
-          addPattern({
-            pattern: newPattern,
+          addBack({
+            back: newBack,
             image: [upload, uploadConstructorImg]
           })
         );
@@ -155,7 +147,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       value: values.handmade,
       checked: values.handmade,
       color: 'primary',
-      label: config.labels.pattern.handmade,
+      label: config.labels.back.handmade,
       handler: () => setFieldValue('handmade', !values.handmade)
     },
     {
@@ -164,15 +156,15 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.pattern.available,
+      label: config.labels.back.available,
       handler: () => setFieldValue('available', !values.available)
     }
   ];
 
   const handleLoadMainImage = (e) => {
     handleImageLoad(e, (event) => {
-      setFieldValue('patternImage', event.target.result);
-      setPatternImage(event.target.result);
+      setFieldValue('backImage', event.target.result);
+      setBackImage(event.target.result);
     });
     setUpload(e.target.files[0]);
   };
@@ -186,8 +178,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   };
 
   const inputs = [
-    { label: patternName, name: 'name' },
-    { label: patternDescription, name: 'description' }
+    { label: backName, name: 'name' },
+    { label: backDescription, name: 'description' }
   ];
 
   const inputOptions = {
@@ -198,15 +190,12 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     inputs
   };
 
-  const imageUploadPatternInputsId = {
-    patternImageInput: 'patternImageInput',
+  const imageUploadBackInputsId = {
+    backImageInput: 'backImageInput',
     constructorImageInput: 'constructorImgInput'
   };
 
-  const valueEquality = checkInitialValue(
-    useFormikInitialValues(pattern),
-    values
-  );
+  const valueEquality = checkInitialValue(useFormikInitialValues(back), values);
 
   return (
     <div>
@@ -217,22 +206,22 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           <CheckboxOptions options={checkboxes} />
 
           <Grid item xs={12}>
-            <Paper className={styles.patternItemUpdate}>
+            <Paper className={styles.backItemUpdate}>
               <div className={styles.imageUploadBlock}>
                 <div>
                   <span className={styles.imageUpload}>
-                    {config.labels.pattern.avatarText}
+                    {config.labels.back.avatarText}
                   </span>
 
                   <div className={styles.imageUploadAvatar}>
                     <ImageUploadPreviewContainer
                       handler={handleLoadMainImage}
-                      src={patternImage}
-                      id={imageUploadPatternInputsId.patternImageInput}
+                      src={backImage}
+                      id={imageUploadBackInputsId.patternImageInput}
                     />
-                    {touched.patternImage && errors.patternImage && (
+                    {touched.backImage && errors.backImage && (
                       <div className={styles.inputError}>
-                        {errors.patternImage}
+                        {errors.backImage}
                       </div>
                     )}
                   </div>
@@ -240,19 +229,19 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
                 <div>
                   <span className={styles.imageUpload}>
-                    {config.labels.pattern.constructorImgText}
+                    {config.labels.back.constructorImgText}
                   </span>
 
                   <div className={styles.imageUploadAvatar}>
                     <ImageUploadPreviewContainer
                       handler={handleLoadConstructorImage}
                       src={constructorImg}
-                      id={imageUploadPatternInputsId.constructorImageInput}
+                      id={imageUploadBackInputsId.constructorImageInput}
                     />
-                    {touched.patternConstructorImage &&
-                      errors.patternConstructorImage && (
+                    {touched.backConstructorImage &&
+                      errors.backConstructorImage && (
                         <div className={styles.inputError}>
-                          {errors.patternConstructorImage}
+                          {errors.backConstructorImage}
                         </div>
                       )}
                   </div>
@@ -288,7 +277,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton initial={!valueEquality} pathBack={pathToPatterns} />
+          <BackButton initial={!valueEquality} pathBack={pathToBacks} />
           <SaveButton
             className={styles.saveButton}
             data-cy='save-btn'
@@ -306,9 +295,9 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
-PatternForm.propTypes = {
+BackForm.propTypes = {
   id: PropTypes.string,
-  pattern: PropTypes.shape({
+  back: PropTypes.shape({
     _id: PropTypes.string,
     available: PropTypes.bool,
     description: PropTypes.arrayOf(valueShape),
@@ -323,34 +312,34 @@ PatternForm.propTypes = {
     name: PropTypes.arrayOf(valueShape)
   }),
   values: PropTypes.shape({
-    patternImage: PropTypes.string,
+    backImage: PropTypes.string,
     material: PropTypes.string,
     handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
-    patternConstructorImage: PropTypes.string
+    backConstructorImage: PropTypes.string
   }),
   errors: PropTypes.shape({
-    patternImage: PropTypes.string,
+    backImage: PropTypes.string,
     material: PropTypes.string,
     handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
-    patternConstructorImage: PropTypes.string
+    backConstructorImage: PropTypes.string
   }),
   touched: PropTypes.shape({
-    patternImage: PropTypes.string,
+    backImage: PropTypes.string,
     material: PropTypes.string,
     handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
     enDescription: PropTypes.string,
-    patternConstructorImage: PropTypes.string
+    backConstructorImage: PropTypes.string
   }),
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -359,13 +348,13 @@ PatternForm.propTypes = {
   }),
   isEdit: PropTypes.bool
 };
-PatternForm.defaultProps = {
+BackForm.defaultProps = {
   id: '',
   match: {},
   values: {},
   errors: {},
   touched: {},
-  pattern: {
+  back: {
     _id: '',
     name: [
       {
@@ -405,4 +394,4 @@ PatternForm.defaultProps = {
   isEdit: false
 };
 
-export default PatternForm;
+export default BackForm;

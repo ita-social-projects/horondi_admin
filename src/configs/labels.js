@@ -116,6 +116,26 @@ const labels = {
       en: 'Pattern description'
     }
   },
+  back: {
+    image: 'Фото гобелена',
+    material: 'Матеріал',
+    available: 'Доступний',
+    handmade: 'Зроблений вручну',
+    avatarText: 'Фото',
+    constructorImgText: 'Фото для конструктора',
+    form: {
+      name: mapToLanguages("І'мя", 'Name'),
+      description: mapToLanguages('Опис', 'Description')
+    },
+    backName: {
+      ua: 'Назва гобелену',
+      en: 'Pattern name'
+    },
+    backDescription: {
+      ua: 'Опис гобелену',
+      en: 'Pattern description'
+    }
+  },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),

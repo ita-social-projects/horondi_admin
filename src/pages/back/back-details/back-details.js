@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { useStyles } from './back-details.styles';
 import LoadingBar from '../../../components/loading-bar';
-import PatternForm from '../../../components/forms/pattern-form';
+import BackForm from '../../../components/forms/back-form';
 import { getBack } from '../../../redux/back/back.actions';
 import { backSelector } from '../../../redux/selectors/back.selectors';
 
@@ -13,6 +13,7 @@ const BackDetails = ({ match }) => {
 
   const dispatch = useDispatch();
   const { loading, back } = useSelector(backSelector);
+  console.log(back);
   const styles = useStyles();
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const BackDetails = ({ match }) => {
 
   return (
     <div className={styles.detailsContainer}>
-      {back !== null ? <PatternForm id={id} back={back} isEdit /> : null}
+      {back !== null ? <BackForm id={id} back={back} isEdit /> : null}
     </div>
   );
 };
@@ -42,14 +43,14 @@ BackDetails.propTypes = {
   back: PropTypes.shape({
     _id: PropTypes.string,
     available: PropTypes.bool,
-    // description: PropTypes.arrayOf(valueShape),
-    // handmade: PropTypes.bool,
+    description: PropTypes.arrayOf(valueShape),
+    handmade: PropTypes.bool,
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
     material: PropTypes.string,
-    name: PropTypes.arrayOf(valueShape)
-    // constructorImg: PropTypes.string
+    name: PropTypes.arrayOf(valueShape),
+    constructorImg: PropTypes.string
   })
 };
 
@@ -57,4 +58,4 @@ BackDetails.defaultProps = {
   back: {}
 };
 
-export default withRouter(BackDetails);
+export default BackDetails;

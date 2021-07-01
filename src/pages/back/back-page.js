@@ -30,7 +30,6 @@ const BackPage = () => {
   const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
     backSelectorWithPagination
   );
-  console.log(list);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,7 +63,7 @@ const BackPage = () => {
       available={backItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => backDeleteHandler(backItem._id)}
       editHandler={() => {
-        dispatch(push(`/patterns/${backItem._id}`));
+        dispatch(push(`/backs/${backItem._id}`));
       }}
     />
   ));
