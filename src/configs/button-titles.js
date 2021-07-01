@@ -74,7 +74,9 @@ const buttonTitles = {
   MODEL: 'Моделі',
   YES_BUTTON: 'Так',
   NO_BUTTON: 'Ні',
-  CREATE_POCKETS_TITLE: 'Додати кишеню'
+  CREATE_POCKETS_TITLE: 'Додати кишеню',
+  PATTERN_AVAILABLE: 'Доступний',
+  PATTERN_MATERIAL: 'Матеріал'
 };
 
 export default buttonTitles;

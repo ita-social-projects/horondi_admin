@@ -94,7 +94,7 @@ const useOrderFilters = () => {
       },
       {
         filters: filters.status,
-        label: buttonTitles.STATUS,
+        label: buttonTitles.ORDER_STATUS,
         selectItems: statusFilterObject,
         setFilterHandler: setStatusFilter,
         objForTranslateRenderItems: orders.orderTableStatus

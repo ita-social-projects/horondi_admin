@@ -18,9 +18,11 @@ import { useStyles as useTableHeadStyles } from '../../../containers/table-conta
 import titles from '../../../configs/titles';
 import { userRolesForFilter } from '../../../utils/history';
 import BackButton from '../../../components/buttons/back-button';
+import { config } from '../../../configs';
 
 const HistoryDetails = ({ match }) => {
   const { id } = match.params;
+  const { pathToHistory } = config.routes;
 
   const { recordItem, darkMode, recordItemLoading } =
     useSelector(historySelector);
@@ -41,7 +43,7 @@ const HistoryDetails = ({ match }) => {
 
   return (
     <div className={commonStyles.container}>
-      <BackButton initial={false} />
+      <BackButton initial={false} pathBack={pathToHistory} />
       <h2 className={styles.detailsTitle}>
         {titles.historyTitles.detailsTitleNumber(recordItem?._id)}
       </h2>
