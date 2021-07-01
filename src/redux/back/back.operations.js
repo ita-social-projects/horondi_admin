@@ -56,13 +56,10 @@ query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
 export const getBackById = async (id) => {
   const getBackByIdQuery = `
       query($id: ID!) {
-        getPatternById(id: $id) {
-          ... on Pattern {
+        getBackById(id: $id) {
+          ... on Back {
             _id
             name {
-              value
-            }
-            description {
               value
             }
             features {
@@ -73,13 +70,19 @@ export const getBackById = async (id) => {
                   value
                 }
               }
-              handmade
+              color{
+                _id
+                name{
+                  lang
+                  value
+                }
+              }
             }
             available
+            customizable
             images {
               thumbnail
             }
-            constructorImg
           }
           ... on Error {
             message
@@ -106,32 +109,39 @@ export const getBackById = async (id) => {
 
 export const deleteBack = async (id) => {
   const deleteBackQuery = `
-      mutation($id: ID!) {
-        deletePattern(id: $id) {
-          ... on Pattern {
-            _id
-            name {
-              lang
-              value
-            }
-            features {
-              material {
-                _id
-                name {
-                  lang
-                  value
-                }
-              }
-              handmade
-            }
-            available
+     mutation($id: ID!) {
+  deleteBack(id: $id) {
+    ... on Back {
+      _id
+      name {
+        lang
+        value
+      }
+      features {
+        material {
+          _id
+          name {
+            lang
+            value
           }
-          ... on Error {
-            message
-            statusCode
+        }
+        color {
+          _id
+          name {
+            lang
+            value
           }
         }
       }
+      available
+      customizable
+    }
+    ... on Error {
+      message
+      statusCode
+    }
+  }
+}
     `;
 
   const result = await setItems(deleteBackQuery, { id });
@@ -186,9 +196,9 @@ export const createBack = async (payload) => {
 
 export const updateBack = async (payload) => {
   const updateBackQuery = `
-      mutation($id: ID!, $pattern: PatternInput!, $image: Upload) {
-        updatePattern(id: $id, pattern: $pattern, image: $image) {
-          ... on Pattern {
+      mutation($id: ID!, $back: BackInput!, $image: Upload) {
+        updateBack(id: $id, back: $back, image: $image) {
+          ... on Back{
             _id
             name {
               lang
@@ -202,10 +212,16 @@ export const updateBack = async (payload) => {
                   value
                 }
               }
-              handmade
+              color{
+                 _id
+                name {
+                  lang
+                  value
+                }
+              }
             }
             available
-            constructorImg
+            customizable
           }
           ... on Error {
             message

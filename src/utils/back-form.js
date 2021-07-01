@@ -43,10 +43,10 @@ export const useFormikInitialValues = (back) => ({
   backConstructorImage: back?.constructorImg || '',
   backImage: back?.images.thumbnail || '',
   uaName: back?.name[0].value || '',
-  enName: back?.name[1].value || '',
-  uaDescription: back?.description[0].value || '',
-  enDescription: back?.description[1].value || '',
+  // enName: back?.name[1].value || '',
+  // uaDescription: back?.description[0].value || '',
+  // enDescription: back?.description[1].value || '',
   material: back?.features.material._id || '',
-  handmade: back?.features.handmade || false,
+  // handmade: back?.features.handmade || false,
   available: back?.available || false
 });

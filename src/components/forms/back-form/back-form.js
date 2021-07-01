@@ -51,7 +51,6 @@ const {
 const { pathToBacks } = config.routes;
 
 const BackForm = ({ back, id, isEdit }) => {
-  console.log(back);
   const styles = useStyles();
   const dispatch = useDispatch();
   const { materialsByPurpose, loading } = useSelector(materialSelector);

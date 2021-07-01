@@ -12,8 +12,8 @@ const BackDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
-  const { loading, back } = useSelector(backSelector);
-  console.log(back);
+  const { loading, back, list } = useSelector(backSelector);
+  console.log(list);
   const styles = useStyles();
 
   useEffect(() => {
@@ -58,4 +58,4 @@ BackDetails.defaultProps = {
   back: {}
 };
 
-export default BackDetails;
+export default withRouter(BackDetails);
