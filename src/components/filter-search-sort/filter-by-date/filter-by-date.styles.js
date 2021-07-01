@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 230,
+    width: 260,
     height: '36px',
     '@media (max-width: 450px)': {
       width: '95%',
@@ -23,7 +23,7 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   datePicker: {
-    width: 240,
+    width: 260,
     '& span': { color: '#828282 !important' },
     '& a.rs-btn.rs-btn-default.rs-picker-toggle.active.rs-btn-md': {
       borderColor: 'black !important'
