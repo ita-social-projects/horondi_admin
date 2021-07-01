@@ -37,29 +37,60 @@ exports[`Pattern-page render tests Should render pattern-page 1`] = `
       Додати гобелен
     </WithStyles(ForwardRef(Button))>
   </div>
+  <div>
+    <FilterNavbar
+      clearOptions={Object {}}
+      options={
+        Object {
+          "clearOptions": Object {
+            "clearAllFilters": [Function],
+            "filters": undefined,
+          },
+          "filterByMultipleOptions": Array [
+            Object {
+              "filters": undefined,
+              "label": "Матеріал",
+              "objForTranslateRenderItems": Object {},
+              "selectItems": Array [],
+              "setFilterHandler": [Function],
+            },
+            Object {
+              "filters": undefined,
+              "label": "Доступний",
+              "objForTranslateRenderItems": Object {
+                "false": "Hi",
+                "true": "Так",
+              },
+              "selectItems": Array [
+                Object {
+                  "key": "true",
+                  "value": "Так",
+                },
+                Object {
+                  "key": "false",
+                  "value": "Ні",
+                },
+              ],
+              "setFilterHandler": [Function],
+            },
+          ],
+          "searchOptions": Object {
+            "placeholderText": "за назвою",
+            "search": undefined,
+            "setSearchFilter": [Function],
+          },
+          "sortOptions": undefined,
+        }
+      }
+      searchOptions={Object {}}
+      sortOptions={Object {}}
+    />
+  </div>
   <TableContainerGenerator
     count={7}
     data-cy="patternTable"
     pagination={true}
-    tableItems={
-      Array [
-        <TableContainerRow
-          available="Так"
-          checkboxChangeHandler={[Function]}
-          clickHandler={[Function]}
-          deleteHandler={[Function]}
-          editHandler={[Function]}
-          id="6043b87c3e06ad3edcdb7b19"
-          image="https://horondi.blob.core.windows.net/horondi/images/thumbnail_id73cf0klxzl60n_149-min.jpg"
-          material="Нитки для шиття"
-          name="Червоний"
-          showAvatar={true}
-          showCheckbox={false}
-          showDelete={true}
-          showEdit={true}
-        />,
-      ]
-    }
+    tableItems={Array []}
     tableTitles={
       Array [
         "Фото",
