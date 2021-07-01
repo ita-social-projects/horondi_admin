@@ -17,18 +17,21 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
+import usePocketFilters from '../../hooks/filters/use-pocket-filters';
 
 const { materialUiConstants } = config;
 const labels = config.labels.pocketsPageLabel;
 const { CREATE_POCKETS_TITLE } = config.buttonTitles;
 const { pathToPocketsAdd } = config.routes;
 const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.pocketsAvailableVariants;
-const { DELETE_POCKET_MESSAGE } = config.messages;
+const { DELETE_POCKET_MESSAGE, NO_POCKET_MESSAGE } = config.messages;
 
 const PocketsPage = () => {
   const dispatch = useDispatch();
   const { IMG_URL } = config;
   const { openSuccessSnackbar } = useSuccessSnackbar();
+  const pocketOptions = usePocketFilters();
 
   const { filter, pocketsList, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(pocketsSelectorWithPagination);
@@ -39,10 +42,11 @@ const PocketsPage = () => {
         pagination: {
           skip: currentPage * rowsPerPage,
           limit: rowsPerPage
-        }
+        },
+        filter
       })
     );
-  }, [dispatch, itemsCount, currentPage, rowsPerPage]);
+  }, [dispatch, itemsCount, currentPage, rowsPerPage, filter]);
 
   const commonStyles = useCommonStyles();
 
@@ -94,12 +98,20 @@ const PocketsPage = () => {
           {CREATE_POCKETS_TITLE}
         </Button>
       </div>
-      <TableContainerGenerator
-        pagination
-        tableTitles={config.tableHeadRowTitles.pockets}
-        tableItems={pocketsItems}
-        count={itemsCount}
-      />
+      <div>
+        <FilterNavbar options={pocketOptions || {}} />
+      </div>
+
+      {pocketsItems?.length ? (
+        <TableContainerGenerator
+          pagination
+          tableTitles={config.tableHeadRowTitles.pockets}
+          tableItems={pocketsItems}
+          count={itemsCount}
+        />
+      ) : (
+        <p className={commonStyles.noRecords}>{NO_POCKET_MESSAGE}</p>
+      )}
     </div>
   );
 };

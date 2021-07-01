@@ -2,25 +2,25 @@ import {
   SET_POCKETS,
   SET_POCKETS_LOADING,
   REMOVE_POCKET_FROM_STATE,
-  SET_POCKET
+  SET_POCKET,
+  SET_FILTER,
+  CLEAR_FILTER
 } from './pockets.types';
 
 export const selectPockets = ({ Pockets }) => ({
   pocketsList: Pockets.list?.items,
   loading: Pockets.pocketsLoading,
-  pocket: Pockets.pocket
-  // filters: SidePockets.filters
+  pocket: Pockets.pocket,
+  filter: Pockets.filter
 });
 
-const initialFilters = {
-  available: [],
-  searchBySimpleName: '',
-  name: []
+const initialFilter = {
+  search: ''
 };
 
 export const initialState = {
   list: [],
-  filters: initialFilters,
+  filter: initialFilter,
   pocket: null,
   showPocketsDialogWindow: false,
   pocketsLoading: false,
@@ -55,6 +55,20 @@ const pocketsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         pocket: action.payload
+      };
+
+    case SET_FILTER:
+      return {
+        ...state,
+        filter: {
+          ...state.filters,
+          ...action.payload
+        }
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filter: initialFilter
       };
 
     default:

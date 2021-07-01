@@ -7,7 +7,9 @@ import {
   REMOVE_POCKET_FROM_STATE,
   GET_POCKET,
   SET_POCKET,
-  UPDATE_POCKET
+  UPDATE_POCKET,
+  SET_FILTER,
+  CLEAR_FILTER
 } from './pockets.types';
 
 export const addPockets = (payload) => ({
@@ -53,4 +55,13 @@ export const setPocket = (payload) => ({
 export const updatePocket = (payload) => ({
   type: UPDATE_POCKET,
   payload
+});
+
+export const setFilter = (filter) => ({
+  type: SET_FILTER,
+  payload: filter
+});
+
+export const clearFilters = () => ({
+  type: CLEAR_FILTER
 });

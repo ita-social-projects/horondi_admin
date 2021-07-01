@@ -39,6 +39,7 @@ const messages = {
   REMOVE_CONSTRUCTOR_MESSAGE: 'Ви впевнені, що хочете видалити цей елемент?',
   NO_HISTORY_RECORDS_MESSAGE: 'Записи останніх змін відсутні',
   REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору',
-  DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?'
+  DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
+  NO_POCKET_MESSAGE: 'Кишені відсутні'
 };
 export default messages;

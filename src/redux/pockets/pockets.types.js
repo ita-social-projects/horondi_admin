@@ -7,3 +7,5 @@ export const REMOVE_POCKET_FROM_STATE = 'REMOVE_POCKET_FROM_STATE';
 export const GET_POCKET = 'GET_POCKET';
 export const SET_POCKET = 'SET_POCKET';
 export const UPDATE_POCKET = 'UPDATE_POCKET';
+export const SET_FILTER = 'SET_FILTER';
+export const CLEAR_FILTER = 'CLEAR_FILTER';
