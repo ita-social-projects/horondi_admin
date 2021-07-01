@@ -8,7 +8,10 @@ import usePocketsHandlers from '../../../utils/use-pockets-handlers';
 import { useStyles } from './pockets-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
-import { addPockets } from '../../../redux/pockets/pockets.actions';
+import {
+  addPockets,
+  updatePocket
+} from '../../../redux/pockets/pockets.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import { pocketsTranslations } from '../../../translations/pockets.translations';
 import {
@@ -17,11 +20,9 @@ import {
   setSnackBarMessage
 } from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
-import {
-  getPocketsInitialValues,
-  onSubmitPocketsHandler
-} from '../../../utils/pockets-form';
+import { getPocketsInitialValues } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const labels = config.labels.pocketsPageLabel;
 
@@ -41,8 +42,10 @@ const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
 const { materialUiConstants } = config;
 
 const PocketsForm = ({ pocket, id, edit }) => {
+  console.log(pocket);
   const styles = useStyles();
   const dispatch = useDispatch();
+
   const { createPockets, setUpload, upload, pocketsImage, setPocketsImage } =
     usePocketsHandlers();
 
@@ -77,13 +80,20 @@ const PocketsForm = ({ pocket, id, edit }) => {
     validationSchema: pocketsValidationSchema,
     initialValues: getPocketsInitialValues(edit, IMG_URL, pocket),
     onSubmit: (data) => {
-      console.log('data', data);
       const newPocket = createPockets(data);
       const uploadCondition = upload instanceof File;
-      onSubmitPocketsHandler(uploadCondition, dispatch, addPockets, {
-        pocket: newPocket,
-        upload
-      });
+
+      if (id) {
+        dispatch(
+          updatePocket({
+            id,
+            pocket: newPocket,
+            upload
+          })
+        );
+        return;
+      }
+      dispatch(addPockets({ pocket: newPocket, upload }));
 
       if (!uploadCondition && !pocket.images.thumbnail) {
         dispatch(setSnackBarSeverity('error'));
@@ -110,14 +120,12 @@ const PocketsForm = ({ pocket, id, edit }) => {
       id: 'restriction',
       dataCy: 'restriction',
       value: values.restriction,
-      checked: values.restrictions,
+      checked: values.restriction,
       color: 'primary',
       label: labels.avaliable,
       handler: () => setFieldValue('restriction', !values.restriction)
     }
   ];
-
-  console.log('values', values);
 
   const inputs = [{ label: labels.pocketsName, name: 'name' }];
 
@@ -130,13 +138,18 @@ const PocketsForm = ({ pocket, id, edit }) => {
     inputs
   };
 
+  const valueEquality = checkInitialValue(
+    getPocketsInitialValues(edit, IMG_URL, pocket),
+    values
+  );
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton pathBack={pathToPockets} />
+              <BackButton initial={!valueEquality} pathBack={pathToPockets} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
@@ -161,7 +174,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 handler={handleImageLoad}
-                src={edit ? values.pocketsImage : pocketsImage}
+                src={edit ? values.pocketImage : pocketsImage}
               />
             </div>
             {touched.code && errors.code && (
@@ -217,21 +230,21 @@ PocketsForm.propTypes = {
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    type: PropTypes.string
+    optionType: PropTypes.string
   }),
   errors: PropTypes.shape({
     pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    type: PropTypes.string
+    optionType: PropTypes.string
   }),
   touched: PropTypes.shape({
     pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    type: PropTypes.string
+    optionType: PropTypes.string
   }),
   edit: PropTypes.bool
 };
@@ -245,9 +258,11 @@ PocketsForm.defaultProps = {
     _id: '',
     name: [
       {
+        lang: '',
         value: ''
       },
       {
+        lang: '',
         value: ''
       }
     ],
@@ -255,7 +270,11 @@ PocketsForm.defaultProps = {
       thumbnail: ''
     },
     restrictions: false,
-    type: null
+    optionType: null,
+    additionalPrice: [
+      { value: null, currency: '' },
+      { value: null, currency: '' }
+    ]
   },
   edit: false
 };

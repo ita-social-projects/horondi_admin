@@ -5,7 +5,7 @@ const { languages } = config;
 
 const usePocketsHandlers = () => {
   const [pocketsImage, setPocketsImage] = useState('');
-  const [upload, setUpload] = useState({});
+  const [upload, setUpload] = useState(null);
   const [imageName, setImageName] = useState('');
 
   const createPockets = (values) => ({
