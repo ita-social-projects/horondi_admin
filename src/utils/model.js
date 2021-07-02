@@ -19,7 +19,7 @@ export const convertToCatOptions = (categories) => {
   return categoryOptions;
 };
 
-export const placeholderModelSearch = 'по тексту';
+export const placeholderModelSearch = 'по назві';
 export const categoryFilterObj = () => {
   const arrToFilter = [];
   _.forEach(categoryOptions, (value, key) => {
