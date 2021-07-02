@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid } from '@material-ui/core';
+import { Paper, Grid, Avatar, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -44,7 +44,7 @@ const { SAVE_TITLE } = config.buttonTitles;
 
 const {
   languages,
-  formRegExp: { enNameCreation, uaNameCreation, patternMaterial },
+  formRegExp: { enNameCreation, uaNameCreation, backMaterial },
   imagePrefix
 } = config;
 
@@ -59,11 +59,11 @@ const BackForm = ({ back, id, isEdit }) => {
     setUpload,
     upload,
     backImage,
-    setBackImage,
-    constructorImg,
-    setConstructorImg,
-    uploadConstructorImg,
-    setUploadConstructorImg
+    setBackImage
+    // constructorImg,
+    // setConstructorImg,
+    // uploadConstructorImg,
+    // setUploadConstructorImg
   } = useBackHandlers();
 
   useEffect(() => {
@@ -71,35 +71,35 @@ const BackForm = ({ back, id, isEdit }) => {
   }, []);
 
   useEffect(() => {
-    backUseEffectHandler(back, setBackImage, setConstructorImg, imagePrefix);
+    backUseEffectHandler(back, setBackImage, imagePrefix);
   }, [dispatch, back]);
 
   const backValidationSchema = Yup.object().shape({
-    enDescription: Yup.string()
-      .min(2, BACK_VALIDATION_ERROR)
-      .required(BACK_ERROR_MESSAGE)
-      .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
+    // enDescription: Yup.string()
+    //   .min(2, BACK_VALIDATION_ERROR)
+    //   .required(BACK_ERROR_MESSAGE)
+    //   .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
     enName: Yup.string()
       .min(2, BACK_VALIDATION_ERROR)
       .required(BACK_ERROR_MESSAGE)
       .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
-    uaDescription: Yup.string()
-      .min(2, BACK_VALIDATION_ERROR)
-      .required(BACK_ERROR_MESSAGE)
-      .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
+    // uaDescription: Yup.string()
+    //   .min(2, BACK_VALIDATION_ERROR)
+    //   .required(BACK_ERROR_MESSAGE)
+    //   .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
     uaName: Yup.string()
       .min(2, BACK_VALIDATION_ERROR)
       .required(BACK_ERROR_MESSAGE)
       .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
     material: Yup.string()
       .min(2, BACK_VALIDATION_ERROR)
-      .matches(patternMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .matches(backMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(BACK_ERROR_MESSAGE),
-    handmade: Yup.boolean(),
-    patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
-    patternConstructorImage: Yup.string().required(
-      CONSTRUCTOR_PHOTO_NOT_PROVIDED
-    )
+    available: Yup.boolean(),
+    customizable: Yup.boolean(),
+    backImage: Yup.string().required(PHOTO_NOT_PROVIDED)
+    // patternConstructorImage: Yup.string().required(
+    //   CONSTRUCTOR_PHOTO_NOT_PROVIDED)
   });
 
   const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
@@ -108,19 +108,16 @@ const BackForm = ({ back, id, isEdit }) => {
       initialValues: useFormikInitialValues(back),
       onSubmit: () => {
         const newBack = createBack(values);
-        const isEditAndUploadAndConstructor =
-          isEdit &&
-          upload instanceof File &&
-          uploadConstructorImg instanceof File;
-        if (isEditAndUploadAndConstructor || isEdit) {
+        const isEditAndUpload = isEdit && upload instanceof File;
+        if (isEditAndUpload || isEdit) {
           backFormOnSubmit(
-            isEditAndUploadAndConstructor,
+            isEditAndUpload,
             dispatch,
             updateBack,
             {
               id,
               back: newBack,
-              image: [upload, uploadConstructorImg]
+              image: [upload]
             },
             isEdit,
             {
@@ -133,7 +130,7 @@ const BackForm = ({ back, id, isEdit }) => {
         dispatch(
           addBack({
             back: newBack,
-            image: [upload, uploadConstructorImg]
+            image: [upload]
           })
         );
       }
@@ -168,13 +165,13 @@ const BackForm = ({ back, id, isEdit }) => {
     setUpload(e.target.files[0]);
   };
 
-  const handleLoadConstructorImage = (e) => {
-    handleImageLoad(e, (event) => {
-      setFieldValue('patternConstructorImage', event.target.result);
-      setConstructorImg(event.target.result);
-    });
-    setUploadConstructorImg(e.target.files[0]);
-  };
+  // const handleLoadConstructorImage = (e) => {
+  //   handleImageLoad(e, (event) => {
+  //     setFieldValue('patternConstructorImage', event.target.result);
+  //     setConstructorImg(event.target.result);
+  //   });
+  //   setUploadConstructorImg(e.target.files[0]);
+  // };
 
   const inputs = [
     { label: backName, name: 'name' },
@@ -190,12 +187,12 @@ const BackForm = ({ back, id, isEdit }) => {
   };
 
   const imageUploadBackInputsId = {
-    backImageInput: 'backImageInput',
-    constructorImageInput: 'constructorImgInput'
+    backImageInput: 'backImageInput'
+    // constructorImageInput: 'constructorImgInput'
   };
 
   const valueEquality = checkInitialValue(useFormikInitialValues(back), values);
-
+  console.log(languages);
   return (
     <div>
       {loading ? (
@@ -216,7 +213,7 @@ const BackForm = ({ back, id, isEdit }) => {
                     <ImageUploadPreviewContainer
                       handler={handleLoadMainImage}
                       src={backImage}
-                      id={imageUploadBackInputsId.patternImageInput}
+                      id={imageUploadBackInputsId.backImageInput}
                     />
                     {touched.backImage && errors.backImage && (
                       <div className={styles.inputError}>
@@ -226,25 +223,25 @@ const BackForm = ({ back, id, isEdit }) => {
                   </div>
                 </div>
 
-                <div>
-                  <span className={styles.imageUpload}>
-                    {config.labels.back.constructorImgText}
-                  </span>
+                {/* <div> */}
+                {/*  <span className={styles.imageUpload}> */}
+                {/*    {config.labels.back.constructorImgText} */}
+                {/*  </span> */}
 
-                  <div className={styles.imageUploadAvatar}>
-                    <ImageUploadPreviewContainer
-                      handler={handleLoadConstructorImage}
-                      src={constructorImg}
-                      id={imageUploadBackInputsId.constructorImageInput}
-                    />
-                    {touched.backConstructorImage &&
-                      errors.backConstructorImage && (
-                        <div className={styles.inputError}>
-                          {errors.backConstructorImage}
-                        </div>
-                      )}
-                  </div>
-                </div>
+                {/*  <div className={styles.imageUploadAvatar}> */}
+                {/*    <ImageUploadPreviewContainer */}
+                {/*      handler={handleLoadConstructorImage} */}
+                {/*      src={constructorImg} */}
+                {/*      id={imageUploadBackInputsId.constructorImageInput} */}
+                {/*    /> */}
+                {/*    {touched.backConstructorImage && */}
+                {/*      errors.backConstructorImage && ( */}
+                {/*        <div className={styles.inputError}> */}
+                {/*          {errors.backConstructorImage} */}
+                {/*        </div> */}
+                {/*      )} */}
+                {/*  </div> */}
+                {/* </div> */}
               </div>
               <FormControl
                 variant='outlined'
@@ -299,46 +296,42 @@ BackForm.propTypes = {
   back: PropTypes.shape({
     _id: PropTypes.string,
     available: PropTypes.bool,
-    description: PropTypes.arrayOf(valueShape),
+    customizable: PropTypes.bool,
     features: PropTypes.shape({
       material: PropTypes.string,
-      handmade: PropTypes.bool
+      color: PropTypes.string
     }),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
-    constructorImg: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
   }),
   values: PropTypes.shape({
     backImage: PropTypes.string,
     material: PropTypes.string,
-    handmade: PropTypes.bool,
+    color: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string,
-    uaDescription: PropTypes.string,
-    enDescription: PropTypes.string,
-    backConstructorImage: PropTypes.string
+    enName: PropTypes.string
+    // uaDescription: PropTypes.string,
+    // enDescription: PropTypes.string,
   }),
   errors: PropTypes.shape({
     backImage: PropTypes.string,
     material: PropTypes.string,
-    handmade: PropTypes.bool,
+    color: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string,
-    uaDescription: PropTypes.string,
-    enDescription: PropTypes.string,
-    backConstructorImage: PropTypes.string
+    enName: PropTypes.string
+    // uaDescription: PropTypes.string,
+    // enDescription: PropTypes.string,
   }),
   touched: PropTypes.shape({
     backImage: PropTypes.string,
     material: PropTypes.string,
-    handmade: PropTypes.bool,
+    color: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string,
-    uaDescription: PropTypes.string,
-    enDescription: PropTypes.string,
-    backConstructorImage: PropTypes.string
+    enName: PropTypes.string
+    // uaDescription: PropTypes.string,
+    // enDescription: PropTypes.string,
   }),
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -374,7 +367,6 @@ BackForm.defaultProps = {
     images: {
       thumbnail: ''
     },
-    constructorImg: '',
     features: {
       material: {
         name: [
@@ -386,9 +378,19 @@ BackForm.defaultProps = {
           }
         ]
       },
-      handmade: false
+      color: {
+        name: [
+          {
+            value: ''
+          },
+          {
+            value: ''
+          }
+        ]
+      }
     },
-    available: false
+    available: false,
+    customizable: false
   },
   isEdit: false
 };

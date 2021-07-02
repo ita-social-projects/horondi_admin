@@ -117,24 +117,23 @@ const labels = {
     }
   },
   back: {
-    image: 'Фото гобелена',
+    image: 'Фото спинки',
     material: 'Матеріал',
     available: 'Доступний',
-    handmade: 'Зроблений вручну',
+    customizable: 'для конструктора',
     avatarText: 'Фото',
-    constructorImgText: 'Фото для конструктора',
     form: {
-      name: mapToLanguages("І'мя", 'Name'),
-      description: mapToLanguages('Опис', 'Description')
+      name: mapToLanguages("І'мя", 'Name')
+      // description: mapToLanguages('Опис', 'Description')
     },
     backName: {
-      ua: 'Назва гобелену',
-      en: 'Pattern name'
-    },
-    backDescription: {
-      ua: 'Опис гобелену',
-      en: 'Pattern description'
+      ua: 'Назва спинки',
+      en: 'Back name'
     }
+    // backDescription: {
+    //   ua: 'Опис спинки',
+    //   en: 'Back description'
+    // }
   },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),

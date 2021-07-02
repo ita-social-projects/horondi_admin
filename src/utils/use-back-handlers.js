@@ -6,9 +6,9 @@ const { languages } = config;
 const useBackHandlers = () => {
   const [backImage, setBackImage] = useState('');
   const [upload, setUpload] = useState({});
-  const [uploadConstructorImg, setUploadConstructorImg] = useState('');
+  // const [uploadConstructorImg, setUploadConstructorImg] = useState('');
   const [imageName, setImageName] = useState('');
-  const [constructorImg, setConstructorImg] = useState('');
+  // const [constructorImg, setConstructorImg] = useState('');
 
   const createBack = (values) => ({
     name: [
@@ -22,20 +22,20 @@ const useBackHandlers = () => {
       }
     ],
 
-    description: [
-      {
-        lang: languages[0],
-        value: values.uaDescription
-      },
-      {
-        lang: languages[1],
-        value: values.enDescription
-      }
-    ],
-    constructorImg: values.patternConstructorImage,
+    // description: [
+    //   {
+    //     lang: languages[0],
+    //     value: values.uaDescription
+    //   },
+    //   {
+    //     lang: languages[1],
+    //     value: values.enDescription
+    //   }
+    // ],
+    // constructorImg: values.patternConstructorImage,
     features: {
       material: values.material,
-      handmade: values.handmade
+      color: values.color
     },
     available: values.available
   });
@@ -47,11 +47,11 @@ const useBackHandlers = () => {
     upload,
     setUpload,
     imageName,
-    setImageName,
-    constructorImg,
-    setConstructorImg,
-    uploadConstructorImg,
-    setUploadConstructorImg
+    setImageName
+    // constructorImg,
+    // setConstructorImg,
+    // uploadConstructorImg,
+    // setUploadConstructorImg
   };
 };
 
