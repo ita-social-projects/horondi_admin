@@ -6,7 +6,11 @@ import {
   ADD_MODEL,
   GET_MODEL,
   SET_MODEL,
+  SET_FILTER,
+  CLEAR_FILTERS,
+  MODEL_SORT_LABEL,
   UPDATE_MODEL,
+  SET_SORT,
   SET_MODEL_ERROR,
   REMOVE_MODEL_FROM_STORE,
   ADD_CONSTRUCTOR_BASIC_TO_STORE,
@@ -125,4 +129,23 @@ export const addConstructorPatternToStore = (payload) => ({
 export const removeConstructorPatternFromStore = (payload) => ({
   type: REMOVE_CONSTRUCTOR_PATTERN_FROM_STORE,
   payload
+});
+
+export const setFilter = (filter) => ({
+  type: SET_FILTER,
+  payload: filter
+});
+
+export const setSort = (sort) => ({
+  type: SET_SORT,
+  payload: sort
+});
+
+export const setModelSortLabel = (payload) => ({
+  type: MODEL_SORT_LABEL,
+  payload
+});
+
+export const clearFilters = () => ({
+  type: CLEAR_FILTERS
 });
