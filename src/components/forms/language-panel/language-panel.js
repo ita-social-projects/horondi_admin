@@ -79,7 +79,15 @@ export default LanguagePanel;
 LanguagePanel.propTypes = {
   lang: PropTypes.string,
   inputOptions: PropTypes.shape({
-    values: PropTypes.objectOf(PropTypes.string),
+    values: PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+        PropTypes.bool,
+        PropTypes.array,
+        PropTypes.object
+      ])
+    ),
     touched: PropTypes.objectOf(PropTypes.string),
     errors: PropTypes.objectOf(PropTypes.string),
     inputs: PropTypes.arrayOf(
