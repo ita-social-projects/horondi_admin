@@ -80,7 +80,6 @@ const ModelForm = ({ model, id, isEdit }) => {
   }, [dispatch]);
 
   const { sizesList } = useSelector(sizesSelectorWithPagination);
-
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.categories
   }));
