@@ -15,8 +15,6 @@ const PocketEdit = ({ match }) => {
 
   const { id } = match.params;
 
-  console.log(match);
-
   useEffect(() => {
     dispatch(getPocket(id));
   }, [dispatch, id]);

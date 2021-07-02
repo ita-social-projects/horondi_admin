@@ -54,6 +54,7 @@ export function* handlePocketsAdd({ payload }) {
   try {
     yield put(setPocketsLoading(true));
     const pocket = yield call(createPockets, payload);
+    console.log(pocket);
     if (pocket) {
       yield put(setPocketsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
@@ -67,9 +68,7 @@ export function* handlePocketsAdd({ payload }) {
 export function* handlePocketDelete({ payload }) {
   try {
     yield put(setPocketsLoading(true));
-
     const pocket = yield call(deletePocket, payload);
-
     if (pocket) {
       yield put(removePocketFromState(payload));
       yield put(setPocketsLoading(false));
@@ -97,12 +96,8 @@ export function* handlePocketById({ payload }) {
 export function* handlePocketUpdate({ payload }) {
   try {
     yield put(setPocketsLoading(true));
-
     const { id, pocket, upload } = payload;
-
     const pocketUpdate = yield call(updatePocket, id, pocket, upload);
-
-    console.log('pocketUpdate', pocketUpdate);
     if (pocketUpdate) {
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
       yield put(push(config.routes.pathToPockets));

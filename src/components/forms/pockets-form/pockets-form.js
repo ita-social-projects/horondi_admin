@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
+
 import usePocketsHandlers from '../../../utils/use-pockets-handlers';
 import { useStyles } from './pockets-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -42,7 +43,6 @@ const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
 const { materialUiConstants } = config;
 
 const PocketsForm = ({ pocket, id, edit }) => {
-  console.log(pocket);
   const styles = useStyles();
   const dispatch = useDispatch();
 

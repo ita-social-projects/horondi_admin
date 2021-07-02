@@ -52,7 +52,7 @@ export const createPockets = async (payload) => {
 
   const result = await setItems(query, payload);
 
-  return result?.data?.addPockets;
+  return result?.data?.addPocket;
 };
 
 export const deletePocket = async (id) => {
@@ -112,7 +112,6 @@ export const getPocketById = async (id) => {
 };
 
 export const updatePocket = async (id, pocket, image) => {
-  console.log(id, pocket, image);
   const query = `
         mutation updatePocket(
           $id: ID!

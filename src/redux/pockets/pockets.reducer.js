@@ -34,13 +34,11 @@ const pocketsReducer = (state = initialState, action = {}) => {
         ...state,
         list: action.payload
       };
-
     case SET_POCKETS_LOADING:
       return {
         ...state,
         pocketsLoading: action.payload
       };
-
     case REMOVE_POCKET_FROM_STATE: {
       const list = state.list.items.filter(
         (pocket) => pocket._id !== action.payload
@@ -50,13 +48,11 @@ const pocketsReducer = (state = initialState, action = {}) => {
         list
       };
     }
-
     case SET_POCKET:
       return {
         ...state,
         pocket: action.payload
       };
-
     case SET_FILTER:
       return {
         ...state,
@@ -70,7 +66,6 @@ const pocketsReducer = (state = initialState, action = {}) => {
         ...state,
         filter: initialFilter
       };
-
     default:
       return state;
   }
