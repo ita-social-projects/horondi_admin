@@ -29,6 +29,7 @@ query ($limit: Int!, $skip: Int!, $filter: PatternFilterInput) {
       }
       features {
         material {
+          _id
           name {
             lang
             value

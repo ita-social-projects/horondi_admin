@@ -16,7 +16,7 @@ const messages = {
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   DELETE_SIZE_MESSAGE: 'Ви впевнені, що хочете видалити цей розмір?',
   NO_SIZES_MESSAGE: 'Розміри відсутні',
-  NO_CATEGORY_MESSAGE: 'Категорії відсутні',
+  NO_MODEL_MESSAGE: 'Моделі відсутні',
   NO_MATERIAL_MESSAGE: 'Матеріали відсутні',
   NO_NEWS_MESSAGE: 'Новини відсутні',
   REMOVE_MATERIAL_COLOR_MESSAGE: 'Ви впевнені, що хочете видалити цей колір?',

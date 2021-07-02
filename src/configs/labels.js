@@ -323,6 +323,12 @@ const labels = {
     weightInKg: 'Вага (кг.)'
   },
   emailQuestionsLabels: {
+    questionFrom: 'Запитання від ',
+    textFieldPlaceholder: 'Введіть вашу відповідь',
+    rowPlaceholder: {
+      answer: 'Відповідь',
+      question: 'Запитання'
+    },
     en: {
       ALL: 'ALL',
       PENDING: 'PENDING',
@@ -335,6 +341,7 @@ const labels = {
       SPAM: 'Спам',
       ANSWERED: 'Відповідь надано'
     },
+    answer: 'Відповісти',
     placeholder: 'Відповідь ...'
   },
   doughnut: {

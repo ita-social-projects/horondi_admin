@@ -9,9 +9,10 @@ import {
   UPDATE_PATTERN,
   SET_PATTERN_ERROR,
   REMOVE_PATTERN_FROM_STORE,
-  SET_FILTER,
-  SET_SORT,
-  CLEAR_FILTERS
+  SET_PATTERN_FILTER,
+  SET_PATTERN_SORT,
+  CLEAR_PATTERN_FILTERS,
+  SET_PATTERN_SORT_LABEL
 } from './pattern.types';
 
 export const setPatterns = (payload) => ({
@@ -64,16 +65,21 @@ export const removePatternFromStore = (payload) => ({
   payload
 });
 
-export const setSort = (sort) => ({
-  type: SET_SORT,
+export const setPatternSortLabel = (payload) => ({
+  type: SET_PATTERN_SORT_LABEL,
+  payload
+});
+
+export const setPatternSort = (sort) => ({
+  type: SET_PATTERN_SORT,
   payload: sort
 });
 
-export const setFilter = (filter) => ({
-  type: SET_FILTER,
+export const setPatternFilter = (filter) => ({
+  type: SET_PATTERN_FILTER,
   payload: filter
 });
 
-export const clearFilters = () => ({
-  type: CLEAR_FILTERS
+export const clearPatternFilters = () => ({
+  type: CLEAR_PATTERN_FILTERS
 });

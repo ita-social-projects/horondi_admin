@@ -6,13 +6,13 @@ import { useStyles } from './model-details.styles';
 import LoadingBar from '../../../components/loading-bar';
 import ModelForm from '../../../components/forms/model-form';
 import { getModel } from '../../../redux/model/model.actions';
-import { selectModel } from '../../../redux/selectors/model.selectors';
+import { modelSelector } from '../../../redux/selectors/model.selectors';
 
 const ModelDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
-  const { loading, model } = useSelector(selectModel);
+  const { loading, model } = useSelector(modelSelector);
   const styles = useStyles();
 
   useEffect(() => {

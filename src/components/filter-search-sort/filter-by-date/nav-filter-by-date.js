@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import { DateRangePicker } from 'rsuite';
@@ -12,16 +12,18 @@ const NavFilterByDate = ({
   const styles = useStyles();
   const { afterToday } = DateRangePicker;
 
-  const from =
-    dateFrom || new Date(new Date().getFullYear(), new Date().getMonth() - 1);
-  const to = dateTo || new Date();
-
-  const [value, setValue] = useState([from, to]);
+  const [value, setValue] = useState([]);
 
   const setDateHandler = (e) => {
-    setValue(e);
     dateHandler(e);
   };
+
+  useEffect(() => {
+    if (dateFrom && dateTo) {
+      setValue([dateFrom, dateTo]);
+    }
+  }, [dateFrom, dateTo]);
+
   return (
     <Paper className={styles.root}>
       <DateRangePicker
@@ -31,7 +33,7 @@ const NavFilterByDate = ({
         appearance='subtle'
         isoWeek
         locale={locale}
-        size={size.md}
+        size={size.sm}
         value={value}
         disabledDate={afterToday()}
         onChange={setDateHandler}

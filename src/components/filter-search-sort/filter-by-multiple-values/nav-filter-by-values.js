@@ -12,9 +12,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { useStyles } from './filter-by-multiple-values.styles';
+import { useStyles, MenuProps } from './filter-by-multiple-values.styles';
 import materialUiConstants from '../../../configs/material-ui-constants';
-import { MenuProps } from '../../../pages/email-questions/email-question-filter/email-question-filter.styles';
 import { badgePosition } from '../../../configs';
 import { filterInputToRender } from '../../../utils/history';
 
@@ -78,7 +77,14 @@ NavFilterByValues.propTypes = {
   setFilterHandler: PropTypes.func,
   label: PropTypes.string,
   objForTranslateRenderItems: PropTypes.objectOf(PropTypes.object),
-  filterByMultipleOptions: PropTypes.objectOf(PropTypes.object)
+  filterByMultipleOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array,
+      PropTypes.string,
+      PropTypes.func
+    ])
+  )
 };
 
 NavFilterByValues.defaultProps = {
