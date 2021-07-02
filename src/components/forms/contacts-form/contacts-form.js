@@ -133,6 +133,27 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   return (
     <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={handleSubmit}>
+        <div className={classes.buttonContainer}>
+          <Grid container spacing={2} className={classes.fixedButtons}>
+            <Grid item className={classes.button}>
+              <BackButton
+                data-cy='go-back-button'
+                initial={!valueEquality}
+                pathBack={pathToContacts}
+              />
+            </Grid>
+            <Grid item className={classes.button}>
+              <SaveButton
+                id='save'
+                type='submit'
+                title='Зберегти'
+                data-cy='save'
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <FormControl className={classes.contactDetails}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
@@ -244,21 +265,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <BackButton
-          data-cy='go-back-button'
-          initial={!valueEquality}
-          pathBack={pathToContacts}
-        />
-
-        <SaveButton
-          id='save'
-          type='submit'
-          title='Зберегти'
-          className={classes.saveButton}
-          data-cy='save'
-          values={values}
-          errors={errors}
-        />
       </form>
     </div>
   );

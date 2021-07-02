@@ -177,7 +177,9 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   };
 
   const handleLoadConstructorImage = (e) => {
+    debugger;
     handleImageLoad(e, (event) => {
+      debugger;
       setFieldValue('patternConstructorImage', event.target.result);
       setConstructorImg(event.target.result);
     });
@@ -213,8 +215,31 @@ const PatternForm = ({ pattern, id, isEdit }) => {
         <LoadingBar />
       ) : (
         <form onSubmit={handleSubmit}>
-          <CheckboxOptions options={checkboxes} />
-
+          <div className={styles.buttonContainer}>
+            <Grid container spacing={2} className={styles.fixedButtons}>
+              <Grid item className={styles.button}>
+                <BackButton
+                  initial={!valueEquality}
+                  pathBack={pathToPatterns}
+                />
+              </Grid>
+              <Grid item className={styles.button}>
+                <SaveButton
+                  data-cy='save-btn'
+                  type='submit'
+                  title={SAVE_TITLE}
+                  values={values}
+                  errors={errors}
+                />
+              </Grid>
+            </Grid>
+          </div>
+          <span className={styles.patternTitle}>
+            {config.titles.patternTitles.createPageTitle}
+          </span>
+          <div>
+            <CheckboxOptions options={checkboxes} />
+          </div>
           <Grid item xs={12}>
             <Paper className={styles.patternItemUpdate}>
               <div className={styles.imageUploadBlock}>
@@ -287,15 +312,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton initial={!valueEquality} pathBack={pathToPatterns} />
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save-btn'
-            type='submit'
-            title={SAVE_TITLE}
-            values={values}
-            errors={errors}
-          />
         </form>
       )}
     </div>

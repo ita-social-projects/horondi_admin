@@ -75,6 +75,31 @@ const CommentForm = ({ comment, id, isEdit }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton pathBack={pathToComments} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                type='submit'
+                title={SAVE_TITLE}
+                errors={errors}
+                values={values}
+              />
+            </Grid>
+          </Grid>
+        </div>
+        {/* <BackButton pathBack={pathToComments} />
+        <SaveButton
+          className={styles.saveCommentButton}
+          data-cy='save'
+          type='submit'
+          title={SAVE_TITLE}
+          errors={errors}
+          values={values}
+        /> */}
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <Paper className={styles.paper}>
@@ -97,15 +122,6 @@ const CommentForm = ({ comment, id, isEdit }) => {
               {config.labels.comment.productInfo}
             </Button>
           </Paper>
-          <BackButton pathBack={pathToComments} />
-          <SaveButton
-            className={styles.saveCommentButton}
-            data-cy='save'
-            type='submit'
-            title={SAVE_TITLE}
-            errors={errors}
-            values={values}
-          />
         </Grid>
       </form>
     </div>

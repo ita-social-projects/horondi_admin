@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import PropTypes from 'prop-types';
-
+import { Grid } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { useStyles } from './history-details.styles';
 import { getRecordItem } from '../../../redux/history/history.actions';
@@ -42,8 +42,14 @@ const HistoryDetails = ({ match }) => {
   }
 
   return (
-    <div className={commonStyles.container}>
-      <BackButton initial={false} pathBack={pathToHistory} />
+    <div className={styles.container}>
+      <div className={styles.buttonContainer}>
+        <Grid container spacing={2} className={styles.fixedButtons}>
+          <Grid item className={styles.button}>
+            <BackButton initial={false} pathBack={pathToHistory} />
+          </Grid>
+        </Grid>
+      </div>
       <h2 className={styles.detailsTitle}>
         {titles.historyTitles.detailsTitleNumber(recordItem?._id)}
       </h2>

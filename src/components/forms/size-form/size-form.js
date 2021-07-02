@@ -75,6 +75,24 @@ function SizeForm({ id, size }) {
   }
   return (
     <div className={styles.container}>
+      <div className={styles.buttonsWrapper}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton initial={!valueEquality} pathBack={pathToSizes} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy={materialUiConstants.save}
+                type={materialUiConstants.types.submit}
+                title={config.buttonTitles.SAVE_SIZE_TITLE}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
+      </div>
       <Typography
         variant={materialUiConstants.typographyVariantH1}
         className={commonStyles.sizeTitle}
@@ -192,17 +210,6 @@ function SizeForm({ id, size }) {
             </div>
           </div>
         </Grid>
-        <div className={styles.buttonsWrapper}>
-          <BackButton initial={!valueEquality} pathBack={pathToSizes} />
-          <SaveButton
-            className={styles.saveButton}
-            data-cy={materialUiConstants.save}
-            type={materialUiConstants.types.submit}
-            title={config.buttonTitles.SAVE_SIZE_TITLE}
-            values={values}
-            errors={errors}
-          />
-        </div>
       </form>
     </div>
   );

@@ -64,6 +64,31 @@ const HeaderForm = ({ header, id }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton initial={!valueEquality} pathBack={pathToHeaders} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                type='submit'
+                title={config.buttonTitles.HEADER_SAVE_TITLE}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
+        {/* <BackButton initial={!valueEquality} pathBack={pathToHeaders} />
+        <SaveButton
+          className={styles.saveButton}
+          data-cy='save'
+          type='submit'
+          title={config.buttonTitles.HEADER_SAVE_TITLE}
+          values={values}
+          errors={errors}
+        /> */}
         <Grid item xs={12}>
           <Paper className={styles.headerItemUpdate}>
             <TextField
@@ -126,15 +151,6 @@ const HeaderForm = ({ header, id }) => {
             </Paper>
           </TabPanel>
         ))}
-        <BackButton initial={!valueEquality} pathBack={pathToHeaders} />
-        <SaveButton
-          className={styles.saveButton}
-          data-cy='save'
-          type='submit'
-          title={config.buttonTitles.HEADER_SAVE_TITLE}
-          values={values}
-          errors={errors}
-        />
       </form>
     </div>
   );

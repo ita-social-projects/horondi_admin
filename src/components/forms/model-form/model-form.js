@@ -189,6 +189,22 @@ const ModelForm = ({ model, id, isEdit }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} autoComplete={materialUiConstants.off}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton initial={!valueEquality} pathBack={pathToModels} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy={materialUiConstants.save}
+                type={materialUiConstants.types.submit}
+                title={MODEL_SAVE_TITLE}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <CheckboxOptions options={checkboxes(materialUiConstants.show, show)} />
         <CheckboxOptions
           options={checkboxes(
@@ -285,15 +301,6 @@ const ModelForm = ({ model, id, isEdit }) => {
             key={lang}
           />
         ))}
-        <BackButton initial={!valueEquality} pathBack={pathToModels} />
-        <SaveButton
-          className={styles.saveButton}
-          data-cy={materialUiConstants.save}
-          type={materialUiConstants.types.submit}
-          title={MODEL_SAVE_TITLE}
-          values={values}
-          errors={errors}
-        />
         {isEdit ? (
           <div className={styles.constructorButton}>
             <Button
