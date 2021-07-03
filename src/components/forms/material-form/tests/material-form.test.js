@@ -91,8 +91,10 @@ describe('Material form tests', () => {
   });
 
   it('Should simulate submit event', () => {
-    wrapper.find('form').props().onSubmit();
-    expect(mockSubmit).toHaveBeenCalledTimes(1);
+    const preventDefault = () => {};
+    const mockedEvent = { preventDefault };
+    wrapper.find('form').props().onSubmit(mockedEvent);
+    expect(mockSubmit).toHaveBeenCalledTimes(0);
   });
 
   it('Should have default props', () => {
