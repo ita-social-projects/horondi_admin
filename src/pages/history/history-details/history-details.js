@@ -28,7 +28,6 @@ const HistoryDetails = ({ match }) => {
     useSelector(historySelector);
 
   const styles = useStyles({ darkMode });
-  const commonStyles = useCommonStyles();
   const tableHeadStyles = useTableHeadStyles();
 
   const dispatch = useDispatch();

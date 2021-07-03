@@ -313,7 +313,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             key={lang}
           />
         ))}
-        {/* {isEdit ? (
+        {isEdit ? (
           <div className={styles.constructorButton}>
             <Button
               data-cy={labelsEn.constructor}
@@ -325,7 +325,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               {MODEL_CONSTRUCTOR}
             </Button>
           </div>
-        ) : null} */}
+        ) : null}
       </form>
     </div>
   );

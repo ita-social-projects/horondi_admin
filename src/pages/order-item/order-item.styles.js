@@ -82,11 +82,6 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     margin: '20px 0'
   },
-  // container: {
-  //   padding: theme.spacing(2.5),
-  //   width: '100%',
-  //   position: 'relative'
-  // },
   buttonContainer: {
     position: 'relative',
     width: '100%',

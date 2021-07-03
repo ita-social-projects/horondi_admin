@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { relativeTimeRounding } from 'moment';
 
 export const useStyles = makeStyles((theme) => ({
   businessPageForm: {
