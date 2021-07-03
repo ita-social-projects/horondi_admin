@@ -54,7 +54,6 @@ export function* handlePocketsAdd({ payload }) {
   try {
     yield put(setPocketsLoading(true));
     const pocket = yield call(createPockets, payload);
-    console.log(pocket);
     if (pocket) {
       yield put(setPocketsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);

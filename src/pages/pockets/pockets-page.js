@@ -43,7 +43,9 @@ const PocketsPage = () => {
           skip: currentPage * rowsPerPage,
           limit: rowsPerPage
         },
-        filter
+        filter: {
+          search: filter.search
+        }
       })
     );
   }, [dispatch, itemsCount, currentPage, rowsPerPage, filter]);

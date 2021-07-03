@@ -64,7 +64,7 @@ const pocketsReducer = (state = initialState, action = {}) => {
     case CLEAR_FILTER:
       return {
         ...state,
-        filter: initialFilter
+        filter: { search: '' }
       };
     default:
       return state;
