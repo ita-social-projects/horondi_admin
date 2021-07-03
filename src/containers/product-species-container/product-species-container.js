@@ -164,12 +164,18 @@ const ProductSpeciesContainer = ({
 };
 
 ProductSpeciesContainer.propTypes = {
-  patterns: PropTypes.arrayOf(PropTypes.array).isRequired,
-  categories: PropTypes.arrayOf(PropTypes.array).isRequired,
-  closures: PropTypes.arrayOf(PropTypes.array).isRequired,
-  models: PropTypes.arrayOf(PropTypes.array).isRequired,
+  patterns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  closures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  models: PropTypes.arrayOf(PropTypes.object).isRequired,
   values: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.array,
+      PropTypes.object
+    ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
@@ -179,7 +185,7 @@ ProductSpeciesContainer.propTypes = {
   setFieldValue: PropTypes.func.isRequired,
   toggleFieldsChanged: PropTypes.func,
   setSizes: PropTypes.func.isRequired,
-  sizes: PropTypes.arrayOf(PropTypes.array).isRequired
+  sizes: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 ProductSpeciesContainer.defaultProps = {

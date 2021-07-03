@@ -3,6 +3,10 @@ import {
   SET_MODEL_LOADING,
   SET_MODEL,
   SET_MODEL_ERROR,
+  SET_FILTER,
+  SET_SORT,
+  CLEAR_FILTERS,
+  MODEL_SORT_LABEL,
   REMOVE_MODEL_FROM_STORE,
   ADD_CONSTRUCTOR_BASIC_TO_STORE,
   REMOVE_CONSTRUCTOR_BASIC_FROM_STORE,
@@ -17,12 +21,31 @@ import {
   REMOVE_CONSTRUCTOR_PATTERN_FROM_STORE
 } from './model.types';
 
+const initialFilters = {
+  available: [],
+  category: [],
+  availableForConstructor: [],
+  search: ''
+};
+
 export const initialState = {
   list: [],
+  filters: initialFilters,
   model: null,
   modelLoading: false,
-  modelError: null
+  modelError: null,
+  sort: {},
+  sortLabel: ''
 };
+
+export const selectModel = ({ Model }) => ({
+  sort: Model.sort,
+  sortLabel: Model.sortLabel,
+  list: Model.list,
+  loading: Model.modelLoading,
+  filter: Model.filters,
+  model: Model.model
+});
 
 const modelReducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -35,6 +58,33 @@ const modelReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         model: action.payload
+      };
+    case SET_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload
+        }
+      };
+    case SET_SORT:
+      return {
+        ...state,
+        sort: {
+          ...action.payload
+        }
+      };
+    case MODEL_SORT_LABEL:
+      return {
+        ...state,
+        sortLabel: action.payload
+      };
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        sort: {},
+        sortLabel: '',
+        filters: initialFilters
       };
     case SET_MODEL_LOADING:
       return {

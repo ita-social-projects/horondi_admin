@@ -154,7 +154,7 @@ const ProductAddImages = ({
 ProductAddImages.propTypes = {
   toggleFieldsChanged: PropTypes.func,
   additionalImagesDisplayed: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.object),
+    PropTypes.arrayOf(PropTypes.string),
     PropTypes.string
   ]),
   setAdditionalImagesDisplayed: PropTypes.func,

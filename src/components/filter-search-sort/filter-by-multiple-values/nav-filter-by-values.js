@@ -77,7 +77,14 @@ NavFilterByValues.propTypes = {
   setFilterHandler: PropTypes.func,
   label: PropTypes.string,
   objForTranslateRenderItems: PropTypes.objectOf(PropTypes.object),
-  filterByMultipleOptions: PropTypes.objectOf(PropTypes.object)
+  filterByMultipleOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array,
+      PropTypes.string,
+      PropTypes.func
+    ])
+  )
 };
 
 NavFilterByValues.defaultProps = {

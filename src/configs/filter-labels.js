@@ -15,6 +15,34 @@ const filterLabels = {
       }
     ]
   },
+  models: {
+    sortLabels: [
+      {
+        value: 'sortByNameAsc',
+        label: "за ім'ям (у алфавітному порядку)",
+        key: 'name',
+        type: 'asc'
+      },
+      {
+        value: 'sortByNameDesc',
+        label: "за ім'ям (проти алфавітного порядку)",
+        key: 'name',
+        type: 'desc'
+      },
+      {
+        value: 'sortByPriorityAsc',
+        label: 'за пріоритетом (від найнижчого до найвищого) ',
+        key: 'priority',
+        type: 'desc'
+      },
+      {
+        value: 'sortByPriorityDesc',
+        label: 'за пріоритетом (від найвищого до найнижчого)',
+        key: 'priority',
+        type: 'asc'
+      }
+    ]
+  },
   orders: {
     users: [
       {
