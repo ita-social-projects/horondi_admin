@@ -27,6 +27,7 @@ const getAllComments = async (filter, pagination) => {
         }
       }
     `;
+
   const result = await getItems(query, { filter, pagination });
 
   return result?.data?.getAllComments;

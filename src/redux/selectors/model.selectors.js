@@ -1,12 +1,14 @@
-export const selectModelAndTable = ({ Model, Table }) => ({
-  list: Model.list,
-  loading: Model.modelLoading,
-  currentPage: Table.pagination.currentPage,
-  rowsPerPage: Table.pagination.rowsPerPage,
-  itemsCount: Table.itemsCount
-});
+import { createSelector } from 'reselect';
+import { selectPagination } from '../table/table.reducer';
+import { selectModel } from '../model/model.reducer';
 
-export const selectModel = ({ Model }) => ({
-  loading: Model.modelLoading,
-  model: Model.model
-});
+export const modelSelector = createSelector(selectModel, (model) => model);
+
+export const modelSelectorWithPagination = createSelector(
+  selectModel,
+  selectPagination,
+  (model, table) => ({
+    ...model,
+    ...table
+  })
+);
