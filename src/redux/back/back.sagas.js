@@ -66,7 +66,7 @@ export function* handleAddBack({ payload }) {
     yield put(setBackLoading(true));
     yield call(createBack, payload);
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(config.routes.pathToPatterns));
+    yield put(push(config.routes.pathToBacks));
   } catch (error) {
     yield call(handleBackError, error);
   }
@@ -90,7 +90,7 @@ export function* handleBackUpdate({ payload }) {
     yield put(setBackLoading(true));
     yield call(updateBack, payload);
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToPatterns));
+    yield put(push(config.routes.pathToBacks));
   } catch (error) {
     yield call(handleBackError, error);
   }

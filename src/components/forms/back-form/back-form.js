@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid, Avatar, TextField } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -16,8 +16,14 @@ import { addBack, updateBack } from '../../../redux/back/back.actions';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
-import { materialSelector } from '../../../redux/selectors/material.selectors';
-import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
+import {
+  materialSelector,
+  materialSelectorWithPagination
+} from '../../../redux/selectors/material.selectors';
+import {
+  getMaterials,
+  getMaterialsByPurpose
+} from '../../../redux/material/material.actions';
 import LoadingBar from '../../loading-bar';
 import {
   handleImageLoad,
@@ -26,6 +32,9 @@ import {
   useFormikInitialValues
 } from '../../../utils/back-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { getColors } from '../../../redux/color/color.actions';
+import useMaterialFilters from '../../../hooks/filters/use-material-filters';
+import ColorsAutocomplete from '../../colors-autocomplete';
 
 const { backName, material, backDescription } = config.labels.back;
 const map = require('lodash/map');
@@ -35,7 +44,6 @@ const {
   BACK_ERROR_MESSAGE,
   BACK_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
-  CONSTRUCTOR_PHOTO_NOT_PROVIDED,
   BACK_EN_NAME_MESSAGE,
   BACK_UA_NAME_MESSAGE
 } = config.backErrorMessages;
@@ -53,21 +61,44 @@ const { pathToBacks } = config.routes;
 const BackForm = ({ back, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { materialsByPurpose, loading } = useSelector(materialSelector);
+  const { materialsByPurpose } = useSelector(materialSelector);
+
   const {
-    createBack,
-    setUpload,
-    upload,
-    backImage,
-    setBackImage
-    // constructorImg,
-    // setConstructorImg,
-    // uploadConstructorImg,
-    // setUploadConstructorImg
-  } = useBackHandlers();
+    list,
+    loading,
+    itemsCount,
+    currentPage,
+    rowsPerPage,
+    colors,
+    filters
+  } = useSelector(materialSelectorWithPagination);
+
+  const materialFilters = useMaterialFilters();
+
+  useEffect(() => {
+    dispatch(
+      getMaterials({
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        filter: {
+          colors: filters.colors,
+          name: filters.name,
+          available: filters.available,
+          purpose: filters.purpose
+        }
+      })
+    );
+  }, [dispatch, rowsPerPage, currentPage, filters]);
+
+  const { createBack, setUpload, upload, backImage, setBackImage } =
+    useBackHandlers();
 
   useEffect(() => {
     dispatch(getMaterialsByPurpose());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getColors());
   }, []);
 
   useEffect(() => {
@@ -98,8 +129,6 @@ const BackForm = ({ back, id, isEdit }) => {
     available: Yup.boolean(),
     customizable: Yup.boolean(),
     backImage: Yup.string().required(PHOTO_NOT_PROVIDED)
-    // patternConstructorImage: Yup.string().required(
-    //   CONSTRUCTOR_PHOTO_NOT_PROVIDED)
   });
 
   const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
@@ -108,6 +137,7 @@ const BackForm = ({ back, id, isEdit }) => {
       initialValues: useFormikInitialValues(back),
       onSubmit: () => {
         const newBack = createBack(values);
+        console.log(newBack);
         const isEditAndUpload = isEdit && upload instanceof File;
         if (isEditAndUpload || isEdit) {
           backFormOnSubmit(
@@ -138,13 +168,13 @@ const BackForm = ({ back, id, isEdit }) => {
 
   const checkboxes = [
     {
-      id: 'handmade',
-      dataCy: 'handmade',
-      value: values.handmade,
-      checked: values.handmade,
+      id: 'customizable',
+      dataCy: 'customizable',
+      value: values.customizable,
+      checked: values.customizable,
       color: 'primary',
-      label: config.labels.back.handmade,
-      handler: () => setFieldValue('handmade', !values.handmade)
+      label: config.labels.back.customizable,
+      handler: () => setFieldValue('customizable', !values.customizable)
     },
     {
       id: 'available',
@@ -164,18 +194,22 @@ const BackForm = ({ back, id, isEdit }) => {
     });
     setUpload(e.target.files[0]);
   };
-
-  // const handleLoadConstructorImage = (e) => {
-  //   handleImageLoad(e, (event) => {
-  //     setFieldValue('patternConstructorImage', event.target.result);
-  //     setConstructorImg(event.target.result);
-  //   });
-  //   setUploadConstructorImg(e.target.files[0]);
+  console.log(materialsByPurpose);
+  // const handleLoadMainImage = (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const reader = new FileReader();
+  //     reader.onload = (event) => {
+  //       setFieldValue('backImage', event.target.result);
+  //       setBackImage(event.target.result);
+  //     };
+  //     reader.readAsDataURL(e.target.files[0]);
+  //     setUpload(e.target.files[0]);
+  //   }
   // };
 
   const inputs = [
-    { label: backName, name: 'name' },
-    { label: backDescription, name: 'description' }
+    { label: backName, name: 'name' }
+    // { label: backDescription, name: 'description' }
   ];
 
   const inputOptions = {
@@ -188,11 +222,9 @@ const BackForm = ({ back, id, isEdit }) => {
 
   const imageUploadBackInputsId = {
     backImageInput: 'backImageInput'
-    // constructorImageInput: 'constructorImgInput'
   };
 
   const valueEquality = checkInitialValue(useFormikInitialValues(back), values);
-  console.log(languages);
   return (
     <div>
       {loading ? (
@@ -222,54 +254,45 @@ const BackForm = ({ back, id, isEdit }) => {
                     )}
                   </div>
                 </div>
-
-                {/* <div> */}
-                {/*  <span className={styles.imageUpload}> */}
-                {/*    {config.labels.back.constructorImgText} */}
-                {/*  </span> */}
-
-                {/*  <div className={styles.imageUploadAvatar}> */}
-                {/*    <ImageUploadPreviewContainer */}
-                {/*      handler={handleLoadConstructorImage} */}
-                {/*      src={constructorImg} */}
-                {/*      id={imageUploadBackInputsId.constructorImageInput} */}
-                {/*    /> */}
-                {/*    {touched.backConstructorImage && */}
-                {/*      errors.backConstructorImage && ( */}
-                {/*        <div className={styles.inputError}> */}
-                {/*          {errors.backConstructorImage} */}
-                {/*        </div> */}
-                {/*      )} */}
-                {/*  </div> */}
-                {/* </div> */}
               </div>
-              <FormControl
-                variant='outlined'
-                className={`${styles.formControl} ${styles.materialSelect}`}
-              >
-                <InputLabel variant='outlined'>{material}</InputLabel>
-                <Select
-                  label={material}
-                  data-cy='material'
-                  name='material'
-                  error={touched.material && !!errors.material}
-                  value={values.material || []}
-                  onChange={handleChange}
-                >
-                  {materialsByPurpose.map(({ _id, name }) => (
-                    <MenuItem key={_id} value={_id}>
-                      {name[0].value}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              {touched.material && errors.material && (
-                <div data-cy='material-error' className={styles.inputError}>
-                  {errors.material}
-                </div>
-              )}
             </Paper>
           </Grid>
+          <div>
+            <ColorsAutocomplete
+              colorsSet={colors}
+              selectedColors={filters?.colors}
+              handleChange={(value) => {
+                materialFilters.setColorsFilter(value);
+              }}
+            />
+          </div>
+
+          <FormControl
+            variant='outlined'
+            className={`${styles.formControl} ${styles.materialSelect}`}
+          >
+            <InputLabel variant='outlined'>{material}</InputLabel>
+            <Select
+              label={material}
+              data-cy='material'
+              name='material'
+              error={touched.material && !!errors.material}
+              value={values.material || []}
+              onChange={handleChange}
+            >
+              {list.map(({ _id, name }) => (
+                <MenuItem key={_id} value={_id}>
+                  {name[0].value}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {touched.material && errors.material && (
+            <div data-cy='material-error' className={styles.inputError}>
+              {errors.material}
+            </div>
+          )}
+
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
@@ -356,14 +379,14 @@ BackForm.defaultProps = {
         value: ''
       }
     ],
-    description: [
-      {
-        value: ''
-      },
-      {
-        value: ''
-      }
-    ],
+    // description: [
+    //   {
+    //     value: ''
+    //   },
+    //   {
+    //     value: ''
+    //   }
+    // ],
     images: {
       thumbnail: ''
     },
@@ -389,6 +412,7 @@ BackForm.defaultProps = {
         ]
       }
     },
+    optionType: 'BACK',
     available: false,
     customizable: false
   },

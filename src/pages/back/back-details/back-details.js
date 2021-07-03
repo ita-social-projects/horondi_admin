@@ -13,7 +13,6 @@ const BackDetails = ({ match }) => {
 
   const dispatch = useDispatch();
   const { loading, back, list } = useSelector(backSelector);
-  console.log(list);
   const styles = useStyles();
 
   useEffect(() => {

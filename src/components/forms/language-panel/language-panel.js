@@ -29,7 +29,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                   id={inputName}
                   className={styles.textField}
                   variant='outlined'
-                  // label={input.label[lang]}
+                  label={input.label[lang]}
                   error={touched[inputName] && !!errors[inputName]}
                   multiline
                   value={values[inputName]}

@@ -42,11 +42,12 @@ export const backFormOnSubmit = (
 export const useFormikInitialValues = (back) => ({
   backImage: back?.images.thumbnail || '',
   uaName: back?.name[0].value || '',
-  enName: back?.name[1].value || '',
+  // enName: back?.name[1].value || '',
   // uaDescription: back?.description[0].value || '',
   // enDescription: back?.description[1].value || '',
   material: back?.features.material._id || '',
-  color: back?.features.color._id || '',
+  color: back?.features.color._id || '6043a1653e06ad3edcdb7b08',
+  optionType: back?.optionType || '"BACK"',
   available: back?.available || false,
   customizable: back?.customizable || false
 });

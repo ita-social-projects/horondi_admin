@@ -54,7 +54,6 @@ const {
 const { pathToPatterns } = config.routes;
 
 const PatternForm = ({ pattern, id, isEdit }) => {
-  console.log(pattern);
   const styles = useStyles();
   const dispatch = useDispatch();
   const { materialsByPurpose, loading } = useSelector(materialSelector);
