@@ -20,6 +20,7 @@ export const useStyles = makeStyles(() => ({
   }),
   userInfoItem: ({ darkMode }) => ({
     fontSize: '17px',
+    marginTop: 0,
     fontWeight: '500',
     color: !darkMode ? '#828282' : '#ffffff',
     marginRight: 20,
@@ -28,15 +29,16 @@ export const useStyles = makeStyles(() => ({
       marginRight: '10px'
     }
   }),
+  userPaper: {
+    padding: '10px'
+  },
   userInfoData: {
-    marginLeft: 10,
-    display: 'flex'
+    margin: '6px 10px',
+    display: 'flex',
+    alignItems: 'center'
   },
   table: {
-    overflow: 'scroll',
-    '& table': {
-      backgroundColor: 'white'
-    }
+    overflow: 'scroll'
   },
   tableCell: ({ darkMode }) => ({
     textAlign: 'center',
