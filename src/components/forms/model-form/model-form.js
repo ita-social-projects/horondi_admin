@@ -203,6 +203,18 @@ const ModelForm = ({ model, id, isEdit }) => {
                 errors={errors}
               />
             </Grid>
+            <Grid item className={styles.button}>
+              {isEdit ? (
+                <Button
+                  data-cy={labelsEn.constructor}
+                  onClick={handleConstructor}
+                  color={materialUiConstants.secondary}
+                  variant={materialUiConstants.contained}
+                >
+                  {MODEL_CONSTRUCTOR}
+                </Button>
+              ) : null}
+            </Grid>
           </Grid>
         </div>
         <CheckboxOptions options={checkboxes(materialUiConstants.show, show)} />
@@ -301,7 +313,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             key={lang}
           />
         ))}
-        {isEdit ? (
+        {/* {isEdit ? (
           <div className={styles.constructorButton}>
             <Button
               data-cy={labelsEn.constructor}
@@ -313,7 +325,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               {MODEL_CONSTRUCTOR}
             </Button>
           </div>
-        ) : null}
+        ) : null} */}
       </form>
     </div>
   );
