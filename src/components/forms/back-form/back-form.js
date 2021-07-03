@@ -194,7 +194,7 @@ const BackForm = ({ back, id, isEdit }) => {
     });
     setUpload(e.target.files[0]);
   };
-  console.log(materialsByPurpose);
+
   // const handleLoadMainImage = (e) => {
   //   if (e.target.files && e.target.files[0]) {
   //     const reader = new FileReader();
