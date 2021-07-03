@@ -61,9 +61,13 @@ const HeaderForm = ({ header, id }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <Grid item xs={12}>
           <Paper className={styles.headerItemUpdate}>
             <TextField
@@ -129,6 +133,7 @@ const HeaderForm = ({ header, id }) => {
         <BackButton initial={!valueEquality} pathBack={pathToHeaders} />
         <SaveButton
           className={styles.saveButton}
+          onClickHandler={handleSubmit}
           data-cy='save'
           type='submit'
           title={config.buttonTitles.HEADER_SAVE_TITLE}

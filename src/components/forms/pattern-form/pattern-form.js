@@ -207,12 +207,16 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       {loading ? (
         <LoadingBar />
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => eventPreventHandler(e)}>
           <CheckboxOptions options={checkboxes} />
 
           <Grid item xs={12}>
@@ -292,6 +296,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
             className={styles.saveButton}
             data-cy='save-btn'
             type='submit'
+            onClickHandler={handleSubmit}
             title={SAVE_TITLE}
             values={values}
             errors={errors}

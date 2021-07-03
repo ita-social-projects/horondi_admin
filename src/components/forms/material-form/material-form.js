@@ -137,9 +137,16 @@ function MaterialForm({ material, id }) {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={styles.container}>
-      <form className={styles.materialForm} onSubmit={handleSubmit}>
+      <form
+        className={styles.materialForm}
+        onSubmit={(e) => eventPreventHandler(e)}
+      >
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <ColorsBar
@@ -205,6 +212,7 @@ function MaterialForm({ material, id }) {
               className={styles.saveButton}
               data-cy='save'
               type='submit'
+              onClickHandler={handleSubmit}
               title={config.buttonTitles.SAVE_MATERIAL}
               values={values}
               errors={errors}
