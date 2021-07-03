@@ -72,13 +72,29 @@ describe('Main-page component tests', () => {
     expect(mockHolder.mock.calls.length).toEqual(4);
   });
 
+  it('Should handle click on comment', () => {
+    useDispatchMock.mockReturnValue(mockHolder);
+    wrapper = mount(<MainPage />);
+    wrapper.find('[data-cy="comment"]').at(0).simulate('click');
+    expect(mockHolder.mock.calls.length).toEqual(8);
+  });
+
   it('Should render TableContainerGenerator', () => {
     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
+    expect(wrapper.find(TableContainerGenerator).length).toBe(2);
   });
 
   it(`Should render orders with "${EMPTY_LIST}" label`, () => {
     mockStore.ordersList = null;
     wrapper = mount(<MainPage />);
     expect(wrapper.find('[data-cy="empty-orders"]').text()).toEqual(EMPTY_LIST);
+  });
+
+  it(`Should render comments with "${EMPTY_LIST}" label`, () => {
+    mockStore.recentComments = null;
+    wrapper = mount(<MainPage />);
+    expect(wrapper.find('[data-cy="empty-comments"]').text()).toEqual(
+      EMPTY_LIST
+    );
   });
 });
