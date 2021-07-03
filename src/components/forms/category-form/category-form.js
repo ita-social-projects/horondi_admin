@@ -128,9 +128,13 @@ const CategoryForm = ({ category, id, edit }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <Grid item xs={12}>
           <Paper className={styles.categoryItemUpdate}>
             <span className={styles.imageUpload}>
@@ -169,6 +173,7 @@ const CategoryForm = ({ category, id, edit }) => {
         <SaveButton
           className={styles.saveCategoryButton}
           data-cy='save'
+          onClickHandler={handleSubmit}
           type={materialUiConstants.types.submit}
           title={SAVE_TITLE}
           errors={errors}
