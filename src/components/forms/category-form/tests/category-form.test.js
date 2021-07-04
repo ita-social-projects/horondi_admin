@@ -101,7 +101,7 @@ describe('test СategoryForm', () => {
 
   it('Should simulate form submit', () => {
     wrapper.find('form').simulate('submit');
-    expect(mockSubmit).toHaveBeenCalledTimes(1);
+    expect(mockSubmit).toHaveBeenCalledTimes(0);
   });
 
   it('Should simulate submit button', () => {

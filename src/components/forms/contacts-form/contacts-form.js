@@ -130,9 +130,13 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
 
   const valueEquality = checkInitialValue(initialValues, values);
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={classes.detailsContainer}>
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={(e) => eventPreventHandler(e)}>
         <FormControl className={classes.contactDetails}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
@@ -254,6 +258,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
           id='save'
           type='submit'
           title='Зберегти'
+          onClickHandler={handleSubmit}
           className={classes.saveButton}
           data-cy='save'
           values={values}

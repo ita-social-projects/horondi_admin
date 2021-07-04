@@ -40,6 +40,7 @@ exports[`Pattern-page render tests Should render pattern-page 1`] = `
   <div>
     <FilterNavbar
       clearOptions={Object {}}
+      filterByMultipleOptions={Object {}}
       options={
         Object {
           "clearOptions": Object {
