@@ -241,31 +241,31 @@ const BackForm = ({ back, id, isEdit }) => {
                     {config.labels.back.avatarText}
                   </span>
 
-                  {/* <div className={styles.imageUploadAvatar}> */}
-                  {/*  <ImageUploadPreviewContainer */}
-                  {/*    handler={handleLoadMainImage} */}
-                  {/*    src={backImage} */}
-                  {/*    id={imageUploadBackInputsId.backImageInput} */}
-                  {/*  /> */}
-                  {/*  {touched.backImage && errors.backImage && ( */}
-                  {/*    <div className={styles.inputError}> */}
-                  {/*      {errors.backImage} */}
-                  {/*    </div> */}
-                  {/*  )} */}
-                  {/* </div> */}
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPreviewContainer
+                      handler={handleLoadMainImage}
+                      src={backImage}
+                      id={imageUploadBackInputsId.backImageInput}
+                    />
+                    {touched.backImage && errors.backImage && (
+                      <div className={styles.inputError}>
+                        {errors.backImage}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </Paper>
           </Grid>
-          <div>
-            <ColorsAutocomplete
-              colorsSet={colors}
-              selectedColors={filters?.colors}
-              handleChange={(value) => {
-                materialFilters.setColorsFilter(value);
-              }}
-            />
-          </div>
+          {/* <div> */}
+          {/*  <ColorsAutocomplete */}
+          {/*    colorsSet={colors} */}
+          {/*    selectedColors={filters?.colors} */}
+          {/*    handleChange={(value) => { */}
+          {/*      materialFilters.setColorsFilter(value); */}
+          {/*    }} */}
+          {/*  /> */}
+          {/* </div> */}
 
           <FormControl
             variant='outlined'
