@@ -124,16 +124,11 @@ const labels = {
     avatarText: 'Фото',
     form: {
       name: mapToLanguages("І'мя", 'Name')
-      // description: mapToLanguages('Опис', 'Description')
     },
     backName: {
       ua: 'Назва спинки',
       en: 'Back name'
     }
-    // backDescription: {
-    //   ua: 'Опис спинки',
-    //   en: 'Back description'
-    // }
   },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),

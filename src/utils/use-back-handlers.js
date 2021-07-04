@@ -34,10 +34,6 @@ const useBackHandlers = () => {
     setUpload,
     imageName,
     setImageName
-    // constructorImg,
-    // setConstructorImg,
-    // uploadConstructorImg,
-    // setUploadConstructorImg
   };
 };
 

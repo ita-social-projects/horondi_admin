@@ -48,7 +48,6 @@ export const backErrorMessages = {
   BACK_ERROR_MESSAGE: 'Поле не може бути порожнім',
   BACK_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
-  // CONSTRUCTOR_PHOTO_NOT_PROVIDED: "Фото для конструктора є обов'язковим",
   BACK_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
   BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
