@@ -159,18 +159,7 @@ export const createBack = async (payload) => {
               lang
               value
             }
-            features {
-              material {
-                _id
-                name {
-                  lang
-                  value
-                }
-              }
-                }
-            available
-            customizable
-          }
+               }
           ... on Error {
             message
             statusCode
@@ -180,10 +169,8 @@ export const createBack = async (payload) => {
     `;
 
   const result = await setItems(createBackQuery, payload);
-
-  if (
-    Object.keys(backTranslations).includes(result?.data?.addPattern?.message)
-  ) {
+  console.log(result);
+  if (Object.keys(backTranslations).includes(result?.data?.addBack?.message)) {
     throw new Error(
       `${result.data.addBack.statusCode} ${
         backTranslations[result.data.addBack.message]
