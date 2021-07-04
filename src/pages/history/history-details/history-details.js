@@ -12,7 +12,6 @@ import Paper from '@material-ui/core/Paper';
 import { useStyles } from './history-details.styles';
 import { getRecordItem } from '../../../redux/history/history.actions';
 import { historySelector } from '../../../redux/selectors/history';
-import { useCommonStyles } from '../../common.styles';
 import LoadingBar from '../../../components/loading-bar';
 import { useStyles as useTableHeadStyles } from '../../../containers/table-container-head/table-container-head.styles';
 import titles from '../../../configs/titles';
