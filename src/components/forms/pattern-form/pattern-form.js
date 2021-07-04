@@ -177,9 +177,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   };
 
   const handleLoadConstructorImage = (e) => {
-    debugger;
     handleImageLoad(e, (event) => {
-      debugger;
       setFieldValue('patternConstructorImage', event.target.result);
       setConstructorImg(event.target.result);
     });
