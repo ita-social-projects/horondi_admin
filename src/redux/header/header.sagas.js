@@ -103,6 +103,7 @@ export function* handleHeaderUpdate({ payload }) {
 
     if (header) {
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(setHeaderLoading(false));
       yield put(push(routes.pathToHeaders));
     }
   } catch (error) {

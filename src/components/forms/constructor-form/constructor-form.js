@@ -219,9 +219,13 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     inputs
   };
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <CheckboxOptions options={checkboxes('available', show)} />
         <CheckboxOptions options={checkboxes('default', defaultElement)} />
         <Grid item xs={12}>
@@ -287,6 +291,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         <BackButton />
         <SaveButton
           className={styles.saveButton}
+          onClickHandler={handleSubmit}
           data-cy='save-btn'
           type='submit'
           title={SAVE_TITLE}

@@ -167,6 +167,10 @@ const BusinessPageForm = ({ id, editMode }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={common.container}>
       <div className={common.adminHeader}>
@@ -178,7 +182,7 @@ const BusinessPageForm = ({ id, editMode }) => {
           {config.titles.businessPageTitles.addBusinessPageTitle}
         </Typography>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <div>
           <Grid item xs={12}>
             <Paper className={classes.businessPageForm}>
@@ -212,6 +216,7 @@ const BusinessPageForm = ({ id, editMode }) => {
             type='submit'
             title='Зберегти'
             data-cy='save-btn'
+            onClickHandler={handleSubmit}
             values={{
               code: values.code,
               uaTitle: values.uaTitle,
