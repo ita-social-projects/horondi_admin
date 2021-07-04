@@ -80,15 +80,6 @@ const HeaderForm = ({ header, id }) => {
             </Grid>
           </Grid>
         </div>
-        {/* <BackButton initial={!valueEquality} pathBack={pathToHeaders} />
-        <SaveButton
-          className={styles.saveButton}
-          data-cy='save'
-          type='submit'
-          title={config.buttonTitles.HEADER_SAVE_TITLE}
-          values={values}
-          errors={errors}
-        /> */}
         <Grid item xs={12}>
           <Paper className={styles.headerItemUpdate}>
             <TextField

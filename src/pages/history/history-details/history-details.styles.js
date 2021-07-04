@@ -42,19 +42,6 @@ export const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(0.5)
   },
-  // container: {
-  //   width: `100%`,
-  //   marginTop: 65,
-  //   position: 'static',
-  //   padding: 20,
-  //   textAlign: 'left',
-  //   '@media (max-width: 450px)': {
-  //     '& .MuiGrid-grid-xs-3': {
-  //       flexBasis: '50%',
-  //       maxWidth: '50%'
-  //     }
-  //   }
-  // },
   container: {
     padding: theme.spacing(2.5),
     position: 'relative',

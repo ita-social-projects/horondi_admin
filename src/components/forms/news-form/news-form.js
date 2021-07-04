@@ -150,16 +150,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {/* <div className={styles.buttonContainer}>
-          <BackButton initial={!valueEquality} pathBack={pathToNews} />
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save'
-            type='submit'
-            title={SAVE_TITLE}
-            values={checkValidData(values)}
-          />
-        </div> */}
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
