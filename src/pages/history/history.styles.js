@@ -6,6 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     background: 'transparent',
     cursor: 'pointer',
     '&:hover': {
+      textDecoration: 'none !important',
       borderBottom: darkMode ? '1px solid #ffffff' : '1px solid #3F51B5 '
     }
   }),
