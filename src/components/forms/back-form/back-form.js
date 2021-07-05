@@ -26,16 +26,16 @@ import {
 } from '../../../redux/material/material.actions';
 import LoadingBar from '../../loading-bar';
 import {
-  handleImageLoad,
   backUseEffectHandler,
   backFormOnSubmit,
-  useFormikInitialValues
+  getBackInitialValues
 } from '../../../utils/back-form';
+
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import { getColors } from '../../../redux/color/color.actions';
 import useMaterialFilters from '../../../hooks/filters/use-material-filters';
-import ColorsAutocomplete from '../../colors-autocomplete';
 
+const { IMG_URL } = config;
 const { backName, material, backDescription } = config.labels.back;
 const map = require('lodash/map');
 
@@ -106,18 +106,10 @@ const BackForm = ({ back, id, isEdit }) => {
   }, [dispatch, back]);
 
   const backValidationSchema = Yup.object().shape({
-    // enDescription: Yup.string()
-    //   .min(2, BACK_VALIDATION_ERROR)
-    //   .required(BACK_ERROR_MESSAGE)
-    //   .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
     enName: Yup.string()
       .min(2, BACK_VALIDATION_ERROR)
       .required(BACK_ERROR_MESSAGE)
       .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
-    // uaDescription: Yup.string()
-    //   .min(2, BACK_VALIDATION_ERROR)
-    //   .required(BACK_ERROR_MESSAGE)
-    //   .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
     uaName: Yup.string()
       .min(2, BACK_VALIDATION_ERROR)
       .required(BACK_ERROR_MESSAGE)
@@ -134,10 +126,10 @@ const BackForm = ({ back, id, isEdit }) => {
   const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
     useFormik({
       validationSchema: backValidationSchema,
-      initialValues: useFormikInitialValues(back),
+      initialValues: getBackInitialValues(isEdit, IMG_URL, back),
+
       onSubmit: () => {
         const newBack = createBack(values);
-        console.log(newBack);
         const isEditAndUpload = isEdit && upload instanceof File;
         if (isEditAndUpload || isEdit) {
           backFormOnSubmit(
@@ -147,7 +139,7 @@ const BackForm = ({ back, id, isEdit }) => {
             {
               id,
               back: newBack,
-              image: [upload]
+              image: upload
             },
             isEdit,
             {
@@ -160,7 +152,7 @@ const BackForm = ({ back, id, isEdit }) => {
         dispatch(
           addBack({
             back: newBack,
-            image: [upload]
+            image: upload
           })
         );
       }
@@ -187,30 +179,20 @@ const BackForm = ({ back, id, isEdit }) => {
     }
   ];
 
-  const handleLoadMainImage = (e) => {
-    handleImageLoad(e, (event) => {
-      setFieldValue('backImage', event.target.result);
-      setBackImage(event.target.result);
-    });
-    setUpload(e.target.files[0]);
+  const handleImageLoad = (e) => {
+    console.log(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFieldValue('backImage', event.target.result);
+        setBackImage(event.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setUpload(e.target.files[0]);
+    }
   };
 
-  // const handleLoadMainImage = (e) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     const reader = new FileReader();
-  //     reader.onload = (event) => {
-  //       setFieldValue('backImage', event.target.result);
-  //       setBackImage(event.target.result);
-  //     };
-  //     reader.readAsDataURL(e.target.files[0]);
-  //     setUpload(e.target.files[0]);
-  //   }
-  // };
-
-  const inputs = [
-    { label: backName, name: 'name' }
-    // { label: backDescription, name: 'description' }
-  ];
+  const inputs = [{ label: backName, name: 'name' }];
 
   const inputOptions = {
     errors,
@@ -224,7 +206,11 @@ const BackForm = ({ back, id, isEdit }) => {
     backImageInput: 'backImageInput'
   };
 
-  const valueEquality = checkInitialValue(useFormikInitialValues(back), values);
+  const valueEquality = checkInitialValue(
+    getBackInitialValues(isEdit, IMG_URL, back),
+    values
+  );
+
   return (
     <div>
       {loading ? (
@@ -243,7 +229,7 @@ const BackForm = ({ back, id, isEdit }) => {
 
                   <div className={styles.imageUploadAvatar}>
                     <ImageUploadPreviewContainer
-                      handler={handleLoadMainImage}
+                      handler={handleImageLoad}
                       src={backImage}
                       id={imageUploadBackInputsId.backImageInput}
                     />
@@ -335,8 +321,6 @@ BackForm.propTypes = {
     color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string
-    // uaDescription: PropTypes.string,
-    // enDescription: PropTypes.string,
   }),
   errors: PropTypes.shape({
     backImage: PropTypes.string,
@@ -344,8 +328,6 @@ BackForm.propTypes = {
     color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string
-    // uaDescription: PropTypes.string,
-    // enDescription: PropTypes.string,
   }),
   touched: PropTypes.shape({
     backImage: PropTypes.string,
@@ -353,8 +335,6 @@ BackForm.propTypes = {
     color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string
-    // uaDescription: PropTypes.string,
-    // enDescription: PropTypes.string,
   }),
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -379,14 +359,6 @@ BackForm.defaultProps = {
         value: ''
       }
     ],
-    // description: [
-    //   {
-    //     value: ''
-    //   },
-    //   {
-    //     value: ''
-    //   }
-    // ],
     images: {
       thumbnail: ''
     },

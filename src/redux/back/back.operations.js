@@ -146,7 +146,6 @@ export const createBack = async (payload) => {
     `;
 
   const result = await setItems(createBackQuery, payload);
-  console.log(result);
   if (Object.keys(backTranslations).includes(result?.data?.addBack?.message)) {
     throw new Error(
       `${result.data.addBack.statusCode} ${

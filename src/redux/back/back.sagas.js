@@ -106,7 +106,7 @@ export function* handleBackError(e) {
   }
 }
 
-export default function* patternSaga() {
+export default function* backSaga() {
   yield takeEvery(GET_BACKS, handleBacksLoad);
   yield takeEvery(DELETE_BACK, handleBackDelete);
   yield takeEvery(GET_BACK, handleBackLoad);
