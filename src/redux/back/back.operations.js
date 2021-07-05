@@ -113,30 +113,7 @@ export const deleteBack = async (id) => {
   deleteBack(id: $id) {
     ... on Back {
       _id
-      name {
-        lang
-        value
-      }
-      features {
-        material {
-          _id
-          name {
-            lang
-            value
-          }
-        }
-        color {
-          _id
-          name {
-            lang
-            value
-          }
-        }
-      }
-      available
-      customizable
-    }
-    ... on Error {
+     ... on Error {
       message
       statusCode
     }
