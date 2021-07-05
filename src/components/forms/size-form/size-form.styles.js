@@ -58,7 +58,7 @@ export const useStyles = makeStyles((theme) => ({
       marginLeft: '0px'
     }
   },
-  selectStyle: {},
+
   inputError: {
     color: theme.palette.error.main,
     padding: '0 5px'

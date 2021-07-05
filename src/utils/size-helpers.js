@@ -14,18 +14,6 @@ export const createSize = (data) => ({
   modelId: data.modelId
 });
 
-export const updateExistingSize = (data) => ({
-  name: data.name,
-  heightInCm: data.heightInCm,
-  widthInCm: data.widthInCm,
-  depthInCm: data.depthInCm,
-  volumeInLiters: data.volumeInLiters,
-  weightInKg: data.weightInKg,
-  available: data.available,
-  additionalPrice: data.additionalPrice,
-  modelId: data.modelId
-});
-
 export const getSizeInitialValues = (size) => ({
   name: size.name || 'M',
   modelId: size.modelId._id || '',

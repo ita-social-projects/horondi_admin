@@ -17,7 +17,6 @@ import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import {
   createSize,
-  updateExistingSize,
   getSizeInitialValues,
   sizePropTypes,
   sizeDefaultProps
@@ -58,7 +57,7 @@ function SizeForm({ id, size }) {
       onSubmit: (data) => {
         const newSize = createSize(data);
         if (id) {
-          const updatedSize = updateExistingSize(data);
+          const updatedSize = createSize(data);
           dispatch(
             updateSize({
               id,
@@ -177,7 +176,6 @@ function SizeForm({ id, size }) {
                     {modelTitle}
                   </InputLabel>
                   <Select
-                    className={styles.selectStyle}
                     data-cy={labels.en.modelId}
                     id='modelId'
                     value={values.modelId}
@@ -188,7 +186,6 @@ function SizeForm({ id, size }) {
                   >
                     {uniqueModelMap.map((value) => (
                       <MenuItem
-                        className={styles.selectStyle}
                         key={value.modelId._id}
                         value={value.modelId._id}
                       >
