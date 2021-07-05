@@ -150,15 +150,6 @@ const BackForm = ({ back, id, isEdit }) => {
 
   const checkboxes = [
     {
-      id: 'customizable',
-      dataCy: 'customizable',
-      value: values.customizable,
-      checked: values.customizable,
-      color: 'primary',
-      label: config.labels.back.customizable,
-      handler: () => setFieldValue('customizable', !values.customizable)
-    },
-    {
       id: 'available',
       dataCy: 'available',
       value: values.available,
@@ -233,15 +224,15 @@ const BackForm = ({ back, id, isEdit }) => {
               </div>
             </Paper>
           </Grid>
-          <div>
-            <ColorsAutocomplete
-              colorsSet={colors}
-              selectedColors={filters?.colors}
-              handleChange={(value) => {
-                materialFilters.setColorsFilter(value);
-              }}
-            />
-          </div>
+          {/* <div> */}
+          {/*  <ColorsAutocomplete */}
+          {/*    colorsSet={colors} */}
+          {/*    selectedColors={filters?.colors} */}
+          {/*    handleChange={(value) => { */}
+          {/*      materialFilters.setColorsFilter(value); */}
+          {/*    }} */}
+          {/*  /> */}
+          {/* </div> */}
 
           <FormControl
             variant='outlined'
