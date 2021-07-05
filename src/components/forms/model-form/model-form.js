@@ -313,19 +313,6 @@ const ModelForm = ({ model, id, isEdit }) => {
             key={lang}
           />
         ))}
-        {isEdit ? (
-          <div className={styles.constructorButton}>
-            <Button
-              data-cy={labelsEn.constructor}
-              className={styles.saveButton}
-              onClick={handleConstructor}
-              color={materialUiConstants.secondary}
-              variant={materialUiConstants.contained}
-            >
-              {MODEL_CONSTRUCTOR}
-            </Button>
-          </div>
-        ) : null}
       </form>
     </div>
   );
