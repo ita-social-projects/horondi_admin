@@ -12,7 +12,7 @@ const BackDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
-  const { loading, back, list } = useSelector(backSelector);
+  const { loading, back } = useSelector(backSelector);
   const styles = useStyles();
 
   useEffect(() => {
