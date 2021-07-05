@@ -16,7 +16,6 @@ import { addBack, updateBack } from '../../../redux/back/back.actions';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
-import ColorsAutocomplete from '../../colors-autocomplete';
 import { materialSelectorWithPagination } from '../../../redux/selectors/material.selectors';
 import {
   getMaterials,
@@ -60,10 +59,9 @@ const BackForm = ({ back, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { list, loading, currentPage, rowsPerPage, colors, filters } =
-    useSelector(materialSelectorWithPagination);
-
-  const materialFilters = useMaterialFilters();
+  const { list, loading, currentPage, rowsPerPage, filters } = useSelector(
+    materialSelectorWithPagination
+  );
 
   useEffect(() => {
     dispatch(
@@ -224,16 +222,6 @@ const BackForm = ({ back, id, isEdit }) => {
               </div>
             </Paper>
           </Grid>
-          {/* <div> */}
-          {/*  <ColorsAutocomplete */}
-          {/*    colorsSet={colors} */}
-          {/*    selectedColors={filters?.colors} */}
-          {/*    handleChange={(value) => { */}
-          {/*      materialFilters.setColorsFilter(value); */}
-          {/*    }} */}
-          {/*  /> */}
-          {/* </div> */}
-
           <FormControl
             variant='outlined'
             className={`${styles.formControl} ${styles.materialSelect}`}
