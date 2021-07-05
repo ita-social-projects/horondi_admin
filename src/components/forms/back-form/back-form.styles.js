@@ -3,20 +3,27 @@ import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
-    details,
-    inputError,
-    imageName,
-    saveButton,
-    controlsBlock,
     attachFile,
     large,
     returnButton,
     imageUpload,
     textField,
     imageUploadAvatar,
-    itemUpdate
+    itemUpdate,
+    details,
+    inputError,
+    imageName,
+    saveButton,
+    controlsBlock
   } = formStyles(theme);
   return {
+    backItemUpdate: {
+      ...itemUpdate,
+      padding: '10px'
+    },
+    backDetails: {
+      ...details
+    },
     imageUploadBlock: {
       display: 'flex',
       '@media (max-width: 768px)': {
@@ -33,14 +40,6 @@ export const useStyles = makeStyles((theme) => {
         width: 'inherit'
       }
     },
-    backItemUpdate: {
-      ...itemUpdate,
-      padding: '10px'
-    },
-    backDetails: {
-      ...details
-    },
-    imageName,
     inputError,
     textField,
     imageUpload,
@@ -49,6 +48,7 @@ export const useStyles = makeStyles((theme) => {
     attachFile,
     large,
     imageUploadAvatar,
-    controlsBlock
+    controlsBlock,
+    imageName
   };
 });

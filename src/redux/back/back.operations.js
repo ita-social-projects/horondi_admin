@@ -109,13 +109,14 @@ export const getBackById = async (id) => {
 
 export const deleteBack = async (id) => {
   const deleteBackQuery = `
-     mutation($id: ID!) {
+mutation($id: ID!) {
   deleteBack(id: $id) {
     ... on Back {
       _id
-     ... on Error {
-      message
+    }
+    ... on Error {
       statusCode
+      message
     }
   }
 }

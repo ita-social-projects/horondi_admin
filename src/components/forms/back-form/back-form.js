@@ -16,10 +16,8 @@ import { addBack, updateBack } from '../../../redux/back/back.actions';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
-import {
-  materialSelector,
-  materialSelectorWithPagination
-} from '../../../redux/selectors/material.selectors';
+import ColorsAutocomplete from '../../colors-autocomplete';
+import { materialSelectorWithPagination } from '../../../redux/selectors/material.selectors';
 import {
   getMaterials,
   getMaterialsByPurpose
@@ -36,7 +34,7 @@ import { getColors } from '../../../redux/color/color.actions';
 import useMaterialFilters from '../../../hooks/filters/use-material-filters';
 
 const { IMG_URL } = config;
-const { backName, material, backDescription } = config.labels.back;
+const { backName, material } = config.labels.back;
 const map = require('lodash/map');
 
 const {
@@ -61,17 +59,9 @@ const { pathToBacks } = config.routes;
 const BackForm = ({ back, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { materialsByPurpose } = useSelector(materialSelector);
 
-  const {
-    list,
-    loading,
-    itemsCount,
-    currentPage,
-    rowsPerPage,
-    colors,
-    filters
-  } = useSelector(materialSelectorWithPagination);
+  const { list, loading, currentPage, rowsPerPage, colors, filters } =
+    useSelector(materialSelectorWithPagination);
 
   const materialFilters = useMaterialFilters();
 
@@ -243,15 +233,15 @@ const BackForm = ({ back, id, isEdit }) => {
               </div>
             </Paper>
           </Grid>
-          {/* <div> */}
-          {/*  <ColorsAutocomplete */}
-          {/*    colorsSet={colors} */}
-          {/*    selectedColors={filters?.colors} */}
-          {/*    handleChange={(value) => { */}
-          {/*      materialFilters.setColorsFilter(value); */}
-          {/*    }} */}
-          {/*  /> */}
-          {/* </div> */}
+          <div>
+            <ColorsAutocomplete
+              colorsSet={colors}
+              selectedColors={filters?.colors}
+              handleChange={(value) => {
+                materialFilters.setColorsFilter(value);
+              }}
+            />
+          </div>
 
           <FormControl
             variant='outlined'
