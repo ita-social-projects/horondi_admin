@@ -45,14 +45,11 @@ const DialogWindow = ({
             <StandardButton
               data-cy='dialog-cancel'
               variant='outlined'
-              title={NO_BUTTON}
-              onClickHandler={handleClose}
-            />
-            <DeleteButton
-              data-cy='dialog-confirm'
+              title={YES_BUTTON}
               onClickHandler={onClickHandler}
-            >
-              {YES_BUTTON}
+            />
+            <DeleteButton data-cy='dialog-confirm' onClickHandler={handleClose}>
+              {NO_BUTTON}
             </DeleteButton>
           </>
         ) : (

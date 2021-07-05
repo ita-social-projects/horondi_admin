@@ -117,9 +117,13 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>

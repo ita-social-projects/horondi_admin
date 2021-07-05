@@ -10,7 +10,7 @@ import {
 
 export const selectContact = ({ Contact }) => ({
   contacts: Contact.contacts,
-  loading: Contact.ContactLoading,
+  loading: Contact.contactsLoading,
   contact: Contact.contact
 });
 

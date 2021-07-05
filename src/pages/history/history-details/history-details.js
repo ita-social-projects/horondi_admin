@@ -51,7 +51,7 @@ const HistoryDetails = ({ match }) => {
       <h2 className={styles.detailsTitle}>
         {titles.historyTitles.detailsTitleNumber(recordItem?._id)}
       </h2>
-      <Paper>
+      <Paper className={styles.userPaper}>
         <h3 className={styles.userInfoTitle}>
           {titles.historyTitles.userInfo}
         </h3>

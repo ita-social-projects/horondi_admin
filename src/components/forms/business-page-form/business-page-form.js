@@ -167,6 +167,10 @@ const BusinessPageForm = ({ id, editMode }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.buttonContainer}>
@@ -203,7 +207,7 @@ const BusinessPageForm = ({ id, editMode }) => {
         </Typography>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <Grid item xs={12}>
           <Paper className={classes.businessPageForm}>
             <TextField
