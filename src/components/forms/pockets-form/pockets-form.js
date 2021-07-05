@@ -143,9 +143,13 @@ const PocketsForm = ({ pocket, id, edit }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
@@ -159,6 +163,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
                 title={SAVE_TITLE}
                 values={values}
                 errors={errors}
+                onClickHandler={handleSubmit}
               />
             </Grid>
           </Grid>
