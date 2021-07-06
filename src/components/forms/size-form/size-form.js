@@ -87,6 +87,7 @@ function SizeForm({ id, size }) {
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
+                onClickHandler={handleSubmit}
                 data-cy={materialUiConstants.save}
                 type={materialUiConstants.types.submit}
                 title={config.buttonTitles.SAVE_SIZE_TITLE}

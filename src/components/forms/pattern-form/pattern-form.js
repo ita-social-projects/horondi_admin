@@ -229,6 +229,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                 <SaveButton
                   data-cy='save-btn'
                   type='submit'
+                  onClickHandler={handleSubmit}
                   title={SAVE_TITLE}
                   values={values}
                   errors={errors}

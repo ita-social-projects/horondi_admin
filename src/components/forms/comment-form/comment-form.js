@@ -86,6 +86,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
+                onClickHandler={handleSubmit}
                 data-cy='save'
                 type='submit'
                 title={SAVE_TITLE}

@@ -187,6 +187,7 @@ const BusinessPageForm = ({ id, editMode }) => {
               type='submit'
               title='Зберегти'
               data-cy='save-btn'
+              onClickHandler={handleSubmit}
               values={{
                 code: values.code,
                 uaTitle: values.uaTitle,

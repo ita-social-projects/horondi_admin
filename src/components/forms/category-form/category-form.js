@@ -148,6 +148,7 @@ const CategoryForm = ({ category, id, edit }) => {
                 data-cy='save'
                 type={materialUiConstants.types.submit}
                 title={SAVE_TITLE}
+                onClickHandler={handleSubmit}
                 errors={errors}
                 values={{
                   uaName: values.uaName,

@@ -75,6 +75,7 @@ const HeaderForm = ({ header, id }) => {
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
+                onClickHandler={handleSubmit}
                 data-cy='save'
                 type='submit'
                 title={config.buttonTitles.HEADER_SAVE_TITLE}

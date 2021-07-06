@@ -135,6 +135,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             <Grid item className={styles.button}>
               <SaveButton
                 data-cy='save'
+                onClickHandler={handleSubmit}
                 type='submit'
                 title={config.buttonTitles.CREATE_SLIDE_TITLE}
                 values={values}

@@ -151,10 +151,11 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 id='save'
                 type='submit'
                 title='Зберегти'
+                onClickHandler={handleSubmit}
                 data-cy='save'
                 values={values}
                 errors={errors}
-              />
+              />   
             </Grid>
           </Grid>
         </div>
