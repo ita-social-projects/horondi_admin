@@ -8,7 +8,7 @@ import PocketsForm from '../../../components/forms/pockets-form/pockets-form';
 import { getPocket } from '../../../redux/pockets/pockets.actions';
 import { pocketsSelector } from '../../../redux/selectors/pockets.selectors';
 
-const PocketEdit = ({ match }) => {
+const PocketsEdit = ({ match }) => {
   const dispatch = useDispatch();
   const styles = useStyles();
   const { loading, pocket } = useSelector(pocketsSelector);
@@ -30,14 +30,14 @@ const PocketEdit = ({ match }) => {
   );
 };
 
-PocketEdit.propTypes = {
+PocketsEdit.propTypes = {
   id: PropTypes.string,
   match: PropTypes.objectOf(PropTypes.object)
 };
 
-PocketEdit.defaultProps = {
+PocketsEdit.defaultProps = {
   id: '',
   match: {}
 };
 
-export default PocketEdit;
+export default PocketsEdit;

@@ -106,9 +106,9 @@ const PocketsForm = ({ pocket, id, edit }) => {
   const handleImageLoad = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setFieldValue('pocketImage', e.target.result);
-        setPocketsImage(e.target.result);
+      reader.onload = (data) => {
+        setFieldValue('pocketImage', data.target.result);
+        setPocketsImage(data.target.result);
       };
       reader.readAsDataURL(e.target.files[0]);
       setUpload(e.target.files[0]);
@@ -172,10 +172,8 @@ const PocketsForm = ({ pocket, id, edit }) => {
           <CheckboxOptions options={checkboxes} />
         </div>
         <Grid item xs={12}>
-          <Paper className={styles.categoryItemUpdate}>
-            <span className={styles.imageUpload}>
-              {config.labels.avatarText}
-            </span>
+          <Paper>
+            <span className={styles.imageUpload}>{labels.avatarText}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 handler={handleImageLoad}
