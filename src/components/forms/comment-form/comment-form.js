@@ -90,9 +90,13 @@ const CommentForm = ({ comment, id, isEdit }) => {
     dispatch(showErrorSnackbar('Product not exist'));
   }
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <Paper className={styles.paper}>
@@ -119,6 +123,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
           <BackButton pathBack={pathToComments} />
           <SaveButton
             className={styles.saveCommentButton}
+            onClickHandler={handleSubmit}
             data-cy='save'
             type='submit'
             title={SAVE_TITLE}

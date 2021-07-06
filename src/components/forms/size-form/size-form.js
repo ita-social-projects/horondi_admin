@@ -70,6 +70,10 @@ function SizeForm({ id, size }) {
     }
   ];
 
+  const preventEventHandler = (e) => {
+    e.preventDefault();
+  };
+
   if (loading) {
     return <LoadingBar />;
   }
@@ -83,7 +87,10 @@ function SizeForm({ id, size }) {
           ? config.titles.sizesTitles.sizeEdit
           : config.titles.sizesTitles.sizeAdd}
       </Typography>
-      <form className={styles.sizeForm} onSubmit={handleSubmit}>
+      <form
+        className={styles.sizeForm}
+        onSubmit={(e) => preventEventHandler(e)}
+      >
         <Grid item xs={12}>
           <div className={styles.wrapper}>
             <div className={styles.contentWrapper}>
@@ -195,6 +202,7 @@ function SizeForm({ id, size }) {
         <div className={styles.buttonsWrapper}>
           <BackButton initial={!valueEquality} pathBack={pathToSizes} />
           <SaveButton
+            onClickHandler={handleSubmit}
             className={styles.saveButton}
             data-cy={materialUiConstants.save}
             type={materialUiConstants.types.submit}

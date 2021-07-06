@@ -117,9 +117,13 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <CheckboxOptions options={checkboxes} />
 
         <Grid item xs={12}>
@@ -159,6 +163,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         <SaveButton
           className={styles.formButton}
           data-cy='save'
+          onClickHandler={handleSubmit}
           type='submit'
           title={config.buttonTitles.CREATE_SLIDE_TITLE}
           values={values}

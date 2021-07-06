@@ -5,7 +5,6 @@ import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 
-import { createBrowserHistory } from 'history';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import messages from '../../../configs/messages';
@@ -36,15 +35,14 @@ const SaveButton = ({
   }, [disable, values, error]);
 
   const dispatch = useDispatch();
-  const history = createBrowserHistory();
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const { SAVE_MESSAGE, SAVE_CHANGES } = messages;
 
   const saveButtonHandler = () => {
     const backAction = () => {
+      onClickHandler();
       dispatch(closeDialog());
-      history.goBack();
     };
     openSuccessSnackbar(backAction, SAVE_MESSAGE, SAVE_CHANGES);
   };

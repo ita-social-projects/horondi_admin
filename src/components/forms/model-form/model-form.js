@@ -186,9 +186,16 @@ const ModelForm = ({ model, id, isEdit }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit} autoComplete={materialUiConstants.off}>
+      <form
+        onSubmit={(e) => eventPreventHandler(e)}
+        autoComplete={materialUiConstants.off}
+      >
         <CheckboxOptions options={checkboxes(materialUiConstants.show, show)} />
         <CheckboxOptions
           options={checkboxes(
@@ -291,6 +298,7 @@ const ModelForm = ({ model, id, isEdit }) => {
           data-cy={materialUiConstants.save}
           type={materialUiConstants.types.submit}
           title={MODEL_SAVE_TITLE}
+          onClickHandler={handleSubmit}
           values={values}
           errors={errors}
         />
