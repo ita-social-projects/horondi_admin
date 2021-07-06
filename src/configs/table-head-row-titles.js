@@ -44,7 +44,8 @@ const tableHeadRowTitles = {
   orderProductTitles: ['№', 'Назва', 'Кількість', 'Розмір', 'Ціна', 'Деталі'],
   comments: {
     commentPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії'],
-    userPageTitles: ['Дата', 'Текст', 'Дії']
+    userPageTitles: ['Дата', 'Текст', 'Дії'],
+    recentCommentsPageTitle: ['Дата', "Ім'я користувача", 'Текст']
   },
   emailQuestions: [
     '#',

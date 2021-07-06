@@ -5,6 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     width: `100%`,
     marginTop: 65,
     position: 'static',
-    padding: 20
+    padding: 20,
+    overflowX: 'hidden'
   }
 }));
