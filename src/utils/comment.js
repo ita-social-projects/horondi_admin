@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 
 export const showCommentOptions = {
   true: 'Видимі',
@@ -14,3 +15,5 @@ export const showFilterObj = () => {
 
   return arrToFilter;
 };
+export const getTime = (date) =>
+  moment.unix(new Date(date) / 1000).format('DD.MM.YYYY ');

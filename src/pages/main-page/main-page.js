@@ -23,6 +23,7 @@ import routes from '../../configs/routes';
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
 import { getEmailQuestionsPendingCount } from '../../redux/email-questions/email-questions.actions';
+import { getTime } from '../../utils/comment';
 
 const map = require('lodash/map');
 
@@ -80,9 +81,7 @@ const MainPage = () => {
       className={classes.comment}
       data-cy='comment'
     >
-      <TableCell>
-        {moment.unix(new Date(date) / 1000).format('DD.MM.YYYY ')}
-      </TableCell>
+      <TableCell>{getTime(date)}</TableCell>
       <TableCell>{user?.firstName || guestUser}</TableCell>
       <TableCell>{text}</TableCell>
     </TableRow>
