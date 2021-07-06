@@ -15,6 +15,7 @@ export const rowsPerPageOptions = [10, 20, 30];
 export const commentsLoadingStatus = true;
 export const commentsErrorExample = 'COMMENT_LOADING_ERROR';
 export const commentId = '92cb31bf8e5ea5af3914g342';
+export const replyCommentId = '92cb31bf8e5ea5af3914g341';
 export const productId = '601826s62b8fd28f3bc509e7';
 export const userId = '601d7907des7e48816a42a63';
 export const switchId = 'ed17f080d44d7r88740a4ad1';
@@ -106,4 +107,21 @@ export const commentsInitialState = {
 export const commentRes = {
   items: comments.list,
   count: 1
+};
+
+export const addReplyData = {
+  id: '601824cf6ec0f77526a74e38',
+  commentId: '601824cf6ec0f77526a74e30',
+  replyCommentData: {
+    replyText: 'reply text',
+    showReplyComment: false,
+    refToReplyComment: '601824cf6ec0f77526a74e30',
+    answerer: '601824cf6ec0f77526a74e11'
+  }
+};
+export const replyCommentsData = [addReplyData, addReplyData];
+
+export const replyFilter = {
+  filters: true,
+  commentId: '601824cf6ec0f77526a74e11'
 };
