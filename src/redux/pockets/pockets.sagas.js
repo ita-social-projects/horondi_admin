@@ -98,6 +98,7 @@ export function* handlePocketUpdate({ payload }) {
     const { id, pocket, upload } = payload;
     const pocketUpdate = yield call(updatePocket, id, pocket, upload);
     if (pocketUpdate) {
+      yield put(setPocketsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
       yield put(push(config.routes.pathToPockets));
     }
