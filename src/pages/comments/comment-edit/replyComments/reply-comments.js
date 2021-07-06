@@ -50,7 +50,7 @@ const ReplyComments = ({ replyComments, itemsCount }) => {
       showAvatar={false}
       showEdit
       data={ReactHtmlParser(getTime(new Date(reply?.createdAt), true))}
-      userName={reply?.answerer?.email}
+      userName={reply?.answerer?.email || 'Видалений користувач'}
       text={reply.replyText}
       show={reply?.showReplyComment ? yes : no}
       id={reply?._id}

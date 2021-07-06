@@ -15,6 +15,10 @@ import {
 } from '../../../redux/selectors/comments.selectors';
 import ReplyComments from './replyComments';
 import ReplyCommentForm from '../../../components/forms/reply-comment-form/reply-comment-form';
+import {
+  resetPagination,
+  setCurrentPage
+} from '../../../redux/table/table.actions';
 
 const CommentEdit = ({ match }) => {
   const { id } = match.params;
@@ -27,12 +31,13 @@ const CommentEdit = ({ match }) => {
   );
   const { adminId } = useSelector(({ Auth }) => ({ adminId: Auth.adminId }));
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    dispatch(resetPagination());
+    return () => {
       dispatch(clearComment());
-    },
-    []
-  );
+      dispatch(setCurrentPage(currentPage));
+    };
+  }, []);
   useEffect(() => {
     dispatch(getComment(id));
   }, [dispatch, id]);
