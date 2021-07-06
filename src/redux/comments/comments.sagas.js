@@ -9,7 +9,10 @@ import {
   getCommentById,
   getCommentsByType,
   getRecentComments,
-  getAllComments
+  getAllComments,
+  getReplyComments,
+  deleteReplyComment,
+  addReplyForComment
 } from './comments.operations';
 
 import {
@@ -18,7 +21,9 @@ import {
   setCommentError,
   removeCommentFromStore,
   setComment,
-  setRecentComments
+  setRecentComments,
+  setReplyComments,
+  removeReplyCommentFromStore
 } from './comments.actions';
 
 import {
@@ -27,7 +32,10 @@ import {
   GET_COMMENT,
   UPDATE_COMMENT,
   GET_COMMENTS_BY_TYPE,
-  GET_RECENT_COMMENTS
+  GET_RECENT_COMMENTS,
+  GET_REPLY_COMMENTS,
+  DELETE_REPLY_COMMENT,
+  ADD_REPLY_COMMENT
 } from './comments.types';
 
 import {
@@ -39,7 +47,8 @@ import { setItemsCount, updatePagination } from '../table/table.actions';
 import { AUTH_ERRORS } from '../../error-messages/auth';
 import { handleAdminLogout } from '../auth/auth.sagas';
 
-const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
+const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS, SUCCESS_ADD_STATUS } =
+  config.statuses;
 
 export function* handleCommentsLoad({ payload: { filter, pagination } }) {
   try {
@@ -78,6 +87,7 @@ export function* handleCommentLoad({ payload }) {
 
     if (comment) {
       yield put(setComment(comment));
+      yield put(setItemsCount(comment?.replyCommentsCount));
       yield put(setCommentsLoading(false));
     }
   } catch (error) {
@@ -135,6 +145,23 @@ export function* handleCommentsByTypeLoad({ payload }) {
   }
 }
 
+export function* handleGetReplyComments({ payload: { filter, pagination } }) {
+  try {
+    yield put(setCommentsLoading(true));
+    const replyComments = yield call(getReplyComments, { filter, pagination });
+
+    if (replyComments?.items[0]?.replyComments) {
+      // yield put(setItemsCount(replyComments?.count));
+      yield put(setReplyComments(replyComments?.items[0]?.replyComments));
+      yield put(setCommentsLoading(false));
+    }
+    yield put(setCommentsLoading(false));
+  } catch (e) {
+    yield put(setCommentsLoading(false));
+    yield call(handleCommentsError, e);
+  }
+}
+
 export function* handleCommentsError(e) {
   if (
     e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
@@ -148,6 +175,39 @@ export function* handleCommentsError(e) {
   }
 }
 
+export function* handleReplyCommentDelete({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+
+    const comment = yield call(deleteReplyComment, payload);
+
+    if (comment) {
+      yield put(removeReplyCommentFromStore(payload));
+      yield put(updatePagination());
+      yield put(setCommentsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleAddReplyComment({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+
+    const reply = yield call(addReplyForComment, payload);
+
+    if (reply) {
+      yield put(setCommentsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(config.routes.pathToComments));
+    }
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
 export default function* commentsSaga() {
   yield takeEvery(GET_COMMENTS, handleCommentsLoad);
   yield takeEvery(GET_RECENT_COMMENTS, handleRecentCommentsLoad);
@@ -155,4 +215,7 @@ export default function* commentsSaga() {
   yield takeEvery(UPDATE_COMMENT, handleCommentUpdate);
   yield takeEvery(GET_COMMENT, handleCommentLoad);
   yield takeEvery(GET_COMMENTS_BY_TYPE, handleCommentsByTypeLoad);
+  yield takeEvery(GET_REPLY_COMMENTS, handleGetReplyComments);
+  yield takeEvery(DELETE_REPLY_COMMENT, handleReplyCommentDelete);
+  yield takeEvery(ADD_REPLY_COMMENT, handleAddReplyComment);
 }

@@ -46,6 +46,9 @@ const tableHeadRowTitles = {
     commentPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії'],
     userPageTitles: ['Дата', 'Текст', 'Дії']
   },
+  replyComments: {
+    replyCommentsPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії']
+  },
   emailQuestions: [
     '#',
     'Дата',

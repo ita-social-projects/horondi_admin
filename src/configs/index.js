@@ -29,6 +29,7 @@ import {
   statsErrorMessages,
   paginationInputErrorMessages,
   commentErrorMessages,
+  replyCommentErrorMessages,
   sizeErrorMessages,
   businessPageErrorMessages
 } from './error-messages';
@@ -222,6 +223,7 @@ export const config = {
   constructorErrorMessages,
   paginationInputErrorMessages,
   commentErrorMessages,
+  replyCommentErrorMessages,
   filterLabels,
   materialUiConstants,
   sizeErrorMessages,
