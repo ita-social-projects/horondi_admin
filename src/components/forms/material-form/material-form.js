@@ -156,6 +156,7 @@ function MaterialForm({ material, id }) {
               <SaveButton
                 data-cy='save'
                 type='submit'
+                onClickHandler={handleSubmit}
                 title={config.buttonTitles.SAVE_MATERIAL}
                 values={values}
                 errors={errors}
