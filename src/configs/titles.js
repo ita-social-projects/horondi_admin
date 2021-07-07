@@ -112,6 +112,9 @@ const titles = {
     filters: 'Фільтри',
     deleteFilter: 'Очистити фільтр',
     mainPageTitle: 'Інформація про продукти'
+  },
+  pocketsTitles: {
+    mainPageTitle: 'Інформація про кишені'
   }
 };
 

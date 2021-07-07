@@ -1,0 +1,7 @@
+export const getPocketsInitialValues = (edit, IMG_URL, pocket) => ({
+  pocketImage: edit ? IMG_URL + pocket.images.thumbnail : '',
+  uaName: pocket.name[0].value || '',
+  enName: pocket.name[1].value || '',
+  additionalPrice: pocket.additionalPrice[1].value / 100 || null,
+  restriction: pocket.restriction || false
+});
