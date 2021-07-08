@@ -6,7 +6,10 @@ import {
   SET_COMMENT,
   SET_FILTER,
   CLEAR_FILTERS,
-  SET_RECENT_COMMENTS
+  SET_RECENT_COMMENTS,
+  SET_REPLY_COMMENT,
+  REMOVE_REPLY_COMMENT_FROM_STORE,
+  CLEAR_COMMENT
 } from './comments.types';
 
 const initialFilters = {
@@ -22,7 +25,8 @@ export const initialState = {
   filters: initialFilters,
   comments: null,
   commentsLoading: false,
-  commentsError: null
+  commentsError: null,
+  replyComments: []
 };
 
 export const selectComment = ({ Comments }) => ({
@@ -30,7 +34,8 @@ export const selectComment = ({ Comments }) => ({
   recentComments: Comments.recentComments,
   filter: Comments.filters,
   loading: Comments.commentsLoading,
-  comment: Comments.comment
+  comment: Comments.comment,
+  replyComments: Comments.replyComments
 });
 
 const commentsReducer = (state = initialState, action = {}) => {
@@ -62,11 +67,27 @@ const commentsReducer = (state = initialState, action = {}) => {
         ...state,
         list: state.list.filter((item) => item._id !== action.payload)
       };
-
+    case SET_REPLY_COMMENT:
+      return {
+        ...state,
+        replyComments: action.payload
+      };
+    case REMOVE_REPLY_COMMENT_FROM_STORE:
+      return {
+        ...state,
+        replyComments: state.replyComments.filter(
+          (item) => item._id !== action.payload
+        )
+      };
     case SET_COMMENTS_ERROR:
       return {
         ...state,
         commentsError: action.payload
+      };
+    case CLEAR_COMMENT:
+      return {
+        ...state,
+        comment: null
       };
 
     case SET_FILTER:

@@ -73,7 +73,7 @@ const Comments = () => {
       showAvatar={false}
       showEdit
       data={ReactHtmlParser(getTime(new Date(comment?.date), true))}
-      userName={comment?.user?.email}
+      userName={comment?.user?.email || 'Видалений користувач'}
       text={comment.text}
       show={comment?.show ? yes : no}
       id={comment?._id}

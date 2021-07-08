@@ -16,7 +16,13 @@ import {
   SET_FILTER,
   CLEAR_FILTERS,
   GET_RECENT_COMMENTS,
-  SET_RECENT_COMMENTS
+  SET_RECENT_COMMENTS,
+  SET_REPLY_COMMENT,
+  GET_REPLY_COMMENTS,
+  DELETE_REPLY_COMMENT,
+  REMOVE_REPLY_COMMENT_FROM_STORE,
+  CLEAR_COMMENT,
+  ADD_REPLY_COMMENT
 } from './comments.types';
 
 const setComments = (comments) => ({
@@ -108,6 +114,35 @@ const clearFilters = () => ({
   type: CLEAR_FILTERS
 });
 
+const setReplyComments = (replyComments) => ({
+  type: SET_REPLY_COMMENT,
+  payload: replyComments
+});
+
+const getReplyComments = (payload) => ({
+  type: GET_REPLY_COMMENTS,
+  payload
+});
+
+const deleteReplyComment = (payload) => ({
+  type: DELETE_REPLY_COMMENT,
+  payload
+});
+
+const removeReplyCommentFromStore = (payload) => ({
+  type: REMOVE_REPLY_COMMENT_FROM_STORE,
+  payload
+});
+
+const clearComment = () => ({
+  type: CLEAR_COMMENT
+});
+
+const addReplyComment = (payload) => ({
+  type: ADD_REPLY_COMMENT,
+  payload
+});
+
 export {
   setComments,
   getComments,
@@ -126,5 +161,11 @@ export {
   setFilter,
   clearFilters,
   setRecentComments,
-  getRecentComments
+  getRecentComments,
+  setReplyComments,
+  getReplyComments,
+  deleteReplyComment,
+  removeReplyCommentFromStore,
+  clearComment,
+  addReplyComment
 };

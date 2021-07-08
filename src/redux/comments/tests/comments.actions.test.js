@@ -14,7 +14,15 @@ import {
   SET_COMMENTS_CURRENT_PAGE,
   UPDATE_COMMENT,
   SET_FILTER,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  GET_RECENT_COMMENTS,
+  SET_RECENT_COMMENTS,
+  SET_REPLY_COMMENT,
+  GET_REPLY_COMMENTS,
+  DELETE_REPLY_COMMENT,
+  REMOVE_REPLY_COMMENT_FROM_STORE,
+  CLEAR_COMMENT,
+  ADD_REPLY_COMMENT
 } from '../comments.types';
 
 import {
@@ -33,7 +41,15 @@ import {
   removeCommentFromStore,
   updateComment,
   setFilter,
-  clearFilters
+  clearFilters,
+  setRecentComments,
+  getRecentComments,
+  setReplyComments,
+  getReplyComments,
+  deleteReplyComment,
+  removeReplyCommentFromStore,
+  clearComment,
+  addReplyComment
 } from '../comments.actions';
 
 import {
@@ -46,7 +62,11 @@ import {
   userId,
   currentPage,
   commentsLoadingStatus,
-  commentsErrorExample
+  commentsErrorExample,
+  addReplyData,
+  replyCommentsData,
+  replyFilter,
+  replyCommentId
 } from './comments.variables';
 
 describe('comments action tests', () => {
@@ -149,6 +169,61 @@ describe('comments action tests', () => {
   it('should clear all comments filters', () => {
     expect(clearFilters()).toEqual({
       type: CLEAR_FILTERS
+    });
+  });
+
+  it('should get recent comments', () => {
+    expect(getRecentComments(pagination)).toEqual({
+      type: GET_RECENT_COMMENTS,
+      payload: pagination
+    });
+  });
+
+  it('should set recent comments', () => {
+    expect(setRecentComments(comments.list)).toEqual({
+      type: SET_RECENT_COMMENTS,
+      payload: comments.list
+    });
+  });
+
+  it('should set reply comments', () => {
+    expect(setReplyComments(replyCommentsData)).toEqual({
+      type: SET_REPLY_COMMENT,
+      payload: replyCommentsData
+    });
+  });
+
+  it('should get reply comments', () => {
+    expect(getReplyComments({ replyFilter, pagination })).toEqual({
+      type: GET_REPLY_COMMENTS,
+      payload: { replyFilter, pagination }
+    });
+  });
+
+  it('should delete reply comment', () => {
+    expect(deleteReplyComment(replyCommentId)).toEqual({
+      type: DELETE_REPLY_COMMENT,
+      payload: replyCommentId
+    });
+  });
+
+  it('should delete reply comment from list', () => {
+    expect(removeReplyCommentFromStore(replyCommentId)).toEqual({
+      type: REMOVE_REPLY_COMMENT_FROM_STORE,
+      payload: replyCommentId
+    });
+  });
+
+  it('should clear comment', () => {
+    expect(clearComment()).toEqual({
+      type: CLEAR_COMMENT
+    });
+  });
+
+  it('should add reply comment data', () => {
+    expect(addReplyComment(addReplyData)).toEqual({
+      type: ADD_REPLY_COMMENT,
+      payload: addReplyData
     });
   });
 });

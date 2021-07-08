@@ -36,6 +36,9 @@ const titles = {
   commentTitles: {
     mainPageTitle: 'Інформація про коментарі'
   },
+  replyCommentTitles: {
+    mainPageTitle: 'Інформація про відповіді'
+  },
   productPageTitles: {
     mainPageTitle: 'Інформація про продукти'
   },

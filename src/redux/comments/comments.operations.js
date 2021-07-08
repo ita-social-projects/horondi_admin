@@ -113,6 +113,7 @@ const getCommentById = async (id) => {
             _id
             text
             date
+            replyCommentsCount
             user {
               _id
               firstName
@@ -249,6 +250,89 @@ const getCommentsByUser = async (userId) => {
   return result?.data?.getAllCommentsByUser;
 };
 
+const getReplyComments = async ({ filter, pagination }) => {
+  const getReplyCommentsQuery = `
+    query($filter: ReplyCommentFilterInput, $pagination: Pagination) {
+      getReplyCommentsByComment(filter: $filter, pagination: $pagination) {
+        ... on PaginatedComments {
+          items{
+            _id
+            replyComments{
+              _id
+              replyText
+              showReplyComment
+              createdAt
+              verifiedPurchase
+              refToReplyComment
+              answerer{
+                _id
+                firstName
+                email
+                role
+              }
+            }
+          }
+          count
+        }
+        ... on Error {
+          statusCode
+          message
+        }
+      }
+    }
+  `;
+  const result = await getItems(getReplyCommentsQuery, { filter, pagination });
+  return result?.data?.getReplyCommentsByComment;
+};
+const deleteReplyComment = async (payload) => {
+  const deleteReplyForCommentMutation = `
+    mutation($replyCommentId: ID!,$id:ID) {
+      deleteReplyForComment(id:$id,replyCommentId: $replyCommentId) {
+        ... on Comment {
+          _id
+        }
+      }
+    }
+  `;
+  const result = await setItems(deleteReplyForCommentMutation, {
+    replyCommentId: payload
+  });
+
+  return result?.data?.deleteReplyForComment;
+};
+
+const addReplyForComment = async ({ id, commentId, replyCommentData }) => {
+  const query = `
+      mutation($id: ID!,$commentId: ID!, $replyCommentData: ReplyCommentInput!) {
+        replyForComment(id:$id,commentId:$commentId , replyCommentData:$replyCommentData) {
+          ... on Comment {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await setItems(query, { id, commentId, replyCommentData });
+
+  if (
+    Object.keys(commentsTranslations).includes(
+      result?.data?.replyForComment?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.replyForComment.statusCode} ${
+        commentsTranslations[result.data.replyForComment.message]
+      }`
+    );
+  }
+
+  return result?.data?.replyForComment;
+};
+
 export {
   getAllComments,
   deleteComment,
@@ -257,5 +341,8 @@ export {
   getCommentsByUser,
   getCommentsByProduct,
   getCommentsByType,
-  getRecentComments
+  getRecentComments,
+  getReplyComments,
+  deleteReplyComment,
+  addReplyForComment
 };
