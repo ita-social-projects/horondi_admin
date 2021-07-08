@@ -6,6 +6,8 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 65,
     position: 'static',
     padding: 20,
-    overflowX: 'hidden'
+    '@media (max-width: 450px)': {
+      padding: '0px'
+    }
   }
 }));

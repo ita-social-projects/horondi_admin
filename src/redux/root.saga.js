@@ -22,6 +22,7 @@ import colorsSaga from './color/color.sagas';
 import constructorSaga from './constructor/constructor.sagas';
 import snackbarSaga from './snackbar/snackbar.sagas';
 import historySaga from './history/history.sagas';
+import pocketsSaga from './pockets/pockets.sagas';
 import backSaga from './back/back.sagas';
 
 export function* rootSaga() {
@@ -49,6 +50,8 @@ export function* rootSaga() {
     colorsSaga(),
     constructorSaga(),
     snackbarSaga(),
-    backSaga()
+    backSaga(),
+    snackbarSaga(),
+    pocketsSaga()
   ]);
 }

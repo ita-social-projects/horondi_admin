@@ -71,8 +71,15 @@ export const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box'
   },
   comment: {
-    borderBottom: '1px solid lightgrey',
-    marginBottom: 10
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+      fontWeight: 'bold'
+    },
+    '& td': {
+      paddingBottom: 15,
+      paddingTop: 15
+    }
   },
   commentInfo: {
     display: 'flex',

@@ -53,6 +53,9 @@ const routes = {
   pathToConstructor: '/constructor/:id',
   pathToAddConstructor: '/constructor/:id/add',
   pathToConstructorDetails: '/constructor/:id/:elementId',
+  pathToPockets: '/pockets',
+  pathToPocketsAdd: '/pockets/add',
+  pathToPocketsEdit: '/pockets/:id',
   pathToBacks: '/backs',
   pathToAddBacks: '/backs/add',
   pathToBackDetails: '/backs/:id'
