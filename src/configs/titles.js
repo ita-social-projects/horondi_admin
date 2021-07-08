@@ -29,6 +29,10 @@ const titles = {
     mainPageTitle: 'Інформація про гобелени',
     createPageTitle: 'Створити гобелен'
   },
+  backTitles: {
+    mainPageTitle: 'Інформація про спинки',
+    createPageTitle: 'Створити спинку'
+  },
   commentTitles: {
     mainPageTitle: 'Інформація про коментарі'
   },

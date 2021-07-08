@@ -43,6 +43,14 @@ export const patternErrorMessages = {
     'Поле може містити тільки українські літери та цифри',
   PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
+export const backErrorMessages = {
+  BACK_VALIDATION_ERROR: 'Мінімум 2 символи',
+  BACK_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  BACK_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
+  BACK_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
+  BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
+};
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
   CATEGORY_VALIDATION_ERROR_CATEGORY_NAME:

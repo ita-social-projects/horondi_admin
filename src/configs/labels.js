@@ -116,6 +116,20 @@ const labels = {
       en: 'Pattern description'
     }
   },
+  back: {
+    image: 'Фото спинки',
+    material: 'Матеріал',
+    available: 'Доступний',
+    customizable: 'для конструктора',
+    avatarText: 'Фото',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    backName: {
+      ua: 'Назва спинки',
+      en: 'Back name'
+    }
+  },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),
