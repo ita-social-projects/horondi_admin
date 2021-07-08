@@ -53,14 +53,14 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: 51,
     '@media (max-width: 600px)': {
-      'padding': '5px 20px'
+      padding: '5px 20px'
     },
     '@media (max-width: 534px)': {
-      'paddingTop': '5px'
+      paddingTop: '5px'
     },
-    
+
     '@media (max-width: 481px)': {
-      'paddingTop': '12px'
+      paddingTop: '12px'
     }
   },
   table: {

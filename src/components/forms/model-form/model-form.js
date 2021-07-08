@@ -80,7 +80,6 @@ const ModelForm = ({ model, id, isEdit }) => {
   }, [dispatch]);
 
   const { sizesList } = useSelector(sizesSelectorWithPagination);
-
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.categories
   }));
@@ -192,7 +191,10 @@ const ModelForm = ({ model, id, isEdit }) => {
 
   return (
     <div>
-      <form onSubmit={eventPreventHandler} autoComplete={materialUiConstants.off}>
+      <form
+        onSubmit={eventPreventHandler}
+        autoComplete={materialUiConstants.off}
+      >
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
@@ -294,7 +296,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             freeSolo
             options={sizesList}
             getOptionLabel={(option) =>
-              `${option.simpleName[0].value} | ${option.name}`
+              `${option.modelId.name[0].value} | ${option.name}`
             }
             defaultValue={sizes}
             onChange={onTagsChange}

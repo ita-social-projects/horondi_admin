@@ -39,7 +39,7 @@ export const useStyles = makeStyles((theme) => {
       zIndex: 1001,
       backgroundColor: theme.palette.bodyColor,
       '@media (max-width: 310px)': {
-        'height': '112px'
+        height: '112px'
       }
     },
     button: {

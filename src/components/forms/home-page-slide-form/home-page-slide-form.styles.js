@@ -9,10 +9,10 @@ export const useStyles = makeStyles((theme) => {
       width: '100%',
       padding: '20px',
       '@media (max-width: 600px)': {
-        'padding': '10px 20px'
+        padding: '10px 20px'
       },
       '@media (max-width: 481px)': {
-        'marginTop': '10px'
+        marginTop: '10px'
       }
     },
     slideItemUpdate: {

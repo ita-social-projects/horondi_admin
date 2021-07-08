@@ -4,9 +4,9 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     width: `100%`,
     position: 'static',
-    padding: '0 20px',  
+    padding: '0 20px',
     '@media (max-width: 358px)': {
-      'padding': '0'
+      padding: '0'
     }
   }
 }));

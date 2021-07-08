@@ -66,6 +66,7 @@ const titles = {
   sizesTitles: {
     mainPageTitle: 'Iнформація про розміри',
     selectTitle: 'Розмір',
+    modelTitle: 'Модель',
     sizeEdit: 'Редагування розміру',
     sizeAdd: 'Додавання розміру'
   },

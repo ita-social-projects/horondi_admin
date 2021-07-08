@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     position: 'relative',
     '@media (max-width: 481px)': {
-      'marginTop': '6px'
+      marginTop: '6px'
     }
   },
   buttonContainer: {
@@ -31,7 +31,7 @@ export const useStyles = makeStyles((theme) => ({
     height: 60,
     marginTop: 51,
     '@media (max-width: 600px)': {
-      'marginTop': '36px'
+      marginTop: '36px'
     }
   },
   fixedButtons: {

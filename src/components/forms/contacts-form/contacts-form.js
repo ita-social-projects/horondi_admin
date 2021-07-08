@@ -155,7 +155,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 data-cy='save'
                 values={values}
                 errors={errors}
-              />   
+              />
             </Grid>
           </Grid>
         </div>
