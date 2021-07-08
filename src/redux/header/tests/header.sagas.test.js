@@ -134,7 +134,7 @@ describe('header sagas tests', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(2);
+        expect(analysisPut).toHaveLength(3);
       });
   });
 });
