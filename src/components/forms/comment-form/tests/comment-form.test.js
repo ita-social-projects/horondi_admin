@@ -89,17 +89,7 @@ describe('Comment form tests', () => {
       `/products/${mockComment.product._id}`
     );
   });
-  it(`Should call handleClick Product Info button click`, () => {
-    const { getAllByRole } = render(
-      <CommentForm
-        comment={mockCommentWithoutProduct}
-        id={mockId}
-        isEdit={mockIsEdit}
-      />
-    );
-    fireEvent.click(getAllByRole('button')[0]);
-    expect(mockUseDispatchFn).toHaveBeenCalled();
-  });
+
   it(`Should render Go back button with '${GO_BACK_TITLE}' label`, () => {
     expect(wrapper.find('button').at(1).text()).toBe(GO_BACK_TITLE);
   });
@@ -112,7 +102,17 @@ describe('Comment form tests', () => {
     expect(CommentForm.propTypes.id).toBe(PropTypes.string);
     expect(CommentForm.propTypes.isEdit).toBe(PropTypes.bool);
   });
-
+  it(`Should call handleClick Product Info button click`, () => {
+    const { getAllByRole } = render(
+      <CommentForm
+        comment={mockCommentWithoutProduct}
+        id={mockId}
+        isEdit={mockIsEdit}
+      />
+    );
+    fireEvent.click(getAllByRole('button')[0]);
+    expect(mockUseDispatchFn).toHaveBeenCalled();
+  });
   it('Should have default props', () => {
     expect(CommentForm.defaultProps).toBeDefined();
     expect(CommentForm.defaultProps.id).toBe('');
