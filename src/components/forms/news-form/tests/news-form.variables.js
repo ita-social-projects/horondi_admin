@@ -34,10 +34,9 @@ const mockNewsArticle = {
     }
   ],
   languages: ['Ukrainian', 'English'],
-  date: '22/06/21',
+  date: '27/06/21',
   image: 'image.jpg'
 };
-
 const mockEditMode = true;
 
 module.exports = {
