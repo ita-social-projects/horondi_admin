@@ -88,10 +88,10 @@ export const useStyles = makeStyles((theme) => ({
     height: 60,
     marginTop: 51,
     '@media (max-width: 600px)': {
-      'marginTop': '36px'
+      marginTop: '36px'
     },
     '@media (max-width: 333px)': {
-      'marginTop': '43px'
+      marginTop: '43px'
     }
   },
   fixedButtons: {

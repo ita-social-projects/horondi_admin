@@ -1,29 +1,23 @@
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { config } from '../configs';
 import sizesEnum, { availableEnum } from '../configs/sizes-enum';
-
-const { languages } = config;
 
 export const createSize = (data) => ({
   name: data.name,
-  simpleName: [
-    { lang: languages[0], value: data.simpleNameUa },
-    { lang: languages[1], value: data.simpleNameEn }
-  ],
   heightInCm: data.heightInCm,
   widthInCm: data.widthInCm,
   depthInCm: data.depthInCm,
   volumeInLiters: data.volumeInLiters,
   weightInKg: data.weightInKg,
   available: data.available,
-  additionalPrice: data.additionalPrice
+  additionalPrice: data.additionalPrice,
+  modelId: data.modelId
 });
 
 export const getSizeInitialValues = (size) => ({
   name: size.name || 'M',
-  simpleNameUa: size.simpleName[0].value || '',
-  simpleNameEn: size.simpleName[1].value || '',
+  modelId: size.modelId._id || '',
+  model: size.modelId || {},
   heightInCm: size.heightInCm || '',
   widthInCm: size.widthInCm || '',
   depthInCm: size.depthInCm || '',
@@ -49,12 +43,7 @@ export const sizePropTypes = {
         value: PropTypes.number
       })
     ),
-    simpleName: PropTypes.arrayOf(
-      PropTypes.shape({
-        lang: PropTypes.string,
-        value: PropTypes.string
-      })
-    )
+    modelId: PropTypes.string
   })
 };
 export const sizeDefaultProps = {
@@ -62,10 +51,7 @@ export const sizeDefaultProps = {
   size: {
     _id: '',
     name: '',
-    simpleName: [
-      { lang: '', value: '' },
-      { lang: '', value: '' }
-    ],
+    modelId: '',
     heightInCm: '',
     widthInCm: '',
     depthInCm: '',

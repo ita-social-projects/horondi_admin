@@ -95,9 +95,11 @@ export const getModelById = async (id) => {
           sizes {
             _id
             name
-            simpleName {
-              lang
-              value
+            modelId { 
+              name { 
+                value
+                lang
+              }
             }
             available
           }

@@ -1,5 +1,11 @@
 import React from 'react';
-import { TextField, Grid, Paper, Typography } from '@material-ui/core';
+import {
+  TextField,
+  Grid,
+  Paper,
+  Typography,
+  MenuItem
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -24,7 +30,7 @@ import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
-const { selectTitle } = config.titles.sizesTitles;
+const { selectTitle, modelTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
@@ -34,7 +40,14 @@ function SizeForm({ id, size }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
-  const { loading } = useSelector(sizesSelectorWithPagination);
+
+  const { sizesList, loading } = useSelector(sizesSelectorWithPagination);
+
+  const uniqueModelMap = [
+    ...new Map(
+      sizesList?.map((item) => [item.modelId?.name[0].value, item])
+    ).values()
+  ];
 
   const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
     useFormik({
@@ -44,10 +57,11 @@ function SizeForm({ id, size }) {
       onSubmit: (data) => {
         const newSize = createSize(data);
         if (id) {
+          const updatedSize = createSize(data);
           dispatch(
             updateSize({
               id,
-              newSize
+              updatedSize
             })
           );
           return;
@@ -140,58 +154,65 @@ function SizeForm({ id, size }) {
               </Paper>
             </div>
             <div className={styles.contentWrapper}>
-              <FormControl
-                variant={materialUiConstants.outlined}
-                className={`${styles.formControl} 
-                ${styles.purposeSelect}`}
-              >
-                <InputLabel
-                  htmlFor={materialUiConstants.outlinedAgeNativeSimple}
-                >
-                  {selectTitle}
-                </InputLabel>
-                <Select
-                  className={styles.select}
-                  data-cy={labels.en.name}
-                  id='name'
-                  native
-                  value={values.name}
-                  onChange={(e) =>
-                    setFieldValue(labels.en.name, e.target.value)
-                  }
-                  label={selectTitle}
-                >
-                  {Object.values(purposeEnum).map((value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
               <Paper className={styles.sizeItemAdd}>
-                {sizeInputs.sizePricesData.map((item) => (
-                  <>
-                    <TextField
-                      data-cy={item}
-                      id={item}
-                      className={styles.textField}
-                      variant={materialUiConstants.outlined}
-                      type={materialUiConstants.types.string}
-                      label={labels.ua[item]}
-                      value={values[item]}
-                      onChange={handleChange}
-                      error={touched[item] && !!errors[item]}
-                    />
-                    {touched[item] && errors[item] && (
-                      <div
-                        data-cy={materialUiConstants.codeError}
-                        className={styles.error}
+                <FormControl
+                  variant={materialUiConstants.outlined}
+                  className={`${styles.formControl} 
+                ${styles.purposeSelect}`}
+                >
+                  <InputLabel
+                    htmlFor={materialUiConstants.outlinedAgeNativeSimple}
+                  >
+                    {selectTitle}
+                  </InputLabel>
+                  <Select
+                    className={styles.select}
+                    data-cy={labels.en.name}
+                    id='name'
+                    value={values.name}
+                    onChange={(e) =>
+                      setFieldValue(labels.en.name, e.target.value)
+                    }
+                    label={selectTitle}
+                  >
+                    {Object.values(purposeEnum).map((value) => (
+                      <MenuItem key={value} value={value}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Paper>
+              <Paper className={styles.sizeItemAdd}>
+                <FormControl
+                  variant={materialUiConstants.outlined}
+                  className={`${styles.formControl} 
+                ${styles.purposeSelect}`}
+                >
+                  <InputLabel
+                    htmlFor={materialUiConstants.outlinedAgeNativeSimple}
+                  >
+                    {modelTitle}
+                  </InputLabel>
+                  <Select
+                    data-cy={labels.en.modelId}
+                    id='modelId'
+                    value={values.modelId}
+                    onChange={(e) =>
+                      setFieldValue(labels.en.modelName, e.target.value)
+                    }
+                    label={selectTitle}
+                  >
+                    {uniqueModelMap.map((value) => (
+                      <MenuItem
+                        key={value.modelId._id}
+                        value={value.modelId._id}
                       >
-                        {errors[item]}
-                      </div>
-                    )}
-                  </>
-                ))}
+                        {value.modelId?.name[0]?.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Paper>
               <Paper className={styles.sizeItemAdd}>
                 <TextField

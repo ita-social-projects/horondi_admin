@@ -10,7 +10,6 @@ export const useStyles = makeStyles((theme) => ({
     '& div': {
       '& div': {
         '& div': {
-          paddingLeft: '0px',
           paddingRight: '0px'
         }
       }
@@ -55,11 +54,11 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 0,
     marginLeft: '20px',
     '@media (max-width: 600px)': {
-      'paddingTop': '13px'
+      paddingTop: '13px'
     },
     '@media (max-width: 481px)': {
-      'padding': '20px 0',
-      'width': '100%'
+      padding: '20px 0',
+      width: '100%'
     }
   },
   buttonContainer: {
@@ -99,6 +98,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   purposeSelect: {
     width: '390px',
+    margin: '10px',
     '@media (max-width: 900px)': {
       width: '300px',
       display: 'block',
@@ -134,7 +134,7 @@ export const useStyles = makeStyles((theme) => ({
   buttonsWrapper: {
     marginLeft: '25px',
     '@media (max-width: 600px)': {
-      'marginLeft': '9px',
-      }
+      marginLeft: '9px'
     }
+  }
 }));

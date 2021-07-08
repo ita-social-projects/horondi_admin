@@ -11,10 +11,10 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     position: 'relative',
     '@media (max-width: 600px)': {
-      'paddingTop': '13px'
+      paddingTop: '13px'
     },
     '@media (max-width: 481px)': {
-      'paddingTop': '20px'
+      paddingTop: '20px'
     }
   },
   title: {
@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
     height: 60,
     marginTop: 51,
     '@media (max-width: 600px)': {
-      'marginTop': '43px'
+      marginTop: '43px'
     }
   },
   fixedButtons: {
@@ -44,8 +44,8 @@ export const useStyles = makeStyles((theme) => ({
     zIndex: 1001,
     backgroundColor: theme.palette.bodyColor,
     '@media (max-width: 416px)': {
-      'height': '112px'
-    },
+      height: '112px'
+    }
   },
   button: {
     marginTop: theme.spacing(0.5)

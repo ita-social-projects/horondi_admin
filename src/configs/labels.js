@@ -487,8 +487,7 @@ const labels = {
       volumeInLiters: "Об'єм (літри)",
       weightInKg: 'Вага',
       additionalPrice: 'Додаткова ціна',
-      simpleNameUa: 'Назва(Укр)',
-      simpleNameEn: 'Назва(Eng)',
+      modelName: 'Назва моделі',
       name: "Ім'я",
       available: 'Доступний'
     },
@@ -499,8 +498,7 @@ const labels = {
       volumeInLiters: 'volumeInLiters',
       weightInKg: 'weightInKg',
       additionalPrice: 'additionalPrice',
-      simpleNameUa: 'simpleNameUa',
-      simpleNameEn: 'simpleNameUa',
+      modelName: 'modelId',
       name: 'name',
       available: 'available'
     }

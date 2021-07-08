@@ -15,11 +15,11 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     padding: 20,
     '@media (max-width: 600px)': {
-      'paddingTop': '5px'
+      paddingTop: '5px'
     },
     '@media (max-width: 392px)': {
-      'paddingTop': '13px'
-    },
+      paddingTop: '13px'
+    }
   },
   saveButton: {
     margin: theme.spacing(2)

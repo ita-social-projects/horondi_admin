@@ -50,9 +50,9 @@ export const useStyles = makeStyles((theme) => {
       height: 60,
       zIndex: 1001,
       backgroundColor: theme.palette.bodyColor,
-    '@media (max-width: 365px)': {
-      'height': '60px'
-    }
+      '@media (max-width: 365px)': {
+        height: '60px'
+      }
     },
     button: {
       marginTop: theme.spacing(0.5)

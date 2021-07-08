@@ -83,6 +83,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   }, [dispatch, pattern]);
 
   const patternValidationSchema = Yup.object().shape({
+    sizes: Yup.array().notRequired(),
     enDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE)

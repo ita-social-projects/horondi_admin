@@ -26,7 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     '@media (max-width: 481px)': {
       marginTop: '10px'
-    },
+    }
   },
   tabs: {
     backgroundColor: 'white',
