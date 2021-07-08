@@ -116,6 +116,20 @@ const labels = {
       en: 'Pattern description'
     }
   },
+  back: {
+    image: 'Фото спинки',
+    material: 'Матеріал',
+    available: 'Доступний',
+    customizable: 'для конструктора',
+    avatarText: 'Фото',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    backName: {
+      ua: 'Назва спинки',
+      en: 'Back name'
+    }
+  },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),
@@ -481,8 +495,7 @@ const labels = {
       volumeInLiters: "Об'єм (літри)",
       weightInKg: 'Вага',
       additionalPrice: 'Додаткова ціна',
-      simpleNameUa: 'Назва(Укр)',
-      simpleNameEn: 'Назва(Eng)',
+      modelName: 'Назва моделі',
       name: "Ім'я",
       available: 'Доступний'
     },
@@ -493,8 +506,7 @@ const labels = {
       volumeInLiters: 'volumeInLiters',
       weightInKg: 'weightInKg',
       additionalPrice: 'additionalPrice',
-      simpleNameUa: 'simpleNameUa',
-      simpleNameEn: 'simpleNameUa',
+      modelName: 'modelId',
       name: 'name',
       available: 'available'
     }

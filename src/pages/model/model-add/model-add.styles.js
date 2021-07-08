@@ -20,7 +20,15 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
     padding: 20,
-    marginTop: 70
+    '@media (max-width: 600px)': {
+      padding: '10px 20px'
+    },
+    '@media (max-width: 481px)': {
+      marginTop: '0'
+    },
+    '@media (max-width: 405px)': {
+      paddingTop: '20px'
+    }
   },
   tabs: {
     backgroundColor: 'white',

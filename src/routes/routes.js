@@ -61,6 +61,9 @@ import HistoryDetails from '../pages/history/history-details';
 import PocketsPage from '../pages/pockets/pockets-page';
 import PocketsAdd from '../pages/pockets/pockets-add/pockets-add';
 import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
+import BackPage from '../pages/back';
+import BackAdd from '../pages/back/back-add';
+import BackDetails from '../pages/back/back-details';
 
 const { routes } = config;
 
@@ -270,6 +273,13 @@ const Routes = () => {
             path={routes.pathToPocketsEdit}
             exact
             component={PocketsEdit}
+          />
+          <Route path={routes.pathToBacks} exact component={BackPage} />
+          <Route path={routes.pathToAddBacks} exact component={BackAdd} />
+          <Route
+            path={routes.pathToBackDetails}
+            exact
+            component={BackDetails}
           />
           <Route component={ErrorPage} />
         </Switch>

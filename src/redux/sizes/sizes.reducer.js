@@ -11,7 +11,7 @@ import {
 } from './sizes.types';
 
 export const selectSizes = ({ Sizes }) => ({
-  sizesList: Sizes.list?.items,
+  sizesList: Sizes.list,
   loading: Sizes.sizesLoading,
   size: Sizes.size,
   filters: Sizes.filters

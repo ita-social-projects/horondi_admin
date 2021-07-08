@@ -46,7 +46,7 @@ export function* handleSizesLoad({ payload }) {
     );
 
     if (sizes) {
-      yield put(setSizes(sizes));
+      yield put(setSizes(sizes.items));
       yield put(setItemsCount(sizes?.count));
       yield put(setSizesLoading(false));
     }
@@ -85,10 +85,10 @@ export function* handleAddSize({ payload }) {
 }
 
 export function* handleSizeUpdate({ payload }) {
-  const { id, newSize } = payload;
+  const { id, updatedSize } = payload;
   try {
     yield put(setSizesLoading(true));
-    const size = yield call(updateSize, id, newSize);
+    const size = yield call(updateSize, id, updatedSize);
 
     if (size) {
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);

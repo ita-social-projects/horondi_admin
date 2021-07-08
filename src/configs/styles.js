@@ -1,6 +1,6 @@
 const formStyles = (theme) => ({
   saveButton: {
-    marginLeft: theme.spacing(2)
+    margin: theme.spacing(2)
   },
 
   inputError: {
