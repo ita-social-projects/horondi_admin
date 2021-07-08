@@ -27,6 +27,24 @@ export const useStyles = makeStyles((theme) => {
         margin: '10px 10px 10px'
       }
     },
+    buttonContainer: {
+      position: 'relative',
+      width: '100%',
+      height: 60,
+      marginTop: 51
+    },
+    fixedButtons: {
+      position: 'fixed',
+      height: 60,
+      zIndex: 1001,
+      backgroundColor: theme.palette.bodyColor,
+      '@media (max-width: 310px)': {
+        'height': '112px'
+      }
+    },
+    button: {
+      marginTop: theme.spacing(0.5)
+    },
     returnButton,
     large,
     controlsBlock,

@@ -147,6 +147,23 @@ function MaterialForm({ material, id }) {
         className={styles.materialForm}
         onSubmit={(e) => eventPreventHandler(e)}
       >
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton initial={!valueEquality} pathBack={pathToMaterials} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                type='submit'
+                onClickHandler={handleSubmit}
+                title={config.buttonTitles.SAVE_MATERIAL}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <ColorsBar
@@ -205,20 +222,6 @@ function MaterialForm({ material, id }) {
           </Paper>
         </Grid>
         {languages.length > 0 ? <div>{languageTabs}</div> : null}
-        <div className={styles.controlsBlock}>
-          <div>
-            <BackButton initial={!valueEquality} pathBack={pathToMaterials} />
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='save'
-              type='submit'
-              onClickHandler={handleSubmit}
-              title={config.buttonTitles.SAVE_MATERIAL}
-              values={values}
-              errors={errors}
-            />
-          </div>
-        </div>
       </form>
     </div>
   );

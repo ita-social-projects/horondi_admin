@@ -124,8 +124,29 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   return (
     <div className={styles.formContainer}>
       <form onSubmit={(e) => eventPreventHandler(e)}>
-        <CheckboxOptions options={checkboxes} />
-
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton
+                initial={!valueEquality}
+                pathBack={pathToHomePageSlides}
+              />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                onClickHandler={handleSubmit}
+                type='submit'
+                title={config.buttonTitles.CREATE_SLIDE_TITLE}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
+        <div>
+          <CheckboxOptions options={checkboxes} />
+        </div>
         <Grid item xs={12}>
           <Paper className={styles.slideItemUpdate}>
             <span className={styles.imageUpload}>
@@ -159,16 +180,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         {languages.map((lang, index) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton initial={!valueEquality} pathBack={pathToHomePageSlides} />
-        <SaveButton
-          className={styles.formButton}
-          data-cy='save'
-          onClickHandler={handleSubmit}
-          type='submit'
-          title={config.buttonTitles.CREATE_SLIDE_TITLE}
-          values={values}
-          errors={errors}
-        />
       </form>
       <Typography variant='h1' className={styles.slideTitle}>
         {preview}

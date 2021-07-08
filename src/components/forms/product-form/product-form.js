@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Paper,
@@ -6,22 +6,17 @@ import {
   Button,
   Typography,
   Box,
-  Divider,
-  useMediaQuery,
-  useTheme
+  Divider
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-
 import { find } from 'lodash';
 import useProductHandlers from '../../../hooks/product/use-product-handlers';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import useProductValidation from '../../../hooks/product/use-product-validation';
 import { useStyles } from './product-form.styles';
-
 import ProductInfoContainer from '../../../containers/product-info-container';
 import ProductSpeciesContainer from '../../../containers/product-species-container';
-
 import {
   addProduct,
   deleteProduct,
@@ -29,7 +24,6 @@ import {
   updateProduct
 } from '../../../redux/products/products.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-
 import { productsTranslations } from '../../../translations/product.translations';
 import DeleteButton from '../../buttons/delete-button';
 import { config } from '../../../configs';
@@ -47,7 +41,6 @@ import {
   setInnerColorsHandler,
   setBottomColorsHandler,
   setMainColorsHandler,
-  sizeMatchesHandler,
   getFormikMaterialsValues
 } from '../../../utils/product-form';
 
@@ -55,7 +48,6 @@ import {
   checkboxesValues,
   productFormValues
 } from '../../../consts/product-form';
-import { TEMPORARY_WIDTHS } from '../../../consts/menu-categories';
 
 const { priceLabel } = config.labels.product;
 
@@ -74,15 +66,11 @@ const { pathToProducts } = config.routes;
 
 const ProductForm = ({ isEdit }) => {
   const styles = useStyles();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down(TEMPORARY_WIDTHS[1]));
   const dispatch = useDispatch();
 
   const { details } = useSelector(selectSelectedProductAndDetails);
 
   const product = useSelector(({ Products }) => Products.selectedProduct);
-
-  const buttonSize = useMemo(() => sizeMatchesHandler(matches), [matches]);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
@@ -308,8 +296,11 @@ const ProductForm = ({ isEdit }) => {
       <div className={styles.buttonContainer}>
         <Grid container spacing={2} className={styles.fixedButtons}>
           <Grid item className={styles.button}>
+            <BackButton pathBack={pathToProducts} />
+          </Grid>
+          <Grid item className={styles.button}>
             <Button
-              size={buttonSize}
+              size='medium'
               type={productFormValues.submit}
               variant={productFormValues.contained}
               color={checkboxesValues.primary}
@@ -321,7 +312,7 @@ const ProductForm = ({ isEdit }) => {
           </Grid>
           <Grid item className={styles.button}>
             <DeleteButton
-              size={buttonSize}
+              size='medium'
               variant={productFormValues.outlined}
               onClickHandler={handleProductDelete}
             >
@@ -436,9 +427,6 @@ const ProductForm = ({ isEdit }) => {
         </Grid>
       </Grid>
       {showCommentsPanel()}
-      <div className={styles.controlsBlock}>
-        <BackButton pathBack={pathToProducts} />
-      </div>
     </div>
   );
 };

@@ -15,12 +15,17 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around'
   },
   saveButton: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
   },
   container: {
     width: '100%',
     padding: 20,
-    marginTop: 70
+    '@media (max-width: 600px)': {
+      'paddingTop': '5px'
+    },
+    '@media (max-width: 392px)': {
+      'paddingTop': '15px'
+    },
   },
   tabs: {
     backgroundColor: 'white',
