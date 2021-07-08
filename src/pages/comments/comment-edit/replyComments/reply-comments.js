@@ -45,6 +45,10 @@ const ReplyComments = ({ replyComments, itemsCount }) => {
     openSuccessSnackbar(removeComment, REMOVE_REPLY_COMMENT_MESSAGE);
   };
 
+  const replyCommentEditHandler = (id) => {
+    dispatch(push(pathToReplyCommentsEdit.replace(':id', id)));
+  };
+
   const replyItems = map(replyComments, (reply) => (
     <TableContainerRow
       showAvatar={false}
@@ -59,7 +63,7 @@ const ReplyComments = ({ replyComments, itemsCount }) => {
         replyCommentDeleteHandler(reply?._id);
       }}
       editHandler={() => {
-        dispatch(push(pathToReplyCommentsEdit.replace(':id', reply?._id)));
+        replyCommentEditHandler(reply?._id);
       }}
     />
   ));
@@ -99,15 +103,17 @@ const ReplyComments = ({ replyComments, itemsCount }) => {
 };
 ReplyComments.propTypes = {
   itemsCount: PropTypes.number,
-  replyComments: PropTypes.shape({
-    _id: PropTypes.string,
-    replyText: PropTypes.string,
-    createdAt: PropTypes.string,
-    showReplyComment: PropTypes.bool,
-    answerer: PropTypes.shape({
-      email: PropTypes.string
+  replyComments: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      replyText: PropTypes.string,
+      createdAt: PropTypes.string,
+      showReplyComment: PropTypes.bool,
+      answerer: PropTypes.shape({
+        email: PropTypes.string
+      })
     })
-  })
+  )
 };
 
 ReplyComments.defaultProps = {
