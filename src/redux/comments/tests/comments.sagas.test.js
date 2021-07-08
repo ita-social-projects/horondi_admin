@@ -420,20 +420,4 @@ describe('handle comment saga error tests', () => {
       })
       .run();
   });
-
-  it('should handle comments error user', () => {
-    expectSaga(handleCommentsError, mockErrorUser)
-      .withReducer(combineReducers({ commentsReducer, Snackbar }), {
-        commentsReducer: {
-          ...initialState,
-          commentsLoading: true
-        },
-        Snackbar: mockSnackbarState
-      })
-      .provide([[call(handleAdminLogout), throwError(mockErrorUser)]])
-      .put(setCommentsLoading(false))
-      .put(setAuth(false))
-      .put(push(config.routes.pathToLogin))
-      .run();
-  });
 });
