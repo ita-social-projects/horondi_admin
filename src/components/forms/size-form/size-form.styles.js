@@ -54,9 +54,12 @@ export const useStyles = makeStyles((theme) => ({
     padding: '20px',
     marginTop: 0,
     marginLeft: '20px',
-    '@media (max-width: 900px)': {
-      padding: '0px',
-      marginLeft: '0px'
+    '@media (max-width: 600px)': {
+      'paddingTop': '13px'
+    },
+    '@media (max-width: 481px)': {
+      'padding': '20px 0',
+      'width': '100%'
     }
   },
   buttonContainer: {
@@ -129,6 +132,9 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   buttonsWrapper: {
-    marginLeft: '25px'
-  }
+    marginLeft: '25px',
+    '@media (max-width: 600px)': {
+      'marginLeft': '9px',
+      }
+    }
 }));

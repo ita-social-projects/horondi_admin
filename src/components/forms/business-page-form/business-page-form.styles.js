@@ -20,7 +20,10 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2.5),
     width: '100%',
-    position: 'relative'
+    position: 'relative',
+    '@media (max-width: 481px)': {
+      'marginTop': '6px'
+    }
   },
   buttonContainer: {
     position: 'relative',
@@ -28,7 +31,7 @@ export const useStyles = makeStyles((theme) => ({
     height: 60,
     marginTop: 51,
     '@media (max-width: 600px)': {
-      marginTop: 43
+      'marginTop': '36px'
     }
   },
   fixedButtons: {

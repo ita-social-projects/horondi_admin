@@ -8,8 +8,11 @@ export const useStyles = makeStyles((theme) => {
     formContainer: {
       width: '100%',
       padding: '20px',
-      '@media (max-width: 450px)': {
-        padding: 0
+      '@media (max-width: 600px)': {
+        'padding': '10px 20px'
+      },
+      '@media (max-width: 481px)': {
+        'marginTop': '10px'
       }
     },
     slideItemUpdate: {

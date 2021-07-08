@@ -51,10 +51,16 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2.5),
     position: 'relative',
     width: '100%',
-    marginTop: 50,
-    '@media (max-width: 900px)': {
-      padding: '0px',
-      marginLeft: '0px'
+    marginTop: 51,
+    '@media (max-width: 600px)': {
+      'padding': '5px 20px'
+    },
+    '@media (max-width: 534px)': {
+      'paddingTop': '5px'
+    },
+    
+    '@media (max-width: 481px)': {
+      'paddingTop': '12px'
     }
   },
   table: {

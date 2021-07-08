@@ -82,8 +82,6 @@ const ProductForm = ({ isEdit }) => {
 
   const product = useSelector(({ Products }) => Products.selectedProduct);
 
-  const buttonSize = useMemo(() => sizeMatchesHandler(matches), [matches]);
-
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
 
   const [isMountedFirst, setFirstMount] = useState(false);
@@ -312,7 +310,7 @@ const ProductForm = ({ isEdit }) => {
           </Grid>
           <Grid item className={styles.button}>
             <Button
-              size={buttonSize}
+              size='medium'
               type={productFormValues.submit}
               variant={productFormValues.contained}
               color={checkboxesValues.primary}
@@ -324,7 +322,7 @@ const ProductForm = ({ isEdit }) => {
           </Grid>
           <Grid item className={styles.button}>
             <DeleteButton
-              size={buttonSize}
+              size='medium'
               variant={productFormValues.outlined}
               onClickHandler={handleProductDelete}
             >
