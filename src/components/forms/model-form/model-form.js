@@ -186,9 +186,13 @@ const ModelForm = ({ model, id, isEdit }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit} autoComplete={materialUiConstants.off}>
+      <form onSubmit={eventPreventHandler} autoComplete={materialUiConstants.off}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
@@ -196,9 +200,11 @@ const ModelForm = ({ model, id, isEdit }) => {
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
+                className={styles.saveButton}
                 data-cy={materialUiConstants.save}
                 type={materialUiConstants.types.submit}
                 title={MODEL_SAVE_TITLE}
+                onClickHandler={handleSubmit}
                 values={values}
                 errors={errors}
               />

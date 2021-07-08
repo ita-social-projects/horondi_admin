@@ -58,6 +58,9 @@ import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
 import History from '../pages/history';
 import HistoryDetails from '../pages/history/history-details';
+import PocketsPage from '../pages/pockets/pockets-page';
+import PocketsAdd from '../pages/pockets/pockets-add/pockets-add';
+import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
 
 const { routes } = config;
 
@@ -260,6 +263,13 @@ const Routes = () => {
             path={routes.pathToCommentsEdit}
             exact
             component={CommentEdit}
+          />
+          <Route path={routes.pathToPockets} exact component={PocketsPage} />
+          <Route path={routes.pathToPocketsAdd} exact component={PocketsAdd} />
+          <Route
+            path={routes.pathToPocketsEdit}
+            exact
+            component={PocketsEdit}
           />
           <Route component={ErrorPage} />
         </Switch>
