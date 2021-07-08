@@ -161,7 +161,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
-                className={styles.saveButton}
                 data-cy='save'
                 type='submit'
                 onClickHandler={handleSubmit}

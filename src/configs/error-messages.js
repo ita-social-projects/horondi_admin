@@ -158,3 +158,11 @@ export const businessPageErrorMessages = {
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
   ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки'
 };
+
+export const pocketsErrorMessages = {
+  POCKETS_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  POCKETS_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  POCKETS_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  POCKETS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
+};

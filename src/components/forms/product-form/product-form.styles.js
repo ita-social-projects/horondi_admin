@@ -9,7 +9,13 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2.5),
     width: '100%',
-    position: 'relative'
+    position: 'relative',
+    '@media (max-width: 600px)': {
+      paddingTop: '13px'
+    },
+    '@media (max-width: 481px)': {
+      paddingTop: '20px'
+    }
   },
   title: {
     fontWeight: '600'
@@ -29,14 +35,17 @@ export const useStyles = makeStyles((theme) => ({
     height: 60,
     marginTop: 51,
     '@media (max-width: 600px)': {
-      marginTop: 43
+      marginTop: '43px'
     }
   },
   fixedButtons: {
     position: 'fixed',
     height: 60,
     zIndex: 1001,
-    backgroundColor: theme.palette.bodyColor
+    backgroundColor: theme.palette.bodyColor,
+    '@media (max-width: 416px)': {
+      height: '112px'
+    }
   },
   button: {
     marginTop: theme.spacing(0.5)

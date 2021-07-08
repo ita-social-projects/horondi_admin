@@ -172,7 +172,32 @@ const BusinessPageForm = ({ id, editMode }) => {
   };
 
   return (
-    <div className={common.container}>
+    <div className={classes.container}>
+      <div className={classes.buttonContainer}>
+        <Grid container spacing={2} className={classes.fixedButtons}>
+          <Grid item className={classes.button}>
+            <BackButton
+              initial={!valueEquality}
+              pathBack={pathToBusinessPages}
+            />
+          </Grid>
+          <Grid item className={classes.button}>
+            <SaveButton
+              id='save'
+              type='submit'
+              title='Зберегти'
+              data-cy='save-btn'
+              onClickHandler={handleSubmit}
+              values={{
+                code: values.code,
+                uaTitle: values.uaTitle,
+                enTitle: values.enTitle
+              }}
+              errors={errors}
+            />
+          </Grid>
+        </Grid>
+      </div>
       <div className={common.adminHeader}>
         <Typography
           variant='h1'
@@ -182,49 +207,31 @@ const BusinessPageForm = ({ id, editMode }) => {
           {config.titles.businessPageTitles.addBusinessPageTitle}
         </Typography>
       </div>
+
       <form onSubmit={(e) => eventPreventHandler(e)}>
-        <div>
-          <Grid item xs={12}>
-            <Paper className={classes.businessPageForm}>
-              <TextField
-                id='code'
-                className={classes.textField}
-                variant='outlined'
-                label='Код сторінки'
-                value={values.code}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.code && !!errors.code}
-                data-cy='page-code'
-              />
-            </Paper>
-            {touched.code && errors.code && (
-              <div data-cy='code-error' className={classes.errorMessage}>
-                {errors.code}
-              </div>
-            )}
-          </Grid>
-          {languages.map((lang) => (
-            <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
-          ))}
-        </div>
-        <div className={classes.controlsBlock}>
-          <BackButton initial={!valueEquality} pathBack={pathToBusinessPages} />
-          <SaveButton
-            className={classes.controlButton}
-            id='save'
-            type='submit'
-            title='Зберегти'
-            data-cy='save-btn'
-            onClickHandler={handleSubmit}
-            values={{
-              code: values.code,
-              uaTitle: values.uaTitle,
-              enTitle: values.enTitle
-            }}
-            errors={errors}
-          />
-        </div>
+        <Grid item xs={12}>
+          <Paper className={classes.businessPageForm}>
+            <TextField
+              id='code'
+              className={classes.textField}
+              variant='outlined'
+              label='Код сторінки'
+              value={values.code}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.code && !!errors.code}
+              data-cy='page-code'
+            />
+          </Paper>
+          {touched.code && errors.code && (
+            <div data-cy='code-error' className={classes.errorMessage}>
+              {errors.code}
+            </div>
+          )}
+        </Grid>
+        {languages.map((lang) => (
+          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+        ))}
       </form>
     </div>
   );
