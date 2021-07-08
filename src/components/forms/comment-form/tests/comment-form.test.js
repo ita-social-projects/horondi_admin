@@ -7,12 +7,7 @@ import { render, fireEvent, act } from '@testing-library/react';
 
 import CommentForm from '../index';
 import { config } from '../../../../configs';
-import {
-  mockComment,
-  mockId,
-  mockIsEdit,
-  mockCommentWithoutProduct
-} from './comment-form.variables';
+import { mockComment, mockId, mockIsEdit } from './comment-form.variables';
 
 configure({ adapter: new Adapter() });
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
@@ -101,17 +96,6 @@ describe('Comment form tests', () => {
   it('Should have appropriate prop types', () => {
     expect(CommentForm.propTypes.id).toBe(PropTypes.string);
     expect(CommentForm.propTypes.isEdit).toBe(PropTypes.bool);
-  });
-  it(`Should call handleClick Product Info button click`, () => {
-    const { getAllByRole } = render(
-      <CommentForm
-        comment={mockCommentWithoutProduct}
-        id={mockId}
-        isEdit={mockIsEdit}
-      />
-    );
-    fireEvent.click(getAllByRole('button')[0]);
-    expect(mockUseDispatchFn).toHaveBeenCalled();
   });
   it('Should have default props', () => {
     expect(CommentForm.defaultProps).toBeDefined();
