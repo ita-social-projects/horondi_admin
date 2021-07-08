@@ -8,8 +8,11 @@ export const useStyles = makeStyles((theme) => {
     formContainer: {
       width: '100%',
       padding: '20px',
-      '@media (max-width: 450px)': {
-        padding: 0
+      '@media (max-width: 600px)': {
+        'padding': '10px 20px'
+      },
+      '@media (max-width: 481px)': {
+        'marginTop': '10px'
       }
     },
     slideItemUpdate: {
@@ -117,6 +120,24 @@ export const useStyles = makeStyles((theme) => {
       '@media (max-width: 375px)': {
         fontSize: theme.spacing(2)
       }
+    },
+    buttonContainer: {
+      position: 'relative',
+      width: '100%',
+      height: 60,
+      marginTop: 51,
+      '@media (max-width: 600px)': {
+        marginTop: 43
+      }
+    },
+    fixedButtons: {
+      position: 'fixed',
+      height: 60,
+      zIndex: 1001,
+      backgroundColor: theme.palette.bodyColor
+    },
+    button: {
+      marginTop: theme.spacing(0.5)
     },
     imageUpload,
     textField,
