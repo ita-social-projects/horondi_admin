@@ -34,18 +34,18 @@ import {
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
+
 const { routes } = config;
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
-export function* handleModelsLoad({ payload }) {
+export function* handleModelsLoad({ payload: { filter, pagination, sort } }) {
   try {
     yield put(setModelLoading(true));
-    const models = yield call(getAllModels, payload.skip, payload.limit);
+    const models = yield call(getAllModels, filter, pagination, sort);
     yield put(setItemsCount(models.count));
     yield put(setModels(models.items));
     yield put(setModelLoading(false));
@@ -101,9 +101,13 @@ export function* handleModelUpdate({ payload }) {
 }
 
 export function* handleModelError(e) {
-  yield put(setModelLoading(false));
-  yield put(setModelError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setModelLoading(false));
+    yield put(setModelError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* modelSaga() {

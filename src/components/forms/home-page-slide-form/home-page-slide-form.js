@@ -28,17 +28,12 @@ const { preview } = config.titles.homePageSliderTitle;
 const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const {
-    discoverMoreTitle,
-    discoverMoreSymbol
-  } = config.titles.homePageSliderTitle;
-  const {
-    slideImage,
-    setSlideImage,
-    createSlide,
-    upload,
-    setUpload
-  } = useHomePageSlideHandlers();
+  const { discoverMoreTitle, discoverMoreSymbol } =
+    config.titles.homePageSliderTitle;
+  const { slideImage, setSlideImage, createSlide, upload, setUpload } =
+    useHomePageSlideHandlers();
+
+  const { pathToHomePageSlides } = config.routes;
 
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
@@ -48,44 +43,38 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     link: Yup.string().min(2, SLIDE_VALIDATION_ERROR)
   });
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    touched,
-    errors,
-    setFieldValue
-  } = useFormik({
-    validationSchema: slideValidationSchema,
-    initialValues: getHomePageSlidesInitialValues(slide, slideOrder),
+  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
+    useFormik({
+      validationSchema: slideValidationSchema,
+      initialValues: getHomePageSlidesInitialValues(slide, slideOrder),
 
-    onSubmit: () => {
-      (() => {
-        if (values.show && slide.show) {
-          values.order = slide.order;
+      onSubmit: () => {
+        (() => {
+          if (values.show && slide.show) {
+            values.order = slide.order;
+            return;
+          }
+          if (values.show) {
+            values.order = slideOrder;
+            return;
+          }
+          if (!values.show) {
+            values.order = 0;
+          }
+        })();
+        const newSlide = createSlide(values);
+
+        if (id && upload.name) {
+          dispatch(updateSlide({ id, slide: newSlide, upload }));
           return;
         }
-        if (values.show) {
-          values.order = slideOrder;
+        if (id) {
+          dispatch(updateSlide({ id, slide: newSlide }));
           return;
         }
-        if (!values.show) {
-          values.order = 0;
-        }
-      })();
-      const newSlide = createSlide(values);
-
-      if (id && upload.name) {
-        dispatch(updateSlide({ id, slide: newSlide, upload }));
-        return;
+        dispatch(addSlide({ slide: newSlide, upload }));
       }
-      if (id) {
-        dispatch(updateSlide({ id, slide: newSlide }));
-        return;
-      }
-      dispatch(addSlide({ slide: newSlide, upload }));
-    }
-  });
+    });
 
   const checkboxes = [
     {
@@ -128,11 +117,36 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleSubmit}>
-        <CheckboxOptions options={checkboxes} />
-
+      <form onSubmit={(e) => eventPreventHandler(e)}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton
+                initial={!valueEquality}
+                pathBack={pathToHomePageSlides}
+              />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                onClickHandler={handleSubmit}
+                type='submit'
+                title={config.buttonTitles.CREATE_SLIDE_TITLE}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
+        <div>
+          <CheckboxOptions options={checkboxes} />
+        </div>
         <Grid item xs={12}>
           <Paper className={styles.slideItemUpdate}>
             <span className={styles.imageUpload}>
@@ -166,15 +180,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         {languages.map((lang, index) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton initial={!valueEquality} />
-        <SaveButton
-          className={styles.formButton}
-          data-cy='save'
-          type='submit'
-          title={config.buttonTitles.CREATE_SLIDE_TITLE}
-          values={values}
-          errors={errors}
-        />
       </form>
       <Typography variant='h1' className={styles.slideTitle}>
         {preview}

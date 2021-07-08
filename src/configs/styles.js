@@ -1,6 +1,6 @@
 const formStyles = (theme) => ({
   saveButton: {
-    marginLeft: theme.spacing(2)
+    margin: theme.spacing(2)
   },
 
   inputError: {
@@ -78,7 +78,10 @@ const formStyles = (theme) => ({
   },
   autoComplete: {
     margin: '10px',
-    width: '33%'
+    width: '33%',
+    '@media (max-width: 450px)': {
+      width: 'inherit'
+    }
   },
   itemUpdate: {
     display: 'flex',

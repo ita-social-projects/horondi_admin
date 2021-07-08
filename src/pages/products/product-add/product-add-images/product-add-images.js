@@ -52,19 +52,17 @@ const ProductAddImages = ({
 
   const imgUrl = config.imagePrefix + displayed;
 
-  const {
-    handlePrimaryImageLoad,
-    handleAdditionalImagesLoad
-  } = useProductAddImages({
-    isEdit,
-    additionalImagesDisplayed,
-    setAdditionalImagesDisplayed,
-    toggleFieldsChanged,
-    additionalImages,
-    setAdditionalImages,
-    setProductImageDisplayed,
-    setPrimaryImage
-  });
+  const { handlePrimaryImageLoad, handleAdditionalImagesLoad } =
+    useProductAddImages({
+      isEdit,
+      additionalImagesDisplayed,
+      setAdditionalImagesDisplayed,
+      toggleFieldsChanged,
+      additionalImages,
+      setAdditionalImages,
+      setProductImageDisplayed,
+      setPrimaryImage
+    });
 
   const additionalFirstImageByIndexLoad = (e) =>
     handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
@@ -89,7 +87,7 @@ const ProductAddImages = ({
 
   return (
     <div className={styles.container}>
-      <Box my={3}>
+      <Box my={3} className={styles.box}>
         <Grid container spacing={1}>
           <Grid item>
             <span className={styles.text}>{PRODUCT_PHOTO_TEXT.PRIMARY}</span>
@@ -106,7 +104,7 @@ const ProductAddImages = ({
           <div className={styles.error}>{REQUIRED_PHOTOS}</div>
         )}
       </Box>
-      <Box my={3}>
+      <Box my={3} className={styles.box}>
         <Grid container spacing={1}>
           <Grid item>
             <span className={styles.text}>{PRODUCT_PHOTO_TEXT.ADDITIONAL}</span>
@@ -156,7 +154,7 @@ const ProductAddImages = ({
 ProductAddImages.propTypes = {
   toggleFieldsChanged: PropTypes.func,
   additionalImagesDisplayed: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.object),
+    PropTypes.arrayOf(PropTypes.string),
     PropTypes.string
   ]),
   setAdditionalImagesDisplayed: PropTypes.func,

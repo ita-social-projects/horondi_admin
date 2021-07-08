@@ -88,7 +88,11 @@ mutation($id: ID!) {
 
   const result = await setItems(deleteUserMutation, { id });
 
-  if (Object.keys(config.errorMessages).includes(result?.data?.deleteUser?.message)) {
+  if (
+    Object.keys(config.errorMessages).includes(
+      result?.data?.deleteUser?.message
+    )
+  ) {
     throw new Error(
       `Помилка: ${config.errorMessages[result.data.deleteUser.message]}`
     );
@@ -128,8 +132,12 @@ const blockUser = async (userId) => {
 
   const result = await setItems(blockUserMutation, { userId });
 
-  if (Object.keys(config.errorMessages).includes(result?.data?.blockUser?.message)) {
-    throw new Error(`Помилка: ${config.errorMessages[result?.data?.blockUser.message]}`);
+  if (
+    Object.keys(config.errorMessages).includes(result?.data?.blockUser?.message)
+  ) {
+    throw new Error(
+      `Помилка: ${config.errorMessages[result?.data?.blockUser.message]}`
+    );
   }
 
   return result?.data?.blockUser;
@@ -166,7 +174,11 @@ const unlockUser = async (userId) => {
 
   const result = await setItems(unlockUserMutation, { userId });
 
-  if (Object.keys(config.errorMessages).includes(result?.data?.unlockUser?.message)) {
+  if (
+    Object.keys(config.errorMessages).includes(
+      result?.data?.unlockUser?.message
+    )
+  ) {
     throw new Error(
       `Помилка: ${config.errorMessages[result.data.unlockUser.message]}`
     );
@@ -191,7 +203,11 @@ mutation($user: AdminRegisterInput!) {
 
   const result = await setItems(registerAdminMutation, { user });
 
-  if (Object.keys(config.errorMessages).includes(result?.data?.registerAdmin?.message)) {
+  if (
+    Object.keys(config.errorMessages).includes(
+      result?.data?.registerAdmin?.message
+    )
+  ) {
     throw new Error(
       `Помилка: ${config.errorMessages[result.data.registerAdmin.message]}`
     );
@@ -222,7 +238,9 @@ mutation($user: resendEmailToConfirmAdminInput!) {
     )
   ) {
     throw new Error(
-      `Помилка: ${config.errorMessages[result.data.resendEmailToConfirmAdmin.message]}`
+      `Помилка: ${
+        config.errorMessages[result.data.resendEmailToConfirmAdmin.message]
+      }`
     );
   }
 
@@ -251,7 +269,9 @@ const confirmSuperadminCreation = async (user) => {
     )
   ) {
     throw new Error(
-      `Помилка: ${config.errorMessages[result.data.confirmSuperadminCreation.message]}`
+      `Помилка: ${
+        config.errorMessages[result.data.confirmSuperadminCreation.message]
+      }`
     );
   }
 
@@ -283,7 +303,9 @@ mutation($user: AdminConfirmInput!,$token: String!){
     )
   ) {
     throw new Error(
-      `Помилка: ${config.errorMessages[result.data.completeAdminRegister.message]}`
+      `Помилка: ${
+        config.errorMessages[result.data.completeAdminRegister.message]
+      }`
     );
   }
 
@@ -311,7 +333,9 @@ const validateToken = async (token) => {
     )
   ) {
     throw new Error(
-      `Помилка: ${config.errorMessages[result.data.validateConfirmationToken.message]}`
+      `Помилка: ${
+        config.errorMessages[result.data.validateConfirmationToken.message]
+      }`
     );
   }
 

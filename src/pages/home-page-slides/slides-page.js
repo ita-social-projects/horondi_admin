@@ -62,21 +62,21 @@ const SlidesPage = () => {
   };
   const slidesItems = list.length
     ? list.map((slidesItem) => (
-      <TableContainerRow
-        key={slidesItem._id}
-        showAvatar={false}
-        id={slidesItem.id}
-        index={slidesItem.order}
-        name={slidesItem.title[0].value || slideTitle}
-        available={
-          slidesItem.show ? slidesTranslations.YES : slidesTranslations.NO
-        }
-        deleteHandler={() => slideDeleteHandler(slidesItem._id)}
-        editHandler={() => {
-          dispatch(push(`/home-page-slides/${slidesItem._id}`));
-        }}
-      />
-    ))
+        <TableContainerRow
+          key={slidesItem._id}
+          showAvatar={false}
+          id={slidesItem.id}
+          index={slidesItem.order}
+          name={slidesItem.title[0].value || slideTitle}
+          available={
+            slidesItem.show ? slidesTranslations.YES : slidesTranslations.NO
+          }
+          deleteHandler={() => slideDeleteHandler(slidesItem._id)}
+          editHandler={() => {
+            dispatch(push(`/home-page-slides/${slidesItem._id}`));
+          }}
+        />
+      ))
     : null;
 
   if (loading) {

@@ -57,6 +57,7 @@ const {
 } = config.labels.model;
 const { IMG_URL } = config;
 const { MODEL_SAVE_TITLE, MODEL_CONSTRUCTOR } = config.buttonTitles;
+const { pathToModels } = config.routes;
 
 const ModelForm = ({ model, id, isEdit }) => {
   const styles = useStyles();
@@ -69,21 +70,16 @@ const ModelForm = ({ model, id, isEdit }) => {
   };
 
   const inputLabel = React.useRef(null);
-  const {
-    createModel,
-    setUpload,
-    upload,
-    modelImage,
-    setModelImage
-  } = useModelHandlers();
+  const { createModel, setUpload, upload, modelImage, setModelImage } =
+    useModelHandlers();
 
   useEffect(() => {
-    dispatch(getSizes());
+    dispatch(getSizes({ limit: null }));
+
     dispatch(getCategories({}));
   }, [dispatch]);
 
   const { sizesList } = useSelector(sizesSelectorWithPagination);
-
   const { categories } = useSelector(({ Categories }) => ({
     categories: Categories.categories
   }));
@@ -189,9 +185,45 @@ const ModelForm = ({ model, id, isEdit }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit} autoComplete={materialUiConstants.off}>
+      <form
+        onSubmit={eventPreventHandler}
+        autoComplete={materialUiConstants.off}
+      >
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton initial={!valueEquality} pathBack={pathToModels} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy={materialUiConstants.save}
+                type={materialUiConstants.types.submit}
+                title={MODEL_SAVE_TITLE}
+                onClickHandler={handleSubmit}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+            <Grid item className={styles.button}>
+              {isEdit ? (
+                <Button
+                  data-cy={labelsEn.constructor}
+                  onClick={handleConstructor}
+                  color={materialUiConstants.secondary}
+                  variant={materialUiConstants.contained}
+                >
+                  {MODEL_CONSTRUCTOR}
+                </Button>
+              ) : null}
+            </Grid>
+          </Grid>
+        </div>
         <CheckboxOptions options={checkboxes(materialUiConstants.show, show)} />
         <CheckboxOptions
           options={checkboxes(
@@ -264,7 +296,7 @@ const ModelForm = ({ model, id, isEdit }) => {
             freeSolo
             options={sizesList}
             getOptionLabel={(option) =>
-              `${option.simpleName[0].value} | ${option.name}`
+              `${option.modelId.name[0].value} | ${option.name}`
             }
             defaultValue={sizes}
             onChange={onTagsChange}
@@ -288,26 +320,6 @@ const ModelForm = ({ model, id, isEdit }) => {
             key={lang}
           />
         ))}
-        <BackButton initial={!valueEquality} />
-        <SaveButton
-          className={styles.saveButton}
-          data-cy={materialUiConstants.save}
-          type={materialUiConstants.types.submit}
-          title={MODEL_SAVE_TITLE}
-          values={values}
-          errors={errors}
-        />
-        {isEdit ? (
-          <Button
-            data-cy={labelsEn.constructor}
-            className={styles.saveButton}
-            onClick={handleConstructor}
-            color={materialUiConstants.secondary}
-            variant={materialUiConstants.contained}
-          >
-            {MODEL_CONSTRUCTOR}
-          </Button>
-        ) : null}
       </form>
     </div>
   );

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Tabs, Tab } from '@material-ui/core';
+import { Paper, Tabs, Tab, Grid } from '@material-ui/core';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
-
 import { config } from '../../configs';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
@@ -22,6 +21,7 @@ import { handleOrderSubmition } from '../../utils/handle-orders-page';
 const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { pathToOrders } = config.routes;
   const { orderTabs } = labels;
   const { materialUiConstants } = config;
   const { SAVE_TITLE } = buttonTitles;
@@ -77,6 +77,27 @@ const OrderItem = ({ id }) => {
 
   return (
     <form onSubmit={handleSubmit} className={classes.orderContainer}>
+      <div className={classes.controlsBlock}>
+        <div className={classes.buttonContainer}>
+          <Grid container spacing={2} className={classes.fixedButtons}>
+            <Grid item className={classes.button}>
+              <BackButton pathBack={pathToOrders} />
+            </Grid>
+            <Grid item className={classes.button}>
+              <SaveButton
+                type={materialUiConstants.types.submit}
+                title={SAVE_TITLE}
+                values={{
+                  code: values.code,
+                  uaTitle: values.uaTitle,
+                  enTitle: values.enTitle
+                }}
+                disabled={!dirty || !isValid}
+              />
+            </Grid>
+          </Grid>
+        </div>
+      </div>
       <Paper>
         <Tabs value={tabValue} onChange={handleTabChange}>
           <Tab value={0} label={general} />
@@ -107,20 +128,6 @@ const OrderItem = ({ id }) => {
           />
         </TabPanel>
       </Paper>
-      <div className={classes.controlsBlock}>
-        <BackButton />
-        <SaveButton
-          className={classes.saveBtn}
-          type={materialUiConstants.types.submit}
-          title={SAVE_TITLE}
-          values={{
-            code: values.code,
-            uaTitle: values.uaTitle,
-            enTitle: values.enTitle
-          }}
-          disabled={!dirty || !isValid}
-        />
-      </div>
     </form>
   );
 };

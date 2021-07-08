@@ -34,12 +34,8 @@ const {
 export const TablePaginator = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const {
-    itemsCount,
-    rowsPerPage,
-    rowsPerPageOptions,
-    currentPage
-  } = useSelector(selectTablePaginationCurrentRowsOptions);
+  const { itemsCount, rowsPerPage, rowsPerPageOptions, currentPage } =
+    useSelector(selectTablePaginationCurrentRowsOptions);
 
   const formSchema = Yup.object().shape({
     pageInput: Yup.number()

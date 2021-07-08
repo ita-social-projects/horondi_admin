@@ -45,26 +45,32 @@ const ProductMaterialsContainer = ({
     toggleFieldsChanged(true);
   };
 
-  const mainMaterialOptions = useMemo(() => handleMenuItem(mainMaterials), [
-    mainMaterials
-  ]);
-  const mainColorOptions = useMemo(() => handleMenuItem(mainColors), [
-    mainColors
-  ]);
-  const bottomMaterialOptions = useMemo(() => handleMenuItem(bottomMaterials), [
-    bottomMaterials
-  ]);
-  const bottomColorOptions = useMemo(() => handleMenuItem(bottomColors), [
-    bottomColors
-  ]);
+  const mainMaterialOptions = useMemo(
+    () => handleMenuItem(mainMaterials),
+    [mainMaterials]
+  );
+  const mainColorOptions = useMemo(
+    () => handleMenuItem(mainColors),
+    [mainColors]
+  );
+  const bottomMaterialOptions = useMemo(
+    () => handleMenuItem(bottomMaterials),
+    [bottomMaterials]
+  );
+  const bottomColorOptions = useMemo(
+    () => handleMenuItem(bottomColors),
+    [bottomColors]
+  );
 
-  const innerMaterialOptions = useMemo(() => handleMenuItem(innerMaterials), [
-    innerMaterials
-  ]);
+  const innerMaterialOptions = useMemo(
+    () => handleMenuItem(innerMaterials),
+    [innerMaterials]
+  );
 
-  const innerColorOptions = useMemo(() => handleMenuItem(innerColors), [
-    innerColors
-  ]);
+  const innerColorOptions = useMemo(
+    () => handleMenuItem(innerColors),
+    [innerColors]
+  );
   const options = [
     mainMaterialOptions,
     mainColorOptions,
@@ -73,7 +79,6 @@ const ProductMaterialsContainer = ({
     innerMaterialOptions,
     innerColorOptions
   ];
-
   return (
     <form onSubmit={handleSubmit} className={sharedStyles.container}>
       <Grid container spacing={1} xs={12} justify='flex-start'>
@@ -99,14 +104,20 @@ const ProductMaterialsContainer = ({
 };
 
 ProductMaterialsContainer.propTypes = {
-  innerMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  innerColors: PropTypes.arrayOf(PropTypes.array).isRequired,
-  bottomMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  bottomColors: PropTypes.arrayOf(PropTypes.array).isRequired,
-  mainMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  mainColors: PropTypes.arrayOf(PropTypes.array).isRequired,
+  innerMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  innerColors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bottomMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bottomColors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  mainMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  mainColors: PropTypes.arrayOf(PropTypes.object).isRequired,
   values: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.array,
+      PropTypes.object
+    ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,

@@ -53,7 +53,10 @@ export const useStyles = makeStyles((theme) => ({
   saveButton: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    marginLeft: 20
+    marginLeft: 20,
+    '@media (max-width: 450px)': {
+      marginLeft: '5px'
+    }
   },
   colorPaletteButton: {
     marginTop: theme.spacing(2),
@@ -65,8 +68,27 @@ export const useStyles = makeStyles((theme) => ({
   },
   container: {
     width: '100%',
-    padding: 20,
-    marginTop: 70
+    '@media (max-width: 450px)': {
+      padding: '0px'
+    }
+  },
+  buttonContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 60,
+    marginTop: 51,
+    '@media (max-width: 600px)': {
+      marginTop: 43
+    }
+  },
+  fixedButtons: {
+    position: 'fixed',
+    height: 60,
+    zIndex: 1001,
+    backgroundColor: theme.palette.bodyColor
+  },
+  button: {
+    marginTop: theme.spacing(0.5)
   },
   controlsBlock: {
     display: 'flex',
@@ -80,7 +102,10 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   purposeSelect: {
-    width: '400px'
+    width: '400px',
+    '@media (max-width: 450px)': {
+      width: 'inherit'
+    }
   },
   errorTab: {
     backgroundColor: theme.palette.error.main,

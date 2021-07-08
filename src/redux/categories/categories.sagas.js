@@ -35,11 +35,8 @@ import { setItemsCount } from '../table/table.actions';
 import { AUTH_ERRORS } from '../../error-messages/auth';
 import { handleAdminLogout } from '../auth/auth.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 export function* handleCategoriesLoad({
   payload: { filter, pagination, sort }
@@ -108,6 +105,7 @@ export function* handleCategoryUpdate({ payload }) {
     const category = yield call(updateCategory, payload);
 
     if (category) {
+      yield put(setCategoryLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
       yield put(push(config.routes.pathToCategories));
     }

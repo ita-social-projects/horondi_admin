@@ -20,7 +20,13 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
     padding: 20,
-    marginTop: 70
+    marginBottom: 20,
+    '@media (max-width: 600px)': {
+      padding: '10px 20px'
+    },
+    '@media (max-width: 481px)': {
+      marginTop: '10px'
+    }
   },
   tabs: {
     backgroundColor: 'white',
@@ -41,11 +47,5 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '.7rem',
     padding: '.2rem'
   },
-  patternInputFile: { display: 'none' },
-  patternTitle: {
-    marginBottom: '10px',
-    fontSize: 24,
-    color: theme.palette.text.disabled,
-    fontWeight: 'bold'
-  }
+  patternInputFile: { display: 'none' }
 }));

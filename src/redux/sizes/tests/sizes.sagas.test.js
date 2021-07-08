@@ -45,11 +45,8 @@ import {
   handleSuccessSnackbar
 } from '../../snackbar/snackbar.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_UPDATE_STATUS,
-  SUCCESS_DELETE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_UPDATE_STATUS, SUCCESS_DELETE_STATUS } =
+  config.statuses;
 
 const {
   analysisMethodTypes: { PUT, CALL }

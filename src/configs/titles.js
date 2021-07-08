@@ -29,6 +29,10 @@ const titles = {
     mainPageTitle: 'Інформація про гобелени',
     createPageTitle: 'Створити гобелен'
   },
+  backTitles: {
+    mainPageTitle: 'Інформація про спинки',
+    createPageTitle: 'Створити спинку'
+  },
   commentTitles: {
     mainPageTitle: 'Інформація про коментарі'
   },
@@ -66,6 +70,7 @@ const titles = {
   sizesTitles: {
     mainPageTitle: 'Iнформація про розміри',
     selectTitle: 'Розмір',
+    modelTitle: 'Модель',
     sizeEdit: 'Редагування розміру',
     sizeAdd: 'Додавання розміру'
   },
@@ -112,6 +117,9 @@ const titles = {
     filters: 'Фільтри',
     deleteFilter: 'Очистити фільтр',
     mainPageTitle: 'Інформація про продукти'
+  },
+  pocketsTitles: {
+    mainPageTitle: 'Інформація про кишені'
   }
 };
 

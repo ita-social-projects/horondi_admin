@@ -13,12 +13,12 @@ import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 import { getHeaderInitialValues } from '../../../utils/header-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
-const {
-  HEADER_VALIDATION_ERROR,
-  HEADER_ERROR_MESSAGE
-} = config.headerErrorMessages;
+const { HEADER_VALIDATION_ERROR, HEADER_ERROR_MESSAGE } =
+  config.headerErrorMessages;
 
 const { languages } = config;
+
+const { pathToHeaders } = config.routes;
 
 const HeaderForm = ({ header, id }) => {
   const styles = useStyles();
@@ -61,9 +61,30 @@ const HeaderForm = ({ header, id }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton initial={!valueEquality} pathBack={pathToHeaders} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                onClickHandler={handleSubmit}
+                data-cy='save'
+                type='submit'
+                title={config.buttonTitles.HEADER_SAVE_TITLE}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <Grid item xs={12}>
           <Paper className={styles.headerItemUpdate}>
             <TextField
@@ -126,15 +147,6 @@ const HeaderForm = ({ header, id }) => {
             </Paper>
           </TabPanel>
         ))}
-        <BackButton initial={!valueEquality} />
-        <SaveButton
-          className={styles.saveButton}
-          data-cy='save'
-          type='submit'
-          title={config.buttonTitles.HEADER_SAVE_TITLE}
-          values={values}
-          errors={errors}
-        />
       </form>
     </div>
   );

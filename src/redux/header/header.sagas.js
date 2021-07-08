@@ -35,11 +35,8 @@ import { handleAdminLogout } from '../auth/auth.sagas';
 
 const { routes } = config;
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 export function* handleHeadersLoad() {
   try {
@@ -106,6 +103,7 @@ export function* handleHeaderUpdate({ payload }) {
 
     if (header) {
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(setHeaderLoading(false));
       yield put(push(routes.pathToHeaders));
     }
   } catch (error) {

@@ -10,7 +10,6 @@ export const useStyles = makeStyles((theme) => ({
     '& div': {
       '& div': {
         '& div': {
-          paddingLeft: '0px',
           paddingRight: '0px'
         }
       }
@@ -20,7 +19,11 @@ export const useStyles = makeStyles((theme) => ({
     width: '400px',
     display: 'flex',
     flexWrap: 'wrap',
-    margin: '20px 0'
+    margin: '20px 0',
+    '@media (max-width: 900px)': {
+      width: '300px',
+      margin: '20px auto 20px'
+    }
   },
   textField: {
     width: '100%',
@@ -48,10 +51,43 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
     padding: '20px',
-    marginTop: '10px',
-    marginLeft: '20px'
+    marginTop: 0,
+    marginLeft: '20px',
+    '@media (max-width: 600px)': {
+      paddingTop: '13px'
+    },
+    '@media (max-width: 481px)': {
+      padding: '20px 0',
+      width: '100%'
+    }
   },
-
+  buttonContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 60,
+    marginTop: 51,
+    '@media (max-width: 600px)': {
+      marginTop: 43
+    }
+  },
+  sizeTitle: {
+    marginBottom: '10px',
+    fontSize: 24,
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold',
+    '@media (max-width: 450px)': {
+      fontSize: theme.spacing(2)
+    }
+  },
+  fixedButtons: {
+    position: 'fixed',
+    height: 60,
+    zIndex: 1001,
+    backgroundColor: theme.palette.bodyColor
+  },
+  button: {
+    marginTop: theme.spacing(0.5)
+  },
   inputError: {
     color: theme.palette.error.main,
     padding: '0 5px'
@@ -61,7 +97,23 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: '5px'
   },
   purposeSelect: {
-    width: '390px'
+    width: '390px',
+    margin: '10px',
+    '@media (max-width: 900px)': {
+      width: '300px',
+      display: 'block',
+      margin: 'auto'
+    }
+  },
+  select: {
+    '@media (max-width: 900px)': {
+      width: '100%'
+    }
+  },
+  checkboxes: {
+    '@media (max-width: 900px)': {
+      marginLeft: '15px'
+    }
   },
   wrapper: {
     display: 'flex',
@@ -69,9 +121,20 @@ export const useStyles = makeStyles((theme) => ({
   },
   contentWrapper: {
     marginLeft: '25px',
-    marginRight: '25px'
+    marginRight: '25px',
+    '@media (max-width: 900px)': {
+      padding: '0px',
+      margin: '0px',
+      width: '100%',
+      '& .MuiFormControlLabel-root': {
+        marginLeft: '15px'
+      }
+    }
   },
   buttonsWrapper: {
-    marginLeft: '25px'
+    marginLeft: '25px',
+    '@media (max-width: 600px)': {
+      marginLeft: '9px'
+    }
   }
 }));

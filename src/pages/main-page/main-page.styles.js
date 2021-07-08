@@ -8,7 +8,7 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     paddingBottom: 15,
     boxSizing: 'border-box',
-    '@media (max-width: 599px)': {
+    '@media (max-width: 450px)': {
       display: 'block'
     }
   },
@@ -19,7 +19,7 @@ export const useStyles = makeStyles((theme) => ({
   commentsOrders: {
     height: 'calc(100vh - 179px)',
     width: '100%',
-    '@media (max-width: 599px)': {
+    '@media (max-width: 450px)': {
       width: '100%',
       height: 'fit-content'
     }
@@ -29,7 +29,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '49%',
     overflow: 'auto',
     display: 'inline-block',
-    '@media (max-width: 599px)': {
+    '@media (max-width: 450px)': {
       minHeight: 'fit-content',
       maxHeight: '100vh',
       width: '100%'
@@ -54,7 +54,7 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: 15,
     overflow: 'auto',
     display: 'inline-block',
-    '@media (max-width: 599px)': {
+    '@media (max-width: 450px)': {
       minHeight: 'fit-content',
       maxHeight: '100vh',
       width: '100%',
@@ -71,8 +71,15 @@ export const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box'
   },
   comment: {
-    borderBottom: '1px solid lightgrey',
-    marginBottom: 10
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+      fontWeight: 'bold'
+    },
+    '& td': {
+      paddingBottom: 15,
+      paddingTop: 15
+    }
   },
   commentInfo: {
     display: 'flex',
@@ -86,7 +93,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '50%',
     height: 'calc(100vh - 155px)',
     marginLeft: theme.spacing(3),
-    '@media (max-width: 599px)': {
+    '@media (max-width: 450px)': {
       height: 'fit-content',
       width: '100%',
       marginLeft: 0,
@@ -101,6 +108,11 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     fontSize: '1.5em',
     marginTop: -55,
-    textAlign: 'center'
+    textAlign: 'center',
+    '@media (max-width: 450px)': {
+      marginTop: 0,
+      paddingBottom: '20px',
+      fontSize: '20px'
+    }
   }
 }));

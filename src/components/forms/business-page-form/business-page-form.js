@@ -50,6 +50,8 @@ const BusinessPageForm = ({ id, editMode }) => {
     }
   } = config;
 
+  const { pathToBusinessPages } = config.routes;
+
   const {
     createBusinessPage,
     uaSetText,
@@ -95,47 +97,47 @@ const BusinessPageForm = ({ id, editMode }) => {
     enTitle: Yup.string().required(ENTER_TITLE_ERROR_MESSAGE)
   });
 
-  const {
-    values,
-    errors,
-    touched,
-    handleSubmit,
-    handleBlur,
-    handleChange
-  } = useFormik({
-    initialValues: {
-      code,
-      uaTitle,
-      enTitle,
-      uaText,
-      enText
-    },
-    validationSchema: formSchema,
-    onSubmit: async () => {
-      const uniqueFiles = files.filter((file, i) => {
-        const { name, size } = file;
-        return indexFinder(i, files, name, size);
-      });
+  const { values, errors, touched, handleSubmit, handleBlur, handleChange } =
+    useFormik({
+      initialValues: {
+        code,
+        uaTitle,
+        enTitle,
+        uaText,
+        enText
+      },
+      validationSchema: formSchema,
+      onSubmit: async () => {
+        const uniqueFiles = files.filter((file, i) => {
+          const { name, size } = file;
+          return indexFinder(i, files, name, size);
+        });
 
-      const newUaText = values.uaText.replace(/src="data:image.*?"/g, 'src=""');
-      const newEnText = values.enText.replace(/src="data:image.*?"/g, 'src=""');
+        const newUaText = values.uaText.replace(
+          /src="data:image.*?"/g,
+          'src=""'
+        );
+        const newEnText = values.enText.replace(
+          /src="data:image.*?"/g,
+          'src=""'
+        );
 
-      const page = createBusinessPage({
-        ...values,
-        uaText: newUaText,
-        enText: newEnText
-      });
+        const page = createBusinessPage({
+          ...values,
+          uaText: newUaText,
+          enText: newEnText
+        });
 
-      businessPageDispatchHandler(
-        editMode,
-        dispatch,
-        updateBusinessPage,
-        addBusinessPage,
-        { id, page, files: uniqueFiles },
-        { page, files: uniqueFiles }
-      );
-    }
-  });
+        businessPageDispatchHandler(
+          editMode,
+          dispatch,
+          updateBusinessPage,
+          addBusinessPage,
+          { id, page, files: uniqueFiles },
+          { page, files: uniqueFiles }
+        );
+      }
+    });
 
   useMemo(() => {
     values.code = code;
@@ -165,8 +167,37 @@ const BusinessPageForm = ({ id, editMode }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className={common.container}>
+    <div className={classes.container}>
+      <div className={classes.buttonContainer}>
+        <Grid container spacing={2} className={classes.fixedButtons}>
+          <Grid item className={classes.button}>
+            <BackButton
+              initial={!valueEquality}
+              pathBack={pathToBusinessPages}
+            />
+          </Grid>
+          <Grid item className={classes.button}>
+            <SaveButton
+              id='save'
+              type='submit'
+              title='Зберегти'
+              data-cy='save-btn'
+              onClickHandler={handleSubmit}
+              values={{
+                code: values.code,
+                uaTitle: values.uaTitle,
+                enTitle: values.enTitle
+              }}
+              errors={errors}
+            />
+          </Grid>
+        </Grid>
+      </div>
       <div className={common.adminHeader}>
         <Typography
           variant='h1'
@@ -176,48 +207,31 @@ const BusinessPageForm = ({ id, editMode }) => {
           {config.titles.businessPageTitles.addBusinessPageTitle}
         </Typography>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <Grid item xs={12}>
-            <Paper className={classes.businessPageForm}>
-              <TextField
-                id='code'
-                className={classes.textField}
-                variant='outlined'
-                label='Код сторінки'
-                value={values.code}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.code && !!errors.code}
-                data-cy='page-code'
-              />
-            </Paper>
-            {touched.code && errors.code && (
-              <div data-cy='code-error' className={classes.errorMessage}>
-                {errors.code}
-              </div>
-            )}
-          </Grid>
-          {languages.map((lang) => (
-            <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
-          ))}
-        </div>
-        <div className={classes.controlsBlock}>
-          <BackButton initial={!valueEquality} />
-          <SaveButton
-            className={classes.controlButton}
-            id='save'
-            type='submit'
-            title='Зберегти'
-            data-cy='save-btn'
-            values={{
-              code: values.code,
-              uaTitle: values.uaTitle,
-              enTitle: values.enTitle
-            }}
-            errors={errors}
-          />
-        </div>
+
+      <form onSubmit={(e) => eventPreventHandler(e)}>
+        <Grid item xs={12}>
+          <Paper className={classes.businessPageForm}>
+            <TextField
+              id='code'
+              className={classes.textField}
+              variant='outlined'
+              label='Код сторінки'
+              value={values.code}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.code && !!errors.code}
+              data-cy='page-code'
+            />
+          </Paper>
+          {touched.code && errors.code && (
+            <div data-cy='code-error' className={classes.errorMessage}>
+              {errors.code}
+            </div>
+          )}
+        </Grid>
+        {languages.map((lang) => (
+          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+        ))}
       </form>
     </div>
   );

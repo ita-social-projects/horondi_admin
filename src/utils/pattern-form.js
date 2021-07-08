@@ -46,7 +46,7 @@ export const useFormikInitialValues = (pattern) => ({
   enName: pattern.name[1].value || '',
   uaDescription: pattern.description[0].value || '',
   enDescription: pattern.description[1].value || '',
-  material: pattern.material._id || '',
-  available: pattern.available || false,
-  handmade: pattern.handmade || false
+  material: pattern.features.material._id || '',
+  handmade: pattern.features.handmade || false,
+  available: pattern.available || false
 });

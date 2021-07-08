@@ -1,8 +1,8 @@
-import {getItems, setItems} from '../../utils/client';
-import {homePageEditTranslations} from '../../translations/home-page-edit.translations';
+import { getItems, setItems } from '../../utils/client';
+import { homePageEditTranslations } from '../../translations/home-page-edit.translations';
 
 const getHomePageLooksImages = async () => {
-    const query = `
+  const query = `
       query {
         getHomePageLooksImages {
           _id
@@ -13,12 +13,12 @@ const getHomePageLooksImages = async () => {
       }
     `;
 
-    const result = await getItems(query);
+  const result = await getItems(query);
 
-    return result?.data?.getHomePageLooksImages;
+  return result?.data?.getHomePageLooksImages;
 };
 const updateHomePageLooksImage = async (id, upload) => {
-    const query = `
+  const query = `
       mutation($id: ID!, $upload: Upload) {
         updateHomePageLooksImage(id: $id, images: $upload) {
           ... on HomePageImages {
@@ -34,21 +34,21 @@ const updateHomePageLooksImage = async (id, upload) => {
       }
     `;
 
-    const result = await setItems(query, {id, upload});
+  const result = await setItems(query, { id, upload });
 
-    if (
-        Object.keys(homePageEditTranslations).includes(
-            result?.data?.updateHomePageLooksImage?.message
-        )
-    ) {
-        throw new Error(
-            `${result.data.updateHomePageLooksImage.statusCode} ${
-                homePageEditTranslations[result.data.updateHomePageLooksImage.message]
-            }`
-        );
-    }
+  if (
+    Object.keys(homePageEditTranslations).includes(
+      result?.data?.updateHomePageLooksImage?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.updateHomePageLooksImage.statusCode} ${
+        homePageEditTranslations[result.data.updateHomePageLooksImage.message]
+      }`
+    );
+  }
 
-    return result?.data?.updateHomePageLooksImage;
+  return result?.data?.updateHomePageLooksImage;
 };
 
-export {getHomePageLooksImages, updateHomePageLooksImage};
+export { getHomePageLooksImages, updateHomePageLooksImage };

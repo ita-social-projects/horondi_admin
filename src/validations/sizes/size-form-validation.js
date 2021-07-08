@@ -18,20 +18,7 @@ const {
 
 export const formSchema = Yup.object().shape({
   name: Yup.string().required(VALIDATION_ERROR),
-
-  simpleNameUa: Yup.string()
-    .typeError(NO_STRING_TYPE_MESSAGE)
-    .matches(config.formRegExp.uaNameCreation, NOT_UA_INPUT_MESSAGE)
-    .min(1, MIN_LENGTH_MESSAGE_SIZE)
-    .max(20, MAX_LENGTH_MESSAGE)
-    .required(VALIDATION_ERROR),
-
-  simpleNameEn: Yup.string()
-    .typeError(NO_STRING_TYPE_MESSAGE)
-    .matches(config.formRegExp.enNameCreation, NOT_EN_INPUT_MESSAGE)
-    .min(1, MIN_LENGTH_MESSAGE_SIZE)
-    .max(20, MAX_LENGTH_MESSAGE)
-    .required(VALIDATION_ERROR),
+  modelId: Yup.string().required(VALIDATION_ERROR),
   heightInCm: Yup.number()
     .typeError(NO_NUMBER_TYPE_MESSAGE)
     .min(1, MIN_LENGTH_MESSAGE)

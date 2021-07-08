@@ -4,7 +4,6 @@ import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import { render, fireEvent, act } from '@testing-library/react';
-import * as formik from 'formik';
 
 import CommentForm from '../index';
 import { config } from '../../../../configs';
@@ -71,26 +70,26 @@ describe('Comment form tests', () => {
   });
 
   it(`Should render Product Info button with '${productInfo}' label`, () => {
-    expect(wrapper.find('button').at(0).text()).toBe(productInfo);
+    expect(wrapper.find('button').at(2).text()).toBe(productInfo);
   });
 
   it(`Should call handleClick Product Info button click`, () => {
     const { getAllByRole } = render(
       <CommentForm comment={mockComment} id={mockId} isEdit={mockIsEdit} />
     );
-    fireEvent.click(getAllByRole('button')[0]);
+    fireEvent.click(getAllByRole('button')[2]);
     expect(mockHistoryPush).toHaveBeenCalled();
     expect(mockHistoryPush).toHaveBeenCalledWith(
-      `/product/${mockComment.product._id}`
+      `/products/${mockComment.product._id}`
     );
   });
 
   it(`Should render Go back button with '${GO_BACK_TITLE}' label`, () => {
-    expect(wrapper.find('button').at(1).text()).toBe(GO_BACK_TITLE);
+    expect(wrapper.find('button').at(0).text()).toBe(GO_BACK_TITLE);
   });
 
   it(`Should render Save button with '${SAVE_TITLE}' label`, () => {
-    expect(wrapper.find('button').at(2).text()).toBe(SAVE_TITLE);
+    expect(wrapper.find('button').at(1).text()).toBe(SAVE_TITLE);
   });
 
   it('Should have appropriate prop types', () => {

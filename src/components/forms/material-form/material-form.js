@@ -37,6 +37,8 @@ function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
+  const { pathToMaterials } = config.routes;
+
   const { loading } = useSelector(materialSelector);
 
   const { createMaterial } = useMaterialHandlers();
@@ -74,35 +76,29 @@ function MaterialForm({ material, id }) {
     colors: Yup.array().of(Yup.string()).required(VALIDATION_ERROR)
   });
 
-  const {
-    values,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched,
-    setFieldValue
-  } = useFormik({
-    validationSchema: formSchema,
-    validateOnBlur: true,
-    initialValues: getMaterialFormInitValues(material, purposeEnum),
-    onSubmit: (data) => {
-      const newMaterial = createMaterial(data);
-      if (id) {
+  const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
+    useFormik({
+      validationSchema: formSchema,
+      validateOnBlur: true,
+      initialValues: getMaterialFormInitValues(material, purposeEnum),
+      onSubmit: (data) => {
+        const newMaterial = createMaterial(data);
+        if (id) {
+          dispatch(
+            updateMaterial({
+              id,
+              material: { ...newMaterial }
+            })
+          );
+          return;
+        }
         dispatch(
-          updateMaterial({
-            id,
+          addMaterial({
             material: { ...newMaterial }
           })
         );
-        return;
       }
-      dispatch(
-        addMaterial({
-          material: { ...newMaterial }
-        })
-      );
-    }
-  });
+    });
 
   const checkboxes = [
     {
@@ -141,9 +137,33 @@ function MaterialForm({ material, id }) {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={styles.container}>
-      <form className={styles.materialForm} onSubmit={handleSubmit}>
+      <form
+        className={styles.materialForm}
+        onSubmit={(e) => eventPreventHandler(e)}
+      >
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton initial={!valueEquality} pathBack={pathToMaterials} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                type='submit'
+                onClickHandler={handleSubmit}
+                title={config.buttonTitles.SAVE_MATERIAL}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <ColorsBar
@@ -202,19 +222,6 @@ function MaterialForm({ material, id }) {
           </Paper>
         </Grid>
         {languages.length > 0 ? <div>{languageTabs}</div> : null}
-        <div className={styles.controlsBlock}>
-          <div>
-            <BackButton initial={!valueEquality} />
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='save'
-              type='submit'
-              title={config.buttonTitles.SAVE_MATERIAL}
-              values={values}
-              errors={errors}
-            />
-          </div>
-        </div>
       </form>
     </div>
   );

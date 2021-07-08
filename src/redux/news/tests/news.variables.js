@@ -123,5 +123,7 @@ export {
   statuses,
   mockError,
   mockTableState,
-  mockAddNewsPayload
+  mockAddNewsPayload,
+  skip,
+  limit
 };

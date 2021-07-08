@@ -9,7 +9,8 @@ export const useStyles = makeStyles((theme) => ({
     padding: 25,
     '@media (max-width: 768px)': {
       flexDirection: 'column',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      margin: '30px 0 16px'
     }
   },
   userDetails: {
@@ -31,7 +32,10 @@ export const useStyles = makeStyles((theme) => ({
 
   controlsBlock: {
     display: 'flex',
-    margin: '40px 10px 20px 0'
+    margin: '40px 10px 20px 0',
+    '@media (max-width: 768px)': {
+      margin: '20px 10px 20px 0'
+    }
   },
   showComments: {
     width: '60%',
@@ -41,12 +45,13 @@ export const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      margin: '0 5%',
+      margin: '0 18%',
       width: 'auto',
       paddingTop: '15px'
     },
-    '@media (max-width: 320px)': {
-      margin: '0'
+    '@media (max-width: 450px)': {
+      margin: '0',
+      padding: '0'
     }
   }
 }));

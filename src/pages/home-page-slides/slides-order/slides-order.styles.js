@@ -72,11 +72,23 @@ export const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
       '& h3': {
         fontSize: '13px',
-        margin: '0px'
+        margin: '0px',
+        '@media (max-width: 450px)': {
+          fontSize: '10px'
+        },
+        '@media (max-width: 375px)': {
+          display: 'none'
+        }
       },
       '& p': {
         fontSize: '10px',
-        wordWrap: 'initial'
+        wordWrap: 'initial',
+        '@media (max-width: 375px)': {
+          display: 'none'
+        },
+        '@media (max-width: 450px)': {
+          fontSize: '8px'
+        }
       }
     }
   },
@@ -84,6 +96,9 @@ export const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: '0px',
     fontSize: '11px',
+    '@media (max-width: 375px)': {
+      display: 'none'
+    },
     '& span': {
       paddingLeft: '3px'
     }
@@ -94,7 +109,12 @@ export const useStyles = makeStyles((theme) => ({
       zoom: '80%'
     },
     '@media (max-width: 375px)': {
-      zoom: '65%'
+      width: '100%',
+      marginBottom: '15px'
+    },
+    '@media (max-width: 450px)': {
+      width: '100%',
+      marginBottom: '15px'
     }
   }
 }));

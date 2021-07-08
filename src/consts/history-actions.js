@@ -30,6 +30,8 @@ export const historyActions = {
   DELETE_PRODUCT: 'Видалено продукт',
   BLOCK_USER: 'Деактивовано користувача',
   UNLOCK_USER: 'Активовано користувача ',
-  REGISTER_ADMIN: 'Зареєстровано адміністратора'
+  REGISTER_ADMIN: 'Зареєстровано адміністратора',
+  EDIT_POCKET: 'Редаговано кишеню',
+  ADD_POCKET: 'Створено кишеню',
+  DELETE_POCKET: 'Видалено кишеню'
 };
-

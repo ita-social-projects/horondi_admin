@@ -6,7 +6,6 @@ import {
   setEmailQuestionLoading,
   setEmailQuestionsError,
   setCurrentEmailQuestion,
-  setEmailQuestionsPagesCount,
   setEmailQuestionsPendingCount
 } from './email-questions.actions';
 import {
@@ -36,6 +35,7 @@ import {
 import routes from '../../configs/routes';
 import { AUTH_ERRORS } from '../../error-messages/auth';
 import { handleAdminLogout } from '../auth/auth.sagas';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
@@ -45,7 +45,7 @@ export function* handleEmailQuestionsLoad({ payload }) {
     const response = yield call(getAllEmailQuestions, payload);
 
     if (response) {
-      yield put(setEmailQuestionsPagesCount(Math.ceil(response?.count / 10)));
+      yield put(setItemsCount(response?.count));
       yield put(setAllEmailQuestion(response?.questions));
       yield put(setEmailQuestionLoading(false));
     }
@@ -152,8 +152,8 @@ export function* handleEmailQuestionsDelete({ payload }) {
           )
         )
       );
-
       yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+      yield put(updatePagination());
       yield put(setEmailQuestionLoading(false));
     }
   } catch (error) {

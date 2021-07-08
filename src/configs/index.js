@@ -4,7 +4,8 @@ import {
   menuCategories,
   clientMenuCategories,
   catalogMenuCategories,
-  staticPagesCategories
+  staticPagesCategories,
+  constructorMenuCategories
 } from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
@@ -17,6 +18,7 @@ import {
   colorErrorMessages,
   contactErrorMessages,
   patternErrorMessages,
+  backErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
@@ -29,7 +31,8 @@ import {
   paginationInputErrorMessages,
   commentErrorMessages,
   sizeErrorMessages,
-  businessPageErrorMessages
+  businessPageErrorMessages,
+  pocketsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -110,6 +113,10 @@ export const config = {
     AVAILABLE_TEXT: 'Доступний',
     UNAVAILABLE_TEXT: 'Відсутній'
   },
+  pocketsAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Недоступний'
+  },
 
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
@@ -189,13 +196,13 @@ export const config = {
   },
   UAH: 'грн',
   maxItemsPerPage: 10,
-
   buttonTitles,
   detailTitles,
   messages,
   menuCategories,
   clientMenuCategories,
   catalogMenuCategories,
+  constructorMenuCategories,
   staticPagesCategories,
   routes,
   statuses,
@@ -208,6 +215,7 @@ export const config = {
   contactErrorMessages,
   categoryErrorMessages,
   patternErrorMessages,
+  backErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
@@ -226,7 +234,8 @@ export const config = {
   businessPageErrorMessages,
   imageUploadNewsInputsId,
   valueKeys,
-  inputNames
+  inputNames,
+  pocketsErrorMessages
 };
 export const inputTypes = {
   button: 'button',

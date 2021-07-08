@@ -4,7 +4,9 @@ export const useStyles = makeStyles((theme) => ({
   detailsContainer: {
     width: '100%',
     margin: theme.spacing(1),
-    padding: 10
+    '@media (max-width: 450px)': {
+      padding: 0
+    }
   },
   deletePanel: {
     width: '90%',
@@ -13,11 +15,15 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
   formControl: {
-    margin: '15px 20px',
-    minWidth: 120
+    margin: '0px 0px 15px',
+    width: '100%'
   },
   formSelect: {
-    width: 300
+    width: 300,
+    marginTop: '40px !important',
+    '@media (max-width: 450px)': {
+      width: 'inherit'
+    }
   },
   saveButton: {
     height: 40

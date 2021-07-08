@@ -1,6 +1,6 @@
 const routes = {
   pathToHistory: '/history',
-  pathToHistoryDetails:'/history/:id',
+  pathToHistoryDetails: '/history/:id',
   pathToLogin: '/login',
   pathToMainPage: '/',
   pathToPatterns: '/patterns',
@@ -15,11 +15,11 @@ const routes = {
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
   pathToProducts: '/products',
-  pathToAddProduct: '/add-product',
-  pathToEditProduct: '/product/:id',
+  pathToAddProduct: '/products/add-product',
+  pathToEditProduct: '/products/:id',
   pathToCategories: '/categories',
-  pathToAddCategory: '/add-category',
-  pathToEditCategory: '/add-category/:id',
+  pathToAddCategory: '/categories/add-category',
+  pathToEditCategory: '/categories/:id',
   pathToRegisterAdmin: '/register',
   pathToConfirmAdmin: '/confirmation/:token',
   pathToContacts: '/contacts',
@@ -52,6 +52,12 @@ const routes = {
   pathToHomePageSlideDetail: '/home-page-slides/:id',
   pathToConstructor: '/constructor/:id',
   pathToAddConstructor: '/constructor/:id/add',
-  pathToConstructorDetails: '/constructor/:id/:elementId'
+  pathToConstructorDetails: '/constructor/:id/:elementId',
+  pathToPockets: '/pockets',
+  pathToPocketsAdd: '/pockets/add',
+  pathToPocketsEdit: '/pockets/:id',
+  pathToBacks: '/backs',
+  pathToAddBacks: '/backs/add',
+  pathToBackDetails: '/backs/:id'
 };
 export default routes;

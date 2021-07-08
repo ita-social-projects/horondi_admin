@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     marginTop: '30px'
   },
-  title:{
-    marginBottom:0
+  title: {
+    marginBottom: 0
   }
 }));

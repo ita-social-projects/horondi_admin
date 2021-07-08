@@ -1,48 +1,56 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import Paper from '@material-ui/core/Paper';
+import { DateRangePicker } from 'rsuite';
+import { FORMAT_DATE, locale, size } from '../../../consts/date-range-picker';
+import { useStyles } from './filter-by-date.styles';
+import 'rsuite/dist/styles/rsuite-default.css';
 
-import {useStyles} from './filter-by-date.styles';
-import materialUiConstants from "../../../configs/material-ui-constants";
-import {generateDateFormatForInputValue} from "../../../utils/history";
+const NavFilterByDate = ({
+  filterByDateOptions: { dateFrom, dateTo, dateHandler }
+}) => {
+  const styles = useStyles();
+  const { afterToday } = DateRangePicker;
 
-const NavFilterByDate = ({filterByDateOptions: {filters, dateHandler, title}}) => {
-    const styles = useStyles();
+  const [value, setValue] = useState([]);
 
-    const setDateHandler = ({target}) => {
-        if (target.value) {
-            dateHandler(new Date(target.value).getTime());
-        }
-    };
+  const setDateHandler = (e) => {
+    dateHandler(e);
+  };
 
-    return (
-        <form className={styles.container} noValidate>
-            <TextField
-                id={materialUiConstants.types.datetimeLocal}
-                onBlur={setDateHandler}
-                label={title}
-                defaultValue={filters ? generateDateFormatForInputValue(filters) : ''}
-                type={materialUiConstants.types.datetimeLocal}
-                className={styles.textField}
-                InputLabelProps={{
-                    shrink: true
-                }}
-            />
-        </form>
-    );
+  useEffect(() => {
+    if (dateFrom && dateTo) {
+      setValue([dateFrom, dateTo]);
+    }
+  }, [dateFrom, dateTo]);
+
+  return (
+    <Paper className={styles.root}>
+      <DateRangePicker
+        menuClassName={styles.menuPicker}
+        className={styles.datePicker}
+        format={FORMAT_DATE.UA}
+        appearance='subtle'
+        isoWeek
+        locale={locale}
+        size={size.sm}
+        value={value}
+        disabledDate={afterToday()}
+        onChange={setDateHandler}
+      />
+    </Paper>
+  );
 };
 
 NavFilterByDate.propTypes = {
-    filters: PropTypes.string,
-    title: PropTypes.string,
-    setDateRangeFilter: PropTypes.func
+  dateFrom: PropTypes.string,
+  dateTo: PropTypes.string,
+  filterByDateOptions: PropTypes.objectOf(PropTypes.object)
 };
-
 NavFilterByDate.defaultProps = {
-    filters: '',
-    setDateRangeFilter: _.noop,
-    title: ''
+  dateFrom: '',
+  dateTo: '',
+  filterByDateOptions: {}
 };
 
 export default NavFilterByDate;

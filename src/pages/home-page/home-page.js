@@ -63,44 +63,44 @@ const HomePage = () => {
   const photosItems =
     photos && photos.length
       ? photos.map((photo, i) => (
-        <Grid
-          item
-          xs={3}
-          key={photo._id}
-          container
-          direction='row'
-          justify='center'
-          alignItems='center'
-          data-cy={`${photo._id}-${i}`}
-        >
-          <label className={styles.uploadContainer}>
-            <input
-              style={{ display: 'none' }}
-              accept='image/*'
-              id='upload-photo'
-              name={`upload-photo-${photo._id}`}
-              data-cy={`upload-photo-${i}`}
-              type='file'
-              onChange={(e) => photoUpdateHandler(e, photo._id)}
-            />
-            <Avatar
-              variant='square'
-              className={styles.avatar}
-              data-cy={`photo-${i}`}
-              src={
-                (image[`upload-photo-${photo._id}`] &&
+          <Grid
+            item
+            xs={3}
+            key={photo._id}
+            container
+            direction='row'
+            justify='center'
+            alignItems='center'
+            data-cy={`${photo._id}-${i}`}
+          >
+            <label className={styles.uploadContainer}>
+              <input
+                style={{ display: 'none' }}
+                accept='image/*'
+                id='upload-photo'
+                name={`upload-photo-${photo._id}`}
+                data-cy={`upload-photo-${i}`}
+                type='file'
+                onChange={(e) => photoUpdateHandler(e, photo._id)}
+              />
+              <Avatar
+                variant='square'
+                className={styles.avatar}
+                data-cy={`photo-${i}`}
+                src={
+                  (image[`upload-photo-${photo._id}`] &&
                     image[`upload-photo-${photo._id}`].preview) ||
                   `${IMG_URL}${photo.images.small}`
-              }
-            >
-              <ImageIcon />
-            </Avatar>
-            <div className={styles.overlay}>
-              <BackupIcon className={styles.uploadIcon} />
-            </div>
-          </label>
-        </Grid>
-      ))
+                }
+              >
+                <ImageIcon />
+              </Avatar>
+              <div className={styles.overlay}>
+                <BackupIcon className={styles.uploadIcon} />
+              </div>
+            </label>
+          </Grid>
+        ))
       : null;
 
   if (loading) {

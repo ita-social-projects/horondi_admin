@@ -19,7 +19,8 @@ import {
   CLEAR_FILTERS,
   BLOCK_USER,
   UNLOCK_USER,
-  CONFIRM_SUPERADMIN_CREATION, USER_SORT_LABEL
+  CONFIRM_SUPERADMIN_CREATION,
+  USER_SORT_LABEL
 } from './users.types';
 
 const getUsers = (payload) => ({

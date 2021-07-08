@@ -11,7 +11,7 @@ import {
 } from './sizes.types';
 
 export const selectSizes = ({ Sizes }) => ({
-  sizesList: Sizes.list?.items,
+  sizesList: Sizes.list,
   loading: Sizes.sizesLoading,
   size: Sizes.size,
   filters: Sizes.filters
@@ -34,61 +34,61 @@ export const initialState = {
 
 const sizeReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case CLEAR_FILTERS:
-    return {
-      ...state,
-      filters: initialFilters
-    };
-  case SET_FILTER:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        ...action.payload
-      }
-    };
-  case SET_SIZES:
-    return {
-      ...state,
-      list: action.payload
-    };
-  case SET_SIZE:
-    return {
-      ...state,
-      size: action.payload
-    };
-  case REMOVE_SIZE_FROM_STATE: {
-    const list = state.list.filter((size) => size._id !== action.payload);
-    return {
-      ...state,
-      list
-    };
-  }
-  case ADD_SIZE_TO_STATE: {
-    const list = [...state.list];
-    list.push(action.payload);
-    return {
-      ...state,
-      list
-    };
-  }
-  case SET_SIZES_LOADING:
-    return {
-      ...state,
-      sizesLoading: action.payload
-    };
-  case SET_SIZES_ERROR:
-    return {
-      ...state,
-      sizeError: action.payload
-    };
-  case SHOW_SIZE_DIALOG_WINDOW:
-    return {
-      ...state,
-      showSizeDialogWindow: action.payload
-    };
-  default:
-    return state;
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: initialFilters
+      };
+    case SET_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload
+        }
+      };
+    case SET_SIZES:
+      return {
+        ...state,
+        list: action.payload
+      };
+    case SET_SIZE:
+      return {
+        ...state,
+        size: action.payload
+      };
+    case REMOVE_SIZE_FROM_STATE: {
+      const list = state.list.filter((size) => size._id !== action.payload);
+      return {
+        ...state,
+        list
+      };
+    }
+    case ADD_SIZE_TO_STATE: {
+      const list = [...state.list];
+      list.push(action.payload);
+      return {
+        ...state,
+        list
+      };
+    }
+    case SET_SIZES_LOADING:
+      return {
+        ...state,
+        sizesLoading: action.payload
+      };
+    case SET_SIZES_ERROR:
+      return {
+        ...state,
+        sizeError: action.payload
+      };
+    case SHOW_SIZE_DIALOG_WINDOW:
+      return {
+        ...state,
+        showSizeDialogWindow: action.payload
+      };
+    default:
+      return state;
   }
 };
 

@@ -1,3 +1,3 @@
-import ConstructorAdd from './constructor-add'
+import ConstructorAdd from './constructor-add';
 
-export default ConstructorAdd
+export default ConstructorAdd;
