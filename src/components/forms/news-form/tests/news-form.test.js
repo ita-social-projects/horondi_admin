@@ -5,12 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import ImageUploadPreviewContainer from '../../../../containers/image-upload-container/image-upload-previewContainer';
 
 import NewsForm from '../index';
-import {
-  mockId,
-  mockNewsArticle,
-  mockEditMode,
-  mockDefaultProps
-} from './news-form.variables';
+import { mockId, mockNewsArticle, mockEditMode } from './news-form.variables';
 import LanguagePanel from '../../language-panel';
 
 configure({ adapter: new Adapter() });
@@ -104,11 +99,5 @@ describe('NewsForm tests', () => {
 
   it('Should render component form', () => {
     expect(wrapper.exists('form')).toBe(true);
-  });
-
-  it('Should render defaultProps', () => {
-    expect(NewsForm.defaultProps).toBeDefined();
-    expect(NewsForm.defaultProps.id).toBe(mockDefaultProps.id);
-    expect(NewsForm.defaultProps.editForm).toBe(mockDefaultProps.editForm);
   });
 });
