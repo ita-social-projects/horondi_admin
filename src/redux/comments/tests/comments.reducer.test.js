@@ -6,7 +6,11 @@ import {
   setCommentError,
   removeCommentFromStore,
   setFilter,
-  clearFilters
+  clearFilters,
+  setRecentComments,
+  setReplyComments,
+  removeReplyCommentFromStore,
+  clearComment
 } from '../comments.actions';
 import {
   comments,
@@ -14,7 +18,10 @@ import {
   commentsLoadingStatus,
   commentsErrorExample,
   filter,
-  mockInitialFilters
+  mockInitialFilters,
+  replyCommentsData,
+  replyItem,
+  replyCommentId
 } from './comments.variables';
 
 describe('comments reducer tests', () => {
@@ -71,6 +78,44 @@ describe('comments reducer tests', () => {
     expect(commentsReducer(initialState, clearFilters())).toEqual({
       ...initialState,
       filters: mockInitialFilters
+    });
+  });
+  it('should set recent comments', () => {
+    expect(
+      commentsReducer(initialState, setRecentComments(comments.list))
+    ).toEqual({
+      ...initialState,
+      recentComments: comments.list
+    });
+  });
+  it('should set reply comments', () => {
+    expect(
+      commentsReducer(initialState, setReplyComments(replyCommentsData))
+    ).toEqual({
+      ...initialState,
+      replyComments: replyCommentsData
+    });
+  });
+  it('should clear comment', () => {
+    expect(
+      commentsReducer(
+        { ...initialState, comment: comments.list },
+        clearComment()
+      )
+    ).toEqual({
+      ...initialState,
+      comment: null
+    });
+  });
+  it('should remove reply coment from the list', () => {
+    expect(
+      commentsReducer(
+        { ...initialState, replyComments: replyCommentsData },
+        removeReplyCommentFromStore(replyCommentId)
+      )
+    ).toEqual({
+      ...initialState,
+      replyComments: [replyItem]
     });
   });
 });

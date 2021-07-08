@@ -2,22 +2,32 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 import { push } from 'connected-react-router';
-
+import { throwError } from 'redux-saga-test-plan/providers';
+import { setAuth } from '../../auth/auth.actions';
+import { handleAdminLogout } from '../../auth/auth.sagas';
 import {
   handleCommentsLoad,
   handleCommentLoad,
   handleCommentDelete,
   handleCommentUpdate,
   handleCommentsByTypeLoad,
-  handleCommentsError
+  handleCommentsError,
+  handleRecentCommentsLoad,
+  handleGetReplyComments,
+  handleAddReplyComment,
+  handleReplyCommentDelete
 } from '../comments.sagas';
 
 import {
-  getRecentComments,
   deleteComment,
   updateComment,
   getCommentById,
-  getCommentsByType
+  getCommentsByType,
+  getAllComments,
+  getRecentComments,
+  getReplyComments,
+  addReplyForComment,
+  deleteReplyComment
 } from '../comments.operations';
 
 import {
@@ -25,7 +35,10 @@ import {
   setCommentsLoading,
   setCommentError,
   removeCommentFromStore,
-  setComment
+  setComment,
+  setRecentComments,
+  setReplyComments,
+  removeReplyCommentFromStore
 } from '../comments.actions';
 
 import { GET_PRODUCT_COMMENTS } from '../comments.types';
@@ -43,9 +56,15 @@ import {
   productId,
   mockError,
   mockSnackbarState,
-  effectCallType,
-  effectPutType,
-  snackBarError
+  snackBarError,
+  filter,
+  mockErrorUser,
+  getReplyCommentsData,
+  addReplyData,
+  snackBarSuccess,
+  mockSuccess,
+  replyCommentId,
+  mockSuccessDelete
 } from './comments.variables';
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
@@ -64,24 +83,15 @@ import Snackbar from '../../snackbar/snackbar.reducer';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
-const testsPromiseResults = (result) => {
-  const { allEffects: analysis } = result;
-  const analysisPut = analysis.filter((e) => e.type === effectPutType);
-  const analysisCall = analysis.filter((e) => e.type === effectCallType);
-  expect(analysis).toHaveLength(4);
-  expect(analysisPut).toHaveLength(3);
-  expect(analysisCall).toHaveLength(1);
-};
-
-describe('comments sagas tests', () => {
+describe('get comments sagas tests', () => {
   it('should handle comments load', () => {
-    expectSaga(handleCommentsLoad, { payload: { pagination } })
+    expectSaga(handleCommentsLoad, { payload: { filter, pagination } })
       .withReducer(combineReducers({ Table, commentsReducer }), {
         commentsReducer: initialState,
         Table: mockTableState
       })
       .put(setCommentsLoading(true))
-      .provide([[call(getRecentComments, pagination), commentRes]])
+      .provide([[call(getAllComments, filter, pagination), commentRes]])
       .put(setItemsCount(commentRes.count))
       .put(setComments(commentRes.items))
       .put(setCommentsLoading(false))
@@ -95,16 +105,27 @@ describe('comments sagas tests', () => {
           itemsCount: commentRes.count
         }
       })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisCall = analysis.filter((e) => e.type === effectCallType);
-        const analysisPut = analysis.filter((e) => e.type === effectPutType);
-        expect(analysis).toHaveLength(5);
-        expect(analysisPut).toHaveLength(4);
-        expect(analysisCall).toHaveLength(1);
-      });
+      .run();
   });
+
+  it('should throw an error', () =>
+    expectSaga(handleCommentsLoad, { payload: { filter, pagination } })
+      .withReducer(combineReducers({ Table, commentsReducer }), {
+        commentsReducer: initialState,
+        Table: mockTableState
+      })
+      .provide([
+        [call(getAllComments, filter, pagination), throwError(mockError)]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('get comment sagas tests', () => {
   it('should handle the load of one specific comment by its id', () => {
     expectSaga(handleCommentLoad, { payload: commentId })
       .withReducer(commentsReducer)
@@ -116,15 +137,28 @@ describe('comments sagas tests', () => {
         ...initialState,
         comment: singleComment
       })
-      .run()
-      .then(testsPromiseResults);
+      .run();
   });
+
+  it('should throw an error', () =>
+    expectSaga(handleCommentLoad, { payload: commentId })
+      .withReducer(commentsReducer)
+      .provide([[call(getCommentById, commentId), throwError(mockError)]])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('delete comment sagas tests', () => {
   it('should handle the delition of one comment by id', () => {
     expectSaga(handleCommentDelete, { payload: commentId })
       .withReducer(commentsReducer)
       .put(setCommentsLoading(true))
       .provide([
-        [call(deleteComment, commentId)],
+        [call(deleteComment, commentId), commentId],
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
       .put(removeCommentFromStore(commentId))
@@ -133,16 +167,22 @@ describe('comments sagas tests', () => {
       .hasFinalState({
         ...initialState
       })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === effectPutType);
-        const analysisCall = analysis.filter((e) => e.type === effectCallType);
-        expect(analysis).toHaveLength(6);
-        expect(analysisPut).toHaveLength(4);
-        expect(analysisCall).toHaveLength(2);
-      });
+      .run();
   });
+
+  it('should throw an error', () =>
+    expectSaga(handleCommentDelete, { payload: commentId })
+      .withReducer(commentsReducer)
+      .provide([[call(deleteComment, commentId), throwError(mockError)]])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('update comment sagas tests', () => {
   it('should update a specific comment', () => {
     expectSaga(handleCommentUpdate, {
       payload: { id: singleComment._id, comment: singleComment }
@@ -150,7 +190,7 @@ describe('comments sagas tests', () => {
       .withReducer(commentsReducer)
       .put(setCommentsLoading(true))
       .provide([
-        [call(updateComment, singleComment._id, singleComment)],
+        [call(updateComment, singleComment._id, singleComment), singleComment],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
       .put(push(config.routes.pathToComments))
@@ -158,16 +198,29 @@ describe('comments sagas tests', () => {
         ...initialState,
         commentsLoading: true
       })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === effectPutType);
-        const analysisCall = analysis.filter((e) => e.type === effectCallType);
-        expect(analysis).toHaveLength(4);
-        expect(analysisPut).toHaveLength(2);
-        expect(analysisCall).toHaveLength(2);
-      });
+      .run();
   });
+
+  it('should throw an error', () =>
+    expectSaga(handleCommentUpdate, {
+      payload: { id: singleComment._id, comment: singleComment }
+    })
+      .withReducer(commentsReducer)
+      .provide([
+        [
+          call(updateComment, singleComment._id, singleComment),
+          throwError(mockError)
+        ]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('handle comment by type sagas tests', () => {
   it('should handle the loading of comments by type', () => {
     expectSaga(handleCommentsByTypeLoad, {
       payload: { value: productId, commentsType: GET_PRODUCT_COMMENTS }
@@ -186,9 +239,159 @@ describe('comments sagas tests', () => {
         ...initialState,
         list: singleComment
       })
-      .run()
-      .then(testsPromiseResults);
+      .run();
   });
+
+  it('should throw an error', () =>
+    expectSaga(handleCommentsByTypeLoad, {
+      payload: { value: productId, commentsType: GET_PRODUCT_COMMENTS }
+    })
+      .withReducer(commentsReducer)
+      .provide([
+        [
+          call(getCommentsByType, productId, GET_PRODUCT_COMMENTS),
+          throwError(mockError)
+        ]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('handle recent comment sagas tests', () => {
+  it('should handle recent comment', () => {
+    expectSaga(handleRecentCommentsLoad, {
+      payload: { pagination }
+    })
+      .withReducer(commentsReducer)
+      .put(setCommentsLoading(true))
+      .provide([[call(getRecentComments, pagination.limit), singleComment]])
+      .put(setRecentComments(singleComment))
+      .put(setCommentsLoading(false))
+      .hasFinalState({
+        ...initialState,
+        recentComments: singleComment
+      })
+      .run();
+  });
+
+  it('should throw an error', () =>
+    expectSaga(handleRecentCommentsLoad, { payload: { pagination } })
+      .withReducer(commentsReducer)
+      .provide([
+        [call(getRecentComments, pagination.limit), throwError(mockError)]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('handle get reply comments sagas tests', () => {
+  it('should get reply  comments', () => {
+    expectSaga(handleGetReplyComments, {
+      payload: { filter, pagination }
+    })
+      .withReducer(commentsReducer)
+      .put(setCommentsLoading(true))
+      .provide([
+        [call(getReplyComments, { filter, pagination }), getReplyCommentsData]
+      ])
+      .put(setReplyComments(getReplyCommentsData.items[0].replyComments))
+      .put(setCommentsLoading(false))
+      .hasFinalState({
+        ...initialState,
+        replyComments: getReplyCommentsData.items[0].replyComments
+      })
+      .run();
+  });
+
+  it('should throw an error', () =>
+    expectSaga(handleGetReplyComments, {
+      payload: { filter, pagination }
+    })
+      .withReducer(commentsReducer)
+      .provide([
+        [call(getReplyComments, { filter, pagination }), throwError(mockError)]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('handle add reply comment sagas tests', () => {
+  it('should add reply comment', () => {
+    expectSaga(handleAddReplyComment, {
+      payload: addReplyData
+    })
+      .withReducer(commentsReducer)
+      .put(setCommentsLoading(true))
+      .provide([[call(addReplyForComment, addReplyData), commentId]])
+      .put(setCommentsLoading(false))
+      .put(setSnackBarSeverity(snackBarSuccess))
+      .put(setSnackBarMessage(mockSuccess.message))
+      .put(setSnackBarStatus(true))
+      .put(push(config.routes.pathToComments))
+      .run();
+  });
+
+  it('should throw an error', () =>
+    expectSaga(handleAddReplyComment, {
+      payload: addReplyData
+    })
+      .withReducer(commentsReducer)
+      .provide([
+        [call(addReplyForComment, addReplyData), throwError(mockError)]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('handle delete reply comment sagas tests', () => {
+  it('should delete reply comment', () => {
+    expectSaga(handleReplyCommentDelete, {
+      payload: replyCommentId
+    })
+      .put(setCommentsLoading(true))
+      .provide([[call(deleteReplyComment, replyCommentId), replyCommentId]])
+      .put(removeReplyCommentFromStore(replyCommentId))
+      .put(updatePagination())
+      .put(setCommentsLoading(false))
+      .put(setSnackBarSeverity(snackBarSuccess))
+      .put(setSnackBarMessage(mockSuccessDelete.message))
+      .put(setSnackBarStatus(true))
+      .run();
+  });
+
+  it('should throw an error', () =>
+    expectSaga(handleReplyCommentDelete, {
+      payload: replyCommentId
+    })
+      .withReducer(commentsReducer)
+      .provide([
+        [call(deleteReplyComment, replyCommentId), throwError(mockError)]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run());
+});
+
+describe('handle comment saga error tests', () => {
   it('should handle comments error', () => {
     expectSaga(handleCommentsError, mockError)
       .withReducer(combineReducers({ commentsReducer, Snackbar }), {
@@ -215,11 +418,22 @@ describe('comments sagas tests', () => {
           snackBarMessage: mockError.message
         }
       })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === effectPutType);
-        expect(analysisPut).toHaveLength(5);
-      });
+      .run();
+  });
+
+  it('should handle comments error user', () => {
+    expectSaga(handleCommentsError, mockErrorUser)
+      .withReducer(combineReducers({ commentsReducer, Snackbar }), {
+        commentsReducer: {
+          ...initialState,
+          commentsLoading: true
+        },
+        Snackbar: mockSnackbarState
+      })
+      .provide([[call(handleAdminLogout), throwError(mockErrorUser)]])
+      .put(setCommentsLoading(false))
+      .put(setAuth(false))
+      .put(push(config.routes.pathToLogin))
+      .run();
   });
 });

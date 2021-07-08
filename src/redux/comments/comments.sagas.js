@@ -151,13 +151,10 @@ export function* handleGetReplyComments({ payload: { filter, pagination } }) {
     const replyComments = yield call(getReplyComments, { filter, pagination });
 
     if (replyComments?.items[0]?.replyComments) {
-      // yield put(setItemsCount(replyComments?.count));
       yield put(setReplyComments(replyComments?.items[0]?.replyComments));
       yield put(setCommentsLoading(false));
     }
-    yield put(setCommentsLoading(false));
   } catch (e) {
-    yield put(setCommentsLoading(false));
     yield call(handleCommentsError, e);
   }
 }

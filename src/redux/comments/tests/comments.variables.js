@@ -22,9 +22,19 @@ export const switchId = 'ed17f080d44d7r88740a4ad1';
 export const mockError = {
   message: 'COMMENT_LOADING_ERROR'
 };
+export const mockErrorUser = {
+  message: 'USER_IS_BLOCKED'
+};
+export const mockSuccess = {
+  message: 'Успішно додано!'
+};
+export const mockSuccessDelete = {
+  message: 'Успішно видалено!'
+};
 export const effectPutType = 'PUT';
 export const effectCallType = 'CALL';
 export const snackBarError = 'error';
+export const snackBarSuccess = 'success';
 
 export const mockSnackbarState = {
   snackBarStatus: false,
@@ -119,9 +129,32 @@ export const addReplyData = {
     answerer: '601824cf6ec0f77526a74e11'
   }
 };
-export const replyCommentsData = [addReplyData, addReplyData];
+
+export const replyItem = {
+  _id: '60e0acee0580cb2548db5505',
+  replyText: 'test reply',
+  showReplyComment: false,
+  createdAt: '2021-07-03T18:31:10.303Z',
+  verifiedPurchase: true,
+  refToReplyComment: '60db19ba123304408493a704',
+  answerer: {
+    _id: '60a239778c0f983a5ceb218a',
+    firstName: 'Іван',
+    email: 'yur.dub7@gmail.com',
+    role: 'user'
+  }
+};
+
+export const replyCommentsData = [
+  replyItem,
+  { ...replyItem, _id: '92cb31bf8e5ea5af3914g341' }
+];
 
 export const replyFilter = {
   filters: true,
   commentId: '601824cf6ec0f77526a74e11'
+};
+
+export const getReplyCommentsData = {
+  items: [{ replyComments: replyCommentsData }]
 };
