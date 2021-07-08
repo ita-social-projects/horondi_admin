@@ -30,7 +30,6 @@ import {
 
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import { getColors } from '../../../redux/color/color.actions';
-import useMaterialFilters from '../../../hooks/filters/use-material-filters';
 
 const { IMG_URL } = config;
 const { backName, material } = config.labels.back;
