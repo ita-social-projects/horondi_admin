@@ -200,7 +200,6 @@ const ModelForm = ({ model, id, isEdit }) => {
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
-                className={styles.saveButton}
                 data-cy={materialUiConstants.save}
                 type={materialUiConstants.types.submit}
                 title={MODEL_SAVE_TITLE}
