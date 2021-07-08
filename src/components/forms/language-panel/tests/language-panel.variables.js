@@ -23,9 +23,7 @@ const mockDefaultProps = {
         required: false,
         isEditor: true
       }
-    ],
-    handleChange: () => {},
-    handleBlur: () => {}
+    ]
   }
 };
 
