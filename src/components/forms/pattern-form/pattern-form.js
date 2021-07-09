@@ -83,6 +83,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   }, [dispatch, pattern]);
 
   const patternValidationSchema = Yup.object().shape({
+    sizes: Yup.array().notRequired(),
     enDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .required(PATTERN_ERROR_MESSAGE)
@@ -207,14 +208,42 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       {loading ? (
         <LoadingBar />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <CheckboxOptions options={checkboxes} />
-
+        <form onSubmit={(e) => eventPreventHandler(e)}>
+          <div className={styles.buttonContainer}>
+            <Grid container spacing={2} className={styles.fixedButtons}>
+              <Grid item className={styles.button}>
+                <BackButton
+                  initial={!valueEquality}
+                  pathBack={pathToPatterns}
+                />
+              </Grid>
+              <Grid item className={styles.button}>
+                <SaveButton
+                  data-cy='save-btn'
+                  type='submit'
+                  onClickHandler={handleSubmit}
+                  title={SAVE_TITLE}
+                  values={values}
+                  errors={errors}
+                />
+              </Grid>
+            </Grid>
+          </div>
+          <span className={styles.patternTitle}>
+            {config.titles.patternTitles.createPageTitle}
+          </span>
+          <div>
+            <CheckboxOptions options={checkboxes} />
+          </div>
           <Grid item xs={12}>
             <Paper className={styles.patternItemUpdate}>
               <div className={styles.imageUploadBlock}>
@@ -287,15 +316,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton initial={!valueEquality} pathBack={pathToPatterns} />
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save-btn'
-            type='submit'
-            title={SAVE_TITLE}
-            values={values}
-            errors={errors}
-          />
         </form>
       )}
     </div>

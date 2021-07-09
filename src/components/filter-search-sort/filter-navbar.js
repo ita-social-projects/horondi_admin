@@ -32,7 +32,7 @@ const FilterNavbar = ({ options }) => {
       ) : null}
       {filterByMultipleOptions?.length
         ? filterByMultipleOptions.map((filterItem) => (
-            <Grid key={filterItem} className={styles.multipleValues} item>
+            <Grid key={filterItem.label} className={styles.multipleValues} item>
               <NavFilterByValues filterByMultipleOptions={filterItem} />
             </Grid>
           ))
@@ -52,16 +52,33 @@ const FilterNavbar = ({ options }) => {
 };
 
 FilterNavbar.propTypes = {
-  options: PropTypes.objectOf(PropTypes.object),
-  sortOptions: PropTypes.objectOf(PropTypes.object),
-  searchOptions: PropTypes.objectOf(PropTypes.object),
-  clearOptions: PropTypes.objectOf(PropTypes.object)
+  options: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+  ),
+  sortOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.string])
+  ),
+  searchOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+  ),
+  clearOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+  ),
+  filterByMultipleOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array,
+      PropTypes.string,
+      PropTypes.func
+    ])
+  )
 };
 
 FilterNavbar.defaultProps = {
   options: {},
   sortOptions: {},
   searchOptions: {},
-  clearOptions: {}
+  clearOptions: {},
+  filterByMultipleOptions: {}
 };
 export default FilterNavbar;

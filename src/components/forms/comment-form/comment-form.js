@@ -72,9 +72,30 @@ const CommentForm = ({ comment, id, isEdit }) => {
     history.push(pathToEditProduct.replace(':id', comment.product._id));
   }
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton pathBack={pathToComments} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                onClickHandler={handleSubmit}
+                data-cy='save'
+                type='submit'
+                title={SAVE_TITLE}
+                errors={errors}
+                values={values}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <Paper className={styles.paper}>
@@ -97,15 +118,6 @@ const CommentForm = ({ comment, id, isEdit }) => {
               {config.labels.comment.productInfo}
             </Button>
           </Paper>
-          <BackButton pathBack={pathToComments} />
-          <SaveButton
-            className={styles.saveCommentButton}
-            data-cy='save'
-            type='submit'
-            title={SAVE_TITLE}
-            errors={errors}
-            values={values}
-          />
         </Grid>
       </form>
     </div>

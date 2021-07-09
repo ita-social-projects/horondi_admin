@@ -27,6 +27,7 @@ const getAllComments = async (filter, pagination) => {
         }
       }
     `;
+
   const result = await getItems(query, { filter, pagination });
 
   return result?.data?.getAllComments;
@@ -76,8 +77,8 @@ const getRecentComments = async (limit) => {
 
 const deleteComment = async (id) => {
   const query = `
-        mutation($id: ID!) {
-          deleteComment(id: $id) {
+        mutation($comment: ID!,$id:ID) {
+          deleteComment(id:$id,commentID: $comment) {
             ... on Comment {
               _id
               text
@@ -99,7 +100,7 @@ const deleteComment = async (id) => {
         }
       `;
 
-  const result = await setItems(query, { id });
+  const result = await setItems(query, { comment: id });
 
   return result?.data?.deleteComment;
 };

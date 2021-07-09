@@ -6,13 +6,16 @@ import { Button, Typography } from '@material-ui/core';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import { getModels, deleteModel } from '../../redux/model/model.actions';
+import { getCategories } from '../../redux/categories/categories.actions';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
+import useModelFilters from '../../hooks/filters/use-model-filters';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
-import { selectModelAndTable } from '../../redux/selectors/model.selectors';
+import { modelSelectorWithPagination } from '../../redux/selectors/model.selectors';
 
 const map = require('lodash/map');
 
@@ -24,25 +27,40 @@ const tableTitles = config.tableHeadRowTitles.models;
 const pageTitle = config.titles.modelPageTitles.mainPageTitle;
 const { IMG_URL } = config;
 const { showEnable, showDisable } = config.labels.model;
-
+const { NO_MODEL_MESSAGE } = config.messages;
 const ModelPage = () => {
   const commonStyles = useCommonStyles();
-
-  const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading, currentPage, rowsPerPage, itemsCount } =
-    useSelector(selectModelAndTable);
-
   const dispatch = useDispatch();
+  const modelOptions = useModelFilters();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+  const { filter, list, sort, loading, currentPage, rowsPerPage, itemsCount } =
+    useSelector(modelSelectorWithPagination);
 
   useEffect(() => {
     dispatch(
       getModels({
-        limit: rowsPerPage,
-        skip: currentPage * rowsPerPage,
-        rowsPerPage
+        filter: {
+          category: filter.category,
+          available: filter.available,
+          availableForConstructor: filter.availableForConstructor,
+          search: filter.search
+        },
+        pagination: {
+          limit: rowsPerPage,
+          skip: currentPage * rowsPerPage
+        },
+        sort
       })
     );
-  }, [dispatch, rowsPerPage, currentPage]);
+    dispatch(
+      getCategories({
+        pagination: {
+          skip: currentPage * rowsPerPage,
+          limit: rowsPerPage
+        }
+      })
+    );
+  }, [dispatch, filter, sort, rowsPerPage, currentPage]);
 
   const modelDeleteHandler = (id) => {
     const removeModel = () => {
@@ -88,13 +106,20 @@ const ModelPage = () => {
           {CREATE_MODEL_TITLE}
         </Button>
       </div>
-      <TableContainerGenerator
-        data-cy='modelTable'
-        pagination
-        count={itemsCount}
-        tableTitles={tableTitles}
-        tableItems={modelItems}
-      />
+      <div>
+        <FilterNavbar options={modelOptions || {}} />
+      </div>
+      {modelItems?.length ? (
+        <TableContainerGenerator
+          data-cy='modelTable'
+          pagination
+          count={itemsCount}
+          tableTitles={tableTitles}
+          tableItems={modelItems}
+        />
+      ) : (
+        <p className={commonStyles.noRecords}>{NO_MODEL_MESSAGE}</p>
+      )}
     </div>
   );
 };

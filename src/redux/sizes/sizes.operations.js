@@ -9,12 +9,15 @@ export const getAllSizes = async (limit, skip, filter) => {
       $filter:SizeFilterInput
     ){
         getAllSizes(limit: $limit, skip: $skip, filter: $filter) {
-        items{
+        items {
           _id
           name
-          simpleName {
-            lang
-            value
+          modelId { 
+            _id
+            name { 
+              value
+              lang
+            }
           }
           available
           }
@@ -24,7 +27,6 @@ export const getAllSizes = async (limit, skip, filter) => {
     `;
 
   const result = await getItems(query, { limit, skip, filter });
-
   return result?.data?.getAllSizes;
 };
 
@@ -34,9 +36,12 @@ export const getSizeById = async (id) => {
         getSizeById(id: $id) {
           ... on Size {
             name
-            simpleName {
-              lang
-              value
+            modelId { 
+              _id
+              name { 
+                value
+                lang
+              }
             }
             heightInCm
             widthInCm

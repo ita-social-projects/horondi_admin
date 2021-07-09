@@ -74,6 +74,10 @@ const buttonTitles = {
   MODEL: 'Моделі',
   YES_BUTTON: 'Так',
   NO_BUTTON: 'Ні',
+  CREATE_BACK_TITLE: 'Додати спинку',
+  CREATE_POCKETS_TITLE: 'Додати кишеню',
+  PATTERN_AVAILABLE: 'Доступний',
+  PATTERN_MATERIAL: 'Матеріал',
   CREATE_CONSTRUCTOR: 'Створити новий '
 };
 

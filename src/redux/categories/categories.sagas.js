@@ -105,6 +105,7 @@ export function* handleCategoryUpdate({ payload }) {
     const category = yield call(updateCategory, payload);
 
     if (category) {
+      yield put(setCategoryLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
       yield put(push(config.routes.pathToCategories));
     }

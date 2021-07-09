@@ -7,12 +7,11 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import PropTypes from 'prop-types';
-
+import { Grid } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { useStyles } from './history-details.styles';
 import { getRecordItem } from '../../../redux/history/history.actions';
 import { historySelector } from '../../../redux/selectors/history';
-import { useCommonStyles } from '../../common.styles';
 import LoadingBar from '../../../components/loading-bar';
 import { useStyles as useTableHeadStyles } from '../../../containers/table-container-head/table-container-head.styles';
 import titles from '../../../configs/titles';
@@ -28,7 +27,6 @@ const HistoryDetails = ({ match }) => {
     useSelector(historySelector);
 
   const styles = useStyles({ darkMode });
-  const commonStyles = useCommonStyles();
   const tableHeadStyles = useTableHeadStyles();
 
   const dispatch = useDispatch();
@@ -42,12 +40,18 @@ const HistoryDetails = ({ match }) => {
   }
 
   return (
-    <div className={commonStyles.container}>
-      <BackButton initial={false} pathBack={pathToHistory} />
+    <div className={styles.container}>
+      <div className={styles.buttonContainer}>
+        <Grid container spacing={2} className={styles.fixedButtons}>
+          <Grid item className={styles.button}>
+            <BackButton initial={false} pathBack={pathToHistory} />
+          </Grid>
+        </Grid>
+      </div>
       <h2 className={styles.detailsTitle}>
         {titles.historyTitles.detailsTitleNumber(recordItem?._id)}
       </h2>
-      <Paper>
+      <Paper className={styles.userPaper}>
         <h3 className={styles.userInfoTitle}>
           {titles.historyTitles.userInfo}
         </h3>

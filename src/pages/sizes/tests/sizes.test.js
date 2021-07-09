@@ -47,6 +47,16 @@ describe('page Sizes tests', () => {
     expect(wrapper).toBeDefined();
   });
 
+  it('Component TableContainerGenerator should exist', () => {
+    mockLoading = true;
+    expect(wrapper.exists(TableContainerGenerator)).toBe(false);
+  });
+
+  it('Component TableContainerRow should exist', () => {
+    mockLoading = true;
+    expect(wrapper.exists(TableContainerRow)).toBe(false);
+  });
+
   it('Component Sizes should render and exist', () => {
     mockLoading = false;
     expect(wrapper.exists(Sizes)).toBe(true);
@@ -56,11 +66,6 @@ describe('page Sizes tests', () => {
   it('Component Typography should exist', () => {
     mockLoading = false;
     expect(wrapper.exists(Typography)).toBe(true);
-  });
-
-  it('Component TableContainerRow should exist', () => {
-    mockLoading = true;
-    expect(wrapper.exists(TableContainerRow)).toBe(false);
   });
 
   it('TableContainerRow editHandler should be invoked', () => {
@@ -85,10 +90,5 @@ describe('page Sizes tests', () => {
     useDispatchMock.mockReturnValue(mockHandler);
     expect(wrapper.exists(Button)).toBe(true);
     expect(wrapper.find(Button).text()).toBe(CREATE_SIZE_TITLE);
-  });
-
-  it('Component TableContainerGenerator should exist', () => {
-    mockLoading = true;
-    expect(wrapper.exists(TableContainerGenerator)).toBe(false);
   });
 });
