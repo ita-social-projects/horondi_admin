@@ -3,8 +3,6 @@ import { call } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 import { push } from 'connected-react-router';
 import { throwError } from 'redux-saga-test-plan/providers';
-import { setAuth } from '../../auth/auth.actions';
-import { handleAdminLogout } from '../../auth/auth.sagas';
 import {
   handleCommentsLoad,
   handleCommentLoad,
@@ -38,7 +36,8 @@ import {
   setComment,
   setRecentComments,
   setReplyComments,
-  removeReplyCommentFromStore
+  removeReplyCommentFromStore,
+  getReplyComments as getReplyCommentsAction
 } from '../comments.actions';
 
 import { GET_PRODUCT_COMMENTS } from '../comments.types';
@@ -58,13 +57,13 @@ import {
   mockSnackbarState,
   snackBarError,
   filter,
-  mockErrorUser,
   getReplyCommentsData,
   addReplyData,
   snackBarSuccess,
   mockSuccess,
   replyCommentId,
-  mockSuccessDelete
+  mockSuccessDelete,
+  tablePagination
 } from './comments.variables';
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
@@ -127,12 +126,15 @@ describe('get comments sagas tests', () => {
 
 describe('get comment sagas tests', () => {
   it('should handle the load of one specific comment by its id', () => {
-    expectSaga(handleCommentLoad, { payload: commentId })
+    expectSaga(handleCommentLoad, {
+      payload: { id: commentId, reply: { filter, pagination } }
+    })
       .withReducer(commentsReducer)
       .put(setCommentsLoading(true))
       .provide([[call(getCommentById, commentId), singleComment]])
       .put(setComment(singleComment))
       .put(setCommentsLoading(false))
+      .put(getReplyCommentsAction({ filter, pagination }))
       .hasFinalState({
         ...initialState,
         comment: singleComment
@@ -141,7 +143,9 @@ describe('get comment sagas tests', () => {
   });
 
   it('should throw an error', () =>
-    expectSaga(handleCommentLoad, { payload: commentId })
+    expectSaga(handleCommentLoad, {
+      payload: { id: commentId, reply: { filter, pagination } }
+    })
       .withReducer(commentsReducer)
       .provide([[call(getCommentById, commentId), throwError(mockError)]])
       .put(setCommentsLoading(false))
@@ -328,26 +332,36 @@ describe('handle get reply comments sagas tests', () => {
 });
 
 describe('handle add reply comment sagas tests', () => {
-  it('should add reply comment', () => {
+  it('should add reply comment', () =>
     expectSaga(handleAddReplyComment, {
       payload: addReplyData
     })
-      .withReducer(commentsReducer)
+      .withReducer(combineReducers({ Table, commentsReducer }), {
+        commentsReducer: initialState,
+        Table: mockTableState
+      })
       .put(setCommentsLoading(true))
       .provide([[call(addReplyForComment, addReplyData), commentId]])
-      .put(setCommentsLoading(false))
       .put(setSnackBarSeverity(snackBarSuccess))
       .put(setSnackBarMessage(mockSuccess.message))
       .put(setSnackBarStatus(true))
-      .put(push(config.routes.pathToComments))
-      .run();
-  });
+      .put(
+        getReplyCommentsAction({
+          filter: { filters: true, commentId: addReplyData.commentId },
+          pagination: tablePagination
+        })
+      )
+      .put(setCommentsLoading(false))
+      .run());
 
   it('should throw an error', () =>
     expectSaga(handleAddReplyComment, {
       payload: addReplyData
     })
-      .withReducer(commentsReducer)
+      .withReducer(combineReducers({ Table, commentsReducer }), {
+        commentsReducer: initialState,
+        Table: mockTableState
+      })
       .provide([
         [call(addReplyForComment, addReplyData), throwError(mockError)]
       ])

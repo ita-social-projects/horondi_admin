@@ -10,7 +10,8 @@ import {
   setRecentComments,
   setReplyComments,
   removeReplyCommentFromStore,
-  clearComment
+  clearComment,
+  setCommentsCurrentPage
 } from '../comments.actions';
 import {
   comments,
@@ -21,7 +22,8 @@ import {
   mockInitialFilters,
   replyCommentsData,
   replyItem,
-  replyCommentId
+  replyCommentId,
+  currentPage
 } from './comments.variables';
 
 describe('comments reducer tests', () => {
@@ -116,6 +118,15 @@ describe('comments reducer tests', () => {
     ).toEqual({
       ...initialState,
       replyComments: [replyItem]
+    });
+  });
+
+  it('should add current page', () => {
+    expect(
+      commentsReducer({ ...initialState }, setCommentsCurrentPage(currentPage))
+    ).toEqual({
+      ...initialState,
+      currentPageForComments: currentPage
     });
   });
 });

@@ -47,6 +47,11 @@ export const pagination = {
   limit: 10
 };
 
+export const tablePagination = {
+  skip: 0,
+  limit: 10
+};
+
 export const commentsList = [];
 export const comments = {
   list: [

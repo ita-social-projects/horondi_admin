@@ -8,7 +8,8 @@ import { useCommonStyles } from '../common.styles';
 import { useStyles } from './comments.styles';
 import {
   getComments,
-  deleteComment
+  deleteComment,
+  setCommentsCurrentPage
 } from '../../redux/comments/comments.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
@@ -23,6 +24,7 @@ import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useCommentFilters from '../../hooks/filters/use-comment-filters';
 import { handleComments } from '../../utils/handle-comments';
 import materialUiConstants from '../../configs/material-ui-constants';
+import { resetPagination } from '../../redux/table/table.actions';
 
 const tableTitles = config.tableHeadRowTitles.comments.commentPageTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
@@ -82,6 +84,8 @@ const Comments = () => {
         commentDeleteHandler(comment?._id);
       }}
       editHandler={() => {
+        dispatch(setCommentsCurrentPage(currentPage));
+        dispatch(resetPagination());
         dispatch(push(pathToCommentsEdit.replace(':id', comment?._id)));
       }}
     />

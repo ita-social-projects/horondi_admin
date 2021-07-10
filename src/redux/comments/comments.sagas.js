@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { config } from '../../configs';
@@ -23,7 +23,8 @@ import {
   setComment,
   setRecentComments,
   setReplyComments,
-  removeReplyCommentFromStore
+  removeReplyCommentFromStore,
+  getReplyComments as getReplyCommentsAction
 } from './comments.actions';
 
 import {
@@ -83,11 +84,12 @@ export function* handleRecentCommentsLoad({ payload }) {
 export function* handleCommentLoad({ payload }) {
   try {
     yield put(setCommentsLoading(true));
-    const comment = yield call(getCommentById, payload);
+    const comment = yield call(getCommentById, payload.id);
 
     if (comment) {
       yield put(setComment(comment));
       yield put(setItemsCount(comment?.replyCommentsCount));
+      yield put(getReplyCommentsAction(payload.reply));
       yield put(setCommentsLoading(false));
     }
   } catch (error) {
@@ -192,14 +194,27 @@ export function* handleReplyCommentDelete({ payload }) {
 export function* handleAddReplyComment({ payload }) {
   try {
     yield put(setCommentsLoading(true));
-
+    const { currentPage, rowsPerPage } = yield select(({ Table }) => ({
+      currentPage: Table.pagination.currentPage,
+      rowsPerPage: Table.pagination.rowsPerPage
+    }));
     const reply = yield call(addReplyForComment, payload);
-
     if (reply) {
-      yield put(setCommentsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-      yield put(push(config.routes.pathToComments));
+      yield put(
+        getReplyCommentsAction({
+          filter: {
+            filters: true,
+            commentId: payload.commentId
+          },
+          pagination: {
+            limit: rowsPerPage,
+            skip: currentPage * rowsPerPage
+          }
+        })
+      );
     }
+    yield put(setCommentsLoading(false));
   } catch (error) {
     yield call(handleCommentsError, error);
   }

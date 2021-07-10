@@ -43,8 +43,8 @@ const CommentForm = ({ comment, id, isEdit }) => {
     useFormik({
       validationSchema: commentValidationSchema,
       initialValues: {
-        text: comment.text || '',
-        show: comment.show || false
+        text: comment.text,
+        show: comment.show
       },
       onSubmit: (data) => {
         if (isEdit) {

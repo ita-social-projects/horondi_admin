@@ -15,10 +15,7 @@ import {
 } from '../../../redux/selectors/comments.selectors';
 import ReplyComments from './replyComments';
 import ReplyCommentForm from '../../../components/forms/reply-comment-form/reply-comment-form';
-import {
-  resetPagination,
-  setCurrentPage
-} from '../../../redux/table/table.actions';
+import { setCurrentPage } from '../../../redux/table/table.actions';
 
 const CommentEdit = ({ match }) => {
   const { id } = match.params;
@@ -26,20 +23,33 @@ const CommentEdit = ({ match }) => {
   const styles = useStyles();
   const { loading, comment } = useSelector(commentSelector);
 
-  const { currentPage, rowsPerPage, replyComments } = useSelector(
-    commentSelectorWithPagination
-  );
+  const { currentPage, rowsPerPage, replyComments, currentPageForComments } =
+    useSelector(commentSelectorWithPagination);
   const { adminId } = useSelector(({ Auth }) => ({ adminId: Auth.adminId }));
 
-  useEffect(() => {
-    dispatch(resetPagination());
-    return () => {
+  useEffect(
+    () => () => {
       dispatch(clearComment());
-      dispatch(setCurrentPage(currentPage));
-    };
-  }, []);
+      dispatch(setCurrentPage(currentPageForComments));
+    },
+    []
+  );
   useEffect(() => {
-    dispatch(getComment(id));
+    dispatch(
+      getComment({
+        id,
+        reply: {
+          filter: {
+            filters: true,
+            commentId: id
+          },
+          pagination: {
+            limit: rowsPerPage,
+            skip: currentPage * rowsPerPage
+          }
+        }
+      })
+    );
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -55,7 +65,7 @@ const CommentEdit = ({ match }) => {
         }
       })
     );
-  }, [dispatch, rowsPerPage, currentPage]);
+  }, [rowsPerPage, currentPage]);
 
   if (loading) {
     return <LoadingBar />;
@@ -66,7 +76,11 @@ const CommentEdit = ({ match }) => {
       {comment !== null ? (
         <>
           <CommentForm id={id} comment={comment} isEdit />
-          <ReplyCommentForm commentId={comment?._id} adminId={adminId} />
+          <ReplyCommentForm
+            commentId={comment?._id}
+            adminId={adminId}
+            adminReply
+          />
           <ReplyComments
             replyComments={replyComments}
             itemsCount={comment?.replyCommentsCount}

@@ -26,7 +26,13 @@ const { SAVE_MESSAGE, SAVE_CHANGES } = config.messages;
 const { SAVE_TITLE } = config.buttonTitles;
 const { pathToComments } = config.routes;
 
-const ReplyCommentForm = ({ reply, isEdit, commentId, adminId }) => {
+const ReplyCommentForm = ({
+  reply,
+  isEdit,
+  commentId,
+  adminId,
+  adminReply
+}) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -46,7 +52,7 @@ const ReplyCommentForm = ({ reply, isEdit, commentId, adminId }) => {
       validationSchema: replyCommentValidationSchema,
       initialValues: {
         replyText: reply.replyText || '',
-        showReplyComment: reply.showReplyComment || false
+        showReplyComment: adminReply ? true : reply.showReplyComment || false
       },
       onSubmit: (data) => {
         if (isEdit) {
@@ -156,13 +162,15 @@ ReplyCommentForm.propTypes = {
   }),
   isEdit: PropTypes.bool,
   commentId: PropTypes.string,
-  adminId: PropTypes.string
+  adminId: PropTypes.string,
+  adminReply: PropTypes.bool
 };
 ReplyCommentForm.defaultProps = {
   reply: {},
   isEdit: false,
   commentId: '',
-  adminId: ''
+  adminId: '',
+  adminReply: false
 };
 
 export default ReplyCommentForm;

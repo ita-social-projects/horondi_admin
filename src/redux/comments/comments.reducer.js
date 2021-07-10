@@ -9,7 +9,8 @@ import {
   SET_RECENT_COMMENTS,
   SET_REPLY_COMMENT,
   REMOVE_REPLY_COMMENT_FROM_STORE,
-  CLEAR_COMMENT
+  CLEAR_COMMENT,
+  SET_COMMENTS_CURRENT_PAGE
 } from './comments.types';
 
 const initialFilters = {
@@ -26,7 +27,8 @@ export const initialState = {
   comments: null,
   commentsLoading: false,
   commentsError: null,
-  replyComments: []
+  replyComments: [],
+  currentPageForComments: 1
 };
 
 export const selectComment = ({ Comments }) => ({
@@ -35,11 +37,17 @@ export const selectComment = ({ Comments }) => ({
   filter: Comments.filters,
   loading: Comments.commentsLoading,
   comment: Comments.comment,
-  replyComments: Comments.replyComments
+  replyComments: Comments.replyComments,
+  currentPageForComments: Comments.currentPageForComments
 });
 
 const commentsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case SET_COMMENTS_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPageForComments: action.payload
+      };
     case SET_COMMENTS:
       return {
         ...state,
