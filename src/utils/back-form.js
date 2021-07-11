@@ -26,15 +26,10 @@ export const backFormOnSubmit = (
   }
 };
 
-export const setBackColorsHandler = (
-  values,
-  setBackColors,
-  find,
-  materials
-) => {
-  if (values.backMaterial) {
-    setBackColors(
-      find(materials.back, (material) => material._id === values.backMaterial)
+export const setBackColorsHandler = (values, setColor, find, materials) => {
+  if (values.material) {
+    setColor(
+      find(materials.back, (material) => material._id === values.material)
         ?.colors || []
     );
   }
@@ -44,8 +39,9 @@ export const getBackInitialValues = (isEdit, IMG_URL, back) => ({
   backImage: isEdit ? IMG_URL + back.images.thumbnail : '',
   uaName: back?.name[0].value || '',
   enName: back?.name[1].value || '',
-  color: back?.features.color._id || '6043a1653e06ad3edcdb7b08',
-  optionType: back?.optionType || '"BACK"',
+  color: back?.features.color._id || '',
+  material: back?.features.material._id || '',
+  optionType: back?.optionType || '',
   available: back?.available || false,
   customizable: back?.customizable || false
 });

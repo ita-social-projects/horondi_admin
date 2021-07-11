@@ -132,13 +132,13 @@ const labels = {
     materialLabels: [
       {
         label: 'Матеріал для спинки ',
-        name: 'backMaterial',
+        name: 'material',
         required: false,
         validation: 'string'
       },
       {
         label: 'Колір спинки',
-        name: 'backColor',
+        name: 'color',
         required: false,
         validation: 'string'
       }

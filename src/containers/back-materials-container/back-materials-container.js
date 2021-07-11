@@ -1,8 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-
 import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
-
 import { noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './back-materials-container.styles';
@@ -12,8 +10,8 @@ import { handleMenuItem } from '../../utils/handle-menu-item';
 const { materialLabels } = config.labels.back;
 
 const BackMaterialsContainer = ({
-  backMaterials,
-  backColors,
+  material,
+  color,
   values,
   errors,
   touched,
@@ -36,13 +34,10 @@ const BackMaterialsContainer = ({
   };
 
   const backMaterialOptions = useMemo(
-    () => handleMenuItem(backMaterials),
-    [backMaterials]
+    () => handleMenuItem(material),
+    [material]
   );
-  const backColorOptions = useMemo(
-    () => handleMenuItem(backColors),
-    [backColors]
-  );
+  const backColorOptions = useMemo(() => handleMenuItem(color), [color]);
 
   const options = [backMaterialOptions, backColorOptions];
   return (
@@ -70,8 +65,8 @@ const BackMaterialsContainer = ({
 };
 
 BackMaterialsContainer.propTypes = {
-  backMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  backColors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  color: PropTypes.arrayOf(PropTypes.object).isRequired,
+  material: PropTypes.arrayOf(PropTypes.object).isRequired,
   values: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string,

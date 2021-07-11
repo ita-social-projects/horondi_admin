@@ -5,7 +5,7 @@ const { languages } = config;
 
 const useBackHandlers = () => {
   const getIdFromItem = (item) => item._id;
-  const [backColors, setBackColors] = useState([]);
+  const [color, setColor] = useState([]);
   const [backImage, setBackImage] = useState('');
   const [upload, setUpload] = useState({});
   const [imageName, setImageName] = useState('');
@@ -25,17 +25,13 @@ const useBackHandlers = () => {
       material: values.material,
       color: values.color
     },
-    backMaterial: {
-      material: values.backMaterial,
-      color: values.backColors
-    },
     available: values.available
   });
 
   return {
     getIdFromItem,
-    backColors,
-    setBackColors,
+    color,
+    setColor,
     backImage,
     setBackImage,
     createBack,

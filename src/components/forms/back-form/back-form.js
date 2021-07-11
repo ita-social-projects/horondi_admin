@@ -41,7 +41,7 @@ const { SAVE_TITLE } = config.buttonTitles;
 
 const {
   languages,
-  formRegExp: { enNameCreation, uaNameCreation, backMaterial },
+  formRegExp: { enNameCreation, uaNameCreation, backMaterial, backColor },
   imagePrefix
 } = config;
 
@@ -61,8 +61,8 @@ const BackForm = ({ back, id, isEdit }) => {
     upload,
     backImage,
     setBackImage,
-    backColors,
-    setBackColors
+    color,
+    setColor
   } = useBackHandlers();
 
   useEffect(() => {
@@ -81,6 +81,10 @@ const BackForm = ({ back, id, isEdit }) => {
     material: Yup.string()
       .min(2, BACK_VALIDATION_ERROR)
       .matches(backMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(BACK_ERROR_MESSAGE),
+    color: Yup.string()
+      .min(2, BACK_VALIDATION_ERROR)
+      .matches(backColor, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(BACK_ERROR_MESSAGE),
     available: Yup.boolean(),
     customizable: Yup.boolean(),
@@ -123,8 +127,8 @@ const BackForm = ({ back, id, isEdit }) => {
     });
 
   useEffect(() => {
-    setBackColorsHandler(values, setBackColors, find, materials);
-  }, [materials, values.backMaterial]);
+    setBackColorsHandler(values, setColor, find, materials);
+  }, [materials, values.material]);
 
   const checkboxes = [
     {
@@ -169,7 +173,7 @@ const BackForm = ({ back, id, isEdit }) => {
     getBackInitialValues(isEdit, IMG_URL, back),
     values
   );
-
+  console.log(values);
   return (
     <div>
       {loading ? (
@@ -202,8 +206,8 @@ const BackForm = ({ back, id, isEdit }) => {
             </Paper>
           </Grid>
           <BackMaterialsContainer
-            backMaterials={materials.back}
-            backColors={backColors}
+            material={materials.back}
+            color={color}
             values={values}
             errors={errors}
             touched={touched}
