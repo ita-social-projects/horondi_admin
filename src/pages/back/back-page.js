@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 import { useCommonStyles } from '../common.styles';
 import { getBacks, deleteBack } from '../../redux/back/back.actions';
-
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
@@ -13,6 +12,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { backSelectorWithPagination } from '../../redux/selectors/back.selectors';
+import { getProductDetails } from '../../redux/products/products.actions';
 
 const map = require('lodash/map');
 
@@ -40,6 +40,10 @@ const BackPage = () => {
       })
     );
   }, [dispatch, currentPage, rowsPerPage]);
+
+  useEffect(() => {
+    dispatch(getProductDetails());
+  }, []);
 
   const backDeleteHandler = (id) => {
     const removeBack = () => {

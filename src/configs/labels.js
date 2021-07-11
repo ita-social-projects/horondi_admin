@@ -128,7 +128,21 @@ const labels = {
     backName: {
       ua: 'Назва спинки',
       en: 'Back name'
-    }
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для спинки ',
+        name: 'backMaterial',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір спинки',
+        name: 'backColor',
+        required: false,
+        validation: 'string'
+      }
+    ]
   },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),

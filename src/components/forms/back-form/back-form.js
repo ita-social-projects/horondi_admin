@@ -2,12 +2,9 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid } from '@material-ui/core';
+import { Paper, Grid, Box } from '@material-ui/core';
 import * as Yup from 'yup';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
+import { find } from 'lodash';
 import useBackHandlers from '../../../utils/use-back-handlers';
 import { useStyles } from './back-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -16,23 +13,19 @@ import { addBack, updateBack } from '../../../redux/back/back.actions';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
-import { materialSelectorWithPagination } from '../../../redux/selectors/material.selectors';
-import {
-  getMaterials,
-  getMaterialsByPurpose
-} from '../../../redux/material/material.actions';
 import LoadingBar from '../../loading-bar';
 import {
   backUseEffectHandler,
   backFormOnSubmit,
-  getBackInitialValues
+  getBackInitialValues,
+  setBackColorsHandler
 } from '../../../utils/back-form';
-
 import { checkInitialValue } from '../../../utils/check-initial-values';
-import { getColors } from '../../../redux/color/color.actions';
+import BackMaterialsContainer from '../../../containers/back-materials-container';
+import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 
 const { IMG_URL } = config;
-const { backName, material } = config.labels.back;
+const { backName } = config.labels.back;
 const map = require('lodash/map');
 
 const {
@@ -58,35 +51,19 @@ const BackForm = ({ back, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { list, loading, currentPage, rowsPerPage, filters } = useSelector(
-    materialSelectorWithPagination
-  );
+  const { details, loading } = useSelector(selectProductDetails);
 
-  useEffect(() => {
-    dispatch(
-      getMaterials({
-        limit: rowsPerPage,
-        skip: currentPage * rowsPerPage,
-        filter: {
-          colors: filters.colors,
-          name: filters.name,
-          available: filters.available,
-          purpose: filters.purpose
-        }
-      })
-    );
-  }, [dispatch, rowsPerPage, currentPage, filters]);
+  const { materials } = details;
 
-  const { createBack, setUpload, upload, backImage, setBackImage } =
-    useBackHandlers();
-
-  useEffect(() => {
-    dispatch(getMaterialsByPurpose());
-  }, []);
-
-  useEffect(() => {
-    dispatch(getColors());
-  }, []);
+  const {
+    createBack,
+    setUpload,
+    upload,
+    backImage,
+    setBackImage,
+    backColors,
+    setBackColors
+  } = useBackHandlers();
 
   useEffect(() => {
     backUseEffectHandler(back, setBackImage, imagePrefix);
@@ -144,6 +121,10 @@ const BackForm = ({ back, id, isEdit }) => {
         );
       }
     });
+
+  useEffect(() => {
+    setBackColorsHandler(values, setBackColors, find, materials);
+  }, [materials, values.backMaterial]);
 
   const checkboxes = [
     {
@@ -204,7 +185,6 @@ const BackForm = ({ back, id, isEdit }) => {
                   <span className={styles.imageUpload}>
                     {config.labels.back.avatarText}
                   </span>
-
                   <div className={styles.imageUploadAvatar}>
                     <ImageUploadPreviewContainer
                       handler={handleImageLoad}
@@ -221,31 +201,18 @@ const BackForm = ({ back, id, isEdit }) => {
               </div>
             </Paper>
           </Grid>
-          <FormControl
-            variant='outlined'
-            className={`${styles.formControl} ${styles.materialSelect}`}
-          >
-            <InputLabel variant='outlined'>{material}</InputLabel>
-            <Select
-              label={material}
-              data-cy='material'
-              name='material'
-              error={touched.material && !!errors.material}
-              value={values.material || []}
-              onChange={handleChange}
-            >
-              {list.map(({ _id, name }) => (
-                <MenuItem key={_id} value={_id}>
-                  {name[0].value}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          {touched.material && errors.material && (
-            <div data-cy='material-error' className={styles.inputError}>
-              {errors.material}
-            </div>
-          )}
+          <BackMaterialsContainer
+            backMaterials={materials.back}
+            backColors={backColors}
+            values={values}
+            errors={errors}
+            touched={touched}
+            handleChange={handleChange}
+            // handleBlur={handleBlur}
+            handleSubmit={handleSubmit}
+            setFieldValue={setFieldValue}
+            // toggleFieldsChanged={toggleFieldsChanged}
+          />
 
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />

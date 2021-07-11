@@ -26,6 +26,20 @@ export const backFormOnSubmit = (
   }
 };
 
+export const setBackColorsHandler = (
+  values,
+  setBackColors,
+  find,
+  materials
+) => {
+  if (values.backMaterial) {
+    setBackColors(
+      find(materials.back, (material) => material._id === values.backMaterial)
+        ?.colors || []
+    );
+  }
+};
+
 export const getBackInitialValues = (isEdit, IMG_URL, back) => ({
   backImage: isEdit ? IMG_URL + back.images.thumbnail : '',
   uaName: back?.name[0].value || '',
