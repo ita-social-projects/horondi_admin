@@ -41,6 +41,7 @@ const messages = {
   REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору',
   BACK_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
   DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
-  NO_POCKET_MESSAGE: 'Кишені відсутні'
+  NO_POCKET_MESSAGE: 'Кишені відсутні',
+  NO_BACKS_MESSAGE: 'Cпинки відсутні'
 };
 export default messages;

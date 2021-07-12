@@ -80,6 +80,10 @@ export const getBackById = async (id) => {
             }
             available
             customizable
+            additionalPrice {
+                currency
+                value
+              }
             images {
               thumbnail
             }

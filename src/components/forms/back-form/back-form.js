@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid, Box } from '@material-ui/core';
+import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
 import useBackHandlers from '../../../utils/use-back-handlers';
@@ -25,7 +25,7 @@ import BackMaterialsContainer from '../../../containers/back-materials-container
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 
 const { IMG_URL } = config;
-const { backName } = config.labels.back;
+const { backName, enterPrice, additionalPrice } = config.labels.back;
 const map = require('lodash/map');
 
 const {
@@ -34,20 +34,27 @@ const {
   BACK_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
   BACK_EN_NAME_MESSAGE,
-  BACK_UA_NAME_MESSAGE
+  BACK_UA_NAME_MESSAGE,
+  BACK_PRICE_ERROR
 } = config.backErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
 const {
   languages,
-  formRegExp: { enNameCreation, uaNameCreation, backMaterial, backColor },
-  imagePrefix
+  formRegExp: {
+    enNameCreation,
+    uaNameCreation,
+    backMaterial,
+    backColor,
+    additionalPriceRegExp
+  },
+  imagePrefix,
+  materialUiConstants
 } = config;
-
 const { pathToBacks } = config.routes;
 
-const BackForm = ({ back, id, isEdit }) => {
+const BackForm = ({ back, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -55,15 +62,8 @@ const BackForm = ({ back, id, isEdit }) => {
 
   const { materials } = details;
 
-  const {
-    createBack,
-    setUpload,
-    upload,
-    backImage,
-    setBackImage,
-    color,
-    setColor
-  } = useBackHandlers();
+  const { createBack, setUpload, upload, setBackImage, color, setColor } =
+    useBackHandlers();
 
   useEffect(() => {
     backUseEffectHandler(back, setBackImage, imagePrefix);
@@ -86,45 +86,56 @@ const BackForm = ({ back, id, isEdit }) => {
       .min(2, BACK_VALIDATION_ERROR)
       .matches(backColor, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(BACK_ERROR_MESSAGE),
+    additionalPrice: Yup.string()
+      .matches(additionalPriceRegExp, BACK_PRICE_ERROR)
+      .required(BACK_ERROR_MESSAGE)
+      .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),
     backImage: Yup.string().required(PHOTO_NOT_PROVIDED)
   });
 
-  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
-    useFormik({
-      validationSchema: backValidationSchema,
-      initialValues: getBackInitialValues(isEdit, IMG_URL, back),
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
+    validationSchema: backValidationSchema,
+    initialValues: getBackInitialValues(edit, IMG_URL, back),
 
-      onSubmit: () => {
-        const newBack = createBack(values);
-        const isEditAndUpload = isEdit && upload instanceof File;
-        if (isEditAndUpload || isEdit) {
-          backFormOnSubmit(
-            isEditAndUpload,
-            dispatch,
-            updateBack,
-            {
-              id,
-              back: newBack,
-              image: upload
-            },
-            isEdit,
-            {
-              id,
-              back: newBack
-            }
-          );
-          return;
-        }
-        dispatch(
-          addBack({
+    onSubmit: () => {
+      const newBack = createBack(values);
+      const editAndUpload = edit && upload instanceof File;
+      if (editAndUpload || edit) {
+        backFormOnSubmit(
+          editAndUpload,
+          dispatch,
+          updateBack,
+          {
+            id,
             back: newBack,
             image: upload
-          })
+          },
+          edit,
+          {
+            id,
+            back: newBack
+          }
         );
+        return;
       }
-    });
+      dispatch(
+        addBack({
+          back: newBack,
+          image: upload
+        })
+      );
+    }
+  });
 
   useEffect(() => {
     setBackColorsHandler(values, setColor, find, materials);
@@ -143,7 +154,6 @@ const BackForm = ({ back, id, isEdit }) => {
   ];
 
   const handleImageLoad = (e) => {
-    console.log(e.target.files[0]);
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -161,6 +171,7 @@ const BackForm = ({ back, id, isEdit }) => {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
@@ -170,16 +181,35 @@ const BackForm = ({ back, id, isEdit }) => {
   };
 
   const valueEquality = checkInitialValue(
-    getBackInitialValues(isEdit, IMG_URL, back),
+    getBackInitialValues(edit, IMG_URL, back),
     values
   );
-  console.log(values);
+
   return (
     <div>
       {loading ? (
         <LoadingBar />
       ) : (
         <form onSubmit={handleSubmit}>
+          <div className={styles.buttonContainer}>
+            <Grid container spacing={2} className={styles.fixedButtons}>
+              <Grid item className={styles.button}>
+                <BackButton initial={!valueEquality} pathBack={pathToBacks} />
+              </Grid>
+              <Grid item className={styles.button}>
+                <SaveButton
+                  className={styles.saveButton}
+                  data-cy='save-btn'
+                  type='submit'
+                  title={SAVE_TITLE}
+                  values={values}
+                  errors={errors}
+                  onClickHandler={handleSubmit}
+                />
+              </Grid>
+            </Grid>
+          </div>
+
           <CheckboxOptions options={checkboxes} />
 
           <Grid item xs={12}>
@@ -192,7 +222,7 @@ const BackForm = ({ back, id, isEdit }) => {
                   <div className={styles.imageUploadAvatar}>
                     <ImageUploadPreviewContainer
                       handler={handleImageLoad}
-                      src={backImage}
+                      src={values.backImage}
                       id={imageUploadBackInputsId.backImageInput}
                     />
                     {touched.backImage && errors.backImage && (
@@ -206,30 +236,47 @@ const BackForm = ({ back, id, isEdit }) => {
             </Paper>
           </Grid>
           <BackMaterialsContainer
-            material={materials.back}
+            material={materials.back ? materials.back : []}
             color={color}
             values={values}
             errors={errors}
             touched={touched}
             handleChange={handleChange}
-            // handleBlur={handleBlur}
+            handleBlur={handleBlur}
             handleSubmit={handleSubmit}
             setFieldValue={setFieldValue}
-            // toggleFieldsChanged={toggleFieldsChanged}
           />
 
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton initial={!valueEquality} pathBack={pathToBacks} />
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save-btn'
-            type='submit'
-            title={SAVE_TITLE}
-            values={values}
-            errors={errors}
-          />
+
+          <Paper className={styles.additionalPrice}>
+            <Box>
+              <Typography>{enterPrice}</Typography>
+            </Box>
+            <TextField
+              data-cy='additionalPrice'
+              id='additionalPrice'
+              className={styles.textField}
+              variant={materialUiConstants.outlined}
+              type={materialUiConstants.types.number}
+              label={additionalPrice}
+              value={values.additionalPrice}
+              inputProps={{ min: 0 }}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.additionalPrice && !!errors.additionalPrice}
+            />
+            {touched.additionalPrice && errors.additionalPrice && (
+              <div
+                data-cy={materialUiConstants.codeError}
+                className={styles.error}
+              >
+                {errors.additionalPrice}
+              </div>
+            )}
+          </Paper>
         </form>
       )}
     </div>
@@ -245,6 +292,7 @@ BackForm.propTypes = {
     _id: PropTypes.string,
     available: PropTypes.bool,
     customizable: PropTypes.bool,
+    // additionalPrice: PropTypes.array,
     features: PropTypes.shape({
       material: PropTypes.string,
       color: PropTypes.string
@@ -274,13 +322,14 @@ BackForm.propTypes = {
     color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string
+    // additionalPrice: PropTypes.array,
   }),
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired
     })
   }),
-  isEdit: PropTypes.bool
+  edit: PropTypes.bool
 };
 BackForm.defaultProps = {
   id: '',
@@ -323,11 +372,14 @@ BackForm.defaultProps = {
         ]
       }
     },
-    optionType: 'BACK',
+    additionalPrice: [
+      { value: null, currency: '' },
+      { value: null, currency: '' }
+    ],
     available: false,
     customizable: false
   },
-  isEdit: false
+  edit: false
 };
 
 export default BackForm;

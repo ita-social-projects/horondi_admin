@@ -49,7 +49,8 @@ export const backErrorMessages = {
   BACK_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
   BACK_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
-  BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
+  BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',

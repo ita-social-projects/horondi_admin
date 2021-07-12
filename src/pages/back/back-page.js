@@ -16,8 +16,8 @@ import { getProductDetails } from '../../redux/products/products.actions';
 
 const map = require('lodash/map');
 
-const { BACK_REMOVE_MESSAGE } = config.messages;
-const { CREATE_BACK_TITLE, EXIT_WITHOUT_SAVING } = config.buttonTitles;
+const { BACK_REMOVE_MESSAGE, NO_BACKS_MESSAGE } = config.messages;
+const { CREATE_BACK_TITLE } = config.buttonTitles;
 
 const pathToBackAddPage = config.routes.pathToAddBacks;
 const tableTitles = config.tableHeadRowTitles.backs;
@@ -50,7 +50,7 @@ const BackPage = () => {
       dispatch(closeDialog());
       dispatch(deleteBack(id));
     };
-    openSuccessSnackbar(removeBack, EXIT_WITHOUT_SAVING, BACK_REMOVE_MESSAGE);
+    openSuccessSnackbar(removeBack, BACK_REMOVE_MESSAGE);
   };
 
   const backItems = map(list, (backItem) => (
@@ -65,6 +65,7 @@ const BackPage = () => {
       name={backItem.name[0].value}
       material={backItem.features.material.name[0].value}
       color={backItem.features.color.name[0].value}
+      additionalPrice={backItem?.additionalPrice[1]?.value / 100}
       available={backItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => backDeleteHandler(backItem._id)}
       editHandler={() => {
@@ -72,6 +73,10 @@ const BackPage = () => {
       }}
     />
   ));
+
+  if (loading) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className={common.container}>
@@ -93,7 +98,7 @@ const BackPage = () => {
           {CREATE_BACK_TITLE}
         </Button>
       </div>
-      {!loading ? (
+      {backItems?.length ? (
         <TableContainerGenerator
           pagination
           data-cy='backTable'
@@ -102,7 +107,7 @@ const BackPage = () => {
           tableItems={backItems}
         />
       ) : (
-        <LoadingBar />
+        <p className={common.noRecords}>{NO_BACKS_MESSAGE}</p>
       )}
     </div>
   );

@@ -122,6 +122,8 @@ const labels = {
     available: 'Доступний',
     customizable: 'для конструктора',
     avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
     form: {
       name: mapToLanguages("І'мя", 'Name')
     },

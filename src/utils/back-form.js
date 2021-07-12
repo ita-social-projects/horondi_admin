@@ -10,19 +10,19 @@ export const backUseEffectHandler = (
 };
 
 export const backFormOnSubmit = (
-  condition,
+  editAndUpload,
   dispatch,
-  updateAction,
+  updateBack,
   updateActionPayload,
-  isEdit,
+  edit,
   secondUpdateActionPayload
 ) => {
-  if (condition) {
-    dispatch(updateAction(updateActionPayload));
+  if (editAndUpload) {
+    dispatch(updateBack(updateActionPayload));
     return;
   }
-  if (isEdit) {
-    dispatch(updateAction(secondUpdateActionPayload));
+  if (edit) {
+    dispatch(updateBack(secondUpdateActionPayload));
   }
 };
 
@@ -41,7 +41,7 @@ export const getBackInitialValues = (isEdit, IMG_URL, back) => ({
   enName: back?.name[1].value || '',
   color: back?.features.color._id || '',
   material: back?.features.material._id || '',
-  optionType: back?.optionType || '',
+  additionalPrice: back?.additionalPrice[1]?.value / 100 || null,
   available: back?.available || false,
   customizable: back?.customizable || false
 });
