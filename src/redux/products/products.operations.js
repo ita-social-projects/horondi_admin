@@ -137,6 +137,7 @@ const getProductDetails = async () => {
               value
             }
             category {
+              _id
               name {
                 value
                 lang
