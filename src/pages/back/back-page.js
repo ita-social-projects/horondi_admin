@@ -13,6 +13,8 @@ import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { backSelectorWithPagination } from '../../redux/selectors/back.selectors';
 import { getProductDetails } from '../../redux/products/products.actions';
+import FilterNavbar from '../../components/filter-search-sort';
+import useBackFilters from '../../hooks/filters/use-back-filters';
 
 const map = require('lodash/map');
 
@@ -24,22 +26,24 @@ const tableTitles = config.tableHeadRowTitles.backs;
 
 const BackPage = () => {
   const common = useCommonStyles();
-
+  const backOptions = useBackFilters();
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const { list, loading, currentPage, rowsPerPage, itemsCount } = useSelector(
     backSelectorWithPagination
   );
+  const filters = useSelector(({ Back }) => Back.filters);
   const dispatch = useDispatch();
-
+  console.log(filters);
   useEffect(() => {
     dispatch(
       getBacks({
         limit: rowsPerPage,
-        skip: currentPage * rowsPerPage
+        skip: currentPage * rowsPerPage,
+        filter: filters.search
       })
     );
-  }, [dispatch, currentPage, rowsPerPage]);
+  }, [dispatch, currentPage, rowsPerPage, filters]);
 
   useEffect(() => {
     dispatch(getProductDetails());
@@ -98,6 +102,10 @@ const BackPage = () => {
           {CREATE_BACK_TITLE}
         </Button>
       </div>
+      <div>
+        <FilterNavbar options={backOptions || {}} />
+      </div>
+
       {backItems?.length ? (
         <TableContainerGenerator
           pagination
