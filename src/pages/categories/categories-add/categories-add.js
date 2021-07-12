@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import { useStyles } from './categories-add.styles';
 import CategoryForm from '../../../components/forms/category-form';
 import { config } from '../../../configs';
-import { selectCategoriesLoadingDialogOpen } from '../../../redux/selectors/category.selectors';
+import { categoriesSelectorWithPagination } from '../../../redux/selectors/category.selectors';
 import LoadingBar from '../../../components/loading-bar';
 
 export const CategoriesAdd = () => {
   const styles = useStyles();
-  const { categoriesLoading } = useSelector(selectCategoriesLoadingDialogOpen);
+  const { categoriesLoading } = useSelector(categoriesSelectorWithPagination);
 
   if (categoriesLoading) {
     return <LoadingBar />;
