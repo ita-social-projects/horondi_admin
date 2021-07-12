@@ -210,6 +210,7 @@ export const updatePattern = async (payload) => {
               lang
               value
             }
+            optionType
             features {
               material {
                 _id
