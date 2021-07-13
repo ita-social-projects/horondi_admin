@@ -34,14 +34,14 @@ export const setBackColorsHandler = (values, setColor, find, materials) => {
     );
   }
 };
-
-export const getBackInitialValues = (isEdit, IMG_URL, back) => ({
-  backImage: isEdit ? IMG_URL + back.images.thumbnail : '',
+console.log('hello');
+export const getBackInitialValues = (edit, IMG_URL, back) => ({
+  backImage: edit ? IMG_URL + back.images.thumbnail : '',
   uaName: back?.name[0].value || '',
   enName: back?.name[1].value || '',
   color: back?.features.color._id || '',
   material: back?.features.material._id || '',
-  additionalPrice: back?.additionalPrice[1]?.value / 100 || null,
+  additionalPrice: edit ? back?.additionalPrice[1]?.value / 100 : null,
   available: back?.available || false,
   customizable: back?.customizable || false
 });

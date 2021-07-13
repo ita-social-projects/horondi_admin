@@ -184,17 +184,24 @@ const BackForm = ({ back, id, edit }) => {
     getBackInitialValues(edit, IMG_URL, back),
     values
   );
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div>
       {loading ? (
         <LoadingBar />
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => eventPreventHandler(e)}>
           <div className={styles.buttonContainer}>
             <Grid container spacing={2} className={styles.fixedButtons}>
               <Grid item className={styles.button}>
-                <BackButton initial={!valueEquality} pathBack={pathToBacks} />
+                <BackButton
+                  className={styles.returnButton}
+                  initial={!valueEquality}
+                  pathBack={pathToBacks}
+                />
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton
@@ -236,7 +243,7 @@ const BackForm = ({ back, id, edit }) => {
             </Paper>
           </Grid>
           <BackMaterialsContainer
-            material={materials.back ? materials.back : []}
+            material={materials?.back}
             color={color}
             values={values}
             errors={errors}

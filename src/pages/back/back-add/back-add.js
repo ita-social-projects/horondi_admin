@@ -14,7 +14,7 @@ const BackAdd = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.detailsContainer}>
       <BackForm />
     </div>
   );
