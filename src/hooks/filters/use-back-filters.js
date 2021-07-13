@@ -29,6 +29,7 @@ const useBackFilters = () => {
     },
     clearOptions: {
       filters,
+      name: filters?.name,
       clearAllFilters
     }
   };
