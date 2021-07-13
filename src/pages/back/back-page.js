@@ -15,8 +15,8 @@ import { backSelectorWithPagination } from '../../redux/selectors/back.selectors
 import { getProductDetails } from '../../redux/products/products.actions';
 import FilterNavbar from '../../components/filter-search-sort';
 import useBackFilters from '../../hooks/filters/use-back-filters';
-import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
 
+const { materialUiConstants } = config;
 const map = require('lodash/map');
 
 const { BACK_REMOVE_MESSAGE, NO_BACKS_MESSAGE } = config.messages;
@@ -33,15 +33,13 @@ const BackPage = () => {
 
   const { list, loading, currentPage, rowsPerPage, itemsCount, filter } =
     useSelector(backSelectorWithPagination);
-  //
-  // const filters = useSelector(({ Back }) => Back.filters);
-  console.log(filter);
+
   useEffect(() => {
     dispatch(
       getBacks({
         limit: rowsPerPage,
-        skip: currentPage * rowsPerPage
-        // filter
+        skip: currentPage * rowsPerPage,
+        filter
       })
     );
   }, [dispatch, currentPage, rowsPerPage, filter]);
@@ -97,8 +95,8 @@ const BackPage = () => {
           data-cy='add-back'
           component={Link}
           to={pathToBackAddPage}
-          variant='contained'
-          color='primary'
+          variant={materialUiConstants.contained}
+          color={materialUiConstants.primary}
         >
           {CREATE_BACK_TITLE}
         </Button>

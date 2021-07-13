@@ -19,11 +19,10 @@ export const selectBack = ({ Back }) => ({
 
 const initialFilters = {
   name: '',
-  // description: '',
   model: [],
   available: [],
-  material: []
-  // handmade: []
+  material: [],
+  color: []
 };
 
 export const initialState = {
