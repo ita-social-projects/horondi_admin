@@ -53,8 +53,8 @@ export function* handleBacksLoad({ payload: { limit, skip, filter } }) {
 export function* handleBackLoad({ payload }) {
   try {
     yield put(setBackLoading(true));
-    const pattern = yield call(getBackById, payload);
-    yield put(setBack(pattern));
+    const back = yield call(getBackById, payload);
+    yield put(setBack(back));
     yield put(setBackLoading(false));
   } catch (error) {
     yield call(handleBackError, error);
@@ -67,6 +67,7 @@ export function* handleAddBack({ payload }) {
     yield call(createBack, payload);
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
     yield put(push(config.routes.pathToBacks));
+    yield put(setBackLoading(false));
   } catch (error) {
     yield call(handleBackError, error);
   }
@@ -91,6 +92,7 @@ export function* handleBackUpdate({ payload }) {
     yield call(updateBack, payload);
     yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToBacks));
+    yield put(setBackLoading(false));
   } catch (error) {
     yield call(handleBackError, error);
   }

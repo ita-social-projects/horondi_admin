@@ -19,11 +19,10 @@ export const selectBack = ({ Back }) => ({
 
 const initialFilters = {
   name: '',
-  description: '',
   model: [],
   available: [],
   material: [],
-  handmade: []
+  color: []
 };
 
 export const initialState = {
@@ -83,7 +82,13 @@ const backReducer = (state = initialState, action = {}) => {
     case CLEAR_FILTERS:
       return {
         ...state,
-        filters: initialFilters
+        filters: {
+          name: '',
+          model: [],
+          available: [],
+          material: [],
+          color: []
+        }
       };
     default:
       return state;

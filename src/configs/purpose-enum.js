@@ -3,7 +3,8 @@ const purposeEnum = {
   INNER: 'INNER',
   BOTTOM: 'BOTTOM',
   PATTERN: 'PATTERN',
-  CLOSURE: 'CLOSURE'
+  CLOSURE: 'CLOSURE',
+  BACK: 'BACK'
 };
 
 export default purposeEnum;
