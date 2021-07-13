@@ -12,7 +12,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
   }
 >
   <div
-    className="makeStyles-container-30"
+    className="makeStyles-container-35"
   >
     <CommentForm
       comment={
@@ -33,15 +33,15 @@ exports[`Comment form tests Should render two forms and list 1`] = `
           onSubmit={[Function]}
         >
           <div
-            className="makeStyles-buttonContainer-35"
+            className="makeStyles-buttonContainer-40"
           >
             <WithStyles(ForwardRef(Grid))
-              className="makeStyles-fixedButtons-36"
+              className="makeStyles-fixedButtons-41"
               container={true}
               spacing={2}
             >
               <ForwardRef(Grid)
-                className="makeStyles-fixedButtons-36"
+                className="makeStyles-fixedButtons-41"
                 classes={
                   Object {
                     "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -153,14 +153,14 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                 spacing={2}
               >
                 <div
-                  className="MuiGrid-root makeStyles-fixedButtons-36 MuiGrid-container MuiGrid-spacing-xs-2"
+                  className="MuiGrid-root makeStyles-fixedButtons-41 MuiGrid-container MuiGrid-spacing-xs-2"
                 >
                   <WithStyles(ForwardRef(Grid))
-                    className="makeStyles-button-37"
+                    className="makeStyles-button-42"
                     item={true}
                   >
                     <ForwardRef(Grid)
-                      className="makeStyles-button-37"
+                      className="makeStyles-button-42"
                       classes={
                         Object {
                           "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -271,7 +271,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                       item={true}
                     >
                       <div
-                        className="MuiGrid-root makeStyles-button-37 MuiGrid-item"
+                        className="MuiGrid-root makeStyles-button-42 MuiGrid-item"
                       >
                         <BackButton
                           color="primary"
@@ -416,11 +416,11 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                     </ForwardRef(Grid)>
                   </WithStyles(ForwardRef(Grid))>
                   <WithStyles(ForwardRef(Grid))
-                    className="makeStyles-button-37"
+                    className="makeStyles-button-42"
                     item={true}
                   >
                     <ForwardRef(Grid)
-                      className="makeStyles-button-37"
+                      className="makeStyles-button-42"
                       classes={
                         Object {
                           "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -531,7 +531,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                       item={true}
                     >
                       <div
-                        className="MuiGrid-root makeStyles-button-37 MuiGrid-item"
+                        className="MuiGrid-root makeStyles-button-42 MuiGrid-item"
                       >
                         <SaveButton
                           color="primary"
@@ -882,10 +882,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                 checkedIcon={<UNDEFINED />}
                                 classes={
                                   Object {
-                                    "checked": "PrivateSwitchBase-checked-39 Mui-checked",
-                                    "disabled": "PrivateSwitchBase-disabled-40 Mui-disabled",
-                                    "input": "PrivateSwitchBase-input-41",
-                                    "root": "PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary",
+                                    "checked": "PrivateSwitchBase-checked-44 Mui-checked",
+                                    "disabled": "PrivateSwitchBase-disabled-45 Mui-disabled",
+                                    "input": "PrivateSwitchBase-input-46",
+                                    "root": "PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary",
                                   }
                                 }
                                 color="primary"
@@ -900,7 +900,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                 value={false}
                               >
                                 <WithStyles(ForwardRef(IconButton))
-                                  className="PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary"
+                                  className="PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary"
                                   color="primary"
                                   component="span"
                                   onBlur={[Function]}
@@ -908,7 +908,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   tabIndex={null}
                                 >
                                   <ForwardRef(IconButton)
-                                    className="PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary"
+                                    className="PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary"
                                     classes={
                                       Object {
                                         "colorInherit": "MuiIconButton-colorInherit",
@@ -930,7 +930,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   >
                                     <WithStyles(ForwardRef(ButtonBase))
                                       centerRipple={true}
-                                      className="MuiIconButton-root PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                                      className="MuiIconButton-root PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
                                       component="span"
                                       disabled={false}
                                       focusRipple={true}
@@ -940,7 +940,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                     >
                                       <ForwardRef(ButtonBase)
                                         centerRipple={true}
-                                        className="MuiIconButton-root PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                                        className="MuiIconButton-root PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
                                         classes={
                                           Object {
                                             "disabled": "Mui-disabled",
@@ -957,7 +957,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                       >
                                         <span
                                           aria-disabled={false}
-                                          className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                                          className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
                                           onBlur={[Function]}
                                           onDragLeave={[Function]}
                                           onFocus={[Function]}
@@ -976,7 +976,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                           >
                                             <input
                                               checked={false}
-                                              className="PrivateSwitchBase-input-41"
+                                              className="PrivateSwitchBase-input-46"
                                               data-indeterminate={false}
                                               onChange={[Function]}
                                               type="checkbox"
@@ -1104,10 +1104,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                   </WithStyles(ForwardRef(FormControlLabel))>
                 </CheckboxOptions>
                 <WithStyles(ForwardRef(Paper))
-                  className="makeStyles-paper-32"
+                  className="makeStyles-paper-37"
                 >
                   <ForwardRef(Paper)
-                    className="makeStyles-paper-32"
+                    className="makeStyles-paper-37"
                     classes={
                       Object {
                         "elevation0": "MuiPaper-elevation0",
@@ -1142,10 +1142,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                     }
                   >
                     <div
-                      className="MuiPaper-root makeStyles-paper-32 MuiPaper-elevation1 MuiPaper-rounded"
+                      className="MuiPaper-root makeStyles-paper-37 MuiPaper-elevation1 MuiPaper-rounded"
                     >
                       <WithStyles(ForwardRef(TextField))
-                        className="makeStyles-textField-33"
+                        className="makeStyles-textField-38"
                         data-cy="text"
                         label="Текст коментаря"
                         multiline={true}
@@ -1155,7 +1155,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                         variant="outlined"
                       >
                         <ForwardRef(TextField)
-                          className="makeStyles-textField-33"
+                          className="makeStyles-textField-38"
                           classes={
                             Object {
                               "root": "MuiTextField-root",
@@ -1170,7 +1170,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           variant="outlined"
                         >
                           <WithStyles(ForwardRef(FormControl))
-                            className="MuiTextField-root makeStyles-textField-33"
+                            className="MuiTextField-root makeStyles-textField-38"
                             color="primary"
                             data-cy="text"
                             disabled={false}
@@ -1180,7 +1180,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                             variant="outlined"
                           >
                             <ForwardRef(FormControl)
-                              className="MuiTextField-root makeStyles-textField-33"
+                              className="MuiTextField-root makeStyles-textField-38"
                               classes={
                                 Object {
                                   "fullWidth": "MuiFormControl-fullWidth",
@@ -1198,7 +1198,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                               variant="outlined"
                             >
                               <div
-                                className="MuiFormControl-root MuiTextField-root makeStyles-textField-33"
+                                className="MuiFormControl-root MuiTextField-root makeStyles-textField-38"
                                 data-cy="text"
                               >
                                 <WithStyles(ForwardRef(InputLabel))>
@@ -1436,10 +1436,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                               className="MuiOutlinedInput-notchedOutline"
                                               classes={
                                                 Object {
-                                                  "legend": "PrivateNotchedOutline-legend-43",
-                                                  "legendLabelled": "PrivateNotchedOutline-legendLabelled-44",
-                                                  "legendNotched": "PrivateNotchedOutline-legendNotched-45",
-                                                  "root": "PrivateNotchedOutline-root-42",
+                                                  "legend": "PrivateNotchedOutline-legend-48",
+                                                  "legendLabelled": "PrivateNotchedOutline-legendLabelled-49",
+                                                  "legendNotched": "PrivateNotchedOutline-legendNotched-50",
+                                                  "root": "PrivateNotchedOutline-root-47",
                                                 }
                                               }
                                               label={
@@ -1452,10 +1452,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                             >
                                               <fieldset
                                                 aria-hidden={true}
-                                                className="PrivateNotchedOutline-root-42 MuiOutlinedInput-notchedOutline"
+                                                className="PrivateNotchedOutline-root-47 MuiOutlinedInput-notchedOutline"
                                               >
                                                 <legend
-                                                  className="PrivateNotchedOutline-legendLabelled-44"
+                                                  className="PrivateNotchedOutline-legendLabelled-49"
                                                 >
                                                   <span>
                                                     Текст коментаря
@@ -1607,6 +1607,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
     </CommentForm>
     <ReplyCommentForm
       adminId=""
+      adminReply={true}
       commentId=""
       isEdit={false}
       reply={Object {}}
@@ -1737,19 +1738,19 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                   options={
                     Array [
                       Object {
-                        "checked": false,
+                        "checked": true,
                         "color": "primary",
                         "dataCy": "showReplyComment",
                         "handler": [Function],
                         "id": "showReplyComment",
                         "label": "Видимий",
-                        "value": false,
+                        "value": true,
                       },
                     ]
                   }
                 >
                   <WithStyles(ForwardRef(FormControlLabel))
-                    checked={false}
+                    checked={true}
                     control={
                       <ForwardRef(WithStyles)
                         color="primary"
@@ -1760,10 +1761,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                     label="Видимий"
                     labelPlacement="end"
                     onChange={[Function]}
-                    value={false}
+                    value={true}
                   >
                     <ForwardRef(FormControlLabel)
-                      checked={false}
+                      checked={true}
                       classes={
                         Object {
                           "disabled": "Mui-disabled",
@@ -1783,20 +1784,20 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                       label="Видимий"
                       labelPlacement="end"
                       onChange={[Function]}
-                      value={false}
+                      value={true}
                     >
                       <label
                         className="MuiFormControlLabel-root"
                         data-cy="showReplyComment"
                       >
                         <WithStyles(ForwardRef(Checkbox))
-                          checked={false}
+                          checked={true}
                           color="primary"
                           onChange={[Function]}
-                          value={false}
+                          value={true}
                         >
                           <ForwardRef(Checkbox)
-                            checked={false}
+                            checked={true}
                             classes={
                               Object {
                                 "checked": "Mui-checked",
@@ -1809,10 +1810,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                             }
                             color="primary"
                             onChange={[Function]}
-                            value={false}
+                            value={true}
                           >
                             <WithStyles(ForwardRef(SwitchBase))
-                              checked={false}
+                              checked={true}
                               checkedIcon={<UNDEFINED />}
                               classes={
                                 Object {
@@ -1830,17 +1831,17 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                               }
                               onChange={[Function]}
                               type="checkbox"
-                              value={false}
+                              value={true}
                             >
                               <ForwardRef(SwitchBase)
-                                checked={false}
+                                checked={true}
                                 checkedIcon={<UNDEFINED />}
                                 classes={
                                   Object {
-                                    "checked": "PrivateSwitchBase-checked-39 Mui-checked",
-                                    "disabled": "PrivateSwitchBase-disabled-40 Mui-disabled",
-                                    "input": "PrivateSwitchBase-input-41",
-                                    "root": "PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary",
+                                    "checked": "PrivateSwitchBase-checked-44 Mui-checked",
+                                    "disabled": "PrivateSwitchBase-disabled-45 Mui-disabled",
+                                    "input": "PrivateSwitchBase-input-46",
+                                    "root": "PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary",
                                   }
                                 }
                                 color="primary"
@@ -1852,10 +1853,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                 }
                                 onChange={[Function]}
                                 type="checkbox"
-                                value={false}
+                                value={true}
                               >
                                 <WithStyles(ForwardRef(IconButton))
-                                  className="PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary"
+                                  className="PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-checked-44 Mui-checked"
                                   color="primary"
                                   component="span"
                                   onBlur={[Function]}
@@ -1863,7 +1864,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   tabIndex={null}
                                 >
                                   <ForwardRef(IconButton)
-                                    className="PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary"
+                                    className="PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-checked-44 Mui-checked"
                                     classes={
                                       Object {
                                         "colorInherit": "MuiIconButton-colorInherit",
@@ -1885,7 +1886,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   >
                                     <WithStyles(ForwardRef(ButtonBase))
                                       centerRipple={true}
-                                      className="MuiIconButton-root PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                                      className="MuiIconButton-root PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-checked-44 Mui-checked MuiIconButton-colorPrimary"
                                       component="span"
                                       disabled={false}
                                       focusRipple={true}
@@ -1895,7 +1896,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                     >
                                       <ForwardRef(ButtonBase)
                                         centerRipple={true}
-                                        className="MuiIconButton-root PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                                        className="MuiIconButton-root PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-checked-44 Mui-checked MuiIconButton-colorPrimary"
                                         classes={
                                           Object {
                                             "disabled": "Mui-disabled",
@@ -1912,7 +1913,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                       >
                                         <span
                                           aria-disabled={false}
-                                          className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-38 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                                          className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-43 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-checked-44 Mui-checked MuiIconButton-colorPrimary"
                                           onBlur={[Function]}
                                           onDragLeave={[Function]}
                                           onFocus={[Function]}
@@ -1930,14 +1931,14 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                             className="MuiIconButton-label"
                                           >
                                             <input
-                                              checked={false}
-                                              className="PrivateSwitchBase-input-41"
+                                              checked={true}
+                                              className="PrivateSwitchBase-input-46"
                                               data-indeterminate={false}
                                               onChange={[Function]}
                                               type="checkbox"
-                                              value={false}
+                                              value={true}
                                             />
-                                            <ForwardRef(CheckBoxOutlineBlankIcon)>
+                                            <ForwardRef(CheckBoxIcon)>
                                               <WithStyles(ForwardRef(SvgIcon))>
                                                 <ForwardRef(SvgIcon)
                                                   classes={
@@ -1961,12 +1962,12 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                                     viewBox="0 0 24 24"
                                                   >
                                                     <path
-                                                      d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                                      d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                                     />
                                                   </svg>
                                                 </ForwardRef(SvgIcon)>
                                               </WithStyles(ForwardRef(SvgIcon))>
-                                            </ForwardRef(CheckBoxOutlineBlankIcon)>
+                                            </ForwardRef(CheckBoxIcon)>
                                           </span>
                                           <WithStyles(memo)
                                             center={true}
@@ -2059,10 +2060,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                   </WithStyles(ForwardRef(FormControlLabel))>
                 </CheckboxOptions>
                 <WithStyles(ForwardRef(Paper))
-                  className="makeStyles-paper-47"
+                  className="makeStyles-paper-52"
                 >
                   <ForwardRef(Paper)
-                    className="makeStyles-paper-47"
+                    className="makeStyles-paper-52"
                     classes={
                       Object {
                         "elevation0": "MuiPaper-elevation0",
@@ -2097,10 +2098,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                     }
                   >
                     <div
-                      className="MuiPaper-root makeStyles-paper-47 MuiPaper-elevation1 MuiPaper-rounded"
+                      className="MuiPaper-root makeStyles-paper-52 MuiPaper-elevation1 MuiPaper-rounded"
                     >
                       <WithStyles(ForwardRef(TextField))
-                        className="makeStyles-textField-48"
+                        className="makeStyles-textField-53"
                         data-cy="replyText"
                         label="Текст відповіді"
                         multiline={true}
@@ -2109,7 +2110,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                         variant="outlined"
                       >
                         <ForwardRef(TextField)
-                          className="makeStyles-textField-48"
+                          className="makeStyles-textField-53"
                           classes={
                             Object {
                               "root": "MuiTextField-root",
@@ -2123,7 +2124,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           variant="outlined"
                         >
                           <WithStyles(ForwardRef(FormControl))
-                            className="MuiTextField-root makeStyles-textField-48"
+                            className="MuiTextField-root makeStyles-textField-53"
                             color="primary"
                             data-cy="replyText"
                             disabled={false}
@@ -2133,7 +2134,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                             variant="outlined"
                           >
                             <ForwardRef(FormControl)
-                              className="MuiTextField-root makeStyles-textField-48"
+                              className="MuiTextField-root makeStyles-textField-53"
                               classes={
                                 Object {
                                   "fullWidth": "MuiFormControl-fullWidth",
@@ -2151,7 +2152,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                               variant="outlined"
                             >
                               <div
-                                className="MuiFormControl-root MuiTextField-root makeStyles-textField-48"
+                                className="MuiFormControl-root MuiTextField-root makeStyles-textField-53"
                                 data-cy="replyText"
                               >
                                 <WithStyles(ForwardRef(InputLabel))>
@@ -2383,10 +2384,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                               className="MuiOutlinedInput-notchedOutline"
                                               classes={
                                                 Object {
-                                                  "legend": "PrivateNotchedOutline-legend-43",
-                                                  "legendLabelled": "PrivateNotchedOutline-legendLabelled-44",
-                                                  "legendNotched": "PrivateNotchedOutline-legendNotched-45",
-                                                  "root": "PrivateNotchedOutline-root-42",
+                                                  "legend": "PrivateNotchedOutline-legend-48",
+                                                  "legendLabelled": "PrivateNotchedOutline-legendLabelled-49",
+                                                  "legendNotched": "PrivateNotchedOutline-legendNotched-50",
+                                                  "root": "PrivateNotchedOutline-root-47",
                                                 }
                                               }
                                               label={
@@ -2399,10 +2400,10 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                             >
                                               <fieldset
                                                 aria-hidden={true}
-                                                className="PrivateNotchedOutline-root-42 MuiOutlinedInput-notchedOutline"
+                                                className="PrivateNotchedOutline-root-47 MuiOutlinedInput-notchedOutline"
                                               >
                                                 <legend
-                                                  className="PrivateNotchedOutline-legendLabelled-44"
+                                                  className="PrivateNotchedOutline-legendLabelled-49"
                                                 >
                                                   <span>
                                                     Текст відповіді
@@ -2425,7 +2426,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                   </ForwardRef(Paper)>
                 </WithStyles(ForwardRef(Paper))>
                 <SaveButton
-                  className="makeStyles-saveCommentButton-46"
+                  className="makeStyles-saveCommentButton-51"
                   color="primary"
                   data-cy="save"
                   errors={Object {}}
@@ -2435,12 +2436,12 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                   values={
                     Object {
                       "replyText": "",
-                      "showReplyComment": false,
+                      "showReplyComment": true,
                     }
                   }
                 >
                   <WithStyles(ForwardRef(Button))
-                    className="makeStyles-saveCommentButton-46"
+                    className="makeStyles-saveCommentButton-51"
                     color="primary"
                     data-cy="save"
                     disabled={true}
@@ -2449,7 +2450,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                     variant="contained"
                   >
                     <ForwardRef(Button)
-                      className="makeStyles-saveCommentButton-46"
+                      className="makeStyles-saveCommentButton-51"
                       classes={
                         Object {
                           "colorInherit": "MuiButton-colorInherit",
@@ -2491,7 +2492,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                       variant="contained"
                     >
                       <WithStyles(ForwardRef(ButtonBase))
-                        className="MuiButton-root MuiButton-contained makeStyles-saveCommentButton-46 MuiButton-containedPrimary Mui-disabled"
+                        className="MuiButton-root MuiButton-contained makeStyles-saveCommentButton-51 MuiButton-containedPrimary Mui-disabled"
                         component="button"
                         data-cy="save"
                         disabled={true}
@@ -2501,7 +2502,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                         type="submit"
                       >
                         <ForwardRef(ButtonBase)
-                          className="MuiButton-root MuiButton-contained makeStyles-saveCommentButton-46 MuiButton-containedPrimary Mui-disabled"
+                          className="MuiButton-root MuiButton-contained makeStyles-saveCommentButton-51 MuiButton-containedPrimary Mui-disabled"
                           classes={
                             Object {
                               "disabled": "Mui-disabled",
@@ -2518,7 +2519,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           type="submit"
                         >
                           <button
-                            className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-saveCommentButton-46 MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                            className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-saveCommentButton-51 MuiButton-containedPrimary Mui-disabled Mui-disabled"
                             data-cy="save"
                             disabled={true}
                             onBlur={[Function]}
@@ -2553,23 +2554,155 @@ exports[`Comment form tests Should render two forms and list 1`] = `
         </form>
       </div>
     </ReplyCommentForm>
+    <div>
+      <FilterNavbar
+        clearOptions={Object {}}
+        filterByMultipleOptions={Object {}}
+        options={
+          Object {
+            "useReplyCommentFilters": Object {},
+          }
+        }
+        searchOptions={Object {}}
+        sortOptions={Object {}}
+      >
+        <WithStyles(ForwardRef(Grid))
+          className="makeStyles-container-55"
+        >
+          <ForwardRef(Grid)
+            className="makeStyles-container-55"
+            classes={
+              Object {
+                "align-content-xs-center": "MuiGrid-align-content-xs-center",
+                "align-content-xs-flex-end": "MuiGrid-align-content-xs-flex-end",
+                "align-content-xs-flex-start": "MuiGrid-align-content-xs-flex-start",
+                "align-content-xs-space-around": "MuiGrid-align-content-xs-space-around",
+                "align-content-xs-space-between": "MuiGrid-align-content-xs-space-between",
+                "align-items-xs-baseline": "MuiGrid-align-items-xs-baseline",
+                "align-items-xs-center": "MuiGrid-align-items-xs-center",
+                "align-items-xs-flex-end": "MuiGrid-align-items-xs-flex-end",
+                "align-items-xs-flex-start": "MuiGrid-align-items-xs-flex-start",
+                "container": "MuiGrid-container",
+                "direction-xs-column": "MuiGrid-direction-xs-column",
+                "direction-xs-column-reverse": "MuiGrid-direction-xs-column-reverse",
+                "direction-xs-row-reverse": "MuiGrid-direction-xs-row-reverse",
+                "grid-lg-1": "MuiGrid-grid-lg-1",
+                "grid-lg-10": "MuiGrid-grid-lg-10",
+                "grid-lg-11": "MuiGrid-grid-lg-11",
+                "grid-lg-12": "MuiGrid-grid-lg-12",
+                "grid-lg-2": "MuiGrid-grid-lg-2",
+                "grid-lg-3": "MuiGrid-grid-lg-3",
+                "grid-lg-4": "MuiGrid-grid-lg-4",
+                "grid-lg-5": "MuiGrid-grid-lg-5",
+                "grid-lg-6": "MuiGrid-grid-lg-6",
+                "grid-lg-7": "MuiGrid-grid-lg-7",
+                "grid-lg-8": "MuiGrid-grid-lg-8",
+                "grid-lg-9": "MuiGrid-grid-lg-9",
+                "grid-lg-auto": "MuiGrid-grid-lg-auto",
+                "grid-lg-true": "MuiGrid-grid-lg-true",
+                "grid-md-1": "MuiGrid-grid-md-1",
+                "grid-md-10": "MuiGrid-grid-md-10",
+                "grid-md-11": "MuiGrid-grid-md-11",
+                "grid-md-12": "MuiGrid-grid-md-12",
+                "grid-md-2": "MuiGrid-grid-md-2",
+                "grid-md-3": "MuiGrid-grid-md-3",
+                "grid-md-4": "MuiGrid-grid-md-4",
+                "grid-md-5": "MuiGrid-grid-md-5",
+                "grid-md-6": "MuiGrid-grid-md-6",
+                "grid-md-7": "MuiGrid-grid-md-7",
+                "grid-md-8": "MuiGrid-grid-md-8",
+                "grid-md-9": "MuiGrid-grid-md-9",
+                "grid-md-auto": "MuiGrid-grid-md-auto",
+                "grid-md-true": "MuiGrid-grid-md-true",
+                "grid-sm-1": "MuiGrid-grid-sm-1",
+                "grid-sm-10": "MuiGrid-grid-sm-10",
+                "grid-sm-11": "MuiGrid-grid-sm-11",
+                "grid-sm-12": "MuiGrid-grid-sm-12",
+                "grid-sm-2": "MuiGrid-grid-sm-2",
+                "grid-sm-3": "MuiGrid-grid-sm-3",
+                "grid-sm-4": "MuiGrid-grid-sm-4",
+                "grid-sm-5": "MuiGrid-grid-sm-5",
+                "grid-sm-6": "MuiGrid-grid-sm-6",
+                "grid-sm-7": "MuiGrid-grid-sm-7",
+                "grid-sm-8": "MuiGrid-grid-sm-8",
+                "grid-sm-9": "MuiGrid-grid-sm-9",
+                "grid-sm-auto": "MuiGrid-grid-sm-auto",
+                "grid-sm-true": "MuiGrid-grid-sm-true",
+                "grid-xl-1": "MuiGrid-grid-xl-1",
+                "grid-xl-10": "MuiGrid-grid-xl-10",
+                "grid-xl-11": "MuiGrid-grid-xl-11",
+                "grid-xl-12": "MuiGrid-grid-xl-12",
+                "grid-xl-2": "MuiGrid-grid-xl-2",
+                "grid-xl-3": "MuiGrid-grid-xl-3",
+                "grid-xl-4": "MuiGrid-grid-xl-4",
+                "grid-xl-5": "MuiGrid-grid-xl-5",
+                "grid-xl-6": "MuiGrid-grid-xl-6",
+                "grid-xl-7": "MuiGrid-grid-xl-7",
+                "grid-xl-8": "MuiGrid-grid-xl-8",
+                "grid-xl-9": "MuiGrid-grid-xl-9",
+                "grid-xl-auto": "MuiGrid-grid-xl-auto",
+                "grid-xl-true": "MuiGrid-grid-xl-true",
+                "grid-xs-1": "MuiGrid-grid-xs-1",
+                "grid-xs-10": "MuiGrid-grid-xs-10",
+                "grid-xs-11": "MuiGrid-grid-xs-11",
+                "grid-xs-12": "MuiGrid-grid-xs-12",
+                "grid-xs-2": "MuiGrid-grid-xs-2",
+                "grid-xs-3": "MuiGrid-grid-xs-3",
+                "grid-xs-4": "MuiGrid-grid-xs-4",
+                "grid-xs-5": "MuiGrid-grid-xs-5",
+                "grid-xs-6": "MuiGrid-grid-xs-6",
+                "grid-xs-7": "MuiGrid-grid-xs-7",
+                "grid-xs-8": "MuiGrid-grid-xs-8",
+                "grid-xs-9": "MuiGrid-grid-xs-9",
+                "grid-xs-auto": "MuiGrid-grid-xs-auto",
+                "grid-xs-true": "MuiGrid-grid-xs-true",
+                "item": "MuiGrid-item",
+                "justify-xs-center": "MuiGrid-justify-xs-center",
+                "justify-xs-flex-end": "MuiGrid-justify-xs-flex-end",
+                "justify-xs-space-around": "MuiGrid-justify-xs-space-around",
+                "justify-xs-space-between": "MuiGrid-justify-xs-space-between",
+                "justify-xs-space-evenly": "MuiGrid-justify-xs-space-evenly",
+                "root": "MuiGrid-root",
+                "spacing-xs-1": "MuiGrid-spacing-xs-1",
+                "spacing-xs-10": "MuiGrid-spacing-xs-10",
+                "spacing-xs-2": "MuiGrid-spacing-xs-2",
+                "spacing-xs-3": "MuiGrid-spacing-xs-3",
+                "spacing-xs-4": "MuiGrid-spacing-xs-4",
+                "spacing-xs-5": "MuiGrid-spacing-xs-5",
+                "spacing-xs-6": "MuiGrid-spacing-xs-6",
+                "spacing-xs-7": "MuiGrid-spacing-xs-7",
+                "spacing-xs-8": "MuiGrid-spacing-xs-8",
+                "spacing-xs-9": "MuiGrid-spacing-xs-9",
+                "wrap-xs-nowrap": "MuiGrid-wrap-xs-nowrap",
+                "wrap-xs-wrap-reverse": "MuiGrid-wrap-xs-wrap-reverse",
+                "zeroMinWidth": "MuiGrid-zeroMinWidth",
+              }
+            }
+          >
+            <div
+              className="MuiGrid-root makeStyles-container-55"
+            />
+          </ForwardRef(Grid)>
+        </WithStyles(ForwardRef(Grid))>
+      </FilterNavbar>
+    </div>
     <ReplyComments
       itemsCount={0}
       replyComments={Array []}
     >
       <div
-        className="makeStyles-container-50"
+        className="makeStyles-container-60"
       >
         <div
-          className="makeStyles-adminHeader-51 makeStyles-title-58"
+          className="makeStyles-adminHeader-61 makeStyles-title-68"
         >
           <WithStyles(ForwardRef(Typography))
-            className="makeStyles-materialTitle-52"
+            className="makeStyles-materialTitle-62"
             data-cy="comment-header"
             variant="h1"
           >
             <ForwardRef(Typography)
-              className="makeStyles-materialTitle-52"
+              className="makeStyles-materialTitle-62"
               classes={
                 Object {
                   "alignCenter": "MuiTypography-alignCenter",
@@ -2608,7 +2741,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
               variant="h1"
             >
               <h1
-                className="MuiTypography-root makeStyles-materialTitle-52 MuiTypography-h1"
+                className="MuiTypography-root makeStyles-materialTitle-62 MuiTypography-h1"
                 data-cy="comment-header"
               >
                 Інформація про відповіді
@@ -2617,7 +2750,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
           </WithStyles(ForwardRef(Typography))>
         </div>
         <p
-          className="makeStyles-noRecords-57"
+          className="makeStyles-noRecords-67"
         >
           Відповіді відсутні
         </p>

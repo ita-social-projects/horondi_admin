@@ -51,10 +51,10 @@ import { handleAdminLogout } from '../auth/auth.sagas';
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS, SUCCESS_ADD_STATUS } =
   config.statuses;
 
-export function* handleCommentsLoad({ payload: { filter, pagination } }) {
+export function* handleCommentsLoad({ payload: { filter, pagination, sort } }) {
   try {
     yield put(setCommentsLoading(true));
-    const comments = yield call(getAllComments, filter, pagination);
+    const comments = yield call(getAllComments, filter, pagination, sort);
 
     if (comments) {
       yield put(setItemsCount(comments?.count));
@@ -147,11 +147,16 @@ export function* handleCommentsByTypeLoad({ payload }) {
   }
 }
 
-export function* handleGetReplyComments({ payload: { filter, pagination } }) {
+export function* handleGetReplyComments({
+  payload: { filter, pagination, sort }
+}) {
   try {
     yield put(setCommentsLoading(true));
-    const replyComments = yield call(getReplyComments, { filter, pagination });
-
+    const replyComments = yield call(getReplyComments, {
+      filter,
+      pagination,
+      sort
+    });
     if (replyComments?.items[0]?.replyComments) {
       yield put(setReplyComments(replyComments?.items[0]?.replyComments));
       yield put(setCommentsLoading(false));

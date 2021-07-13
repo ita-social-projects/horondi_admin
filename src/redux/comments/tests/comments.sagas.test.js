@@ -63,7 +63,9 @@ import {
   mockSuccess,
   replyCommentId,
   mockSuccessDelete,
-  tablePagination
+  tablePagination,
+  sortData,
+  replyFilter
 } from './comments.variables';
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
@@ -84,13 +86,17 @@ const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
 describe('get comments sagas tests', () => {
   it('should handle comments load', () => {
-    expectSaga(handleCommentsLoad, { payload: { filter, pagination } })
+    expectSaga(handleCommentsLoad, {
+      payload: { filter, pagination, sort: sortData }
+    })
       .withReducer(combineReducers({ Table, commentsReducer }), {
         commentsReducer: initialState,
         Table: mockTableState
       })
       .put(setCommentsLoading(true))
-      .provide([[call(getAllComments, filter, pagination), commentRes]])
+      .provide([
+        [call(getAllComments, filter, pagination, sortData), commentRes]
+      ])
       .put(setItemsCount(commentRes.count))
       .put(setComments(commentRes.items))
       .put(setCommentsLoading(false))
@@ -108,13 +114,18 @@ describe('get comments sagas tests', () => {
   });
 
   it('should throw an error', () =>
-    expectSaga(handleCommentsLoad, { payload: { filter, pagination } })
+    expectSaga(handleCommentsLoad, {
+      payload: { filter, pagination, sort: sortData }
+    })
       .withReducer(combineReducers({ Table, commentsReducer }), {
         commentsReducer: initialState,
         Table: mockTableState
       })
       .provide([
-        [call(getAllComments, filter, pagination), throwError(mockError)]
+        [
+          call(getAllComments, filter, pagination, sortData),
+          throwError(mockError)
+        ]
       ])
       .put(setCommentsLoading(false))
       .put(setCommentError({ e: mockError }))
@@ -299,12 +310,19 @@ describe('handle recent comment sagas tests', () => {
 describe('handle get reply comments sagas tests', () => {
   it('should get reply  comments', () => {
     expectSaga(handleGetReplyComments, {
-      payload: { filter, pagination }
+      payload: { filter: replyFilter, pagination, sort: sortData }
     })
       .withReducer(commentsReducer)
       .put(setCommentsLoading(true))
       .provide([
-        [call(getReplyComments, { filter, pagination }), getReplyCommentsData]
+        [
+          call(getReplyComments, {
+            filter: replyFilter,
+            pagination,
+            sort: sortData
+          }),
+          getReplyCommentsData
+        ]
       ])
       .put(setReplyComments(getReplyCommentsData.items[0].replyComments))
       .put(setCommentsLoading(false))
@@ -317,11 +335,22 @@ describe('handle get reply comments sagas tests', () => {
 
   it('should throw an error', () =>
     expectSaga(handleGetReplyComments, {
-      payload: { filter, pagination }
+      payload: {
+        filter: replyFilter,
+        pagination,
+        sort: sortData
+      }
     })
       .withReducer(commentsReducer)
       .provide([
-        [call(getReplyComments, { filter, pagination }), throwError(mockError)]
+        [
+          call(getReplyComments, {
+            filter: replyFilter,
+            pagination,
+            sort: sortData
+          }),
+          throwError(mockError)
+        ]
       ])
       .put(setCommentsLoading(false))
       .put(setCommentError({ e: mockError }))

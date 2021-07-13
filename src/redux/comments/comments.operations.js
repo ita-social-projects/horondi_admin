@@ -5,14 +5,15 @@ import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');
 
-const getAllComments = async (filter, pagination) => {
+const getAllComments = async (filter, pagination, sort) => {
   const query = `
-      query($filter: CommentFilterInput, $pagination: Pagination) {
-        getAllComments(filter: $filter, pagination: $pagination) {
+      query($filter: CommentFilterInput, $pagination: Pagination,$sort: CommentsSortInput) {
+        getAllComments(filter: $filter, pagination: $pagination,sort: $sort) {
           items {
             _id
             text
             date
+            replyCommentsCount
             user {
               _id
               firstName
@@ -28,7 +29,7 @@ const getAllComments = async (filter, pagination) => {
       }
     `;
 
-  const result = await getItems(query, { filter, pagination });
+  const result = await getItems(query, { filter, pagination, sort });
 
   return result?.data?.getAllComments;
 };
@@ -250,10 +251,10 @@ const getCommentsByUser = async (userId) => {
   return result?.data?.getAllCommentsByUser;
 };
 
-const getReplyComments = async ({ filter, pagination }) => {
+const getReplyComments = async ({ filter, pagination, sort }) => {
   const getReplyCommentsQuery = `
-    query($filter: ReplyCommentFilterInput, $pagination: Pagination) {
-      getReplyCommentsByComment(filter: $filter, pagination: $pagination) {
+    query($filter: ReplyCommentFilterInput, $pagination: Pagination,$sort: ReplyCommentsSortInput) {
+      getReplyCommentsByComment(filter: $filter, pagination: $pagination,sort: $sort) {
         ... on PaginatedComments {
           items{
             _id
@@ -281,7 +282,11 @@ const getReplyComments = async ({ filter, pagination }) => {
       }
     }
   `;
-  const result = await getItems(getReplyCommentsQuery, { filter, pagination });
+  const result = await getItems(getReplyCommentsQuery, {
+    filter,
+    pagination,
+    sort
+  });
   return result?.data?.getReplyCommentsByComment;
 };
 const deleteReplyComment = async (payload) => {

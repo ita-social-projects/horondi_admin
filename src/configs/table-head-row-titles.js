@@ -43,7 +43,14 @@ const tableHeadRowTitles = {
   contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
   orderProductTitles: ['№', 'Назва', 'Кількість', 'Розмір', 'Ціна', 'Деталі'],
   comments: {
-    commentPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії'],
+    commentPageTitles: [
+      'Дата',
+      'Пошта',
+      'Текст',
+      'Видимий',
+      'Кількість відповідей',
+      'Дії'
+    ],
     userPageTitles: ['Дата', 'Текст', 'Дії'],
     recentCommentsPageTitle: ['Дата', "Ім'я користувача", 'Текст']
   },

@@ -11,7 +11,9 @@ import {
   setReplyComments,
   removeReplyCommentFromStore,
   clearComment,
-  setCommentsCurrentPage
+  setCommentsCurrentPage,
+  setSort,
+  setSortLabel
 } from '../comments.actions';
 import {
   comments,
@@ -23,7 +25,9 @@ import {
   replyCommentsData,
   replyItem,
   replyCommentId,
-  currentPage
+  currentPage,
+  sortDataLabel,
+  sortData
 } from './comments.variables';
 
 describe('comments reducer tests', () => {
@@ -79,7 +83,9 @@ describe('comments reducer tests', () => {
   it('should clear all comments filters', () => {
     expect(commentsReducer(initialState, clearFilters())).toEqual({
       ...initialState,
-      filters: mockInitialFilters
+      filters: mockInitialFilters,
+      sort: { date: -1 },
+      sortLabel: ''
     });
   });
   it('should set recent comments', () => {
@@ -127,6 +133,22 @@ describe('comments reducer tests', () => {
     ).toEqual({
       ...initialState,
       currentPageForComments: currentPage
+    });
+  });
+
+  it('should add filter to comments', () => {
+    expect(commentsReducer({ ...initialState }, setSort(sortData))).toEqual({
+      ...initialState,
+      sort: sortData
+    });
+  });
+
+  it('should add filter label to comments', () => {
+    expect(
+      commentsReducer({ ...initialState }, setSortLabel(sortDataLabel))
+    ).toEqual({
+      ...initialState,
+      sortLabel: sortDataLabel
     });
   });
 });

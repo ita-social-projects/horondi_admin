@@ -157,9 +157,15 @@ export const replyCommentsData = [
 
 export const replyFilter = {
   filters: true,
-  commentId: '601824cf6ec0f77526a74e11'
+  commentId: '601824cf6ec0f77526a74e30',
+  createdAt: { dateFrom: '', dateTo: '' },
+  showReplyComment: [],
+  search: ''
 };
 
 export const getReplyCommentsData = {
   items: [{ replyComments: replyCommentsData }]
 };
+
+export const sortDataLabel = 'sortByReplyDesc';
+export const sortData = { date: 1 };

@@ -22,7 +22,9 @@ import {
   DELETE_REPLY_COMMENT,
   REMOVE_REPLY_COMMENT_FROM_STORE,
   CLEAR_COMMENT,
-  ADD_REPLY_COMMENT
+  ADD_REPLY_COMMENT,
+  SET_COMMENT_SORT,
+  SET_COMMENT_SORT_LABEL
 } from '../comments.types';
 
 import {
@@ -49,7 +51,9 @@ import {
   deleteReplyComment,
   removeReplyCommentFromStore,
   clearComment,
-  addReplyComment
+  addReplyComment,
+  setSort,
+  setSortLabel
 } from '../comments.actions';
 
 import {
@@ -66,7 +70,9 @@ import {
   addReplyData,
   replyCommentsData,
   replyFilter,
-  replyCommentId
+  replyCommentId,
+  sortDataLabel,
+  sortData
 } from './comments.variables';
 
 describe('comments action tests', () => {
@@ -224,6 +230,20 @@ describe('comments action tests', () => {
     expect(addReplyComment(addReplyData)).toEqual({
       type: ADD_REPLY_COMMENT,
       payload: addReplyData
+    });
+  });
+
+  it('should add filter to comment', () => {
+    expect(setSort(sortData)).toEqual({
+      type: SET_COMMENT_SORT,
+      payload: sortData
+    });
+  });
+
+  it('should add filter label to comment', () => {
+    expect(setSortLabel(sortDataLabel)).toEqual({
+      type: SET_COMMENT_SORT_LABEL,
+      payload: sortDataLabel
     });
   });
 });

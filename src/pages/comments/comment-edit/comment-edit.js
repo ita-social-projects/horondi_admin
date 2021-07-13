@@ -16,15 +16,24 @@ import {
 import ReplyComments from './replyComments';
 import ReplyCommentForm from '../../../components/forms/reply-comment-form/reply-comment-form';
 import { setCurrentPage } from '../../../redux/table/table.actions';
+import useReplyCommentFilters from '../../../hooks/filters/use-reply-comment-filters';
+import FilterNavbar from '../../../components/filter-search-sort/filter-navbar';
 
 const CommentEdit = ({ match }) => {
   const { id } = match.params;
   const dispatch = useDispatch();
   const styles = useStyles();
   const { loading, comment } = useSelector(commentSelector);
+  const replyCommentOptions = useReplyCommentFilters();
 
-  const { currentPage, rowsPerPage, replyComments, currentPageForComments } =
-    useSelector(commentSelectorWithPagination);
+  const {
+    replyFilters,
+    replySort,
+    currentPage,
+    rowsPerPage,
+    replyComments,
+    currentPageForComments
+  } = useSelector(commentSelectorWithPagination);
   const { adminId } = useSelector(({ Auth }) => ({ adminId: Auth.adminId }));
 
   useEffect(
@@ -41,12 +50,19 @@ const CommentEdit = ({ match }) => {
         reply: {
           filter: {
             filters: true,
-            commentId: id
+            commentId: id,
+            createdAt: {
+              dateFrom: replyFilters.dateFrom,
+              dateTo: replyFilters.dateTo
+            },
+            showReplyComment: replyFilters.show,
+            search: replyFilters.search
           },
           pagination: {
             limit: rowsPerPage,
             skip: currentPage * rowsPerPage
-          }
+          },
+          sort: replySort
         }
       })
     );
@@ -57,15 +73,22 @@ const CommentEdit = ({ match }) => {
       getReplyComments({
         filter: {
           filters: true,
+          createdAt: {
+            dateFrom: replyFilters.dateFrom,
+            dateTo: replyFilters.dateTo
+          },
+          showReplyComment: replyFilters.show,
+          search: replyFilters.search,
           commentId: id
         },
         pagination: {
           limit: rowsPerPage,
           skip: currentPage * rowsPerPage
-        }
+        },
+        sort: replySort
       })
     );
-  }, [rowsPerPage, currentPage]);
+  }, [rowsPerPage, currentPage, replyFilters, replySort]);
 
   if (loading) {
     return <LoadingBar />;
@@ -81,6 +104,9 @@ const CommentEdit = ({ match }) => {
             adminId={adminId}
             adminReply
           />
+          <div>
+            <FilterNavbar options={replyCommentOptions || {}} />
+          </div>
           <ReplyComments
             replyComments={replyComments}
             itemsCount={comment?.replyCommentsCount}

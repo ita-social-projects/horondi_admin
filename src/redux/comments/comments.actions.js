@@ -22,7 +22,13 @@ import {
   DELETE_REPLY_COMMENT,
   REMOVE_REPLY_COMMENT_FROM_STORE,
   CLEAR_COMMENT,
-  ADD_REPLY_COMMENT
+  ADD_REPLY_COMMENT,
+  SET_COMMENT_SORT,
+  SET_COMMENT_SORT_LABEL,
+  SET_REPLY_FILTER,
+  SET_REPLY_SORT,
+  SET_REPLY_SORT_LABEL,
+  CLEAR_REPLY_FILTERS
 } from './comments.types';
 
 const setComments = (comments) => ({
@@ -143,6 +149,35 @@ const addReplyComment = (payload) => ({
   payload
 });
 
+const setSort = (payload) => ({
+  type: SET_COMMENT_SORT,
+  payload
+});
+
+const setSortLabel = (payload) => ({
+  type: SET_COMMENT_SORT_LABEL,
+  payload
+});
+
+const setReplyFilter = (payload) => ({
+  type: SET_REPLY_FILTER,
+  payload
+});
+
+const setReplySort = (payload) => ({
+  type: SET_REPLY_SORT,
+  payload
+});
+
+const setReplySortLabel = (payload) => ({
+  type: SET_REPLY_SORT_LABEL,
+  payload
+});
+
+const clearReplyFilters = () => ({
+  type: CLEAR_REPLY_FILTERS
+});
+
 export {
   setComments,
   getComments,
@@ -167,5 +202,11 @@ export {
   deleteReplyComment,
   removeReplyCommentFromStore,
   clearComment,
-  addReplyComment
+  addReplyComment,
+  setSort,
+  setSortLabel,
+  setReplyFilter,
+  setReplySort,
+  setReplySortLabel,
+  clearReplyFilters
 };

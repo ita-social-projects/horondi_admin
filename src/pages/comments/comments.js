@@ -43,7 +43,7 @@ const Comments = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { filter, list, loading, currentPage, rowsPerPage, itemsCount } =
+  const { sort, filter, list, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(commentSelectorWithPagination);
 
   useEffect(() => {
@@ -57,10 +57,11 @@ const Comments = () => {
         pagination: {
           limit: rowsPerPage,
           skip: currentPage * rowsPerPage
-        }
+        },
+        sort
       })
     );
-  }, [dispatch, filter, rowsPerPage, currentPage]);
+  }, [dispatch, filter, rowsPerPage, currentPage, sort]);
 
   const commentDeleteHandler = (id) => {
     const removeComment = () => {
@@ -79,6 +80,7 @@ const Comments = () => {
       text={comment.text}
       show={comment?.show ? yes : no}
       id={comment?._id}
+      count={comment?.replyCommentsCount}
       key={comment?._id}
       deleteHandler={() => {
         commentDeleteHandler(comment?._id);

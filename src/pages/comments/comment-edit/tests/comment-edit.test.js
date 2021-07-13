@@ -11,6 +11,12 @@ import ReplyCommentForm from '../../../../components/forms/reply-comment-form/re
 
 import CommentsEdit from '../index';
 
+jest.mock('../../../../hooks/filters/use-reply-comment-filters', () => ({
+  __esModule: true,
+  default: () => ({
+    useReplyCommentFilters: {}
+  })
+}));
 configure({ adapter: new Adapter() });
 
 const mockUseDispatchFn = jest.fn();
@@ -22,7 +28,18 @@ describe('Comment form tests', () => {
 
   beforeEach(() => {
     mockUseDispatch.mockReturnValue(() => mockUseDispatchFn());
-    mockUseSelector.mockReturnValue({ loading: false });
+    mockUseSelector.mockReturnValue({
+      loading: false,
+      replyFilters: {
+        dateFrom: '',
+        dateTo: ''
+      },
+      replySort: '',
+      currentPage: 0,
+      rowsPerPage: 10,
+      replyComments: [],
+      currentPageForComments: 0
+    });
     wrapper = mount(<CommentsEdit match={matchMock} />);
   });
 
@@ -38,7 +55,18 @@ describe('Comment form tests', () => {
   });
 
   it('Should render loading', () => {
-    mockUseSelector.mockReturnValue({ loading: true });
+    mockUseSelector.mockReturnValue({
+      loading: true,
+      replyFilters: {
+        dateFrom: '',
+        dateTo: ''
+      },
+      replySort: '',
+      currentPage: 0,
+      rowsPerPage: 10,
+      replyComments: [],
+      currentPageForComments: 0
+    });
     wrapper = mount(<CommentsEdit match={matchMock} />);
     expect(wrapper.exists(LoadingBar)).toBe(true);
   });
