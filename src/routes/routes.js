@@ -56,6 +56,7 @@ import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
+import ReplyCommentEdit from '../pages/comments/comment-edit/replyComments/reply-comment-edit';
 import History from '../pages/history';
 import HistoryDetails from '../pages/history/history-details';
 import PocketsPage from '../pages/pockets/pockets-page';
@@ -266,6 +267,11 @@ const Routes = () => {
             path={routes.pathToCommentsEdit}
             exact
             component={CommentEdit}
+          />
+          <Route
+            path={routes.pathToReplyCommentsEdit}
+            exact
+            component={ReplyCommentEdit}
           />
           <Route path={routes.pathToPockets} exact component={PocketsPage} />
           <Route path={routes.pathToPocketsAdd} exact component={PocketsAdd} />

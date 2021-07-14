@@ -17,7 +17,7 @@ import {
   CLEAR_FILTERS,
   GET_RECENT_COMMENTS,
   SET_RECENT_COMMENTS,
-  SET_REPLY_COMMENT,
+  SET_REPLY_COMMENTS,
   GET_REPLY_COMMENTS,
   DELETE_REPLY_COMMENT,
   REMOVE_REPLY_COMMENT_FROM_STORE,
@@ -194,7 +194,7 @@ describe('comments action tests', () => {
 
   it('should set reply comments', () => {
     expect(setReplyComments(replyCommentsData)).toEqual({
-      type: SET_REPLY_COMMENT,
+      type: SET_REPLY_COMMENTS,
       payload: replyCommentsData
     });
   });

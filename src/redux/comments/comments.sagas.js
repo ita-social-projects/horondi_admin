@@ -12,7 +12,9 @@ import {
   getAllComments,
   getReplyComments,
   deleteReplyComment,
-  addReplyForComment
+  addReplyForComment,
+  updateReplyComment,
+  getReplyComment
 } from './comments.operations';
 
 import {
@@ -24,7 +26,9 @@ import {
   setRecentComments,
   setReplyComments,
   removeReplyCommentFromStore,
-  getReplyComments as getReplyCommentsAction
+  getReplyComments as getReplyCommentsAction,
+  setReply,
+  setReplyLoading
 } from './comments.actions';
 
 import {
@@ -36,7 +40,9 @@ import {
   GET_RECENT_COMMENTS,
   GET_REPLY_COMMENTS,
   DELETE_REPLY_COMMENT,
-  ADD_REPLY_COMMENT
+  ADD_REPLY_COMMENT,
+  UPDATE_REPLY,
+  GET_REPLY
 } from './comments.types';
 
 import {
@@ -159,6 +165,7 @@ export function* handleGetReplyComments({
     });
     if (replyComments?.items[0]?.replyComments) {
       yield put(setReplyComments(replyComments?.items[0]?.replyComments));
+      yield put(setItemsCount(replyComments?.countAll));
       yield put(setCommentsLoading(false));
     }
   } catch (e) {
@@ -225,6 +232,42 @@ export function* handleAddReplyComment({ payload }) {
   }
 }
 
+export function* handleReplyCommentUpdate({ payload }) {
+  const { replyCommentId, replyCommentData, commentId } = payload;
+  try {
+    yield put(setCommentsLoading(true));
+    const replyComment = yield call(
+      updateReplyComment,
+      replyCommentId,
+      replyCommentData
+    );
+
+    if (replyComment) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(
+        push(config.routes.pathToCommentsEdit.replace(':id', commentId))
+      );
+    }
+    yield put(setCommentsLoading(false));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleReplyCommentLoad({ payload }) {
+  try {
+    yield put(setReplyLoading(true));
+    const reply = yield call(getReplyComment, payload.id);
+
+    if (reply) {
+      yield put(setReply(reply?.replyComments[0]));
+      yield put(setReplyLoading(false));
+    }
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
 export default function* commentsSaga() {
   yield takeEvery(GET_COMMENTS, handleCommentsLoad);
   yield takeEvery(GET_RECENT_COMMENTS, handleRecentCommentsLoad);
@@ -235,4 +278,6 @@ export default function* commentsSaga() {
   yield takeEvery(GET_REPLY_COMMENTS, handleGetReplyComments);
   yield takeEvery(DELETE_REPLY_COMMENT, handleReplyCommentDelete);
   yield takeEvery(ADD_REPLY_COMMENT, handleAddReplyComment);
+  yield takeEvery(UPDATE_REPLY, handleReplyCommentUpdate);
+  yield takeEvery(GET_REPLY, handleReplyCommentLoad);
 }

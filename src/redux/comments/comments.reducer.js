@@ -7,7 +7,7 @@ import {
   SET_FILTER,
   CLEAR_FILTERS,
   SET_RECENT_COMMENTS,
-  SET_REPLY_COMMENT,
+  SET_REPLY_COMMENTS,
   REMOVE_REPLY_COMMENT_FROM_STORE,
   CLEAR_COMMENT,
   SET_COMMENTS_CURRENT_PAGE,
@@ -16,7 +16,9 @@ import {
   SET_REPLY_FILTER,
   SET_REPLY_SORT,
   SET_REPLY_SORT_LABEL,
-  CLEAR_REPLY_FILTERS
+  CLEAR_REPLY_FILTERS,
+  SET_REPLY,
+  SET_REPLY_LOADING
 } from './comments.types';
 
 const initialFilters = {
@@ -39,7 +41,9 @@ export const initialState = {
   replyComments: [],
   currentPageForComments: 0,
   sort: { date: -1 },
-  sortLabel: ''
+  sortLabel: '',
+  replyLoading: false,
+  reply: ''
 };
 
 export const selectComment = ({ Comments }) => ({
@@ -54,11 +58,23 @@ export const selectComment = ({ Comments }) => ({
   sortLabel: Comments.sortLabel,
   replyFilters: Comments.replyFilters,
   replySort: Comments.replySort,
-  replySortLabel: Comments.replySortLabel
+  replySortLabel: Comments.replySortLabel,
+  replyLoading: Comments.replyLoading,
+  reply: Comments.reply
 });
 
 const commentsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case SET_REPLY:
+      return {
+        ...state,
+        reply: action.payload
+      };
+    case SET_REPLY_LOADING:
+      return {
+        ...state,
+        replyLoading: action.payload
+      };
     case SET_COMMENTS_CURRENT_PAGE:
       return {
         ...state,
@@ -102,7 +118,7 @@ const commentsReducer = (state = initialState, action = {}) => {
         ...state,
         list: state.list.filter((item) => item._id !== action.payload)
       };
-    case SET_REPLY_COMMENT:
+    case SET_REPLY_COMMENTS:
       return {
         ...state,
         replyComments: action.payload

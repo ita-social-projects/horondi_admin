@@ -11,7 +11,10 @@ import { useStyles } from './reply-comment-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import CheckboxOptions from '../../checkbox-options';
 import { config } from '../../../configs';
-import { addReplyComment } from '../../../redux/comments/comments.actions';
+import {
+  addReplyComment,
+  updateReply
+} from '../../../redux/comments/comments.actions';
 import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
@@ -24,7 +27,7 @@ const {
 const { SAVE_MESSAGE, SAVE_CHANGES } = config.messages;
 
 const { SAVE_TITLE } = config.buttonTitles;
-const { pathToComments } = config.routes;
+const { pathToCommentsEdit } = config.routes;
 
 const ReplyCommentForm = ({
   reply,
@@ -56,9 +59,10 @@ const ReplyCommentForm = ({
       },
       onSubmit: (data) => {
         if (isEdit) {
-          return;
+          updateReplyCommentHandler(reply._id, data, reply.refToReplyComment);
+        } else {
+          addReplyCommentHandler(data);
         }
-        addReplyCommentHandler(data);
       }
     });
 
@@ -81,10 +85,27 @@ const ReplyCommentForm = ({
     openSuccessSnackbar(addReplyForComment, SAVE_MESSAGE, SAVE_CHANGES);
   };
 
-  function handleProductClick() {
+  const updateReplyCommentHandler = (id, data, commentId) => {
+    const updateReplyForComment = () => {
+      dispatch(closeDialog());
+      dispatch(
+        updateReply({
+          replyCommentId: id,
+          replyCommentData: {
+            replyText: data.replyText,
+            showReplyComment: data.showReplyComment
+          },
+          commentId
+        })
+      );
+    };
+    openSuccessSnackbar(updateReplyForComment, SAVE_MESSAGE, SAVE_CHANGES);
+  };
+
+  function handleCommentClick() {
     if (reply?.refToReplyComment) {
       return history.push(
-        pathToComments.replace(':id', reply.refToReplyComment)
+        pathToCommentsEdit.replace(':id', reply.refToReplyComment)
       );
     }
     dispatch(showErrorSnackbar('Comment not exist'));
@@ -114,7 +135,7 @@ const ReplyCommentForm = ({
               className={styles.textField}
               variant='outlined'
               label={config.labels.replyComment.text}
-              value={values.text}
+              value={values.replyText}
               onChange={handleChange}
               error={touched.code && !!errors.code}
               multiline
@@ -125,14 +146,17 @@ const ReplyCommentForm = ({
               </div>
             )}
             {isEdit ? (
-              <Button variant='contained' onClick={handleProductClick}>
+              <Button variant='contained' onClick={handleCommentClick}>
                 {config.labels.replyComment.commentInfo}
               </Button>
             ) : null}
           </Paper>
           {isEdit ? (
             <BackButton
-              pathBack={pathToComments.replace(':id', reply.refToReplyComment)}
+              pathBack={pathToCommentsEdit.replace(
+                ':id',
+                reply.refToReplyComment
+              )}
             />
           ) : null}
           <SaveButton

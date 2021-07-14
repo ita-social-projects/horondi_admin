@@ -274,6 +274,7 @@ const getReplyComments = async ({ filter, pagination, sort }) => {
             }
           }
           count
+          countAll
         }
         ... on Error {
           statusCode
@@ -338,6 +339,85 @@ const addReplyForComment = async ({ id, commentId, replyCommentData }) => {
   return result?.data?.replyForComment;
 };
 
+const updateReplyComment = async (replyCommentId, replyCommentData) => {
+  const query = `
+      mutation($replyCommentId: ID!, $replyCommentData: ReplyCommentUpdateInput!) {
+        updateReplyForComment(replyCommentId: $replyCommentId, replyCommentData: $replyCommentData) {
+          ... on Comment {
+            _id
+            text
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await setItems(query, { replyCommentId, replyCommentData });
+
+  if (
+    Object.keys(commentsTranslations).includes(
+      result?.data?.updateReplyForComment?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.updateReplyForComment.statusCode} ${
+        commentsTranslations[result.data.updateReplyForComment.message]
+      }`
+    );
+  }
+
+  return result?.data?.updateReplyForComment;
+};
+
+const getReplyComment = async (id) => {
+  const query = `
+      query($id: ID!) {
+        getReplyCommentById(id: $id) {
+          ... on Comment {
+            _id
+            replyComments{
+              _id
+              replyText
+              showReplyComment
+              createdAt
+              verifiedPurchase
+              refToReplyComment
+              answerer{
+                _id
+                firstName
+                email
+                role
+              }
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await setItems(query, { id });
+
+  if (
+    Object.keys(commentsTranslations).includes(
+      result?.data?.getReplyCommentById?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getReplyCommentById.statusCode} ${
+        commentsTranslations[result.data.getReplyCommentById.message]
+      }`
+    );
+  }
+
+  return result?.data?.getReplyCommentById;
+};
+
 export {
   getAllComments,
   deleteComment,
@@ -349,5 +429,7 @@ export {
   getRecentComments,
   getReplyComments,
   deleteReplyComment,
-  addReplyForComment
+  addReplyForComment,
+  updateReplyComment,
+  getReplyComment
 };
