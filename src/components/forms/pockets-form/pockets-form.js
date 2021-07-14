@@ -153,7 +153,11 @@ const PocketsForm = ({ pocket, id, edit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToPockets} />
+              <BackButton
+                className={styles.returnButton}
+                initial={!valueEquality}
+                pathBack={pathToPockets}
+              />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
