@@ -197,15 +197,10 @@ const BackForm = ({ back, id, edit }) => {
           <div className={styles.buttonContainer}>
             <Grid container spacing={2} className={styles.fixedButtons}>
               <Grid item className={styles.button}>
-                <BackButton
-                  className={styles.returnButton}
-                  initial={!valueEquality}
-                  pathBack={pathToBacks}
-                />
+                <BackButton initial={!valueEquality} pathBack={pathToBacks} />
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton
-                  className={styles.saveButton}
                   data-cy='save-btn'
                   type='submit'
                   title={SAVE_TITLE}
@@ -216,9 +211,7 @@ const BackForm = ({ back, id, edit }) => {
               </Grid>
             </Grid>
           </div>
-
           <CheckboxOptions options={checkboxes} />
-
           <Grid item xs={12}>
             <Paper className={styles.backItemUpdate}>
               <div className={styles.imageUploadBlock}>
@@ -329,7 +322,6 @@ BackForm.propTypes = {
     color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string
-    // additionalPrice: PropTypes.array,
   }),
   match: PropTypes.shape({
     params: PropTypes.shape({
