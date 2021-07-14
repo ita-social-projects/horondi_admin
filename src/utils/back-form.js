@@ -34,7 +34,7 @@ export const setBackColorsHandler = (values, setColor, find, materials) => {
     );
   }
 };
-console.log('hello');
+
 export const getBackInitialValues = (edit, IMG_URL, back) => ({
   backImage: edit ? IMG_URL + back.images.thumbnail : '',
   uaName: back?.name[0].value || '',

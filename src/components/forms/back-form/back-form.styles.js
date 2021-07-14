@@ -49,7 +49,7 @@ export const useStyles = makeStyles((theme) => {
     buttonContainer: {
       position: 'relative',
       width: '100%',
-      height: 60,
+      height: 80,
       marginTop: 51,
       '@media (max-width: 600px)': {
         marginTop: 43
@@ -57,12 +57,16 @@ export const useStyles = makeStyles((theme) => {
     },
     fixedButtons: {
       position: 'fixed',
-      height: 60,
+      height: 80,
       zIndex: 1001,
       backgroundColor: theme.palette.bodyColor
     },
     button: {
       marginTop: theme.spacing(0.5)
+    },
+    error: {
+      color: '#e60000',
+      marginLeft: '5px'
     },
     inputError,
     textField,

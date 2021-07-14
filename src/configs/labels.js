@@ -123,7 +123,7 @@ const labels = {
     customizable: 'для конструктора',
     avatarText: 'Фото',
     enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну',
+    additionalPriceLabel: 'Введіть додаткову ціну',
     form: {
       name: mapToLanguages("І'мя", 'Name')
     },

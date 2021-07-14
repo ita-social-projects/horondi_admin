@@ -25,7 +25,7 @@ import BackMaterialsContainer from '../../../containers/back-materials-container
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 
 const { IMG_URL } = config;
-const { backName, enterPrice, additionalPrice } = config.labels.back;
+const { backName, enterPrice, additionalPriceLabel } = config.labels.back;
 const map = require('lodash/map');
 
 const {
@@ -268,7 +268,7 @@ const BackForm = ({ back, id, edit }) => {
               className={styles.textField}
               variant={materialUiConstants.outlined}
               type={materialUiConstants.types.number}
-              label={additionalPrice}
+              label={additionalPriceLabel}
               value={values.additionalPrice}
               inputProps={{ min: 0 }}
               onChange={handleChange}
