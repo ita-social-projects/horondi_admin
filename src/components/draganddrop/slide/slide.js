@@ -56,30 +56,28 @@ const Slide = ({ slide, index }) => {
   );
 };
 
-const valueShape = PropTypes.shape({
-  description: PropTypes.arrayOf(
-    PropTypes.shape({
-      lang: PropTypes.string,
-      value: PropTypes.string
-    })
-  ),
-  images: PropTypes.shape({
-    thumbnail: PropTypes.string
-  }),
-  link: PropTypes.string,
-  order: PropTypes.number,
-  show: PropTypes.bool,
-  title: PropTypes.arrayOf(
-    PropTypes.shape({
-      lang: PropTypes.string,
-      value: PropTypes.string
-    })
-  ),
-  _id: PropTypes.string
-});
-
 Slide.propTypes = {
-  slide: PropTypes.shape(valueShape),
+  slide: PropTypes.shape({
+    description: PropTypes.arrayOf(
+      PropTypes.shape({
+        lang: PropTypes.string,
+        value: PropTypes.string
+      })
+    ),
+    images: PropTypes.shape({
+      small: PropTypes.string
+    }),
+    link: PropTypes.string,
+    order: PropTypes.number,
+    show: PropTypes.bool,
+    title: PropTypes.arrayOf(
+      PropTypes.shape({
+        lang: PropTypes.string,
+        value: PropTypes.string
+      })
+    ),
+    _id: PropTypes.string
+  }),
   index: PropTypes.number
 };
 
