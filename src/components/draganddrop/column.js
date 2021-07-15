@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import { Typography, Paper } from '@material-ui/core';
-import Task from './slide';
+import Slide from './slide';
 import { useStyles } from './column.styles';
 import { useCommonStyles } from '../../pages/common.styles';
 
@@ -26,13 +26,8 @@ const Column = ({ column }) => {
             isDraggingOver={snapshot.isDraggingOver}
           >
             {column.items.length ? (
-              column.items.map((task, index) => (
-                <Task
-                  key={task._id}
-                  taskId={task._id}
-                  task={task}
-                  index={index}
-                />
+              column.items.map((slide, index) => (
+                <Slide key={slide._id} slide={slide} index={index} />
               ))
             ) : (
               <div>

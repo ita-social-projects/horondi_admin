@@ -1,3 +1,3 @@
-import Task from './slide';
+import Slide from './slide';
 
-export default Task;
+export default Slide;

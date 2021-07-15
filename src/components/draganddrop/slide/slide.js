@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { config } from '../../../configs';
 import { useStyles } from './slide.styles';
 
-const Task = ({ task, index }) => {
+const Slide = ({ slide, index }) => {
   const styles = useStyles();
   const { discoverMoreTitle, discoverMoreSymbol } =
     config.titles.homePageSliderTitle;
@@ -18,7 +18,7 @@ const Task = ({ task, index }) => {
         ...draggableStyle,
         position: 'static'
       })}
-      draggableId={task._id}
+      draggableId={slide._id}
       index={index}
     >
       {(provided, snapshot) => (
@@ -29,19 +29,19 @@ const Task = ({ task, index }) => {
           innerRef={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          <Paper elevation={20} className={styles.dndItem} key={task._id}>
+          <Paper elevation={20} className={styles.dndItem} key={slide._id}>
             <Avatar
               variant='square'
               className={styles.square}
-              src={`${IMG_URL}${task.images.small}`}
+              src={`${IMG_URL}${slide.images.small}`}
               color='primary'
             >
               <ImageIcon />
             </Avatar>
             <div className={styles.slideContent}>
               <div>
-                <h3>{task.title[0].value}</h3>
-                <p>{task.description[0].value}</p>
+                <h3>{slide.title[0].value}</h3>
+                <p>{slide.description[0].value}</p>
               </div>
               <p className={styles.discoverMore}>
                 {' '}
@@ -78,14 +78,14 @@ const valueShape = PropTypes.shape({
   _id: PropTypes.string
 });
 
-Task.propTypes = {
-  task: PropTypes.shape(valueShape),
+Slide.propTypes = {
+  slide: PropTypes.shape(valueShape),
   index: PropTypes.number
 };
 
-Task.defaultProps = {
-  task: {},
+Slide.defaultProps = {
+  slide: {},
   index: null
 };
 
-export default Task;
+export default Slide;
