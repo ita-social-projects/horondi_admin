@@ -64,6 +64,9 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     textShadow: '2px 2px 5px black',
+    '& h3': {
+      lineHeight: 'normal'
+    },
     '& div': {
       display: 'flex',
       justifyContent: 'center',
@@ -115,6 +118,31 @@ export const useStyles = makeStyles((theme) => ({
     '@media (max-width: 450px)': {
       width: '100%',
       marginBottom: '15px'
+    }
+  },
+  dndDivison: {
+    padding: '8px',
+    width: '380px'
+  },
+  columnContainer: {
+    margin: '8px',
+
+    borderRadius: '2px',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  title: {
+    padding: '8px'
+  },
+  taskListContainer: {
+    padding: '8px',
+    transition: 'background-color 0.2s ease',
+    flexGrow: 1,
+    flexWrap: 'wrap',
+    display: 'flex',
+    '& div': {
+      marginLeft: 0,
+      marginRight: 0
     }
   }
 }));
