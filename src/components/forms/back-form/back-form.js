@@ -157,16 +157,16 @@ const BackForm = ({ back, id, isEdit }) => {
     }
   ];
 
-  const handleImageLoad = (e) => {
-    console.log(e.target.files[0]);
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (files) => {
+    console.log(files[0]);
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setFieldValue('backImage', event.target.result);
         setBackImage(event.target.result);
       };
-      reader.readAsDataURL(e.target.files[0]);
-      setUpload(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
+      setUpload(files[0]);
     }
   };
 

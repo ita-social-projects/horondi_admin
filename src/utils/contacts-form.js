@@ -1,11 +1,11 @@
-export const setMapImageHandler = (target, setMapFn, values, valuesKey) => {
-  if (target.files && target.files[0]) {
+export const setMapImageHandler = (files, setMapFn, values, valuesKey) => {
+  if (files && files[0]) {
     setMapFn({
-      name: target.files[0].name,
-      imageUrl: URL.createObjectURL(target.files[0])
+      name: files[0].name,
+      imageUrl: URL.createObjectURL(files[0])
     });
   }
-  [values[valuesKey]] = target.files;
+  [values[valuesKey]] = files;
 };
 
 export const setInputsContactHandler = (schedule, address) => [

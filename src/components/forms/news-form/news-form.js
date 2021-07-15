@@ -99,12 +99,12 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
       }
     });
 
-  const handleLoadAuthorImage = ({ target }) => {
-    imageHandler(target, setUploadAuthorImage, values, authorPhoto);
+  const handleLoadAuthorImage = (files) => {
+    imageHandler(files, setUploadAuthorImage, values, authorPhoto);
   };
 
-  const handleLoadNewsImage = ({ target }) => {
-    imageHandler(target, setUploadNewsImage, values, newsImage);
+  const handleLoadNewsImage = (files) => {
+    imageHandler(files, setUploadNewsImage, values, newsImage);
   };
 
   const inputs = [

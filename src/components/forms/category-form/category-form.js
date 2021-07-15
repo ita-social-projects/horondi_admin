@@ -100,15 +100,16 @@ const CategoryForm = ({ category, id, edit }) => {
     }
   });
 
-  const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (files) => {
+    console.log(files);
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setFieldValue('categoryImage', event.target.result);
         setCategoryImage(event.target.result);
       };
-      reader.readAsDataURL(e.target.files[0]);
-      setUpload(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
+      setUpload(files[0]);
     }
   };
   const inputs = [
