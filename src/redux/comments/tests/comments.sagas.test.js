@@ -238,33 +238,75 @@ describe('update comment sagas tests', () => {
 describe('handle comment by type sagas tests', () => {
   it('should handle the loading of comments by type', () => {
     expectSaga(handleCommentsByTypeLoad, {
-      payload: { value: productId, commentsType: GET_PRODUCT_COMMENTS }
+      payload: {
+        value: {
+          filter: {
+            filters: true,
+            productId
+          },
+          pagination,
+          sort: sortData
+        },
+        commentsType: GET_PRODUCT_COMMENTS
+      }
     })
       .withReducer(commentsReducer)
       .put(setCommentsLoading(true))
       .provide([
         [
-          call(getCommentsByType, productId, GET_PRODUCT_COMMENTS),
-          singleComment
+          call(
+            getCommentsByType,
+            {
+              filter: {
+                filters: true,
+                productId
+              },
+              pagination,
+              sort: sortData
+            },
+            GET_PRODUCT_COMMENTS
+          ),
+          commentRes
         ]
       ])
-      .put(setComments(singleComment))
+      .put(setComments(commentRes.items))
       .put(setCommentsLoading(false))
       .hasFinalState({
         ...initialState,
-        list: singleComment
+        list: commentRes.items
       })
       .run();
   });
 
   it('should throw an error', () =>
     expectSaga(handleCommentsByTypeLoad, {
-      payload: { value: productId, commentsType: GET_PRODUCT_COMMENTS }
+      payload: {
+        value: {
+          filter: {
+            filters: true,
+            productId
+          },
+          pagination,
+          sort: sortData
+        },
+        commentsType: GET_PRODUCT_COMMENTS
+      }
     })
       .withReducer(commentsReducer)
       .provide([
         [
-          call(getCommentsByType, productId, GET_PRODUCT_COMMENTS),
+          call(
+            getCommentsByType,
+            {
+              filter: {
+                filters: true,
+                productId
+              },
+              pagination,
+              sort: sortData
+            },
+            GET_PRODUCT_COMMENTS
+          ),
           throwError(mockError)
         ]
       ])

@@ -2107,6 +2107,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                         multiline={true}
                         name="replyText"
                         onChange={[Function]}
+                        value=""
                         variant="outlined"
                       >
                         <ForwardRef(TextField)
@@ -2121,6 +2122,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           multiline={true}
                           name="replyText"
                           onChange={[Function]}
+                          value=""
                           variant="outlined"
                         >
                           <WithStyles(ForwardRef(FormControl))
@@ -2224,6 +2226,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   multiline={true}
                                   name="replyText"
                                   onChange={[Function]}
+                                  value=""
                                 >
                                   <ForwardRef(OutlinedInput)
                                     autoFocus={false}
@@ -2255,6 +2258,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                     multiline={true}
                                     name="replyText"
                                     onChange={[Function]}
+                                    value=""
                                   >
                                     <WithStyles(ForwardRef(InputBase))
                                       autoFocus={false}
@@ -2284,6 +2288,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                       onChange={[Function]}
                                       renderSuffix={[Function]}
                                       type="text"
+                                      value=""
                                     >
                                       <ForwardRef(InputBase)
                                         autoFocus={false}
@@ -2316,6 +2321,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                         onChange={[Function]}
                                         renderSuffix={[Function]}
                                         type="text"
+                                        value=""
                                       >
                                         <div
                                           className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
@@ -2332,6 +2338,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                             onChange={[Function]}
                                             onFocus={[Function]}
                                             required={false}
+                                            value=""
                                           >
                                             <textarea
                                               aria-invalid={false}
@@ -2351,6 +2358,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                                   "overflow": "hidden",
                                                 }
                                               }
+                                              value=""
                                             />
                                             <textarea
                                               aria-hidden={true}

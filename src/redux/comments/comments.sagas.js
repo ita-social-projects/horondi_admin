@@ -145,7 +145,8 @@ export function* handleCommentsByTypeLoad({ payload }) {
     );
 
     if (comments) {
-      yield put(setComments(comments));
+      yield put(setItemsCount(comments?.count));
+      yield put(setComments(comments?.items));
       yield put(setCommentsLoading(false));
     }
   } catch (error) {

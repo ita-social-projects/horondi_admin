@@ -14,10 +14,6 @@ const ReplyCommentEdit = ({ match }) => {
   const styles = useStyles();
   const { loading, replyLoading, reply } = useSelector(commentSelector);
 
-  // const { reply } = useSelector(({ Comments }) => ({
-  //   reply: Comments.replyComments.filter((item) => item._id === id)
-  // }));
-
   useEffect(() => {
     dispatch(getReply({ id }));
   }, [dispatch, id]);

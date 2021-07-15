@@ -196,31 +196,39 @@ const getCommentsByType = async (value, commentsType) => {
   }
 };
 
-const getCommentsByProduct = async (id) => {
+const getCommentsByProduct = async ({ filter, pagination, sort }) => {
   const query = `
-        query($productId: ID!) {
-          getAllCommentsByProduct(
-            productId: $productId
-          ) {
-            ... on Comment{
-              _id
-              text
-              date
-              user {
-                firstName
-                email
+        query($filter: ProductCommentFilterInput, $pagination: Pagination,$sort: CommentsSortInput) {
+          getCommentsByProduct(filter: $filter, pagination: $pagination,sort: $sort) {
+            ... on PaginatedComments {
+              items{
+                _id
+                text
+                date
+                show
+                rate
+                verifiedPurchase
+                replyCommentsCount 
+                user {
+                  _id
+                  email
+                  firstName
+                  role
+                }
               }
-            ... on Error{
-              message
+              count
+            }
+            ... on Error {
               statusCode
+              message
             }
           }
         }
       `;
 
-  const result = await getItems(query, { productId: id });
+  const result = await getItems(query, { filter, pagination, sort });
 
-  return result?.data?.getAllCommentsByProduct;
+  return result?.data?.getCommentsByProduct;
 };
 
 const getCommentsByUser = async (userId) => {
