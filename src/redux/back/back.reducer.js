@@ -6,7 +6,8 @@ import {
   REMOVE_BACK_FROM_STORE,
   SET_FILTER,
   SET_SORT,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  CLEAR_BACK
 } from './back.types';
 
 export const selectBack = ({ Back }) => ({
@@ -78,6 +79,11 @@ const backReducer = (state = initialState, action = {}) => {
         sort: {
           ...action.payload
         }
+      };
+    case CLEAR_BACK:
+      return {
+        ...state,
+        back: null
       };
     case CLEAR_FILTERS:
       return {

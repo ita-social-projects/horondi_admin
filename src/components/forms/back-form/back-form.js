@@ -9,7 +9,11 @@ import useBackHandlers from '../../../utils/use-back-handlers';
 import { useStyles } from './back-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
-import { addBack, updateBack } from '../../../redux/back/back.actions';
+import {
+  addBack,
+  updateBack,
+  clearBack
+} from '../../../redux/back/back.actions';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
@@ -69,6 +73,9 @@ const BackForm = ({ back, id, edit }) => {
     backUseEffectHandler(back, setBackImage, imagePrefix);
   }, [dispatch, back]);
 
+  useEffect(() => () => {
+      dispatch(clearBack());
+    }, []);
   const backValidationSchema = Yup.object().shape({
     enName: Yup.string()
       .min(2, BACK_VALIDATION_ERROR)
