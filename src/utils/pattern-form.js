@@ -44,6 +44,7 @@ export const useFormikInitialValues = (pattern) => ({
   patternImage: pattern.images.thumbnail || '',
   uaName: pattern.name[0].value || '',
   enName: pattern.name[1].value || '',
+  optionType: pattern.optionType || 'PATTERN',
   uaDescription: pattern.description[0].value || '',
   enDescription: pattern.description[1].value || '',
   material: pattern.features.material._id || '',

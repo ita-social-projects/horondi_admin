@@ -2,8 +2,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
-  const { saveButton, textField, imageUpload, imageUploadAvatar } =
-    formStyles(theme);
+  const {
+    saveButton,
+    textField,
+    imageUpload,
+    imageUploadAvatar,
+    returnButton
+  } = formStyles(theme);
   return {
     error: {
       color: '#e60000',
@@ -33,7 +38,7 @@ export const useStyles = makeStyles((theme) => {
     buttonContainer: {
       position: 'relative',
       width: '100%',
-      height: 60,
+      height: 90,
       marginTop: -13,
       '@media (max-width: 600px)': {
         marginTop: -21
@@ -44,7 +49,7 @@ export const useStyles = makeStyles((theme) => {
     },
     fixedButtons: {
       position: 'fixed',
-      height: 60,
+      height: 90,
       zIndex: 1001,
       backgroundColor: theme.palette.bodyColor
     },
@@ -57,6 +62,7 @@ export const useStyles = makeStyles((theme) => {
     textField,
     saveButton,
     imageUpload,
-    imageUploadAvatar
+    imageUploadAvatar,
+    returnButton
   };
 });
