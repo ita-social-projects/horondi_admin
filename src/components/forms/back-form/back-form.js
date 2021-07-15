@@ -158,7 +158,6 @@ const BackForm = ({ back, id, isEdit }) => {
   ];
 
   const handleImageLoad = (files) => {
-    console.log(files[0]);
     if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {

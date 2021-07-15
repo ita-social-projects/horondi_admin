@@ -101,7 +101,6 @@ const CategoryForm = ({ category, id, edit }) => {
   });
 
   const handleImageLoad = (files) => {
-    console.log(files);
     if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
