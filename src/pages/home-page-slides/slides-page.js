@@ -42,7 +42,6 @@ const SlidesPage = () => {
     rowsPerPage,
     currentPage
   } = useSelector(selectSlidesAndTable);
-
   useEffect(() => {
     dispatch(getAvailableSlides());
     dispatch(
