@@ -61,10 +61,10 @@ const CommentsSection = ({ id, commentsType }) => {
     );
   }, [dispatch, id, commentsType, filter, rowsPerPage, currentPage, sort]);
 
-  const commentDeleteHandler = (id) => {
+  const commentDeleteHandler = (deleteId) => {
     const removeComment = () => {
       dispatch(closeDialog());
-      dispatch(deleteComment(id));
+      dispatch(deleteComment(deleteId));
     };
     openSuccessSnackbar(removeComment, REMOVE_COMMENT_MESSAGE);
   };

@@ -85,7 +85,7 @@ const ReplyCommentForm = ({
     openSuccessSnackbar(addReplyForComment, SAVE_MESSAGE, SAVE_CHANGES);
   };
 
-  const updateReplyCommentHandler = (id, data, commentId) => {
+  const updateReplyCommentHandler = (id, data, commentIdUpdate) => {
     const updateReplyForComment = () => {
       dispatch(closeDialog());
       dispatch(
@@ -95,7 +95,7 @@ const ReplyCommentForm = ({
             replyText: data.replyText,
             showReplyComment: data.showReplyComment
           },
-          commentId
+          commentId: commentIdUpdate
         })
       );
     };
