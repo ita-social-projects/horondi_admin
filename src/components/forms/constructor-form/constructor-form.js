@@ -159,22 +159,22 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     }
   ];
 
-  const handleImageLoad = (e, callback) => {
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (files, callback) => {
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
         callback(event);
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
     }
   };
 
-  const handleLoadConstructorImage = (e) => {
-    handleImageLoad(e, (event) => {
+  const handleLoadConstructorImage = (files) => {
+    handleImageLoad(files, (event) => {
       setFieldValue('image', event.target.result);
       setConstructorAvatar(event.target.result);
     });
-    setUploadConstructorImg(e.target.files[0]);
+    setUploadConstructorImg(files[0]);
   };
 
   const selectField = (

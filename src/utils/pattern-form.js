@@ -1,10 +1,10 @@
-export const handleImageLoad = (e, callback) => {
-  if (e.target.files && e.target.files[0]) {
+export const handleImageLoad = (files, callback) => {
+  if (files && files[0]) {
     const reader = new FileReader();
     reader.onload = (event) => {
       callback(event);
     };
-    reader.readAsDataURL(e.target.files[0]);
+    reader.readAsDataURL(files[0]);
   }
 };
 

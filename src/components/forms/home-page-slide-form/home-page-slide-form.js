@@ -88,15 +88,15 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     }
   ];
 
-  const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (files) => {
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setFieldValue('slideImage', event.target.result);
         setSlideImage(event.target.result);
       };
-      reader.readAsDataURL(e.target.files[0]);
-      setUpload(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
+      setUpload(files[0]);
     }
   };
 
