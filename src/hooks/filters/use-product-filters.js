@@ -13,7 +13,9 @@ import {
 import {
   dataFilterObj,
   dataRenderObj,
-  placeholderProductSearch
+  filterCategoryByModel,
+  placeholderProductSearch,
+  filterModelByCategory
 } from '../../utils/product';
 import { sortDirection } from '../../configs/sort';
 import filterLabels from '../../configs/filter-labels';
@@ -86,14 +88,14 @@ const useProductFilters = () => {
       {
         filters: filters.category,
         label: buttonTitles.CATEGORY,
-        selectItems: dataFilterObj(details?.categories),
+        selectItems: filterCategoryByModel(details?.categories, filters.models),
         setFilterHandler: setCategoryFilter,
         objForTranslateRenderItems: dataRenderObj(details?.categories)
       },
       {
         filters: filters.models,
         label: buttonTitles.MODEL,
-        selectItems: dataFilterObj(details?.models),
+        selectItems: filterModelByCategory(details?.models, filters.category),
         setFilterHandler: setModelsFilter,
         objForTranslateRenderItems: dataRenderObj(details?.models)
       },

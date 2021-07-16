@@ -1,14 +1,16 @@
+import { createSelector } from 'reselect';
+import { selectPagination } from '../table/table.reducer';
+import { selectCategoriesLoadingDialogOpen } from '../categories/categories.reducer';
+
 export const selectCategorySwitchAndDeleteId = ({ Categories }) => ({
   switchId: Categories.switchId,
   deleteId: Categories.deleteId
 });
-
-export const selectCategoriesLoadingDialogOpen = ({ Categories, Table }) => ({
-  categories: Categories.categories,
-  categoriesLoading: Categories.categoryLoading,
-  isDeleteDialogOpen: Categories.isDeleteDialogOpen,
-  filter: Categories.filters,
-  sort: Categories.sort,
-  currentPage: Table.pagination.currentPage,
-  rowsPerPage: Table.pagination.rowsPerPage
-});
+export const categoriesSelectorWithPagination = createSelector(
+  selectCategoriesLoadingDialogOpen,
+  selectPagination,
+  (category, table) => ({
+    ...category,
+    ...table
+  })
+);
