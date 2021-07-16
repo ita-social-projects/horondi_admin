@@ -108,7 +108,7 @@ const ReplyCommentForm = ({
         pathToCommentsEdit.replace(':id', reply.refToReplyComment)
       );
     }
-    dispatch(showErrorSnackbar('Comment not exist'));
+    dispatch(showErrorSnackbar("Comment doesn't exist"));
   };
 
   const checkboxes = [
