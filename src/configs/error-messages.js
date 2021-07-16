@@ -162,6 +162,12 @@ export const commentErrorMessages = {
   MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
 };
 
+export const replyCommentErrorMessages = {
+  REPLY_COMMENT_VALIDATION_ERROR: 'Мінімум 2 символи',
+  REPLY_COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
+};
+
 export const businessPageErrorMessages = {
   ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',

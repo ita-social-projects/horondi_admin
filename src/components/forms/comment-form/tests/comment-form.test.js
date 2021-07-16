@@ -7,13 +7,19 @@ import { render, fireEvent, act } from '@testing-library/react';
 
 import CommentForm from '../index';
 import { config } from '../../../../configs';
-import { mockComment, mockId, mockIsEdit } from './comment-form.variables';
+import {
+  mockComment,
+  mockId,
+  mockIsEdit,
+  mockCommentWithoutProduct
+} from './comment-form.variables';
 
 configure({ adapter: new Adapter() });
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 const { productInfo } = config.labels.comment;
 
 const mockHistoryPush = jest.fn();
+const mockUseDispatchFn = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: () => ({
@@ -39,7 +45,7 @@ describe('Comment form tests', () => {
   let wrapper;
 
   beforeEach(() => {
-    mockUseDispatch.mockImplementation(() => jest.fn());
+    mockUseDispatch.mockImplementation(() => mockUseDispatchFn);
     wrapper = mount(
       <CommentForm comment={mockComment} id={mockId} isEdit={mockIsEdit} />
     );
@@ -64,8 +70,8 @@ describe('Comment form tests', () => {
     expect(mockSetFieldValue).toHaveBeenCalled();
   });
 
-  it('Should render three buttons and two inputs', () => {
-    expect(wrapper.find('input')).toHaveLength(2);
+  it('Should render three buttons and one input', () => {
+    expect(wrapper.find('input')).toHaveLength(1);
     expect(wrapper.find('button')).toHaveLength(3);
   });
 
@@ -96,7 +102,18 @@ describe('Comment form tests', () => {
     expect(CommentForm.propTypes.id).toBe(PropTypes.string);
     expect(CommentForm.propTypes.isEdit).toBe(PropTypes.bool);
   });
-
+  it(`Should call handleClick Product Info button click`, () => {
+    mockUseDispatch(() => mockUseDispatchFn);
+    wrapper = mount(
+      <CommentForm
+        comment={mockCommentWithoutProduct}
+        id={mockId}
+        isEdit={mockIsEdit}
+      />
+    );
+    wrapper.find('button').at(2).props().onClick();
+    expect(mockUseDispatchFn).toHaveBeenCalled();
+  });
   it('Should have default props', () => {
     expect(CommentForm.defaultProps).toBeDefined();
     expect(CommentForm.defaultProps.id).toBe('');

@@ -8,7 +8,8 @@ import { useCommonStyles } from '../common.styles';
 import { useStyles } from './comments.styles';
 import {
   getComments,
-  deleteComment
+  deleteComment,
+  setCommentsCurrentPage
 } from '../../redux/comments/comments.actions';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
@@ -23,6 +24,7 @@ import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useCommentFilters from '../../hooks/filters/use-comment-filters';
 import { handleComments } from '../../utils/handle-comments';
 import materialUiConstants from '../../configs/material-ui-constants';
+import { resetPagination } from '../../redux/table/table.actions';
 
 const tableTitles = config.tableHeadRowTitles.comments.commentPageTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
@@ -41,7 +43,7 @@ const Comments = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { filter, list, loading, currentPage, rowsPerPage, itemsCount } =
+  const { sort, filter, list, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(commentSelectorWithPagination);
 
   useEffect(() => {
@@ -55,10 +57,11 @@ const Comments = () => {
         pagination: {
           limit: rowsPerPage,
           skip: currentPage * rowsPerPage
-        }
+        },
+        sort
       })
     );
-  }, [dispatch, filter, rowsPerPage, currentPage]);
+  }, [dispatch, filter, rowsPerPage, currentPage, sort]);
 
   const commentDeleteHandler = (id) => {
     const removeComment = () => {
@@ -73,15 +76,18 @@ const Comments = () => {
       showAvatar={false}
       showEdit
       data={ReactHtmlParser(getTime(new Date(comment?.date), true))}
-      userName={comment?.user?.email}
+      userName={comment?.user?.email || 'Видалений користувач'}
       text={comment.text}
       show={comment?.show ? yes : no}
       id={comment?._id}
+      count={comment?.replyCommentsCount}
       key={comment?._id}
       deleteHandler={() => {
         commentDeleteHandler(comment?._id);
       }}
       editHandler={() => {
+        dispatch(setCommentsCurrentPage(currentPage));
+        dispatch(resetPagination());
         dispatch(push(pathToCommentsEdit.replace(':id', comment?._id)));
       }}
     />

@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { sortDirection } from '../../configs/sort';
 import {
-  clearFilters,
-  setFilter,
-  setSort,
-  setSortLabel
+  setReplyFilter,
+  setReplySort,
+  setReplySortLabel,
+  clearReplyFilters
 } from '../../redux/comments/comments.actions';
 import filterLabels from '../../configs/filter-labels';
 import { setCurrentPage } from '../../redux/table/table.actions';
@@ -15,15 +15,15 @@ import {
   showFilterObj
 } from '../../utils/comment';
 
-const useCommentFilters = () => {
+const useReplyCommentFilters = () => {
   const dispatch = useDispatch();
-  const filters = useSelector(({ Comments }) => Comments.filters);
-  const sortLabel = useSelector(({ Comments }) => Comments.sortLabel);
+  const filters = useSelector(({ Comments }) => Comments.replyFilters);
+  const sortLabel = useSelector(({ Comments }) => Comments.replySortLabel);
 
   const setCommentDateRangeFilter = (date) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setFilter({
+      setReplyFilter({
         dateFrom: date[0],
         dateTo: date[1]
       })
@@ -33,7 +33,7 @@ const useCommentFilters = () => {
   const setShowFilter = (show) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setFilter({
+      setReplyFilter({
         show
       })
     );
@@ -41,7 +41,7 @@ const useCommentFilters = () => {
   const setSearchFilter = (search) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setFilter({
+      setReplyFilter({
         search
       })
     );
@@ -50,21 +50,21 @@ const useCommentFilters = () => {
   const setSorting = ({ key, type, value }) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setSort({
+      setReplySort({
         [key]: sortDirection[type]
       })
     );
-    dispatch(setSortLabel(value));
+    dispatch(setReplySortLabel(value));
   };
 
   const clearAllFilters = () => {
     dispatch(setCurrentPage(0));
-    dispatch(clearFilters());
+    dispatch(clearReplyFilters());
   };
 
   return {
     sortOptions: {
-      labels: filterLabels.comments.sortLabels,
+      labels: filterLabels.reply.sortLabels,
       setSorting,
       sortLabel
     },
@@ -94,4 +94,4 @@ const useCommentFilters = () => {
   };
 };
 
-export default useCommentFilters;
+export default useReplyCommentFilters;

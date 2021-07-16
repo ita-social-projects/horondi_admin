@@ -168,6 +168,14 @@ const labels = {
     no: 'Ні',
     productInfo: 'Інформація про продукт'
   },
+  replyComment: {
+    commentInfo: 'Інформіція про коментар',
+    text: 'Текст відповіді',
+    show: 'Видимий',
+    hidden: 'Прихований',
+    yes: 'Так',
+    no: 'Ні'
+  },
   businessPageLabel: [
     {
       label: { ua: 'Заголовок', en: 'Title' },

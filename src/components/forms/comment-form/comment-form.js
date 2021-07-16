@@ -12,9 +12,13 @@ import { BackButton, SaveButton } from '../../buttons';
 import CheckboxOptions from '../../checkbox-options';
 import { config } from '../../../configs';
 import { updateComment } from '../../../redux/comments/comments.actions';
+import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 
 const { COMMENT_VALIDATION_ERROR, COMMENT_ERROR_MESSAGE, MAX_LENGTH_MESSAGE } =
   config.commentErrorMessages;
+const { SAVE_MESSAGE, SAVE_CHANGES } = config.messages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -25,6 +29,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const commentValidationSchema = Yup.object().shape({
     text: Yup.string()
@@ -38,20 +43,12 @@ const CommentForm = ({ comment, id, isEdit }) => {
     useFormik({
       validationSchema: commentValidationSchema,
       initialValues: {
-        text: comment.text || '',
-        show: comment.show || false
+        text: comment.text,
+        show: comment.show
       },
       onSubmit: (data) => {
         if (isEdit) {
-          dispatch(
-            updateComment({
-              id,
-              comment: {
-                text: data.text,
-                show: data.show
-              }
-            })
-          );
+          commentUpdateHandler(data);
         }
       }
     });
@@ -68,8 +65,29 @@ const CommentForm = ({ comment, id, isEdit }) => {
     }
   ];
 
+  const commentUpdateHandler = (data) => {
+    const commentUpdate = () => {
+      dispatch(closeDialog());
+      dispatch(
+        updateComment({
+          id,
+          comment: {
+            text: data.text,
+            show: data.show
+          }
+        })
+      );
+    };
+    openSuccessSnackbar(commentUpdate, SAVE_MESSAGE, SAVE_CHANGES);
+  };
+
   function handleProductClick() {
-    history.push(pathToEditProduct.replace(':id', comment.product._id));
+    if (comment.product?._id) {
+      return history.push(
+        pathToEditProduct.replace(':id', comment.product._id)
+      );
+    }
+    dispatch(showErrorSnackbar("Product doesn't exist"));
   }
 
   const eventPreventHandler = (e) => {
@@ -108,6 +126,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
               value={values.text}
               onChange={handleChange}
               error={touched.code && !!errors.code}
+              multiline
             />
             {touched.code && errors.code && (
               <div data-cy='code-error' className={styles.error}>

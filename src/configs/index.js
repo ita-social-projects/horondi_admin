@@ -30,6 +30,7 @@ import {
   statsErrorMessages,
   paginationInputErrorMessages,
   commentErrorMessages,
+  replyCommentErrorMessages,
   sizeErrorMessages,
   businessPageErrorMessages,
   pocketsErrorMessages
@@ -228,6 +229,7 @@ export const config = {
   constructorErrorMessages,
   paginationInputErrorMessages,
   commentErrorMessages,
+  replyCommentErrorMessages,
   filterLabels,
   materialUiConstants,
   sizeErrorMessages,

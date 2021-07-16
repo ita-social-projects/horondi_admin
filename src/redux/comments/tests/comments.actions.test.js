@@ -14,7 +14,25 @@ import {
   SET_COMMENTS_CURRENT_PAGE,
   UPDATE_COMMENT,
   SET_FILTER,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  GET_RECENT_COMMENTS,
+  SET_RECENT_COMMENTS,
+  SET_REPLY_COMMENTS,
+  GET_REPLY_COMMENTS,
+  DELETE_REPLY_COMMENT,
+  REMOVE_REPLY_COMMENT_FROM_STORE,
+  CLEAR_COMMENT,
+  ADD_REPLY_COMMENT,
+  SET_COMMENT_SORT,
+  SET_COMMENT_SORT_LABEL,
+  SET_REPLY_FILTER,
+  SET_REPLY_SORT,
+  SET_REPLY_SORT_LABEL,
+  CLEAR_REPLY_FILTERS,
+  UPDATE_REPLY,
+  GET_REPLY,
+  SET_REPLY,
+  SET_REPLY_LOADING
 } from '../comments.types';
 
 import {
@@ -33,7 +51,25 @@ import {
   removeCommentFromStore,
   updateComment,
   setFilter,
-  clearFilters
+  clearFilters,
+  setRecentComments,
+  getRecentComments,
+  setReplyComments,
+  getReplyComments,
+  deleteReplyComment,
+  removeReplyCommentFromStore,
+  clearComment,
+  addReplyComment,
+  setSort,
+  setSortLabel,
+  setReplyFilter,
+  setReplySort,
+  setReplySortLabel,
+  clearReplyFilters,
+  updateReply,
+  getReply,
+  setReply,
+  setReplyLoading
 } from '../comments.actions';
 
 import {
@@ -46,7 +82,14 @@ import {
   userId,
   currentPage,
   commentsLoadingStatus,
-  commentsErrorExample
+  commentsErrorExample,
+  addReplyData,
+  replyCommentsData,
+  replyFilter,
+  replyCommentId,
+  sortDataLabel,
+  sortData,
+  replyItem
 } from './comments.variables';
 
 describe('comments action tests', () => {
@@ -149,6 +192,122 @@ describe('comments action tests', () => {
   it('should clear all comments filters', () => {
     expect(clearFilters()).toEqual({
       type: CLEAR_FILTERS
+    });
+  });
+
+  it('should get recent comments', () => {
+    expect(getRecentComments(pagination)).toEqual({
+      type: GET_RECENT_COMMENTS,
+      payload: pagination
+    });
+  });
+
+  it('should set recent comments', () => {
+    expect(setRecentComments(comments.list)).toEqual({
+      type: SET_RECENT_COMMENTS,
+      payload: comments.list
+    });
+  });
+
+  it('should set reply comments', () => {
+    expect(setReplyComments(replyCommentsData)).toEqual({
+      type: SET_REPLY_COMMENTS,
+      payload: replyCommentsData
+    });
+  });
+
+  it('should get reply comments', () => {
+    expect(getReplyComments({ replyFilter, pagination })).toEqual({
+      type: GET_REPLY_COMMENTS,
+      payload: { replyFilter, pagination }
+    });
+  });
+
+  it('should delete reply comment', () => {
+    expect(deleteReplyComment(replyCommentId)).toEqual({
+      type: DELETE_REPLY_COMMENT,
+      payload: replyCommentId
+    });
+  });
+
+  it('should delete reply comment from list', () => {
+    expect(removeReplyCommentFromStore(replyCommentId)).toEqual({
+      type: REMOVE_REPLY_COMMENT_FROM_STORE,
+      payload: replyCommentId
+    });
+  });
+
+  it('should clear comment', () => {
+    expect(clearComment()).toEqual({
+      type: CLEAR_COMMENT
+    });
+  });
+
+  it('should add reply comment data', () => {
+    expect(addReplyComment(addReplyData)).toEqual({
+      type: ADD_REPLY_COMMENT,
+      payload: addReplyData
+    });
+  });
+
+  it('should add filter to comment', () => {
+    expect(setSort(sortData)).toEqual({
+      type: SET_COMMENT_SORT,
+      payload: sortData
+    });
+  });
+
+  it('should add filter label to comment', () => {
+    expect(setSortLabel(sortDataLabel)).toEqual({
+      type: SET_COMMENT_SORT_LABEL,
+      payload: sortDataLabel
+    });
+  });
+
+  it('should add filter to reply', () => {
+    expect(setReplyFilter(replyFilter)).toEqual({
+      type: SET_REPLY_FILTER,
+      payload: replyFilter
+    });
+  });
+  it('should set sort to reply', () => {
+    expect(setReplySort(sortData)).toEqual({
+      type: SET_REPLY_SORT,
+      payload: sortData
+    });
+  });
+  it('should add filter label to reply', () => {
+    expect(setReplySortLabel(sortDataLabel)).toEqual({
+      type: SET_REPLY_SORT_LABEL,
+      payload: sortDataLabel
+    });
+  });
+  it('should clear reply filters', () => {
+    expect(clearReplyFilters()).toEqual({
+      type: CLEAR_REPLY_FILTERS
+    });
+  });
+  it('should get reply', () => {
+    expect(getReply()).toEqual({
+      type: GET_REPLY
+    });
+  });
+  it('should set reply', () => {
+    expect(setReply(replyItem)).toEqual({
+      type: SET_REPLY,
+      payload: replyItem
+    });
+  });
+  it('should set reply loading', () => {
+    expect(setReplyLoading(commentsLoadingStatus)).toEqual({
+      type: SET_REPLY_LOADING,
+      payload: commentsLoadingStatus
+    });
+  });
+  it('should update reply', () => {
+    expect(updateReply(replyItem)).toEqual({
+      type: UPDATE_REPLY,
+      payload: replyItem
     });
   });
 });

@@ -19,6 +19,6 @@ export function* handleErrorSnackbar(message) {
 }
 
 export default function* snackbarSaga() {
-  yield takeEvery(SHOW_ERROR_SNACKBAR, handleSuccessSnackbar);
-  yield takeEvery(SHOW_SUCCESS_SNACKBAR, handleErrorSnackbar);
+  yield takeEvery(SHOW_SUCCESS_SNACKBAR, handleSuccessSnackbar);
+  yield takeEvery(SHOW_ERROR_SNACKBAR, handleErrorSnackbar);
 }
