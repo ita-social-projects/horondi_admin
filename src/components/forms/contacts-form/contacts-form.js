@@ -60,12 +60,12 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
 
   const uaCartImageText = 'uaCartImage';
   const enCartImageText = 'enCartImage';
-  const uaSelectImageHandler = ({ target }) => {
-    setMapImageHandler(target, uaSetMapImage, values, uaCartImageText);
+  const uaSelectImageHandler = (files) => {
+    setMapImageHandler(files, uaSetMapImage, values, uaCartImageText);
   };
 
-  const enSelectImageHandler = ({ target }) => {
-    setMapImageHandler(target, enSetMapImage, values, enCartImageText);
+  const enSelectImageHandler = (files) => {
+    setMapImageHandler(files, enSetMapImage, values, enCartImageText);
   };
 
   const formSchema = Yup.object().shape({

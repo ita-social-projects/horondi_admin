@@ -73,9 +73,12 @@ const BackForm = ({ back, id, edit }) => {
     backUseEffectHandler(back, setBackImage, imagePrefix);
   }, [dispatch, back]);
 
-  useEffect(() => () => {
+  useEffect(
+    () => () => {
       dispatch(clearBack());
-    }, []);
+    },
+    []
+  );
   const backValidationSchema = Yup.object().shape({
     enName: Yup.string()
       .min(2, BACK_VALIDATION_ERROR)
@@ -161,6 +164,7 @@ const BackForm = ({ back, id, edit }) => {
   ];
 
   const handleImageLoad = (e) => {
+    console.log(e.target.files[0]);
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -299,7 +303,6 @@ BackForm.propTypes = {
     _id: PropTypes.string,
     available: PropTypes.bool,
     customizable: PropTypes.bool,
-    // additionalPrice: PropTypes.array,
     features: PropTypes.shape({
       material: PropTypes.string,
       color: PropTypes.string
