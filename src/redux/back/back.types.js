@@ -10,4 +10,5 @@ export const SET_BACK_ERROR = 'SET_BACK_ERROR';
 export const REMOVE_BACK_FROM_STORE = 'REMOVE_BACK_FROM_STORE';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_SORT = 'SET_SORT';
+export const CLEAR_BACK = 'CLEAR_BACK';
 export const CLEAR_FILTERS = 'CLEAR_FILTERS';

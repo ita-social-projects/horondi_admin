@@ -50,6 +50,15 @@ query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
     filter
   });
 
+  if (
+    Object.keys(backTranslations).includes(result?.data?.getAllBacks?.message)
+  ) {
+    throw new Error(
+      `${result.data.getAllBacks.statusCode} ${
+        backTranslations[result.data.getAllBacks.message]
+      }`
+    );
+  }
   return result?.data?.getAllBacks;
 };
 
@@ -80,6 +89,10 @@ export const getBackById = async (id) => {
             }
             available
             customizable
+            additionalPrice {
+                currency
+                value
+              }
             images {
               thumbnail
             }

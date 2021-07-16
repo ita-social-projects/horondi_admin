@@ -10,28 +10,38 @@ export const backUseEffectHandler = (
 };
 
 export const backFormOnSubmit = (
-  condition,
+  editAndUpload,
   dispatch,
-  updateAction,
+  updateBack,
   updateActionPayload,
-  isEdit,
+  edit,
   secondUpdateActionPayload
 ) => {
-  if (condition) {
-    dispatch(updateAction(updateActionPayload));
+  if (editAndUpload) {
+    dispatch(updateBack(updateActionPayload));
     return;
   }
-  if (isEdit) {
-    dispatch(updateAction(secondUpdateActionPayload));
+  if (edit) {
+    dispatch(updateBack(secondUpdateActionPayload));
   }
 };
 
-export const getBackInitialValues = (isEdit, IMG_URL, back) => ({
-  backImage: isEdit ? IMG_URL + back.images.thumbnail : '',
+export const setBackColorsHandler = (values, setColor, find, materials) => {
+  if (values.material) {
+    setColor(
+      find(materials.back, (material) => material._id === values.material)
+        ?.colors || []
+    );
+  }
+};
+
+export const getBackInitialValues = (edit, IMG_URL, back) => ({
+  backImage: edit ? IMG_URL + back.images.thumbnail : '',
   uaName: back?.name[0].value || '',
   enName: back?.name[1].value || '',
-  color: back?.features.color._id || '6043a1653e06ad3edcdb7b08',
-  optionType: back?.optionType || '"BACK"',
+  color: back?.features.color._id || '',
+  material: back?.features.material._id || '',
+  additionalPrice: edit ? back?.additionalPrice[1]?.value / 100 : null,
   available: back?.available || false,
   customizable: back?.customizable || false
 });
