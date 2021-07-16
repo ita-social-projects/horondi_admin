@@ -64,6 +64,8 @@ import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
 import BackPage from '../pages/back';
 import BackAdd from '../pages/back/back-add';
 import BackDetails from '../pages/back/back-details';
+import PositionPage from '../pages/position/position-page';
+import PositionAdd from '../pages/position/position-add/position-add';
 
 const { routes } = config;
 
@@ -281,6 +283,8 @@ const Routes = () => {
             exact
             component={BackDetails}
           />
+          <Route path={routes.pathToPosition} exact component={PositionPage} />
+          <Route path={routes.pathToPositionAdd} exact component={PositionAdd} />
           <Route component={ErrorPage} />
         </Switch>
       </ErrorBoundary>

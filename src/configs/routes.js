@@ -58,6 +58,8 @@ const routes = {
   pathToPocketsEdit: '/pockets/:id',
   pathToBacks: '/backs',
   pathToAddBacks: '/backs/add',
-  pathToBackDetails: '/backs/:id'
+  pathToBackDetails: '/backs/:id',
+  pathToPosition: '/position',
+  pathToPositionAdd: '/position/add'
 };
 export default routes;

@@ -31,7 +31,9 @@ const {
   POCKETS_VALIDATION_ERROR,
   POCKETS_ERROR_MESSAGE,
   POCKETS_UA_NAME_MESSAGE,
-  POCKETS_EN_NAME_MESSAGE
+  POCKETS_EN_NAME_MESSAGE,
+  POCKETS_MAX_LENGTH_MESSAGE,
+  POCKETS_MIN_LENGTH_MESSAGE,
 } = config.pocketsErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -53,13 +55,13 @@ const PocketsForm = ({ pocket, id, edit }) => {
 
   const pocketsValidationSchema = Yup.object().shape({
     uaName: Yup.string()
-      .min(2, POCKETS_VALIDATION_ERROR)
-      .max(50, POCKETS_VALIDATION_ERROR)
+      .min(2, POCKETS_MIN_LENGTH_MESSAGE)
+      .max(50, POCKETS_MAX_LENGTH_MESSAGE)
       .required(POCKETS_ERROR_MESSAGE)
       .matches(uaNameCreation, POCKETS_UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, POCKETS_VALIDATION_ERROR)
-      .max(50, POCKETS_VALIDATION_ERROR)
+      .min(2, POCKETS_MIN_LENGTH_MESSAGE)
+      .max(50, POCKETS_MAX_LENGTH_MESSAGE)
       .required(POCKETS_ERROR_MESSAGE)
       .matches(enNameCreation, POCKETS_EN_NAME_MESSAGE),
     additionalPrice: Yup.string()
