@@ -20,5 +20,16 @@ export const useStyles = makeStyles((theme) => ({
   },
   selectedEmpty: {
     margin: theme.spacing(2)
+  },
+  noConstructor: {
+    padding: 200,
+    marginLeft: 50,
+    fontSize: 20,
+    color: theme.palette.text.disabled,
+    fontWeight: '500',
+    alignSelf: 'flex-start'
+  },
+  textAbove: {
+    marginLeft: 20
   }
 }));

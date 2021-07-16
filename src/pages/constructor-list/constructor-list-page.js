@@ -13,8 +13,9 @@ import { config } from '../../configs';
 import { getModels } from '../../redux/model/model.actions';
 import LoadingBar from '../../components/loading-bar';
 import { selectModel } from '../../redux/model/model.reducer';
-import { useStyles } from '../../components/forms/model-form/model-form.styles';
+import { useStyles } from './constructor-list-page.styles';
 
+const { NO_CONSTRUCTOR_MESSAGE } = config.messages;
 const { materialUiConstants } = config;
 const { CREATE_CONSTRUCTOR } = config.buttonTitles;
 
@@ -53,7 +54,9 @@ const ConstructorListPage = () => {
 
   const DropDownModelList = () => (
     <FormControl required className={styles.formControl}>
-      <InputLabel shrink>Оберіть модель для конструктора</InputLabel>
+      <InputLabel className={styles.textAbove}>
+        Оберіть модель для конструктора
+      </InputLabel>
       <Select
         value={id}
         onChange={handleChange}
@@ -69,7 +72,7 @@ const ConstructorListPage = () => {
           </MenuItem>
         ))}
       </Select>
-      <FormHelperText>
+      <FormHelperText className={styles.textAbove}>
         Після вибору моделі настисніть кнопку створити новий
       </FormHelperText>
     </FormControl>
@@ -98,6 +101,7 @@ const ConstructorListPage = () => {
       <div>
         <DropDownModelList />
       </div>
+      <p className={styles.noConstructor}>{NO_CONSTRUCTOR_MESSAGE}</p>
     </div>
   );
 };
