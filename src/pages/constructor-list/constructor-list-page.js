@@ -7,15 +7,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { Link } from 'react-router-dom';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import { getModels } from '../../redux/model/model.actions';
 import LoadingBar from '../../components/loading-bar';
-// import { selectModelAndTable } from '../../redux/selectors/model.selectors';
 import { selectModel } from '../../redux/model/model.reducer';
 import { useStyles } from '../../components/forms/model-form/model-form.styles';
 
-const { labelsEn } = config.labels.model;
 const { materialUiConstants } = config;
 const { CREATE_CONSTRUCTOR } = config.buttonTitles;
 
@@ -27,7 +26,7 @@ const ConstructorListPage = () => {
   const handleChange = (event) => {
     setId(event.target.value);
   };
-  console.log(id);
+
   const commonStyles = useCommonStyles();
   const styles = useStyles();
   const { list, loading, currentPage, rowsPerPage } = useSelector(selectModel);
@@ -60,7 +59,6 @@ const ConstructorListPage = () => {
         onChange={handleChange}
         autoWidth
         className={styles.selectedEmpty}
-        inputProps={{ 'aria-label': 'Without label' }}
       >
         <MenuItem value='' disabled>
           Модель
@@ -86,11 +84,12 @@ const ConstructorListPage = () => {
 
         <div className={styles.constructorButton}>
           <Button
-            data-cy={labelsEn.constructor}
-            className={styles.saveButton}
+            disabled={!id ? 'disabled' : ''}
+            data-cy='add-back'
+            component={Link}
             onClick={handleConstructor}
-            color={materialUiConstants.secondary}
             variant={materialUiConstants.contained}
+            color={materialUiConstants.primary}
           >
             {CREATE_CONSTRUCTOR}
           </Button>
