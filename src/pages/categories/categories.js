@@ -13,7 +13,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { useCommonStyles } from '../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
-import { selectCategoriesLoadingDialogOpen } from '../../redux/selectors/category.selectors';
+import { categoriesSelectorWithPagination } from '../../redux/selectors/category.selectors';
 import StandardButton from '../../components/buttons/standard-button';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useCategoryFilters from '../../hooks/filters/use-category-filters';
@@ -37,8 +37,9 @@ const Categories = () => {
     filter,
     sort,
     currentPage,
-    rowsPerPage
-  } = useSelector(selectCategoriesLoadingDialogOpen);
+    rowsPerPage,
+    itemsCount
+  } = useSelector(categoriesSelectorWithPagination);
 
   const handleDeleteCategory = (id) => {
     dispatch(setCategoryDeleteId(id));
@@ -106,8 +107,10 @@ const Categories = () => {
       {categoriesList?.length ? (
         <>
           <TableContainerGenerator
+            pagination
             tableTitles={config.tableHeadRowTitles.categories}
             tableItems={categoriesList}
+            count={itemsCount}
           />
           <CategoryDeleteDialog />
         </>
