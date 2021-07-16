@@ -102,14 +102,14 @@ const ReplyCommentForm = ({
     openSuccessSnackbar(updateReplyForComment, SAVE_MESSAGE, SAVE_CHANGES);
   };
 
-  function handleCommentClick() {
+  const handleCommentClick = () => {
     if (reply?.refToReplyComment) {
       return history.push(
         pathToCommentsEdit.replace(':id', reply.refToReplyComment)
       );
     }
     dispatch(showErrorSnackbar('Comment not exist'));
-  }
+  };
 
   const checkboxes = [
     {

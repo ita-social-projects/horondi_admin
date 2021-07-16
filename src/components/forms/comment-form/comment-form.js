@@ -87,7 +87,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
         pathToEditProduct.replace(':id', comment.product._id)
       );
     }
-    dispatch(showErrorSnackbar('Product not exist'));
+    dispatch(showErrorSnackbar("Product doesn't exist"));
   }
 
   const eventPreventHandler = (e) => {
