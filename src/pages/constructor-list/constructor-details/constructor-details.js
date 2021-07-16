@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { useStyles } from './constructor-details.styles';
 import LoadingBar from '../../../components/loading-bar';
 import { getModel } from '../../../redux/model/model.actions';
-import { selectModel } from '../../../redux/selectors/model.selectors';
+// import { selectModel } from '../../../redux/selectors/model.selectors';
+import { selectModel } from '../../../redux/model/model.reducer';
 import ConstructorModelForm from '../../../components/forms/constructor-form/constructor-model-form.js';
 
 const ConstructorModelDetails = ({ match }) => {

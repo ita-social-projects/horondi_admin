@@ -11,7 +11,8 @@ import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import { getModels } from '../../redux/model/model.actions';
 import LoadingBar from '../../components/loading-bar';
-import { selectModelAndTable } from '../../redux/selectors/model.selectors';
+// import { selectModelAndTable } from '../../redux/selectors/model.selectors';
+import { selectModel } from '../../redux/model/model.reducer';
 import { useStyles } from '../../components/forms/model-form/model-form.styles';
 
 const { labelsEn } = config.labels.model;
@@ -29,8 +30,7 @@ const ConstructorListPage = () => {
   console.log(id);
   const commonStyles = useCommonStyles();
   const styles = useStyles();
-  const { list, loading, currentPage, rowsPerPage } =
-    useSelector(selectModelAndTable);
+  const { list, loading, currentPage, rowsPerPage } = useSelector(selectModel);
 
   const dispatch = useDispatch();
 
