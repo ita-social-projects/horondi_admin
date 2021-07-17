@@ -10,7 +10,6 @@ import {
   DELETE_BACK,
   UPDATE_BACK,
   SET_FILTER,
-  SET_SORT,
   CLEAR_FILTERS,
   CLEAR_BACK
 } from '../back.types';
@@ -27,7 +26,6 @@ import {
   deleteBack,
   updateBack,
   setFilter,
-  setSort,
   clearFilters,
   clearBack
 } from '../back.actions';
@@ -102,6 +100,11 @@ describe('back actions tests', () => {
   it('should clear all backs filters', () => {
     expect(clearFilters()).toEqual({
       type: CLEAR_FILTERS
+    });
+  });
+  it('should clear back', () => {
+    expect(clearBack()).toEqual({
+      type: CLEAR_BACK
     });
   });
 });

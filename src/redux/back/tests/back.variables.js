@@ -59,10 +59,13 @@ const mockBacks = {
   count: 1
 };
 
-const mockBack = mockBacks.items[0];
+export const mockBack = {
+  items: mockBacks.items,
+  count: 1
+};
 
 const filter = {
-  search: 'Бонд'
+  name: 'Бонд'
 };
 const mockBacksState = {
   list: [],
@@ -90,16 +93,16 @@ const mockInputBack = {
 };
 
 const mockBacksLoadPayload = {
-  skip: 0,
   limit: 10,
+  skip: 0,
   filters: {
     name: '',
     model: [],
     available: [],
     material: [],
     color: []
-  },
-  backsPerPage: 10
+  }
+  // backsPerPage: 10
 };
 
 const mockSnackarState = {
@@ -118,17 +121,18 @@ const mockError = {
   message: 'error'
 };
 const mockInitialFilters = {
-  search: '',
-  dateFrom: '',
-  dateTo: '',
-  show: []
+  name: '',
+  model: [],
+  available: [],
+  material: [],
+  color: []
 };
+
 export {
   mockBacksState,
   mockBacksLoadPayload,
   mockBacks,
   mockId,
-  mockBack,
   mockSnackarState,
   statuses,
   mockInputBack,

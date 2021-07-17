@@ -49,6 +49,19 @@ import {
   handleSuccessSnackbar,
   handleErrorSnackbar
 } from '../../snackbar/snackbar.sagas';
+import { handleCommentsLoad } from '../../comments/comments.sagas';
+import {
+  commentRes,
+  filter,
+  pagination,
+  sortData
+} from '../../comments/tests/comments.variables';
+import commentsReducer, { initialState } from '../../comments/comments.reducer';
+import {
+  setComments,
+  setCommentsLoading
+} from '../../comments/comments.actions';
+import { getAllComments } from '../../comments/comments.operations';
 
 describe('Test Back sagas', () => {
   it.skip('should load all Backs', () =>
@@ -108,7 +121,7 @@ describe('Test Back sagas', () => {
         expect(analysisPut).toHaveLength(3);
       }));
 
-  it.skip('should add Back by input data', () =>
+  it('should add Back by input data', () =>
     expectSaga(handleAddBack, { payload: mockInputBack })
       .withReducer(combineReducers({ Back }), {
         Back: mockBacksState
@@ -122,14 +135,14 @@ describe('Test Back sagas', () => {
       .hasFinalState({
         Back: {
           ...mockBacksState,
-          backLoading: true
+          backLoading: false
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(2);
+        expect(analysisPut).toHaveLength(3);
       }));
 
   it('should delete Back by id', () =>

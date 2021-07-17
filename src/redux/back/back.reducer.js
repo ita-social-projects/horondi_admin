@@ -5,7 +5,6 @@ import {
   SET_BACK_ERROR,
   REMOVE_BACK_FROM_STORE,
   SET_FILTER,
-  SET_SORT,
   CLEAR_FILTERS,
   CLEAR_BACK
 } from './back.types';
@@ -18,7 +17,13 @@ export const selectBack = ({ Back }) => ({
   sort: Back.sort
 });
 
-const initialFilters = {};
+const initialFilters = {
+  name: '',
+  model: [],
+  available: [],
+  material: [],
+  color: []
+};
 
 export const initialState = {
   list: [],
@@ -64,13 +69,6 @@ const backReducer = (state = initialState, action = {}) => {
         ...state,
         filters: {
           ...state.filters,
-          ...action.payload
-        }
-      };
-    case SET_SORT:
-      return {
-        ...state,
-        sort: {
           ...action.payload
         }
       };

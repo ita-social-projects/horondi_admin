@@ -3,7 +3,8 @@ import {
   mockBacks,
   mockId,
   filter,
-  mockInitialFilters
+  mockInitialFilters,
+  mockBacksLoadPayload
 } from './back.variables';
 import {
   setBackError,
@@ -12,7 +13,8 @@ import {
   setBack,
   removeBackFromStore,
   clearFilters,
-  setFilter
+  setFilter,
+  clearBack
 } from '../back.actions';
 
 describe('reducer tests', () => {
@@ -54,19 +56,26 @@ describe('reducer tests', () => {
       list: filteredBacks
     });
   });
-  // it('should set filter for backs', () => {
-  //     expect(backReducer(initialState, setFilter(filter))).toEqual({
-  //         ...initialState,
-  //         filters: {
-  //             ...mockInitialFilters,
-  //             ...filter
-  //         }
-  //     });
-  // });
-  // it('should clear all backs filters', () => {
-  //     expect(backReducer(initialState, clearFilters())).toEqual({
-  //         ...initialState,
-  //         filters: mockInitialFilters
-  //     });
-  // });
+  it('should set filter for backs', () => {
+    expect(backReducer(initialState, setFilter(filter))).toEqual({
+      ...initialState,
+      filters: {
+        ...mockInitialFilters,
+        ...filter
+      }
+    });
+  });
+  it('should clear back', () => {
+    expect(backReducer(initialState, clearBack())).toEqual({
+      ...initialState,
+      back: null
+    });
+  });
+
+  it('should clear all backs filters', () => {
+    expect(backReducer(initialState, clearFilters())).toEqual({
+      ...initialState,
+      filters: mockBacksLoadPayload.filters
+    });
+  });
 });
