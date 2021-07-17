@@ -134,7 +134,7 @@ describe('useEffect tests', () => {
     expect(mockDispatchFn).toHaveBeenCalledTimes(1);
   });
 
-  test('Should render TableContainerRow', () => {
+  test.skip('Should render TableContainerRow', () => {
     expect(backPage.exists(TableContainerRow)).toBe(true);
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
