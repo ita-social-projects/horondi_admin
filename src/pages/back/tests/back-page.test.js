@@ -14,7 +14,7 @@ import { config } from '../../../configs';
 import PatternPage from '../../pattern';
 
 const { CREATE_BACK_TITLE } = config.buttonTitles;
-const {pathToAddBacks} = config.routes;
+const { pathToAddBacks } = config.routes;
 const tableTitles = config.tableHeadRowTitles.backs;
 
 configure({ adapter: new Adapter() });
@@ -51,7 +51,7 @@ describe('Back-page render tests', () => {
     spyOnUseSelector.mockClear();
   });
 
-  test('Should render pattern-page', () => {
+  test('Should render back-page', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper).toHaveLength(1);
   });
@@ -134,7 +134,7 @@ describe('useEffect tests', () => {
     expect(mockDispatchFn).toHaveBeenCalledTimes(1);
   });
 
-  test.skip('Should render TableContainerRow', () => {
+  test('Should render TableContainerRow', () => {
     expect(backPage.exists(TableContainerRow)).toBe(true);
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
