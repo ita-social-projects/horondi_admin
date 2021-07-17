@@ -18,13 +18,7 @@ export const selectBack = ({ Back }) => ({
   sort: Back.sort
 });
 
-const initialFilters = {
-  name: '',
-  model: [],
-  available: [],
-  material: [],
-  color: []
-};
+const initialFilters = {};
 
 export const initialState = {
   list: [],
