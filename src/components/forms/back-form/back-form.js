@@ -62,10 +62,9 @@ const BackForm = ({ back, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const {
-    details: { materials },
-    loading
-  } = useSelector(selectProductDetails);
+  const { details, loading } = useSelector(selectProductDetails);
+
+  const { materials } = details;
 
   const { createBack, setUpload, upload, setBackImage, color, setColor } =
     useBackHandlers();
