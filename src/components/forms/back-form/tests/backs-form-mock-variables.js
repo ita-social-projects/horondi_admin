@@ -1,16 +1,5 @@
 const mockBack = {
-  _id: '',
-  name: [
-    {
-      value: ''
-    },
-    {
-      value: ''
-    }
-  ],
-  images: {
-    thumbnail: ''
-  },
+  available: false,
   features: {
     material: {
       name: [
@@ -33,12 +22,22 @@ const mockBack = {
       ]
     }
   },
+  _id: '',
+  name: [
+    {
+      value: ''
+    },
+    {
+      value: ''
+    }
+  ],
+  images: {
+    thumbnail: ''
+  },
   additionalPrice: [
     { value: null, currency: '' },
     { value: null, currency: '' }
-  ],
-  available: false,
-  customizable: false
+  ]
 };
 
 const mockId = '6047321793650236ddbfb841';
