@@ -15,7 +15,7 @@ import BackForm from '../index';
 import ImageUploadPreviewContainer from '../../../../containers/image-upload-container/image-upload-previewContainer';
 import CheckboxOptions from '../../../checkbox-options';
 import { config } from '../../../../configs';
-import { mockMaterial } from './backs-form-mock-variables';
+import { mockMaterial, files, target } from './backs-form-mock-variables';
 
 configure({ adapter: new Adapter() });
 
@@ -23,6 +23,8 @@ const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
 const mockChange = jest.fn();
 const mockBlur = jest.fn();
+const mockSetUpload = jest.fn();
+const mockSetBackImage = jest.fn();
 
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
@@ -39,6 +41,19 @@ jest.mock('formik', () => ({
   })
 }));
 
+jest.mock('../../../../utils/use-back-handlers.js', () => ({
+  __esModule: true,
+  default: () => ({
+    setUpload: mockSetUpload,
+    setBackImage: mockSetBackImage
+  })
+}));
+
+jest.spyOn(global, 'FileReader').mockImplementation(function () {
+  this.readAsDataURL = jest.fn();
+  this.onload = jest.fn();
+});
+
 describe('Back form tests', () => {
   let spyOnUseSelector;
   let spyOnUseDispatch;
@@ -51,15 +66,14 @@ describe('Back form tests', () => {
     spyOnUseSelector.mockImplementation(() => mockMaterial);
 
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
-
     mockDispatch = jest.fn();
-    spyOnUseDispatch.mockReturnValue(mockDispatch);
+
+    spyOnUseDispatch.mockImplementation(() => jest.fn());
     component = mount(<BackForm />);
   });
   afterEach(() => {
-    jest.restoreAllMocks();
-    spyOnUseSelector.mockClear();
     component.unmount();
+    spyOnUseSelector.mockClear();
   });
 
   it('should render form component', () => {
@@ -103,6 +117,28 @@ describe('Back form tests', () => {
     const wrapper = component.find(ImageUploadPreviewContainer);
     expect(wrapper.exists(ImageUploadPreviewContainer)).toBeDefined();
     expect(wrapper.exists(ImageUploadPreviewContainer)).toBe(true);
+  });
+
+  it('Should upload image', () => {
+    const imageContainer = component.find(ImageUploadPreviewContainer);
+    const handler = imageContainer.prop('handler');
+    handler(files);
+    expect(mockSetUpload).toHaveBeenCalledTimes(1);
+    expect(mockSetUpload).toHaveBeenCalledWith(files[0]);
+  });
+
+  it('Should test FileReader ', () => {
+    const reader = FileReader.mock.instances[0];
+    reader.onload(target);
+    expect(reader.readAsDataURL).toHaveBeenCalled();
+    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
+  });
+
+  it('Should test BackImage', () => {
+    const reader = FileReader.mock.instances[0];
+    reader.onload(target);
+    expect(mockSetBackImage).toHaveBeenCalled();
+    expect(mockSetBackImage).toHaveBeenCalledWith('foo');
   });
 
   it('should render FormControl component', () => {

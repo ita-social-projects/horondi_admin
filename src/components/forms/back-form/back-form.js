@@ -321,7 +321,7 @@ BackForm.propTypes = {
   }),
   errors: PropTypes.shape({
     backImage: PropTypes.string,
-    material: PropTypes.string,
+    material: PropTypes,
     color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string

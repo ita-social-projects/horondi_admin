@@ -66,12 +66,13 @@ const mockMaterial = {
   },
   loading: false
 };
-
+const files = [new File([], 'foo,png', { type: 'image' })];
 module.exports = {
   mockMaterial,
   mockBack,
   mockId,
   mockEdit,
   event,
-  target
+  target,
+  files
 };
