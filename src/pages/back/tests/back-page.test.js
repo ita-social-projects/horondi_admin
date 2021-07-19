@@ -11,7 +11,6 @@ import TableContainerRow from '../../../containers/table-container-row';
 import LoadingBar from '../../../components/loading-bar';
 
 import { config } from '../../../configs';
-import PatternPage from '../../pattern';
 
 const { CREATE_BACK_TITLE } = config.buttonTitles;
 const { pathToAddBacks } = config.routes;
@@ -30,13 +29,11 @@ describe('Back-page render tests', () => {
   let getState;
 
   beforeEach(() => {
-    // Mock useSelector hook
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
     spyOnUseSelector.mockImplementation(() => mockStore);
 
-    // Mock useDispatch hook
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
-    // Mock dispatch function returned from useDispatch
+
     mockDispatch = jest.fn();
     spyOnUseDispatch.mockReturnValue(mockDispatch);
 
@@ -104,20 +101,18 @@ describe('useEffect tests', () => {
   let tableContainerRowFirst;
 
   beforeEach(() => {
-    // Mock useSelector hook
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
     spyOnUseSelector.mockImplementation(() => mockStore);
 
-    // Mock dispatch function returned from useDispatch
     mockDispatchFn = jest.fn();
     reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
 
     wrapper = mount(
       <BrowserRouter>
-        <PatternPage />
+        <BackPage />
       </BrowserRouter>
     );
-    backPage = wrapper.find(PatternPage);
+    backPage = wrapper.find(BackPage);
     tableContainerRow = backPage.find(TableContainerRow);
     tableContainerRowFirst = backPage.find({
       id: '60eadfb9e913fc3f88294bd9'
@@ -126,29 +121,30 @@ describe('useEffect tests', () => {
 
   afterEach(() => {
     wrapper.unmount();
-    jest.restoreAllMocks();
     spyOnUseSelector.mockClear();
   });
 
-  test.skip('UseEffect hook shoud work out', () => {
-    expect(mockDispatchFn).toHaveBeenCalledTimes(1);
+  test('UseEffect hook should work out', () => {
+    expect(mockDispatchFn).toHaveBeenCalled();
   });
 
-  test.skip('Should render TableContainerRow', () => {
+  test('Should render TableContainerRows', () => {
     expect(backPage.exists(TableContainerRow)).toBe(true);
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
-    expect(tableContainerRowFirst.prop('name')).toBe('Червоний');
+    expect(tableContainerRowFirst.prop('name')).toBe(
+      mockStore.list[0].name[0].value
+    );
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
   });
 
-  test.skip('11', () => {
+  test('deleteHandler should work out', () => {
     tableContainerRowFirst.at(0).props().deleteHandler();
-    expect(mockDispatchFn).toHaveBeenCalledTimes(2);
+    expect(mockDispatchFn).toHaveBeenCalledTimes(3);
   });
 
-  test.skip('11', () => {
+  test('editHandler should work out', () => {
     tableContainerRowFirst.at(0).props().editHandler();
-    expect(mockDispatchFn).toHaveBeenCalledTimes(2);
+    expect(mockDispatchFn).toHaveBeenCalledTimes(3);
   });
 });
