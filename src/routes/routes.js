@@ -65,6 +65,8 @@ import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
 import BackPage from '../pages/back';
 import BackAdd from '../pages/back/back-add';
 import BackDetails from '../pages/back/back-details';
+import ConstructorListPage from '../pages/constructor-list';
+import ConstructorModelDetails from '../pages/constructor-list/constructor-details';
 
 const { routes } = config;
 
@@ -286,6 +288,16 @@ const Routes = () => {
             path={routes.pathToBackDetails}
             exact
             component={BackDetails}
+          />
+          <Route
+            path={routes.pathToConstructorList}
+            exact
+            component={ConstructorListPage}
+          />
+          <Route
+            path={routes.pathToConstructorModelDetails}
+            exact
+            component={ConstructorModelDetails}
           />
           <Route component={ErrorPage} />
         </Switch>

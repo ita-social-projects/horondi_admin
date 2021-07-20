@@ -123,6 +123,12 @@ const titles = {
   },
   pocketsTitles: {
     mainPageTitle: 'Інформація про кишені'
+  },
+  constructorListPageTitles: {
+    mainPageTitle: 'Список конструкторів'
+  },
+  constructorModelTitles: {
+    mainPageTitle: 'Опції конструктора'
   }
 };
 
