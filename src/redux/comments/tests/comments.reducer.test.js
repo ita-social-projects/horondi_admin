@@ -6,7 +6,14 @@ import {
   setCommentError,
   removeCommentFromStore,
   setFilter,
-  clearFilters
+  clearFilters,
+  setRecentComments,
+  setReplyComments,
+  removeReplyCommentFromStore,
+  clearComment,
+  setCommentsCurrentPage,
+  setSort,
+  setSortLabel
 } from '../comments.actions';
 import {
   comments,
@@ -14,7 +21,13 @@ import {
   commentsLoadingStatus,
   commentsErrorExample,
   filter,
-  mockInitialFilters
+  mockInitialFilters,
+  replyCommentsData,
+  replyItem,
+  replyCommentId,
+  currentPage,
+  sortDataLabel,
+  sortData
 } from './comments.variables';
 
 describe('comments reducer tests', () => {
@@ -70,7 +83,72 @@ describe('comments reducer tests', () => {
   it('should clear all comments filters', () => {
     expect(commentsReducer(initialState, clearFilters())).toEqual({
       ...initialState,
-      filters: mockInitialFilters
+      filters: mockInitialFilters,
+      sort: { date: -1 },
+      sortLabel: ''
+    });
+  });
+  it('should set recent comments', () => {
+    expect(
+      commentsReducer(initialState, setRecentComments(comments.list))
+    ).toEqual({
+      ...initialState,
+      recentComments: comments.list
+    });
+  });
+  it('should set reply comments', () => {
+    expect(
+      commentsReducer(initialState, setReplyComments(replyCommentsData))
+    ).toEqual({
+      ...initialState,
+      replyComments: replyCommentsData
+    });
+  });
+  it('should clear comment', () => {
+    expect(
+      commentsReducer(
+        { ...initialState, comment: comments.list },
+        clearComment()
+      )
+    ).toEqual({
+      ...initialState,
+      comment: null
+    });
+  });
+  it('should remove reply coment from the list', () => {
+    expect(
+      commentsReducer(
+        { ...initialState, replyComments: replyCommentsData },
+        removeReplyCommentFromStore(replyCommentId)
+      )
+    ).toEqual({
+      ...initialState,
+      replyComments: [replyItem]
+    });
+  });
+
+  it('should add current page', () => {
+    expect(
+      commentsReducer({ ...initialState }, setCommentsCurrentPage(currentPage))
+    ).toEqual({
+      ...initialState,
+      currentPageForComments: currentPage
+    });
+  });
+
+  it('should add filter to comments', () => {
+    expect(commentsReducer({ ...initialState }, setSort(sortData))).toEqual({
+      ...initialState,
+      sort: sortData
+    });
+  });
+
+  it('should add filter label to comments', () => {
+    expect(
+      commentsReducer({ ...initialState }, setSortLabel(sortDataLabel))
+    ).toEqual({
+      ...initialState,
+      sortLabel: sortDataLabel
     });
   });
 });

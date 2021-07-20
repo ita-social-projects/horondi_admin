@@ -122,13 +122,29 @@ const labels = {
     available: 'Доступний',
     customizable: 'для конструктора',
     avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну',
     form: {
       name: mapToLanguages("І'мя", 'Name')
     },
     backName: {
       ua: 'Назва спинки',
       en: 'Back name'
-    }
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для спинки ',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір спинки',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
   },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
@@ -151,6 +167,14 @@ const labels = {
     yes: 'Так',
     no: 'Ні',
     productInfo: 'Інформація про продукт'
+  },
+  replyComment: {
+    commentInfo: 'Інформіція про коментар',
+    text: 'Текст відповіді',
+    show: 'Видимий',
+    hidden: 'Прихований',
+    yes: 'Так',
+    no: 'Ні'
   },
   businessPageLabel: [
     {

@@ -43,9 +43,19 @@ const tableHeadRowTitles = {
   contacts: ['Номер телефону', 'Email', 'Адреса', 'Дії'],
   orderProductTitles: ['№', 'Назва', 'Кількість', 'Розмір', 'Ціна', 'Деталі'],
   comments: {
-    commentPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії'],
+    commentPageTitles: [
+      'Дата',
+      'Пошта',
+      'Текст',
+      'Видимий',
+      'Кількість відповідей',
+      'Дії'
+    ],
     userPageTitles: ['Дата', 'Текст', 'Дії'],
     recentCommentsPageTitle: ['Дата', "Ім'я користувача", 'Текст']
+  },
+  replyComments: {
+    replyCommentsPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії']
   },
   emailQuestions: [
     '#',
@@ -74,7 +84,15 @@ const tableHeadRowTitles = {
   actionLabel: 'Дії',
   constructor: ['Колір', 'Назва', 'Матеріал', 'Доступний', 'Дії'],
   pockets: ['Зображення', 'Назва', 'Доступний', 'Дії'],
-  backs: ['Фото', 'Назва', 'Матеріал', 'Доступний', 'Дії']
+  backs: [
+    'Фото',
+    'Назва',
+    'Матеріал',
+    'Колір',
+    'Ціна (USD)',
+    'Доступний',
+    'Дії'
+  ]
 };
 
 export default tableHeadRowTitles;

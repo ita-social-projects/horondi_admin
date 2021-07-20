@@ -6,7 +6,8 @@ import {
   REMOVE_BACK_FROM_STORE,
   SET_FILTER,
   SET_SORT,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  CLEAR_BACK
 } from './back.types';
 
 export const selectBack = ({ Back }) => ({
@@ -19,11 +20,10 @@ export const selectBack = ({ Back }) => ({
 
 const initialFilters = {
   name: '',
-  description: '',
   model: [],
   available: [],
   material: [],
-  handmade: []
+  color: []
 };
 
 export const initialState = {
@@ -80,10 +80,21 @@ const backReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
+    case CLEAR_BACK:
+      return {
+        ...state,
+        back: null
+      };
     case CLEAR_FILTERS:
       return {
         ...state,
-        filters: initialFilters
+        filters: {
+          name: '',
+          model: [],
+          available: [],
+          material: [],
+          color: []
+        }
       };
     default:
       return state;

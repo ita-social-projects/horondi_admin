@@ -18,30 +18,29 @@ const useProductAddImages = ({
 
   const products = useSelector(({ Products }) => Products);
 
-  const handlePrimaryImageLoad = (e) => {
+  const handlePrimaryImageLoad = (files) => {
     toggleFieldsChanged(true);
     const reader = new FileReader();
-    if ((e.target.files && e.target.files[0]) || isEdit) {
+    if ((files && files[0]) || isEdit) {
       reader.onload = (event) => {
         setProductImageDisplayed(event.target.result);
       };
-      dispatch(setPrimaryImageToUpload([e.target.files[0]]));
-      setPrimaryImage(e.target.files[0]);
-      reader.readAsDataURL(e.target.files[0]);
+      dispatch(setPrimaryImageToUpload([files[0]]));
+      setPrimaryImage(files[0]);
+      reader.readAsDataURL(files[0]);
     }
   };
 
-  const handleAdditionalImagesLoad = (e, index) => {
-    const file = e?.target?.files[0];
+  const handleAdditionalImagesLoad = (files, index) => {
+    const file = files[0];
     const reader = new FileReader();
     toggleFieldsChanged(true);
-    if (e.target.files && e.target.files[0]) {
+    if (files && files[0]) {
       reader.onload = (event) => {
         const newArr = [...additionalImagesDisplayed];
         newArr[index] = event.target.result;
         setAdditionalImagesDisplayed(newArr);
       };
-      e.persist();
       if (!isEdit) {
         const arrAdd = [...additionalImages];
         arrAdd[index] = file;
@@ -51,7 +50,7 @@ const useProductAddImages = ({
         arrUpdate[index] = file;
         dispatch(setFilesToUpload(arrUpdate));
       }
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
     }
   };
 

@@ -8,6 +8,7 @@ export const materialTranslations = {
     BOTTOM: 'Низ',
     INNER: 'Внутрішній',
     PATTERN: 'Гобелен',
-    CLOSURE: 'Замочок'
+    CLOSURE: 'Замочок',
+    BACK: 'Спинка'
   }
 };

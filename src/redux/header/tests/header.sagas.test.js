@@ -85,9 +85,10 @@ describe('header sagas tests', () => {
       .withReducer(combineReducers({ Header }), { Header: initialState })
       .put(setHeaderLoading(true))
       .provide([
-        [call(createHeader, mockHeader)],
+        [call(createHeader, mockHeader), mockHeader],
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
+      .put(push(routes.pathToHeaders))
       .put(setHeaderLoading(false))
       .run()
       .then((result) => {
@@ -102,7 +103,7 @@ describe('header sagas tests', () => {
       .withReducer(combineReducers({ Header }), { Header: initialState })
       .put(setHeaderLoading(true))
       .provide([
-        [call(deleteHeader, id)],
+        [call(deleteHeader, id), id],
         [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
       ])
       .put(removeHeaderFromStore(id))
@@ -134,7 +135,7 @@ describe('header sagas tests', () => {
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(2);
+        expect(analysisPut).toHaveLength(3);
       });
   });
 });

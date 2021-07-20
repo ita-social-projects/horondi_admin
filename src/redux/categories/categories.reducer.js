@@ -26,6 +26,14 @@ export const initialState = {
   switchId: null
 };
 
+export const selectCategoriesLoadingDialogOpen = ({ Categories }) => ({
+  categories: Categories.categories,
+  categoriesLoading: Categories.categoryLoading,
+  isDeleteDialogOpen: Categories.isDeleteDialogOpen,
+  filter: Categories.filters,
+  sort: Categories.sort
+});
+
 const categoryReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_CATEGORIES:

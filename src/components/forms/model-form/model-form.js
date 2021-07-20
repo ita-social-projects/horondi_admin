@@ -152,15 +152,15 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   ];
 
-  const handleImageLoad = (e) => {
-    if (loadHelper(e.target.files, e.target.files[0])) {
+  const handleImageLoad = (files) => {
+    if (loadHelper(files, files[0])) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setFieldValue(labelsEn.modelImage, event.target.result);
         setModelImage(event.target.result);
       };
-      reader.readAsDataURL(e.target.files[0]);
-      setUpload(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
+      setUpload(files[0]);
     }
   };
   const handleConstructor = () => {

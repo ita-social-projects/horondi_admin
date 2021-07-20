@@ -46,6 +46,17 @@ export const patternErrorMessages = {
     'Поле може містити тільки українські літери та цифри',
   PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
+
+export const backErrorMessages = {
+  BACK_VALIDATION_ERROR: 'Мінімум 2 символи',
+  BACK_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  BACK_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
+  BACK_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
+  BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
+};
+
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
   CATEGORY_VALIDATION_ERROR_CATEGORY_NAME:
@@ -156,8 +167,22 @@ export const commentErrorMessages = {
   MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
 };
 
+export const replyCommentErrorMessages = {
+  REPLY_COMMENT_VALIDATION_ERROR: 'Мінімум 2 символи',
+  REPLY_COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
+};
+
 export const businessPageErrorMessages = {
   ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
   ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки'
+};
+
+export const pocketsErrorMessages = {
+  POCKETS_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  POCKETS_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  POCKETS_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  POCKETS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };

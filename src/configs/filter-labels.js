@@ -124,6 +124,50 @@ const filterLabels = {
         type: 'desc'
       }
     ]
+  },
+  comments: {
+    sortLabels: [
+      {
+        value: 'sortByDateAsc',
+        label: 'за датою (від старішого до новішого)',
+        key: 'date',
+        type: 'asc'
+      },
+      {
+        value: 'sortByDateDesc',
+        label: 'за датою (від новішого до старішого)',
+        key: 'date',
+        type: 'desc'
+      },
+      {
+        value: 'sortByReplyAsc',
+        label: 'за датою відповідей (від старішого до новішого)',
+        key: 'replyComments',
+        type: 'asc'
+      },
+      {
+        value: 'sortByReplyDesc',
+        label: 'за датою відповідей (від новішого до старішого)',
+        key: 'replyComments',
+        type: 'desc'
+      }
+    ]
+  },
+  reply: {
+    sortLabels: [
+      {
+        value: 'sortByDateAsc',
+        label: 'за датою (від старішого до новішого)',
+        key: 'date',
+        type: 'asc'
+      },
+      {
+        value: 'sortByDateDesc',
+        label: 'за датою (від новішого до старішого)',
+        key: 'date',
+        type: 'desc'
+      }
+    ]
   }
 };
 

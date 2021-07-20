@@ -4,6 +4,8 @@ import { config } from '../configs';
 const { languages } = config;
 
 const useBackHandlers = () => {
+  const getIdFromItem = (item) => item._id;
+  const [color, setColor] = useState([]);
   const [backImage, setBackImage] = useState('');
   const [upload, setUpload] = useState({});
   const [imageName, setImageName] = useState('');
@@ -23,10 +25,15 @@ const useBackHandlers = () => {
       material: values.material,
       color: values.color
     },
-    available: values.available
+    available: values.available,
+    additionalPrice: values.additionalPrice,
+    optionType: 'BACK'
   });
 
   return {
+    getIdFromItem,
+    color,
+    setColor,
     backImage,
     setBackImage,
     createBack,

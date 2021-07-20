@@ -1,10 +1,10 @@
-export const handleImageLoad = (e, callback) => {
-  if (e.target.files && e.target.files[0]) {
+export const handleImageLoad = (files, callback) => {
+  if (files && files[0]) {
     const reader = new FileReader();
     reader.onload = (event) => {
       callback(event);
     };
-    reader.readAsDataURL(e.target.files[0]);
+    reader.readAsDataURL(files[0]);
   }
 };
 
@@ -44,6 +44,7 @@ export const useFormikInitialValues = (pattern) => ({
   patternImage: pattern.images.thumbnail || '',
   uaName: pattern.name[0].value || '',
   enName: pattern.name[1].value || '',
+  optionType: pattern.optionType || 'PATTERN',
   uaDescription: pattern.description[0].value || '',
   enDescription: pattern.description[1].value || '',
   material: pattern.features.material._id || '',

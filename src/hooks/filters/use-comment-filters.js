@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-
-import { clearFilters, setFilter } from '../../redux/comments/comments.actions';
+import { sortDirection } from '../../configs/sort';
+import {
+  clearFilters,
+  setFilter,
+  setSort,
+  setSortLabel
+} from '../../redux/comments/comments.actions';
+import filterLabels from '../../configs/filter-labels';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import buttonTitles from '../../configs/button-titles';
 import {
@@ -12,6 +18,7 @@ import {
 const useCommentFilters = () => {
   const dispatch = useDispatch();
   const filters = useSelector(({ Comments }) => Comments.filters);
+  const sortLabel = useSelector(({ Comments }) => Comments.sortLabel);
 
   const setCommentDateRangeFilter = (date) => {
     dispatch(setCurrentPage(0));
@@ -40,12 +47,27 @@ const useCommentFilters = () => {
     );
   };
 
+  const setSorting = ({ key, type, value }) => {
+    dispatch(setCurrentPage(0));
+    dispatch(
+      setSort({
+        [key]: sortDirection[type]
+      })
+    );
+    dispatch(setSortLabel(value));
+  };
+
   const clearAllFilters = () => {
     dispatch(setCurrentPage(0));
     dispatch(clearFilters());
   };
 
   return {
+    sortOptions: {
+      labels: filterLabels.comments.sortLabels,
+      setSorting,
+      sortLabel
+    },
     filterByDateOptions: {
       dateHandler: setCommentDateRangeFilter,
       dateFrom: filters.dateFrom,
