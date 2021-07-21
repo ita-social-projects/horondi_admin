@@ -44,6 +44,7 @@ const messages = {
   BACK_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
   DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
   NO_POCKET_MESSAGE: 'Кишені відсутні',
-  NO_BACKS_MESSAGE: 'Cпинки відсутні'
+  NO_BACKS_MESSAGE: 'Cпинки відсутні',
+  NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення'
 };
 export default messages;
