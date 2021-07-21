@@ -11,7 +11,8 @@ import {
   REMOVE_BACK_FROM_STORE,
   SET_FILTER,
   SET_SORT,
-  CLEAR_FILTERS
+  CLEAR_FILTERS,
+  CLEAR_BACK
 } from './back.types';
 
 export const setBacks = (payload) => ({
@@ -76,4 +77,8 @@ export const setFilter = (filter) => ({
 
 export const clearFilters = () => ({
   type: CLEAR_FILTERS
+});
+
+export const clearBack = () => ({
+  type: CLEAR_BACK
 });

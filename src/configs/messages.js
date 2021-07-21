@@ -12,7 +12,9 @@ const messages = {
     'Ви впевнені,що хочете змінити статус користувача?',
   REMOVE_CONTACT_MESSAGE: 'Ви впевнені,що хочете видалити цей контакт?',
   REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
+  REMOVE_REPLY_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цю відповідь?',
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
+  NO_REPLY_COMMENTS_MESSAGE: 'Відповіді відсутні',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   DELETE_SIZE_MESSAGE: 'Ви впевнені, що хочете видалити цей розмір?',
   NO_SIZES_MESSAGE: 'Розміри відсутні',
@@ -43,6 +45,8 @@ const messages = {
   DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
   NO_POCKET_MESSAGE: 'Кишені відсутні',
   DELETE_POSITION_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
-  NO_POSITION_MESSAGE: 'Позиції відсутні'
+  NO_POSITION_MESSAGE: 'Позиції відсутні',
+  NO_BACKS_MESSAGE: 'Cпинки відсутні',
+  NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення'
 };
 export default messages;

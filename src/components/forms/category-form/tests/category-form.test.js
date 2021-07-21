@@ -10,7 +10,7 @@ import {
   mockCategory,
   mockId,
   mockIsEdit,
-  event,
+  files,
   target
 } from './category-form.variables';
 
@@ -123,16 +123,16 @@ describe('test СategoryForm', () => {
   it('Should upload image', () => {
     const imageContainer = wrapper.find(ImageUploadContainer);
     const handler = imageContainer.prop('handler');
-    handler(event);
+    handler(files);
     expect(mockSetUpload).toHaveBeenCalledTimes(1);
-    expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
+    expect(mockSetUpload).toHaveBeenCalledWith(files[0]);
   });
 
   it('Should test FileReader ', () => {
     const reader = FileReader.mock.instances[0];
     reader.onload(target);
     expect(reader.readAsDataURL).toHaveBeenCalled();
-    expect(reader.readAsDataURL).toHaveBeenCalledWith(event.target.files[0]);
+    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
 
   it('Should test CategoryImage', () => {

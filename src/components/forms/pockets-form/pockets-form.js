@@ -33,7 +33,7 @@ const {
   POCKETS_UA_NAME_MESSAGE,
   POCKETS_EN_NAME_MESSAGE,
   POCKETS_MAX_LENGTH_MESSAGE,
-  POCKETS_MIN_LENGTH_MESSAGE,
+  POCKETS_MIN_LENGTH_MESSAGE
 } = config.pocketsErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -105,15 +105,15 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   });
 
-  const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (files) => {
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (data) => {
         setFieldValue('pocketImage', data.target.result);
         setPocketsImage(data.target.result);
       };
-      reader.readAsDataURL(e.target.files[0]);
-      setUpload(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
+      setUpload(files[0]);
     }
   };
 
@@ -155,7 +155,11 @@ const PocketsForm = ({ pocket, id, edit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToPockets} />
+              <BackButton
+                className={styles.returnButton}
+                initial={!valueEquality}
+                pathBack={pathToPockets}
+              />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton

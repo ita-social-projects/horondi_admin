@@ -56,6 +56,7 @@ import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
+import ReplyCommentEdit from '../pages/comments/comment-edit/replyComments/reply-comment-edit';
 import History from '../pages/history';
 import HistoryDetails from '../pages/history/history-details';
 import PocketsPage from '../pages/pockets/pockets-page';
@@ -66,6 +67,8 @@ import BackAdd from '../pages/back/back-add';
 import BackDetails from '../pages/back/back-details';
 import PositionPage from '../pages/position/position-page';
 import PositionAdd from '../pages/position/position-add/position-add';
+import ConstructorListPage from '../pages/constructor-list';
+import ConstructorModelDetails from '../pages/constructor-list/constructor-details';
 
 const { routes } = config;
 
@@ -269,6 +272,11 @@ const Routes = () => {
             exact
             component={CommentEdit}
           />
+          <Route
+            path={routes.pathToReplyCommentsEdit}
+            exact
+            component={ReplyCommentEdit}
+          />
           <Route path={routes.pathToPockets} exact component={PocketsPage} />
           <Route path={routes.pathToPocketsAdd} exact component={PocketsAdd} />
           <Route
@@ -284,7 +292,21 @@ const Routes = () => {
             component={BackDetails}
           />
           <Route path={routes.pathToPosition} exact component={PositionPage} />
-          <Route path={routes.pathToPositionAdd} exact component={PositionAdd} />
+          <Route
+            path={routes.pathToPositionAdd}
+            exact
+            component={PositionAdd}
+          />
+          <Route
+            path={routes.pathToConstructorList}
+            exact
+            component={ConstructorListPage}
+          />
+          <Route
+            path={routes.pathToConstructorModelDetails}
+            exact
+            component={ConstructorModelDetails}
+          />
           <Route component={ErrorPage} />
         </Switch>
       </ErrorBoundary>

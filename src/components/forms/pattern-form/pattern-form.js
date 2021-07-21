@@ -169,20 +169,20 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   ];
 
-  const handleLoadMainImage = (e) => {
-    handleImageLoad(e, (event) => {
+  const handleLoadMainImage = (files) => {
+    handleImageLoad(files, (event) => {
       setFieldValue('patternImage', event.target.result);
       setPatternImage(event.target.result);
     });
-    setUpload(e.target.files[0]);
+    setUpload(files[0]);
   };
 
-  const handleLoadConstructorImage = (e) => {
-    handleImageLoad(e, (event) => {
+  const handleLoadConstructorImage = (files) => {
+    handleImageLoad(files, (event) => {
       setFieldValue('patternConstructorImage', event.target.result);
       setConstructorImg(event.target.result);
     });
-    setUploadConstructorImg(e.target.files[0]);
+    setUploadConstructorImg(files[0]);
   };
 
   const inputs = [

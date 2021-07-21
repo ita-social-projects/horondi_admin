@@ -16,7 +16,23 @@ import {
   SET_FILTER,
   CLEAR_FILTERS,
   GET_RECENT_COMMENTS,
-  SET_RECENT_COMMENTS
+  SET_RECENT_COMMENTS,
+  SET_REPLY_COMMENTS,
+  GET_REPLY_COMMENTS,
+  DELETE_REPLY_COMMENT,
+  REMOVE_REPLY_COMMENT_FROM_STORE,
+  CLEAR_COMMENT,
+  ADD_REPLY_COMMENT,
+  SET_COMMENT_SORT,
+  SET_COMMENT_SORT_LABEL,
+  SET_REPLY_FILTER,
+  SET_REPLY_SORT,
+  SET_REPLY_SORT_LABEL,
+  CLEAR_REPLY_FILTERS,
+  UPDATE_REPLY,
+  GET_REPLY,
+  SET_REPLY,
+  SET_REPLY_LOADING
 } from './comments.types';
 
 const setComments = (comments) => ({
@@ -108,6 +124,84 @@ const clearFilters = () => ({
   type: CLEAR_FILTERS
 });
 
+const setReplyComments = (replyComments) => ({
+  type: SET_REPLY_COMMENTS,
+  payload: replyComments
+});
+
+const getReplyComments = (payload) => ({
+  type: GET_REPLY_COMMENTS,
+  payload
+});
+
+const deleteReplyComment = (payload) => ({
+  type: DELETE_REPLY_COMMENT,
+  payload
+});
+
+const removeReplyCommentFromStore = (payload) => ({
+  type: REMOVE_REPLY_COMMENT_FROM_STORE,
+  payload
+});
+
+const clearComment = () => ({
+  type: CLEAR_COMMENT
+});
+
+const addReplyComment = (payload) => ({
+  type: ADD_REPLY_COMMENT,
+  payload
+});
+
+const setSort = (payload) => ({
+  type: SET_COMMENT_SORT,
+  payload
+});
+
+const setSortLabel = (payload) => ({
+  type: SET_COMMENT_SORT_LABEL,
+  payload
+});
+
+const setReplyFilter = (payload) => ({
+  type: SET_REPLY_FILTER,
+  payload
+});
+
+const setReplySort = (payload) => ({
+  type: SET_REPLY_SORT,
+  payload
+});
+
+const setReplySortLabel = (payload) => ({
+  type: SET_REPLY_SORT_LABEL,
+  payload
+});
+
+const clearReplyFilters = () => ({
+  type: CLEAR_REPLY_FILTERS
+});
+
+const updateReply = (payload) => ({
+  type: UPDATE_REPLY,
+  payload
+});
+
+const getReply = (payload) => ({
+  type: GET_REPLY,
+  payload
+});
+
+const setReply = (payload) => ({
+  type: SET_REPLY,
+  payload
+});
+
+const setReplyLoading = (payload) => ({
+  type: SET_REPLY_LOADING,
+  payload
+});
+
 export {
   setComments,
   getComments,
@@ -126,5 +220,21 @@ export {
   setFilter,
   clearFilters,
   setRecentComments,
-  getRecentComments
+  getRecentComments,
+  setReplyComments,
+  getReplyComments,
+  deleteReplyComment,
+  removeReplyCommentFromStore,
+  clearComment,
+  addReplyComment,
+  setSort,
+  setSortLabel,
+  setReplyFilter,
+  setReplySort,
+  setReplySortLabel,
+  clearReplyFilters,
+  updateReply,
+  getReply,
+  setReply,
+  setReplyLoading
 };

@@ -32,6 +32,7 @@ const usePatternHandlers = () => {
         value: values.enDescription
       }
     ],
+    optionType: values.optionType,
     constructorImg: values.patternConstructorImage,
     features: {
       material: values.material,

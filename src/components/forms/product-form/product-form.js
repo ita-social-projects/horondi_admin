@@ -281,7 +281,7 @@ const ProductForm = ({ isEdit }) => {
           </Button>
           {showComments ? (
             <CommentsSection
-              value={product._id}
+              id={product._id}
               commentsType={GET_PRODUCT_COMMENTS}
             />
           ) : null}

@@ -38,21 +38,21 @@ const HomePage = () => {
   const updateHomePageLooksHandler = ({ id, upload }) =>
     dispatch(updateHomePageData({ id, upload }));
 
-  const photoUpdateHandler = ({ target }, id) => {
-    if (target.files && target.files[0]) {
+  const photoUpdateHandler = (files, id) => {
+    if (files && files[0]) {
       const uploadedImage = {
         id,
-        upload: target.files[0],
-        preview: URL.createObjectURL(target.files[0])
+        upload: files[0],
+        preview: URL.createObjectURL(files[0])
       };
 
       setImageUrl((prev) => {
-        if (Object.keys(prev).find((el) => el === target.name)) {
-          return { ...prev, [target.name]: { ...uploadedImage } };
+        if (Object.keys(prev).find((el) => el === files[0].name)) {
+          return { ...prev, [files[0].name]: { ...uploadedImage } };
         }
         return {
           ...prev,
-          [target.name]: uploadedImage
+          [files[0].name]: uploadedImage
         };
       });
 

@@ -55,7 +55,6 @@ export const useStyles = makeStyles((theme) => ({
     margin: '40px 10px 20px 0'
   },
   showComments: {
-    width: '60%',
     padding: '15px',
     marginTop: '15px',
     paddingTop: '0',

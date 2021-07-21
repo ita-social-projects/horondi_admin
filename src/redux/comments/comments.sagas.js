@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { config } from '../../configs';
@@ -9,7 +9,12 @@ import {
   getCommentById,
   getCommentsByType,
   getRecentComments,
-  getAllComments
+  getAllComments,
+  getReplyComments,
+  deleteReplyComment,
+  addReplyForComment,
+  updateReplyComment,
+  getReplyComment
 } from './comments.operations';
 
 import {
@@ -18,7 +23,12 @@ import {
   setCommentError,
   removeCommentFromStore,
   setComment,
-  setRecentComments
+  setRecentComments,
+  setReplyComments,
+  removeReplyCommentFromStore,
+  getReplyComments as getReplyCommentsAction,
+  setReply,
+  setReplyLoading
 } from './comments.actions';
 
 import {
@@ -27,7 +37,12 @@ import {
   GET_COMMENT,
   UPDATE_COMMENT,
   GET_COMMENTS_BY_TYPE,
-  GET_RECENT_COMMENTS
+  GET_RECENT_COMMENTS,
+  GET_REPLY_COMMENTS,
+  DELETE_REPLY_COMMENT,
+  ADD_REPLY_COMMENT,
+  UPDATE_REPLY,
+  GET_REPLY
 } from './comments.types';
 
 import {
@@ -39,12 +54,13 @@ import { setItemsCount, updatePagination } from '../table/table.actions';
 import { AUTH_ERRORS } from '../../error-messages/auth';
 import { handleAdminLogout } from '../auth/auth.sagas';
 
-const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
+const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS, SUCCESS_ADD_STATUS } =
+  config.statuses;
 
-export function* handleCommentsLoad({ payload: { filter, pagination } }) {
+export function* handleCommentsLoad({ payload: { filter, pagination, sort } }) {
   try {
     yield put(setCommentsLoading(true));
-    const comments = yield call(getAllComments, filter, pagination);
+    const comments = yield call(getAllComments, filter, pagination, sort);
 
     if (comments) {
       yield put(setItemsCount(comments?.count));
@@ -74,10 +90,12 @@ export function* handleRecentCommentsLoad({ payload }) {
 export function* handleCommentLoad({ payload }) {
   try {
     yield put(setCommentsLoading(true));
-    const comment = yield call(getCommentById, payload);
+    const comment = yield call(getCommentById, payload.id);
 
     if (comment) {
       yield put(setComment(comment));
+      yield put(setItemsCount(comment?.replyCommentsCount));
+      yield put(getReplyCommentsAction(payload.reply));
       yield put(setCommentsLoading(false));
     }
   } catch (error) {
@@ -127,11 +145,32 @@ export function* handleCommentsByTypeLoad({ payload }) {
     );
 
     if (comments) {
-      yield put(setComments(comments));
+      yield put(setItemsCount(comments?.count));
+      yield put(setComments(comments?.items));
       yield put(setCommentsLoading(false));
     }
   } catch (error) {
     yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleGetReplyComments({
+  payload: { filter, pagination, sort }
+}) {
+  try {
+    yield put(setCommentsLoading(true));
+    const replyComments = yield call(getReplyComments, {
+      filter,
+      pagination,
+      sort
+    });
+    if (replyComments?.items[0]?.replyComments) {
+      yield put(setReplyComments(replyComments?.items[0]?.replyComments));
+      yield put(setItemsCount(replyComments?.countAll));
+      yield put(setCommentsLoading(false));
+    }
+  } catch (e) {
+    yield call(handleCommentsError, e);
   }
 }
 
@@ -148,6 +187,88 @@ export function* handleCommentsError(e) {
   }
 }
 
+export function* handleReplyCommentDelete({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+
+    const comment = yield call(deleteReplyComment, payload);
+
+    if (comment) {
+      yield put(removeReplyCommentFromStore(payload));
+      yield put(updatePagination());
+      yield put(setCommentsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleAddReplyComment({ payload }) {
+  try {
+    yield put(setCommentsLoading(true));
+    const { currentPage, rowsPerPage } = yield select(({ Table }) => ({
+      currentPage: Table.pagination.currentPage,
+      rowsPerPage: Table.pagination.rowsPerPage
+    }));
+    const reply = yield call(addReplyForComment, payload);
+    if (reply) {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(
+        getReplyCommentsAction({
+          filter: {
+            filters: true,
+            commentId: payload.commentId
+          },
+          pagination: {
+            limit: rowsPerPage,
+            skip: currentPage * rowsPerPage
+          }
+        })
+      );
+    }
+    yield put(setCommentsLoading(false));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleReplyCommentUpdate({ payload }) {
+  const { replyCommentId, replyCommentData, commentId } = payload;
+  try {
+    yield put(setCommentsLoading(true));
+    const replyComment = yield call(
+      updateReplyComment,
+      replyCommentId,
+      replyCommentData
+    );
+
+    if (replyComment) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(
+        push(config.routes.pathToCommentsEdit.replace(':id', commentId))
+      );
+    }
+    yield put(setCommentsLoading(false));
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleReplyCommentLoad({ payload }) {
+  try {
+    yield put(setReplyLoading(true));
+    const reply = yield call(getReplyComment, payload.id);
+
+    if (reply) {
+      yield put(setReply(reply?.replyComments[0]));
+      yield put(setReplyLoading(false));
+    }
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
 export default function* commentsSaga() {
   yield takeEvery(GET_COMMENTS, handleCommentsLoad);
   yield takeEvery(GET_RECENT_COMMENTS, handleRecentCommentsLoad);
@@ -155,4 +276,9 @@ export default function* commentsSaga() {
   yield takeEvery(UPDATE_COMMENT, handleCommentUpdate);
   yield takeEvery(GET_COMMENT, handleCommentLoad);
   yield takeEvery(GET_COMMENTS_BY_TYPE, handleCommentsByTypeLoad);
+  yield takeEvery(GET_REPLY_COMMENTS, handleGetReplyComments);
+  yield takeEvery(DELETE_REPLY_COMMENT, handleReplyCommentDelete);
+  yield takeEvery(ADD_REPLY_COMMENT, handleAddReplyComment);
+  yield takeEvery(UPDATE_REPLY, handleReplyCommentUpdate);
+  yield takeEvery(GET_REPLY, handleReplyCommentLoad);
 }

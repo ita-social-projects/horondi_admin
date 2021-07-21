@@ -27,6 +27,7 @@ const routes = {
   pathToAddContact: '/contacts/add',
   pathToComments: '/comments',
   pathToCommentsEdit: '/comments/:id',
+  pathToReplyCommentsEdit: '/reply-comments/:id',
   pathToSizes: '/sizes',
   pathToAddSize: '/sizes/add',
   pathToEditSize: '/sizes/:id',
@@ -60,6 +61,8 @@ const routes = {
   pathToAddBacks: '/backs/add',
   pathToBackDetails: '/backs/:id',
   pathToPosition: '/position',
-  pathToPositionAdd: '/position/add'
+  pathToPositionAdd: '/position/add',
+  pathToConstructorList: '/constructor-list',
+  pathToConstructorModelDetails: '/constructor-model/:id'
 };
 export default routes;

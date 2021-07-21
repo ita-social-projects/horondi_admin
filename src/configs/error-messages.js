@@ -49,7 +49,8 @@ export const backErrorMessages = {
   BACK_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
   BACK_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
-  BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
+  BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
@@ -161,6 +162,12 @@ export const commentErrorMessages = {
   MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
 };
 
+export const replyCommentErrorMessages = {
+  REPLY_COMMENT_VALIDATION_ERROR: 'Мінімум 2 символи',
+  REPLY_COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
+};
+
 export const businessPageErrorMessages = {
   ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
@@ -172,7 +179,8 @@ export const pocketsErrorMessages = {
   POCKETS_ERROR_MESSAGE: 'Поле не може бути порожнім',
   POCKETS_UA_NAME_MESSAGE:
     'Поле може містити тільки українські літери та цифри',
-  POCKETS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  POCKETS_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
   POCKETS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
@@ -181,7 +189,8 @@ export const positionErrorMessages = {
   POSITION_ERROR_MESSAGE: 'Поле не може бути порожнім',
   POSITION_UA_NAME_MESSAGE:
     'Поле може містити тільки українські літери та цифри',
-  POSITION_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  POSITION_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
   POSITION_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POSITION_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
