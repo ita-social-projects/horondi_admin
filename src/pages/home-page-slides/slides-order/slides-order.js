@@ -120,7 +120,11 @@ const SlidesOrder = (props) => {
       dispatch(
         updateSlidesOrder({
           id: item.id,
-          slide: { order: item.slide.order, show: item.slide.show }
+          slide: {
+            order: item.slide.order,
+            show: item.slide.show,
+            link: item.slide.link
+          }
         })
       )
     );
