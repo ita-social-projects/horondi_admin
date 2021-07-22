@@ -7,14 +7,14 @@ const mockBacks = {
       name: [
         {
           lang: 'ua',
-          value: 'Бонд '
+          value: 'сіра'
         },
         {
           lang: 'en',
-          Value: 'Bond'
+          value: 'grey'
         }
       ],
-      available: false,
+      optionType: 'BACK',
       features: {
         material: {
           name: [
@@ -42,7 +42,10 @@ const mockBacks = {
         }
       },
       images: {
-        thumbnail: 'thumbnail_xds8am0kr0e5x4r_47.png'
+        thumbnail: 'thumbnail_xds8878kr3mbmnu_138.png',
+        medium: 'medium_xds8878kr3mbmnu_138.png',
+        small: 'small_xds8878kr3mbmnu_138.png',
+        large: 'large_xds8878kr3mbmnu_138.png'
       },
       additionalPrice: [
         {
@@ -53,10 +56,12 @@ const mockBacks = {
           currency: 'USD',
           value: 8800
         }
-      ]
+      ],
+      available: false,
+      customizable: null
     }
   ],
-  count: 1
+  count: 6
 };
 
 export const mockBack = {
@@ -67,8 +72,20 @@ export const mockBack = {
 const filter = {
   name: 'Бонд'
 };
+
+const initialFilters = {
+  name: '',
+  model: [],
+  available: [],
+  material: [],
+  color: []
+};
 const mockBacksState = {
   list: [],
+  sort: {
+    name: 1
+  },
+  filters: initialFilters,
   back: null,
   backLoading: false,
   backError: null
@@ -93,7 +110,7 @@ const mockInputBack = {
 };
 
 const mockBacksLoadPayload = {
-  limit: 10,
+  limit: 1,
   skip: 0,
   filters: {
     name: '',
@@ -128,6 +145,11 @@ const mockInitialFilters = {
   color: []
 };
 
+const payload = {
+  limit: 10,
+  skip: 0
+};
+
 export {
   mockBacksState,
   mockBacksLoadPayload,
@@ -139,5 +161,6 @@ export {
   mockError,
   mockTableState,
   filter,
-  mockInitialFilters
+  mockInitialFilters,
+  payload
 };

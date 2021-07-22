@@ -1,8 +1,8 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-
 import { combineReducers } from 'redux';
+import Back, { initialState } from '../back.reducer';
 import {
   handleBackLoad,
   handleBacksLoad,
@@ -22,14 +22,14 @@ import {
 
 import {
   mockBacksState,
-  mockBacksLoadPayload,
   mockBacks,
   mockId,
   mockBack,
   statuses,
   mockInputBack,
   mockError,
-  mockTableState
+  mockTableState,
+  payload
 } from './back.variables';
 
 import {
@@ -42,30 +42,16 @@ import {
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
 
-import Back from '../back.reducer';
 import Table from '../../table/table.reducer';
 
 import {
   handleSuccessSnackbar,
   handleErrorSnackbar
 } from '../../snackbar/snackbar.sagas';
-import { handleCommentsLoad } from '../../comments/comments.sagas';
-import {
-  commentRes,
-  filter,
-  pagination,
-  sortData
-} from '../../comments/tests/comments.variables';
-import commentsReducer, { initialState } from '../../comments/comments.reducer';
-import {
-  setComments,
-  setCommentsLoading
-} from '../../comments/comments.actions';
-import { getAllComments } from '../../comments/comments.operations';
 
 describe('Test Back sagas', () => {
-  it.skip('should load all Backs', () =>
-    expectSaga(handleBacksLoad, { payload: mockBacksLoadPayload })
+  it.skip('should load all Backs', async (done) => {
+    expectSaga(handleBacksLoad, { payload })
       .withReducer(combineReducers({ Back, Table }), {
         Back: mockBacksState,
         Table: mockTableState
@@ -75,8 +61,9 @@ describe('Test Back sagas', () => {
         [
           call(
             getAllBacks,
-            mockBacksLoadPayload.skip,
-            mockBacksLoadPayload.limit
+            payload.skip,
+            payload.limit
+            // payload.filters
           ),
           mockBacks
         ]
@@ -99,9 +86,11 @@ describe('Test Back sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(4);
-      }));
+      });
+    done();
+  });
 
-  it('should get Back by id', () =>
+  it('should get Back by id', async (done) => {
     expectSaga(handleBackLoad, { payload: mockId })
       .withReducer(combineReducers({ Back }), { Back: mockBacksState })
       .put(setBackLoading(true))
@@ -119,9 +108,11 @@ describe('Test Back sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(3);
-      }));
+      });
+    done();
+  });
 
-  it('should add Back by input data', () =>
+  it('should add Back by input data', async (done) => {
     expectSaga(handleAddBack, { payload: mockInputBack })
       .withReducer(combineReducers({ Back }), {
         Back: mockBacksState
@@ -143,9 +134,11 @@ describe('Test Back sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(3);
-      }));
+      });
+    done();
+  });
 
-  it('should delete Back by id', () =>
+  it('should delete Back by id', async (done) => {
     expectSaga(handleBackDelete, { payload: mockId })
       .withReducer(combineReducers({ Back }), {
         Back: {
@@ -172,9 +165,11 @@ describe('Test Back sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(4);
-      }));
+      });
+    done();
+  });
 
-  it('should update Back by input data', () =>
+  it('should update Back by input data', async (done) => {
     expectSaga(handleBackUpdate, { payload: mockInputBack })
       .withReducer(combineReducers({ Back }), {
         Back: mockBacksState
@@ -196,9 +191,11 @@ describe('Test Back sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(3);
-      }));
+      });
+    done();
+  });
 
-  it('should handle Back errors', () =>
+  it('should handle Back errors', async (done) => {
     expectSaga(handleBackError, mockError)
       .withReducer(combineReducers({ Back }), {
         Back: {
@@ -221,5 +218,7 @@ describe('Test Back sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 });
