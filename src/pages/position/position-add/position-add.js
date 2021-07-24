@@ -1,20 +1,18 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import PositionForm from '../../../components/forms/position-form/position-form';
-// import { useStyles } from './position-add.styles';
 import { useCommonStyles } from '../../common.styles';
-// import { pocketsSelector } from '../../../redux/selectors/pockets.selectors';
-// import LoadingBar from '../../../components/loading-bar';
+import { positionsSelector } from '../../../redux/selectors/position.selectors';
+import LoadingBar from '../../../components/loading-bar';
 
 const PositionAdd = () => {
-  //   const styles = useStyles();
   const commonStyles = useCommonStyles();
-  //   const { loading } = useSelector(pocketsSelector);
+  const { loading } = useSelector(positionsSelector);
 
-  //   if (loading) {
-  //     return <LoadingBar />;
-  //   }
+  if (loading) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className={commonStyles.container}>

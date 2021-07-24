@@ -2,38 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
-  const {
-    saveButton,
-    textField,
-    imageUpload,
-    imageUploadAvatar,
-    returnButton
-  } = formStyles(theme);
+  const { saveButton, textField, returnButton } = formStyles(theme);
   return {
     error: {
       color: '#e60000',
       marginLeft: '5px'
-    },
-    imageUploadContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      margin: '10px'
-    },
-    large: {
-      marginLeft: '10px',
-      width: theme.spacing(6),
-      height: theme.spacing(6)
-    },
-    imageName: {
-      fontSize: '.9rem',
-      marginLeft: '10px',
-      color: 'rgba(0, 0, 0, 0.54)',
-      '@media (max-width: 768px)': {
-        display: 'none'
-      }
-    },
-    attachFile: {
-      marginRight: '5px'
     },
     buttonContainer: {
       position: 'relative',
@@ -53,16 +26,8 @@ export const useStyles = makeStyles((theme) => {
       zIndex: 1001,
       backgroundColor: theme.palette.bodyColor
     },
-    additionalPrice: {
-      display: 'flex',
-      flexDirection: 'column',
-      margin: '10px 0',
-      padding: '10px'
-    },
     textField,
     saveButton,
-    imageUpload,
-    imageUploadAvatar,
     returnButton
   };
 });

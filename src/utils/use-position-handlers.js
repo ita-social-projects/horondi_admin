@@ -1,13 +1,8 @@
-import { useState } from 'react';
 import { config } from '../configs';
 
 const { languages } = config;
 
 const usePositionHandlers = () => {
-  // const [pocketsImage, setPocketsImage] = useState('');
-  // const [upload, setUpload] = useState(null);
-  // const [imageName, setImageName] = useState('');
-
   const createPosition = (values) => ({
     name: [
       {
@@ -20,14 +15,14 @@ const usePositionHandlers = () => {
       }
     ],
     // additionalPrice: values.additionalPrice,
-    avaliable: values.avaliable
+    available: values.available
     // optionType: 'SIDE'
   });
 
   return {
     // pocketsImage,
     // setPocketsImage,
-    createPosition,
+    createPosition
     // upload,
     // setUpload,
     // imageName,

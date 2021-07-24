@@ -542,7 +542,7 @@ const labels = {
   positionPageLabel: {
     positionHeader: 'position-header',
     positionTable: 'positionTable',
-    avaliable: 'Доступно',
+    available: 'Доступно',
     positionName: {
       ua: 'Позиція',
       en: 'Position'

@@ -60,8 +60,9 @@ const routes = {
   pathToBacks: '/backs',
   pathToAddBacks: '/backs/add',
   pathToBackDetails: '/backs/:id',
-  pathToPosition: '/position',
-  pathToPositionAdd: '/position/add',
+  pathToPosition: '/positions',
+  pathToPositionAdd: '/positions/add',
+  pathToPositionEdit: '/positions/:id',
   pathToConstructorList: '/constructor-list',
   pathToConstructorModelDetails: '/constructor-model/:id'
 };

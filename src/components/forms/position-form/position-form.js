@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 
 import usePositionHandlers from '../../../utils/use-position-handlers';
@@ -10,20 +10,13 @@ import { useStyles } from './position-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import {
-  addPosition
-  //   updatePosition
+  addPosition,
+  updatePosition
 } from '../../../redux/position/position.actions';
-// import ImageUploadContainer from '../../../containers/image-upload-container';
-// import { pocketsTranslations } from '../../../translations/pockets.translations';
-// import {
-//   setSnackBarSeverity,
-//   setSnackBarStatus,
-//   setSnackBarMessage
-// } from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
 import { getPositionInitialValues } from '../../../utils/position-form';
 import CheckboxOptions from '../../checkbox-options';
-// import { checkInitialValue } from '../../../utils/check-initial-values';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 
 const labels = config.labels.positionPageLabel;
 
@@ -37,10 +30,7 @@ const {
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
-// const { POCKETS_ERROR } = pocketsTranslations;
-// const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation } = config.formRegExp;
-// const { materialUiConstants } = config;
 
 const PositionForm = ({ position, id, edit }) => {
   const styles = useStyles();
@@ -76,55 +66,32 @@ const PositionForm = ({ position, id, edit }) => {
     onSubmit: (data) => {
       const newPosition = createPosition(data);
 
-      
-      //     const uploadCondition = upload instanceof File;
-
-      // if (id) {
-      //   dispatch(
-      //     updatePosition({
-      //       id,
-      //       position: newPosition
-      //     })
-      //   );
-      //   return;
-      // }
+      if (id) {
+        dispatch(
+          updatePosition({
+            id,
+            position: newPosition
+          })
+        );
+        return;
+      }
       dispatch(addPosition({ position: newPosition }));
-
-      //     if (!uploadCondition && !pocket.images.thumbnail) {
-      //       dispatch(setSnackBarSeverity('error'));
-      //       dispatch(setSnackBarMessage(POCKETS_ERROR));
-      //       dispatch(setSnackBarStatus(true));
-      //     }
     }
   });
-
-  //   const handleImageLoad = (e) => {
-  //     if (e.target.files && e.target.files[0]) {
-  //       const reader = new FileReader();
-  //       reader.onload = (data) => {
-  //         setFieldValue('pocketImage', data.target.result);
-  //         setPocketsImage(data.target.result);
-  //       };
-  //       reader.readAsDataURL(e.target.files[0]);
-  //       setUpload(e.target.files[0]);
-  //     }
-  //   };
 
   const checkboxes = [
     {
       id: 'position',
       dataCy: 'position',
-      value: values.avaliable,
-      checked: values.avaliable,
+      value: values.available,
+      checked: values.available,
       color: 'primary',
-      label: labels.avaliable,
-      handler: () => setFieldValue('avaliable', !values.avaliable)
+      label: labels.available,
+      handler: () => setFieldValue('available', !values.available)
     }
   ];
 
   const inputs = [{ label: labels.positionName, name: 'name' }];
-
-  // console.log(values)
 
   const inputOptions = {
     errors,
@@ -135,10 +102,10 @@ const PositionForm = ({ position, id, edit }) => {
     inputs
   };
 
-  //   const valueEquality = checkInitialValue(
-  //     getPocketsInitialValues(edit, IMG_URL, pocket),
-  //     values
-  //   );
+  const valueEquality = checkInitialValue(
+    getPositionInitialValues(edit, position),
+    values
+  );
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
@@ -152,7 +119,7 @@ const PositionForm = ({ position, id, edit }) => {
             <Grid item className={styles.button}>
               <BackButton
                 className={styles.returnButton}
-                //   initial={!valueEquality}
+                initial={!valueEquality}
                 pathBack={pathToPosition}
               />
             </Grid>
@@ -172,85 +139,33 @@ const PositionForm = ({ position, id, edit }) => {
         <div>
           <CheckboxOptions options={checkboxes} />
         </div>
-        {/* <Grid item xs={12}>
-          <Paper>
-            <span className={styles.imageUpload}>{labels.avatarText}</span>
-            <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer
-                handler={handleImageLoad}
-                src={edit ? values.pocketImage : pocketsImage}
-              />
-            </div>
-            {touched.code && errors.code && (
-              <div data-cy='code-error' className={styles.error}>
-                {errors.code}
-              </div>
-            )}
-          </Paper>
-        </Grid> */}
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        {/* <Paper className={styles.additionalPrice}>
-          <Box>
-            <Typography>{labels.enterPrice}</Typography>
-          </Box>
-          <TextField
-            data-cy='additionalPrice'
-            id='additionalPrice'
-            className={styles.textField}
-            variant={materialUiConstants.outlined}
-            type={materialUiConstants.types.number}
-            label={labels.additionalPrice}
-            value={values.additionalPrice}
-            inputProps={{ min: 0 }}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.additionalPrice && !!errors.additionalPrice}
-          />
-          {touched.additionalPrice && errors.additionalPrice && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
-            >
-              {errors.additionalPrice}
-            </div>
-          )}
-        </Paper> */}
       </form>
     </div>
   );
 };
 
 PositionForm.propTypes = {
-  //   id: PropTypes.string,
-  //   pocket: PropTypes.shape({
-  //     images: PropTypes.shape({
-  //       thumbnail: PropTypes.string
-  //     })
-  //   }),
+  id: PropTypes.string,
+  position: PropTypes.objectOf(PropTypes.object),
   values: PropTypes.shape({
-    // pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    avaliable: PropTypes.bool
-    // optionType: PropTypes.string
+    available: PropTypes.bool
   }),
   errors: PropTypes.shape({
-    // pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    avaliable: PropTypes.bool
-    // optionType: PropTypes.string
+    available: PropTypes.bool
   }),
   touched: PropTypes.shape({
-    // pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    avaliable: PropTypes.bool
-    // optionType: PropTypes.string
-  })
-  //   edit: PropTypes.bool
+    available: PropTypes.bool
+  }),
+  edit: PropTypes.bool
 };
 
 PositionForm.defaultProps = {
@@ -270,12 +185,7 @@ PositionForm.defaultProps = {
         value: ''
       }
     ],
-    avaliable: false,
-    optionType: null,
-    additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
-    ]
+    available: false
   },
   edit: false
 };

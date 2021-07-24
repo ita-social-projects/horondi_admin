@@ -66,7 +66,8 @@ import BackPage from '../pages/back';
 import BackAdd from '../pages/back/back-add';
 import BackDetails from '../pages/back/back-details';
 import PositionPage from '../pages/position/position-page';
-import PositionAdd from '../pages/position/position-add/position-add';
+import PositionAdd from '../pages/position/position-add';
+import PositionEdit from '../pages/position/position-edit';
 import ConstructorListPage from '../pages/constructor-list';
 import ConstructorModelDetails from '../pages/constructor-list/constructor-details';
 
@@ -296,6 +297,11 @@ const Routes = () => {
             path={routes.pathToPositionAdd}
             exact
             component={PositionAdd}
+          />
+          <Route
+            path={routes.pathToPositionEdit}
+            exact
+            component={PositionEdit}
           />
           <Route
             path={routes.pathToConstructorList}

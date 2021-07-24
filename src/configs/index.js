@@ -119,6 +119,10 @@ export const config = {
     AVAILABLE_TEXT: 'Доступний',
     UNAVAILABLE_TEXT: 'Недоступний'
   },
+  positionAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступна',
+    UNAVAILABLE_TEXT: 'Недоступна'
+  },
 
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
   newsPerPage: 6,
