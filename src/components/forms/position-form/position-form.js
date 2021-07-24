@@ -35,7 +35,6 @@ const { enNameCreation, uaNameCreation } = config.formRegExp;
 const PositionForm = ({ position, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-
   const { createPosition } = usePositionHandlers();
   const { pathToPosition } = config.routes;
 
