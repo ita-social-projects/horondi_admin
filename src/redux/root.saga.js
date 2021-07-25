@@ -24,6 +24,7 @@ import snackbarSaga from './snackbar/snackbar.sagas';
 import historySaga from './history/history.sagas';
 import pocketsSaga from './pockets/pockets.sagas';
 import backSaga from './back/back.sagas';
+import closuresSaga from './closures/closures.sagas';
 
 export function* rootSaga() {
   yield all([
@@ -52,6 +53,7 @@ export function* rootSaga() {
     snackbarSaga(),
     backSaga(),
     snackbarSaga(),
-    pocketsSaga()
+    pocketsSaga(),
+    closuresSaga()
   ]);
 }

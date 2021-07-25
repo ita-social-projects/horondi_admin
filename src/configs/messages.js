@@ -45,6 +45,8 @@ const messages = {
   DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
   NO_POCKET_MESSAGE: 'Кишені відсутні',
   NO_BACKS_MESSAGE: 'Cпинки відсутні',
-  NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення'
+  NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',
+  DELETE_CLOSURE_MESSAGE: 'Ви впевнені, що хочете видалити цей замочок?',
+  NO_CLOSURE_MESSAGE: 'Замочки відсутні'
 };
 export default messages;

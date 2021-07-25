@@ -61,6 +61,9 @@ const routes = {
   pathToAddBacks: '/backs/add',
   pathToBackDetails: '/backs/:id',
   pathToConstructorList: '/constructor-list',
-  pathToConstructorModelDetails: '/constructor-model/:id'
+  pathToConstructorModelDetails: '/constructor-model/:id',
+  pathToClosures: '/closures',
+  pathToClosuresAdd: '/closures/add',
+  pathToClosuresEdit: '/closures/:id'
 };
 export default routes;

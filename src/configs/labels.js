@@ -538,6 +538,18 @@ const labels = {
     additionalPrice: 'Введіть додаткову ціну',
     avaliable: 'Додати до обмежень',
     avatarText: 'Фото'
+  },
+  closuresPageLabel: {
+    closuresHeader: 'closures-header',
+    closuresTable: 'sideClosuresTable',
+    closuresName: {
+      ua: 'Назва замочка',
+      en: 'Сlosures name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    avaliable: 'Додати до обмежень',
+    avatarText: 'Фото'
   }
 };
 export default labels;
