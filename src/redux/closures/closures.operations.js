@@ -2,7 +2,7 @@ import { setItems, getItems } from '../../utils/client';
 
 export const getAllClosures = async (limit, skip) => {
   const query = `
-      query($limit: Int!, $skip: Int!) {
+    query($limit: Int!, $skip: Int!) {
   getAllClosure(limit: $limit, skip: $skip) {
     items {
       _id
@@ -39,8 +39,7 @@ export const getAllClosures = async (limit, skip) => {
       `;
 
   const result = await getItems(query, { limit, skip });
-
-  return result?.data?.getAllClosures;
+  return result?.data?.getAllClosure;
 };
 
 export const createClosures = async (payload) => {

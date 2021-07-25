@@ -6,7 +6,7 @@ import {
 } from './closures.types';
 
 export const selectClosures = ({ Closures }) => ({
-  // closuresList: Closures.list?.items,
+  closuresList: Closures.list?.items,
   loading: Closures.closuresLoading,
   closure: Closures.closure,
   filter: Closures.filter
