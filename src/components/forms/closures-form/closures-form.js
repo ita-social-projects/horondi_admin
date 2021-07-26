@@ -35,12 +35,11 @@ const {
 } = config.closuresErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
-const { languages } = config;
+const { languages, IMG_URL, materialUiConstants } = config;
 const { CLOSURES_ERROR } = closuresTranslations;
-const { IMG_URL } = config;
+
 const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
   config.formRegExp;
-const { materialUiConstants } = config;
 
 const ClosuresForm = ({ closure, id, edit }) => {
   const styles = useStyles();
@@ -122,11 +121,11 @@ const ClosuresForm = ({ closure, id, edit }) => {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.back.available,
+      label: config.labels.closuresPageLabel.available,
       handler: () => setFieldValue('available', !values.available)
     }
   ];
-
+  console.log(values.available);
   const inputs = [{ label: labels.closuresName, name: 'name' }];
 
   const inputOptions = {

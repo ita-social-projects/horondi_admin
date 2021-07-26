@@ -32,7 +32,6 @@ const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
 export function* handleClosuresLoad({ payload: { pagination } }) {
-  console.log(pagination);
   try {
     yield put(setClosuresLoading(true));
     const closures = yield call(

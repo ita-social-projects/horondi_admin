@@ -548,7 +548,7 @@ const labels = {
     },
     enterPrice: 'Додаткова ціна (USD):',
     additionalPrice: 'Введіть додаткову ціну',
-    available: 'Додати до обмежень',
+    available: 'Доступний',
     avatarText: 'Фото'
   }
 };
