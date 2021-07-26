@@ -14,19 +14,11 @@ const usePositionHandlers = () => {
         value: values.enName
       }
     ],
-    // additionalPrice: values.additionalPrice,
     available: values.available
-    // optionType: 'SIDE'
   });
 
   return {
-    // pocketsImage,
-    // setPocketsImage,
     createPosition
-    // upload,
-    // setUpload,
-    // imageName,
-    // setImageName
   };
 };
 export default usePositionHandlers;

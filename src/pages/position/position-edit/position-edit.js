@@ -12,7 +12,6 @@ const PositionEdit = ({ match }) => {
   const dispatch = useDispatch();
   const commonStyles = useCommonStyles();
   const { loading, position } = useSelector(positionsSelector);
-
   const { id } = match.params;
 
   useEffect(() => {
