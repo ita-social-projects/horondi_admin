@@ -46,13 +46,8 @@ const ClosuresForm = ({ closure, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const {
-    createClosures,
-    setUpload,
-    upload
-    // closuresImage,
-    // setClosuresImage
-  } = useClosuresHandlers();
+  const { createClosures, setUpload, upload, closuresImage, setClosuresImage } =
+    useClosuresHandlers();
 
   const { pathToClosures } = config.routes;
 
@@ -108,29 +103,29 @@ const ClosuresForm = ({ closure, id, edit }) => {
     }
   });
 
-  // const handleImageLoad = (files) => {
-  //     if (files && files[0]) {
-  //         const reader = new FileReader();
-  //         reader.onload = (data) => {
-  //             setFieldValue('closureImage', data.target.result);
-  //             setClosuresImage(data.target.result);
-  //         };
-  //         reader.readAsDataURL(files[0]);
-  //         setUpload(files[0]);
-  //     }
-  // };
+  const handleImageLoad = (files) => {
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = (data) => {
+        setFieldValue('closureImage', data.target.result);
+        setClosuresImage(data.target.result);
+      };
+      reader.readAsDataURL(files[0]);
+      setUpload(files[0]);
+    }
+  };
 
-  // const checkboxes = [
-  //     {
-  //         id: 'restriction',
-  //         dataCy: 'restriction',
-  //         value: values.restriction,
-  //         checked: values.restriction,
-  //         color: 'primary',
-  //         label: labels.avaliable,
-  //         handler: () => setFieldValue('restriction', !values.restriction)
-  //     }
-  // ];
+  const checkboxes = [
+    {
+      id: 'available',
+      dataCy: 'available',
+      value: values.available,
+      checked: values.available,
+      color: 'primary',
+      label: config.labels.back.available,
+      handler: () => setFieldValue('available', !values.available)
+    }
+  ];
 
   const inputs = [{ label: labels.closuresName, name: 'name' }];
 
@@ -177,22 +172,24 @@ const ClosuresForm = ({ closure, id, edit }) => {
             </Grid>
           </Grid>
         </div>
-        <div>{/* <CheckboxOptions options={checkboxes} /> */}</div>
+        <div>
+          <CheckboxOptions options={checkboxes} />
+        </div>
         <Grid item xs={12}>
-          {/* <Paper> */}
-          {/*    <span className={styles.imageUpload}>{labels.avatarText}</span> */}
-          {/*    <div className={styles.imageUploadAvatar}> */}
-          {/*        <ImageUploadContainer */}
-          {/*            handler={handleImageLoad} */}
-          {/*            src={edit ? values.closureImage : closuresImage} */}
-          {/*        /> */}
-          {/*    </div> */}
-          {/*    {touched.code && errors.code && ( */}
-          {/*        <div data-cy='code-error' className={styles.error}> */}
-          {/*            {errors.code} */}
-          {/*        </div> */}
-          {/*    )} */}
-          {/* </Paper> */}
+          <Paper>
+            <span className={styles.imageUpload}>{labels.avatarText}</span>
+            <div className={styles.imageUploadAvatar}>
+              <ImageUploadContainer
+                handler={handleImageLoad}
+                src={edit ? values.closureImage : closuresImage}
+              />
+            </div>
+            {touched.code && errors.code && (
+              <div data-cy='code-error' className={styles.error}>
+                {errors.code}
+              </div>
+            )}
+          </Paper>
         </Grid>
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
@@ -242,6 +239,10 @@ ClosuresForm.propTypes = {
     // restrictions: PropTypes.bool,
     optionType: PropTypes.string
   }),
+  features: PropTypes.shape({
+    material: PropTypes.string,
+    color: PropTypes.string
+  }),
   errors: PropTypes.shape({
     closuresImage: PropTypes.string,
     uaName: PropTypes.string,
@@ -256,6 +257,7 @@ ClosuresForm.propTypes = {
     // restrictions: PropTypes.bool,
     optionType: PropTypes.string
   }),
+  // available:PropTypes.bool,
   edit: PropTypes.bool
 };
 
@@ -286,6 +288,29 @@ ClosuresForm.defaultProps = {
       { value: null, currency: '' }
     ]
   },
+  features: {
+    material: {
+      name: [
+        {
+          value: ''
+        },
+        {
+          value: ''
+        }
+      ]
+    },
+    color: {
+      name: [
+        {
+          value: ''
+        },
+        {
+          value: ''
+        }
+      ]
+    }
+  },
+  // available:true,
   edit: false
 };
 

@@ -21,7 +21,11 @@ const useClosuresHandlers = () => {
     ],
     additionalPrice: values.additionalPrice,
     // restriction: values.restriction,
-    optionType: 'CLOSURE'
+    optionType: 'CLOSURE',
+    features: {
+      material: values.material,
+      color: values.color
+    }
   });
 
   return {
