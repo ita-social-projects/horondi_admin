@@ -10,7 +10,12 @@ export const getAllClosures = async (limit, skip) => {
         lang
         value
       }
-      image
+    images {
+           large
+           medium
+           small
+           thumbnail
+         }
       optionType
       features {
         material {
@@ -99,8 +104,7 @@ export const getClosureById = async (id) => {
                 small
                 thumbnail
               }
-              restriction
-              additionalPrice {
+                additionalPrice {
                 currency
                 value
               }

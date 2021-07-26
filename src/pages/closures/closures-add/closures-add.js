@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-// import ClosuresForm from '../../../components/forms/closures-form/closures-form';
+import ClosuresForm from '../../../components/forms/closures-form';
 import { useStyles } from './closures-add.styles';
 import { closuresSelector } from '../../../redux/selectors/closures.selectors';
 import LoadingBar from '../../../components/loading-bar';
@@ -14,7 +14,11 @@ const ClosuresAdd = () => {
     return <LoadingBar />;
   }
 
-  return <div className={styles.container}>{/* <ClosuresForm /> */}</div>;
+  return (
+    <div className={styles.container}>
+      <ClosuresForm />
+    </div>
+  );
 };
 
 export default ClosuresAdd;

@@ -33,7 +33,8 @@ import {
   replyCommentErrorMessages,
   sizeErrorMessages,
   businessPageErrorMessages,
-  pocketsErrorMessages
+  pocketsErrorMessages,
+  closuresErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -241,7 +242,8 @@ export const config = {
   imageUploadNewsInputsId,
   valueKeys,
   inputNames,
-  pocketsErrorMessages
+  pocketsErrorMessages,
+  closuresErrorMessages
 };
 export const inputTypes = {
   button: 'button',

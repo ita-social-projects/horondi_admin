@@ -181,3 +181,11 @@ export const pocketsErrorMessages = {
     'Поле може містити тільки українські літери та цифри',
   POCKETS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
+export const closuresErrorMessages = {
+  CLOSURES_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  CLOSURES_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CLOSURES_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  CLOSURES_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри'
+};

@@ -544,11 +544,11 @@ const labels = {
     closuresTable: 'sideClosuresTable',
     closuresName: {
       ua: 'Назва замочка',
-      en: 'Сlosures name'
+      en: 'Closure name'
     },
     enterPrice: 'Додаткова ціна (USD):',
     additionalPrice: 'Введіть додаткову ціну',
-    avaliable: 'Додати до обмежень',
+    available: 'Додати до обмежень',
     avatarText: 'Фото'
   }
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useStyles } from './closures-edit.styles';
 import LoadingBar from '../../../components/loading-bar';
-// import ClosuresForm from '../../../components/forms/closures-form/closures-form';
+import ClosuresForm from '../../../components/forms/closures-form/closures-form';
 import { getClosure } from '../../../redux/closures/closures.actions';
 import { closuresSelector } from '../../../redux/selectors/closures.selectors';
 
@@ -25,7 +25,9 @@ const ClosuresEdit = ({ match }) => {
 
   return (
     <div className={styles.container}>
-      {/* {closure !== null ? <ClosuresForm id={id} edit closure={closure} /> : null} */}
+      {closure !== null ? (
+        <ClosuresForm id={id} edit closure={closure} />
+      ) : null}
     </div>
   );
 };
