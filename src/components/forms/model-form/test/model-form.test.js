@@ -1,10 +1,11 @@
 import React from 'react';
 import 'mutationobserver-shim';
 import * as redux from 'react-redux';
-import { configure, shallow, mount } from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Paper, TextField, Select, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { useFormik } from 'formik';
 import LanguagePanel from '../../language-panel';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 
@@ -70,11 +71,16 @@ jest.mock('../../../../utils/model-form', () => ({
   loadHelper: () => mockLoadHelper()
 }));
 
-const mockHandleImageLoad = jest.fn();
-
-jest.spyOn(global, 'FileReader').mockImplementation(() => {
-  this.readAsDataURL = jest.fn();
-  this.onload = jest.fn();
+// jest.spyOn(global, 'FileReader').mockImplementation(() => {
+//   this.onload = jest.fn();
+//   this.readAsDataURL = jest.fn();
+// });
+Object.defineProperty(global, 'FileReader', {
+  writable: true,
+  value: jest.fn().mockImplementation(() => ({
+    readAsDataURL: jest.fn(),
+    onload: jest.fn()
+  }))
 });
 
 describe('Model-form tests', () => {
@@ -192,31 +198,23 @@ describe('Model-form tests', () => {
   //   expect(mockSetFieldValue).toHaveBeenCalledWith('sizes', [Sizes.list[0]._id]);
   // })
 
-  it('should simulate upload the image', () => {
-    wrapper
-      .find(ImageUploadContainer)
-      .at(0)
-      .prop('handler', {
-        target: {
-          files: [new File([], 'foo,png', { type: 'image' })]
-        }
-      });
-
-    expect(mockHandleImageLoad).toHaveBeenCalledTimes(1);
-    // expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
-  });
-
   // it('Should test FileReader ', () => {
   //   const reader = FileReader.mock.instances[0];
   //   reader.onload({ target: { result: 'foo' } });
-  //   expect(reader.readAsDataURL).toHaveBeenCalled();
-  //   expect(reader.readAsDataURL).toHaveBeenCalledWith(new File([], 'foo,png', { type: 'image' }));
+  //   expect(mockSetFieldValue).toHaveBeenCalledWith('', 'foo')
   // });
 
-  // it('Should upload image', () => {
-  //   const imageContainer = wrapper.find(ImageUploadContainer);
-  //   imageContainer.props('handler').handler(event);
-  //   expect(mockSetUpload).toHaveBeenCalledTimes(1);
-  //   expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
-  // });
+  it('should call 3 dispatch in use Formik', () => {});
+  it('Should upload image', () => {
+    const event = {
+      target: {
+        files: [new File([], 'foo.png', { type: 'image' })]
+      }
+    };
+    mockLoadHelper.mockReturnValue(true);
+    const imageContainer = wrapper.find(ImageUploadContainer);
+    imageContainer.props('handler').handler(event);
+    expect(mockSetUpload).toHaveBeenCalledTimes(1);
+    expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
+  });
 });
