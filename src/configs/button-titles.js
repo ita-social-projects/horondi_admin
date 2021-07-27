@@ -79,7 +79,8 @@ const buttonTitles = {
   PATTERN_AVAILABLE: 'Доступний',
   PATTERN_MATERIAL: 'Матеріал',
   CREATE_CONSTRUCTOR: 'Створити новий ',
-  CREATE_CLOSURES_TITLE: 'Додати защіпку'
+  CREATE_CLOSURES_TITLE: 'Додати защіпку',
+  CREATE_POSITION_TITLE: 'Додати розміщення'
 };
 
 export default buttonTitles;

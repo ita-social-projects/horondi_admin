@@ -179,7 +179,20 @@ export const pocketsErrorMessages = {
   POCKETS_ERROR_MESSAGE: 'Поле не може бути порожнім',
   POCKETS_UA_NAME_MESSAGE:
     'Поле може містити тільки українські літери та цифри',
-  POCKETS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
+  POCKETS_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  POCKETS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+};
+
+export const positionErrorMessages = {
+  POSITION_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  POSITION_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  POSITION_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  POSITION_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  POSITION_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
 export const closuresErrorMessages = {
   CLOSURES_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
