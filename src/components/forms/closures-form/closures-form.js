@@ -152,16 +152,11 @@ const ClosuresForm = ({ closure, id, edit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton
-                className={styles.returnButton}
-                initial={!valueEquality}
-                pathBack={pathToClosures}
-              />
+              <BackButton initial={!valueEquality} pathBack={pathToClosures} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
-                className={styles.saveButton}
-                data-cy='save'
+                data-cy='save-btn'
                 type='submit'
                 title={SAVE_TITLE}
                 values={values}
@@ -171,9 +166,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
             </Grid>
           </Grid>
         </div>
-        <div>
-          <CheckboxOptions options={checkboxes} />
-        </div>
+        <CheckboxOptions options={checkboxes} />
         <Grid item xs={12}>
           <Paper>
             <span className={styles.imageUpload}>{labels.avatarText}</span>
@@ -190,35 +183,37 @@ const ClosuresForm = ({ closure, id, edit }) => {
             )}
           </Paper>
         </Grid>
-        {languages.map((lang) => (
-          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
-        ))}
-        <Paper className={styles.additionalPrice}>
-          <Box>
-            <Typography>{labels.enterPrice}</Typography>
-          </Box>
-          <TextField
-            data-cy='additionalPrice'
-            id='additionalPrice'
-            className={styles.textField}
-            variant={materialUiConstants.outlined}
-            type={materialUiConstants.types.number}
-            label={labels.additionalPrice}
-            value={values.additionalPrice}
-            inputProps={{ min: 0 }}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.additionalPrice && !!errors.additionalPrice}
-          />
-          {touched.additionalPrice && errors.additionalPrice && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
-            >
-              {errors.additionalPrice}
-            </div>
-          )}
-        </Paper>
+        <>
+          {languages.map((lang) => (
+            <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+          ))}
+          <Paper className={styles.additionalPrice}>
+            <Box>
+              <Typography>{labels.enterPrice}</Typography>
+            </Box>
+            <TextField
+              data-cy='additionalPrice'
+              id='additionalPrice'
+              className={styles.textField}
+              variant={materialUiConstants.outlined}
+              type={materialUiConstants.types.number}
+              label={labels.additionalPrice}
+              value={values.additionalPrice}
+              inputProps={{ min: 0 }}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.additionalPrice && !!errors.additionalPrice}
+            />
+            {touched.additionalPrice && errors.additionalPrice && (
+              <div
+                data-cy={materialUiConstants.codeError}
+                className={styles.error}
+              >
+                {errors.additionalPrice}
+              </div>
+            )}
+          </Paper>
+        </>
       </form>
     </div>
   );

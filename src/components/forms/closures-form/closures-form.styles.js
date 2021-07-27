@@ -3,55 +3,42 @@ import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
-    saveButton,
-    textField,
+    attachFile,
+    large,
+    returnButton,
     imageUpload,
+    textField,
     imageUploadAvatar,
-    returnButton
+    itemUpdate,
+    details,
+    inputError,
+    imageName,
+    saveButton,
+    controlsBlock
   } = formStyles(theme);
   return {
-    error: {
-      color: '#e60000',
-      marginLeft: '5px'
-    },
-    imageUploadContainer: {
+    imageUploadBlock: {
       display: 'flex',
-      alignItems: 'center',
-      margin: '10px'
-    },
-    large: {
-      marginLeft: '10px',
-      width: theme.spacing(6),
-      height: theme.spacing(6)
-    },
-    imageName: {
-      fontSize: '.9rem',
-      marginLeft: '10px',
-      color: 'rgba(0, 0, 0, 0.54)',
       '@media (max-width: 768px)': {
-        display: 'none'
+        flexDirection: 'column'
       }
     },
-    attachFile: {
-      marginRight: '5px'
+    backItemUpdate: {
+      ...itemUpdate,
+      padding: '10px'
     },
-    buttonContainer: {
-      position: 'relative',
-      width: '100%',
-      height: 90,
-      marginTop: -13,
-      '@media (max-width: 600px)': {
-        marginTop: -21
+    backDetails: {
+      ...details
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120
+    },
+    materialSelect: {
+      width: '550px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
       }
-    },
-    button: {
-      marginTop: theme.spacing(0.5)
-    },
-    fixedButtons: {
-      position: 'fixed',
-      height: 90,
-      zIndex: 1001,
-      backgroundColor: theme.palette.bodyColor
     },
     additionalPrice: {
       display: 'flex',
@@ -59,10 +46,37 @@ export const useStyles = makeStyles((theme) => {
       margin: '10px 0',
       padding: '10px'
     },
+    buttonContainer: {
+      position: 'relative',
+      width: '100%',
+      height: 60,
+      marginTop: 51,
+      '@media (max-width: 600px)': {
+        marginTop: 43
+      }
+    },
+    fixedButtons: {
+      position: 'fixed',
+      height: 60,
+      zIndex: 1001,
+      backgroundColor: theme.palette.bodyColor
+    },
+    button: {
+      marginTop: theme.spacing(0.5)
+    },
+    error: {
+      color: '#e60000',
+      marginLeft: '5px'
+    },
+    inputError,
     textField,
-    saveButton,
     imageUpload,
+    saveButton,
+    returnButton,
+    attachFile,
+    large,
     imageUploadAvatar,
-    returnButton
+    controlsBlock,
+    imageName
   };
 });
