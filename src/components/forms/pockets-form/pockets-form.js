@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
@@ -24,6 +24,7 @@ import LanguagePanel from '../language-panel';
 import { getPocketsInitialValues } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { getAllPositions } from '../../../redux/position/position.actions';
 
 const labels = config.labels.pocketsPageLabel;
 
@@ -43,6 +44,7 @@ const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
   config.formRegExp;
 const { materialUiConstants } = config;
+const { pathToPockets } = config.routes;
 
 const PocketsForm = ({ pocket, id, edit }) => {
   const styles = useStyles();
@@ -51,7 +53,32 @@ const PocketsForm = ({ pocket, id, edit }) => {
   const { createPockets, setUpload, upload, pocketsImage, setPocketsImage } =
     usePocketsHandlers();
 
-  const { pathToPockets } = config.routes;
+  useEffect(() => {
+    dispatch(
+      getAllPositions({
+        pagination: {
+          skip: null,
+          limit: null
+        }
+      })
+    );
+  }, [dispatch]);
+
+  // const {
+  //   filter,
+  //   positionsList,
+  //   loading,
+  //   currentPage,
+  //   rowsPerPage,
+  //   itemsCount
+  // } = useSelector(positionsSelectorWithPagination);
+
+  const { positionsList } = useSelector(({ Positions }) => ({
+    positionsList: Positions.list.items
+  }));
+
+  if (positionsList)
+    console.log(positionsList.filter((el) => el.available === true));
 
   const pocketsValidationSchema = Yup.object().shape({
     uaName: Yup.string()
@@ -117,15 +144,16 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   };
 
-  const checkboxes = [
+  const checkboxes = (checkBoxName, label) => [
     {
-      id: 'restriction',
-      dataCy: 'restriction',
-      value: values.restriction,
-      checked: values.restriction,
-      color: 'primary',
-      label: labels.avaliable,
-      handler: () => setFieldValue('restriction', !values.restriction)
+      id: `${checkBoxName}`,
+      dataCy: `${checkBoxName}`,
+      value: values[`${checkBoxName}`],
+      checked: values[`${checkBoxName}`],
+      color: materialUiConstants.primary,
+      label,
+      handler: () =>
+        setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
     }
   ];
 
@@ -175,7 +203,9 @@ const PocketsForm = ({ pocket, id, edit }) => {
           </Grid>
         </div>
         <div>
-          <CheckboxOptions options={checkboxes} />
+          <CheckboxOptions
+            options={checkboxes(labels.labelsRestriction, labels.avaliable)}
+          />
         </div>
         <Grid item xs={12}>
           <Paper>

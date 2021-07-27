@@ -537,7 +537,8 @@ const labels = {
     enterPrice: 'Додаткова ціна (USD):',
     additionalPrice: 'Введіть додаткову ціну',
     avaliable: 'Додати до обмежень',
-    avatarText: 'Фото'
+    avatarText: 'Фото',
+    labelsRestriction: 'restriction'
   },
   positionPageLabel: {
     positionHeader: 'position-header',
