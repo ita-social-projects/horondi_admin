@@ -7,7 +7,9 @@ import {
   REMOVE_CLOSURE_FROM_STATE,
   GET_CLOSURE,
   SET_CLOSURE,
-  UPDATE_CLOSURE
+  UPDATE_CLOSURE,
+  SET_FILTER,
+  CLEAR_FILTER
 } from './closures.types';
 
 export const addClosures = (payload) => ({
@@ -53,4 +55,13 @@ export const setClosure = (payload) => ({
 export const updateClosure = (payload) => ({
   type: UPDATE_CLOSURE,
   payload
+});
+
+export const setFilter = (filter) => ({
+  type: SET_FILTER,
+  payload: filter
+});
+
+export const clearFilters = () => ({
+  type: CLEAR_FILTER
 });

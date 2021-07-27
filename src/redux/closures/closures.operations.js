@@ -1,9 +1,9 @@
 import { setItems, getItems } from '../../utils/client';
 
-export const getAllClosures = async (limit, skip) => {
+export const getAllClosures = async (limit, skip, filter) => {
   const query = `
-    query($limit: Int!, $skip: Int!) {
-  getAllClosure(limit: $limit, skip: $skip) {
+    query($limit: Int!, $skip: Int!,$filter: ClosureFilterInput) {
+  getAllClosure(limit: $limit, skip: $skip,filter: $filter) {
     items {
       _id
       name {
@@ -29,7 +29,7 @@ export const getAllClosures = async (limit, skip) => {
 }
       `;
 
-  const result = await getItems(query, { limit, skip });
+  const result = await getItems(query, { limit, skip, filter });
   return result?.data?.getAllClosure;
 };
 

@@ -17,6 +17,8 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import FilterNavbar from '../../components/filter-search-sort';
+import useClosureFilters from '../../hooks/filters/use-closure-filters';
 
 const { materialUiConstants } = config;
 const labels = config.labels.closuresPageLabel;
@@ -29,7 +31,7 @@ const ClosuresPage = () => {
   const dispatch = useDispatch();
   const { IMG_URL } = config;
   const { openSuccessSnackbar } = useSuccessSnackbar();
-
+  const closureOptions = useClosureFilters();
   const {
     filter,
     closuresList,
@@ -45,6 +47,9 @@ const ClosuresPage = () => {
         pagination: {
           skip: currentPage * rowsPerPage,
           limit: rowsPerPage
+        },
+        filter: {
+          search: filter.search
         }
       })
     );
@@ -103,7 +108,9 @@ const ClosuresPage = () => {
           {CREATE_CLOSURES_TITLE}
         </Button>
       </div>
-
+      <div>
+        <FilterNavbar options={closureOptions || {}} />
+      </div>
       {closuresItems?.length ? (
         <TableContainerGenerator
           pagination

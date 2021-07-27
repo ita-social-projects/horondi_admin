@@ -31,13 +31,14 @@ import { setItemsCount, updatePagination } from '../table/table.actions';
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-export function* handleClosuresLoad({ payload: { pagination } }) {
+export function* handleClosuresLoad({ payload: { pagination, filter } }) {
   try {
     yield put(setClosuresLoading(true));
     const closures = yield call(
       getAllClosures,
       pagination.limit,
-      pagination.skip
+      pagination.skip,
+      filter
     );
     if (closures) {
       yield put(setClosures(closures));
