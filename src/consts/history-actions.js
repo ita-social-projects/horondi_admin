@@ -33,5 +33,8 @@ export const historyActions = {
   REGISTER_ADMIN: 'Зареєстровано адміністратора',
   EDIT_POCKET: 'Редаговано кишеню',
   ADD_POCKET: 'Створено кишеню',
-  DELETE_POCKET: 'Видалено кишеню'
+  DELETE_POCKET: 'Видалено кишеню',
+  DELETE_POSITION: 'Видалено позицію',
+  ADD_POSITION: 'Додано позицію',
+  EDIT_POSITION: 'Редаговано позицію'
 };

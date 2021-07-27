@@ -31,6 +31,7 @@ import PictureInPictureIcon from '@material-ui/icons/PictureInPicture';
 import PanoramaVerticalIcon from '@material-ui/icons/PanoramaVertical';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
+import MyLocationIcon from '@material-ui/icons/MyLocation';
 
 import routes from './routes';
 
@@ -76,6 +77,7 @@ export const constructorMenuCategories = [
   ['Низ', routes.pathToPatterns, GetAppIcon],
   ['Передня кишеня', routes.pathToPatterns, PictureInPictureIcon],
   ['Кишені', routes.pathToPockets, SwapHorizIcon],
+  ['Позиція', routes.pathToPosition, MyLocationIcon],
   ['Потаємні кишені', routes.pathToPatterns, VisibilityOffIcon],
   ['Спинка', routes.pathToBacks, PanoramaVerticalIcon],
   ['Ремінці', routes.pathToPatterns, ConfirmationNumberIcon],

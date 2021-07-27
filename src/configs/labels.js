@@ -538,6 +538,15 @@ const labels = {
     additionalPrice: 'Введіть додаткову ціну',
     avaliable: 'Додати до обмежень',
     avatarText: 'Фото'
+  },
+  positionPageLabel: {
+    positionHeader: 'position-header',
+    positionTable: 'positionTable',
+    available: 'Доступно',
+    positionName: {
+      ua: 'Позиція',
+      en: 'Position'
+    }
   }
 };
 export default labels;

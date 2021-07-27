@@ -78,7 +78,8 @@ const buttonTitles = {
   CREATE_POCKETS_TITLE: 'Додати кишеню',
   PATTERN_AVAILABLE: 'Доступний',
   PATTERN_MATERIAL: 'Матеріал',
-  CREATE_CONSTRUCTOR: 'Створити новий '
+  CREATE_POSITION_TITLE: 'Додати розміщення',
+  CREATE_CONSTRUCTOR: 'Створити новий'
 };
 
 export default buttonTitles;
