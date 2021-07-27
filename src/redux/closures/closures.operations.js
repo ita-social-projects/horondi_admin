@@ -17,20 +17,6 @@ export const getAllClosures = async (limit, skip) => {
            thumbnail
          }
       optionType
-      features {
-        material {
-          name {
-            lang
-            value
-          }
-        }
-        color {
-          name {
-            lang
-            value
-          }
-        }
-      }
         additionalPrice {
         currency
         value

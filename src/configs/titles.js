@@ -131,7 +131,7 @@ const titles = {
     mainPageTitle: 'Опції конструктора'
   },
   closuresTitles: {
-    mainPageTitle: 'Інформація про застібки'
+    mainPageTitle: 'Інформація про защіпки'
   }
 };
 

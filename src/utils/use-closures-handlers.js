@@ -20,13 +20,8 @@ const useClosuresHandlers = () => {
       }
     ],
     additionalPrice: values.additionalPrice,
-    // restriction: values.restriction,
     available: values.available,
-    optionType: 'CLOSURE',
-    features: {
-      material: values.material,
-      color: values.color
-    }
+    optionType: 'CLOSURE'
   });
 
   return {

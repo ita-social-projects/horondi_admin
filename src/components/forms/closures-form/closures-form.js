@@ -125,7 +125,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
       handler: () => setFieldValue('available', !values.available)
     }
   ];
-  console.log(values.available);
+
   const inputs = [{ label: labels.closuresName, name: 'name' }];
 
   const inputOptions = {
@@ -235,28 +235,23 @@ ClosuresForm.propTypes = {
     closuresImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    // restrictions: PropTypes.bool,
-    optionType: PropTypes.string
-  }),
-  features: PropTypes.shape({
-    material: PropTypes.string,
-    color: PropTypes.string
+    optionType: PropTypes.string,
+    available: PropTypes.bool
   }),
   errors: PropTypes.shape({
     closuresImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    // restrictions: PropTypes.bool,
-    optionType: PropTypes.string
+    optionType: PropTypes.string,
+    available: PropTypes.bool
   }),
   touched: PropTypes.shape({
     closuresImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    // restrictions: PropTypes.bool,
-    optionType: PropTypes.string
+    optionType: PropTypes.string,
+    available: PropTypes.bool
   }),
-  // available:PropTypes.bool,
   edit: PropTypes.bool
 };
 
@@ -280,36 +275,12 @@ ClosuresForm.defaultProps = {
     images: {
       thumbnail: ''
     },
-    // restrictions: false,
     optionType: null,
     additionalPrice: [
       { value: null, currency: '' },
       { value: null, currency: '' }
     ]
   },
-  features: {
-    material: {
-      name: [
-        {
-          value: ''
-        },
-        {
-          value: ''
-        }
-      ]
-    },
-    color: {
-      name: [
-        {
-          value: ''
-        },
-        {
-          value: ''
-        }
-      ]
-    }
-  },
-  // available:true,
   edit: false
 };
 

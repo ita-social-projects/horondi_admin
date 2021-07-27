@@ -17,8 +17,6 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
-// import useClosureFilters from '../../hooks/filters/use-closure-filters';
 
 const { materialUiConstants } = config;
 const labels = config.labels.closuresPageLabel;
@@ -31,7 +29,6 @@ const ClosuresPage = () => {
   const dispatch = useDispatch();
   const { IMG_URL } = config;
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  // const closureOptions = useClosureFilters();
 
   const {
     filter,
@@ -71,7 +68,8 @@ const ClosuresPage = () => {
         closure?.images?.thumbnail ? IMG_URL + closure.images.thumbnail : ''
       }
       name={closure?.name[0]?.value}
-      available={closure.restriction ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
+      additionalPrice={closure?.additionalPrice[1]?.value / 100}
+      available={closure.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         closuresDeleteHandler(closure._id);
       }}
@@ -81,9 +79,9 @@ const ClosuresPage = () => {
     />
   ));
 
-  // if (loading) {
-  //     return <LoadingBar />;
-  // }
+  if (loading) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className={commonStyles.container}>
@@ -105,7 +103,6 @@ const ClosuresPage = () => {
           {CREATE_CLOSURES_TITLE}
         </Button>
       </div>
-      <div>{/* <FilterNavbar options={closureOptions || {}} /> */}</div>
 
       {closuresItems?.length ? (
         <TableContainerGenerator

@@ -79,7 +79,7 @@ const buttonTitles = {
   PATTERN_AVAILABLE: 'Доступний',
   PATTERN_MATERIAL: 'Матеріал',
   CREATE_CONSTRUCTOR: 'Створити новий ',
-  CREATE_CLOSURES_TITLE: 'Додати замочок'
+  CREATE_CLOSURES_TITLE: 'Додати защіпку'
 };
 
 export default buttonTitles;
