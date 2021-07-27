@@ -3,7 +3,7 @@ import {
   SET_CLOSURES_LOADING,
   REMOVE_CLOSURE_FROM_STATE,
   SET_CLOSURE,
-  SET_FILTER,
+  SET_CLOSURE_FILTER,
   CLEAR_FILTER
 } from './closures.types';
 
@@ -53,7 +53,7 @@ const closuresReducer = (state = initialState, action = {}) => {
         ...state,
         closure: action.payload
       };
-    case SET_FILTER:
+    case SET_CLOSURE_FILTER:
       return {
         ...state,
         filter: {
