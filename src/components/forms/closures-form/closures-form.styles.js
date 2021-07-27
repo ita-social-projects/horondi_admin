@@ -30,6 +30,12 @@ export const useStyles = makeStyles((theme) => {
     backDetails: {
       ...details
     },
+    additionalPrice: {
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '10px 0',
+      padding: '10px'
+    },
     formControl: {
       margin: theme.spacing(1),
       minWidth: 120
@@ -40,11 +46,11 @@ export const useStyles = makeStyles((theme) => {
         width: 'inherit'
       }
     },
-    additionalPrice: {
-      display: 'flex',
-      flexDirection: 'column',
-      margin: '10px 0',
-      padding: '10px'
+    fixedButtons: {
+      position: 'fixed',
+      height: 60,
+      zIndex: 1001,
+      backgroundColor: theme.palette.bodyColor
     },
     buttonContainer: {
       position: 'relative',
@@ -55,18 +61,12 @@ export const useStyles = makeStyles((theme) => {
         marginTop: 43
       }
     },
-    fixedButtons: {
-      position: 'fixed',
-      height: 60,
-      zIndex: 1001,
-      backgroundColor: theme.palette.bodyColor
-    },
-    button: {
-      marginTop: theme.spacing(0.5)
-    },
     error: {
       color: '#e60000',
       marginLeft: '5px'
+    },
+    button: {
+      marginTop: theme.spacing(0.5)
     },
     inputError,
     textField,

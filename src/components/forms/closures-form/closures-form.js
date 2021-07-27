@@ -183,31 +183,33 @@ const ClosuresForm = ({ closure, id, edit }) => {
             )}
           </Paper>
         </Grid>
-        <>
+        <div>
           {languages.map((lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
+        </div>
+        <>
           <Paper className={styles.additionalPrice}>
             <Box>
               <Typography>{labels.enterPrice}</Typography>
             </Box>
             <TextField
+              type={materialUiConstants.types.number}
+              label={labels.additionalPrice}
+              value={values.additionalPrice}
               data-cy='additionalPrice'
               id='additionalPrice'
               className={styles.textField}
               variant={materialUiConstants.outlined}
-              type={materialUiConstants.types.number}
-              label={labels.additionalPrice}
-              value={values.additionalPrice}
               inputProps={{ min: 0 }}
-              onChange={handleChange}
-              onBlur={handleBlur}
               error={touched.additionalPrice && !!errors.additionalPrice}
+              onBlur={handleBlur}
+              onChange={handleChange}
             />
             {touched.additionalPrice && errors.additionalPrice && (
               <div
-                data-cy={materialUiConstants.codeError}
                 className={styles.error}
+                data-cy={materialUiConstants.codeError}
               >
                 {errors.additionalPrice}
               </div>
