@@ -41,8 +41,8 @@ export const useStyles = makeStyles((theme) => {
       width: '100%',
       height: 60,
       marginTop: 51,
-      '@media (max-width: 600px)': {
-        marginTop: 43
+      '@media (max-width: 405px)': {
+        marginTop: 41
       }
     },
     fixedButtons: {
