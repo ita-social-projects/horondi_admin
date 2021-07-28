@@ -67,7 +67,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
       .matches(additionalPriceRegExp, CLOSURES_VALIDATION_ERROR)
       .nullable(),
     available: Yup.boolean(),
-    backImage: Yup.string().required(PHOTO_NOT_PROVIDED)
+    closureImage: Yup.string().required(PHOTO_NOT_PROVIDED)
   });
 
   const {
