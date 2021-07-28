@@ -31,7 +31,8 @@ const {
   CLOSURES_VALIDATION_ERROR,
   CLOSURES_ERROR_MESSAGE,
   CLOSURES_UA_NAME_MESSAGE,
-  CLOSURES_EN_NAME_MESSAGE
+  CLOSURES_EN_NAME_MESSAGE,
+  PHOTO_NOT_PROVIDED
 } = config.closuresErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -64,7 +65,9 @@ const ClosuresForm = ({ closure, id, edit }) => {
     additionalPrice: Yup.string()
       .required(CLOSURES_ERROR_MESSAGE)
       .matches(additionalPriceRegExp, CLOSURES_VALIDATION_ERROR)
-      .nullable()
+      .nullable(),
+    available: Yup.boolean(),
+    backImage: Yup.string().required(PHOTO_NOT_PROVIDED)
   });
 
   const {
@@ -272,6 +275,7 @@ ClosuresForm.defaultProps = {
     images: {
       thumbnail: ''
     },
+    available: false,
     optionType: null,
     additionalPrice: [
       { value: null, currency: '' },

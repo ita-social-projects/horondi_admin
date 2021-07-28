@@ -200,5 +200,6 @@ export const closuresErrorMessages = {
   CLOSURES_UA_NAME_MESSAGE:
     'Поле може містити тільки українські літери та цифри',
   CLOSURES_EN_NAME_MESSAGE:
-    'Поле може містити тільки англійські літери та цифри'
+    'Поле може містити тільки англійські літери та цифри',
+  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим"
 };

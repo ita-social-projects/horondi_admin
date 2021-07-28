@@ -83,6 +83,7 @@ export const getClosureById = async (id) => {
                 lang
                 value
               }
+              available
               optionType
               images {
                 large
