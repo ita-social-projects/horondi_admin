@@ -84,7 +84,8 @@ export const config = {
   ],
   allowedforRegistrationRoles: ['admin', 'superadmin'],
   tabNames: {
-    users: ['Користувачі', 'Адміністратори']
+    users: ['Користувачі', 'Адміністратори'],
+    userOrdersComments: ['Замовлення', 'Коментарі']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
