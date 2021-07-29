@@ -107,11 +107,7 @@ const mockError = {
   message: 'error'
 };
 const mockInitialFilters = {
-  name: '',
-  model: [],
-  available: [],
-  material: [],
-  color: []
+  search: ''
 };
 
 const payload = {
