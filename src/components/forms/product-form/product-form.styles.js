@@ -10,12 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2.5),
     width: '100%',
     position: 'relative',
-    '@media (max-width: 600px)': {
-      paddingTop: '13px'
-    },
-    '@media (max-width: 481px)': {
-      paddingTop: '20px'
-    }
+    paddingTop: '20px'
   },
   title: {
     fontWeight: '600'
@@ -35,7 +30,7 @@ export const useStyles = makeStyles((theme) => ({
     height: 60,
     marginTop: 51,
     '@media (max-width: 600px)': {
-      marginTop: '50px'
+      marginTop: '42px'
     }
   },
   fixedButtons: {
