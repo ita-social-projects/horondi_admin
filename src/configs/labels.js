@@ -538,7 +538,10 @@ const labels = {
     additionalPrice: 'Введіть додаткову ціну',
     avaliable: 'Додати до обмежень',
     avatarText: 'Фото',
-    labelsRestriction: 'restriction'
+    labelsRestriction: 'restriction',
+    labelIdAut: 'labelIdAut',
+    normal: 'normal',
+    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' }
   },
   positionPageLabel: {
     positionHeader: 'position-header',

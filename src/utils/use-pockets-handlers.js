@@ -21,7 +21,8 @@ const usePocketsHandlers = () => {
     ],
     additionalPrice: values.additionalPrice,
     restriction: values.restriction,
-    optionType: 'SIDE'
+    optionType: 'POCKET',
+    positions: values.positions
   });
 
   return {

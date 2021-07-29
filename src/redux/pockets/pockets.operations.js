@@ -92,6 +92,14 @@ export const getPocketById = async (id) => {
                 small
                 thumbnail
               }
+              positions {
+                _id
+                name {
+                  lang
+                  value
+                }
+               available
+              }
               restriction
               additionalPrice {
                 currency

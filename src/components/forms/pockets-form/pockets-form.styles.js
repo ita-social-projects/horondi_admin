@@ -7,7 +7,8 @@ export const useStyles = makeStyles((theme) => {
     textField,
     imageUpload,
     imageUploadAvatar,
-    returnButton
+    returnButton,
+    autoComplete
   } = formStyles(theme);
   return {
     error: {
@@ -63,6 +64,7 @@ export const useStyles = makeStyles((theme) => {
     saveButton,
     imageUpload,
     imageUploadAvatar,
-    returnButton
+    returnButton,
+    autoComplete
   };
 });
