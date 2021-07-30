@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
-
 import _ from 'lodash';
+
 import LoadingBar from '../../components/loading-bar';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';

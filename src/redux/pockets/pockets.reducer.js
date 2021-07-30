@@ -3,8 +3,8 @@ import {
   SET_POCKETS_LOADING,
   REMOVE_POCKET_FROM_STATE,
   SET_POCKET,
-  SET_FILTER,
-  CLEAR_FILTER
+  SET_POCKETS_FILTER,
+  CLEAR_POCKETS_FILTER
 } from './pockets.types';
 
 export const selectPockets = ({ Pockets }) => ({
@@ -53,7 +53,7 @@ const pocketsReducer = (state = initialState, action = {}) => {
         ...state,
         pocket: action.payload
       };
-    case SET_FILTER:
+    case SET_POCKETS_FILTER:
       return {
         ...state,
         filter: {
@@ -61,7 +61,7 @@ const pocketsReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
-    case CLEAR_FILTER:
+    case CLEAR_POCKETS_FILTER:
       return {
         ...state,
         filter: { search: '' }

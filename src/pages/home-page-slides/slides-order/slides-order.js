@@ -98,7 +98,6 @@ const SlidesOrder = (props) => {
     const available = [];
     const nonAvailable = [];
     Object.entries(data).forEach(([key, value]) => {
-      console.log(key, value);
       if (key === 'available') {
         value.items.forEach((availableSlide, index) => {
           available.push({
@@ -121,7 +120,11 @@ const SlidesOrder = (props) => {
       dispatch(
         updateSlidesOrder({
           id: item.id,
-          slide: { order: item.slide.order, show: item.slide.show }
+          slide: {
+            order: item.slide.order,
+            show: item.slide.show,
+            link: item.slide.link
+          }
         })
       )
     );
