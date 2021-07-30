@@ -60,6 +60,12 @@ export const useStyles = makeStyles((theme) => {
       margin: '10px 0',
       padding: '10px'
     },
+    inputPanel: {
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '10px 0',
+      padding: '10px'
+    },
     textField,
     saveButton,
     imageUpload,

@@ -35,7 +35,8 @@ const {
   POCKETS_UA_NAME_MESSAGE,
   POCKETS_EN_NAME_MESSAGE,
   POCKETS_MAX_LENGTH_MESSAGE,
-  POCKETS_MIN_LENGTH_MESSAGE
+  POCKETS_MIN_LENGTH_MESSAGE,
+  POCKETS_POSITION_ERROR_MESSAGE
 } = config.pocketsErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -96,7 +97,8 @@ const PocketsForm = ({ pocket, id, edit }) => {
     additionalPrice: Yup.string()
       .required(POCKETS_ERROR_MESSAGE)
       .matches(additionalPriceRegExp, POCKETS_VALIDATION_ERROR)
-      .nullable()
+      .nullable(),
+    positions: Yup.string().required(POCKETS_POSITION_ERROR_MESSAGE)
   });
 
   const {
@@ -159,11 +161,9 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   ];
 
-  const onTagsChange = (_, value) => {
-    setFieldValue(
-      'positions',
-      value.map((position) => position._id)
-    );
+  const onTagsChange = (_, value, values) => {
+    const positionsData = value.map((position) => position._id);
+    setFieldValue('positions', [...new Set(positionsData)]);
     setPositions(value);
   };
 
@@ -233,16 +233,17 @@ const PocketsForm = ({ pocket, id, edit }) => {
             )}
           </Paper>
         </Grid>
-        <Paper>
+        <Paper className={styles.inputPanel}>
           <Autocomplete
             id={labels.labelIdAut}
-            className={styles.autoComplete}
+            className={styles.textField}
             multiple
             freeSolo
             options={availablePositions}
             getOptionLabel={(option) => `${option.name[0].value}`}
             defaultValue={positions}
             onChange={onTagsChange}
+            onBlur={handleBlur}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -251,9 +252,18 @@ const PocketsForm = ({ pocket, id, edit }) => {
                 placeholder={labels.choosePositions.inputTitle}
                 margin={labels.normal}
                 fullWidth
+                error={touched.labelIdAut && !!errors.positions}
               />
             )}
           />
+          {touched.labelIdAut && errors.positions && (
+            <div
+              data-cy={materialUiConstants.codeError}
+              className={styles.error}
+            >
+              {errors.positions}
+            </div>
+          )}
         </Paper>
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
@@ -299,7 +309,8 @@ PocketsForm.propTypes = {
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
     optionType: PropTypes.string,
-    positions: PropTypes.shape([])
+    positions: PropTypes.shape([]),
+    additionalPrice: PropTypes.number
   }),
   values: PropTypes.shape({
     pocketsImage: PropTypes.string,
@@ -307,7 +318,8 @@ PocketsForm.propTypes = {
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
     optionType: PropTypes.string,
-    positions: PropTypes.shape([])
+    positions: PropTypes.shape([]),
+    additionalPrice: PropTypes.number
   }),
   errors: PropTypes.shape({
     pocketsImage: PropTypes.string,
@@ -315,7 +327,8 @@ PocketsForm.propTypes = {
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
     optionType: PropTypes.string,
-    positions: PropTypes.shape([])
+    positions: PropTypes.shape([]),
+    additionalPrice: PropTypes.number
   }),
   touched: PropTypes.shape({
     pocketsImage: PropTypes.string,
@@ -323,7 +336,8 @@ PocketsForm.propTypes = {
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
     optionType: PropTypes.string,
-    positions: PropTypes.shape([])
+    positions: PropTypes.shape([]),
+    additionalPrice: PropTypes.number
   }),
   edit: PropTypes.bool
 };
