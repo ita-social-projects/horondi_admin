@@ -13,20 +13,20 @@ const mockDefaultProps = {
   },
   errors: {
     modelImage: 'image.jpg',
-    category: '',
-    uaName: '',
-    enName: '',
-    uaDescription: '',
-    enDescription: '',
+    category: 'a',
+    uaName: 's',
+    enName: 'd',
+    uaDescription: 'f',
+    enDescription: 'v',
     priority: 1
   },
   touched: {
     modelImage: 'image.jpg',
-    category: '',
-    uaName: '',
-    enName: '',
-    uaDescription: '',
-    enDescription: '',
+    category: 'a',
+    uaName: 's',
+    enName: 'd',
+    uaDescription: 'd',
+    enDescription: 'f',
     priority: 1
   },
   model: {

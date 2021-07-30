@@ -5,9 +5,9 @@ import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Paper, TextField, Select, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { useFormik } from 'formik';
 import LanguagePanel from '../../language-panel';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
+import { BackButton, SaveButton } from '../../../buttons';
 
 import ModelForm from '../index';
 import {
@@ -16,10 +16,10 @@ import {
   mockModel,
   mockValues,
   Sizes,
-  Categories
+  Categories,
+  mockTouched,
+  mockErrors
 } from './model-form.variables';
-import { BackButton, SaveButton } from '../../../buttons';
-import CheckboxOptions from '../../../checkbox-options';
 
 React.useLayoutEffect = React.useEffect;
 
@@ -37,8 +37,8 @@ jest.mock('formik', () => ({
     handleSubmit: mockHandleSubmit,
     handleChange: mockHandleChange,
     handleBlur: mockHandleBlur,
-    touched: {},
-    errors: {},
+    touched: mockTouched,
+    errors: mockErrors,
     setFieldValue: mockSetFieldValue
   })
 }));
@@ -58,23 +58,6 @@ jest.mock('../../../../utils/use-model-handlers', () => ({
   })
 }));
 
-const mockModelFormOnSubmit = jest.fn();
-const mockUseFormikInitialValues = jest.fn();
-const mockUpdateModelHandler = jest.fn();
-const mockLoadHelper = jest.fn();
-
-jest.mock('../../../../utils/model-form', () => ({
-  __esModule: true,
-  modelFormOnSubmit: () => mockModelFormOnSubmit(),
-  useFormikInitialValues: () => mockUseFormikInitialValues(),
-  updateModelHandler: () => mockUpdateModelHandler(),
-  loadHelper: () => mockLoadHelper()
-}));
-
-// jest.spyOn(global, 'FileReader').mockImplementation(() => {
-//   this.onload = jest.fn();
-//   this.readAsDataURL = jest.fn();
-// });
 Object.defineProperty(global, 'FileReader', {
   writable: true,
   value: jest.fn().mockImplementation(() => ({
@@ -90,15 +73,16 @@ describe('Model-form tests', () => {
 
   let wrapper;
 
-  const mockStore = {
-    sizesList: Sizes.list,
-    categories: Categories.categories
+  const Table = {
+    pagination: {
+      currentPage: 0
+    }
   };
 
   beforeEach(() => {
     mockUseDispatch.mockImplementation(() => jest.fn());
     mockUseEffect.mockImplementation(() => jest.fn());
-    mockUseSelector.mockReturnValue(mockStore);
+    mockUseSelector.mockImplementation((f) => f({ Sizes, Categories, Table }));
 
     wrapper = shallow(
       <ModelForm model={mockModel} id={mockId} isEdit={mockIsEdit} />
@@ -112,7 +96,6 @@ describe('Model-form tests', () => {
     mockUseEffect.mockClear();
     mockUseSelector.mockClear();
   });
-
   it('should render Model-Form component', () => {
     expect(wrapper).toBeDefined();
   });
@@ -145,11 +128,11 @@ describe('Model-form tests', () => {
     expect(wrapper.find('CheckboxOptions')).toHaveLength(2);
   });
 
-  it('should find inputs', () => {
+  it('should find Paper component', () => {
     expect(wrapper.find(Paper)).toHaveLength(1);
   });
 
-  it('should find inputs', () => {
+  it('should find TextField', () => {
     expect(wrapper.find(TextField)).toHaveLength(1);
   });
 
@@ -176,6 +159,12 @@ describe('Model-form tests', () => {
     expect(mockHandleSubmit).toHaveBeenCalled();
   });
 
+  it('should call preventDefault', () => {
+    const event = { preventDefault: () => {} };
+    jest.spyOn(event, 'preventDefault');
+    wrapper.find('form').simulate('submit', event);
+    expect(event.preventDefault).toBeCalled();
+  });
   it('should call handle constructor', () => {
     wrapper.find(Button).at(0).simulate('click');
     expect(mockUseDispatch).toHaveBeenCalledTimes(1);
@@ -188,33 +177,41 @@ describe('Model-form tests', () => {
     expect(mockSetFieldValue).toHaveBeenCalledWith('category', 'accessories');
   });
 
-  it('should call setFieldValue for checkbox', () => {
-    wrapper.find(CheckboxOptions).at(0).simulate('click');
-    expect(mockSetFieldValue).toHaveBeenCalled();
+  it('should call setFieldValue for Autocomplete', () => {
+    const list = Sizes.list.map((size) => size._id);
+    wrapper.find(Autocomplete).simulate('change', {}, Sizes.list);
+    expect(mockSetFieldValue).toHaveBeenCalledWith('sizes', list);
   });
 
-  // it('should call setFieldValue for Autocomplete', () => {
-  //   wrapper.find(Autocomplete).prop('onChange', [Sizes.list[3]])()
-  //   expect(mockSetFieldValue).toHaveBeenCalledWith('sizes', [Sizes.list[0]._id]);
-  // })
+  it('should call setFieldValue for first checkbox', () => {
+    wrapper.find('CheckboxOptions').at(0).props().options[0].handler();
+    expect(mockSetFieldValue).toHaveBeenCalledWith('show', false);
+  });
 
-  // it('Should test FileReader ', () => {
-  //   const reader = FileReader.mock.instances[0];
-  //   reader.onload({ target: { result: 'foo' } });
-  //   expect(mockSetFieldValue).toHaveBeenCalledWith('', 'foo')
-  // });
+  it('should call setFieldValue for second checkbox', () => {
+    wrapper.find('CheckboxOptions').at(1).props().options[0].handler();
+    expect(mockSetFieldValue).toHaveBeenCalledWith(
+      'availableForConstructor',
+      true
+    );
+  });
 
-  it('should call 3 dispatch in use Formik', () => {});
   it('Should upload image', () => {
     const event = {
       target: {
         files: [new File([], 'foo.png', { type: 'image' })]
       }
     };
-    mockLoadHelper.mockReturnValue(true);
     const imageContainer = wrapper.find(ImageUploadContainer);
-    imageContainer.props('handler').handler(event);
+    imageContainer.props().handler(event);
+
     expect(mockSetUpload).toHaveBeenCalledTimes(1);
     expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
+  });
+
+  it('should do smth', () => {
+    const label = wrapper.find(Autocomplete).props();
+    label.getOptionLabel(Sizes.list[0]);
+    expect(label).toBeDefined();
   });
 });
