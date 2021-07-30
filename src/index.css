@@ -17,3 +17,8 @@ code {
 a {
   text-decoration: none;
 }
+
+a.MuiButton-containedPrimary:hover,
+a.MuiButton-containedPrimary:focus {
+  color: white;
+}

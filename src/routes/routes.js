@@ -65,6 +65,14 @@ import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
 import BackPage from '../pages/back';
 import BackAdd from '../pages/back/back-add';
 import BackDetails from '../pages/back/back-details';
+import PositionPage from '../pages/position/position-page';
+import PositionAdd from '../pages/position/position-add';
+import PositionEdit from '../pages/position/position-edit';
+import ConstructorListPage from '../pages/constructor-list';
+import ConstructorModelDetails from '../pages/constructor-list/constructor-details';
+import ClosuresPage from '../pages/closures/closures-page';
+import ClosuresAdd from '../pages/closures/closures-add/closures-add';
+import ClosuresEdit from '../pages/closures/closures-edit/closures-edit';
 
 const { routes } = config;
 
@@ -286,6 +294,38 @@ const Routes = () => {
             path={routes.pathToBackDetails}
             exact
             component={BackDetails}
+          />
+          <Route path={routes.pathToPosition} exact component={PositionPage} />
+          <Route
+            path={routes.pathToPositionAdd}
+            exact
+            component={PositionAdd}
+          />
+          <Route
+            path={routes.pathToPositionEdit}
+            exact
+            component={PositionEdit}
+          />
+          <Route
+            path={routes.pathToConstructorList}
+            exact
+            component={ConstructorListPage}
+          />
+          <Route
+            path={routes.pathToConstructorModelDetails}
+            exact
+            component={ConstructorModelDetails}
+          />
+          <Route path={routes.pathToClosures} exact component={ClosuresPage} />
+          <Route
+            path={routes.pathToClosuresAdd}
+            exact
+            component={ClosuresAdd}
+          />
+          <Route
+            path={routes.pathToClosuresEdit}
+            exact
+            component={ClosuresEdit}
           />
           <Route component={ErrorPage} />
         </Switch>

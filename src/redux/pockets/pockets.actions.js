@@ -8,8 +8,8 @@ import {
   GET_POCKET,
   SET_POCKET,
   UPDATE_POCKET,
-  SET_FILTER,
-  CLEAR_FILTER
+  SET_POCKETS_FILTER,
+  CLEAR_POCKETS_FILTER
 } from './pockets.types';
 
 export const addPockets = (payload) => ({
@@ -58,10 +58,10 @@ export const updatePocket = (payload) => ({
 });
 
 export const setFilter = (filter) => ({
-  type: SET_FILTER,
+  type: SET_POCKETS_FILTER,
   payload: filter
 });
 
 export const clearFilters = () => ({
-  type: CLEAR_FILTER
+  type: CLEAR_POCKETS_FILTER
 });
