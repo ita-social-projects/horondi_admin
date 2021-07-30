@@ -41,6 +41,7 @@ const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
 export function* handleBacksLoad({ payload: { limit, skip, filter } }) {
   try {
     yield put(setBackLoading(true));
+    console.log(filter);
     const backs = yield call(getAllBacks, limit, skip, filter);
     yield put(setItemsCount(backs?.count));
     yield put(setBacks(backs?.items));

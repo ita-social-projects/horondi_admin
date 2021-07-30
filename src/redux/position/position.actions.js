@@ -4,8 +4,8 @@ import {
   SET_POSITIONS,
   SET_POSITIONS_LOADING,
   DELETE_POSITION,
-  SET_FILTER,
-  CLEAR_FILTER,
+  SET_POSITIONS_FILTER,
+  CLEAR_POSITIONS_FILTER,
   REMOVE_POSITION_FROM_STATE,
   GET_POSITION,
   SET_POSITION,
@@ -43,12 +43,12 @@ export const removePositionFromState = (payload) => ({
 });
 
 export const setFilter = (filter) => ({
-  type: SET_FILTER,
+  type: SET_POSITIONS_FILTER,
   payload: filter
 });
 
 export const clearFilters = () => ({
-  type: CLEAR_FILTER
+  type: CLEAR_POSITIONS_FILTER
 });
 
 export const getPosition = (payload) => ({

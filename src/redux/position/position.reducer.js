@@ -1,8 +1,8 @@
 import {
   SET_POSITIONS,
   SET_POSITIONS_LOADING,
-  SET_FILTER,
-  CLEAR_FILTER,
+  SET_POSITIONS_FILTER,
+  CLEAR_POSITIONS_FILTER,
   REMOVE_POSITION_FROM_STATE,
   SET_POSITION
 } from './position.types';
@@ -53,7 +53,7 @@ const positionsReducer = (state = initialState, action = {}) => {
         ...state,
         position: action.payload
       };
-    case SET_FILTER:
+    case SET_POSITIONS_FILTER:
       return {
         ...state,
         filter: {
@@ -61,7 +61,7 @@ const positionsReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
-    case CLEAR_FILTER:
+    case CLEAR_POSITIONS_FILTER:
       return {
         ...state,
         filter: { search: '' }

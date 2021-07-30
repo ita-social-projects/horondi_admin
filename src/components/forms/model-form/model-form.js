@@ -131,7 +131,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     setCategory(event.target.value);
   };
 
-  const onTagsChange = (event, value) => {
+  const onTagsChange = (_, value) => {
     setFieldValue(
       'sizes',
       value.map((size) => size._id)
@@ -289,28 +289,30 @@ const ModelForm = ({ model, id, isEdit }) => {
               <div className={styles.inputError}>{errors.priority}</div>
             )}
           </Paper>
-          <Autocomplete
-            id={labelsEn.tagsFilled}
-            className={styles.autoComplete}
-            multiple
-            freeSolo
-            options={sizesList}
-            getOptionLabel={(option) =>
-              `${option.modelId.name[0].value} | ${option.name}`
-            }
-            defaultValue={sizes}
-            onChange={onTagsChange}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant={materialUiConstants.outlined}
-                label={chooseSizes.title}
-                placeholder={chooseSizes.inputTitle}
-                margin={labelsEn.normal}
-                fullWidth
-              />
-            )}
-          />
+          <Paper>
+            <Autocomplete
+              id={labelsEn.tagsFilled}
+              className={styles.autoComplete}
+              multiple
+              freeSolo
+              options={sizesList}
+              getOptionLabel={(option) =>
+                `${option.modelId.name[0].value} | ${option.name}`
+              }
+              defaultValue={sizes}
+              onChange={onTagsChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant={materialUiConstants.outlined}
+                  label={chooseSizes.title}
+                  placeholder={chooseSizes.inputTitle}
+                  margin={labelsEn.normal}
+                  fullWidth
+                />
+              )}
+            />
+          </Paper>
         </Grid>
         {languages.map((lang) => (
           <LanguagePanel

@@ -537,7 +537,11 @@ const labels = {
     enterPrice: 'Додаткова ціна (USD):',
     additionalPrice: 'Введіть додаткову ціну',
     avaliable: 'Додати до обмежень',
-    avatarText: 'Фото'
+    avatarText: 'Фото',
+    labelsRestriction: 'restriction',
+    labelIdAut: 'labelIdAut',
+    normal: 'normal',
+    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' }
   },
   closuresPageLabel: {
     closuresHeader: 'closures-header',
