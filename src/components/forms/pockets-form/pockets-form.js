@@ -161,7 +161,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   ];
 
-  const onTagsChange = (_, value, values) => {
+  const onTagsChange = (_, value) => {
     const positionsData = value.map((position) => position._id);
     setFieldValue('positions', [...new Set(positionsData)]);
     setPositions(value);
