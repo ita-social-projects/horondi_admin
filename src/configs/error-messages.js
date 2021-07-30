@@ -197,3 +197,13 @@ export const positionErrorMessages = {
   POSITION_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POSITION_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
+
+export const closuresErrorMessages = {
+  CLOSURES_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  CLOSURES_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CLOSURES_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  CLOSURES_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим"
+};
