@@ -17,6 +17,7 @@ import {
   mockValues,
   Sizes,
   Categories,
+  Table,
   mockTouched,
   mockErrors
 } from './model-form.variables';
@@ -73,12 +74,6 @@ describe('Model-form tests', () => {
 
   let wrapper;
 
-  const Table = {
-    pagination: {
-      currentPage: 0
-    }
-  };
-
   beforeEach(() => {
     mockUseDispatch.mockImplementation(() => jest.fn());
     mockUseEffect.mockImplementation(() => jest.fn());
@@ -96,6 +91,7 @@ describe('Model-form tests', () => {
     mockUseEffect.mockClear();
     mockUseSelector.mockClear();
   });
+
   it('should render Model-Form component', () => {
     expect(wrapper).toBeDefined();
   });

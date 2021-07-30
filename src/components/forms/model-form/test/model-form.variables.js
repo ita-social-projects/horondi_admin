@@ -385,6 +385,12 @@ const Sizes = {
   ]
 };
 
+const Table = {
+  pagination: {
+    currentPage: 0
+  }
+};
+
 module.exports = {
   mockId: mockDefaultProps.id,
   mockMatch: mockDefaultProps.match,
@@ -394,5 +400,6 @@ module.exports = {
   mockModel: mockDefaultProps.model,
   mockIsEdit: mockDefaultProps.isEdit,
   Categories,
-  Sizes
+  Sizes,
+  Table
 };
