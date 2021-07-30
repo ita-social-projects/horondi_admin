@@ -62,9 +62,10 @@ const BackForm = ({ back, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { details, loading } = useSelector(selectProductDetails);
-
-  const { materials } = details;
+  const {
+    details: { materials },
+    loading
+  } = useSelector(selectProductDetails);
 
   const { createBack, setUpload, upload, setBackImage, color, setColor } =
     useBackHandlers();
@@ -320,7 +321,7 @@ BackForm.propTypes = {
   }),
   errors: PropTypes.shape({
     backImage: PropTypes.string,
-    material: PropTypes.string,
+    material: PropTypes,
     color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string
