@@ -53,7 +53,9 @@ export const backErrorMessages = {
   PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
   BACK_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
   BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
-  BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
+  BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  BACK_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  BACK_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
@@ -206,5 +208,8 @@ export const closuresErrorMessages = {
     'Поле може містити тільки українські літери та цифри',
   CLOSURES_EN_NAME_MESSAGE:
     'Поле може містити тільки англійські літери та цифри',
-  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим"
+  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим",
+  CLOSURES_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  CLOSURES_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
+  CLOSURES_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };
