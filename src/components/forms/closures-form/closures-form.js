@@ -28,11 +28,13 @@ import { checkInitialValue } from '../../../utils/check-initial-values';
 const labels = config.labels.closuresPageLabel;
 
 const {
-  CLOSURES_VALIDATION_ERROR,
   CLOSURES_ERROR_MESSAGE,
   CLOSURES_UA_NAME_MESSAGE,
   CLOSURES_EN_NAME_MESSAGE,
-  PHOTO_NOT_PROVIDED
+  PHOTO_NOT_PROVIDED,
+  CLOSURES_MAX_LENGTH_MESSAGE,
+  CLOSURES_MIN_LENGTH_MESSAGE,
+  CLOSURES_PRICE_ERROR
 } = config.closuresErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -53,18 +55,18 @@ const ClosuresForm = ({ closure, id, edit }) => {
 
   const closuresValidationSchema = Yup.object().shape({
     uaName: Yup.string()
-      .min(2, CLOSURES_VALIDATION_ERROR)
-      .max(50, CLOSURES_VALIDATION_ERROR)
+      .min(2, CLOSURES_MIN_LENGTH_MESSAGE)
+      .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
       .required(CLOSURES_ERROR_MESSAGE)
       .matches(uaNameCreation, CLOSURES_UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, CLOSURES_VALIDATION_ERROR)
-      .max(50, CLOSURES_VALIDATION_ERROR)
+      .min(2, CLOSURES_MIN_LENGTH_MESSAGE)
+      .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
       .required(CLOSURES_ERROR_MESSAGE)
       .matches(enNameCreation, CLOSURES_EN_NAME_MESSAGE),
     additionalPrice: Yup.string()
       .required(CLOSURES_ERROR_MESSAGE)
-      .matches(additionalPriceRegExp, CLOSURES_VALIDATION_ERROR)
+      .matches(additionalPriceRegExp, CLOSURES_PRICE_ERROR)
       .nullable(),
     available: Yup.boolean(),
     closureImage: Yup.string().required(PHOTO_NOT_PROVIDED)
