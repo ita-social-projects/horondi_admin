@@ -9,7 +9,7 @@ import {
   REMOVE_BACK_FROM_STORE,
   DELETE_BACK,
   UPDATE_BACK,
-  SET_FILTER,
+  SET_BACK_FILTER,
   CLEAR_FILTERS,
   CLEAR_BACK
 } from '../back.types';
@@ -93,7 +93,7 @@ describe('back actions tests', () => {
   });
   it('should set a filter to be applied to the given list of backs', () => {
     expect(setFilter(filter)).toEqual({
-      type: SET_FILTER,
+      type: SET_BACK_FILTER,
       payload: filter
     });
   });
