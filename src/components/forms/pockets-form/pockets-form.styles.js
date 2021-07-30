@@ -7,7 +7,8 @@ export const useStyles = makeStyles((theme) => {
     textField,
     imageUpload,
     imageUploadAvatar,
-    returnButton
+    returnButton,
+    autoComplete
   } = formStyles(theme);
   return {
     error: {
@@ -59,10 +60,17 @@ export const useStyles = makeStyles((theme) => {
       margin: '10px 0',
       padding: '10px'
     },
+    inputPanel: {
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '10px 0',
+      padding: '10px'
+    },
     textField,
     saveButton,
     imageUpload,
     imageUploadAvatar,
-    returnButton
+    returnButton,
+    autoComplete
   };
 });

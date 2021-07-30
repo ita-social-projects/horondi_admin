@@ -1,7 +1,7 @@
 import { setItems, getItems } from '../../utils/client';
 
 export const getAllPositions = async (limit, skip, filter) => {
-  const query = `query($limit: Int!, $skip: Int!, $filter: PositionsFilterInput) {
+  const query = `query($limit: Int, $skip: Int, $filter: PositionsFilterInput) {
                         getAllPositions(limit: $limit, skip: $skip, filter: $filter) {
                         ... on PaginatedPositions {
                             items {
