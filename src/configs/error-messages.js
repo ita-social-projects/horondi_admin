@@ -198,6 +198,7 @@ export const positionErrorMessages = {
   POSITION_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POSITION_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
+
 export const closuresErrorMessages = {
   CLOSURES_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
   CLOSURES_ERROR_MESSAGE: 'Поле не може бути порожнім',
