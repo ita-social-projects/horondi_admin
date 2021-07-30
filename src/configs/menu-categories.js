@@ -81,5 +81,5 @@ export const constructorMenuCategories = [
   ['Потаємні кишені', routes.pathToPatterns, VisibilityOffIcon],
   ['Спинка', routes.pathToBacks, PanoramaVerticalIcon],
   ['Ремінці', routes.pathToPatterns, ConfirmationNumberIcon],
-  ['Застібки', routes.pathToPatterns, AllInclusiveIcon]
+  ['Защіпки', routes.pathToClosures, AllInclusiveIcon]
 ];

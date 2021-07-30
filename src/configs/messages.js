@@ -47,6 +47,8 @@ const messages = {
   DELETE_POSITION_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
   NO_POSITION_MESSAGE: 'Позиції відсутні',
   NO_BACKS_MESSAGE: 'Cпинки відсутні',
-  NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення'
+  NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',
+  DELETE_CLOSURE_MESSAGE: 'Ви впевнені, що хочете видалити цей замочок?',
+  NO_CLOSURE_MESSAGE: 'Замочки відсутні'
 };
 export default messages;

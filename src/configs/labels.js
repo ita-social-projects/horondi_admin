@@ -539,6 +539,18 @@ const labels = {
     avaliable: 'Додати до обмежень',
     avatarText: 'Фото'
   },
+  closuresPageLabel: {
+    closuresHeader: 'closures-header',
+    closuresTable: 'sideClosuresTable',
+    closuresName: {
+      ua: 'Назва замочка',
+      en: 'Closure name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    available: 'Доступний',
+    avatarText: 'Фото'
+  },
   positionPageLabel: {
     positionHeader: 'position-header',
     positionTable: 'positionTable',

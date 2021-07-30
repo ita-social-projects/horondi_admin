@@ -93,7 +93,8 @@ const tableHeadRowTitles = {
     'Доступний',
     'Дії'
   ],
-  positions: ['Назва', 'Доступний', 'Дії']
+  positions: ['Назва', 'Доступний', 'Дії'],
+  closures: ['Фото', 'Назва', 'Ціна (USD)', 'Доступний', 'Дії']
 };
 
 export default tableHeadRowTitles;

@@ -4,7 +4,7 @@ import {
   SET_BACK,
   SET_BACK_ERROR,
   REMOVE_BACK_FROM_STORE,
-  SET_FILTER,
+  SET_BACK_FILTER,
   SET_SORT,
   CLEAR_FILTERS,
   CLEAR_BACK
@@ -65,7 +65,7 @@ const backReducer = (state = initialState, action = {}) => {
         ...state,
         list: backs
       };
-    case SET_FILTER:
+    case SET_BACK_FILTER:
       return {
         ...state,
         filters: {
