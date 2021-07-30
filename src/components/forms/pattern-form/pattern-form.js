@@ -35,6 +35,8 @@ const map = require('lodash/map');
 
 const {
   PATTERN_VALIDATION_ERROR,
+  PATTERN_VALIDATION_ERROR_NAME,
+  PATTERN_VALIDATION_ERROR_DESCRIPTION,
   PATTERN_ERROR_MESSAGE,
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
@@ -85,19 +87,27 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   const patternValidationSchema = Yup.object().shape({
     sizes: Yup.array().notRequired(),
     enDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(2, PATTERN_VALIDATION_ERROR_DESCRIPTION)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(1000, PATTERN_VALIDATION_ERROR_DESCRIPTION)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(2, PATTERN_VALIDATION_ERROR_NAME)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(50, PATTERN_VALIDATION_ERROR_NAME)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
     uaDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(2, PATTERN_VALIDATION_ERROR_DESCRIPTION)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(1000, PATTERN_VALIDATION_ERROR_DESCRIPTION)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(2, PATTERN_VALIDATION_ERROR_NAME)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(50, PATTERN_VALIDATION_ERROR_NAME)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
     material: Yup.string()
@@ -111,42 +121,49 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     )
   });
 
-  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
-    useFormik({
-      validationSchema: patternValidationSchema,
-      initialValues: useFormikInitialValues(pattern),
-      onSubmit: () => {
-        const newPattern = createPattern(values);
-        const isEditAndUploadAndConstructor =
-          isEdit &&
-          upload instanceof File &&
-          uploadConstructorImg instanceof File;
-        if (isEditAndUploadAndConstructor || isEdit) {
-          patternFormOnSubmit(
-            isEditAndUploadAndConstructor,
-            dispatch,
-            updatePattern,
-            {
-              id,
-              pattern: newPattern,
-              image: [upload, uploadConstructorImg]
-            },
-            isEdit,
-            {
-              id,
-              pattern: newPattern
-            }
-          );
-          return;
-        }
-        dispatch(
-          addPattern({
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
+    validationSchema: patternValidationSchema,
+    initialValues: useFormikInitialValues(pattern),
+    onSubmit: () => {
+      const newPattern = createPattern(values);
+      const isEditAndUploadAndConstructor =
+        isEdit &&
+        upload instanceof File &&
+        uploadConstructorImg instanceof File;
+      if (isEditAndUploadAndConstructor || isEdit) {
+        patternFormOnSubmit(
+          isEditAndUploadAndConstructor,
+          dispatch,
+          updatePattern,
+          {
+            id,
             pattern: newPattern,
             image: [upload, uploadConstructorImg]
-          })
+          },
+          isEdit,
+          {
+            id,
+            pattern: newPattern
+          }
         );
+        return;
       }
-    });
+      dispatch(
+        addPattern({
+          pattern: newPattern,
+          image: [upload, uploadConstructorImg]
+        })
+      );
+    }
+  });
 
   const checkboxes = [
     {
@@ -194,6 +211,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
@@ -298,6 +316,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   error={touched.material && !!errors.material}
                   value={values.material || []}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                 >
                   {materialsByPurpose.map(({ _id, name }) => (
                     <MenuItem key={_id} value={_id}>

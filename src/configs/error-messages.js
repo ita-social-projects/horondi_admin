@@ -35,6 +35,9 @@ export const loginErrorMessages = {
 };
 export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
+  PATTERN_VALIDATION_ERROR_NAME: 'Назва повинна містити від 2 до 50 символів',
+  PATTERN_VALIDATION_ERROR_DESCRIPTION:
+    'Опис повинний містити від 2 до 1000 символів',
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото гобелена є обов'язковим",
@@ -195,6 +198,7 @@ export const positionErrorMessages = {
   POSITION_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POSITION_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
+
 export const closuresErrorMessages = {
   CLOSURES_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
   CLOSURES_ERROR_MESSAGE: 'Поле не може бути порожнім',
