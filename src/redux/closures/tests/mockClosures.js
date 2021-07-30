@@ -44,16 +44,16 @@ const mockClosure = {
 };
 
 const filter = {
-  name: 'чорний'
+  search: 'чорна'
 };
 
-const initialFilter = {
+const mockInitialFilters = {
   search: ''
 };
 
 const mockClosuresState = {
   list: [],
-  filter: initialFilter,
+  filter: mockInitialFilters,
   closure: null,
   showClosuresDialogWindow: false,
   closuresLoading: false,
@@ -81,12 +81,8 @@ const mockInputClosure = {
 const mockClosuresLoadPayload = {
   limit: 1,
   skip: 0,
-  filters: {
-    name: '',
-    model: [],
-    available: [],
-    material: [],
-    color: []
+  filter: {
+    search: ''
   }
   // closuresPerPage: 10
 };
@@ -105,9 +101,6 @@ const statuses = {
 
 const mockError = {
   message: 'error'
-};
-const mockInitialFilters = {
-  search: ''
 };
 
 const payload = {

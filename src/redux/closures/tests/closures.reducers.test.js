@@ -3,8 +3,7 @@ import {
   mockClosures,
   mockId,
   filter,
-  mockInitialFilters,
-  mockClosuresLoadPayload
+  mockInitialFilters
 } from './mockClosures';
 import {
   setClosuresLoading,
@@ -35,7 +34,7 @@ describe('reducer tests', () => {
     });
   });
 
-  it('should set closures to store', () => {
+  it('should set closures to state', () => {
     expect(
       closureReducer(initialState, setClosures(mockClosures.items))
     ).toEqual({
@@ -43,8 +42,10 @@ describe('reducer tests', () => {
       list: mockClosures.items
     });
   });
-  it.skip('should remove closure from store', () => {
+
+  it.skip('should remove closure from state', () => {
     const state = { ...initialState, list: mockClosures.items };
+
     const filteredClosures = mockClosures.items.filter(
       (closureEl) => closureEl._id !== mockId
     );
@@ -53,7 +54,8 @@ describe('reducer tests', () => {
       list: filteredClosures
     });
   });
-  it.skip('should set filter for closures', () => {
+
+  it('should set filter for closures', () => {
     expect(closureReducer(initialState, setFilter(filter))).toEqual({
       ...initialState,
       filter: {
@@ -63,10 +65,10 @@ describe('reducer tests', () => {
     });
   });
 
-  it.skip('should clear all closures filters', () => {
+  it('should clear all closures filters', () => {
     expect(closureReducer(initialState, clearFilters())).toEqual({
       ...initialState,
-      filters: mockClosuresLoadPayload.filters
+      filter: mockInitialFilters
     });
   });
 });
