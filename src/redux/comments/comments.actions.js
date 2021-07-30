@@ -14,7 +14,9 @@ import {
   GET_USER_COMMENTS,
   GET_PRODUCT_COMMENTS,
   SET_FILTER,
+  SET_FILTER_USER,
   CLEAR_FILTERS,
+  CLEAR_FILTERS_USER,
   GET_RECENT_COMMENTS,
   SET_RECENT_COMMENTS,
   SET_REPLY_COMMENTS,
@@ -120,8 +122,17 @@ const setFilter = (filter) => ({
   payload: filter
 });
 
+const setFilterUser = (filter) => ({
+  type: SET_FILTER_USER,
+  payload: filter
+});
+
 const clearFilters = () => ({
   type: CLEAR_FILTERS
+});
+
+const clearFiltersUser = () => ({
+  type: CLEAR_FILTERS_USER
 });
 
 const setReplyComments = (replyComments) => ({
@@ -218,7 +229,9 @@ export {
   getUserComments,
   getProductComments,
   setFilter,
+  setFilterUser,
   clearFilters,
+  clearFiltersUser,
   setRecentComments,
   getRecentComments,
   setReplyComments,

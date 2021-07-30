@@ -8,6 +8,8 @@ import { useCommonStyles } from '../../common.styles';
 import { useStyles } from './users-details.styles';
 import { useUsersHandler } from '../../../hooks/user/use-users-handlers';
 import useOrdersCommentsTabs from '../../../hooks/user/use-orders-comments-tabs';
+import useOrderUserFilters from '../../../hooks/filters/use-order-user-filters';
+import useCommentUserFilters from '../../../hooks/filters/use-comment-user-filters';
 import LoadingBar from '../../../components/loading-bar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
@@ -17,6 +19,7 @@ import CommentsSection from '../../../components/comments-section/comments-secti
 import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
 import { config } from '../../../configs';
 import { BackButton } from '../../../components/buttons';
+import FilterNavbar from '../../../components/filter-search-sort';
 import { UserBlockPeriod } from '../../../consts/user-block-status';
 import {
   blockUserByAdmin,
@@ -39,17 +42,33 @@ const { pathToUsers } = config.routes;
 
 const UsersDetails = (props) => {
   const { match } = props;
+  const { id } = match.params;
+
+  const dispatch = useDispatch();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const common = useCommonStyles();
   const styles = useStyles();
-  const dispatch = useDispatch();
+
+  const orderUserFilters = useOrderUserFilters();
+  const commentUserFilters = useCommentUserFilters();
+
+  const {
+    orderLoading,
+    items: ordersList,
+    filtersUser,
+    sort
+  } = useSelector(({ Orders }) => Orders);
+
+  const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
+    currentPage: Table.pagination.currentPage,
+    rowsPerPage: Table.pagination.rowsPerPage,
+    itemsCount: Table.itemsCount
+  }));
 
   const { loading } = useSelector(({ Users }) => ({
     loading: Users.userLoading
   }));
-
-  const { id } = match.params;
 
   const [showComments, setShowComments] = useState(false);
 
@@ -65,7 +84,32 @@ const UsersDetails = (props) => {
     email
   } = useUsersHandler(id);
 
+  // useEffect(() => {
+  //   dispatch(
+  //     getOrderList({
+  //       limit: rowsPerPage,
+  //       skip: currentPage * rowsPerPage,
+  //       filter: {
+  //         date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
+  //         status: filters.status,
+  //         paymentStatus: filters.paymentStatus,
+  //         search: filters.search
+  //       },
+  //       sort
+  //     })
+  //   );
+  // }, [dispatch, rowsPerPage, currentPage, filters, sort]);
+
+  // const ordersDeleteHandler = (id) => {
+  //   const removeOrders = () => {
+  //     dispatch(closeDialog());
+  //     dispatch(deleteOrder(id));
+  //   };
+  //   openSuccessSnackbar(removeOrders, REMOVE_ORDER_MESSAGE);
+  // };
+
   const { tab, handleTabChange } = useOrdersCommentsTabs();
+
   const tabs = tabNames.map((name) => <Tab key={name} label={name} />);
 
   if (loading) {
@@ -147,10 +191,12 @@ const UsersDetails = (props) => {
         </Tabs>
       </AppBar>
       <TabPanel value={tab} index={0}>
+        <FilterNavbar options={orderUserFilters || {}} />
         <div>Orders</div>
         {/* <UserTab list={list} onDelete={userDeleteHandler} /> */}
       </TabPanel>
       <TabPanel value={tab} index={1}>
+        <FilterNavbar options={commentUserFilters || {}} />
         <div>Comments</div>
         {/* <AdminTab list={list} onDelete={userDeleteHandler} /> */}
       </TabPanel>
@@ -167,3 +213,4 @@ UsersDetails.propTypes = {
 };
 
 export default withRouter(UsersDetails);
+// export default UsersDetails;

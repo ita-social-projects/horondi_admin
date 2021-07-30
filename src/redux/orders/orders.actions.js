@@ -23,7 +23,9 @@ import {
   SET_UKRPOST_POSTOFFICES,
   GET_UKRPOST_POSTOFFICES,
   SET_FILTER,
+  SET_FILTER_USER,
   CLEAR_FILTERS,
+  CLEAR_FILTERS_USER,
   SET_SORT,
   SET_ORDER_SORT_LABEL
 } from './orders.types';
@@ -147,8 +149,17 @@ const setOrderFilter = (payload) => ({
   payload
 });
 
+const setOrderFilterUser = (payload) => ({
+  type: SET_FILTER_USER,
+  payload
+});
+
 const clearOrderFilters = () => ({
   type: CLEAR_FILTERS
+});
+
+const clearOrderFiltersUser = () => ({
+  type: CLEAR_FILTERS_USER
 });
 
 const setOrderSort = (sort) => ({
@@ -186,7 +197,9 @@ export {
   getUkrPostRegions,
   setUkrPostRegions,
   setOrderFilter,
+  setOrderFilterUser,
   clearOrderFilters,
+  clearOrderFiltersUser,
   setOrderSort,
   setOrderSortLabel
 };

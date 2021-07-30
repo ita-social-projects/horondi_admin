@@ -12,7 +12,9 @@ import {
   SET_UKRPOST_CITIES,
   SET_UKRPOST_POSTOFFICES,
   CLEAR_FILTERS,
+  CLEAR_FILTERS_USER,
   SET_FILTER,
+  SET_FILTER_USER,
   SET_SORT,
   SET_ORDER_SORT_LABEL
 } from './orders.types';
@@ -25,9 +27,12 @@ const initialFilters = {
   search: ''
 };
 
+const defaultFiltersUser = { ...initialFilters };
+
 export const initialState = {
   list: [],
   filters: initialFilters,
+  filtersUser: { ...defaultFiltersUser },
   sort: {
     dateOfCreation: -1
   },
@@ -128,6 +133,14 @@ const ordersReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
+    case SET_FILTER_USER:
+      return {
+        ...state,
+        filtersUser: {
+          ...state.filtersUser,
+          ...action.payload
+        }
+      };
     case SET_SORT:
       return {
         ...state,
@@ -139,6 +152,13 @@ const ordersReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         filters: initialFilters,
+        sortLabel: '',
+        sort: {}
+      };
+    case CLEAR_FILTERS_USER:
+      return {
+        ...state,
+        filtersUser: defaultFiltersUser,
         sortLabel: '',
         sort: {}
       };

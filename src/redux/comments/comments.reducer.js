@@ -5,7 +5,9 @@ import {
   SET_COMMENTS_ERROR,
   SET_COMMENT,
   SET_FILTER,
+  SET_FILTER_USER,
   CLEAR_FILTERS,
+  CLEAR_FILTERS_USER,
   SET_RECENT_COMMENTS,
   SET_REPLY_COMMENTS,
   REMOVE_REPLY_COMMENT_FROM_STORE,
@@ -28,10 +30,13 @@ const initialFilters = {
   search: ''
 };
 
+const defaultFiltersUser = { ...initialFilters, typeComment: [] };
+
 export const initialState = {
   list: [],
   recentComments: [],
   filters: initialFilters,
+  filtersUser: { ...defaultFiltersUser },
   replyFilters: initialFilters,
   replySort: { date: 1 },
   replySortLabel: '',
@@ -50,6 +55,7 @@ export const selectComment = ({ Comments }) => ({
   list: Comments.list,
   recentComments: Comments.recentComments,
   filter: Comments.filters,
+  filtersUser: Comments.filtersUser,
   loading: Comments.commentsLoading,
   comment: Comments.comment,
   replyComments: Comments.replyComments,
@@ -149,10 +155,25 @@ const commentsReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
+    case SET_FILTER_USER:
+      return {
+        ...state,
+        filtersUser: {
+          ...state.filtersUser,
+          ...action.payload
+        }
+      };
     case CLEAR_FILTERS:
       return {
         ...state,
         filters: initialFilters,
+        sort: { date: -1 },
+        sortLabel: ''
+      };
+    case CLEAR_FILTERS_USER:
+      return {
+        ...state,
+        filtersUser: defaultFiltersUser,
         sort: { date: -1 },
         sortLabel: ''
       };
