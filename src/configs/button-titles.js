@@ -45,7 +45,6 @@ const buttonTitles = {
   CLOSE_DIALOG_TITLE: 'Закрити вікно',
   ORDER_DETAILS: 'Деталі',
   USER_STATUS_TITLE: 'Статус',
-  AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор',
   CLEAR_FILTERS: 'Очистити фільтри',
   CREATE_SLIDE_TITLE: 'Створити слайд',
   OPEN_SLIDE_EDIT: 'Увімкнути редагування',
@@ -78,7 +77,10 @@ const buttonTitles = {
   CREATE_BACK_TITLE: 'Додати спинку',
   CREATE_POCKETS_TITLE: 'Додати кишеню',
   PATTERN_AVAILABLE: 'Доступний',
-  PATTERN_MATERIAL: 'Матеріал'
+  PATTERN_MATERIAL: 'Матеріал',
+  CREATE_CONSTRUCTOR: 'Створити новий ',
+  CREATE_CLOSURES_TITLE: 'Додати защіпку',
+  CREATE_POSITION_TITLE: 'Додати розміщення'
 };
 
 export default buttonTitles;
