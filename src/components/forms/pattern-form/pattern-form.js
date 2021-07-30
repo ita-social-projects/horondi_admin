@@ -53,6 +53,8 @@ const {
   imagePrefix
 } = config;
 
+const { pathToPatterns } = config.routes;
+
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -83,6 +85,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   }, [dispatch, pattern]);
 
   const patternValidationSchema = Yup.object().shape({
+    sizes: Yup.array().notRequired(),
     enDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR_DESCRIPTION)
       .required(PATTERN_ERROR_MESSAGE)
@@ -111,6 +114,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(PATTERN_ERROR_MESSAGE),
+    handmade: Yup.boolean(),
     patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
     patternConstructorImage: Yup.string().required(
       CONSTRUCTOR_PHOTO_NOT_PROVIDED
@@ -222,14 +226,42 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     values
   );
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       {loading ? (
         <LoadingBar />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <CheckboxOptions options={checkboxes} />
-
+        <form onSubmit={(e) => eventPreventHandler(e)}>
+          <div className={styles.buttonContainer}>
+            <Grid container spacing={2} className={styles.fixedButtons}>
+              <Grid item className={styles.button}>
+                <BackButton
+                  initial={!valueEquality}
+                  pathBack={pathToPatterns}
+                />
+              </Grid>
+              <Grid item className={styles.button}>
+                <SaveButton
+                  data-cy='save-btn'
+                  type='submit'
+                  onClickHandler={handleSubmit}
+                  title={SAVE_TITLE}
+                  values={values}
+                  errors={errors}
+                />
+              </Grid>
+            </Grid>
+          </div>
+          <span className={styles.patternTitle}>
+            {config.titles.patternTitles.createPageTitle}
+          </span>
+          <div>
+            <CheckboxOptions options={checkboxes} />
+          </div>
           <Grid item xs={12}>
             <Paper className={styles.patternItemUpdate}>
               <div className={styles.imageUploadBlock}>
@@ -303,15 +335,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton initial={!valueEquality} />
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save-btn'
-            type='submit'
-            title={SAVE_TITLE}
-            values={values}
-            errors={errors}
-          />
         </form>
       )}
     </div>
@@ -327,17 +350,20 @@ PatternForm.propTypes = {
     _id: PropTypes.string,
     available: PropTypes.bool,
     description: PropTypes.arrayOf(valueShape),
-    handmade: PropTypes.bool,
+    features: PropTypes.shape({
+      material: PropTypes.string,
+      handmade: PropTypes.bool
+    }),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
     constructorImg: PropTypes.string,
-    material: PropTypes.string,
     name: PropTypes.arrayOf(valueShape)
   }),
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -347,6 +373,7 @@ PatternForm.propTypes = {
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -356,6 +383,7 @@ PatternForm.propTypes = {
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -397,18 +425,20 @@ PatternForm.defaultProps = {
       thumbnail: ''
     },
     constructorImg: '',
-    material: {
-      name: [
-        {
-          value: ''
-        },
-        {
-          value: ''
-        }
-      ]
+    features: {
+      material: {
+        name: [
+          {
+            value: ''
+          },
+          {
+            value: ''
+          }
+        ]
+      },
+      handmade: false
     },
-    available: false,
-    handmade: false
+    available: false
   },
   isEdit: false
 };

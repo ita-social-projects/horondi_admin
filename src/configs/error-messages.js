@@ -46,7 +46,6 @@ export const patternErrorMessages = {
     'Поле може містити тільки українські літери та цифри',
   PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
 };
-
 export const backErrorMessages = {
   BACK_VALIDATION_ERROR: 'Мінімум 2 символи',
   BACK_ERROR_MESSAGE: 'Поле не може бути порожнім',
@@ -56,7 +55,6 @@ export const backErrorMessages = {
   BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
   BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };
-
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
   CATEGORY_VALIDATION_ERROR_CATEGORY_NAME:
@@ -184,5 +182,18 @@ export const pocketsErrorMessages = {
   POCKETS_ERROR_MESSAGE: 'Поле не може бути порожнім',
   POCKETS_UA_NAME_MESSAGE:
     'Поле може містити тільки українські літери та цифри',
-  POCKETS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
+  POCKETS_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  POCKETS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+};
+
+export const positionErrorMessages = {
+  POSITION_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  POSITION_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  POSITION_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  POSITION_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  POSITION_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
