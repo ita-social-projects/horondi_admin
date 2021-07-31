@@ -109,6 +109,7 @@ const payload = {
 };
 
 export {
+  mockClosure,
   mockClosuresState,
   mockClosuresLoadPayload,
   mockClosures,

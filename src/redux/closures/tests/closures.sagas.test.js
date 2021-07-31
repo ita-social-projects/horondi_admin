@@ -26,7 +26,8 @@ import {
   mockInputClosure,
   mockError,
   mockTableState,
-  payload
+  payload,
+  mockClosure
 } from './mockClosures';
 
 import {
@@ -50,7 +51,7 @@ describe('Test Closure sagas', () => {
   it.skip('should load all Closures', async (done) => {
     expectSaga(handleClosuresLoad, { payload })
       .withReducer(combineReducers({ Closures, Table }), {
-        Closure: mockClosuresState,
+        Closures: mockClosuresState,
         Table: mockTableState
       })
       .put(setClosuresLoading(true))
@@ -69,7 +70,7 @@ describe('Test Closure sagas', () => {
       .put(setClosures(mockClosures.items))
       .put(setClosuresLoading(false))
       .hasFinalState({
-        Closure: {
+        Closures: {
           ...mockClosuresState,
           list: mockClosures.items
         },
@@ -87,19 +88,19 @@ describe('Test Closure sagas', () => {
     done();
   });
 
-  it.skip('should get Closure by id', async (done) => {
+  it.skip('should get Closures by id', async (done) => {
     expectSaga(handleClosuresLoad, { payload: mockId })
       .withReducer(combineReducers({ Closures }), {
-        Closure: mockClosuresState
+        Closures: mockClosuresState
       })
       .put(setClosuresLoading(true))
-      .provide([[call(getClosureById, mockId), mockClosures]])
-      .put(setClosure(mockClosures))
+      .provide([[call(getClosureById, mockId), mockClosure]])
+      .put(setClosure(mockClosure))
       .put(setClosuresLoading(false))
       .hasFinalState({
-        Closure: {
+        Closures: {
           ...mockClosuresState,
-          Closure: mockClosures
+          closure: mockClosure
         }
       })
       .run()
@@ -114,7 +115,7 @@ describe('Test Closure sagas', () => {
   it.skip('should add Closure by input data', async (done) => {
     expectSaga(handleClosuresAdd, { payload: mockInputClosure })
       .withReducer(combineReducers({ Closures }), {
-        Closure: mockClosuresState
+        Closures: mockClosuresState
       })
       .put(setClosuresLoading(true))
       .provide([
@@ -123,7 +124,7 @@ describe('Test Closure sagas', () => {
       ])
       .put(push('/Closures'))
       .hasFinalState({
-        Closure: {
+        Closures: {
           ...mockClosuresState,
           ClosureLoading: false
         }
@@ -137,10 +138,10 @@ describe('Test Closure sagas', () => {
     done();
   });
 
-  it.skip('should delete Closure by id', async (done) => {
+  it('should delete Closure by id', async (done) => {
     expectSaga(handleClosureDelete, { payload: mockId })
       .withReducer(combineReducers({ Closures }), {
-        Closure: {
+        Closures: {
           ...mockClosuresState,
           list: mockClosures.items
         }
@@ -154,7 +155,7 @@ describe('Test Closure sagas', () => {
       .put(updatePagination())
       .put(setClosuresLoading(false))
       .hasFinalState({
-        Closure: {
+        Closures: {
           ...mockClosuresState,
           list: []
         }
@@ -171,7 +172,7 @@ describe('Test Closure sagas', () => {
   it.skip('should update Closure by input data', async (done) => {
     expectSaga(handleClosureUpdate, { payload: mockInputClosure })
       .withReducer(combineReducers({ Closures }), {
-        Closure: mockClosuresState
+        Closures: mockClosuresState
       })
       .put(setClosuresLoading(true))
       .provide([
@@ -180,7 +181,7 @@ describe('Test Closure sagas', () => {
       ])
       .put(push('/Closures'))
       .hasFinalState({
-        Closure: {
+        Closures: {
           ...mockClosuresState,
           ClosureLoading: false
         }
@@ -197,19 +198,19 @@ describe('Test Closure sagas', () => {
   it.skip('should handle Closure errors', async (done) => {
     expectSaga(handleClosuresError, mockError)
       .withReducer(combineReducers({ Closures }), {
-        Closure: {
+        Closures: {
           ...mockClosuresState,
-          ClosureLoading: true
+          closuresLoading: true
         }
       })
       .provide([[call(handleErrorSnackbar, mockError.message)]])
       .put(setClosuresLoading(false))
       // .put(setClosuresError({ e: mockError }))
       .hasFinalState({
-        Closure: {
+        Closures: {
           ...mockClosuresState,
-          ClosureLoading: false,
-          ClosureError: { e: mockError }
+          closuresLoading: false,
+          closuresError: { e: mockError }
         }
       })
       .run()
