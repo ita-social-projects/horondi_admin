@@ -14,12 +14,6 @@ import {
   updateClosure
 } from '../../../redux/closures/closures.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import { closuresTranslations } from '../../../translations/closures.translations';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
 import { getClosuresInitialValues } from '../../../utils/closures-form';
 import CheckboxOptions from '../../checkbox-options';
@@ -39,7 +33,6 @@ const {
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages, IMG_URL, materialUiConstants } = config;
-const { CLOSURES_ERROR } = closuresTranslations;
 
 const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
   config.formRegExp;
@@ -87,7 +80,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
       const newClosure = createClosures(data);
       const uploadCondition = upload instanceof File;
 
-      if (id) {
+      if (id && uploadCondition) {
         dispatch(
           updateClosure({
             id,
@@ -98,12 +91,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
         return;
       }
       dispatch(addClosures({ closure: newClosure, upload }));
-
-      if (!uploadCondition && !closure.images.thumbnail) {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(CLOSURES_ERROR));
-        dispatch(setSnackBarStatus(true));
-      }
     }
   });
 

@@ -112,11 +112,10 @@ describe('useEffect tests', () => {
         <ClosuresPage />
       </BrowserRouter>
     );
-    // console.log(wrapper.debug())
     closurePage = wrapper.find(ClosuresPage);
     tableContainerRow = closurePage.find(TableContainerRow);
     tableContainerRowFirst = closurePage.find({
-      id: '60fed1aee3a0252140b5b79a'
+      id: mockClosures.closuresList[0]._id
     });
   });
 
