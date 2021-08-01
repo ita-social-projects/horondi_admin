@@ -31,11 +31,41 @@ const mockClosures = {
           value: 500
         }
       ],
-      available: true,
-      customizable: null
+      available: true
     }
   ],
-  count: 3
+  count: 1
+};
+const singleClosure = {
+  _id: mockId,
+  name: [
+    {
+      lang: 'ua',
+      value: 'Чорна пластмасова'
+    },
+    {
+      lang: 'en',
+      value: 'Black plastic'
+    }
+  ],
+  images: {
+    large: 'large_3cczdzwkrm28odg_git.png',
+    medium: 'medium_3cczdzwkrm28odg_git.png',
+    small: 'small_3cczdzwkrm28odg_git.png',
+    thumbnail: 'thumbnail_3cczdzwkrm28odg_git.png'
+  },
+  optionType: 'CLOSURE',
+  additionalPrice: [
+    {
+      currency: 'UAH',
+      value: 13410
+    },
+    {
+      currency: 'USD',
+      value: 500
+    }
+  ],
+  available: true
 };
 
 const mockClosure = {
@@ -44,9 +74,12 @@ const mockClosure = {
 };
 
 const filter = {
-  search: 'чорна'
+  search: ''
 };
-
+const pagination = {
+  limit: 1,
+  skip: 0
+};
 const mockInitialFilters = {
   search: ''
 };
@@ -84,7 +117,6 @@ const mockClosuresLoadPayload = {
   filter: {
     search: ''
   }
-  // closuresPerPage: 10
 };
 
 const mockSnackarState = {
@@ -103,11 +135,6 @@ const mockError = {
   message: 'error'
 };
 
-const payload = {
-  limit: 10,
-  skip: 0
-};
-
 export {
   mockClosure,
   mockClosuresState,
@@ -121,5 +148,6 @@ export {
   mockTableState,
   filter,
   mockInitialFilters,
-  payload
+  pagination,
+  singleClosure
 };
