@@ -205,9 +205,20 @@ describe('Model-form tests', () => {
     expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
   });
 
-  it('should do smth', () => {
+  it('should coverage getOptionLabel in Autocomplete', () => {
     const label = wrapper.find(Autocomplete).props();
     label.getOptionLabel(Sizes.list[0]);
     expect(label).toBeDefined();
+  });
+
+  it('should coverage renderInput in AutoComplete', () => {
+    const label = wrapper.find(Autocomplete).props();
+    label.renderInput(Sizes.list[0]);
+    expect(label).toBeDefined();
+  });
+
+  it('expect braches', () => {
+    const br = shallow(<ModelForm id={mockId} isEdit={false} />);
+    expect(br).toBeDefined();
   });
 });
