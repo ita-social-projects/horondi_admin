@@ -121,7 +121,7 @@ export const getPocketById = async (id) => {
 
 export const updatePocket = async (id, pocket, image) => {
   const query = `
-        mutation updatePocket(
+        mutation (
           $id: ID!
           $pocket: PocketInput!
           $image: Upload
