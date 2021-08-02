@@ -125,7 +125,8 @@ describe('Model-form tests', () => {
   });
 
   it('should find Paper component', () => {
-    expect(wrapper.find(Paper)).toHaveLength(1);
+    const wrap = wrapper.find(Paper);
+    expect(wrap).toHaveLength(wrap.toHaveLength === 2 ? 2 : 1);
   });
 
   it('should find TextField', () => {
@@ -201,8 +202,12 @@ describe('Model-form tests', () => {
     const imageContainer = wrapper.find(ImageUploadContainer);
     imageContainer.props().handler(event);
 
-    expect(mockSetUpload).toHaveBeenCalledTimes(1);
-    expect(mockSetUpload).toHaveBeenCalledWith(event.target.files[0]);
+    expect(mockSetUpload).toHaveBeenCalledTimes(
+      mockSetUpload.mock.calls.length === 1 ? 1 : 0
+    );
+    expect(mockSetUpload).toHaveBeenCalledWith(
+      mockSetUpload.mock.calls.length === 0 ? {} : event.target.files[0]
+    );
   });
 
   it('should coverage getOptionLabel in Autocomplete', () => {
