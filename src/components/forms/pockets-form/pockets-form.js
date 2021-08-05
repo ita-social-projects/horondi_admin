@@ -26,6 +26,7 @@ import { getPocketsInitialValues } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import { getAllPositions } from '../../../redux/position/position.actions';
+import { handleCircularProgress } from '../../../utils/handle-orders-page';
 
 const labels = config.labels.pocketsPageLabel;
 
@@ -72,8 +73,9 @@ const PocketsForm = ({ pocket, id, edit }) => {
     );
   }, [dispatch]);
 
-  const { positionsList } = useSelector(({ Positions }) => ({
-    positionsList: Positions.list.items
+  const { positionsList, loadingPositions } = useSelector(({ Positions }) => ({
+    positionsList: Positions.list.items,
+    loadingPositions: Positions.positionsLoading
   }));
 
   const [positions, setPositions] = useState(pocket.positions || []);
@@ -239,11 +241,13 @@ const PocketsForm = ({ pocket, id, edit }) => {
             className={styles.textField}
             multiple
             freeSolo
+            filterSelectedOptions
             options={availablePositions}
-            getOptionLabel={(option) => `${option.name[0].value}`}
+            getOptionSelected={(option, value) => option._id === value._id}
             defaultValue={positions}
             onChange={onTagsChange}
             onBlur={handleBlur}
+            getOptionLabel={(option) => `${option.name[0].value}`}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -253,6 +257,10 @@ const PocketsForm = ({ pocket, id, edit }) => {
                 margin={labels.normal}
                 fullWidth
                 error={touched.labelIdAut && !!errors.positions}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: <>{handleCircularProgress(loadingPositions)}</>
+                }}
               />
             )}
           />

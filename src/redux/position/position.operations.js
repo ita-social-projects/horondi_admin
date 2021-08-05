@@ -90,7 +90,7 @@ export const getPositionById = async (id) => {
 };
 
 export const updatePosition = async (id, position) => {
-  const query = `mutation updatePosition($id: ID!, $position: PositionInput!) {
+  const query = `mutation ($id: ID!, $position: PositionInput!) {
                     updatePosition(id: $id, position: $position) {
                       ... on Position {
                         _id
