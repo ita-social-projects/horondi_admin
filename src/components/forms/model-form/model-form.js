@@ -9,11 +9,9 @@ import {
   Select,
   FormControl,
   InputLabel,
-  Avatar,
   Button
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Image } from '@material-ui/icons';
 import { push } from 'connected-react-router';
 
 import useModelHandlers from '../../../utils/use-model-handlers';

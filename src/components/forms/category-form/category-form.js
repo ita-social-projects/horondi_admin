@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Avatar } from '@material-ui/core';
+import { Paper, TextField, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import useCategoryHandlers from '../../../utils/use-category-handlers';
 import { useStyles } from './category-form.styles';
