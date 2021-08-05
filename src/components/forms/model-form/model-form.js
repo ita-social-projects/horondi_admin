@@ -9,11 +9,9 @@ import {
   Select,
   FormControl,
   InputLabel,
-  Avatar,
   Button
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Image } from '@material-ui/icons';
 import { push } from 'connected-react-router';
 
 import useModelHandlers from '../../../utils/use-model-handlers';
@@ -236,10 +234,14 @@ const ModelForm = ({ model, id, isEdit }) => {
           <Paper className={styles.modelItemUpdate}>
             <span className={styles.imageUpload}>{avatarText}</span>
             <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
-              <Avatar src={modelImage || `${IMG_URL}${model.images.thumbnail}`}>
-                <Image />
-              </Avatar>
+              <ImageUploadContainer
+                handler={handleImageLoad}
+                src={
+                  isEdit
+                    ? modelImage || `${IMG_URL}${model.images.thumbnail}`
+                    : modelImage
+                }
+              />
             </div>
             <FormControl
               variant={materialUiConstants.outlined}
