@@ -236,10 +236,14 @@ const ModelForm = ({ model, id, isEdit }) => {
           <Paper className={styles.modelItemUpdate}>
             <span className={styles.imageUpload}>{avatarText}</span>
             <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
-              <Avatar src={modelImage || `${IMG_URL}${model.images.thumbnail}`}>
-                <Image />
-              </Avatar>
+              <ImageUploadContainer
+                handler={handleImageLoad}
+                src={
+                  isEdit
+                    ? modelImage || `${IMG_URL}${model.images.thumbnail}`
+                    : modelImage
+                }
+              />
             </div>
             <FormControl
               variant={materialUiConstants.outlined}

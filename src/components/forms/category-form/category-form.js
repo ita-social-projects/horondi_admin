@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Avatar } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Image } from '@material-ui/icons';
 import useCategoryHandlers from '../../../utils/use-category-handlers';
 import { useStyles } from './category-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -165,12 +164,10 @@ const CategoryForm = ({ category, id, edit }) => {
               {config.labels.avatarText}
             </span>
             <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
-              {(categoryImage || edit) && (
-                <Avatar src={edit ? values.categoryImage : categoryImage}>
-                  <Image />
-                </Avatar>
-              )}
+              <ImageUploadContainer
+                handler={handleImageLoad}
+                src={edit ? values.categoryImage : categoryImage}
+              />
             </div>
             <TextField
               data-cy='code'
