@@ -12,7 +12,7 @@ import LoadingBar from '../../../components/loading-bar';
 import TableContainerCollapsableRow from '../../../containers/table-container-collapsable-row';
 import useQuestionFilters from '../../../hooks/filters/use-question-filters';
 
-jest.mock('../../../hooks/filters/use-questions-filter');
+jest.mock('../../../hooks/filters/use-question-filters');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn().mockImplementationOnce((selector) => selector()),
