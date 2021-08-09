@@ -4,14 +4,17 @@ import { bottomTranslations } from '../../translations/bottom.translations';
 export const getAllBottoms = async (limit, skip, filter) => {
   const getAllBottomsQuery = `
     query (
-      $limit: Int
-      $skip: Int
+      $limit: Int!
+      $skip: Int!
       $filter: BottomFilterInput
     ){
         getAllBottoms(limit: $limit, skip: $skip, filter: $filter) {
           items {
             _id
-            name
+            name {
+              lang
+              value
+            }
             optionType
             features {
               material {
@@ -70,7 +73,10 @@ export const getBottomById = async (id) => {
       query ($id: ID!){
         getBottomById(id: $id) {
             ... on Bottom {
-                name
+                name {
+                  lang
+                  value
+                }
                 optionType
                 features {
                   material {
@@ -183,7 +189,10 @@ export const updateBottom = async (payload) => {
         updateBottom(id: $id, bottom: $bottom, image: $image) {
           ... on Bottom {
             _id
-            name
+            name {
+              lang
+              value
+            }
             optionType
             features {
               material {
