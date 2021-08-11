@@ -67,13 +67,11 @@ export function* handleClosuresAdd({ payload }) {
 export function* handleClosureDelete({ payload }) {
   try {
     yield put(setClosuresLoading(true));
-    const closure = yield call(deleteClosure, payload);
-    if (closure) {
-      yield put(removeClosureFromState(payload));
-      yield put(setClosuresLoading(false));
-      yield put(updatePagination());
-      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-    }
+    yield call(deleteClosure, payload);
+    yield put(removeClosureFromState(payload));
+    yield put(setClosuresLoading(false));
+    yield put(updatePagination());
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
   } catch (error) {
     yield call(handleClosuresError, error);
   }

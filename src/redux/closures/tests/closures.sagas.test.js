@@ -8,7 +8,8 @@ import {
   handleClosuresAdd,
   handleClosureDelete,
   handleClosureUpdate,
-  handleClosuresError
+  handleClosuresError,
+  handleClosureById
 } from '../closures.sagas';
 
 import {
@@ -47,6 +48,9 @@ import {
   handleSuccessSnackbar,
   handleErrorSnackbar
 } from '../../snackbar/snackbar.sagas';
+import Back from '../../back/back.reducer';
+import { mockBacks, mockBacksState } from '../../back/tests/back.variables';
+import { removeBackFromStore, setBackLoading } from '../../back/back.actions';
 
 describe('Test Closure sagas', () => {
   it('should load all Closures', async (done) => {
@@ -84,8 +88,8 @@ describe('Test Closure sagas', () => {
     done();
   });
 
-  it.skip('should get Closures by id', async (done) => {
-    expectSaga(handleClosuresLoad, { payload: mockId })
+  it('should get Closures by id', async (done) => {
+    expectSaga(handleClosureById, { payload: mockId })
       .withReducer(combineReducers({ Closures }), {
         Closures: mockClosuresState
       })
@@ -118,11 +122,11 @@ describe('Test Closure sagas', () => {
         [call(createClosures, mockInputClosure)],
         [call(handleSuccessSnackbar, statuses.SUCCESS_ADD_STATUS)]
       ])
-      .put(push('/Closures'))
+      .put(push('/closures'))
       .hasFinalState({
         Closures: {
           ...mockClosuresState,
-          ClosureLoading: false
+          closuresLoading: false
         }
       })
       .run()
@@ -134,12 +138,12 @@ describe('Test Closure sagas', () => {
     done();
   });
 
-  it.skip('should delete Closure by id', async (done) => {
+  it('should delete Closure by id', async (done) => {
     expectSaga(handleClosureDelete, { payload: mockId })
       .withReducer(combineReducers({ Closures }), {
         Closures: {
           ...mockClosuresState,
-          list: mockClosures.items
+          list: mockClosures
         }
       })
       .put(setClosuresLoading(true))
