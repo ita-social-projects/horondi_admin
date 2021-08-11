@@ -78,9 +78,10 @@ const ClosuresForm = ({ closure, id, edit }) => {
     initialValues: getClosuresInitialValues(edit, IMG_URL, closure),
     onSubmit: (data) => {
       const newClosure = createClosures(data);
-      const uploadCondition = upload instanceof File;
+      const editAndUpload = edit && upload instanceof File;
+      // const uploadCondition = upload instanceof File;
 
-      if (id && uploadCondition) {
+      if (editAndUpload || edit) {
         dispatch(
           updateClosure({
             id,

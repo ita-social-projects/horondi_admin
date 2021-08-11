@@ -109,7 +109,7 @@ export const getClosureById = async (id) => {
   return result?.data?.getClosureById;
 };
 
-export const updateClosure = async ({ id, closure, image }) => {
+export const updateClosure = async ({ id, closure, upload: image }) => {
   const query = `
         mutation updateClosure(
           $id: ID!

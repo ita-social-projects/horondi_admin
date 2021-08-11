@@ -16,7 +16,8 @@ import {
   setClosures,
   setClosuresLoading,
   setClosure,
-  removeClosureFromState
+  removeClosureFromState,
+  setClosureError
 } from '../closures.actions';
 
 import {
@@ -205,7 +206,7 @@ describe('Test Closure sagas', () => {
       })
       .provide([[call(handleErrorSnackbar, mockError.message)]])
       .put(setClosuresLoading(false))
-      // .put(setClosuresError({ e: mockError }))
+      .put(setClosureError({ e: mockError }))
       .hasFinalState({
         Closures: {
           ...mockClosuresState,
