@@ -9,7 +9,8 @@ import {
   SET_CLOSURE,
   UPDATE_CLOSURE,
   SET_CLOSURE_FILTER,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  SET_CLOSURE_ERROR
 } from '../closures.types';
 
 import {
@@ -23,7 +24,8 @@ import {
   deleteClosure,
   updateClosure,
   setFilter,
-  clearFilters
+  clearFilters,
+  setClosureError
 } from '../closures.actions';
 
 import { mockClosures, mockId, filter } from './mockClosures';
@@ -91,6 +93,11 @@ describe('closure actions tests', () => {
   it('should clear all closures filters', () => {
     expect(clearFilters()).toEqual({
       type: CLEAR_FILTER
+    });
+  });
+  it('should clear all closures filters', () => {
+    expect(setClosureError()).toEqual({
+      type: SET_CLOSURE_ERROR
     });
   });
 });

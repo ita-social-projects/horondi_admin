@@ -11,7 +11,8 @@ import {
   setClosure,
   removeClosureFromState,
   clearFilters,
-  setFilter
+  setFilter,
+  setClosureError
 } from '../closures.actions';
 
 describe('reducer tests', () => {
@@ -68,6 +69,13 @@ describe('reducer tests', () => {
     expect(closuresReducer(initialState, clearFilters())).toEqual({
       ...initialState,
       filter: mockInitialFilters
+    });
+  });
+
+  it('should set closures error to true', () => {
+    expect(closuresReducer(initialState, setClosureError(true))).toEqual({
+      ...initialState,
+      closuresError: true
     });
   });
 });
