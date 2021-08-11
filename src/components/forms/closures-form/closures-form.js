@@ -79,7 +79,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
     onSubmit: (data) => {
       const newClosure = createClosures(data);
       const editAndUpload = edit && upload instanceof File;
-      // const uploadCondition = upload instanceof File;
 
       if (editAndUpload || edit) {
         dispatch(
