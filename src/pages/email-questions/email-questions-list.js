@@ -11,7 +11,7 @@ import {
   answerToEmailQuestion
 } from '../../redux/email-questions/email-questions.actions';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
-import useQuestionFilter from '../../hooks/filters/use-questions-filter';
+import useQuestionFilters from '../../hooks/filters/use-question-filters';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -44,7 +44,7 @@ const EmailQuestionsList = () => {
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const questionOptions = useQuestionFilter();
+  const questionOptions = useQuestionFilters();
 
   const { filters, loading, list, currentPage, rowsPerPage, itemsCount } =
     useSelector(questionSelectorWithPagination);
