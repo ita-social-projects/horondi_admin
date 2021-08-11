@@ -20,13 +20,16 @@ import {
   setClosures,
   setClosuresLoading,
   removeClosureFromState,
-  setClosure
+  setClosure,
+  setClosureError
 } from './closures.actions';
 import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
 import { setItemsCount, updatePagination } from '../table/table.actions';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
@@ -53,14 +56,12 @@ export function* handleClosuresLoad({ payload: { pagination, filter } }) {
 export function* handleClosuresAdd({ payload }) {
   try {
     yield put(setClosuresLoading(true));
-    const closure = yield call(createClosures, payload);
-    if (closure) {
-      yield put(setClosuresLoading(false));
-      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-      yield put(push(config.routes.pathToClosures));
-    }
-  } catch (e) {
-    yield call(handleClosuresError, e);
+    yield call(createClosures, payload);
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+    yield put(push(config.routes.pathToClosures));
+    yield put(setClosuresLoading(false));
+  } catch (error) {
+    yield call(handleClosuresError, error);
   }
 }
 
@@ -93,20 +94,23 @@ export function* handleClosureById({ payload }) {
 export function* handleClosureUpdate({ payload }) {
   try {
     yield put(setClosuresLoading(true));
-    const { id, closure, upload } = payload;
-    const closureUpdate = yield call(updateClosure, id, closure, upload);
-    if (closureUpdate) {
-      yield put(setClosuresLoading(false));
-      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-      yield put(push(config.routes.pathToClosures));
-    }
+    yield call(updateClosure, payload);
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    yield put(push(config.routes.pathToClosures));
+    yield put(setClosuresLoading(false));
   } catch (error) {
     yield call(handleClosuresError, error);
   }
 }
 
 export function* handleClosuresError(e) {
-  yield call(handleErrorSnackbar, e.message);
+  if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setClosuresLoading(false));
+    yield put(setClosureError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* closuresSaga() {

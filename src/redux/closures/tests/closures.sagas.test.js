@@ -112,7 +112,7 @@ describe('Test Closure sagas', () => {
     done();
   });
 
-  it.skip('should add Closure by input data', async (done) => {
+  it('should add Closure by input data', async (done) => {
     expectSaga(handleClosuresAdd, { payload: mockInputClosure })
       .withReducer(combineReducers({ Closures }), {
         Closures: mockClosuresState
@@ -169,7 +169,7 @@ describe('Test Closure sagas', () => {
     done();
   });
 
-  it.skip('should update Closure by input data', async (done) => {
+  it('should update Closure by input data', async (done) => {
     expectSaga(handleClosureUpdate, { payload: mockInputClosure })
       .withReducer(combineReducers({ Closures }), {
         Closures: mockClosuresState
@@ -179,11 +179,11 @@ describe('Test Closure sagas', () => {
         [call(updateClosure, mockInputClosure)],
         [call(handleSuccessSnackbar, statuses.SUCCESS_UPDATE_STATUS)]
       ])
-      .put(push('/Closures'))
+      .put(push('/closures'))
       .hasFinalState({
         Closures: {
-          ...mockClosuresState,
-          ClosureLoading: false
+          ...mockClosuresState
+          // closureLoading: false
         }
       })
       .run()
@@ -195,7 +195,7 @@ describe('Test Closure sagas', () => {
     done();
   });
 
-  it.skip('should handle Closure errors', async (done) => {
+  it('should handle Closure errors', async (done) => {
     expectSaga(handleClosuresError, mockError)
       .withReducer(combineReducers({ Closures }), {
         Closures: {
