@@ -95,4 +95,10 @@ describe('test СategoryForm', () => {
     wrapper.find(ImageUploadContainer).at(1).props().handler();
     expect(mockSetContactsImage).toHaveBeenCalledTimes(2);
   });
+  it('should call preventDefault', () => {
+    const event = { preventDefault: () => {} };
+    jest.spyOn(event, 'preventDefault');
+    wrapper.find('form').simulate('submit', event);
+    expect(event.preventDefault).toBeCalled();
+  });
 });
