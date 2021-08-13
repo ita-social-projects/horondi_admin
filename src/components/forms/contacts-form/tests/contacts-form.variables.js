@@ -1,4 +1,3 @@
-const contactSaveHandler = () => {};
 const initialValues = {
   phoneNumber: '0662837452',
   uaSchedule: 'тест',
@@ -10,4 +9,4 @@ const initialValues = {
   email: 'something@gmail.com',
   cartLink: 'www.google.com'
 };
-module.exports = { contactSaveHandler, initialValues };
+module.exports = { initialValues };

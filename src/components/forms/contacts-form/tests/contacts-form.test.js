@@ -6,7 +6,7 @@ import * as reactRedux from 'react-redux';
 import ContactsForm from '../index';
 import { config } from '../../../../configs';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
-import { contactSaveHandler, initialValues } from './contacts-form.variables';
+import { initialValues } from './contacts-form.variables';
 
 configure({ adapter: new Adapter() });
 
@@ -16,6 +16,7 @@ const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
 const mockChange = jest.fn();
 const mockBlur = jest.fn();
+const mockContactSaveHandler = jest.fn();
 
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
@@ -59,7 +60,7 @@ describe('test СategoryForm', () => {
     useDispatchMock.mockImplementation(() => jest.fn());
     wrapper = mount(
       <ContactsForm
-        contactSaveHandler={contactSaveHandler}
+        contactSaveHandler={mockContactSaveHandler}
         initialValues={initialValues}
       />
     );
