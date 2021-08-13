@@ -83,7 +83,7 @@ const tableHeadRowTitles = {
   homePageSlides: ['Порядок', 'Назва', 'Доступний', 'Дії'],
   actionLabel: 'Дії',
   constructor: ['Колір', 'Назва', 'Матеріал', 'Доступний', 'Дії'],
-  pockets: ['Зображення', 'Назва', 'Доступний', 'Дії'],
+  pockets: ['Зображення', 'Назва', 'Додаткова ціна (USD)', 'Доступний', 'Дії'],
   backs: [
     'Фото',
     'Назва',
@@ -92,7 +92,9 @@ const tableHeadRowTitles = {
     'Ціна (USD)',
     'Доступний',
     'Дії'
-  ]
+  ],
+  positions: ['Назва', 'Доступний', 'Дії'],
+  closures: ['Фото', 'Назва', 'Ціна (USD)', 'Доступний', 'Дії']
 };
 
 export default tableHeadRowTitles;

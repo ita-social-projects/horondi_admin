@@ -7,7 +7,7 @@ import { setCurrentPage } from '../../redux/table/table.actions';
 import buttonTitles from '../../configs/button-titles';
 import { showQuestionOptions, showFilterObj } from '../../utils/questions';
 
-const useQuestionFilter = () => {
+const useQuestionFilters = () => {
   const dispatch = useDispatch();
   const selctedFilters = useSelector(
     ({ EmailQuestions }) => EmailQuestions.filters
@@ -76,4 +76,4 @@ const useQuestionFilter = () => {
   };
 };
 
-export default useQuestionFilter;
+export default useQuestionFilters;

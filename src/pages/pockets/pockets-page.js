@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
-
 import _ from 'lodash';
+
 import LoadingBar from '../../components/loading-bar';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
@@ -66,6 +66,7 @@ const PocketsPage = () => {
       id={pocket._id}
       image={pocket?.images?.thumbnail ? IMG_URL + pocket.images.thumbnail : ''}
       name={pocket?.name[0]?.value}
+      additionalPrice={pocket?.additionalPrice[1]?.value / 100}
       available={pocket.restriction ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         pocketsDeleteHandler(pocket._id);

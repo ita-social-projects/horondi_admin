@@ -24,7 +24,8 @@ const formStyles = (theme) => ({
 
   returnButton: {
     margin: theme.spacing(2),
-    marginRight: 0
+    marginRight: 0,
+    marginLeft: 0
   },
 
   large: {

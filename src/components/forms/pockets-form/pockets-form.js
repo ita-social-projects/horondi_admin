@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import usePocketsHandlers from '../../../utils/use-pockets-handlers';
 import { useStyles } from './pockets-form.styles';
@@ -24,6 +25,8 @@ import LanguagePanel from '../language-panel';
 import { getPocketsInitialValues } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { getAllPositions } from '../../../redux/position/position.actions';
+import { handleCircularProgress } from '../../../utils/handle-orders-page';
 
 const labels = config.labels.pocketsPageLabel;
 
@@ -31,7 +34,10 @@ const {
   POCKETS_VALIDATION_ERROR,
   POCKETS_ERROR_MESSAGE,
   POCKETS_UA_NAME_MESSAGE,
-  POCKETS_EN_NAME_MESSAGE
+  POCKETS_EN_NAME_MESSAGE,
+  POCKETS_MAX_LENGTH_MESSAGE,
+  POCKETS_MIN_LENGTH_MESSAGE,
+  POCKETS_POSITION_ERROR_MESSAGE
 } = config.pocketsErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -41,31 +47,60 @@ const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
   config.formRegExp;
 const { materialUiConstants } = config;
+const { pathToPockets } = config.routes;
 
 const PocketsForm = ({ pocket, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
+  const checkIsEdit = (checkCondition) => {
+    if (checkCondition) {
+      return pocket.positions.map((item) => item._id);
+    }
+  };
+
   const { createPockets, setUpload, upload, pocketsImage, setPocketsImage } =
     usePocketsHandlers();
 
-  const { pathToPockets } = config.routes;
+  useEffect(() => {
+    dispatch(
+      getAllPositions({
+        pagination: {
+          skip: null,
+          limit: null
+        }
+      })
+    );
+  }, [dispatch]);
+
+  const { positionsList, loadingPositions } = useSelector(({ Positions }) => ({
+    positionsList: Positions.list.items,
+    loadingPositions: Positions.positionsLoading
+  }));
+
+  const [positions, setPositions] = useState(pocket.positions || []);
+
+  const availablePositions =
+    positionsList && positionsList.length
+      ? positionsList.filter((el) => el.available)
+      : null;
 
   const pocketsValidationSchema = Yup.object().shape({
     uaName: Yup.string()
-      .min(2, POCKETS_VALIDATION_ERROR)
-      .max(50, POCKETS_VALIDATION_ERROR)
+      .min(2, POCKETS_MIN_LENGTH_MESSAGE)
+      .max(50, POCKETS_MAX_LENGTH_MESSAGE)
       .required(POCKETS_ERROR_MESSAGE)
       .matches(uaNameCreation, POCKETS_UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, POCKETS_VALIDATION_ERROR)
-      .max(50, POCKETS_VALIDATION_ERROR)
+      .min(2, POCKETS_MIN_LENGTH_MESSAGE)
+      .max(50, POCKETS_MAX_LENGTH_MESSAGE)
       .required(POCKETS_ERROR_MESSAGE)
       .matches(enNameCreation, POCKETS_EN_NAME_MESSAGE),
     additionalPrice: Yup.string()
       .required(POCKETS_ERROR_MESSAGE)
       .matches(additionalPriceRegExp, POCKETS_VALIDATION_ERROR)
-      .nullable()
+      .nullable(),
+    positions: Yup.string().required(POCKETS_POSITION_ERROR_MESSAGE)
   });
 
   const {
@@ -78,7 +113,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
     setFieldValue
   } = useFormik({
     validationSchema: pocketsValidationSchema,
-    initialValues: getPocketsInitialValues(edit, IMG_URL, pocket),
+    initialValues: getPocketsInitialValues(edit, IMG_URL, pocket, checkIsEdit),
     onSubmit: (data) => {
       const newPocket = createPockets(data);
       const uploadCondition = upload instanceof File;
@@ -115,17 +150,24 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   };
 
-  const checkboxes = [
+  const checkboxes = (checkBoxName, label) => [
     {
-      id: 'restriction',
-      dataCy: 'restriction',
-      value: values.restriction,
-      checked: values.restriction,
-      color: 'primary',
-      label: labels.avaliable,
-      handler: () => setFieldValue('restriction', !values.restriction)
+      id: `${checkBoxName}`,
+      dataCy: `${checkBoxName}`,
+      value: values[`${checkBoxName}`],
+      checked: values[`${checkBoxName}`],
+      color: materialUiConstants.primary,
+      label,
+      handler: () =>
+        setFieldValue(`${checkBoxName}`, !values[`${checkBoxName}`])
     }
   ];
+
+  const onTagsChange = (_, value) => {
+    const positionsData = value.map((position) => position._id);
+    setFieldValue('positions', [...new Set(positionsData)]);
+    setPositions(value);
+  };
 
   const inputs = [{ label: labels.pocketsName, name: 'name' }];
 
@@ -139,7 +181,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
   };
 
   const valueEquality = checkInitialValue(
-    getPocketsInitialValues(edit, IMG_URL, pocket),
+    getPocketsInitialValues(edit, IMG_URL, pocket, checkIsEdit),
     values
   );
 
@@ -173,7 +215,9 @@ const PocketsForm = ({ pocket, id, edit }) => {
           </Grid>
         </div>
         <div>
-          <CheckboxOptions options={checkboxes} />
+          <CheckboxOptions
+            options={checkboxes(labels.labelsRestriction, labels.avaliable)}
+          />
         </div>
         <Grid item xs={12}>
           <Paper>
@@ -191,6 +235,44 @@ const PocketsForm = ({ pocket, id, edit }) => {
             )}
           </Paper>
         </Grid>
+        <Paper className={styles.inputPanel}>
+          <Autocomplete
+            id={labels.labelIdAut}
+            className={styles.textField}
+            multiple
+            freeSolo
+            filterSelectedOptions
+            options={availablePositions}
+            getOptionSelected={(option, value) => option._id === value._id}
+            defaultValue={positions}
+            onChange={onTagsChange}
+            onBlur={handleBlur}
+            getOptionLabel={(option) => `${option.name[0].value}`}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant={materialUiConstants.outlined}
+                label={labels.choosePositions.title}
+                placeholder={labels.choosePositions.inputTitle}
+                margin={labels.normal}
+                fullWidth
+                error={touched.labelIdAut && !!errors.positions}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: <>{handleCircularProgress(loadingPositions)}</>
+                }}
+              />
+            )}
+          />
+          {touched.labelIdAut && errors.positions && (
+            <div
+              data-cy={materialUiConstants.codeError}
+              className={styles.error}
+            >
+              {errors.positions}
+            </div>
+          )}
+        </Paper>
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
@@ -230,28 +312,40 @@ PocketsForm.propTypes = {
   pocket: PropTypes.shape({
     images: PropTypes.shape({
       thumbnail: PropTypes.string
-    })
+    }),
+    uaName: PropTypes.string,
+    enName: PropTypes.string,
+    restrictions: PropTypes.bool,
+    optionType: PropTypes.string,
+    positions: PropTypes.shape([]),
+    additionalPrice: PropTypes.number
   }),
   values: PropTypes.shape({
     pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    optionType: PropTypes.string
+    optionType: PropTypes.string,
+    positions: PropTypes.shape([]),
+    additionalPrice: PropTypes.number
   }),
   errors: PropTypes.shape({
     pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    optionType: PropTypes.string
+    optionType: PropTypes.string,
+    positions: PropTypes.shape([]),
+    additionalPrice: PropTypes.number
   }),
   touched: PropTypes.shape({
     pocketsImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     restrictions: PropTypes.bool,
-    optionType: PropTypes.string
+    optionType: PropTypes.string,
+    positions: PropTypes.shape([]),
+    additionalPrice: PropTypes.number
   }),
   edit: PropTypes.bool
 };
@@ -281,7 +375,8 @@ PocketsForm.defaultProps = {
     additionalPrice: [
       { value: null, currency: '' },
       { value: null, currency: '' }
-    ]
+    ],
+    positions: []
   },
   edit: false
 };
