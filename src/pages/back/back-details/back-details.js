@@ -12,6 +12,7 @@ const BackDetails = ({ match }) => {
 
   const dispatch = useDispatch();
   const { back } = useSelector(backSelector);
+
   const styles = useStyles();
 
   useEffect(() => {

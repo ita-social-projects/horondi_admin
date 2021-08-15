@@ -146,6 +146,35 @@ const labels = {
       }
     ]
   },
+  bottom: {
+    image: 'Фото низу',
+    material: 'Матеріал',
+    available: 'Доступний',
+    avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    bottomName: {
+      ua: 'Назва низу',
+      en: 'Bottom name'
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для низу',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір низу',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
+  },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),

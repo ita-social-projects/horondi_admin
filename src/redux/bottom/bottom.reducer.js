@@ -13,15 +13,12 @@ export const selectBottom = ({ Bottom }) => ({
   list: Bottom.list,
   loading: Bottom.bottomLoading,
   bottom: Bottom.bottom,
-  filter: Bottom.filter,
+  filter: Bottom.filters,
   sort: Bottom.sort
 });
 
 const initialFilters = {
-  name: '',
-  available: [],
-  material: [],
-  color: []
+  name: ''
 };
 
 export const initialState = {
@@ -82,10 +79,7 @@ const bottomReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         filters: {
-          name: '',
-          available: [],
-          material: [],
-          color: []
+          name: ''
         }
       };
     default:
