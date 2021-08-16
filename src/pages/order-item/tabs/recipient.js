@@ -8,23 +8,23 @@ import { config } from '../../../configs';
 
 const Recipient = ({ data, handleChange }) => {
   const { materialUiConstants } = config;
-  const { user, userComment } = data;
+  const { recipient, userComment } = data;
   const { orderRecipient } = labels;
   const classes = useStyles();
   return (
     <div className={classes.recipient}>
-      {user &&
-        Object.keys(user).map((item) => (
+      {recipient &&
+        Object.keys(recipient).map((item) => (
           <TextField
-            name={`user.${item}`}
+            name={`recipient.${item}`}
             label={orderRecipient[item] || ''}
             key={item}
             variant={materialUiConstants.outlined}
             onChange={handleChange}
-            value={user[item] || ''}
+            value={recipient[item] || ''}
           />
         ))}
-      {user && (
+      {recipient && (
         <TextField
           name={inputName.userComment}
           label={orderRecipient.commentary}
