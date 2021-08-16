@@ -73,11 +73,7 @@ const filter = {
 };
 
 const initialFilters = {
-  name: '',
-  model: [],
-  available: [],
-  material: [],
-  color: []
+  name: ''
 };
 
 const mockBottomsState = {
@@ -113,10 +109,7 @@ const mockBottomsLoadPayload = {
   limit: 1,
   skip: 0,
   filters: {
-    name: '',
-    available: [],
-    material: [],
-    color: []
+    name: ''
   }
 };
 
@@ -136,10 +129,7 @@ const mockError = {
   message: 'error'
 };
 const mockInitialFilters = {
-  name: '',
-  available: [],
-  material: [],
-  color: []
+  name: ''
 };
 
 const payload = {

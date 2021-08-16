@@ -116,17 +116,17 @@ export const getBottomById = async (id) => {
 
   if (
     Object.keys(bottomTranslations).includes(
-      result?.data?.getAllBottoms?.message
+      result?.data?.getBottomById?.message
     )
   ) {
     throw new Error(
-      `${result.data.getAllBottoms.statusCode} ${
-        bottomTranslations[result.data.getAllBottoms.message]
+      `${result.data.getBottomById.statusCode} ${
+        bottomTranslations[result.data.getBottomById.message]
       }`
     );
   }
 
-  return result?.data.getAllBottoms;
+  return result?.data.getBottomById;
 };
 
 export const deleteBottom = async (id) => {

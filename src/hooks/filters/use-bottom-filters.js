@@ -29,7 +29,6 @@ const useBottomFilters = () => {
     },
     clearOptions: {
       filters,
-      name: filters?.name,
       clearAllFilters
     }
   };
