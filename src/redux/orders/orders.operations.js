@@ -118,7 +118,7 @@ export const updateOrder = (order, id) => {
 				...on Order {
 					_id
 					status
-					user {
+					recipient {
 						firstName
 						lastName
 						email
