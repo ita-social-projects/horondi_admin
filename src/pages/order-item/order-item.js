@@ -74,7 +74,7 @@ const OrderItem = ({ id }) => {
   if (orderLoading) {
     return <LoadingBar />;
   }
-  console.log(values);
+
   return (
     <form onSubmit={handleSubmit} className={classes.orderContainer}>
       <div className={classes.controlsBlock}>
