@@ -35,6 +35,10 @@ const BottomPage = () => {
     useSelector(bottomSelectorWithPagination);
 
   useEffect(() => {
+    console.log(currentPage * rowsPerPage);
+    console.log(rowsPerPage);
+    console.log(currentPage);
+
     dispatch(
       getBottoms({
         limit: rowsPerPage,

@@ -42,6 +42,7 @@ const messages = {
   NO_HISTORY_RECORDS_MESSAGE: 'Записи останніх змін відсутні',
   REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору',
   BACK_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
+  BOTTOM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей низ?',
   DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
   NO_POCKET_MESSAGE: 'Кишені відсутні',
   DELETE_POSITION_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
