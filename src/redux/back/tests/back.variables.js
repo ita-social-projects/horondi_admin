@@ -61,7 +61,7 @@ const mockBacks = {
       customizable: null
     }
   ],
-  count: 6
+  count: 1
 };
 
 export const mockBack = {
@@ -72,6 +72,8 @@ export const mockBack = {
 const filter = {
   name: 'Бонд'
 };
+const limit = 1;
+const skip = 0;
 
 const initialFilters = {
   name: '',
@@ -119,7 +121,6 @@ const mockBacksLoadPayload = {
     material: [],
     color: []
   }
-  // backsPerPage: 10
 };
 
 const mockSnackarState = {
@@ -145,11 +146,6 @@ const mockInitialFilters = {
   color: []
 };
 
-const payload = {
-  limit: 10,
-  skip: 0
-};
-
 export {
   mockBacksState,
   mockBacksLoadPayload,
@@ -160,7 +156,8 @@ export {
   mockInputBack,
   mockError,
   mockTableState,
-  filter,
   mockInitialFilters,
-  payload
+  filter,
+  skip,
+  limit
 };
