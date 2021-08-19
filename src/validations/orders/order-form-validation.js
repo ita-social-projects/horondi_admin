@@ -18,7 +18,7 @@ export const validationSchema = Yup.object().shape({
   status: Yup.string().required(),
   paymentMethod: Yup.string().required(),
   isPaid: Yup.bool().required(),
-  user: Yup.object().shape({
+  recipient: Yup.object().shape({
     firstName: Yup.string().trim().matches(userNameRegex).required(),
     lastName: Yup.string().trim().matches(userNameRegex).required(),
     email: Yup.string().trim().email().required(),

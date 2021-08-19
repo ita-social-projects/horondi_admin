@@ -29,7 +29,9 @@ import {
   mockInputBack,
   mockError,
   mockTableState,
-  payload
+  limit,
+  skip,
+  filter
 } from './back.variables';
 
 import {
@@ -50,24 +52,14 @@ import {
 } from '../../snackbar/snackbar.sagas';
 
 describe('Test Back sagas', () => {
-  it.skip('should load all Backs', async (done) => {
-    expectSaga(handleBacksLoad, { payload })
+  it('should load all Backs', async (done) => {
+    expectSaga(handleBacksLoad, { payload: { limit, skip, filter } })
       .withReducer(combineReducers({ Back, Table }), {
         Back: mockBacksState,
         Table: mockTableState
       })
       .put(setBackLoading(true))
-      .provide([
-        [
-          call(
-            getAllBacks,
-            payload.skip,
-            payload.limit
-            // payload.filters
-          ),
-          mockBacks
-        ]
-      ])
+      .provide([[call(getAllBacks, limit, skip, filter), mockBacks]])
       .put(setItemsCount(mockBacks.count))
       .put(setBacks(mockBacks.items))
       .put(setBackLoading(false))
