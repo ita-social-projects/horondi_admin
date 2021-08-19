@@ -12,7 +12,7 @@ import {
   SET_BACK_FILTER,
   CLEAR_FILTERS,
   CLEAR_BACK
-} from '../back.types';
+} from '../../back/back.types';
 
 import {
   getBack,
@@ -28,7 +28,7 @@ import {
   setFilter,
   clearFilters,
   clearBack
-} from '../back.actions';
+} from '../../back/back.actions';
 
 import { mockBacks, mockId, filter } from './back.variables';
 

@@ -1,4 +1,4 @@
-import bottomReducer, { initialState } from '../bottom.reducer';
+import bottomReducer, { initialState } from '../../bottom/bottom.reducer';
 import {
   mockBottoms,
   mockId,
@@ -15,7 +15,7 @@ import {
   clearFilters,
   setFilter,
   clearBottom
-} from '../bottom.actions';
+} from '../../bottom/bottom.actions';
 
 describe('reducer tests', () => {
   it('should return default state', () => {

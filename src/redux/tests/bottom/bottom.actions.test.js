@@ -12,7 +12,7 @@ import {
   SET_BOTTOM_FILTER,
   CLEAR_FILTERS,
   CLEAR_BOTTOM
-} from '../bottom.types';
+} from '../../bottom/bottom.types';
 
 import {
   getBottom,
@@ -28,7 +28,7 @@ import {
   setFilter,
   clearFilters,
   clearBottom
-} from '../bottom.actions';
+} from '../../bottom/bottom.actions';
 
 import { mockBottoms, mockId, filter } from './bottom.variables';
 

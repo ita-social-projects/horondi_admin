@@ -2,21 +2,21 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { combineReducers } from 'redux';
-import Bottom from '../bottom.reducer';
+import Bottom from '../../bottom/bottom.reducer';
 import {
   handleBottomLoad,
   handleAddBottom,
   handleBottomDelete,
   handleBottomUpdate,
   handleBottomError
-} from '../bottom.sagas';
+} from '../../bottom/bottom.sagas';
 
 import {
   setBottomLoading,
   setBottom,
   removeBottomFromStore,
   setBottomError
-} from '../bottom.actions';
+} from '../../bottom/bottom.actions';
 
 import {
   mockBottomsState,
@@ -33,7 +33,7 @@ import {
   createBottom,
   deleteBottom,
   updateBottom
-} from '../bottom.operations';
+} from '../../bottom/bottom.operations';
 
 import { updatePagination } from '../../table/table.actions';
 

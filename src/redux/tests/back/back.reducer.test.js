@@ -1,4 +1,4 @@
-import backReducer, { initialState } from '../back.reducer';
+import backReducer, { initialState } from '../../back/back.reducer';
 import {
   mockBacks,
   mockId,
@@ -15,7 +15,7 @@ import {
   clearFilters,
   setFilter,
   clearBack
-} from '../back.actions';
+} from '../../back/back.actions';
 
 describe('reducer tests', () => {
   it('should return default state', () => {

@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { combineReducers } from 'redux';
-import Back, { initialState } from '../back.reducer';
+import Back, { initialState } from '../../back/back.reducer';
 import {
   handleBackLoad,
   handleBacksLoad,
@@ -10,7 +10,7 @@ import {
   handleBackDelete,
   handleBackUpdate,
   handleBackError
-} from '../back.sagas';
+} from '../../back/back.sagas';
 
 import {
   setBacks,
@@ -18,7 +18,7 @@ import {
   setBack,
   removeBackFromStore,
   setBackError
-} from '../back.actions';
+} from '../../back/back.actions';
 
 import {
   mockBacksState,
@@ -38,7 +38,7 @@ import {
   createBack,
   deleteBack,
   updateBack
-} from '../back.operations';
+} from '../../back/back.operations';
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
 
