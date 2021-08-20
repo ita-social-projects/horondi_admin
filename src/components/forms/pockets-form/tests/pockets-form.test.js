@@ -7,7 +7,13 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import PocketsForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 
-import { files, target, mockPosition, Sizes } from './mockPockets';
+import {
+  files,
+  target,
+  mockPosition,
+  Sizes,
+  mockPositionWithData
+} from './mockPockets';
 
 configure({ adapter: new Adapter() });
 
@@ -25,8 +31,12 @@ jest.mock('formik', () => ({
     values: {},
     handleSubmit: mockSubmit,
     handleChange: mockChange,
-    touched: {},
-    errors: {},
+    touched: {
+      labelIdAut: true,
+      code: true,
+      additionalPrice: true
+    },
+    errors: { code: true, positions: 'true', additionalPrice: 'true' },
     setFieldValue: mockSetFieldValue,
     handleBlur: mockBlur
   })
@@ -112,17 +122,27 @@ describe('pocket form tests', () => {
   });
 
   it('should coverage onTagsChange', () => {
-    // const label = component.find(Autocomplete).props();
-    // label.getOptionLabel(Sizes.list[0]);
-    // expect(label).toBeDefined();
-    // const test = component.find('checkIsEdit')
-    // console.log(test.debug())
+    const positionsData = component.find(Autocomplete).props();
+    positionsData.onChange(null, Sizes.list);
+    expect(positionsData).toBeDefined();
   });
 
-  // it('Should click onsubmit button', () => {
-  //     const event = { preventDefault: () => {} };
-  //     jest.spyOn(event, 'preventDefault');
-  //     component.find('form').simulate('submit', event);
-  //     expect(event.preventDefault).toBeCalled();
-  // });
+  it('should coverage error', () => {
+    const positionsData = component.find(Autocomplete).props();
+    positionsData.onChange(null, Sizes.list);
+    expect(positionsData).toBeDefined();
+  });
+
+  it('should coverage availablePositions', () => {
+    spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
+    spyOnUseSelector.mockImplementation(() => mockPositionWithData);
+    spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
+    spyOnUseDispatch.mockImplementation(() => jest.fn());
+    component = mount(<PocketsForm />);
+    expect(component).toBeDefined();
+  });
+  it('should coverage test', () => {
+    component = mount(<PocketsForm edit />);
+    expect(component).toBeDefined();
+  });
 });

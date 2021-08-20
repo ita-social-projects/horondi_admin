@@ -7,6 +7,29 @@ const mockPosition = {
   loadingPositions: false
 };
 
+const mockPositionWithData = {
+  positionsList: [
+    {
+      _id: '604394a2a7532c33dcb326d5',
+      name: 'L',
+      modelId: {
+        _id: '6043bf9e3e06ad3edcdb7b30',
+        name: [
+          {
+            value: 'Роллтоп',
+            lang: 'ua'
+          },
+          {
+            value: 'Rolltop',
+            lang: 'en'
+          }
+        ]
+      },
+      available: false
+    }
+  ],
+  loadingPositions: false
+};
 const Sizes = {
   list: [
     {
@@ -47,6 +70,7 @@ const pocket = {
 };
 
 module.exports = {
+  mockPositionWithData,
   Sizes,
   mockPosition,
   target,
