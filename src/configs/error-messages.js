@@ -35,6 +35,9 @@ export const loginErrorMessages = {
 };
 export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
+  PATTERN_VALIDATION_ERROR_NAME: 'Назва повинна містити від 2 до 50 символів',
+  PATTERN_VALIDATION_ERROR_DESCRIPTION:
+    'Опис повинний містити від 2 до 1000 символів',
   PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото гобелена є обов'язковим",
@@ -50,7 +53,9 @@ export const backErrorMessages = {
   PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
   BACK_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
   BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
-  BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
+  BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  BACK_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  BACK_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
@@ -182,7 +187,8 @@ export const pocketsErrorMessages = {
   POCKETS_EN_NAME_MESSAGE:
     'Поле може містити тільки англійські літери та цифри',
   POCKETS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
-  POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+  POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
+  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку'
 };
 
 export const positionErrorMessages = {
@@ -193,4 +199,17 @@ export const positionErrorMessages = {
     'Поле може містити тільки англійські літери та цифри',
   POSITION_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POSITION_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+};
+
+export const closuresErrorMessages = {
+  CLOSURES_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  CLOSURES_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  CLOSURES_UA_NAME_MESSAGE:
+    'Поле може містити тільки українські літери та цифри',
+  CLOSURES_EN_NAME_MESSAGE:
+    'Поле може містити тільки англійські літери та цифри',
+  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим",
+  CLOSURES_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  CLOSURES_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
+  CLOSURES_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };

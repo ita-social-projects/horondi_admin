@@ -6,7 +6,7 @@ export const getOrderById = (id) => {
 			getOrderById(id: $id) {
 				...on Order {
 					status
-					user {
+					recipient {
 						firstName
 						lastName
 						email
@@ -118,7 +118,7 @@ export const updateOrder = (order, id) => {
 				...on Order {
 					_id
 					status
-					user {
+					recipient {
 						firstName
 						lastName
 						email
@@ -211,7 +211,7 @@ export const getAllOrders = async (skip, limit, filter, sort) => {
         getAllOrders(limit: $limit, skip: $skip, filter: $filter, sort:$sort) {
           items {
             _id
-                user 
+            recipient 
                 {
                 firstName
                 lastName

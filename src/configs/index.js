@@ -34,6 +34,7 @@ import {
   sizeErrorMessages,
   businessPageErrorMessages,
   pocketsErrorMessages,
+  closuresErrorMessages,
   positionErrorMessages
 } from './error-messages';
 import messages from './messages';
@@ -117,6 +118,10 @@ export const config = {
     UNAVAILABLE_TEXT: 'Відсутній'
   },
   pocketsAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Недоступний'
+  },
+  closuresAvailableVariants: {
     AVAILABLE_TEXT: 'Доступний',
     UNAVAILABLE_TEXT: 'Недоступний'
   },
@@ -244,6 +249,7 @@ export const config = {
   valueKeys,
   inputNames,
   pocketsErrorMessages,
+  closuresErrorMessages,
   positionErrorMessages
 };
 export const inputTypes = {

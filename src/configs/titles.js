@@ -132,6 +132,9 @@ const titles = {
   },
   constructorModelTitles: {
     mainPageTitle: 'Опції конструктора'
+  },
+  closuresTitles: {
+    mainPageTitle: 'Інформація про защіпки'
   }
 };
 

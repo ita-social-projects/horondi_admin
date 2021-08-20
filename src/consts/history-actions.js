@@ -34,6 +34,9 @@ export const historyActions = {
   EDIT_POCKET: 'Редаговано кишеню',
   ADD_POCKET: 'Створено кишеню',
   DELETE_POCKET: 'Видалено кишеню',
+  EDIT_BACK: 'Редаговано спинку',
+  ADD_BACK: 'Створено спинку',
+  DELETE_BACK: 'Видалено спинку',
   DELETE_POSITION: 'Видалено позицію',
   ADD_POSITION: 'Додано позицію',
   EDIT_POSITION: 'Редаговано позицію'

@@ -89,7 +89,7 @@ const OrdersPage = () => {
         key={order._id}
         data={ReactHtmlParser(getTime(order.dateOfCreation, true))}
         orderId={order.orderNumber}
-        customer={`${order?.user?.firstName} ${order?.user?.lastName}`}
+        customer={`${order?.recipient?.firstName} ${order?.recipient?.lastName}`}
         totalPrice={`${order?.totalPriceToPay[0]?.value} ₴`}
         paymentStatus={
           <Status

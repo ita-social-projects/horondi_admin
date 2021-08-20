@@ -92,6 +92,14 @@ export const getPocketById = async (id) => {
                 small
                 thumbnail
               }
+              positions {
+                _id
+                name {
+                  lang
+                  value
+                }
+               available
+              }
               restriction
               additionalPrice {
                 currency
@@ -113,7 +121,7 @@ export const getPocketById = async (id) => {
 
 export const updatePocket = async (id, pocket, image) => {
   const query = `
-        mutation updatePocket(
+        mutation (
           $id: ID!
           $pocket: PocketInput!
           $image: Upload

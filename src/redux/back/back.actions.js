@@ -9,8 +9,7 @@ import {
   UPDATE_BACK,
   SET_BACK_ERROR,
   REMOVE_BACK_FROM_STORE,
-  SET_FILTER,
-  SET_SORT,
+  SET_BACK_FILTER,
   CLEAR_FILTERS,
   CLEAR_BACK
 } from './back.types';
@@ -65,13 +64,8 @@ export const removeBackFromStore = (payload) => ({
   payload
 });
 
-export const setSort = (sort) => ({
-  type: SET_SORT,
-  payload: sort
-});
-
 export const setFilter = (filter) => ({
-  type: SET_FILTER,
+  type: SET_BACK_FILTER,
   payload: filter
 });
 

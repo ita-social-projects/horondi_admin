@@ -33,13 +33,14 @@ const { backName, enterPrice, additionalPriceLabel } = config.labels.back;
 const map = require('lodash/map');
 
 const {
-  BACK_VALIDATION_ERROR,
   BACK_ERROR_MESSAGE,
   BACK_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
   BACK_EN_NAME_MESSAGE,
   BACK_UA_NAME_MESSAGE,
-  BACK_PRICE_ERROR
+  BACK_PRICE_ERROR,
+  BACK_MAX_LENGTH_MESSAGE,
+  BACK_MIN_LENGTH_MESSAGE
 } = config.backErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -62,9 +63,10 @@ const BackForm = ({ back, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { details, loading } = useSelector(selectProductDetails);
-
-  const { materials } = details;
+  const {
+    details: { materials },
+    loading
+  } = useSelector(selectProductDetails);
 
   const { createBack, setUpload, upload, setBackImage, color, setColor } =
     useBackHandlers();
@@ -81,19 +83,21 @@ const BackForm = ({ back, id, edit }) => {
   );
   const backValidationSchema = Yup.object().shape({
     enName: Yup.string()
-      .min(2, BACK_VALIDATION_ERROR)
+      .min(2, BACK_MIN_LENGTH_MESSAGE)
+      .max(50, BACK_MAX_LENGTH_MESSAGE)
       .required(BACK_ERROR_MESSAGE)
       .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, BACK_VALIDATION_ERROR)
+      .min(2, BACK_MIN_LENGTH_MESSAGE)
+      .max(50, BACK_MAX_LENGTH_MESSAGE)
       .required(BACK_ERROR_MESSAGE)
       .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, BACK_VALIDATION_ERROR)
+      .min(2, BACK_MIN_LENGTH_MESSAGE)
       .matches(backMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(BACK_ERROR_MESSAGE),
     color: Yup.string()
-      .min(2, BACK_VALIDATION_ERROR)
+      .min(2, BACK_MIN_LENGTH_MESSAGE)
       .matches(backColor, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(BACK_ERROR_MESSAGE),
     additionalPrice: Yup.string()
@@ -320,7 +324,7 @@ BackForm.propTypes = {
   }),
   errors: PropTypes.shape({
     backImage: PropTypes.string,
-    material: PropTypes.string,
+    material: PropTypes,
     color: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string

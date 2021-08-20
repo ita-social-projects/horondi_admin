@@ -30,6 +30,7 @@ import Constructor from './constructor/constructor.reducer';
 import Back from './back/back.reducer';
 import Pockets from './pockets/pockets.reducer';
 import Positions from './position/position.reducer';
+import Closures from './closures/closures.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
@@ -62,5 +63,6 @@ export const rootReducer = (history) =>
     History,
     Back,
     Pockets,
+    Closures,
     Positions
   });

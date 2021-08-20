@@ -18,7 +18,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import usePositionFilters from '../../hooks/filters/use-pocket-filters';
+import usePositionFilters from '../../hooks/filters/use-position-filters';
 
 const { materialUiConstants } = config;
 const labels = config.labels.positionPageLabel;

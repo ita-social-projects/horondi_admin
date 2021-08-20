@@ -110,7 +110,10 @@ const OrderItem = ({ id }) => {
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           <Recipient
-            data={{ user: values.user, userComment: values.userComment }}
+            data={{
+              recipient: values.recipient,
+              userComment: values.userComment
+            }}
             handleChange={formikHandleChange}
           />
         </TabPanel>

@@ -70,6 +70,9 @@ import PositionAdd from '../pages/position/position-add';
 import PositionEdit from '../pages/position/position-edit';
 import ConstructorListPage from '../pages/constructor-list';
 import ConstructorModelDetails from '../pages/constructor-list/constructor-details';
+import ClosuresPage from '../pages/closures/closures-page';
+import ClosuresAdd from '../pages/closures/closures-add/closures-add';
+import ClosuresEdit from '../pages/closures/closures-edit/closures-edit';
 
 const { routes } = config;
 
@@ -312,6 +315,17 @@ const Routes = () => {
             path={routes.pathToConstructorModelDetails}
             exact
             component={ConstructorModelDetails}
+          />
+          <Route path={routes.pathToClosures} exact component={ClosuresPage} />
+          <Route
+            path={routes.pathToClosuresAdd}
+            exact
+            component={ClosuresAdd}
+          />
+          <Route
+            path={routes.pathToClosuresEdit}
+            exact
+            component={ClosuresEdit}
           />
           <Route component={ErrorPage} />
         </Switch>

@@ -10,9 +10,9 @@ import dataList from './dataList';
 import EmailQuestionsList from '../email-questions-list';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerCollapsableRow from '../../../containers/table-container-collapsable-row';
-import useQuestionFilter from '../../../hooks/filters/use-questions-filter';
+import useQuestionFilters from '../../../hooks/filters/use-question-filters';
 
-jest.mock('../../../hooks/filters/use-questions-filter');
+jest.mock('../../../hooks/filters/use-question-filters');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn().mockImplementationOnce((selector) => selector()),
@@ -103,7 +103,7 @@ describe('EmailQuestions test', () => {
   });
 
   it('should render when question options equal null', () => {
-    useQuestionFilter.mockImplementationOnce(() => null);
+    useQuestionFilters.mockImplementationOnce(() => null);
     const mockedDispatch = jest.fn();
     useDispatchMock.mockReturnValue(mockedDispatch);
     useSelectorMock.mockReturnValue({ filters: 'test' });

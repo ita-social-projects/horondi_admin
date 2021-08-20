@@ -1,7 +1,7 @@
 import { setItems, getItems } from '../../utils/client';
 
 export const getAllPositions = async (limit, skip, filter) => {
-  const query = `query($limit: Int!, $skip: Int!, $filter: PositionsFilterInput) {
+  const query = `query($limit: Int, $skip: Int, $filter: PositionsFilterInput) {
                         getAllPositions(limit: $limit, skip: $skip, filter: $filter) {
                         ... on PaginatedPositions {
                             items {
@@ -90,7 +90,7 @@ export const getPositionById = async (id) => {
 };
 
 export const updatePosition = async (id, position) => {
-  const query = `mutation updatePosition($id: ID!, $position: PositionInput!) {
+  const query = `mutation ($id: ID!, $position: PositionInput!) {
                     updatePosition(id: $id, position: $position) {
                       ... on Position {
                         _id

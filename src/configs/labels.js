@@ -543,6 +543,22 @@ const labels = {
     enterPrice: 'Додаткова ціна (USD):',
     additionalPrice: 'Введіть додаткову ціну',
     avaliable: 'Додати до обмежень',
+    avatarText: 'Фото',
+    labelsRestriction: 'restriction',
+    labelIdAut: 'labelIdAut',
+    normal: 'normal',
+    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' }
+  },
+  closuresPageLabel: {
+    closuresHeader: 'closures-header',
+    closuresTable: 'sideClosuresTable',
+    closuresName: {
+      ua: 'Назва замочка',
+      en: 'Closure name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    available: 'Доступний',
     avatarText: 'Фото'
   },
   positionPageLabel: {
