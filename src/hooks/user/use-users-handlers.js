@@ -11,16 +11,14 @@ export const useUsersHandler = (id) => {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
   const [adress, setAdress] = useState('');
   const [postCode, setPostCode] = useState('');
   const [email, setEmail] = useState('');
-
-  const [isBanned, setBan] = useState('');
-
+  const [isBanned, setBan] = useState({});
   const [confirmed, setConfirmed] = useState(false);
+  const [phone, setPhone] = useState('');
 
   useEffect(() => {
     dispatch(getUser(id));
@@ -40,20 +38,9 @@ export const useUsersHandler = (id) => {
       setBan(user.banned);
       setConfirmed(user.confirmed);
       setEmail(user.email);
+      setPhone(user.phoneNumber);
     }
-  }, [
-    user,
-    setFirstName,
-    setLastName,
-    setCountry,
-    setCity,
-    setAdress,
-    setPostCode,
-    setEmail,
-    setBan,
-    setConfirmed,
-    setEmail
-  ]);
+  }, [user]);
 
   return {
     firstName,
@@ -64,6 +51,7 @@ export const useUsersHandler = (id) => {
     postCode,
     email,
     isBanned,
-    confirmed
+    confirmed,
+    phone
   };
 };

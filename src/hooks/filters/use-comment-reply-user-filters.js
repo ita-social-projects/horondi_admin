@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  clearFiltersUser,
-  setFilterUser
+  clearFiltersReplyUser,
+  setFilterReplyUser,
+  setReplySort,
+  setReplySortLabel
 } from '../../redux/comments/comments.actions';
 import filterLabels from '../../configs/filter-labels';
 import { setCurrentPage } from '../../redux/table/table.actions';
@@ -11,32 +13,31 @@ import {
   showCommentOptions,
   showFilterObj
 } from '../../utils/comment';
-import useCommentFilters from './use-comment-filters';
-import labels from '../../configs/labels';
+import useCommentUserFilters from './use-comment-user-filters';
+import { sortDirection } from '../../configs/sort';
 
-const useCommentUserFilters = () => {
+const useCommentReplyUserFilters = () => {
   const dispatch = useDispatch();
-  const { filtersUser: filters, sortLabel } = useSelector(
+  const { filtersReplyUser: filters, replySortLabel: sortLabel } = useSelector(
     ({ Comments }) => Comments
   );
 
-  const {
-    sortOptions: { setSorting }
-  } = useCommentFilters();
+  const { pickerOptions } = useCommentUserFilters();
 
-  const pickValue = (type) => {
+  const setSorting = ({ key, type, value }) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setFilterUser({
-        typeComment: type
+      setReplySort({
+        [key]: sortDirection[type]
       })
     );
+    dispatch(setReplySortLabel(value));
   };
 
   const setCommentDateRangeFilter = (date) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setFilterUser({
+      setFilterReplyUser({
         dateFrom: date[0],
         dateTo: date[1]
       })
@@ -46,7 +47,7 @@ const useCommentUserFilters = () => {
   const setShowFilter = (show) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setFilterUser({
+      setFilterReplyUser({
         show
       })
     );
@@ -55,7 +56,7 @@ const useCommentUserFilters = () => {
   const setSearchFilter = (search) => {
     dispatch(setCurrentPage(0));
     dispatch(
-      setFilterUser({
+      setFilterReplyUser({
         search
       })
     );
@@ -63,18 +64,13 @@ const useCommentUserFilters = () => {
 
   const clearAllFilters = () => {
     dispatch(setCurrentPage(0));
-    dispatch(clearFiltersUser());
+    dispatch(clearFiltersReplyUser());
   };
 
   return {
-    pickerOptions: {
-      labels: labels.comments.select,
-      pickValue,
-      valuePicked: filters.typeComment,
-      labelPicker: buttonTitles.COMMENT_TYPE
-    },
+    pickerOptions,
     sortOptions: {
-      labels: filterLabels.comments.sortLabels,
+      labels: filterLabels.reply.sortLabels,
       setSorting,
       sortLabel
     },
@@ -104,4 +100,4 @@ const useCommentUserFilters = () => {
   };
 };
 
-export default useCommentUserFilters;
+export default useCommentReplyUserFilters;

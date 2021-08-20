@@ -1,6 +1,10 @@
 import {
   SET_COMMENTS,
   GET_COMMENTS,
+  SET_COMMENTS_USER,
+  SET_REPLIES_COMMENTS_USER,
+  GET_COMMENTS_USER,
+  GET_REPLIES_COMMENTS_USER,
   DELETE_COMMENT,
   GET_COMMENTS_BY_PRODUCTS,
   GET_COMMENTS_BY_TYPE,
@@ -15,8 +19,10 @@ import {
   GET_PRODUCT_COMMENTS,
   SET_FILTER,
   SET_FILTER_USER,
+  SET_FILTER_REPLY_USER,
   CLEAR_FILTERS,
   CLEAR_FILTERS_USER,
+  CLEAR_FILTERS_REPLY_USER,
   GET_RECENT_COMMENTS,
   SET_RECENT_COMMENTS,
   SET_REPLY_COMMENTS,
@@ -42,6 +48,16 @@ const setComments = (comments) => ({
   payload: comments
 });
 
+const setCommentsUser = (comments) => ({
+  type: SET_COMMENTS_USER,
+  payload: comments
+});
+
+const setRepliesCommentsUser = (replies) => ({
+  type: SET_REPLIES_COMMENTS_USER,
+  payload: replies
+});
+
 const setRecentComments = (comments) => ({
   type: SET_RECENT_COMMENTS,
   payload: comments
@@ -59,6 +75,16 @@ const getComment = (payload) => ({
 
 const getComments = (payload) => ({
   type: GET_COMMENTS,
+  payload
+});
+
+const getCommentsByUser = (payload) => ({
+  type: GET_COMMENTS_USER,
+  payload
+});
+
+const getRepliesCommentsByUser = (payload) => ({
+  type: GET_REPLIES_COMMENTS_USER,
   payload
 });
 
@@ -127,12 +153,21 @@ const setFilterUser = (filter) => ({
   payload: filter
 });
 
+const setFilterReplyUser = (filter) => ({
+  type: SET_FILTER_REPLY_USER,
+  payload: filter
+});
+
 const clearFilters = () => ({
   type: CLEAR_FILTERS
 });
 
 const clearFiltersUser = () => ({
   type: CLEAR_FILTERS_USER
+});
+
+const clearFiltersReplyUser = () => ({
+  type: CLEAR_FILTERS_REPLY_USER
 });
 
 const setReplyComments = (replyComments) => ({
@@ -216,6 +251,10 @@ const setReplyLoading = (payload) => ({
 export {
   setComments,
   getComments,
+  setCommentsUser,
+  getCommentsByUser,
+  setRepliesCommentsUser,
+  getRepliesCommentsByUser,
   getCommentsByType,
   removeCommentFromStore,
   setCommentsLoading,
@@ -230,7 +269,9 @@ export {
   getProductComments,
   setFilter,
   setFilterUser,
+  setFilterReplyUser,
   clearFilters,
+  clearFiltersReplyUser,
   clearFiltersUser,
   setRecentComments,
   getRecentComments,

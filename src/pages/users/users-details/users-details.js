@@ -1,76 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Button, AppBar, Tabs, Tab } from '@material-ui/core';
-
+import { Grid, AppBar, Tabs, Tab } from '@material-ui/core';
 import { withRouter } from 'react-router';
+
 import { useCommonStyles } from '../../common.styles';
 import { useStyles } from './users-details.styles';
 import { useUsersHandler } from '../../../hooks/user/use-users-handlers';
 import useOrdersCommentsTabs from '../../../hooks/user/use-orders-comments-tabs';
-import useOrderUserFilters from '../../../hooks/filters/use-order-user-filters';
-import useCommentUserFilters from '../../../hooks/filters/use-comment-user-filters';
-import LoadingBar from '../../../components/loading-bar';
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import UserDetailsCard from './containers/user-details-card';
 import TabPanel from '../../../components/tab-panel';
-import CommentsSection from '../../../components/comments-section/comments-section';
-import { GET_USER_COMMENTS } from '../../../redux/comments/comments.types';
 import { config } from '../../../configs';
-import { BackButton } from '../../../components/buttons';
-import FilterNavbar from '../../../components/filter-search-sort';
-import { UserBlockPeriod } from '../../../consts/user-block-status';
 import {
-  blockUserByAdmin,
-  resendEmail,
-  unlockUserByAdmin
-} from '../../../redux/users/users.actions';
-import { getUserBlockStatus } from '../../../utils/user';
+  getCommentsByUser,
+  getRepliesCommentsByUser
+} from '../../../redux/comments/comments.actions';
+import { getOrderListUser } from '../../../redux/orders/orders.actions';
+import { commentSelectorWithPagination } from '../../../redux/selectors/comments.selectors';
+import { orderSelector } from '../../../redux/selectors/orders.selectors';
+import labels from '../../../configs/labels';
+import OrderTab from '../components/order-tab';
+import CommentTab from '../components/comment-tab';
+import CommentReplyTab from '../components/comment-reply-tab';
+import LoadingBar from '../../../components/loading-bar';
 
-const {
-  USER_ACTIVE_TITLE,
-  USER_INACTIVE_TITLE,
-  SWITCH_USER_STATUS_TITLE,
-  SHOW_COMMENTS_TITLE,
-  HIDE_COMMENTS_TITLE,
-  SEND_CONFIRM
-} = config.buttonTitles;
-const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
 const tabNames = config.tabNames.userOrdersComments;
 const { pathToUsers } = config.routes;
 
 const UsersDetails = (props) => {
-  const { match } = props;
-  const { id } = match.params;
-
+  const {
+    match: {
+      params: { id }
+    }
+  } = props;
   const dispatch = useDispatch();
 
-  const { openSuccessSnackbar } = useSuccessSnackbar();
   const common = useCommonStyles();
   const styles = useStyles();
 
-  const orderUserFilters = useOrderUserFilters();
-  const commentUserFilters = useCommentUserFilters();
+  const {
+    sort: sortComment,
+    replySort: sortReply,
+    filtersUser: filtersComment,
+    filtersReplyUser: filtersReply,
+    listUser: listComment,
+    listRepliesUser: listReplies,
+    currentPage,
+    rowsPerPage
+  } = useSelector(commentSelectorWithPagination);
 
   const {
-    orderLoading,
-    items: ordersList,
-    filtersUser,
-    sort
-  } = useSelector(({ Orders }) => Orders);
-
-  const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
-    currentPage: Table.pagination.currentPage,
-    rowsPerPage: Table.pagination.rowsPerPage,
-    itemsCount: Table.itemsCount
-  }));
+    sort: sortOrder,
+    filtersUser: filtersOrder,
+    listUser: listOrder
+  } = useSelector(orderSelector);
 
   const { loading } = useSelector(({ Users }) => ({
     loading: Users.userLoading
   }));
-
-  const [showComments, setShowComments] = useState(false);
 
   const {
     firstName,
@@ -79,36 +66,88 @@ const UsersDetails = (props) => {
     city,
     adress,
     postCode,
+    email,
     isBanned,
     confirmed,
-    email
+    phone
   } = useUsersHandler(id);
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getOrderList({
-  //       limit: rowsPerPage,
-  //       skip: currentPage * rowsPerPage,
-  //       filter: {
-  //         date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
-  //         status: filters.status,
-  //         paymentStatus: filters.paymentStatus,
-  //         search: filters.search
-  //       },
-  //       sort
-  //     })
-  //   );
-  // }, [dispatch, rowsPerPage, currentPage, filters, sort]);
-
-  // const ordersDeleteHandler = (id) => {
-  //   const removeOrders = () => {
-  //     dispatch(closeDialog());
-  //     dispatch(deleteOrder(id));
-  //   };
-  //   openSuccessSnackbar(removeOrders, REMOVE_ORDER_MESSAGE);
-  // };
-
   const { tab, handleTabChange } = useOrdersCommentsTabs();
+
+  useEffect(() => {
+    if (tab) {
+      if (filtersComment.typeComment === labels.comments.select[0].value) {
+        dispatch(
+          getCommentsByUser({
+            filter: {
+              date: {
+                dateFrom: filtersComment.dateFrom,
+                dateTo: filtersComment.dateTo
+              },
+              show: filtersComment.show,
+              search: filtersComment.search
+            },
+            pagination: {
+              limit: rowsPerPage,
+              skip: currentPage * rowsPerPage
+            },
+            sort: sortComment,
+            userId: id
+          })
+        );
+      } else {
+        dispatch(
+          getRepliesCommentsByUser({
+            filter: {
+              createdAt: {
+                dateFrom: filtersReply.dateFrom,
+                dateTo: filtersReply.dateTo
+              },
+              filters: true,
+              showReplyComment: filtersReply.show,
+              search: filtersReply.search
+            },
+            pagination: {
+              limit: rowsPerPage,
+              skip: currentPage * rowsPerPage
+            },
+            sort: sortReply,
+            userId: id
+          })
+        );
+      }
+    } else {
+      dispatch(
+        getOrderListUser({
+          limit: rowsPerPage,
+          skip: currentPage * rowsPerPage,
+          filter: {
+            date: {
+              dateFrom: filtersOrder.dateFrom,
+              dateTo: filtersOrder.dateTo
+            },
+            status: filtersOrder.status,
+            paymentStatus: filtersOrder.paymentStatus,
+            search: filtersOrder.search
+          },
+          sort: sortOrder,
+          userId: id
+        })
+      );
+    }
+  }, [
+    dispatch,
+    tab,
+    filtersComment,
+    filtersReply,
+    filtersOrder,
+    rowsPerPage,
+    currentPage,
+    sortComment,
+    sortReply,
+    sortOrder,
+    id
+  ]);
 
   const tabs = tabNames.map((name) => <Tab key={name} label={name} />);
 
@@ -116,69 +155,27 @@ const UsersDetails = (props) => {
     return <LoadingBar />;
   }
 
-  const avatar = `${firstName[0]}${lastName[0]}`;
-  const name = `${firstName} ${lastName}`;
-
-  const primaryData = { country, city };
-  const secondaryData = { adress, postCode };
-
-  const status = getUserBlockStatus(isBanned);
-
-  const userStatusHandler = (userId) => {
-    const updateStatus = () => {
-      dispatch(closeDialog());
-      isBanned?.blockPeriod !== UserBlockPeriod.UNLOCKED
-        ? dispatch(unlockUserByAdmin(userId))
-        : dispatch(blockUserByAdmin(userId));
-    };
-    openSuccessSnackbar(
-      updateStatus,
-      SWITCH_USER_STATUS_MESSAGE,
-      SWITCH_USER_STATUS_TITLE
-    );
-  };
-
-  const sendConfirmationHandler = () => {
-    dispatch(resendEmail({ email }));
-  };
-
-  const showCommentsHandler = () => setShowComments(!showComments);
-
   return (
     <div className={common.container}>
       <Grid className={styles.detailsContainer}>
-        <Grid className={styles.userDetails}>
-          <UserDetailsCard
-            avatar={avatar}
-            name={name}
-            status={status}
-            primaryData={primaryData}
-            secondaryData={secondaryData}
-            buttonStatus={
-              isBanned?.blockPeriod !== UserBlockPeriod.UNLOCKED
-                ? USER_ACTIVE_TITLE
-                : USER_INACTIVE_TITLE
-            }
-            buttonConfirmed={!confirmed ? SEND_CONFIRM : null}
-            buttonConfirmationHandler={() => sendConfirmationHandler()}
-            buttonHandler={() => userStatusHandler(id)}
-          />
-          <div className={styles.controlsBlock}>
-            <BackButton pathBack={pathToUsers} />
-          </div>
-        </Grid>
-        <Grid className={styles.showComments}>
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={showCommentsHandler}
-          >
-            {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
-          </Button>
-          {showComments ? (
-            <CommentsSection value={id} commentsType={GET_USER_COMMENTS} />
-          ) : null}
-        </Grid>
+        <UserDetailsCard
+          info={{
+            id,
+            sections: {
+              phone,
+              country,
+              city,
+              adress,
+              postCode
+            },
+            firstName,
+            lastName,
+            isBanned,
+            email,
+            confirmed
+          }}
+          pathBack={pathToUsers}
+        />
       </Grid>
       <AppBar position='static' color='primary'>
         <Tabs
@@ -191,14 +188,14 @@ const UsersDetails = (props) => {
         </Tabs>
       </AppBar>
       <TabPanel value={tab} index={0}>
-        <FilterNavbar options={orderUserFilters || {}} />
-        <div>Orders</div>
-        {/* <UserTab list={list} onDelete={userDeleteHandler} /> */}
+        <OrderTab list={listOrder} />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <FilterNavbar options={commentUserFilters || {}} />
-        <div>Comments</div>
-        {/* <AdminTab list={list} onDelete={userDeleteHandler} /> */}
+        {filtersComment.typeComment === labels.comments.select[0].value ? (
+          <CommentTab list={listComment} />
+        ) : (
+          <CommentReplyTab list={listReplies} />
+        )}
       </TabPanel>
     </div>
   );
@@ -213,4 +210,3 @@ UsersDetails.propTypes = {
 };
 
 export default withRouter(UsersDetails);
-// export default UsersDetails;

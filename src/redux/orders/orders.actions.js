@@ -6,7 +6,9 @@ import {
   SET_ORDER_ERROR,
   GET_ORDER,
   GET_ORDER_LIST,
+  GET_ORDER_LIST_USER,
   SET_ORDER_LIST,
+  SET_ORDER_LIST_USER,
   DELETE_ORDER,
   REMOVE_ORDER_FROM_STORE,
   SET_NOVAPOSHTA_CITIES,
@@ -58,8 +60,18 @@ const getOrderList = (payload) => ({
   payload
 });
 
+const getOrderListUser = (payload) => ({
+  type: GET_ORDER_LIST_USER,
+  payload
+});
+
 const setOrderList = (payload) => ({
   type: SET_ORDER_LIST,
+  payload
+});
+
+const setOrderListUser = (payload) => ({
+  type: SET_ORDER_LIST_USER,
   payload
 });
 
@@ -180,7 +192,9 @@ export {
   setOrderLoading,
   setOrderError,
   getOrderList,
+  getOrderListUser,
   setOrderList,
+  setOrderListUser,
   deleteOrder,
   removeOrderFromStore,
   getNovaPoshtaCities,

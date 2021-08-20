@@ -5,6 +5,60 @@ import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');
 
+const getAllCommentsByUser = async (filter, pagination, sort, userId) => {
+  const query = `
+    query($filter: CommentFilterInput, $pagination: Pagination, $sort : CommentsSortInput, $userId: ID!) {
+      getCommentsByUser(filter: $filter, pagination: $pagination,sort: $sort, userId: $userId) {
+        items {
+          _id
+          text
+          date
+          replyCommentsCount
+          product {
+            _id
+            name {
+              value
+            }
+          }
+          show
+        }
+        count
+      }
+    }
+  `;
+
+  const result = await getItems(query, { filter, pagination, sort, userId });
+
+  return result?.data?.getCommentsByUser;
+};
+
+const getAllCommentsRepliesByUser = async (
+  filter,
+  pagination,
+  sort,
+  userId
+) => {
+  const query = `
+    query($filter: ReplyCommentFilterInput, $pagination: Pagination, $sort: ReplyCommentsSortInput, $userId: ID!) {
+      getCommentsRepliesByUser(filter: $filter, pagination: $pagination, sort: $sort, userId: $userId) {
+        items {
+            _id
+            replyText
+            createdAt
+            refToReplyComment
+            verifiedPurchase
+            showReplyComment
+        }
+        count
+      }
+    }
+  `;
+
+  const result = await getItems(query, { filter, pagination, sort, userId });
+
+  return result?.data?.getCommentsRepliesByUser;
+};
+
 const getAllComments = async (filter, pagination, sort) => {
   const query = `
       query($filter: CommentFilterInput, $pagination: Pagination,$sort: CommentsSortInput) {
@@ -186,10 +240,10 @@ const updateComment = async (id, comment) => {
 const getCommentsByType = async (value, commentsType) => {
   try {
     if (commentsType === GET_USER_COMMENTS) {
-      return await getCommentsByUser(value);
+      return getCommentsByUser(value);
     }
     if (commentsType === GET_PRODUCT_COMMENTS) {
-      return await getCommentsByProduct(value);
+      return getCommentsByProduct(value);
     }
   } catch (error) {
     throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
@@ -427,6 +481,8 @@ const getReplyComment = async (id) => {
 };
 
 export {
+  getAllCommentsByUser,
+  getAllCommentsRepliesByUser,
   getAllComments,
   deleteComment,
   updateComment,

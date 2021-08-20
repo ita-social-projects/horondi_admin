@@ -1,6 +1,8 @@
 import {
   SET_COMMENTS_LOADING,
   SET_COMMENTS,
+  SET_COMMENTS_USER,
+  SET_REPLIES_COMMENTS_USER,
   REMOVE_COMMENT_FROM_STORE,
   SET_COMMENTS_ERROR,
   SET_COMMENT,
@@ -8,6 +10,8 @@ import {
   SET_FILTER_USER,
   CLEAR_FILTERS,
   CLEAR_FILTERS_USER,
+  CLEAR_FILTERS_REPLY_USER,
+  SET_FILTER_REPLY_USER,
   SET_RECENT_COMMENTS,
   SET_REPLY_COMMENTS,
   REMOVE_REPLY_COMMENT_FROM_STORE,
@@ -30,13 +34,17 @@ const initialFilters = {
   search: ''
 };
 
-const defaultFiltersUser = { ...initialFilters, typeComment: [] };
+const defaultFiltersUser = { ...initialFilters, typeComment: 'COMMENT' };
+const defaultFiltersReplyUser = { ...initialFilters };
 
 export const initialState = {
   list: [],
+  listUser: [],
+  listRepliesUser: [],
   recentComments: [],
   filters: initialFilters,
-  filtersUser: { ...defaultFiltersUser },
+  filtersUser: defaultFiltersUser,
+  filtersReplyUser: defaultFiltersReplyUser,
   replyFilters: initialFilters,
   replySort: { date: 1 },
   replySortLabel: '',
@@ -53,9 +61,12 @@ export const initialState = {
 
 export const selectComment = ({ Comments }) => ({
   list: Comments.list,
+  listUser: Comments.listUser,
+  listRepliesUser: Comments.listRepliesUser,
   recentComments: Comments.recentComments,
   filter: Comments.filters,
   filtersUser: Comments.filtersUser,
+  filtersReplyUser: Comments.filtersReplyUser,
   loading: Comments.commentsLoading,
   comment: Comments.comment,
   replyComments: Comments.replyComments,
@@ -91,6 +102,16 @@ const commentsReducer = (state = initialState, action = {}) => {
         ...state,
         list: action.payload
       };
+    case SET_COMMENTS_USER:
+      return {
+        ...state,
+        listUser: action.payload
+      };
+    case SET_REPLIES_COMMENTS_USER:
+      return {
+        ...state,
+        listRepliesUser: action.payload
+      };
     case SET_RECENT_COMMENTS:
       return {
         ...state,
@@ -118,11 +139,26 @@ const commentsReducer = (state = initialState, action = {}) => {
         ...state,
         commentsLoading: action.payload
       };
-
     case REMOVE_COMMENT_FROM_STORE:
+      const allLists = {
+        list: state.list,
+        listUser: state.listUser
+      };
+
+      const filteredLists = Object.keys(allLists).reduce(
+        (acumulator, listKey) => {
+          acumulator[listKey] = allLists[listKey].filter(
+            (comment) => comment._id !== action.payload
+          );
+          return acumulator;
+        },
+        {}
+      );
+
       return {
         ...state,
-        list: state.list.filter((item) => item._id !== action.payload)
+        list: [...filteredLists.list],
+        listUser: [...filteredLists.listUser]
       };
     case SET_REPLY_COMMENTS:
       return {
@@ -130,11 +166,25 @@ const commentsReducer = (state = initialState, action = {}) => {
         replyComments: action.payload
       };
     case REMOVE_REPLY_COMMENT_FROM_STORE:
+      const allReplyLists = {
+        list: state.replyComments,
+        listUser: state.listRepliesUser
+      };
+
+      const filteredReplyLists = Object.keys(allReplyLists).reduce(
+        (acumulator, listKey) => {
+          acumulator[listKey] = allReplyLists[listKey].filter(
+            (reply) => reply._id !== action.payload
+          );
+          return acumulator;
+        },
+        {}
+      );
+
       return {
         ...state,
-        replyComments: state.replyComments.filter(
-          (item) => item._id !== action.payload
-        )
+        replyComments: [...filteredReplyLists.list],
+        listRepliesUser: [...filteredReplyLists.listUser]
       };
     case SET_COMMENTS_ERROR:
       return {
@@ -163,6 +213,14 @@ const commentsReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
+    case SET_FILTER_REPLY_USER:
+      return {
+        ...state,
+        filtersReplyUser: {
+          ...state.filtersReplyUser,
+          ...action.payload
+        }
+      };
     case CLEAR_FILTERS:
       return {
         ...state,
@@ -176,6 +234,13 @@ const commentsReducer = (state = initialState, action = {}) => {
         filtersUser: defaultFiltersUser,
         sort: { date: -1 },
         sortLabel: ''
+      };
+    case CLEAR_FILTERS_REPLY_USER:
+      return {
+        ...state,
+        filtersReplyUser: defaultFiltersReplyUser,
+        replySort: { date: -1 },
+        replySortLabel: ''
       };
     case SET_REPLY_FILTER:
       return {
