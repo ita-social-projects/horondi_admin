@@ -11,7 +11,7 @@ import {
   files,
   target,
   mockPosition,
-  Sizes,
+  Pockets,
   mockPositionWithData
 } from './mockPockets';
 
@@ -117,19 +117,19 @@ describe('pocket form tests', () => {
 
   it('should coverage getOptionLabel in Autocomplete', () => {
     const label = component.find(Autocomplete).props();
-    label.getOptionLabel(Sizes.list[0]);
+    label.getOptionLabel(Pockets.list[0]);
     expect(label).toBeDefined();
   });
 
   it('should coverage onTagsChange', () => {
     const positionsData = component.find(Autocomplete).props();
-    positionsData.onChange(null, Sizes.list);
+    positionsData.onChange(null, Pockets.list);
     expect(positionsData).toBeDefined();
   });
 
   it('should coverage error', () => {
     const positionsData = component.find(Autocomplete).props();
-    positionsData.onChange(null, Sizes.list);
+    positionsData.onChange(null, Pockets.list);
     expect(positionsData).toBeDefined();
   });
 

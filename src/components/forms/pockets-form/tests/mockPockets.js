@@ -30,7 +30,7 @@ const mockPositionWithData = {
   ],
   loadingPositions: false
 };
-const Sizes = {
+const Pockets = {
   list: [
     {
       _id: '604394a2a7532c33dcb326d5',
@@ -39,11 +39,11 @@ const Sizes = {
         _id: '6043bf9e3e06ad3edcdb7b30',
         name: [
           {
-            value: 'Роллтоп',
+            value: 'Кишеня',
             lang: 'ua'
           },
           {
-            value: 'Rolltop',
+            value: 'pocket',
             lang: 'en'
           }
         ]
@@ -52,26 +52,10 @@ const Sizes = {
     }
   ]
 };
-const pocket = {
-  id: '',
-  values: {},
-  errors: {},
-  touched: {},
-  pocket: {
-    _id: '',
-    name: [[Object], [Object]],
-    images: { thumbnail: '' },
-    restrictions: false,
-    optionType: null,
-    additionalPrice: [[Object], [Object]],
-    positions: []
-  },
-  edit: false
-};
 
 module.exports = {
   mockPositionWithData,
-  Sizes,
+  Pockets,
   mockPosition,
   target,
   files
