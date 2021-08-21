@@ -1,9 +1,4 @@
-export const bottomUseEffectHandler = (
-  bottom,
-  setBottomFn,
-  setConstImgFn,
-  imagePrefix
-) => {
+export const bottomUseEffectHandler = (bottom, setBottomFn, imagePrefix) => {
   if (bottom?.images.thumbnail) {
     setBottomFn(`${imagePrefix}${bottom.images.thumbnail}`);
   }
