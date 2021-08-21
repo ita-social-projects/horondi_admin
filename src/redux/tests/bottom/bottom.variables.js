@@ -4,30 +4,31 @@ const mockBottoms = {
   items: [
     {
       _id: mockId,
-      name: [
-        {
-          lang: 'ua',
-          value: 'Низ'
-        },
-        {
-          lang: 'en',
-          value: 'Bottom'
-        }
-      ],
       optionType: 'BOTTOM',
       features: {
         material: {
           name: [
             {
               lang: 'ua',
-              value: 'Бонд (303-318)'
+              value: 'Мальмо'
             },
             {
               lang: 'en',
-              value: 'Bond (303-318)'
+              value: 'Malmo'
             }
           ]
         },
+        name: [
+          {
+            lang: 'ua',
+            value: 'Низ'
+          },
+          {
+            lang: 'en',
+            value: 'Bottom'
+          }
+        ],
+
         color: {
           name: [
             {
@@ -41,12 +42,7 @@ const mockBottoms = {
           ]
         }
       },
-      images: {
-        thumbnail: 'thumbnail_xds8878kr3mbmnu_138.png',
-        medium: 'medium_xds8878kr3mbmnu_138.png',
-        small: 'small_xds8878kr3mbmnu_138.png',
-        large: 'large_xds8878kr3mbmnu_138.png'
-      },
+
       additionalPrice: [
         {
           currency: 'UAH',
@@ -57,6 +53,12 @@ const mockBottoms = {
           value: 8800
         }
       ],
+      images: {
+        thumbnail: 'thumbnail_bottom_138.png',
+        medium: 'medium_bottom_138.png',
+        small: 'small_bottom_138.png',
+        large: 'large_bottom_138.png'
+      },
       available: false
     }
   ],
