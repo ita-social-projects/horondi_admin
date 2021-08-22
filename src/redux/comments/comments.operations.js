@@ -237,7 +237,7 @@ const updateComment = async (id, comment) => {
   return result?.data?.updateComment;
 };
 
-const getCommentsByType = async (value, commentsType) => {
+const getCommentsByType = (value, commentsType) => {
   try {
     if (commentsType === GET_USER_COMMENTS) {
       return getCommentsByUser(value);
