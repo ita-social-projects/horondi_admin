@@ -238,15 +238,17 @@ const updateComment = async (id, comment) => {
 };
 
 const getCommentsByType = (value, commentsType) => {
-  try {
-    if (commentsType === GET_USER_COMMENTS) {
-      return getCommentsByUser(value);
-    }
-    if (commentsType === GET_PRODUCT_COMMENTS) {
-      return getCommentsByProduct(value);
-    }
-  } catch (error) {
-    throw new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+  const createErrorMsg = (error) => new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+
+  if (commentsType === GET_USER_COMMENTS) {
+    return getCommentsByUser(value).catch((error) => {
+      throw createErrorMsg(error);
+    });
+  }
+  if (commentsType === GET_PRODUCT_COMMENTS) {
+    return getCommentsByProduct(value).catch((error) => {
+      throw createErrorMsg(error);
+    });
   }
 };
 
