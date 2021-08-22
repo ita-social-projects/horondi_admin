@@ -42,7 +42,6 @@ const UserDetailsCard = ({ info, pathBack }) => {
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  console.log({ info });
   const status = getUserBlockStatus(info.isBanned);
 
   const btnTitleStatus =
@@ -69,16 +68,14 @@ const UserDetailsCard = ({ info, pathBack }) => {
     dispatch(resendEmail({ email: info.email }));
   };
 
-  const sections = userTitles.sections.map((section) => {
-    return (
+  const sections = userTitles.sections.map((section) => (
       <InfoItem
         label={section.label}
         id={section.id}
         data={info.sections[section.id]}
         key={section.id}
       />
-    );
-  });
+    ));
 
   return (
     <Grid container direction='column' className={styles.container}>
@@ -154,7 +151,11 @@ UserDetailsCard.propTypes = {
     firstName: PropTypes.string,
     id: PropTypes.string,
     lastName: PropTypes.string,
-    isBanned: PropTypes.object,
+    isBanned: PropTypes.shape({
+      blockPeriod: PropTypes.string,
+      updatedAt: PropTypes.string,
+      blockCount: PropTypes.number
+    }),
     sections: PropTypes.shape({
       adress: PropTypes.string,
       city: PropTypes.string,

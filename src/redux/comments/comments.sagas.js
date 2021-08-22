@@ -83,6 +83,7 @@ export function* handleCommentsUserLoad({
 }) {
   try {
     yield put(setCommentsLoading(true));
+    console.log({ filter, pagination, sort, userId });
     const comments = yield call(
       getAllCommentsByUser,
       filter,
@@ -106,6 +107,7 @@ export function* handleRepliesCommentsUserLoad({
 }) {
   try {
     yield put(setCommentsLoading(true));
+    console.log({ filter, pagination, sort, userId });
     const comments = yield call(
       getAllCommentsRepliesByUser,
       filter,

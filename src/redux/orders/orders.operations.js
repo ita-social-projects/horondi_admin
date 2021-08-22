@@ -252,7 +252,7 @@ export const getOrdersByUser = async (skip, limit, filter, sort, userId) => {
         getOrdersByUser(limit: $limit, skip: $skip, filter: $filter, sort: $sort, userId: $userId) {
           items {
             _id
-            user {
+            recipient {
               firstName
               lastName
               email

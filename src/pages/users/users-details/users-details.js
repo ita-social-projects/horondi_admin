@@ -55,6 +55,7 @@ const UsersDetails = (props) => {
     listUser: listOrder
   } = useSelector(orderSelector);
 
+  console.log({ listOrder, listComment, listReplies });
   const { loading } = useSelector(({ Users }) => ({
     loading: Users.userLoading
   }));

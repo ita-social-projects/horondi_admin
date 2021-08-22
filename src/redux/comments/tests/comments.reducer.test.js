@@ -1,12 +1,18 @@
 import commentsReducer, { initialState } from '../comments.reducer';
 import {
   setComments,
+  setCommentsUser,
+  setRepliesCommentsUser,
   setComment,
   setCommentsLoading,
   setCommentError,
   removeCommentFromStore,
   setFilter,
+  setFilterUser,
+  setFilterReplyUser,
   clearFilters,
+  clearFiltersUser,
+  clearFiltersReplyUser,
   setRecentComments,
   setReplyComments,
   removeReplyCommentFromStore,
@@ -22,6 +28,7 @@ import {
   commentsErrorExample,
   filter,
   mockInitialFilters,
+  mockInitialFiltersUser,
   replyCommentsData,
   replyItem,
   replyCommentId,
@@ -35,9 +42,25 @@ describe('comments reducer tests', () => {
     expect(commentsReducer()).toEqual(initialState);
   });
   it('should set comments to the store', () => {
-    expect(commentsReducer(initialState, setComments(comments))).toEqual({
+    expect(commentsReducer(initialState, setComments(comments.list))).toEqual({
       ...initialState,
-      list: comments
+      list: comments.list
+    });
+  });
+  it('should set user comments to the store', () => {
+    expect(
+      commentsReducer(initialState, setCommentsUser(comments.list))
+    ).toEqual({
+      ...initialState,
+      listUser: comments.list
+    });
+  });
+  it('should set user replies to the store', () => {
+    expect(
+      commentsReducer(initialState, setRepliesCommentsUser(replyCommentsData))
+    ).toEqual({
+      ...initialState,
+      listRepliesUser: replyCommentsData
     });
   });
   it('should set comment to the store', () => {
@@ -80,12 +103,46 @@ describe('comments reducer tests', () => {
       }
     });
   });
-  it('should clear all comments filters', () => {
+  it('should set filter for user comments', () => {
+    expect(commentsReducer(initialState, setFilterUser(filter))).toEqual({
+      ...initialState,
+      filtersUser: {
+        ...mockInitialFiltersUser,
+        ...filter
+      }
+    });
+  });
+  it('should set filter for user replies', () => {
+    expect(commentsReducer(initialState, setFilterReplyUser(filter))).toEqual({
+      ...initialState,
+      filtersReplyUser: {
+        ...mockInitialFilters,
+        ...filter
+      }
+    });
+  });
+  it('should clear all comment filters', () => {
     expect(commentsReducer(initialState, clearFilters())).toEqual({
       ...initialState,
       filters: mockInitialFilters,
       sort: { date: -1 },
       sortLabel: ''
+    });
+  });
+  it('should clear all user comment filters', () => {
+    expect(commentsReducer(initialState, clearFiltersUser())).toEqual({
+      ...initialState,
+      filtersUser: mockInitialFiltersUser,
+      sort: { date: -1 },
+      sortLabel: ''
+    });
+  });
+  it('should clear all user reply filters', () => {
+    expect(commentsReducer(initialState, clearFiltersReplyUser())).toEqual({
+      ...initialState,
+      filtersReplyUser: mockInitialFilters,
+      replySort: { date: -1 },
+      replySortLabel: ''
     });
   });
   it('should set recent comments', () => {
