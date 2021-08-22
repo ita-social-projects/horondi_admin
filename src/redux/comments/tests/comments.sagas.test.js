@@ -95,6 +95,13 @@ import Snackbar from '../../snackbar/snackbar.reducer';
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
 describe('get user comments sagas tests', () => {
+  const {
+    filter: filterComment,
+    pagination: paginComment,
+    sort,
+    userId
+  } = commentFilterUser;
+
   it('should handle user comments load', () => {
     expectSaga(handleCommentsUserLoad, {
       payload: commentFilterUser
@@ -106,13 +113,7 @@ describe('get user comments sagas tests', () => {
       .put(setCommentsLoading(true))
       .provide([
         [
-          call(
-            getAllCommentsByUser,
-            commentFilterUser.filter,
-            commentFilterUser.pagination,
-            commentFilterUser.sort,
-            commentFilterUser.userId
-          ),
+          call(getAllCommentsByUser, filterComment, paginComment, sort, userId),
           userComments
         ]
       ])
@@ -144,10 +145,10 @@ describe('get user comments sagas tests', () => {
         [
           call(
             getAllCommentsRepliesByUser,
-            commentFilterUser.filter,
-            commentFilterUser.pagination,
-            commentFilterUser.sort,
-            commentFilterUser.userId
+            filterComment,
+            paginComment,
+            sort,
+            userId
           ),
           throwError(mockError)
         ]
@@ -162,6 +163,13 @@ describe('get user comments sagas tests', () => {
 });
 
 describe('get user replies sagas tests', () => {
+  const {
+    filter: filterReply,
+    pagination: paginReply,
+    sort,
+    userId
+  } = replyFilterUser;
+
   it('should handle user replies load', () => {
     expectSaga(handleRepliesCommentsUserLoad, {
       payload: replyFilterUser
@@ -175,10 +183,10 @@ describe('get user replies sagas tests', () => {
         [
           call(
             getAllCommentsRepliesByUser,
-            replyFilterUser.filter,
-            replyFilterUser.pagination,
-            replyFilterUser.sort,
-            replyFilterUser.userId
+            filterReply,
+            paginReply,
+            sort,
+            userId
           ),
           userReplies
         ]
@@ -211,10 +219,10 @@ describe('get user replies sagas tests', () => {
         [
           call(
             getAllCommentsRepliesByUser,
-            replyFilterUser.filter,
-            replyFilterUser.pagination,
-            replyFilterUser.sort,
-            replyFilterUser.userId
+            filterReply,
+            paginReply,
+            sort,
+            userId
           ),
           throwError(mockError)
         ]

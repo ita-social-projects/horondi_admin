@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import ReactHtmlParser from 'react-html-parser';
 
+import { useCommonStyles } from '../../../common.styles';
 import orders from '../../../../configs/orders';
 import getTime from '../../../../utils/getTime';
 import Status from '../../../orders/Status/Status';
@@ -21,9 +22,10 @@ import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 
 const { pathToOrderItem } = config.routes;
 const tableTitles = config.tableHeadRowTitles.users.orderTab;
-const { REMOVE_ORDER_MESSAGE } = config.messages;
+const { REMOVE_ORDER_MESSAGE, NO_ORDERS_MESSAGE } = config.messages;
 
 const OrderTab = ({ list }) => {
+  const commonStyles = useCommonStyles();
   const tabStyles = useStyles();
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -74,13 +76,17 @@ const OrderTab = ({ list }) => {
         <FilterNavbar options={orderUserFilters || {}} />
       </div>
       <div>
-        <TableContainerGenerator
-          pagination
-          count={itemsCount}
-          id='usersTable'
-          tableTitles={tableTitles}
-          tableItems={orderItems}
-        />
+        {orderItems?.length ? (
+          <TableContainerGenerator
+            pagination
+            count={itemsCount}
+            id='usersTable'
+            tableTitles={tableTitles}
+            tableItems={orderItems}
+          />
+        ) : (
+          <p className={commonStyles.noRecords}>{NO_ORDERS_MESSAGE}</p>
+        )}
       </div>
     </>
   );

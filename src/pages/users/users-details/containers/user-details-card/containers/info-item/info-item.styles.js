@@ -9,5 +9,8 @@ export const useStyles = makeStyles((theme) => ({
   detailTitle: {
     fontWeight: 'bold'
   },
+  defaultText: {
+    color: 'lightgrey'
+  },
   detailSubtitle: {}
 }));

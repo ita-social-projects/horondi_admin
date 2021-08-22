@@ -20,15 +20,18 @@ import { commentSelectorWithPagination } from '../../../../redux/selectors/comme
 import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import { resetPagination } from '../../../../redux/table/table.actions';
+import { useCommonStyles } from '../../../common.styles';
 
 const tableTitles = config.tableHeadRowTitles.users.commentReplyTab;
-const { REMOVE_REPLY_COMMENT_MESSAGE } = config.messages;
+const { REMOVE_REPLY_COMMENT_MESSAGE, NO_REPLY_COMMENTS_MESSAGE } =
+  config.messages;
 const {
   comment: { no, yes }
 } = config.labels;
 const { pathToCommentsEdit } = config.routes;
 
 const CommentReplyTab = ({ list }) => {
+  const commonStyles = useCommonStyles();
   const tabStyles = useStyles();
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -82,13 +85,17 @@ const CommentReplyTab = ({ list }) => {
         <FilterNavbar options={commentReplyUserFilters || {}} />
       </div>
       <div>
-        <TableContainerGenerator
-          pagination
-          count={itemsCount}
-          id='usersTable'
-          tableTitles={tableTitles}
-          tableItems={commentReplyItems}
-        />
+        {commentReplyItems?.length ? (
+          <TableContainerGenerator
+            pagination
+            count={itemsCount}
+            id='usersTable'
+            tableTitles={tableTitles}
+            tableItems={commentReplyItems}
+          />
+        ) : (
+          <p className={commonStyles.noRecords}>{NO_REPLY_COMMENTS_MESSAGE}</p>
+        )}
       </div>
     </>
   );

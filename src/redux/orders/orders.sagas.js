@@ -118,7 +118,6 @@ export function* handleOrdersListUserLoad({
 }) {
   try {
     yield put(setOrderLoading(true));
-
     const orders = yield call(
       getOrdersByUser,
       skip,

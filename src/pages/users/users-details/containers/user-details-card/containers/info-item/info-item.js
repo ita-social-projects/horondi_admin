@@ -16,11 +16,13 @@ const InfoItem = ({ label, id, data, key }) => {
         </div>
         <div>
           <Typography
-            className={styles.detailSubtitle}
+            className={
+              data?.length ? styles.detailSubtitle : styles.defaultText
+            }
             data-cy={id}
             variant='h6'
           >
-            {data}
+            {data?.length ? data : 'Порожньо'}
           </Typography>
         </div>
       </Grid>
