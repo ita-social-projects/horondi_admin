@@ -49,7 +49,7 @@ export function* handleHistoryRecordByIdLoad({ payload }) {
   }
 }
 
-function* handleHistoryError(e) {
+export function* handleHistoryError(e) {
   if (
     e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
     e.message === AUTH_ERRORS.USER_IS_BLOCKED
