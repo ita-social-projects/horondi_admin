@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearFilters, setFilter } from '../../redux/basics/basics.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
 
-const useBasicFilter = () => {
+const useBasicFilters = () => {
   const dispatch = useDispatch();
   const filter = useSelector(({ Basics }) => Basics.filter);
 
@@ -32,4 +32,4 @@ const useBasicFilter = () => {
   };
 };
 
-export default useBasicFilter;
+export default useBasicFilters;

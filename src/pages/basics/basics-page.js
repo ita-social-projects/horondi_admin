@@ -15,7 +15,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import FilterNavbar from '../../components/filter-search-sort';
-import useBasicFilter from '../../hooks/filters/use-basic-filters';
+import useBasicFilters from '../../hooks/filters/use-basic-filters';
 
 const { materialUiConstants } = config;
 const labels = config.labels.basiscPageLabel;
@@ -26,7 +26,7 @@ const { DELETE_BASIC_MESSAGE, NO_BASICS_MESSAGE } = config.messages;
 
 const BasicsPage = () => {
   const dispatch = useDispatch();
-  const basicOptions = useBasicFilter();
+  const basicOptions = useBasicFilters();
   const { IMG_URL } = config;
   const { filter, basicsList, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(basicsSelectorWithPagination);
