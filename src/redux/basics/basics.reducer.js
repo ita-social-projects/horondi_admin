@@ -1,13 +1,24 @@
-import { ADD_BASICS, GET_BASICS } from './basics.types';
+import {
+  SET_BASICS,
+  REMOVE_BASIC,
+  SET_BASICS_LOADING,
+  SET_BASIC,
+  CLEAR_FILTER,
+  SET_BASICS_FILTER
+} from './basics.types';
 
 export const selectBasics = ({ Basics }) => ({
-  basics: Basics.list?.items,
+  basicsList: Basics.list.items,
   loading: Basics.basicsLoading,
-  filter: Basics.filter
+  filter: Basics.filter,
+  basic: Basics.basic
 });
 
 const initialFilter = {
-  search: ''
+  name: '',
+  available: [],
+  material: [],
+  color: []
 };
 
 export const initialState = {
@@ -18,18 +29,45 @@ export const initialState = {
   basicsErrors: null
 };
 
-const basicsReducer = (state = initialState, action) => {
+const basicsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case ADD_BASICS:
+    case SET_BASICS:
       return {
         ...state,
         list: action.payload
       };
-    case GET_BASICS:
+    case REMOVE_BASIC:
+      const list = state.list.items.filter((basic) => basic._id !== action.payload);
       return {
-        ...state
+        ...state,
+        list
+      };
+    case SET_BASICS_LOADING:
+      return {
+        ...state,
+        basicsLoading: action.payload
+      };
+    case SET_BASIC:
+      return {
+        ...state,
+        basic: action.payload
+      };
+    case SET_BASICS_FILTER:
+      return {
+        ...state,
+        filter: {
+          ...state.filter,
+          ...action.payload
+        }
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filter: initialFilter
       };
     default:
       return state;
   }
 };
+
+export default basicsReducer;

@@ -116,6 +116,36 @@ const labels = {
       en: 'Pattern description'
     }
   },
+  basics: {
+    image: 'Фото основи',
+    material: 'Матеріал',
+    available: 'Доступна',
+    customizable: 'для конструктора',
+    avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    basicName: {
+      ua: 'Назва основи',
+      en: 'Basic name'
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для основи ',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір основи',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
+  },
   back: {
     image: 'Фото спинки',
     material: 'Матеріал',
@@ -563,6 +593,16 @@ const labels = {
       ua: 'Позиція',
       en: 'Position'
     }
+  },
+  basiscPageLabel: {
+    basicsHeader: 'basics-header',
+    basicsTable: 'sideBasicsTable',
+    basicsName: {
+      ua: 'Назва основи',
+      en: 'Basics name'
+    },
+    available: 'Доступний',
+    avatarText: 'Фото'
   }
 };
 export default labels;

@@ -49,6 +49,8 @@ const messages = {
   NO_BACKS_MESSAGE: 'Cпинки відсутні',
   NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',
   DELETE_CLOSURE_MESSAGE: 'Ви впевнені, що хочете видалити цей замочок?',
-  NO_CLOSURE_MESSAGE: 'Замочки відсутні'
+  NO_CLOSURE_MESSAGE: 'Замочки відсутні',
+  DELETE_BASIC_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
+  NO_BASICS_MESSAGE: 'Основи відсутні'
 };
 export default messages;

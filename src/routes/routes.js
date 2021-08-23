@@ -73,6 +73,9 @@ import ConstructorModelDetails from '../pages/constructor-list/constructor-detai
 import ClosuresPage from '../pages/closures/closures-page';
 import ClosuresAdd from '../pages/closures/closures-add/closures-add';
 import ClosuresEdit from '../pages/closures/closures-edit/closures-edit';
+import BasicsPage from '../pages/basics/basics-page';
+import BasicAdd from '../pages/basics/basic-add';
+import BasicDetails from '../pages/basics/basic-details';
 
 const { routes } = config;
 
@@ -327,6 +330,9 @@ const Routes = () => {
             exact
             component={ClosuresEdit}
           />
+          <Route path={routes.pathToBasics} exact component={BasicsPage} />
+          <Route path={routes.pathToAddBasic} exact component={BasicAdd} />
+          <Route path={routes.pathToEditBasic} exact component={BasicDetails} />
           <Route component={ErrorPage} />
         </Switch>
       </ErrorBoundary>
