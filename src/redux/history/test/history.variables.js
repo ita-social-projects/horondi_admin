@@ -1,4 +1,4 @@
-const historyId = '6070d0c7cb643400241bf5ed';
+export const historyId = '6070d0c7cb643400241bf5ed';
 
 export const historyRecord = {
   _id: historyId,
@@ -14,7 +14,7 @@ export const historyRecord = {
   userId: '60452208873045422c1dbef8'
 };
 
-const mockHistoryRecords = {
+export const mockHistoryRecords = {
   items: [
     {
       _id: historyId,
@@ -33,7 +33,7 @@ const mockHistoryRecords = {
   count: 1
 };
 
-const mockTableState = {
+export const mockTableState = {
   dense: false,
   pagination: {
     currentPage: 0,
@@ -58,7 +58,7 @@ export const mockInitialFilters = {
   search: ''
 };
 
-const mockHistoryState = {
+export const mockHistoryState = {
   filters: initialFilters,
   records: null,
   historyLoading: false,
@@ -67,7 +67,7 @@ const mockHistoryState = {
   recordItemLoading: false
 };
 
-const mockHistoryRecordsLoadPayload = {
+export const mockHistoryRecordsLoadPayload = {
   limit: 10,
   skip: 0,
   filter: {}
