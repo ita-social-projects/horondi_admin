@@ -35,7 +35,8 @@ import {
   businessPageErrorMessages,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages
+  positionErrorMessages,
+  basicsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -253,7 +254,8 @@ export const config = {
   inputNames,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages
+  positionErrorMessages,
+  basicsErrorMessages
 };
 export const inputTypes = {
   button: 'button',

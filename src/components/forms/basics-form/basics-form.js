@@ -31,15 +31,15 @@ const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
 const map = require('lodash/map');
 
 const {
-  BACK_ERROR_MESSAGE,
-  BACK_ERROR_ENGLISH_AND_DIGITS_ONLY,
+  BASICS_ERROR_MESSAGE,
+  BASICS_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
-  BACK_EN_NAME_MESSAGE,
-  BACK_UA_NAME_MESSAGE,
-  BACK_PRICE_ERROR,
-  BACK_MAX_LENGTH_MESSAGE,
-  BACK_MIN_LENGTH_MESSAGE
-} = config.backErrorMessages;
+  BASICS_EN_NAME_MESSAGE,
+  BASICS_UA_NAME_MESSAGE,
+  BASICS_PRICE_ERROR,
+  BASICS_MAX_LENGTH_MESSAGE,
+  BASICS_MIN_LENGTH_MESSAGE
+} = config.basicsErrorMessages;
 const { SAVE_TITLE } = config.buttonTitles;
 const {
   languages,
@@ -47,8 +47,8 @@ const {
   formRegExp: {
     enNameCreation,
     uaNameCreation,
-    backMaterial,
-    backColor,
+    basicMaterial,
+    basicColor,
     additionalPriceRegExp
   },
   imagePrefix,
@@ -77,26 +77,26 @@ const BasicsForm = ({ basic, id, edit }) => {
 
   const basicsValidationSchema = Yup.object().shape({
     enName: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .max(50, BACK_MAX_LENGTH_MESSAGE)
-      .required(BACK_ERROR_MESSAGE)
-      .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
+      .min(2, BASICS_MIN_LENGTH_MESSAGE)
+      .max(50, BASICS_MAX_LENGTH_MESSAGE)
+      .required(BASICS_ERROR_MESSAGE)
+      .matches(enNameCreation, BASICS_EN_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .max(50, BACK_MAX_LENGTH_MESSAGE)
-      .required(BACK_ERROR_MESSAGE)
-      .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
+      .min(2, BASICS_MIN_LENGTH_MESSAGE)
+      .max(50, BASICS_MAX_LENGTH_MESSAGE)
+      .required(BASICS_ERROR_MESSAGE)
+      .matches(uaNameCreation, BASICS_UA_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .matches(backMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BACK_ERROR_MESSAGE),
+      .min(2, BASICS_MIN_LENGTH_MESSAGE)
+      .matches(basicMaterial, BASICS_ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(BASICS_ERROR_MESSAGE),
     color: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .matches(backColor, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BACK_ERROR_MESSAGE),
+      .min(2, BASICS_MIN_LENGTH_MESSAGE)
+      .matches(basicColor, BASICS_ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(BASICS_ERROR_MESSAGE),
     additionalPrice: Yup.string()
-      .matches(additionalPriceRegExp, BACK_PRICE_ERROR)
-      .required(BACK_ERROR_MESSAGE)
+      .matches(additionalPriceRegExp, BASICS_PRICE_ERROR)
+      .required(BASICS_ERROR_MESSAGE)
       .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),
@@ -147,6 +147,7 @@ const BasicsForm = ({ basic, id, edit }) => {
   useEffect(() => {
     setBasicsColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
+
   const checkboxes = [
     {
       id: 'available',
@@ -204,11 +205,11 @@ const BasicsForm = ({ basic, id, edit }) => {
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
-                data-cy='save-btn'
                 type='submit'
+                data-cy='save-btn'
                 title={SAVE_TITLE}
-                values={values}
                 errors={errors}
+                values={values}
                 onClickHandler={handleSubmit}
               />
             </Grid>
@@ -216,11 +217,11 @@ const BasicsForm = ({ basic, id, edit }) => {
         </div>
         <CheckboxOptions options={checkboxes} />
         <Grid item xs={12}>
-          <Paper className={styles.backItemUpdate}>
+          <Paper className={styles.basicItemUpdate}>
             <div className={styles.imageUploadBlock}>
               <div>
                 <span className={styles.imageUpload}>
-                  {config.labels.back.avatarText}
+                  {config.labels.basics.avatarText}
                 </span>
                 <div className={styles.imageUploadAvatar}>
                   <ImageUploadContainer
@@ -242,11 +243,11 @@ const BasicsForm = ({ basic, id, edit }) => {
           values={values}
           errors={errors}
           touched={touched}
+          materialLabels={materialLabels}
           handleChange={handleChange}
           handleBlur={handleBlur}
           handleSubmit={handleSubmit}
           setFieldValue={setFieldValue}
-          materialLabels={materialLabels}
         />
         {map(languages, (lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
@@ -264,9 +265,9 @@ const BasicsForm = ({ basic, id, edit }) => {
             label={additionalPriceLabel}
             value={values.additionalPrice}
             inputProps={{ min: 0 }}
+            error={touched.additionalPrice && !!errors.additionalPrice}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.additionalPrice && !!errors.additionalPrice}
           />
           {touched.additionalPrice && errors.additionalPrice && (
             <div

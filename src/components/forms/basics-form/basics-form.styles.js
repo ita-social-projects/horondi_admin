@@ -34,17 +34,17 @@ export const useStyles = makeStyles((theme) => {
       margin: theme.spacing(1),
       minWidth: 120
     },
-    materialSelect: {
-      width: '550px',
-      '@media (max-width: 450px)': {
-        width: 'inherit'
-      }
-    },
     additionalPrice: {
       display: 'flex',
       flexDirection: 'column',
       margin: '10px 0',
       padding: '10px'
+    },
+    materialSelect: {
+      width: '550px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
     },
     buttonContainer: {
       position: 'relative',

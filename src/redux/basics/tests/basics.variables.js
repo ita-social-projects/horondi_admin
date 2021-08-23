@@ -1,4 +1,4 @@
-const mockId = '6047321793650236ddbfb841';
+const mockId = '6047321793650236ddbfb842';
 
 const mockBasics = {
   list: {
@@ -8,11 +8,11 @@ const mockBasics = {
         name: [
           {
             lang: 'ua',
-            value: 'сірий'
+            value: 'Чорний'
           },
           {
             lang: 'en',
-            value: 'grey'
+            value: 'Black'
           }
         ],
         optionType: 'BASICS',
@@ -33,20 +33,20 @@ const mockBasics = {
             name: [
               {
                 lang: 'ua',
-                value: 'Сірий'
+                value: 'Чорний'
               },
               {
                 lang: 'en',
-                value: 'Grey'
+                value: 'Black'
               }
             ]
           }
         },
         images: {
-          thumbnail: 'thumbnail_xds8878kr3mbmnu_138.png',
-          medium: 'medium_xds8878kr3mbmnu_138.png',
-          small: 'small_xds8878kr3mbmnu_138.png',
-          large: 'large_xds8878kr3mbmnu_138.png'
+          thumbnail: 'thumbnail_image_138.png',
+          medium: 'medium_image_138.png',
+          small: 'small_image_138.png',
+          large: 'large_image_138.png'
         },
         additionalPrice: [
           {
@@ -58,8 +58,7 @@ const mockBasics = {
             value: 5
           }
         ],
-        available: false,
-        customizable: null
+        available: false
       }
     ]
   },
