@@ -17,18 +17,6 @@ const mockBasics = {
         ],
         optionType: 'BASICS',
         features: {
-          material: {
-            name: [
-              {
-                lang: 'ua',
-                value: 'Мальмо'
-              },
-              {
-                lang: 'en',
-                value: 'Malmo'
-              }
-            ]
-          },
           color: {
             name: [
               {
@@ -38,6 +26,18 @@ const mockBasics = {
               {
                 lang: 'en',
                 value: 'Black'
+              }
+            ]
+          },
+          material: {
+            name: [
+              {
+                lang: 'ua',
+                value: 'Мальмо'
+              },
+              {
+                lang: 'en',
+                value: 'Malmo'
               }
             ]
           }

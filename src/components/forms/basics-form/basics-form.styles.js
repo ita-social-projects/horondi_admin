@@ -46,6 +46,10 @@ export const useStyles = makeStyles((theme) => {
         width: 'inherit'
       }
     },
+    error: {
+      color: '#e60000',
+      marginLeft: '5px'
+    },
     buttonContainer: {
       position: 'relative',
       width: '100%',
@@ -55,28 +59,24 @@ export const useStyles = makeStyles((theme) => {
         marginTop: 43
       }
     },
+    button: {
+      marginTop: theme.spacing(0.5)
+    },
     fixedButtons: {
       position: 'fixed',
       height: 60,
       zIndex: 1001,
       backgroundColor: theme.palette.bodyColor
     },
-    button: {
-      marginTop: theme.spacing(0.5)
-    },
-    error: {
-      color: '#e60000',
-      marginLeft: '5px'
-    },
-    inputError,
-    textField,
-    imageUpload,
-    saveButton,
-    returnButton,
     attachFile,
     large,
     imageUploadAvatar,
     controlsBlock,
-    imageName
+    imageName,
+    inputError,
+    textField,
+    imageUpload,
+    saveButton,
+    returnButton
   };
 });
