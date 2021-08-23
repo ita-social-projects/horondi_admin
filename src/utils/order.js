@@ -7,7 +7,7 @@ import config from '../configs/orders';
 
 export const recipientPropTypes = {
   data: PropTypes.shape({
-    user: PropTypes.objectOf(PropTypes.string),
+    recipient: PropTypes.objectOf(PropTypes.string),
     userComment: PropTypes.string
   }),
   handleChange: PropTypes.func.isRequired
@@ -103,7 +103,7 @@ const items = (order) =>
 
 export const newOrder = (order) => ({
   status: order.status,
-  user: order.user,
+  recipient: order.recipient,
   delivery: address(order.delivery),
   items: items(order),
   paymentMethod: order.paymentMethod,
@@ -182,7 +182,7 @@ export const initialValues = {
   status: '',
   paymentMethod: '',
   isPaid: false,
-  user: {
+  recipient: {
     firstName: '',
     lastName: '',
     email: '',
@@ -262,7 +262,7 @@ export const setFormValues = (selectedOrder) => {
     status: selectedOrder.status,
     paymentMethod: selectedOrder.paymentMethod,
     isPaid: selectedOrder.isPaid,
-    user: selectedOrder.user,
+    recipient: selectedOrder.recipient,
     delivery: {
       sentBy,
       courier: {
