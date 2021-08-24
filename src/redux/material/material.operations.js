@@ -17,6 +17,7 @@ export const getAllMaterials = async (skip, limit, filter) => {
             available
             additionalPrice {
               value
+              type
             }
             purpose
             colors {

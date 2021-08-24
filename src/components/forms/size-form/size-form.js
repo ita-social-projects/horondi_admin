@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   TextField,
   Grid,
@@ -9,9 +9,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import { useFormik } from 'formik';
-
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import { useCommonStyles } from '../../../pages/common.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
@@ -29,25 +31,25 @@ import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
+import { getModels } from '../../../redux/model/model.actions';
+import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
 
-const { selectTitle, modelTitle } = config.titles.sizesTitles;
+const { selectTitle, modelTitle, convertationTitle } =
+  config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
+const { additionalPriceType, modelName } = labels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
 const { pathToSizes } = config.routes;
-
 function SizeForm({ id, size }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
 
-  const { sizesList, loading } = useSelector(sizesSelectorWithPagination);
-
-  const uniqueModelMap = [
-    ...new Map(
-      sizesList?.map((item) => [item.modelId?.name[0].value, item])
-    ).values()
-  ];
+  const { loading } = useSelector(sizesSelectorWithPagination);
+  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+  const { list } = useSelector(modelSelectorWithPagination);
 
   const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
     useFormik({
@@ -69,6 +71,22 @@ function SizeForm({ id, size }) {
         dispatch(addSize(newSize));
       }
     });
+
+  useEffect(() => {
+    dispatch(getModels());
+    dispatch(getCurrencies());
+  }, []);
+
+  const getLabelValue = () => {
+    switch (values.additionalPriceType) {
+      case 'ABSOLUTE_INDICATOR':
+        return additionalPriceType.absolutePrice[0].value;
+      case 'RELATIVE_INDICATOR':
+        return additionalPriceType.relativePrice[0].value;
+      default:
+        return '';
+    }
+  };
 
   const valueEquality = checkInitialValue(getSizeInitialValues(size), values);
 
@@ -151,10 +169,6 @@ function SizeForm({ id, size }) {
                     )}
                   </>
                 ))}
-              </Paper>
-            </div>
-            <div className={styles.contentWrapper}>
-              <Paper className={styles.sizeItemAdd}>
                 <FormControl
                   variant={materialUiConstants.outlined}
                   className={`${styles.formControl} 
@@ -183,6 +197,8 @@ function SizeForm({ id, size }) {
                   </Select>
                 </FormControl>
               </Paper>
+            </div>
+            <div className={styles.contentWrapper}>
               <Paper className={styles.sizeItemAdd}>
                 <FormControl
                   variant={materialUiConstants.outlined}
@@ -195,27 +211,79 @@ function SizeForm({ id, size }) {
                     {modelTitle}
                   </InputLabel>
                   <Select
-                    data-cy={labels.en.modelId}
+                    data-cy={modelName}
                     id='modelId'
                     value={values.modelId}
                     onChange={(e) =>
                       setFieldValue(labels.en.modelName, e.target.value)
                     }
-                    label={selectTitle}
+                    label={modelTitle}
                   >
-                    {uniqueModelMap.map((value) => (
-                      <MenuItem
-                        key={value.modelId._id}
-                        value={value.modelId._id}
-                      >
-                        {value.modelId?.name[0]?.value}
+                    {list.map((value) => (
+                      <MenuItem key={value._id} value={value._id}>
+                        {value?.name[0]?.value}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </Paper>
               <Paper className={styles.sizeItemAdd}>
+                <FormControl component='fieldset'>
+                  <RadioGroup
+                    name='additionalPriceType'
+                    className={styles.textField}
+                    value={values.additionalPriceType}
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel
+                      value='ABSOLUTE_INDICATOR'
+                      control={<Radio />}
+                      label={additionalPriceType.absolutePrice[0].value}
+                      key={2}
+                    />
+                    <FormControlLabel
+                      value='RELATIVE_INDICATOR'
+                      control={<Radio />}
+                      label={additionalPriceType.relativePrice[0].value}
+                      key={1}
+                    />
+                  </RadioGroup>
+                </FormControl>
                 <TextField
+                  data-cy='additionalPrice'
+                  id='additionalPrice'
+                  className={`
+                  ${styles.textField} 
+                  ${styles.materialSelect} 
+                  `}
+                  variant='outlined'
+                  label={getLabelValue()}
+                  value={values.additionalPrice}
+                  onChange={handleChange}
+                  error={touched.additionalPrice && !!errors.additionalPrice}
+                />
+                {touched.additionalPrice && errors.additionalPrice && (
+                  <div className={styles.inputError}>
+                    {errors.additionalPrice}
+                  </div>
+                )}
+                <TextField
+                  id='outlined-basic'
+                  label={convertationTitle}
+                  variant='outlined'
+                  className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+                  value={
+                    values.additionalPriceType === 'ABSOLUTE_INDICATOR'
+                      ? values.additionalPrice *
+                        Number(exchangeRate?.toFixed(2))
+                      : '0'
+                  }
+                  disabled
+                />
+                {/* <TextField
                   data-cy='additionalPrice'
                   id={labels.en.additionalPrice}
                   className={styles.textField}
@@ -232,8 +300,8 @@ function SizeForm({ id, size }) {
                     className={styles.error}
                   >
                     {errors.additionalPrice}
-                  </div>
-                )}
+                  </div> */}
+                {/* )} */}
               </Paper>
               <CheckboxOptions options={checkboxes} />
             </div>

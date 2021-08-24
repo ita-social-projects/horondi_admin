@@ -2,12 +2,16 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid } from '@material-ui/core';
+import { Paper, Grid, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
 import usePatternHandlers from '../../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -21,6 +25,8 @@ import ImageUploadPreviewContainer from '../../../containers/image-upload-contai
 import LanguagePanel from '../language-panel';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
+import { getModels } from '../../../redux/model/model.actions';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import LoadingBar from '../../loading-bar';
 import {
   handleImageLoad,
@@ -30,7 +36,14 @@ import {
 } from '../../../utils/pattern-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 
-const { patternName, material, patternDescription } = config.labels.pattern;
+const {
+  patternName,
+  material,
+  patternDescription,
+  modelName,
+  additionalPriceType
+} = config.labels.pattern;
+const { materialUiConstants } = config;
 const map = require('lodash/map');
 
 const {
@@ -46,6 +59,7 @@ const {
 } = config.patternErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
+const { modelTitle, convertationTitle } = config.titles.patternTitles;
 
 const {
   languages,
@@ -59,6 +73,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const { materialsByPurpose, loading } = useSelector(materialSelector);
+  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+  const { list } = useSelector(modelSelectorWithPagination);
   const {
     createPattern,
     setUpload,
@@ -73,6 +89,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
   useEffect(() => {
     dispatch(getMaterialsByPurpose());
+    dispatch(getModels());
+    dispatch(getCurrencies());
   }, []);
 
   useEffect(() => {
@@ -114,10 +132,16 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(PATTERN_ERROR_MESSAGE),
+    modelId: Yup.string().required(PATTERN_VALIDATION_ERROR),
     handmade: Yup.boolean(),
     patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
     patternConstructorImage: Yup.string().required(
       CONSTRUCTOR_PHOTO_NOT_PROVIDED
+    ),
+    additionalPriceType: Yup.string(),
+    additionalPrice: Yup.string().matches(
+      config.formRegExp.onlyPositiveFloat,
+      PATTERN_VALIDATION_ERROR
     )
   });
 
@@ -200,6 +224,17 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       setConstructorImg(event.target.result);
     });
     setUploadConstructorImg(files[0]);
+  };
+
+  const getLabelValue = () => {
+    switch (values.additionalPriceType) {
+      case 'ABSOLUTE_INDICATOR':
+        return additionalPriceType.absolutePrice[0].value;
+      case 'RELATIVE_INDICATOR':
+        return additionalPriceType.relativePrice[0].value;
+      default:
+        return '';
+    }
   };
 
   const inputs = [
@@ -330,6 +365,83 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   {errors.material}
                 </div>
               )}
+              <FormControl
+                variant={materialUiConstants.outlined}
+                className={`${styles.formControl} ${styles.materialSelect}`}
+              >
+                <InputLabel
+                  htmlFor={materialUiConstants.outlinedAgeNativeSimple}
+                >
+                  {modelTitle}
+                </InputLabel>
+                <Select
+                  data-cy={modelName}
+                  id='modelId'
+                  value={values.modelId}
+                  onChange={(e) => setFieldValue('modelId', e.target.value)}
+                  label={modelTitle}
+                >
+                  {list.map((value) => (
+                    <MenuItem key={value._id} value={value._id}>
+                      {value?.name[0]?.value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl component='fieldset'>
+                <RadioGroup
+                  name='additionalPriceType'
+                  className={styles.textField}
+                  value={values.additionalPriceType}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value='ABSOLUTE_INDICATOR'
+                    control={<Radio />}
+                    label={additionalPriceType.absolutePrice[0].value}
+                    key={2}
+                  />
+                  <FormControlLabel
+                    value='RELATIVE_INDICATOR'
+                    control={<Radio />}
+                    label={additionalPriceType.relativePrice[0].value}
+                    key={1}
+                  />
+                </RadioGroup>
+              </FormControl>
+              <TextField
+                data-cy='additionalPrice'
+                id='additionalPrice'
+                className={`
+                  ${styles.textField} 
+                  ${styles.materialSelect} 
+                  `}
+                variant='outlined'
+                label={getLabelValue()}
+                value={values.additionalPrice}
+                onChange={handleChange}
+                error={touched.additionalPrice && !!errors.additionalPrice}
+              />
+              {touched.additionalPrice && errors.additionalPrice && (
+                <div className={styles.inputError}>
+                  {errors.additionalPrice}
+                </div>
+              )}
+              <TextField
+                id='outlined-basic'
+                label={convertationTitle}
+                variant='outlined'
+                className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+                value={
+                  values.additionalPriceType === 'ABSOLUTE_INDICATOR'
+                    ? values.additionalPrice * Number(exchangeRate?.toFixed(2))
+                    : '0'
+                }
+                disabled
+              />
             </Paper>
           </Grid>
           {map(languages, (lang) => (
@@ -358,7 +470,12 @@ PatternForm.propTypes = {
       thumbnail: PropTypes.string
     }),
     constructorImg: PropTypes.string,
-    name: PropTypes.arrayOf(valueShape)
+    name: PropTypes.arrayOf(valueShape),
+    additionalPrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.number
+      })
+    )
   }),
   values: PropTypes.shape({
     patternImage: PropTypes.string,

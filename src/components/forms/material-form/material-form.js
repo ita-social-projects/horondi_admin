@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import { TextField, Grid, Paper } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +6,10 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import ColorsBar from '../../colors-bar';
@@ -24,6 +26,7 @@ import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
 import LanguagePanel from '../language-panel';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const { languages } = config;
 const {
@@ -40,6 +43,7 @@ function MaterialForm({ material, id }) {
   const { pathToMaterials } = config.routes;
 
   const { loading } = useSelector(materialSelector);
+  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
 
   const { createMaterial } = useMaterialHandlers();
 
@@ -68,9 +72,9 @@ function MaterialForm({ material, id }) {
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
-
+    additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
-      .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_VALIDATION_ERROR)
       .required(VALIDATION_ERROR),
 
     colors: Yup.array().of(Yup.string()).required(VALIDATION_ERROR)
@@ -100,6 +104,10 @@ function MaterialForm({ material, id }) {
       }
     });
 
+  useEffect(() => {
+    dispatch(getCurrencies());
+  }, []);
+
   const checkboxes = [
     {
       id: 'available',
@@ -112,10 +120,25 @@ function MaterialForm({ material, id }) {
     }
   ];
 
+  const getLabelValue = () => {
+    switch (values.additionalPriceType) {
+      case 'ABSOLUTE_INDICATOR':
+        return additionalPriceType.absolutePrice[0].value;
+      case 'RELATIVE_INDICATOR':
+        return additionalPriceType.relativePrice[0].value;
+      default:
+        return '';
+    }
+  };
+
   const inputs = [
     { label: config.labels.material.name, name: 'name' },
     { label: config.labels.material.description, name: 'description' }
   ];
+
+  const { additionalPriceType } = config.labels.material;
+
+  const { convertationTitle } = config.titles.materialTitles;
   const inputOptions = {
     errors,
     touched,
@@ -206,12 +229,33 @@ function MaterialForm({ material, id }) {
               <div className={styles.inputError}>{errors.purpose}</div>
             )}
             <br />
+            <FormControl component='fieldset'>
+              <RadioGroup
+                name='additionalPriceType'
+                className={styles.textField}
+                value={values.additionalPriceType}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  value='ABSOLUTE_INDICATOR'
+                  control={<Radio />}
+                  label={additionalPriceType.absolutePrice[0].value}
+                  key={2}
+                />
+                <FormControlLabel
+                  value='RELATIVE_INDICATOR'
+                  control={<Radio />}
+                  label={additionalPriceType.relativePrice[0].value}
+                  key={1}
+                />
+              </RadioGroup>
+            </FormControl>
             <TextField
               data-cy='additionalPrice'
               id='additionalPrice'
               className={styles.textField}
               variant='outlined'
-              label={config.labels.material.additionalPrice[0].value}
+              label={getLabelValue()}
               value={values.additionalPrice}
               onChange={handleChange}
               error={touched.additionalPrice && !!errors.additionalPrice}
@@ -219,6 +263,21 @@ function MaterialForm({ material, id }) {
             {touched.additionalPrice && errors.additionalPrice && (
               <div className={styles.inputError}>{errors.additionalPrice}</div>
             )}
+            <TextField
+              id='outlined-basic'
+              label={convertationTitle}
+              variant='outlined'
+              className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+              value={
+                values.additionalPriceType === 'ABSOLUTE_INDICATOR'
+                  ? values.additionalPrice * exchangeRate
+                  : '0'
+              }
+              disabled
+            />
           </Paper>
         </Grid>
         {languages.length > 0 ? <div>{languageTabs}</div> : null}
@@ -313,14 +372,7 @@ MaterialForm.defaultProps = {
     ],
     available: false,
     purpose: '',
-    additionalPrice: [
-      {
-        value: 0
-      },
-      {
-        value: 0
-      }
-    ],
+    additionalPrice: 0,
     colors: []
   }
 };

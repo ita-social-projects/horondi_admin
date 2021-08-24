@@ -31,7 +31,7 @@ export const setModels = (payload) => ({
   payload
 });
 
-export const getModels = (payload) => ({
+export const getModels = (payload = {}) => ({
   type: GET_MODELS,
   payload
 });

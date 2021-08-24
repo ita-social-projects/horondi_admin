@@ -114,6 +114,18 @@ const labels = {
     patternDescription: {
       ua: 'Опис гобелену',
       en: 'Pattern description'
+    },
+    modelName: 'Назва моделі',
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
     }
   },
   back: {
@@ -123,7 +135,7 @@ const labels = {
     customizable: 'для конструктора',
     avatarText: 'Фото',
     enterPrice: 'Додаткова ціна (USD):',
-    additionalPriceLabel: 'Введіть додаткову ціну',
+    additionalPriceLabel: 'Введіть додаткову ціну (USD)',
     form: {
       name: mapToLanguages("І'мя", 'Name')
     },
@@ -152,7 +164,17 @@ const labels = {
     available: mapToLanguages('Доступний', 'Available'),
     name: { ua: 'Назва матеріалу', en: 'Material name' },
     description: { ua: 'Опис матеріалу', en: 'Material description' },
-    additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
   },
   color: {
     name: 'Назва кольору',
@@ -189,6 +211,13 @@ const labels = {
     }
   ],
   product: {
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
     sortBySelectOptions: [
       { label: 'популярністю', value: 'popularity' },
       { label: 'від дорогих до дешевих', value: 'sortDesc' },
@@ -321,7 +350,7 @@ const labels = {
       additions: false
     },
     priceLabel: {
-      label: 'Ціна(USD) ',
+      label: 'Ціна (USD) ',
       name: 'basePrice'
     }
   },
@@ -504,16 +533,31 @@ const labels = {
   },
 
   sizeLabels: {
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
     ua: {
       heightInCm: 'Висота',
       widthInCm: 'Ширина',
       depthInCm: 'Глибина',
       volumeInLiters: "Об'єм (літри)",
       weightInKg: 'Вага',
-      additionalPrice: 'Додаткова ціна',
+      additionalPrice: 'Додаткова ціна (USD)',
       modelName: 'Назва моделі',
       name: "Ім'я",
-      available: 'Доступний'
+      available: 'Доступний',
+      additionalPriceType: {
+        absolutePrice: 'Абсолютна ціна (USD)',
+        relativePrice: 'Відносна ціна (%)'
+      }
     },
     en: {
       heightInCm: 'heightInCm',
@@ -521,10 +565,14 @@ const labels = {
       depthInCm: 'depthInCm',
       volumeInLiters: 'volumeInLiters',
       weightInKg: 'weightInKg',
-      additionalPrice: 'additionalPrice',
+      additionalPrice: 'additionalPrice (USD)',
       modelName: 'modelId',
       name: 'name',
-      available: 'available'
+      available: 'available',
+      additionalPriceType: {
+        absolutePrice: 'Absolute price (USD)',
+        relativePrice: 'Relative price (%)'
+      }
     }
   },
   pocketsPageLabel: {
@@ -551,9 +599,20 @@ const labels = {
       en: 'Closure name'
     },
     enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну',
+    // additionalPrice: 'Введіть додаткову ціну',
     available: 'Доступний',
-    avatarText: 'Фото'
+    avatarText: 'Фото',
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
   },
   positionPageLabel: {
     positionHeader: 'position-header',

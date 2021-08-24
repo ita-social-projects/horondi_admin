@@ -49,5 +49,7 @@ export const useFormikInitialValues = (pattern) => ({
   enDescription: pattern.description[1].value || '',
   material: pattern.features.material._id || '',
   handmade: pattern.features.handmade || false,
-  available: pattern.available || false
+  available: pattern.available || false,
+  additionalPrice: pattern.additionalPrice || '',
+  additionalPriceType: pattern.additionalPriceType || 'ABSOLUTE_INDICATOR'
 });

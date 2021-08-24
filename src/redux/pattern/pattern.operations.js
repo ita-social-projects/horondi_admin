@@ -50,6 +50,7 @@ query ($limit: Int!, $skip: Int!, $filter: PatternFilterInput) {
       constructorImg
       additionalPrice {
         value
+        type
       }
       available
       customizable
