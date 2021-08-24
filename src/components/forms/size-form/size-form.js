@@ -102,6 +102,11 @@ function SizeForm({ id, size }) {
     }
   ];
 
+  const calculateConvertedValue = () => {
+    const result = Number(values?.additionalPrice) * Number(exchangeRate);
+    return result.toFixed(2);
+  };
+
   const preventEventHandler = (e) => {
     e.preventDefault();
   };
@@ -219,7 +224,7 @@ function SizeForm({ id, size }) {
                     }
                     label={modelTitle}
                   >
-                    {list.map((value) => (
+                    {list?.map((value) => (
                       <MenuItem key={value._id} value={value._id}>
                         {value?.name[0]?.value}
                       </MenuItem>
@@ -277,8 +282,7 @@ function SizeForm({ id, size }) {
                   `}
                   value={
                     values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                      ? values.additionalPrice *
-                        Number(exchangeRate?.toFixed(2))
+                      ? calculateConvertedValue()
                       : '0'
                   }
                   disabled

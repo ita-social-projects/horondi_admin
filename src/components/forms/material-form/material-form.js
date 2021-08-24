@@ -160,6 +160,11 @@ function MaterialForm({ material, id }) {
     values
   );
 
+  const calculateConvertedValue = () => {
+    const result = Number(values?.additionalPrice) * Number(exchangeRate);
+    return result.toFixed(2);
+  };
+
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -273,7 +278,7 @@ function MaterialForm({ material, id }) {
                   `}
               value={
                 values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                  ? values.additionalPrice * exchangeRate
+                  ? calculateConvertedValue()
                   : '0'
               }
               disabled

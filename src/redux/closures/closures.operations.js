@@ -94,6 +94,7 @@ export const getClosureById = async (id) => {
                 additionalPrice {
                 currency
                 value
+                type
               }
             }
             ... on Error {

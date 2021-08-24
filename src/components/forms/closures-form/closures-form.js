@@ -93,9 +93,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
     validationSchema: closuresValidationSchema,
     initialValues: getClosuresInitialValues(edit, IMG_URL, closure),
     onSubmit: (data) => {
-      debugger;
       const newClosure = createClosures(data);
-      debugger;
       const editAndUpload = edit && upload instanceof File;
 
       if (editAndUpload || edit) {
@@ -162,6 +160,11 @@ const ClosuresForm = ({ closure, id, edit }) => {
     getClosuresInitialValues(edit, IMG_URL, closure),
     values
   );
+
+  const calculateConvertedValue = () => {
+    const result = Number(values?.additionalPrice) * Number(exchangeRate);
+    return result.toFixed(2);
+  };
 
   const eventPreventDefaultHandler = (e) => {
     e.preventDefault();
@@ -261,7 +264,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                   `}
               value={
                 values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                  ? values.additionalPrice * Number(exchangeRate?.toFixed(2))
+                  ? calculateConvertedValue()
                   : '0'
               }
               disabled
@@ -326,10 +329,6 @@ ClosuresForm.defaultProps = {
     },
     available: false,
     optionType: null,
-    // additionalPrice: [
-    //   { value: null, currency: '' },
-    //   { value: null, currency: '' }
-    // ]
     additionalPrice: PropTypes.arrayOf(
       PropTypes.shape({
         value: PropTypes.number
