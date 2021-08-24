@@ -50,6 +50,15 @@ export const useFormikInitialValues = (pattern) => ({
   material: pattern.features.material._id || '',
   handmade: pattern.features.handmade || false,
   available: pattern.available || false,
-  additionalPrice: pattern.additionalPrice || '',
+  // additionalPrice: pattern.additionalPrice.value || '',
+  additionalPrice: getAdditionalPriceValue(pattern),
   additionalPriceType: pattern.additionalPriceType || 'ABSOLUTE_INDICATOR'
 });
+
+const getAdditionalPriceValue = (pattern) => {
+  const { type } = pattern?.additionalPrice[0] || {};
+  if (type === 'ABSOLUTE_INDICATOR') {
+    return pattern?.additionalPrice[1]?.value || '';
+  }
+  return pattern?.additionalPrice[0]?.value || '';
+};

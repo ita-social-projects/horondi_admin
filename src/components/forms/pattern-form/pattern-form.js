@@ -188,6 +188,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       );
     }
   });
+  debugger;
 
   const checkboxes = [
     {

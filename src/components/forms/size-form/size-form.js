@@ -283,25 +283,6 @@ function SizeForm({ id, size }) {
                   }
                   disabled
                 />
-                {/* <TextField
-                  data-cy='additionalPrice'
-                  id={labels.en.additionalPrice}
-                  className={styles.textField}
-                  variant={materialUiConstants.outlined}
-                  type={materialUiConstants.types.number}
-                  label={labels.ua.additionalPrice}
-                  value={values.additionalPrice}
-                  onChange={handleChange}
-                  error={touched.additionalPrice && !!errors.additionalPrice}
-                />
-                {touched.additionalPrice && errors.additionalPrice && (
-                  <div
-                    data-cy={materialUiConstants.codeError}
-                    className={styles.error}
-                  >
-                    {errors.additionalPrice}
-                  </div> */}
-                {/* )} */}
               </Paper>
               <CheckboxOptions options={checkboxes} />
             </div>

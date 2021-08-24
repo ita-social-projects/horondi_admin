@@ -94,6 +94,10 @@ export const getPatternById = async (id) => {
               thumbnail
             }
             constructorImg
+            additionalPrice {
+              value
+              type
+            }
           }
           ... on Error {
             message

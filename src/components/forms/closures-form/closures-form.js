@@ -28,8 +28,7 @@ import { checkInitialValue } from '../../../utils/check-initial-values';
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const labels = config.labels.closuresPageLabel;
-const { additionalPriceType, additionalPrice } =
-  config.labels.closuresPageLabel;
+const { additionalPriceType } = config.labels.closuresPageLabel;
 
 const {
   CLOSURES_ERROR_MESSAGE,
@@ -51,10 +50,8 @@ const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
 const ClosuresForm = ({ closure, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-
   const { createClosures, setUpload, upload, closuresImage, setClosuresImage } =
     useClosuresHandlers();
-
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
 
   useEffect(() => {
@@ -74,11 +71,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
       .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
       .required(CLOSURES_ERROR_MESSAGE)
       .matches(enNameCreation, CLOSURES_EN_NAME_MESSAGE),
-    // additionalPrice: Yup.string()
-    //   .required(CLOSURES_ERROR_MESSAGE)
-    //   .matches(additionalPriceRegExp, CLOSURES_PRICE_ERROR)
-    //   .nullable(),
-
     additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
       .required(CLOSURES_ERROR_MESSAGE)
@@ -101,7 +93,9 @@ const ClosuresForm = ({ closure, id, edit }) => {
     validationSchema: closuresValidationSchema,
     initialValues: getClosuresInitialValues(edit, IMG_URL, closure),
     onSubmit: (data) => {
+      debugger;
       const newClosure = createClosures(data);
+      debugger;
       const editAndUpload = edit && upload instanceof File;
 
       if (editAndUpload || edit) {
@@ -272,28 +266,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
               }
               disabled
             />
-
-            {/* <TextField
-              type={materialUiConstants.types.number}
-              label={labels.additionalPrice}
-              value={values.additionalPrice}
-              data-cy='additionalPrice'
-              id='additionalPrice'
-              className={styles.textField}
-              variant={materialUiConstants.outlined}
-              inputProps={{ min: 0 }}
-              error={touched.additionalPrice && !!errors.additionalPrice}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            /> */}
-            {/* {touched.additionalPrice && errors.additionalPrice && (
-              <div
-                className={styles.error}
-                data-cy={materialUiConstants.codeError}
-              >
-                {errors.additionalPrice}
-              </div>
-            )} */}
           </Paper>
         </>
       </form>
