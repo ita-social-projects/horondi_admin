@@ -70,7 +70,6 @@ const {
 const { pathToPatterns } = config.routes;
 
 const PatternForm = ({ pattern, id, isEdit }) => {
-  debugger;
   const styles = useStyles();
   const dispatch = useDispatch();
   const { materialsByPurpose, loading } = useSelector(materialSelector);
@@ -189,7 +188,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       );
     }
   });
-  debugger;
 
   const checkboxes = [
     {
