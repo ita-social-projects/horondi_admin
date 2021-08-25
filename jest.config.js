@@ -18,7 +18,6 @@ module.exports = {
     '/node_modules/',
     'cypress',
     '__mocks__/',
-    'public/',
     'src/setupTests.js',
     'babel.config.js',
     'jest.config.js'
