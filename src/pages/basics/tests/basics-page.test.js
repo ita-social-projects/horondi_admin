@@ -88,11 +88,7 @@ describe('useEffect tests', () => {
   let wrapper;
   let basicPage;
   let tableContainerRow;
-  const mockDelete = jest.fn();
 
-  jest.mock('../../../redux/basics/basics.actions', () => ({
-    deleteBasic: mockDelete
-  }));
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
     spyOnUseSelector.mockImplementation(() => mockStore);
@@ -131,5 +127,10 @@ describe('useEffect tests', () => {
   it('editHandler should work out', () => {
     tableContainerRow.at(0).props().editHandler();
     expect(mockDispatchFn).toHaveBeenCalledTimes(2);
+  });
+
+  it('SHOULD CALL ADD/EDIT BUTTON', () => {
+    basicPage.find(Button).at(0).simulate('click');
+    expect(mockDispatchFn).toHaveBeenCalledTimes(1);
   });
 });
