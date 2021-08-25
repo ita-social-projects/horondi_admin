@@ -70,6 +70,7 @@ const {
 const { pathToPatterns } = config.routes;
 
 const PatternForm = ({ pattern, id, isEdit }) => {
+  debugger;
   const styles = useStyles();
   const dispatch = useDispatch();
   const { materialsByPurpose, loading } = useSelector(materialSelector);
@@ -262,6 +263,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     values
   );
 
+  const calculateConvertedValue = () => {
+    const result = Number(values?.additionalPrice) * Number(exchangeRate);
+    return result.toFixed(2);
+  };
+
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -437,8 +443,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   ${styles.currencyField}
                   `}
                 value={
+                  // values.additionalPriceType === 'ABSOLUTE_INDICATOR'
+                  //   ? values.additionalPrice * Number(exchangeRate?.toFixed(2))
+                  //   : '0'
                   values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                    ? values.additionalPrice * Number(exchangeRate?.toFixed(2))
+                    ? calculateConvertedValue()
                     : '0'
                 }
                 disabled

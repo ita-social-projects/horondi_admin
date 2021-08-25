@@ -24,14 +24,7 @@ const defaultProps = {
     ],
     available: false,
     purpose: '',
-    additionalPrice: [
-      {
-        value: 0
-      },
-      {
-        value: 0
-      }
-    ],
+    additionalPrice: 0,
     colors: []
   }
 };
