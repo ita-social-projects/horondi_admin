@@ -441,9 +441,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   ${styles.currencyField}
                   `}
                 value={
-                  // values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                  //   ? values.additionalPrice * Number(exchangeRate?.toFixed(2))
-                  //   : '0'
                   values.additionalPriceType === 'ABSOLUTE_INDICATOR'
                     ? calculateConvertedValue()
                     : '0'
