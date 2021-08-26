@@ -8,7 +8,7 @@ import { find } from 'lodash';
 import { BackButton, SaveButton } from '../../buttons';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import { config } from '../../../configs';
-import { useStyles } from './bottom-form.styles';
+import { useStyles } from '../common.styles';
 import LoadingBar from '../../loading-bar';
 import {
   addBottom,
@@ -228,7 +228,7 @@ const BottomForm = ({ bottom, id, edit }) => {
           </div>
           <CheckboxOptions options={checkboxes} />
           <Grid item xs={12}>
-            <Paper className={styles.bottomItemUpdate}>
+            <Paper className={styles.itemUpdate}>
               <div className={styles.imageUploadBlock}>
                 <div>
                   <span className={styles.imageUpload}>

@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { formStyles } from '../../../configs/styles';
+import { formStyles } from '../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
@@ -17,11 +17,11 @@ export const useStyles = makeStyles((theme) => {
     controlsBlock
   } = formStyles(theme);
   return {
-    bottomItemUpdate: {
+    itemUpdate: {
       ...itemUpdate,
       padding: '10px'
     },
-    bottomDetails: {
+    details: {
       ...details
     },
     imageUploadBlock: {

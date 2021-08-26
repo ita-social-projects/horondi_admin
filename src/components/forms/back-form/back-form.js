@@ -6,7 +6,7 @@ import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
 import useBackHandlers from '../../../utils/use-back-handlers';
-import { useStyles } from './back-form.styles';
+import { useStyles } from '../common.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import {
@@ -227,7 +227,7 @@ const BackForm = ({ back, id, edit }) => {
           </div>
           <CheckboxOptions options={checkboxes} />
           <Grid item xs={12}>
-            <Paper className={styles.backItemUpdate}>
+            <Paper className={styles.itemUpdate}>
               <div className={styles.imageUploadBlock}>
                 <div>
                   <span className={styles.imageUpload}>

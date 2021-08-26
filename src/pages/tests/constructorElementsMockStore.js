@@ -1,4 +1,4 @@
-const mockStore = {
+const constructorElementsMockStore = {
   list: [
     {
       _id: '60eadfb9e913fc3f88294bd9',
@@ -45,4 +45,4 @@ const mockStore = {
   }
 };
 
-export default mockStore;
+export default constructorElementsMockStore;

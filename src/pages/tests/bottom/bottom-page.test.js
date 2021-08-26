@@ -4,7 +4,7 @@ import * as reactRedux from 'react-redux';
 import Adapter from 'enzyme-adapter-react-16';
 import { Button, Typography } from '@material-ui/core';
 import { configure, shallow, mount } from 'enzyme';
-import mockStore from '../constructorElementsMockStore';
+import constructorElementsMockStore from '../constructorElementsMockStore';
 import BottomPage from '../../bottom/bottom-page';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -30,7 +30,7 @@ describe('Bottom-page render tests', () => {
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockStore);
+    spyOnUseSelector.mockImplementation(() => constructorElementsMockStore);
 
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
 
@@ -75,19 +75,19 @@ describe('Bottom-page render tests', () => {
   });
 
   test('Should render Loading Bar', () => {
-    mockStore.loading = true;
+    constructorElementsMockStore.loading = true;
     wrapper = shallow(<BottomPage />);
     const loadingBar = wrapper.find(LoadingBar);
     expect(wrapper.exists(LoadingBar)).toBeDefined();
     expect(wrapper.exists(LoadingBar)).toBe(true);
     expect(loadingBar).toHaveLength(1);
     expect(wrapper.exists(TableContainerGenerator)).toBe(false);
-    mockStore.loading = false;
+    constructorElementsMockStore.loading = false;
   });
 
   test('useSelector hook should be called', () => {
-    getState = reactRedux.useSelector(mockStore);
-    expect(getState).toEqual(mockStore);
+    getState = reactRedux.useSelector(constructorElementsMockStore);
+    expect(getState).toEqual(constructorElementsMockStore);
     expect(spyOnUseSelector).toHaveBeenCalled();
   });
 });
@@ -102,7 +102,7 @@ describe('useEffect tests', () => {
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockStore);
+    spyOnUseSelector.mockImplementation(() => constructorElementsMockStore);
 
     mockDispatchFn = jest.fn();
     reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
@@ -133,7 +133,7 @@ describe('useEffect tests', () => {
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
     expect(tableContainerRowFirst.prop('name')).toBe(
-      mockStore.list[0].name[0].value
+      constructorElementsMockStore.list[0].name[0].value
     );
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
   });
