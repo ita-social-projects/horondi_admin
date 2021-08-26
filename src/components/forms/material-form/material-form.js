@@ -153,11 +153,6 @@ function MaterialForm({ material, id }) {
     values
   );
 
-  const calculateConvertedValue = () => {
-    const result = Number(values?.additionalPrice) * Number(exchangeRate);
-    return result.toFixed(2);
-  };
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };

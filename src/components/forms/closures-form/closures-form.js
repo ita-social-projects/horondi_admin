@@ -153,11 +153,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
     values
   );
 
-  const calculateConvertedValue = () => {
-    const result = Number(values?.additionalPrice) * Number(exchangeRate);
-    return result.toFixed(2);
-  };
-
   const eventPreventDefaultHandler = (e) => {
     e.preventDefault();
   };
