@@ -11,7 +11,6 @@ const formRegExp = {
   enRegex: /[a-z]/i,
   onlyPositiveDigits: /^[0-9]\d*$/,
   onlyPositiveFloat: /^(?:[1-9]\d*|0(?!(?:\.0+)?$))?(?:\.\d+)?$/,
-  editorField: /^<p><br><\/p>|<p><\/p>$/,
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
   userName: /[а-яА-Я]{2,}/g,
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
