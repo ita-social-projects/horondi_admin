@@ -27,6 +27,7 @@ const buttonTitles = {
   USER_UNACTIVE_TITLE: 'Деактивувати',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+  COMMENT_TYPE: 'Тип',
   SAVE_ORDER: 'Зберегти замовлення',
   SAVE_TITLE: 'Зберегти',
   UNDERSTAND: 'Зрозуміло',

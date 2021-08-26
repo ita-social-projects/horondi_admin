@@ -7,6 +7,7 @@ import NavSearch from './nav-search';
 import NavClearFilters from './nav-clear-filters';
 import NavFilterByDate from './filter-by-date';
 import NavFilterByValues from './filter-by-multiple-values';
+import NavPicker from './nav-picker';
 
 const FilterNavbar = ({ options }) => {
   const styles = useStyles();
@@ -14,12 +15,18 @@ const FilterNavbar = ({ options }) => {
     sortOptions,
     searchOptions,
     clearOptions,
+    pickerOptions,
     filterByDateOptions,
     filterByMultipleOptions
   } = options;
 
   return (
     <Grid className={styles.container}>
+      {pickerOptions ? (
+        <Grid item>
+          <NavPicker pickerOptions={pickerOptions} />
+        </Grid>
+      ) : null}
       {filterByDateOptions ? (
         <Grid className={styles.dateRangeItem} item>
           <NavFilterByDate filterByDateOptions={filterByDateOptions} />
@@ -55,6 +62,9 @@ FilterNavbar.propTypes = {
   options: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.object])
   ),
+  pickerOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.string])
+  ),
   sortOptions: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.string])
   ),
@@ -76,6 +86,7 @@ FilterNavbar.propTypes = {
 
 FilterNavbar.defaultProps = {
   options: {},
+  pickerOptions: {},
   sortOptions: {},
   searchOptions: {},
   clearOptions: {},

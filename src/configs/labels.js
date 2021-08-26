@@ -475,6 +475,12 @@ const labels = {
       { label: 'Доставлено', value: 'DELIVERED' }
     ]
   },
+  comments: {
+    select: [
+      { label: 'Коментар', value: 'COMMENT' },
+      { label: 'Відповідь', value: 'REPLY_COMMENT' }
+    ]
+  },
   homePageSlide: {
     image: 'Фото слайду',
     title: { ua: 'Заголовок слайду', en: 'Slider title' },

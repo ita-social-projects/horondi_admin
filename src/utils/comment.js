@@ -5,7 +5,9 @@ export const showCommentOptions = {
   true: 'Видимі',
   false: 'Приховані'
 };
+
 export const placeholderCommentSearch = 'по тексту';
+
 export const showFilterObj = () => {
   const arrToFilter = [];
 
@@ -15,5 +17,6 @@ export const showFilterObj = () => {
 
   return arrToFilter;
 };
+
 export const getTime = (date) =>
   moment.unix(new Date(date) / 1000).format('DD.MM.YYYY ');

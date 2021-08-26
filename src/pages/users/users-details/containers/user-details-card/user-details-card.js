@@ -7,118 +7,164 @@ import {
   Typography,
   Button
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import InfoItem from './containers/info-item';
 import { useStyles } from './user-details-card.styles';
 import { config } from '../../../../../configs';
+import { BackButton } from '../../../../../components/buttons';
+import { getUserBlockStatus } from '../../../../../utils/user';
+import { UserBlockPeriod } from '../../../../../consts/user-block-status';
+import { closeDialog } from '../../../../../redux/dialog-window/dialog-window.actions';
+import {
+  blockUserByAdmin,
+  resendEmail,
+  unlockUserByAdmin
+} from '../../../../../redux/users/users.actions';
+import useSuccessSnackbar from '../../../../../utils/use-success-snackbar';
 
 const userTitles = config.detailTitles.users;
 const {
   materialUiConstants: { primary, contained }
 } = config;
+const {
+  USER_ACTIVE_TITLE,
+  USER_INACTIVE_TITLE,
+  SWITCH_USER_STATUS_TITLE,
+  SEND_CONFIRM,
+  EDIT_TITLE
+} = config.buttonTitles;
+const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
 
-const UserDetailsCard = ({
-  avatar,
-  name,
-  status,
-  primaryData,
-  secondaryData,
-  buttonStatus,
-  buttonHandler,
-  buttonConfirmed,
-  buttonConfirmationHandler
-}) => {
+const UserDetailsCard = ({ info, pathBack }) => {
   const styles = useStyles();
+  const dispatch = useDispatch();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const avatarSection = (
-    <Avatar data-cy={userTitles.avatar.id} className={styles.avatar}>
-      {avatar}
-    </Avatar>
-  );
-  const nameSection = (
-    <Typography data-cy={userTitles.name.id} variant='h3'>
-      {name}
-    </Typography>
-  );
-  const statusSection = (
-    <Typography data-cy={userTitles.status.id} variant='h5'>
-      {status}
-    </Typography>
-  );
-  const primarySection = userTitles.primarySection.map((item, idx) => (
-    <InfoItem
-      label={item.label}
-      id={item.id}
-      data={primaryData[item.id]}
-      key={idx}
-    />
-  ));
-  const secondarySection = userTitles.secondarySection.map((item, idx) => (
-    <InfoItem
-      label={item.label}
-      id={item.id}
-      data={secondaryData[item.id]}
-      key={idx}
-    />
-  ));
+  const status = getUserBlockStatus(info.isBanned);
+
+  const btnTitleStatus =
+    info.isBanned?.blockPeriod !== UserBlockPeriod.UNLOCKED
+      ? USER_ACTIVE_TITLE
+      : USER_INACTIVE_TITLE;
+  const btnTitleConfirm = !info.confirmed ? SEND_CONFIRM : null;
+
+  const toggleUserStatus = (userId) => {
+    const updateStatus = () => {
+      dispatch(closeDialog());
+      info.isBanned?.blockPeriod !== UserBlockPeriod.UNLOCKED
+        ? dispatch(unlockUserByAdmin(userId))
+        : dispatch(blockUserByAdmin(userId));
+    };
+    openSuccessSnackbar(
+      updateStatus,
+      SWITCH_USER_STATUS_MESSAGE,
+      SWITCH_USER_STATUS_TITLE
+    );
+  };
+
+  const sendConfirmationHandler = () => {
+    dispatch(resendEmail({ email: info.email }));
+  };
+
+  const sections = userTitles.sections.map((section) => (
+      <InfoItem
+        label={section.label}
+        id={section.id}
+        data={info.sections[section.id]}
+        key={section.id}
+      />
+    ));
 
   return (
-    <Card>
-      <CardContent>
-        <Grid alignItems='center' direction='column' spacing={2} container>
-          <Grid item xs={12}>
-            {avatarSection}
-          </Grid>
-          <Grid item xs={12}>
-            {nameSection}
-          </Grid>
-          <Grid item xs={12} className={styles.status}>
-            {statusSection}
-          </Grid>
-          <Grid xs={12} item container justify='space-around'>
-            {primarySection}
-          </Grid>
-          <Grid item container xs={12} spacing={1} direction='column'>
-            {secondarySection}
-          </Grid>
-          <div className={styles.buttons}>
-            <Grid item xs={12} container justify='space-around'>
+    <Grid container direction='column' className={styles.container}>
+      <div className={styles.controlsBlock}>
+        <BackButton pathBack={pathBack} />
+      </div>
+      <Card>
+        <CardContent className={styles.main}>
+          <div className={styles.avatarSide}>
+            <Grid item xs={12}>
+              <Avatar data-cy={userTitles.avatar.id} className={styles.avatar}>
+                {`${info.firstName[0]}${info.lastName[0]}`}
+              </Avatar>
+            </Grid>
+            <Typography data-cy={userTitles.status.id} variant='h6'>
+              {status}
+            </Typography>
+          </div>
+          <div className={styles.infoSide}>
+            <Typography
+              data-cy={userTitles.name.id}
+              className={styles.username}
+              variant='h2'
+            >
+              {info.firstName} {info.lastName}
+            </Typography>
+            <Typography
+              data-cy={userTitles.name.id}
+              className={styles.email}
+              variant='h5'
+            >
+              {info.email}
+            </Typography>
+            {sections}
+          </div>
+          <div className={styles.btnsSide}>
+            <Button
+              variant={contained}
+              color={primary}
+              onClick={() => toggleUserStatus(info.id)}
+              data-cy='change-user-status-button'
+            >
+              {btnTitleStatus}
+            </Button>
+            {btnTitleConfirm && (
               <Button
                 variant={contained}
                 color={primary}
-                onClick={buttonHandler}
-                data-cy='change-user-status-button'
+                onClick={sendConfirmationHandler}
+                data-cy='send-user-confirmation-button'
               >
-                {buttonStatus}
+                {btnTitleConfirm}
               </Button>
-              {buttonConfirmed && (
-                <Button
-                  variant={contained}
-                  color={primary}
-                  onClick={buttonConfirmationHandler}
-                  data-cy='change-user-status-button'
-                >
-                  {buttonConfirmed}
-                </Button>
-              )}
-            </Grid>
+            )}
+            <Button
+              variant={contained}
+              color={primary}
+              data-cy='edit-user-info-button'
+            >
+              {EDIT_TITLE}
+            </Button>
           </div>
-        </Grid>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 };
 
 UserDetailsCard.propTypes = {
-  avatar: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  primaryData: PropTypes.objectOf(PropTypes.object).isRequired,
-  secondaryData: PropTypes.objectOf(PropTypes.object).isRequired,
-  buttonStatus: PropTypes.string.isRequired,
-  buttonHandler: PropTypes.func.isRequired,
-  buttonConfirmed: PropTypes.string.isRequired,
-  buttonConfirmationHandler: PropTypes.func.isRequired
+  info: PropTypes.shape({
+    confirmed: PropTypes.bool,
+    email: PropTypes.string,
+    firstName: PropTypes.string,
+    id: PropTypes.string,
+    lastName: PropTypes.string,
+    isBanned: PropTypes.shape({
+      blockPeriod: PropTypes.string,
+      updatedAt: PropTypes.string,
+      blockCount: PropTypes.number
+    }),
+    sections: PropTypes.shape({
+      adress: PropTypes.string,
+      city: PropTypes.string,
+      country: PropTypes.string,
+      phone: PropTypes.string,
+      postCode: PropTypes.string
+    })
+  }).isRequired,
+  pathBack: PropTypes.string.isRequired
 };
 
 export default UserDetailsCard;
