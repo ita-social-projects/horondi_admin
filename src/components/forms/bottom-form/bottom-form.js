@@ -24,12 +24,13 @@ import {
   getBottomInitialValues,
   setBottomColorsHandler
 } from '../../../utils/bottom-form';
-import BottomMaterialsContainer from '../../../containers/bottom-materials-container';
+import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 import useBottomHandlers from '../../../utils/use-bottom-handlers';
 
 const { IMG_URL } = config;
-const { bottomName, enterPrice, additionalPriceLabel } = config.labels.bottom;
+const { bottomName, enterPrice, additionalPriceLabel, materialLabels } =
+  config.labels.bottom;
 const map = require('lodash/map');
 
 const {
@@ -250,7 +251,7 @@ const BottomForm = ({ bottom, id, edit }) => {
               </div>
             </Paper>
           </Grid>
-          <BottomMaterialsContainer
+          <MaterialsContainer
             material={materials?.bottom}
             color={color}
             values={values}
@@ -260,6 +261,7 @@ const BottomForm = ({ bottom, id, edit }) => {
             handleBlur={handleBlur}
             handleSubmit={handleSubmit}
             setFieldValue={setFieldValue}
+            materialLabels={materialLabels}
           />
 
           {map(languages, (lang) => (

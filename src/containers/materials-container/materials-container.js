@@ -4,12 +4,10 @@ import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
 import { noop } from 'lodash';
 import { handleMenuItem } from '../../utils/handle-menu-item';
 import { useSharedStyles } from '../shared.styles';
-import { useStyles } from './bottom-materials-container.styles';
+import { useStyles } from './materials-container.styles';
 import { config } from '../../configs';
 
-const { materialLabels } = config.labels.bottom;
-
-const BottomMaterialsContainer = ({
+const MaterialsContainer = ({
   material,
   color,
   values,
@@ -19,7 +17,8 @@ const BottomMaterialsContainer = ({
   handleChange,
   handleSubmit,
   setFieldValue,
-  toggleFieldsChanged
+  toggleFieldsChanged,
+  materialLabels
 }) => {
   const sharedStyles = useSharedStyles();
   const styles = useStyles();
@@ -33,13 +32,10 @@ const BottomMaterialsContainer = ({
     toggleFieldsChanged(true);
   };
 
-  const bottomMaterialOptions = useMemo(
-    () => handleMenuItem(material),
-    [material]
-  );
-  const bottomColorOptions = useMemo(() => handleMenuItem(color), [color]);
+  const materialOptions = useMemo(() => handleMenuItem(material), [material]);
+  const colorOptions = useMemo(() => handleMenuItem(color), [color]);
 
-  const options = [bottomMaterialOptions, bottomColorOptions];
+  const options = [materialOptions, colorOptions];
 
   return (
     <>
@@ -67,7 +63,7 @@ const BottomMaterialsContainer = ({
   );
 };
 
-BottomMaterialsContainer.propTypes = {
+MaterialsContainer.propTypes = {
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -85,11 +81,12 @@ BottomMaterialsContainer.propTypes = {
       PropTypes.object
     ])
   ).isRequired,
-  color: PropTypes.arrayOf(PropTypes.object).isRequired
+  color: PropTypes.arrayOf(PropTypes.object).isRequired,
+  materialLabels: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-BottomMaterialsContainer.defaultProps = {
+MaterialsContainer.defaultProps = {
   toggleFieldsChanged: noop
 };
 
-export default BottomMaterialsContainer;
+export default MaterialsContainer;

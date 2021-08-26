@@ -25,11 +25,12 @@ import {
   setBackColorsHandler
 } from '../../../utils/back-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
-import BackMaterialsContainer from '../../../containers/back-materials-container';
+import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 
 const { IMG_URL } = config;
-const { backName, enterPrice, additionalPriceLabel } = config.labels.back;
+const { backName, enterPrice, additionalPriceLabel, materialLabels } =
+  config.labels.back;
 const map = require('lodash/map');
 
 const {
@@ -249,7 +250,7 @@ const BackForm = ({ back, id, edit }) => {
               </div>
             </Paper>
           </Grid>
-          <BackMaterialsContainer
+          <MaterialsContainer
             material={materials?.back}
             color={color}
             values={values}
@@ -259,6 +260,7 @@ const BackForm = ({ back, id, edit }) => {
             handleBlur={handleBlur}
             handleSubmit={handleSubmit}
             setFieldValue={setFieldValue}
+            materialLabels={materialLabels}
           />
 
           {map(languages, (lang) => (
