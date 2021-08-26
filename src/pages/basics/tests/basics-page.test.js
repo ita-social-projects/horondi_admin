@@ -88,6 +88,7 @@ describe('useEffect tests', () => {
   let wrapper;
   let basicPage;
   let tableContainerRow;
+  let tableContainerRowFirst;
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
@@ -103,6 +104,9 @@ describe('useEffect tests', () => {
     );
     basicPage = wrapper.find(BasicsPage);
     tableContainerRow = basicPage.find(TableContainerRow);
+    tableContainerRowFirst = basicPage.find({
+      id: '60eadfb9e913fc3f88294bd9'
+    });
   });
 
   afterEach(() => {
@@ -120,17 +124,12 @@ describe('useEffect tests', () => {
   });
 
   it('deleteHandler should work out', () => {
-    tableContainerRow.at(0).props().deleteHandler();
+    tableContainerRowFirst.at(0).props().deleteHandler();
     expect(mockDispatchFn).toHaveBeenCalledTimes(2);
   });
 
   it('editHandler should work out', () => {
-    tableContainerRow.at(0).props().editHandler();
+    tableContainerRowFirst.at(0).props().editHandler();
     expect(mockDispatchFn).toHaveBeenCalledTimes(2);
-  });
-
-  it('SHOULD CALL ADD/EDIT BUTTON', () => {
-    basicPage.find(Button).at(0).simulate('click');
-    expect(mockDispatchFn).toHaveBeenCalledTimes(1);
   });
 });
