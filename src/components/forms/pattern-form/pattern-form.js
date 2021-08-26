@@ -12,6 +12,10 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
+import {
+  getLabelValue,
+  calculateAddittionalPriceValue
+} from '../../../utils/additionalPrice-helper';
 import usePatternHandlers from '../../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -226,22 +230,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     setUploadConstructorImg(files[0]);
   };
 
-  const getLabelValue = () => {
-    switch (values.additionalPriceType) {
-      case 'ABSOLUTE_INDICATOR':
-        return additionalPriceType.absolutePrice[0].value;
-      case 'RELATIVE_INDICATOR':
-        return additionalPriceType.relativePrice[0].value;
-      default:
-        return '';
-    }
-  };
-
-  const calculateAddittionalPriceValue =
-    values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-      ? calculateConvertedValue()
-      : '0';
-
   const inputs = [
     { label: patternName, name: 'name' },
     { label: patternDescription, name: 'description' }
@@ -266,10 +254,10 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     values
   );
 
-  const calculateConvertedValue = () => {
-    const result = Number(values?.additionalPrice) * Number(exchangeRate);
-    return result.toFixed(2);
-  };
+  // const calculateConvertedValue = () => {
+  //   const result = Number(values?.additionalPrice) * Number(exchangeRate);
+  //   return result.toFixed(2);
+  // };
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
@@ -427,7 +415,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   ${styles.materialSelect} 
                   `}
                 variant='outlined'
-                label={getLabelValue()}
+                label={getLabelValue(values, additionalPriceType)}
                 value={values.additionalPrice}
                 onChange={handleChange}
                 error={touched.additionalPrice && !!errors.additionalPrice}
@@ -445,7 +433,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   ${styles.textField} 
                   ${styles.currencyField}
                   `}
-                value={calculateAddittionalPriceValue}
+                value={calculateAddittionalPriceValue(values, exchangeRate)}
                 disabled
               />
             </Paper>

@@ -14,6 +14,10 @@ import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import ColorsBar from '../../colors-bar';
 import useMaterialHandlers from '../../../utils/use-material-handlers';
+import {
+  getLabelValue,
+  calculateAddittionalPriceValue
+} from '../../../utils/additionalPrice-helper';
 import getMaterialFormInitValues from '../../../utils/material-form';
 import { useStyles } from './material-form.styles';
 import {
@@ -119,17 +123,6 @@ function MaterialForm({ material, id }) {
       handler: () => setFieldValue('available', !values.available)
     }
   ];
-
-  const getLabelValue = () => {
-    switch (values.additionalPriceType) {
-      case 'ABSOLUTE_INDICATOR':
-        return additionalPriceType.absolutePrice[0].value;
-      case 'RELATIVE_INDICATOR':
-        return additionalPriceType.relativePrice[0].value;
-      default:
-        return '';
-    }
-  };
 
   const inputs = [
     { label: config.labels.material.name, name: 'name' },
@@ -260,7 +253,7 @@ function MaterialForm({ material, id }) {
               id='additionalPrice'
               className={styles.textField}
               variant='outlined'
-              label={getLabelValue()}
+              label={getLabelValue(values, additionalPriceType)}
               value={values.additionalPrice}
               onChange={handleChange}
               error={touched.additionalPrice && !!errors.additionalPrice}
@@ -276,11 +269,7 @@ function MaterialForm({ material, id }) {
                   ${styles.textField} 
                   ${styles.currencyField}
                   `}
-              value={
-                values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                  ? calculateConvertedValue()
-                  : '0'
-              }
+              value={calculateAddittionalPriceValue(values, exchangeRate)}
               disabled
             />
           </Paper>

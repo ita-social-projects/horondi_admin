@@ -24,6 +24,10 @@ import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import {
+  getLabelValue,
+  calculateAddittionalPriceValue
+} from '../../../utils/additionalPrice-helper';
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const labels = config.labels.closuresPageLabel;
@@ -133,17 +137,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
     }
   ];
 
-  const getLabelValue = () => {
-    switch (values.additionalPriceType) {
-      case 'ABSOLUTE_INDICATOR':
-        return additionalPriceType.absolutePrice[0].value;
-      case 'RELATIVE_INDICATOR':
-        return additionalPriceType.relativePrice[0].value;
-      default:
-        return '';
-    }
-  };
-
   const inputs = [{ label: labels.closuresName, name: 'name' }];
 
   const inputOptions = {
@@ -245,7 +238,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                   ${styles.materialSelect} 
                   `}
               variant='outlined'
-              label={getLabelValue()}
+              label={getLabelValue(values, additionalPriceType)}
               value={values.additionalPrice}
               onChange={handleChange}
               error={touched.additionalPrice && !!errors.additionalPrice}
@@ -261,11 +254,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                   ${styles.textField} 
                   ${styles.currencyField}
                   `}
-              value={
-                values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                  ? calculateConvertedValue()
-                  : '0'
-              }
+              value={calculateAddittionalPriceValue(values, exchangeRate)}
               disabled
             />
           </Paper>

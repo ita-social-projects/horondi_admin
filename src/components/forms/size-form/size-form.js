@@ -23,6 +23,10 @@ import {
   sizePropTypes,
   sizeDefaultProps
 } from '../../../utils/size-helpers';
+import {
+  getLabelValue,
+  calculateAddittionalPriceValue
+} from '../../../utils/additionalPrice-helper';
 import { formSchema } from '../../../validations/sizes/size-form-validation';
 import { useStyles } from './size-form.styles';
 import { addSize, updateSize } from '../../../redux/sizes/sizes.actions';
@@ -77,17 +81,6 @@ function SizeForm({ id, size }) {
     dispatch(getCurrencies());
   }, []);
 
-  const getLabelValue = () => {
-    switch (values.additionalPriceType) {
-      case 'ABSOLUTE_INDICATOR':
-        return additionalPriceType.absolutePrice[0].value;
-      case 'RELATIVE_INDICATOR':
-        return additionalPriceType.relativePrice[0].value;
-      default:
-        return '';
-    }
-  };
-
   const valueEquality = checkInitialValue(getSizeInitialValues(size), values);
 
   const checkboxes = [
@@ -101,11 +94,6 @@ function SizeForm({ id, size }) {
       handler: () => setFieldValue(labels.en.available, !values.available)
     }
   ];
-
-  const calculateConvertedValue = () => {
-    const result = Number(values?.additionalPrice) * Number(exchangeRate);
-    return result.toFixed(2);
-  };
 
   const preventEventHandler = (e) => {
     e.preventDefault();
@@ -262,7 +250,7 @@ function SizeForm({ id, size }) {
                   ${styles.materialSelect} 
                   `}
                   variant='outlined'
-                  label={getLabelValue()}
+                  label={getLabelValue(values, additionalPriceType)}
                   value={values.additionalPrice}
                   onChange={handleChange}
                   error={touched.additionalPrice && !!errors.additionalPrice}
@@ -280,11 +268,7 @@ function SizeForm({ id, size }) {
                   ${styles.textField} 
                   ${styles.currencyField}
                   `}
-                  value={
-                    values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                      ? calculateConvertedValue()
-                      : '0'
-                  }
+                  value={calculateAddittionalPriceValue(values, exchangeRate)}
                   disabled
                 />
               </Paper>
