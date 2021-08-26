@@ -14,11 +14,15 @@ import {
   deleteReplyComment,
   addReplyForComment,
   updateReplyComment,
-  getReplyComment
+  getReplyComment,
+  getAllCommentsByUser,
+  getAllCommentsRepliesByUser
 } from './comments.operations';
 
 import {
   setComments,
+  setCommentsUser,
+  setRepliesCommentsUser,
   setCommentsLoading,
   setCommentError,
   removeCommentFromStore,
@@ -33,6 +37,8 @@ import {
 
 import {
   GET_COMMENTS,
+  GET_COMMENTS_USER,
+  GET_REPLIES_COMMENTS_USER,
   DELETE_COMMENT,
   GET_COMMENT,
   UPDATE_COMMENT,
@@ -65,6 +71,52 @@ export function* handleCommentsLoad({ payload: { filter, pagination, sort } }) {
     if (comments) {
       yield put(setItemsCount(comments?.count));
       yield put(setComments(comments?.items));
+      yield put(setCommentsLoading(false));
+    }
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleCommentsUserLoad({
+  payload: { filter, pagination, sort, userId }
+}) {
+  try {
+    yield put(setCommentsLoading(true));
+    const comments = yield call(
+      getAllCommentsByUser,
+      filter,
+      pagination,
+      sort,
+      userId
+    );
+
+    if (comments) {
+      yield put(setItemsCount(comments?.count));
+      yield put(setCommentsUser(comments?.items));
+      yield put(setCommentsLoading(false));
+    }
+  } catch (error) {
+    yield call(handleCommentsError, error);
+  }
+}
+
+export function* handleRepliesCommentsUserLoad({
+  payload: { filter, pagination, sort, userId }
+}) {
+  try {
+    yield put(setCommentsLoading(true));
+    const comments = yield call(
+      getAllCommentsRepliesByUser,
+      filter,
+      pagination,
+      sort,
+      userId
+    );
+
+    if (comments) {
+      yield put(setItemsCount(comments?.count));
+      yield put(setRepliesCommentsUser(comments?.items));
       yield put(setCommentsLoading(false));
     }
   } catch (error) {
@@ -271,6 +323,8 @@ export function* handleReplyCommentLoad({ payload }) {
 
 export default function* commentsSaga() {
   yield takeEvery(GET_COMMENTS, handleCommentsLoad);
+  yield takeEvery(GET_COMMENTS_USER, handleCommentsUserLoad);
+  yield takeEvery(GET_REPLIES_COMMENTS_USER, handleRepliesCommentsUserLoad);
   yield takeEvery(GET_RECENT_COMMENTS, handleRecentCommentsLoad);
   yield takeEvery(DELETE_COMMENT, handleCommentDelete);
   yield takeEvery(UPDATE_COMMENT, handleCommentUpdate);

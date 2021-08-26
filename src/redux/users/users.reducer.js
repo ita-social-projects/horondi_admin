@@ -5,6 +5,7 @@ import {
   SET_USERS_ERROR,
   DELETE_USER_LOCALLY,
   SET_TAB,
+  SET_TAB_ORDERS_COMMENTS,
   SET_FILTER,
   SET_SORT,
   CLEAR_FILTERS,
@@ -24,6 +25,7 @@ export const initialState = {
   sort: {},
   filters: initialFilters,
   tab: 0,
+  tabOrdersComments: 0,
   user: null,
   userLoading: false,
   userError: null,
@@ -78,6 +80,11 @@ const usersReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         tab: action.payload
+      };
+    case SET_TAB_ORDERS_COMMENTS:
+      return {
+        ...state,
+        tabOrdersComments: action.payload
       };
     case SET_FILTER:
       return {

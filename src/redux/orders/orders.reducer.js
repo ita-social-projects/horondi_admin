@@ -3,6 +3,7 @@ import {
   SET_ORDER_LOADING,
   SET_ORDER_ERROR,
   SET_ORDER_LIST,
+  SET_ORDER_LIST_USER,
   REMOVE_ORDER_FROM_STORE,
   SET_NOVAPOSHTA_CITIES,
   SET_NOVAPOSHTA_WAREHOUSES,
@@ -12,7 +13,9 @@ import {
   SET_UKRPOST_CITIES,
   SET_UKRPOST_POSTOFFICES,
   CLEAR_FILTERS,
+  CLEAR_FILTERS_USER,
   SET_FILTER,
+  SET_FILTER_USER,
   SET_SORT,
   SET_ORDER_SORT_LABEL
 } from './orders.types';
@@ -25,9 +28,13 @@ const initialFilters = {
   search: ''
 };
 
+const defaultFiltersUser = { ...initialFilters };
+
 export const initialState = {
-  list: [],
+  list: { count: 0, items: [] },
+  listUser: [],
   filters: initialFilters,
+  filtersUser: defaultFiltersUser,
   sort: {
     dateOfCreation: -1
   },
@@ -45,9 +52,12 @@ export const initialState = {
 };
 
 export const selectOrderList = ({ Orders }) => ({
+  listUser: Orders.listUser,
+  filtersUser: Orders.filtersUser,
   orderLoading: Orders.orderLoading,
   ordersList: Orders.list?.items,
-  sort: Orders.sort
+  sort: Orders.sort,
+  sortLabel: ''
 });
 
 const ordersReducer = (state = initialState, action = {}) => {
@@ -77,13 +87,35 @@ const ordersReducer = (state = initialState, action = {}) => {
         ...state,
         list: action.payload
       };
-    case REMOVE_ORDER_FROM_STORE:
-      const orders = state.list.items.filter(
-        (order) => order._id !== action.payload
-      );
+    case SET_ORDER_LIST_USER:
       return {
         ...state,
-        list: { ...state.list, items: orders, count: state.list.count - 1 }
+        listUser: action.payload
+      };
+    case REMOVE_ORDER_FROM_STORE:
+      const allLists = {
+        list: state.list?.items ? state.list.items : [],
+        listUser: state.listUser
+      };
+
+      const filteredLists = Object.keys(allLists).reduce(
+        (acumulator, listOrderskey) => {
+          acumulator[listOrderskey] = allLists[listOrderskey].filter(
+            (order) => order._id !== action.payload
+          );
+          return acumulator;
+        },
+        {}
+      );
+
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          items: filteredLists.list,
+          count: state.list.count - 1
+        },
+        listUser: [...filteredLists.listUser]
       };
     case SET_UKRPOST_REGIONS:
       return {
@@ -128,6 +160,14 @@ const ordersReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
+    case SET_FILTER_USER:
+      return {
+        ...state,
+        filtersUser: {
+          ...state.filtersUser,
+          ...action.payload
+        }
+      };
     case SET_SORT:
       return {
         ...state,
@@ -139,6 +179,13 @@ const ordersReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         filters: initialFilters,
+        sortLabel: '',
+        sort: {}
+      };
+    case CLEAR_FILTERS_USER:
+      return {
+        ...state,
+        filtersUser: defaultFiltersUser,
         sortLabel: '',
         sort: {}
       };

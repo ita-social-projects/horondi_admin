@@ -246,6 +246,47 @@ export const getAllOrders = async (skip, limit, filter, sort) => {
   return result?.data?.getAllOrders;
 };
 
+export const getOrdersByUser = async (skip, limit, filter, sort, userId) => {
+  const query = `
+      query($limit: Int, $skip: Int, $filter: OrderFilterInput, $sort:JSONObject, $userId: ID!) {
+        getOrdersByUser(limit: $limit, skip: $skip, filter: $filter, sort: $sort, userId: $userId) {
+          items {
+            _id
+            recipient {
+              firstName
+              lastName
+              email
+              phoneNumber
+            }
+            status
+            paymentStatus
+            orderNumber
+            dateOfCreation
+            totalItemsPrice {
+              currency
+              value
+            }
+            totalPriceToPay {
+              currency
+              value
+            }
+          }
+          count
+        }
+      }
+    `;
+
+  const result = await getItems(query, {
+    skip,
+    limit,
+    filter,
+    sort,
+    userId
+  });
+
+  return result?.data?.getOrdersByUser;
+};
+
 export const deleteOrder = async (id) => {
   const query = `
       mutation($id: ID!) {
