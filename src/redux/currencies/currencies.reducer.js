@@ -5,15 +5,13 @@ export const initialState = {
 };
 
 const currenciesReducer = (state = initialState, action = {}) => {
-  switch (action.type) {
-    case SET_EXCHANGE_RATE:
-      return {
-        ...state,
-        exchangeRate: action.payload.exchangeRate
-      };
-    default:
-      return state;
+  if (action.type === SET_EXCHANGE_RATE) {
+    return {
+      ...state,
+      exchangeRate: action.payload.exchangeRate
+    };
   }
+  return state;
 };
 
 export default currenciesReducer;

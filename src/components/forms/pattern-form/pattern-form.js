@@ -237,6 +237,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   };
 
+  const calculateAddittionalPriceValue =
+    values.additionalPriceType === 'ABSOLUTE_INDICATOR'
+      ? calculateConvertedValue()
+      : '0';
+
   const inputs = [
     { label: patternName, name: 'name' },
     { label: patternDescription, name: 'description' }
@@ -440,11 +445,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   ${styles.textField} 
                   ${styles.currencyField}
                   `}
-                value={
-                  values.additionalPriceType === 'ABSOLUTE_INDICATOR'
-                    ? calculateConvertedValue()
-                    : '0'
-                }
+                value={calculateAddittionalPriceValue}
                 disabled
               />
             </Paper>

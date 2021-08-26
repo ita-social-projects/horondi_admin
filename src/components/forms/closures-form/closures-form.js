@@ -22,7 +22,6 @@ import {
 } from '../../../redux/closures/closures.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
-// import { getClosuresInitialValues } from '../../../utils/closures-form';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
