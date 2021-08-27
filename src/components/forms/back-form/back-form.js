@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
@@ -27,6 +26,14 @@ import {
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
+import {
+  constructorObject,
+  defaultProps,
+  constructorObjectPropsTypes,
+  defaultPropTypes,
+  valuesPropTypes,
+  imagePropTypes
+} from '../bottom-form/constructor.variables';
 
 const { IMG_URL } = config;
 const { backName, enterPrice, additionalPriceLabel, materialLabels } =
@@ -299,101 +306,16 @@ const BackForm = ({ back, id, edit }) => {
   );
 };
 
-const valueShape = PropTypes.shape({
-  value: PropTypes.string
-});
+valuesPropTypes.values.backImage = imagePropTypes;
+valuesPropTypes.errors.backImage = imagePropTypes;
+valuesPropTypes.touched.backImage = imagePropTypes;
+
 BackForm.propTypes = {
-  id: PropTypes.string,
-  back: PropTypes.shape({
-    _id: PropTypes.string,
-    available: PropTypes.bool,
-    customizable: PropTypes.bool,
-    features: PropTypes.shape({
-      material: PropTypes.string,
-      color: PropTypes.string
-    }),
-    images: PropTypes.shape({
-      thumbnail: PropTypes.string
-    }),
-    name: PropTypes.arrayOf(valueShape)
-  }),
-  values: PropTypes.shape({
-    backImage: PropTypes.string,
-    material: PropTypes.string,
-    color: PropTypes.string,
-    uaName: PropTypes.string,
-    enName: PropTypes.string
-  }),
-  errors: PropTypes.shape({
-    backImage: PropTypes.string,
-    material: PropTypes,
-    color: PropTypes.string,
-    uaName: PropTypes.string,
-    enName: PropTypes.string
-  }),
-  touched: PropTypes.shape({
-    backImage: PropTypes.string,
-    material: PropTypes.string,
-    color: PropTypes.string,
-    uaName: PropTypes.string,
-    enName: PropTypes.string
-  }),
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired
-    })
-  }),
-  edit: PropTypes.bool
+  ...defaultPropTypes,
+  back: constructorObjectPropsTypes.element,
+  ...valuesPropTypes
 };
-BackForm.defaultProps = {
-  id: '',
-  match: {},
-  values: {},
-  errors: {},
-  touched: {},
-  back: {
-    _id: '',
-    name: [
-      {
-        value: ''
-      },
-      {
-        value: ''
-      }
-    ],
-    images: {
-      thumbnail: ''
-    },
-    features: {
-      material: {
-        name: [
-          {
-            value: ''
-          },
-          {
-            value: ''
-          }
-        ]
-      },
-      color: {
-        name: [
-          {
-            value: ''
-          },
-          {
-            value: ''
-          }
-        ]
-      }
-    },
-    additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
-    ],
-    available: false,
-    customizable: false
-  },
-  edit: false
-};
+
+BackForm.defaultProps = { back: constructorObject, ...defaultProps };
 
 export default BackForm;

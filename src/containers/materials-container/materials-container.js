@@ -5,7 +5,6 @@ import { noop } from 'lodash';
 import { handleMenuItem } from '../../utils/handle-menu-item';
 import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './materials-container.styles';
-import { config } from '../../configs';
 
 const MaterialsContainer = ({
   material,

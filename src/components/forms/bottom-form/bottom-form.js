@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
@@ -27,6 +26,14 @@ import {
 import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 import useBottomHandlers from '../../../utils/use-bottom-handlers';
+import {
+  constructorObject,
+  defaultProps,
+  constructorObjectPropsTypes,
+  defaultPropTypes,
+  valuesPropTypes,
+  imagePropTypes
+} from './constructor.variables';
 
 const { IMG_URL } = config;
 const { bottomName, enterPrice, additionalPriceLabel, materialLabels } =
@@ -300,101 +307,16 @@ const BottomForm = ({ bottom, id, edit }) => {
   );
 };
 
-const valueShape = PropTypes.shape({
-  value: PropTypes.string
-});
+valuesPropTypes.values.bottomImage = imagePropTypes;
+valuesPropTypes.errors.bottomImage = imagePropTypes;
+valuesPropTypes.touched.bottomImage = imagePropTypes;
+
 BottomForm.propTypes = {
-  id: PropTypes.string,
-  bottom: PropTypes.shape({
-    _id: PropTypes.string,
-    available: PropTypes.bool,
-    customizable: PropTypes.bool,
-    features: PropTypes.shape({
-      material: PropTypes.string,
-      color: PropTypes.string
-    }),
-    images: PropTypes.shape({
-      thumbnail: PropTypes.string
-    }),
-    name: PropTypes.arrayOf(valueShape)
-  }),
-  values: PropTypes.shape({
-    bottomImage: PropTypes.string,
-    material: PropTypes.string,
-    color: PropTypes.string,
-    uaName: PropTypes.string,
-    enName: PropTypes.string
-  }),
-  errors: PropTypes.shape({
-    bottomImage: PropTypes.string,
-    material: PropTypes,
-    color: PropTypes.string,
-    uaName: PropTypes.string,
-    enName: PropTypes.string
-  }),
-  touched: PropTypes.shape({
-    bottomImage: PropTypes.string,
-    material: PropTypes.string,
-    color: PropTypes.string,
-    uaName: PropTypes.string,
-    enName: PropTypes.string
-  }),
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired
-    })
-  }),
-  edit: PropTypes.bool
+  ...defaultPropTypes,
+  bottom: constructorObjectPropsTypes.element,
+  ...valuesPropTypes
 };
-BottomForm.defaultProps = {
-  id: '',
-  match: {},
-  values: {},
-  errors: {},
-  touched: {},
-  bottom: {
-    _id: '',
-    name: [
-      {
-        value: ''
-      },
-      {
-        value: ''
-      }
-    ],
-    images: {
-      thumbnail: ''
-    },
-    features: {
-      material: {
-        name: [
-          {
-            value: ''
-          },
-          {
-            value: ''
-          }
-        ]
-      },
-      color: {
-        name: [
-          {
-            value: ''
-          },
-          {
-            value: ''
-          }
-        ]
-      }
-    },
-    additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
-    ],
-    available: false,
-    customizable: false
-  },
-  edit: false
-};
+
+BottomForm.defaultProps = { bottom: constructorObject, ...defaultProps };
 
 export default BottomForm;
