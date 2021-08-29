@@ -6,6 +6,7 @@ import { Paper, Grid } from '@material-ui/core';
 import LoadingBar from '../../../loading-bar';
 import BasicsForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
+import MaterialsContainer from '../../../../containers/materials-container';
 import CheckboxOptions from '../../../checkbox-options';
 import { config } from '../../../../configs';
 import { mockMaterial, files, target } from './basics-form.variables';
@@ -86,6 +87,11 @@ describe('Basics form tests', () => {
 
   it('should render CheckboxOptions component', () => {
     const wrapper = component.find(CheckboxOptions);
+    expect(wrapper).toHaveLength(1);
+  });
+
+  it('should render MaterialsContainer component', () => {
+    const wrapper = component.find(MaterialsContainer);
     expect(wrapper).toHaveLength(1);
   });
 
