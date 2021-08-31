@@ -385,30 +385,30 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                 <RadioGroup
                   name='additionalPriceType'
                   className={styles.textField}
-                  value={values.additionalPriceType}
                   onChange={handleChange}
+                  value={values.additionalPriceType}
                 >
                   <FormControlLabel
                     value='ABSOLUTE_INDICATOR'
-                    control={<Radio />}
                     label={additionalPriceType.absolutePrice[0].value}
+                    control={<Radio />}
                     key={2}
                   />
                   <FormControlLabel
                     value='RELATIVE_INDICATOR'
-                    control={<Radio />}
                     label={additionalPriceType.relativePrice[0].value}
+                    control={<Radio />}
                     key={1}
                   />
                 </RadioGroup>
               </FormControl>
               <TextField
                 data-cy='additionalPrice'
-                id='additionalPrice'
                 className={`
                   ${styles.textField} 
                   ${styles.materialSelect} 
                   `}
+                id='additionalPrice'
                 variant='outlined'
                 label={getLabelValue(values, additionalPriceType)}
                 value={values.additionalPrice}
@@ -422,8 +422,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
               )}
               <TextField
                 id='outlined-basic'
-                label={convertationTitle}
                 variant='outlined'
+                label={convertationTitle}
                 className={`
                   ${styles.textField} 
                   ${styles.currencyField}

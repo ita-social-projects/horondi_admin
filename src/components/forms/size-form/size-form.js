@@ -225,31 +225,31 @@ function SizeForm({ id, size }) {
                   <RadioGroup
                     name='additionalPriceType'
                     className={styles.textField}
-                    value={values.additionalPriceType}
                     onChange={handleChange}
+                    value={values.additionalPriceType}
                   >
                     <FormControlLabel
                       value='ABSOLUTE_INDICATOR'
-                      control={<Radio />}
                       label={additionalPriceType.absolutePrice[0].value}
                       key={2}
+                      control={<Radio />}
                     />
                     <FormControlLabel
                       value='RELATIVE_INDICATOR'
-                      control={<Radio />}
                       label={additionalPriceType.relativePrice[0].value}
                       key={1}
+                      control={<Radio />}
                     />
                   </RadioGroup>
                 </FormControl>
                 <TextField
                   data-cy='additionalPrice'
                   id='additionalPrice'
+                  variant='outlined'
                   className={`
                   ${styles.textField} 
                   ${styles.materialSelect} 
                   `}
-                  variant='outlined'
                   label={getLabelValue(values, additionalPriceType)}
                   value={values.additionalPrice}
                   onChange={handleChange}
@@ -261,13 +261,13 @@ function SizeForm({ id, size }) {
                   </div>
                 )}
                 <TextField
+                  className={`
+                    ${styles.textField} 
+                    ${styles.currencyField}
+                `}
                   id='outlined-basic'
                   label={convertationTitle}
                   variant='outlined'
-                  className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
-                  `}
                   value={calculateAddittionalPriceValue(values, exchangeRate)}
                   disabled
                 />

@@ -224,28 +224,28 @@ function MaterialForm({ material, id }) {
             <br />
             <FormControl component='fieldset'>
               <RadioGroup
-                name='additionalPriceType'
                 className={styles.textField}
+                name='additionalPriceType'
                 value={values.additionalPriceType}
                 onChange={handleChange}
               >
                 <FormControlLabel
-                  value='ABSOLUTE_INDICATOR'
                   control={<Radio />}
+                  value='ABSOLUTE_INDICATOR'
                   label={additionalPriceType.absolutePrice[0].value}
                   key={2}
                 />
                 <FormControlLabel
-                  value='RELATIVE_INDICATOR'
                   control={<Radio />}
+                  value='RELATIVE_INDICATOR'
                   label={additionalPriceType.relativePrice[0].value}
                   key={1}
                 />
               </RadioGroup>
             </FormControl>
             <TextField
-              data-cy='additionalPrice'
               id='additionalPrice'
+              data-cy='additionalPrice'
               className={styles.textField}
               variant='outlined'
               label={getLabelValue(values, additionalPriceType)}
@@ -257,8 +257,8 @@ function MaterialForm({ material, id }) {
               <div className={styles.inputError}>{errors.additionalPrice}</div>
             )}
             <TextField
-              id='outlined-basic'
               label={convertationTitle}
+              id='outlined-basic'
               variant='outlined'
               className={`
                   ${styles.textField} 

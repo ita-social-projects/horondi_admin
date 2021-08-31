@@ -206,28 +206,27 @@ const ClosuresForm = ({ closure, id, edit }) => {
             </Box>
             <FormControl component='fieldset'>
               <RadioGroup
+                value={values.additionalPriceType}
                 name='additionalPriceType'
                 className={styles.textField}
-                value={values.additionalPriceType}
                 onChange={handleChange}
               >
                 <FormControlLabel
-                  value='ABSOLUTE_INDICATOR'
                   control={<Radio />}
                   label={additionalPriceType.absolutePrice[0].value}
                   key={2}
+                  value='ABSOLUTE_INDICATOR'
                 />
                 <FormControlLabel
-                  value='RELATIVE_INDICATOR'
                   control={<Radio />}
                   label={additionalPriceType.relativePrice[0].value}
                   key={1}
+                  value='RELATIVE_INDICATOR'
                 />
               </RadioGroup>
             </FormControl>
             <TextField
               data-cy='additionalPrice'
-              id='additionalPrice'
               className={`
                   ${styles.textField} 
                   ${styles.materialSelect} 
@@ -236,6 +235,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
               label={getLabelValue(values, additionalPriceType)}
               value={values.additionalPrice}
               onChange={handleChange}
+              id='additionalPrice'
               error={touched.additionalPrice && !!errors.additionalPrice}
             />
             {touched.additionalPrice && errors.additionalPrice && (
@@ -243,12 +243,12 @@ const ClosuresForm = ({ closure, id, edit }) => {
             )}
             <TextField
               id='outlined-basic'
-              label={convertationTitle}
-              variant='outlined'
               className={`
                   ${styles.textField} 
                   ${styles.currencyField}
                   `}
+              label={convertationTitle}
+              variant='outlined'
               value={calculateAddittionalPriceValue(values, exchangeRate)}
               disabled
             />
