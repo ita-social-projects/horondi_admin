@@ -29,7 +29,7 @@ export const basicFormOnSubmit = (
 export const setBasicsColorsHandler = (values, setColor, find, materials) => {
   if (values.material) {
     setColor(
-      find(materials.main, (material) => material._id === values.material)
+      find(materials?.main, (material) => material._id === values.material)
         ?.colors || []
     );
   }

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { useStyles } from './basic-details.styles';
+import LoadingBar from '../../../components/loading-bar';
 import BasicsForm from '../../../components/forms/basics-form';
 import { basicsSelector } from '../../../redux/selectors/basics.selectors';
 import { getBasic } from '../../../redux/basics/basics.actions';
@@ -11,11 +12,15 @@ const BasicDetails = ({ match }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
-  const { basic } = useSelector(basicsSelector);
+  const { basic, loading } = useSelector(basicsSelector);
   const styles = useStyles();
   useEffect(() => {
     dispatch(getBasic(id));
   }, [dispatch, id]);
+
+  if (loading) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className={styles.detailsContainer}>

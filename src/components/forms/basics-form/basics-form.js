@@ -64,6 +64,7 @@ const BasicsForm = ({ basic, id, edit }) => {
     details: { materials },
     loading
   } = useSelector(selectProductDetails);
+
   const { createBasic, setUpload, upload, setBasicImage, color, setColor } =
     useBasicsHandlers();
 
