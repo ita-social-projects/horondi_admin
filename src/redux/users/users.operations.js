@@ -47,6 +47,8 @@ query($id: ID!) {
       firstName
       lastName
       confirmed
+      role
+      phoneNumber
       email
       address {
         country

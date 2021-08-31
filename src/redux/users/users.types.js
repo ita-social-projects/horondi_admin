@@ -15,6 +15,7 @@ export const CONFIRM_ADMIN = 'CONFIRM_ADMIN';
 export const VALIDATE_TOKEN = 'VALIDATE_TOKEN';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_TAB = 'SET_TAB';
+export const SET_TAB_ORDERS_COMMENTS = 'SET_TAB_ORDERS_COMMENTS';
 export const SET_SORT = 'SET_USER_SORT';
 export const CLEAR_FILTERS = 'CLEAR_USER_FILTERS';
 export const BLOCK_USER = 'BLOCK_USER';

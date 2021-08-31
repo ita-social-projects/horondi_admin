@@ -16,6 +16,7 @@ import {
   SET_FILTER,
   SET_SORT,
   SET_TAB,
+  SET_TAB_ORDERS_COMMENTS,
   CLEAR_FILTERS,
   BLOCK_USER,
   UNLOCK_USER,
@@ -116,6 +117,12 @@ const setTab = (tab) => ({
   type: SET_TAB,
   payload: tab
 });
+
+const setTabOrdersComments = (payload) => ({
+  type: SET_TAB_ORDERS_COMMENTS,
+  payload
+});
+
 const blockUserByAdmin = (payload) => ({
   type: BLOCK_USER,
   payload
@@ -145,6 +152,7 @@ export {
   confirmAdmin,
   validateToken,
   setTab,
+  setTabOrdersComments,
   setFilter,
   setSort,
   clearFilters,

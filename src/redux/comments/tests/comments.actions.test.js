@@ -1,7 +1,11 @@
 import {
   SET_COMMENTS,
+  SET_COMMENTS_USER,
+  SET_REPLIES_COMMENTS_USER,
   GET_COMMENTS,
   GET_COMMENT,
+  GET_COMMENTS_USER,
+  GET_REPLIES_COMMENTS_USER,
   SET_COMMENT,
   DELETE_COMMENT,
   SET_COMMENTS_LOADING,
@@ -14,7 +18,11 @@ import {
   SET_COMMENTS_CURRENT_PAGE,
   UPDATE_COMMENT,
   SET_FILTER,
+  SET_FILTER_USER,
+  SET_FILTER_REPLY_USER,
   CLEAR_FILTERS,
+  CLEAR_FILTERS_USER,
+  CLEAR_FILTERS_REPLY_USER,
   GET_RECENT_COMMENTS,
   SET_RECENT_COMMENTS,
   SET_REPLY_COMMENTS,
@@ -37,9 +45,13 @@ import {
 
 import {
   setComments,
+  setCommentsUser,
+  setRepliesCommentsUser,
   setComment,
   getComment,
   getComments,
+  getCommentsByUser,
+  getRepliesCommentsByUser,
   deleteComment,
   getCommentsByProduct,
   getUserComments,
@@ -51,7 +63,11 @@ import {
   removeCommentFromStore,
   updateComment,
   setFilter,
+  setFilterReplyUser,
+  setFilterUser,
   clearFilters,
+  clearFiltersUser,
+  clearFiltersReplyUser,
   setRecentComments,
   getRecentComments,
   setReplyComments,
@@ -86,6 +102,8 @@ import {
   addReplyData,
   replyCommentsData,
   replyFilter,
+  replyFilterUser,
+  commentFilterUser,
   replyCommentId,
   sortDataLabel,
   sortData,
@@ -102,10 +120,34 @@ describe('comments action tests', () => {
       }
     });
   });
+  it('should get all comments by user', () => {
+    expect(getCommentsByUser(commentFilterUser)).toEqual({
+      type: GET_COMMENTS_USER,
+      payload: commentFilterUser
+    });
+  });
+  it('should get all replies by user', () => {
+    expect(getRepliesCommentsByUser(replyFilterUser)).toEqual({
+      type: GET_REPLIES_COMMENTS_USER,
+      payload: replyFilterUser
+    });
+  });
   it('should set all comments', () => {
     expect(setComments(comments.list)).toEqual({
       type: SET_COMMENTS,
       payload: comments.list
+    });
+  });
+  it('should set all user comments', () => {
+    expect(setCommentsUser(comments.list)).toEqual({
+      type: SET_COMMENTS_USER,
+      payload: comments.list
+    });
+  });
+  it('should set all user replies', () => {
+    expect(setRepliesCommentsUser(replyCommentsData)).toEqual({
+      type: SET_REPLIES_COMMENTS_USER,
+      payload: replyCommentsData
     });
   });
   it('should get a specific comment', () => {
@@ -183,15 +225,43 @@ describe('comments action tests', () => {
       payload: singleComment
     });
   });
+
   it('should set a filter to be applied to the given list of comments', () => {
     expect(setFilter(filter)).toEqual({
       type: SET_FILTER,
       payload: filter
     });
   });
+
+  it('should update user comment filters by setting new filter state', () => {
+    expect(setFilterUser(filter)).toEqual({
+      type: SET_FILTER_USER,
+      payload: filter
+    });
+  });
+
+  it('should update user reply filters by setting new filter state', () => {
+    expect(setFilterReplyUser(filter)).toEqual({
+      type: SET_FILTER_REPLY_USER,
+      payload: filter
+    });
+  });
+
   it('should clear all comments filters', () => {
     expect(clearFilters()).toEqual({
       type: CLEAR_FILTERS
+    });
+  });
+
+  it('should clear all user comments filters', () => {
+    expect(clearFiltersUser()).toEqual({
+      type: CLEAR_FILTERS_USER
+    });
+  });
+
+  it('should clear all user replies filters', () => {
+    expect(clearFiltersReplyUser()).toEqual({
+      type: CLEAR_FILTERS_REPLY_USER
     });
   });
 
