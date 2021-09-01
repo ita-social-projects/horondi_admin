@@ -35,7 +35,8 @@ import {
   businessPageErrorMessages,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages
+  positionErrorMessages,
+  basicsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -126,6 +127,10 @@ export const config = {
     UNAVAILABLE_TEXT: 'Недоступний'
   },
   positionAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступна',
+    UNAVAILABLE_TEXT: 'Недоступна'
+  },
+  basicsAvailableVariants: {
     AVAILABLE_TEXT: 'Доступна',
     UNAVAILABLE_TEXT: 'Недоступна'
   },
@@ -250,7 +255,8 @@ export const config = {
   inputNames,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages
+  positionErrorMessages,
+  basicsErrorMessages
 };
 export const inputTypes = {
   button: 'button',

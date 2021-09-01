@@ -53,11 +53,7 @@ query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
   if (
     Object.keys(backTranslations).includes(result?.data?.getAllBacks?.message)
   ) {
-    throw new Error(
-      `${result.data.getAllBacks.statusCode} ${
-        backTranslations[result.data.getAllBacks.message]
-      }`
-    );
+    throw new Error(`${backTranslations[result.data.getAllBacks.message]}`);
   }
   return result?.data?.getAllBacks;
 };
@@ -161,11 +157,7 @@ export const createBack = async (payload) => {
 
   const result = await setItems(createBackQuery, payload);
   if (Object.keys(backTranslations).includes(result?.data?.addBack?.message)) {
-    throw new Error(
-      `${result.data.addBack.statusCode} ${
-        backTranslations[result.data.addBack.message]
-      }`
-    );
+    throw new Error(`${backTranslations[result.data.addBack.message]}`);
   }
 
   return result?.data?.addBack;

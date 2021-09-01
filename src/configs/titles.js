@@ -135,6 +135,9 @@ const titles = {
   },
   closuresTitles: {
     mainPageTitle: 'Інформація про защіпки'
+  },
+  basicsTitles: {
+    mainPageTitle: 'Інформація про основи'
   }
 };
 
