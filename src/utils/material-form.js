@@ -34,18 +34,17 @@ const getMaterialFormInitValues = (material, purposeEnum) => ({
   enDescription: material.description[1].value || '',
   purpose: material.purpose || purposeEnum.MAIN,
   available: material.available || false,
-  // additionalPrice: +material.additionalPrice[0].value / 100 || 0,
   colors: (material.colors && material.colors.map((color) => color._id)) || [],
-  additionalPrice: getAdditionalPriceValue(material),
+  additionalPrice: getAdditionalPriceValue(material) || '',
   additionalPriceType: material.additionalPriceType || 'ABSOLUTE_INDICATOR'
 });
 
 const getAdditionalPriceValue = (material) => {
-  const { type } = material?.additionalPrice[0] || {};
+  const { type } = material?.additionalPrice?.[0] || {};
   if (type === 'ABSOLUTE_INDICATOR') {
-    return material?.additionalPrice[1]?.value || '';
+    return material?.additionalPrice?.[1]?.value || '';
   }
-  return material?.additionalPrice[0]?.value || '';
+  return material?.additionalPrice?.[0]?.value || '';
 };
 
 export default getMaterialFormInitValues;

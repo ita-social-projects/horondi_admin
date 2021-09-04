@@ -81,6 +81,7 @@ export const getMaterialById = async (id) => {
             available
             additionalPrice {
               value
+              type
             }
             purpose
             colors {
@@ -186,6 +187,7 @@ export const updateMaterial = async (id, material) => {
             }
             additionalPrice {
               value
+              type
             }
             colors {
               _id
