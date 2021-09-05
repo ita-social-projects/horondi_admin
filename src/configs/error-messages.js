@@ -213,3 +213,15 @@ export const closuresErrorMessages = {
   CLOSURES_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
   CLOSURES_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };
+
+export const basicsErrorMessages = {
+  BASICS_VALIDATION_ERROR: 'Мінімум 2 символи',
+  BASICS_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  BASICS_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  PHOTO_NOT_PROVIDED: "Фото основи є обов'язковим",
+  BASICS_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
+  BASICS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  BASICS_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  BASICS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  BASICS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+};

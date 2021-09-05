@@ -4,12 +4,9 @@ import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
 import { noop } from 'lodash';
 import { handleMenuItem } from '../../utils/handle-menu-item';
 import { useSharedStyles } from '../shared.styles';
-import { useStyles } from './back-materials-container.styles';
-import { config } from '../../configs';
+import { useStyles } from './materials-container.styles';
 
-const { materialLabels } = config.labels.back;
-
-const BackMaterialsContainer = ({
+const MaterialsContainer = ({
   material,
   color,
   values,
@@ -19,7 +16,8 @@ const BackMaterialsContainer = ({
   handleChange,
   handleSubmit,
   setFieldValue,
-  toggleFieldsChanged
+  toggleFieldsChanged,
+  materialLabels
 }) => {
   const sharedStyles = useSharedStyles();
   const styles = useStyles();
@@ -40,7 +38,6 @@ const BackMaterialsContainer = ({
   const backColorOptions = useMemo(() => handleMenuItem(color), [color]);
 
   const options = [backMaterialOptions, backColorOptions];
-
   return (
     <>
       <form onSubmit={handleSubmit} className={sharedStyles.container}>
@@ -67,7 +64,7 @@ const BackMaterialsContainer = ({
   );
 };
 
-BackMaterialsContainer.propTypes = {
+MaterialsContainer.propTypes = {
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -85,11 +82,12 @@ BackMaterialsContainer.propTypes = {
       PropTypes.object
     ])
   ).isRequired,
-  color: PropTypes.arrayOf(PropTypes.object).isRequired
+  color: PropTypes.arrayOf(PropTypes.object).isRequired,
+  materialLabels: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-BackMaterialsContainer.defaultProps = {
+MaterialsContainer.defaultProps = {
   toggleFieldsChanged: noop
 };
 
-export default BackMaterialsContainer;
+export default MaterialsContainer;

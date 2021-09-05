@@ -8,7 +8,8 @@ import {
 } from './table.types';
 
 export const selectPagination = ({ Table }) => ({
-  currentPage: Table.pagination.currentPage,
+  currentPage:
+    Table.pagination.currentPage < 0 ? 0 : Table.pagination.currentPage,
   rowsPerPage: Table.pagination.rowsPerPage,
   itemsCount: Table.itemsCount
 });
