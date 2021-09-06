@@ -17,6 +17,7 @@ import useProductValidation from '../../../hooks/product/use-product-validation'
 import { useStyles } from './product-form.styles';
 import ProductInfoContainer from '../../../containers/product-info-container';
 import ProductSpeciesContainer from '../../../containers/product-species-container';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 import {
   addProduct,
   deleteProduct,
@@ -268,6 +269,32 @@ const ProductForm = ({ isEdit }) => {
     }
   ];
 
+  const valueEquality = checkInitialValue(
+    {
+      available: formikSpeciesValues.available,
+      basePrice: formikPriceValue.basePrice,
+      bottomColor: formikMaterialsValues.bottomColor,
+      bottomMaterial: formikMaterialsValues.bottomMaterial,
+      category: formikSpeciesValues.category,
+      closure: formikSpeciesValues.closure,
+      enDescription: product.description[1].value,
+      enName: product.name[1].value,
+      images: formikSpeciesValues.images,
+      innerColor: formikMaterialsValues.innerColor,
+      innerMaterial: formikMaterialsValues.innerMaterial,
+      isHotItem: formikSpeciesValues.isHotItem,
+      mainColor: formikMaterialsValues.mainColor,
+      mainMaterial: formikMaterialsValues.mainMaterial,
+      model: formikSpeciesValues.model,
+      pattern: formikSpeciesValues.pattern,
+      sizes: formikSpeciesValues.sizes,
+      strapLengthInCm: formikSpeciesValues.strapLengthInCm,
+      uaDescription: product.description[0].value,
+      uaName: product.name[0].value
+    },
+    values
+  );
+
   const showCommentsPanel = () => {
     if (product._id) {
       return (
@@ -296,7 +323,7 @@ const ProductForm = ({ isEdit }) => {
       <div className={styles.buttonContainer}>
         <Grid container spacing={2} className={styles.fixedButtons}>
           <Grid item className={styles.button}>
-            <BackButton pathBack={pathToProducts} />
+            <BackButton initial={!valueEquality} pathBack={pathToProducts} />
           </Grid>
           <Grid item className={styles.button}>
             <Button
