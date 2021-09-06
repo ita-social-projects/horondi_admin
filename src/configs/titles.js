@@ -140,12 +140,12 @@ const titles = {
     mainPageTitle: 'Опції конструктора'
   },
   closuresTitles: {
-    mainPageTitle: 'Інформація про защіпки'
+    mainPageTitle: 'Інформація про защіпки',
+    convertationTitle: 'Відповідна ціна в UAH'
   },
   basicsTitles: {
     mainPageTitle: 'Інформація про основи'
-  },
-  convertationTitle: 'Відповідна ціна в UAH'
+  }
 };
 
 export default titles;
