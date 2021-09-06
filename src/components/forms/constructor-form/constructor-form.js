@@ -67,6 +67,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const dispatch = useDispatch();
   const history = createBrowserHistory();
 
+  const { pathToConstructor } = config.routes;
+
   const { createConstructor, setUploadConstructorImg, uploadConstructorImg } =
     useConstructorHandlers();
 
@@ -291,7 +293,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton />
+        <BackButton pathBack={pathToConstructor} />
         <SaveButton
           className={styles.saveButton}
           onClickHandler={handleSubmit}

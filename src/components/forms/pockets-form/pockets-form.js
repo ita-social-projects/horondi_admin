@@ -24,7 +24,6 @@ import {
 import LanguagePanel from '../language-panel';
 import { getPocketsInitialValues } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { getAllPositions } from '../../../redux/position/position.actions';
 import { handleCircularProgress } from '../../../utils/handle-orders-page';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
@@ -183,11 +182,6 @@ const PocketsForm = ({ pocket, id, edit }) => {
     inputs
   };
 
-  const valueEquality = checkInitialValue(
-    getPocketsInitialValues(edit, IMG_URL, pocket, checkIsEdit),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -200,7 +194,6 @@ const PocketsForm = ({ pocket, id, edit }) => {
             <Grid item className={styles.button}>
               <BackButton
                 className={styles.returnButton}
-                initial={!valueEquality}
                 pathBack={pathToPockets}
               />
             </Grid>

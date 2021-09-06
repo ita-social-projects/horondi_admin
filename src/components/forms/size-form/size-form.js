@@ -28,7 +28,6 @@ import { sizesSelectorWithPagination } from '../../../redux/selectors/sizes.sele
 import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { selectTitle, modelTitle } = config.titles.sizesTitles;
@@ -73,8 +72,6 @@ function SizeForm({ id, size }) {
 
   useUnsavedChangesHandler(values);
 
-  const valueEquality = checkInitialValue(getSizeInitialValues(size), values);
-
   const checkboxes = [
     {
       id: 'avaliable',
@@ -100,7 +97,7 @@ function SizeForm({ id, size }) {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToSizes} />
+              <BackButton pathBack={pathToSizes} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton

@@ -16,7 +16,6 @@ import {
 import LanguagePanel from '../language-panel';
 import { getPositionInitialValues } from '../../../utils/position-form';
 import CheckboxOptions from '../../checkbox-options';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const labels = config.labels.positionPageLabel;
@@ -104,11 +103,6 @@ const PositionForm = ({ position, id, edit }) => {
     inputs
   };
 
-  const valueEquality = checkInitialValue(
-    getPositionInitialValues(edit, position),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -121,7 +115,6 @@ const PositionForm = ({ position, id, edit }) => {
             <Grid item className={styles.button}>
               <BackButton
                 className={styles.returnButton}
-                initial={!valueEquality}
                 pathBack={pathToPosition}
               />
             </Grid>

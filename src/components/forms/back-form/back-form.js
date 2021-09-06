@@ -197,10 +197,6 @@ const BackForm = ({ back, id, edit }) => {
     backImageInput: 'backImageInput'
   };
 
-  const valueEquality = checkInitialValue(
-    getBackInitialValues(edit, IMG_URL, back),
-    values
-  );
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -214,7 +210,7 @@ const BackForm = ({ back, id, edit }) => {
           <div className={styles.buttonContainer}>
             <Grid container spacing={2} className={styles.fixedButtons}>
               <Grid item className={styles.button}>
-                <BackButton initial={!valueEquality} pathBack={pathToBacks} />
+                <BackButton pathBack={pathToBacks} />
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton

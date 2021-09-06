@@ -19,7 +19,6 @@ import {
 } from '../../../redux/home-page-slides/home-page-slides.actions';
 import LanguagePanel from '../language-panel';
 import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages } = config;
@@ -115,11 +114,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     inputs
   };
 
-  const valueEquality = checkInitialValue(
-    getHomePageSlidesInitialValues(slide, slideOrder),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -130,10 +124,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton
-                initial={!valueEquality}
-                pathBack={pathToHomePageSlides}
-              />
+              <BackButton pathBack={pathToHomePageSlides} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton

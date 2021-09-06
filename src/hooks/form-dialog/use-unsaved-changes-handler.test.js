@@ -10,6 +10,7 @@ const useEffectSpy = jest
 const useRefSpy = jest.spyOn(React, 'useRef').mockImplementation((value) => ({
   current: value
 }));
+
 jest.mock('react-redux', () => ({
   useDispatch: () => (cb) => null
 }));

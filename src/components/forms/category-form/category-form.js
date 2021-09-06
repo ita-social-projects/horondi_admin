@@ -24,7 +24,6 @@ import {
   getCategoryInitialValues,
   onSubmitCategoryHandler
 } from '../../../utils/category-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const {
@@ -125,11 +124,6 @@ const CategoryForm = ({ category, id, edit }) => {
     inputs
   };
 
-  const valueEquality = checkInitialValue(
-    getCategoryInitialValues(edit, IMG_URL, category),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -140,10 +134,7 @@ const CategoryForm = ({ category, id, edit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton
-                initial={!valueEquality}
-                pathBack={pathToCategories}
-              />
+              <BackButton pathBack={pathToCategories} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton

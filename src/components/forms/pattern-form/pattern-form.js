@@ -28,7 +28,6 @@ import {
   patternFormOnSubmit,
   useFormikInitialValues
 } from '../../../utils/pattern-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { patternName, material, patternDescription } = config.labels.pattern;
@@ -224,11 +223,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     constructorImageInput: 'constructorImgInput'
   };
 
-  const valueEquality = checkInitialValue(
-    useFormikInitialValues(pattern),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -242,10 +236,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
           <div className={styles.buttonContainer}>
             <Grid container spacing={2} className={styles.fixedButtons}>
               <Grid item className={styles.button}>
-                <BackButton
-                  initial={!valueEquality}
-                  pathBack={pathToPatterns}
-                />
+                <BackButton pathBack={pathToPatterns} />
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton

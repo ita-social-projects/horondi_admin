@@ -23,7 +23,6 @@ import CheckboxOptions from '../../checkbox-options';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
 import LanguagePanel from '../language-panel';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages } = config;
@@ -135,11 +134,6 @@ function MaterialForm({ material, id }) {
     return <LoadingBar />;
   }
 
-  const valueEquality = checkInitialValue(
-    getMaterialFormInitValues(material, purposeEnum),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -153,7 +147,7 @@ function MaterialForm({ material, id }) {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToMaterials} />
+              <BackButton pathBack={pathToMaterials} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
