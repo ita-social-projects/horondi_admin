@@ -26,6 +26,7 @@ jest.mock('react-router-dom', () => ({
     push: mockHistoryPush
   })
 }));
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
 const mockSetFieldValue = jest.fn();
 jest.mock('formik', () => ({

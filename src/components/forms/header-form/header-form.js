@@ -12,6 +12,7 @@ import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 import { getHeaderInitialValues } from '../../../utils/header-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { HEADER_VALIDATION_ERROR, HEADER_ERROR_MESSAGE } =
   config.headerErrorMessages;
@@ -55,6 +56,8 @@ const HeaderForm = ({ header, id }) => {
       dispatch(addHeader({ header: newHeader }));
     }
   });
+
+  useUnsavedChangesHandler(values);
 
   const valueEquality = checkInitialValue(
     getHeaderInitialValues(header),

@@ -31,6 +31,7 @@ import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -139,6 +140,7 @@ const BusinessPageForm = ({ id, editMode }) => {
       }
     });
 
+  useUnsavedChangesHandler(values);
   useMemo(() => {
     values.code = code;
     values.uaTitle = uaTitle;

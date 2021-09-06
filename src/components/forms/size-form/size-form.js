@@ -29,6 +29,7 @@ import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import purposeEnum from '../../../configs/sizes-enum';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { selectTitle, modelTitle } = config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
@@ -69,6 +70,8 @@ function SizeForm({ id, size }) {
         dispatch(addSize(newSize));
       }
     });
+
+  useUnsavedChangesHandler(values);
 
   const valueEquality = checkInitialValue(getSizeInitialValues(size), values);
 

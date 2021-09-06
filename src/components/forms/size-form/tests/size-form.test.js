@@ -25,6 +25,7 @@ jest.mock('../../../../redux/sizes/sizes.actions', () => ({
     updateSize: mockUpdateSize
   })
 }));
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();

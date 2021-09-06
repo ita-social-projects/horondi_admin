@@ -22,6 +22,7 @@ import {
 } from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages, materialUiConstants } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -116,6 +117,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
         }
       }
     });
+
+  useUnsavedChangesHandler(values);
 
   const inputs = setInputsContactHandler(schedule, adress);
 

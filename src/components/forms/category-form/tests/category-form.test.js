@@ -35,6 +35,7 @@ jest.mock('formik', () => ({
     handleBlur: mockBlur
   })
 }));
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
 const mockSetUpload = jest.fn();
 const mockSetCategoryImage = jest.fn();

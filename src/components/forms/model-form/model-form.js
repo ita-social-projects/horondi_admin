@@ -38,6 +38,7 @@ import {
   loadHelper
 } from '../../../utils/model-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -123,6 +124,8 @@ const ModelForm = ({ model, id, isEdit }) => {
       dispatch(setSnackBarStatus(true));
     }
   });
+
+  useUnsavedChangesHandler(values);
 
   const handleCategory = (event) => {
     setFieldValue('category', event.target.value);

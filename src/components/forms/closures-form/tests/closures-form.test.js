@@ -29,7 +29,7 @@ jest.mock('formik', () => ({
     handleBlur: mockBlur
   })
 }));
-
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 jest.mock('../../../../utils/use-closures-handlers', () => ({
   __esModule: true,
   default: () => ({

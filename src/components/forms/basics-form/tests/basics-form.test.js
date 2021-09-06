@@ -40,7 +40,7 @@ jest.mock('formik', () => ({
     handleBlur: mockBlur
   })
 }));
-
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 jest.mock('../../../../utils/use-basics-handlers', () => ({
   __esModule: true,
   default: () => ({
@@ -79,7 +79,9 @@ describe('Basics form tests', () => {
   });
 
   it('should call preventDefault method', () => {
-    const event = { preventDefault: () => {} };
+    const event = {
+      preventDefault: () => {}
+    };
     jest.spyOn(event, 'preventDefault');
     component.find('form').at(0).simulate('submit', event);
     expect(event.preventDefault).toHaveBeenCalled();
