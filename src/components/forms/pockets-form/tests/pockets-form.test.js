@@ -25,6 +25,7 @@ const mockSetUpload = jest.fn();
 const mockSetPocketsImage = jest.fn();
 const getOptionSelected = jest.fn();
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({

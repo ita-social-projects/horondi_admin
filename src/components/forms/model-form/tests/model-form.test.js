@@ -31,6 +31,7 @@ const mockSetFieldValue = jest.fn();
 const mockHandleChange = jest.fn();
 const mockHandleBlur = jest.fn();
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({

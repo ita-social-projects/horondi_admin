@@ -20,6 +20,8 @@ const { productInfo } = config.labels.comment;
 
 const mockHistoryPush = jest.fn();
 const mockUseDispatchFn = jest.fn();
+
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: () => ({

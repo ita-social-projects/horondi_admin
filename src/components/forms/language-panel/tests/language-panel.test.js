@@ -9,6 +9,7 @@ configure({ adapter: new Adapter() });
 
 const mockOnEditorChange = jest.fn();
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('../../../editor', () => ({
   __esModule: true,
   default: function FuncEditor() {

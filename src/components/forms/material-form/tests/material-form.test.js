@@ -13,6 +13,7 @@ configure({ adapter: new Adapter() });
 
 const mockCreateMaterial = jest.fn();
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('../../../../utils/use-material-handlers', () => ({
   __esModule: true,
   default: () => ({

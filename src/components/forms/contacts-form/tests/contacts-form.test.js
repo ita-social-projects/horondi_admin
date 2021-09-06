@@ -18,6 +18,7 @@ const mockChange = jest.fn();
 const mockBlur = jest.fn();
 const mockContactSaveHandler = jest.fn();
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({

@@ -13,6 +13,7 @@ configure({ adapter: new Adapter() });
 const mockHandleSubmit = jest.fn();
 const mockImageHandler = jest.fn();
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('../../../../utils/contacts-form', () => ({
   __esModule: true,
   setMapImageHandler: () => mockImageHandler()

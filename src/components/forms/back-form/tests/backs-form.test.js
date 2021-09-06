@@ -28,6 +28,7 @@ const mockSetBackImage = jest.fn();
 
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({

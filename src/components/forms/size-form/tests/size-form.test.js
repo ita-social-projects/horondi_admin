@@ -18,6 +18,7 @@ const labels = config.labels.sizeLabels;
 const mockAddSize = jest.fn();
 const mockUpdateSize = jest.fn();
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('../../../../redux/sizes/sizes.actions', () => ({
   __esModule: true,
   default: () => ({

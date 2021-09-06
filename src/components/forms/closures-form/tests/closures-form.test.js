@@ -17,6 +17,7 @@ const mockBlur = jest.fn();
 const mockSetUpload = jest.fn();
 const mockSetClosureImage = jest.fn();
 
+jest.mock('../../../../hooks/form-dialog/use-form-dialog');
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({
