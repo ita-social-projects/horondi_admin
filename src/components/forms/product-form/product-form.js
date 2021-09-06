@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   Paper,
   Grid,
@@ -213,19 +212,8 @@ const ProductForm = ({ isEdit }) => {
       setFirstMount(true);
     }
   }, [values]);
-  const unblock = useRef(null);
-  const history = useHistory();
 
-  useEffect(() => {
-    if (isFieldsChanged) {
-      unblock.current = history.block((tx, action) =>
-        window.confirm('Are you sure')
-      );
-    }
-    return () => {
-      if (unblock.current) unblock.current();
-    };
-  }, [history, isFieldsChanged]);
+  useUnsavedChangesHandler(values);
 
   useEffect(() => {
     setModelsHandler(values, setModels, find, categories);
