@@ -29,6 +29,7 @@ import {
   useFormikInitialValues
 } from '../../../utils/pattern-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { patternName, material, patternDescription } = config.labels.pattern;
 const map = require('lodash/map');
@@ -164,6 +165,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       );
     }
   });
+
+  useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {

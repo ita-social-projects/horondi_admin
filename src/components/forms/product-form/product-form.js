@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Paper,
   Grid,
@@ -48,6 +49,7 @@ import {
   checkboxesValues,
   productFormValues
 } from '../../../consts/product-form';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { priceLabel } = config.labels.product;
 
@@ -211,6 +213,19 @@ const ProductForm = ({ isEdit }) => {
       setFirstMount(true);
     }
   }, [values]);
+  const unblock = useRef(null);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isFieldsChanged) {
+      unblock.current = history.block((tx, action) =>
+        window.confirm('Are you sure')
+      );
+    }
+    return () => {
+      if (unblock.current) unblock.current();
+    };
+  }, [history, isFieldsChanged]);
 
   useEffect(() => {
     setModelsHandler(values, setModels, find, categories);
@@ -228,6 +243,8 @@ const ProductForm = ({ isEdit }) => {
     values.bottomMaterial,
     values.mainMaterial
   ]);
+  useUnsavedChangesHandler(values);
+
   const handleProductValidate = async () => {
     setShouldValidate(true);
 
@@ -387,6 +404,7 @@ const ProductForm = ({ isEdit }) => {
               </Typography>
             </Box>
             <Box mt={3} ml={1}>
+              Vasyl Lymych, [05.09.21 14:29]
               <ProductMaterialsContainer
                 innerMaterials={materials.inner}
                 innerColors={innerColors}
@@ -413,7 +431,7 @@ const ProductForm = ({ isEdit }) => {
             <Box mt={3} ml={1}>
               <TextField
                 className={styles.input}
-                label={`${priceLabel.label}*`}
+                label={priceLabel.label}
                 type={productFormValues.number}
                 name={priceLabel.name}
                 inputProps={{ min: 0 }}

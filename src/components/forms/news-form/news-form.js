@@ -15,6 +15,7 @@ import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const map = require('lodash/map');
 
@@ -98,6 +99,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         }
       }
     });
+
+  useUnsavedChangesHandler(values);
 
   const handleLoadAuthorImage = (files) => {
     imageHandler(files, setUploadAuthorImage, values, authorPhoto);

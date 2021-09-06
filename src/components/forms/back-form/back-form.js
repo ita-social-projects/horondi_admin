@@ -27,6 +27,7 @@ import {
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL } = config;
 const { backName, enterPrice, additionalPriceLabel, materialLabels } =
@@ -151,6 +152,8 @@ const BackForm = ({ back, id, edit }) => {
       );
     }
   });
+
+  useUnsavedChangesHandler(values);
 
   useEffect(() => {
     setBackColorsHandler(values, setColor, find, materials);

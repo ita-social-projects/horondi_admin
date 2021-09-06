@@ -20,6 +20,7 @@ import {
 import LanguagePanel from '../language-panel';
 import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages } = config;
 
@@ -75,6 +76,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         dispatch(addSlide({ slide: newSlide, upload }));
       }
     });
+
+  useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {

@@ -15,6 +15,7 @@ import { updateComment } from '../../../redux/comments/comments.actions';
 import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { COMMENT_VALIDATION_ERROR, COMMENT_ERROR_MESSAGE, MAX_LENGTH_MESSAGE } =
   config.commentErrorMessages;
@@ -52,6 +53,8 @@ const CommentForm = ({ comment, id, isEdit }) => {
         }
       }
     });
+
+  useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {

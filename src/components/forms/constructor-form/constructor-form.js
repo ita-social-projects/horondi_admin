@@ -25,6 +25,7 @@ import useConstructorHandlers from '../../../utils/use-constructor-handlers';
 import ColorCircle from '../../color-circle';
 import { selectConstructorMethodAndMaterials } from '../../../redux/selectors/constructor.selectors';
 import LanguagePanel from '../language-panel';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL } = config;
 
@@ -137,6 +138,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         );
       }
     });
+
+  useUnsavedChangesHandler(values);
 
   const handleMaterial = (e) => {
     setFieldValue('material', e.target.value);

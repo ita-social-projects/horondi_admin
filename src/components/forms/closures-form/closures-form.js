@@ -18,6 +18,7 @@ import LanguagePanel from '../language-panel';
 import { getClosuresInitialValues } from '../../../utils/closures-form';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const labels = config.labels.closuresPageLabel;
 
@@ -128,6 +129,8 @@ const ClosuresForm = ({ closure, id, edit }) => {
     values,
     inputs
   };
+
+  useUnsavedChangesHandler(values);
 
   const valueEquality = checkInitialValue(
     getClosuresInitialValues(edit, IMG_URL, closure),

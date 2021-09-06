@@ -17,6 +17,7 @@ import LanguagePanel from '../language-panel';
 import { getPositionInitialValues } from '../../../utils/position-form';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const labels = config.labels.positionPageLabel;
 
@@ -77,6 +78,8 @@ const PositionForm = ({ position, id, edit }) => {
       dispatch(addPosition({ position: newPosition }));
     }
   });
+
+  useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {

@@ -27,6 +27,7 @@ import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import { getAllPositions } from '../../../redux/position/position.actions';
 import { handleCircularProgress } from '../../../utils/handle-orders-page';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const labels = config.labels.pocketsPageLabel;
 
@@ -138,6 +139,8 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   });
 
+  useUnsavedChangesHandler(values);
+
   const handleImageLoad = (files) => {
     if (files && files[0]) {
       const reader = new FileReader();
@@ -179,6 +182,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
     values,
     inputs
   };
+  useUnsavedChangesHandler(values);
 
   const valueEquality = checkInitialValue(
     getPocketsInitialValues(edit, IMG_URL, pocket, checkIsEdit),

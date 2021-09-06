@@ -25,6 +25,7 @@ import {
   onSubmitCategoryHandler
 } from '../../../utils/category-form';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const {
   CATEGORY_VALIDATION_ERROR,
@@ -98,6 +99,8 @@ const CategoryForm = ({ category, id, edit }) => {
       }
     }
   });
+
+  useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
     if (files && files[0]) {
