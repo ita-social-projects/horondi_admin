@@ -609,6 +609,14 @@ const labels = {
     },
     available: 'Доступний',
     avatarText: 'Фото'
+  },
+  strapsPageLabel: {
+    strapsHeader: 'straps-header',
+    strapsTable: 'sideStrapsTable',
+    strapsName: {
+      ua: 'Назва ремінця',
+      en: 'Strap name'
+    }
   }
 };
 export default labels;

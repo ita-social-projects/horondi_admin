@@ -70,6 +70,9 @@ const routes = {
   pathToClosuresEdit: '/closures/:id',
   pathToBasics: '/basics',
   pathToAddBasic: '/basics/add',
-  pathToEditBasic: '/basics/:id'
+  pathToEditBasic: '/basics/:id',
+  pathToStraps: '/straps',
+  pathToStrapsAdd: '/straps/add',
+  pathToStrapsEdit: '/straps/:id'
 };
 export default routes;

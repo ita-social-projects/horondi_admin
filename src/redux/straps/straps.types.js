@@ -1,0 +1,11 @@
+export const ADD_STRAP = 'ADD_STRAP';
+export const GET_STRAPS = 'GET_STRAPS';
+export const SET_STRAPS = 'SET_STRAPS';
+export const SET_STRAPS_LOADING = 'SET_STRAPS_LOADING';
+export const DELETE_STRAP = 'DELETE_STRAP';
+export const REMOVE_STRAP_FROM_STATE = 'REMOVE_STRAP_FROM_STATE';
+export const GET_STRAP = 'GET_STRAP';
+export const SET_STRAP = 'SET_STRAP';
+export const UPDATE_STRAP = 'UPDATE_STRAP';
+export const SET_STRAPS_FILTER = 'SET_STRAPS_FILTER';
+export const CLEAR_STRAPS_FILTER = 'CLEAR_STRAPS_FILTER';

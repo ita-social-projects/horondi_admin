@@ -36,7 +36,8 @@ import {
   pocketsErrorMessages,
   closuresErrorMessages,
   positionErrorMessages,
-  basicsErrorMessages
+  basicsErrorMessages,
+  strapsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -119,6 +120,10 @@ export const config = {
     UNAVAILABLE_TEXT: 'Відсутній'
   },
   pocketsAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Недоступний'
+  },
+  strapsAvailableVariants: {
     AVAILABLE_TEXT: 'Доступний',
     UNAVAILABLE_TEXT: 'Недоступний'
   },
@@ -256,7 +261,8 @@ export const config = {
   pocketsErrorMessages,
   closuresErrorMessages,
   positionErrorMessages,
-  basicsErrorMessages
+  basicsErrorMessages,
+  strapsErrorMessages
 };
 export const inputTypes = {
   button: 'button',

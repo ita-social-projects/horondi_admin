@@ -138,6 +138,9 @@ const titles = {
   },
   basicsTitles: {
     mainPageTitle: 'Інформація про основи'
+  },
+  strapsTitles: {
+    mainPageTitle: 'Інформація про ремінці'
   }
 };
 

@@ -32,6 +32,7 @@ import Pockets from './pockets/pockets.reducer';
 import Positions from './position/position.reducer';
 import Closures from './closures/closures.reducer';
 import Basics from './basics/basics.reducer';
+import Straps from './straps/straps.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
@@ -66,5 +67,6 @@ export const rootReducer = (history) =>
     Pockets,
     Closures,
     Positions,
-    Basics
+    Basics,
+    Straps
   });

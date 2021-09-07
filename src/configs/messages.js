@@ -45,6 +45,8 @@ const messages = {
   BACK_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
   DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
   NO_POCKET_MESSAGE: 'Кишені відсутні',
+  DELETE_STRAP_MESSAGE: 'Ви впевнені, що хочете видалити цей ремінець?',
+  NO_STRAPS_MESSAGE: 'Ремінці відсутні',
   DELETE_POSITION_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
   NO_POSITION_MESSAGE: 'Позиції відсутні',
   NO_BACKS_MESSAGE: 'Cпинки відсутні',
