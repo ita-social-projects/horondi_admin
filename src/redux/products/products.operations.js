@@ -429,14 +429,11 @@ const getProduct = async (id) => {
                 currency
               }
               sizes {
-                _id
-                name
-                heightInCm
-                widthInCm
-                depthInCm
-                volumeInLiters
-                available
-                additionalPrice {
+                size {
+                  _id
+                  name
+                }
+                price {
                   value
                   currency
                 }

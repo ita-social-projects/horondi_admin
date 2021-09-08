@@ -2571,6 +2571,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
             "useReplyCommentFilters": Object {},
           }
         }
+        pickerOptions={Object {}}
         searchOptions={Object {}}
         sortOptions={Object {}}
       >

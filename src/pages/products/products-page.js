@@ -111,7 +111,7 @@ const ProductsPage = () => {
             category={category.name[0].value}
             model={model.name[0].value}
             pattern={pattern.name[0].value}
-            price={Math.round(basePrice[0].value / 100)}
+            price={Math.round(basePrice[0].value)}
             rate={rate.toFixed(2)}
             purchasedCount={purchasedCount}
             editHandler={() => handleProductEdit(_id)}
