@@ -45,8 +45,8 @@ export const formSchema = Yup.object().shape({
     .max(5, MAX_WEIGHT_MESSAGE_SIZE)
     .required(VALIDATION_ERROR),
   available: Yup.bool().required(VALIDATION_ERROR),
-
+  additionalPriceType: Yup.string(),
   additionalPrice: Yup.string()
-    .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
+    .matches(config.formRegExp.onlyPositiveFloat, PRICE_VALIDATION_ERROR)
     .required(VALIDATION_ERROR)
 });

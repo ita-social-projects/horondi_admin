@@ -37,7 +37,9 @@ const basicsReducer = (state = initialState, action = {}) => {
         list: action.payload
       };
     case REMOVE_BASIC:
-      const list = state.list.items.filter((basic) => basic._id !== action.payload);
+      const list = state.list.items.filter(
+        (basic) => basic._id !== action.payload
+      );
       return {
         ...state,
         list

@@ -31,6 +31,7 @@ import Back from './back/back.reducer';
 import Pockets from './pockets/pockets.reducer';
 import Positions from './position/position.reducer';
 import Closures from './closures/closures.reducer';
+import Currencies from './currencies/currencies.reducer';
 import Basics from './basics/basics.reducer';
 
 export const rootReducer = (history) =>
@@ -66,5 +67,6 @@ export const rootReducer = (history) =>
     Pockets,
     Closures,
     Positions,
+    Currencies,
     Basics
   });
