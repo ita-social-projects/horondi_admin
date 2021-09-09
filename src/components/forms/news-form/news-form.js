@@ -13,8 +13,8 @@ import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const map = require('lodash/map');
 
@@ -99,6 +99,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
       }
     });
 
+  useUnsavedChangesHandler(values);
+
   const handleLoadAuthorImage = (files) => {
     imageHandler(files, setUploadAuthorImage, values, authorPhoto);
   };
@@ -121,11 +123,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     values,
     inputs
   };
-
-  const valueEquality = checkInitialValue(
-    useFormikInitialValues(newsArticle),
-    values
-  );
 
   const checkValidData = (value) => {
     if (
@@ -157,7 +154,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToNews} />
+              <BackButton pathBack={pathToNews} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton

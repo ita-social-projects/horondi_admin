@@ -24,9 +24,9 @@ import {
   getBackInitialValues,
   setBackColorsHandler
 } from '../../../utils/back-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL } = config;
 const { backName, enterPrice, additionalPriceLabel, materialLabels } =
@@ -152,6 +152,7 @@ const BackForm = ({ back, id, edit }) => {
     }
   });
 
+  useUnsavedChangesHandler(values);
   useEffect(() => {
     setBackColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -195,10 +196,6 @@ const BackForm = ({ back, id, edit }) => {
     backImageInput: 'backImageInput'
   };
 
-  const valueEquality = checkInitialValue(
-    getBackInitialValues(edit, IMG_URL, back),
-    values
-  );
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -212,7 +209,7 @@ const BackForm = ({ back, id, edit }) => {
           <div className={styles.buttonContainer}>
             <Grid container spacing={2} className={styles.fixedButtons}>
               <Grid item className={styles.button}>
-                <BackButton initial={!valueEquality} pathBack={pathToBacks} />
+                <BackButton pathBack={pathToBacks} />
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton

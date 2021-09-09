@@ -17,7 +17,7 @@ jest.mock('../../../../utils/contacts-form', () => ({
   __esModule: true,
   setMapImageHandler: () => mockImageHandler()
 }));
-
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({
