@@ -28,7 +28,7 @@ const { DELETE_STRAP_MESSAGE, NO_STRAPS_MESSAGE } = config.messages;
 const StrapsPage = () => {
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const strapOptions = useStrapFilters();
+  const searchOptions = useStrapFilters();
   const { filter, strapsList, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(strapsSelectorWithPagination);
 
@@ -40,7 +40,7 @@ const StrapsPage = () => {
           limit: rowsPerPage
         },
         filter: {
-          search: filter.search
+          name: filter.name
         }
       })
     );
@@ -115,7 +115,7 @@ const StrapsPage = () => {
         </Button>
       </div>
       <div>
-        <FilterNavbar options={strapOptions || {}} />
+        <FilterNavbar options={searchOptions || {}} />
       </div>
 
       {strapsItems?.length ? (

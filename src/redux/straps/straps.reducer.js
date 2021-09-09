@@ -16,7 +16,9 @@ export const selectStraps = ({ Straps }) => ({
 });
 
 const initialFilter = {
-  search: ''
+  name: '',
+  color: '',
+  available: ''
 };
 
 export const initialState = {

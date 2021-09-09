@@ -4,7 +4,7 @@ import { config } from '../configs';
 const { languages } = config;
 
 const useStrapsHandlers = () => {
-  const [strapsImage, setStrapsImage] = useState('');
+  const [strapImage, setStrapImage] = useState('');
   const [color, setColor] = useState([]);
   const [upload, setUpload] = useState(null);
   const [imageName, setImageName] = useState('');
@@ -24,13 +24,14 @@ const useStrapsHandlers = () => {
       color: values.color[0]
     },
     available: values.available,
+    image: values.image,
     additionalPrice: values.additionalPrice,
     optionType: 'STRAP'
   });
 
   return {
-    strapsImage,
-    setStrapsImage,
+    strapImage,
+    setStrapImage,
     createStraps,
     upload,
     setUpload,

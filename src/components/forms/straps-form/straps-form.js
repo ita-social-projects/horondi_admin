@@ -50,7 +50,7 @@ const StrapsForm = ({ strap, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { createStraps, setUpload, upload, strapsImage, setStrapsImage } =
+  const { createStraps, setUpload, upload, strapImage, setStrapImage } =
     useStrapsHandlers();
 
   useEffect(() => {
@@ -68,10 +68,7 @@ const StrapsForm = ({ strap, id, edit }) => {
     colorsList: Color.list,
     colorLoading: Color.colorLoading
   }));
-
-  // const [color, setColor] = useState(strap.color || []);
-  const [color, setColor] = useState([]);
-
+  const [color, setColor] = useState(strap ? [strap.features.color._id] : []);
   const strapsValidationSchema = Yup.object().shape({
     uaName: Yup.string()
       .min(2, STRAPS_MIN_LENGTH_MESSAGE)
@@ -104,10 +101,12 @@ const StrapsForm = ({ strap, id, edit }) => {
     validationSchema: strapsValidationSchema,
     initialValues: getStrapsInitialValues(edit, IMG_URL, strap),
     onSubmit: (data) => {
+      if (edit && strap.image) data.image = strap.image;
+
       const newStrap = createStraps(data);
       const uploadCondition = upload instanceof File;
 
-      if (id) {
+      if (edit) {
         dispatch(
           updateStrap({
             id,
@@ -132,7 +131,7 @@ const StrapsForm = ({ strap, id, edit }) => {
       const reader = new FileReader();
       reader.onload = (data) => {
         setFieldValue('strapImage', data.target.result);
-        setStrapsImage(data.target.result);
+        setStrapImage(data.target.result);
       };
       reader.readAsDataURL(files[0]);
       setUpload(files[0]);
@@ -177,7 +176,7 @@ const StrapsForm = ({ strap, id, edit }) => {
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
-  console.log(strap);
+
   return (
     <div>
       <form onSubmit={(e) => eventPreventHandler(e)}>
@@ -214,7 +213,7 @@ const StrapsForm = ({ strap, id, edit }) => {
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
                 handler={handleImageLoad}
-                src={edit ? values.strapImage : strapsImage}
+                src={edit ? values.strapImage : strapImage}
               />
             </div>
             {touched.code && errors.code && (
@@ -307,7 +306,7 @@ StrapsForm.propTypes = {
         _id: PropTypes.string
       })
     }),
-    additionalPrice: PropTypes.number
+    additionalPrice: PropTypes.shape([])
   }),
   values: PropTypes.shape({
     strapImage: PropTypes.string,

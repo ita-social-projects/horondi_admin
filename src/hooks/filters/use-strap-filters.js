@@ -11,7 +11,7 @@ const useStrapFilters = () => {
     dispatch(setCurrentPage(0));
     dispatch(
       setFilter({
-        search: searchString
+        name: searchString
       })
     );
   };
@@ -22,12 +22,13 @@ const useStrapFilters = () => {
   };
   return {
     searchOptions: {
-      search: filter.search,
-      setSearchFilter
+      search: filter.name,
+      setSearchFilter,
+      placeholderText: 'по назві'
     },
     clearOptions: {
       filter,
-      search: filter.search,
+      search: filter.name,
       clearAllFilters
     }
   };
