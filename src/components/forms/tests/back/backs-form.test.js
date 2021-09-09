@@ -11,11 +11,15 @@ import { Paper, Grid } from '@material-ui/core';
 import LanguagePanel from '../../language-panel';
 import LoadingBar from '../../../loading-bar';
 import { BackButton, SaveButton } from '../../../buttons';
-import BackForm from '../index';
+import BackForm from '../../back-form/index';
 import ImageUploadPreviewContainer from '../../../../containers/image-upload-container/image-upload-previewContainer';
 import CheckboxOptions from '../../../checkbox-options';
 import { config } from '../../../../configs';
-import { mockMaterial, files, target } from './backs-form-mock-variables';
+import {
+  mockMaterial,
+  files,
+  target
+} from '../constructor-elements-form-mock-variables';
 
 configure({ adapter: new Adapter() });
 
