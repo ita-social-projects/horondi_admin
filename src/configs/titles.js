@@ -35,6 +35,10 @@ const titles = {
     mainPageTitle: 'Інформація про спинки',
     createPageTitle: 'Створити спинку'
   },
+  bottomTitles: {
+    mainPageTitle: 'Інформація про низи',
+    createPageTitle: 'Створити низ'
+  },
   commentTitles: {
     mainPageTitle: 'Інформація про коментарі'
   },

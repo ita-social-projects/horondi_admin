@@ -11,11 +11,15 @@ import { Paper, Grid } from '@material-ui/core';
 import LanguagePanel from '../../language-panel';
 import LoadingBar from '../../../loading-bar';
 import { BackButton, SaveButton } from '../../../buttons';
-import BackForm from '../index';
+import BottomForm from '../../bottom-form/index';
 import ImageUploadPreviewContainer from '../../../../containers/image-upload-container/image-upload-previewContainer';
 import CheckboxOptions from '../../../checkbox-options';
 import { config } from '../../../../configs';
-import { mockMaterial, files, target } from './backs-form-mock-variables';
+import {
+  mockMaterial,
+  files,
+  target
+} from '../constructor-elements-form-mock-variables';
 
 configure({ adapter: new Adapter() });
 
@@ -24,7 +28,7 @@ const mockSubmit = jest.fn();
 const mockChange = jest.fn();
 const mockBlur = jest.fn();
 const mockSetUpload = jest.fn();
-const mockSetBackImage = jest.fn();
+const mockSetBottomImage = jest.fn();
 
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
@@ -41,21 +45,20 @@ jest.mock('formik', () => ({
   })
 }));
 
-jest.mock('../../../../utils/use-back-handlers.js', () => ({
+jest.mock('../../../../utils/use-bottom-handlers.js', () => ({
   __esModule: true,
   default: () => ({
     setUpload: mockSetUpload,
-    setBackImage: mockSetBackImage
+    setBottomImage: mockSetBottomImage
   })
 }));
-jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
 jest.spyOn(global, 'FileReader').mockImplementation(function () {
   this.readAsDataURL = jest.fn();
   this.onload = jest.fn();
 });
 
-describe('Back form tests', () => {
+describe('Bottom form tests', () => {
   let spyOnUseSelector;
   let spyOnUseDispatch;
   let mockDispatch;
@@ -70,7 +73,7 @@ describe('Back form tests', () => {
     mockDispatch = jest.fn();
 
     spyOnUseDispatch.mockImplementation(() => jest.fn());
-    component = mount(<BackForm />);
+    component = mount(<BottomForm />);
   });
   afterEach(() => {
     component.unmount();
@@ -94,7 +97,7 @@ describe('Back form tests', () => {
     expect(component.find('button')).toHaveLength(2);
   });
 
-  it(`Should render go-back button with '${GO_BACK_TITLE}' label`, () => {
+  it(`Should render go-bottom button with '${GO_BACK_TITLE}' label`, () => {
     expect(component.find('button').at(0).text()).toBe(GO_BACK_TITLE);
   });
 
@@ -135,11 +138,11 @@ describe('Back form tests', () => {
     expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
 
-  it('Should test BackImage', () => {
+  it('Should test BottomImage', () => {
     const reader = FileReader.mock.instances[0];
     reader.onload(target);
-    expect(mockSetBackImage).toHaveBeenCalled();
-    expect(mockSetBackImage).toHaveBeenCalledWith('foo');
+    expect(mockSetBottomImage).toHaveBeenCalled();
+    expect(mockSetBottomImage).toHaveBeenCalledWith('foo');
   });
 
   it('should render FormControl component', () => {
@@ -186,7 +189,7 @@ describe('Back form tests', () => {
     expect(SaveButton).toHaveLength(1);
   });
 
-  it('Should render back-form', () => {
+  it('Should render bottom-form', () => {
     expect(component).toBeDefined();
     expect(component).toHaveLength(1);
   });
@@ -198,8 +201,8 @@ describe('Back form tests', () => {
   });
 
   it('Should have appropriate prop types', () => {
-    expect(BackForm.propTypes.id).toBe(PropTypes.string);
-    expect(BackForm.propTypes.edit).toBe(PropTypes.bool);
+    expect(BottomForm.propTypes.id).toBe(PropTypes.string);
+    expect(BottomForm.propTypes.edit).toBe(PropTypes.bool);
   });
 
   it('Loading bar should be not visible', () => {
@@ -208,7 +211,7 @@ describe('Back form tests', () => {
 
   it('Loading bar should be visible', () => {
     mockMaterial.loading = true;
-    component = mount(<BackForm />);
+    component = mount(<BottomForm />);
     const loadingBar = component.find(LoadingBar);
     expect(component.exists(LoadingBar)).toBeDefined();
     expect(component.exists(LoadingBar)).toBe(true);

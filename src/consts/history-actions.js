@@ -37,6 +37,9 @@ export const historyActions = {
   EDIT_BACK: 'Редаговано спинку',
   ADD_BACK: 'Створено спинку',
   DELETE_BACK: 'Видалено спинку',
+  EDIT_BOTTOM: 'Редаговано низ',
+  ADD_BOTTOM: 'Створено низ',
+  DELETE_BOTTOM: 'Видалено низ',
   DELETE_POSITION: 'Видалено позицію',
   ADD_POSITION: 'Додано позицію',
   EDIT_POSITION: 'Редаговано позицію'

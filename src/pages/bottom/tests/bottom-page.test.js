@@ -5,20 +5,20 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Button, Typography } from '@material-ui/core';
 import { configure, shallow, mount } from 'enzyme';
 import constructorElementsMockStore from '../../constructorElementsMockStore';
-import BackPage from '../back-page';
+import BottomPage from '../bottom-page';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
 import LoadingBar from '../../../components/loading-bar';
 
 import { config } from '../../../configs';
 
-const { CREATE_BACK_TITLE } = config.buttonTitles;
-const { pathToAddBacks } = config.routes;
-const tableTitles = config.tableHeadRowTitles.backs;
+const { CREATE_BOTTOM_TITLE } = config.buttonTitles;
+const { pathToBottomsAdd } = config.routes;
+const tableTitles = config.tableHeadRowTitles.bottoms;
 
 configure({ adapter: new Adapter() });
 
-describe('Back-page render tests', () => {
+describe('Bottom-page render tests', () => {
   let spyOnUseSelector;
   let spyOnUseDispatch;
   let mockDispatch;
@@ -37,7 +37,7 @@ describe('Back-page render tests', () => {
     mockDispatch = jest.fn();
     spyOnUseDispatch.mockReturnValue(mockDispatch);
 
-    wrapper = shallow(<BackPage />);
+    wrapper = shallow(<BottomPage />);
     typography = wrapper.find(Typography);
     button = wrapper.find(Button);
     tableContainerGenerator = wrapper.find(TableContainerGenerator);
@@ -48,23 +48,23 @@ describe('Back-page render tests', () => {
     spyOnUseSelector.mockClear();
   });
 
-  test('Should render back-page', () => {
+  test('Should render bottom-page', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper).toHaveLength(1);
   });
 
-  test(`Should render Typography wrapper with "${config.titles.backTitles}" label`, () => {
+  test(`Should render Typography wrapper with "${config.titles.bottomTitles}" label`, () => {
     expect(wrapper.exists(Typography)).toBe(true);
     expect(typography).toHaveLength(1);
-    expect(typography.text()).toBe(config.titles.backTitles.mainPageTitle);
+    expect(typography.text()).toBe(config.titles.bottomTitles.mainPageTitle);
   });
 
   test(`Should render button wrapper`, () => {
     expect(wrapper.exists(Button)).toBe(true);
     expect(button).toHaveLength(1);
-    expect(button.text()).toBe(CREATE_BACK_TITLE);
+    expect(button.text()).toBe(CREATE_BOTTOM_TITLE);
     expect(button.prop('component')).toEqual(Link);
-    expect(button.prop('to')).toBe(pathToAddBacks);
+    expect(button.prop('to')).toBe(pathToBottomsAdd);
   });
 
   test('Should render Table Container Generator', () => {
@@ -76,7 +76,7 @@ describe('Back-page render tests', () => {
 
   test('Should render Loading Bar', () => {
     constructorElementsMockStore.loading = true;
-    wrapper = shallow(<BackPage />);
+    wrapper = shallow(<BottomPage />);
     const loadingBar = wrapper.find(LoadingBar);
     expect(wrapper.exists(LoadingBar)).toBeDefined();
     expect(wrapper.exists(LoadingBar)).toBe(true);
@@ -96,7 +96,7 @@ describe('useEffect tests', () => {
   let spyOnUseSelector;
   let mockDispatchFn;
   let wrapper;
-  let backPage;
+  let bottomPage;
   let tableContainerRow;
   let tableContainerRowFirst;
 
@@ -109,12 +109,12 @@ describe('useEffect tests', () => {
 
     wrapper = mount(
       <BrowserRouter>
-        <BackPage />
+        <BottomPage />
       </BrowserRouter>
     );
-    backPage = wrapper.find(BackPage);
-    tableContainerRow = backPage.find(TableContainerRow);
-    tableContainerRowFirst = backPage.find({
+    bottomPage = wrapper.find(BottomPage);
+    tableContainerRow = bottomPage.find(TableContainerRow);
+    tableContainerRowFirst = bottomPage.find({
       id: '60eadfb9e913fc3f88294bd9'
     });
   });
@@ -129,7 +129,7 @@ describe('useEffect tests', () => {
   });
 
   test('Should render TableContainerRows', () => {
-    expect(backPage.exists(TableContainerRow)).toBe(true);
+    expect(bottomPage.exists(TableContainerRow)).toBe(true);
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
     expect(tableContainerRowFirst.prop('name')).toBe(
