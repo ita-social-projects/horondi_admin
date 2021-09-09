@@ -44,11 +44,13 @@ jest.spyOn(global, 'FileReader').mockImplementation(function () {
 });
 
 describe('closure form tests', () => {
+  const mockUseSelector = jest.spyOn(reactRedux, 'useSelector');
   let spyOnUseDispatch;
   let component;
 
   beforeEach(() => {
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
+    mockUseSelector.mockReturnValue({ exchangeRate: 27 });
     spyOnUseDispatch.mockImplementation(() => jest.fn());
 
     component = mount(<ClosureForm />);

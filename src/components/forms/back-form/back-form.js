@@ -24,7 +24,6 @@ import {
   getBackInitialValues,
   setBackColorsHandler
 } from '../../../utils/back-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';

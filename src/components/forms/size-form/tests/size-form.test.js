@@ -49,7 +49,7 @@ describe('Size form tests', () => {
 
   beforeEach(() => {
     mockUseDispatch.mockImplementation(() => jest.fn());
-    mockUseSelector.mockReturnValue({ loading: false, sizesList: sizeList });
+    mockUseSelector.mockReturnValue({ loading: false, list: sizeList });
     wrapper = shallow(<SizeForm />);
   });
 
@@ -71,7 +71,7 @@ describe('Size form tests', () => {
   });
 
   it('Should render unique Model', () => {
-    expect(wrapper.find('#modelId').find(MenuItem).length).toBe(2);
+    expect(wrapper.find('#modelId').find(MenuItem).length).toBe(3);
   });
 
   it('Should simulate onchange click event on Select', () => {
