@@ -8,21 +8,23 @@ const InfoItem = ({ label, id, data, key }) => {
 
   return (
     <Grid item key={key}>
-      <Grid container spacing={1} direction='column'>
-        <Grid item xs={12}>
+      <Grid container spacing={1} className={styles.container}>
+        <div>
           <Typography className={styles.detailTitle} variant='h6'>
-            {label}
+            {label}:
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
+        </div>
+        <div>
           <Typography
-            className={styles.detailSubtitle}
+            className={
+              data?.length ? styles.detailSubtitle : styles.defaultText
+            }
             data-cy={id}
             variant='h6'
           >
-            {data}
+            {data?.length ? data : 'Порожньо'}
           </Typography>
-        </Grid>
+        </div>
       </Grid>
     </Grid>
   );
@@ -32,7 +34,7 @@ InfoItem.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   data: PropTypes.string.isRequired,
-  key: PropTypes.number.isRequired
+  key: PropTypes.string.isRequired
 };
 
 export default InfoItem;

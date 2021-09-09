@@ -36,12 +36,20 @@ export const useStyles = makeStyles((theme) => {
       margin: '10px 0',
       padding: '10px'
     },
+    currencyField: {
+      width: '170px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
+    },
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 120
+      minWidth: 120,
+      marginTop: 20
     },
     materialSelect: {
-      width: '550px',
+      width: '100%',
+      margin: '10px 0',
       '@media (max-width: 450px)': {
         width: 'inherit'
       }

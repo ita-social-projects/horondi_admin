@@ -5,6 +5,11 @@ export const mockInitialFilters = {
   show: []
 };
 
+export const mockInitialFiltersUser = {
+  ...mockInitialFilters,
+  typeComment: 'COMMENT'
+};
+
 export const filter = {
   search: 'плюси'
 };
@@ -53,6 +58,36 @@ export const tablePagination = {
 };
 
 export const commentsList = [];
+
+export const userComments = {
+  items: {
+    _id: '601824cf6ec0f77526a74e38',
+    text: 'Плюси: вигляд, якість пошивки, зручні кишеньки; Мінуси: поки немає',
+    date: '1612195023937',
+    replyCommentsCount: 0,
+    product: {
+      _id: '601013b62b3fd28f3bc509e7',
+      name: {
+        value: 'Сірий гаманець'
+      }
+    },
+    show: true
+  },
+  count: 1
+};
+
+export const userReplies = {
+  items: {
+    _id: '601824cf6ec0f77526a74e33',
+    replyText: 'Test reply text',
+    createdAt: '1612195023937',
+    refToReplyComment: '601824cf6ec0f77526a74e38',
+    verifiedPurchase: false,
+    showReplyComment: false
+  },
+  count: 1
+};
+
 export const comments = {
   list: [
     {
@@ -163,9 +198,33 @@ export const replyFilter = {
   search: ''
 };
 
+export const sortData = { date: 1 };
+
+export const replyFilterUser = {
+  filter: {
+    createdAt: { dateFrom: '', dateTo: '' },
+    filters: true,
+    search: '',
+    showReplyComment: []
+  },
+  pagination: { skip: 0, limit: 10 },
+  sort: sortData,
+  userId
+};
+
+export const commentFilterUser = {
+  filter: {
+    date: { dateFrom: '', dateTo: '' },
+    show: [],
+    search: ''
+  },
+  pagination: { skip: 0, limit: 10 },
+  sort: sortData,
+  userId
+};
+
 export const getReplyCommentsData = {
   items: [{ replyComments: replyCommentsData }]
 };
 
 export const sortDataLabel = 'sortByReplyDesc';
-export const sortData = { date: 1 };

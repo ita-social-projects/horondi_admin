@@ -4,7 +4,8 @@ import {
   REMOVE_CLOSURE_FROM_STATE,
   SET_CLOSURE,
   SET_CLOSURE_FILTER,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  SET_CLOSURE_ERROR
 } from './closures.types';
 
 export const selectClosures = ({ Closures }) => ({
@@ -65,6 +66,11 @@ const closuresReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         filter: { search: '' }
+      };
+    case SET_CLOSURE_ERROR:
+      return {
+        ...state,
+        closuresError: action.payload
       };
     default:
       return state;

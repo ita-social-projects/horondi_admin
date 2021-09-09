@@ -27,6 +27,7 @@ const buttonTitles = {
   USER_UNACTIVE_TITLE: 'Деактивувати',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+  COMMENT_TYPE: 'Тип',
   SAVE_ORDER: 'Зберегти замовлення',
   SAVE_TITLE: 'Зберегти',
   UNDERSTAND: 'Зрозуміло',
@@ -81,7 +82,8 @@ const buttonTitles = {
   PATTERN_MATERIAL: 'Матеріал',
   CREATE_CONSTRUCTOR: 'Створити новий ',
   CREATE_CLOSURES_TITLE: 'Додати защіпку',
-  CREATE_POSITION_TITLE: 'Додати розміщення'
+  CREATE_POSITION_TITLE: 'Додати розміщення',
+  CREATE_BASIC_TITLE: 'Додати основу'
 };
 
 export default buttonTitles;

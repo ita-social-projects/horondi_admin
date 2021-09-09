@@ -17,6 +17,7 @@ import { BackButton, SaveButton } from '../../components/buttons';
 import { submitStatus, initialValues, setFormValues } from '../../utils/order';
 import { validationSchema } from '../../validations/orders/order-form-validation';
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
+import { checkInitialValue } from '../../utils/check-initial-values';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -66,6 +67,10 @@ const OrderItem = ({ id }) => {
     }
   }, [selectedOrder, resetForm]);
 
+  const valueEquality = selectedOrder
+    ? checkInitialValue(setFormValues(selectedOrder), values)
+    : true;
+
   const formikHandleChange =
     submitStatus.includes(selectedOrder && selectedOrder.status) || !id
       ? handleChange
@@ -81,7 +86,7 @@ const OrderItem = ({ id }) => {
         <div className={classes.buttonContainer}>
           <Grid container spacing={2} className={classes.fixedButtons}>
             <Grid item className={classes.button}>
-              <BackButton pathBack={pathToOrders} />
+              <BackButton initial={!valueEquality} pathBack={pathToOrders} />
             </Grid>
             <Grid item className={classes.button}>
               <SaveButton
@@ -110,7 +115,10 @@ const OrderItem = ({ id }) => {
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           <Recipient
-            data={{ user: values.user, userComment: values.userComment }}
+            data={{
+              recipient: values.recipient,
+              userComment: values.userComment
+            }}
             handleChange={formikHandleChange}
           />
         </TabPanel>

@@ -6,7 +6,7 @@ export const getOrderById = (id) => {
 			getOrderById(id: $id) {
 				...on Order {
 					status
-					user {
+					recipient {
 						firstName
 						lastName
 						email
@@ -118,7 +118,7 @@ export const updateOrder = (order, id) => {
 				...on Order {
 					_id
 					status
-					user {
+					recipient {
 						firstName
 						lastName
 						email
@@ -211,7 +211,7 @@ export const getAllOrders = async (skip, limit, filter, sort) => {
         getAllOrders(limit: $limit, skip: $skip, filter: $filter, sort:$sort) {
           items {
             _id
-                user 
+            recipient 
                 {
                 firstName
                 lastName
@@ -244,6 +244,47 @@ export const getAllOrders = async (skip, limit, filter, sort) => {
   });
 
   return result?.data?.getAllOrders;
+};
+
+export const getOrdersByUser = async (skip, limit, filter, sort, userId) => {
+  const query = `
+      query($limit: Int, $skip: Int, $filter: OrderFilterInput, $sort:JSONObject, $userId: ID!) {
+        getOrdersByUser(limit: $limit, skip: $skip, filter: $filter, sort: $sort, userId: $userId) {
+          items {
+            _id
+            recipient {
+              firstName
+              lastName
+              email
+              phoneNumber
+            }
+            status
+            paymentStatus
+            orderNumber
+            dateOfCreation
+            totalItemsPrice {
+              currency
+              value
+            }
+            totalPriceToPay {
+              currency
+              value
+            }
+          }
+          count
+        }
+      }
+    `;
+
+  const result = await getItems(query, {
+    skip,
+    limit,
+    filter,
+    sort,
+    userId
+  });
+
+  return result?.data?.getOrdersByUser;
 };
 
 export const deleteOrder = async (id) => {

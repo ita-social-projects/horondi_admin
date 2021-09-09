@@ -36,7 +36,8 @@ import {
   businessPageErrorMessages,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages
+  positionErrorMessages,
+  basicsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -86,7 +87,8 @@ export const config = {
   ],
   allowedforRegistrationRoles: ['admin', 'superadmin'],
   tabNames: {
-    users: ['Користувачі', 'Адміністратори']
+    users: ['Користувачі', 'Адміністратори'],
+    userOrdersComments: ['Замовлення', 'Коментарі']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -126,6 +128,10 @@ export const config = {
     UNAVAILABLE_TEXT: 'Недоступний'
   },
   positionAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступна',
+    UNAVAILABLE_TEXT: 'Недоступна'
+  },
+  basicsAvailableVariants: {
     AVAILABLE_TEXT: 'Доступна',
     UNAVAILABLE_TEXT: 'Недоступна'
   },
@@ -251,7 +257,8 @@ export const config = {
   inputNames,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages
+  positionErrorMessages,
+  basicsErrorMessages
 };
 export const inputTypes = {
   button: 'button',

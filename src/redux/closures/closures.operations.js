@@ -18,8 +18,8 @@ export const getAllClosures = async (limit, skip, filter) => {
          }
       optionType
         additionalPrice {
-        currency
         value
+        type
       }
       available
       customizable
@@ -94,6 +94,7 @@ export const getClosureById = async (id) => {
                 additionalPrice {
                 currency
                 value
+                type
               }
             }
             ... on Error {
@@ -109,7 +110,7 @@ export const getClosureById = async (id) => {
   return result?.data?.getClosureById;
 };
 
-export const updateClosure = async (id, closure, image) => {
+export const updateClosure = async ({ id, closure, upload: image }) => {
   const query = `
         mutation updateClosure(
           $id: ID!

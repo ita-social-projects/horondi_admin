@@ -50,8 +50,8 @@ export const getSizeById = async (id) => {
             weightInKg
             available
             additionalPrice {
-              currency
               value
+              type
             }
           }
         }

@@ -14,6 +14,7 @@ const messages = {
   REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
   REMOVE_REPLY_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цю відповідь?',
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
+  NO_ORDERS_MESSAGE: 'Коментарі відсутні',
   NO_REPLY_COMMENTS_MESSAGE: 'Відповіді відсутні',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   DELETE_SIZE_MESSAGE: 'Ви впевнені, що хочете видалити цей розмір?',
@@ -50,6 +51,8 @@ const messages = {
   NO_BOTTOMS_MESSAGE: 'Низи відсутні',
   NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',
   DELETE_CLOSURE_MESSAGE: 'Ви впевнені, що хочете видалити цей замочок?',
-  NO_CLOSURE_MESSAGE: 'Замочки відсутні'
+  NO_CLOSURE_MESSAGE: 'Замочки відсутні',
+  DELETE_BASIC_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
+  NO_BASICS_MESSAGE: 'Основи відсутні'
 };
 export default messages;

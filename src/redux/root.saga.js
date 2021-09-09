@@ -8,6 +8,7 @@ import businessPagesSaga from './business-pages/business-pages.sagas';
 import productsSaga from './products/products.sagas';
 import categorySaga from './categories/categories.sagas';
 import usersSaga from './users/users.saga';
+import currenciesSaga from './currencies/currencies.saga';
 import commentsSaga from './comments/comments.sagas';
 import sizesSaga from './sizes/sizes.sagas';
 import contactsSaga from './contact/contact.sagas';
@@ -27,6 +28,7 @@ import backSaga from './back/back.sagas';
 import bottomSaga from './bottom/bottom.sagas';
 import positionSaga from './position/position.sagas';
 import closuresSaga from './closures/closures.sagas';
+import basicsSaga from './basics/basics.sagas';
 
 export function* rootSaga() {
   yield all([
@@ -58,6 +60,8 @@ export function* rootSaga() {
     snackbarSaga(),
     pocketsSaga(),
     positionSaga(),
-    closuresSaga()
+    closuresSaga(),
+    currenciesSaga(),
+    basicsSaga()
   ]);
 }

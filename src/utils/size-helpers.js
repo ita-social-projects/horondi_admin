@@ -10,9 +10,20 @@ export const createSize = (data) => ({
   volumeInLiters: data.volumeInLiters,
   weightInKg: data.weightInKg,
   available: data.available,
-  additionalPrice: data.additionalPrice,
-  modelId: data.modelId
+  modelId: data.modelId,
+  additionalPrice: {
+    value: +data.additionalPrice,
+    type: data.additionalPriceType
+  }
 });
+
+const getAdditionalPriceValue = (size) => {
+  const { type } = size?.additionalPrice[0] || {};
+  if (type === 'ABSOLUTE_INDICATOR') {
+    return size?.additionalPrice[1]?.value || '';
+  }
+  return size?.additionalPrice[0]?.value || '';
+};
 
 export const getSizeInitialValues = (size) => ({
   name: size.name || 'M',
@@ -24,7 +35,9 @@ export const getSizeInitialValues = (size) => ({
   volumeInLiters: size.volumeInLiters || '',
   weightInKg: size.weightInKg || '',
   available: size.available || false,
-  additionalPrice: size.additionalPrice[1].value / 100 || 0
+  // additionalPrice: size.additionalPrice || '',
+  additionalPrice: getAdditionalPriceValue(size),
+  additionalPriceType: size?.additionalPrice[0]?.type || 'ABSOLUTE_INDICATOR'
 });
 
 export const sizePropTypes = {
@@ -58,14 +71,7 @@ export const sizeDefaultProps = {
     volumeInLiters: '',
     weightInKg: '',
     available: '',
-    additionalPrice: [
-      {
-        value: 0
-      },
-      {
-        value: 0
-      }
-    ]
+    additionalPrice: 0
   }
 };
 export const sizeFilterObj = () => {

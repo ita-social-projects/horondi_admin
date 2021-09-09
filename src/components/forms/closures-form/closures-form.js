@@ -1,31 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
-
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import useClosuresHandlers from '../../../utils/use-closures-handlers';
 import { useStyles } from './closures-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import {
+  closureDefaultProps,
+  getClosuresInitialValues
+} from '../../../utils/closures-form';
+import {
   addClosures,
   updateClosure
 } from '../../../redux/closures/closures.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import { closuresTranslations } from '../../../translations/closures.translations';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
-import { getClosuresInitialValues } from '../../../utils/closures-form';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
+import {
+  getLabelValue,
+  calculateAddittionalPriceValue
+} from '../../../utils/additionalPrice-helper';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const labels = config.labels.closuresPageLabel;
+const { additionalPriceType } = config.labels.closuresPageLabel;
 
 const {
   CLOSURES_ERROR_MESSAGE,
@@ -38,8 +44,8 @@ const {
 } = config.closuresErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
+const { convertationTitle } = config.titles.closuresTitles;
 const { languages, IMG_URL, materialUiConstants } = config;
-const { CLOSURES_ERROR } = closuresTranslations;
 
 const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
   config.formRegExp;
@@ -47,9 +53,13 @@ const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
 const ClosuresForm = ({ closure, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-
   const { createClosures, setUpload, upload, closuresImage, setClosuresImage } =
     useClosuresHandlers();
+  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+
+  useEffect(() => {
+    dispatch(getCurrencies());
+  }, []);
 
   const { pathToClosures } = config.routes;
 
@@ -64,10 +74,12 @@ const ClosuresForm = ({ closure, id, edit }) => {
       .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
       .required(CLOSURES_ERROR_MESSAGE)
       .matches(enNameCreation, CLOSURES_EN_NAME_MESSAGE),
+    additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
       .required(CLOSURES_ERROR_MESSAGE)
-      .matches(additionalPriceRegExp, CLOSURES_PRICE_ERROR)
+      .matches(config.formRegExp.onlyPositiveFloat, CLOSURES_PRICE_ERROR)
       .nullable(),
+
     available: Yup.boolean(),
     closureImage: Yup.string().required(PHOTO_NOT_PROVIDED)
   });
@@ -85,9 +97,9 @@ const ClosuresForm = ({ closure, id, edit }) => {
     initialValues: getClosuresInitialValues(edit, IMG_URL, closure),
     onSubmit: (data) => {
       const newClosure = createClosures(data);
-      const uploadCondition = upload instanceof File;
+      const editAndUpload = edit && upload instanceof File;
 
-      if (id) {
+      if (editAndUpload || edit) {
         dispatch(
           updateClosure({
             id,
@@ -98,12 +110,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
         return;
       }
       dispatch(addClosures({ closure: newClosure, upload }));
-
-      if (!uploadCondition && !closure.images.thumbnail) {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(CLOSURES_ERROR));
-        dispatch(setSnackBarStatus(true));
-      }
     }
   });
 
@@ -198,27 +204,54 @@ const ClosuresForm = ({ closure, id, edit }) => {
             <Box>
               <Typography>{labels.enterPrice}</Typography>
             </Box>
+            <FormControl component='fieldset'>
+              <RadioGroup
+                value={values.additionalPriceType}
+                name='additionalPriceType'
+                className={styles.textField}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  control={<Radio />}
+                  label={additionalPriceType.absolutePrice[0].value}
+                  key={2}
+                  value='ABSOLUTE_INDICATOR'
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  label={additionalPriceType.relativePrice[0].value}
+                  key={1}
+                  value='RELATIVE_INDICATOR'
+                />
+              </RadioGroup>
+            </FormControl>
             <TextField
-              type={materialUiConstants.types.number}
-              label={labels.additionalPrice}
-              value={values.additionalPrice}
               data-cy='additionalPrice'
-              id='additionalPrice'
-              className={styles.textField}
-              variant={materialUiConstants.outlined}
-              inputProps={{ min: 0 }}
-              error={touched.additionalPrice && !!errors.additionalPrice}
-              onBlur={handleBlur}
+              className={`
+                  ${styles.textField} 
+                  ${styles.materialSelect} 
+                  `}
+              variant='outlined'
+              label={getLabelValue(values, additionalPriceType)}
+              value={values.additionalPrice}
               onChange={handleChange}
+              id='additionalPrice'
+              error={touched.additionalPrice && !!errors.additionalPrice}
             />
             {touched.additionalPrice && errors.additionalPrice && (
-              <div
-                className={styles.error}
-                data-cy={materialUiConstants.codeError}
-              >
-                {errors.additionalPrice}
-              </div>
+              <div className={styles.inputError}>{errors.additionalPrice}</div>
             )}
+            <TextField
+              id='outlined-basic'
+              className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+              label={convertationTitle}
+              variant='outlined'
+              value={calculateAddittionalPriceValue(values, exchangeRate)}
+              disabled
+            />
           </Paper>
         </>
       </form>
@@ -279,12 +312,15 @@ ClosuresForm.defaultProps = {
     },
     available: false,
     optionType: null,
-    additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
-    ]
+    additionalPrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.number
+      })
+    )
   },
   edit: false
 };
+
+ClosuresForm.defaultProps = closureDefaultProps;
 
 export default ClosuresForm;

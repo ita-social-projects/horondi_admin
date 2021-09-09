@@ -6,7 +6,9 @@ import {
   SET_ORDER_ERROR,
   GET_ORDER,
   GET_ORDER_LIST,
+  GET_ORDER_LIST_USER,
   SET_ORDER_LIST,
+  SET_ORDER_LIST_USER,
   DELETE_ORDER,
   REMOVE_ORDER_FROM_STORE,
   SET_NOVAPOSHTA_CITIES,
@@ -23,7 +25,9 @@ import {
   SET_UKRPOST_POSTOFFICES,
   GET_UKRPOST_POSTOFFICES,
   SET_FILTER,
+  SET_FILTER_USER,
   CLEAR_FILTERS,
+  CLEAR_FILTERS_USER,
   SET_SORT,
   SET_ORDER_SORT_LABEL
 } from './orders.types';
@@ -56,8 +60,18 @@ const getOrderList = (payload) => ({
   payload
 });
 
+const getOrderListUser = (payload) => ({
+  type: GET_ORDER_LIST_USER,
+  payload
+});
+
 const setOrderList = (payload) => ({
   type: SET_ORDER_LIST,
+  payload
+});
+
+const setOrderListUser = (payload) => ({
+  type: SET_ORDER_LIST_USER,
   payload
 });
 
@@ -147,8 +161,17 @@ const setOrderFilter = (payload) => ({
   payload
 });
 
+const setOrderFilterUser = (payload) => ({
+  type: SET_FILTER_USER,
+  payload
+});
+
 const clearOrderFilters = () => ({
   type: CLEAR_FILTERS
+});
+
+const clearOrderFiltersUser = () => ({
+  type: CLEAR_FILTERS_USER
 });
 
 const setOrderSort = (sort) => ({
@@ -169,7 +192,9 @@ export {
   setOrderLoading,
   setOrderError,
   getOrderList,
+  getOrderListUser,
   setOrderList,
+  setOrderListUser,
   deleteOrder,
   removeOrderFromStore,
   getNovaPoshtaCities,
@@ -186,7 +211,9 @@ export {
   getUkrPostRegions,
   setUkrPostRegions,
   setOrderFilter,
+  setOrderFilterUser,
   clearOrderFilters,
+  clearOrderFiltersUser,
   setOrderSort,
   setOrderSortLabel
 };
