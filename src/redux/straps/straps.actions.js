@@ -9,7 +9,8 @@ import {
   SET_STRAP,
   UPDATE_STRAP,
   SET_STRAPS_FILTER,
-  CLEAR_STRAPS_FILTER
+  CLEAR_STRAPS_FILTER,
+  SET_STRAPS_ERROR
 } from './straps.types';
 
 export const addStraps = (payload) => ({
@@ -64,4 +65,9 @@ export const setFilter = (filter) => ({
 
 export const clearFilters = () => ({
   type: CLEAR_STRAPS_FILTER
+});
+
+export const setStrapsError = (payload) => ({
+  type: SET_STRAPS_ERROR,
+  payload
 });

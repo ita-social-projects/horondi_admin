@@ -16,6 +16,7 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useStrapFilters from '../../hooks/filters/use-strap-filters';
+import { getColors } from '../../redux/color/color.actions';
 
 const { materialUiConstants } = config;
 const labels = config.labels.strapsPageLabel;
@@ -26,12 +27,11 @@ const { DELETE_STRAP_MESSAGE, NO_STRAPS_MESSAGE } = config.messages;
 
 const StrapsPage = () => {
   const dispatch = useDispatch();
-  const { IMG_URL } = config;
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const strapOptions = useStrapFilters();
-
   const { filter, strapsList, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(strapsSelectorWithPagination);
+
   useEffect(() => {
     dispatch(
       getAllStraps({
@@ -44,9 +44,22 @@ const StrapsPage = () => {
         }
       })
     );
+    dispatch(
+      getColors({
+        pagination: {
+          skip: null,
+          limit: null
+        }
+      })
+    );
   }, [dispatch, itemsCount, currentPage, rowsPerPage, filter]);
 
+  const { colorsList } = useSelector(({ Color }) => ({
+    colorsList: Color.list
+  }));
   const commonStyles = useCommonStyles();
+
+  const { IMG_URL } = config;
 
   const strapsDeleteHandler = (id) => {
     const removeStrap = () => {
@@ -60,10 +73,14 @@ const StrapsPage = () => {
     <TableContainerRow
       key={strap._id}
       id={strap._id}
-      image={strap?.images?.thumbnail ? IMG_URL + strap.images.thumbnail : ''}
+      image={strap?.image ? IMG_URL + strap.image : ''}
       name={strap?.name[0]?.value}
+      color={
+        colorsList?.find((el) => el._id === strap.features.color._id).name[0]
+          .value
+      }
       additionalPrice={strap?.additionalPrice[1]?.value / 100}
-      available={strap.restriction ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
+      available={strap.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         strapsDeleteHandler(strap._id);
       }}

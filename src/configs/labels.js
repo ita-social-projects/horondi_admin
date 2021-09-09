@@ -616,7 +616,12 @@ const labels = {
     strapsName: {
       ua: 'Назва ремінця',
       en: 'Strap name'
-    }
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    available: 'Доступний',
+    avatarText: 'Фото',
+    chooseColor: { title: 'Список кольорів', inputTitle: 'Оберіть колір' }
   }
 };
 export default labels;

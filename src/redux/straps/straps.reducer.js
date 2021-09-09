@@ -4,7 +4,8 @@ import {
   REMOVE_STRAP_FROM_STATE,
   SET_STRAP,
   SET_STRAPS_FILTER,
-  CLEAR_STRAPS_FILTER
+  CLEAR_STRAPS_FILTER,
+  SET_STRAPS_ERROR
 } from './straps.types';
 
 export const selectStraps = ({ Straps }) => ({
@@ -65,6 +66,11 @@ const strapsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         filter: { search: '' }
+      };
+    case SET_STRAPS_ERROR:
+      return {
+        ...state,
+        strapsErrorError: action.payload
       };
     default:
       return state;

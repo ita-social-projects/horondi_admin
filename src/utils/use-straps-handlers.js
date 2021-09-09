@@ -5,6 +5,7 @@ const { languages } = config;
 
 const useStrapsHandlers = () => {
   const [strapsImage, setStrapsImage] = useState('');
+  const [color, setColor] = useState([]);
   const [upload, setUpload] = useState(null);
   const [imageName, setImageName] = useState('');
 
@@ -19,10 +20,12 @@ const useStrapsHandlers = () => {
         value: values.enName
       }
     ],
+    features: {
+      color: values.color[0]
+    },
+    available: values.available,
     additionalPrice: values.additionalPrice,
-    restriction: values.restriction,
-    optionType: 'STRAP',
-    positions: values.positions
+    optionType: 'STRAP'
   });
 
   return {
@@ -32,7 +35,9 @@ const useStrapsHandlers = () => {
     upload,
     setUpload,
     imageName,
-    setImageName
+    setImageName,
+    color,
+    setColor
   };
 };
 export default useStrapsHandlers;

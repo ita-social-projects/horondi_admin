@@ -11,7 +11,6 @@ import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import { addStraps, updateStrap } from '../../../redux/straps/straps.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-// eslint-disable-next-line import/named
 import { strapsTranslations } from '../../../translations/straps.translations';
 import {
   setSnackBarSeverity,
@@ -22,7 +21,7 @@ import LanguagePanel from '../language-panel';
 import { getStrapsInitialValues } from '../../../utils/straps-form';
 import CheckboxOptions from '../../checkbox-options';
 import { checkInitialValue } from '../../../utils/check-initial-values';
-import { getAllPositions } from '../../../redux/position/position.actions';
+import { getColors } from '../../../redux/color/color.actions';
 import { handleCircularProgress } from '../../../utils/handle-orders-page';
 import useStrapsHandlers from '../../../utils/use-straps-handlers';
 
@@ -34,7 +33,8 @@ const {
   STRAPS_UA_NAME_MESSAGE,
   STRAPS_EN_NAME_MESSAGE,
   STRAPS_MAX_LENGTH_MESSAGE,
-  STRAPS_MIN_LENGTH_MESSAGE
+  STRAPS_MIN_LENGTH_MESSAGE,
+  STRAPS_COLOR_ERROR_MESSAGE
 } = config.strapsErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -50,18 +50,12 @@ const StrapsForm = ({ strap, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const checkIsEdit = (checkCondition) => {
-    if (checkCondition) {
-      return strap.positions.map((item) => item._id);
-    }
-  };
-
   const { createStraps, setUpload, upload, strapsImage, setStrapsImage } =
     useStrapsHandlers();
 
   useEffect(() => {
     dispatch(
-      getAllPositions({
+      getColors({
         pagination: {
           skip: null,
           limit: null
@@ -70,17 +64,13 @@ const StrapsForm = ({ strap, id, edit }) => {
     );
   }, [dispatch]);
 
-  const { positionsList, loadingPositions } = useSelector(({ Positions }) => ({
-    positionsList: Positions.list.items,
-    loadingPositions: Positions.positionsLoading
+  const { colorsList, colorLoading } = useSelector(({ Color }) => ({
+    colorsList: Color.list,
+    colorLoading: Color.colorLoading
   }));
 
-  const [positions, setPositions] = useState(strap.positions || []);
-
-  const availablePositions =
-    positionsList && positionsList.length
-      ? positionsList.filter((el) => el.available)
-      : null;
+  // const [color, setColor] = useState(strap.color || []);
+  const [color, setColor] = useState([]);
 
   const strapsValidationSchema = Yup.object().shape({
     uaName: Yup.string()
@@ -96,7 +86,10 @@ const StrapsForm = ({ strap, id, edit }) => {
     additionalPrice: Yup.string()
       .required(STRAPS_ERROR_MESSAGE)
       .matches(additionalPriceRegExp, STRAPS_VALIDATION_ERROR)
-      .nullable()
+      .nullable(),
+    available: Yup.boolean(),
+    strapImage: Yup.string(),
+    color: Yup.string().required(STRAPS_COLOR_ERROR_MESSAGE)
   });
 
   const {
@@ -109,7 +102,7 @@ const StrapsForm = ({ strap, id, edit }) => {
     setFieldValue
   } = useFormik({
     validationSchema: strapsValidationSchema,
-    initialValues: getStrapsInitialValues(edit, IMG_URL, strap, checkIsEdit),
+    initialValues: getStrapsInitialValues(edit, IMG_URL, strap),
     onSubmit: (data) => {
       const newStrap = createStraps(data);
       const uploadCondition = upload instanceof File;
@@ -119,14 +112,14 @@ const StrapsForm = ({ strap, id, edit }) => {
           updateStrap({
             id,
             strap: newStrap,
-            upload
+            image: upload
           })
         );
         return;
       }
-      dispatch(addStraps({ strap: newStrap, upload }));
+      dispatch(addStraps({ strap: newStrap, image: upload }));
 
-      if (!uploadCondition && !strap.images.thumbnail) {
+      if (!uploadCondition && !strap.image) {
         dispatch(setSnackBarSeverity('error'));
         dispatch(setSnackBarMessage(STRAPS_ERROR));
         dispatch(setSnackBarStatus(true));
@@ -160,9 +153,9 @@ const StrapsForm = ({ strap, id, edit }) => {
   ];
 
   const onTagsChange = (_, value) => {
-    const positionsData = value.map((position) => position._id);
-    setFieldValue('positions', [...new Set(positionsData)]);
-    setPositions(value);
+    const colorsData = value.map((color) => color._id);
+    setFieldValue('color', [...new Set(colorsData)]);
+    setColor(value);
   };
 
   const inputs = [{ label: labels.strapsName, name: 'name' }];
@@ -177,14 +170,14 @@ const StrapsForm = ({ strap, id, edit }) => {
   };
 
   const valueEquality = checkInitialValue(
-    getStrapsInitialValues(edit, IMG_URL, strap, checkIsEdit),
+    getStrapsInitialValues(edit, IMG_URL, strap),
     values
   );
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
-
+  console.log(strap);
   return (
     <div>
       <form onSubmit={(e) => eventPreventHandler(e)}>
@@ -212,7 +205,7 @@ const StrapsForm = ({ strap, id, edit }) => {
         </div>
         <div>
           <CheckboxOptions
-            options={checkboxes(labels.labelsRestriction, labels.avaliable)}
+            options={checkboxes('available', labels.available)}
           />
         </div>
         <Grid item xs={12}>
@@ -238,9 +231,9 @@ const StrapsForm = ({ strap, id, edit }) => {
             multiple
             freeSolo
             filterSelectedOptions
-            options={availablePositions}
+            options={colorsList}
             getOptionSelected={(option, value) => option._id === value._id}
-            defaultValue={positions}
+            defaultValue={color}
             onChange={onTagsChange}
             onBlur={handleBlur}
             getOptionLabel={(option) => `${option.name[0].value}`}
@@ -248,24 +241,24 @@ const StrapsForm = ({ strap, id, edit }) => {
               <TextField
                 {...params}
                 variant={materialUiConstants.outlined}
-                label={labels.choosePositions.title}
-                placeholder={labels.choosePositions.inputTitle}
+                label={labels.chooseColor.title}
+                placeholder={labels.chooseColor.inputTitle}
                 margin={labels.normal}
                 fullWidth
-                error={touched.labelIdAut && !!errors.positions}
+                error={touched.labelIdAut && !!errors.color}
                 InputProps={{
                   ...params.InputProps,
-                  endAdornment: <>{handleCircularProgress(loadingPositions)}</>
+                  endAdornment: <>{handleCircularProgress(colorLoading)}</>
                 }}
               />
             )}
           />
-          {touched.labelIdAut && errors.positions && (
+          {touched.labelIdAut && errors.color && (
             <div
               data-cy={materialUiConstants.codeError}
               className={styles.error}
             >
-              {errors.positions}
+              {errors.color}
             </div>
           )}
         </Paper>
@@ -306,42 +299,42 @@ const StrapsForm = ({ strap, id, edit }) => {
 StrapsForm.propTypes = {
   id: PropTypes.string,
   strap: PropTypes.shape({
-    images: PropTypes.shape({
-      thumbnail: PropTypes.string
-    }),
-    uaName: PropTypes.string,
-    enName: PropTypes.string,
-    restrictions: PropTypes.bool,
+    image: PropTypes.string,
     optionType: PropTypes.string,
-    positions: PropTypes.shape([]),
+    names: PropTypes.shape([]),
+    features: PropTypes.shape({
+      color: PropTypes.shape({
+        _id: PropTypes.string
+      })
+    }),
     additionalPrice: PropTypes.number
   }),
   values: PropTypes.shape({
-    strapsImage: PropTypes.string,
+    strapImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    restrictions: PropTypes.bool,
     optionType: PropTypes.string,
-    positions: PropTypes.shape([]),
-    additionalPrice: PropTypes.number
+    color: PropTypes.string,
+    additionalPrice: PropTypes.number,
+    available: PropTypes.bool
   }),
   errors: PropTypes.shape({
-    strapsImage: PropTypes.string,
+    strapImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    restrictions: PropTypes.bool,
     optionType: PropTypes.string,
-    positions: PropTypes.shape([]),
-    additionalPrice: PropTypes.number
+    color: PropTypes.string,
+    additionalPrice: PropTypes.number,
+    available: PropTypes.bool
   }),
   touched: PropTypes.shape({
-    strapsImage: PropTypes.string,
+    strapImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
-    restrictions: PropTypes.bool,
     optionType: PropTypes.string,
-    positions: PropTypes.shape([]),
-    additionalPrice: PropTypes.number
+    color: PropTypes.string,
+    additionalPrice: PropTypes.number,
+    available: PropTypes.bool
   }),
   edit: PropTypes.bool
 };
@@ -363,16 +356,16 @@ StrapsForm.defaultProps = {
         value: ''
       }
     ],
-    images: {
-      thumbnail: ''
-    },
-    restrictions: false,
+    image: '',
     optionType: null,
     additionalPrice: [
       { value: null, currency: '' },
       { value: null, currency: '' }
     ],
-    positions: []
+    features: {
+      color: { _id: '' }
+    },
+    available: false
   },
   edit: false
 };

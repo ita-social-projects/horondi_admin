@@ -20,7 +20,8 @@ import {
   setStraps,
   setStrapsLoading,
   removeStrapFromState,
-  setStrap
+  setStrap,
+  setStrapsError
 } from './straps.actions';
 import {
   handleErrorSnackbar,
@@ -40,7 +41,6 @@ export function* handleStrapsLoad({ payload: { pagination, filter } }) {
       pagination.skip,
       filter
     );
-    console.log(straps);
     if (straps) {
       yield put(setStraps(straps));
       yield put(setItemsCount(straps?.count));
@@ -96,8 +96,8 @@ export function* handleGetStrapById({ payload }) {
 export function* handleStrapUpdate({ payload }) {
   try {
     yield put(setStrapsLoading(true));
-    const { id, strap, upload } = payload;
-    const strapUpdate = yield call(updateStrap, id, strap, upload);
+    const { id, strap, image } = payload;
+    const strapUpdate = yield call(updateStrap, id, strap, image);
     if (strapUpdate) {
       yield put(setStrapsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
@@ -110,6 +110,8 @@ export function* handleStrapUpdate({ payload }) {
 
 export function* handleStrapsError(e) {
   yield call(handleErrorSnackbar, e.message);
+  yield put(setStrapsLoading(false));
+  yield put(setStrapsError({ e }));
 }
 
 export default function* strapsSaga() {
