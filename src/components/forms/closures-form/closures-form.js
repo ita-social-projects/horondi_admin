@@ -23,7 +23,7 @@ import {
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import CheckboxOptions from '../../checkbox-options';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import {
   getLabelValue,
   calculateAddittionalPriceValue
@@ -45,10 +45,9 @@ const {
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { convertationTitle } = config.titles.closuresTitles;
-const { languages, IMG_URL, materialUiConstants } = config;
+const { languages, IMG_URL } = config;
 
-const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
-  config.formRegExp;
+const { enNameCreation, uaNameCreation } = config.formRegExp;
 
 const ClosuresForm = ({ closure, id, edit }) => {
   const styles = useStyles();
@@ -113,6 +112,8 @@ const ClosuresForm = ({ closure, id, edit }) => {
     }
   });
 
+  useUnsavedChangesHandler(values);
+
   const handleImageLoad = (files) => {
     if (files && files[0]) {
       const reader = new FileReader();
@@ -148,11 +149,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
     inputs
   };
 
-  const valueEquality = checkInitialValue(
-    getClosuresInitialValues(edit, IMG_URL, closure),
-    values
-  );
-
   const eventPreventDefaultHandler = (e) => {
     e.preventDefault();
   };
@@ -163,7 +159,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToClosures} />
+              <BackButton pathBack={pathToClosures} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton

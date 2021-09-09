@@ -15,7 +15,7 @@ import { updateComment } from '../../../redux/comments/comments.actions';
 import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { COMMENT_VALIDATION_ERROR, COMMENT_ERROR_MESSAGE, MAX_LENGTH_MESSAGE } =
   config.commentErrorMessages;
@@ -66,6 +66,8 @@ const CommentForm = ({ comment, id, isEdit }) => {
     }
   ];
 
+  useUnsavedChangesHandler(values);
+
   const commentUpdateHandler = (data) => {
     const commentUpdate = () => {
       dispatch(closeDialog());
@@ -81,11 +83,6 @@ const CommentForm = ({ comment, id, isEdit }) => {
     };
     openSuccessSnackbar(commentUpdate, SAVE_MESSAGE, SAVE_CHANGES);
   };
-
-  const valueEquality = checkInitialValue(
-    { text: comment.text, show: comment.show },
-    values
-  );
 
   function handleProductClick() {
     if (comment.product?._id) {
@@ -106,7 +103,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToComments} />
+              <BackButton pathBack={pathToComments} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton

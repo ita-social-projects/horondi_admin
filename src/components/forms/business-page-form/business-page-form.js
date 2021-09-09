@@ -30,7 +30,7 @@ import {
 import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -139,6 +139,7 @@ const BusinessPageForm = ({ id, editMode }) => {
       }
     });
 
+  useUnsavedChangesHandler(values);
   useMemo(() => {
     values.code = code;
     values.uaTitle = uaTitle;
@@ -162,11 +163,6 @@ const BusinessPageForm = ({ id, editMode }) => {
     inputs: businessPageLabel
   };
 
-  const valueEquality = checkInitialValue(
-    { code, enText, enTitle, uaText, uaTitle },
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -176,10 +172,7 @@ const BusinessPageForm = ({ id, editMode }) => {
       <div className={classes.buttonContainer}>
         <Grid container spacing={2} className={classes.fixedButtons}>
           <Grid item className={classes.button}>
-            <BackButton
-              initial={!valueEquality}
-              pathBack={pathToBusinessPages}
-            />
+            <BackButton pathBack={pathToBusinessPages} />
           </Grid>
           <Grid item className={classes.button}>
             <SaveButton
