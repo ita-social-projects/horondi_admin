@@ -63,6 +63,7 @@ import PocketsPage from '../pages/pockets/pockets-page';
 import PocketsAdd from '../pages/pockets/pockets-add/pockets-add';
 import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
 import BackPage from '../pages/back';
+import BottomPage from '../pages/bottom';
 import BackAdd from '../pages/back/back-add';
 import BackDetails from '../pages/back/back-details';
 import PositionPage from '../pages/position/position-page';
@@ -73,6 +74,8 @@ import ConstructorModelDetails from '../pages/constructor-list/constructor-detai
 import ClosuresPage from '../pages/closures/closures-page';
 import ClosuresAdd from '../pages/closures/closures-add/closures-add';
 import ClosuresEdit from '../pages/closures/closures-edit/closures-edit';
+import BottomAdd from '../pages/bottom/bottom-add';
+import BottomEdit from '../pages/bottom/bottom-edit';
 import BasicsPage from '../pages/basics/basics-page';
 import BasicAdd from '../pages/basics/basic-add';
 import BasicDetails from '../pages/basics/basic-details';
@@ -301,6 +304,9 @@ const Routes = () => {
             exact
             component={BackDetails}
           />
+          <Route path={routes.pathToBottoms} exact component={BottomPage} />
+          <Route path={routes.pathToBottomsAdd} exact component={BottomAdd} />
+          <Route path={routes.pathToBottomsEdit} exact component={BottomEdit} />
           <Route path={routes.pathToPosition} exact component={PositionPage} />
           <Route
             path={routes.pathToPositionAdd}

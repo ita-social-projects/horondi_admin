@@ -57,6 +57,17 @@ export const backErrorMessages = {
   BACK_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   BACK_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
+export const bottomErrorMessages = {
+  BOTTOM_VALIDATION_ERROR: 'Мінімум 2 символи',
+  BOTTOM_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  PHOTO_NOT_PROVIDED: "Фото низу є обов'язковим",
+  BOTTOM_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
+  BOTTOM_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  BOTTOM_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  BOTTOM_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  BOTTOM_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+};
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
   CATEGORY_VALIDATION_ERROR_CATEGORY_NAME:

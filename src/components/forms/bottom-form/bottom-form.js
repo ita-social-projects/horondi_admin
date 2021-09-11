@@ -4,27 +4,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
-import useBackHandlers from '../../../utils/use-back-handlers';
-import { useStyles } from '../common.styles';
 import { BackButton, SaveButton } from '../../buttons';
+import { checkInitialValue } from '../../../utils/check-initial-values';
 import { config } from '../../../configs';
-import {
-  addBack,
-  updateBack,
-  clearBack
-} from '../../../redux/back/back.actions';
-import CheckboxOptions from '../../checkbox-options';
-import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
-import LanguagePanel from '../language-panel';
+import { useStyles } from '../common.styles';
 import LoadingBar from '../../loading-bar';
 import {
-  backUseEffectHandler,
-  backFormOnSubmit,
-  getBackInitialValues,
-  setBackColorsHandler
-} from '../../../utils/back-form';
+  addBottom,
+  updateBottom,
+  clearBottom
+} from '../../../redux/bottom/bottom.actions';
+import CheckboxOptions from '../../checkbox-options';
+import LanguagePanel from '../language-panel';
+import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
+import {
+  bottomUseEffectHandler,
+  bottomFormOnSubmit,
+  getBottomInitialValues,
+  setBottomColorsHandler
+} from '../../../utils/bottom-form';
 import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
+import useBottomHandlers from '../../../utils/use-bottom-handlers';
 import {
   constructorObject,
   defaultProps,
@@ -32,24 +33,23 @@ import {
   defaultPropTypes,
   valuesPropTypes,
   imagePropTypes
-} from '../bottom-form/constructor.variables';
-import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+} from './constructor.variables';
 
 const { IMG_URL } = config;
-const { backName, enterPrice, additionalPriceLabel, materialLabels } =
-  config.labels.back;
+const { bottomName, enterPrice, additionalPriceLabel, materialLabels } =
+  config.labels.bottom;
 const map = require('lodash/map');
 
 const {
-  BACK_ERROR_MESSAGE,
-  BACK_ERROR_ENGLISH_AND_DIGITS_ONLY,
+  BOTTOM_ERROR_MESSAGE,
+  BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
-  BACK_EN_NAME_MESSAGE,
-  BACK_UA_NAME_MESSAGE,
-  BACK_PRICE_ERROR,
-  BACK_MAX_LENGTH_MESSAGE,
-  BACK_MIN_LENGTH_MESSAGE
-} = config.backErrorMessages;
+  BOTTOM_UA_NAME_MESSAGE,
+  BOTTOM_EN_NAME_MESSAGE,
+  BOTTOM_PRICE_ERROR,
+  BOTTOM_MAX_LENGTH_MESSAGE,
+  BOTTOM_MIN_LENGTH_MESSAGE
+} = config.bottomErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -65,9 +65,9 @@ const {
   imagePrefix,
   materialUiConstants
 } = config;
-const { pathToBacks } = config.routes;
+const { pathToBottoms } = config.routes;
 
-const BackForm = ({ back, id, edit }) => {
+const BottomForm = ({ bottom, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
@@ -76,45 +76,46 @@ const BackForm = ({ back, id, edit }) => {
     loading
   } = useSelector(selectProductDetails);
 
-  const { createBack, setUpload, upload, setBackImage, color, setColor } =
-    useBackHandlers();
+  const { createBottom, setUpload, upload, setBottomImage, color, setColor } =
+    useBottomHandlers();
 
   useEffect(() => {
-    backUseEffectHandler(back, setBackImage, imagePrefix);
-  }, [dispatch, back]);
+    bottomUseEffectHandler(bottom, setBottomImage, imagePrefix);
+  }, [dispatch, bottom]);
 
   useEffect(
     () => () => {
-      dispatch(clearBack());
+      dispatch(clearBottom());
     },
     []
   );
-  const backValidationSchema = Yup.object().shape({
+
+  const bottomValidationSchema = Yup.object().shape({
     enName: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .max(50, BACK_MAX_LENGTH_MESSAGE)
-      .required(BACK_ERROR_MESSAGE)
-      .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
+      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
+      .max(50, BOTTOM_MAX_LENGTH_MESSAGE)
+      .required(BOTTOM_ERROR_MESSAGE)
+      .matches(enNameCreation, BOTTOM_EN_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .max(50, BACK_MAX_LENGTH_MESSAGE)
-      .required(BACK_ERROR_MESSAGE)
-      .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
+      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
+      .max(50, BOTTOM_MAX_LENGTH_MESSAGE)
+      .required(BOTTOM_ERROR_MESSAGE)
+      .matches(uaNameCreation, BOTTOM_UA_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .matches(backMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BACK_ERROR_MESSAGE),
+      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
+      .matches(backMaterial, BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(BOTTOM_ERROR_MESSAGE),
     color: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .matches(backColor, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BACK_ERROR_MESSAGE),
+      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
+      .matches(backColor, BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(BOTTOM_ERROR_MESSAGE),
     additionalPrice: Yup.string()
-      .matches(additionalPriceRegExp, BACK_PRICE_ERROR)
-      .required(BACK_ERROR_MESSAGE)
+      .matches(additionalPriceRegExp, BOTTOM_PRICE_ERROR)
+      .required(BOTTOM_ERROR_MESSAGE)
       .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),
-    backImage: Yup.string().required(PHOTO_NOT_PROVIDED)
+    bottomImage: Yup.string().required(PHOTO_NOT_PROVIDED)
   });
 
   const {
@@ -126,42 +127,41 @@ const BackForm = ({ back, id, edit }) => {
     errors,
     setFieldValue
   } = useFormik({
-    validationSchema: backValidationSchema,
-    initialValues: getBackInitialValues(edit, IMG_URL, back),
+    validationSchema: bottomValidationSchema,
+    initialValues: getBottomInitialValues(edit, IMG_URL, bottom),
 
     onSubmit: () => {
-      const newBack = createBack(values);
+      const newBottom = createBottom(values);
       const editAndUpload = edit && upload instanceof File;
       if (editAndUpload || edit) {
-        backFormOnSubmit(
+        bottomFormOnSubmit(
           editAndUpload,
           dispatch,
-          updateBack,
+          updateBottom,
           {
             id,
-            back: newBack,
+            bottom: newBottom,
             image: upload
           },
           edit,
           {
             id,
-            back: newBack
+            bottom: newBottom
           }
         );
         return;
       }
       dispatch(
-        addBack({
-          back: newBack,
+        addBottom({
+          bottom: newBottom,
           image: upload
         })
       );
     }
   });
 
-  useUnsavedChangesHandler(values);
   useEffect(() => {
-    setBackColorsHandler(values, setColor, find, materials);
+    setBottomColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
 
   const checkboxes = [
@@ -171,7 +171,7 @@ const BackForm = ({ back, id, edit }) => {
       value: values.available,
       checked: values.available,
       color: 'primary',
-      label: config.labels.back.available,
+      label: config.labels.bottom.available,
       handler: () => setFieldValue('available', !values.available)
     }
   ];
@@ -180,15 +180,15 @@ const BackForm = ({ back, id, edit }) => {
     if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFieldValue('backImage', event.target.result);
-        setBackImage(event.target.result);
+        setFieldValue('bottomImage', event.target.result);
+        setBottomImage(event.target.result);
       };
       reader.readAsDataURL(files[0]);
       setUpload(files[0]);
     }
   };
 
-  const inputs = [{ label: backName, name: 'name' }];
+  const inputs = [{ label: bottomName, name: 'name' }];
 
   const inputOptions = {
     errors,
@@ -199,10 +199,14 @@ const BackForm = ({ back, id, edit }) => {
     inputs
   };
 
-  const imageUploadBackInputsId = {
-    backImageInput: 'backImageInput'
+  const imageUploadBottomInputsId = {
+    bottomImageInput: 'bottomImageInput'
   };
 
+  const valueEquality = checkInitialValue(
+    getBottomInitialValues(edit, IMG_URL, bottom),
+    values
+  );
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -216,7 +220,7 @@ const BackForm = ({ back, id, edit }) => {
           <div className={styles.buttonContainer}>
             <Grid container spacing={2} className={styles.fixedButtons}>
               <Grid item className={styles.button}>
-                <BackButton pathBack={pathToBacks} />
+                <BackButton initial={!valueEquality} pathBack={pathToBottoms} />
               </Grid>
               <Grid item className={styles.button}>
                 <SaveButton
@@ -236,17 +240,17 @@ const BackForm = ({ back, id, edit }) => {
               <div className={styles.imageUploadBlock}>
                 <div>
                   <span className={styles.imageUpload}>
-                    {config.labels.back.avatarText}
+                    {config.labels.bottom.avatarText}
                   </span>
                   <div className={styles.imageUploadAvatar}>
                     <ImageUploadPreviewContainer
                       handler={handleImageLoad}
-                      src={values.backImage}
-                      id={imageUploadBackInputsId.backImageInput}
+                      src={values.bottomImage}
+                      id={imageUploadBottomInputsId.bottomImageInput}
                     />
-                    {touched.backImage && errors.backImage && (
+                    {touched.bottomImage && errors.bottomImage && (
                       <div className={styles.inputError}>
-                        {errors.backImage}
+                        {errors.bottomImage}
                       </div>
                     )}
                   </div>
@@ -255,7 +259,7 @@ const BackForm = ({ back, id, edit }) => {
             </Paper>
           </Grid>
           <MaterialsContainer
-            material={materials?.back}
+            material={materials?.bottom}
             color={color}
             values={values}
             errors={errors}
@@ -303,16 +307,16 @@ const BackForm = ({ back, id, edit }) => {
   );
 };
 
-valuesPropTypes.values.backImage = imagePropTypes;
-valuesPropTypes.errors.backImage = imagePropTypes;
-valuesPropTypes.touched.backImage = imagePropTypes;
+valuesPropTypes.values.bottomImage = imagePropTypes;
+valuesPropTypes.errors.bottomImage = imagePropTypes;
+valuesPropTypes.touched.bottomImage = imagePropTypes;
 
-BackForm.propTypes = {
+BottomForm.propTypes = {
   ...defaultPropTypes,
-  back: constructorObjectPropsTypes.element,
+  bottom: constructorObjectPropsTypes.element,
   ...valuesPropTypes
 };
 
-BackForm.defaultProps = { back: constructorObject, ...defaultProps };
+BottomForm.defaultProps = { bottom: constructorObject, ...defaultProps };
 
-export default BackForm;
+export default BottomForm;

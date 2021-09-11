@@ -25,6 +25,7 @@ import snackbarSaga from './snackbar/snackbar.sagas';
 import historySaga from './history/history.sagas';
 import pocketsSaga from './pockets/pockets.sagas';
 import backSaga from './back/back.sagas';
+import bottomSaga from './bottom/bottom.sagas';
 import positionSaga from './position/position.sagas';
 import closuresSaga from './closures/closures.sagas';
 import basicsSaga from './basics/basics.sagas';
@@ -56,6 +57,7 @@ export function* rootSaga() {
     constructorSaga(),
     snackbarSaga(),
     backSaga(),
+    bottomSaga(),
     snackbarSaga(),
     pocketsSaga(),
     positionSaga(),
