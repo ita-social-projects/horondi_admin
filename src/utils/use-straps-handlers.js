@@ -21,11 +21,14 @@ const useStrapsHandlers = () => {
       }
     ],
     features: {
-      color: values.color[0]
+      color: values.color
     },
     available: values.available,
     image: values.image,
-    additionalPrice: values.additionalPrice,
+    additionalPrice: {
+      value: +values.additionalPrice,
+      type: values.additionalPriceType
+    },
     optionType: 'STRAP'
   });
 

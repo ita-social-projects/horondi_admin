@@ -7,34 +7,12 @@ export const useStyles = makeStyles((theme) => {
     textField,
     imageUpload,
     imageUploadAvatar,
-    returnButton,
-    autoComplete
+    returnButton
   } = formStyles(theme);
   return {
     error: {
       color: '#e60000',
       marginLeft: '5px'
-    },
-    imageUploadContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      margin: '10px'
-    },
-    large: {
-      marginLeft: '10px',
-      width: theme.spacing(6),
-      height: theme.spacing(6)
-    },
-    imageName: {
-      fontSize: '.9rem',
-      marginLeft: '10px',
-      color: 'rgba(0, 0, 0, 0.54)',
-      '@media (max-width: 768px)': {
-        display: 'none'
-      }
-    },
-    attachFile: {
-      marginRight: '5px'
     },
     buttonContainer: {
       position: 'relative',
@@ -55,6 +33,18 @@ export const useStyles = makeStyles((theme) => {
       backgroundColor: theme.palette.bodyColor
     },
     additionalPrice: {
+      width: '550px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
+    },
+    colorPaper: {
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '10px 0',
+      padding: '10px'
+    },
+    additionalPricePaper: {
       display: 'flex',
       flexDirection: 'column',
       margin: '10px 0',
@@ -66,11 +56,27 @@ export const useStyles = makeStyles((theme) => {
       margin: '10px 0',
       padding: '10px'
     },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+      marginTop: 20
+    },
+    colorSelect: {
+      width: '550px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
+    },
+    currencyField: {
+      width: '170px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
+    },
     textField,
     saveButton,
     imageUpload,
     imageUploadAvatar,
-    returnButton,
-    autoComplete
+    returnButton
   };
 });

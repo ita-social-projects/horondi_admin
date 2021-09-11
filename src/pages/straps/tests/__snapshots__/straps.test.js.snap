@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Straps test Should render Straps page 1`] = `
+exports[`Straps test Should render straps page 1`] = `
 <BrowserRouter>
   <Router
     history={

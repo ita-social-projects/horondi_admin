@@ -48,6 +48,7 @@ jest.mock('../../../../utils/use-back-handlers.js', () => ({
     setBackImage: mockSetBackImage
   })
 }));
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
 jest.spyOn(global, 'FileReader').mockImplementation(function () {
   this.readAsDataURL = jest.fn();

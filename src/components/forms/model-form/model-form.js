@@ -37,7 +37,7 @@ import {
   updateModelHandler,
   loadHelper
 } from '../../../utils/model-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -124,6 +124,8 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
+  useUnsavedChangesHandler(values);
+
   const handleCategory = (event) => {
     setFieldValue('category', event.target.value);
     setCategory(event.target.value);
@@ -178,11 +180,6 @@ const ModelForm = ({ model, id, isEdit }) => {
     inputs
   };
 
-  const valueEquality = checkInitialValue(
-    useFormikInitialValues(model, category, checkIsEdit, isEdit),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -196,7 +193,7 @@ const ModelForm = ({ model, id, isEdit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToModels} />
+              <BackButton pathBack={pathToModels} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton

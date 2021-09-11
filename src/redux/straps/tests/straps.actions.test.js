@@ -9,7 +9,8 @@ import {
   SET_STRAP,
   UPDATE_STRAP,
   SET_STRAPS_FILTER,
-  CLEAR_STRAPS_FILTER
+  CLEAR_STRAPS_FILTER,
+  SET_STRAPS_ERROR
 } from '../straps.types';
 import {
   addStraps,
@@ -22,10 +23,10 @@ import {
   setStrap,
   updateStrap,
   setFilter,
-  clearFilters
+  clearFilters,
+  setStrapsError
 } from '../straps.actions';
-
-const actionsPayload = ['custom payload'];
+import { actionsPayload } from './straps.variables';
 
 describe('straps.actions tests', () => {
   it('should return expected addStraps result', () => {
@@ -101,5 +102,14 @@ describe('straps.actions tests', () => {
     const result = clearFilters(actionsPayload);
 
     expect(result).toEqual({ type: CLEAR_STRAPS_FILTER });
+  });
+
+  it('should return expected setStrapsError payload', () => {
+    const result = setStrapsError(actionsPayload);
+
+    expect(result).toEqual({
+      type: SET_STRAPS_ERROR,
+      payload: actionsPayload
+    });
   });
 });

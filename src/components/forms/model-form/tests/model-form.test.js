@@ -43,6 +43,7 @@ jest.mock('formik', () => ({
     setFieldValue: mockSetFieldValue
   })
 }));
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
 const mockCreateModel = jest.fn();
 const mockSetUpload = jest.fn();

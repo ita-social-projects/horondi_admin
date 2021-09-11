@@ -27,7 +27,7 @@ describe('Straps test', () => {
     useDispatch.mockReturnValue(mockedDispatch);
   });
 
-  it('Should render Straps page', () => {
+  it('Should render straps page', () => {
     useSelector.mockReturnValue({ filter: 'test' });
 
     wrapper = mount(

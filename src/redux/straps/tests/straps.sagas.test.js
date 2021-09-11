@@ -1,234 +1,244 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { combineReducers } from 'redux';
 
+import { combineReducers } from 'redux';
 import {
   handleStrapsLoad,
+  handleGetStrapById,
   handleStrapAdd,
-  handleStrapUpdate,
   handleStrapDelete,
-  handleStrapsError,
-  handleGetStrapById
+  handleStrapUpdate,
+  handleStrapsError
 } from '../straps.sagas';
 
 import {
-  getAllStraps,
-  getStrapById,
-  updateStrap,
-  createStrap,
-  deleteStrap
-} from '../straps.operations';
-
-import Strap from '../straps.reducer';
+  mockId,
+  mockStraps,
+  mockStrap,
+  mockStrapsLoadPayload,
+  mockError,
+  statuses,
+  mockStrapState,
+  mockStrapToUpdate,
+  mockTableState
+} from './straps.variables';
 
 import {
-  removeStrapFromState,
-  setStrap,
-  setStrapsLoading,
   setStraps,
-  setStrapsError
+  setStrapsLoading,
+  setStrap,
+  setStrapsError,
+  removeStrapFromState
 } from '../straps.actions';
 
-import { config } from '../../../configs';
+import { setItemsCount, updatePagination } from '../../table/table.actions';
+
 import {
-  handleErrorSnackbar,
-  handleSuccessSnackbar
+  getAllStraps,
+  deleteStrap,
+  createStrap,
+  updateStrap,
+  getStrapById
+} from '../straps.operations';
+
+import {
+  handleSuccessSnackbar,
+  handleErrorSnackbar
 } from '../../snackbar/snackbar.sagas';
 
-const { SUCCESS_ADD_STATUS, SUCCESS_UPDATE_STATUS, SUCCESS_DELETE_STATUS } =
-  config.statuses;
+import Straps from '../straps.reducer';
+import Table from '../../table/table.reducer';
 
-const {
-  analysisMethodTypes: { PUT, CALL }
-} = require('../../../consts/method-types');
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  statuses;
 
-const mockStrapsState = {
-  list: [],
-  filter: { search: '' },
-  strap: null,
-  showStrapsDialogWindow: false,
-  strapsLoading: false,
-  strapsError: null
-};
-const mockSizes = {
-  items: [
-    {
-      _id: '',
-      name: [
-        {
-          lang: 'ua',
-          value: 'large'
-        },
-        {
-          lang: 'en',
-          value: 'великий'
-        }
-      ],
-      description: [
-        {
-          lang: 'ua',
-          value: 'test'
-        },
-        {
-          lang: 'en',
-          value: 'test'
-        }
-      ],
-      sizes: []
-    }
-  ]
-};
-describe('straps sagas tests', () => {
-  it('should load all straps', () => {
-    expectSaga(handleStrapsLoad)
-      .withReducer(combineReducers({ Strap }), { Strap: mockStrapsState })
-      .put(setStrapsLoading(true))
-      .provide([[call(getAllStraps), mockSizes]])
-      .put(setStraps(mockSizes))
-      .put(setStrapsLoading(false))
-      .hasFinalState({
-        Strap: {
-          ...mockStrapsState,
-          list: mockSizes
-        }
+describe('Test straps sagas', () => {
+  it('should load all straps', async (done) => {
+    expectSaga(handleStrapsLoad, { payload: mockStrapsLoadPayload })
+      .withReducer(combineReducers({ Straps, Table }), {
+        Strap: mockStrapState,
+        Table: mockTableState
       })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === PUT);
-        const analysisCall = analysis.filter((e) => e.type === CALL);
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
-      });
-  });
-  it('should handle one strap load id', () => {
-    expectSaga(handleGetStrapById, { payload: 2 })
-      .withReducer(combineReducers({ Strap }), { Strap: mockStrapsState })
-      .put(setStrapsLoading(true))
-      .provide([[call(getStrapById, 2), [10]]])
-      .put(setStrap([10]))
-      .put(setStrapsLoading(false))
-      .hasFinalState({
-        Strap: {
-          ...mockStrapsState,
-          strap: [10]
-        }
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === PUT);
-        const analysisCall = analysis.filter((e) => e.type === CALL);
-        expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(1);
-      });
-  });
-  it('should add strap', () => {
-    expectSaga(handleStrapAdd, { payload: [10] })
-      .withReducer(combineReducers({ Strap }), { Strap: mockStrapsState })
       .put(setStrapsLoading(true))
       .provide([
-        [call(createStrap, [10])],
+        [
+          call(
+            getAllStraps,
+            mockStrapsLoadPayload.pagination.skip,
+            mockStrapsLoadPayload.pagination.limit,
+            mockStrapsLoadPayload.filter
+          ),
+          mockStraps
+        ]
+      ])
+      .put(setItemsCount(mockStraps.count))
+      .put(setStraps(mockStraps.items))
+      .put(setStrapsLoading(false))
+      .hasFinalState({
+        Strap: {
+          ...mockStrapState,
+          list: mockStraps.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: mockStraps.count
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+
+        expect(analysisPut).toHaveLength(4);
+        expect(analysisCall).toHaveLength(1);
+      });
+    done();
+  });
+
+  it('should load strap by id', async (done) => {
+    expectSaga(handleGetStrapById, { payload: mockId })
+      .withReducer(combineReducers({ Straps }), { Straps: mockStrapState })
+      .put(setStrapsLoading(true))
+      .provide([[call(getStrapById, mockId), mockStrap]])
+      .put(setStrap(mockStrap))
+      .put(setStrapsLoading(false))
+      .hasFinalState({
+        Straps: {
+          ...mockStrapState,
+          strap: mockStrap
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+
+        expect(analysisPut).toHaveLength(3);
+        expect(analysisCall).toHaveLength(1);
+      });
+    done();
+  });
+
+  it('should add strap', async (done) => {
+    expectSaga(handleStrapAdd, { payload: mockStrap })
+      .withReducer(combineReducers({ Straps }), {
+        Straps: mockStrapState
+      })
+      .put(setStrapsLoading(true))
+      .provide([
+        [call(createStrap, mockStrap)],
         [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
       ])
-      .put(setStrapsLoading(false))
-      .put(push(config.routes.pathToStraps))
+      .put(push('/straps'))
       .hasFinalState({
-        Strap: {
-          ...mockStrapsState,
-          strapsLoading: false
+        Model: {
+          ...mockStrapState,
+          strapsLoading: true
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === PUT);
-        const analysisCall = analysis.filter((e) => e.type === CALL);
-        expect(analysisPut).toHaveLength(3);
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+
+        expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
       });
+    done();
   });
-  it('should delete size by id', () => {
-    expectSaga(handleStrapDelete, { payload: 10 })
-      .withReducer(combineReducers({ Strap }), {
-        Strap: mockStrapsState
+
+  it('should delete strap', async (done) => {
+    expectSaga(handleStrapDelete, { payload: mockId })
+      .withReducer(combineReducers({ Straps }), {
+        Straps: {
+          ...mockStrapState,
+          list: mockStraps.items
+        }
       })
       .put(setStrapsLoading(true))
       .provide([
-        [call(deleteStrap, { name: '' })],
+        [call(deleteStrap, mockId)],
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
-      .put(removeStrapFromState({ name: '' }))
+      .put(removeStrapFromState(mockId))
+      .put(updatePagination())
       .put(setStrapsLoading(false))
       .hasFinalState({
-        Size: {
-          ...mockStrapsState,
-          sizeLoading: false
+        Model: {
+          ...mockStrapState,
+          list: []
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === PUT);
-        const analysisCall = analysis.filter((e) => e.type === CALL);
-        expect(analysisPut).toHaveLength(3);
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+
+        expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
       });
+    done();
   });
 
-  it('should update a specific strap', () => {
-    expectSaga(handleStrapUpdate, { payload: 10 })
-      .withReducer(combineReducers({ Strap }), {
-        Size: mockStrapsState
+  it('should update strap', async (done) => {
+    expectSaga(handleStrapUpdate, { payload: mockStrapToUpdate })
+      .withReducer(combineReducers({ Straps }), {
+        Straps: mockStrapState
       })
       .put(setStrapsLoading(true))
       .provide([
-        [call(updateStrap, 'mockPayloadToUpdateSize.id', {})],
+        [call(updateStrap, mockStrapToUpdate)],
         [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
       ])
-      .put(push(config.routes.pathToStraps))
+      .put(push('/straps'))
       .hasFinalState({
-        Size: {
-          ...mockStrapsState,
-          sizesLoading: true
+        Straps: {
+          ...mockStrapState,
+          strapsLoading: true
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === PUT);
-        const analysisCall = analysis.filter((e) => e.type === CALL);
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        const analysisCall = analysis.filter((e) => e.type === 'CALL');
+
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
       });
+    done();
   });
 
-  it('should handle size error', () => {
-    expectSaga(handleStrapsError, 'mockError')
-      .withReducer(combineReducers({ Strap }), {
-        Strap: {
-          ...mockStrapsState,
-          sizeLoading: true
+  it('should handle models error', async (done) => {
+    expectSaga(handleStrapsError, mockError)
+      .withReducer(combineReducers({ Straps }), {
+        Straps: {
+          ...mockStrapState,
+          strapsLoading: true
         }
       })
-      .provide([[call(handleErrorSnackbar, 'mockError.message')]])
+      .provide([[call(handleErrorSnackbar, mockError.message)]])
       .put(setStrapsLoading(false))
-      .put(setStrapsError({ e: 'asd' }))
+      .put(setStrapsError({ e: mockError }))
       .hasFinalState({
-        Size: {
-          ...mockStrapsState,
-          sizeLoading: true,
-          strapsError: { e: 'asd' }
+        Straps: {
+          ...mockStrapState,
+          strapsLoading: false,
+          strapsError: { e: mockError }
         }
       })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === PUT);
-        const analysisCall = analysis.filter((e) => e.type === CALL);
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+
         expect(analysisPut).toHaveLength(2);
-        expect(analysisCall).toHaveLength(1);
       });
+    done();
   });
 });

@@ -34,11 +34,16 @@ const usePatternHandlers = () => {
     ],
     optionType: values.optionType,
     constructorImg: values.patternConstructorImage,
+    model: values.modelId,
     features: {
       material: values.material,
       handmade: values.handmade
     },
-    available: values.available
+    available: values.available,
+    additionalPrice: {
+      value: +values.additionalPrice,
+      type: values.additionalPriceType
+    }
   });
 
   return {

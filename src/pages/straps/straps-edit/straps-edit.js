@@ -22,7 +22,7 @@ const StrapsEdit = ({ match }) => {
   if (loading) {
     return <LoadingBar />;
   }
-  console.log(strap);
+
   return (
     <div className={styles.container}>
       {strap !== null ? <StrapsForm id={id} edit strap={strap} /> : null}

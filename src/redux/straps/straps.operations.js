@@ -13,6 +13,10 @@ export const getAllStraps = async (limit, skip, filter) => {
             features {
               color {
                 _id
+                name {
+              lang
+              value
+            }
               }
             }
             image
@@ -20,6 +24,7 @@ export const getAllStraps = async (limit, skip, filter) => {
             additionalPrice {
               currency
               value
+              type
             }
           }
           count
@@ -46,14 +51,18 @@ export const createStrap = async (payload) => {
             features {
               color {
                 _id
+                name {
+                lang
+                value
+                }
               }
             }
             image
             available
-            customizable
             additionalPrice {
               currency
               value
+              type
             }
           }
           ... on Error {
@@ -85,7 +94,7 @@ export const deleteStrap = async (id) => {
     `;
 
   const result = await setItems(query, { id });
-  console.log(result);
+
   return result?.data?.deleteStrap;
 };
 
@@ -103,14 +112,18 @@ export const getStrapById = async (id) => {
             features {
               color {
                 _id
+                name {
+                lang
+                value
+                }
               }
             }
             image
             available
-            customizable
             additionalPrice {
               currency
               value
+              type
             }
           }
           ... on Error {
@@ -144,10 +157,10 @@ export const updateStrap = async (id, strap, image) => {
             }
             image
             available
-            customizable
             additionalPrice {
               currency
               value
+              type
             }
           }
           ... on Error {

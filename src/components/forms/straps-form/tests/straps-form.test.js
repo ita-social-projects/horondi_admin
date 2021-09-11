@@ -1,6 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { configure, mount } from 'enzyme';
+import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { act, fireEvent, render } from '@testing-library/react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -14,6 +14,9 @@ import {
   mockColorsWithData
 } from './straps.form.variables';
 import StrapsForm from '../index';
+import { SaveButton } from '../../../buttons';
+import ModelForm from '../../model-form';
+import { mockId } from '../../model-form/tests/model-form.variables';
 
 configure({ adapter: new Adapter() });
 
@@ -54,6 +57,8 @@ jest.spyOn(global, 'FileReader').mockImplementation(function () {
   this.onload = jest.fn();
 });
 
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
+
 describe('Straps form tests', () => {
   let spyOnUseSelector;
   let spyOnUseDispatch;
@@ -69,8 +74,13 @@ describe('Straps form tests', () => {
   });
   afterEach(() => {
     component.unmount();
+
     spyOnUseDispatch.mockClear();
     spyOnUseSelector.mockClear();
+  });
+
+  it('Should match snapshot', () => {
+    expect(component).toMatchSnapshot;
   });
 
   it('Should upload image', () => {
@@ -101,6 +111,21 @@ describe('Straps form tests', () => {
     expect(mockSetFieldValue).toHaveBeenCalled();
   });
 
+  it('Should simulate submit button', () => {
+    component.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
+  });
+
+  it('Should update checkboxes checked value on click', () => {
+    const { getByRole } = render(<StrapsForm />);
+
+    act(() => {
+      fireEvent.click(getByRole('checkbox'));
+    });
+
+    expect(mockSetFieldValue).toHaveBeenCalled();
+  });
+
   it('Should click onsubmit button', () => {
     const event = {
       preventDefault: () => {}
@@ -113,46 +138,11 @@ describe('Straps form tests', () => {
     expect(event.preventDefault).toBeCalled();
   });
 
-  it('should coverage getOptionSelected in AutoComplete', () => {
-    const label = component.find(Autocomplete).props();
-
-    label.getOptionSelected(
-      '604394a2a7532c33dcb326d5',
-      '604394a2a7532c33dcb326d5'
-    );
-
-    expect(label).toBeDefined();
-  });
-
-  it('should coverage getOptionLabel in Autocomplete', () => {
-    const label = component.find(Autocomplete).props();
-
-    label.getOptionLabel(Straps.list[0]);
-
-    expect(label).toBeDefined();
-  });
-
-  it('should coverage onTagsChange', () => {
-    const colorsData = component.find(Autocomplete).props();
-
-    colorsData.onChange(null, Straps.list);
-
-    expect(colorsData).toBeDefined();
-  });
-
-  it('should coverage error', () => {
-    const colorsData = component.find(Autocomplete).props();
-
-    colorsData.onChange(null, Straps.list);
-
-    expect(colorsData).toBeDefined();
-  });
-
-  it('should coverage availableColors', () => {
-    spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockColorsWithData);
-    spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
-    spyOnUseDispatch.mockImplementation(() => jest.fn());
+  it('Should coverage availableColors', () => {
+    jest
+      .spyOn(reactRedux, 'useSelector')
+      .mockImplementation(() => mockColorsWithData);
+    jest.spyOn(reactRedux, 'useDispatch').mockImplementation(() => jest.fn());
 
     component = mount(<StrapsForm />);
 

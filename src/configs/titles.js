@@ -27,7 +27,9 @@ const titles = {
   },
   patternTitles: {
     mainPageTitle: 'Інформація про гобелени',
-    createPageTitle: 'Створити гобелен'
+    createPageTitle: 'Створити гобелен',
+    convertationTitle: 'Відповідна ціна в UAH',
+    modelTitle: 'Модель'
   },
   backTitles: {
     mainPageTitle: 'Інформація про спинки',
@@ -75,11 +77,13 @@ const titles = {
     selectTitle: 'Розмір',
     modelTitle: 'Модель',
     sizeEdit: 'Редагування розміру',
-    sizeAdd: 'Додавання розміру'
+    sizeAdd: 'Додавання розміру',
+    convertationTitle: 'Відповідна ціна в UAH'
   },
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
-    createPageTitle: 'Створити матеріал'
+    createPageTitle: 'Створити матеріал',
+    convertationTitle: 'Відповідна ціна в UAH'
   },
   colorTitles: {
     createColorTitle: 'Створити колір',
@@ -119,7 +123,9 @@ const titles = {
   productTitles: {
     filters: 'Фільтри',
     deleteFilter: 'Очистити фільтр',
-    mainPageTitle: 'Інформація про продукти'
+    mainPageTitle: 'Інформація про продукти',
+    convertationTitle: 'Відповідна ціна в UAH',
+    modelTitle: 'Модель'
   },
   pocketsTitles: {
     mainPageTitle: 'Інформація про кишені'
@@ -134,13 +140,15 @@ const titles = {
     mainPageTitle: 'Опції конструктора'
   },
   closuresTitles: {
-    mainPageTitle: 'Інформація про защіпки'
+    mainPageTitle: 'Інформація про защіпки',
+    convertationTitle: 'Відповідна ціна в UAH'
   },
   basicsTitles: {
     mainPageTitle: 'Інформація про основи'
   },
   strapsTitles: {
-    mainPageTitle: 'Інформація про ремінці'
+    mainPageTitle: 'Інформація про ремінці',
+    convertationTitle: 'Відповідна ціна в UAH'
   }
 };
 

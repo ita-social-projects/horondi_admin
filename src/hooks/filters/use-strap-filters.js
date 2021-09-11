@@ -15,11 +15,11 @@ const useStrapFilters = () => {
       })
     );
   };
-
   const clearAllFilters = () => {
     dispatch(setCurrentPage(0));
     dispatch(clearFilters());
   };
+
   return {
     searchOptions: {
       search: filter.name,

@@ -41,6 +41,7 @@ export function* handleStrapsLoad({ payload: { pagination, filter } }) {
       pagination.skip,
       filter
     );
+
     if (straps) {
       yield put(setStraps(straps));
       yield put(setItemsCount(straps?.count));
@@ -55,6 +56,7 @@ export function* handleStrapAdd({ payload }) {
   try {
     yield put(setStrapsLoading(true));
     const strap = yield call(createStrap, payload);
+
     if (strap) {
       yield put(setStrapsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
@@ -69,6 +71,7 @@ export function* handleStrapDelete({ payload }) {
   try {
     yield put(setStrapsLoading(true));
     const strap = yield call(deleteStrap, payload);
+
     if (strap) {
       yield put(removeStrapFromState(payload));
       yield put(setStrapsLoading(false));
@@ -84,6 +87,7 @@ export function* handleGetStrapById({ payload }) {
   try {
     yield put(setStrapsLoading(true));
     const strap = yield call(getStrapById, payload);
+
     if (strap) {
       yield put(setStrap(strap));
       yield put(setStrapsLoading(false));
@@ -98,6 +102,7 @@ export function* handleStrapUpdate({ payload }) {
     yield put(setStrapsLoading(true));
     const { id, strap, image } = payload;
     const strapUpdate = yield call(updateStrap, id, strap, image);
+
     if (strapUpdate) {
       yield put(setStrapsLoading(false));
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);

@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
 import { useStyles } from './straps-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
@@ -20,13 +26,16 @@ import {
 import LanguagePanel from '../language-panel';
 import { getStrapsInitialValues } from '../../../utils/straps-form';
 import CheckboxOptions from '../../checkbox-options';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { getColors } from '../../../redux/color/color.actions';
-import { handleCircularProgress } from '../../../utils/handle-orders-page';
 import useStrapsHandlers from '../../../utils/use-straps-handlers';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import {
+  calculateAddittionalPriceValue,
+  getLabelValue
+} from '../../../utils/additionalPrice-helper';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const labels = config.labels.strapsPageLabel;
-
 const {
   STRAPS_VALIDATION_ERROR,
   STRAPS_ERROR_MESSAGE,
@@ -36,7 +45,6 @@ const {
   STRAPS_MIN_LENGTH_MESSAGE,
   STRAPS_COLOR_ERROR_MESSAGE
 } = config.strapsErrorMessages;
-
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
 const { STRAPS_ERROR } = strapsTranslations;
@@ -45,11 +53,12 @@ const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
   config.formRegExp;
 const { materialUiConstants } = config;
 const { pathToStraps } = config.routes;
+const { convertationTitle } = config.titles.strapsTitles;
 
 const StrapsForm = ({ strap, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-
+  const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
   const { createStraps, setUpload, upload, strapImage, setStrapImage } =
     useStrapsHandlers();
 
@@ -62,13 +71,13 @@ const StrapsForm = ({ strap, id, edit }) => {
         }
       })
     );
+    dispatch(getCurrencies());
   }, [dispatch]);
 
-  const { colorsList, colorLoading } = useSelector(({ Color }) => ({
-    colorsList: Color.list,
-    colorLoading: Color.colorLoading
+  const { colorsList } = useSelector(({ Color }) => ({
+    colorsList: Color.list
   }));
-  const [color, setColor] = useState(strap ? [strap.features.color._id] : []);
+
   const strapsValidationSchema = Yup.object().shape({
     uaName: Yup.string()
       .min(2, STRAPS_MIN_LENGTH_MESSAGE)
@@ -84,6 +93,7 @@ const StrapsForm = ({ strap, id, edit }) => {
       .required(STRAPS_ERROR_MESSAGE)
       .matches(additionalPriceRegExp, STRAPS_VALIDATION_ERROR)
       .nullable(),
+    additionalPriceType: Yup.string(),
     available: Yup.boolean(),
     strapImage: Yup.string(),
     color: Yup.string().required(STRAPS_COLOR_ERROR_MESSAGE)
@@ -116,6 +126,7 @@ const StrapsForm = ({ strap, id, edit }) => {
         );
         return;
       }
+
       dispatch(addStraps({ strap: newStrap, image: upload }));
 
       if (!uploadCondition && !strap.image) {
@@ -125,6 +136,8 @@ const StrapsForm = ({ strap, id, edit }) => {
       }
     }
   });
+
+  useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
     if (files && files[0]) {
@@ -151,12 +164,6 @@ const StrapsForm = ({ strap, id, edit }) => {
     }
   ];
 
-  const onTagsChange = (_, value) => {
-    const colorsData = value.map((color) => color._id);
-    setFieldValue('color', [...new Set(colorsData)]);
-    setColor(value);
-  };
-
   const inputs = [{ label: labels.strapsName, name: 'name' }];
 
   const inputOptions = {
@@ -167,11 +174,6 @@ const StrapsForm = ({ strap, id, edit }) => {
     values,
     inputs
   };
-
-  const valueEquality = checkInitialValue(
-    getStrapsInitialValues(edit, IMG_URL, strap),
-    values
-  );
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
@@ -185,7 +187,6 @@ const StrapsForm = ({ strap, id, edit }) => {
             <Grid item className={styles.button}>
               <BackButton
                 className={styles.returnButton}
-                initial={!valueEquality}
                 pathBack={pathToStraps}
               />
             </Grid>
@@ -216,79 +217,103 @@ const StrapsForm = ({ strap, id, edit }) => {
                 src={edit ? values.strapImage : strapImage}
               />
             </div>
-            {touched.code && errors.code && (
-              <div data-cy='code-error' className={styles.error}>
-                {errors.code}
+            {touched.strapImage && errors.strapImage && (
+              <div data-cy='strapImage-error' className={styles.error}>
+                {errors.strapImage}
               </div>
             )}
           </Paper>
         </Grid>
-        <Paper className={styles.inputPanel}>
-          <Autocomplete
-            id={labels.labelIdAut}
-            className={styles.textField}
-            multiple
-            freeSolo
-            filterSelectedOptions
-            options={colorsList}
-            getOptionSelected={(option, value) => option._id === value._id}
-            defaultValue={color}
-            onChange={onTagsChange}
-            onBlur={handleBlur}
-            getOptionLabel={(option) => `${option.name[0].value}`}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant={materialUiConstants.outlined}
-                label={labels.chooseColor.title}
-                placeholder={labels.chooseColor.inputTitle}
-                margin={labels.normal}
-                fullWidth
-                error={touched.labelIdAut && !!errors.color}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: <>{handleCircularProgress(colorLoading)}</>
-                }}
-              />
-            )}
-          />
-          {touched.labelIdAut && errors.color && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
+        <Paper className={styles.Paper}>
+          <Box>
+            <Typography>{labels.chooseColor.title}</Typography>
+          </Box>
+          <FormControl
+            variant='outlined'
+            className={`${styles.formControl} ${styles.colorSelect}`}
+          >
+            <InputLabel variant='outlined'>
+              {labels.chooseColor.inputTitle}
+            </InputLabel>
+            <Select
+              label={labels.chooseColor.inputTitle}
+              data-cy='color'
+              name='color'
+              error={touched.color && !!errors.color}
+              value={values.color || []}
+              onChange={handleChange}
+              onBlur={handleBlur}
             >
+              {colorsList.map(({ _id, name }) => (
+                <MenuItem key={_id} value={_id}>
+                  {name[0].value}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {touched.color && errors.color && (
+            <div data-cy='color-error' className={styles.error}>
               {errors.color}
             </div>
           )}
         </Paper>
-        {languages.map((lang) => (
-          <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
-        ))}
-        <Paper className={styles.additionalPrice}>
-          <Box>
-            <Typography>{labels.enterPrice}</Typography>
-          </Box>
+        <Paper className={styles.additionalPricePaper}>
+          <FormControl component='fieldset'>
+            <RadioGroup
+              name='additionalPriceType'
+              className={styles.textField}
+              onChange={handleChange}
+              value={values.additionalPriceType}
+            >
+              <FormControlLabel
+                value='ABSOLUTE_INDICATOR'
+                label={labels.additionalPriceType.absolutePrice[0].value}
+                control={<Radio />}
+                key={2}
+              />
+              <FormControlLabel
+                value='RELATIVE_INDICATOR'
+                label={labels.additionalPriceType.relativePrice[0].value}
+                control={<Radio />}
+                key={1}
+              />
+            </RadioGroup>
+          </FormControl>
           <TextField
             data-cy='additionalPrice'
+            className={`
+                  ${styles.textField}
+                  ${styles.additionalPrice} 
+                  `}
             id='additionalPrice'
-            className={styles.textField}
-            variant={materialUiConstants.outlined}
-            type={materialUiConstants.types.number}
-            label={labels.additionalPrice}
+            variant='outlined'
+            label={getLabelValue(values, labels.additionalPriceType)}
             value={values.additionalPrice}
-            inputProps={{ min: 0 }}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.additionalPrice && !!errors.additionalPrice}
+            error={touched.additionalPrice && errors.additionalPrice}
           />
           {touched.additionalPrice && errors.additionalPrice && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
-            >
+            <div data-cy='additionalPrice-error' className={styles.error}>
               {errors.additionalPrice}
             </div>
           )}
+          <TextField
+            id='outlined-basic'
+            variant='outlined'
+            label={convertationTitle}
+            className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+            value={calculateAddittionalPriceValue(values, exchangeRate)}
+            disabled
+          />
+        </Paper>
+        <Paper className={styles.inputPanel}>
+          {languages.map((lang) => (
+            <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
+          ))}
         </Paper>
       </form>
     </div>
@@ -303,10 +328,16 @@ StrapsForm.propTypes = {
     names: PropTypes.shape([]),
     features: PropTypes.shape({
       color: PropTypes.shape({
-        _id: PropTypes.string
+        _id: PropTypes.string,
+        name: PropTypes.string
       })
     }),
-    additionalPrice: PropTypes.shape([])
+    additionalPrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.number
+      })
+    ),
+    available: PropTypes.bool
   }),
   values: PropTypes.shape({
     strapImage: PropTypes.string,
@@ -318,7 +349,6 @@ StrapsForm.propTypes = {
     available: PropTypes.bool
   }),
   errors: PropTypes.shape({
-    strapImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     optionType: PropTypes.string,
@@ -327,7 +357,6 @@ StrapsForm.propTypes = {
     available: PropTypes.bool
   }),
   touched: PropTypes.shape({
-    strapImage: PropTypes.string,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     optionType: PropTypes.string,
@@ -356,13 +385,10 @@ StrapsForm.defaultProps = {
       }
     ],
     image: '',
-    optionType: null,
-    additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
-    ],
+    optionType: '',
+    additionalPrice: [{ value: null }, { value: null }],
     features: {
-      color: { _id: '' }
+      color: { _id: '', name: '' }
     },
     available: false
   },

@@ -1,7 +1,21 @@
 const target = { target: { result: 'foo' } };
 const files = [new File([], 'foo.png', { type: 'image' })];
 const mockColor = {
-  colorsList: {},
+  colorsList: [
+    {
+      _id: 'asddsadsa',
+      name: [
+        {
+          lang: 'ua',
+          value: 'Червоний'
+        },
+        {
+          lang: 'en',
+          value: 'Red'
+        }
+      ]
+    }
+  ],
   loadingPositions: false
 };
 const mockColorsWithData = {

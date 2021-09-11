@@ -283,6 +283,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           <WithStyles(ForwardRef(Button))
                             color="primary"
                             data-cy="back-btn"
+                            initial={false}
                             onClick={[Function]}
                             type="button"
                             variant="outlined"
@@ -323,6 +324,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                               }
                               color="primary"
                               data-cy="back-btn"
+                              initial={false}
                               onClick={[Function]}
                               type="button"
                               variant="outlined"
@@ -334,6 +336,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                 disabled={false}
                                 focusRipple={true}
                                 focusVisibleClassName="Mui-focusVisible"
+                                initial={false}
                                 onClick={[Function]}
                                 type="button"
                               >
@@ -351,6 +354,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   disabled={false}
                                   focusRipple={true}
                                   focusVisibleClassName="Mui-focusVisible"
+                                  initial={false}
                                   onClick={[Function]}
                                   type="button"
                                 >
@@ -358,6 +362,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                     className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
                                     data-cy="back-btn"
                                     disabled={false}
+                                    initial={false}
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onDragLeave={[Function]}

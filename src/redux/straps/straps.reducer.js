@@ -67,12 +67,12 @@ const strapsReducer = (state = initialState, action = {}) => {
     case CLEAR_STRAPS_FILTER:
       return {
         ...state,
-        filter: { search: '' }
+        filter: { name: '' }
       };
     case SET_STRAPS_ERROR:
       return {
         ...state,
-        strapsErrorError: action.payload
+        strapsError: action.payload
       };
     default:
       return state;

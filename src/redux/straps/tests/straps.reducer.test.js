@@ -5,14 +5,18 @@ import {
   setFilter,
   setStrapsLoading,
   removeStrapFromState,
-  clearFilters
+  clearFilters,
+  setStrapsError
 } from '../straps.actions';
+
 import {
-  actionsPayload,
-  strapItems,
+  mockStraps,
+  mockStrap,
+  mockId,
+  mockError,
   strapFromState,
   filter,
-  clearFilter
+  cleanFilter
 } from './straps.variables';
 
 describe('straps reducer tests', () => {
@@ -23,27 +27,27 @@ describe('straps reducer tests', () => {
   });
 
   it('should return state with straps', () => {
-    const result = strapsReducer(initialState, setStraps(strapItems));
+    const result = strapsReducer(initialState, setStraps(mockStraps.items));
 
     expect(result).toEqual({
       ...initialState,
-      list: strapItems
+      list: mockStraps.items
     });
   });
 
   it('should return state with strap', () => {
-    const result = strapsReducer(initialState, setStrap(actionsPayload));
+    const result = strapsReducer(initialState, setStrap(mockStrap));
 
     expect(result).toEqual({
       ...initialState,
-      strap: actionsPayload
+      strap: mockStrap
     });
   });
 
   it('should remove strap from state', () => {
-    initialState.list.items = strapItems;
+    initialState.list.items = mockStraps.items;
 
-    const result = strapsReducer(initialState, removeStrapFromState(1));
+    const result = strapsReducer(initialState, removeStrapFromState(mockId));
 
     expect(result).toEqual({
       ...initialState,
@@ -69,7 +73,16 @@ describe('straps reducer tests', () => {
   it('should clear straps filter in state', () => {
     const result = strapsReducer(initialState, clearFilters());
 
-    expect(result.filter).toEqual(clearFilter);
+    expect(result.filter).toEqual(cleanFilter);
+  });
+
+  it('should set straps error', () => {
+    const result = strapsReducer(
+      initialState,
+      setStrapsError(mockError.message)
+    );
+
+    expect(result.strapsError).toBe(mockError.message);
   });
 
   it('should select straps', () => {

@@ -49,6 +49,7 @@ import {
   checkboxesValues,
   productFormValues
 } from '../../../consts/product-form';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { priceLabel } = config.labels.product;
 
@@ -80,7 +81,7 @@ const ProductForm = ({ isEdit }) => {
   const [showComments, setShowComments] = useState(false);
 
   const formikPriceValue = {
-    basePrice: Math.round(product?.basePrice[1]?.value / 100) || 0
+    basePrice: Math.round(product?.basePrice[1]?.value) || 0
   };
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -117,7 +118,7 @@ const ProductForm = ({ isEdit }) => {
     closure: product?.closure?._id,
     available: product.available || false,
     isHotItem: product.isHotItem || false,
-    sizes: product?.sizes?.map((el) => getIdFromItem(el) || []),
+    sizes: product?.sizes?.map((el) => getIdFromItem(el.size) || []),
     images: {
       primary: {}
     }
@@ -205,6 +206,7 @@ const ProductForm = ({ isEdit }) => {
     formikMaterialsValues
   );
 
+  useUnsavedChangesHandler(values);
   useEffect(() => {
     if (isMountedFirst) {
       toggleFieldsChanged(true);
