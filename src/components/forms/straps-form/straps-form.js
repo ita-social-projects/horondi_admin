@@ -224,7 +224,7 @@ const StrapsForm = ({ strap, id, edit }) => {
             )}
           </Paper>
         </Grid>
-        <Paper className={styles.Paper}>
+        <Paper className={styles.colorPaper}>
           <Box>
             <Typography>{labels.chooseColor.title}</Typography>
           </Box>
