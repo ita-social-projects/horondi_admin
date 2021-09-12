@@ -319,10 +319,10 @@ exports[`Straps test Should render straps page 1`] = `
             sortOptions={Object {}}
           >
             <WithStyles(ForwardRef(Grid))
-              className="makeStyles-container-9"
+              className="makeStyles-container-10"
             >
               <ForwardRef(Grid)
-                className="makeStyles-container-9"
+                className="makeStyles-container-10"
                 classes={
                   Object {
                     "align-content-xs-center": "MuiGrid-align-content-xs-center",
@@ -432,7 +432,7 @@ exports[`Straps test Should render straps page 1`] = `
                 }
               >
                 <div
-                  className="MuiGrid-root makeStyles-container-9"
+                  className="MuiGrid-root makeStyles-container-10"
                 />
               </ForwardRef(Grid)>
             </WithStyles(ForwardRef(Grid))>

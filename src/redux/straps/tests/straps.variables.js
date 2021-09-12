@@ -2,7 +2,7 @@ export const actionsPayload = ['custom payload'];
 export const filter = { name: 'abc' };
 export const cleanFilter = { name: '' };
 export const mockId = '5fa034049a59a906f0610e42';
-export const mockStrapState = {
+export const mockStrapsState = {
   list: [],
   strap: null,
   strapsLoading: false,

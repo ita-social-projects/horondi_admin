@@ -19,7 +19,7 @@ import {
   mockStrapsLoadPayload,
   mockError,
   statuses,
-  mockStrapState,
+  mockStrapsState,
   mockStrapToUpdate,
   mockTableState
 } from './straps.variables';
@@ -57,7 +57,7 @@ describe('Test straps sagas', () => {
   it('should load all straps', async (done) => {
     expectSaga(handleStrapsLoad, { payload: mockStrapsLoadPayload })
       .withReducer(combineReducers({ Straps, Table }), {
-        Strap: mockStrapState,
+        Straps: mockStrapsState,
         Table: mockTableState
       })
       .put(setStrapsLoading(true))
@@ -69,15 +69,15 @@ describe('Test straps sagas', () => {
             mockStrapsLoadPayload.pagination.limit,
             mockStrapsLoadPayload.filter
           ),
-          mockStraps
+          mockStraps.items
         ]
       ])
-      .put(setItemsCount(mockStraps.count))
       .put(setStraps(mockStraps.items))
+      .put(setItemsCount(mockStraps.count))
       .put(setStrapsLoading(false))
       .hasFinalState({
-        Strap: {
-          ...mockStrapState,
+        Straps: {
+          ...mockStrapsState,
           list: mockStraps.items
         },
         Table: {
@@ -99,14 +99,14 @@ describe('Test straps sagas', () => {
 
   it('should load strap by id', async (done) => {
     expectSaga(handleGetStrapById, { payload: mockId })
-      .withReducer(combineReducers({ Straps }), { Straps: mockStrapState })
+      .withReducer(combineReducers({ Straps }), { Straps: mockStrapsState })
       .put(setStrapsLoading(true))
       .provide([[call(getStrapById, mockId), mockStrap]])
       .put(setStrap(mockStrap))
       .put(setStrapsLoading(false))
       .hasFinalState({
         Straps: {
-          ...mockStrapState,
+          ...mockStrapsState,
           strap: mockStrap
         }
       })
@@ -125,18 +125,17 @@ describe('Test straps sagas', () => {
   it('should add strap', async (done) => {
     expectSaga(handleStrapAdd, { payload: mockStrap })
       .withReducer(combineReducers({ Straps }), {
-        Straps: mockStrapState
+        Straps: mockStrapsState
       })
       .put(setStrapsLoading(true))
-      .provide([
-        [call(createStrap, mockStrap)],
-        [call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)]
-      ])
+      .provide([[call(createStrap, mockStrap)]])
+      .put(setStrapsLoading(false))
+      .call(handleSuccessSnackbar, SUCCESS_ADD_STATUS)
       .put(push('/straps'))
       .hasFinalState({
-        Model: {
-          ...mockStrapState,
-          strapsLoading: true
+        Straps: {
+          ...mockStrapsState,
+          strapsLoading: false
         }
       })
       .run()
@@ -155,21 +154,19 @@ describe('Test straps sagas', () => {
     expectSaga(handleStrapDelete, { payload: mockId })
       .withReducer(combineReducers({ Straps }), {
         Straps: {
-          ...mockStrapState,
+          ...mockStrapsState,
           list: mockStraps.items
         }
       })
       .put(setStrapsLoading(true))
-      .provide([
-        [call(deleteStrap, mockId)],
-        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
-      ])
+      .provide([[call(deleteStrap, mockId)]])
       .put(removeStrapFromState(mockId))
-      .put(updatePagination())
       .put(setStrapsLoading(false))
+      .put(updatePagination())
+      .call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)
       .hasFinalState({
-        Model: {
-          ...mockStrapState,
+        Straps: {
+          ...mockStrapsState,
           list: []
         }
       })
@@ -188,18 +185,17 @@ describe('Test straps sagas', () => {
   it('should update strap', async (done) => {
     expectSaga(handleStrapUpdate, { payload: mockStrapToUpdate })
       .withReducer(combineReducers({ Straps }), {
-        Straps: mockStrapState
+        Straps: mockStrapsState
       })
       .put(setStrapsLoading(true))
-      .provide([
-        [call(updateStrap, mockStrapToUpdate)],
-        [call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)]
-      ])
+      .provide([[call(updateStrap, mockStrapToUpdate)]])
+      .put(setStrapsLoading(false))
+      .call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS)
       .put(push('/straps'))
       .hasFinalState({
         Straps: {
-          ...mockStrapState,
-          strapsLoading: true
+          ...mockStrapsState,
+          strapsLoading: false
         }
       })
       .run()
@@ -214,11 +210,11 @@ describe('Test straps sagas', () => {
     done();
   });
 
-  it('should handle models error', async (done) => {
+  it('should handle straps error', async (done) => {
     expectSaga(handleStrapsError, mockError)
       .withReducer(combineReducers({ Straps }), {
         Straps: {
-          ...mockStrapState,
+          ...mockStrapsState,
           strapsLoading: true
         }
       })
@@ -227,7 +223,7 @@ describe('Test straps sagas', () => {
       .put(setStrapsError({ e: mockError }))
       .hasFinalState({
         Straps: {
-          ...mockStrapState,
+          ...mockStrapsState,
           strapsLoading: false,
           strapsError: { e: mockError }
         }
