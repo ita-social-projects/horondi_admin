@@ -26,7 +26,7 @@ const { CREATE_COLOR_TITLE } = config.buttonTitles;
 const { createColorTitle, alreadyUse } = config.titles.colorTitles;
 const { pathToMaterials } = config.routes;
 
-function ColorsBar({ onColorChange, colors }) {
+function ColorsBar({ onColorChange, colors, onColorBlur, name, id }) {
   const dispatch = useDispatch();
   const {
     colors: colorsSet,
@@ -58,12 +58,15 @@ function ColorsBar({ onColorChange, colors }) {
     <>
       <div className={styles.colorBar}>
         <ColorsAutocomplete
+          name={name}
+          id={id}
           colorsSet={colorsSet}
           selectedColors={selectedColor}
           handleChange={(value) => {
             setSelectedColor(value);
             onColorChange(value);
           }}
+          handleBlur={onColorBlur}
           deleteHandler={colorDeleteHandler}
         />
         <Button
@@ -115,6 +118,9 @@ function ColorsBar({ onColorChange, colors }) {
 
 ColorsBar.propTypes = {
   onColorChange: PropTypes.func.isRequired,
+  onColorBlur: PropTypes.func,
+  name: PropTypes.string,
+  id: PropTypes.string,
   colors: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
@@ -136,7 +142,10 @@ ColorsBar.propTypes = {
 };
 
 ColorsBar.defaultProps = {
-  colors: []
+  colors: [],
+  name: '',
+  id: '',
+  onColorBlur: () => {}
 };
 
 export default ColorsBar;

@@ -19,7 +19,10 @@ const ColorsAutocomplete = ({
   colorsSet,
   selectedColors,
   handleChange,
-  deleteHandler
+  handleBlur,
+  deleteHandler,
+  name,
+  id
 }) => {
   const styles = useStyles();
 
@@ -27,7 +30,9 @@ const ColorsAutocomplete = ({
     <Autocomplete
       className={styles.root}
       multiple
-      id='tags-filled'
+      id={id || 'tags-filled'}
+      name={name}
+      onBlur={handleBlur}
       options={colorsSet}
       value={selectedColors}
       disableCloseOnSelect
@@ -98,11 +103,17 @@ ColorsAutocomplete.propTypes = {
   colorsSet: PropTypes.arrayOf(colorsType).isRequired,
   selectedColors: PropTypes.oneOfType([colorsType, PropTypes.array]).isRequired,
   handleChange: PropTypes.func.isRequired,
-  deleteHandler: PropTypes.func
+  deleteHandler: PropTypes.func,
+  handleBlur: PropTypes.func,
+  name: PropTypes.string,
+  id: PropTypes.string
 };
 
 ColorsAutocomplete.defaultProps = {
-  deleteHandler: null
+  deleteHandler: null,
+  name: '',
+  id: '',
+  handleBlur: () => {}
 };
 
 export default ColorsAutocomplete;

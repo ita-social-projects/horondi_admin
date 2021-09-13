@@ -19,6 +19,7 @@ const formRegExp = {
   uaNameCreation: /^[а-яїієґ0-9\s]+$/i,
   enNameCreation: /^[a-z0-9\s]+$/i,
   enDescription: /^[a-z0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
+  uaDescription: /^[а-яїієґ0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   categoryCode: /^[a-z0-9|-]/i,
   firstName:
     /^(?=.{2,30}$)[a-zA-Zа-яА-Яіїє]+(([',. -][a-zA-Zа-яА-Яіїє])?[a-zA-Zа-яА-Яіїє]*)*$/i,

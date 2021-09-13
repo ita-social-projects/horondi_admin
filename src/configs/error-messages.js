@@ -129,7 +129,11 @@ export const materialErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
   VALIDATION_ERROR: 'Поле обовязкове',
-  PRICE_VALIDATION_ERROR: 'Тільки цифри'
+  PRICE_VALIDATION_ERROR: 'Тільки цифри',
+  NOT_EN_NAME_MESSAGE: `Введіть ім'я матеріалу англійською`,
+  NOT_UA_NAME_MESSAGE: `Введіть ім'я матеріалу українською`,
+  NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис матеріалу англійською`,
+  NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис матеріалу українською`
 };
 export const sizeErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 20 символів`,
