@@ -79,6 +79,9 @@ export const getPatternById = async (id) => {
             description {
               value
             }
+            model{
+              _id
+            }
             features {
               material {
                 _id

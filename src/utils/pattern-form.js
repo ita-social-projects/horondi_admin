@@ -48,6 +48,7 @@ export const useFormikInitialValues = (pattern) => ({
   uaDescription: pattern.description[0].value || '',
   enDescription: pattern.description[1].value || '',
   material: pattern.features.material._id || '',
+  modelId: pattern.model._id || '',
   handmade: pattern.features.handmade || false,
   available: pattern.available || false,
   additionalPrice: getAdditionalPriceValue(pattern) || '',
