@@ -82,7 +82,9 @@ export const categoryErrorMessages = {
 export const headerErrorMessages = {
   HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
   HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+  HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  NOT_UA_NAME_MESSAGE: `Введіть ім'я посилання українською`,
+  NOT_EN_NAME_MESSAGE: `Введіть ім'я посилання англійською`
 };
 export const newsErrorMessages = {
   NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 2 символів`,
