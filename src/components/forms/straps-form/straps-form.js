@@ -17,11 +17,6 @@ import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import { addStraps, updateStrap } from '../../../redux/straps/straps.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
 import { getStrapsInitialValues } from '../../../utils/straps-form';
 import CheckboxOptions from '../../checkbox-options';
@@ -112,7 +107,6 @@ const StrapsForm = ({ strap, id, edit }) => {
       if (edit && strap.image) data.image = strap.image;
 
       const newStrap = createStraps(data);
-      const uploadCondition = upload instanceof File;
 
       if (edit) {
         dispatch(
