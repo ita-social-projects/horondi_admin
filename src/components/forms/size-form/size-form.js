@@ -56,26 +56,33 @@ function SizeForm({ id, size }) {
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
   const { list } = useSelector(modelSelectorWithPagination);
 
-  const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
-    useFormik({
-      validateOnBlur: true,
-      validationSchema: formSchema,
-      initialValues: getSizeInitialValues(size),
-      onSubmit: (data) => {
-        const newSize = createSize(data);
-        if (id) {
-          const updatedSize = createSize(data);
-          dispatch(
-            updateSize({
-              id,
-              updatedSize
-            })
-          );
-          return;
-        }
-        dispatch(addSize(newSize));
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    setFieldValue,
+    handleBlur
+  } = useFormik({
+    validateOnBlur: true,
+    validationSchema: formSchema,
+    initialValues: getSizeInitialValues(size),
+    onSubmit: (data) => {
+      const newSize = createSize(data);
+      if (id) {
+        const updatedSize = createSize(data);
+        dispatch(
+          updateSize({
+            id,
+            updatedSize
+          })
+        );
+        return;
       }
-    });
+      dispatch(addSize(newSize));
+    }
+  });
 
   useUnsavedChangesHandler(values);
   useEffect(() => {
@@ -150,6 +157,7 @@ function SizeForm({ id, size }) {
                       label={labels.ua[item]}
                       value={values[item]}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       error={touched[item] && !!errors[item]}
                     />
                     {touched[item] && errors[item] && (
@@ -210,6 +218,7 @@ function SizeForm({ id, size }) {
                     onChange={(e) =>
                       setFieldValue(labels.en.modelName, e.target.value)
                     }
+                    onBlur={handleBlur}
                     label={modelTitle}
                   >
                     {list?.map((value) => (
@@ -253,6 +262,7 @@ function SizeForm({ id, size }) {
                   label={getLabelValue(values, additionalPriceType)}
                   value={values.additionalPrice}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   error={touched.additionalPrice && !!errors.additionalPrice}
                 />
                 {touched.additionalPrice && errors.additionalPrice && (
