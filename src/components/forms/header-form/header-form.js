@@ -43,7 +43,7 @@ const HeaderForm = ({ header, id }) => {
       .min(2, HEADER_VALIDATION_ERROR)
       .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
       .required(HEADER_ERROR_MESSAGE),
-    priority: Yup.number(),
+    priority: Yup.number().required(HEADER_ERROR_MESSAGE),
     link: Yup.string()
       .min(2, HEADER_VALIDATION_ERROR)
       .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
@@ -116,6 +116,7 @@ const HeaderForm = ({ header, id }) => {
               label={config.labels.header.priority}
               value={values.priority}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.priority && !!errors.priority}
               helperText={
                 touched.priority && errors.priority ? errors.priority : ''
