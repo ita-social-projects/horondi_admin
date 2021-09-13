@@ -43,7 +43,7 @@ import { modelSelectorWithPagination } from '../../../redux/selectors/model.sele
 const { selectTitle, modelTitle, convertationTitle } =
   config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
-const { additionalPriceType, modelName } = labels;
+const { additionalPriceType } = labels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
 const { pathToSizes } = config.routes;
@@ -212,14 +212,16 @@ function SizeForm({ id, size }) {
                     {modelTitle}
                   </InputLabel>
                   <Select
-                    data-cy={modelName}
-                    id='modelId'
+                    data-cy={labels.en.modelName}
+                    id={labels.en.modelName}
+                    name={labels.en.modelName}
                     value={values.modelId}
                     onChange={(e) =>
                       setFieldValue(labels.en.modelName, e.target.value)
                     }
                     onBlur={handleBlur}
                     label={modelTitle}
+                    error={touched.modelId && !!errors.modelId}
                   >
                     {list?.map((value) => (
                       <MenuItem key={value._id} value={value._id}>
@@ -227,6 +229,9 @@ function SizeForm({ id, size }) {
                       </MenuItem>
                     ))}
                   </Select>
+                  {touched.modelId && errors.modelId && (
+                    <div className={styles.inputError}>{errors.modelId}</div>
+                  )}
                 </FormControl>
               </Paper>
               <Paper className={styles.sizeItemAdd}>
