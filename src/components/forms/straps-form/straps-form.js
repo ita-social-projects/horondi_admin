@@ -17,7 +17,6 @@ import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import { addStraps, updateStrap } from '../../../redux/straps/straps.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import { strapsTranslations } from '../../../translations/straps.translations';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -47,7 +46,6 @@ const {
 } = config.strapsErrorMessages;
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
-const { STRAPS_ERROR } = strapsTranslations;
 const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
   config.formRegExp;
@@ -128,12 +126,6 @@ const StrapsForm = ({ strap, id, edit }) => {
       }
 
       dispatch(addStraps({ strap: newStrap, image: upload }));
-
-      if (!uploadCondition && !strap.image) {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(STRAPS_ERROR));
-        dispatch(setSnackBarStatus(true));
-      }
     }
   });
 
@@ -217,11 +209,6 @@ const StrapsForm = ({ strap, id, edit }) => {
                 src={edit ? values.strapImage : strapImage}
               />
             </div>
-            {touched.strapImage && errors.strapImage && (
-              <div data-cy='strapImage-error' className={styles.error}>
-                {errors.strapImage}
-              </div>
-            )}
           </Paper>
         </Grid>
         <Paper className={styles.colorPaper}>
