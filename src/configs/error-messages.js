@@ -202,6 +202,16 @@ export const pocketsErrorMessages = {
   POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку'
 };
 
+export const strapsErrorMessages = {
+  STRAPS_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  STRAPS_ERROR_MESSAGE: 'Поле не може бути порожнім',
+  STRAPS_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
+  STRAPS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  STRAPS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  STRAPS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
+  STRAPS_COLOR_ERROR_MESSAGE: 'Оберіть колір із запропронованого списку'
+};
+
 export const positionErrorMessages = {
   POSITION_ERROR_MESSAGE: 'Поле не може бути порожнім',
   POSITION_UA_NAME_MESSAGE:

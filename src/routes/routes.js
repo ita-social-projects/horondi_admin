@@ -79,6 +79,9 @@ import BottomEdit from '../pages/bottom/bottom-edit';
 import BasicsPage from '../pages/basics/basics-page';
 import BasicAdd from '../pages/basics/basic-add';
 import BasicDetails from '../pages/basics/basic-details';
+import StrapsPage from '../pages/straps/straps-page';
+import StrapsAdd from '../pages/straps/straps-add/straps-add';
+import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 
 const { routes } = config;
 
@@ -339,6 +342,9 @@ const Routes = () => {
           <Route path={routes.pathToBasics} exact component={BasicsPage} />
           <Route path={routes.pathToAddBasic} exact component={BasicAdd} />
           <Route path={routes.pathToEditBasic} exact component={BasicDetails} />
+          <Route path={routes.pathToStraps} exact component={StrapsPage} />
+          <Route path={routes.pathToStrapsAdd} exact component={StrapsAdd} />
+          <Route path={routes.pathToStrapsEdit} exact component={StrapsEdit} />
           <Route component={ErrorPage} />
         </Switch>
       </ErrorBoundary>
