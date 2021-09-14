@@ -162,7 +162,11 @@ export const statsErrorMessages = {
 export const homePageSlideErrorMessages = {
   SLIDE_VALIDATION_ERROR: 'Мінімум 2 символи',
   SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+  SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  NOT_UA_NAME_MESSAGE: `Введіть ім'я слайду українською`,
+  NOT_EN_NAME_MESSAGE: `Введіть ім'я слайду англійською`,
+  NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис слайду англійською`,
+  NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис слайду українською`
 };
 
 export const constructorErrorMessages = {
