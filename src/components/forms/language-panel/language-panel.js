@@ -54,18 +54,28 @@ const LanguagePanel = ({ lang, inputOptions }) => {
               values[inputName] = value;
             };
             return (
-              <Editor
-                value={values[inputName]}
-                placeholder={input.label[lang]}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                onEditorChange={(value) => setEditorValue(value)}
-                setFiles={input.setFiles}
-                data-cy={`${lang}-${input.name}`}
-                label={lang}
-                id={`${lang}-${input.name}`}
-                key={lang}
-              />
+              <>
+                <Editor
+                  value={values[inputName]}
+                  placeholder={input.label[lang]}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  onEditorChange={(value) => setEditorValue(value)}
+                  setFiles={input.setFiles}
+                  data-cy={`${lang}-${input.name}`}
+                  label={lang}
+                  id={`${lang}-${input.name}`}
+                  key={lang}
+                />
+                {touched[`${lang}-${input.name}`] && errors[inputName] && (
+                  <div
+                    data-cy={`${lang}-${input.name}-error`}
+                    className={styles.error}
+                  >
+                    {errors[inputName]}
+                  </div>
+                )}
+              </>
             );
           })}
         </Paper>

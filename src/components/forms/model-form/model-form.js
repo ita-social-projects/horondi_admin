@@ -291,7 +291,6 @@ const ModelForm = ({ model, id, isEdit }) => {
             )}
           </Paper>
           <Paper>
-            {console.log(touched, errors)}
             <Autocomplete
               id={labelsEn.tagsFilled}
               className={styles.autoComplete}
