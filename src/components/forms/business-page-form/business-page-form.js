@@ -31,6 +31,7 @@ import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -139,6 +140,7 @@ const BusinessPageForm = ({ id, editMode }) => {
       }
     });
 
+  const changed = useChangedValuesChecker(values, id);
   useUnsavedChangesHandler(values);
   useMemo(() => {
     values.code = code;
@@ -187,6 +189,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                 enTitle: values.enTitle
               }}
               errors={errors}
+              disabled={!changed}
             />
           </Grid>
         </Grid>

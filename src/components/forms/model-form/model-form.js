@@ -38,6 +38,7 @@ import {
   loadHelper
 } from '../../../utils/model-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -124,6 +125,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, id);
   useUnsavedChangesHandler(values);
 
   const handleCategory = (event) => {
@@ -203,6 +205,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 onClickHandler={handleSubmit}
                 values={values}
                 errors={errors}
+                disabled={!changed}
               />
             </Grid>
             <Grid item className={styles.button}>

@@ -34,6 +34,7 @@ import {
   valuesPropTypes,
   imagePropTypes
 } from './constructor.variables';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { IMG_URL } = config;
 const { bottomName, enterPrice, additionalPriceLabel, materialLabels } =
@@ -160,6 +161,7 @@ const BottomForm = ({ bottom, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, id);
   useEffect(() => {
     setBottomColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -230,6 +232,7 @@ const BottomForm = ({ bottom, id, edit }) => {
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
+                  disabled={!changed}
                 />
               </Grid>
             </Grid>

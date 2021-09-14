@@ -25,6 +25,7 @@ import {
   onSubmitCategoryHandler
 } from '../../../utils/category-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const {
   CATEGORY_VALIDATION_ERROR,
@@ -99,6 +100,7 @@ const CategoryForm = ({ category, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, id);
   useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -148,6 +150,7 @@ const CategoryForm = ({ category, id, edit }) => {
                   enName: values.enName,
                   code: values.code
                 }}
+                disabled={!changed}
               />
             </Grid>
           </Grid>

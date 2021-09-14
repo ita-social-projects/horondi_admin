@@ -50,6 +50,7 @@ import {
   productFormValues
 } from '../../../consts/product-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { priceLabel } = config.labels.product;
 
@@ -206,6 +207,7 @@ const ProductForm = ({ isEdit }) => {
     formikMaterialsValues
   );
 
+  const changed = useChangedValuesChecker(values, isEdit);
   useUnsavedChangesHandler(values);
   useEffect(() => {
     if (isMountedFirst) {
@@ -333,7 +335,7 @@ const ProductForm = ({ isEdit }) => {
               type={productFormValues.submit}
               variant={productFormValues.contained}
               color={checkboxesValues.primary}
-              disabled={!isFieldsChanged}
+              disabled={!changed}
               onClick={handleProductValidate}
             >
               {SAVE}

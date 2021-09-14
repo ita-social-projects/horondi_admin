@@ -29,6 +29,7 @@ import {
   calculateAddittionalPriceValue
 } from '../../../utils/additionalPrice-helper';
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const labels = config.labels.closuresPageLabel;
 const { additionalPriceType } = config.labels.closuresPageLabel;
@@ -112,6 +113,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, id);
   useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -169,6 +171,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                disabled={!changed}
               />
             </Grid>
           </Grid>
