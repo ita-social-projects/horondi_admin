@@ -697,6 +697,26 @@ const labels = {
     },
     available: 'Доступний',
     avatarText: 'Фото'
+  },
+  strapsPageLabel: {
+    strapsHeader: 'straps-header',
+    strapsTable: 'sideStrapsTable',
+    strapsName: {
+      ua: 'Назва ремінця',
+      en: 'Strap name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
+    available: 'Доступний',
+    avatarText: 'Фото',
+    chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
   }
 };
 export default labels;
