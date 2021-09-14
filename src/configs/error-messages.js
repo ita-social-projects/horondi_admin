@@ -89,7 +89,14 @@ export const headerErrorMessages = {
 export const newsErrorMessages = {
   NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 2 символів`,
   TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів',
-  TEXT_MIN_LENGTH_MESSAGE: 'Текстове поле повино містити не менше 10 символів'
+  TEXT_MIN_LENGTH_MESSAGE: 'Текстове поле повино містити не менше 10 символів',
+  NOT_EN_TEXT_MESSAGE: 'Введіть текст новини англійською',
+  NOT_UA_TEXT_MESSAGE: 'Введіть текст новини українською',
+  NOT_EN_TITLE_MESSAGE: 'Введіть заголовок новини англійською',
+  NOT_UA_TITLE_MESSAGE: 'Введіть заголовок новини українською',
+  NOT_EN_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини англійською",
+  NOT_UA_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини українською",
+  NEWS_ERROR_MESSAGE: 'Поле не може бути порожнім'
 };
 export const modelErrorMessages = {
   MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',

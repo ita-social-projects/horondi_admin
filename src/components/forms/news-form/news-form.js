@@ -20,8 +20,12 @@ const map = require('lodash/map');
 
 const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
-const { NAME_MIN_LENGTH_MESSAGE, TITLE_MIN_LENGTH_MESSAGE } =
-  config.newsErrorMessages;
+const {
+  NAME_MIN_LENGTH_MESSAGE,
+  TITLE_MIN_LENGTH_MESSAGE,
+  TEXT_MIN_LENGTH_MESSAGE,
+  NEWS_ERROR_MESSAGE
+} = config.newsErrorMessages;
 const { imagePrefix } = config;
 const { authorName, title, text } = config.labels.news;
 const {
@@ -59,13 +63,29 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const selectFormSchema = () => {
     const formObj = languages.reduce((reducer, lang) => {
+      reducer[`${lang}Text`] = Yup.string()
+        .min(10, TEXT_MIN_LENGTH_MESSAGE)
+        .matches(
+          config.formRegExp[`${lang}Description`],
+          config.newsErrorMessages[`NOT_${lang.toUpperCase()}_TEXT_MESSAGE`]
+        )
+        .required(NEWS_ERROR_MESSAGE);
       reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
-        .required(NAME_MIN_LENGTH_MESSAGE);
+        .matches(
+          config.formRegExp[`${lang}NameCreation`],
+          config.newsErrorMessages[
+            `NOT_${lang.toUpperCase()}_AUTHOR_NAME_MESSAGE`
+          ]
+        )
+        .required(NEWS_ERROR_MESSAGE);
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
-        .required(TITLE_MIN_LENGTH_MESSAGE);
-      reducer[`${lang}Text`] = Yup.string();
+        .matches(
+          config.formRegExp[`${lang}NameCreation`],
+          config.newsErrorMessages[`NOT_${lang.toUpperCase()}_TITLE_MESSAGE`]
+        )
+        .required(NEWS_ERROR_MESSAGE);
       return reducer;
     }, {});
 
@@ -167,6 +187,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
             </Grid>
           </Grid>
         </div>
+        {console.log(errors, touched)}
         <Grid item xs={12}>
           <Paper className={styles.newsItemUpdate}>
             <div className={styles.imageUploadBlock}>
