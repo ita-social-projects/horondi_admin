@@ -32,7 +32,7 @@ const Editor = ({
 
   const handleChange = (html) => {
     setContent(html);
-    onEditorChange(html);
+    onEditorChange(html === '<p><br></p>' ? '' : html);
   };
 
   const imageHandler = () => {

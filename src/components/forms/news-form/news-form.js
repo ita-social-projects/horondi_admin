@@ -64,11 +64,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   const selectFormSchema = () => {
     const formObj = languages.reduce((reducer, lang) => {
       reducer[`${lang}Text`] = Yup.string()
-        .min(10, TEXT_MIN_LENGTH_MESSAGE)
-        .matches(
-          config.formRegExp[`${lang}Description`],
-          config.newsErrorMessages[`NOT_${lang.toUpperCase()}_TEXT_MESSAGE`]
-        )
+        .min(17, TEXT_MIN_LENGTH_MESSAGE)
         .required(NEWS_ERROR_MESSAGE);
       reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
@@ -144,26 +140,6 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     inputs
   };
 
-  const checkValidData = (value) => {
-    if (
-      value.enAuthorName.length >= 2 &&
-      value.uaAuthorName.length >= 2 &&
-      value.enTitle.length >= 10 &&
-      value.uaTitle.length >= 10
-    ) {
-      return {
-        newsImage: value.newsImage,
-        enAuthorName: value.enAuthorName,
-        uaAuthorName: value.uaAuthorName,
-        enTitle: value.enTitle,
-        uaTitle: value.uaTitle
-      };
-    }
-    if (value.enText === '') delete value.enText;
-    if (value.uaText === '') delete value.uaText;
-    return value;
-  };
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -182,7 +158,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 type='submit'
                 onClickHandler={handleSubmit}
                 title={SAVE_TITLE}
-                values={checkValidData(values)}
+                values={values}
               />
             </Grid>
           </Grid>

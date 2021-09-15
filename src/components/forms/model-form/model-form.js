@@ -177,7 +177,8 @@ const ModelForm = ({ model, id, isEdit }) => {
     handleChange,
     handleBlur,
     values,
-    inputs
+    inputs,
+    setFieldValue
   };
 
   const eventPreventHandler = (e) => {

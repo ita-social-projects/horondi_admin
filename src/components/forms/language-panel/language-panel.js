@@ -60,7 +60,9 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                   placeholder={input.label[lang]}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  onEditorChange={(value) => setEditorValue(value)}
+                  onEditorChange={(value) => {
+                    setEditorValue(value);
+                  }}
                   setFiles={input.setFiles}
                   data-cy={`${lang}-${input.name}`}
                   label={lang}
