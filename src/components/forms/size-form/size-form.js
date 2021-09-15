@@ -79,7 +79,7 @@ function SizeForm({ id, size }) {
       }
     });
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
   useEffect(() => {
     dispatch(getModels());
@@ -121,7 +121,7 @@ function SizeForm({ id, size }) {
                 title={config.buttonTitles.SAVE_SIZE_TITLE}
                 values={values}
                 errors={errors}
-                disabled={!changed}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

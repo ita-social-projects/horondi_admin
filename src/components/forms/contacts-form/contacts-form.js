@@ -22,7 +22,6 @@ import {
 } from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { languages, materialUiConstants } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -118,7 +117,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       }
     });
 
-  const changed = useChangedValuesChecker(values, initialValues);
   useUnsavedChangesHandler(values);
 
   const inputs = setInputsContactHandler(schedule, adress);
@@ -153,7 +151,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 data-cy='save'
                 values={values}
                 errors={errors}
-                disabled={!changed}
               />
             </Grid>
           </Grid>

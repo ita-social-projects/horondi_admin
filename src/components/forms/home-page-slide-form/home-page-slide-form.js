@@ -77,7 +77,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       }
     });
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const checkboxes = [
@@ -136,7 +136,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 title={config.buttonTitles.CREATE_SLIDE_TITLE}
                 values={values}
                 errors={errors}
-                disabled={!changed}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

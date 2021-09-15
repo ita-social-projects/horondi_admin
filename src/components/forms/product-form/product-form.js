@@ -207,7 +207,7 @@ const ProductForm = ({ isEdit }) => {
     formikMaterialsValues
   );
 
-  const changed = useChangedValuesChecker(values, isEdit);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
   useEffect(() => {
     if (isMountedFirst) {
@@ -335,7 +335,7 @@ const ProductForm = ({ isEdit }) => {
               type={productFormValues.submit}
               variant={productFormValues.contained}
               color={checkboxesValues.primary}
-              disabled={!changed}
+              {...(isEdit ? { disabled: !changed } : {})}
               onClick={handleProductValidate}
             >
               {SAVE}

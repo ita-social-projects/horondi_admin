@@ -41,7 +41,10 @@ jest.mock('formik', () => ({
     setFieldValue: mockSetFieldValue
   })
 }));
-
+jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
+  __esModule: true,
+  default: () => true
+}));
 describe('Size form tests', () => {
   const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
   const mockUseSelector = jest.spyOn(redux, 'useSelector');

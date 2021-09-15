@@ -142,7 +142,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       }
     });
 
-  const changed = useChangedValuesChecker(values, isEdit);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const handleMaterial = (e) => {
@@ -304,7 +304,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
           title={SAVE_TITLE}
           values={values}
           errors={errors}
-          disabled={!changed}
+          {...(isEdit ? { disabled: !changed } : {})}
         />
       </form>
     </div>

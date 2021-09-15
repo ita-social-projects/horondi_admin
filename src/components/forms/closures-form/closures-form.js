@@ -113,7 +113,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -171,7 +171,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
-                disabled={!changed}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

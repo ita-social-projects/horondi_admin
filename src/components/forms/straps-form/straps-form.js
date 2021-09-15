@@ -28,6 +28,7 @@ import {
   getLabelValue
 } from '../../../utils/additionalPrice-helper';
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const labels = config.labels.strapsPageLabel;
 const {
@@ -123,6 +124,7 @@ const StrapsForm = ({ strap, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -185,6 +187,7 @@ const StrapsForm = ({ strap, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

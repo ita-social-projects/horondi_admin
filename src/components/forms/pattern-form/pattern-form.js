@@ -194,7 +194,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, id, errors);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const checkboxes = [
@@ -276,7 +276,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   title={SAVE_TITLE}
                   values={values}
                   errors={errors}
-                  disabled={!changed}
+                  {...(id ? { disabled: !changed } : {})}
                 />
               </Grid>
             </Grid>

@@ -49,6 +49,10 @@ jest.mock('../../../../utils/use-pockets-handlers', () => ({
     setPocketsImage: mockSetPocketsImage
   })
 }));
+jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
+  __esModule: true,
+  default: () => true
+}));
 
 jest.spyOn(global, 'FileReader').mockImplementation(function () {
   this.readAsDataURL = jest.fn();

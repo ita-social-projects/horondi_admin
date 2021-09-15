@@ -109,7 +109,7 @@ function MaterialForm({ material, id }) {
       }
     });
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
   useEffect(() => {
     dispatch(getCurrencies());
@@ -174,7 +174,7 @@ function MaterialForm({ material, id }) {
                 title={config.buttonTitles.SAVE_MATERIAL}
                 values={values}
                 errors={errors}
-                disabled={!changed}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

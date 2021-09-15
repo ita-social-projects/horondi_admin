@@ -161,7 +161,7 @@ const BottomForm = ({ bottom, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values, errors);
   useEffect(() => {
     setBottomColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -232,7 +232,7 @@ const BottomForm = ({ bottom, id, edit }) => {
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
-                  disabled={!changed}
+                  {...(id ? { disabled: !changed } : {})}
                 />
               </Grid>
             </Grid>

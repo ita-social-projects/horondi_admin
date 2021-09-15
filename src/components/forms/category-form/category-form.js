@@ -100,7 +100,7 @@ const CategoryForm = ({ category, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -150,7 +150,7 @@ const CategoryForm = ({ category, id, edit }) => {
                   enName: values.enName,
                   code: values.code
                 }}
-                disabled={!changed}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

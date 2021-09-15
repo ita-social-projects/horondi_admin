@@ -1,22 +1,30 @@
-import _ from 'lodash';
 import { useState, useEffect } from 'react';
+import _ from 'lodash';
 import { checkInitialValue } from '../../utils/check-initial-values';
 
-export default function useChangedValuesChecker(values, isEdit, errors) {
+export default function useChangedValuesChecker(values, errors) {
   const [changed, toggleChanged] = useState(false);
   const [firstlyMounted, toggleFirstlyMounted] = useState(false);
-  const [initialValues] = useState(values);
+  const [initialValues, changeInitialValues] = useState(values);
 
   useEffect(() => {
-    if (firstlyMounted && isEdit && !checkInitialValue(initialValues, values))
+    if (
+      _.isEmpty(errors) &&
+      firstlyMounted &&
+      !checkInitialValue(initialValues, values)
+    )
       toggleChanged(true);
     else toggleChanged(false);
-  }, [values]);
+  }, [values, errors]);
   useEffect(() => {
     toggleFirstlyMounted(true);
+
+    if (initialValues.additionalPriceType)
+      changeInitialValues((initialState) => ({
+        ...initialState,
+        additionalPrice: JSON.stringify(initialState.additionalPrice)
+      }));
   }, []);
-  if (firstlyMounted && _.isEmpty(errors, true)) {
-    toggleChanged(true);
-  }
+
   return changed;
 }

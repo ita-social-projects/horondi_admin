@@ -67,7 +67,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
     }
   ];
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const commentUpdateHandler = (data) => {
@@ -115,7 +115,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
                 title={SAVE_TITLE}
                 errors={errors}
                 values={values}
-                disabled={!changed}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

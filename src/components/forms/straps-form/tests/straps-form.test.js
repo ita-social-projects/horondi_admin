@@ -58,6 +58,10 @@ jest.spyOn(global, 'FileReader').mockImplementation(function () {
 });
 
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
+jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
+  __esModule: true,
+  default: () => true
+}));
 
 describe('Straps form tests', () => {
   let spyOnUseSelector;

@@ -57,7 +57,7 @@ const HeaderForm = ({ header, id }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const eventPreventHandler = (e) => {
@@ -80,7 +80,7 @@ const HeaderForm = ({ header, id }) => {
                 title={config.buttonTitles.HEADER_SAVE_TITLE}
                 values={values}
                 errors={errors}
-                disabled={!changed}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

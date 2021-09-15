@@ -146,7 +146,7 @@ const BasicsForm = ({ basic, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, id);
+  const changed = useChangedValuesChecker(values);
   useUnsavedChangesHandler(values);
   useEffect(() => {
     setBasicsColorsHandler(values, setColor, find, materials);
@@ -210,7 +210,7 @@ const BasicsForm = ({ basic, id, edit }) => {
                 errors={errors}
                 values={values}
                 onClickHandler={handleSubmit}
-                disabled={!changed}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

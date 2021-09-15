@@ -68,7 +68,7 @@ const ReplyCommentForm = ({
       }
     });
 
-  const changed = useChangedValuesChecker(values, isEdit);
+  const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
 
   const addReplyCommentHandler = (data) => {
@@ -171,7 +171,7 @@ const ReplyCommentForm = ({
             title={SAVE_TITLE}
             errors={errors}
             values={values}
-            disabled={!changed}
+            {...(isEdit ? { disabled: !changed } : {})}
           />
         </Grid>
       </form>
