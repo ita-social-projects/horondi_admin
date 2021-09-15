@@ -42,5 +42,8 @@ export const historyActions = {
   DELETE_BOTTOM: 'Видалено низ',
   DELETE_POSITION: 'Видалено позицію',
   ADD_POSITION: 'Додано позицію',
-  EDIT_POSITION: 'Редаговано позицію'
+  EDIT_POSITION: 'Редаговано позицію',
+  ADD_STRAP: 'Додано ремінець',
+  EDIT_STRAP: 'Редаговано ремінець',
+  DELETE_STRAP: 'Видалено ремінець'
 };

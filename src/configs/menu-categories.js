@@ -75,6 +75,6 @@ export const constructorMenuCategories = [
   ['Кишені', routes.pathToPockets, SwapHorizIcon],
   ['Позиція', routes.pathToPosition, MyLocationIcon],
   ['Спинка', routes.pathToBacks, PanoramaVerticalIcon],
-  ['Ремінці', routes.pathToPatterns, ConfirmationNumberIcon],
+  ['Ремінці', routes.pathToStraps, ConfirmationNumberIcon],
   ['Защіпки', routes.pathToClosures, AllInclusiveIcon]
 ];

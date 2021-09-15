@@ -34,6 +34,7 @@ import Positions from './position/position.reducer';
 import Closures from './closures/closures.reducer';
 import Currencies from './currencies/currencies.reducer';
 import Basics from './basics/basics.reducer';
+import Straps from './straps/straps.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
@@ -69,6 +70,7 @@ export const rootReducer = (history) =>
     Pockets,
     Closures,
     Positions,
-    Currencies,
-    Basics
+    Basics,
+    Straps,
+    Currencies
   });
