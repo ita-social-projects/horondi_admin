@@ -10,7 +10,8 @@ export default function useChangedValuesChecker(values, errors) {
   useEffect(() => {
     if (
       initialValues.additionalPriceType &&
-      values.additionalPrice !== initialValues.additionalPrice
+      values.additionalPrice !== initialValues.additionalPrice &&
+      typeof initialValues.additionalPrice !== 'string'
     )
       changeInitialValues((initialState) => ({
         ...initialState,
