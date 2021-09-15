@@ -67,7 +67,7 @@ const ReplyCommentForm = ({
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const addReplyCommentHandler = (data) => {
     const addReplyForComment = () => {
@@ -169,6 +169,9 @@ const ReplyCommentForm = ({
             title={SAVE_TITLE}
             errors={errors}
             values={values}
+            onClickHandler={() => {
+              if (unblock) unblock();
+            }}
           />
         </Grid>
       </form>

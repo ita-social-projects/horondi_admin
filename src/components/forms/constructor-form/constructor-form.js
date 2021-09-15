@@ -141,7 +141,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleMaterial = (e) => {
     setFieldValue('material', e.target.value);
@@ -296,7 +296,10 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         <BackButton pathBack={pathToConstructor} />
         <SaveButton
           className={styles.saveButton}
-          onClickHandler={handleSubmit}
+          onClickHandler={() => {
+            if (unblock) unblock();
+            handleSubmit();
+          }}
           data-cy='save-btn'
           type='submit'
           title={SAVE_TITLE}

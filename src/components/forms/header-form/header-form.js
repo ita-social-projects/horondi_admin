@@ -56,7 +56,7 @@ const HeaderForm = ({ header, id }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
@@ -72,7 +72,10 @@ const HeaderForm = ({ header, id }) => {
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
-                onClickHandler={handleSubmit}
+                onClickHandler={() => {
+                  if (unblock) unblock();
+                  handleSubmit();
+                }}
                 data-cy='save'
                 type='submit'
                 title={config.buttonTitles.HEADER_SAVE_TITLE}

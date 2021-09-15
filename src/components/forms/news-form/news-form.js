@@ -99,7 +99,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleLoadAuthorImage = (files) => {
     imageHandler(files, setUploadAuthorImage, values, authorPhoto);
@@ -160,7 +160,10 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
               <SaveButton
                 data-cy='save'
                 type='submit'
-                onClickHandler={handleSubmit}
+                onClickHandler={() => {
+                  if (unblock) unblock();
+                  handleSubmit();
+                }}
                 title={SAVE_TITLE}
                 values={checkValidData(values)}
               />

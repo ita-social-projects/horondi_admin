@@ -41,7 +41,9 @@ jest.mock('formik', () => ({
     handleBlur: mockBlur
   })
 }));
-jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler', () => ({
+  useUnsavedChangesHandler: () => null
+}));
 jest.mock('../../../../utils/use-pockets-handlers', () => ({
   __esModule: true,
   default: () => ({

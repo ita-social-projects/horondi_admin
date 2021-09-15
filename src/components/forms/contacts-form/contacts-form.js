@@ -117,7 +117,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const inputs = setInputsContactHandler(schedule, adress);
 
@@ -147,7 +147,10 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 id='save'
                 type='submit'
                 title='Зберегти'
-                onClickHandler={handleSubmit}
+                onClickHandler={() => {
+                  if (unblock) unblock();
+                  handleSubmit();
+                }}
                 data-cy='save'
                 values={values}
                 errors={errors}

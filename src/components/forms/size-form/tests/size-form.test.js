@@ -10,6 +10,7 @@ import SizeForm from '../index';
 import { sizeList, id, size } from './size-form.variables';
 import { config } from '../../../../configs';
 import { sizeDefaultProps } from '../../../../utils/size-helpers';
+import { useUnsavedChangesHandler } from '../../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 configure({ adapter: new Adapter() });
 
@@ -25,7 +26,9 @@ jest.mock('../../../../redux/sizes/sizes.actions', () => ({
     updateSize: mockUpdateSize
   })
 }));
-jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler', () => ({
+  useUnsavedChangesHandler: () => null
+}));
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();

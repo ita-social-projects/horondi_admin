@@ -124,7 +124,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleCategory = (event) => {
     setFieldValue('category', event.target.value);
@@ -200,7 +200,10 @@ const ModelForm = ({ model, id, isEdit }) => {
                 data-cy={materialUiConstants.save}
                 type={materialUiConstants.types.submit}
                 title={MODEL_SAVE_TITLE}
-                onClickHandler={handleSubmit}
+                onClickHandler={() => {
+                  if (unblock) unblock();
+                  handleSubmit();
+                }}
                 values={values}
                 errors={errors}
               />

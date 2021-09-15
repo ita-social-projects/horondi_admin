@@ -206,7 +206,7 @@ const ProductForm = ({ isEdit }) => {
     formikMaterialsValues
   );
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     if (isMountedFirst) {
       toggleFieldsChanged(true);
@@ -334,7 +334,10 @@ const ProductForm = ({ isEdit }) => {
               variant={productFormValues.contained}
               color={checkboxesValues.primary}
               disabled={!isFieldsChanged}
-              onClick={handleProductValidate}
+              onClick={() => {
+                if (unblock) unblock();
+                handleProductValidate();
+              }}
             >
               {SAVE}
             </Button>

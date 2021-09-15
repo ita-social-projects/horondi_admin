@@ -51,4 +51,6 @@ export const useUnsavedChangesHandler = (values) => {
       if (unblock.current) unblock.current();
     };
   }, [history, isFieldsChanged]);
+
+  return unblock.current;
 };

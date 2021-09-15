@@ -138,7 +138,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
     if (files && files[0]) {
@@ -205,7 +205,10 @@ const PocketsForm = ({ pocket, id, edit }) => {
                 title={SAVE_TITLE}
                 values={values}
                 errors={errors}
-                onClickHandler={handleSubmit}
+                onClickHandler={() => {
+                  if (unblock) unblock();
+                  handleSubmit();
+                }}
               />
             </Grid>
           </Grid>

@@ -76,7 +76,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {
@@ -129,7 +129,10 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
             <Grid item className={styles.button}>
               <SaveButton
                 data-cy='save'
-                onClickHandler={handleSubmit}
+                onClickHandler={() => {
+                  if (unblock) unblock();
+                  handleSubmit();
+                }}
                 type='submit'
                 title={config.buttonTitles.CREATE_SLIDE_TITLE}
                 values={values}

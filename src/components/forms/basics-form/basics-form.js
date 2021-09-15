@@ -145,7 +145,7 @@ const BasicsForm = ({ basic, id, edit }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     setBasicsColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -207,7 +207,10 @@ const BasicsForm = ({ basic, id, edit }) => {
                 title={SAVE_TITLE}
                 errors={errors}
                 values={values}
-                onClickHandler={handleSubmit}
+                onClickHandler={() => {
+                  if (unblock) unblock();
+                  handleSubmit();
+                }}
               />
             </Grid>
           </Grid>

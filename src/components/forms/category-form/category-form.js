@@ -99,7 +99,7 @@ const CategoryForm = ({ category, id, edit }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
     if (files && files[0]) {
@@ -141,7 +141,10 @@ const CategoryForm = ({ category, id, edit }) => {
                 data-cy='save'
                 type={materialUiConstants.types.submit}
                 title={SAVE_TITLE}
-                onClickHandler={handleSubmit}
+                onClickHandler={() => {
+                  if (unblock) unblock();
+                  handleSubmit();
+                }}
                 errors={errors}
                 values={{
                   uaName: values.uaName,
