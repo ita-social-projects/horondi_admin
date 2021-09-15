@@ -9,6 +9,25 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import messages from '../../../configs/messages';
 
+export const saveButtonHandler = (
+  props,
+  onClickHandler,
+  dispatch,
+  openSuccessSnackbar,
+  saveMessage,
+  saveChanges
+) => {
+  const backAction = () => {
+    if (props.unblockFunction) {
+      props.unblockFunction();
+    }
+    onClickHandler();
+    dispatch(closeDialog());
+  };
+  openSuccessSnackbar(backAction, saveMessage, saveChanges);
+  return backAction;
+};
+
 const SaveButton = ({
   title,
   type,
@@ -39,24 +58,20 @@ const SaveButton = ({
 
   const { SAVE_MESSAGE, SAVE_CHANGES } = messages;
 
-  const saveButtonHandler = () => {
-    const backAction = () => {
-      if (props.unblockFunction) {
-        props.unblockFunction();
-      }
-      onClickHandler();
-      dispatch(closeDialog());
-    };
-    openSuccessSnackbar(backAction, SAVE_MESSAGE, SAVE_CHANGES);
-  };
-
   return (
     <Button
       variant='contained'
       color={color}
       type={type}
       onClick={() => {
-        saveButtonHandler();
+        saveButtonHandler(
+          props,
+          onClickHandler,
+          dispatch,
+          openSuccessSnackbar,
+          SAVE_MESSAGE,
+          SAVE_CHANGES
+        );
         setTimeout(() => {
           if (!error) {
             setDisabled(true);

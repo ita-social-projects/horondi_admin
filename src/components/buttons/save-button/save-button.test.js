@@ -2,7 +2,7 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { noop } from 'lodash';
-import SaveButton from './save-button';
+import SaveButton, { saveButtonHandler } from './save-button';
 import { config, inputTypes } from '../../../configs';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -66,5 +66,20 @@ describe('save button tests', () => {
   });
   it('should have default props', () => {
     expect(SaveButton.defaultProps.onClickHandler).toEqual(noop);
+  });
+  it('should call saveButtonHandler', () => {
+    const unblockFunctionMock = jest.fn();
+
+    const result = saveButtonHandler(
+      { unblockFunction: unblockFunctionMock },
+      () => null,
+      () => null,
+      () => null,
+      '',
+      ''
+    );
+    result();
+
+    expect(unblockFunctionMock).toHaveBeenCalled();
   });
 });
