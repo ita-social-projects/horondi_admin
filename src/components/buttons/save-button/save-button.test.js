@@ -20,6 +20,8 @@ describe('save button tests', () => {
   const title = SAVE_TITLE;
   const type = inputTypes.button;
   const mockCallBack = jest.fn(noop());
+  const mockUnblock = jest.fn();
+
   let component;
 
   beforeEach(() => {
@@ -29,6 +31,7 @@ describe('save button tests', () => {
         title={title}
         type={type}
         onClickHandler={mockCallBack}
+        unblockFunction={mockUnblock}
       />
     );
   });
@@ -59,6 +62,7 @@ describe('save button tests', () => {
     expect(SaveButton.propTypes.title).toBeDefined();
     expect(SaveButton.propTypes.type).toBeDefined();
     expect(SaveButton.propTypes.onClickHandler).toBeDefined();
+    expect(SaveButton.propTypes.unblockFunction).toBeDefined();
   });
   it('should have default props', () => {
     expect(SaveButton.defaultProps.onClickHandler).toEqual(noop);

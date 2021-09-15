@@ -77,7 +77,7 @@ function SizeForm({ id, size }) {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     dispatch(getModels());
     dispatch(getCurrencies());
@@ -113,6 +113,7 @@ function SizeForm({ id, size }) {
             <Grid item className={styles.button}>
               <SaveButton
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
                 data-cy={materialUiConstants.save}
                 type={materialUiConstants.types.submit}
                 title={config.buttonTitles.SAVE_SIZE_TITLE}

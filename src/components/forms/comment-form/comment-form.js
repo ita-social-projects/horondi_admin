@@ -66,7 +66,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
     }
   ];
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const commentUpdateHandler = (data) => {
     const commentUpdate = () => {
@@ -108,6 +108,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
             <Grid item className={styles.button}>
               <SaveButton
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
                 data-cy='save'
                 type='submit'
                 title={SAVE_TITLE}

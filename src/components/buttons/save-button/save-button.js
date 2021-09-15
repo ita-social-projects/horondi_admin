@@ -41,6 +41,9 @@ const SaveButton = ({
 
   const saveButtonHandler = () => {
     const backAction = () => {
+      if (props.unblockFunction) {
+        props.unblockFunction();
+      }
       onClickHandler();
       dispatch(closeDialog());
     };
@@ -70,6 +73,7 @@ const SaveButton = ({
 
 SaveButton.propTypes = {
   onClickHandler: PropTypes.func,
+  unblockFunction: PropTypes.func,
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -81,7 +85,8 @@ SaveButton.defaultProps = {
   color: 'primary',
   errors: {},
   values: {},
-  onClickHandler: noop
+  onClickHandler: noop,
+  unblockFunction: () => null
 };
 
 export default SaveButton;

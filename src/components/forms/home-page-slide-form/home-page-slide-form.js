@@ -76,7 +76,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {
@@ -134,6 +134,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 title={config.buttonTitles.CREATE_SLIDE_TITLE}
                 values={values}
                 errors={errors}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

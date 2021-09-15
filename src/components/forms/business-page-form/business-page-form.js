@@ -139,7 +139,7 @@ const BusinessPageForm = ({ id, editMode }) => {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
   useMemo(() => {
     values.code = code;
     values.uaTitle = uaTitle;
@@ -181,6 +181,7 @@ const BusinessPageForm = ({ id, editMode }) => {
               title='Зберегти'
               data-cy='save-btn'
               onClickHandler={handleSubmit}
+              unblockFunction={unblock}
               values={{
                 code: values.code,
                 uaTitle: values.uaTitle,

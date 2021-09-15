@@ -108,7 +108,7 @@ function MaterialForm({ material, id }) {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     dispatch(getCurrencies());
   }, []);
@@ -169,6 +169,7 @@ function MaterialForm({ material, id }) {
                 data-cy='save'
                 type='submit'
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
                 title={config.buttonTitles.SAVE_MATERIAL}
                 values={values}
                 errors={errors}
