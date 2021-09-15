@@ -9,8 +9,15 @@ import Editor from '../../editor';
 const LanguagePanel = ({ lang, inputOptions }) => {
   const styles = useStyles();
 
-  const { values, touched, errors, inputs, handleChange, handleBlur } =
-    inputOptions;
+  const {
+    values,
+    touched,
+    errors,
+    inputs,
+    handleChange,
+    handleBlur,
+    setFieldValue
+  } = inputOptions;
   const inputsTextfields = inputs.filter((input) => !input.isEditor);
   const inputsEditor = inputs.filter((input) => input.isEditor);
   return (
@@ -58,9 +65,9 @@ const LanguagePanel = ({ lang, inputOptions }) => {
                 <Editor
                   value={values[inputName]}
                   placeholder={input.label[lang]}
-                  onChange={handleChange}
                   onBlur={handleBlur}
                   onEditorChange={(value) => {
+                    setFieldValue(inputName, value.toString());
                     setEditorValue(value);
                   }}
                   setFiles={input.setFiles}
@@ -114,7 +121,8 @@ LanguagePanel.propTypes = {
       })
     ),
     handleChange: PropTypes.func,
-    handleBlur: PropTypes.func
+    handleBlur: PropTypes.func,
+    setFieldValue: PropTypes.func.isRequired
   })
 };
 

@@ -22,7 +22,8 @@ const ProductInfoContainer = ({
   touched,
   handleChange,
   handleSubmit,
-  handleBlur
+  handleBlur,
+  setFieldValue
 }) => {
   const styles = useStyles();
 
@@ -32,7 +33,8 @@ const ProductInfoContainer = ({
     handleChange,
     values,
     inputs: infoLabels,
-    handleBlur
+    handleBlur,
+    setFieldValue
   };
 
   const inputsList = languages.map((lang, idx) => (
@@ -63,11 +65,13 @@ ProductInfoContainer.propTypes = {
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  handleBlur: PropTypes.func
+  handleBlur: PropTypes.func,
+  setFieldValue: PropTypes.func
 };
 
 ProductInfoContainer.defaultProps = {
-  handleBlur: () => {}
+  handleBlur: () => {},
+  setFieldValue: () => {}
 };
 
 export default ProductInfoContainer;

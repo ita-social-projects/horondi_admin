@@ -90,30 +90,37 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const formSchema = selectFormSchema();
 
-  const { values, handleSubmit, handleChange, handleBlur, touched, errors } =
-    useFormik({
-      validationSchema: formSchema,
-      initialValues: useFormikInitialValues(newsArticle),
-      onSubmit: () => {
-        const newArticle = createArticle(values);
-        if (editMode) {
-          dispatch(
-            updateArticle({
-              id,
-              newArticle,
-              upload: [values.authorPhoto, values.newsImage]
-            })
-          );
-        } else {
-          dispatch(
-            addArticle({
-              article: newArticle,
-              upload: [values.authorPhoto, values.newsImage]
-            })
-          );
-        }
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
+    validationSchema: formSchema,
+    initialValues: useFormikInitialValues(newsArticle),
+    onSubmit: () => {
+      const newArticle = createArticle(values);
+      if (editMode) {
+        dispatch(
+          updateArticle({
+            id,
+            newArticle,
+            upload: [values.authorPhoto, values.newsImage]
+          })
+        );
+      } else {
+        dispatch(
+          addArticle({
+            article: newArticle,
+            upload: [values.authorPhoto, values.newsImage]
+          })
+        );
       }
-    });
+    }
+  });
 
   useUnsavedChangesHandler(values);
 
@@ -137,7 +144,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     handleChange,
     handleBlur,
     values,
-    inputs
+    inputs,
+    setFieldValue
   };
 
   const eventPreventHandler = (e) => {
