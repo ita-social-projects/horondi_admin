@@ -75,7 +75,7 @@ const ProductForm = ({ isEdit }) => {
 
   const product = useSelector(({ Products }) => Products.selectedProduct);
 
-  const [isFieldsChanged, toggleFieldsChanged] = useState(false);
+  const toggleFieldsChanged = useState(false)[1];
 
   const [isMountedFirst, setFirstMount] = useState(false);
 
