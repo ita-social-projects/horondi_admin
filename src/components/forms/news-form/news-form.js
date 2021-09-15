@@ -159,11 +159,11 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 onClickHandler={handleSubmit}
                 title={SAVE_TITLE}
                 values={values}
+                errors={errors}
               />
             </Grid>
           </Grid>
         </div>
-        {console.log(errors, touched)}
         <Grid item xs={12}>
           <Paper className={styles.newsItemUpdate}>
             <div className={styles.imageUploadBlock}>
