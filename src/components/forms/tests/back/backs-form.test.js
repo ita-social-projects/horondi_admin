@@ -128,6 +128,11 @@ describe('Back form tests', () => {
     expect(wrapper.exists(ImageUploadPreviewContainer)).toBe(true);
   });
 
+  it('Should simulate submit button', () => {
+    component.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
+  });
+
   it('Should upload image', () => {
     const imageContainer = component.find(ImageUploadPreviewContainer);
     const handler = imageContainer.prop('handler');

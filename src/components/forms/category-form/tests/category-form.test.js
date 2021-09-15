@@ -13,6 +13,7 @@ import {
   files,
   target
 } from './category-form.variables';
+import { SaveButton } from '../../../buttons';
 
 configure({ adapter: new Adapter() });
 
@@ -159,6 +160,11 @@ describe('test СategoryForm', () => {
   it('Should have appropriate prop types', () => {
     expect(CategoryForm.propTypes.id).toBe(PropTypes.string);
     expect(CategoryForm.propTypes.edit).toBe(PropTypes.bool);
+  });
+
+  it('Should simulate submit button', () => {
+    wrapper.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
   });
 
   it('Should have default props', () => {

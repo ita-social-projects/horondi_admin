@@ -13,6 +13,7 @@ import {
   mockIsEdit,
   mockCommentWithoutProduct
 } from './comment-form.variables';
+import { SaveButton } from '../../../buttons';
 
 configure({ adapter: new Adapter() });
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
@@ -29,11 +30,13 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const mockSetFieldValue = jest.fn();
+const mockSubmit = jest.fn();
+
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({
     values: {},
-    handleSubmit: jest.fn(),
+    handleSubmit: mockSubmit,
     handleChange: jest.fn(),
     touched: {},
     errors: {},
@@ -78,6 +81,11 @@ describe('Comment form tests', () => {
 
   it(`Should render Product Info button with '${productInfo}' label`, () => {
     expect(wrapper.find('button').at(2).text()).toBe(productInfo);
+  });
+
+  it('Should simulate submit button', () => {
+    wrapper.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
   });
 
   it(`Should call handleClick Product Info button click`, () => {

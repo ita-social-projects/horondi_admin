@@ -109,6 +109,11 @@ describe('Bottom form tests', () => {
     expect(component.find('button').at(1).text()).toBe(SAVE_TITLE);
   });
 
+  it('Should simulate submit button', () => {
+    component.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
+  });
+
   it('should render Grid component', () => {
     const wrapper = component.find(Grid);
     expect(wrapper.exists(Grid)).toBeDefined();

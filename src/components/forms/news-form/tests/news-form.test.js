@@ -7,6 +7,7 @@ import ImageUploadPreviewContainer from '../../../../containers/image-upload-con
 import NewsForm from '../index';
 import { mockId, mockNewsArticle, mockEditMode } from './news-form.variables';
 import LanguagePanel from '../../language-panel';
+import { SaveButton } from '../../../buttons';
 
 configure({ adapter: new Adapter() });
 
@@ -97,6 +98,11 @@ describe('NewsForm tests', () => {
 
   it('Should render LanguagePanel component two times', () => {
     expect(wrapper.find(LanguagePanel)).toHaveLength(2);
+  });
+
+  it('Should simulate submit button', () => {
+    wrapper.find(SaveButton).prop('onClickHandler')();
+    expect(mockHandleSubmit).toHaveBeenCalled();
   });
 
   it('Should render component form', () => {

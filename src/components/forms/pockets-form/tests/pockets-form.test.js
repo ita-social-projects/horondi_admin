@@ -14,6 +14,7 @@ import {
   Pockets,
   mockPositionWithData
 } from './mockPockets';
+import { SaveButton } from '../../../buttons';
 
 configure({ adapter: new Adapter() });
 
@@ -145,6 +146,12 @@ describe('pocket form tests', () => {
     component = mount(<PocketsForm />);
     expect(component).toBeDefined();
   });
+
+  it('Should simulate submit button', () => {
+    component.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
+  });
+
   it('should coverage test', () => {
     component = mount(<PocketsForm edit />);
     expect(component).toBeDefined();

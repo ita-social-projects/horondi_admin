@@ -133,4 +133,9 @@ describe('Size form tests', () => {
     expect(wrapper.props().id).toBe(id);
     expect(wrapper.props().size).toEqual(size);
   });
+
+  it('Should simulate submit button', () => {
+    wrapper.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
+  });
 });

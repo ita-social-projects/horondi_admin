@@ -63,6 +63,11 @@ describe('Material form tests', () => {
     expect(wrapper.exists(LoadingBar)).toBe(true);
   });
 
+  it('Should simulate submit button', () => {
+    wrapper.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
+  });
+
   it('Should render component form', () => {
     expect(wrapper.exists('form')).toBe(true);
   });
@@ -93,13 +98,6 @@ describe('Material form tests', () => {
       .onChange({ target: { value: 'PATTERN' } });
     expect(mockSetFieldValue).toHaveBeenCalledTimes(3);
     expect(mockSetFieldValue).toHaveBeenNthCalledWith(3, 'purpose', 'PATTERN');
-  });
-
-  it('Should simulate submit event', () => {
-    const preventDefault = () => {};
-    const mockedEvent = { preventDefault };
-    wrapper.find('form').props().onSubmit(mockedEvent);
-    expect(mockSubmit).toHaveBeenCalledTimes(0);
   });
 
   it('Should have default props', () => {

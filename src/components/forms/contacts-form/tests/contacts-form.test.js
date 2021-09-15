@@ -7,6 +7,7 @@ import ContactsForm from '../index';
 import { config } from '../../../../configs';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { initialValues } from './contacts-form.variables';
+import { SaveButton } from '../../../buttons';
 
 configure({ adapter: new Adapter() });
 
@@ -39,7 +40,6 @@ jest.mock('react-router-dom', () => ({
     block: () => () => null
   })
 }));
-const mockSetUpload = jest.fn();
 const mockSetContactsImage = jest.fn();
 
 jest.mock('../../../../utils/contacts-form', () => ({
@@ -98,6 +98,10 @@ describe('test СategoryForm', () => {
   it('Should handle enSelectImageHandler', () => {
     wrapper.find(ImageUploadContainer).at(1).props().handler();
     expect(mockSetContactsImage).toHaveBeenCalledTimes(2);
+  });
+  it('Should simulate submit button', () => {
+    wrapper.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
   });
   it('should call preventDefault', () => {
     const event = { preventDefault: () => {} };

@@ -7,6 +7,7 @@ import ClosureForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 
 import { files, target } from './mockClosures';
+import { SaveButton } from '../../../buttons';
 
 configure({ adapter: new Adapter() });
 
@@ -85,6 +86,11 @@ describe('closure form tests', () => {
       fireEvent.click(getByRole('checkbox'));
     });
     expect(mockSetFieldValue).toHaveBeenCalled();
+  });
+
+  it('Should simulate submit button', () => {
+    component.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
   });
 
   it('Should click onsubmit button', () => {
