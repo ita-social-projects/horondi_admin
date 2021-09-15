@@ -38,6 +38,10 @@ jest.mock('formik', () => ({
     errors: {}
   })
 }));
+jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
+  __esModule: true,
+  default: () => true
+}));
 
 describe('NewsForm tests', () => {
   const mockUseEffect = jest.spyOn(React, 'useEffect');

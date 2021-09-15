@@ -9,6 +9,15 @@ export default function useChangedValuesChecker(values, errors) {
 
   useEffect(() => {
     if (
+      initialValues.additionalPriceType &&
+      values.additionalPrice !== initialValues.additionalPrice
+    )
+      changeInitialValues((initialState) => ({
+        ...initialState,
+        additionalPrice: JSON.stringify(initialState.additionalPrice)
+      }));
+
+    if (
       _.isEmpty(errors) &&
       firstlyMounted &&
       !checkInitialValue(initialValues, values)
@@ -18,12 +27,6 @@ export default function useChangedValuesChecker(values, errors) {
   }, [values, errors]);
   useEffect(() => {
     toggleFirstlyMounted(true);
-
-    if (initialValues.additionalPriceType)
-      changeInitialValues((initialState) => ({
-        ...initialState,
-        additionalPrice: JSON.stringify(initialState.additionalPrice)
-      }));
   }, []);
 
   return changed;
