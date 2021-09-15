@@ -69,19 +69,15 @@ const CommentForm = ({ comment, id, isEdit }) => {
   const unblock = useUnsavedChangesHandler(values);
 
   const commentUpdateHandler = (data) => {
-    const commentUpdate = () => {
-      dispatch(closeDialog());
-      dispatch(
-        updateComment({
-          id,
-          comment: {
-            text: data.text,
-            show: data.show
-          }
-        })
-      );
-    };
-    openSuccessSnackbar(commentUpdate, SAVE_MESSAGE, SAVE_CHANGES);
+    dispatch(
+      updateComment({
+        id,
+        comment: {
+          text: data.text,
+          show: data.show
+        }
+      })
+    );
   };
 
   function handleProductClick() {
