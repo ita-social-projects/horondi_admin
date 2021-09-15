@@ -26,8 +26,10 @@ jest.mock('../../../../redux/sizes/sizes.actions', () => ({
     updateSize: mockUpdateSize
   })
 }));
-jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler', () => ({
-  useUnsavedChangesHandler: () => null
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({
+    block: () => () => null
+  })
 }));
 
 const mockSetFieldValue = jest.fn();

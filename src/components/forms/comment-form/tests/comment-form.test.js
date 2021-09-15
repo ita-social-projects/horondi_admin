@@ -23,11 +23,9 @@ const mockUseDispatchFn = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: () => ({
-    push: mockHistoryPush
+    push: mockHistoryPush,
+    block: () => () => null
   })
-}));
-jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler', () => ({
-  useUnsavedChangesHandler: () => null
 }));
 
 const mockSetFieldValue = jest.fn();

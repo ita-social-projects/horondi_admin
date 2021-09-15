@@ -57,8 +57,10 @@ jest.spyOn(global, 'FileReader').mockImplementation(function () {
   this.onload = jest.fn();
 });
 
-jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler', () => ({
-  useUnsavedChangesHandler: () => null
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({
+    block: () => () => null
+  })
 }));
 
 describe('Straps form tests', () => {

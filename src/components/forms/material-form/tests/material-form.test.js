@@ -19,8 +19,10 @@ jest.mock('../../../../utils/use-material-handlers', () => ({
     createMaterial: mockCreateMaterial
   })
 }));
-jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler', () => ({
-  useUnsavedChangesHandler: () => null
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({
+    block: () => () => null
+  })
 }));
 
 const mockSetFieldValue = jest.fn();
