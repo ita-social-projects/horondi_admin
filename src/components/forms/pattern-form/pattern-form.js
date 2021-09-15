@@ -528,6 +528,9 @@ PatternForm.defaultProps = {
       thumbnail: ''
     },
     constructorImg: '',
+    model: {
+      _id: ''
+    },
     features: {
       material: {
         name: [
