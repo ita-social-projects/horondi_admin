@@ -41,8 +41,8 @@ const DateRangePicker = ({ dateFrom, dateTo, handler }) => {
 };
 
 DateRangePicker.propTypes = {
-  dateFrom: PropTypes.any,
-  dateTo: PropTypes.any,
+  dateFrom: PropTypes.instanceOf(Date),
+  dateTo: PropTypes.instanceOf(Date),
   handler: PropTypes.func.isRequired
 };
 
