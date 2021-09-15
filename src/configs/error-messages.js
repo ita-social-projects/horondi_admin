@@ -204,7 +204,11 @@ export const replyCommentErrorMessages = {
 export const businessPageErrorMessages = {
   ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
-  ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки'
+  ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки',
+  ENTER_UA_MESSAGE: 'Поле може містити тільки українські літери та цифри',
+  ENTER_EN_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  MIN_TEXT_LENGTH_MESSAGE: 'Мінімум 10 символiв',
+  MIN_TITLE_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
 
 export const pocketsErrorMessages = {
