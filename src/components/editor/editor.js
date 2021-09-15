@@ -178,7 +178,7 @@ Editor.defaultProps = {
   placeholder: 'Текст',
   setFiles: noop,
   id: '',
-  onBlur: () => {}
+  onBlur: noop
 };
 
 export default Editor;

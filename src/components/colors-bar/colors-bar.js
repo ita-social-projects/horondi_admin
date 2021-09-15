@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { noop } from 'lodash';
 import {
   getColors,
   deleteColor,
@@ -42,10 +43,10 @@ function ColorsBar({ onColorChange, colors, onColorBlur, name, id }) {
     dispatch(getColors());
   }, [dispatch]);
 
-  const colorDeleteHandler = (id) => {
+  const colorDeleteHandler = (idColor) => {
     const removeColor = () => {
       dispatch(closeDialog());
-      dispatch(deleteColor(id));
+      dispatch(deleteColor(idColor));
     };
     openSuccessSnackbar(
       removeColor,
@@ -145,7 +146,7 @@ ColorsBar.defaultProps = {
   colors: [],
   name: '',
   id: '',
-  onColorBlur: () => {}
+  onColorBlur: noop
 };
 
 export default ColorsBar;

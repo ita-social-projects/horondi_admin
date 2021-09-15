@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { noop } from 'lodash';
 import { useStyles } from './product-info-container.styles';
 
 import { config } from '../../configs';
@@ -70,8 +71,8 @@ ProductInfoContainer.propTypes = {
 };
 
 ProductInfoContainer.defaultProps = {
-  handleBlur: () => {},
-  setFieldValue: () => {}
+  handleBlur: noop,
+  setFieldValue: noop
 };
 
 export default ProductInfoContainer;

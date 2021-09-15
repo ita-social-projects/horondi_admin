@@ -3,6 +3,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField, Checkbox } from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { noop } from 'lodash';
 import PropTypes from 'prop-types';
 import { useStyles } from './colors-autocomplete.styles';
 import ColorCircle from '../color-circle';
@@ -113,7 +114,7 @@ ColorsAutocomplete.defaultProps = {
   deleteHandler: null,
   name: '',
   id: '',
-  handleBlur: () => {}
+  handleBlur: noop
 };
 
 export default ColorsAutocomplete;
