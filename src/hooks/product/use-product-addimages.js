@@ -32,7 +32,7 @@ const useProductAddImages = ({
   };
 
   const handleAdditionalImagesLoad = (files) => {
-    console.log(`files`, files);
+    // console.log(`files`, files);
     toggleFieldsChanged(true);
     if (files && files[0]) {
       files.forEach((file, index) => {

@@ -22,7 +22,7 @@ const ImageUploadContainer = ({ handler, src, id, multiple, maxFiles }) => {
   };
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone(onDrop);
-  // console.log(`acceptedFiles`, acceptedFiles)
+  console.log(`src`, src);
 
   const thumbs = Array.isArray(src)
     ? acceptedFiles.map((file) => (
@@ -43,11 +43,13 @@ const ImageUploadContainer = ({ handler, src, id, multiple, maxFiles }) => {
       <Grid item {...getRootProps({ className: 'dropzone' })}>
         <input style={{ height: '100%', width: 'auto' }} {...getInputProps()} />
         <label
-          className={src ? style.labelWithoutBack : style.labelWithBack}
+          className={
+            src && !multiple ? style.labelWithoutBack : style.labelWithBack
+          }
           htmlFor={id}
           data-cy={utils.dataCy.preview}
         >
-          {src && (
+          {src && !multiple && (
             <img className={style.image} src={src} alt={utils.alt.preview} />
           )}
         </label>

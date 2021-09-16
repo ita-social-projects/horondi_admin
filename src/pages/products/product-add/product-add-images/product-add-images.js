@@ -114,7 +114,7 @@ const ProductAddImages = ({
                 src={additionalImagesDisplayed}
                 id={imageUploadInputsId.imageInput1}
                 multiple
-                maxFiles={3}
+                maxFiles={6}
               />
             </div>
           </Grid>
