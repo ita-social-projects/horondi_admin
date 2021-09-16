@@ -135,6 +135,7 @@ const ProductSpeciesContainer = ({
                 onChange={handleSelectChange}
                 onBlur={handleBlur}
                 multiple={multiple}
+                disabled={!options[idx] || !options[idx].length}
               >
                 {options[idx]}
               </Select>
