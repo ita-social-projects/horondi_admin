@@ -31,26 +31,30 @@ const useProductAddImages = ({
     }
   };
 
-  const handleAdditionalImagesLoad = (files, index) => {
-    const file = files[0];
-    const reader = new FileReader();
+  const handleAdditionalImagesLoad = (files) => {
+    console.log(`files`, files);
     toggleFieldsChanged(true);
     if (files && files[0]) {
-      reader.onload = (event) => {
-        const newArr = [...additionalImagesDisplayed];
-        newArr[index] = event.target.result;
-        setAdditionalImagesDisplayed(newArr);
-      };
-      if (!isEdit) {
-        const arrAdd = [...additionalImages];
-        arrAdd[index] = file;
-        setAdditionalImages(arrAdd);
-      } else {
-        const arrUpdate = [...products?.upload];
-        arrUpdate[index] = file;
-        dispatch(setFilesToUpload(arrUpdate));
-      }
-      reader.readAsDataURL(files[0]);
+      files.forEach((file, index) => {
+        // console.log("file in forEach", file)
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const newArr = [...additionalImagesDisplayed];
+          newArr.push(event.target.result);
+          setAdditionalImagesDisplayed(newArr);
+        };
+        if (!isEdit) {
+          const arrAdd = [...additionalImages];
+          arrAdd.push(file);
+          setAdditionalImages(arrAdd);
+        } else {
+          const arrUpdate = [...products?.upload];
+          arrUpdate[index] = file;
+          dispatch(setFilesToUpload(arrUpdate));
+        }
+
+        reader.readAsDataURL(file);
+      });
     }
   };
 

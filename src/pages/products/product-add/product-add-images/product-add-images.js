@@ -64,29 +64,29 @@ const ProductAddImages = ({
       setPrimaryImage
     });
 
-  const additionalFirstImageByIndexLoad = (e) =>
-    handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
+  // const additionalFirstImageByIndexLoad = (e) =>
+  //   handleAdditionalImagesLoad(e, IMAGES_INDEXES.FIRST_ADDITIONAL_IMAGE);
 
-  const additionalSecondImageByIndexLoad = (e) =>
-    handleAdditionalImagesLoad(e, IMAGES_INDEXES.SECOND_ADDITIONAL_IMAGE);
+  // const additionalSecondImageByIndexLoad = (e) =>
+  //   handleAdditionalImagesLoad(e, IMAGES_INDEXES.SECOND_ADDITIONAL_IMAGE);
 
-  const additionalThirdImageByIndexLoad = (e) =>
-    handleAdditionalImagesLoad(e, IMAGES_INDEXES.THIRD_ADDITIONAL_IMAGE);
+  // const additionalThirdImageByIndexLoad = (e) =>
+  //   handleAdditionalImagesLoad(e, IMAGES_INDEXES.THIRD_ADDITIONAL_IMAGE);
 
   const mainImageSrc = isEdit
     ? productImageDisplayed || imgUrl
     : productImageDisplayed;
 
-  const displaySecondImageLoad = additionalImagesDisplayed[0]
-    ? styles.display
-    : styles.displayNone;
+  // const displaySecondImageLoad = additionalImagesDisplayed[0]
+  //   ? styles.display
+  //   : styles.displayNone;
 
-  const displayThirdImageLoad = additionalImagesDisplayed[1]
-    ? styles.display
-    : styles.displayNone;
+  // const displayThirdImageLoad = additionalImagesDisplayed[1]
+  //   ? styles.display
+  //   : styles.displayNone;
 
   return (
-    <div className={styles.container}>
+    <Grid container spacing={1}>
       <Box my={3} className={styles.box}>
         <Grid container spacing={1}>
           <Grid item>
@@ -110,15 +110,17 @@ const ProductAddImages = ({
             <span className={styles.text}>{PRODUCT_PHOTO_TEXT.ADDITIONAL}</span>
             <div className={styles.imageUploadAvatar}>
               <ImageUploadContainer
-                handler={additionalFirstImageByIndexLoad}
-                src={additionalImagesDisplayed[0]}
+                handler={handleAdditionalImagesLoad}
+                src={additionalImagesDisplayed}
                 id={imageUploadInputsId.imageInput1}
+                multiple
+                maxFiles={3}
               />
             </div>
           </Grid>
         </Grid>
       </Box>
-      <Box my={3}>
+      {/* <Box my={3}>
         <Grid container spacing={1}>
           <Grid item className={displaySecondImageLoad}>
             <span className={styles.text} />
@@ -146,8 +148,8 @@ const ProductAddImages = ({
             </div>
           </Grid>
         </Grid>
-      </Box>
-    </div>
+      </Box> */}
+    </Grid>
   );
 };
 
