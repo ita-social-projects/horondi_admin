@@ -124,7 +124,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleCategory = (event) => {
     setFieldValue('category', event.target.value);
@@ -204,6 +204,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 onClickHandler={handleSubmit}
                 values={values}
                 errors={errors}
+                unblockFunction={unblock}
               />
             </Grid>
             <Grid item className={styles.button}>

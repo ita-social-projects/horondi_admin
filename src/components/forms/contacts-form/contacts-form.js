@@ -117,7 +117,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       }
     });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const inputs = setInputsContactHandler(schedule, adress);
 
@@ -151,6 +151,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 data-cy='save'
                 values={values}
                 errors={errors}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

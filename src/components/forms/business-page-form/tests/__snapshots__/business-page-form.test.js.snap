@@ -36,6 +36,7 @@ exports[`Straps form tests Should match snapshot 1`] = `
           onClickHandler={[MockFunction]}
           title="Зберегти"
           type="submit"
+          unblockFunction={[Function]}
           values={
             Object {
               "code": "some code",
@@ -105,6 +106,7 @@ exports[`Straps form tests Should match snapshot 1`] = `
               "setFiles": [MockFunction],
             },
           ],
+          "setFieldValue": [MockFunction],
           "touched": Object {},
           "values": Object {
             "code": "some code",
@@ -143,6 +145,7 @@ exports[`Straps form tests Should match snapshot 1`] = `
               "setFiles": [MockFunction],
             },
           ],
+          "setFieldValue": [MockFunction],
           "touched": Object {},
           "values": Object {
             "code": "some code",

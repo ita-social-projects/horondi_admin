@@ -123,7 +123,7 @@ const StrapsForm = ({ strap, id, edit }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
     if (files && files[0]) {
@@ -185,6 +185,7 @@ const StrapsForm = ({ strap, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>
