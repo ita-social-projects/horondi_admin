@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Straps form tests Should match snapshot 1`] = `
+<div
+  className="makeStyles-container-5"
+>
+  <div
+    className="makeStyles-buttonContainer-6"
+  >
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-fixedButtons-7"
+      container={true}
+      spacing={2}
+    >
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-button-8"
+        item={true}
+      >
+        <BackButton
+          color="primary"
+          initial={false}
+          pathBack="/business-pages"
+          type="button"
+          variant="outlined"
+        />
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-button-8"
+        item={true}
+      >
+        <SaveButton
+          color="primary"
+          data-cy="save-btn"
+          errors={Object {}}
+          id="save"
+          onClickHandler={[MockFunction]}
+          title="Зберегти"
+          type="submit"
+          values={
+            Object {
+              "code": "some code",
+              "enTitle": "some title",
+              "uaTitle": "some title",
+            }
+          }
+        />
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </div>
+  <div
+    className="makeStyles-adminHeader-12"
+  >
+    <WithStyles(ForwardRef(Typography))
+      className="makeStyles-materialTitle-13"
+      data-cy="add-header"
+      variant="h1"
+    >
+      Додати нову бізнес сторінку
+    </WithStyles(ForwardRef(Typography))>
+  </div>
+  <form
+    onSubmit={[Function]}
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      xs={12}
+    >
+      <WithStyles(ForwardRef(Paper))
+        className="makeStyles-businessPageForm-1"
+      >
+        <WithStyles(ForwardRef(TextField))
+          className="makeStyles-textField-2"
+          data-cy="page-code"
+          id="code"
+          label="Код сторінки"
+          onBlur={[MockFunction]}
+          onChange={[MockFunction]}
+          value="some code"
+          variant="outlined"
+        />
+      </WithStyles(ForwardRef(Paper))>
+    </WithStyles(ForwardRef(Grid))>
+    <LanguagePanel
+      inputOptions={
+        Object {
+          "errors": Object {},
+          "handleBlur": [MockFunction],
+          "handleChange": [MockFunction],
+          "inputs": Array [
+            Object {
+              "label": Object {
+                "en": "Title",
+                "ua": "Заголовок",
+              },
+              "name": "title",
+              "required": true,
+            },
+            Object {
+              "isEditor": true,
+              "label": Object {
+                "en": "Text",
+                "ua": "Текст",
+              },
+              "name": "text",
+              "setFiles": [MockFunction],
+            },
+          ],
+          "touched": Object {},
+          "values": Object {
+            "code": "some code",
+            "enText": "some text",
+            "enTitle": "some title",
+            "uaText": "some text",
+            "uaTitle": "some title",
+          },
+        }
+      }
+      key="ua"
+      lang="ua"
+    />
+    <LanguagePanel
+      inputOptions={
+        Object {
+          "errors": Object {},
+          "handleBlur": [MockFunction],
+          "handleChange": [MockFunction],
+          "inputs": Array [
+            Object {
+              "label": Object {
+                "en": "Title",
+                "ua": "Заголовок",
+              },
+              "name": "title",
+              "required": true,
+            },
+            Object {
+              "isEditor": true,
+              "label": Object {
+                "en": "Text",
+                "ua": "Текст",
+              },
+              "name": "text",
+              "setFiles": [MockFunction],
+            },
+          ],
+          "touched": Object {},
+          "values": Object {
+            "code": "some code",
+            "enText": "some text",
+            "enTitle": "some title",
+            "uaText": "some text",
+            "uaTitle": "some title",
+          },
+        }
+      }
+      key="en"
+      lang="en"
+    />
+  </form>
+</div>
+`;
