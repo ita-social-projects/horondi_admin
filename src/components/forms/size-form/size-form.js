@@ -43,7 +43,7 @@ import { modelSelectorWithPagination } from '../../../redux/selectors/model.sele
 const { selectTitle, modelTitle, convertationTitle } =
   config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
-const { additionalPriceType, modelName } = labels;
+const { additionalPriceType } = labels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
 const { pathToSizes } = config.routes;
@@ -56,26 +56,33 @@ function SizeForm({ id, size }) {
   const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
   const { list } = useSelector(modelSelectorWithPagination);
 
-  const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
-    useFormik({
-      validateOnBlur: true,
-      validationSchema: formSchema,
-      initialValues: getSizeInitialValues(size),
-      onSubmit: (data) => {
-        const newSize = createSize(data);
-        if (id) {
-          const updatedSize = createSize(data);
-          dispatch(
-            updateSize({
-              id,
-              updatedSize
-            })
-          );
-          return;
-        }
-        dispatch(addSize(newSize));
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    setFieldValue,
+    handleBlur
+  } = useFormik({
+    validateOnBlur: true,
+    validationSchema: formSchema,
+    initialValues: getSizeInitialValues(size),
+    onSubmit: (data) => {
+      const newSize = createSize(data);
+      if (id) {
+        const updatedSize = createSize(data);
+        dispatch(
+          updateSize({
+            id,
+            updatedSize
+          })
+        );
+        return;
       }
-    });
+      dispatch(addSize(newSize));
+    }
+  });
 
   useUnsavedChangesHandler(values);
   useEffect(() => {
@@ -150,6 +157,7 @@ function SizeForm({ id, size }) {
                       label={labels.ua[item]}
                       value={values[item]}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       error={touched[item] && !!errors[item]}
                     />
                     {touched[item] && errors[item] && (
@@ -204,13 +212,16 @@ function SizeForm({ id, size }) {
                     {modelTitle}
                   </InputLabel>
                   <Select
-                    data-cy={modelName}
-                    id='modelId'
+                    data-cy={labels.en.modelName}
+                    id={labels.en.modelName}
+                    name={labels.en.modelName}
                     value={values.modelId}
                     onChange={(e) =>
                       setFieldValue(labels.en.modelName, e.target.value)
                     }
+                    onBlur={handleBlur}
                     label={modelTitle}
+                    error={touched.modelId && !!errors.modelId}
                   >
                     {list?.map((value) => (
                       <MenuItem key={value._id} value={value._id}>
@@ -218,6 +229,9 @@ function SizeForm({ id, size }) {
                       </MenuItem>
                     ))}
                   </Select>
+                  {touched.modelId && errors.modelId && (
+                    <div className={styles.inputError}>{errors.modelId}</div>
+                  )}
                 </FormControl>
               </Paper>
               <Paper className={styles.sizeItemAdd}>
@@ -253,6 +267,7 @@ function SizeForm({ id, size }) {
                   label={getLabelValue(values, additionalPriceType)}
                   value={values.additionalPrice}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   error={touched.additionalPrice && !!errors.additionalPrice}
                 />
                 {touched.additionalPrice && errors.additionalPrice && (

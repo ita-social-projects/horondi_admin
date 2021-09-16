@@ -136,17 +136,16 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(PATTERN_ERROR_MESSAGE),
-    modelId: Yup.string().required(PATTERN_VALIDATION_ERROR),
+    modelId: Yup.string().required(PATTERN_ERROR_MESSAGE),
     handmade: Yup.boolean(),
     patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
     patternConstructorImage: Yup.string().required(
       CONSTRUCTOR_PHOTO_NOT_PROVIDED
     ),
-    additionalPriceType: Yup.string(),
-    additionalPrice: Yup.string().matches(
-      config.formRegExp.onlyPositiveFloat,
-      PATTERN_VALIDATION_ERROR
-    )
+    additionalPriceType: Yup.string().required(PATTERN_ERROR_MESSAGE),
+    additionalPrice: Yup.string()
+      .matches(config.formRegExp.onlyPositiveFloat, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE)
   });
 
   const {
@@ -364,9 +363,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                 <Select
                   data-cy={modelName}
                   id='modelId'
+                  name='modelId'
                   value={values.modelId}
                   onChange={(e) => setFieldValue('modelId', e.target.value)}
                   label={modelTitle}
+                  onBlur={handleBlur}
                 >
                   {list.map((value) => (
                     <MenuItem key={value._id} value={value._id}>
@@ -375,6 +376,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   ))}
                 </Select>
               </FormControl>
+              {touched.modelId && errors.modelId && (
+                <div data-cy='material-error' className={styles.inputError}>
+                  {errors.modelId}
+                </div>
+              )}
               <FormControl component='fieldset'>
                 <RadioGroup
                   name='additionalPriceType'
@@ -404,9 +410,11 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   `}
                 id='additionalPrice'
                 variant='outlined'
+                type='number'
                 label={getLabelValue(values, additionalPriceType)}
                 value={values.additionalPrice}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 error={touched.additionalPrice && !!errors.additionalPrice}
               />
               {touched.additionalPrice && errors.additionalPrice && (
