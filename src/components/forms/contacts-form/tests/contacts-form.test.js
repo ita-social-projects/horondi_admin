@@ -35,10 +35,6 @@ jest.mock('formik', () => ({
   })
 }));
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
-jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
-  __esModule: true,
-  default: () => true
-}));
 
 const mockSetContactsImage = jest.fn();
 

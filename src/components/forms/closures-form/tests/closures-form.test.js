@@ -37,10 +37,6 @@ jest.mock('../../../../utils/use-closures-handlers', () => ({
     setClosuresImage: mockSetClosureImage
   })
 }));
-jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
-  __esModule: true,
-  default: () => true
-}));
 jest.spyOn(global, 'FileReader').mockImplementation(function () {
   this.readAsDataURL = jest.fn();
   this.onload = jest.fn();

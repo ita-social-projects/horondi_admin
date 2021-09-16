@@ -39,10 +39,6 @@ jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 jest.mock('react-router-dom', () => ({
   useHistory: () => ({ push: () => null })
 }));
-jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
-  __esModule: true,
-  default: () => true
-}));
 
 const mockSetUpload = jest.fn();
 const mockSetCategoryImage = jest.fn();

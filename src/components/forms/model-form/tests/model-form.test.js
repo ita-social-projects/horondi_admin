@@ -44,10 +44,7 @@ jest.mock('formik', () => ({
   })
 }));
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
-jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
-  __esModule: true,
-  default: () => true
-}));
+
 const mockCreateModel = jest.fn();
 const mockSetUpload = jest.fn();
 const mockSetModelImage = jest.fn();
@@ -104,8 +101,8 @@ describe('Model-form tests', () => {
     expect(wrapper.exists('form')).toBe(true);
   });
 
-  it(' should call useEffect twice', () => {
-    expect(mockUseEffect).toHaveBeenCalledTimes(2);
+  it(' should call useEffect four times', () => {
+    expect(mockUseEffect).toHaveBeenCalledTimes(4);
   });
 
   it(' should call useSelector twice', () => {

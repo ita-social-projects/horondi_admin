@@ -23,7 +23,6 @@ const mockChange = jest.fn();
 const mockBlur = jest.fn();
 const mockSetUpload = jest.fn();
 const mockSetPocketsImage = jest.fn();
-const getOptionSelected = jest.fn();
 
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
@@ -48,10 +47,6 @@ jest.mock('../../../../utils/use-pockets-handlers', () => ({
     setUpload: mockSetUpload,
     setPocketsImage: mockSetPocketsImage
   })
-}));
-jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
-  __esModule: true,
-  default: () => true
 }));
 
 jest.spyOn(global, 'FileReader').mockImplementation(function () {

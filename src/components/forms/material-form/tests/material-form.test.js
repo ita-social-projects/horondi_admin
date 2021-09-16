@@ -20,10 +20,6 @@ jest.mock('../../../../utils/use-material-handlers', () => ({
   })
 }));
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
-jest.mock('../../../../hooks/forms/use-changed-values-checker', () => ({
-  __esModule: true,
-  default: () => true
-}));
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
