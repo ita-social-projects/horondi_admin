@@ -93,6 +93,7 @@ const ProductMaterialsContainer = ({
               value={values[name]}
               onChange={handleSelectChange}
               onBlur={handleBlur}
+              disabled={!options[idx] || !options[idx].length}
             >
               {options[idx]}
             </Select>
