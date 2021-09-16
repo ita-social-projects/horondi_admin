@@ -35,7 +35,6 @@ export const getSizeInitialValues = (size) => ({
   volumeInLiters: size.volumeInLiters || '',
   weightInKg: size.weightInKg || '',
   available: size.available || false,
-  // additionalPrice: size.additionalPrice || '',
   additionalPrice: getAdditionalPriceValue(size),
   additionalPriceType: size?.additionalPrice[0]?.type || 'ABSOLUTE_INDICATOR'
 });

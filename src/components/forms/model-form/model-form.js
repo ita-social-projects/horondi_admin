@@ -177,7 +177,8 @@ const ModelForm = ({ model, id, isEdit }) => {
     handleChange,
     handleBlur,
     values,
-    inputs
+    inputs,
+    setFieldValue
   };
 
   const eventPreventHandler = (e) => {
@@ -260,6 +261,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 value={category}
                 native
                 onChange={handleCategory}
+                onBlur={handleBlur}
                 label={availableCategory}
                 variant={labelsEn.variantStandard}
               >
@@ -283,6 +285,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               label={priority}
               value={values.priority}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.priority && !!errors.priority}
             />
             {touched.priority && errors.priority && (
@@ -301,6 +304,8 @@ const ModelForm = ({ model, id, isEdit }) => {
               }
               defaultValue={sizes}
               onChange={onTagsChange}
+              onBlur={handleBlur}
+              error={touched['tags-filled'] && !!errors.priority}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -312,6 +317,9 @@ const ModelForm = ({ model, id, isEdit }) => {
                 />
               )}
             />
+            {touched['tags-filled'] && errors.sizes && (
+              <div className={styles.inputError}>{errors.sizes}</div>
+            )}
           </Paper>
         </Grid>
         {languages.map((lang) => (

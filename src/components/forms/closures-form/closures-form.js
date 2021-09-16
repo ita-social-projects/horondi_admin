@@ -232,6 +232,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
               label={getLabelValue(values, additionalPriceType)}
               value={values.additionalPrice}
               onChange={handleChange}
+              onBlur={handleBlur}
               id='additionalPrice'
               error={touched.additionalPrice && !!errors.additionalPrice}
             />
