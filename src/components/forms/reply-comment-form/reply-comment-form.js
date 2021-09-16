@@ -52,21 +52,28 @@ const ReplyCommentForm = ({
     showReplyComment: Yup.bool()
   });
 
-  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
-    useFormik({
-      validationSchema: replyCommentValidationSchema,
-      initialValues: {
-        replyText: reply.replyText || '',
-        showReplyComment: adminReply ? true : reply.showReplyComment || false
-      },
-      onSubmit: (data) => {
-        if (isEdit) {
-          updateReplyCommentHandler(reply._id, data, reply.refToReplyComment);
-        } else {
-          addReplyCommentHandler(data);
-        }
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
+    validationSchema: replyCommentValidationSchema,
+    initialValues: {
+      replyText: reply.replyText || '',
+      showReplyComment: adminReply ? true : reply.showReplyComment || false
+    },
+    onSubmit: (data) => {
+      if (isEdit) {
+        updateReplyCommentHandler(reply._id, data, reply.refToReplyComment);
+      } else {
+        addReplyCommentHandler(data);
       }
-    });
+    }
+  });
 
   const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
@@ -142,12 +149,13 @@ const ReplyCommentForm = ({
               label={config.labels.replyComment.text}
               value={values.replyText}
               onChange={handleChange}
-              error={touched.code && !!errors.code}
+              onBlur={handleBlur}
+              error={touched.replyText && !!errors.replyText}
               multiline
             />
-            {touched.code && errors.code && (
+            {touched.replyText && errors.replyText && (
               <div data-cy='code-error' className={styles.error}>
-                {errors.code}
+                {errors.replyText}
               </div>
             )}
             {isEdit ? (
