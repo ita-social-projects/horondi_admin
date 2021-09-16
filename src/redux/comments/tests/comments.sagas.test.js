@@ -5,6 +5,8 @@ import { push } from 'connected-react-router';
 import { throwError } from 'redux-saga-test-plan/providers';
 import {
   handleCommentsLoad,
+  handleCommentsUserLoad,
+  handleRepliesCommentsUserLoad,
   handleCommentLoad,
   handleCommentDelete,
   handleCommentUpdate,
@@ -22,6 +24,8 @@ import {
   getCommentById,
   getCommentsByType,
   getAllComments,
+  getAllCommentsByUser,
+  getAllCommentsRepliesByUser,
   getRecentComments,
   getReplyComments,
   addReplyForComment,
@@ -30,6 +34,8 @@ import {
 
 import {
   setComments,
+  setCommentsUser,
+  setRepliesCommentsUser,
   setCommentsLoading,
   setCommentError,
   removeCommentFromStore,
@@ -65,7 +71,11 @@ import {
   mockSuccessDelete,
   tablePagination,
   sortData,
-  replyFilter
+  replyFilter,
+  commentFilterUser,
+  replyFilterUser,
+  userComments,
+  userReplies
 } from './comments.variables';
 
 import { setItemsCount, updatePagination } from '../../table/table.actions';
@@ -83,6 +93,148 @@ import {
 import Snackbar from '../../snackbar/snackbar.reducer';
 
 const { SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
+
+describe('get user comments sagas tests', () => {
+  const {
+    filter: filterComment,
+    pagination: paginComment,
+    sort,
+    userId
+  } = commentFilterUser;
+
+  it('should handle user comments load', () => {
+    expectSaga(handleCommentsUserLoad, {
+      payload: commentFilterUser
+    })
+      .withReducer(combineReducers({ Table, commentsReducer }), {
+        commentsReducer: initialState,
+        Table: mockTableState
+      })
+      .put(setCommentsLoading(true))
+      .provide([
+        [
+          call(getAllCommentsByUser, filterComment, paginComment, sort, userId),
+          userComments
+        ]
+      ])
+      .put(setItemsCount(userComments.count))
+      .put(setCommentsUser(userComments.items))
+      .put(setCommentsLoading(false))
+      .hasFinalState({
+        commentsReducer: {
+          ...initialState,
+          listUser: userComments.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: userComments.count
+        }
+      })
+      .run();
+  });
+
+  it('should throw an error', () => {
+    expectSaga(handleRepliesCommentsUserLoad, {
+      payload: commentFilterUser
+    })
+      .withReducer(combineReducers({ Table, commentsReducer }), {
+        commentsReducer: initialState,
+        Table: mockTableState
+      })
+      .provide([
+        [
+          call(
+            getAllCommentsRepliesByUser,
+            filterComment,
+            paginComment,
+            sort,
+            userId
+          ),
+          throwError(mockError)
+        ]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run();
+  });
+});
+
+describe('get user replies sagas tests', () => {
+  const {
+    filter: filterReply,
+    pagination: paginReply,
+    sort,
+    userId
+  } = replyFilterUser;
+
+  it('should handle user replies load', () => {
+    expectSaga(handleRepliesCommentsUserLoad, {
+      payload: replyFilterUser
+    })
+      .withReducer(combineReducers({ Table, commentsReducer }), {
+        commentsReducer: initialState,
+        Table: mockTableState
+      })
+      .put(setCommentsLoading(true))
+      .provide([
+        [
+          call(
+            getAllCommentsRepliesByUser,
+            filterReply,
+            paginReply,
+            sort,
+            userId
+          ),
+          userReplies
+        ]
+      ])
+      .put(setItemsCount(userReplies.count))
+      .put(setRepliesCommentsUser(userReplies.items))
+      .put(setCommentsLoading(false))
+      .hasFinalState({
+        commentsReducer: {
+          ...initialState,
+          listRepliesUser: userReplies.items
+        },
+        Table: {
+          ...mockTableState,
+          itemsCount: userReplies.count
+        }
+      })
+      .run();
+  });
+
+  it('should throw an error', () => {
+    expectSaga(handleRepliesCommentsUserLoad, {
+      payload: replyFilterUser
+    })
+      .withReducer(combineReducers({ Table, commentsReducer }), {
+        commentsReducer: initialState,
+        Table: mockTableState
+      })
+      .provide([
+        [
+          call(
+            getAllCommentsRepliesByUser,
+            filterReply,
+            paginReply,
+            sort,
+            userId
+          ),
+          throwError(mockError)
+        ]
+      ])
+      .put(setCommentsLoading(false))
+      .put(setCommentError({ e: mockError }))
+      .put(setSnackBarSeverity(snackBarError))
+      .put(setSnackBarMessage(mockError.message))
+      .put(setSnackBarStatus(true))
+      .run();
+  });
+});
 
 describe('get comments sagas tests', () => {
   it('should handle comments load', () => {
@@ -113,7 +265,7 @@ describe('get comments sagas tests', () => {
       .run();
   });
 
-  it('should throw an error', () =>
+  it('should throw an error', () => {
     expectSaga(handleCommentsLoad, {
       payload: { filter, pagination, sort: sortData }
     })
@@ -132,7 +284,8 @@ describe('get comments sagas tests', () => {
       .put(setSnackBarSeverity(snackBarError))
       .put(setSnackBarMessage(mockError.message))
       .put(setSnackBarStatus(true))
-      .run());
+      .run();
+  });
 });
 
 describe('get comment sagas tests', () => {

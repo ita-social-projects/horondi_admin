@@ -70,11 +70,11 @@ export const staticPagesCategories = [
 
 export const constructorMenuCategories = [
   ['Список конструкторів', routes.pathToConstructorList, ViewHeadlineIcon],
-  ['Основа', routes.pathToPatterns, ViewDayIcon],
-  ['Низ', routes.pathToPatterns, GetAppIcon],
+  ['Низ', routes.pathToBottoms, GetAppIcon],
+  ['Основа', routes.pathToBasics, ViewDayIcon],
   ['Кишені', routes.pathToPockets, SwapHorizIcon],
   ['Позиція', routes.pathToPosition, MyLocationIcon],
   ['Спинка', routes.pathToBacks, PanoramaVerticalIcon],
-  ['Ремінці', routes.pathToPatterns, ConfirmationNumberIcon],
+  ['Ремінці', routes.pathToStraps, ConfirmationNumberIcon],
   ['Защіпки', routes.pathToClosures, AllInclusiveIcon]
 ];

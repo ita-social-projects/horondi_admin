@@ -63,6 +63,7 @@ import PocketsPage from '../pages/pockets/pockets-page';
 import PocketsAdd from '../pages/pockets/pockets-add/pockets-add';
 import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
 import BackPage from '../pages/back';
+import BottomPage from '../pages/bottom';
 import BackAdd from '../pages/back/back-add';
 import BackDetails from '../pages/back/back-details';
 import PositionPage from '../pages/position/position-page';
@@ -73,6 +74,14 @@ import ConstructorModelDetails from '../pages/constructor-list/constructor-detai
 import ClosuresPage from '../pages/closures/closures-page';
 import ClosuresAdd from '../pages/closures/closures-add/closures-add';
 import ClosuresEdit from '../pages/closures/closures-edit/closures-edit';
+import BottomAdd from '../pages/bottom/bottom-add';
+import BottomEdit from '../pages/bottom/bottom-edit';
+import BasicsPage from '../pages/basics/basics-page';
+import BasicAdd from '../pages/basics/basic-add';
+import BasicDetails from '../pages/basics/basic-details';
+import StrapsPage from '../pages/straps/straps-page';
+import StrapsAdd from '../pages/straps/straps-add/straps-add';
+import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 
 const { routes } = config;
 
@@ -295,6 +304,9 @@ const Routes = () => {
             exact
             component={BackDetails}
           />
+          <Route path={routes.pathToBottoms} exact component={BottomPage} />
+          <Route path={routes.pathToBottomsAdd} exact component={BottomAdd} />
+          <Route path={routes.pathToBottomsEdit} exact component={BottomEdit} />
           <Route path={routes.pathToPosition} exact component={PositionPage} />
           <Route
             path={routes.pathToPositionAdd}
@@ -327,6 +339,12 @@ const Routes = () => {
             exact
             component={ClosuresEdit}
           />
+          <Route path={routes.pathToBasics} exact component={BasicsPage} />
+          <Route path={routes.pathToAddBasic} exact component={BasicAdd} />
+          <Route path={routes.pathToEditBasic} exact component={BasicDetails} />
+          <Route path={routes.pathToStraps} exact component={StrapsPage} />
+          <Route path={routes.pathToStrapsAdd} exact component={StrapsAdd} />
+          <Route path={routes.pathToStrapsEdit} exact component={StrapsEdit} />
           <Route component={ErrorPage} />
         </Switch>
       </ErrorBoundary>

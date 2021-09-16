@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { noop } from 'lodash';
 import {
   getColors,
   deleteColor,
@@ -26,7 +27,7 @@ const { CREATE_COLOR_TITLE } = config.buttonTitles;
 const { createColorTitle, alreadyUse } = config.titles.colorTitles;
 const { pathToMaterials } = config.routes;
 
-function ColorsBar({ onColorChange, colors }) {
+function ColorsBar({ onColorChange, colors, onColorBlur, name, id }) {
   const dispatch = useDispatch();
   const {
     colors: colorsSet,
@@ -42,10 +43,10 @@ function ColorsBar({ onColorChange, colors }) {
     dispatch(getColors());
   }, [dispatch]);
 
-  const colorDeleteHandler = (id) => {
+  const colorDeleteHandler = (idColor) => {
     const removeColor = () => {
       dispatch(closeDialog());
-      dispatch(deleteColor(id));
+      dispatch(deleteColor(idColor));
     };
     openSuccessSnackbar(
       removeColor,
@@ -58,12 +59,15 @@ function ColorsBar({ onColorChange, colors }) {
     <>
       <div className={styles.colorBar}>
         <ColorsAutocomplete
+          name={name}
+          id={id}
           colorsSet={colorsSet}
           selectedColors={selectedColor}
           handleChange={(value) => {
             setSelectedColor(value);
             onColorChange(value);
           }}
+          handleBlur={onColorBlur}
           deleteHandler={colorDeleteHandler}
         />
         <Button
@@ -115,6 +119,9 @@ function ColorsBar({ onColorChange, colors }) {
 
 ColorsBar.propTypes = {
   onColorChange: PropTypes.func.isRequired,
+  onColorBlur: PropTypes.func,
+  name: PropTypes.string,
+  id: PropTypes.string,
   colors: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
@@ -136,7 +143,10 @@ ColorsBar.propTypes = {
 };
 
 ColorsBar.defaultProps = {
-  colors: []
+  colors: [],
+  name: '',
+  id: '',
+  onColorBlur: noop
 };
 
 export default ColorsBar;

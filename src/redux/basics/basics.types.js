@@ -1,0 +1,12 @@
+export const ADD_BASIC = 'ADD_BASIC';
+export const GET_BASICS = 'GET_BASICS';
+export const SET_BASICS = 'SET_BASICS';
+export const GET_BASIC = 'GET_BASIC';
+export const SET_BASIC = 'SET_BASIC';
+export const SET_BASICS_LOADING = 'SET_BASICS_LOADING';
+export const DELETE_BASIC = 'DELETE_BASIC';
+export const UPDATE_BASIC = 'UPDATE_BASIC';
+export const CLEAR_FILTER = 'CLEAR_FILTER';
+export const SET_BASICS_FILTER = 'SET_BASICS_FILTER';
+export const REMOVE_BASIC = 'REMOVE_BASIC';
+export const SET_BASIC_ERROR = 'SET_BASIC_ERROR';

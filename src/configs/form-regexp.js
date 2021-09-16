@@ -10,6 +10,7 @@ const formRegExp = {
   uaRegex: '[А-ЩЬЮЯҐЄІЇа-щьюяґєії]',
   enRegex: /[a-z]/i,
   onlyPositiveDigits: /^[0-9]\d*$/,
+  onlyPositiveFloat: /^(?:[1-9]\d*|0(?!(?:\.0+)?$))?(?:\.\d+)?$/,
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
   userName: /[а-яА-Я]{2,}/g,
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
@@ -18,6 +19,7 @@ const formRegExp = {
   uaNameCreation: /^[а-яїієґ0-9\s]+$/i,
   enNameCreation: /^[a-z0-9\s]+$/i,
   enDescription: /^[a-z0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
+  uaDescription: /^[а-яїієґ0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   categoryCode: /^[a-z0-9|-]/i,
   firstName:
     /^(?=.{2,30}$)[a-zA-Zа-яА-Яіїє]+(([',. -][a-zA-Zа-яА-Яіїє])?[a-zA-Zа-яА-Яіїє]*)*$/i,

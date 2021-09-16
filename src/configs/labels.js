@@ -114,7 +114,49 @@ const labels = {
     patternDescription: {
       ua: 'Опис гобелену',
       en: 'Pattern description'
+    },
+    modelName: 'Назва моделі',
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
     }
+  },
+  basics: {
+    image: 'Фото основи',
+    material: 'Матеріал',
+    available: 'Доступна',
+    customizable: 'для конструктора',
+    avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    basicName: {
+      ua: 'Назва основи',
+      en: 'Basic name'
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для основи ',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір основи',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
   },
   back: {
     image: 'Фото спинки',
@@ -123,7 +165,7 @@ const labels = {
     customizable: 'для конструктора',
     avatarText: 'Фото',
     enterPrice: 'Додаткова ціна (USD):',
-    additionalPriceLabel: 'Введіть додаткову ціну',
+    additionalPriceLabel: 'Введіть додаткову ціну (USD)',
     form: {
       name: mapToLanguages("І'мя", 'Name')
     },
@@ -146,13 +188,52 @@ const labels = {
       }
     ]
   },
+  bottom: {
+    image: 'Фото низу',
+    material: 'Матеріал',
+    available: 'Доступний',
+    avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    bottomName: {
+      ua: 'Назва низу',
+      en: 'Bottom name'
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для низу',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір низу',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
+  },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),
     available: mapToLanguages('Доступний', 'Available'),
     name: { ua: 'Назва матеріалу', en: 'Material name' },
     description: { ua: 'Опис матеріалу', en: 'Material description' },
-    additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
   },
   color: {
     name: 'Назва кольору',
@@ -189,6 +270,13 @@ const labels = {
     }
   ],
   product: {
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
     sortBySelectOptions: [
       { label: 'популярністю', value: 'popularity' },
       { label: 'від дорогих до дешевих', value: 'sortDesc' },
@@ -321,7 +409,7 @@ const labels = {
       additions: false
     },
     priceLabel: {
-      label: 'Ціна(USD) ',
+      label: 'Ціна (USD) ',
       name: 'basePrice'
     }
   },
@@ -475,6 +563,12 @@ const labels = {
       { label: 'Доставлено', value: 'DELIVERED' }
     ]
   },
+  comments: {
+    select: [
+      { label: 'Коментар', value: 'COMMENT' },
+      { label: 'Відповідь', value: 'REPLY_COMMENT' }
+    ]
+  },
   homePageSlide: {
     image: 'Фото слайду',
     title: { ua: 'Заголовок слайду', en: 'Slider title' },
@@ -504,16 +598,31 @@ const labels = {
   },
 
   sizeLabels: {
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
     ua: {
       heightInCm: 'Висота',
       widthInCm: 'Ширина',
       depthInCm: 'Глибина',
       volumeInLiters: "Об'єм (літри)",
       weightInKg: 'Вага',
-      additionalPrice: 'Додаткова ціна',
+      additionalPrice: 'Додаткова ціна (USD)',
       modelName: 'Назва моделі',
       name: "Ім'я",
-      available: 'Доступний'
+      available: 'Доступний',
+      additionalPriceType: {
+        absolutePrice: 'Абсолютна ціна (USD)',
+        relativePrice: 'Відносна ціна (%)'
+      }
     },
     en: {
       heightInCm: 'heightInCm',
@@ -521,10 +630,14 @@ const labels = {
       depthInCm: 'depthInCm',
       volumeInLiters: 'volumeInLiters',
       weightInKg: 'weightInKg',
-      additionalPrice: 'additionalPrice',
+      additionalPrice: 'additionalPrice (USD)',
       modelName: 'modelId',
       name: 'name',
-      available: 'available'
+      available: 'available',
+      additionalPriceType: {
+        absolutePrice: 'Absolute price (USD)',
+        relativePrice: 'Relative price (%)'
+      }
     }
   },
   pocketsPageLabel: {
@@ -551,9 +664,20 @@ const labels = {
       en: 'Closure name'
     },
     enterPrice: 'Додаткова ціна (USD):',
-    additionalPrice: 'Введіть додаткову ціну',
+    // additionalPrice: 'Введіть додаткову ціну',
     available: 'Доступний',
-    avatarText: 'Фото'
+    avatarText: 'Фото',
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
   },
   positionPageLabel: {
     positionHeader: 'position-header',
@@ -563,6 +687,36 @@ const labels = {
       ua: 'Позиція',
       en: 'Position'
     }
+  },
+  basiscPageLabel: {
+    basicsHeader: 'basics-header',
+    basicsTable: 'sideBasicsTable',
+    basicsName: {
+      ua: 'Назва основи',
+      en: 'Basics name'
+    },
+    available: 'Доступний',
+    avatarText: 'Фото'
+  },
+  strapsPageLabel: {
+    strapsHeader: 'straps-header',
+    strapsTable: 'sideStrapsTable',
+    strapsName: {
+      ua: 'Назва ремінця',
+      en: 'Strap name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
+    available: 'Доступний',
+    avatarText: 'Фото',
+    chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
   }
 };
 export default labels;

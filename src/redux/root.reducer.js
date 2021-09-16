@@ -28,9 +28,13 @@ import Error from './error/error.reducer';
 import Color from './color/color.reducer';
 import Constructor from './constructor/constructor.reducer';
 import Back from './back/back.reducer';
+import Bottom from './bottom/bottom.reducer';
 import Pockets from './pockets/pockets.reducer';
 import Positions from './position/position.reducer';
 import Closures from './closures/closures.reducer';
+import Currencies from './currencies/currencies.reducer';
+import Basics from './basics/basics.reducer';
+import Straps from './straps/straps.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
@@ -62,7 +66,11 @@ export const rootReducer = (history) =>
     Constructor,
     History,
     Back,
+    Bottom,
     Pockets,
     Closures,
-    Positions
+    Positions,
+    Basics,
+    Straps,
+    Currencies
   });

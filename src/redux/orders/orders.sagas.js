@@ -1,12 +1,11 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
 
 import { config } from '../../configs';
-import routes from '../../configs/routes';
 import {
   GET_ORDER,
   UPDATE_ORDER,
   GET_ORDER_LIST,
+  GET_ORDER_LIST_USER,
   DELETE_ORDER,
   GET_NOVAPOSHTA_CITIES,
   GET_NOVAPOSHTA_WAREHOUSES,
@@ -21,6 +20,7 @@ import {
   updateOrder,
   addOrder,
   getAllOrders,
+  getOrdersByUser,
   deleteOrder,
   getNovaPoshtaCities,
   getNovaPoshtaWarehouses,
@@ -33,6 +33,7 @@ import { setItemsCount, updatePagination } from '../table/table.actions';
 
 import {
   setOrderList,
+  setOrderListUser,
   setOrderError,
   setOrderLoading,
   setOrder,
@@ -112,6 +113,31 @@ export function* handleOrdersListLoad({ payload }) {
   }
 }
 
+export function* handleOrdersListUserLoad({
+  payload: { skip, limit, filter, sort, userId }
+}) {
+  try {
+    yield put(setOrderLoading(true));
+    const orders = yield call(
+      getOrdersByUser,
+      skip,
+      limit,
+      filter,
+      sort,
+      userId
+    );
+
+    if (orders) {
+      yield put(setItemsCount(orders?.count));
+      yield put(setOrderListUser(orders?.items));
+    }
+  } catch (error) {
+    yield call(handleOrdersError, error);
+  } finally {
+    yield put(setOrderLoading(false));
+  }
+}
+
 export function* handleOrderLoad({ payload }) {
   try {
     yield put(setOrderLoading(true));
@@ -147,7 +173,6 @@ export function* handleOrdersDelete({ payload }) {
       yield put(setOrderLoading(false));
       yield put(updatePagination());
       yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
-      yield put(push(routes.pathToOrders));
     }
   } catch (error) {
     yield call(handleOrdersError, error);
@@ -252,6 +277,7 @@ export function* handleUkrPostPostOffices({ payload }) {
 
 export default function* ordersSaga() {
   yield takeEvery(GET_ORDER_LIST, handleOrdersListLoad);
+  yield takeEvery(GET_ORDER_LIST_USER, handleOrdersListUserLoad);
   yield takeEvery(GET_ORDER, handleOrderLoad);
   yield takeEvery(UPDATE_ORDER, handleOrderUpdate);
   yield takeEvery(ADD_ORDER, handleAddOrder);

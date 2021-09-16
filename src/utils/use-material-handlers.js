@@ -34,7 +34,10 @@ const useMaterialHandlers = () => {
     ],
     available: values.available,
     purpose: values.purpose,
-    additionalPrice: +values.additionalPrice,
+    additionalPrice: {
+      value: +values.additionalPrice,
+      type: values.additionalPriceType
+    },
     colors: values.colors
   });
 

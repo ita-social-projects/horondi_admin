@@ -27,6 +27,7 @@ const buttonTitles = {
   USER_UNACTIVE_TITLE: 'Деактивувати',
   SHOW_COMMENTS_TITLE: 'Переглянути коментарі',
   HIDE_COMMENTS_TITLE: 'Приховати коментарі',
+  COMMENT_TYPE: 'Тип',
   SAVE_ORDER: 'Зберегти замовлення',
   SAVE_TITLE: 'Зберегти',
   UNDERSTAND: 'Зрозуміло',
@@ -75,12 +76,15 @@ const buttonTitles = {
   YES_BUTTON: 'Так',
   NO_BUTTON: 'Ні',
   CREATE_BACK_TITLE: 'Додати спинку',
+  CREATE_BOTTOM_TITLE: 'Додати низ',
   CREATE_POCKETS_TITLE: 'Додати кишеню',
   PATTERN_AVAILABLE: 'Доступний',
   PATTERN_MATERIAL: 'Матеріал',
   CREATE_CONSTRUCTOR: 'Створити новий ',
   CREATE_CLOSURES_TITLE: 'Додати защіпку',
-  CREATE_POSITION_TITLE: 'Додати розміщення'
+  CREATE_POSITION_TITLE: 'Додати розміщення',
+  CREATE_BASIC_TITLE: 'Додати основу',
+  CREATE_STRAP_TITLE: 'Додати ремінець'
 };
 
 export default buttonTitles;

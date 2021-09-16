@@ -1,3 +1,15 @@
+export const initFilters = {
+  status: [],
+  paymentStatus: [],
+  dateFrom: '',
+  dateTo: '',
+  search: ''
+};
+
+export const filter = {
+  search: 'test'
+};
+
 export const fakeOrderState = {
   list: [],
   selectedOrder: null,
@@ -162,6 +174,19 @@ export const getFakeOrderList = {
   sort: {}
 };
 
+export const orderFilterUser = {
+  filter: {
+    date: { dateFrom: '', dateTo: '' },
+    paymentStatus: [],
+    search: '',
+    status: []
+  },
+  limit: 10,
+  skip: 0,
+  sort: { dateOfCreation: -1 },
+  userId: '60e85cfd2d34d70024ded1f1'
+};
+
 const inputObj = {
   _id: fakeId,
   status: 'DELIVERED',
@@ -268,4 +293,31 @@ export const fakeIdOrderPayload = {
 
 export const fakeError = {
   message: 'ORDERS_NOT_FOUND'
+};
+
+export const ordersByUser = {
+  items: [
+    {
+      _id: '29faced3722c5801322fe3a4',
+      recipient: {
+        firstName: 'TestFirstName',
+        lastName: 'TestLastName',
+        email: 'test@gmail.com',
+        phoneNumber: '38068617237'
+      },
+      status: 'DELIVERED',
+      paymentStatus: 'CREATED',
+      orderNumber: 'GSeJUl',
+      dateOfCreation: '1603980848358',
+      totalItemsPrice: {
+        currency: 'UAH',
+        value: 296909
+      },
+      totalPriceToPay: {
+        currency: 'UAH',
+        value: 296909
+      }
+    }
+  ],
+  count: 1
 };

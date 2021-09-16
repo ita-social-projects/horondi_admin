@@ -2,9 +2,13 @@ import ordersReducer, { initialState } from '../orders.reducer';
 import {
   setOrder,
   setOrderList,
+  setOrderListUser,
   setOrderLoading,
-  setOrderError
+  setOrderError,
+  clearOrderFiltersUser,
+  setOrderFilterUser
 } from '../orders.actions';
+import { ordersByUser, initFilters, filter } from './orders.variables';
 
 describe('orders reducer tests', () => {
   it('should return default state', () => {
@@ -15,6 +19,34 @@ describe('orders reducer tests', () => {
     expect(ordersReducer(initialState, setOrderList(true))).toEqual({
       ...initialState,
       list: true
+    });
+  });
+
+  it('should set user order list', () => {
+    expect(
+      ordersReducer(initialState, setOrderListUser(ordersByUser.items))
+    ).toEqual({
+      ...initialState,
+      listUser: ordersByUser.items
+    });
+  });
+
+  it('should clear user filters', () => {
+    expect(ordersReducer(initialState, clearOrderFiltersUser())).toEqual({
+      ...initialState,
+      filtersUser: initFilters,
+      sortLabel: '',
+      sort: {}
+    });
+  });
+
+  it('should update user filters', () => {
+    expect(ordersReducer(initialState, setOrderFilterUser(filter))).toEqual({
+      ...initialState,
+      filtersUser: {
+        ...initialState.filtersUser,
+        ...filter
+      }
     });
   });
 

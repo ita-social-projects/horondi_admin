@@ -14,6 +14,7 @@ const messages = {
   REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
   REMOVE_REPLY_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цю відповідь?',
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
+  NO_ORDERS_MESSAGE: 'Коментарі відсутні',
   NO_REPLY_COMMENTS_MESSAGE: 'Відповіді відсутні',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   DELETE_SIZE_MESSAGE: 'Ви впевнені, що хочете видалити цей розмір?',
@@ -42,13 +43,19 @@ const messages = {
   NO_HISTORY_RECORDS_MESSAGE: 'Записи останніх змін відсутні',
   REMOVE_COLOR_DIALOG_TITLE: 'Видалення кольору',
   BACK_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цю спинку?',
+  BOTTOM_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей низ?',
   DELETE_POCKET_MESSAGE: 'Ви впевнені, що хочете видалити цю кишеню?',
   NO_POCKET_MESSAGE: 'Кишені відсутні',
+  DELETE_STRAP_MESSAGE: 'Ви впевнені, що хочете видалити цей ремінець?',
+  NO_STRAPS_MESSAGE: 'Ремінці відсутні',
   DELETE_POSITION_MESSAGE: 'Ви впевнені, що хочете видалити цe розміщення?',
   NO_POSITION_MESSAGE: 'Позиції відсутні',
   NO_BACKS_MESSAGE: 'Cпинки відсутні',
+  NO_BOTTOMS_MESSAGE: 'Низи відсутні',
   NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',
   DELETE_CLOSURE_MESSAGE: 'Ви впевнені, що хочете видалити цей замочок?',
-  NO_CLOSURE_MESSAGE: 'Замочки відсутні'
+  NO_CLOSURE_MESSAGE: 'Замочки відсутні',
+  DELETE_BASIC_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
+  NO_BASICS_MESSAGE: 'Основи відсутні'
 };
 export default messages;

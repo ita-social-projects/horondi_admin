@@ -19,6 +19,7 @@ import {
   contactErrorMessages,
   patternErrorMessages,
   backErrorMessages,
+  bottomErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
@@ -35,7 +36,9 @@ import {
   businessPageErrorMessages,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages
+  positionErrorMessages,
+  basicsErrorMessages,
+  strapsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -85,7 +88,8 @@ export const config = {
   ],
   allowedforRegistrationRoles: ['admin', 'superadmin'],
   tabNames: {
-    users: ['Користувачі', 'Адміністратори']
+    users: ['Користувачі', 'Адміністратори'],
+    userOrdersComments: ['Замовлення', 'Коментарі']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -120,11 +124,19 @@ export const config = {
     AVAILABLE_TEXT: 'Доступний',
     UNAVAILABLE_TEXT: 'Недоступний'
   },
+  strapsAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Недоступний'
+  },
   closuresAvailableVariants: {
     AVAILABLE_TEXT: 'Доступний',
     UNAVAILABLE_TEXT: 'Недоступний'
   },
   positionAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступна',
+    UNAVAILABLE_TEXT: 'Недоступна'
+  },
+  basicsAvailableVariants: {
     AVAILABLE_TEXT: 'Доступна',
     UNAVAILABLE_TEXT: 'Недоступна'
   },
@@ -227,6 +239,7 @@ export const config = {
   categoryErrorMessages,
   patternErrorMessages,
   backErrorMessages,
+  bottomErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
@@ -249,7 +262,9 @@ export const config = {
   inputNames,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages
+  positionErrorMessages,
+  basicsErrorMessages,
+  strapsErrorMessages
 };
 export const inputTypes = {
   button: 'button',
