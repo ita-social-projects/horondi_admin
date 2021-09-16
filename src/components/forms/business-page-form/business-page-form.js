@@ -47,7 +47,12 @@ const BusinessPageForm = ({ id, editMode }) => {
     languages,
     businessPageErrorMessages: {
       ENTER_CODE_ERROR_MESSAGE,
-      ENTER_TITLE_ERROR_MESSAGE
+      ENTER_TITLE_ERROR_MESSAGE,
+      ENTER_TEXT_ERROR_MESSAGE,
+      ENTER_UA_MESSAGE,
+      ENTER_EN_MESSAGE,
+      MIN_TEXT_LENGTH_MESSAGE,
+      MIN_TITLE_LENGTH_MESSAGE
     }
   } = config;
 
@@ -94,51 +99,65 @@ const BusinessPageForm = ({ id, editMode }) => {
 
   const formSchema = Yup.object().shape({
     code: Yup.string().required(ENTER_CODE_ERROR_MESSAGE),
-    uaTitle: Yup.string().required(ENTER_TITLE_ERROR_MESSAGE),
-    enTitle: Yup.string().required(ENTER_TITLE_ERROR_MESSAGE)
+    uaTitle: Yup.string()
+      .min(2, MIN_TITLE_LENGTH_MESSAGE)
+      .matches(config.formRegExp.uaNameCreation, ENTER_EN_MESSAGE)
+      .required(ENTER_TITLE_ERROR_MESSAGE),
+    enTitle: Yup.string()
+      .min(2, MIN_TITLE_LENGTH_MESSAGE)
+      .matches(config.formRegExp.enNameCreation, ENTER_UA_MESSAGE)
+      .required(ENTER_TITLE_ERROR_MESSAGE),
+    enText: Yup.string()
+      .min(17, MIN_TEXT_LENGTH_MESSAGE)
+      .matches(config.formRegExp.enDescription, ENTER_EN_MESSAGE)
+      .required(ENTER_TEXT_ERROR_MESSAGE),
+    uaText: Yup.string()
+      .min(17, MIN_TEXT_LENGTH_MESSAGE)
+      .required(ENTER_TEXT_ERROR_MESSAGE)
   });
 
-  const { values, errors, touched, handleSubmit, handleBlur, handleChange } =
-    useFormik({
-      initialValues: {
-        code,
-        uaTitle,
-        enTitle,
-        uaText,
-        enText
-      },
-      validationSchema: formSchema,
-      onSubmit: async () => {
-        const uniqueFiles = files.filter((file, i) => {
-          const { name, size } = file;
-          return indexFinder(i, files, name, size);
-        });
+  const {
+    values,
+    errors,
+    touched,
+    handleSubmit,
+    handleBlur,
+    handleChange,
+    setFieldValue
+  } = useFormik({
+    initialValues: {
+      code,
+      uaTitle,
+      enTitle,
+      uaText,
+      enText
+    },
+    validationSchema: formSchema,
+    onSubmit: async () => {
+      const uniqueFiles = files.filter((file, i) => {
+        const { name, size } = file;
+        return indexFinder(i, files, name, size);
+      });
 
-        const newUaText = values.uaText.replace(
-          /src="data:image.*?"/g,
-          'src=""'
-        );
-        const newEnText = values.enText.replace(
-          /src="data:image.*?"/g,
-          'src=""'
-        );
+      const newUaText = values.uaText.replace(/src="data:image.*?"/g, 'src=""');
+      const newEnText = values.enText.replace(/src="data:image.*?"/g, 'src=""');
 
-        const page = createBusinessPage({
-          ...values,
-          uaText: newUaText,
-          enText: newEnText
-        });
+      const page = createBusinessPage({
+        ...values,
+        uaText: newUaText,
+        enText: newEnText
+      });
 
-        businessPageDispatchHandler(
-          editMode,
-          dispatch,
-          updateBusinessPage,
-          addBusinessPage,
-          { id, page, files: uniqueFiles },
-          { page, files: uniqueFiles }
-        );
-      }
-    });
+      businessPageDispatchHandler(
+        editMode,
+        dispatch,
+        updateBusinessPage,
+        addBusinessPage,
+        { id, page, files: uniqueFiles },
+        { page, files: uniqueFiles }
+      );
+    }
+  });
 
   const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
@@ -162,7 +181,8 @@ const BusinessPageForm = ({ id, editMode }) => {
     handleChange,
     handleBlur,
     values,
-    inputs: businessPageLabel
+    inputs: businessPageLabel,
+    setFieldValue
   };
 
   const eventPreventHandler = (e) => {
@@ -183,11 +203,7 @@ const BusinessPageForm = ({ id, editMode }) => {
               title='Зберегти'
               data-cy='save-btn'
               onClickHandler={handleSubmit}
-              values={{
-                code: values.code,
-                uaTitle: values.uaTitle,
-                enTitle: values.enTitle
-              }}
+              values={values}
               errors={errors}
               {...(id ? { disabled: !changed } : {})}
             />

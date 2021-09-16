@@ -38,7 +38,11 @@ const {
   VALIDATION_ERROR,
   MIN_LENGTH_MESSAGE,
   MAX_LENGTH_MESSAGE,
-  PRICE_VALIDATION_ERROR
+  PRICE_VALIDATION_ERROR,
+  NOT_UA_NAME_MESSAGE,
+  NOT_EN_NAME_MESSAGE,
+  NOT_UA_DESCRIPTION_MESSAGE,
+  NOT_EN_DESCRIPTION_MESSAGE
 } = config.materialErrorMessages;
 
 function MaterialForm({ material, id }) {
@@ -56,21 +60,25 @@ function MaterialForm({ material, id }) {
     uaName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
+      .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
       .required(VALIDATION_ERROR),
 
     enName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
       .required(VALIDATION_ERROR),
 
     uaDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(300, MAX_LENGTH_MESSAGE)
+      .matches(config.formRegExp.uaDescription, NOT_UA_DESCRIPTION_MESSAGE)
       .required(VALIDATION_ERROR),
 
     enDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(300, MAX_LENGTH_MESSAGE)
+      .matches(config.formRegExp.enDescription, NOT_EN_DESCRIPTION_MESSAGE)
       .required(VALIDATION_ERROR),
 
     purpose: Yup.string()
@@ -85,29 +93,36 @@ function MaterialForm({ material, id }) {
     colors: Yup.array().of(Yup.string()).required(VALIDATION_ERROR)
   });
 
-  const { values, handleChange, handleSubmit, errors, touched, setFieldValue } =
-    useFormik({
-      validationSchema: formSchema,
-      validateOnBlur: true,
-      initialValues: getMaterialFormInitValues(material, purposeEnum),
-      onSubmit: (data) => {
-        const newMaterial = createMaterial(data);
-        if (id) {
-          dispatch(
-            updateMaterial({
-              id,
-              material: { ...newMaterial }
-            })
-          );
-          return;
-        }
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    setFieldValue,
+    handleBlur
+  } = useFormik({
+    validationSchema: formSchema,
+    validateOnBlur: true,
+    initialValues: getMaterialFormInitValues(material, purposeEnum),
+    onSubmit: (data) => {
+      const newMaterial = createMaterial(data);
+      if (id) {
         dispatch(
-          addMaterial({
+          updateMaterial({
+            id,
             material: { ...newMaterial }
           })
         );
+        return;
       }
-    });
+      dispatch(
+        addMaterial({
+          material: { ...newMaterial }
+        })
+      );
+    }
+  });
 
   const changed = useChangedValuesChecker(values, errors);
   useUnsavedChangesHandler(values);
@@ -140,7 +155,8 @@ function MaterialForm({ material, id }) {
     touched,
     handleChange,
     values,
-    inputs
+    inputs,
+    handleBlur
   };
 
   const languageTabs = languages.map((lang) => (
@@ -188,9 +204,12 @@ function MaterialForm({ material, id }) {
                 colors.map((color) => color._id)
               );
             }}
+            onColorBlur={handleBlur}
             colors={material.colors}
+            name='colors'
+            id='colors'
           />
-          {errors.colors && (
+          {touched.colors && errors.colors && (
             <div className={styles.inputError}>{errors.colors}</div>
           )}
           <Paper className={styles.materialItemAdd}>
@@ -205,9 +224,11 @@ function MaterialForm({ material, id }) {
               <Select
                 data-cy='purpose'
                 id='purpose'
+                name='purpose'
                 native
                 value={values.purpose}
                 onChange={(e) => setFieldValue('purpose', e.target.value)}
+                onBlur={handleBlur}
                 label='Застосування'
               >
                 {Object.values(purposeEnum).map((value) => (
@@ -246,10 +267,12 @@ function MaterialForm({ material, id }) {
               id='additionalPrice'
               data-cy='additionalPrice'
               className={styles.textField}
+              type='number'
               variant='outlined'
               label={getLabelValue(values, additionalPriceType)}
               value={values.additionalPrice}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.additionalPrice && !!errors.additionalPrice}
             />
             {touched.additionalPrice && errors.additionalPrice && (

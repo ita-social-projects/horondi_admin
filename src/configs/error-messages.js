@@ -82,12 +82,21 @@ export const categoryErrorMessages = {
 export const headerErrorMessages = {
   HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
   HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+  HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  NOT_UA_NAME_MESSAGE: `Введіть ім'я посилання українською`,
+  NOT_EN_NAME_MESSAGE: `Введіть ім'я посилання англійською`
 };
 export const newsErrorMessages = {
   NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 2 символів`,
   TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів',
-  TEXT_MIN_LENGTH_MESSAGE: 'Текстове поле повино містити не менше 10 символів'
+  TEXT_MIN_LENGTH_MESSAGE: 'Текстове поле повино містити не менше 10 символів',
+  NOT_EN_TEXT_MESSAGE: 'Введіть текст новини англійською',
+  NOT_UA_TEXT_MESSAGE: 'Введіть текст новини українською',
+  NOT_EN_TITLE_MESSAGE: 'Введіть заголовок новини англійською',
+  NOT_UA_TITLE_MESSAGE: 'Введіть заголовок новини українською',
+  NOT_EN_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини англійською",
+  NOT_UA_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини українською",
+  NEWS_ERROR_MESSAGE: 'Поле не може бути порожнім'
 };
 export const modelErrorMessages = {
   MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',
@@ -127,7 +136,11 @@ export const materialErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
   VALIDATION_ERROR: 'Поле обовязкове',
-  PRICE_VALIDATION_ERROR: 'Тільки цифри'
+  PRICE_VALIDATION_ERROR: 'Тільки цифри',
+  NOT_EN_NAME_MESSAGE: `Введіть ім'я матеріалу англійською`,
+  NOT_UA_NAME_MESSAGE: `Введіть ім'я матеріалу українською`,
+  NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис матеріалу англійською`,
+  NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис матеріалу українською`
 };
 export const sizeErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 20 символів`,
@@ -156,7 +169,11 @@ export const statsErrorMessages = {
 export const homePageSlideErrorMessages = {
   SLIDE_VALIDATION_ERROR: 'Мінімум 2 символи',
   SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри'
+  SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  NOT_UA_NAME_MESSAGE: `Введіть ім'я слайду українською`,
+  NOT_EN_NAME_MESSAGE: `Введіть ім'я слайду англійською`,
+  NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис слайду англійською`,
+  NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис слайду українською`
 };
 
 export const constructorErrorMessages = {
@@ -187,7 +204,11 @@ export const replyCommentErrorMessages = {
 export const businessPageErrorMessages = {
   ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
-  ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки'
+  ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки',
+  ENTER_UA_MESSAGE: 'Поле може містити тільки українські літери та цифри',
+  ENTER_EN_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  MIN_TEXT_LENGTH_MESSAGE: 'Мінімум 10 символiв',
+  MIN_TITLE_LENGTH_MESSAGE: 'Мінімум 2 символи'
 };
 
 export const pocketsErrorMessages = {

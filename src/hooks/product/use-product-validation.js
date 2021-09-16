@@ -40,7 +40,7 @@ const useProductValidation = (
   formikPriceValue,
   formikMaterialsValues
 ) => {
-  const [shouldValidate, setShouldValidate] = useState(false);
+  const [shouldValidate, setShouldValidate] = useState(true);
 
   const { name, description } = useSelector(({ Products }) => ({
     name: Products[product].name,
@@ -66,9 +66,13 @@ const useProductValidation = (
           [`${lang}${capitalize(infoLabels[0].name)}`]: Yup.string()
             .min(6, NAME_TOO_SHORT_MESSAGE)
             .max(50, NAME_TOO_LONG_MESSAGE)
+            .matches(
+              config.formRegExp[`${lang}NameCreation`],
+              productsTranslations[`NOT_${lang.toUpperCase()}_NAME_MESSAGE`]
+            )
             .required(REQUIRED_FIELD),
           [`${lang}${capitalize(infoLabels[1].name)}`]: Yup.string()
-            .min(2, NAME_TOO_SHORT_MESSAGE)
+            .min(13, NAME_TOO_SHORT_MESSAGE)
             .max(1000, NAME_TOO_LONG_MESSAGE)
             .required(REQUIRED_FIELD)
         }))
