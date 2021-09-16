@@ -124,6 +124,7 @@ function MaterialForm({ material, id }) {
   });
 
   useUnsavedChangesHandler(values);
+
   useEffect(() => {
     dispatch(getCurrencies());
   }, []);

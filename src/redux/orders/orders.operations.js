@@ -12,6 +12,7 @@ export const getOrderById = (id) => {
 						email
 						phoneNumber
 					}
+					user_id
 					userComment
 					delivery {
 						sentOn
@@ -124,6 +125,7 @@ export const updateOrder = (order, id) => {
 						email
 						phoneNumber
 					}
+					user_id
 					userComment
 					delivery {
 						sentOn
@@ -218,6 +220,7 @@ export const getAllOrders = async (skip, limit, filter, sort) => {
                 email
                 phoneNumber
             }
+			user_id
             status
             paymentStatus
             orderNumber
@@ -258,6 +261,7 @@ export const getOrdersByUser = async (skip, limit, filter, sort, userId) => {
               email
               phoneNumber
             }
+			user_id
             status
             paymentStatus
             orderNumber

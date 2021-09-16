@@ -2111,6 +2111,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                         label="Текст відповіді"
                         multiline={true}
                         name="replyText"
+                        onBlur={[Function]}
                         onChange={[Function]}
                         value=""
                         variant="outlined"
@@ -2126,6 +2127,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           label="Текст відповіді"
                           multiline={true}
                           name="replyText"
+                          onBlur={[Function]}
                           onChange={[Function]}
                           value=""
                           variant="outlined"
@@ -2230,6 +2232,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   }
                                   multiline={true}
                                   name="replyText"
+                                  onBlur={[Function]}
                                   onChange={[Function]}
                                   value=""
                                 >
@@ -2262,6 +2265,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                     }
                                     multiline={true}
                                     name="replyText"
+                                    onBlur={[Function]}
                                     onChange={[Function]}
                                     value=""
                                   >
@@ -2290,6 +2294,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                       inputComponent="input"
                                       multiline={true}
                                       name="replyText"
+                                      onBlur={[Function]}
                                       onChange={[Function]}
                                       renderSuffix={[Function]}
                                       type="text"
@@ -2323,6 +2328,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                         inputComponent="input"
                                         multiline={true}
                                         name="replyText"
+                                        onBlur={[Function]}
                                         onChange={[Function]}
                                         renderSuffix={[Function]}
                                         type="text"
