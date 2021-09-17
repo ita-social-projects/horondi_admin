@@ -4,10 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import useClosuresHandlers from '../../../utils/use-closures-handlers';
 import { useStyles } from './closures-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -24,10 +20,7 @@ import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import {
-  getLabelValue,
-  calculateAddittionalPriceValue
-} from '../../../utils/additionalPrice-helper';
+import { calculateAddittionalPriceValue } from '../../../utils/additionalPrice-helper';
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const labels = config.labels.closuresPageLabel;
@@ -201,27 +194,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
             <Box>
               <Typography>{labels.enterPrice}</Typography>
             </Box>
-            <FormControl component='fieldset'>
-              <RadioGroup
-                value={values.additionalPriceType}
-                name='additionalPriceType'
-                className={styles.textField}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  control={<Radio />}
-                  label={additionalPriceType.absolutePrice[0].value}
-                  key={2}
-                  value='ABSOLUTE_INDICATOR'
-                />
-                <FormControlLabel
-                  control={<Radio />}
-                  label={additionalPriceType.relativePrice[0].value}
-                  key={1}
-                  value='RELATIVE_INDICATOR'
-                />
-              </RadioGroup>
-            </FormControl>
             <TextField
               data-cy='additionalPrice'
               className={`
@@ -229,7 +201,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                   ${styles.materialSelect} 
                   `}
               variant='outlined'
-              label={getLabelValue(values, additionalPriceType)}
+              label={additionalPriceType.absolutePrice[0].value}
               value={values.additionalPrice}
               onChange={handleChange}
               onBlur={handleBlur}

@@ -240,27 +240,6 @@ const StrapsForm = ({ strap, id, edit }) => {
           )}
         </Paper>
         <Paper className={styles.additionalPricePaper}>
-          <FormControl component='fieldset'>
-            <RadioGroup
-              name='additionalPriceType'
-              className={styles.textField}
-              onChange={handleChange}
-              value={values.additionalPriceType}
-            >
-              <FormControlLabel
-                value='ABSOLUTE_INDICATOR'
-                label={labels.additionalPriceType.absolutePrice[0].value}
-                control={<Radio />}
-                key={2}
-              />
-              <FormControlLabel
-                value='RELATIVE_INDICATOR'
-                label={labels.additionalPriceType.relativePrice[0].value}
-                control={<Radio />}
-                key={1}
-              />
-            </RadioGroup>
-          </FormControl>
           <TextField
             data-cy='additionalPrice'
             className={`
@@ -269,7 +248,7 @@ const StrapsForm = ({ strap, id, edit }) => {
                   `}
             id='additionalPrice'
             variant='outlined'
-            label={getLabelValue(values, labels.additionalPriceType)}
+            label={labels.additionalPriceType.absolutePrice[0].value}
             value={values.additionalPrice}
             onChange={handleChange}
             onBlur={handleBlur}
