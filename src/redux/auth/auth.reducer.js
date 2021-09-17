@@ -15,40 +15,40 @@ export const initialState = {
 
 const authReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_AUTH:
-    return {
-      ...state,
-      isAuth: action.payload
-    };
+    case SET_AUTH:
+      return {
+        ...state,
+        isAuth: action.payload
+      };
 
-  case SET_ADMIN_ID:
-    return {
-      ...state,
-      adminId: action.payload
-    };
+    case SET_ADMIN_ID:
+      return {
+        ...state,
+        adminId: action.payload
+      };
 
-  case SET_AUTH_ERROR:
-    return {
-      ...state,
-      error: action.payload
-    };
+    case SET_AUTH_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      };
 
-  case LOGOUT_USER:
-    return {
-      isAuth: false,
-      adminId: null,
-      error: null,
-      loading: false
-    };
+    case LOGOUT_USER:
+      return {
+        isAuth: false,
+        adminId: null,
+        error: null,
+        loading: false
+      };
 
-  case SET_AUTH_LOADING:
-    return {
-      ...state,
-      loading: action.payload
-    };
+    case SET_AUTH_LOADING:
+      return {
+        ...state,
+        loading: action.payload
+      };
 
-  default:
-    return state;
+    default:
+      return state;
   }
 };
 

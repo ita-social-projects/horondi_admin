@@ -2,18 +2,26 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { noop } from 'lodash';
-import SaveButton from './save-button';
+import SaveButton, { saveButtonHandler } from './save-button';
 import { config, inputTypes } from '../../../configs';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const { SAVE_TITLE } = config.buttonTitles;
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: (selector) => selector(),
+  useDispatch: () => jest.fn()
+}));
+
 describe('save button tests', () => {
   const size = 'small';
   const title = SAVE_TITLE;
   const type = inputTypes.button;
   const mockCallBack = jest.fn(noop());
+  const mockUnblock = jest.fn();
+
   let component;
 
   beforeEach(() => {
@@ -23,6 +31,7 @@ describe('save button tests', () => {
         title={title}
         type={type}
         onClickHandler={mockCallBack}
+        unblockFunction={mockUnblock}
       />
     );
   });
@@ -53,8 +62,24 @@ describe('save button tests', () => {
     expect(SaveButton.propTypes.title).toBeDefined();
     expect(SaveButton.propTypes.type).toBeDefined();
     expect(SaveButton.propTypes.onClickHandler).toBeDefined();
+    expect(SaveButton.propTypes.unblockFunction).toBeDefined();
   });
   it('should have default props', () => {
-    expect(SaveButton.defaultProps.onClickHandler).toEqual(mockCallBack());
+    expect(SaveButton.defaultProps.onClickHandler).toEqual(noop);
+  });
+  it('should call saveButtonHandler', () => {
+    const unblockFunctionMock = jest.fn();
+
+    const result = saveButtonHandler(
+      { unblockFunction: unblockFunctionMock },
+      () => null,
+      () => null,
+      () => null,
+      '',
+      ''
+    );
+    result();
+
+    expect(unblockFunctionMock).toHaveBeenCalled();
   });
 });

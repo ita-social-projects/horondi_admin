@@ -1,18 +1,24 @@
-import React from 'react';
-
-import { TextField, Grid, Tabs, Tab, AppBar, Paper } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { TextField, Grid, Paper } from '@material-ui/core';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
-import TabPanel from '../../tab-panel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import ColorsBar from '../../colors-bar';
 import useMaterialHandlers from '../../../utils/use-material-handlers';
+import {
+  getLabelValue,
+  calculateAddittionalPriceValue
+} from '../../../utils/additionalPrice-helper';
+import getMaterialFormInitValues from '../../../utils/material-form';
 import { useStyles } from './material-form.styles';
 import {
   addMaterial,
@@ -22,51 +28,65 @@ import { config } from '../../../configs';
 import CheckboxOptions from '../../checkbox-options';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import purposeEnum from '../../../configs/purpose-enum';
+import LanguagePanel from '../language-panel';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const { languages } = config;
 const {
   VALIDATION_ERROR,
   MIN_LENGTH_MESSAGE,
   MAX_LENGTH_MESSAGE,
-  PRICE_VALIDATION_ERROR
+  PRICE_VALIDATION_ERROR,
+  NOT_UA_NAME_MESSAGE,
+  NOT_EN_NAME_MESSAGE,
+  NOT_UA_DESCRIPTION_MESSAGE,
+  NOT_EN_DESCRIPTION_MESSAGE
 } = config.materialErrorMessages;
 
 function MaterialForm({ material, id }) {
   const styles = useStyles();
   const dispatch = useDispatch();
 
-  const { loading } = useSelector(materialSelector);
+  const { pathToMaterials } = config.routes;
 
-  const { createMaterial, tabsValue, handleTabsChange } = useMaterialHandlers();
+  const { loading } = useSelector(materialSelector);
+  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+
+  const { createMaterial } = useMaterialHandlers();
 
   const formSchema = Yup.object().shape({
     uaName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
+      .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
       .required(VALIDATION_ERROR),
 
     enName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
       .required(VALIDATION_ERROR),
 
     uaDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(300, MAX_LENGTH_MESSAGE)
+      .matches(config.formRegExp.uaDescription, NOT_UA_DESCRIPTION_MESSAGE)
       .required(VALIDATION_ERROR),
 
     enDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(300, MAX_LENGTH_MESSAGE)
+      .matches(config.formRegExp.enDescription, NOT_EN_DESCRIPTION_MESSAGE)
       .required(VALIDATION_ERROR),
 
     purpose: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
       .required(VALIDATION_ERROR),
-
+    additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
-      .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_VALIDATION_ERROR)
       .required(VALIDATION_ERROR),
 
     colors: Yup.array().of(Yup.string()).required(VALIDATION_ERROR)
@@ -78,22 +98,12 @@ function MaterialForm({ material, id }) {
     handleSubmit,
     errors,
     touched,
-    setFieldValue
+    setFieldValue,
+    handleBlur
   } = useFormik({
     validationSchema: formSchema,
     validateOnBlur: true,
-    initialValues: {
-      uaName: material.name[0].value || '',
-      enName: material.name[1].value || '',
-      uaDescription: material.description[0].value || '',
-      enDescription: material.description[1].value || '',
-      purpose: material.purpose || purposeEnum.MAIN,
-      available: material.available || false,
-
-      additionalPrice: +material.additionalPrice[0].value / 100 || 0,
-      colors:
-        (material.colors && material.colors.map((color) => color._id)) || []
-    },
+    initialValues: getMaterialFormInitValues(material, purposeEnum),
     onSubmit: (data) => {
       const newMaterial = createMaterial(data);
       if (id) {
@@ -113,44 +123,10 @@ function MaterialForm({ material, id }) {
     }
   });
 
-  const tabPanels = languages.map((lang, index) => (
-    <TabPanel key={lang} value={tabsValue} index={index}>
-      <Paper className={styles.materialItemAdd}>
-        <TextField
-          data-cy={`${lang}Name`}
-          id={`${lang}Name`}
-          className={styles.textField}
-          variant='outlined'
-          label={config.labels.material.name[tabsValue].value}
-          error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
-          multiline
-          value={values[`${lang}Name`]}
-          onChange={handleChange}
-        />
-        {touched[`${lang}Name`] && errors[`${lang}Name`] && (
-          <div className={styles.inputError}>{errors[`${lang}Name`]}</div>
-        )}
-        <TextField
-          data-cy={`${lang}Description`}
-          id={`${lang}Description`}
-          className={styles.textField}
-          variant='outlined'
-          label={config.labels.material.description[tabsValue].value}
-          multiline
-          error={
-            touched[`${lang}Description`] && !!errors[`${lang}Description`]
-          }
-          value={values[`${lang}Description`]}
-          onChange={handleChange}
-        />
-        {touched[`${lang}Description`] && errors[`${lang}Description`] && (
-          <div className={styles.inputError}>
-            {errors[`${lang}Description`]}
-          </div>
-        )}
-      </Paper>
-    </TabPanel>
-  ));
+  const unblock = useUnsavedChangesHandler(values);
+  useEffect(() => {
+    dispatch(getCurrencies());
+  }, []);
 
   const checkboxes = [
     {
@@ -164,25 +140,59 @@ function MaterialForm({ material, id }) {
     }
   ];
 
+  const inputs = [
+    { label: config.labels.material.name, name: 'name' },
+    { label: config.labels.material.description, name: 'description' }
+  ];
+
+  const { additionalPriceType } = config.labels.material;
+
+  const { convertationTitle } = config.titles.materialTitles;
+  const inputOptions = {
+    errors,
+    touched,
+    handleChange,
+    values,
+    inputs,
+    handleBlur
+  };
+
   const languageTabs = languages.map((lang) => (
-    <Tab
-      className={
-        (touched[`${lang}Description`] && errors[`${lang}Description`]) ||
-        (touched[`${lang}Name`] && errors[`${lang}Name`])
-          ? styles.errorTab
-          : styles.tabs
-      }
-      label={lang}
-      key={lang}
-    />
+    <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
   ));
 
   if (loading) {
     return <LoadingBar />;
   }
+
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={styles.container}>
-      <form className={styles.materialForm} onSubmit={handleSubmit}>
+      <form
+        className={styles.materialForm}
+        onSubmit={(e) => eventPreventHandler(e)}
+      >
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton pathBack={pathToMaterials} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                type='submit'
+                onClickHandler={handleSubmit}
+                unblockFunction={unblock}
+                title={config.buttonTitles.SAVE_MATERIAL}
+                values={values}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <ColorsBar
@@ -192,9 +202,12 @@ function MaterialForm({ material, id }) {
                 colors.map((color) => color._id)
               );
             }}
+            onColorBlur={handleBlur}
             colors={material.colors}
+            name='colors'
+            id='colors'
           />
-          {errors.colors && (
+          {touched.colors && errors.colors && (
             <div className={styles.inputError}>{errors.colors}</div>
           )}
           <Paper className={styles.materialItemAdd}>
@@ -209,9 +222,11 @@ function MaterialForm({ material, id }) {
               <Select
                 data-cy='purpose'
                 id='purpose'
+                name='purpose'
                 native
                 value={values.purpose}
                 onChange={(e) => setFieldValue('purpose', e.target.value)}
+                onBlur={handleBlur}
                 label='Застосування'
               >
                 {Object.values(purposeEnum).map((value) => (
@@ -225,51 +240,56 @@ function MaterialForm({ material, id }) {
               <div className={styles.inputError}>{errors.purpose}</div>
             )}
             <br />
+            <FormControl component='fieldset'>
+              <RadioGroup
+                className={styles.textField}
+                name='additionalPriceType'
+                value={values.additionalPriceType}
+                onChange={handleChange}
+              >
+                <FormControlLabel
+                  control={<Radio />}
+                  value='ABSOLUTE_INDICATOR'
+                  label={additionalPriceType.absolutePrice[0].value}
+                  key={2}
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  value='RELATIVE_INDICATOR'
+                  label={additionalPriceType.relativePrice[0].value}
+                  key={1}
+                />
+              </RadioGroup>
+            </FormControl>
             <TextField
-              data-cy='additionalPrice'
               id='additionalPrice'
+              data-cy='additionalPrice'
               className={styles.textField}
+              type='number'
               variant='outlined'
-              label={config.labels.material.additionalPrice[0].value}
+              label={getLabelValue(values, additionalPriceType)}
               value={values.additionalPrice}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.additionalPrice && !!errors.additionalPrice}
             />
             {touched.additionalPrice && errors.additionalPrice && (
               <div className={styles.inputError}>{errors.additionalPrice}</div>
             )}
+            <TextField
+              label={convertationTitle}
+              id='outlined-basic'
+              variant='outlined'
+              className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+              value={calculateAddittionalPriceValue(values, exchangeRate)}
+              disabled
+            />
           </Paper>
         </Grid>
-        {languages.length > 0 ? (
-          <div>
-            <AppBar position='static'>
-              <Tabs
-                indicatorColor='primary'
-                textColor='primary'
-                className={styles.tabs}
-                value={tabsValue}
-                onChange={handleTabsChange}
-                aria-label='tabs'
-              >
-                {languageTabs}
-              </Tabs>
-            </AppBar>
-            {tabPanels}
-          </div>
-        ) : null}
-        <div className={styles.controlsBlock}>
-          <div>
-            <BackButton />
-            <SaveButton
-              className={styles.saveButton}
-              data-cy='save'
-              type='submit'
-              title={config.buttonTitles.SAVE_MATERIAL}
-              values={values}
-              errors={errors}
-            />
-          </div>
-        </div>
+        {languages.length > 0 ? <div>{languageTabs}</div> : null}
       </form>
     </div>
   );
@@ -361,14 +381,7 @@ MaterialForm.defaultProps = {
     ],
     available: false,
     purpose: '',
-    additionalPrice: [
-      {
-        value: 0
-      },
-      {
-        value: 0
-      }
-    ],
+    additionalPrice: 0,
     colors: []
   }
 };

@@ -1,6 +1,12 @@
 import { colors } from '@material-ui/core';
 import routes from './routes';
-import menuCategories from './menu-categories';
+import {
+  menuCategories,
+  clientMenuCategories,
+  catalogMenuCategories,
+  staticPagesCategories,
+  constructorMenuCategories
+} from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
@@ -12,6 +18,8 @@ import {
   colorErrorMessages,
   contactErrorMessages,
   patternErrorMessages,
+  backErrorMessages,
+  bottomErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
@@ -23,17 +31,29 @@ import {
   statsErrorMessages,
   paginationInputErrorMessages,
   commentErrorMessages,
-  sizeErrorMessages
+  replyCommentErrorMessages,
+  sizeErrorMessages,
+  businessPageErrorMessages,
+  pocketsErrorMessages,
+  closuresErrorMessages,
+  positionErrorMessages,
+  basicsErrorMessages,
+  strapsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
 import { newsPaginationPayload, contactsPaginationPayload } from './pagination';
 import titles from './titles';
-import { sort } from './sort';
 import languages from './languages';
+import {
+  imageUploadNewsInputsId,
+  valueKeys,
+  inputNames
+} from './news-form-helpers';
 
 export const config = {
+  fetchPolicy: 'no-cache',
   app: {
     title: 'Horondi Admin Portal',
     serverUrl: 'http://localhost:5000/',
@@ -56,14 +76,20 @@ export const config = {
       name: []
     }
   },
+  userRole: {
+    user: 'user',
+    admin: 'admin',
+    superadmin: 'superadmin'
+  },
   userRoles: [
     { role: 'user', label: 'Юзер' },
     { role: 'admin', label: 'Адмін' },
     { role: 'superadmin', label: 'Суперадмін' }
   ],
-  allowedforRegistrationRoles: ['admin'],
+  allowedforRegistrationRoles: ['admin', 'superadmin'],
   tabNames: {
-    users: ['Користувачі', 'Адміністратори']
+    users: ['Користувачі', 'Адміністратори'],
+    userOrdersComments: ['Замовлення', 'Коментарі']
   },
   tableSizes: {
     SMALL_SIZE: 'small',
@@ -93,6 +119,26 @@ export const config = {
   sizesAvailableVariants: {
     AVAILABLE_TEXT: 'Доступний',
     UNAVAILABLE_TEXT: 'Відсутній'
+  },
+  pocketsAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Недоступний'
+  },
+  strapsAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Недоступний'
+  },
+  closuresAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступний',
+    UNAVAILABLE_TEXT: 'Недоступний'
+  },
+  positionAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступна',
+    UNAVAILABLE_TEXT: 'Недоступна'
+  },
+  basicsAvailableVariants: {
+    AVAILABLE_TEXT: 'Доступна',
+    UNAVAILABLE_TEXT: 'Недоступна'
   },
 
   IMG_URL: 'https://horondi.blob.core.windows.net/horondi/images/',
@@ -173,11 +219,14 @@ export const config = {
   },
   UAH: 'грн',
   maxItemsPerPage: 10,
-
   buttonTitles,
   detailTitles,
   messages,
   menuCategories,
+  clientMenuCategories,
+  catalogMenuCategories,
+  constructorMenuCategories,
+  staticPagesCategories,
   routes,
   statuses,
   tableHeadRowTitles,
@@ -189,6 +238,8 @@ export const config = {
   contactErrorMessages,
   categoryErrorMessages,
   patternErrorMessages,
+  backErrorMessages,
+  bottomErrorMessages,
   materialErrorMessages,
   newsErrorMessages,
   errorMessages,
@@ -199,12 +250,21 @@ export const config = {
   statsErrorMessages,
   homePageSlideErrorMessages,
   constructorErrorMessages,
-  sort,
   paginationInputErrorMessages,
   commentErrorMessages,
+  replyCommentErrorMessages,
   filterLabels,
   materialUiConstants,
-  sizeErrorMessages
+  sizeErrorMessages,
+  businessPageErrorMessages,
+  imageUploadNewsInputsId,
+  valueKeys,
+  inputNames,
+  pocketsErrorMessages,
+  closuresErrorMessages,
+  positionErrorMessages,
+  basicsErrorMessages,
+  strapsErrorMessages
 };
 export const inputTypes = {
   button: 'button',
@@ -218,3 +278,10 @@ export const badgePosition = {
 
 export const dateFormat = ' HH:mm DD/MM/YYYY ';
 export const dateFormatOrder = ' DD.MM.YYYY ';
+
+export const formConstants = {
+  formTypeSelect: 'select',
+  isRequired: '*',
+  notRequired: '',
+  textFieldFilled: 'filled'
+};

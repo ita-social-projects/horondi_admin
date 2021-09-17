@@ -38,21 +38,21 @@ const HomePage = () => {
   const updateHomePageLooksHandler = ({ id, upload }) =>
     dispatch(updateHomePageData({ id, upload }));
 
-  const photoUpdateHandler = ({ target }, id) => {
-    if (target.files && target.files[0]) {
+  const photoUpdateHandler = (files, id) => {
+    if (files && files[0]) {
       const uploadedImage = {
         id,
-        upload: target.files[0],
-        preview: URL.createObjectURL(target.files[0])
+        upload: files[0],
+        preview: URL.createObjectURL(files[0])
       };
 
       setImageUrl((prev) => {
-        if (Object.keys(prev).find((el) => el === target.name)) {
-          return { ...prev, [target.name]: { ...uploadedImage } };
+        if (Object.keys(prev).find((el) => el === files[0].name)) {
+          return { ...prev, [files[0].name]: { ...uploadedImage } };
         }
         return {
           ...prev,
-          [target.name]: uploadedImage
+          [files[0].name]: uploadedImage
         };
       });
 
@@ -63,44 +63,44 @@ const HomePage = () => {
   const photosItems =
     photos && photos.length
       ? photos.map((photo, i) => (
-        <Grid
-          item
-          xs={3}
-          key={photo._id}
-          container
-          direction='row'
-          justify='center'
-          alignItems='center'
-          data-cy={`${photo._id}-${i}`}
-        >
-          <label className={styles.uploadContainer}>
-            <input
-              style={{ display: 'none' }}
-              accept='image/*'
-              id='upload-photo'
-              name={`upload-photo-${photo._id}`}
-              data-cy={`upload-photo-${i}`}
-              type='file'
-              onChange={(e) => photoUpdateHandler(e, photo._id)}
-            />
-            <Avatar
-              variant='square'
-              className={styles.avatar}
-              data-cy={`photo-${i}`}
-              src={
-                (image[`upload-photo-${photo._id}`] &&
+          <Grid
+            item
+            xs={3}
+            key={photo._id}
+            container
+            direction='row'
+            justify='center'
+            alignItems='center'
+            data-cy={`${photo._id}-${i}`}
+          >
+            <label className={styles.uploadContainer}>
+              <input
+                style={{ display: 'none' }}
+                accept='image/*'
+                id='upload-photo'
+                name={`upload-photo-${photo._id}`}
+                data-cy={`upload-photo-${i}`}
+                type='file'
+                onChange={(e) => photoUpdateHandler(e, photo._id)}
+              />
+              <Avatar
+                variant='square'
+                className={styles.avatar}
+                data-cy={`photo-${i}`}
+                src={
+                  (image[`upload-photo-${photo._id}`] &&
                     image[`upload-photo-${photo._id}`].preview) ||
                   `${IMG_URL}${photo.images.small}`
-              }
-            >
-              <ImageIcon />
-            </Avatar>
-            <div className={styles.overlay}>
-              <BackupIcon className={styles.uploadIcon} />
-            </div>
-          </label>
-        </Grid>
-      ))
+                }
+              >
+                <ImageIcon />
+              </Avatar>
+              <div className={styles.overlay}>
+                <BackupIcon className={styles.uploadIcon} />
+              </div>
+            </label>
+          </Grid>
+        ))
       : null;
 
   if (loading) {

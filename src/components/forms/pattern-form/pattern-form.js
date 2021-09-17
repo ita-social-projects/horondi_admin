@@ -2,13 +2,20 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, Grid, Avatar } from '@material-ui/core';
+import { Paper, Grid, TextField } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Image } from '@material-ui/icons';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
+import {
+  getLabelValue,
+  calculateAddittionalPriceValue
+} from '../../../utils/additionalPrice-helper';
 import usePatternHandlers from '../../../utils/use-pattern-handlers';
 import { useStyles } from './pattern-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -18,17 +25,35 @@ import {
   updatePattern
 } from '../../../redux/pattern/pattern.actions';
 import CheckboxOptions from '../../checkbox-options';
-import ImageUploadContainer from '../../../containers/image-upload-container';
+import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
 import { materialSelector } from '../../../redux/selectors/material.selectors';
 import { getMaterialsByPurpose } from '../../../redux/material/material.actions';
+import { getModels } from '../../../redux/model/model.actions';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import LoadingBar from '../../loading-bar';
+import {
+  handleImageLoad,
+  patternUseEffectHandler,
+  patternFormOnSubmit,
+  useFormikInitialValues
+} from '../../../utils/pattern-form';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
-const { patternName, material, patternDescription } = config.labels.pattern;
+const {
+  patternName,
+  material,
+  patternDescription,
+  modelName,
+  additionalPriceType
+} = config.labels.pattern;
+const { materialUiConstants } = config;
 const map = require('lodash/map');
 
 const {
   PATTERN_VALIDATION_ERROR,
+  PATTERN_VALIDATION_ERROR_NAME,
+  PATTERN_VALIDATION_ERROR_DESCRIPTION,
   PATTERN_ERROR_MESSAGE,
   PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
@@ -38,6 +63,7 @@ const {
 } = config.patternErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
+const { modelTitle, convertationTitle } = config.titles.patternTitles;
 
 const {
   languages,
@@ -45,10 +71,14 @@ const {
   imagePrefix
 } = config;
 
+const { pathToPatterns } = config.routes;
+
 const PatternForm = ({ pattern, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const { materialsByPurpose, loading } = useSelector(materialSelector);
+  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+  const { list } = useSelector(modelSelectorWithPagination);
   const {
     createPattern,
     setUpload,
@@ -63,83 +93,94 @@ const PatternForm = ({ pattern, id, isEdit }) => {
 
   useEffect(() => {
     dispatch(getMaterialsByPurpose());
+    dispatch(getModels());
+    dispatch(getCurrencies());
   }, []);
 
   useEffect(() => {
-    if (pattern.images.thumbnail) {
-      setPatternImage(`${imagePrefix}${pattern.images.thumbnail}`);
-    }
-    if (pattern.constructorImg) {
-      setConstructorImg(`${imagePrefix}${pattern.constructorImg}`);
-    }
+    patternUseEffectHandler(
+      pattern,
+      setPatternImage,
+      setConstructorImg,
+      imagePrefix
+    );
   }, [dispatch, pattern]);
 
   const patternValidationSchema = Yup.object().shape({
+    sizes: Yup.array().notRequired(),
     enDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(2, PATTERN_VALIDATION_ERROR_DESCRIPTION)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(1000, PATTERN_VALIDATION_ERROR_DESCRIPTION)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(2, PATTERN_VALIDATION_ERROR_NAME)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(50, PATTERN_VALIDATION_ERROR_NAME)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
     uaDescription: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(2, PATTERN_VALIDATION_ERROR_DESCRIPTION)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(1000, PATTERN_VALIDATION_ERROR_DESCRIPTION)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
+      .min(2, PATTERN_VALIDATION_ERROR_NAME)
+      .required(PATTERN_ERROR_MESSAGE)
+      .max(50, PATTERN_VALIDATION_ERROR_NAME)
       .required(PATTERN_ERROR_MESSAGE)
       .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
     material: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR)
       .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(PATTERN_ERROR_MESSAGE),
+    modelId: Yup.string().required(PATTERN_ERROR_MESSAGE),
+    handmade: Yup.boolean(),
     patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
     patternConstructorImage: Yup.string().required(
       CONSTRUCTOR_PHOTO_NOT_PROVIDED
-    )
+    ),
+    additionalPriceType: Yup.string().required(PATTERN_ERROR_MESSAGE),
+    additionalPrice: Yup.string()
+      .matches(config.formRegExp.onlyPositiveFloat, PATTERN_VALIDATION_ERROR)
+      .required(PATTERN_ERROR_MESSAGE)
   });
 
   const {
     values,
     handleSubmit,
     handleChange,
+    handleBlur,
     touched,
     errors,
     setFieldValue
   } = useFormik({
     validationSchema: patternValidationSchema,
-    initialValues: {
-      patternConstructorImage: pattern.constructorImg || '',
-      patternImage: pattern.images.thumbnail || '',
-      uaName: pattern.name[0].value || '',
-      enName: pattern.name[1].value || '',
-      uaDescription: pattern.description[0].value || '',
-      enDescription: pattern.description[1].value || '',
-      material: pattern.material._id || '',
-      available: pattern.available || false,
-      handmade: pattern.handmade || false
-    },
+    initialValues: useFormikInitialValues(pattern),
     onSubmit: () => {
       const newPattern = createPattern(values);
-
-      if (
+      const isEditAndUploadAndConstructor =
         isEdit &&
         upload instanceof File &&
-        uploadConstructorImg instanceof File
-      ) {
-        dispatch(
-          updatePattern({
+        uploadConstructorImg instanceof File;
+      if (isEditAndUploadAndConstructor || isEdit) {
+        patternFormOnSubmit(
+          isEditAndUploadAndConstructor,
+          dispatch,
+          updatePattern,
+          {
             id,
             pattern: newPattern,
             image: [upload, uploadConstructorImg]
-          })
+          },
+          isEdit,
+          {
+            id,
+            pattern: newPattern
+          }
         );
-        return;
-      }
-      if (isEdit) {
-        dispatch(updatePattern({ id, pattern: newPattern }));
         return;
       }
       dispatch(
@@ -150,6 +191,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       );
     }
   });
+
+  const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {
@@ -172,30 +215,20 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   ];
 
-  const handleImageLoad = (e, callback) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        callback(event);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-
-  const handleLoadMainImage = (e) => {
-    handleImageLoad(e, (event) => {
+  const handleLoadMainImage = (files) => {
+    handleImageLoad(files, (event) => {
       setFieldValue('patternImage', event.target.result);
       setPatternImage(event.target.result);
     });
-    setUpload(e.target.files[0]);
+    setUpload(files[0]);
   };
 
-  const handleLoadConstructorImage = (e) => {
-    handleImageLoad(e, (event) => {
+  const handleLoadConstructorImage = (files) => {
+    handleImageLoad(files, (event) => {
       setFieldValue('patternConstructorImage', event.target.result);
       setConstructorImg(event.target.result);
     });
-    setUploadConstructorImg(e.target.files[0]);
+    setUploadConstructorImg(files[0]);
   };
 
   const inputs = [
@@ -207,8 +240,18 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
+  };
+
+  const imageUploadPatternInputsId = {
+    patternImageInput: 'patternImageInput',
+    constructorImageInput: 'constructorImgInput'
+  };
+
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -216,45 +259,71 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       {loading ? (
         <LoadingBar />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <CheckboxOptions options={checkboxes} />
-
+        <form onSubmit={(e) => eventPreventHandler(e)}>
+          <div className={styles.buttonContainer}>
+            <Grid container spacing={2} className={styles.fixedButtons}>
+              <Grid item className={styles.button}>
+                <BackButton pathBack={pathToPatterns} />
+              </Grid>
+              <Grid item className={styles.button}>
+                <SaveButton
+                  data-cy='save-btn'
+                  type='submit'
+                  onClickHandler={handleSubmit}
+                  unblockFunction={unblock}
+                  title={SAVE_TITLE}
+                  values={values}
+                  errors={errors}
+                />
+              </Grid>
+            </Grid>
+          </div>
+          <span className={styles.patternTitle}>
+            {config.titles.patternTitles.createPageTitle}
+          </span>
+          <div>
+            <CheckboxOptions options={checkboxes} />
+          </div>
           <Grid item xs={12}>
             <Paper className={styles.patternItemUpdate}>
-              <div>
-                <span className={styles.imageUpload}>
-                  {config.labels.pattern.avatarText}
-                </span>
-                <div className={styles.imageUploadAvatar}>
-                  <ImageUploadContainer handler={handleLoadMainImage} />
-                  {patternImage && (
-                    <Avatar src={patternImage}>
-                      <Image />
-                    </Avatar>
-                  )}
-                  {touched.patternImage && errors.patternImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternImage}
-                    </div>
-                  )}
+              <div className={styles.imageUploadBlock}>
+                <div>
+                  <span className={styles.imageUpload}>
+                    {config.labels.pattern.avatarText}
+                  </span>
+
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPreviewContainer
+                      handler={handleLoadMainImage}
+                      src={patternImage}
+                      id={imageUploadPatternInputsId.patternImageInput}
+                    />
+                    {touched.patternImage && errors.patternImage && (
+                      <div className={styles.inputError}>
+                        {errors.patternImage}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <span className={styles.imageUpload}>
-                  {config.labels.pattern.constructorImgText}
-                </span>
-                <div className={styles.imageUploadAvatar}>
-                  <ImageUploadContainer handler={handleLoadConstructorImage} />
-                  {constructorImg && (
-                    <Avatar src={constructorImg}>
-                      <Image />
-                    </Avatar>
-                  )}
-                  {touched.patternConstructorImage &&
-                    errors.patternConstructorImage && (
-                    <div className={styles.inputError}>
-                      {errors.patternConstructorImage}
-                    </div>
-                  )}
+                <div>
+                  <span className={styles.imageUpload}>
+                    {config.labels.pattern.constructorImgText}
+                  </span>
+
+                  <div className={styles.imageUploadAvatar}>
+                    <ImageUploadPreviewContainer
+                      handler={handleLoadConstructorImage}
+                      src={constructorImg}
+                      id={imageUploadPatternInputsId.constructorImageInput}
+                    />
+                    {touched.patternConstructorImage &&
+                      errors.patternConstructorImage && (
+                        <div className={styles.inputError}>
+                          {errors.patternConstructorImage}
+                        </div>
+                      )}
+                  </div>
                 </div>
               </div>
               <FormControl
@@ -269,6 +338,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   error={touched.material && !!errors.material}
                   value={values.material || []}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                 >
                   {materialsByPurpose.map(({ _id, name }) => (
                     <MenuItem key={_id} value={_id}>
@@ -282,20 +352,93 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   {errors.material}
                 </div>
               )}
+              <FormControl
+                variant={materialUiConstants.outlined}
+                className={`${styles.formControl} ${styles.materialSelect}`}
+              >
+                <InputLabel
+                  htmlFor={materialUiConstants.outlinedAgeNativeSimple}
+                >
+                  {modelTitle}
+                </InputLabel>
+                <Select
+                  data-cy={modelName}
+                  id='modelId'
+                  name='modelId'
+                  value={values.modelId}
+                  onChange={(e) => setFieldValue('modelId', e.target.value)}
+                  label={modelTitle}
+                  onBlur={handleBlur}
+                >
+                  {list.map((value) => (
+                    <MenuItem key={value._id} value={value._id}>
+                      {value?.name[0]?.value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {touched.modelId && errors.modelId && (
+                <div data-cy='material-error' className={styles.inputError}>
+                  {errors.modelId}
+                </div>
+              )}
+              <FormControl component='fieldset'>
+                <RadioGroup
+                  name='additionalPriceType'
+                  className={styles.textField}
+                  onChange={handleChange}
+                  value={values.additionalPriceType}
+                >
+                  <FormControlLabel
+                    value='ABSOLUTE_INDICATOR'
+                    label={additionalPriceType.absolutePrice[0].value}
+                    control={<Radio />}
+                    key={2}
+                  />
+                  <FormControlLabel
+                    value='RELATIVE_INDICATOR'
+                    label={additionalPriceType.relativePrice[0].value}
+                    control={<Radio />}
+                    key={1}
+                  />
+                </RadioGroup>
+              </FormControl>
+              <TextField
+                data-cy='additionalPrice'
+                className={`
+                  ${styles.textField} 
+                  ${styles.materialSelect} 
+                  `}
+                id='additionalPrice'
+                variant='outlined'
+                type='number'
+                label={getLabelValue(values, additionalPriceType)}
+                value={values.additionalPrice}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.additionalPrice && !!errors.additionalPrice}
+              />
+              {touched.additionalPrice && errors.additionalPrice && (
+                <div className={styles.inputError}>
+                  {errors.additionalPrice}
+                </div>
+              )}
+              <TextField
+                id='outlined-basic'
+                variant='outlined'
+                label={convertationTitle}
+                className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+                value={calculateAddittionalPriceValue(values, exchangeRate)}
+                disabled
+              />
             </Paper>
           </Grid>
           {map(languages, (lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
-          <BackButton />
-          <SaveButton
-            className={styles.saveButton}
-            data-cy='save-btn'
-            type='submit'
-            title={SAVE_TITLE}
-            values={values}
-            errors={errors}
-          />
         </form>
       )}
     </div>
@@ -311,17 +454,25 @@ PatternForm.propTypes = {
     _id: PropTypes.string,
     available: PropTypes.bool,
     description: PropTypes.arrayOf(valueShape),
-    handmade: PropTypes.bool,
+    features: PropTypes.shape({
+      material: PropTypes.string,
+      handmade: PropTypes.bool
+    }),
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
     constructorImg: PropTypes.string,
-    material: PropTypes.string,
-    name: PropTypes.arrayOf(valueShape)
+    name: PropTypes.arrayOf(valueShape),
+    additionalPrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.number
+      })
+    )
   }),
   values: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -331,6 +482,7 @@ PatternForm.propTypes = {
   errors: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -340,6 +492,7 @@ PatternForm.propTypes = {
   touched: PropTypes.shape({
     patternImage: PropTypes.string,
     material: PropTypes.string,
+    handmade: PropTypes.bool,
     uaName: PropTypes.string,
     enName: PropTypes.string,
     uaDescription: PropTypes.string,
@@ -381,18 +534,23 @@ PatternForm.defaultProps = {
       thumbnail: ''
     },
     constructorImg: '',
-    material: {
-      name: [
-        {
-          value: ''
-        },
-        {
-          value: ''
-        }
-      ]
+    model: {
+      _id: ''
     },
-    available: false,
-    handmade: false
+    features: {
+      material: {
+        name: [
+          {
+            value: ''
+          },
+          {
+            value: ''
+          }
+        ]
+      },
+      handmade: false
+    },
+    available: false
   },
   isEdit: false
 };

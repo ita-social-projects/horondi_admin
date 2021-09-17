@@ -1,13 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import { FormControl, MenuItem, Select } from '@material-ui/core';
+import React, { useCallback } from 'react';
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import _, { noop } from 'lodash';
+
 import { useStyles } from './nav-sort.styles';
+import materialUiConstants from '../../../configs/material-ui-constants';
+import { sortLabel } from '../../../configs/sort';
 
 const NavSort = ({ sortOptions }) => {
-  const [sortValue, setSortValue] = useState(sortOptions.labels[1].value);
   const styles = useStyles();
-  const { setSorting } = sortOptions;
+  const { setSorting, sortLabel: sortLabelValue } = sortOptions;
 
   const selectOptions = _.map(sortOptions.labels, ({ label, value }) => (
     <MenuItem key={label} value={value}>
@@ -21,21 +23,22 @@ const NavSort = ({ sortOptions }) => {
       const result = sortOptions.labels.find((item) => item.value === value);
 
       if (result) {
-        setSortValue(result.value);
-        setSorting(result.key, result.type);
+        setSorting(result);
       }
     },
     [sortOptions.label]
   );
-
   return (
     <div className={styles.sort}>
       <FormControl className={styles.formControl}>
+        <InputLabel id={materialUiConstants.checkBoxLabel}>
+          {sortLabel}
+        </InputLabel>
         <Select
           data-cy='user-sorting'
           labelId='checkbox-label'
           id='checkbox'
-          value={sortValue}
+          value={sortLabelValue}
           onChange={selectHandler}
           defaultValue={0}
         >
@@ -47,14 +50,16 @@ const NavSort = ({ sortOptions }) => {
 };
 
 NavSort.propTypes = {
-  sortOptions: PropTypes.objectOf(PropTypes.object),
-  labels: PropTypes.arrayOf(PropTypes.array),
+  sortOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.string])
+  ),
+  labels: PropTypes.arrayOf(PropTypes.object),
   setSorting: PropTypes.func
 };
 
 NavSort.defaultProps = {
   sortOptions: {},
   labels: [],
-  setSorting: noop()
+  setSorting: noop
 };
 export default NavSort;

@@ -15,7 +15,14 @@ Quill.debug('error');
 Quill.register(VideoBlot);
 Quill.register(ImageBlot);
 
-const Editor = ({ value, placeholder, onEditorChange, setFiles, id }) => {
+const Editor = ({
+  value,
+  placeholder,
+  onEditorChange,
+  setFiles,
+  id,
+  onBlur
+}) => {
   const reactQuillRef = useRef(null);
   const inputOpenImageRef = useRef();
 
@@ -25,7 +32,7 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles, id }) => {
 
   const handleChange = (html) => {
     setContent(html);
-    onEditorChange(html);
+    onEditorChange(html === '<p><br></p>' ? '' : html);
   };
 
   const imageHandler = () => {
@@ -97,7 +104,7 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles, id }) => {
   };
   const styles = useStyles(styleProps);
   return (
-    <div data-cy='editor'>
+    <div data-cy='editor' className={styles.editor}>
       <div
         id={id || 'toolbar'}
         className={`ql-toolbar ql-snow ${styles.editorBackground}`}
@@ -138,6 +145,9 @@ const Editor = ({ value, placeholder, onEditorChange, setFiles, id }) => {
         theme='snow'
         ref={reactQuillRef}
         onChange={handleChange}
+        onBlur={() => {
+          onBlur({ target: { name: id } });
+        }}
         modules={modules}
         formats={formats}
         value={content}
@@ -159,14 +169,16 @@ Editor.propTypes = {
   placeholder: PropTypes.string,
   onEditorChange: PropTypes.func.isRequired,
   setFiles: PropTypes.func,
+  onBlur: PropTypes.func,
   id: PropTypes.string
 };
 
 Editor.defaultProps = {
   value: '',
   placeholder: 'Текст',
-  setFiles: noop(),
-  id: ''
+  setFiles: noop,
+  id: '',
+  onBlur: noop
 };
 
 export default Editor;

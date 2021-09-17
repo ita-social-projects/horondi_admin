@@ -60,7 +60,8 @@ import {
   mockSnackarState,
   mockError,
   mockProductsStateToDeleteImages,
-  mockId
+  mockId,
+  mockPayload
 } from './products.variables';
 
 import {
@@ -83,15 +84,12 @@ import {
 } from '../../selectors/products.selectors';
 import { handleSuccessSnackbar } from '../../snackbar/snackbar.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  statuses;
 
 describe('Test products saga', () => {
   it('should load filter', () =>
-    expectSaga(handleFilterLoad)
+    expectSaga(handleFilterLoad, { payload: mockPayload })
       .withReducer(combineReducers({ Products, Table }), {
         Products: mockProductsState,
         Table: mockTableState
@@ -106,7 +104,14 @@ describe('Test products saga', () => {
           }
         ],
         [
-          call(getAllProducts, mockProductsState, mockTableState),
+          call(
+            getAllProducts,
+            mockPayload.limit,
+            mockPayload.skip,
+            mockPayload.filter,
+            mockPayload.sort,
+            mockPayload.search
+          ),
           mockProductsList
         ]
       ])
@@ -132,10 +137,8 @@ describe('Test products saga', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        const analysisSelect = analysis.filter((e) => e.type === 'SELECT');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
-        expect(analysisSelect).toHaveLength(1);
       }));
 
   it('should get filters', () =>
@@ -147,18 +150,12 @@ describe('Test products saga', () => {
       .provide([[call(getAllFilters), mockFiltersData]])
       .put(setAllFilterData(mockFiltersData))
       .put(setProductsLoading(false))
-      .hasFinalState({
-        Products: {
-          ...mockProductsState,
-          filterData: mockFiltersData
-        }
-      })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisPut).toHaveLength(3);
+        expect(analysisPut).toHaveLength(5);
         expect(analysisCall).toHaveLength(1);
       }));
 
@@ -259,17 +256,14 @@ describe('Test products saga', () => {
         [call(handleFilterLoad)],
         [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
       ])
-      .hasFinalState({
-        Products: mockProductsState
-      })
       .run()
       .then((result) => {
         const { allEffects: analysis } = result;
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisCall).toHaveLength(3);
+        expect(analysisCall).toHaveLength(9);
       }));
 
-  it.skip('should update product', () =>
+  it('should update product', () =>
     expectSaga(handleProductUpdate, { payload: mockProductToUpdatePayload })
       .withReducer(combineReducers({ Products }), {
         Products: mockProductToUpload
@@ -312,7 +306,7 @@ describe('Test products saga', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisSelect).toHaveLength(1);
         expect(analysisCall).toHaveLength(2);
-        expect(analysisPut).toHaveLength(4);
+        expect(analysisPut).toHaveLength(5);
       }));
 
   it.skip('should load product by id', () =>

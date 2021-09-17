@@ -9,7 +9,7 @@ import { TableCell, TableRow, Typography } from '@material-ui/core';
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 
-import { getComments } from '../../redux/comments/comments.actions';
+import { getRecentComments } from '../../redux/comments/comments.actions';
 import { getOrderList } from '../../redux/orders/orders.actions';
 import { selectOrderList } from '../../redux/orders/orders.reducer';
 import { selectComment } from '../../redux/comments/comments.reducer';
@@ -22,33 +22,32 @@ import routes from '../../configs/routes';
 
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './main-page.styles';
+import { getEmailQuestionsPendingCount } from '../../redux/email-questions/email-questions.actions';
+import { getTime } from '../../utils/comment';
 
 const map = require('lodash/map');
 
 const MainPage = () => {
-  const {
-    mainTitle,
-    commentsTitle,
-    ordersTitle,
-    changesTitle
-  } = titles.mainPageTitles;
+  const { mainTitle, commentsTitle, ordersTitle } = titles.mainPageTitles;
   const ordersTableTitles = tableHeadRowTitles.mainPageOrders;
+  const commentsTableTitles =
+    tableHeadRowTitles.comments.recentCommentsPageTitle;
   const { guestUser } = labels.user;
   const { EMPTY_LIST } = messages;
-  const { pathToOrders } = routes;
+  const { pathToOrders, pathToComments } = routes;
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
-  const { list, loading } = useSelector(selectComment);
+  const { recentComments: list, loading } = useSelector(selectComment);
 
-  const { orderLoading, ordersList } = useSelector(selectOrderList);
+  const { orderLoading, ordersList, sort } = useSelector(selectOrderList);
   const { rowsPerPage, currentPage } = useSelector(
     commentSelectorWithPagination
   );
 
   useEffect(() => {
     dispatch(
-      getComments({
+      getRecentComments({
         pagination: {
           limit: rowsPerPage,
           skip: currentPage * rowsPerPage
@@ -62,48 +61,56 @@ const MainPage = () => {
       getOrderList({
         limit: rowsPerPage,
         skip: currentPage * rowsPerPage,
-        filter: {
-          orderStatus: 'CREATED'
-        }
+        sort
       })
     );
   }, [dispatch, rowsPerPage, currentPage]);
 
-  const comments = map(list, ({ date, text, user, _id }) => (
-    <div key={_id} className={classes.comment}>
-      <div className={classes.commentText}>{text}</div>
-      <div className={classes.commentInfo}>
-        <div>{user.firstName || guestUser}</div>
-        <div>{moment.unix(date / 1000).format('HH:mm DD.MM.YYYY ')}</div>
-      </div>
-    </div>
-  ));
-
-  const orders =
-    ordersList && ordersList.length
-      ? map(ordersList, ({ dateOfCreation, totalItemsPrice, _id }) => (
-        <TableRow
-          key={_id}
-          onClick={() => dispatch(push(`${pathToOrders}/${_id}`))}
-          className={classes.order}
-          data-cy='order'
-        >
-          <TableCell>
-            {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
-          </TableCell>
-          <TableCell>
-            {totalItemsPrice[0].value}
-            {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
-            {totalItemsPrice[1].currency}
-          </TableCell>
-          <TableCell>{_id}</TableCell>
-        </TableRow>
-      ))
-      : null;
+  useEffect(() => {
+    dispatch(getEmailQuestionsPendingCount());
+  }, []);
 
   if (orderLoading || loading) {
     return <LoadingBar />;
   }
+
+  const comments = map(list, ({ date, text, user, _id }) => (
+    <TableRow
+      key={_id}
+      onClick={() => dispatch(push(`${pathToComments}/${_id}`))}
+      className={classes.comment}
+      data-cy='comment'
+    >
+      <TableCell>{getTime(date)}</TableCell>
+      <TableCell>{user?.firstName || guestUser}</TableCell>
+      <TableCell>{text}</TableCell>
+    </TableRow>
+  ));
+
+  const orders =
+    ordersList && ordersList.length
+      ? map(
+          ordersList,
+          ({ dateOfCreation, totalItemsPrice, _id, orderNumber }) => (
+            <TableRow
+              key={_id}
+              onClick={() => dispatch(push(`${pathToOrders}/edit/${_id}`))}
+              className={classes.order}
+              data-cy='order'
+            >
+              <TableCell>
+                {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
+              </TableCell>
+              <TableCell>
+                {totalItemsPrice[0].value}
+                {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
+                {totalItemsPrice[1].currency}
+              </TableCell>
+              <TableCell>{orderNumber}</TableCell>
+            </TableRow>
+          )
+        )
+      : null;
 
   return (
     <div className={`${commonClasses.container} ${classes.root}`}>
@@ -139,14 +146,19 @@ const MainPage = () => {
             <Typography variant='h5' className={classes.blockTitle}>
               {commentsTitle}
             </Typography>
-            <div className={classes.comments}>{comments}</div>
+            {comments && comments.length ? (
+              <TableContainerGenerator
+                tableItems={comments}
+                tableTitles={commentsTableTitles}
+                data-cy='comments-table'
+              />
+            ) : (
+              <div className={classes.emptyList} data-cy='empty-comments'>
+                {EMPTY_LIST}
+              </div>
+            )}
           </Paper>
         </div>
-        <Paper className={classes.changesContainer} data-cy='changes-container'>
-          <Typography variant='h5' className={classes.blockTitle}>
-            {changesTitle}
-          </Typography>
-        </Paper>
       </div>
     </div>
   );

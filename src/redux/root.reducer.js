@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
+
+import History from './history/history.reducer';
 import News from './news/news.reducer';
 import { contactsReducer } from './contact/contact.reducer';
 import Theme from './theme/theme.reducer';
@@ -25,6 +27,14 @@ import Slides from './home-page-slides/home-page-slides.reducer';
 import Error from './error/error.reducer';
 import Color from './color/color.reducer';
 import Constructor from './constructor/constructor.reducer';
+import Back from './back/back.reducer';
+import Bottom from './bottom/bottom.reducer';
+import Pockets from './pockets/pockets.reducer';
+import Positions from './position/position.reducer';
+import Closures from './closures/closures.reducer';
+import Currencies from './currencies/currencies.reducer';
+import Basics from './basics/basics.reducer';
+import Straps from './straps/straps.reducer';
 
 export const rootReducer = (history) =>
   combineReducers({
@@ -53,5 +63,14 @@ export const rootReducer = (history) =>
     Slides,
     Error,
     Color,
-    Constructor
+    Constructor,
+    History,
+    Back,
+    Bottom,
+    Pockets,
+    Closures,
+    Positions,
+    Basics,
+    Straps,
+    Currencies
   });

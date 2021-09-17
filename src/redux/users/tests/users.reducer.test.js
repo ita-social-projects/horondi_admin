@@ -3,7 +3,6 @@ import {
   setUser,
   setUsersLoading,
   setUserError,
-  updateUserLocally,
   deleteUserLocally,
   setTab,
   setSort,
@@ -53,24 +52,6 @@ describe('Test users reducer', () => {
     expect(userReducer(initialState, setUserError(mockError))).toEqual({
       ...initialState,
       userError: mockError
-    });
-  });
-
-  it('should update user locally in state', () => {
-    expect(
-      userReducer(
-        {
-          ...initialState,
-          user: mockUser
-        },
-        updateUserLocally(mockId)
-      )
-    ).toEqual({
-      ...initialState,
-      user: {
-        ...mockUser,
-        banned: true
-      }
     });
   });
 

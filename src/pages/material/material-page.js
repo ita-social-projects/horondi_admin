@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
+import { map } from 'lodash';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
+
 import { config } from '../../configs';
 import {
   getMaterials,
-  deleteMaterial,
-  setColorFilter
+  deleteMaterial
 } from '../../redux/material/material.actions.js';
 import { getColors } from '../../redux/color/color.actions';
 import ColorCircle from '../../components/color-circle';
@@ -20,8 +21,10 @@ import { useCommonStyles } from '../common.styles';
 import { useStyles } from './material-page.styles';
 import ColorsAutocomplete from '../../components/colors-autocomplete';
 import { materialSelectorWithPagination } from '../../redux/selectors/material.selectors';
-
-const map = require('lodash/map');
+import LoadingBar from '../../components/loading-bar';
+import useMaterialFilters from '../../hooks/filters/use-material-filters';
+import FilterNavbar from '../../components/filter-search-sort';
+import messages from '../../configs/messages';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
@@ -36,29 +39,36 @@ const MaterialPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const {
     list,
+    loading,
     itemsCount,
     currentPage,
     rowsPerPage,
     colors,
-    filter
+    filters
   } = useSelector(materialSelectorWithPagination);
+
+  const materialFilters = useMaterialFilters();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getColors());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(
       getMaterials({
-        filter,
         limit: rowsPerPage,
         skip: currentPage * rowsPerPage,
-        rowsPerPage
+        filter: {
+          colors: filters.colors,
+          name: filters.name,
+          available: filters.available,
+          purpose: filters.purpose
+        }
       })
     );
-  }, [dispatch, rowsPerPage, currentPage, filter]);
+  }, [dispatch, rowsPerPage, currentPage, filters]);
 
   const materialDeleteHandler = (id) => {
     const removeMaterial = () => {
@@ -74,7 +84,7 @@ const MaterialPage = () => {
       showAvatar={false}
       id={materialItem.id}
       name={materialItem.name[0].value}
-      purpose={materialItem.purpose}
+      purpose={materialTranslations.purpose[materialItem.purpose]}
       colors={
         <div className={styles.colorsCell}>
           {materialItem.colors.map((color) => (
@@ -99,6 +109,10 @@ const MaterialPage = () => {
     />
   ));
 
+  if (loading) {
+    return <LoadingBar />;
+  }
+
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
@@ -118,19 +132,26 @@ const MaterialPage = () => {
       <div className={styles.filters}>
         <ColorsAutocomplete
           colorsSet={colors}
-          selectedColors={filter.colors}
+          selectedColors={filters?.colors}
           handleChange={(value) => {
-            dispatch(setColorFilter(value));
+            materialFilters.setColorsFilter(value);
           }}
         />
+        <FilterNavbar options={materialFilters || {}} />
       </div>
       <div>
-        <TableContainerGenerator
-          pagination
-          count={itemsCount}
-          tableTitles={tableTitles}
-          tableItems={materialItems}
-        />
+        {materialItems?.length ? (
+          <TableContainerGenerator
+            pagination
+            count={itemsCount}
+            tableTitles={tableTitles}
+            tableItems={materialItems}
+          />
+        ) : (
+          <p className={commonStyles.noRecords}>
+            {messages.NO_MATERIAL_MESSAGE}
+          </p>
+        )}
       </div>
     </div>
   );

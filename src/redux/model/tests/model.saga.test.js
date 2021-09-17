@@ -52,14 +52,11 @@ import {
 import Model from '../model.reducer';
 import Table from '../../table/table.reducer';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  statuses;
 
 describe('Test model sagas', () => {
-  it('should load all models', () =>
+  it('should load all models', async (done) => {
     expectSaga(handleModelsLoad, { payload: mockModelsLoadPayload })
       .withReducer(combineReducers({ Model, Table }), {
         Model: mockModelState,
@@ -96,9 +93,11 @@ describe('Test model sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(1);
-      }));
+      });
+    done();
+  });
 
-  it('should load model by id', () =>
+  it('should load model by id', async (done) => {
     expectSaga(handleModelLoad, { payload: mockId })
       .withReducer(combineReducers({ Model }), { Model: mockModelState })
       .put(setModelLoading(true))
@@ -120,10 +119,12 @@ describe('Test model sagas', () => {
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(3);
-        expect(analysisCall).toHaveLength(2);
-      }));
+        expect(analysisCall).toHaveLength(1);
+      });
+    done();
+  });
 
-  it('should add model', () =>
+  it('should add model', async (done) => {
     expectSaga(handleAddModel, { payload: mockModel })
       .withReducer(combineReducers({ Model }), {
         Model: mockModelState
@@ -147,9 +148,11 @@ describe('Test model sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('should delete model', () =>
+  it('should delete model', async (done) => {
     expectSaga(handleModelDelete, { payload: mockId })
       .withReducer(combineReducers({ Model }), {
         Model: {
@@ -178,9 +181,11 @@ describe('Test model sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('should update model', () =>
+  it('should update model', async (done) => {
     expectSaga(handleModelUpdate, { payload: mockModelToUpdate })
       .withReducer(combineReducers({ Model }), {
         Model: mockModelState
@@ -204,9 +209,11 @@ describe('Test model sagas', () => {
         const analysisCall = analysis.filter((e) => e.type === 'CALL');
         expect(analysisPut).toHaveLength(2);
         expect(analysisCall).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 
-  it('should handle models error', () =>
+  it('should handle models error', async (done) => {
     expectSaga(handleModelError, mockError)
       .withReducer(combineReducers({ Model }), {
         Model: {
@@ -229,5 +236,7 @@ describe('Test model sagas', () => {
         const { allEffects: analysis } = result;
         const analysisPut = analysis.filter((e) => e.type === 'PUT');
         expect(analysisPut).toHaveLength(2);
-      }));
+      });
+    done();
+  });
 });

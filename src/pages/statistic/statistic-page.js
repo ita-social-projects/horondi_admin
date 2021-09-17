@@ -20,6 +20,7 @@ import {
 
 import { config } from '../../configs';
 import { useCommonStyles } from '../common.styles';
+import { getInitialStatsHandler } from '../../utils/statistic-page';
 
 const {
   titles: {
@@ -55,9 +56,7 @@ const StatisticPage = () => {
 
   useEffect(() => {
     const { categories } = doughnutData;
-    if (!categories.counts.length) {
-      dispatch(getIniitalStats());
-    }
+    getInitialStatsHandler(categories, dispatch, getIniitalStats);
   }, [dispatch, doughnutData]);
 
   if (loading) {
@@ -72,12 +71,18 @@ const StatisticPage = () => {
     if (doughnutValue === doughnut.select[1].value) {
       dispatch(getAllOrdersStats(date));
     }
-    if (barValue === bar.select[1].value) {
-      dispatch(getPaidOrdersStats(date));
+
+    switch (barValue) {
+      case barValue === bar.select[1].value:
+        dispatch(getPaidOrdersStats(date));
+        break;
+      case barValue === bar.select[2].value:
+        dispatch(getUsersByDays(date));
+        break;
+      default:
+        break;
     }
-    if (barValue === bar.select[2].value) {
-      dispatch(getUsersByDays(date));
-    }
+
     fetchedDoughnutStats.current.push(doughnutValue);
     fetchedBarStats.current.push(barValue);
   };
@@ -86,7 +91,9 @@ const StatisticPage = () => {
     const { value } = e.target;
     const { select } = doughnut;
     const isFetched = fetchedDoughnutStats.current.includes(value);
-    if (value === select[1].value && !isFetched) {
+    const selectEqualsFirstValue = value === select[1].value;
+    const firstValueAndNotFetched = selectEqualsFirstValue && !isFetched;
+    if (firstValueAndNotFetched) {
       dispatch(getAllOrdersStats(date));
       fetchedDoughnutStats.current.push(value);
     }
@@ -97,11 +104,15 @@ const StatisticPage = () => {
     const { value } = e.target;
     const { select } = bar;
     const isFetched = fetchedBarStats.current.includes(value);
-    if (value === select[1].value && !isFetched) {
+    const selectEqualsFirstValue = value === select[1].value;
+    const selectEqualsSecondValue = value === select[2].value;
+    const firstValueAndNotFetched = selectEqualsFirstValue && !isFetched;
+    const secondValueAndNotFetched = selectEqualsSecondValue && !isFetched;
+    if (firstValueAndNotFetched) {
       dispatch(getPaidOrdersStats(date));
       fetchedBarStats.current.push(value);
     }
-    if (value === select[2].value && !isFetched) {
+    if (secondValueAndNotFetched) {
       dispatch(getUsersByDays(date));
       fetchedBarStats.current.push(value);
     }

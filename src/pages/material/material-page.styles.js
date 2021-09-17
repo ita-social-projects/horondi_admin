@@ -18,6 +18,9 @@ export const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap'
   },
   filters: {
-    marginBottom: '15px'
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginBottom: '15px',
+    marginTop: '-25px'
   }
 }));

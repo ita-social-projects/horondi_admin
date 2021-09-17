@@ -22,7 +22,7 @@ ColorCircle.propTypes = {
 
 ColorCircle.defaultProps = {
   colorName: '',
-  onDelete: noop()
+  onDelete: noop
 };
 
 export default ColorCircle;

@@ -27,6 +27,8 @@ import {
   getPaidOrdersStats,
   getUsersByDays
 } from './stats.operations';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 export function* handleInitialStatsLoad() {
   try {
@@ -37,7 +39,7 @@ export function* handleInitialStatsLoad() {
     yield put(setPopularProducts(products));
     yield put(setStatsLoading(false));
   } catch (e) {
-    handleStatsErrors(e);
+    yield call(handleStatsErrors, e);
   }
 }
 
@@ -45,10 +47,13 @@ export function* handleOrdersStatisticLoad({ payload }) {
   try {
     yield put(setUpdatingDoughnutData(true));
     const orders = yield call(getOrdersStats, payload);
-    yield put(setAllOrdersStats(orders));
-    yield put(setUpdatingDoughnutData(false));
+
+    if (orders) {
+      yield put(setAllOrdersStats(orders));
+      yield put(setUpdatingDoughnutData(false));
+    }
   } catch (e) {
-    handleStatsErrors(e);
+    yield call(handleStatsErrors, e);
   }
 }
 
@@ -56,10 +61,13 @@ export function* handlePaidOrdersLoad({ payload }) {
   try {
     yield put(setUpdatingBarData(true));
     const orders = yield call(getPaidOrdersStats, payload);
-    yield put(setPaidOrdersStats(orders));
-    yield put(setUpdatingBarData(false));
+
+    if (orders) {
+      yield put(setPaidOrdersStats(orders));
+      yield put(setUpdatingBarData(false));
+    }
   } catch (e) {
-    handleStatsErrors(e);
+    yield call(handleStatsErrors, e);
   }
 }
 
@@ -67,16 +75,26 @@ export function* handleUsersStatisticLoad({ payload }) {
   try {
     yield put(setUpdatingBarData(true));
     const users = yield call(getUsersByDays, payload);
-    yield put(setUsersByDays(users));
-    yield put(setUpdatingBarData(false));
+
+    if (users) {
+      yield put(setUsersByDays(users));
+      yield put(setUpdatingBarData(false));
+    }
   } catch (e) {
-    handleStatsErrors(e);
+    yield call(handleStatsErrors, e);
   }
 }
 
 export function* handleStatsErrors(e) {
-  yield put(setStatsLoading(false));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setStatsLoading(false));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* statsSaga() {

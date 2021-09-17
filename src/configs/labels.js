@@ -2,7 +2,7 @@ import { mapToLanguages } from '../utils/map-languages';
 
 const labels = {
   sort: 'Сортувати за',
-  search: 'Шукати',
+  search: (param) => (!param ? 'Шукати' : `Шукати ${param}`),
   goToPage: 'Перейти на сторінку',
   user: {
     unknownAdmin: 'Невідомий адмін',
@@ -20,7 +20,9 @@ const labels = {
     text: {
       ua: 'Текст',
       en: 'Text'
-    }
+    },
+    avatarText: 'Фото автора',
+    mainImgText: 'Головне фото'
   },
   contacts: {
     schedule: {
@@ -29,7 +31,7 @@ const labels = {
     },
     adress: {
       ua: 'Адреса',
-      en: 'Adress'
+      en: 'Address'
     }
   },
   model: {
@@ -40,6 +42,21 @@ const labels = {
     description: {
       ua: 'Опис',
       en: 'Description'
+    },
+    labelsEn: {
+      modelImage: 'modelImage',
+      name: 'name',
+      description: 'description',
+      availableForConstructor: 'availableForConstructor',
+      categorySelect: 'category-select',
+      category: 'category',
+      priority: 'priority',
+      tagsFilled: 'tags-filled',
+      standard: 'standard',
+      normal: 'normal',
+      constructor: 'constructor',
+      labelId: 'controlled-open-select-label',
+      variantStandard: 'standard'
     },
     image: 'Фото моделі',
     availableCategory: 'Категорія',
@@ -57,6 +74,7 @@ const labels = {
     constructorColor: 'Колір',
     avatarText: 'Фото',
     priority: 'Пріорітет',
+    chooseSizes: { title: 'Список розмірів', inputTitle: 'Оберіть розміри' },
     showEnable: 'Так',
     showDisable: 'Ні',
     availablePatternsForConstructor: 'Доступні патерни для контсруктора',
@@ -96,15 +114,126 @@ const labels = {
     patternDescription: {
       ua: 'Опис гобелену',
       en: 'Pattern description'
+    },
+    modelName: 'Назва моделі',
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
     }
+  },
+  basics: {
+    image: 'Фото основи',
+    material: 'Матеріал',
+    available: 'Доступна',
+    customizable: 'для конструктора',
+    avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    basicName: {
+      ua: 'Назва основи',
+      en: 'Basic name'
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для основи ',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір основи',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
+  },
+  back: {
+    image: 'Фото спинки',
+    material: 'Матеріал',
+    available: 'Доступний',
+    customizable: 'для конструктора',
+    avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну (USD)',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    backName: {
+      ua: 'Назва спинки',
+      en: 'Back name'
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для спинки ',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір спинки',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
+  },
+  bottom: {
+    image: 'Фото низу',
+    material: 'Матеріал',
+    available: 'Доступний',
+    avatarText: 'Фото',
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPriceLabel: 'Введіть додаткову ціну',
+    form: {
+      name: mapToLanguages("І'мя", 'Name')
+    },
+    bottomName: {
+      ua: 'Назва низу',
+      en: 'Bottom name'
+    },
+    materialLabels: [
+      {
+        label: 'Матеріал для низу',
+        name: 'material',
+        required: false,
+        validation: 'string'
+      },
+      {
+        label: 'Колір низу',
+        name: 'color',
+        required: false,
+        validation: 'string'
+      }
+    ]
   },
   material: {
     image: mapToLanguages('Фото матеріалу', 'Material photo'),
     purpose: mapToLanguages('Застосування', 'Purpose'),
     available: mapToLanguages('Доступний', 'Available'),
-    name: mapToLanguages('Назва матеріалу', 'Material name'),
-    description: mapToLanguages('Опис матеріалу', 'Material description'),
-    additionalPrice: mapToLanguages('Додаткова ціна', 'Additional price')
+    name: { ua: 'Назва матеріалу', en: 'Material name' },
+    description: { ua: 'Опис матеріалу', en: 'Material description' },
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
   },
   color: {
     name: 'Назва кольору',
@@ -115,22 +244,39 @@ const labels = {
   comment: {
     text: 'Текст коментаря',
     show: 'Видимий',
+    hidden: 'Прихований',
+    yes: 'Так',
+    no: 'Ні',
     productInfo: 'Інформація про продукт'
   },
-  businessPage: [
+  replyComment: {
+    commentInfo: 'Інформіція про коментар',
+    text: 'Текст відповіді',
+    show: 'Видимий',
+    hidden: 'Прихований',
+    yes: 'Так',
+    no: 'Ні'
+  },
+  businessPageLabel: [
     {
-      label: mapToLanguages('Заголовок', 'Title'),
-      errorLabel: mapToLanguages('Введіть заголовок', 'Pass title')
+      label: { ua: 'Заголовок', en: 'Title' },
+      name: 'title',
+      required: true
     },
     {
-      label: mapToLanguages('Текст', 'Text'),
-      errorLabel: mapToLanguages(
-        'Введіть текст для сторінки',
-        'Pass text for the page'
-      )
+      label: { ua: 'Текст', en: 'Text' },
+      name: 'text',
+      isEditor: true
     }
   ],
   product: {
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
     sortBySelectOptions: [
       { label: 'популярністю', value: 'popularity' },
       { label: 'від дорогих до дешевих', value: 'sortDesc' },
@@ -263,7 +409,7 @@ const labels = {
       additions: false
     },
     priceLabel: {
-      label: 'Ціна(USD) ',
+      label: 'Ціна (USD) ',
       name: 'basePrice'
     }
   },
@@ -303,6 +449,12 @@ const labels = {
     weightInKg: 'Вага (кг.)'
   },
   emailQuestionsLabels: {
+    questionFrom: 'Запитання від ',
+    textFieldPlaceholder: 'Введіть вашу відповідь',
+    rowPlaceholder: {
+      answer: 'Відповідь',
+      question: 'Запитання'
+    },
     en: {
       ALL: 'ALL',
       PENDING: 'PENDING',
@@ -315,6 +467,7 @@ const labels = {
       SPAM: 'Спам',
       ANSWERED: 'Відповідь надано'
     },
+    answer: 'Відповісти',
     placeholder: 'Відповідь ...'
   },
   doughnut: {
@@ -377,13 +530,11 @@ const labels = {
     delivery: 'Доставка'
   },
   deliveryLabels: {
-    deliveryMethodLabel: 'Спосіб доставки',
-    byCourierLabel: "Доставка кур'єром:",
-    invoiceNumberLabel: 'Номер накладної',
-    warehouseNumberLabel: 'Номер відділення: ',
-    sentAtLabel: 'Відправлено о:',
-    deliveryCostLabel: 'Вартість доставки',
-    courierOfficeNameLabel: 'Номер відділення'
+    novaPost: 'Нова пошта',
+    ukrPost: 'Укрпошта',
+    selfPickup: 'Самовивіз',
+    novaPostCourier: "Кур'єр нової пошти",
+    ukrPostCourier: "Кур'єр укрпошти"
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
@@ -403,14 +554,19 @@ const labels = {
   },
   orders: {
     select: [
-      { label: 'Створені', value: 'CREATED' },
-      { label: 'Виконані', value: 'CONFIRMED' },
-      { label: 'Оброблені', value: 'PRODUCED' },
-      { label: 'Скасовані', value: 'CANCELLED' },
-      { label: 'Повернені', value: 'REFUNDED' },
-      { label: 'Надіслані', value: 'SENT' },
-      { label: 'Доставлені', value: 'DELIVERED' },
-      { label: 'Всі', value: 'All' }
+      { label: 'Створено', value: 'CREATED' },
+      { label: 'Підтвердженно', value: 'CONFIRMED' },
+      { label: 'Виготовлено', value: 'PRODUCED' },
+      { label: 'Скасовано', value: 'CANCELLED' },
+      { label: 'Повернення коштів', value: 'REFUNDED' },
+      { label: 'Відправлено', value: 'SENT' },
+      { label: 'Доставлено', value: 'DELIVERED' }
+    ]
+  },
+  comments: {
+    select: [
+      { label: 'Коментар', value: 'COMMENT' },
+      { label: 'Відповідь', value: 'REPLY_COMMENT' }
     ]
   },
   homePageSlide: {
@@ -418,7 +574,7 @@ const labels = {
     title: { ua: 'Заголовок слайду', en: 'Slider title' },
     show: 'Доступний',
     description: { ua: 'Опис слайду', en: 'Slide description' },
-    link: 'Посилання для переходу'
+    link: 'Відносне посилання для переходу (без домену)'
   },
   lableTitle: {
     ua: 'Заголовок ua',
@@ -442,17 +598,31 @@ const labels = {
   },
 
   sizeLabels: {
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
     ua: {
       heightInCm: 'Висота',
       widthInCm: 'Ширина',
       depthInCm: 'Глибина',
       volumeInLiters: "Об'єм (літри)",
       weightInKg: 'Вага',
-      additionalPrice: 'Додаткова ціна',
-      simpleNameUa: 'Назва(Укр)',
-      simpleNameEn: 'Назва(Eng)',
+      additionalPrice: 'Додаткова ціна (USD)',
+      modelName: 'Назва моделі',
       name: "Ім'я",
-      available: 'Доступний'
+      available: 'Доступний',
+      additionalPriceType: {
+        absolutePrice: 'Абсолютна ціна (USD)',
+        relativePrice: 'Відносна ціна (%)'
+      }
     },
     en: {
       heightInCm: 'heightInCm',
@@ -460,12 +630,93 @@ const labels = {
       depthInCm: 'depthInCm',
       volumeInLiters: 'volumeInLiters',
       weightInKg: 'weightInKg',
-      additionalPrice: 'additionalPrice',
-      simpleNameUa: 'simpleNameUa',
-      simpleNameEn: 'simpleNameUa',
+      additionalPrice: 'additionalPrice (USD)',
+      modelName: 'modelId',
       name: 'name',
-      available: 'available'
+      available: 'available',
+      additionalPriceType: {
+        absolutePrice: 'Absolute price (USD)',
+        relativePrice: 'Relative price (%)'
+      }
     }
+  },
+  pocketsPageLabel: {
+    pocketsHeader: 'pockets-header',
+    pocketsTable: 'sidePocketsTable',
+    pocketsName: {
+      ua: 'Назва кишені',
+      en: 'Pocket name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    avaliable: 'Додати до обмежень',
+    avatarText: 'Фото',
+    labelsRestriction: 'restriction',
+    labelIdAut: 'labelIdAut',
+    normal: 'normal',
+    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' }
+  },
+  closuresPageLabel: {
+    closuresHeader: 'closures-header',
+    closuresTable: 'sideClosuresTable',
+    closuresName: {
+      ua: 'Назва замочка',
+      en: 'Closure name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    // additionalPrice: 'Введіть додаткову ціну',
+    available: 'Доступний',
+    avatarText: 'Фото',
+    additionalPrice: mapToLanguages(
+      'Додаткова ціна (USD)',
+      'Additional price (USD)'
+    ),
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
+  },
+  positionPageLabel: {
+    positionHeader: 'position-header',
+    positionTable: 'positionTable',
+    available: 'Доступно',
+    positionName: {
+      ua: 'Позиція',
+      en: 'Position'
+    }
+  },
+  basiscPageLabel: {
+    basicsHeader: 'basics-header',
+    basicsTable: 'sideBasicsTable',
+    basicsName: {
+      ua: 'Назва основи',
+      en: 'Basics name'
+    },
+    available: 'Доступний',
+    avatarText: 'Фото'
+  },
+  strapsPageLabel: {
+    strapsHeader: 'straps-header',
+    strapsTable: 'sideStrapsTable',
+    strapsName: {
+      ua: 'Назва ремінця',
+      en: 'Strap name'
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
+    available: 'Доступний',
+    avatarText: 'Фото',
+    chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
   }
 };
 export default labels;

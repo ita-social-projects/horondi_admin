@@ -10,11 +10,14 @@ import {
   REMOVE_SIZE_FROM_STATE,
   SET_SIZES_LOADING,
   SET_SIZES_ERROR,
-  SHOW_SIZE_DIALOG_WINDOW
+  SHOW_SIZE_DIALOG_WINDOW,
+  CLEAR_FILTERS,
+  SET_FILTER
 } from './sizes.types';
 
-export const getSizes = () => ({
-  type: GET_SIZES
+export const getSizes = (payload) => ({
+  type: GET_SIZES,
+  payload
 });
 
 export const getSize = (payload) => ({
@@ -69,4 +72,13 @@ export const setSizesLoading = (payload) => ({
 export const setSizesError = (payload) => ({
   type: SET_SIZES_ERROR,
   payload
+});
+
+export const setSizeFilter = (payload) => ({
+  type: SET_FILTER,
+  payload
+});
+
+export const clearSizeFilters = () => ({
+  type: CLEAR_FILTERS
 });

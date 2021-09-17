@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { TableRow, TableCell, Avatar, Checkbox } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
+
 import PropTypes from 'prop-types';
 
 import { noop } from 'lodash';
@@ -9,6 +10,7 @@ import {
   CustomizedEditIcon,
   CustomizedDeleteIcon
 } from '../../components/icons';
+
 import { useStyles } from './table-container-row.styles';
 import { config } from '../../configs';
 
@@ -31,7 +33,6 @@ const TableContainerRow = ({
   const dense = useSelector(({ Table }) => Table.dense);
 
   const properties = { ...rest };
-
   const tableCells = Object.keys(properties).map((property) => (
     <TableCell key={property} data-cy='table-cell'>
       {properties[property]}
@@ -40,7 +41,6 @@ const TableContainerRow = ({
 
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
   const avatarSize = dense ? classes.small : classes.medium;
-
   return (
     <TableRow key={id} hover onClick={(e) => clickHandler(e)}>
       {showCheckbox && (
@@ -97,10 +97,10 @@ TableContainerRow.propTypes = {
 TableContainerRow.defaultProps = {
   id: '',
   image: '',
-  deleteHandler: noop(),
-  editHandler: noop(),
-  clickHandler: noop(),
-  checkboxChangeHandler: noop(),
+  deleteHandler: noop,
+  editHandler: noop,
+  clickHandler: noop,
+  checkboxChangeHandler: noop,
   showAvatar: true,
   showEdit: true,
   showDelete: true,

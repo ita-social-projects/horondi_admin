@@ -1,18 +1,13 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem,
-  Grid
-} from '@material-ui/core';
+import { FormControl, Select, InputLabel, Grid } from '@material-ui/core';
 
-import { map, noop } from 'lodash';
+import { noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 import { useStyles } from './product-materials-container.styles';
 import { config } from '../../configs';
+import { handleMenuItem } from '../../utils/handle-menu-item';
 
 const { materialLabels } = config.labels.product;
 
@@ -51,59 +46,29 @@ const ProductMaterialsContainer = ({
   };
 
   const mainMaterialOptions = useMemo(
-    () =>
-      map(mainMaterials, (material) => (
-        <MenuItem value={material._id} key={material.name[1].value}>
-          {material.name[0].value}
-        </MenuItem>
-      )),
+    () => handleMenuItem(mainMaterials),
     [mainMaterials]
   );
   const mainColorOptions = useMemo(
-    () =>
-      map(mainColors, (color) => (
-        <MenuItem value={color._id} key={color.name[1].value}>
-          {color.name[0].value}
-        </MenuItem>
-      )),
+    () => handleMenuItem(mainColors),
     [mainColors]
   );
   const bottomMaterialOptions = useMemo(
-    () =>
-      map(bottomMaterials, (material) => (
-        <MenuItem value={material._id} key={material.name[1].value}>
-          {material.name[0].value}
-        </MenuItem>
-      )),
+    () => handleMenuItem(bottomMaterials),
     [bottomMaterials]
   );
   const bottomColorOptions = useMemo(
-    () =>
-      map(bottomColors, (color) => (
-        <MenuItem value={color._id} key={color.name[1].value}>
-          {color.name[0].value}
-        </MenuItem>
-      )),
+    () => handleMenuItem(bottomColors),
     [bottomColors]
   );
 
   const innerMaterialOptions = useMemo(
-    () =>
-      map(innerMaterials, (material) => (
-        <MenuItem value={material._id} key={material.name[1].value}>
-          {material.name[0].value}
-        </MenuItem>
-      )),
+    () => handleMenuItem(innerMaterials),
     [innerMaterials]
   );
 
   const innerColorOptions = useMemo(
-    () =>
-      map(innerColors, (color) => (
-        <MenuItem value={color._id} key={color.name[1].value}>
-          {color.name[0].value}
-        </MenuItem>
-      )),
+    () => handleMenuItem(innerColors),
     [innerColors]
   );
   const options = [
@@ -114,7 +79,6 @@ const ProductMaterialsContainer = ({
     innerMaterialOptions,
     innerColorOptions
   ];
-
   return (
     <form onSubmit={handleSubmit} className={sharedStyles.container}>
       <Grid container spacing={1} xs={12} justify='flex-start'>
@@ -129,6 +93,7 @@ const ProductMaterialsContainer = ({
               value={values[name]}
               onChange={handleSelectChange}
               onBlur={handleBlur}
+              disabled={!options[idx] || !options[idx].length}
             >
               {options[idx]}
             </Select>
@@ -140,14 +105,20 @@ const ProductMaterialsContainer = ({
 };
 
 ProductMaterialsContainer.propTypes = {
-  innerMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  innerColors: PropTypes.arrayOf(PropTypes.array).isRequired,
-  bottomMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  bottomColors: PropTypes.arrayOf(PropTypes.array).isRequired,
-  mainMaterials: PropTypes.arrayOf(PropTypes.array).isRequired,
-  mainColors: PropTypes.arrayOf(PropTypes.array).isRequired,
+  innerMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  innerColors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bottomMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bottomColors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  mainMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  mainColors: PropTypes.arrayOf(PropTypes.object).isRequired,
   values: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.array,
+      PropTypes.object
+    ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
@@ -159,7 +130,7 @@ ProductMaterialsContainer.propTypes = {
 };
 
 ProductMaterialsContainer.defaultProps = {
-  toggleFieldsChanged: noop()
+  toggleFieldsChanged: noop
 };
 
 export default ProductMaterialsContainer;

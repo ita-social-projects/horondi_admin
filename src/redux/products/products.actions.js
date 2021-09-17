@@ -3,10 +3,7 @@ import {
   SET_ALL_PRODUCTS,
   GET_ALL_FILTERS,
   SET_ALL_FILTER_DATA,
-  SET_SORT_BY_PRICE,
-  SET_SORT_BY_DATE,
-  SET_SORT_BY_RATE,
-  SET_SORT_BY_POPULARITY,
+  SET_PRODUCT_SORT,
   GET_FILTRED_PRODUCTS,
   SET_PRODUCTS_LOADING,
   SET_CATEGORY_FILTER,
@@ -34,7 +31,10 @@ import {
   REMOVE_IMAGES_TO_UPLOAD,
   SET_PRIMARY_IMAGE_TO_UPLOAD,
   SET_PRODUCT_DETAILS,
-  GET_PRODUCT_DETAILS
+  GET_PRODUCT_DETAILS,
+  SET_PRODUCT_FILTER,
+  CLEAR_PRODUCT_FILTER,
+  SET_PRODUCT_SORT_LABEL
 } from './products.types';
 
 export const getProduct = (id) => ({
@@ -47,28 +47,18 @@ export const setAllFilterData = (payload) => ({
   payload
 });
 
-export const setSortByPrice = (payload) => ({
-  type: SET_SORT_BY_PRICE,
+export const setProductSort = (payload) => ({
+  type: SET_PRODUCT_SORT,
+  payload
+});
+
+export const clearProductFilter = (payload) => ({
+  type: CLEAR_PRODUCT_FILTER,
   payload
 });
 
 export const setProductDetails = (payload) => ({
   type: SET_PRODUCT_DETAILS,
-  payload
-});
-
-export const setSortByDate = (payload) => ({
-  type: SET_SORT_BY_DATE,
-  payload
-});
-
-export const setSortByRate = (payload) => ({
-  type: SET_SORT_BY_RATE,
-  payload
-});
-
-export const setSortByPopularity = (payload) => ({
-  type: SET_SORT_BY_POPULARITY,
   payload
 });
 
@@ -80,6 +70,11 @@ export const getFiltredProducts = (payload) => ({
 export const setProductsLoading = (loading) => ({
   type: SET_PRODUCTS_LOADING,
   payload: loading
+});
+
+export const setProductFilter = (payload) => ({
+  type: SET_PRODUCT_FILTER,
+  payload
 });
 
 export const setCategoryFilter = (payload) => ({
@@ -211,5 +206,9 @@ export const removeImagesToUpload = (payload) => ({
 
 export const setPrimaryImageToUpload = (payload) => ({
   type: SET_PRIMARY_IMAGE_TO_UPLOAD,
+  payload
+});
+export const setProductSortLabel = (payload) => ({
+  type: SET_PRODUCT_SORT_LABEL,
   payload
 });

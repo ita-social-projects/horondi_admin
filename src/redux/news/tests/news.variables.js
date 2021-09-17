@@ -96,7 +96,10 @@ const mockAddNewsPayload = {
 const mockNewsLoadPayload = {
   skip,
   limit,
-  newsPerPage: 10
+  newsPerPage: 10,
+  filter: {
+    search: ''
+  }
 };
 
 const statuses = {
@@ -120,5 +123,7 @@ export {
   statuses,
   mockError,
   mockTableState,
-  mockAddNewsPayload
+  mockAddNewsPayload,
+  skip,
+  limit
 };

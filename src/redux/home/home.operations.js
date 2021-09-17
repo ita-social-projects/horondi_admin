@@ -1,14 +1,8 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-
+import { getItems, setItems } from '../../utils/client';
 import { homePageEditTranslations } from '../../translations/home-page-edit.translations';
-import { getFromLocalStorage } from '../../services/local-storage.service';
-
-const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
 
 const getHomePageLooksImages = async () => {
-  const result = await client.query({
-    query: gql`
+  const query = `
       query {
         getHomePageLooksImages {
           _id
@@ -17,24 +11,14 @@ const getHomePageLooksImages = async () => {
           }
         }
       }
-    `
-  });
+    `;
 
-  client.stop();
-  client.resetStore();
+  const result = await getItems(query);
 
-  const { data } = result;
-  return data.getHomePageLooksImages;
+  return result?.data?.getHomePageLooksImages;
 };
-
 const updateHomePageLooksImage = async (id, upload) => {
-  const result = await client.mutate({
-    variables: {
-      id,
-      upload
-    },
-    context: { headers: { token } },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $upload: Upload) {
         updateHomePageLooksImage(id: $id, images: $upload) {
           ... on HomePageImages {
@@ -48,22 +32,23 @@ const updateHomePageLooksImage = async (id, upload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
+    `;
 
-  const { data } = result;
+  const result = await setItems(query, { id, upload });
 
-  if (data.updateHomePageLooksImage.message) {
+  if (
+    Object.keys(homePageEditTranslations).includes(
+      result?.data?.updateHomePageLooksImage?.message
+    )
+  ) {
     throw new Error(
-      `${data.updateHomePageLooksImage.statusCode} ${
-        homePageEditTranslations[data.updateHomePageLooksImage.message]
+      `${result.data.updateHomePageLooksImage.statusCode} ${
+        homePageEditTranslations[result.data.updateHomePageLooksImage.message]
       }`
     );
   }
 
-  return data.updateHomePageLooksImage;
+  return result?.data?.updateHomePageLooksImage;
 };
 
 export { getHomePageLooksImages, updateHomePageLooksImage };

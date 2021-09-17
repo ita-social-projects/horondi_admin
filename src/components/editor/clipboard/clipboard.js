@@ -1,6 +1,8 @@
 import { Quill } from 'react-quill';
 import axios from 'axios';
 
+import { definePosition } from '../../../utils/clipboard';
+
 const QuillClipboard = Quill.import('modules/clipboard');
 
 class Clipboard extends QuillClipboard {
@@ -27,21 +29,25 @@ class Clipboard extends QuillClipboard {
               let image;
               let url;
               for (const node of this.getMetaTagElements(payload)) {
-                if (node.getAttribute('property') === 'og:title') {
-                  title = node.getAttribute('content');
-                }
-                if (node.getAttribute('property') === 'og:image') {
-                  image = node.getAttribute('content');
-                }
-                if (node.getAttribute('property') === 'og:url') {
-                  url = node.getAttribute('content');
+                switch (node.getAttribute('property')) {
+                  case 'og:title':
+                    title = node.getAttribute('content');
+                    break;
+                  case 'og:image':
+                    image = node.getAttribute('content');
+                    break;
+                  case 'og:url':
+                    url = node.getAttribute('content');
+                    break;
+                  default:
+                    break;
                 }
               }
 
               const rendered = `<a href=${url} target="_blank"><div><img src=${image} alt=${title} width="20%"/><span>${title}</span></div></a>`;
 
               const range = this.quill.getSelection();
-              const position = range ? range.index : 0;
+              const position = definePosition(range);
               this.quill.pasteHTML(position, rendered, 'silent');
               this.quill.setSelection(position + rendered.length);
             })

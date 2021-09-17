@@ -12,5 +12,8 @@ export const useStyles = makeStyles((theme) => ({
     alignSelf: 'flex-end',
     marginBottom: '20px',
     marginTop: '15px'
+  },
+  filters: {
+    marginTop: 30
   }
 }));

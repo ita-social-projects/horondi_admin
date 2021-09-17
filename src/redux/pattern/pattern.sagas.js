@@ -32,19 +32,18 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
-export function* handlePatternsLoad({ payload }) {
+export function* handlePatternsLoad({ payload: { limit, skip, filter } }) {
   try {
     yield put(setPatternLoading(true));
-    const patterns = yield call(getAllPatterns, payload.skip, payload.limit);
-    yield put(setItemsCount(patterns.count));
-    yield put(setPatterns(patterns.items));
+    const patterns = yield call(getAllPatterns, limit, skip, filter);
+    yield put(setItemsCount(patterns?.count));
+    yield put(setPatterns(patterns?.items));
     yield put(setPatternLoading(false));
   } catch (error) {
     yield call(handlePatternError, error);
@@ -98,9 +97,13 @@ export function* handlePatternUpdate({ payload }) {
 }
 
 export function* handlePatternError(e) {
-  yield put(setPatternLoading(false));
-  yield put(setPatternError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setPatternLoading(false));
+    yield put(setPatternError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* patternSaga() {

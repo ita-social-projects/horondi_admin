@@ -12,11 +12,10 @@ import { config } from '../../../configs';
 const { submitKey, labels } = config;
 const { search: searchLabel } = labels;
 
-const NavSearch = ({ searchOptions }) => {
+const NavSearch = ({
+  searchOptions: { search, setSearchFilter, placeholderText = '' }
+}) => {
   const styles = useStyles();
-  const { filters } = searchOptions;
-  const { setSearchFilter } = searchOptions;
-  const { search } = filters;
   const [searchValue, setSearchValue] = useState(search);
 
   const handleSetSearchValue = (event) => {
@@ -37,7 +36,7 @@ const NavSearch = ({ searchOptions }) => {
     <div>
       <Paper className={styles.root}>
         <InputBase
-          placeholder={searchLabel}
+          placeholder={searchLabel(placeholderText)}
           value={searchValue}
           onChange={handleSetSearchValue}
           onKeyPress={handleSearchSubmit}
@@ -56,14 +55,18 @@ const NavSearch = ({ searchOptions }) => {
   );
 };
 NavSearch.propTypes = {
-  searchOptions: PropTypes.objectOf(PropTypes.object),
-  filters: PropTypes.func,
-  setSearchFilter: PropTypes.func
+  searchOptions: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+  ),
+  search: PropTypes.string,
+  setSearchFilter: PropTypes.func,
+  placeholderText: PropTypes.string
 };
 
 NavSearch.defaultProps = {
   searchOptions: {},
-  filters: noop(),
-  setSearchFilter: noop()
+  search: '',
+  placeholderText: '',
+  setSearchFilter: noop
 };
 export default NavSearch;

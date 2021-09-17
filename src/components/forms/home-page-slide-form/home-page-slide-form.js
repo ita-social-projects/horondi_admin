@@ -18,32 +18,49 @@ import {
   updateSlide
 } from '../../../redux/home-page-slides/home-page-slides.actions';
 import LanguagePanel from '../language-panel';
+import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages } = config;
 
-const { SLIDE_VALIDATION_ERROR } = config.homePageSlideErrorMessages;
+const {
+  SLIDE_VALIDATION_ERROR,
+  SLIDE_ERROR_MESSAGE,
+  NOT_EN_DESCRIPTION_MESSAGE,
+  NOT_EN_NAME_MESSAGE,
+  NOT_UA_DESCRIPTION_MESSAGE
+} = config.homePageSlideErrorMessages;
 const { preview } = config.titles.homePageSliderTitle;
 const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const {
-    discoverMoreTitle,
-    discoverMoreSymbol
-  } = config.titles.homePageSliderTitle;
-  const {
-    slideImage,
-    setSlideImage,
-    createSlide,
-    upload,
-    setUpload
-  } = useHomePageSlideHandlers();
+  const { discoverMoreTitle, discoverMoreSymbol } =
+    config.titles.homePageSliderTitle;
+  const { slideImage, setSlideImage, createSlide, upload, setUpload } =
+    useHomePageSlideHandlers();
+
+  const { pathToHomePageSlides } = config.routes;
 
   const slideValidationSchema = Yup.object().shape({
-    enDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    enTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    uaDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    uaTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    link: Yup.string().min(2, SLIDE_VALIDATION_ERROR)
+    enDescription: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .matches(config.formRegExp.enDescription, NOT_EN_DESCRIPTION_MESSAGE)
+      .required(SLIDE_ERROR_MESSAGE),
+    enTitle: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
+      .required(SLIDE_ERROR_MESSAGE),
+    uaDescription: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .matches(config.formRegExp.uaDescription, NOT_UA_DESCRIPTION_MESSAGE)
+      .required(SLIDE_ERROR_MESSAGE),
+    uaTitle: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
+      .required(SLIDE_ERROR_MESSAGE),
+    link: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .required(SLIDE_ERROR_MESSAGE)
   });
 
   const {
@@ -52,19 +69,11 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     handleChange,
     touched,
     errors,
-    setFieldValue
+    setFieldValue,
+    handleBlur
   } = useFormik({
     validationSchema: slideValidationSchema,
-    initialValues: {
-      slideImage: slide.images.large || '',
-      uaTitle: slide.title[0].value || '',
-      enTitle: slide.title[1].value || '',
-      uaDescription: slide.description[0].value || '',
-      enDescription: slide.description[1].value || '',
-      link: slide.link || '',
-      show: slide.show || false,
-      order: slide.order || slideOrder
-    },
+    initialValues: getHomePageSlidesInitialValues(slide, slideOrder),
 
     onSubmit: () => {
       (() => {
@@ -94,6 +103,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     }
   });
 
+  const unblock = useUnsavedChangesHandler(values);
+
   const checkboxes = [
     {
       id: 'show',
@@ -106,15 +117,15 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     }
   ];
 
-  const handleImageLoad = (e) => {
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (files) => {
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setFieldValue('slideImage', event.target.result);
         setSlideImage(event.target.result);
       };
-      reader.readAsDataURL(e.target.files[0]);
-      setUpload(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
+      setUpload(files[0]);
     }
   };
 
@@ -127,14 +138,38 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     touched,
     handleChange,
     values,
-    inputs
+    inputs,
+    handleBlur
+  };
+
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
   };
 
   return (
     <div className={styles.formContainer}>
-      <form onSubmit={handleSubmit}>
-        <CheckboxOptions options={checkboxes} />
-
+      <form onSubmit={(e) => eventPreventHandler(e)}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton pathBack={pathToHomePageSlides} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                data-cy='save'
+                onClickHandler={handleSubmit}
+                type='submit'
+                title={config.buttonTitles.CREATE_SLIDE_TITLE}
+                values={values}
+                errors={errors}
+                unblockFunction={unblock}
+              />
+            </Grid>
+          </Grid>
+        </div>
+        <div>
+          <CheckboxOptions options={checkboxes} />
+        </div>
         <Grid item xs={12}>
           <Paper className={styles.slideItemUpdate}>
             <span className={styles.imageUpload}>
@@ -156,6 +191,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
               label={config.labels.homePageSlide.link}
               value={values.link}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.link && !!errors.link}
             />
             {touched.link && errors.link && (
@@ -168,15 +204,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         {languages.map((lang, index) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton />
-        <SaveButton
-          className={styles.formButton}
-          data-cy='save'
-          type='submit'
-          title={config.buttonTitles.CREATE_SLIDE_TITLE}
-          values={values}
-          errors={errors}
-        />
       </form>
       <Typography variant='h1' className={styles.slideTitle}>
         {preview}

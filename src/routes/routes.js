@@ -35,7 +35,6 @@ import ConfirmUser from '../pages/users/confirm-user';
 import OrderItem from '../pages/order-item';
 import HomePage from '../pages/home-page';
 import EmailQuestionsList from '../pages/email-questions';
-import EmailQuestionsDetails from '../pages/email-questions/email-question-details';
 import ModelPage from '../pages/model';
 import ModelAdd from '../pages/model/model-add';
 import ModelDetails from '../pages/model/model-details';
@@ -57,12 +56,39 @@ import ConstructorPage from '../pages/model/constructor/constructor-page';
 import ConstructorAdd from '../pages/model/constructor/constructor-add';
 import ConstructorDetails from '../pages/model/constructor/constructor-details';
 import CommentEdit from '../pages/comments/comment-edit/comment-edit';
+import ReplyCommentEdit from '../pages/comments/comment-edit/replyComments/reply-comment-edit';
+import History from '../pages/history';
+import HistoryDetails from '../pages/history/history-details';
+import PocketsPage from '../pages/pockets/pockets-page';
+import PocketsAdd from '../pages/pockets/pockets-add/pockets-add';
+import PocketsEdit from '../pages/pockets/pockets-edit/pockets-edit';
+import BackPage from '../pages/back';
+import BottomPage from '../pages/bottom';
+import BackAdd from '../pages/back/back-add';
+import BackDetails from '../pages/back/back-details';
+import PositionPage from '../pages/position/position-page';
+import PositionAdd from '../pages/position/position-add';
+import PositionEdit from '../pages/position/position-edit';
+import ConstructorListPage from '../pages/constructor-list';
+import ConstructorModelDetails from '../pages/constructor-list/constructor-details';
+import ClosuresPage from '../pages/closures/closures-page';
+import ClosuresAdd from '../pages/closures/closures-add/closures-add';
+import ClosuresEdit from '../pages/closures/closures-edit/closures-edit';
+import BottomAdd from '../pages/bottom/bottom-add';
+import BottomEdit from '../pages/bottom/bottom-edit';
+import BasicsPage from '../pages/basics/basics-page';
+import BasicAdd from '../pages/basics/basic-add';
+import BasicDetails from '../pages/basics/basic-details';
+import StrapsPage from '../pages/straps/straps-page';
+import StrapsAdd from '../pages/straps/straps-add/straps-add';
+import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 
 const { routes } = config;
 
 const Routes = () => {
   const location = useLocation();
   const history = useHistory();
+
   useEffect(() => {
     if (location.pathname !== history.location.pathname) {
       history.push(location.pathname);
@@ -98,6 +124,12 @@ const Routes = () => {
       <ErrorBoundary>
         <Switch>
           <Route path={routes.pathToMainPage} exact component={MainPage} />
+          <Route path={routes.pathToHistory} exact component={History} />
+          <Route
+            path={routes.pathToHistoryDetails}
+            exact
+            component={HistoryDetails}
+          />
           <Route path={routes.pathToUsers} exact component={UsersPage} />
           <Route
             path={routes.pathToUsersDetails}
@@ -207,13 +239,6 @@ const Routes = () => {
             component={EmailQuestionsList}
           />
           <Route
-            path={routes.pathToEmailQuestionDetails}
-            exact
-            render={({ match }) => (
-              <EmailQuestionsDetails id={match.params.id} />
-            )}
-          />
-          <Route
             path={routes.pathToStatistic}
             exact
             component={StatisticPage}
@@ -260,6 +285,66 @@ const Routes = () => {
             exact
             component={CommentEdit}
           />
+          <Route
+            path={routes.pathToReplyCommentsEdit}
+            exact
+            component={ReplyCommentEdit}
+          />
+          <Route path={routes.pathToPockets} exact component={PocketsPage} />
+          <Route path={routes.pathToPocketsAdd} exact component={PocketsAdd} />
+          <Route
+            path={routes.pathToPocketsEdit}
+            exact
+            component={PocketsEdit}
+          />
+          <Route path={routes.pathToBacks} exact component={BackPage} />
+          <Route path={routes.pathToAddBacks} exact component={BackAdd} />
+          <Route
+            path={routes.pathToBackDetails}
+            exact
+            component={BackDetails}
+          />
+          <Route path={routes.pathToBottoms} exact component={BottomPage} />
+          <Route path={routes.pathToBottomsAdd} exact component={BottomAdd} />
+          <Route path={routes.pathToBottomsEdit} exact component={BottomEdit} />
+          <Route path={routes.pathToPosition} exact component={PositionPage} />
+          <Route
+            path={routes.pathToPositionAdd}
+            exact
+            component={PositionAdd}
+          />
+          <Route
+            path={routes.pathToPositionEdit}
+            exact
+            component={PositionEdit}
+          />
+          <Route
+            path={routes.pathToConstructorList}
+            exact
+            component={ConstructorListPage}
+          />
+          <Route
+            path={routes.pathToConstructorModelDetails}
+            exact
+            component={ConstructorModelDetails}
+          />
+          <Route path={routes.pathToClosures} exact component={ClosuresPage} />
+          <Route
+            path={routes.pathToClosuresAdd}
+            exact
+            component={ClosuresAdd}
+          />
+          <Route
+            path={routes.pathToClosuresEdit}
+            exact
+            component={ClosuresEdit}
+          />
+          <Route path={routes.pathToBasics} exact component={BasicsPage} />
+          <Route path={routes.pathToAddBasic} exact component={BasicAdd} />
+          <Route path={routes.pathToEditBasic} exact component={BasicDetails} />
+          <Route path={routes.pathToStraps} exact component={StrapsPage} />
+          <Route path={routes.pathToStrapsAdd} exact component={StrapsAdd} />
+          <Route path={routes.pathToStrapsEdit} exact component={StrapsEdit} />
           <Route component={ErrorPage} />
         </Switch>
       </ErrorBoundary>

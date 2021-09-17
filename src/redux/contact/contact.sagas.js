@@ -34,20 +34,23 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import routes from '../../configs/routes';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 export function* handleContactsLoad({ payload: { skip, limit } }) {
   try {
     yield put(setContactsLoading(true));
     const contacts = yield call(getContacts, skip, limit);
-    yield put(setItemsCount(contacts.count));
-    yield put(setContacts(contacts.items));
-    yield put(setContactsLoading(false));
+
+    if (contacts) {
+      yield put(setItemsCount(contacts?.count));
+      yield put(setContacts(contacts?.items));
+      yield put(setContactsLoading(false));
+    }
   } catch (error) {
     yield call(handleContactsError, error);
   }
@@ -57,8 +60,11 @@ export function* handleContactLoad({ payload }) {
   try {
     yield put(setContactsLoading(true));
     const contact = yield call(getContactById, payload);
-    yield put(setContact(contact));
-    yield put(setContactsLoading(false));
+
+    if (contact) {
+      yield put(setContact(contact));
+      yield put(setContactsLoading(false));
+    }
   } catch (error) {
     yield call(handleContactsError, error);
   }
@@ -67,12 +73,19 @@ export function* handleContactLoad({ payload }) {
 export function* handleAddContact({ payload }) {
   try {
     yield put(setContactsLoading(true));
-    yield call(addContact, payload.newContact, payload.mapImages);
-    yield put(addContactInStore(payload.newContact));
-    yield put(setContactsLoading(false));
+    const contact = yield call(
+      addContact,
+      payload.newContact,
+      payload.mapImages
+    );
 
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push('/contacts'));
+    if (contact) {
+      yield put(addContactInStore(payload.newContact));
+      yield put(setContactsLoading(false));
+
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(routes.pathToContacts));
+    }
   } catch (error) {
     yield call(handleContactsError, error);
   }
@@ -81,11 +94,14 @@ export function* handleAddContact({ payload }) {
 export function* handleContactDelete({ payload }) {
   try {
     yield put(setContactsLoading(true));
-    yield call(deleteContact, payload);
-    yield put(deleteContactInStore(payload));
-    yield put(updatePagination());
-    yield put(setContactsLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const contact = yield call(deleteContact, payload);
+
+    if (contact) {
+      yield put(deleteContactInStore(payload));
+      yield put(updatePagination());
+      yield put(setContactsLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleContactsError, error);
   }
@@ -96,21 +112,29 @@ export function* handleContactUpdate({ payload }) {
 
   try {
     yield put(setContactsLoading(true));
-    yield call(updateContact, id, updatedContact, mapImages);
+    const contact = yield call(updateContact, id, updatedContact, mapImages);
 
-    yield put(updateContactInStore(id, updatedContact));
-
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push('/contacts'));
+    if (contact) {
+      yield put(updateContactInStore(id, updatedContact));
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(routes.pathToContacts));
+    }
   } catch (error) {
     yield call(handleContactsError, error);
   }
 }
 
 export function* handleContactsError(e) {
-  yield put(setContactsLoading(false));
-  yield put(setContactsError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setContactsLoading(false));
+    yield put(setContactsError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* contactsSaga() {

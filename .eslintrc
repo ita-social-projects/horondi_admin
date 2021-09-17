@@ -28,11 +28,11 @@
   },
   "extends": [
     "airbnb",
-    "prettier",
-    "prettier/react",
     "plugin:cypress/recommended",
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react"
   ],
   "rules": {
     "semi": "off",
@@ -75,6 +75,7 @@
     "no-nested-ternary": 0,
     "no-unneeded-ternary": 2,
     "react/no-unescaped-entities": 2,
+    "react/forbid-foreign-prop-types": 0,
     "prefer-arrow-callback": 1,
     "prefer-spread": 1,
     "prefer-template": 1,
@@ -90,18 +91,6 @@
     "lines-between-class-members": [1, "always"],
     "consistent-return": 0,
     "no-this-before-super": 2,
-    "indent": [
-      2,
-      2,
-      {
-        "ignoreComments": true,
-        "VariableDeclarator": {
-          "var": 2,
-          "let": 2,
-          "const": 3
-        }
-      }
-    ],
     "no-return-await": 2,
     "react/jsx-no-duplicate-props": 2,
     "camelcase": 2,
@@ -146,7 +135,6 @@
         "ignoreNonDOM": true
       }
     ],
-    "react/jsx-indent": 0,
     "react/jsx-uses-vars": 2,
     "react/jsx-props-no-spreading": 0,
     "react/prop-types": 2,
@@ -209,6 +197,7 @@
       }
     ],
     "cypress/no-unnecessary-waiting": 0,
-    "import/no-unresolved": 0
+    "import/no-unresolved": 0,
+    "import/no-cycle": 0
   }
 }

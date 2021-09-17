@@ -1,10 +1,13 @@
 const sizesEnum = {
-  SIZE_XS: 'XXS',
-  SIZE_S: 'S',
-  SIZE_M: 'M',
-  SIZE_L: 'L',
-  SIZE_XL: 'XL',
-  SIZE_XXL: 'XXL'
+  XS: 'XXS',
+  S: 'S',
+  M: 'M',
+  L: 'L',
+  XL: 'XL',
+  XXL: 'XXL'
 };
-
+export const availableEnum = {
+  true: 'Доступний',
+  false: 'Відсутній'
+};
 export default sizesEnum;

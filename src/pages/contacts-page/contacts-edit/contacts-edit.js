@@ -100,15 +100,15 @@ const ContactsEdit = ({ match }) => {
     const mapImages =
       uaCartImage.name && enCartImage.name
         ? [
-          {
-            lang: languages[0],
-            image: uaCartImage
-          },
-          {
-            lang: languages[1],
-            image: enCartImage
-          }
-        ]
+            {
+              lang: languages[0],
+              image: uaCartImage
+            },
+            {
+              lang: languages[1],
+              image: enCartImage
+            }
+          ]
         : [];
 
     dispatch(updateContact({ id, updatedContact, mapImages }));
@@ -118,10 +118,12 @@ const ContactsEdit = ({ match }) => {
     return <LoadingBar />;
   }
   return (
-    <ContactsForm
-      contactSaveHandler={contactSaveHandler}
-      initialValues={contactFormValues}
-    />
+    contactFormValues.email && (
+      <ContactsForm
+        contactSaveHandler={contactSaveHandler}
+        initialValues={contactFormValues}
+      />
+    )
   );
 };
 

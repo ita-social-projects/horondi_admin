@@ -3,12 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
-    height: '100%'
+    height: '100%',
+    maxWidth: '100%'
   },
   container: {
     padding: theme.spacing(2.5),
     width: '100%',
-    position: 'relative'
+    position: 'relative',
+    paddingTop: '20px'
   },
   title: {
     fontWeight: '600'
@@ -28,14 +30,17 @@ export const useStyles = makeStyles((theme) => ({
     height: 60,
     marginTop: 51,
     '@media (max-width: 600px)': {
-      marginTop: 43
+      marginTop: '42px'
     }
   },
   fixedButtons: {
     position: 'fixed',
     height: 60,
     zIndex: 1001,
-    backgroundColor: theme.palette.bodyColor
+    backgroundColor: theme.palette.bodyColor,
+    '@media (max-width: 416px)': {
+      height: '112px'
+    }
   },
   button: {
     marginTop: theme.spacing(0.5)
@@ -45,9 +50,8 @@ export const useStyles = makeStyles((theme) => ({
     margin: '40px 10px 20px 0'
   },
   showComments: {
-    width: '60%',
     padding: '15px',
-    marginTop: '5px',
+    marginTop: '15px',
     paddingTop: '0',
     '@media (max-width: 768px)': {
       display: 'flex',

@@ -7,7 +7,12 @@ export const useStyles = makeStyles((theme) => {
   return {
     imageUploadAvatar,
     container: {
-      position: 'relative'
+      display: 'flex',
+      position: 'relative',
+      flexWrap: 'wrap'
+    },
+    box: {
+      margin: '24px auto 24px'
     },
     error: {
       color: theme.palette.error.main,
@@ -28,6 +33,19 @@ export const useStyles = makeStyles((theme) => {
       '& div': {
         margin: '5px 10px 0 0'
       }
+    },
+    text: {
+      marginLeft: '10px',
+      alignItems: 'center'
+    },
+    additionalImages: {
+      display: 'flex'
+    },
+    displayNone: {
+      display: 'none!important'
+    },
+    display: {
+      display: 'block'
     }
   };
 });

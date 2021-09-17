@@ -1,50 +1,74 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-import { getFromLocalStorage } from '../../services/local-storage.service';
+import { getItems, setItems } from '../../utils/client';
 import { patternTranslations } from '../../translations/pattern.translations';
 
-export const getAllPatterns = async (skip, limit) => {
-  const result = await client.query({
-    variables: {
-      skip,
-      limit
-    },
-    query: gql`
-      query($skip: Int, $limit: Int) {
-        getAllPatterns(skip: $skip, limit: $limit) {
-          items {
-            _id
-            name {
-              lang
-              value
-            }
-            material {
-              _id
-              name {
-                lang
-                value
-              }
-            }
-            available
-            constructorImg
-            images {
-              thumbnail
-            }
-          }
-          count
+export const getAllPatterns = async (limit, skip, filter) => {
+  const getAllPatternsQuery = `
+query ($limit: Int!, $skip: Int!, $filter: PatternFilterInput) {
+  getAllPatterns(limit: $limit, skip: $skip, filter: $filter) {
+    count
+    items {
+      _id
+      name {
+        lang
+        value
+      }
+      optionType
+      model {
+        _id
+        category {
+          _id
+          code
+        }
+        name {
+          lang
+        }
+        description {
+          lang
+          value
         }
       }
-    `
-  });
-  await client.resetStore();
+      features {
+        material {
+          _id
+          name {
+            lang
+            value
+          }
+        }
+        handmade
+      }
+      description {
+        lang
+        value
+      }
+      images {
+        thumbnail
+        medium
+        small
+        large
+      }
+      constructorImg
+      additionalPrice {
+        value
+        type
+      }
+      available
+      customizable
+    }
+  }
+}`;
 
-  return result.data.getAllPatterns;
+  const result = await getItems(getAllPatternsQuery, {
+    skip,
+    limit,
+    filter
+  });
+
+  return result?.data?.getAllPatterns;
 };
 
 export const getPatternById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const getPatternByIdQuery = `
       query($id: ID!) {
         getPatternById(id: $id) {
           ... on Pattern {
@@ -55,19 +79,28 @@ export const getPatternById = async (id) => {
             description {
               value
             }
-            material {
+            model{
               _id
-              name {
-                lang
-                value
-              }
             }
-            handmade
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
+              }
+              handmade
+            }
             available
             images {
               thumbnail
             }
             constructorImg
+            additionalPrice {
+              value
+              type
+            }
           }
           ... on Error {
             message
@@ -75,11 +108,15 @@ export const getPatternById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  if (result.data.getPatternById.message) {
+  const result = await getItems(getPatternByIdQuery, { id });
+
+  if (
+    Object.keys(patternTranslations).includes(
+      result?.data?.getPatternById?.message
+    )
+  ) {
     throw new Error(
       `${result.data.getPatternById.statusCode} ${
         patternTranslations[result.data.getPatternById.message]
@@ -87,15 +124,11 @@ export const getPatternById = async (id) => {
     );
   }
 
-  return result.data.getPatternById;
+  return result?.data?.getPatternById;
 };
 
 export const deletePattern = async (id) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client.mutate({
-    variables: { id },
-    context: { headers: { token } },
-    mutation: gql`
+  const deletePatternQuery = `
       mutation($id: ID!) {
         deletePattern(id: $id) {
           ... on Pattern {
@@ -104,12 +137,15 @@ export const deletePattern = async (id) => {
               lang
               value
             }
-            material {
-              _id
-              name {
-                lang
-                value
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
               }
+              handmade
             }
             available
           }
@@ -119,28 +155,15 @@ export const deletePattern = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.deletePattern.message) {
-    throw new Error(
-      `${result.data.deletePattern.statusCode} ${
-        patternTranslations[result.data.deletePattern.message]
-      }`
-    );
-  }
+  const result = await setItems(deletePatternQuery, { id });
 
-  return result.data.deletePattern;
+  return result?.data?.deletePattern;
 };
 
 export const createPattern = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-    mutation: gql`
+  const createPatternQuery = `
       mutation($pattern: PatternInput!, $image: Upload!) {
         addPattern(pattern: $pattern, image: $image) {
           ... on Pattern {
@@ -149,12 +172,15 @@ export const createPattern = async (payload) => {
               lang
               value
             }
-            material {
-              _id
-              name {
-                lang
-                value
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
               }
+              handmade
             }
             available
             constructorImg
@@ -165,12 +191,13 @@ export const createPattern = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.addPattern.message) {
+  const result = await setItems(createPatternQuery, payload);
+
+  if (
+    Object.keys(patternTranslations).includes(result?.data?.addPattern?.message)
+  ) {
     throw new Error(
       `${result.data.addPattern.statusCode} ${
         patternTranslations[result.data.addPattern.message]
@@ -178,15 +205,11 @@ export const createPattern = async (payload) => {
     );
   }
 
-  return result.data.addPattern;
+  return result?.data?.addPattern;
 };
 
 export const updatePattern = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-    mutation: gql`
+  const updatePatternQuery = `
       mutation($id: ID!, $pattern: PatternInput!, $image: Upload) {
         updatePattern(id: $id, pattern: $pattern, image: $image) {
           ... on Pattern {
@@ -195,12 +218,16 @@ export const updatePattern = async (payload) => {
               lang
               value
             }
-            material {
-              _id
-              name {
-                lang
-                value
+            optionType
+            features {
+              material {
+                _id
+                name {
+                  lang
+                  value
+                }
               }
+              handmade
             }
             available
             constructorImg
@@ -211,12 +238,15 @@ export const updatePattern = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
+    `;
 
-  if (result.data.updatePattern.message) {
+  const result = await setItems(updatePatternQuery, payload);
+
+  if (
+    Object.keys(patternTranslations).includes(
+      result?.data?.updatePattern?.message
+    )
+  ) {
     throw new Error(
       `${result.data.updatePattern.statusCode} ${
         patternTranslations[result.data.updatePattern.message]
@@ -224,5 +254,5 @@ export const updatePattern = async (payload) => {
     );
   }
 
-  return result.data.updatePattern;
+  return result?.data?.updatePattern;
 };

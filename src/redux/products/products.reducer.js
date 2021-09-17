@@ -2,10 +2,6 @@ import { config } from '../../configs';
 import {
   SET_ALL_PRODUCTS,
   SET_ALL_FILTER_DATA,
-  SET_SORT_BY_PRICE,
-  SET_SORT_BY_DATE,
-  SET_SORT_BY_RATE,
-  SET_SORT_BY_POPULARITY,
   SET_PRODUCTS_LOADING,
   SET_CATEGORY_FILTER,
   SET_PRICE_FILTER,
@@ -24,7 +20,11 @@ import {
   SET_FILES_TO_DELETE,
   REMOVE_IMAGES_TO_UPLOAD,
   SET_PRIMARY_IMAGE_TO_UPLOAD,
-  SET_PRODUCT_DETAILS
+  SET_PRODUCT_DETAILS,
+  SET_PRODUCT_SORT,
+  SET_PRODUCT_FILTER,
+  CLEAR_PRODUCT_FILTER,
+  SET_PRODUCT_SORT_LABEL
 } from './products.types';
 
 const { initialLanguageValues } = config;
@@ -42,23 +42,20 @@ export const productModel = {
   basePrice: 0,
   strapLengthInCm: 0,
   available: true,
+  isHotItem: false,
   options: []
 };
 
+const initialFilters = {
+  pattern: [],
+  category: [],
+  models: [],
+  search: ''
+};
 export const initialState = {
   loading: false,
-  sorting: {
-    sortByPrice: 0,
-    sortByRate: 0,
-    sortByPopularity: -1
-  },
-  filters: {
-    colorsFilter: [],
-    patternsFilter: [],
-    categoryFilter: [],
-    searchFilter: '',
-    modelsFilter: []
-  },
+  sort: {},
+  filters: initialFilters,
   filterData: [],
   selectedProduct: productModel,
   productToSend: {
@@ -74,186 +71,177 @@ export const initialState = {
     categories: [],
     modelsForSelectedCategory: []
   },
-  details: {
-    categories: [],
-    models: [],
-    closures: [],
-    materials: {
-      inner: [],
-      bottom: [],
-      main: []
-    }
-  }
+  details: {},
+  sortLabel: ''
 };
-export const setSort = ({
-  sortByPrice = 0,
-  sortByRate = 0,
-  sortByPopularity = 0
-}) => ({
-  sortByPrice,
-  sortByRate,
-  sortByPopularity
-});
 
 const productsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case SET_ALL_PRODUCTS:
-    return {
-      ...state,
-      products: action.payload
-    };
-  case SET_ALL_FILTER_DATA:
-    return {
-      ...state,
-      filterData: action.payload
-    };
-  case SET_PATTERNS_FILTER:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        patternsFilter: action.payload
-      }
-    };
-  case SET_PRODUCT_DETAILS:
-    return {
-      ...state,
-      details: {
-        ...action.payload
-      }
-    };
-  case SET_COLORS_FILTER:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        colorsFilter: action.payload
-      }
-    };
-  case SET_PRICE_FILTER:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        priceFilter: action.payload
-      }
-    };
-  case SET_MODELS_FILTER:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        modelsFilter: action.payload
-      }
-    };
-  case SET_CATEGORY_FILTER:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        categoryFilter: action.payload
-      }
-    };
-  case SET_SEARCH:
-    return {
-      ...state,
-      filters: {
-        ...state.filters,
-        searchFilter: action.payload
-      }
-    };
-  case SET_SORT_BY_PRICE:
-    return {
-      ...state,
-      sorting: { ...setSort({ sortByPrice: action.payload }) }
-    };
-  case SET_SORT_BY_DATE:
-    return {
-      ...state,
-      sorting: { ...setSort({ sortByDate: action.payload }) }
-    };
-  case SET_SORT_BY_RATE:
-    return {
-      ...state,
-      sorting: { ...setSort({ sortByRate: action.payload }) }
-    };
-  case SET_SORT_BY_POPULARITY:
-    return {
-      ...state,
-      sorting: { ...setSort({ sortByPopularity: action.payload }) }
-    };
-  case SET_PRODUCTS_LOADING:
-    return {
-      ...state,
-      loading: action.payload
-    };
-  case SET_PRODUCT_TO_SEND:
-    return {
-      ...state,
-      productToSend: {
-        ...state.productToSend,
-        ...action.payload
-      }
-    };
-  case CLEAR_PRODUCT_TO_SEND:
-    return {
-      ...state,
-      upload: [],
-      productToSend: initialState.productToSend
-    };
-  case SET_PRODUCTS_ERROR:
-    return {
-      ...state,
-      productsError: action.payload
-    };
-  case SET_PRODUCT_CATEGORIES:
-    return {
-      ...state,
-      productSpecies: {
-        ...state.productSpecies,
-        categories: action.payload
-      }
-    };
-  case SET_MODELS:
-    return {
-      ...state,
-      productSpecies: {
-        ...state.productSpecies,
-        modelsForSelectedCategory: action.payload
-      }
-    };
-  case SET_FILES_TO_UPLOAD:
-    return {
-      ...state,
-      upload: [...state.upload, ...action.payload]
-    };
-  case SET_PRODUCT:
-    return {
-      ...state,
-      selectedProduct: action.payload
-    };
-  case CLEAR_FILES_TO_UPLOAD:
-    return {
-      ...state,
-      upload: []
-    };
-  case SET_FILES_TO_DELETE: {
-    return { ...state, filesToDelete: action.payload };
-  }
-  case REMOVE_IMAGES_TO_UPLOAD: {
-    return {
-      ...state,
-      upload: state.upload.filter(({ name }) => name !== action.payload)
-    };
-  }
-  case SET_PRIMARY_IMAGE_TO_UPLOAD: {
-    return {
-      ...state,
-      primaryImageUpload: action.payload
-    };
-  }
-  default:
-    return state;
+    case SET_PRODUCT_SORT:
+      return {
+        ...state,
+        sort: {
+          ...action.payload
+        }
+      };
+    case SET_PRODUCT_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload
+        }
+      };
+    case CLEAR_PRODUCT_FILTER:
+      return {
+        ...state,
+        filters: initialFilters,
+        sort: {},
+        sortLabel: ''
+      };
+    case SET_PRODUCT_SORT_LABEL:
+      return {
+        ...state,
+        sortLabel: action.payload
+      };
+    case SET_ALL_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload
+      };
+    case SET_ALL_FILTER_DATA:
+      return {
+        ...state,
+        filterData: action.payload
+      };
+    case SET_PATTERNS_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          patternsFilter: action.payload
+        }
+      };
+    case SET_PRODUCT_DETAILS:
+      return {
+        ...state,
+        details: {
+          ...action.payload
+        }
+      };
+    case SET_COLORS_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          colorsFilter: action.payload
+        }
+      };
+    case SET_PRICE_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          priceFilter: action.payload
+        }
+      };
+    case SET_MODELS_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          modelsFilter: action.payload
+        }
+      };
+    case SET_CATEGORY_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          categoryFilter: action.payload
+        }
+      };
+    case SET_SEARCH:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          searchFilter: action.payload
+        }
+      };
+
+    case SET_PRODUCTS_LOADING:
+      return {
+        ...state,
+        loading: action.payload
+      };
+    case SET_PRODUCT_TO_SEND:
+      return {
+        ...state,
+        productToSend: {
+          ...state.productToSend,
+          ...action.payload
+        }
+      };
+    case CLEAR_PRODUCT_TO_SEND:
+      return {
+        ...state,
+        upload: [],
+        productToSend: initialState.productToSend
+      };
+    case SET_PRODUCTS_ERROR:
+      return {
+        ...state,
+        productsError: action.payload
+      };
+    case SET_PRODUCT_CATEGORIES:
+      return {
+        ...state,
+        productSpecies: {
+          ...state.productSpecies,
+          categories: action.payload
+        }
+      };
+    case SET_MODELS:
+      return {
+        ...state,
+        productSpecies: {
+          ...state.productSpecies,
+          modelsForSelectedCategory: action.payload
+        }
+      };
+    case SET_FILES_TO_UPLOAD:
+      return {
+        ...state,
+        upload: [...action.payload]
+      };
+    case SET_PRODUCT:
+      return {
+        ...state,
+        selectedProduct: action.payload
+      };
+    case CLEAR_FILES_TO_UPLOAD:
+      return {
+        ...state,
+        upload: []
+      };
+    case SET_FILES_TO_DELETE: {
+      return { ...state, filesToDelete: action.payload };
+    }
+    case REMOVE_IMAGES_TO_UPLOAD: {
+      return {
+        ...state,
+        upload: state.upload.filter(({ name }) => name !== action.payload)
+      };
+    }
+    case SET_PRIMARY_IMAGE_TO_UPLOAD: {
+      return {
+        ...state,
+        primaryImageUpload: action.payload
+      };
+    }
+    default:
+      return state;
   }
 };
 

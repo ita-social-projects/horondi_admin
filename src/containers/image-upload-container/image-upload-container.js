@@ -1,41 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
-import { AttachFile } from '@material-ui/icons';
+import { useDropzone } from 'react-dropzone';
+import { useStyles } from './image-upload-previewContainer.styles';
+import { utils } from '../../utils/image-upload';
 
-const ImageUploadContainer = ({ handler, multiple, buttonLabel }) => (
-  <div>
-    <label htmlFor='upload-photo' data-cy='pattern-image'>
-      <Button
-        variant='contained'
-        color='primary'
-        component='label'
-        data-cy='upload-photo'
-      >
-        <AttachFile />
-        {buttonLabel}
+const ImageUploadContainer = ({ handler, src, id }) => {
+  const style = useStyles();
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFiles) => {
+      handler(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file)
+          })
+        )
+      );
+    }
+  });
+
+  return (
+    <section className='container'>
+      <div {...getRootProps({ className: 'dropzone' })}>
         <input
-          style={{ display: 'none' }}
-          id='upload-photo'
-          name='upload-photo'
-          type='file'
-          multiple
-          onChange={handler}
+          style={{ height: '300px', width: '200px' }}
+          {...getInputProps()}
         />
-      </Button>
-    </label>
-  </div>
-);
+        <label
+          className={src ? style.labelWithoutBack : style.labelWithBack}
+          htmlFor={id}
+          data-cy={utils.dataCy.preview}
+        >
+          {src && (
+            <img className={style.image} src={src} alt={utils.alt.preview} />
+          )}
+        </label>
+      </div>
+    </section>
+  );
+};
 
 ImageUploadContainer.propTypes = {
   handler: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
-  buttonLabel: PropTypes.string
+  src: PropTypes.string,
+  id: PropTypes.string.isRequired
 };
 
 ImageUploadContainer.defaultProps = {
   multiple: false,
-  buttonLabel: 'Завантажити'
+  src: null
 };
 
 export default ImageUploadContainer;

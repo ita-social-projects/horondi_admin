@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@material-ui/core';
 import { push } from 'connected-react-router';
 import { Link } from 'react-router-dom';
-
 import _ from 'lodash';
+
 import { useCommonStyles } from '../common.styles';
+import { useStyles } from './sizes.styles';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { getSizes, deleteSize } from '../../redux/sizes/sizes.actions';
 import TableContainerRow from '../../containers/table-container-row';
@@ -14,6 +15,8 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { sizesSelectorWithPagination } from '../../redux/selectors/sizes.selector';
+import useSizeFilters from '../../hooks/filters/useSizesFilters';
+import FilterNavbar from '../../components/filter-search-sort';
 
 const tableTitles = config.tableHeadRowTitles.sizes.sizesPageTitles;
 const { materialUiConstants } = config;
@@ -26,15 +29,24 @@ const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.sizesAvailableVariants;
 const Sizes = () => {
   const dispatch = useDispatch();
   const commonStyles = useCommonStyles();
+  const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-
-  const { sizesList, loading, itemsCount } = useSelector(
-    sizesSelectorWithPagination
-  );
-
+  const sizeFilters = useSizeFilters();
+  const { sizesList, loading, itemsCount, filters, rowsPerPage, currentPage } =
+    useSelector(sizesSelectorWithPagination);
   useEffect(() => {
-    dispatch(getSizes());
-  }, [sizesList]);
+    dispatch(
+      getSizes({
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        filter: {
+          available: filters.available,
+          searchBySimpleName: filters.searchBySimpleName,
+          name: filters.name
+        }
+      })
+    );
+  }, [dispatch, rowsPerPage, currentPage, filters]);
 
   const sizeDeleteHandler = (id) => {
     const removeSize = () => {
@@ -44,15 +56,12 @@ const Sizes = () => {
     openSuccessSnackbar(removeSize, DELETE_SIZE_MESSAGE);
   };
 
-  if (loading) {
-    return <LoadingBar />;
-  }
   const sizeItems = _.map(sizesList, (size) => (
     <TableContainerRow
       showAvatar={false}
       showEdit
       showDelete
-      name={size.simpleName[0].value}
+      name={size?.modelId?.name[0]?.value}
       size={size.name}
       available={size.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       id={size._id}
@@ -66,9 +75,12 @@ const Sizes = () => {
     />
   ));
 
+  if (loading) {
+    return <LoadingBar />;
+  }
   return (
     <div className={commonStyles.container}>
-      <div className={commonStyles.adminHeader}>
+      <div className={`${commonStyles.adminHeader} ${styles.title}`}>
         <Typography
           variant={materialUiConstants.typographyVariantH1}
           className={commonStyles.materialTitle}
@@ -86,7 +98,8 @@ const Sizes = () => {
           {CREATE_SIZE_TITLE}
         </Button>
       </div>
-      {!loading ? (
+      <FilterNavbar options={sizeFilters || {}} />
+      {sizeItems?.length ? (
         <TableContainerGenerator
           pagination
           data-cy={labels.sizesTable}
@@ -95,7 +108,7 @@ const Sizes = () => {
           tableItems={sizeItems}
         />
       ) : (
-        <LoadingBar />
+        <div className={styles.noRecords}>{NO_SIZES_MESSAGE}</div>
       )}
     </div>
   );

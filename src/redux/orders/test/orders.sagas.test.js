@@ -7,10 +7,16 @@ import {
   setOrder,
   setOrderList,
   setOrderLoading,
-  setOrderError
+  setOrderError,
+  setOrderListUser
 } from '../orders.actions';
-import { getAllOrders, getOrderById } from '../orders.operations';
 import {
+  getAllOrders,
+  getOrderById,
+  getOrdersByUser
+} from '../orders.operations';
+import {
+  handleOrdersListUserLoad,
   handleOrdersListLoad,
   handleOrderLoad,
   handleOrdersError
@@ -22,7 +28,9 @@ import {
   fakeId,
   fakeOrderList,
   fakeOrderState,
-  fakeTableState
+  fakeTableState,
+  orderFilterUser,
+  ordersByUser
 } from './orders.variables';
 
 import { handleErrorSnackbar } from '../../snackbar/snackbar.sagas';
@@ -30,6 +38,39 @@ import Table from '../../table/table.reducer';
 import Orders from '../orders.reducer';
 
 describe('order sagas tests', () => {
+  const { filter, limit, skip, sort, userId } = orderFilterUser;
+
+  it('should handle user orders load', () => {
+    expectSaga(handleOrdersListUserLoad, { payload: orderFilterUser })
+      .withReducer(combineReducers({ Orders, Table }), {
+        Orders: fakeOrderState,
+        Table: fakeTableState
+      })
+      .put(setOrderLoading(true))
+      .provide([
+        [call(getOrdersByUser, skip, limit, filter, sort, userId), ordersByUser]
+      ])
+      .put(setItemsCount(ordersByUser.count))
+      .put(setOrderListUser(ordersByUser.items))
+      .put(setOrderLoading(false))
+      .hasFinalState({
+        Orders: {
+          ...fakeOrderState,
+          listUser: ordersByUser.items
+        },
+        Table: {
+          ...fakeTableState,
+          itemsCount: ordersByUser.count
+        }
+      })
+      .run()
+      .then((result) => {
+        const { allEffects: analysis } = result;
+        const analysisPut = analysis.filter((e) => e.type === 'PUT');
+        expect(analysisPut).toHaveLength(4);
+      });
+  });
+
   it('should handle all order list', () =>
     expectSaga(handleOrdersListLoad, { payload: getFakeOrderList })
       .withReducer(combineReducers({ Orders, Table }), {
@@ -43,7 +84,8 @@ describe('order sagas tests', () => {
             getAllOrders,
             getFakeOrderList.skip,
             getFakeOrderList.limit,
-            getFakeOrderList.filter.orderStatus
+            getFakeOrderList.filter,
+            getFakeOrderList.sort
           ),
           fakeOrderList
         ]

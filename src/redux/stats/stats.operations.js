@@ -1,7 +1,7 @@
 import { getItems } from '../../utils/client';
 
 const getPopularCategories = async () => {
-  const res = await getItems(`
+  const query = `
 	query {
 		getPopularCategories {
 			names
@@ -9,12 +9,14 @@ const getPopularCategories = async () => {
 			relations
 		}
 	}
- `);
-  return res.data.getPopularCategories;
+ `;
+  const result = await getItems(query);
+
+  return result?.data?.getPopularCategories;
 };
 
 const getPopularProducts = async () => {
-  const res = await getItems(`
+  const query = `
 		query {
 			getPopularProducts{
 				labels
@@ -22,13 +24,15 @@ const getPopularProducts = async () => {
 				total
 			}
 		}	
-	`);
-  return res.data.getPopularProducts;
+	`;
+
+  const result = await getItems(query);
+
+  return result?.data?.getPopularProducts;
 };
 
 const getUsersByDays = async (days) => {
-  const res = await getItems(
-    `
+  const query = `
 		query ($days: Int!) {
 			getUsersForStatistic(filter: {days: $days}) {
 				counts
@@ -36,15 +40,15 @@ const getUsersByDays = async (days) => {
 				total
 			}
 		}
-	`,
-    { days }
-  );
-  return res.data.getUsersForStatistic;
+	`;
+
+  const result = await getItems(query, { days });
+
+  return result?.data?.getUsersForStatistic;
 };
 
 const getOrdersStats = async (date) => {
-  const res = await getItems(
-    `
+  const query = `
 		query($date: Int!) {
 			getOrdersStatistic(date: $date) {
 				names
@@ -52,15 +56,15 @@ const getOrdersStats = async (date) => {
 				relations
 			}
 		}
-	`,
-    { date }
-  );
-  return res.data.getOrdersStatistic;
+	`;
+
+  const result = await getItems(query, { date });
+
+  return result?.data?.getOrdersStatistic;
 };
 
 const getPaidOrdersStats = async (date) => {
-  const res = await getItems(
-    `
+  const query = `
 		query($date: Int!) {
 			getPaidOrdersStatistic(date: $date) {
 				labels
@@ -68,10 +72,11 @@ const getPaidOrdersStats = async (date) => {
 				total
 			}
 		}
-	`,
-    { date }
-  );
-  return res.data.getPaidOrdersStatistic;
+	`;
+
+  const result = await getItems(query, { date });
+
+  return result?.data?.getPaidOrdersStatistic;
 };
 
 export {

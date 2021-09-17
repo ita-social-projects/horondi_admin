@@ -1,12 +1,16 @@
 import {
   GET_ORDER,
+  GET_ORDER_LIST_USER,
   SET_ORDER,
   SET_ORDER_LOADING,
   SET_ORDER_ERROR,
   GET_ORDER_LIST,
   SET_ORDER_LIST,
+  SET_ORDER_LIST_USER,
+  SET_FILTER_USER,
   UPDATE_ORDER,
-  DELETE_ORDER
+  DELETE_ORDER,
+  CLEAR_FILTERS_USER
 } from '../orders.types';
 
 import {
@@ -17,14 +21,19 @@ import {
   setOrderLoading,
   setOrderError,
   updateOrder,
-  deleteOrder
+  deleteOrder,
+  setOrderListUser,
+  getOrderListUser,
+  setOrderFilterUser,
+  clearOrderFiltersUser
 } from '../orders.actions';
 import {
   getFakeOrderList,
   fakeOrderList,
   fakeIdOrderInput,
   fakeId,
-  fakeIdOrderPayload
+  fakeIdOrderPayload,
+  ordersByUser
 } from './orders.variables';
 
 describe('orders actions', () => {
@@ -49,10 +58,37 @@ describe('orders actions', () => {
     });
   });
 
+  it('should create an action for getting user order list', () => {
+    expect(getOrderListUser(ordersByUser)).toEqual({
+      type: GET_ORDER_LIST_USER,
+      payload: ordersByUser
+    });
+  });
+
   it('should create an action to set order list', () => {
     expect(setOrderList(fakeOrderList)).toEqual({
       type: SET_ORDER_LIST,
       payload: { ...fakeOrderList }
+    });
+  });
+
+  it('should create an action for setting user order list', () => {
+    expect(setOrderListUser(ordersByUser)).toEqual({
+      type: SET_ORDER_LIST_USER,
+      payload: ordersByUser
+    });
+  });
+
+  it('should create an action for updating user filters', () => {
+    expect(setOrderFilterUser(getFakeOrderList)).toEqual({
+      type: SET_FILTER_USER,
+      payload: getFakeOrderList
+    });
+  });
+
+  it('should create an action for clearing user filters', () => {
+    expect(clearOrderFiltersUser()).toEqual({
+      type: CLEAR_FILTERS_USER
     });
   });
 

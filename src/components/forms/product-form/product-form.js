@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Paper,
@@ -6,22 +6,18 @@ import {
   Button,
   Typography,
   Box,
-  Divider,
-  useMediaQuery,
-  useTheme
+  Divider
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-
 import { find } from 'lodash';
 import useProductHandlers from '../../../hooks/product/use-product-handlers';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import useProductValidation from '../../../hooks/product/use-product-validation';
 import { useStyles } from './product-form.styles';
-
 import ProductInfoContainer from '../../../containers/product-info-container';
 import ProductSpeciesContainer from '../../../containers/product-species-container';
-
+import { checkInitialValue } from '../../../utils/check-initial-values';
 import {
   addProduct,
   deleteProduct,
@@ -29,9 +25,7 @@ import {
   updateProduct
 } from '../../../redux/products/products.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-
 import { productsTranslations } from '../../../translations/product.translations';
-import ProductCarousel from './product-carousel';
 import DeleteButton from '../../buttons/delete-button';
 import { config } from '../../../configs';
 import { BackButton } from '../../buttons';
@@ -40,6 +34,22 @@ import ProductAddImages from '../../../pages/products/product-add/product-add-im
 import { selectSelectedProductAndDetails } from '../../../redux/selectors/products.selectors';
 import CommentsSection from '../../comments-section/comments-section';
 import { GET_PRODUCT_COMMENTS } from '../../../redux/comments/comments.types';
+import CheckboxOptions from '../../checkbox-options';
+import {
+  actionDispatchHandler,
+  setModelsHandler,
+  setSizesHandler,
+  setInnerColorsHandler,
+  setBottomColorsHandler,
+  setMainColorsHandler,
+  getFormikMaterialsValues
+} from '../../../utils/product-form';
+
+import {
+  checkboxesValues,
+  productFormValues
+} from '../../../consts/product-form';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { priceLabel } = config.labels.product;
 
@@ -54,24 +64,25 @@ const {
 
 const { SHOW_COMMENTS_TITLE, HIDE_COMMENTS_TITLE } = config.buttonTitles;
 
+const { pathToProducts } = config.routes;
+
 const ProductForm = ({ isEdit }) => {
   const styles = useStyles();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useDispatch();
 
-  const { product, details } = useSelector(selectSelectedProductAndDetails);
+  const { details } = useSelector(selectSelectedProductAndDetails);
 
-  const buttonSize = useMemo(() => (matches ? 'small' : 'medium'), [matches]);
+  const product = useSelector(({ Products }) => Products.selectedProduct);
 
   const [isFieldsChanged, toggleFieldsChanged] = useState(false);
+
+  const [isMountedFirst, setFirstMount] = useState(false);
 
   const [showComments, setShowComments] = useState(false);
 
   const formikPriceValue = {
-    basePrice: Math.round(product?.basePrice[1]?.value / 100) || 0
+    basePrice: Math.round(product?.basePrice[1]?.value) || 0
   };
-
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const {
@@ -90,28 +101,29 @@ const ProductForm = ({ isEdit }) => {
     setAdditionalImages,
     additionalImages,
     setPrimaryImage,
-    primaryImage
+    primaryImage,
+    setProductImageDisplayed,
+    productImageDisplayed,
+    setAdditionalImagesDisplayed,
+    additionalImagesDisplayed
   } = useProductHandlers();
 
   const { categories, materials, patterns, closures } = details;
 
   const formikSpeciesValues = {
-    category: product?.category?._id || '',
-    model: product?.model?._id || '',
-    pattern: product?.pattern?._id || '',
+    category: product?.category?._id,
+    model: product?.model?._id,
+    pattern: product?.pattern?._id,
     strapLengthInCm: product?.strapLengthInCm || 0,
-    closure: product?.closure?._id || '',
-    sizes: product?.sizes?.map((el) => getIdFromItem(el) || [])
+    closure: product?.closure?._id,
+    available: product.available || false,
+    isHotItem: product.isHotItem || false,
+    sizes: product?.sizes?.map((el) => getIdFromItem(el.size) || []),
+    images: {
+      primary: {}
+    }
   };
-  const formikMaterialsValues = {
-    innerMaterial: product?.innerMaterial?.material?._id || '',
-    innerColor: product?.innerMaterial?.color?._id || '',
-    mainMaterial: product?.mainMaterial?.material?._id || '',
-    mainColor: product?.mainMaterial?.color?._id || '',
-    bottomMaterial: product?.bottomMaterial?.material?._id || '',
-    bottomColor: product?.bottomMaterial?.color?._id || ''
-  };
-
+  const formikMaterialsValues = getFormikMaterialsValues(product);
   const onSubmit = (formValues) => {
     const {
       strapLengthInCm,
@@ -120,17 +132,22 @@ const ProductForm = ({ isEdit }) => {
       category,
       basePrice,
       closure,
+      available,
+      isHotItem,
+      images,
       sizes: sizeToSend
     } = formValues;
 
     const productInfo = createProductInfo(formValues);
     if (!isEdit) {
       setShouldValidate(true);
-      if (primaryImage && additionalImages.length) {
-        dispatch(setFilesToUpload([primaryImage, ...additionalImages]));
-      } else if (primaryImage) {
-        dispatch(setFilesToUpload([primaryImage]));
-      }
+      actionDispatchHandler(
+        primaryImage && additionalImages.length,
+        dispatch,
+        setFilesToUpload,
+        primaryImage,
+        additionalImages
+      );
       dispatch(
         addProduct({
           closure,
@@ -140,7 +157,10 @@ const ProductForm = ({ isEdit }) => {
           model,
           category,
           basePrice,
-          strapLengthInCm
+          strapLengthInCm,
+          available,
+          images,
+          isHotItem
         })
       );
       return;
@@ -155,13 +175,15 @@ const ProductForm = ({ isEdit }) => {
           model,
           category,
           basePrice,
-          strapLengthInCm
+          strapLengthInCm,
+          available,
+          isHotItem,
+          images
         },
         id: product._id
       })
     );
     setShouldValidate(false);
-    toggleFieldsChanged(false);
   };
 
   const {
@@ -179,44 +201,26 @@ const ProductForm = ({ isEdit }) => {
     {},
     onSubmit,
     formikSpeciesValues,
-    'selectedProduct',
+    productFormValues.selectedProduct,
     formikPriceValue,
     formikMaterialsValues
   );
 
+  const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
-    if (values.category)
-      setModels(
-        find(categories, (category) => category._id === values.category)
-          ?.models || []
-      );
-    if (values.model) {
-      setSizes(
-        find(models, (model) => model._id === values.model)?.sizes || []
-      );
+    if (isMountedFirst) {
+      toggleFieldsChanged(true);
+    } else {
+      setFirstMount(true);
     }
-    if (values.innerMaterial) {
-      setInnerColors(
-        find(
-          materials.inner,
-          (material) => material._id === values.innerMaterial
-        )?.colors || []
-      );
-    }
-    if (values.bottomMaterial) {
-      setBottomColors(
-        find(
-          materials.bottom,
-          (material) => material._id === values.bottomMaterial
-        )?.colors || []
-      );
-    }
-    if (values.mainMaterial) {
-      setMainColors(
-        find(materials.main, (material) => material._id === values.mainMaterial)
-          ?.colors || []
-      );
-    }
+  }, [values]);
+
+  useEffect(() => {
+    setModelsHandler(values, setModels, find, categories);
+    setSizesHandler(values, setSizes, find, models);
+    setInnerColorsHandler(values, setInnerColors, find, materials);
+    setBottomColorsHandler(values, setBottomColors, find, materials);
+    setMainColorsHandler(values, setMainColors, find, materials);
   }, [
     values.category,
     values.model,
@@ -231,6 +235,8 @@ const ProductForm = ({ isEdit }) => {
     setShouldValidate(true);
 
     await submitForm();
+
+    if (unblock) unblock();
   };
 
   const handleProductDelete = () => {
@@ -244,6 +250,76 @@ const ProductForm = ({ isEdit }) => {
       DELETE_PRODUCT_TITLE
     );
   };
+  const checkboxes = [
+    {
+      id: checkboxesValues.isHotItem,
+      dataCy: checkboxesValues.isHotItem,
+      checked: values.isHotItem,
+      value: values.isHotItem,
+      color: checkboxesValues.primary,
+      label: checkboxesValues.hotItemUa,
+      handler: () =>
+        setFieldValue(checkboxesValues.isHotItem, !values.isHotItem)
+    },
+    {
+      id: checkboxesValues.available,
+      dataCy: checkboxesValues.available,
+      checked: values.available,
+      value: values.available,
+      color: checkboxesValues.primary,
+      label: config.labels.pattern.available,
+      handler: () =>
+        setFieldValue(checkboxesValues.available, !values.available)
+    }
+  ];
+
+  const valueEquality = checkInitialValue(
+    {
+      available: formikSpeciesValues.available,
+      basePrice: formikPriceValue.basePrice,
+      bottomColor: formikMaterialsValues.bottomColor,
+      bottomMaterial: formikMaterialsValues.bottomMaterial,
+      category: formikSpeciesValues.category,
+      closure: formikSpeciesValues.closure,
+      enDescription: product.description[1].value,
+      enName: product.name[1].value,
+      images: formikSpeciesValues.images,
+      innerColor: formikMaterialsValues.innerColor,
+      innerMaterial: formikMaterialsValues.innerMaterial,
+      isHotItem: formikSpeciesValues.isHotItem,
+      mainColor: formikMaterialsValues.mainColor,
+      mainMaterial: formikMaterialsValues.mainMaterial,
+      model: formikSpeciesValues.model,
+      pattern: formikSpeciesValues.pattern,
+      sizes: formikSpeciesValues.sizes,
+      strapLengthInCm: formikSpeciesValues.strapLengthInCm,
+      uaDescription: product.description[0].value,
+      uaName: product.name[0].value
+    },
+    values
+  );
+
+  const showCommentsPanel = () => {
+    if (product._id) {
+      return (
+        <Grid className={styles.showComments}>
+          <Button
+            variant={productFormValues.contained}
+            color={checkboxesValues.primary}
+            onClick={showCommentsHandler}
+          >
+            {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
+          </Button>
+          {showComments ? (
+            <CommentsSection
+              id={product._id}
+              commentsType={GET_PRODUCT_COMMENTS}
+            />
+          ) : null}
+        </Grid>
+      );
+    }
+  };
 
   const showCommentsHandler = () => setShowComments(!showComments);
   return (
@@ -251,11 +327,14 @@ const ProductForm = ({ isEdit }) => {
       <div className={styles.buttonContainer}>
         <Grid container spacing={2} className={styles.fixedButtons}>
           <Grid item className={styles.button}>
+            <BackButton initial={!valueEquality} pathBack={pathToProducts} />
+          </Grid>
+          <Grid item className={styles.button}>
             <Button
-              size={buttonSize}
-              type='submit'
-              variant='contained'
-              color='primary'
+              size='medium'
+              type={productFormValues.submit}
+              variant={productFormValues.contained}
+              color={checkboxesValues.primary}
               disabled={!isFieldsChanged}
               onClick={handleProductValidate}
             >
@@ -264,8 +343,8 @@ const ProductForm = ({ isEdit }) => {
           </Grid>
           <Grid item className={styles.button}>
             <DeleteButton
-              size={buttonSize}
-              variant='outlined'
+              size='medium'
+              variant={productFormValues.outlined}
               onClickHandler={handleProductDelete}
             >
               {DELETE_PRODUCT_TITLE}
@@ -273,23 +352,28 @@ const ProductForm = ({ isEdit }) => {
           </Grid>
         </Grid>
       </div>
-      <Grid container justify='center' spacing={3}>
-        <Grid item xs={12} md={5} xl={3}>
+
+      <Grid container justify={productFormValues.center} spacing={3}>
+        <Grid item xs={12}>
           <Paper className={styles.paper}>
-            {isEdit ? (
-              <ProductCarousel toggleFieldsChanged={toggleFieldsChanged} />
-            ) : (
-              <ProductAddImages
-                setAdditionalImages={setAdditionalImages}
-                additionalImages={additionalImages}
-                setPrimaryImage={setPrimaryImage}
-                primaryImage={primaryImage}
-                validate={shouldValidate}
-              />
-            )}
+            <ProductAddImages
+              isEdit={isEdit}
+              setAdditionalImagesDisplayed={setAdditionalImagesDisplayed}
+              additionalImagesDisplayed={additionalImagesDisplayed}
+              productImageDisplayed={productImageDisplayed}
+              setProductImageDisplayed={setProductImageDisplayed}
+              setAdditionalImages={setAdditionalImages}
+              additionalImages={additionalImages}
+              setPrimaryImage={setPrimaryImage}
+              primaryImage={primaryImage}
+              validate={shouldValidate}
+              displayed={product?.images?.primary?.thumbnail}
+              toggleFieldsChanged={toggleFieldsChanged}
+            />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={7} xl={9}>
+        <Grid item xs={12}>
+          <CheckboxOptions options={checkboxes} />
           <ProductInfoContainer
             shouldValidate={shouldValidate}
             values={values}
@@ -361,7 +445,7 @@ const ProductForm = ({ isEdit }) => {
               <TextField
                 className={styles.input}
                 label={`${priceLabel.label}*`}
-                type='number'
+                type={productFormValues.number}
                 name={priceLabel.name}
                 inputProps={{ min: 0 }}
                 error={touched[priceLabel.name] && !!errors[priceLabel.name]}
@@ -373,24 +457,7 @@ const ProductForm = ({ isEdit }) => {
           </Paper>
         </Grid>
       </Grid>
-      <Grid className={styles.showComments}>
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={showCommentsHandler}
-        >
-          {showComments ? HIDE_COMMENTS_TITLE : SHOW_COMMENTS_TITLE}
-        </Button>
-        {showComments ? (
-          <CommentsSection
-            value={product._id}
-            commentsType={GET_PRODUCT_COMMENTS}
-          />
-        ) : null}
-      </Grid>
-      <div className={styles.controlsBlock}>
-        <BackButton />
-      </div>
+      {showCommentsPanel()}
     </div>
   );
 };

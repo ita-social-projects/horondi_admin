@@ -1,6 +1,6 @@
 const formStyles = (theme) => ({
   saveButton: {
-    marginLeft: theme.spacing(2)
+    margin: theme.spacing(2)
   },
 
   inputError: {
@@ -8,9 +8,24 @@ const formStyles = (theme) => ({
     marginLeft: '5px'
   },
 
+  inputLabel: {
+    marginTop: '7px'
+  },
+
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: '120px',
+    marginTop: '20px'
+  },
+
+  purposeSelect: {
+    width: '390px'
+  },
+
   returnButton: {
     margin: theme.spacing(2),
-    marginRight: 0
+    marginRight: 0,
+    marginLeft: 0
   },
 
   large: {
@@ -40,8 +55,10 @@ const formStyles = (theme) => ({
 
   imageUpload: {
     fontSize: 14,
-    marginLeft: '10px'
+    marginLeft: '10px',
+    paddingTop: '10px'
   },
+
   imageUploadAvatar: {
     padding: '10px',
     display: 'flex',
@@ -60,12 +77,19 @@ const formStyles = (theme) => ({
   textField: {
     margin: '10px 5px'
   },
-
+  autoComplete: {
+    margin: '10px',
+    width: '33%',
+    '@media (max-width: 450px)': {
+      width: 'inherit'
+    }
+  },
   itemUpdate: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0'
   },
+
   imageName: {
     fontSize: '.9rem',
     marginLeft: '10px',

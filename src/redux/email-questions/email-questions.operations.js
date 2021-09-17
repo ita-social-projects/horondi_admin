@@ -1,17 +1,12 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
 
-const getAllEmailQuestions = async ({ filter, skip }) => {
-  const result = await client.query({
-    variables: {
-      filter: {
-        emailQuestionStatus: filter.length ? filter : null
-      },
-      skip
-    },
-    query: gql`
-      query($filter: FilterInput, $skip: Int) {
-        getAllEmailQuestions(filter: $filter, skip: $skip) {
+const getAllEmailQuestions = async ({
+  filter,
+  pagination: { skip, limit }
+}) => {
+  const query = `
+      query($filter: QuestionsFilterInput, $pagination: Pagination) {
+        getAllEmailQuestions(filter: $filter, pagination: $pagination) {
           questions {
             _id
             senderName
@@ -27,32 +22,34 @@ const getAllEmailQuestions = async ({ filter, skip }) => {
           count
         }
       }
-    `
+    `;
+  const result = await getItems(query, {
+    filter: {
+      emailQuestionStatus: filter.filter.length ? filter.filter : null,
+      search: filter.search,
+      date: filter.date
+    },
+    pagination: {
+      skip,
+      limit
+    }
   });
 
-  const { data } = result;
-  return data.getAllEmailQuestions;
+  return result?.data?.getAllEmailQuestions;
 };
-
 const getPendingEmailQuestionsCount = async () => {
-  const result = await client.query({
-    query: gql`
+  const query = `
       query {
         getPendingEmailQuestionsCount
       }
-    `
-  });
+    `;
 
-  const { data } = result;
-  return data.getPendingEmailQuestionsCount;
+  const result = await getItems(query);
+
+  return result?.data?.getPendingEmailQuestionsCount;
 };
-
 const getEmailQuestionById = async (id) => {
-  const result = await client.query({
-    variables: {
-      id
-    },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getEmailQuestionById(id: $id) {
           ... on EmailQuestion {
@@ -79,45 +76,27 @@ const getEmailQuestionById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
+    `;
 
-  if (data.getEmailQuestionById.message) {
-    throw new Error(
-      `${data.getEmailQuestionById.statusCode} ${data.getEmailQuestionById.message}`
-    );
-  }
+  const result = await getItems(query, { id });
 
-  return data.getEmailQuestionById;
+  return result?.data?.getEmailQuestionById;
 };
-
 const deleteEmailQuestions = async (questionsToDelete) => {
-  const result = await client.mutate({
-    variables: { questionsToDelete },
-    mutation: gql`
+  const query = `
       mutation($questionsToDelete: [String]) {
         deleteEmailQuestions(questionsToDelete: $questionsToDelete) {
           _id
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  const { data } = result;
-  return data.deleteEmailQuestions;
+  const result = await setItems(query, { questionsToDelete });
+
+  return result?.data?.deleteEmailQuestions;
 };
-
 const answerEmailQuestion = async ({ questionId, adminId, text }) => {
-  const result = await client.mutate({
-    variables: {
-      questionId,
-      adminId,
-      text
-    },
-    mutation: gql`
+  const query = `
       mutation($questionId: ID!, $adminId: ID!, $text: String!) {
         answerEmailQuestion(
           questionId: $questionId
@@ -148,28 +127,14 @@ const answerEmailQuestion = async ({ questionId, adminId, text }) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  const { data } = result;
+  const result = await setItems(query, { questionId, adminId, text });
 
-  if (data.answerEmailQuestion.message) {
-    throw new Error(
-      `${data.answerEmailQuestion.statusCode} ${data.answerEmailQuestion.message}`
-    );
-  }
-
-  return data.answerEmailQuestion;
+  return result?.data?.answerEmailQuestion;
 };
-
 const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
-  const result = await client.mutate({
-    variables: {
-      questionsToSpam,
-      adminId
-    },
-    mutation: gql`
+  const query = `
       mutation($questionsToSpam: [String], $adminId: ID!) {
         makeEmailQuestionsSpam(
           questionsToSpam: $questionsToSpam
@@ -193,12 +158,11 @@ const makeEmailQuestionsSpam = async ({ questionsToSpam, adminId }) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  const { data } = result;
-  return data.makeEmailQuestionsSpam;
+  const result = await setItems(query, { questionsToSpam, adminId });
+
+  return result?.data?.makeEmailQuestionsSpam;
 };
 
 export {

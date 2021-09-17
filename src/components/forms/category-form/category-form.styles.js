@@ -19,7 +19,31 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: 0
   },
   textField: {
-    margin: '10px 5px'
+    margin: '10px 5px',
+    padding: '10px'
+  },
+  container: {
+    padding: theme.spacing(2.5),
+    width: '100%',
+    position: 'relative'
+  },
+  buttonContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 60,
+    marginTop: 51,
+    '@media (max-width: 600px)': {
+      marginTop: 43
+    }
+  },
+  fixedButtons: {
+    position: 'fixed',
+    height: 60,
+    zIndex: 1001,
+    backgroundColor: theme.palette.bodyColor
+  },
+  button: {
+    marginTop: theme.spacing(0.5)
   },
   tabs: {
     backgroundColor: 'white',
@@ -42,6 +66,9 @@ export const useStyles = makeStyles((theme) => ({
     padding: '10px',
     display: 'flex',
     alignItems: 'center',
+    '@media (max-width: 450px)': {
+      margin: 'auto'
+    },
     '& div:nth-child(2)': {
       marginLeft: '15px'
     }

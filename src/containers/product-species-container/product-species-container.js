@@ -12,10 +12,11 @@ import { map, noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 
 import { productsTranslations } from '../../translations/product.translations';
-import { config } from '../../configs';
+import { config, formConstants } from '../../configs';
 
 const { selectsLabels } = config.labels.product;
 const { ALL_FIELDS_ARE_REQUIRED } = productsTranslations;
+const { formTypeSelect, isRequired, notRequired } = formConstants;
 
 const ProductSpeciesContainer = ({
   patterns,
@@ -120,27 +121,31 @@ const ProductSpeciesContainer = ({
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      {selectsLabels.map(({ label, name, type, required, multiple }, idx) =>
-        type === 'select' ? (
-          <FormControl className={styles.formControl} key={label}>
-            <InputLabel htmlFor={label}>{`${label}${
-              required ? '*' : ''
-            }`}</InputLabel>
-            <Select
-              name={name}
-              error={touched[name] && !!errors[name]}
-              value={values[name] || []}
-              onChange={handleSelectChange}
-              onBlur={handleBlur}
-              multiple={multiple}
-            >
-              {options[idx]}
-            </Select>
-          </FormControl>
-        ) : (
+      {selectsLabels.map(({ label, name, type, required, multiple }, idx) => {
+        if (type === formTypeSelect) {
+          return (
+            <FormControl className={styles.formControl} key={label}>
+              <InputLabel htmlFor={label}>{`${label}${
+                required ? isRequired : notRequired
+              }`}</InputLabel>
+              <Select
+                name={name}
+                error={touched[name] && !!errors[name]}
+                value={values[name] || []}
+                onChange={handleSelectChange}
+                onBlur={handleBlur}
+                multiple={multiple}
+                disabled={!options[idx] || !options[idx].length}
+              >
+                {options[idx]}
+              </Select>
+            </FormControl>
+          );
+        }
+        return (
           <TextField
             className={styles.numberInputControl}
-            label={`${label}${required ? '*' : ''}`}
+            label={`${label}${required ? isRequired : notRequired}`}
             key={name}
             type={type}
             name={name}
@@ -150,8 +155,8 @@ const ProductSpeciesContainer = ({
             onChange={handleSpeciesChange}
             onBlur={handleBlur}
           />
-        )
-      )}
+        );
+      })}
       <div className={styles.error}>
         {!!speciesErrors.length && ALL_FIELDS_ARE_REQUIRED}
       </div>
@@ -160,12 +165,18 @@ const ProductSpeciesContainer = ({
 };
 
 ProductSpeciesContainer.propTypes = {
-  patterns: PropTypes.arrayOf(PropTypes.array).isRequired,
-  categories: PropTypes.arrayOf(PropTypes.array).isRequired,
-  closures: PropTypes.arrayOf(PropTypes.array).isRequired,
-  models: PropTypes.arrayOf(PropTypes.array).isRequired,
+  patterns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  closures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  models: PropTypes.arrayOf(PropTypes.object).isRequired,
   values: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.array,
+      PropTypes.object
+    ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
@@ -175,11 +186,11 @@ ProductSpeciesContainer.propTypes = {
   setFieldValue: PropTypes.func.isRequired,
   toggleFieldsChanged: PropTypes.func,
   setSizes: PropTypes.func.isRequired,
-  sizes: PropTypes.arrayOf(PropTypes.array).isRequired
+  sizes: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 ProductSpeciesContainer.defaultProps = {
-  toggleFieldsChanged: noop()
+  toggleFieldsChanged: noop
 };
 
 export default ProductSpeciesContainer;

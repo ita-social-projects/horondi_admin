@@ -1,8 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
+
+import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
+import messages from '../../../configs/messages';
+
+export const saveButtonHandler = (
+  props,
+  onClickHandler,
+  dispatch,
+  openSuccessSnackbar,
+  saveMessage,
+  saveChanges
+) => {
+  const backAction = () => {
+    if (props.unblockFunction) {
+      props.unblockFunction();
+    }
+    onClickHandler();
+    dispatch(closeDialog());
+  };
+  openSuccessSnackbar(backAction, saveMessage, saveChanges);
+  return backAction;
+};
 
 const SaveButton = ({
   title,
@@ -15,10 +39,10 @@ const SaveButton = ({
 }) => {
   const error = !!Object.keys(errors).length;
   const disable = Object.values(values).every((el) => {
-    if (typeof el === 'boolean') {
+    if (typeof el === 'boolean' && !error) {
       return true;
     }
-    if (el) {
+    if ((el || el === 0) && !error) {
       return true;
     }
     return false;
@@ -29,12 +53,25 @@ const SaveButton = ({
     setDisabled(!disable);
   }, [disable, values, error]);
 
+  const dispatch = useDispatch();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
+
+  const { SAVE_MESSAGE, SAVE_CHANGES } = messages;
+
   return (
     <Button
       variant='contained'
       color={color}
       type={type}
       onClick={() => {
+        saveButtonHandler(
+          props,
+          onClickHandler,
+          dispatch,
+          openSuccessSnackbar,
+          SAVE_MESSAGE,
+          SAVE_CHANGES
+        );
         setTimeout(() => {
           if (!error) {
             setDisabled(true);
@@ -51,6 +88,7 @@ const SaveButton = ({
 
 SaveButton.propTypes = {
   onClickHandler: PropTypes.func,
+  unblockFunction: PropTypes.func,
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -62,7 +100,8 @@ SaveButton.defaultProps = {
   color: 'primary',
   errors: {},
   values: {},
-  onClickHandler: noop()
+  onClickHandler: noop,
+  unblockFunction: () => null
 };
 
 export default SaveButton;

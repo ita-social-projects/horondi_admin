@@ -3,11 +3,10 @@ const detailTitles = {
     avatar: { id: 'avatar' },
     name: { id: 'name' },
     status: { id: 'status' },
-    primarySection: [
+    sections: [
+      { id: 'phone', label: 'Телефон' },
       { id: 'country', label: 'Країна' },
-      { id: 'city', label: 'Місто' }
-    ],
-    secondarySection: [
+      { id: 'city', label: 'Місто' },
       { id: 'adress', label: 'Адреса' },
       { id: 'postCode', label: 'Поштовий індекс' }
     ]

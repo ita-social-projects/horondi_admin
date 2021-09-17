@@ -28,19 +28,28 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
+import { setItemsCount } from '../table/table.actions';
 
-const {
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_ADD_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_DELETE_STATUS, SUCCESS_ADD_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
-export function* handleSizesLoad() {
+export function* handleSizesLoad({ payload }) {
   try {
     yield put(setSizesLoading(true));
-    const sizes = yield call(getAllSizes);
-    yield put(setSizes(sizes));
-    yield put(setSizesLoading(false));
+    const sizes = yield call(
+      getAllSizes,
+      payload.limit,
+      payload.skip,
+      payload.filter
+    );
+
+    if (sizes) {
+      yield put(setSizes(sizes.items));
+      yield put(setItemsCount(sizes?.count));
+      yield put(setSizesLoading(false));
+    }
   } catch (error) {
     yield call(handleSizesError, error);
   }
@@ -50,8 +59,11 @@ export function* handleSizeById({ payload }) {
   try {
     yield put(setSizesLoading(true));
     const size = yield call(getSizeById, payload);
-    yield put(setSize(size));
-    yield put(setSizesLoading(false));
+
+    if (size) {
+      yield put(setSize(size));
+      yield put(setSizesLoading(false));
+    }
   } catch (error) {
     yield call(handleSizesError, error);
   }
@@ -60,22 +72,28 @@ export function* handleSizeById({ payload }) {
 export function* handleAddSize({ payload }) {
   try {
     yield put(setSizesLoading(true));
-    yield call(addSize, payload);
-    yield put(setSizesLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(config.routes.pathToSizes));
+    const size = yield call(addSize, payload);
+
+    if (size) {
+      yield put(setSizesLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(config.routes.pathToSizes));
+    }
   } catch (error) {
     yield call(handleSizesError, error);
   }
 }
 
 export function* handleSizeUpdate({ payload }) {
-  const { id, newSize } = payload;
+  const { id, updatedSize } = payload;
   try {
     yield put(setSizesLoading(true));
-    yield call(updateSize, id, newSize);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(config.routes.pathToSizes));
+    const size = yield call(updateSize, id, updatedSize);
+
+    if (size) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(push(config.routes.pathToSizes));
+    }
   } catch (error) {
     yield call(handleSizesError, error);
   }
@@ -85,18 +103,29 @@ export function* handleSizeDelete({ payload }) {
   try {
     yield put(setSizesLoading(true));
 
-    yield call(deleteSize, payload);
-    yield put(removeSizeFromState(payload));
-    yield put(setSizesLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const size = yield call(deleteSize, payload);
+
+    if (size) {
+      yield put(removeSizeFromState(payload));
+      yield put(setSizesLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleSizesError, error);
   }
 }
+
 export function* handleSizesError(e) {
-  yield put(setSizesLoading(false));
-  yield put(setSizesError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setSizesLoading(false));
+    yield put(setSizesError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* sizesSaga() {

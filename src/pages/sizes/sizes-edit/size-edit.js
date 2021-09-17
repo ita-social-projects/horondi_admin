@@ -5,17 +5,25 @@ import PropTypes from 'prop-types';
 import { useStyles } from './size-edit.styles';
 import LoadingBar from '../../../components/loading-bar';
 import SizeForm from '../../../components/forms/size-form/size-form';
-import { getSize } from '../../../redux/sizes/sizes.actions';
+import { getSize, getSizes } from '../../../redux/sizes/sizes.actions';
 import { sizeSelector } from '../../../redux/selectors/sizes.selector';
 
 const SizeEdit = ({ id }) => {
   const dispatch = useDispatch();
   const styles = useStyles();
   const { loading, size } = useSelector(sizeSelector);
-
   useEffect(() => {
     dispatch(getSize(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(
+      getSizes({
+        skip: 0,
+        limit: null
+      })
+    );
+  }, []);
 
   if (loading) {
     return <LoadingBar />;

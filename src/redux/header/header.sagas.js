@@ -30,21 +30,23 @@ import {
   handleErrorSnackbar,
   handleSuccessSnackbar
 } from '../snackbar/snackbar.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
+import { handleAdminLogout } from '../auth/auth.sagas';
 
 const { routes } = config;
 
-const {
-  SUCCESS_ADD_STATUS,
-  SUCCESS_DELETE_STATUS,
-  SUCCESS_UPDATE_STATUS
-} = config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
+  config.statuses;
 
 export function* handleHeadersLoad() {
   try {
     yield put(setHeaderLoading(true));
     const headers = yield call(getAllHeaders);
-    yield put(setHeaders(headers));
-    yield put(setHeaderLoading(false));
+
+    if (headers) {
+      yield put(setHeaders(headers));
+      yield put(setHeaderLoading(false));
+    }
   } catch (error) {
     yield call(handleHeaderError, error);
   }
@@ -54,8 +56,11 @@ export function* handleHeaderLoad({ payload }) {
   try {
     yield put(setHeaderLoading(true));
     const header = yield call(getHeaderById, payload);
-    yield put(setHeader(header));
-    yield put(setHeaderLoading(false));
+
+    if (header) {
+      yield put(setHeader(header));
+      yield put(setHeaderLoading(false));
+    }
   } catch (error) {
     yield call(handleHeaderError, error);
   }
@@ -64,10 +69,13 @@ export function* handleHeaderLoad({ payload }) {
 export function* handleAddHeader({ payload }) {
   try {
     yield put(setHeaderLoading(true));
-    yield call(createHeader, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
-    yield put(push(routes.pathToHeaders));
-    yield put(setHeaderLoading(false));
+    const header = yield call(createHeader, payload);
+
+    if (header) {
+      yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+      yield put(push(routes.pathToHeaders));
+      yield put(setHeaderLoading(false));
+    }
   } catch (error) {
     yield call(handleHeaderError, error);
   }
@@ -76,10 +84,13 @@ export function* handleAddHeader({ payload }) {
 export function* handleHeaderDelete({ payload }) {
   try {
     yield put(setHeaderLoading(true));
-    yield call(deleteHeader, payload);
-    yield put(removeHeaderFromStore(payload));
-    yield put(setHeaderLoading(false));
-    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    const header = yield call(deleteHeader, payload);
+
+    if (header) {
+      yield put(removeHeaderFromStore(payload));
+      yield put(setHeaderLoading(false));
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+    }
   } catch (error) {
     yield call(handleHeaderError, error);
   }
@@ -88,18 +99,29 @@ export function* handleHeaderDelete({ payload }) {
 export function* handleHeaderUpdate({ payload }) {
   try {
     yield put(setHeaderLoading(true));
-    yield call(updateHeader, payload);
-    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-    yield put(push(routes.pathToHeaders));
+    const header = yield call(updateHeader, payload);
+
+    if (header) {
+      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+      yield put(setHeaderLoading(false));
+      yield put(push(routes.pathToHeaders));
+    }
   } catch (error) {
     yield call(handleHeaderError, error);
   }
 }
 
 function* handleHeaderError(e) {
-  yield put(setHeaderLoading(false));
-  yield put(setHeaderError({ e }));
-  yield call(handleErrorSnackbar, e.message);
+  if (
+    e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID ||
+    e.message === AUTH_ERRORS.USER_IS_BLOCKED
+  ) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setHeaderLoading(false));
+    yield put(setHeaderError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
 }
 
 export default function* headerSaga() {

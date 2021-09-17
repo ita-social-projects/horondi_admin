@@ -1,0 +1,14 @@
+export const SET_BACKS = 'SET_BACKS';
+export const GET_BACKS = 'GET_BACKS';
+export const DELETE_BACK = 'DELETE_BACK';
+export const ADD_BACK = 'ADD_BACK';
+export const GET_BACK = 'GET_BACK';
+export const SET_BACK = 'SET_BACK';
+export const SET_BACK_LOADING = 'SET_BACK_LOADING';
+export const UPDATE_BACK = 'UPDATE_BACK';
+export const SET_BACK_ERROR = 'SET_BACK_ERROR';
+export const REMOVE_BACK_FROM_STORE = 'REMOVE_BACK_FROM_STORE';
+export const SET_BACK_FILTER = 'SET_BACK_FILTER';
+export const SET_SORT = 'SET_SORT';
+export const CLEAR_BACK = 'CLEAR_BACK';
+export const CLEAR_FILTERS = 'CLEAR_FILTERS';

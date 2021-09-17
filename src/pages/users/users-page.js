@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppBar, Tabs, Tab, Typography } from '@material-ui/core';
+
 import { useCommonStyles } from '../common.styles';
 import { deleteUser, getUsers } from '../../redux/users/users.actions';
 import TabPanel from '../../components/tab-panel';
@@ -19,9 +20,8 @@ const UsersPage = () => {
   const common = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, filter, sort, currentPage, rowsPerPage } = useSelector(
-    selectUsersAndTable
-  );
+  const { list, filter, sort, currentPage, rowsPerPage, isNewAdminCreated } =
+    useSelector(selectUsersAndTable);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const UsersPage = () => {
         sort
       })
     );
-  }, [dispatch, filter, sort, currentPage, rowsPerPage]);
+  }, [dispatch, filter, sort, currentPage, rowsPerPage, isNewAdminCreated]);
 
   const userDeleteHandler = (id) => {
     const removeUser = () => {

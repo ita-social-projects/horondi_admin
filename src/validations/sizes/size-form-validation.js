@@ -18,20 +18,7 @@ const {
 
 export const formSchema = Yup.object().shape({
   name: Yup.string().required(VALIDATION_ERROR),
-
-  simpleNameUa: Yup.string()
-    .typeError(NO_STRING_TYPE_MESSAGE)
-    .matches(config.formRegExp.uaNameCreation, NOT_UA_INPUT_MESSAGE)
-    .min(1, MIN_LENGTH_MESSAGE_SIZE)
-    .max(20, MAX_LENGTH_MESSAGE)
-    .required(VALIDATION_ERROR),
-
-  simpleNameEn: Yup.string()
-    .typeError(NO_STRING_TYPE_MESSAGE)
-    .matches(config.formRegExp.enNameCreation, NOT_EN_INPUT_MESSAGE)
-    .min(1, MIN_LENGTH_MESSAGE_SIZE)
-    .max(20, MAX_LENGTH_MESSAGE)
-    .required(VALIDATION_ERROR),
+  modelId: Yup.string().required(VALIDATION_ERROR),
   heightInCm: Yup.number()
     .typeError(NO_NUMBER_TYPE_MESSAGE)
     .min(1, MIN_LENGTH_MESSAGE)
@@ -58,8 +45,8 @@ export const formSchema = Yup.object().shape({
     .max(5, MAX_WEIGHT_MESSAGE_SIZE)
     .required(VALIDATION_ERROR),
   available: Yup.bool().required(VALIDATION_ERROR),
-
+  additionalPriceType: Yup.string(),
   additionalPrice: Yup.string()
-    .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
+    .matches(config.formRegExp.onlyPositiveFloat, PRICE_VALIDATION_ERROR)
     .required(VALIDATION_ERROR)
 });

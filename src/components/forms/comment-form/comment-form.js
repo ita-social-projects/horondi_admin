@@ -12,16 +12,17 @@ import { BackButton, SaveButton } from '../../buttons';
 import CheckboxOptions from '../../checkbox-options';
 import { config } from '../../../configs';
 import { updateComment } from '../../../redux/comments/comments.actions';
+import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 
-const {
-  COMMENT_VALIDATION_ERROR,
-  COMMENT_ERROR_MESSAGE,
-  MAX_LENGTH_MESSAGE
-} = config.commentErrorMessages;
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+
+const { COMMENT_VALIDATION_ERROR, COMMENT_ERROR_MESSAGE, MAX_LENGTH_MESSAGE } =
+  config.commentErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
 const { pathToEditProduct } = config.routes;
+const { pathToComments } = config.routes;
 
 const CommentForm = ({ comment, id, isEdit }) => {
   const styles = useStyles();
@@ -36,33 +37,19 @@ const CommentForm = ({ comment, id, isEdit }) => {
     show: Yup.bool()
   });
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    touched,
-    errors,
-    setFieldValue
-  } = useFormik({
-    validationSchema: commentValidationSchema,
-    initialValues: {
-      text: comment.text || '',
-      show: comment.show || false
-    },
-    onSubmit: (data) => {
-      if (isEdit) {
-        dispatch(
-          updateComment({
-            id,
-            comment: {
-              text: data.text,
-              show: data.show
-            }
-          })
-        );
+  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
+    useFormik({
+      validationSchema: commentValidationSchema,
+      initialValues: {
+        text: comment.text,
+        show: comment.show
+      },
+      onSubmit: (data) => {
+        if (isEdit) {
+          commentUpdateHandler(data);
+        }
       }
-    }
-  });
+    });
 
   const checkboxes = [
     {
@@ -76,13 +63,54 @@ const CommentForm = ({ comment, id, isEdit }) => {
     }
   ];
 
+  const unblock = useUnsavedChangesHandler(values);
+
+  const commentUpdateHandler = (data) => {
+    dispatch(
+      updateComment({
+        id,
+        comment: {
+          text: data.text,
+          show: data.show
+        }
+      })
+    );
+  };
+
   function handleProductClick() {
-    history.push(pathToEditProduct.replace(':id', comment.product._id));
+    if (comment.product?._id) {
+      return history.push(
+        pathToEditProduct.replace(':id', comment.product._id)
+      );
+    }
+    dispatch(showErrorSnackbar("Product doesn't exist"));
   }
+
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
+        <div className={styles.buttonContainer}>
+          <Grid container spacing={2} className={styles.fixedButtons}>
+            <Grid item className={styles.button}>
+              <BackButton pathBack={pathToComments} />
+            </Grid>
+            <Grid item className={styles.button}>
+              <SaveButton
+                onClickHandler={handleSubmit}
+                unblockFunction={unblock}
+                data-cy='save'
+                type='submit'
+                title={SAVE_TITLE}
+                errors={errors}
+                values={values}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <Grid item xs={12}>
           <CheckboxOptions options={checkboxes} />
           <Paper className={styles.paper}>
@@ -95,6 +123,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
               value={values.text}
               onChange={handleChange}
               error={touched.code && !!errors.code}
+              multiline
             />
             {touched.code && errors.code && (
               <div data-cy='code-error' className={styles.error}>
@@ -105,15 +134,6 @@ const CommentForm = ({ comment, id, isEdit }) => {
               {config.labels.comment.productInfo}
             </Button>
           </Paper>
-          <BackButton />
-          <SaveButton
-            className={styles.saveCommentButton}
-            data-cy='save'
-            type='submit'
-            title={SAVE_TITLE}
-            errors={errors}
-            values={values}
-          />
         </Grid>
       </form>
     </div>

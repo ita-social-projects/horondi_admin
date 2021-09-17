@@ -25,6 +25,7 @@ import useConstructorHandlers from '../../../utils/use-constructor-handlers';
 import ColorCircle from '../../color-circle';
 import { selectConstructorMethodAndMaterials } from '../../../redux/selectors/constructor.selectors';
 import LanguagePanel from '../language-panel';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL } = config;
 
@@ -66,11 +67,10 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const dispatch = useDispatch();
   const history = createBrowserHistory();
 
-  const {
-    createConstructor,
-    setUploadConstructorImg,
-    uploadConstructorImg
-  } = useConstructorHandlers();
+  const { pathToConstructor } = config.routes;
+
+  const { createConstructor, setUploadConstructorImg, uploadConstructorImg } =
+    useConstructorHandlers();
 
   const { list, model, constructorElementMethod } = useSelector(
     selectConstructorMethodAndMaterials
@@ -106,46 +106,42 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       .required(CONSTRUCTOR_ERROR_MESSAGE)
   });
 
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    touched,
-    errors,
-    setFieldValue
-  } = useFormik({
-    validationSchema: constructorValidationSchema,
-    initialValues: {
-      image: editableConstructorElement.image || '',
-      uaName: editableConstructorElement.name[0].value || '',
-      enName: editableConstructorElement.name[1].value || '',
-      material: editableConstructorElement.material._id || '',
-      color: editableConstructorElement.color._id || '',
-      available: editableConstructorElement.available || false,
-      default: editableConstructorElement.default || false,
-      basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
-    },
-    onSubmit: (formValues) => {
-      const constructorElement = createConstructor(formValues);
-      history.goBack();
-      if (isEdit) {
+  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
+    useFormik({
+      validationSchema: constructorValidationSchema,
+      initialValues: {
+        image: editableConstructorElement.image || '',
+        uaName: editableConstructorElement.name[0].value || '',
+        enName: editableConstructorElement.name[1].value || '',
+        material: editableConstructorElement.material._id || '',
+        color: editableConstructorElement.color._id || '',
+        available: editableConstructorElement.available || false,
+        default: editableConstructorElement.default || false,
+        basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
+      },
+      onSubmit: (formValues) => {
+        const constructorElement = createConstructor(formValues);
+        history.goBack();
+        if (isEdit) {
+          return dispatch(
+            constructorElementMethod({
+              constructorElement,
+              id: editableConstructorElement._id,
+              upload: uploadConstructorImg
+            })
+          );
+        }
         return dispatch(
           constructorElementMethod({
             constructorElement,
-            id: editableConstructorElement._id,
+            id: model._id,
             upload: uploadConstructorImg
           })
         );
       }
-      return dispatch(
-        constructorElementMethod({
-          constructorElement,
-          id: model._id,
-          upload: uploadConstructorImg
-        })
-      );
-    }
-  });
+    });
+
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleMaterial = (e) => {
     setFieldValue('material', e.target.value);
@@ -168,22 +164,22 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     }
   ];
 
-  const handleImageLoad = (e, callback) => {
-    if (e.target.files && e.target.files[0]) {
+  const handleImageLoad = (files, callback) => {
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
         callback(event);
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(files[0]);
     }
   };
 
-  const handleLoadConstructorImage = (e) => {
-    handleImageLoad(e, (event) => {
+  const handleLoadConstructorImage = (files) => {
+    handleImageLoad(files, (event) => {
       setFieldValue('image', event.target.result);
       setConstructorAvatar(event.target.result);
     });
-    setUploadConstructorImg(e.target.files[0]);
+    setUploadConstructorImg(files[0]);
   };
 
   const selectField = (
@@ -228,9 +224,13 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     inputs
   };
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => eventPreventHandler(e)}>
         <CheckboxOptions options={checkboxes('available', show)} />
         <CheckboxOptions options={checkboxes('default', defaultElement)} />
         <Grid item xs={12}>
@@ -293,9 +293,11 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton />
+        <BackButton pathBack={pathToConstructor} />
         <SaveButton
           className={styles.saveButton}
+          onClickHandler={handleSubmit}
+          unblockFunction={unblock}
           data-cy='save-btn'
           type='submit'
           title={SAVE_TITLE}

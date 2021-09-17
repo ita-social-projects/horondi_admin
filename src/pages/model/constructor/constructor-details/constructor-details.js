@@ -7,10 +7,9 @@ import LoadingBar from '../../../../components/loading-bar';
 
 const ConstructorDetails = () => {
   const styles = useStyles();
-  const {
-    editableConstructorElement,
-    loading
-  } = useSelector(selectConstructorMethodAndMaterials);
+  const { editableConstructorElement, loading } = useSelector(
+    selectConstructorMethodAndMaterials
+  );
 
   if (loading) {
     return <LoadingBar />;
@@ -18,7 +17,10 @@ const ConstructorDetails = () => {
 
   return (
     <div className={styles.container}>
-      <ConstructorForm isEdit editableConstructorElement={editableConstructorElement} />
+      <ConstructorForm
+        isEdit
+        editableConstructorElement={editableConstructorElement}
+      />
     </div>
   );
 };

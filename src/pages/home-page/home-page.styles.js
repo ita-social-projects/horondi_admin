@@ -28,8 +28,8 @@ export const useStyles = makeStyles((theme) => ({
       transition: '.3s'
     },
     '@media (max-width: 768px)': {
-      width: theme.spacing(7),
-      height: theme.spacing(7)
+      width: '110px',
+      height: '110px'
     }
   },
   paper: {

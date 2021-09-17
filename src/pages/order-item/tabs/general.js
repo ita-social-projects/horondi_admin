@@ -1,22 +1,18 @@
 import React from 'react';
 import { Select, MenuItem, Checkbox } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
 import { useStyles } from '../order-item.styles';
 import orders from '../../../configs/orders';
 import labels from '../../../configs/labels';
 import materialUiConstants from '../../../configs/material-ui-constants';
-import { inputName } from '../../../utils/order';
+import { generalPropTypes, inputName } from '../../../utils/order';
 
 const General = ({ data, handleChange }) => {
   const classes = useStyles();
   const { status, isPaid, paymentMethod } = data;
   const { generalLabels } = labels;
-  const {
-    deliveryStatusLabel,
-    isPaidLabel,
-    paymentMethodLabel
-  } = generalLabels;
+  const { deliveryStatusLabel, isPaidLabel, paymentMethodLabel } =
+    generalLabels;
   const { statusOptions, paymentOptions } = orders;
 
   const statusOptionElements = statusOptions.map(({ label, value }, index) => (
@@ -36,11 +32,11 @@ const General = ({ data, handleChange }) => {
   return (
     <div className={classes.general}>
       <div>
-        <label htmlFor='status'>{deliveryStatusLabel}</label>
+        <label htmlFor={inputName.status}>{deliveryStatusLabel}</label>
         <Select
           fullWidth
-          id='status'
-          name='status'
+          id={inputName.status}
+          name={inputName.status}
           value={status}
           onChange={handleChange}
           variant={materialUiConstants.outlined}
@@ -50,11 +46,11 @@ const General = ({ data, handleChange }) => {
         </Select>
       </div>
       <div>
-        <label htmlFor='paymentMethod'>{paymentMethodLabel}</label>
+        <label htmlFor={inputName.paymentMethod}>{paymentMethodLabel}</label>
         <Select
           fullWidth
-          id='paymentMethod'
-          name='paymentMethod'
+          id={inputName.paymentMethod}
+          name={inputName.paymentMethod}
           value={paymentMethod}
           onChange={handleChange}
           variant={materialUiConstants.outlined}
@@ -64,7 +60,7 @@ const General = ({ data, handleChange }) => {
         </Select>
       </div>
       <div className={classes.isPaid}>
-        <label htmlFor='paymentMethod'>{isPaidLabel}</label>
+        <label htmlFor={inputName.paymentMethod}>{isPaidLabel}</label>
         <Checkbox
           checked={isPaid}
           name={inputName.isPaidInput}
@@ -79,17 +75,6 @@ General.defaultProps = {
   data: {}
 };
 
-General.propTypes = {
-  data: PropTypes.shape({
-    status: PropTypes.string,
-    isPaid: PropTypes.bool,
-    courierOffice: PropTypes.string,
-    paymentMethod: PropTypes.string,
-    paymentStatus: PropTypes.string,
-    city: PropTypes.string,
-    street: PropTypes.string
-  }),
-  handleChange: PropTypes.func.isRequired
-};
+General.propTypes = generalPropTypes;
 
 export default General;

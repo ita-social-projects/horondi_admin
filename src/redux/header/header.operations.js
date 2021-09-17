@@ -1,11 +1,8 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-import { getFromLocalStorage } from '../../services/local-storage.service';
+import { getItems, setItems } from '../../utils/client';
 import { headerTranslations } from '../../translations/header.translations';
 
-export const getAllHeaders = async (skip, limit) => {
-  const result = await client.query({
-    query: gql`
+export const getAllHeaders = async () => {
+  const query = `
       query {
         getAllHeaders {
           _id
@@ -17,17 +14,14 @@ export const getAllHeaders = async (skip, limit) => {
           priority
         }
       }
-    `
-  });
-  client.resetStore();
+    `;
 
-  return result.data.getAllHeaders;
+  const result = await getItems(query);
+
+  return result?.data?.getAllHeaders;
 };
-
 export const getHeaderById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getHeaderById(id: $id) {
           ... on Header {
@@ -45,28 +39,26 @@ export const getHeaderById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
-  if (data.getHeaderById.message) {
+    `;
+
+  const result = await getItems(query, { id });
+
+  if (
+    Object.keys(headerTranslations).includes(
+      result?.data?.getHeaderById?.message
+    )
+  ) {
     throw new Error(
-      `${data.getHeaderById.statusCode} ${
-        headerTranslations[data.getHeaderById.message]
+      `${result.data.getHeaderById.statusCode} ${
+        headerTranslations[result.data.getHeaderById.message]
       }`
     );
   }
 
-  return data.getHeaderById;
+  return result?.data?.getHeaderById;
 };
-
 export const deleteHeader = async (id) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    variables: { id },
-    context: { headers: { token } },
-    mutation: gql`
+  const query = `
       mutation($id: ID!) {
         deleteHeader(id: $id) {
           ... on Header {
@@ -78,31 +70,26 @@ export const deleteHeader = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.deleteHeader.message) {
+  const result = await setItems(query, { id });
+
+  if (
+    Object.keys(headerTranslations).includes(
+      result?.data?.deleteHeader?.message
+    )
+  ) {
     throw new Error(
-      `${data.deleteHeader.statusCode} ${
-        headerTranslations[data.deleteHeader.message]
+      `${result.data.deleteHeader.statusCode} ${
+        headerTranslations[result.data.deleteHeader.message]
       }`
     );
   }
 
-  return data.deleteHeader;
+  return result?.data?.deleteHeader;
 };
-
 export const createHeader = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-
-    mutation: gql`
+  const query = `
       mutation($header: HeaderInput!) {
         addHeader(header: $header) {
           ... on Header {
@@ -120,30 +107,24 @@ export const createHeader = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addHeader.message) {
+  const result = await setItems(query, payload);
+
+  if (
+    Object.keys(headerTranslations).includes(result?.data?.addHeader?.message)
+  ) {
     throw new Error(
-      `${data.addHeader.statusCode} ${
-        headerTranslations[data.addHeader.message]
+      `${result.data.addHeader.statusCode} ${
+        headerTranslations[result.data.addHeader.message]
       }`
     );
   }
 
-  return data.addHeader;
+  return result?.data?.addHeader;
 };
-
-export const updateHeader = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, header, image } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, header, image },
-    mutation: gql`
+export const updateHeader = async ({ id, header, image }) => {
+  const query = `
       mutation($id: ID!, $header: HeaderInput!) {
         updateHeader(id: $id, header: $header) {
           ... on Header {
@@ -161,18 +142,21 @@ export const updateHeader = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
-  if (data.updateHeader.message) {
+    `;
+
+  const result = await setItems(query, { id, header, image });
+
+  if (
+    Object.keys(headerTranslations).includes(
+      result?.data?.updateHeader?.message
+    )
+  ) {
     throw new Error(
-      `${data.updateHeader.statusCode} ${
-        headerTranslations[data.updateHeader.message]
+      `${result.data.updateHeader.statusCode} ${
+        headerTranslations[result.data.updateHeader.message]
       }`
     );
   }
 
-  return data.updateHeader;
+  return result?.data?.updateHeader;
 };

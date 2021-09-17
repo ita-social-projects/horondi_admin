@@ -319,6 +319,13 @@ if issue is in work it should be placed in proper column on dashboard according 
 [![@Hai-Vasyl](https://avatars.githubusercontent.com/u/64915099?s=200&u=4540d5aba6e388992ca06b9224ed0e0a35f94b1c&v=4)](https://github.com/Hai-Vasyl)
 [![@Wasya1212](https://avatars.githubusercontent.com/u/15053168?s=200&u=4540d5aba6e388992ca06b9224ed0e0a35f94b1c&v=4)](https://github.com/Wasya1212)
 [![@BohdanShchur](https://avatars.githubusercontent.com/u/50678261?s=200&u=4540d5aba6e388992ca06b9224ed0e0a35f94b1c&v=4)](https://github.com/BohdanShchur)
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> e05d0d18a8dbf54cc17832c2c2a137ff7e304437
+=======
+>>>>>>> e05d0d18a8dbf54cc17832c2c2a137ff7e304437
 ### Quality control team
 
 [![@HrytsykOlya](https://avatars1.githubusercontent.com/u/65678737?s=200&u=181e62bf4f25b07122f06ce677e73ddd34021391&v=4)](https://github.com/HrytsykOlya)
@@ -330,6 +337,7 @@ if issue is in work it should be placed in proper column on dashboard according 
 [![@olesmack](https://avatars.githubusercontent.com/u/84582793?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/olesmack)
 [![@NataliaAndriiets](https://avatars.githubusercontent.com/u/84592689?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/NataliaAndriiets)
 [![@xfightr](https://avatars.githubusercontent.com/u/85612818?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/xfightr)
+
 ### ISTQB team
 
 [![@olya011](https://avatars3.githubusercontent.com/u/49495443?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/olya011)
@@ -339,6 +347,11 @@ if issue is in work it should be placed in proper column on dashboard according 
 [![@GalyaGirnyak](https://avatars.githubusercontent.com/u/75363667?s=200&u=5602aefda507989d28b8bfba247dd05a8a81431b&v=4)](https://github.com/GalyaGirnyak)
 [![@kirkchernyshkov](https://avatars.githubusercontent.com/u/75264827?s=200&u=ba90664860143e53146be7f6956483d9b883618f&v=4)](https://github.com/kirkchernyshkov)
 [![@runner-on-waves](https://avatars.githubusercontent.com/u/75261055?s=200&u=d2b87ed36b47dcc16b934cf0ad2aab1327155fb8&v=4)](https://github.com/runner-on-waves)
+[![@asIgnat](https://avatars.githubusercontent.com/u/62054774?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/asIgnat)
+[![@rrarock](https://avatars.githubusercontent.com/u/84689435?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/rrarock)
+[![@olesmack](https://avatars.githubusercontent.com/u/84582793?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/olesmack)
+[![@NataliaAndriiets](https://avatars.githubusercontent.com/u/84592689?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/NataliaAndriiets)
+[![@xfightr](https://avatars.githubusercontent.com/u/85612818?s=200&u=285aa0df8435a6ec16edb6ba26b4718d82693bf9&v=4)](https://github.com/xfightr)
 [Serhii Datsiuk](https://github.com/SerhiiDatsiuk)
 [![@MariyaRashkevych](https://avatars.githubusercontent.com/u/6838192?s=200)](https://github.com/MariyaRashkevych)
 [![@MarianaZemba](https://avatars.githubusercontent.com/u/79637539?s=200)](https://github.com/MarianaZemba)
@@ -355,6 +368,7 @@ if issue is in work it should be placed in proper column on dashboard according 
 [![@YukiAmeka](https://avatars2.githubusercontent.com/u/42378468?s=200&u=c749e6713546c371b801786ecdd678dd1d152f42&v=4)](https://github.com/YukiAmeka)
 [![@yaremich](https://avatars.githubusercontent.com/u/58247822?s=200&u=db2f3b6459c080079c5c5e4b52da61cd18b4e223&v=4)](https://github.com/yaremich)
 [![@Meamzy](https://avatars.githubusercontent.com/u/48360177?s=200&u=db2f3b6459c080079c5c5e4b52da61cd18b4e223&v=4)](https://github.com/Meamzy)
+
 ### DevOps team
 
 [![@SofiaDemyanovska](https://avatars1.githubusercontent.com/u/48492789?s=200&u=cb0520a8498667594ded0db8e29cdd3ec5529578&v=4)](https://github.com/SofiaDemyanovska)
@@ -363,8 +377,11 @@ if issue is in work it should be placed in proper column on dashboard according 
 [![@rholovchak](https://avatars.githubusercontent.com/u/68376355?s=200)](https://github.com/rholovchak)
 
 ---
+
 ### Designer team
+
 [![@Nikadsgn](https://avatars.githubusercontent.com/u/87034205?s=200&u=4540d5aba6e388992ca06b9224ed0e0a35f94b1c&v=4)](https://github.com/Nikadsgn)
+
 ## FAQ
 
 - **How do I do _specifically_ so and so?**

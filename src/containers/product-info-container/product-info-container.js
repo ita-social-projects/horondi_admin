@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { noop } from 'lodash';
 import { useStyles } from './product-info-container.styles';
 
 import { config } from '../../configs';
@@ -21,7 +22,9 @@ const ProductInfoContainer = ({
   errors,
   touched,
   handleChange,
-  handleSubmit
+  handleSubmit,
+  handleBlur,
+  setFieldValue
 }) => {
   const styles = useStyles();
 
@@ -30,7 +33,9 @@ const ProductInfoContainer = ({
     touched,
     handleChange,
     values,
-    inputs: infoLabels
+    inputs: infoLabels,
+    handleBlur,
+    setFieldValue
   };
 
   const inputsList = languages.map((lang, idx) => (
@@ -49,14 +54,25 @@ const ProductInfoContainer = ({
 
 ProductInfoContainer.propTypes = {
   values: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.array,
+      PropTypes.object
+    ])
   ).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func,
+  setFieldValue: PropTypes.func
 };
 
-ProductInfoContainer.defaultProps = {};
+ProductInfoContainer.defaultProps = {
+  handleBlur: noop,
+  setFieldValue: noop
+};
 
 export default ProductInfoContainer;

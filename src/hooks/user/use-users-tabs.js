@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setTab } from '../../redux/users/users.actions';
 import { config } from '../../configs';
-import useUsersFiltering from './use-users-filtering';
+import useUsersFilters from '../filters/use-users-filters';
 
 const { userRoles } = config;
 const [user, ...other] = userRoles.map((item) => item.role);
@@ -11,7 +11,10 @@ const useUsersTabs = () => {
   const { tab } = useSelector(({ Users }) => ({
     tab: Users.tab
   }));
-  const { setRolesFilter, clearAllFilters } = useUsersFiltering();
+  const {
+    setRolesFilter,
+    clearOptions: { clearAllFilters }
+  } = useUsersFilters();
 
   const handleTabChange = (currentTab) => {
     dispatch(setTab(currentTab));

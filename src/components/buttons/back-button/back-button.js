@@ -1,18 +1,32 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { createBrowserHistory } from 'history';
-import buttonTitles from '../../../configs/button-titles';
+import { useHistory } from 'react-router-dom';
 
-const BackButton = ({ type, variant, color, ...props }) => {
+import buttonTitles from '../../../configs/button-titles';
+import materialUiConstants from '../../../configs/material-ui-constants';
+
+const {
+  primary,
+  outlined,
+  types: { button }
+} = materialUiConstants;
+
+const BackButton = ({ type, variant, color, pathBack, ...props }) => {
   const { GO_BACK_TITLE } = buttonTitles;
-  const history = createBrowserHistory();
+
+  const history = useHistory();
+
+  const backButtonHandler = () => {
+    history.push(pathBack);
+  };
+
   return (
     <Button
       type={type}
       color={color}
       variant={variant}
-      onClick={() => history.goBack()}
+      onClick={backButtonHandler}
       data-cy='back-btn'
       {...props}
     >
@@ -22,14 +36,18 @@ const BackButton = ({ type, variant, color, ...props }) => {
 };
 
 BackButton.propTypes = {
+  initial: PropTypes.bool,
   color: PropTypes.string,
   type: PropTypes.string,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  pathBack: PropTypes.string
 };
 BackButton.defaultProps = {
-  color: 'primary',
-  type: 'button',
-  variant: 'outlined'
+  initial: false,
+  color: primary,
+  type: button,
+  variant: outlined,
+  pathBack: ''
 };
 
 export default BackButton;

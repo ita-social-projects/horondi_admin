@@ -8,7 +8,9 @@ import {
   SET_ARTICLE,
   UPDATE_ARTICLE,
   SET_NEWS_ERROR,
-  REMOVE_ARTICLE_FROM_STORE
+  REMOVE_ARTICLE_FROM_STORE,
+  SET_NEWS_FILTER,
+  CLEAR_NEWS_FILTER
 } from './news.types';
 
 const setNews = (news) => ({
@@ -61,6 +63,15 @@ const removeArticleFromStore = (payload) => ({
   payload
 });
 
+const setNewsFilter = (payload) => ({
+  type: SET_NEWS_FILTER,
+  payload
+});
+
+const clearNewsFilter = () => ({
+  type: CLEAR_NEWS_FILTER
+});
+
 export {
   setNews,
   getNews,
@@ -71,5 +82,7 @@ export {
   setArticle,
   getArticle,
   setNewsError,
-  removeArticleFromStore
+  removeArticleFromStore,
+  setNewsFilter,
+  clearNewsFilter
 };

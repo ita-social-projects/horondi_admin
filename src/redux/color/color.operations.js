@@ -1,45 +1,42 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-
-import { getFromLocalStorage } from '../../services/local-storage.service';
+import { getItems, setItems } from '../../utils/client';
 import { colorsTranslations } from '../../translations/colors.translations';
 
-const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-const colorRequest = `
-  _id
-  colorHex
-  name {
-    value
-    lang
-  }
-  simpleName {
-    value
-    lang
-  }
-`;
-
 export const getAllColors = async () => {
-  const result = await client.query({
-    query: gql`
+  const query = `
       query {
         getAllColors{
-         ${colorRequest}
+           _id
+          colorHex
+          name {
+            value
+            lang
+          }
+          simpleName {
+            value
+            lang
+          }
         }
       }
-    `
-  });
-  return result.data.getAllColors;
-};
+    `;
+  const result = await getItems(query);
 
+  return result?.data?.getAllColors;
+};
 export const getColorById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const query = `
       query($id: ID!) {
         getColorById(id: $id) {
           ... on Color {
-            ${colorRequest}
+              _id
+            colorHex
+            name {
+              value
+              lang
+            }
+            simpleName {
+              value
+              lang
+            }
           }
           ... on Error {
             statusCode
@@ -47,28 +44,38 @@ export const getColorById = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
+  const result = await getItems(query, { id });
 
-  const { getColorById: color } = result.data;
-  if (color.message) {
-    throw new Error(`${color.statusCode} ${colorsTranslations[color.message]}`);
+  if (
+    Object.keys(colorsTranslations).includes(
+      result?.data?.getColorById?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getColorById.statusCode} ${
+        colorsTranslations[result.data.getColorById.message]
+      }`
+    );
   }
 
-  return color;
+  return result?.data?.getColorById;
 };
-
 export const createColor = async (payload) => {
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-
-    mutation: gql`
+  const query = `
       mutation($input: ColorInput!) {
         addColor(data: $input) {
           ... on Color {
-            ${colorRequest}
+                _id
+              colorHex
+              name {
+                value
+                lang
+              }
+              simpleName {
+                value
+                lang
+              }
           }
           ...on Error {
             statusCode
@@ -76,23 +83,23 @@ export const createColor = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
+  const result = await setItems(query, payload);
 
-  const { addColor: color } = result.data;
-  if (color.message) {
-    throw new Error(`${color.statusCode} ${colorsTranslations[color.message]}`);
+  if (
+    Object.keys(colorsTranslations).includes(result?.data?.addColor?.message)
+  ) {
+    throw new Error(
+      `${result.data.addColor.statusCode} ${
+        colorsTranslations[result.data.addColor.message]
+      }`
+    );
   }
 
-  return color;
+  return result?.data?.addColor;
 };
-
 export const deleteColor = async (id) => {
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id },
-    mutation: gql`
+  const query = `
       mutation($id: ID!) {
         deleteColor(id: $id) {
           ... on Color {
@@ -126,16 +133,21 @@ export const deleteColor = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
+    `;
 
-  const { deleteColor: color } = result.data;
-  if (color.message) {
-    throw new Error(`${color.statusCode} ${colorsTranslations[color.message]}`);
-  } else if (color.items) {
-    return color.items;
+  const result = await setItems(query, { id });
+
+  if (
+    Object.keys(colorsTranslations).includes(result?.data?.deleteColor?.message)
+  ) {
+    throw new Error(
+      `${result.data.deleteColor.statusCode} ${
+        result.data.deleteColor[result.data.deleteColor.message]
+      }`
+    );
+  } else if (result.data?.deleteColor.items) {
+    return result.data?.deleteColor.items;
   }
 
-  return color;
+  return result?.data?.deleteColor;
 };

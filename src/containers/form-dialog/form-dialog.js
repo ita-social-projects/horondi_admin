@@ -3,10 +3,11 @@ import { Dialog } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import DialogTitle from './components/dialog-title';
 import DialogContent from './components/dialog-content';
+import { useStyles } from './form-dialog.styles';
 
 const FormDialog = (props) => {
   const { isOpen, handleClose, children, title, ...other } = props;
-
+  const styles = useStyles();
   return (
     <Dialog
       open={isOpen}
@@ -14,7 +15,9 @@ const FormDialog = (props) => {
       data-cy='form-dialog-window'
       {...other}
     >
-      <DialogTitle data-cy='form-dialog-title'>{title}</DialogTitle>
+      <div className={styles.title}>
+        <DialogTitle data-cy='form-dialog-title'>{title}</DialogTitle>
+      </div>
       <DialogContent data-cy='form-dialog-content'>{children}</DialogContent>
     </Dialog>
   );

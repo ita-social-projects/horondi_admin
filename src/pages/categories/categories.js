@@ -13,10 +13,15 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { useCommonStyles } from '../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
-import { selectCategoriesLoadingDialogOpen } from '../../redux/selectors/category.selectors';
+import { categoriesSelectorWithPagination } from '../../redux/selectors/category.selectors';
 import StandardButton from '../../components/buttons/standard-button';
 import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
 import useCategoryFilters from '../../hooks/filters/use-category-filters';
+import messages from '../../configs/messages';
+
+const pathToAddCategoryPage = config.routes.pathToAddCategory;
+
+const pathToEditCategoryPage = config.routes.pathToCategories;
 
 const Categories = () => {
   const { IMG_URL } = config;
@@ -32,8 +37,9 @@ const Categories = () => {
     filter,
     sort,
     currentPage,
-    rowsPerPage
-  } = useSelector(selectCategoriesLoadingDialogOpen);
+    rowsPerPage,
+    itemsCount
+  } = useSelector(categoriesSelectorWithPagination);
 
   const handleDeleteCategory = (id) => {
     dispatch(setCategoryDeleteId(id));
@@ -41,7 +47,7 @@ const Categories = () => {
   };
 
   const handleAddCategory = () => {
-    dispatch(push(config.routes.pathToAddCategory));
+    dispatch(push(pathToAddCategoryPage));
   };
 
   useEffect(() => {
@@ -57,29 +63,32 @@ const Categories = () => {
     );
   }, [dispatch, filter, sort, currentPage, rowsPerPage]);
 
+  const categoriesList = categories.length
+    ? categories
+        .slice()
+        .filter((category) => category)
+        .map((category) => (
+          <TableContainerRow
+            key={category._id}
+            id={category._id}
+            image={
+              category?.images?.thumbnail
+                ? IMG_URL + category.images.thumbnail
+                : ''
+            }
+            name={category.name.length ? category.name[0].value : ''}
+            deleteHandler={() => handleDeleteCategory(category._id)}
+            editHandler={() =>
+              dispatch(push(`${pathToEditCategoryPage}/${category._id}`))
+            }
+          />
+        ))
+    : null;
+
   if (categoriesLoading) {
     return <LoadingBar />;
   }
 
-  const categoriesList = categories.length
-    ? categories
-      .slice()
-      .filter((category) => category)
-      .map((category) => (
-        <TableContainerRow
-          key={category._id}
-          id={category._id}
-          image={
-            category.images.thumbnail
-              ? IMG_URL + category.images.thumbnail
-              : ''
-          }
-          name={category.name.length ? category.name[0].value : ''}
-          deleteHandler={() => handleDeleteCategory(category._id)}
-          editHandler={() => dispatch(push(`/add-category/${category._id}`))}
-        />
-      ))
-    : null;
   return (
     <div className={commonStyles.container}>
       <div className={commonStyles.adminHeader}>
@@ -94,11 +103,20 @@ const Categories = () => {
       <div>
         <FilterNavbar options={categoryOptions || {}} />
       </div>
-      <TableContainerGenerator
-        tableTitles={config.tableHeadRowTitles.categories}
-        tableItems={categoriesList}
-      />
-      <CategoryDeleteDialog />
+
+      {categoriesList?.length ? (
+        <>
+          <TableContainerGenerator
+            pagination
+            tableTitles={config.tableHeadRowTitles.categories}
+            tableItems={categoriesList}
+            count={itemsCount}
+          />
+          <CategoryDeleteDialog />
+        </>
+      ) : (
+        <p className={commonStyles.noRecords}>{messages.NO_CATEGORY_MESSAGE}</p>
+      )}
     </div>
   );
 };

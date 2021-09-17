@@ -39,26 +39,14 @@ const productModel = {
   pattern: [],
   basePrice: 0,
   strapLengthInCm: 0,
+  isHotItem: false,
   available: true,
   options: []
 };
 
 const mockProductsState = {
-  details: {
-    categories: [],
-    closures: [],
-    materials: {
-      bottom: [],
-      inner: [],
-      main: []
-    },
-    models: []
-  },
-  sorting: {
-    sortByPrice: 0,
-    sortByRate: 0,
-    sortByPopularity: -1
-  },
+  details: {},
+  sort: {},
   loading: false,
   filterData: [],
   upload: [],
@@ -75,13 +63,13 @@ const mockProductsState = {
   filesToDelete: [],
   primaryImageUpload: null,
   filters: {
-    colorsFilter: [],
-    patternsFilter: [],
-    categoryFilter: [],
-    searchFilter: '',
-    modelsFilter: []
+    pattern: [],
+    category: [],
+    search: '',
+    models: []
   },
-  productsError: null
+  productsError: null,
+  sortLabel: ''
 };
 
 const mockTableState = {
@@ -188,7 +176,8 @@ const pagesCount = Math.ceil(
 
 const mockProductToDelete = {
   id: mockId,
-  request: true
+  request: true,
+  limit: 10
 };
 
 const mockProductToUpdatePayload = {
@@ -237,7 +226,16 @@ const mockUploadToRemoveImages = [{ name: 'image' }];
 
 const mockId = '5fa034049a59a906d0640e42';
 
+const mockPayload = {
+  limit: 5,
+  skip: 0,
+  filter: {},
+  sort: {},
+  search: 'hello'
+};
+
 export {
+  mockPayload,
   mockUploadToRemoveImages,
   mockPrimaryImage,
   mockCategory,

@@ -5,15 +5,45 @@ const titles = {
     ordersTitle: 'Останні замовлення',
     changesTitle: 'Останні зміни'
   },
+  historyTitles: {
+    mainTitle: 'Останні зміни',
+    detailsTitle: 'Деталі зміни',
+    detailsTitleNumber: (number) => `Деталі зміни № ${number}`,
+    userInfo: 'Інформація про користувача',
+    id: 'Ідентифікатор:',
+    email: 'Електронна пошта:',
+    name: `Ім'я:`,
+    role: 'Роль:',
+    changesTitle: 'Інформація про зміни',
+    subject: 'Об’єкт дії',
+    before: 'До зміни',
+    after: 'Після зміни',
+    noChanges: 'N/A',
+    from: 'Від',
+    to: 'До'
+  },
   categoriesTitles: {
     deleteTitle: 'Видалити категорію'
   },
   patternTitles: {
     mainPageTitle: 'Інформація про гобелени',
-    createPageTitle: 'Створити гобелен'
+    createPageTitle: 'Створити гобелен',
+    convertationTitle: 'Відповідна ціна в UAH',
+    modelTitle: 'Модель'
+  },
+  backTitles: {
+    mainPageTitle: 'Інформація про спинки',
+    createPageTitle: 'Створити спинку'
+  },
+  bottomTitles: {
+    mainPageTitle: 'Інформація про низи',
+    createPageTitle: 'Створити низ'
   },
   commentTitles: {
     mainPageTitle: 'Інформація про коментарі'
+  },
+  replyCommentTitles: {
+    mainPageTitle: 'Інформація про відповіді'
   },
   productPageTitles: {
     mainPageTitle: 'Інформація про продукти'
@@ -49,11 +79,15 @@ const titles = {
   sizesTitles: {
     mainPageTitle: 'Iнформація про розміри',
     selectTitle: 'Розмір',
-    sizeAdjustMenu: 'Редагування розміром'
+    modelTitle: 'Модель',
+    sizeEdit: 'Редагування розміру',
+    sizeAdd: 'Додавання розміру',
+    convertationTitle: 'Відповідна ціна в UAH'
   },
   materialTitles: {
     mainPageTitle: 'Iнформація про матеріали',
-    createPageTitle: 'Створити матеріал'
+    createPageTitle: 'Створити матеріал',
+    convertationTitle: 'Відповідна ціна в UAH'
   },
   colorTitles: {
     createColorTitle: 'Створити колір',
@@ -78,7 +112,7 @@ const titles = {
   orderTitles: {
     mainPageTitle: 'Інформація про замовлення',
     filterBy: 'Фільтрувати',
-    ORDER_NOT_FOUND: 'Замовлень за заданим фільтром не знайдено',
+    ORDER_NOT_FOUND: 'Замовлення відсутні',
     orders: 'замовлень'
   },
   homePageSliderTitle: {
@@ -92,7 +126,33 @@ const titles = {
   },
   productTitles: {
     filters: 'Фільтри',
-    deleteFilter: 'Очистити фільтр'
+    deleteFilter: 'Очистити фільтр',
+    mainPageTitle: 'Інформація про продукти',
+    convertationTitle: 'Відповідна ціна в UAH',
+    modelTitle: 'Модель'
+  },
+  pocketsTitles: {
+    mainPageTitle: 'Інформація про кишені'
+  },
+  positionTitles: {
+    mainPageTitle: 'Інформація про розміщення'
+  },
+  constructorListPageTitles: {
+    mainPageTitle: 'Список конструкторів'
+  },
+  constructorModelTitles: {
+    mainPageTitle: 'Опції конструктора'
+  },
+  closuresTitles: {
+    mainPageTitle: 'Інформація про защіпки',
+    convertationTitle: 'Відповідна ціна в UAH'
+  },
+  basicsTitles: {
+    mainPageTitle: 'Інформація про основи'
+  },
+  strapsTitles: {
+    mainPageTitle: 'Інформація про ремінці',
+    convertationTitle: 'Відповідна ціна в UAH'
   }
 };
 

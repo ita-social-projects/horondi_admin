@@ -1,12 +1,10 @@
-import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
-import { getFromLocalStorage } from '../../services/local-storage.service';
+import { getItems, setItems } from '../../utils/client';
 import { modelTranslations } from '../../translations/model.translations';
 
 const constructorElementRequest = `
     _id
     available
-    default
+    customizable
     basePrice {
      value
      currency
@@ -15,32 +13,29 @@ const constructorElementRequest = `
      value
      lang
     }
-    material{
-      _id
-      name {
-        value
-        lang
+    features {
+      material{
+        _id
+        name {
+          value
+          lang
+        }
       }
-    }
-    color {
-       _id
-      colorHex
-      name {
-        value
-        lang
-    }
+      color {
+         _id
+        colorHex
+        name {
+          value
+          lang
+      }
+      }
     }
 `;
 
-export const getAllModels = async (skip, limit) => {
-  const result = await client.query({
-    variables: {
-      skip,
-      limit
-    },
-    query: gql`
-      query($skip: Int, $limit: Int) {
-        getAllModels(skip: $skip, limit: $limit) {
+export const getAllModels = async (filter, pagination, sort) => {
+  const getAllModelsQuery = `
+      query($filter: ModelFilterInput, $pagination: Pagination,  $sort: ModelSortInput) {
+        getAllModels(filter: $filter, pagination: $pagination, sort: $sort) {
           items {
             _id
             name {
@@ -69,16 +64,19 @@ export const getAllModels = async (skip, limit) => {
           count
         }
       }
-    `
+    `;
+
+  const result = await getItems(getAllModelsQuery, {
+    filter,
+    pagination,
+    sort
   });
-  await client.resetStore();
-  return result.data.getAllModels;
+
+  return result?.data?.getAllModels;
 };
 
 export const getModelById = async (id) => {
-  const result = await client.query({
-    variables: { id },
-    query: gql`
+  const getModelByIdQuery = `
     query($id: ID!) {
       getModelById(id: $id) {
         ... on Model {
@@ -94,6 +92,17 @@ export const getModelById = async (id) => {
               lang
             }
           }
+          sizes {
+            _id
+            name
+            modelId { 
+              name { 
+                value
+                lang
+              }
+            }
+            available
+          }
           images {
             large
             medium
@@ -107,35 +116,41 @@ export const getModelById = async (id) => {
             value
             lang
           }
-          constructorBasic {
-            ${constructorElementRequest}
-          }
-          constructorPattern {
-            _id
-            name {
-              value
-              lang
+          eligibleOptions {
+            constructorBasic {
+              ${constructorElementRequest}
             }
-            images {
-              large
-              medium
-              small
-              thumbnail
-            }
-            material {
+            constructorPattern {
               _id
               name {
                 value
                 lang
               }
+              images {
+                large
+                medium
+                small
+                thumbnail
+              }
+              features {
+                material {
+                  _id
+                  name {
+                    value
+                    lang
+                  }
+                }
+                handmade 
+              }
+            }
+            constructorFrontPocket  {
+              ${constructorElementRequest}
+            }
+            constructorBottom{
+              ${constructorElementRequest}
             }
           }
-          constructorFrontPocket  {
-            ${constructorElementRequest}
-          }
-          constructorBottom{
-            ${constructorElementRequest}
-          }
+          
         }
         ... on Error {
           message
@@ -143,44 +158,41 @@ export const getModelById = async (id) => {
         }
       }
     }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  const { data } = result;
-  await client.resetStore();
-  if (data.getModelById.message) {
+    `;
+  const result = await getItems(getModelByIdQuery, { id });
+
+  if (
+    Object.keys(modelTranslations).includes(result?.data?.getModelById?.message)
+  ) {
     throw new Error(
-      `${data.getModelById.statusCode} ${
-        modelTranslations[data.getModelById.message]
+      `${result.data.getModelById.statusCode} ${
+        modelTranslations[result.data.getModelById.message]
       }`
     );
   }
 
-  return data.getModelById;
+  return result?.data?.getModelById;
 };
 
 export const deleteModel = async (id) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    variables: { id },
-    context: { headers: { token } },
-    mutation: gql`
+  const deleteModelMutation = `
       mutation($id: ID!) {
         deleteModel(id: $id) {
           ... on Model {
             _id
-            constructorBasic {
-              _id
-            }
-            constructorPattern {
-              _id
-            }
-            constructorFrontPocket {
-              _id
-            }
-            constructorBottom {
-              _id
+            eligibleOptions {
+              constructorBasic {
+                _id
+              }
+              constructorPattern {
+                _id
+              }
+              constructorFrontPocket {
+                _id
+              }
+              constructorBottom {
+                _id
+              }
             }
           }
           ... on Error {
@@ -189,31 +201,15 @@ export const deleteModel = async (id) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.deleteModel.message) {
-    throw new Error(
-      `${data.deleteModel.statusCode} ${
-        modelTranslations[data.deleteModel.message]
-      }`
-    );
-  }
+  const result = await setItems(deleteModelMutation, { id });
 
-  return data.deleteModel;
+  return result?.data?.deleteModel;
 };
 
 export const createModel = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: payload,
-
-    mutation: gql`
+  const addMutation = `
       mutation($model: ModelInput!, $image: Upload) {
         addModel(model: $model, upload: $image) {
           ... on Model {
@@ -247,28 +243,25 @@ export const createModel = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addModel.message) {
+  const result = await setItems(addMutation, payload);
+
+  if (
+    Object.keys(modelTranslations).includes(result?.data?.addModel?.message)
+  ) {
     throw new Error(
-      `${data.addModel.statusCode} ${modelTranslations[data.addModel.message]}`
+      `${result.data.addModel.statusCode} ${
+        modelTranslations[result.data.addModel.message]
+      }`
     );
   }
 
-  return data.addModel;
+  return result?.data?.addModel;
 };
 
 export const updateModel = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, model, image } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, model, image },
-    mutation: gql`
+  const updateMutation = `
       mutation($id: ID!, $model: ModelInput!, $image: Upload) {
         updateModel(id: $id, model: $model, upload: $image) {
           ... on Model {
@@ -302,29 +295,25 @@ export const updateModel = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  client.resetStore();
-  const { data } = result;
-  if (data.updateModel.message) {
+    `;
+
+  const result = await setItems(updateMutation, payload);
+
+  if (
+    Object.keys(modelTranslations).includes(result?.data?.updateModel?.message)
+  ) {
     throw new Error(
-      `${data.updateModel.statusCode} ${
-        modelTranslations[data.updateModel.message]
+      `${result.data.updateModel.statusCode} ${
+        modelTranslations[result.data.updateModel.message]
       }`
     );
   }
 
-  return data.updateModel;
+  return result?.data?.updateModel;
 };
 
 export const addModelConstructorBasic = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, constructorElementID },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $constructorElementID: ID!) {
         addModelConstructorBasic(
           id: $id
@@ -339,29 +328,27 @@ export const addModelConstructorBasic = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addModelConstructorBasic.message) {
+  const result = await setItems(query, payload);
+
+  if (
+    Object.keys(modelTranslations).includes(
+      result?.data?.addModelConstructorBasic?.message
+    )
+  ) {
     throw new Error(
-      `${data.addModelConstructorBasic.statusCode} ${
-        modelTranslations[data.addModelConstructorBasic.message]
+      `${result.data.addModelConstructorBasic.statusCode} ${
+        modelTranslations[result.data.addModelConstructorBasic.message]
       }`
     );
   }
-  return data.addModelConstructorBasic;
+
+  return result?.data?.addModelConstructorBasic;
 };
 
 export const deleteModelConstructorBasic = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, constructorElementID },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $constructorElementID: ID!) {
         deleteModelConstructorBasic(
           id: $id
@@ -376,29 +363,15 @@ export const deleteModelConstructorBasic = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.deleteModelConstructorBasic.message) {
-    throw new Error(
-      `${data.deleteModelConstructorBasic.statusCode} ${
-        modelTranslations[data.deleteModelConstructorBasic.message]
-      }`
-    );
-  }
-  return data.deleteModelConstructorBasic;
+  const result = await setItems(query, payload);
+
+  return result?.data?.deleteModelConstructorBasic;
 };
 
 export const addModelConstructorPattern = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, constructorElementID },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $constructorElementID: ID!) {
         addModelConstructorPattern(
           id: $id
@@ -413,29 +386,26 @@ export const addModelConstructorPattern = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addModelConstructorPattern.message) {
+  const result = await setItems(query, payload);
+
+  if (
+    Object.keys(modelTranslations).includes(
+      result?.data?.addModelConstructorPattern?.message
+    )
+  ) {
     throw new Error(
-      `${data.addModelConstructorPattern.statusCode} ${
-        modelTranslations[data.addModelConstructorPattern.message]
+      `${result.data.addModelConstructorPattern.statusCode} ${
+        modelTranslations[result.data.addModelConstructorPattern.message]
       }`
     );
   }
-  return data.addModelConstructorPattern;
+  return result?.data?.addModelConstructorPattern;
 };
 
 export const deleteModelConstructorPattern = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, constructorElementID },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $constructorElementID: ID!) {
         deleteModelConstructorPattern(
           id: $id
@@ -450,29 +420,15 @@ export const deleteModelConstructorPattern = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.deleteModelConstructorPattern.message) {
-    throw new Error(
-      `${data.deleteModelConstructorPattern.statusCode} ${
-        modelTranslations[data.deleteModelConstructorPattern.message]
-      }`
-    );
-  }
-  return data.deleteModelConstructorPattern;
+  const result = await setItems(query, payload);
+
+  return result?.data?.deleteModelConstructorPattern;
 };
 
 export const addModelConstructorFrontPocket = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, constructorElementID },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $constructorElementID: ID!) {
         addModelConstructorFrontPocket(
           id: $id
@@ -487,29 +443,27 @@ export const addModelConstructorFrontPocket = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addModelConstructorFrontPocket.message) {
+  const result = await setItems(query, payload);
+
+  if (
+    Object.keys(modelTranslations).includes(
+      result?.data?.addModelConstructorFrontPocket?.message
+    )
+  ) {
     throw new Error(
-      `${data.addModelConstructorFrontPocket.statusCode} ${
-        modelTranslations[data.addModelConstructorFrontPocket.message]
+      `${result.data.addModelConstructorFrontPocket.statusCode} ${
+        modelTranslations[result.data.addModelConstructorFrontPocket.message]
       }`
     );
   }
-  return data.addModelConstructorFrontPocket;
+
+  return result?.data?.addModelConstructorFrontPocket;
 };
 
 export const deleteModelConstructorFrontPocket = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, constructorElementID },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $constructorElementID: ID!) {
         deleteModelConstructorFrontPocket(
           id: $id
@@ -524,29 +478,15 @@ export const deleteModelConstructorFrontPocket = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.deleteModelConstructorFrontPocket.message) {
-    throw new Error(
-      `${data.deleteModelConstructorFrontPocket.statusCode} ${
-        modelTranslations[data.deleteModelConstructorFrontPocket.message]
-      }`
-    );
-  }
-  return data.deleteModelConstructorFrontPocket;
+  const result = await setItems(query, payload);
+
+  return result?.data?.deleteModelConstructorFrontPocket;
 };
 
 export const addModelConstructorBottom = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, constructorElementID },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $constructorElementID: ID!) {
         addModelConstructorBottom(
           id: $id
@@ -561,29 +501,27 @@ export const addModelConstructorBottom = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.addModelConstructorBottom.message) {
+  const result = await setItems(query, payload);
+
+  if (
+    Object.keys(modelTranslations).includes(
+      result?.data?.addModelConstructorBottom?.message
+    )
+  ) {
     throw new Error(
-      `${data.addModelConstructorBottom.statusCode} ${
-        modelTranslations[data.addModelConstructorBottom.message]
+      `${result.data.addModelConstructorBottom.statusCode} ${
+        modelTranslations[result.data.addModelConstructorBottom.message]
       }`
     );
   }
-  return data.addModelConstructorBottom;
+
+  return result?.data?.addModelConstructorBottom;
 };
 
 export const deleteModelConstructorBottom = async (payload) => {
-  const token = getFromLocalStorage('HORONDI_AUTH_TOKEN');
-  const { id, constructorElementID } = payload;
-  const result = await client.mutate({
-    context: { headers: { token } },
-    variables: { id, constructorElementID },
-    mutation: gql`
+  const query = `
       mutation($id: ID!, $constructorElementID: ID!) {
         deleteModelConstructorBottom(
           id: $id
@@ -598,18 +536,9 @@ export const deleteModelConstructorBottom = async (payload) => {
           }
         }
       }
-    `,
-    fetchPolicy: 'no-cache'
-  });
-  await client.resetStore();
-  const { data } = result;
+    `;
 
-  if (data.deleteModelConstructorBottom.message) {
-    throw new Error(
-      `${data.deleteModelConstructorBottom.statusCode} ${
-        modelTranslations[data.deleteModelConstructorBottom.message]
-      }`
-    );
-  }
-  return data.deleteModelConstructorBottom;
+  const result = await setItems(query, payload);
+
+  return result?.data?.deleteModelConstructorBottom;
 };

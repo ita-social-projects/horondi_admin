@@ -2,13 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
-  const {
-    imageUpload,
-    textField,
-    inputError,
-    tabs,
-    imageUploadAvatar
-  } = formStyles(theme);
+  const { imageUpload, textField, inputError, tabs, imageUploadAvatar } =
+    formStyles(theme);
   return {
     formContainer: {
       width: '100%',
@@ -17,7 +12,8 @@ export const useStyles = makeStyles((theme) => {
     slideItemUpdate: {
       display: 'flex',
       flexDirection: 'column',
-      margin: '20px 0px'
+      margin: '20px 0px',
+      padding: '10px'
     },
     formButton: {
       margin: theme.spacing(2),
@@ -118,6 +114,24 @@ export const useStyles = makeStyles((theme) => {
       '@media (max-width: 375px)': {
         fontSize: theme.spacing(2)
       }
+    },
+    buttonContainer: {
+      position: 'relative',
+      width: '100%',
+      height: 60,
+      marginTop: 51,
+      '@media (max-width: 600px)': {
+        marginTop: 43
+      }
+    },
+    fixedButtons: {
+      position: 'fixed',
+      height: 60,
+      zIndex: 1001,
+      backgroundColor: theme.palette.bodyColor
+    },
+    button: {
+      marginTop: theme.spacing(0.5)
     },
     imageUpload,
     textField,

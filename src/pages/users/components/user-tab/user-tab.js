@@ -7,9 +7,12 @@ import TableContainerRow from '../../../../containers/table-container-row';
 import { userRoleTranslations } from '../../../../translations/user.translations';
 import { formatPhoneNumber } from '../../../../utils/format-phone-number';
 import { config } from '../../../../configs';
-import UserNavbar from '../user-navbar';
+import { useStyles } from './user-tab.styles';
 import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
+import { UserBlockPeriod } from '../../../../consts/user-block-status';
+import useUsersFilters from '../../../../hooks/filters/use-users-filters';
+import FilterNavbar from '../../../../components/filter-search-sort';
 
 const map = require('lodash/map');
 
@@ -21,6 +24,8 @@ const UserTab = (props) => {
   const { list, onDelete } = props;
   const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
   const dispatch = useDispatch();
+  const usersFilters = useUsersFilters();
+  const tabStyles = useStyles();
 
   const usersItems = map(list, (userItem) => (
     <TableContainerRow
@@ -34,27 +39,33 @@ const UserTab = (props) => {
       mobile={formatPhoneNumber(userItem.phoneNumber) || ''}
       email={userItem.email || ''}
       role={userRoleTranslations[userItem.role]}
-      banned={userItem.banned ? USER_INACTIVE_STATUS : USER_ACTIVE_STATUS}
+      banned={
+        userItem.banned.blockPeriod === UserBlockPeriod.UNLOCKED
+          ? USER_ACTIVE_STATUS
+          : USER_INACTIVE_STATUS
+      }
       deleteHandler={() => onDelete(userItem._id)}
       editHandler={() => dispatch(push(`/users/${userItem._id}`))}
     />
   ));
 
+  if (userLoading) {
+    return <LoadingBar />;
+  }
+
   return (
     <>
-      <UserNavbar />
+      <div className={tabStyles.filters}>
+        <FilterNavbar options={usersFilters || {}} />
+      </div>
       <div>
-        {userLoading ? (
-          <LoadingBar />
-        ) : (
-          <TableContainerGenerator
-            pagination
-            count={itemsCount}
-            id='usersTable'
-            tableTitles={tableTitles}
-            tableItems={usersItems}
-          />
-        )}
+        <TableContainerGenerator
+          pagination
+          count={itemsCount}
+          id='usersTable'
+          tableTitles={tableTitles}
+          tableItems={usersItems}
+        />
       </div>
     </>
   );

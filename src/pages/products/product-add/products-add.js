@@ -13,6 +13,7 @@ const ProductsAdd = () => {
   }, [dispatch]);
 
   const { loading, details } = useSelector(selectProductsLoadingAndDetails);
+
   if (loading && !details.categories.length) {
     return <LoadingBar />;
   }

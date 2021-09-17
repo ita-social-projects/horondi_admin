@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import { useDispatch } from 'react-redux';
-
 import { FormControl, Paper, TextField, Grid, Avatar } from '@material-ui/core';
-
 import { useFormik } from 'formik';
-
 import * as Yup from 'yup';
-
 import { Image } from '@material-ui/icons';
+
 import { config } from '../../../configs';
 import { BackButton, SaveButton } from '../../buttons';
 import {
@@ -20,13 +16,17 @@ import {
 import { useStyles } from './contacts-form.style';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
+import {
+  setMapImageHandler,
+  setInputsContactHandler
+} from '../../../utils/contacts-form';
+import { handleAvatar } from '../../../utils/handle-avatar';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
-const { languages } = config;
+const { languages, materialUiConstants } = config;
 const { schedule, adress } = config.labels.contacts;
 
 const {
-  PHONE_NUMBER_LENGTH_MESSAGE,
-  PHONE_NUMBER_TYPE_MESSAGE,
   ENTER_PHONE_NUMBER_MESSAGE,
   INPUT_LENGTH_MESSAGE,
   ENTER_UA_SCHEDULE_MESSAGE,
@@ -35,15 +35,14 @@ const {
   ENTER_EN_ADDRESS_MESSAGE,
   IMAGE_FORMAT_MESSAGE,
   ENTER_LINK_MESSAGE,
-  SELECT_IMAGES_MESSAGE
+  SELECT_IMAGES_MESSAGE,
+  INVALID_PHONE_MESSAGE
 } = config.contactErrorMessages;
 
-const {
-  INVALID_EMAIL_MESSAGE,
-  ENTER_EMAIL_MESSAGE
-} = config.loginErrorMessages;
+const { INVALID_EMAIL_MESSAGE, ENTER_EMAIL_MESSAGE } =
+  config.loginErrorMessages;
 
-const { enAddressRegex, uaRegex, enRegex } = config.formRegExp;
+const { enAddressRegex, uaRegex, enRegex, phoneNumber } = config.formRegExp;
 
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
@@ -57,32 +56,21 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     imageUrl: ''
   });
 
-  const uaSelectImageHandler = ({ target }) => {
-    if (target.files && target.files[0]) {
-      uaSetMapImage({
-        name: target.files[0].name,
-        imageUrl: URL.createObjectURL(target.files[0])
-      });
+  const { pathToContacts } = config.routes;
 
-      [values.uaCartImage] = target.files;
-    }
+  const uaCartImageText = 'uaCartImage';
+  const enCartImageText = 'enCartImage';
+  const uaSelectImageHandler = (files) => {
+    setMapImageHandler(files, uaSetMapImage, values, uaCartImageText);
   };
 
-  const enSelectImageHandler = ({ target }) => {
-    if (target.files && target.files[0]) {
-      enSetMapImage({
-        name: target.files[0].name,
-        imageUrl: URL.createObjectURL(target.files[0])
-      });
-
-      [values.enCartImage] = target.files;
-    }
+  const enSelectImageHandler = (files) => {
+    setMapImageHandler(files, enSetMapImage, values, enCartImageText);
   };
 
   const formSchema = Yup.object().shape({
-    phoneNumber: Yup.number()
-      .min(12, PHONE_NUMBER_LENGTH_MESSAGE)
-      .typeError(PHONE_NUMBER_TYPE_MESSAGE)
+    phoneNumber: Yup.string()
+      .matches(phoneNumber, INVALID_PHONE_MESSAGE)
       .required(ENTER_PHONE_NUMBER_MESSAGE),
     uaSchedule: Yup.string()
       .min(10, INPUT_LENGTH_MESSAGE)
@@ -93,11 +81,11 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .matches(enRegex, ENTER_EN_SCHEDULE_MESSAGE)
       .required(ENTER_EN_SCHEDULE_MESSAGE),
     uaAddress: Yup.string()
-      .min(8, INPUT_LENGTH_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
       .matches(uaRegex, ENTER_UA_ADDRESS_MESSAGE)
       .required(ENTER_UA_ADDRESS_MESSAGE),
     enAddress: Yup.string()
-      .min(8, INPUT_LENGTH_MESSAGE)
+      .min(10, INPUT_LENGTH_MESSAGE)
       .matches(enAddressRegex, ENTER_EN_ADDRESS_MESSAGE)
       .required(ENTER_EN_ADDRESS_MESSAGE),
     email: Yup.string()
@@ -109,41 +97,65 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .required(ENTER_LINK_MESSAGE)
   });
 
-  const { handleSubmit, handleChange, values, touched, errors } = useFormik({
-    initialValues,
-    validationSchema: formSchema,
-    validateOnBlur: true,
-    onSubmit: (formValues) => {
-      if (
-        formValues.uaCartImage &&
-        formValues.enCartImage &&
-        typeof formValues.uaCartImage === typeof formValues.enCartImage
-      ) {
-        contactSaveHandler(formValues);
-      } else {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(SELECT_IMAGES_MESSAGE));
-        dispatch(setSnackBarStatus(true));
+  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
+      validateOnBlur: true,
+      onSubmit: (formValues) => {
+        if (
+          formValues.uaCartImage &&
+          formValues.enCartImage &&
+          typeof formValues.uaCartImage === typeof formValues.enCartImage
+        ) {
+          contactSaveHandler(formValues);
+        } else {
+          dispatch(setSnackBarSeverity(materialUiConstants.styleError));
+          dispatch(setSnackBarMessage(SELECT_IMAGES_MESSAGE));
+          dispatch(setSnackBarStatus(true));
+        }
       }
-    }
-  });
+    });
 
-  const inputs = [
-    { label: schedule, name: 'schedule' },
-    { label: adress, name: 'address' }
-  ];
+  const unblock = useUnsavedChangesHandler(values);
+
+  const inputs = setInputsContactHandler(schedule, adress);
 
   const inputOptions = {
     errors,
     touched,
     handleChange,
+    handleBlur,
     values,
     inputs
   };
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className={classes.detailsContainer}>
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={(e) => eventPreventHandler(e)}>
+        <div className={classes.buttonContainer}>
+          <Grid container spacing={2} className={classes.fixedButtons}>
+            <Grid item className={classes.button}>
+              <BackButton data-cy='go-back-button' pathBack={pathToContacts} />
+            </Grid>
+            <Grid item className={classes.button}>
+              <SaveButton
+                id='save'
+                type='submit'
+                title='Зберегти'
+                onClickHandler={handleSubmit}
+                data-cy='save'
+                values={values}
+                errors={errors}
+                unblockFunction={unblock}
+              />
+            </Grid>
+          </Grid>
+        </div>
         <FormControl className={classes.contactDetails}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
@@ -161,15 +173,13 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     >
                       <Image />
                     </Avatar>
-                  ) : initialValues.uaCartImage ? (
-                    <Avatar
-                      data-cy='uaCartImage'
-                      src={initialValues.uaCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
-                  ) : null}
+                  ) : (
+                    handleAvatar(
+                      initialValues.uaCartImage,
+                      'uaCartImage',
+                      classes.large
+                    )
+                  )}
                 </div>
                 <span className={classes.imageUpload}>
                   Зображення карти (Англ.)
@@ -184,16 +194,12 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                     >
                       <Image />
                     </Avatar>
-                  ) : initialValues.enCartImage ? (
-                    <Avatar
-                      data-cy='enCartImage'
-                      src={initialValues.enCartImage}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
                   ) : (
-                    <></>
+                    handleAvatar(
+                      initialValues.enCartImage,
+                      'enCartImage',
+                      classes.large
+                    )
                   )}
                 </div>
                 <TextField
@@ -209,6 +215,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   }}
                   value={values.cartLink}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   error={touched.cartLink && !!errors.cartLink}
                   helperText={touched.cartLink && errors.cartLink}
                 />
@@ -226,6 +233,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   }}
                   value={values.phoneNumber}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   error={touched.phoneNumber && !!errors.phoneNumber}
                   helperText={touched.phoneNumber && errors.phoneNumber}
                 />
@@ -242,6 +250,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                   }}
                   value={values.email}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   error={touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
                 />
@@ -258,17 +267,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
             </Grid>
           </Grid>
         </FormControl>
-        <BackButton data-cy='go-back-button' />
-
-        <SaveButton
-          id='save'
-          type='submit'
-          title='Зберегти'
-          className={classes.saveButton}
-          data-cy='save'
-          values={values}
-          errors={errors}
-        />
       </form>
     </div>
   );

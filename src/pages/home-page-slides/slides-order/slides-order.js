@@ -1,20 +1,20 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import PropTypes from 'prop-types';
-import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
 import { Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './slides-order.styles';
 import { config } from '../../../configs';
 import { StandardButton } from '../../../components/buttons';
-import { slidesTranslations } from '../../../translations/home-page-slides.translations';
+import Column from '../../../components/draganddrop';
 import {
   setSlides,
   updateSlidesOrder
 } from '../../../redux/home-page-slides/home-page-slides.actions';
 import { useCommonStyles } from '../../common.styles';
+
+import { convertSliderData } from '../../../utils/data-helper';
 
 const SlidesOrder = (props) => {
   const styles = useStyles();
@@ -23,95 +23,94 @@ const SlidesOrder = (props) => {
   const dispatch = useDispatch();
 
   const { drugAndDropList } = props;
-  const [list, setList] = useState(drugAndDropList);
-  const [dragging, setDragging] = useState(false);
-  const [draggable, setDraggable] = useState(false);
-  const { IMG_URL } = config;
-  const {
-    discoverMoreTitle,
-    slideOrderTitle,
-    discoverMoreSymbol
-  } = config.titles.homePageSliderTitle;
-  const {
-    OPEN_SLIDE_EDIT,
-    SAVE_SLIDE_ORDER,
-    CANCEL_SLIDE_ORDER
-  } = config.buttonTitles;
+  const [dragged, setDragged] = useState(true);
+  const [data, setData] = useState(null);
+  const { slideOrderTitle } = config.titles.homePageSliderTitle;
+  const { SAVE_SLIDE_ORDER } = config.buttonTitles;
 
   const { rowsPerPage } = useSelector(({ Table }) => ({
     rowsPerPage: Table.pagination.rowsPerPage
   }));
 
-  const dragItem = useRef();
-  const dragItemNode = useRef();
+  useEffect(() => {
+    if (drugAndDropList.length) setData(convertSliderData(drugAndDropList));
+  }, [drugAndDropList]);
 
-  const handlerDragStart = (e, item) => {
-    dragItemNode.current = e.target;
-    dragItemNode.current.addEventListener('dragend', handleDragEnd);
-    dragItem.current = item;
-    setDragging(true);
-  };
+  const onDragEnd = (result) => {
+    const { destination, source } = result;
 
-  const handleDragEnter = (e, targetItem) => {
-    if (dragItemNode.current !== e.target) {
-      setList((oldList) => {
-        const newList = JSON.parse(JSON.stringify(oldList));
-        newList[targetItem.groupIndex].items.splice(
-          targetItem.itemIndex,
-          0,
-          newList[dragItem.current.groupIndex].items.splice(
-            dragItem.current.itemIndex,
-            1
-          )[0]
-        );
-        dragItem.current = targetItem;
-        return newList;
-      });
-    }
-  };
-
-  const handleDragEnd = () => {
-    setDragging(false);
-    dragItem.current = null;
-    dragItemNode.current.removeEventListener('dragend', handleDragEnd);
-    dragItemNode.current = null;
-  };
-
-  const getStyles = (item) => {
-    if (
-      dragItem.current.groupIndex === item.groupIndex &&
-      dragItem.current.itemIndex === item.itemIndex
-    ) {
-      return `${styles.dndItem} ${styles.current}`;
-    }
-    return styles.dndItem;
-  };
-  const changeHandler = () => {
-    if (draggable) {
-      setDraggable(false);
-      setList(drugAndDropList);
+    if (!destination) {
       return;
     }
-    setDraggable(true);
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const home = data[source.droppableId];
+    const foreign = data[destination.droppableId];
+    if (home === foreign) {
+      const newTaskIds = Array.from(home.items);
+      const [removedItem] = newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, removedItem);
+
+      const newItemObject = {
+        ...home,
+        items: newTaskIds
+      };
+
+      const newObjectState = {
+        ...data,
+        [newItemObject.title]: newItemObject
+      };
+
+      setDragged(false);
+      setData(newObjectState);
+      return;
+    }
+    const homeTaskIds = Array.from(home.items);
+    const [removed] = homeTaskIds.splice(source.index, 1);
+    const newHome = {
+      ...home,
+      items: homeTaskIds
+    };
+
+    const foreignTaskIds = Array.from(foreign.items);
+    foreignTaskIds.splice(destination.index, 0, removed);
+    const newForeign = {
+      ...foreign,
+      items: foreignTaskIds
+    };
+
+    const newState = {
+      ...data,
+      [newHome.title]: newHome,
+      [newForeign.title]: newForeign
+    };
+    setDragged(false);
+    setData(newState);
   };
 
   const saveHandler = () => {
     const available = [];
     const nonAvailable = [];
-    list.forEach((el) => {
-      if (el.title === 'available') {
-        el.items.forEach((availableSlide, index) => {
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === 'available') {
+        value.items.forEach((availableSlide, index) => {
           available.push({
             id: availableSlide._id,
-            slide: { order: +index + 1, show: true, ...availableSlide }
+            slide: { ...availableSlide, order: +index + 1, show: true }
           });
         });
       }
-      if (el.title === 'nonAvailable') {
-        el.items.forEach((nonAvailableSlide) => {
+      if (key === 'nonAvailable') {
+        value.items.forEach((nonAvailableSlide) => {
           nonAvailable.push({
             id: nonAvailableSlide._id,
-            slide: { order: 0, show: false, ...nonAvailableSlide }
+            slide: { ...nonAvailableSlide, order: 0, show: false }
           });
         });
       }
@@ -121,77 +120,21 @@ const SlidesOrder = (props) => {
       dispatch(
         updateSlidesOrder({
           id: item.id,
-          slide: { order: item.slide.order, show: item.slide.show }
+          slide: {
+            order: item.slide.order,
+            show: item.slide.show,
+            link: item.slide.link
+          }
         })
       )
     );
     const arrayToStore = newSlideItems.map((el) => el.slide);
     arrayToStore.length = rowsPerPage;
     dispatch(setSlides(arrayToStore));
-    setDraggable(false);
   };
-  const drugAndDropContainer = drugAndDropList.length
-    ? list.map((group, groupIndex) => (
-      <Card
-        key={group.title}
-        elevation={2}
-        onDragEnter={
-          dragging && !group.items.length
-            ? (e) => handleDragEnter(e, { groupIndex, itemIndex: 0 })
-            : null
-        }
-        className={styles.dndGroup}
-      >
-        <Typography variant='h1' className={styles.slideTitle}>
-          {group.title === 'available'
-            ? slidesTranslations.available
-            : slidesTranslations.nonAvailable}
-        </Typography>
-        {group.items.map((item, itemIndex) => (
-          <Paper
-            draggable={draggable}
-            elevation={5}
-            onDragStart={(e) =>
-              handlerDragStart(e, { groupIndex, itemIndex })
-            }
-            onDragEnter={
-              dragging
-                ? (e) => {
-                  handleDragEnter(e, { groupIndex, itemIndex });
-                }
-                : null
-            }
-            className={
-              dragging ? getStyles({ groupIndex, itemIndex }) : styles.dndItem
-            }
-            key={item._id}
-          >
-            <Avatar
-              variant='square'
-              className={styles.square}
-              src={`${IMG_URL}${item.images.small}`}
-              color='primary'
-            >
-              <ImageIcon />
-            </Avatar>
-            <div className={styles.slideContent}>
-              <div>
-                <h3>{item.title[0].value}</h3>
-                <p>{item.description[0].value}</p>
-              </div>
-              <p className={styles.discoverMore}>
-                {' '}
-                {discoverMoreTitle}
-                <span>{discoverMoreSymbol}</span>
-              </p>
-            </div>
-          </Paper>
-        ))}
-      </Card>
-    ))
-    : null;
+
   return (
-    <Paper elevation={3}>
+    <Paper elevation={10}>
       <div className={commonStyles.container}>
         <div className={commonStyles.adminHeader}>
           <Typography variant='h1' className={commonStyles.materialTitle}>
@@ -200,23 +143,26 @@ const SlidesOrder = (props) => {
           <div>
             <StandardButton
               className={styles.saveButton}
-              color='secondary'
-              data-cy='save'
-              title={draggable ? CANCEL_SLIDE_ORDER : OPEN_SLIDE_EDIT}
-              onClickHandler={changeHandler}
-              type='button'
-            />
-            <StandardButton
-              className={styles.saveButton}
               data-cy='save'
               onClickHandler={saveHandler}
               title={SAVE_SLIDE_ORDER}
-              disabled={!draggable}
+              disabled={dragged}
               type='button'
             />
           </div>
         </div>
-        <div className={styles.dndContainer}>{drugAndDropContainer}</div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div style={{}}>
+            {data &&
+              data.columnData.map((col) => (
+                <Column
+                  key={data[col].title}
+                  column={data[col]}
+                  tasks={data[col].items}
+                />
+              ))}
+          </div>
+        </DragDropContext>
       </div>
     </Paper>
   );
