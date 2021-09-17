@@ -206,7 +206,7 @@ const ProductForm = ({ isEdit }) => {
     formikMaterialsValues
   );
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     if (isMountedFirst) {
       toggleFieldsChanged(true);
@@ -235,6 +235,8 @@ const ProductForm = ({ isEdit }) => {
     setShouldValidate(true);
 
     await submitForm();
+
+    if (unblock) unblock();
   };
 
   const handleProductDelete = () => {

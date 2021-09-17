@@ -112,7 +112,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
     if (files && files[0]) {
@@ -169,6 +169,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

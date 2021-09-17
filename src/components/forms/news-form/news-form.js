@@ -122,7 +122,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleLoadAuthorImage = (files) => {
     imageHandler(files, setUploadAuthorImage, values, authorPhoto);
@@ -166,6 +166,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 type='submit'
                 onClickHandler={handleSubmit}
                 title={SAVE_TITLE}
+                unblockFunction={unblock}
                 values={values}
                 errors={errors}
               />

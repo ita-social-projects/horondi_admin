@@ -32,6 +32,7 @@ const mockSetBottomImage = jest.fn();
 
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({

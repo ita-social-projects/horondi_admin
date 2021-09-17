@@ -192,7 +192,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   });
 
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {
@@ -270,6 +270,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   data-cy='save-btn'
                   type='submit'
                   onClickHandler={handleSubmit}
+                  unblockFunction={unblock}
                   title={SAVE_TITLE}
                   values={values}
                   errors={errors}
