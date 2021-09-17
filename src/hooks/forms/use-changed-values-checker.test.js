@@ -1,9 +1,6 @@
 import React from 'react';
 import useChangedValuesChecker from './use-changed-values-checker';
 
-const useStateSpy = jest
-  .spyOn(React, 'useState')
-  .mockImplementation(() => [true, () => null]);
 const useEffectSpy = jest
   .spyOn(React, 'useEffect')
   .mockImplementation((cb) => cb());
@@ -22,7 +19,6 @@ describe('use-changed-values-checker test', () => {
       {}
     );
 
-    expect(useStateSpy).toHaveBeenCalled();
     expect(useEffectSpy).toHaveBeenCalled();
     expect(useRefSpy).toHaveBeenCalled();
   });

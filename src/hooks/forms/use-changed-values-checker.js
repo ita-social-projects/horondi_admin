@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { checkInitialValue } from '../../utils/check-initial-values';
 
 export default function useChangedValuesChecker(values, errors) {
-  const [changed, toggleChanged] = useState(false);
-  const [firstlyMounted, toggleFirstlyMounted] = useState(false);
+  const changed = useRef(false);
+  const firstlyMounted = useRef(false);
   const initialValues = useRef(values);
 
   useEffect(() => {
@@ -13,16 +13,15 @@ export default function useChangedValuesChecker(values, errors) {
 
     if (
       _.isEmpty(errors) &&
-      firstlyMounted &&
+      firstlyMounted.current &&
       !checkInitialValue(initialValues.current, values)
     )
-      toggleChanged(true);
-    else toggleChanged(false);
+      changed.current = true;
+    else changed.current = false;
   }, [values, errors]);
 
   useEffect(() => {
-    toggleFirstlyMounted(true);
-
+    firstlyMounted.current = true;
     if (
       initialValues.current.additionalPrice &&
       typeof initialValues.current.additionalPrice !== 'string'
@@ -32,5 +31,5 @@ export default function useChangedValuesChecker(values, errors) {
       );
   }, []);
 
-  return changed;
+  return changed.current;
 }
