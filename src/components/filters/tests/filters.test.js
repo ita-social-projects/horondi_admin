@@ -5,6 +5,7 @@ import { act } from 'react-dom/test-utils';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import { Select } from '@material-ui/core';
+import { DateRangePicker as DateRangeSelector } from 'rsuite';
 
 import Clear from '../clear';
 import DateRangePicker from '../date-range-picker';
@@ -53,6 +54,16 @@ describe('Testing filters', () => {
       wrapper = mount(<DateRangePicker {...props} />);
 
       expect(wrapper).toBeDefined();
+    });
+
+    it('Should call setDateHander', () => {
+      const value = ['test'];
+      const label = 'test';
+      props = { options: [{ value, label }], handler, value };
+      wrapper = mount(<DateRangePicker {...props} />);
+      wrapper.find(DateRangeSelector).props().onChange('test');
+
+      expect(handler.mock.calls.length).toBe(1);
     });
   });
 
