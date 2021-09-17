@@ -10,6 +10,7 @@ import usePocketsHandlers from '../../../utils/use-pockets-handlers';
 import { useStyles } from './pockets-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import {
   addPockets,
   updatePocket
@@ -21,6 +22,7 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../../../redux/snackbar/snackbar.actions';
+import { calculateAddittionalPriceValue } from '../../../utils/additionalPrice-helper';
 import LanguagePanel from '../language-panel';
 import { getPocketsInitialValues } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
@@ -30,22 +32,24 @@ import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved
 
 const labels = config.labels.pocketsPageLabel;
 
+const { additionalPriceType } = config.labels.closuresPageLabel;
+const { convertationTitle } = config.titles.closuresTitles;
+
 const {
-  POCKETS_VALIDATION_ERROR,
   POCKETS_ERROR_MESSAGE,
   POCKETS_UA_NAME_MESSAGE,
   POCKETS_EN_NAME_MESSAGE,
   POCKETS_MAX_LENGTH_MESSAGE,
   POCKETS_MIN_LENGTH_MESSAGE,
-  POCKETS_POSITION_ERROR_MESSAGE
+  POCKETS_POSITION_ERROR_MESSAGE,
+  POCKETS_PRICE_ERROR
 } = config.pocketsErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
 const { POCKETS_ERROR } = pocketsTranslations;
 const { IMG_URL } = config;
-const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
-  config.formRegExp;
+const { enNameCreation, uaNameCreation } = config.formRegExp;
 const { materialUiConstants } = config;
 const { pathToPockets } = config.routes;
 
@@ -58,6 +62,12 @@ const PocketsForm = ({ pocket, id, edit }) => {
       return pocket.positions.map((item) => item._id);
     }
   };
+
+  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+
+  useEffect(() => {
+    dispatch(getCurrencies());
+  }, []);
 
   const { createPockets, setUpload, upload, pocketsImage, setPocketsImage } =
     usePocketsHandlers();
@@ -96,9 +106,10 @@ const PocketsForm = ({ pocket, id, edit }) => {
       .max(50, POCKETS_MAX_LENGTH_MESSAGE)
       .required(POCKETS_ERROR_MESSAGE)
       .matches(enNameCreation, POCKETS_EN_NAME_MESSAGE),
+    additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
       .required(POCKETS_ERROR_MESSAGE)
-      .matches(additionalPriceRegExp, POCKETS_VALIDATION_ERROR)
+      .matches(config.formRegExp.onlyPositiveFloat, POCKETS_PRICE_ERROR)
       .nullable(),
     positions: Yup.string().required(POCKETS_POSITION_ERROR_MESSAGE)
   });
@@ -279,25 +290,31 @@ const PocketsForm = ({ pocket, id, edit }) => {
           </Box>
           <TextField
             data-cy='additionalPrice'
-            id='additionalPrice'
-            className={styles.textField}
-            variant={materialUiConstants.outlined}
-            type={materialUiConstants.types.number}
-            label={labels.additionalPrice}
+            className={`
+                  ${styles.textField} 
+                  ${styles.materialSelect} 
+                  `}
+            variant='outlined'
+            label={additionalPriceType.absolutePrice[0].value}
             value={values.additionalPrice}
-            inputProps={{ min: 0 }}
             onChange={handleChange}
             onBlur={handleBlur}
+            id='additionalPrice'
             error={touched.additionalPrice && !!errors.additionalPrice}
           />
           {touched.additionalPrice && errors.additionalPrice && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
-            >
-              {errors.additionalPrice}
-            </div>
+            <div className={styles.inputError}>{errors.additionalPrice}</div>
           )}
+          <TextField
+            className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+            label={convertationTitle}
+            variant='outlined'
+            value={calculateAddittionalPriceValue(values, exchangeRate)}
+            disabled
+          />
         </Paper>
       </form>
     </div>
@@ -370,8 +387,8 @@ PocketsForm.defaultProps = {
     restrictions: false,
     optionType: null,
     additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
+      { value: null, type: 'ABSOLUTE_PRICE', currency: '' },
+      { value: null, type: 'ABSOLUTE_PRICE', currencsy: '' }
     ],
     positions: []
   },

@@ -220,6 +220,7 @@ export const pocketsErrorMessages = {
     'Поле може містити тільки англійські літери та цифри',
   POCKETS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
+  POCKETS_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
   POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку'
 };
 

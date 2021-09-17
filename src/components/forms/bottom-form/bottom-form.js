@@ -9,11 +9,8 @@ import { checkInitialValue } from '../../../utils/check-initial-values';
 import { config } from '../../../configs';
 import { useStyles } from '../common.styles';
 import LoadingBar from '../../loading-bar';
-import {
-  addBottom,
-  updateBottom,
-  clearBottom
-} from '../../../redux/bottom/bottom.actions';
+import { calculateAddittionalPriceValue } from '../../../utils/additionalPrice-helper';
+import { addBottom, updateBottom } from '../../../redux/bottom/bottom.actions';
 import CheckboxOptions from '../../checkbox-options';
 import LanguagePanel from '../language-panel';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
@@ -25,7 +22,9 @@ import {
 } from '../../../utils/bottom-form';
 import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
+import { getProductDetails } from '../../../redux/products/products.actions';
 import useBottomHandlers from '../../../utils/use-bottom-handlers';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import {
   constructorObject,
   defaultProps,
@@ -37,8 +36,9 @@ import {
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL } = config;
-const { bottomName, enterPrice, additionalPriceLabel, materialLabels } =
-  config.labels.bottom;
+const { bottomName, enterPrice, materialLabels } = config.labels.bottom;
+const { additionalPriceType } = config.labels.closuresPageLabel;
+const { convertationTitle } = config.titles.closuresTitles;
 const map = require('lodash/map');
 
 const {
@@ -56,15 +56,8 @@ const { SAVE_TITLE } = config.buttonTitles;
 
 const {
   languages,
-  formRegExp: {
-    enNameCreation,
-    uaNameCreation,
-    backMaterial,
-    backColor,
-    additionalPriceRegExp
-  },
-  imagePrefix,
-  materialUiConstants
+  formRegExp: { enNameCreation, uaNameCreation, backMaterial, backColor },
+  imagePrefix
 } = config;
 const { pathToBottoms } = config.routes;
 
@@ -81,15 +74,18 @@ const BottomForm = ({ bottom, id, edit }) => {
     useBottomHandlers();
 
   useEffect(() => {
+    dispatch(getProductDetails());
+  }, []);
+
+  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
+
+  useEffect(() => {
+    dispatch(getCurrencies());
+  }, []);
+
+  useEffect(() => {
     bottomUseEffectHandler(bottom, setBottomImage, imagePrefix);
   }, [dispatch, bottom]);
-
-  useEffect(
-    () => () => {
-      dispatch(clearBottom());
-    },
-    []
-  );
 
   const bottomValidationSchema = Yup.object().shape({
     enName: Yup.string()
@@ -110,9 +106,10 @@ const BottomForm = ({ bottom, id, edit }) => {
       .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
       .matches(backColor, BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY)
       .required(BOTTOM_ERROR_MESSAGE),
+    additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
-      .matches(additionalPriceRegExp, BOTTOM_PRICE_ERROR)
       .required(BOTTOM_ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, BOTTOM_PRICE_ERROR)
       .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),
@@ -284,25 +281,31 @@ const BottomForm = ({ bottom, id, edit }) => {
             </Box>
             <TextField
               data-cy='additionalPrice'
-              id='additionalPrice'
-              className={styles.textField}
-              variant={materialUiConstants.outlined}
-              type={materialUiConstants.types.number}
-              label={additionalPriceLabel}
+              className={`
+                  ${styles.textField} 
+                  ${styles.materialSelect} 
+                  `}
+              variant='outlined'
+              label={additionalPriceType.absolutePrice[0].value}
               value={values.additionalPrice}
-              inputProps={{ min: 0 }}
               onChange={handleChange}
               onBlur={handleBlur}
+              id='additionalPrice'
               error={touched.additionalPrice && !!errors.additionalPrice}
             />
             {touched.additionalPrice && errors.additionalPrice && (
-              <div
-                data-cy={materialUiConstants.codeError}
-                className={styles.error}
-              >
-                {errors.additionalPrice}
-              </div>
+              <div className={styles.inputError}>{errors.additionalPrice}</div>
             )}
+            <TextField
+              className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+              label={convertationTitle}
+              variant='outlined'
+              value={calculateAddittionalPriceValue(values, exchangeRate)}
+              disabled
+            />
           </Paper>
         </form>
       )}
