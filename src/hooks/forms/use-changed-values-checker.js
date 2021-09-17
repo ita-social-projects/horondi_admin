@@ -8,14 +8,8 @@ export default function useChangedValuesChecker(values, errors) {
   const initialValues = useRef(values);
 
   useEffect(() => {
-    if (
-      initialValues.current.additionalPriceType &&
-      values.additionalPrice !== initialValues.current.additionalPrice &&
-      typeof initialValues.current.additionalPrice !== 'string'
-    )
-      initialValues.current.additionalPrice = JSON.stringify(
-        initialValues.current.additionalPrice
-      );
+    if (values.additionalPrice && typeof values.additionalPrice !== 'string')
+      values.additionalPrice = JSON.stringify(values.additionalPrice);
 
     if (
       _.isEmpty(errors) &&
@@ -28,6 +22,14 @@ export default function useChangedValuesChecker(values, errors) {
 
   useEffect(() => {
     toggleFirstlyMounted(true);
+
+    if (
+      initialValues.current.additionalPrice &&
+      typeof initialValues.current.additionalPrice !== 'string'
+    )
+      initialValues.current.additionalPrice = JSON.stringify(
+        initialValues.current.additionalPrice
+      );
   }, []);
 
   return changed;

@@ -13,14 +13,12 @@ import CheckboxOptions from '../../checkbox-options';
 import { config } from '../../../configs';
 import { updateComment } from '../../../redux/comments/comments.actions';
 import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { COMMENT_VALIDATION_ERROR, COMMENT_ERROR_MESSAGE, MAX_LENGTH_MESSAGE } =
   config.commentErrorMessages;
-const { SAVE_MESSAGE, SAVE_CHANGES } = config.messages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -31,7 +29,6 @@ const CommentForm = ({ comment, id, isEdit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const commentValidationSchema = Yup.object().shape({
     text: Yup.string()
@@ -68,22 +65,18 @@ const CommentForm = ({ comment, id, isEdit }) => {
   ];
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const commentUpdateHandler = (data) => {
-    const commentUpdate = () => {
-      dispatch(closeDialog());
-      dispatch(
-        updateComment({
-          id,
-          comment: {
-            text: data.text,
-            show: data.show
-          }
-        })
-      );
-    };
-    openSuccessSnackbar(commentUpdate, SAVE_MESSAGE, SAVE_CHANGES);
+    dispatch(
+      updateComment({
+        id,
+        comment: {
+          text: data.text,
+          show: data.show
+        }
+      })
+    );
   };
 
   function handleProductClick() {
@@ -110,6 +103,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
             <Grid item className={styles.button}>
               <SaveButton
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
                 data-cy='save'
                 type='submit'
                 title={SAVE_TITLE}

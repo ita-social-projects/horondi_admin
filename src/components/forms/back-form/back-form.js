@@ -161,7 +161,8 @@ const BackForm = ({ back, id, edit }) => {
   });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     setBackColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -229,6 +230,7 @@ const BackForm = ({ back, id, edit }) => {
                   errors={errors}
                   onClickHandler={handleSubmit}
                   {...(id ? { disabled: !changed } : {})}
+                  unblockFunction={unblock}
                 />
               </Grid>
             </Grid>

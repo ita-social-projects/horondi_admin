@@ -124,7 +124,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
   });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleLoadAuthorImage = (files) => {
     imageHandler(files, setUploadAuthorImage, values, authorPhoto);
@@ -169,6 +169,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 onClickHandler={handleSubmit}
                 title={SAVE_TITLE}
                 {...(id ? { disabled: !changed } : {})}
+                unblockFunction={unblock}
                 values={values}
                 errors={errors}
               />

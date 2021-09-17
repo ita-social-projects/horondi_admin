@@ -119,7 +119,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const inputs = setInputsContactHandler(schedule, adress);
 
@@ -154,6 +154,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 values={values}
                 errors={errors}
                 {...(initialValues ? { disabled: !changed } : {})}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

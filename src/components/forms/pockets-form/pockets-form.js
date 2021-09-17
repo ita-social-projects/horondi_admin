@@ -140,7 +140,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
   });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
     if (files && files[0]) {
@@ -209,6 +209,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
                 errors={errors}
                 onClickHandler={handleSubmit}
                 {...(id ? { disabled: !changed } : {})}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

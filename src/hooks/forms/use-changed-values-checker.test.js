@@ -9,7 +9,6 @@ const useEffectSpy = jest
   .mockImplementation((cb) => cb());
 const useRefSpy = jest.spyOn(React, 'useRef').mockImplementation(() => ({
   current: {
-    additionalPriceType: 'Absolute',
     additionalPrice: 10
   }
 }));

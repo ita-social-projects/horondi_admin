@@ -35,6 +35,7 @@ import {
   imagePropTypes
 } from './constructor.variables';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL } = config;
 const { bottomName, enterPrice, additionalPriceLabel, materialLabels } =
@@ -162,6 +163,8 @@ const BottomForm = ({ bottom, id, edit }) => {
   });
 
   const changed = useChangedValuesChecker(values, errors);
+  const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     setBottomColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -233,6 +236,7 @@ const BottomForm = ({ bottom, id, edit }) => {
                   errors={errors}
                   onClickHandler={handleSubmit}
                   {...(id ? { disabled: !changed } : {})}
+                  unblockFunction={unblock}
                 />
               </Grid>
             </Grid>

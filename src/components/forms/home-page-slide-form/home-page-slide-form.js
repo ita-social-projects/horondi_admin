@@ -105,7 +105,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {
@@ -165,6 +165,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 values={values}
                 errors={errors}
                 {...(id ? { disabled: !changed } : {})}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

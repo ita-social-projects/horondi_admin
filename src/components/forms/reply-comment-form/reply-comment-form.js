@@ -76,7 +76,7 @@ const ReplyCommentForm = ({
   });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const addReplyCommentHandler = (data) => {
     const addReplyForComment = () => {
@@ -180,6 +180,8 @@ const ReplyCommentForm = ({
             errors={errors}
             values={values}
             {...(isEdit ? { disabled: !changed } : {})}
+            onClickHandler={handleSubmit}
+            unblockFunction={unblock}
           />
         </Grid>
       </form>

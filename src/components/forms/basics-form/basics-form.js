@@ -147,7 +147,8 @@ const BasicsForm = ({ basic, id, edit }) => {
   });
 
   const changed = useChangedValuesChecker(values);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     setBasicsColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -211,6 +212,7 @@ const BasicsForm = ({ basic, id, edit }) => {
                 values={values}
                 onClickHandler={handleSubmit}
                 {...(id ? { disabled: !changed } : {})}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

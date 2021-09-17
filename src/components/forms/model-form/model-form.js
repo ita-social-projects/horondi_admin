@@ -126,7 +126,7 @@ const ModelForm = ({ model, id, isEdit }) => {
   });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleCategory = (event) => {
     setFieldValue('category', event.target.value);
@@ -207,6 +207,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 values={values}
                 errors={errors}
                 {...(id ? { disabled: !changed } : {})}
+                unblockFunction={unblock}
               />
             </Grid>
             <Grid item className={styles.button}>

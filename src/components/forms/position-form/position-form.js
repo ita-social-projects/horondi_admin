@@ -80,7 +80,7 @@ const PositionForm = ({ position, id, edit }) => {
   });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {
@@ -130,6 +130,7 @@ const PositionForm = ({ position, id, edit }) => {
                 errors={errors}
                 onClickHandler={handleSubmit}
                 {...(id ? { disabled: !changed } : {})}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

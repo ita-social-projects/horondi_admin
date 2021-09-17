@@ -546,6 +546,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           onClickHandler={[Function]}
                           title="Зберегти"
                           type="submit"
+                          unblockFunction={null}
                           values={
                             Object {
                               "show": false,
@@ -559,6 +560,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                             disabled={true}
                             onClick={[Function]}
                             type="submit"
+                            unblockFunction={null}
                             variant="contained"
                           >
                             <ForwardRef(Button)
@@ -600,6 +602,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                               disabled={true}
                               onClick={[Function]}
                               type="submit"
+                              unblockFunction={null}
                               variant="contained"
                             >
                               <WithStyles(ForwardRef(ButtonBase))
@@ -611,6 +614,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                 focusVisibleClassName="Mui-focusVisible"
                                 onClick={[Function]}
                                 type="submit"
+                                unblockFunction={null}
                               >
                                 <ForwardRef(ButtonBase)
                                   className="MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled"
@@ -628,6 +632,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   focusVisibleClassName="Mui-focusVisible"
                                   onClick={[Function]}
                                   type="submit"
+                                  unblockFunction={null}
                                 >
                                   <button
                                     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
@@ -647,6 +652,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                     onTouchStart={[Function]}
                                     tabIndex={-1}
                                     type="submit"
+                                    unblockFunction={null}
                                   >
                                     <span
                                       className="MuiButton-label"
@@ -2112,6 +2118,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                         label="Текст відповіді"
                         multiline={true}
                         name="replyText"
+                        onBlur={[Function]}
                         onChange={[Function]}
                         value=""
                         variant="outlined"
@@ -2127,6 +2134,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           label="Текст відповіді"
                           multiline={true}
                           name="replyText"
+                          onBlur={[Function]}
                           onChange={[Function]}
                           value=""
                           variant="outlined"
@@ -2231,6 +2239,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                   }
                                   multiline={true}
                                   name="replyText"
+                                  onBlur={[Function]}
                                   onChange={[Function]}
                                   value=""
                                 >
@@ -2263,6 +2272,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                     }
                                     multiline={true}
                                     name="replyText"
+                                    onBlur={[Function]}
                                     onChange={[Function]}
                                     value=""
                                   >
@@ -2291,6 +2301,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                       inputComponent="input"
                                       multiline={true}
                                       name="replyText"
+                                      onBlur={[Function]}
                                       onChange={[Function]}
                                       renderSuffix={[Function]}
                                       type="text"
@@ -2324,6 +2335,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                                         inputComponent="input"
                                         multiline={true}
                                         name="replyText"
+                                        onBlur={[Function]}
                                         onChange={[Function]}
                                         renderSuffix={[Function]}
                                         type="text"
@@ -2447,6 +2459,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                   onClickHandler={[Function]}
                   title="Зберегти"
                   type="submit"
+                  unblockFunction={null}
                   values={
                     Object {
                       "replyText": "",
@@ -2461,6 +2474,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                     disabled={true}
                     onClick={[Function]}
                     type="submit"
+                    unblockFunction={null}
                     variant="contained"
                   >
                     <ForwardRef(Button)
@@ -2503,6 +2517,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                       disabled={true}
                       onClick={[Function]}
                       type="submit"
+                      unblockFunction={null}
                       variant="contained"
                     >
                       <WithStyles(ForwardRef(ButtonBase))
@@ -2514,6 +2529,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                         focusVisibleClassName="Mui-focusVisible"
                         onClick={[Function]}
                         type="submit"
+                        unblockFunction={null}
                       >
                         <ForwardRef(ButtonBase)
                           className="MuiButton-root MuiButton-contained makeStyles-saveCommentButton-52 MuiButton-containedPrimary Mui-disabled"
@@ -2531,6 +2547,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                           focusVisibleClassName="Mui-focusVisible"
                           onClick={[Function]}
                           type="submit"
+                          unblockFunction={null}
                         >
                           <button
                             className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-saveCommentButton-52 MuiButton-containedPrimary Mui-disabled Mui-disabled"
@@ -2550,6 +2567,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                             onTouchStart={[Function]}
                             tabIndex={-1}
                             type="submit"
+                            unblockFunction={null}
                           >
                             <span
                               className="MuiButton-label"

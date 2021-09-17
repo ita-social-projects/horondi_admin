@@ -160,7 +160,8 @@ const BusinessPageForm = ({ id, editMode }) => {
   });
 
   const changed = useChangedValuesChecker(values, errors);
-  useUnsavedChangesHandler(values);
+  const unblock = useUnsavedChangesHandler(values);
+
   useMemo(() => {
     values.code = code;
     values.uaTitle = uaTitle;
@@ -203,7 +204,12 @@ const BusinessPageForm = ({ id, editMode }) => {
               title='Зберегти'
               data-cy='save-btn'
               onClickHandler={handleSubmit}
-              values={values}
+              unblockFunction={unblock}
+              values={{
+                code: values.code,
+                uaTitle: values.uaTitle,
+                enTitle: values.enTitle
+              }}
               errors={errors}
               {...(id ? { disabled: !changed } : {})}
             />
