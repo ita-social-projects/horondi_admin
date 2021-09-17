@@ -319,7 +319,10 @@ if issue is in work it should be placed in proper column on dashboard according 
 [![@Hai-Vasyl](https://avatars.githubusercontent.com/u/64915099?s=200&u=4540d5aba6e388992ca06b9224ed0e0a35f94b1c&v=4)](https://github.com/Hai-Vasyl)
 [![@Wasya1212](https://avatars.githubusercontent.com/u/15053168?s=200&u=4540d5aba6e388992ca06b9224ed0e0a35f94b1c&v=4)](https://github.com/Wasya1212)
 [![@BohdanShchur](https://avatars.githubusercontent.com/u/50678261?s=200&u=4540d5aba6e388992ca06b9224ed0e0a35f94b1c&v=4)](https://github.com/BohdanShchur)
+<<<<<<< HEAD
 
+=======
+>>>>>>> e05d0d18a8dbf54cc17832c2c2a137ff7e304437
 ### Quality control team
 
 [![@HrytsykOlya](https://avatars1.githubusercontent.com/u/65678737?s=200&u=181e62bf4f25b07122f06ce677e73ddd34021391&v=4)](https://github.com/HrytsykOlya)
