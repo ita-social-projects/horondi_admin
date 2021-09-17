@@ -3,11 +3,9 @@ import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { act } from 'react-dom/test-utils';
 import IconButton from '@material-ui/core/IconButton';
-import { DateRangePicker as DateRangeSelector } from 'rsuite';
 import InputBase from '@material-ui/core/InputBase';
 import { Select } from '@material-ui/core';
 
-import { wrap } from 'lodash';
 import Clear from '../clear';
 import DateRangePicker from '../date-range-picker';
 import OptionPicker from '../option-picker';
@@ -56,13 +54,6 @@ describe('Testing filters', () => {
 
       expect(wrapper).toBeDefined();
     });
-
-    it('Should select range', () => {
-      props = { dateFrom: new Date(), dateTo: new Date() };
-
-      wrapper = mount(<DateRangePicker {...props} />);
-      console.log(wrapper.find(DateRangePicker).last().props());
-    });
   });
 
   describe('OptionPicker filter', () => {
@@ -92,18 +83,19 @@ describe('Testing filters', () => {
   });
 
   describe('OptionsPicker filter', () => {
-    it('Should render', () => {
-      props = { options: ['test'], value: ['test'] };
+    beforeEach(() => {
+      const value = ['test'];
+      const label = 'test';
+      props = { options: [{ value, label }], handler, value };
+    });
 
+    it('Should render', () => {
       wrapper = mount(<OptionsPicker {...props} />);
+
       expect(wrapper).toBeDefined();
     });
 
     it('Should call setOptionsHandler', () => {
-      const value = ['test'];
-      const label = 'test';
-      props = { options: [{ value, label }], handler, value };
-
       wrapper = mount(<OptionsPicker {...props} />);
       wrapper
         .find(Select)
