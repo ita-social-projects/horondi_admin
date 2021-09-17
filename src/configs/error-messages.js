@@ -220,7 +220,7 @@ export const pocketsErrorMessages = {
     'Поле може містити тільки англійські літери та цифри',
   POCKETS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
-  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку'
+  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропонованого списку'
 };
 
 export const strapsErrorMessages = {
@@ -230,7 +230,7 @@ export const strapsErrorMessages = {
   STRAPS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
   STRAPS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   STRAPS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
-  STRAPS_COLOR_ERROR_MESSAGE: 'Оберіть колір із запропронованого списку'
+  STRAPS_COLOR_ERROR_MESSAGE: 'Оберіть колір із запропонованого списку'
 };
 
 export const positionErrorMessages = {
