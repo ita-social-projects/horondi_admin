@@ -98,9 +98,10 @@ const BottomForm = ({ bottom, id, edit }) => {
       .required(BOTTOM_ERROR_MESSAGE)
       .matches(enNameCreation, BOTTOM_EN_NAME_MESSAGE),
     uaName: Yup.string()
+      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
       .max(50, BOTTOM_MAX_LENGTH_MESSAGE)
       .required(BOTTOM_ERROR_MESSAGE)
-      .matches(/^([a-zа-яіїє]|[',. -][a-zа-яіїє])*$/i, BOTTOM_UA_NAME_MESSAGE),
+      .matches(uaNameCreation, BOTTOM_UA_NAME_MESSAGE),
     material: Yup.string()
       .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
       .matches(backMaterial, BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY)
