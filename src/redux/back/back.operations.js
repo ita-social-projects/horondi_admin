@@ -166,7 +166,6 @@ export const createBack = async (payload) => {
 };
 
 export const updateBack = async (payload) => {
-  console.log('payload', payload);
   const updateBackQuery = `
       mutation($id: ID!, $back: BackInput!, $image: Upload) {
         updateBack(id: $id, back: $back, image: $image) {

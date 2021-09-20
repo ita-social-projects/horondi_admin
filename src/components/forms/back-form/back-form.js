@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
 import useBackHandlers from '../../../utils/use-back-handlers';
@@ -24,6 +24,7 @@ import {
   setBackColorsHandler
 } from '../../../utils/back-form';
 import MaterialsContainer from '../../../containers/materials-container';
+import AdditionalPrice from '../../../containers/additional-price-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 import {
   constructorObject,
@@ -34,11 +35,6 @@ import {
   imagePropTypes
 } from '../bottom-form/constructor.variables';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import {
-  calculateAddittionalPriceValue,
-  getLabelValue
-} from '../../../utils/additionalPrice-helper';
-import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const { IMG_URL } = config;
 const {
@@ -49,6 +45,12 @@ const {
   additionalPriceType
 } = config.labels.back;
 const { convertationTitle } = config.titles.backTitles;
+const labels = {
+  enterPrice,
+  additionalPriceLabel,
+  additionalPriceType,
+  convertationTitle
+};
 const map = require('lodash/map');
 
 const {
@@ -73,8 +75,7 @@ const {
     backColor,
     additionalPriceRegExp
   },
-  imagePrefix,
-  materialUiConstants
+  imagePrefix
 } = config;
 const { pathToBacks } = config.routes;
 
@@ -87,14 +88,11 @@ const BackForm = ({ back, id, edit }) => {
     loading
   } = useSelector(selectProductDetails);
 
-  const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
-
   const { createBack, setUpload, upload, setBackImage, color, setColor } =
     useBackHandlers();
 
   useEffect(() => {
     backUseEffectHandler(back, setBackImage, imagePrefix);
-    dispatch(getCurrencies());
   }, [dispatch, back]);
 
   useEffect(
@@ -145,7 +143,6 @@ const BackForm = ({ back, id, edit }) => {
 
     onSubmit: () => {
       const newBack = createBack(values);
-      console.log(`newBack`, newBack);
       const editAndUpload = edit && upload instanceof File;
       if (editAndUpload || edit) {
         backFormOnSubmit(
@@ -287,7 +284,16 @@ const BackForm = ({ back, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
 
-          <Paper className={styles.additionalPricePaper}>
+          <AdditionalPrice
+            values={values}
+            labels={labels}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
+
+          {/* <Paper className={styles.additionalPricePaper}>
             <Box>
               <Typography>{enterPrice}</Typography>
             </Box>
@@ -321,7 +327,7 @@ const BackForm = ({ back, id, edit }) => {
               value={calculateAddittionalPriceValue(values, exchangeRate)}
               disabled
             />
-          </Paper>
+          </Paper> */}
         </form>
       )}
     </div>
