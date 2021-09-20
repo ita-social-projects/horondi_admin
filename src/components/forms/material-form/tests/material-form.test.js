@@ -19,6 +19,7 @@ jest.mock('../../../../utils/use-material-handlers', () => ({
     createMaterial: mockCreateMaterial
   })
 }));
+jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();

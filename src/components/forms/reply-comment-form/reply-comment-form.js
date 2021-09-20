@@ -18,6 +18,7 @@ import {
 import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const {
   REPLY_COMMENT_VALIDATION_ERROR,
@@ -50,21 +51,30 @@ const ReplyCommentForm = ({
     showReplyComment: Yup.bool()
   });
 
-  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
-    useFormik({
-      validationSchema: replyCommentValidationSchema,
-      initialValues: {
-        replyText: reply.replyText || '',
-        showReplyComment: adminReply ? true : reply.showReplyComment || false
-      },
-      onSubmit: (data) => {
-        if (isEdit) {
-          updateReplyCommentHandler(reply._id, data, reply.refToReplyComment);
-        } else {
-          addReplyCommentHandler(data);
-        }
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
+    validationSchema: replyCommentValidationSchema,
+    initialValues: {
+      replyText: reply.replyText || '',
+      showReplyComment: adminReply ? true : reply.showReplyComment || false
+    },
+    onSubmit: (data) => {
+      if (isEdit) {
+        updateReplyCommentHandler(reply._id, data, reply.refToReplyComment);
+      } else {
+        addReplyCommentHandler(data);
       }
-    });
+    }
+  });
+
+  const unblock = useUnsavedChangesHandler(values);
 
   const addReplyCommentHandler = (data) => {
     const addReplyForComment = () => {
@@ -137,12 +147,13 @@ const ReplyCommentForm = ({
               label={config.labels.replyComment.text}
               value={values.replyText}
               onChange={handleChange}
-              error={touched.code && !!errors.code}
+              onBlur={handleBlur}
+              error={touched.replyText && !!errors.replyText}
               multiline
             />
-            {touched.code && errors.code && (
+            {touched.replyText && errors.replyText && (
               <div data-cy='code-error' className={styles.error}>
-                {errors.code}
+                {errors.replyText}
               </div>
             )}
             {isEdit ? (
@@ -166,6 +177,8 @@ const ReplyCommentForm = ({
             title={SAVE_TITLE}
             errors={errors}
             values={values}
+            onClickHandler={handleSubmit}
+            unblockFunction={unblock}
           />
         </Grid>
       </form>

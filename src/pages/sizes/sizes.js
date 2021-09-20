@@ -61,7 +61,7 @@ const Sizes = () => {
       showAvatar={false}
       showEdit
       showDelete
-      name={size?.modelId.name[0]?.value}
+      name={size?.modelId?.name[0]?.value}
       size={size.name}
       available={size.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       id={size._id}

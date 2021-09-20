@@ -1,5 +1,4 @@
-const mockStore = {
-  count: 5,
+const constructorElementsMockStore = {
   list: [
     {
       _id: '60eadfb9e913fc3f88294bd9',
@@ -36,10 +35,14 @@ const mockStore = {
       customizable: null
     }
   ],
+  count: 3,
   loading: false,
-  currentPage: 0,
+  currentPage: 1,
   rowsPerPage: 10,
-  itemsCount: 7
+  itemsCount: 1,
+  filter: {
+    search: ''
+  }
 };
 
-export default mockStore;
+export default constructorElementsMockStore;

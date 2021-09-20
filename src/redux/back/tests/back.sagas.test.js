@@ -2,7 +2,7 @@ import { expectSaga } from 'redux-saga-test-plan';
 import { call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { combineReducers } from 'redux';
-import Back, { initialState } from '../back.reducer';
+import Back from '../back.reducer';
 import {
   handleBackLoad,
   handleBacksLoad,

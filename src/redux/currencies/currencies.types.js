@@ -1,0 +1,2 @@
+export const GET_CURRENCIES = 'GET_CURRENCIES';
+export const SET_EXCHANGE_RATE = 'SET_EXCHANGE_RATE';

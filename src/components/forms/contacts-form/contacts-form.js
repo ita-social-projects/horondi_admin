@@ -21,7 +21,7 @@ import {
   setInputsContactHandler
 } from '../../../utils/contacts-form';
 import { handleAvatar } from '../../../utils/handle-avatar';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages, materialUiConstants } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -117,6 +117,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       }
     });
 
+  const unblock = useUnsavedChangesHandler(values);
+
   const inputs = setInputsContactHandler(schedule, adress);
 
   const inputOptions = {
@@ -128,8 +130,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     inputs
   };
 
-  const valueEquality = checkInitialValue(initialValues, values);
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -140,11 +140,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
         <div className={classes.buttonContainer}>
           <Grid container spacing={2} className={classes.fixedButtons}>
             <Grid item className={classes.button}>
-              <BackButton
-                data-cy='go-back-button'
-                initial={!valueEquality}
-                pathBack={pathToContacts}
-              />
+              <BackButton data-cy='go-back-button' pathBack={pathToContacts} />
             </Grid>
             <Grid item className={classes.button}>
               <SaveButton
@@ -155,6 +151,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 data-cy='save'
                 values={values}
                 errors={errors}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

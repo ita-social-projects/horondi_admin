@@ -25,6 +25,7 @@ import useConstructorHandlers from '../../../utils/use-constructor-handlers';
 import ColorCircle from '../../color-circle';
 import { selectConstructorMethodAndMaterials } from '../../../redux/selectors/constructor.selectors';
 import LanguagePanel from '../language-panel';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL } = config;
 
@@ -65,6 +66,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const history = createBrowserHistory();
+
+  const { pathToConstructor } = config.routes;
 
   const { createConstructor, setUploadConstructorImg, uploadConstructorImg } =
     useConstructorHandlers();
@@ -137,6 +140,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         );
       }
     });
+
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleMaterial = (e) => {
     setFieldValue('material', e.target.value);
@@ -288,10 +293,11 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <BackButton />
+        <BackButton pathBack={pathToConstructor} />
         <SaveButton
           className={styles.saveButton}
           onClickHandler={handleSubmit}
+          unblockFunction={unblock}
           data-cy='save-btn'
           type='submit'
           title={SAVE_TITLE}

@@ -238,7 +238,8 @@ const updateComment = async (id, comment) => {
 };
 
 const getCommentsByType = (value, commentsType) => {
-  const createErrorMsg = (error) => new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
+  const createErrorMsg = (error) =>
+    new Error(`Помилка: ${config.errorMessages[formError(error)]}`);
 
   if (commentsType === GET_USER_COMMENTS) {
     return getCommentsByUser(value).catch((error) => {

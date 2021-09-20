@@ -31,13 +31,11 @@ const MaterialsContainer = ({
     toggleFieldsChanged(true);
   };
 
-  const backMaterialOptions = useMemo(
-    () => handleMenuItem(material),
-    [material]
-  );
-  const backColorOptions = useMemo(() => handleMenuItem(color), [color]);
+  const materialOptions = useMemo(() => handleMenuItem(material), [material]);
+  const colorOptions = useMemo(() => handleMenuItem(color), [color]);
 
-  const options = [backMaterialOptions, backColorOptions];
+  const options = [materialOptions, colorOptions];
+
   return (
     <>
       <form onSubmit={handleSubmit} className={sharedStyles.container}>

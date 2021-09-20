@@ -13,15 +13,19 @@ import { addArticle, updateArticle } from '../../../redux/news/news.actions';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
 import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
 import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const map = require('lodash/map');
 
 const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
-const { NAME_MIN_LENGTH_MESSAGE, TITLE_MIN_LENGTH_MESSAGE } =
-  config.newsErrorMessages;
+const {
+  NAME_MIN_LENGTH_MESSAGE,
+  TITLE_MIN_LENGTH_MESSAGE,
+  TEXT_MIN_LENGTH_MESSAGE,
+  NEWS_ERROR_MESSAGE
+} = config.newsErrorMessages;
 const { imagePrefix } = config;
 const { authorName, title, text } = config.labels.news;
 const {
@@ -59,13 +63,25 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const selectFormSchema = () => {
     const formObj = languages.reduce((reducer, lang) => {
+      reducer[`${lang}Text`] = Yup.string()
+        .min(17, TEXT_MIN_LENGTH_MESSAGE)
+        .required(NEWS_ERROR_MESSAGE);
       reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
-        .required(NAME_MIN_LENGTH_MESSAGE);
+        .matches(
+          config.formRegExp[`${lang}NameCreation`],
+          config.newsErrorMessages[
+            `NOT_${lang.toUpperCase()}_AUTHOR_NAME_MESSAGE`
+          ]
+        )
+        .required(NEWS_ERROR_MESSAGE);
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
-        .required(TITLE_MIN_LENGTH_MESSAGE);
-      reducer[`${lang}Text`] = Yup.string();
+        .matches(
+          config.formRegExp[`${lang}NameCreation`],
+          config.newsErrorMessages[`NOT_${lang.toUpperCase()}_TITLE_MESSAGE`]
+        )
+        .required(NEWS_ERROR_MESSAGE);
       return reducer;
     }, {});
 
@@ -74,30 +90,39 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const formSchema = selectFormSchema();
 
-  const { values, handleSubmit, handleChange, handleBlur, touched, errors } =
-    useFormik({
-      validationSchema: formSchema,
-      initialValues: useFormikInitialValues(newsArticle),
-      onSubmit: () => {
-        const newArticle = createArticle(values);
-        if (editMode) {
-          dispatch(
-            updateArticle({
-              id,
-              newArticle,
-              upload: [values.authorPhoto, values.newsImage]
-            })
-          );
-        } else {
-          dispatch(
-            addArticle({
-              article: newArticle,
-              upload: [values.authorPhoto, values.newsImage]
-            })
-          );
-        }
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
+    validationSchema: formSchema,
+    initialValues: useFormikInitialValues(newsArticle),
+    onSubmit: () => {
+      const newArticle = createArticle(values);
+      if (editMode) {
+        dispatch(
+          updateArticle({
+            id,
+            newArticle,
+            upload: [values.authorPhoto, values.newsImage]
+          })
+        );
+      } else {
+        dispatch(
+          addArticle({
+            article: newArticle,
+            upload: [values.authorPhoto, values.newsImage]
+          })
+        );
       }
-    });
+    }
+  });
+
+  const unblock = useUnsavedChangesHandler(values);
 
   const handleLoadAuthorImage = (files) => {
     imageHandler(files, setUploadAuthorImage, values, authorPhoto);
@@ -119,32 +144,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     handleChange,
     handleBlur,
     values,
-    inputs
-  };
-
-  const valueEquality = checkInitialValue(
-    useFormikInitialValues(newsArticle),
-    values
-  );
-
-  const checkValidData = (value) => {
-    if (
-      value.enAuthorName.length >= 2 &&
-      value.uaAuthorName.length >= 2 &&
-      value.enTitle.length >= 10 &&
-      value.uaTitle.length >= 10
-    ) {
-      return {
-        newsImage: value.newsImage,
-        enAuthorName: value.enAuthorName,
-        uaAuthorName: value.uaAuthorName,
-        enTitle: value.enTitle,
-        uaTitle: value.uaTitle
-      };
-    }
-    if (value.enText === '') delete value.enText;
-    if (value.uaText === '') delete value.uaText;
-    return value;
+    inputs,
+    setFieldValue
   };
 
   const eventPreventHandler = (e) => {
@@ -157,7 +158,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToNews} />
+              <BackButton pathBack={pathToNews} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
@@ -165,7 +166,9 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 type='submit'
                 onClickHandler={handleSubmit}
                 title={SAVE_TITLE}
-                values={checkValidData(values)}
+                unblockFunction={unblock}
+                values={values}
+                errors={errors}
               />
             </Grid>
           </Grid>

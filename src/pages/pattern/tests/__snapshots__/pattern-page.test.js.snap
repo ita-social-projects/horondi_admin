@@ -83,6 +83,7 @@ exports[`Pattern-page render tests Should render pattern-page 1`] = `
           "sortOptions": undefined,
         }
       }
+      pickerOptions={Object {}}
       searchOptions={Object {}}
       sortOptions={Object {}}
     />
