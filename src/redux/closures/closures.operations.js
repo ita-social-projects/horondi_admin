@@ -18,8 +18,8 @@ export const getAllClosures = async (limit, skip, filter) => {
          }
       optionType
         additionalPrice {
-        currency
         value
+        type
       }
       available
       customizable
@@ -94,6 +94,7 @@ export const getClosureById = async (id) => {
                 additionalPrice {
                 currency
                 value
+                type
               }
             }
             ... on Error {

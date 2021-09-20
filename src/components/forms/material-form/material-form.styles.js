@@ -110,6 +110,12 @@ export const useStyles = makeStyles((theme) => ({
       width: 'inherit'
     }
   },
+  currencyField: {
+    width: '170px',
+    '@media (max-width: 450px)': {
+      width: 'inherit'
+    }
+  },
   errorTab: {
     backgroundColor: theme.palette.error.main,
     '& span': {

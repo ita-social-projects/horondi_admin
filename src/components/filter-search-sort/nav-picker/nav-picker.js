@@ -10,13 +10,11 @@ const NavPicker = ({ pickerOptions }) => {
 
   const { pickValue, valuePicked, labels, labelPicker } = pickerOptions;
 
-  const pickOptions = labels.map(({ label, value }) => {
-    return (
+  const pickOptions = labels.map(({ label, value }) => (
       <MenuItem key={label} value={value}>
         {label}
       </MenuItem>
-    );
-  });
+    ));
 
   const handlePickOption = (e) => {
     const { value } = e.target;

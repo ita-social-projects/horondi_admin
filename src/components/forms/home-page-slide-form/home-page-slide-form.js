@@ -19,11 +19,17 @@ import {
 } from '../../../redux/home-page-slides/home-page-slides.actions';
 import LanguagePanel from '../language-panel';
 import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages } = config;
 
-const { SLIDE_VALIDATION_ERROR } = config.homePageSlideErrorMessages;
+const {
+  SLIDE_VALIDATION_ERROR,
+  SLIDE_ERROR_MESSAGE,
+  NOT_EN_DESCRIPTION_MESSAGE,
+  NOT_EN_NAME_MESSAGE,
+  NOT_UA_DESCRIPTION_MESSAGE
+} = config.homePageSlideErrorMessages;
 const { preview } = config.titles.homePageSliderTitle;
 const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const styles = useStyles();
@@ -36,45 +42,68 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const { pathToHomePageSlides } = config.routes;
 
   const slideValidationSchema = Yup.object().shape({
-    enDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    enTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    uaDescription: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    uaTitle: Yup.string().min(2, SLIDE_VALIDATION_ERROR),
-    link: Yup.string().min(2, SLIDE_VALIDATION_ERROR)
+    enDescription: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .matches(config.formRegExp.enDescription, NOT_EN_DESCRIPTION_MESSAGE)
+      .required(SLIDE_ERROR_MESSAGE),
+    enTitle: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
+      .required(SLIDE_ERROR_MESSAGE),
+    uaDescription: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .matches(config.formRegExp.uaDescription, NOT_UA_DESCRIPTION_MESSAGE)
+      .required(SLIDE_ERROR_MESSAGE),
+    uaTitle: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
+      .required(SLIDE_ERROR_MESSAGE),
+    link: Yup.string()
+      .min(2, SLIDE_VALIDATION_ERROR)
+      .required(SLIDE_ERROR_MESSAGE)
   });
 
-  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
-    useFormik({
-      validationSchema: slideValidationSchema,
-      initialValues: getHomePageSlidesInitialValues(slide, slideOrder),
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    touched,
+    errors,
+    setFieldValue,
+    handleBlur
+  } = useFormik({
+    validationSchema: slideValidationSchema,
+    initialValues: getHomePageSlidesInitialValues(slide, slideOrder),
 
-      onSubmit: () => {
-        (() => {
-          if (values.show && slide.show) {
-            values.order = slide.order;
-            return;
-          }
-          if (values.show) {
-            values.order = slideOrder;
-            return;
-          }
-          if (!values.show) {
-            values.order = 0;
-          }
-        })();
-        const newSlide = createSlide(values);
-
-        if (id && upload.name) {
-          dispatch(updateSlide({ id, slide: newSlide, upload }));
+    onSubmit: () => {
+      (() => {
+        if (values.show && slide.show) {
+          values.order = slide.order;
           return;
         }
-        if (id) {
-          dispatch(updateSlide({ id, slide: newSlide }));
+        if (values.show) {
+          values.order = slideOrder;
           return;
         }
-        dispatch(addSlide({ slide: newSlide, upload }));
+        if (!values.show) {
+          values.order = 0;
+        }
+      })();
+      const newSlide = createSlide(values);
+
+      if (id && upload.name) {
+        dispatch(updateSlide({ id, slide: newSlide, upload }));
+        return;
       }
-    });
+      if (id) {
+        dispatch(updateSlide({ id, slide: newSlide }));
+        return;
+      }
+      dispatch(addSlide({ slide: newSlide, upload }));
+    }
+  });
+
+  const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
     {
@@ -109,13 +138,9 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     touched,
     handleChange,
     values,
-    inputs
+    inputs,
+    handleBlur
   };
-
-  const valueEquality = checkInitialValue(
-    getHomePageSlidesInitialValues(slide, slideOrder),
-    values
-  );
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
@@ -127,10 +152,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton
-                initial={!valueEquality}
-                pathBack={pathToHomePageSlides}
-              />
+              <BackButton pathBack={pathToHomePageSlides} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
@@ -140,6 +162,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 title={config.buttonTitles.CREATE_SLIDE_TITLE}
                 values={values}
                 errors={errors}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>
@@ -168,6 +191,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
               label={config.labels.homePageSlide.link}
               value={values.link}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.link && !!errors.link}
             />
             {touched.link && errors.link && (

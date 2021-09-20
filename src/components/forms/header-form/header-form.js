@@ -11,10 +11,14 @@ import TabPanel from '../../tab-panel';
 import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 import { getHeaderInitialValues } from '../../../utils/header-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
-const { HEADER_VALIDATION_ERROR, HEADER_ERROR_MESSAGE } =
-  config.headerErrorMessages;
+const {
+  HEADER_VALIDATION_ERROR,
+  HEADER_ERROR_MESSAGE,
+  NOT_EN_NAME_MESSAGE,
+  NOT_UA_NAME_MESSAGE
+} = config.headerErrorMessages;
 
 const { languages } = config;
 
@@ -33,33 +37,34 @@ const HeaderForm = ({ header, id }) => {
   const headerValidationSchema = Yup.object().shape({
     enName: Yup.string()
       .min(2, HEADER_VALIDATION_ERROR)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
       .required(HEADER_ERROR_MESSAGE),
     uaName: Yup.string()
       .min(2, HEADER_VALIDATION_ERROR)
+      .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
       .required(HEADER_ERROR_MESSAGE),
-    priority: Yup.number(),
+    priority: Yup.number().required(HEADER_ERROR_MESSAGE),
     link: Yup.string()
-      .min(1, HEADER_VALIDATION_ERROR)
+      .min(2, HEADER_VALIDATION_ERROR)
+      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
       .required(HEADER_ERROR_MESSAGE)
   });
 
-  const { values, handleSubmit, handleChange, touched, errors } = useFormik({
-    validationSchema: headerValidationSchema,
-    initialValues: getHeaderInitialValues(header),
-    onSubmit: () => {
-      const newHeader = createHeader(values);
-      if (header._id) {
-        dispatch(updateHeader({ id, header: newHeader }));
-        return;
+  const { values, handleSubmit, handleChange, touched, errors, handleBlur } =
+    useFormik({
+      validationSchema: headerValidationSchema,
+      initialValues: getHeaderInitialValues(header),
+      onSubmit: () => {
+        const newHeader = createHeader(values);
+        if (header._id) {
+          dispatch(updateHeader({ id, header: newHeader }));
+          return;
+        }
+        dispatch(addHeader({ header: newHeader }));
       }
-      dispatch(addHeader({ header: newHeader }));
-    }
-  });
+    });
 
-  const valueEquality = checkInitialValue(
-    getHeaderInitialValues(header),
-    values
-  );
+  const unblock = useUnsavedChangesHandler(values);
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
@@ -71,11 +76,12 @@ const HeaderForm = ({ header, id }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToHeaders} />
+              <BackButton pathBack={pathToHeaders} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
                 data-cy='save'
                 type='submit'
                 title={config.buttonTitles.HEADER_SAVE_TITLE}
@@ -95,6 +101,7 @@ const HeaderForm = ({ header, id }) => {
               label={config.labels.header.link}
               value={values.link}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.link && !!errors.link}
             />
             {touched.link && errors.link && (
@@ -110,6 +117,7 @@ const HeaderForm = ({ header, id }) => {
               label={config.labels.header.priority}
               value={values.priority}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.priority && !!errors.priority}
               helperText={
                 touched.priority && errors.priority ? errors.priority : ''
@@ -139,6 +147,7 @@ const HeaderForm = ({ header, id }) => {
                 multiline
                 value={values[`${lang}Name`]}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 error={touched[`${lang}Name`] && !!errors[`${lang}Name`]}
               />
               {touched[`${lang}Name`] && errors[`${lang}Name`] && (

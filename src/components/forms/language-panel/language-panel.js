@@ -9,8 +9,15 @@ import Editor from '../../editor';
 const LanguagePanel = ({ lang, inputOptions }) => {
   const styles = useStyles();
 
-  const { values, touched, errors, inputs, handleChange, handleBlur } =
-    inputOptions;
+  const {
+    values,
+    touched,
+    errors,
+    inputs,
+    handleChange,
+    handleBlur,
+    setFieldValue
+  } = inputOptions;
   const inputsTextfields = inputs.filter((input) => !input.isEditor);
   const inputsEditor = inputs.filter((input) => input.isEditor);
   return (
@@ -54,18 +61,30 @@ const LanguagePanel = ({ lang, inputOptions }) => {
               values[inputName] = value;
             };
             return (
-              <Editor
-                value={values[inputName]}
-                placeholder={input.label[lang]}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                onEditorChange={(value) => setEditorValue(value)}
-                setFiles={input.setFiles}
-                data-cy={`${lang}-${input.name}`}
-                label={lang}
-                id={`${lang}-${input.name}`}
-                key={lang}
-              />
+              <>
+                <Editor
+                  value={values[inputName]}
+                  placeholder={input.label[lang]}
+                  onBlur={handleBlur}
+                  onEditorChange={(value) => {
+                    setFieldValue(inputName, value.toString());
+                    setEditorValue(value);
+                  }}
+                  setFiles={input.setFiles}
+                  data-cy={`${lang}-${input.name}`}
+                  label={lang}
+                  id={`${lang}-${input.name}`}
+                  key={lang}
+                />
+                {touched[`${lang}-${input.name}`] && errors[inputName] && (
+                  <div
+                    data-cy={`${lang}-${input.name}-error`}
+                    className={styles.error}
+                  >
+                    {errors[inputName]}
+                  </div>
+                )}
+              </>
             );
           })}
         </Paper>
@@ -102,7 +121,8 @@ LanguagePanel.propTypes = {
       })
     ),
     handleChange: PropTypes.func,
-    handleBlur: PropTypes.func
+    handleBlur: PropTypes.func,
+    setFieldValue: PropTypes.func.isRequired
   })
 };
 

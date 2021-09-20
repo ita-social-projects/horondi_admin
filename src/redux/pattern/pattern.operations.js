@@ -50,6 +50,7 @@ query ($limit: Int!, $skip: Int!, $filter: PatternFilterInput) {
       constructorImg
       additionalPrice {
         value
+        type
       }
       available
       customizable
@@ -78,6 +79,9 @@ export const getPatternById = async (id) => {
             description {
               value
             }
+            model{
+              _id
+            }
             features {
               material {
                 _id
@@ -93,6 +97,10 @@ export const getPatternById = async (id) => {
               thumbnail
             }
             constructorImg
+            additionalPrice {
+              value
+              type
+            }
           }
           ... on Error {
             message

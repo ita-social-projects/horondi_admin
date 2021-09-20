@@ -37,7 +37,7 @@ import {
   updateModelHandler,
   loadHelper
 } from '../../../utils/model-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { languages } = config;
 const { materialUiConstants } = config;
@@ -124,6 +124,8 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   });
 
+  const unblock = useUnsavedChangesHandler(values);
+
   const handleCategory = (event) => {
     setFieldValue('category', event.target.value);
     setCategory(event.target.value);
@@ -175,13 +177,9 @@ const ModelForm = ({ model, id, isEdit }) => {
     handleChange,
     handleBlur,
     values,
-    inputs
+    inputs,
+    setFieldValue
   };
-
-  const valueEquality = checkInitialValue(
-    useFormikInitialValues(model, category, checkIsEdit, isEdit),
-    values
-  );
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
@@ -196,7 +194,7 @@ const ModelForm = ({ model, id, isEdit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToModels} />
+              <BackButton pathBack={pathToModels} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
@@ -206,6 +204,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 onClickHandler={handleSubmit}
                 values={values}
                 errors={errors}
+                unblockFunction={unblock}
               />
             </Grid>
             <Grid item className={styles.button}>
@@ -262,6 +261,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 value={category}
                 native
                 onChange={handleCategory}
+                onBlur={handleBlur}
                 label={availableCategory}
                 variant={labelsEn.variantStandard}
               >
@@ -285,6 +285,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               label={priority}
               value={values.priority}
               onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.priority && !!errors.priority}
             />
             {touched.priority && errors.priority && (
@@ -303,6 +304,8 @@ const ModelForm = ({ model, id, isEdit }) => {
               }
               defaultValue={sizes}
               onChange={onTagsChange}
+              onBlur={handleBlur}
+              error={touched['tags-filled'] && !!errors.priority}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -314,6 +317,9 @@ const ModelForm = ({ model, id, isEdit }) => {
                 />
               )}
             />
+            {touched['tags-filled'] && errors.sizes && (
+              <div className={styles.inputError}>{errors.sizes}</div>
+            )}
           </Paper>
         </Grid>
         {languages.map((lang) => (

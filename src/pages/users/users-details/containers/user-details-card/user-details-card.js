@@ -69,13 +69,13 @@ const UserDetailsCard = ({ info, pathBack }) => {
   };
 
   const sections = userTitles.sections.map((section) => (
-      <InfoItem
-        label={section.label}
-        id={section.id}
-        data={info.sections[section.id]}
-        key={section.id}
-      />
-    ));
+    <InfoItem
+      label={section.label}
+      id={section.id}
+      data={info.sections[section.id]}
+      key={section.id}
+    />
+  ));
 
   return (
     <Grid container direction='column' className={styles.container}>

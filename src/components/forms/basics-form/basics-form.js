@@ -24,7 +24,7 @@ import {
 } from '../../../utils/basics-form';
 import useBasicsHandlers from '../../../utils/use-basics-handlers';
 import CheckboxOptions from '../../checkbox-options';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
@@ -145,6 +145,7 @@ const BasicsForm = ({ basic, id, edit }) => {
     }
   });
 
+  const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     setBasicsColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -183,11 +184,6 @@ const BasicsForm = ({ basic, id, edit }) => {
     }
   };
 
-  const valueEquality = checkInitialValue(
-    getBasicsInitialValues(edit, IMG_URL, basic),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -202,7 +198,7 @@ const BasicsForm = ({ basic, id, edit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToBasics} />
+              <BackButton pathBack={pathToBasics} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
@@ -212,6 +208,7 @@ const BasicsForm = ({ basic, id, edit }) => {
                 errors={errors}
                 values={values}
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
               />
             </Grid>
           </Grid>

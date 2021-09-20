@@ -43,5 +43,8 @@ export const productsTranslations = {
   PRODUCT_OPTIONS: 'Опційні параметри продукту:',
   PRODUCT_MATERIALS: 'Матеріали та їх кольори для продукту:',
   PRODUCT_PRICE: 'Вкажіть ціну продукту:',
-  CORRECT_DATA_ERROR: 'Заповніть необхідні поля коректними даними для усіх мов '
+  CORRECT_DATA_ERROR:
+    'Заповніть необхідні поля коректними даними для усіх мов ',
+  NOT_UA_NAME_MESSAGE: 'Введіть назву українською',
+  NOT_EN_NAME_MESSAGE: 'Введіть назву англійською'
 };

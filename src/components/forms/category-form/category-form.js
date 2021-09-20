@@ -24,7 +24,7 @@ import {
   getCategoryInitialValues,
   onSubmitCategoryHandler
 } from '../../../utils/category-form';
-import { checkInitialValue } from '../../../utils/check-initial-values';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const {
   CATEGORY_VALIDATION_ERROR,
@@ -99,6 +99,8 @@ const CategoryForm = ({ category, id, edit }) => {
     }
   });
 
+  const unblock = useUnsavedChangesHandler(values);
+
   const handleImageLoad = (files) => {
     if (files && files[0]) {
       const reader = new FileReader();
@@ -122,11 +124,6 @@ const CategoryForm = ({ category, id, edit }) => {
     inputs
   };
 
-  const valueEquality = checkInitialValue(
-    getCategoryInitialValues(edit, IMG_URL, category),
-    values
-  );
-
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
@@ -137,10 +134,7 @@ const CategoryForm = ({ category, id, edit }) => {
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
             <Grid item className={styles.button}>
-              <BackButton
-                initial={!valueEquality}
-                pathBack={pathToCategories}
-              />
+              <BackButton pathBack={pathToCategories} />
             </Grid>
             <Grid item className={styles.button}>
               <SaveButton
@@ -148,6 +142,7 @@ const CategoryForm = ({ category, id, edit }) => {
                 type={materialUiConstants.types.submit}
                 title={SAVE_TITLE}
                 onClickHandler={handleSubmit}
+                unblockFunction={unblock}
                 errors={errors}
                 values={{
                   uaName: values.uaName,
