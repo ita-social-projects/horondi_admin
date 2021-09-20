@@ -25,9 +25,16 @@ import {
 import useBasicsHandlers from '../../../utils/use-basics-handlers';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import {
+  calculateAddittionalPriceValue,
+  getLabelValue
+} from '../../../utils/additionalPrice-helper';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
+const { additionalPriceType } = config.labels.basicsPageLabel;
+const { convertationTitle } = config.titles.basicsTitles;
 const map = require('lodash/map');
 
 const {
@@ -65,15 +72,15 @@ const BasicsForm = ({ basic, id, edit }) => {
     loading
   } = useSelector(selectProductDetails);
 
+  const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
+
   const { createBasic, setUpload, upload, setBasicImage, color, setColor } =
     useBasicsHandlers();
 
   useEffect(() => {
-    dispatch(getProductDetails());
-  }, []);
-
-  useEffect(() => {
     basicImageHandler(basic, setBasicImage, imagePrefix);
+    dispatch(getProductDetails());
+    dispatch(getCurrencies());
   }, [dispatch, basic]);
 
   const basicsValidationSchema = Yup.object().shape({
@@ -250,31 +257,40 @@ const BasicsForm = ({ basic, id, edit }) => {
         {map(languages, (lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <Paper className={styles.additionalPrice}>
+        <Paper className={styles.additionalPricePaper}>
           <Box>
             <Typography>{enterPrice}</Typography>
           </Box>
           <TextField
             data-cy='additionalPrice'
+            className={`
+                  ${styles.textField}
+                  ${styles.additionalPrice} 
+                  `}
             id='additionalPrice'
-            className={styles.textField}
-            variant={materialUiConstants.outlined}
-            type={materialUiConstants.types.number}
-            label={additionalPriceLabel}
+            variant='outlined'
+            label={getLabelValue(values, additionalPriceType)}
             value={values.additionalPrice}
-            inputProps={{ min: 0 }}
-            error={touched.additionalPrice && !!errors.additionalPrice}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={touched.additionalPrice && errors.additionalPrice}
           />
           {touched.additionalPrice && errors.additionalPrice && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
-            >
+            <div data-cy='additionalPrice-error' className={styles.error}>
               {errors.additionalPrice}
             </div>
           )}
+          <TextField
+            id='outlined-basic'
+            variant='outlined'
+            label={convertationTitle}
+            className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+            value={calculateAddittionalPriceValue(values, exchangeRate)}
+            disabled
+          />
         </Paper>
       </form>
     </div>
@@ -297,14 +313,23 @@ BasicsForm.propTypes = {
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
-    name: PropTypes.arrayOf(valueShape)
+    name: PropTypes.arrayOf(valueShape),
+    additionalPrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        currency: PropTypes.string,
+        value: PropTypes.number
+      })
+    )
   }),
   values: PropTypes.shape({
     basicImage: PropTypes.string,
     material: PropTypes.string,
     color: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string
+    enName: PropTypes.string,
+    additionalPrice: PropTypes.number,
+    additionalPriceType: PropTypes.string
   }),
   errors: PropTypes.shape({
     basicImage: PropTypes.string,
@@ -370,8 +395,8 @@ BasicsForm.defaultProps = {
       }
     },
     additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
+      { value: null, currency: '', type: '' },
+      { value: null, currency: '', type: '' }
     ],
     available: false
   },

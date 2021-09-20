@@ -35,10 +35,22 @@ export const useStyles = makeStyles((theme) => {
       minWidth: 120
     },
     additionalPrice: {
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      },
+      width: '550px'
+    },
+    additionalPricePaper: {
       display: 'flex',
       flexDirection: 'column',
       margin: '10px 0',
       padding: '10px'
+    },
+    currencyField: {
+      width: '170px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
     },
     materialSelect: {
       width: '550px',

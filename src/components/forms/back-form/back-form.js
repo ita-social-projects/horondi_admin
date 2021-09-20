@@ -34,10 +34,21 @@ import {
   imagePropTypes
 } from '../bottom-form/constructor.variables';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import {
+  calculateAddittionalPriceValue,
+  getLabelValue
+} from '../../../utils/additionalPrice-helper';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 
 const { IMG_URL } = config;
-const { backName, enterPrice, additionalPriceLabel, materialLabels } =
-  config.labels.back;
+const {
+  backName,
+  enterPrice,
+  additionalPriceLabel,
+  materialLabels,
+  additionalPriceType
+} = config.labels.back;
+const { convertationTitle } = config.titles.backTitles;
 const map = require('lodash/map');
 
 const {
@@ -76,11 +87,14 @@ const BackForm = ({ back, id, edit }) => {
     loading
   } = useSelector(selectProductDetails);
 
+  const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
+
   const { createBack, setUpload, upload, setBackImage, color, setColor } =
     useBackHandlers();
 
   useEffect(() => {
     backUseEffectHandler(back, setBackImage, imagePrefix);
+    dispatch(getCurrencies());
   }, [dispatch, back]);
 
   useEffect(
@@ -131,6 +145,7 @@ const BackForm = ({ back, id, edit }) => {
 
     onSubmit: () => {
       const newBack = createBack(values);
+      console.log(`newBack`, newBack);
       const editAndUpload = edit && upload instanceof File;
       if (editAndUpload || edit) {
         backFormOnSubmit(
@@ -272,31 +287,40 @@ const BackForm = ({ back, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
 
-          <Paper className={styles.additionalPrice}>
+          <Paper className={styles.additionalPricePaper}>
             <Box>
               <Typography>{enterPrice}</Typography>
             </Box>
             <TextField
               data-cy='additionalPrice'
+              className={`
+                  ${styles.textField}
+                  ${styles.additionalPrice} 
+                  `}
               id='additionalPrice'
-              className={styles.textField}
-              variant={materialUiConstants.outlined}
-              type={materialUiConstants.types.number}
-              label={additionalPriceLabel}
+              variant='outlined'
+              label={getLabelValue(values, additionalPriceType)}
               value={values.additionalPrice}
-              inputProps={{ min: 0 }}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.additionalPrice && !!errors.additionalPrice}
+              error={touched.additionalPrice && errors.additionalPrice}
             />
             {touched.additionalPrice && errors.additionalPrice && (
-              <div
-                data-cy={materialUiConstants.codeError}
-                className={styles.error}
-              >
+              <div data-cy='additionalPrice-error' className={styles.error}>
                 {errors.additionalPrice}
               </div>
             )}
+            <TextField
+              id='outlined-basic'
+              variant='outlined'
+              label={convertationTitle}
+              className={`
+                  ${styles.textField} 
+                  ${styles.currencyField}
+                  `}
+              value={calculateAddittionalPriceValue(values, exchangeRate)}
+              disabled
+            />
           </Paper>
         </form>
       )}
