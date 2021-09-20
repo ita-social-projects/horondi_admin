@@ -97,7 +97,9 @@ const BusinessPageForm = ({ id, editMode }) => {
   ]);
 
   const formSchema = Yup.object().shape({
-    code: Yup.string().required(ENTER_CODE_ERROR_MESSAGE),
+    code: Yup.string()
+      .matches(config.formRegExp.pageCode, ENTER_CODE_ERROR_MESSAGE)
+      .required(ENTER_CODE_ERROR_MESSAGE),
     uaTitle: Yup.string()
       .min(2, MIN_TITLE_LENGTH_MESSAGE)
       .matches(config.formRegExp.uaNameCreation, ENTER_EN_MESSAGE)
