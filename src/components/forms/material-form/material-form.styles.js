@@ -27,7 +27,10 @@ export const useStyles = makeStyles((theme) => ({
       '& div': {
         '& div': {
           paddingLeft: 0,
-          paddingRight: 0
+          paddingRight: 0,
+          '& textarea': {
+            padding: '0 14px'
+          }
         }
       }
     }
