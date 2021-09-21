@@ -27,6 +27,7 @@ const formRegExp = {
     /^(?=.{2,30}$)[a-zA-Zа-яА-Яіїє]+(([',. -][a-zA-Zа-яА-Яіїє])?[a-zA-Zа-яА-Яіїє]*)*$/i,
   phoneNumber:
     /^(38)?(?:\(0[0-9]{2}\)[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|0[0-9]{2}[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|0[0-9]{2}[0-9]{7})$/,
-  additionalPriceRegExp: /^[0-9|]/i
+  additionalPriceRegExp: /^[0-9|]/i,
+  pageCode: /^\/([a-zA-Z_\/-])+$/i // eslint-disable-line
 };
 export default formRegExp;

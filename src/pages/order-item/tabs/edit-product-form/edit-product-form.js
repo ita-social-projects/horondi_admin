@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, MenuItem } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
@@ -17,6 +17,7 @@ const EditProductForm = ({
   onCloseHandler,
   selectedItem,
   setFieldValue,
+  setSizeItems,
   items
 }) => {
   const { materialUiConstants } = config;
@@ -24,13 +25,13 @@ const EditProductForm = ({
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [size, setSize] = useState('');
+  const [size, setSize] = useState({ _id: '', name: '', price: {} });
   const [quantity, setQuantity] = useState('');
 
   useEffect(() => {
     if (selectedItem) {
       setQuantity(selectedItem.quantity);
-      setSize(selectedItem.options.size._id);
+      setSize(selectedItem.options.size);
     }
   }, [selectedItem]);
 
@@ -43,26 +44,24 @@ const EditProductForm = ({
   }, [selectedItem]);
 
   const selectHandler = (e) => {
-    setSize(e.target.value);
+    setSize({
+      _id: e.target.value,
+      name: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].size
+        .name,
+      price: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].price
+    });
   };
 
-  const sizeItems =
-    sizes &&
-    sizes.length &&
-    sizes
-      .filter(({ available, name }) => available && name)
-      .map((item) => (
-        <MenuItem key={item._id} value={item._id}>
-          {item.name}
-        </MenuItem>
-      ));
+  const sizeItems = setSizeItems(sizes);
 
   const confirmHandler = () => {
     const index = items.findIndex(
       (item) => item.product._id === selectedItem.product._id
     );
     const newValue = { ...items[index], ...items[index].options };
-    newValue.options.size = { _id: size };
+    newValue.options.size._id = size._id;
+    newValue.options.size.price = size.price;
+    newValue.options.size.name = size.name;
     newValue.quantity = quantity;
     setFieldValue(inputName.itemsName, [
       ...items.slice(0, index),
@@ -92,7 +91,7 @@ const EditProductForm = ({
         </div>
         <div>
           {productLabels.size}
-          <Select value={size} onChange={selectHandler}>
+          <Select value={size._id} onChange={selectHandler}>
             {sizeItems}
           </Select>
         </div>
@@ -101,7 +100,7 @@ const EditProductForm = ({
           variant={materialUiConstants.contained}
           color={materialUiConstants.primary}
           disabled={
-            size === selectedItem?.options.size._id &&
+            size._id === selectedItem?.options.size._id &&
             quantity === selectedItem?.quantity
           }
           onClick={confirmHandler}

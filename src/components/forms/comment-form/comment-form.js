@@ -15,6 +15,7 @@ import { updateComment } from '../../../redux/comments/comments.actions';
 import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { COMMENT_VALIDATION_ERROR, COMMENT_ERROR_MESSAGE, MAX_LENGTH_MESSAGE } =
   config.commentErrorMessages;
@@ -63,6 +64,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
     }
   ];
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const commentUpdateHandler = (data) => {
@@ -107,6 +109,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
                 title={SAVE_TITLE}
                 errors={errors}
                 values={values}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>
