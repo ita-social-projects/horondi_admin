@@ -161,7 +161,11 @@ export const colorErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
   COLOR_VALIDATION_ERROR: 'Неправильний формат кольору',
-  VALIDATION_ERROR: 'Поле обовязкове'
+  VALIDATION_ERROR: 'Поле обовязкове',
+  NOT_EN_NAME_MESSAGE: `Поле може містити тільки англійські літери та цифри`,
+  NOT_UA_NAME_MESSAGE: `Поле може містити тільки українські літери та цифри`,
+  NOT_EN_SIMPLE_NAME_MESSAGE: `Введіть опис матеріалу англійською`,
+  NOT_UA_SIMPLE_NAME_MESSAGE: `Введіть опис матеріалу українською`
 };
 export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'
