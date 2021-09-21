@@ -65,10 +65,7 @@ export const useStyles = makeStyles((theme) => ({
     position: 'relative',
     width: '100%',
     height: 60,
-    marginTop: 51,
-    '@media (max-width: 600px)': {
-      marginTop: 43
-    }
+    marginTop: 51
   },
   sizeTitle: {
     marginBottom: '10px',

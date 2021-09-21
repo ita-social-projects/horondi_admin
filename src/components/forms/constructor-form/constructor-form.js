@@ -26,6 +26,7 @@ import ColorCircle from '../../color-circle';
 import { selectConstructorMethodAndMaterials } from '../../../redux/selectors/constructor.selectors';
 import LanguagePanel from '../language-panel';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { IMG_URL } = config;
 
@@ -141,6 +142,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       }
     });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleMaterial = (e) => {
@@ -303,6 +305,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
           title={SAVE_TITLE}
           values={values}
           errors={errors}
+          {...(isEdit ? { disabled: !changed } : {})}
         />
       </form>
     </div>

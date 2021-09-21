@@ -96,12 +96,24 @@ export const postPropTypes = {
   }).isRequired
 };
 
+const price = (item) => [
+  {
+    value: item.quantity * item.options.size.price[0].value,
+    currency: 'UAH'
+  },
+  {
+    value: item.quantity * item.options.size.price[1].value,
+    currency: 'USD'
+  }
+];
+
 const { deliveryTypes } = config;
 const items = (order) =>
   order.items?.map((item) => ({
     product: item?.product._id,
     quantity: item.quantity,
     isFromConstructor: !item.product._id,
+    price: price(item),
     options: {
       size: item.options.size._id,
       sidePocket: item.options.sidePocket
@@ -299,7 +311,13 @@ export const setFormValues = (selectedOrder) => {
     },
     userComment: selectedOrder.userComment,
     items: selectedOrder.items.map((item) => ({
-      options: { size: { _id: item.options.size._id } },
+      options: {
+        size: {
+          _id: item.options.size._id,
+          name: item.options.size.name,
+          price: item.fixedPrice
+        }
+      },
       product: {
         _id: item.product._id,
         name: item.product.name,
@@ -329,7 +347,7 @@ export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
     ...orderItems,
     {
       options: {
-        size: { _id: size.id, name: size.name }
+        size: { _id: size.id, name: size.name, price: size.price }
       },
       product: {
         basePrice: selectedProduct.basePrice,
@@ -359,7 +377,7 @@ export const paymentStatusFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(config.paymentStatusTranslation, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
 
   return arrToFilter;

@@ -18,8 +18,14 @@ import { config } from '../../configs';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { handleOrdersPage } from '../../utils/handle-orders-page';
-import useOrderFilters from '../../hooks/filters/use-order-filters';
-import FilterNavbar from '../../components/filter-search-sort';
+import ContainerFilters from '../../components/container-filters';
+
+import FilterDateRangePicker from './components/filter-date-range-picker';
+import FilterSortPicker from './components/filter-sort-picker';
+import FilterPaymentStatusesPicker from './components/filter-payment-statuses-picker';
+import FilterOrderStatusesPicker from './components/filter-order-statuses-picker';
+import FilterSearch from './components/filter-search';
+import FilterClear from './components/filter-clear';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
@@ -31,14 +37,6 @@ const OrdersPage = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-
-  const {
-    searchOptions,
-    clearOptions,
-    filterByMultipleOptions,
-    filterByDateOptions,
-    sortOptions
-  } = useOrderFilters();
 
   const {
     orderLoading,
@@ -81,6 +79,15 @@ const OrdersPage = () => {
     };
     openSuccessSnackbar(removeOrders, REMOVE_ORDER_MESSAGE);
   };
+
+  const filterElems = [
+    FilterDateRangePicker,
+    FilterSortPicker,
+    FilterPaymentStatusesPicker,
+    FilterOrderStatusesPicker,
+    FilterSearch,
+    FilterClear
+  ].map((Filter) => <Filter key={Filter.toString()} />);
 
   const orderItems =
     ordersList &&
@@ -128,18 +135,7 @@ const OrdersPage = () => {
           </Button>
         </div>
       </div>
-      <FilterNavbar
-        options={
-          {
-            sortOptions,
-            filterByMultipleOptions,
-            filterByDateOptions,
-            clearOptions,
-            searchOptions
-          } || {}
-        }
-      />
-
+      <ContainerFilters>{filterElems}</ContainerFilters>
       <div className={commonStyles.table}>
         {handleOrdersPage(
           ordersList,

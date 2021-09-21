@@ -193,15 +193,43 @@ export const updateOrder = (order, id) => {
 export const addOrder = (order) => {
   const query = `
 		mutation ($order: OrderInput!) {
-			addOrder (order: $order) {
-				...on Order {
-					orderNumber
+			addOrder(order: $order) {
+				... on Order {
+				  _id
+				  items {
+					product {
+					  name {
+						lang
+						value
+					  }
+					  images {
+						primary {
+						  thumbnail
+						}
+					  }
+					}
+					fixedPrice {
+					  currency
+					  value
+					}
+					quantity
+					options {
+					  size {
+						name
+					  }
+					}
+				  }
+				  totalPriceToPay {
+					currency
+					value
+				  }
+				  paymentStatus
 				}
-				...on Error {
-					statusCode
-					message
+				... on Error {
+				  statusCode
+				  message
 				}
-			}
+			  }
 		}
   `;
   return setItems(query, { order });

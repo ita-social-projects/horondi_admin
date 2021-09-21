@@ -19,6 +19,7 @@ import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const {
   REPLY_COMMENT_VALIDATION_ERROR,
@@ -74,6 +75,7 @@ const ReplyCommentForm = ({
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const addReplyCommentHandler = (data) => {
@@ -177,6 +179,7 @@ const ReplyCommentForm = ({
             title={SAVE_TITLE}
             errors={errors}
             values={values}
+            {...(isEdit ? { disabled: !changed } : {})}
             onClickHandler={handleSubmit}
             unblockFunction={unblock}
           />

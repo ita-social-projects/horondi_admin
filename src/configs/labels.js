@@ -166,6 +166,14 @@ const labels = {
     avatarText: 'Фото',
     enterPrice: 'Додаткова ціна (USD):',
     additionalPriceLabel: 'Введіть додаткову ціну (USD)',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
+    additionalPrice: 'Введіть додаткову ціну',
     form: {
       name: mapToLanguages("І'мя", 'Name')
     },
@@ -690,7 +698,7 @@ const labels = {
       en: 'Position'
     }
   },
-  basiscPageLabel: {
+  basicsPageLabel: {
     basicsHeader: 'basics-header',
     basicsTable: 'sideBasicsTable',
     basicsName: {
@@ -698,7 +706,16 @@ const labels = {
       en: 'Basics name'
     },
     available: 'Доступний',
-    avatarText: 'Фото'
+    avatarText: 'Фото',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну'
   },
   strapsPageLabel: {
     strapsHeader: 'straps-header',
