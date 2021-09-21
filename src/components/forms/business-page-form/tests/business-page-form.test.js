@@ -63,6 +63,7 @@ jest.mock('../../../../utils/use-business-handlers', () => ({
   })
 }));
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
+jest.mock('../../../../hooks/forms/use-changed-values-checker');
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useEffect: jest.fn((f) => f())

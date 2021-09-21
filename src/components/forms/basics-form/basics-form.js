@@ -26,6 +26,7 @@ import {
 import useBasicsHandlers from '../../../utils/use-basics-handlers';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
@@ -150,7 +151,9 @@ const BasicsForm = ({ basic, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values);
   const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     setBasicsColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -213,6 +216,7 @@ const BasicsForm = ({ basic, id, edit }) => {
                 errors={errors}
                 values={values}
                 onClickHandler={handleSubmit}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

@@ -27,6 +27,7 @@ import CheckboxOptions from '../../checkbox-options';
 import { getAllPositions } from '../../../redux/position/position.actions';
 import { handleCircularProgress } from '../../../utils/handle-orders-page';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const labels = config.labels.pocketsPageLabel;
 
@@ -138,6 +139,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -206,6 +208,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

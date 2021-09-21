@@ -35,6 +35,7 @@ import {
   imagePropTypes
 } from '../bottom-form/constructor.variables';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { IMG_URL } = config;
 const {
@@ -171,7 +172,9 @@ const BackForm = ({ back, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     setBackColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -238,6 +241,7 @@ const BackForm = ({ back, id, edit }) => {
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
+                  {...(id ? { disabled: !changed } : {})}
                   unblockFunction={unblock}
                 />
               </Grid>
