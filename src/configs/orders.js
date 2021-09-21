@@ -64,6 +64,12 @@ const orders = {
   productAdditionalInfo: {
     noOneProduct: 'Жодного продукту не знайдено'
   },
+  userAdditionalInfo: {
+    noOneUser: 'Жодного користувача не знайдено'
+  },
+  userLabels: {
+    addRegisteredUser: 'Додати користувача'
+  },
   orderTableStatus: {
     CREATED: 'Створено',
     CONFIRMED: 'Підтверджено',
