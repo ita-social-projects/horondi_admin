@@ -253,12 +253,17 @@ function SizeForm({ id, size }) {
                     />
                     <FormControlLabel
                       value='RELATIVE_INDICATOR'
-                      label={additionalPriceType.relativePrice[0].value}
+                      label={
+                        <>
+                          <span>
+                            {additionalPriceType.relativePrice[0].value}
+                          </span>
+                          <Tooltip arrow title='Hello world' />
+                        </>
+                      }
                       key={1}
                       control={<Radio />}
-                    >
-                      <Tooltip arrow title='Hello world' />
-                    </FormControlLabel>
+                    />
                   </RadioGroup>
                 </FormControl>
                 <TextField
