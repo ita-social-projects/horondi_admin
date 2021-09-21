@@ -40,9 +40,8 @@ const RegisteredUser = ({ userId, setFieldValue }) => {
   const noUser = () => {
     if (regUsers.loading) {
       return '';
-    } 
-      return inputName.noUser;
-    
+    }
+    return inputName.noUser;
   };
 
   if (regUsers.loading) {
@@ -50,7 +49,10 @@ const RegisteredUser = ({ userId, setFieldValue }) => {
   }
 
   const sortedUsers = regUsers.list?.filter((option) => option?.firstName);
-  sortedUsers.unshift({ firstName: noUser(), lastName: '', _id: null });
+
+  if (userId) {
+    sortedUsers.unshift({ firstName: noUser(), lastName: '', _id: null });
+  }
 
   return (
     <div className={classes.registeredUser}>
@@ -60,7 +62,7 @@ const RegisteredUser = ({ userId, setFieldValue }) => {
           noOptionsText={userAdditionalInfo.noOneUser}
           options={sortedUsers}
           getOptionLabel={(option) =>
-            `${option?.firstName } ${ option?.lastName}`
+            `${option?.firstName} ${option?.lastName}`
           }
           onChange={onUserChange}
           getOptionSelected={(option, value) =>
