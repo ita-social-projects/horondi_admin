@@ -1,7 +1,7 @@
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MenuItem, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -21,7 +21,7 @@ import {
   addProductFormPropTypes
 } from '../../../../utils/order';
 
-const AddProductForm = ({ items, setFieldValue }) => {
+const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
   const { materialUiConstants } = config;
   const styles = useStyles();
   const { productLabels, productAdditionalInfo } = configs;
@@ -55,6 +55,15 @@ const AddProductForm = ({ items, setFieldValue }) => {
       });
   }, [sizes]);
 
+  const selectHandler = (e) => {
+    setSize({
+      id: e.target.value,
+      price: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].price,
+      name: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].size
+        .name
+    });
+  };
+
   const addProductHandler = () => {
     setQuantity(1);
     setFieldValue(
@@ -63,23 +72,8 @@ const AddProductForm = ({ items, setFieldValue }) => {
     );
   };
 
-  const selectHandler = (e) => {
-    setSize({
-      id: e.target.value,
-      name: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].size
-        .name,
-      price: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].price
-    });
-  };
+  const sizeItems = setSizeItems(sizes);
 
-  const sizeItems =
-    sizes &&
-    sizes.length &&
-    sizes.map((item) => (
-      <MenuItem key={item.size._id} value={item.size._id}>
-        {item.size.name}
-      </MenuItem>
-    ));
   return (
     <div>
       <Autocomplete

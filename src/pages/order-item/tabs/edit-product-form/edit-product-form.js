@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, MenuItem } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
@@ -17,6 +17,7 @@ const EditProductForm = ({
   onCloseHandler,
   selectedItem,
   setFieldValue,
+  setSizeItems,
   items
 }) => {
   const { materialUiConstants } = config;
@@ -51,14 +52,8 @@ const EditProductForm = ({
     });
   };
 
-  const sizeItems =
-    sizes &&
-    sizes.length &&
-    sizes.map((item) => (
-      <MenuItem key={item.size._id} value={item.size._id}>
-        {item.size.name}
-      </MenuItem>
-    ));
+  const sizeItems = setSizeItems(sizes);
+
   const confirmHandler = () => {
     const index = items.findIndex(
       (item) => item.product._id === selectedItem.product._id

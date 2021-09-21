@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-
+import { MenuItem } from '@material-ui/core';
 import { useStyles } from '../order-item.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -38,6 +38,16 @@ const Products = ({ data, setFieldValue }) => {
     setSelectedItem(null);
   };
 
+  const setSizeItems = (sizes) => (
+      sizes &&
+      sizes.length &&
+      sizes.map((item) => (
+        <MenuItem key={item.size._id} value={item.size._id}>
+          {item.size.name}
+        </MenuItem>
+      ))
+    );
+
   const productItems =
     items &&
     items.map((item, index) => (
@@ -56,7 +66,11 @@ const Products = ({ data, setFieldValue }) => {
 
   return (
     <div className={classes.products}>
-      <AddProductForm items={items} setFieldValue={setFieldValue} />
+      <AddProductForm
+        items={items}
+        setFieldValue={setFieldValue}
+        setSizeItems={setSizeItems}
+      />
       {items.length ? (
         <TableContainerGenerator
           id='contactTable'
@@ -69,6 +83,7 @@ const Products = ({ data, setFieldValue }) => {
         onCloseHandler={onCloseHandler}
         selectedItem={selectedItem}
         setFieldValue={setFieldValue}
+        setSizeItems={setSizeItems}
         items={items}
       />
     </div>
