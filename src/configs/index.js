@@ -273,7 +273,7 @@ export const inputTypes = {
 
 export const badgePosition = {
   vertical: 'top',
-  horizontal: 'left'
+  horizontal: 'right'
 };
 
 export const dateFormat = ' HH:mm DD/MM/YYYY ';
