@@ -19,7 +19,10 @@ const usePocketsHandlers = () => {
         value: values.enName
       }
     ],
-    additionalPrice: values.additionalPrice,
+    additionalPrice: {
+      value: +values.additionalPrice,
+      type: values.additionalPriceType
+    },
     restriction: values.restriction,
     optionType: 'POCKET',
     positions: values.positions

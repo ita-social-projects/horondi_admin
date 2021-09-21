@@ -73,7 +73,7 @@ const ClosuresPage = () => {
         closure?.images?.thumbnail ? IMG_URL + closure.images.thumbnail : ''
       }
       name={closure?.name[0]?.value}
-      additionalPrice={closure?.additionalPrice[1]?.value / 100}
+      additionalPrice={closure?.additionalPrice[1]?.value}
       available={closure.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         closuresDeleteHandler(closure._id);

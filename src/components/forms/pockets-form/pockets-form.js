@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Paper, TextField, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -27,26 +27,28 @@ import CheckboxOptions from '../../checkbox-options';
 import { getAllPositions } from '../../../redux/position/position.actions';
 import { handleCircularProgress } from '../../../utils/handle-orders-page';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const labels = config.labels.pocketsPageLabel;
+const { convertationTitle } = config.titles.closuresTitles;
+
+const labels = { ...config.labels.pocketsPageLabel, convertationTitle };
 
 const {
-  POCKETS_VALIDATION_ERROR,
   POCKETS_ERROR_MESSAGE,
   POCKETS_UA_NAME_MESSAGE,
   POCKETS_EN_NAME_MESSAGE,
   POCKETS_MAX_LENGTH_MESSAGE,
   POCKETS_MIN_LENGTH_MESSAGE,
-  POCKETS_POSITION_ERROR_MESSAGE
+  POCKETS_POSITION_ERROR_MESSAGE,
+  POCKETS_PRICE_ERROR
 } = config.pocketsErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
 const { POCKETS_ERROR } = pocketsTranslations;
 const { IMG_URL } = config;
-const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
-  config.formRegExp;
+const { enNameCreation, uaNameCreation } = config.formRegExp;
 const { materialUiConstants } = config;
 const { pathToPockets } = config.routes;
 
@@ -97,9 +99,10 @@ const PocketsForm = ({ pocket, id, edit }) => {
       .max(50, POCKETS_MAX_LENGTH_MESSAGE)
       .required(POCKETS_ERROR_MESSAGE)
       .matches(enNameCreation, POCKETS_EN_NAME_MESSAGE),
+    additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
       .required(POCKETS_ERROR_MESSAGE)
-      .matches(additionalPriceRegExp, POCKETS_VALIDATION_ERROR)
+      .matches(config.formRegExp.onlyPositiveFloat, POCKETS_PRICE_ERROR)
       .nullable(),
     positions: Yup.string().required(POCKETS_POSITION_ERROR_MESSAGE)
   });
@@ -276,32 +279,14 @@ const PocketsForm = ({ pocket, id, edit }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <Paper className={styles.additionalPrice}>
-          <Box>
-            <Typography>{labels.enterPrice}</Typography>
-          </Box>
-          <TextField
-            data-cy='additionalPrice'
-            id='additionalPrice'
-            className={styles.textField}
-            variant={materialUiConstants.outlined}
-            type={materialUiConstants.types.number}
-            label={labels.additionalPrice}
-            value={values.additionalPrice}
-            inputProps={{ min: 0 }}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.additionalPrice && !!errors.additionalPrice}
-          />
-          {touched.additionalPrice && errors.additionalPrice && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
-            >
-              {errors.additionalPrice}
-            </div>
-          )}
-        </Paper>
+        <AdditionalPriceContainer
+          values={values}
+          labels={labels}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+        />
       </form>
     </div>
   );
@@ -373,8 +358,8 @@ PocketsForm.defaultProps = {
     restrictions: false,
     optionType: null,
     additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
+      { value: null, type: 'ABSOLUTE_PRICE', currency: '' },
+      { value: null, type: 'ABSOLUTE_PRICE', currencsy: '' }
     ],
     positions: []
   },

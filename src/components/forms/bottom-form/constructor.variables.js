@@ -36,8 +36,8 @@ export const constructorObject = {
     }
   },
   additionalPrice: [
-    { value: null, currency: '' },
-    { value: null, currency: '' }
+    { value: null, type: 'ABSOLUTE_PRICE', currency: '' },
+    { value: null, type: 'ABSOLUTE_PRICE', currencsy: '' }
   ],
   available: false,
   customizable: false
