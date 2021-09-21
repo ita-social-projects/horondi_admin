@@ -664,7 +664,14 @@ const labels = {
     labelsRestriction: 'restriction',
     labelIdAut: 'labelIdAut',
     normal: 'normal',
-    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' }
+    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' },
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
   },
   closuresPageLabel: {
     closuresHeader: 'closures-header',
@@ -674,13 +681,8 @@ const labels = {
       en: 'Closure name'
     },
     enterPrice: 'Додаткова ціна (USD):',
-    // additionalPrice: 'Введіть додаткову ціну',
     available: 'Доступний',
     avatarText: 'Фото',
-    additionalPrice: mapToLanguages(
-      'Додаткова ціна (USD)',
-      'Additional price (USD)'
-    ),
     additionalPriceType: {
       absolutePrice: mapToLanguages(
         'Абсолютна ціна (USD)',

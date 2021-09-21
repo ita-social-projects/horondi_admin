@@ -84,6 +84,7 @@ const ConstructorPage = ({ match }) => {
   const { model, constructorTabs, patternList, filter, loading } = useSelector(
     selectConstructorMethodAndMaterials
   );
+
   useEffect(() => {
     dispatch(
       getMaterials({

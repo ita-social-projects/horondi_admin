@@ -24,7 +24,7 @@ export const bottomFormOnSubmit = (
 export const setBottomColorsHandler = (values, setColor, find, materials) => {
   if (values.material) {
     setColor(
-      find(materials.bottom, (material) => material._id === values.material)
+      find(materials?.bottom, (material) => material._id === values.material)
         ?.colors || []
     );
   }
@@ -36,7 +36,8 @@ export const getBottomInitialValues = (edit, IMG_URL, bottom) => ({
   enName: bottom?.name[1].value || '',
   color: bottom?.features.color._id || '',
   material: bottom?.features.material._id || '',
-  additionalPrice: edit ? bottom?.additionalPrice[1]?.value / 100 : null,
+  additionalPrice: bottom?.additionalPrice[1]?.value || '',
+  additionalPriceType: 'ABSOLUTE_INDICATOR',
   available: bottom?.available || false,
   customizable: bottom?.customizable || false
 });
