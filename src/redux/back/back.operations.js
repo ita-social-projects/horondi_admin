@@ -36,6 +36,7 @@ query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
       additionalPrice {
         currency
         value
+        type
       }
       available
       customizable
@@ -88,6 +89,7 @@ export const getBackById = async (id) => {
             additionalPrice {
                 currency
                 value
+                type
               }
             images {
               thumbnail

@@ -541,6 +541,7 @@ exports[`Comment form tests Should render two forms and list 1`] = `
                         <SaveButton
                           color="primary"
                           data-cy="save"
+                          disabled={true}
                           errors={Object {}}
                           onClickHandler={[Function]}
                           title="Зберегти"

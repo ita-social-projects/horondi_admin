@@ -31,6 +31,7 @@ import purposeEnum from '../../../configs/purpose-enum';
 import LanguagePanel from '../language-panel';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { languages } = config;
 const {
@@ -123,6 +124,7 @@ function MaterialForm({ material, id }) {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     dispatch(getCurrencies());
@@ -189,6 +191,7 @@ function MaterialForm({ material, id }) {
                 title={config.buttonTitles.SAVE_MATERIAL}
                 values={values}
                 errors={errors}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

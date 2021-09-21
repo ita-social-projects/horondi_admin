@@ -41,6 +41,18 @@ export const useStyles = makeStyles((theme) => {
       }
     },
     additionalPrice: {
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      },
+      width: '550px'
+    },
+    currencyField: {
+      width: '170px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
+    },
+    additionalPricePaper: {
       display: 'flex',
       flexDirection: 'column',
       margin: '10px 0',

@@ -23,7 +23,6 @@ const mockChange = jest.fn();
 const mockBlur = jest.fn();
 const mockSetUpload = jest.fn();
 const mockSetPocketsImage = jest.fn();
-const getOptionSelected = jest.fn();
 
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),

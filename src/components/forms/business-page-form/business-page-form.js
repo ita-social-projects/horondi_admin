@@ -31,6 +31,7 @@ import { useCommonStyles } from '../../../pages/common.styles';
 import LanguagePanel from '../language-panel';
 import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const BusinessPageForm = ({ id, editMode }) => {
   const dispatch = useDispatch();
@@ -97,7 +98,9 @@ const BusinessPageForm = ({ id, editMode }) => {
   ]);
 
   const formSchema = Yup.object().shape({
-    code: Yup.string().required(ENTER_CODE_ERROR_MESSAGE),
+    code: Yup.string()
+      .matches(config.formRegExp.pageCode, ENTER_CODE_ERROR_MESSAGE)
+      .required(ENTER_CODE_ERROR_MESSAGE),
     uaTitle: Yup.string()
       .min(2, MIN_TITLE_LENGTH_MESSAGE)
       .matches(config.formRegExp.uaNameCreation, ENTER_EN_MESSAGE)
@@ -158,7 +161,9 @@ const BusinessPageForm = ({ id, editMode }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
+
   useMemo(() => {
     values.code = code;
     values.uaTitle = uaTitle;
@@ -208,6 +213,7 @@ const BusinessPageForm = ({ id, editMode }) => {
                 enTitle: values.enTitle
               }}
               errors={errors}
+              {...(id ? { disabled: !changed } : {})}
             />
           </Grid>
         </Grid>
