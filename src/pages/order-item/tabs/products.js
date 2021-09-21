@@ -47,7 +47,7 @@ const Products = ({ data, setFieldValue }) => {
         name={item.product.name[0].value}
         quantity={item.quantity}
         size={item.options.size.name}
-        price={`${item.product.basePrice[0].value * item.quantity}₴`}
+        price={`${item.options.size.price[0].value * item.quantity}₴`}
         showAvatar={false}
         deleteHandler={() => deleteItemHendler(index)}
         editHandler={() => setSelectedItem(item)}
@@ -57,13 +57,13 @@ const Products = ({ data, setFieldValue }) => {
   return (
     <div className={classes.products}>
       <AddProductForm items={items} setFieldValue={setFieldValue} />
-      {items.length && (
+      {items.length ? (
         <TableContainerGenerator
           id='contactTable'
           tableTitles={orderProductTitles}
           tableItems={productItems}
         />
-      )}
+      ) : null}
       <EditProductForm
         open={!!selectedItem?.product}
         onCloseHandler={onCloseHandler}

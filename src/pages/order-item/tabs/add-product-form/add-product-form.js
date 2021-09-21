@@ -33,7 +33,7 @@ const AddProductForm = ({ items, setFieldValue }) => {
   }));
   const [productInput, setProductInput] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [size, setSize] = useState({ id: '', name: '' });
+  const [size, setSize] = useState({ id: '', name: '', price: {} });
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -48,8 +48,10 @@ const AddProductForm = ({ items, setFieldValue }) => {
     selectedProduct &&
       sizes &&
       setSize({
-        id: sizes[0]._id,
-        name: sizes.filter(({ _id }) => _id === sizes[0]._id)[0].name
+        id: sizes[0].size._id,
+        name: sizes.filter(({ size: sz }) => sz._id === sizes[0].size._id)[0]
+          .size.name,
+        price: sizes[0].price
       });
   }, [sizes]);
 
@@ -64,21 +66,20 @@ const AddProductForm = ({ items, setFieldValue }) => {
   const selectHandler = (e) => {
     setSize({
       id: e.target.value,
-      name: sizes.filter(({ _id }) => _id === e.target.value)[0].name
+      name: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].size
+        .name,
+      price: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].price
     });
   };
 
   const sizeItems =
     sizes &&
     sizes.length &&
-    sizes
-      .filter(({ available, name }) => available && name)
-      .map((item) => (
-        <MenuItem key={item._id} value={item._id}>
-          {item.name}
-        </MenuItem>
-      ));
-
+    sizes.map((item) => (
+      <MenuItem key={item.size._id} value={item.size._id}>
+        {item.size.name}
+      </MenuItem>
+    ));
   return (
     <div>
       <Autocomplete
