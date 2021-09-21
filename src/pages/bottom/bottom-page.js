@@ -55,7 +55,6 @@ const BottomPage = () => {
     };
     openSuccessSnackbar(removeBottom, BOTTOM_REMOVE_MESSAGE);
   };
-
   const bottomItems = map(list, (bottomItem) => (
     <TableContainerRow
       image={

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import useClosuresHandlers from '../../../utils/use-closures-handlers';
 import { useStyles } from './closures-form.styles';
@@ -20,11 +20,10 @@ import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import { calculateAddittionalPriceValue } from '../../../utils/additionalPrice-helper';
-import { getCurrencies } from '../../../redux/currencies/currencies.actions';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 
-const labels = config.labels.closuresPageLabel;
-const { additionalPriceType } = config.labels.closuresPageLabel;
+const { convertationTitle } = config.titles.backTitles;
+const labels = { ...config.labels.closuresPageLabel, convertationTitle };
 
 const {
   CLOSURES_ERROR_MESSAGE,
@@ -37,7 +36,6 @@ const {
 } = config.closuresErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
-const { convertationTitle } = config.titles.closuresTitles;
 const { languages, IMG_URL } = config;
 
 const { enNameCreation, uaNameCreation } = config.formRegExp;
@@ -47,11 +45,6 @@ const ClosuresForm = ({ closure, id, edit }) => {
   const dispatch = useDispatch();
   const { createClosures, setUpload, upload, closuresImage, setClosuresImage } =
     useClosuresHandlers();
-  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
-
-  useEffect(() => {
-    dispatch(getCurrencies());
-  }, []);
 
   const { pathToClosures } = config.routes;
 
@@ -189,41 +182,14 @@ const ClosuresForm = ({ closure, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
         </div>
-        <>
-          <Paper className={styles.additionalPrice}>
-            <Box>
-              <Typography>{labels.enterPrice}</Typography>
-            </Box>
-            <TextField
-              data-cy='additionalPrice'
-              className={`
-                  ${styles.textField} 
-                  ${styles.materialSelect} 
-                  `}
-              variant='outlined'
-              label={additionalPriceType.absolutePrice[0].value}
-              value={values.additionalPrice}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              id='additionalPrice'
-              error={touched.additionalPrice && !!errors.additionalPrice}
-            />
-            {touched.additionalPrice && errors.additionalPrice && (
-              <div className={styles.inputError}>{errors.additionalPrice}</div>
-            )}
-            <TextField
-              id='outlined-basic'
-              className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
-                  `}
-              label={convertationTitle}
-              variant='outlined'
-              value={calculateAddittionalPriceValue(values, exchangeRate)}
-              disabled
-            />
-          </Paper>
-        </>
+        <AdditionalPriceContainer
+          values={values}
+          labels={labels}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+        />
       </form>
     </div>
   );

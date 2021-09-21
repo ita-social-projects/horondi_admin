@@ -166,6 +166,14 @@ const labels = {
     avatarText: 'Фото',
     enterPrice: 'Додаткова ціна (USD):',
     additionalPriceLabel: 'Введіть додаткову ціну (USD)',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
+    additionalPrice: 'Введіть додаткову ціну',
     form: {
       name: mapToLanguages("І'мя", 'Name')
     },
@@ -654,7 +662,14 @@ const labels = {
     labelsRestriction: 'restriction',
     labelIdAut: 'labelIdAut',
     normal: 'normal',
-    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' }
+    choosePositions: { title: 'Список позицій', inputTitle: 'Оберіть позиції' },
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    }
   },
   closuresPageLabel: {
     closuresHeader: 'closures-header',
@@ -664,13 +679,8 @@ const labels = {
       en: 'Closure name'
     },
     enterPrice: 'Додаткова ціна (USD):',
-    // additionalPrice: 'Введіть додаткову ціну',
     available: 'Доступний',
     avatarText: 'Фото',
-    additionalPrice: mapToLanguages(
-      'Додаткова ціна (USD)',
-      'Additional price (USD)'
-    ),
     additionalPriceType: {
       absolutePrice: mapToLanguages(
         'Абсолютна ціна (USD)',
@@ -688,7 +698,7 @@ const labels = {
       en: 'Position'
     }
   },
-  basiscPageLabel: {
+  basicsPageLabel: {
     basicsHeader: 'basics-header',
     basicsTable: 'sideBasicsTable',
     basicsName: {
@@ -696,7 +706,16 @@ const labels = {
       en: 'Basics name'
     },
     available: 'Доступний',
-    avatarText: 'Фото'
+    avatarText: 'Фото',
+    additionalPriceType: {
+      absolutePrice: mapToLanguages(
+        'Абсолютна ціна (USD)',
+        'Absolute price (USD)'
+      ),
+      relativePrice: mapToLanguages('Відносна ціна (%)', 'Relative price (%)')
+    },
+    enterPrice: 'Додаткова ціна (USD):',
+    additionalPrice: 'Введіть додаткову ціну'
   },
   strapsPageLabel: {
     strapsHeader: 'straps-header',

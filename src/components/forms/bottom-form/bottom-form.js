@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
+import { Paper, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
 import { BackButton, SaveButton } from '../../buttons';
@@ -9,7 +9,6 @@ import { checkInitialValue } from '../../../utils/check-initial-values';
 import { config } from '../../../configs';
 import { useStyles } from '../common.styles';
 import LoadingBar from '../../loading-bar';
-import { calculateAddittionalPriceValue } from '../../../utils/additionalPrice-helper';
 import { addBottom, updateBottom } from '../../../redux/bottom/bottom.actions';
 import CheckboxOptions from '../../checkbox-options';
 import LanguagePanel from '../language-panel';
@@ -24,7 +23,6 @@ import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 import { getProductDetails } from '../../../redux/products/products.actions';
 import useBottomHandlers from '../../../utils/use-bottom-handlers';
-import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import {
   constructorObject,
   defaultProps,
@@ -34,11 +32,20 @@ import {
   imagePropTypes
 } from './constructor.variables';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 
 const { IMG_URL } = config;
-const { bottomName, enterPrice, materialLabels } = config.labels.bottom;
+const { bottomName, enterPrice, materialLabels, additionalPriceLabel } =
+  config.labels.bottom;
 const { additionalPriceType } = config.labels.closuresPageLabel;
 const { convertationTitle } = config.titles.closuresTitles;
+
+const labels = {
+  enterPrice,
+  additionalPriceLabel,
+  additionalPriceType,
+  convertationTitle
+};
 const map = require('lodash/map');
 
 const {
@@ -75,12 +82,6 @@ const BottomForm = ({ bottom, id, edit }) => {
 
   useEffect(() => {
     dispatch(getProductDetails());
-  }, []);
-
-  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
-
-  useEffect(() => {
-    dispatch(getCurrencies());
   }, []);
 
   useEffect(() => {
@@ -275,38 +276,14 @@ const BottomForm = ({ bottom, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
 
-          <Paper className={styles.additionalPrice}>
-            <Box>
-              <Typography>{enterPrice}</Typography>
-            </Box>
-            <TextField
-              data-cy='additionalPrice'
-              className={`
-                  ${styles.textField} 
-                  ${styles.materialSelect} 
-                  `}
-              variant='outlined'
-              label={additionalPriceType.absolutePrice[0].value}
-              value={values.additionalPrice}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              id='additionalPrice'
-              error={touched.additionalPrice && !!errors.additionalPrice}
-            />
-            {touched.additionalPrice && errors.additionalPrice && (
-              <div className={styles.inputError}>{errors.additionalPrice}</div>
-            )}
-            <TextField
-              className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
-                  `}
-              label={convertationTitle}
-              variant='outlined'
-              value={calculateAddittionalPriceValue(values, exchangeRate)}
-              disabled
-            />
-          </Paper>
+          <AdditionalPriceContainer
+            values={values}
+            labels={labels}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
         </form>
       )}
     </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Paper, TextField, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -10,7 +10,6 @@ import usePocketsHandlers from '../../../utils/use-pockets-handlers';
 import { useStyles } from './pockets-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
-import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import {
   addPockets,
   updatePocket
@@ -22,18 +21,17 @@ import {
   setSnackBarStatus,
   setSnackBarMessage
 } from '../../../redux/snackbar/snackbar.actions';
-import { calculateAddittionalPriceValue } from '../../../utils/additionalPrice-helper';
 import LanguagePanel from '../language-panel';
 import { getPocketsInitialValues } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
 import { getAllPositions } from '../../../redux/position/position.actions';
 import { handleCircularProgress } from '../../../utils/handle-orders-page';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 
-const labels = config.labels.pocketsPageLabel;
-
-const { additionalPriceType } = config.labels.closuresPageLabel;
 const { convertationTitle } = config.titles.closuresTitles;
+
+const labels = { ...config.labels.pocketsPageLabel, convertationTitle };
 
 const {
   POCKETS_ERROR_MESSAGE,
@@ -62,12 +60,6 @@ const PocketsForm = ({ pocket, id, edit }) => {
       return pocket.positions.map((item) => item._id);
     }
   };
-
-  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
-
-  useEffect(() => {
-    dispatch(getCurrencies());
-  }, []);
 
   const { createPockets, setUpload, upload, pocketsImage, setPocketsImage } =
     usePocketsHandlers();
@@ -284,38 +276,14 @@ const PocketsForm = ({ pocket, id, edit }) => {
         {languages.map((lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <Paper className={styles.additionalPrice}>
-          <Box>
-            <Typography>{labels.enterPrice}</Typography>
-          </Box>
-          <TextField
-            data-cy='additionalPrice'
-            className={`
-                  ${styles.textField} 
-                  ${styles.materialSelect} 
-                  `}
-            variant='outlined'
-            label={additionalPriceType.absolutePrice[0].value}
-            value={values.additionalPrice}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            id='additionalPrice'
-            error={touched.additionalPrice && !!errors.additionalPrice}
-          />
-          {touched.additionalPrice && errors.additionalPrice && (
-            <div className={styles.inputError}>{errors.additionalPrice}</div>
-          )}
-          <TextField
-            className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
-                  `}
-            label={convertationTitle}
-            variant='outlined'
-            value={calculateAddittionalPriceValue(values, exchangeRate)}
-            disabled
-          />
-        </Paper>
+        <AdditionalPriceContainer
+          values={values}
+          labels={labels}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+        />
       </form>
     </div>
   );

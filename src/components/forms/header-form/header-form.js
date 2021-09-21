@@ -14,6 +14,7 @@ import { getHeaderInitialValues } from '../../../utils/header-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const {
+  HEADER_MIN_LENGTH_MESSAGE,
   HEADER_VALIDATION_ERROR,
   HEADER_ERROR_MESSAGE,
   NOT_EN_NAME_MESSAGE,
@@ -45,8 +46,8 @@ const HeaderForm = ({ header, id }) => {
       .required(HEADER_ERROR_MESSAGE),
     priority: Yup.number().required(HEADER_ERROR_MESSAGE),
     link: Yup.string()
-      .min(2, HEADER_VALIDATION_ERROR)
-      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
+      .min(2, HEADER_MIN_LENGTH_MESSAGE)
+      .matches(config.formRegExp.pageCode, HEADER_VALIDATION_ERROR)
       .required(HEADER_ERROR_MESSAGE)
   });
 

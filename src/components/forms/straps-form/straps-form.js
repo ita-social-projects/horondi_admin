@@ -27,9 +27,8 @@ import {
   calculateAddittionalPriceValue,
   getLabelValue
 } from '../../../utils/additionalPrice-helper';
-import { getCurrencies } from '../../../redux/currencies/currencies.actions';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 
-const labels = config.labels.strapsPageLabel;
 const {
   STRAPS_VALIDATION_ERROR,
   STRAPS_ERROR_MESSAGE,
@@ -47,11 +46,11 @@ const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
 const { materialUiConstants } = config;
 const { pathToStraps } = config.routes;
 const { convertationTitle } = config.titles.strapsTitles;
+const labels = { ...config.labels.strapsPageLabel, convertationTitle };
 
 const StrapsForm = ({ strap, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
   const { createStraps, setUpload, upload, strapImage, setStrapImage } =
     useStrapsHandlers();
 
@@ -64,7 +63,6 @@ const StrapsForm = ({ strap, id, edit }) => {
         }
       })
     );
-    dispatch(getCurrencies());
   }, [dispatch]);
 
   const { colorsList } = useSelector(({ Color }) => ({
@@ -239,38 +237,14 @@ const StrapsForm = ({ strap, id, edit }) => {
             </div>
           )}
         </Paper>
-        <Paper className={styles.additionalPricePaper}>
-          <TextField
-            data-cy='additionalPrice'
-            className={`
-                  ${styles.textField}
-                  ${styles.additionalPrice} 
-                  `}
-            id='additionalPrice'
-            variant='outlined'
-            label={labels.additionalPriceType.absolutePrice[0].value}
-            value={values.additionalPrice}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.additionalPrice && errors.additionalPrice}
-          />
-          {touched.additionalPrice && errors.additionalPrice && (
-            <div data-cy='additionalPrice-error' className={styles.error}>
-              {errors.additionalPrice}
-            </div>
-          )}
-          <TextField
-            id='outlined-basic'
-            variant='outlined'
-            label={convertationTitle}
-            className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
-                  `}
-            value={calculateAddittionalPriceValue(values, exchangeRate)}
-            disabled
-          />
-        </Paper>
+        <AdditionalPriceContainer
+          values={values}
+          labels={labels}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+        />
         <Paper className={styles.inputPanel}>
           {languages.map((lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
