@@ -256,6 +256,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     e.preventDefault();
   };
 
+  const idCondition = id ? { disabled: !changed } : {};
+
   return (
     <div>
       {loading ? (
@@ -276,7 +278,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   title={SAVE_TITLE}
                   values={values}
                   errors={errors}
-                  {...(id ? { disabled: !changed } : {})}
+                  {...idCondition}
                 />
               </Grid>
             </Grid>
