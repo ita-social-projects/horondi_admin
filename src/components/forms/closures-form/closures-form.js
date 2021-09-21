@@ -21,6 +21,7 @@ import LanguagePanel from '../language-panel';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import AdditionalPriceContainer from '../../../containers/additional-price-container';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { convertationTitle } = config.titles.backTitles;
 const labels = { ...config.labels.closuresPageLabel, convertationTitle };
@@ -98,6 +99,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -155,6 +157,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

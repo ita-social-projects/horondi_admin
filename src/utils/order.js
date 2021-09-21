@@ -347,7 +347,7 @@ export const paymentStatusFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(config.paymentStatusTranslation, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
 
   return arrToFilter;

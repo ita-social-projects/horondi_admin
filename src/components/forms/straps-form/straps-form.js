@@ -2,16 +2,13 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Paper, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
 
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
 import { useStyles } from './straps-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
@@ -23,11 +20,8 @@ import CheckboxOptions from '../../checkbox-options';
 import { getColors } from '../../../redux/color/color.actions';
 import useStrapsHandlers from '../../../utils/use-straps-handlers';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import {
-  calculateAddittionalPriceValue,
-  getLabelValue
-} from '../../../utils/additionalPrice-helper';
 import AdditionalPriceContainer from '../../../containers/additional-price-container';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const {
   STRAPS_VALIDATION_ERROR,
@@ -121,6 +115,7 @@ const StrapsForm = ({ strap, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -183,6 +178,7 @@ const StrapsForm = ({ strap, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

@@ -20,6 +20,7 @@ import {
 import LanguagePanel from '../language-panel';
 import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { languages } = config;
 
@@ -103,6 +104,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
@@ -162,6 +164,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 title={config.buttonTitles.CREATE_SLIDE_TITLE}
                 values={values}
                 errors={errors}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

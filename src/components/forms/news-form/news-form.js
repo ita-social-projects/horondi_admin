@@ -15,6 +15,7 @@ import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
 import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const map = require('lodash/map');
 
@@ -122,6 +123,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleLoadAuthorImage = (files) => {
@@ -166,6 +168,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 type='submit'
                 onClickHandler={handleSubmit}
                 title={SAVE_TITLE}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
                 values={values}
                 errors={errors}
