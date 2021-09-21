@@ -419,11 +419,11 @@ const ProductForm = ({ isEdit }) => {
             </Box>
             <Box mt={3} ml={1}>
               <ProductMaterialsContainer
-                innerMaterials={materials.inner}
+                innerMaterials={materials?.inner || []}
                 innerColors={innerColors}
-                mainMaterials={materials.main}
+                mainMaterials={materials?.main || []}
                 mainColors={mainColors}
-                bottomMaterials={materials.bottom}
+                bottomMaterials={materials?.bottom || []}
                 bottomColors={bottomColors}
                 values={values}
                 errors={errors}
