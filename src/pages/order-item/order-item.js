@@ -7,7 +7,7 @@ import { noop } from 'lodash';
 import { config } from '../../configs';
 import { useStyles } from './order-item.styles';
 import TabPanel from '../../components/tab-panel';
-import { Delivery, Recipient, Products, General } from './tabs';
+import { Delivery, RegisteredUser, Recipient, Products, General } from './tabs';
 import { getOrder } from '../../redux/orders/orders.actions';
 import LoadingBar from '../../components/loading-bar';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -26,7 +26,7 @@ const OrderItem = ({ id }) => {
   const { orderTabs } = labels;
   const { materialUiConstants } = config;
   const { SAVE_TITLE } = buttonTitles;
-  const { delivery, general, products, receiver } = orderTabs;
+  const { delivery, registeredUser, general, products, receiver } = orderTabs;
   const [tabValue, setTabValue] = useState(0);
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { selectedOrder, orderLoading } = useSelector(({ Orders }) => ({
@@ -80,8 +80,12 @@ const OrderItem = ({ id }) => {
     return <LoadingBar />;
   }
 
+  const eventPreventHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <form onSubmit={handleSubmit} className={classes.orderContainer}>
+    <form onSubmit={eventPreventHandler} className={classes.orderContainer}>
       <div className={classes.controlsBlock}>
         <div className={classes.buttonContainer}>
           <Grid container spacing={2} className={classes.fixedButtons}>
@@ -92,6 +96,7 @@ const OrderItem = ({ id }) => {
               <SaveButton
                 type={materialUiConstants.types.submit}
                 title={SAVE_TITLE}
+                onClickHandler={handleSubmit}
                 values={{
                   code: values.code,
                   uaTitle: values.uaTitle,
@@ -106,14 +111,21 @@ const OrderItem = ({ id }) => {
       <Paper>
         <Tabs value={tabValue} onChange={handleTabChange}>
           <Tab value={0} label={general} />
-          <Tab value={1} label={receiver} />
-          <Tab value={2} label={products} />
-          <Tab value={3} label={delivery} />
+          <Tab value={1} label={registeredUser} />
+          <Tab value={2} label={receiver} />
+          <Tab value={3} label={products} />
+          <Tab value={4} label={delivery} />
         </Tabs>
         <TabPanel value={tabValue} index={0}>
           <General data={values} handleChange={formikHandleChange} />
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
+          <RegisteredUser
+            userId={values.user_id}
+            setFieldValue={setFieldValue}
+          />
+        </TabPanel>
+        <TabPanel value={tabValue} index={2}>
           <Recipient
             data={{
               recipient: values.recipient,
@@ -122,13 +134,13 @@ const OrderItem = ({ id }) => {
             handleChange={formikHandleChange}
           />
         </TabPanel>
-        <TabPanel value={tabValue} index={2}>
+        <TabPanel value={tabValue} index={3}>
           <Products
             data={{ items: values.items }}
             setFieldValue={setFieldValue}
           />
         </TabPanel>
-        <TabPanel value={tabValue} index={3}>
+        <TabPanel value={tabValue} index={4}>
           <Delivery
             data={{ delivery: values.delivery }}
             handleChange={formikHandleChange}

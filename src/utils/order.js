@@ -13,6 +13,13 @@ export const recipientPropTypes = {
   handleChange: PropTypes.func.isRequired
 };
 
+export const registeredUserPropTypes = {
+  data: PropTypes.shape({
+    user_id: PropTypes.objectOf(PropTypes.string)
+  }),
+  setFieldValue: PropTypes.func.isRequired
+};
+
 export const productsPropTypes = {
   data: PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.object)
@@ -90,15 +97,15 @@ export const postPropTypes = {
 };
 
 const price = (item) => [
-    {
-      value: item.quantity * item.options.size.price[0].value,
-      currency: 'UAH'
-    },
-    {
-      value: item.quantity * item.options.size.price[1].value,
-      currency: 'USD'
-    }
-  ];
+  {
+    value: item.quantity * item.options.size.price[0].value,
+    currency: 'UAH'
+  },
+  {
+    value: item.quantity * item.options.size.price[1].value,
+    currency: 'USD'
+  }
+];
 
 const { deliveryTypes } = config;
 const items = (order) =>
@@ -116,6 +123,7 @@ const items = (order) =>
 export const newOrder = (order) => ({
   status: order.status,
   recipient: order.recipient,
+  user_id: order.user_id,
   delivery: address(order.delivery),
   items: items(order),
   paymentMethod: order.paymentMethod,
@@ -182,6 +190,8 @@ export const inputName = {
     cityId: 'delivery.ukrPost.cityId',
     courierOffice: 'delivery.ukrPost.courierOffice'
   },
+  userId: 'user_id',
+  noUser: 'Користувача не вибрано',
   isPaidInput: 'isPaid',
   itemsName: 'items',
   status: 'status',
@@ -200,6 +210,7 @@ export const initialValues = {
     email: '',
     phoneNumber: ''
   },
+  user_id: '',
   delivery: {
     sentBy: deliveryTypes.selfPickUp,
     courier: {
@@ -275,6 +286,7 @@ export const setFormValues = (selectedOrder) => {
     paymentMethod: selectedOrder.paymentMethod,
     isPaid: selectedOrder.isPaid,
     recipient: selectedOrder.recipient,
+    user_id: selectedOrder.user_id,
     delivery: {
       sentBy,
       courier: {

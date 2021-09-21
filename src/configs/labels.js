@@ -438,6 +438,7 @@ const labels = {
     patronymicName: 'По-батькові',
     email: 'e-mail',
     phoneNumber: 'Номер телефону',
+    id: 'id',
     commentary: 'Коментар'
   },
   deliveryDetails: {
@@ -533,6 +534,7 @@ const labels = {
   },
   orderTabs: {
     general: 'Загальне',
+    registeredUser: 'Користувач',
     receiver: 'Отримувач',
     products: 'Продукти',
     delivery: 'Доставка'

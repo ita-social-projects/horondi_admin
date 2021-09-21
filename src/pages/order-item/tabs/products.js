@@ -38,15 +38,14 @@ const Products = ({ data, setFieldValue }) => {
     setSelectedItem(null);
   };
 
-  const setSizeItems = (sizes) => (
-      sizes &&
-      sizes.length &&
-      sizes.map((item) => (
-        <MenuItem key={item.size._id} value={item.size._id}>
-          {item.size.name}
-        </MenuItem>
-      ))
-    );
+  const setSizeItems = (sizes) =>
+    sizes &&
+    sizes.length &&
+    sizes.map((item) => (
+      <MenuItem key={item.size._id} value={item.size._id}>
+        {item.size.name}
+      </MenuItem>
+    ));
 
   const productItems =
     items &&
