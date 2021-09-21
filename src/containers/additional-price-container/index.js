@@ -1,3 +1,3 @@
-import AdditionalPrice from './additional-price-container';
+import AdditionalPriceContainer from './additional-price-container';
 
-export default AdditionalPrice;
+export default AdditionalPriceContainer;

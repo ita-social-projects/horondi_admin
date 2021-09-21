@@ -18,7 +18,7 @@ import {
   getLabelValue
 } from '../../utils/additionalPrice-helper';
 
-const AdditionalPrice = ({
+const AdditionalPriceContainer = ({
   values,
   labels,
   onChange,
@@ -95,7 +95,7 @@ const AdditionalPrice = ({
   );
 };
 
-AdditionalPrice.propTypes = {
+AdditionalPriceContainer.propTypes = {
   values: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string,
@@ -113,8 +113,8 @@ AdditionalPrice.propTypes = {
   onBlur: PropTypes.func.isRequired
 };
 
-AdditionalPrice.defaultProps = {
+AdditionalPriceContainer.defaultProps = {
   radio: false
 };
 
-export default AdditionalPrice;
+export default AdditionalPriceContainer;

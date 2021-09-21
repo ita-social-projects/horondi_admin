@@ -13,7 +13,7 @@ import { useStyles } from './basics-form.styles';
 import { addBasic, updateBasic } from '../../../redux/basics/basics.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import MaterialsContainer from '../../../containers/materials-container';
-import AdditionalPrice from '../../../containers/additional-price-container';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 import { getProductDetails } from '../../../redux/products/products.actions';
 import LanguagePanel from '../language-panel';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
@@ -255,7 +255,7 @@ const BasicsForm = ({ basic, id, edit }) => {
         {map(languages, (lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <AdditionalPrice
+        <AdditionalPriceContainer
           values={values}
           labels={labels}
           onChange={handleChange}

@@ -24,7 +24,7 @@ import {
   setBackColorsHandler
 } from '../../../utils/back-form';
 import MaterialsContainer from '../../../containers/materials-container';
-import AdditionalPrice from '../../../containers/additional-price-container';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 import {
   constructorObject,
@@ -284,7 +284,7 @@ const BackForm = ({ back, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
 
-          <AdditionalPrice
+          <AdditionalPriceContainer
             values={values}
             labels={labels}
             onChange={handleChange}
@@ -292,42 +292,6 @@ const BackForm = ({ back, id, edit }) => {
             errors={errors}
             touched={touched}
           />
-
-          {/* <Paper className={styles.additionalPricePaper}>
-            <Box>
-              <Typography>{enterPrice}</Typography>
-            </Box>
-            <TextField
-              data-cy='additionalPrice'
-              className={`
-                  ${styles.textField}
-                  ${styles.additionalPrice} 
-                  `}
-              id='additionalPrice'
-              variant='outlined'
-              label={getLabelValue(values, additionalPriceType)}
-              value={values.additionalPrice}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.additionalPrice && errors.additionalPrice}
-            />
-            {touched.additionalPrice && errors.additionalPrice && (
-              <div data-cy='additionalPrice-error' className={styles.error}>
-                {errors.additionalPrice}
-              </div>
-            )}
-            <TextField
-              id='outlined-basic'
-              variant='outlined'
-              label={convertationTitle}
-              className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
-                  `}
-              value={calculateAddittionalPriceValue(values, exchangeRate)}
-              disabled
-            />
-          </Paper> */}
         </form>
       )}
     </div>
