@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
 import useBackHandlers from '../../../utils/use-back-handlers';
@@ -24,6 +24,7 @@ import {
   setBackColorsHandler
 } from '../../../utils/back-form';
 import MaterialsContainer from '../../../containers/materials-container';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 import {
   constructorObject,
@@ -36,8 +37,20 @@ import {
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 
 const { IMG_URL } = config;
-const { backName, enterPrice, additionalPriceLabel, materialLabels } =
-  config.labels.back;
+const {
+  backName,
+  enterPrice,
+  additionalPriceLabel,
+  materialLabels,
+  additionalPriceType
+} = config.labels.back;
+const { convertationTitle } = config.titles.backTitles;
+const labels = {
+  enterPrice,
+  additionalPriceLabel,
+  additionalPriceType,
+  convertationTitle
+};
 const map = require('lodash/map');
 
 const {
@@ -62,8 +75,7 @@ const {
     backColor,
     additionalPriceRegExp
   },
-  imagePrefix,
-  materialUiConstants
+  imagePrefix
 } = config;
 const { pathToBacks } = config.routes;
 
@@ -272,32 +284,14 @@ const BackForm = ({ back, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
 
-          <Paper className={styles.additionalPrice}>
-            <Box>
-              <Typography>{enterPrice}</Typography>
-            </Box>
-            <TextField
-              data-cy='additionalPrice'
-              id='additionalPrice'
-              className={styles.textField}
-              variant={materialUiConstants.outlined}
-              type={materialUiConstants.types.number}
-              label={additionalPriceLabel}
-              value={values.additionalPrice}
-              inputProps={{ min: 0 }}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.additionalPrice && !!errors.additionalPrice}
-            />
-            {touched.additionalPrice && errors.additionalPrice && (
-              <div
-                data-cy={materialUiConstants.codeError}
-                className={styles.error}
-              >
-                {errors.additionalPrice}
-              </div>
-            )}
-          </Paper>
+          <AdditionalPriceContainer
+            values={values}
+            labels={labels}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
         </form>
       )}
     </div>

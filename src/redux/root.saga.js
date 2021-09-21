@@ -62,7 +62,6 @@ export function* rootSaga() {
     pocketsSaga(),
     positionSaga(),
     closuresSaga(),
-    basicsSaga(),
     strapsSaga(),
     currenciesSaga(),
     basicsSaga()

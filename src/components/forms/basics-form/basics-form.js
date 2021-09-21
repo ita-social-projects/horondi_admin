@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 
 import { find } from 'lodash';
@@ -13,6 +13,7 @@ import { useStyles } from './basics-form.styles';
 import { addBasic, updateBasic } from '../../../redux/basics/basics.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import MaterialsContainer from '../../../containers/materials-container';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 import { getProductDetails } from '../../../redux/products/products.actions';
 import LanguagePanel from '../language-panel';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
@@ -28,6 +29,14 @@ import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
+const { additionalPriceType } = config.labels.basicsPageLabel;
+const { convertationTitle } = config.titles.basicsTitles;
+const labels = {
+  enterPrice,
+  additionalPriceLabel,
+  additionalPriceType,
+  convertationTitle
+};
 const map = require('lodash/map');
 
 const {
@@ -51,8 +60,7 @@ const {
     basicColor,
     additionalPriceRegExp
   },
-  imagePrefix,
-  materialUiConstants
+  imagePrefix
 } = config;
 const { pathToBasics } = config.routes;
 
@@ -69,11 +77,8 @@ const BasicsForm = ({ basic, id, edit }) => {
     useBasicsHandlers();
 
   useEffect(() => {
-    dispatch(getProductDetails());
-  }, []);
-
-  useEffect(() => {
     basicImageHandler(basic, setBasicImage, imagePrefix);
+    dispatch(getProductDetails());
   }, [dispatch, basic]);
 
   const basicsValidationSchema = Yup.object().shape({
@@ -250,32 +255,14 @@ const BasicsForm = ({ basic, id, edit }) => {
         {map(languages, (lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <Paper className={styles.additionalPrice}>
-          <Box>
-            <Typography>{enterPrice}</Typography>
-          </Box>
-          <TextField
-            data-cy='additionalPrice'
-            id='additionalPrice'
-            className={styles.textField}
-            variant={materialUiConstants.outlined}
-            type={materialUiConstants.types.number}
-            label={additionalPriceLabel}
-            value={values.additionalPrice}
-            inputProps={{ min: 0 }}
-            error={touched.additionalPrice && !!errors.additionalPrice}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {touched.additionalPrice && errors.additionalPrice && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
-            >
-              {errors.additionalPrice}
-            </div>
-          )}
-        </Paper>
+        <AdditionalPriceContainer
+          values={values}
+          labels={labels}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+        />
       </form>
     </div>
   );
@@ -297,14 +284,23 @@ BasicsForm.propTypes = {
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
-    name: PropTypes.arrayOf(valueShape)
+    name: PropTypes.arrayOf(valueShape),
+    additionalPrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        currency: PropTypes.string,
+        value: PropTypes.number
+      })
+    )
   }),
   values: PropTypes.shape({
     basicImage: PropTypes.string,
     material: PropTypes.string,
     color: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string
+    enName: PropTypes.string,
+    additionalPrice: PropTypes.number,
+    additionalPriceType: PropTypes.string
   }),
   errors: PropTypes.shape({
     basicImage: PropTypes.string,
@@ -370,8 +366,8 @@ BasicsForm.defaultProps = {
       }
     },
     additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
+      { value: null, currency: '', type: '' },
+      { value: null, currency: '', type: '' }
     ],
     available: false
   },
