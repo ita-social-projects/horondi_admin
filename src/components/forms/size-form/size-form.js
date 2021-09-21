@@ -40,6 +40,8 @@ import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import { getModels } from '../../../redux/model/model.actions';
 import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
 
+import Tooltip from '../../tooltip';
+
 const { selectTitle, modelTitle, convertationTitle } =
   config.titles.sizesTitles;
 const labels = config.labels.sizeLabels;
@@ -254,7 +256,9 @@ function SizeForm({ id, size }) {
                       label={additionalPriceType.relativePrice[0].value}
                       key={1}
                       control={<Radio />}
-                    />
+                    >
+                      <Tooltip arrow title='Hello world' />
+                    </FormControlLabel>
                   </RadioGroup>
                 </FormControl>
                 <TextField
