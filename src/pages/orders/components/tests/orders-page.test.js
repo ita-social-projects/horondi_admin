@@ -177,7 +177,6 @@ describe('Testing filters', () => {
         .props()
         .onChange({ target: { value: 'test' } });
 
-      console.log(mockSetCurrentPage.mock.calls.length);
       expect(mockSetCurrentPage).toHaveBeenCalled();
       expect(mockSetOrderFilter).toHaveBeenCalled();
     });

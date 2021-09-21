@@ -142,12 +142,6 @@ describe('Testing filters', () => {
       props = { handler };
 
       wrapper = mount(<Search {...props} />);
-      // act(() => {
-      //   wrapper
-      //     .find(InputBase)
-      //     .props()
-      //     .onChange({ target: { value: 'test' } });
-      // });
       wrapper.find(IconButton).props().onClick();
 
       expect(handler).toHaveBeenCalled();
