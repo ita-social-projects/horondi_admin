@@ -139,20 +139,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   ];
 
   const handleImageLoad = (files) => {
-    // if (files && files[0]) {
-    //   const reader = new FileReader();
-    //   reader.onload = (event) => {
-    //     setFieldValue('slideImage', event.target.result);
-    //     setSlideImage(event.target.result);
-    //   };
-    //   reader.readAsDataURL(files[0]);
-    //   setUpload(files[0]);
-    // }
-
     imageHandler(files, setUploadImage, values, slideImage);
   };
-
-  // console.log(imageHandler);
 
   const inputs = [
     { label: config.labels.homePageSlide.title, name: 'title' },
@@ -206,11 +194,11 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 src={uploadImage.imageUrl}
                 id={imageInput}
               />
-              {/* {slideImage && (
+              {slideImage && (
                 <Avatar src={slideImage}>
                   <Image />
                 </Avatar>
-              )} */}
+              )}
             </div>
             <TextField
               data-cy='link'
