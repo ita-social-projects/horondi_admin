@@ -7,25 +7,25 @@ import PropTypes from 'prop-types';
 
 import { useStyles } from './tooltip.styles';
 
-const placementCases = ['left', 'top', 'bottom', 'right'];
+export const placementCases = ['left', 'top', 'bottom', 'right'];
 
-const TooltipTitle = ({ text, children }) => {
+export const TooltipTitle = ({ text, children }) => {
   const classes = useStyles();
 
   return (
     <>
-      {text.split('\n').map((message) => (
-        <>
+      {text.split('\n').map((message, index) => (
+        <div key={`tooltip-title-${index}`}>
           <span>{message}</span>
           <br />
-        </>
+        </div>
       ))}
       {children && <div className={classes.description}>{children}</div>}
     </>
   );
 };
 
-const TooltipButton = ({ title, placement, children }) => (
+export const TooltipButton = ({ title, placement, children }) => (
   <Tooltip
     title={<TooltipTitle text={title}>{children}</TooltipTitle>}
     arrow
