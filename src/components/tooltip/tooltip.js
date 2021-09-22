@@ -5,6 +5,8 @@ import HelpIcon from '@material-ui/icons/Help';
 
 import PropTypes from 'prop-types';
 
+const placementCases = ['left', 'top', 'bottom', 'right'];
+
 const TooltipTitle = ({ text }) => (
   <>
     {text.split('\n').map((message) => (
@@ -16,8 +18,12 @@ const TooltipTitle = ({ text }) => (
   </>
 );
 
-const TooltipButton = ({ title }) => (
-  <Tooltip title={<TooltipTitle text={title} />} arrow>
+const TooltipButton = ({ title, placement }) => (
+  <Tooltip
+    title={<TooltipTitle text={title} />}
+    arrow
+    placement={placementCases.includes(placement) ? placement : 'bottom'}
+  >
     <IconButton>
       <HelpIcon />
     </IconButton>
@@ -25,11 +31,13 @@ const TooltipButton = ({ title }) => (
 );
 
 TooltipButton.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
+  placement: PropTypes.string
 };
 
 TooltipButton.defaultProps = {
-  title: ''
+  title: '',
+  placement: ''
 };
 
 TooltipTitle.propTypes = {

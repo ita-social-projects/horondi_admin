@@ -263,7 +263,10 @@ function SizeForm({ id, size }) {
                           <span>
                             {additionalPriceType.relativePrice[0].value}
                           </span>
-                          <Tooltip title={RELATIVE_PRICE_EXPLANATION} />
+                          <Tooltip
+                            title={RELATIVE_PRICE_EXPLANATION}
+                            placement='right'
+                          />
                         </>
                       }
                       key={1}
