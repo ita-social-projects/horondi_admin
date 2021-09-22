@@ -1,3 +1,3 @@
-export const tableTranslations = {
-  ROWS_PER_PAGE: 'Кількість рядків:'
-};
+// export const tableTranslations = {
+//   ROWS_PER_PAGE: 'Кількість рядків:'
+// };

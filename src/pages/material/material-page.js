@@ -16,7 +16,7 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
-import { materialTranslations } from '../../translations/material.translations';
+import { materialTranslations } from '../../configs/error-modal-messages';
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './material-page.styles';
 import ColorsAutocomplete from '../../components/colors-autocomplete';

@@ -1,6 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { businessTranslations } from '../../translations/business.translations';
-import { newsTranslations } from '../../translations/news.translations';
+import { businessTranslations , newsTranslations } from '../../configs/error-modal-messages';
 
 export const getAllBusinessPages = async () => {
   const getAllBusinessPagesQuery = `

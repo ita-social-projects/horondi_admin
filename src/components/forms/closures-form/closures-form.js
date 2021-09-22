@@ -26,15 +26,16 @@ import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-che
 const { convertationTitle } = config.titles.backTitles;
 const labels = { ...config.labels.closuresPageLabel, convertationTitle };
 
+const { PHOTO_NOT_PROVIDED } = config.closuresErrorMessages;
+
 const {
-  CLOSURES_ERROR_MESSAGE,
-  CLOSURES_UA_NAME_MESSAGE,
-  CLOSURES_EN_NAME_MESSAGE,
-  PHOTO_NOT_PROVIDED,
-  CLOSURES_MAX_LENGTH_MESSAGE,
-  CLOSURES_MIN_LENGTH_MESSAGE,
-  CLOSURES_PRICE_ERROR
-} = config.closuresErrorMessages;
+  ERROR_MESSAGE,
+  UA_NAME_MESSAGE,
+  EN_NAME_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  MIN_LENGTH_MESSAGE,
+  PRICE_ERROR
+} = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages, IMG_URL } = config;
@@ -51,19 +52,19 @@ const ClosuresForm = ({ closure, id, edit }) => {
 
   const closuresValidationSchema = Yup.object().shape({
     uaName: Yup.string()
-      .min(2, CLOSURES_MIN_LENGTH_MESSAGE)
-      .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
-      .required(CLOSURES_ERROR_MESSAGE)
-      .matches(uaNameCreation, CLOSURES_UA_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, CLOSURES_MIN_LENGTH_MESSAGE)
-      .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
-      .required(CLOSURES_ERROR_MESSAGE)
-      .matches(enNameCreation, CLOSURES_EN_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, EN_NAME_MESSAGE),
     additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
-      .required(CLOSURES_ERROR_MESSAGE)
-      .matches(config.formRegExp.onlyPositiveFloat, CLOSURES_PRICE_ERROR)
+      .required(ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
       .nullable(),
 
     available: Yup.boolean(),

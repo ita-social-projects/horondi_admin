@@ -21,11 +21,9 @@ import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const {
-  REPLY_COMMENT_VALIDATION_ERROR,
-  REPLY_COMMENT_ERROR_MESSAGE,
-  MAX_LENGTH_MESSAGE
-} = config.replyCommentErrorMessages;
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, MAX_LENGTH_MESSAGE_300 } =
+  config.commonErrorMessages;
+
 const { SAVE_MESSAGE, SAVE_CHANGES } = config.messages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -46,9 +44,9 @@ const ReplyCommentForm = ({
 
   const replyCommentValidationSchema = Yup.object().shape({
     replyText: Yup.string()
-      .min(2, REPLY_COMMENT_VALIDATION_ERROR)
-      .max(300, MAX_LENGTH_MESSAGE)
-      .required(REPLY_COMMENT_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE_300)
+      .required(ERROR_MESSAGE),
     showReplyComment: Yup.bool()
   });
 

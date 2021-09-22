@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
-import { constructorTranslations } from '../../translations/constructor.translations';
+import { constructorTranslations } from '../../configs/error-modal-messages';
 
 const constructorElementRequest = `
   _id

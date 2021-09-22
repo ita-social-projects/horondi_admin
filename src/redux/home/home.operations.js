@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { homePageEditTranslations } from '../../translations/home-page-edit.translations';
+import { homePageEditTranslations } from '../../configs/error-modal-messages';
 
 const getHomePageLooksImages = async () => {
   const query = `

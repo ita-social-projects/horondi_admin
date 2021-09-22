@@ -14,6 +14,7 @@ import statuses from './statuses';
 import filterLabels from './filter-labels';
 import materialUiConstants from './material-ui-constants';
 import {
+  commonErrorMessages,
   loginErrorMessages,
   colorErrorMessages,
   contactErrorMessages,
@@ -30,13 +31,10 @@ import {
   constructorErrorMessages,
   statsErrorMessages,
   paginationInputErrorMessages,
-  commentErrorMessages,
-  replyCommentErrorMessages,
   sizeErrorMessages,
   businessPageErrorMessages,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages,
   basicsErrorMessages,
   strapsErrorMessages
 } from './error-messages';
@@ -233,6 +231,7 @@ export const config = {
   formRegExp,
   labels,
   titles,
+  commonErrorMessages,
   loginErrorMessages,
   colorErrorMessages,
   contactErrorMessages,
@@ -251,8 +250,6 @@ export const config = {
   homePageSlideErrorMessages,
   constructorErrorMessages,
   paginationInputErrorMessages,
-  commentErrorMessages,
-  replyCommentErrorMessages,
   filterLabels,
   materialUiConstants,
   sizeErrorMessages,
@@ -262,7 +259,6 @@ export const config = {
   inputNames,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages,
   basicsErrorMessages,
   strapsErrorMessages
 };

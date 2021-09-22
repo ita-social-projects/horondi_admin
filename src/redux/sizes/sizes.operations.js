@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { sizeTranslations } from '../../translations/sizes.translations';
+import { sizeTranslations } from '../../configs/error-modal-messages';
 
 export const getAllSizes = async (limit, skip, filter) => {
   const query = `

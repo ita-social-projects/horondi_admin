@@ -1,6 +1,6 @@
 import { getItems, setItems } from '../../utils/client';
 import { config } from '../../configs';
-import { commentsTranslations } from '../../translations/comments.translations';
+import { commentsTranslations } from '../../configs/error-modal-messages';
 import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');

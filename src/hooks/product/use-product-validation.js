@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { capitalize } from '@material-ui/core';
 import { config } from '../../configs';
-import { productsTranslations } from '../../translations/product.translations';
+import { productsTranslations } from '../../configs/error-modal-messages';
 
 const selectName = ({ name, validation, required }) =>
   required

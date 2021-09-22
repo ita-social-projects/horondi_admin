@@ -13,7 +13,7 @@ import {
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
-import { slidesTranslations } from '../../translations/home-page-slides.translations';
+import { slidesTranslations } from '../../configs/error-modal-messages';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import SlidesOrder from './slides-order';

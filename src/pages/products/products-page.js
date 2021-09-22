@@ -15,7 +15,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import LoadingBar from '../../components/loading-bar';
 
 import { config } from '../../configs';
-import { productsTranslations } from '../../translations/product.translations';
+import { productsTranslations } from '../../configs/error-modal-messages';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { selectProductsAndTable } from '../../redux/selectors/multiple.selectors';

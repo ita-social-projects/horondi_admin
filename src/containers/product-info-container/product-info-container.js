@@ -5,7 +5,7 @@ import { noop } from 'lodash';
 import { useStyles } from './product-info-container.styles';
 
 import { config } from '../../configs';
-import { productsTranslations } from '../../translations/product.translations';
+import { productsTranslations } from '../../configs/error-modal-messages';
 import LanguagePanel from '../../components/forms/language-panel';
 
 const {

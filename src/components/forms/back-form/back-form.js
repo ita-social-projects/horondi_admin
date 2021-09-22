@@ -54,16 +54,17 @@ const labels = {
 };
 const map = require('lodash/map');
 
+const { PHOTO_NOT_PROVIDED } = config.backErrorMessages;
+
 const {
-  BACK_ERROR_MESSAGE,
-  BACK_ERROR_ENGLISH_AND_DIGITS_ONLY,
-  PHOTO_NOT_PROVIDED,
-  BACK_EN_NAME_MESSAGE,
-  BACK_UA_NAME_MESSAGE,
-  BACK_PRICE_ERROR,
-  BACK_MAX_LENGTH_MESSAGE,
-  BACK_MIN_LENGTH_MESSAGE
-} = config.backErrorMessages;
+  MIN_LENGTH_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  ERROR_MESSAGE,
+  UA_NAME_MESSAGE,
+  EN_NAME_MESSAGE,
+  ERROR_ENGLISH_AND_DIGITS_ONLY,
+  PRICE_ERROR
+} = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -104,26 +105,26 @@ const BackForm = ({ back, id, edit }) => {
   );
   const backValidationSchema = Yup.object().shape({
     enName: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .max(50, BACK_MAX_LENGTH_MESSAGE)
-      .required(BACK_ERROR_MESSAGE)
-      .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, EN_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .max(50, BACK_MAX_LENGTH_MESSAGE)
-      .required(BACK_ERROR_MESSAGE)
-      .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, UA_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .matches(backMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BACK_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(backMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     color: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .matches(backColor, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BACK_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(backColor, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     additionalPrice: Yup.string()
-      .matches(additionalPriceRegExp, BACK_PRICE_ERROR)
-      .required(BACK_ERROR_MESSAGE)
+      .matches(additionalPriceRegExp, PRICE_ERROR)
+      .required(ERROR_MESSAGE)
       .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),

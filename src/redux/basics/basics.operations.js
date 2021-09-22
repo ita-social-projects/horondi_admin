@@ -1,5 +1,5 @@
 import { setItems, getItems } from '../../utils/client';
-import { basicsTranslations } from '../../translations/basics.translations';
+import { constructorTranslations } from '../../configs/error-modal-messages';
 
 export const getAllBasics = async (limit, skip, filter) => {
   const query = `
@@ -48,13 +48,13 @@ export const getAllBasics = async (limit, skip, filter) => {
   const result = await getItems(query, { limit, skip, filter });
 
   if (
-    Object.keys(basicsTranslations).includes(
+    Object.keys(constructorTranslations).includes(
       result?.data?.getAllBasics?.message
     )
   ) {
     throw new Error(
       `${result.data.getAllBasics.statusCode} ${
-        basicsTranslations[result.data.getAllBasics.message]
+        constructorTranslations[result.data.getAllBasics.message]
       }`
     );
   }
@@ -80,11 +80,13 @@ export const createBasic = async (payload) => {
   const result = await setItems(createQuery, payload);
 
   if (
-    Object.keys(basicsTranslations).includes(result?.data?.addBasic?.message)
+    Object.keys(constructorTranslations).includes(
+      result?.data?.addBasic?.message
+    )
   ) {
     throw new Error(
       `${result.data.addBasic.statusCode} ${
-        basicsTranslations[result.data.addBasic.message]
+        constructorTranslations[result.data.addBasic.message]
       }`
     );
   }
@@ -180,13 +182,13 @@ export const getBasicById = async (id) => {
   const result = await getItems(query, { id });
 
   if (
-    Object.keys(basicsTranslations).includes(
+    Object.keys(constructorTranslations).includes(
       result?.data?.getBasicById?.message
     )
   ) {
     throw new Error(
       `${result.data.getBasicById.statusCode} ${
-        basicsTranslations[result.data.getBasicById.message]
+        constructorTranslations[result.data.getBasicById.message]
       }`
     );
   }

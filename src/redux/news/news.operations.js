@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { newsTranslations } from '../../translations/news.translations';
+import { newsTranslations } from '../../configs/error-modal-messages';
 
 const getAllNews = async (skip, limit, filter) => {
   const query = `

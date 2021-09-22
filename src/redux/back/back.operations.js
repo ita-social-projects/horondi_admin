@@ -1,4 +1,4 @@
-import { backTranslations } from '../../translations/back.translations';
+import { backTranslations } from '../../configs/error-modal-messages';
 import { getItems, setItems } from '../../utils/client';
 
 export const getAllBacks = async (limit, skip, filter) => {

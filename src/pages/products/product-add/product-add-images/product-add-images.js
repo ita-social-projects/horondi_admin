@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './product-add-images.styles';
 import { config } from '../../../../configs/index';
 
-import { productsTranslations } from '../../../../translations/product.translations';
+import { productsTranslations } from '../../../../configs/error-modal-messages';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import useProductAddImages from '../../../../hooks/product/use-product-addimages';
 import {

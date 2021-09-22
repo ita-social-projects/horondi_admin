@@ -16,7 +16,7 @@ import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
 import routes from '../../configs/routes';
 import { LOCAL_STORAGE } from '../../consts/local-storage';
 import { AUTH_ERRORS } from '../../error-messages/auth';
-import { userTranslations } from '../../translations/user.translations';
+import { userTranslations } from '../../configs/error-modal-messages';
 
 const { pathToMainPage, pathToLogin } = routes;
 

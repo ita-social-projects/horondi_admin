@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 import { config } from '../../../src/configs';
-import { businessTranslations } from '../../../src/translations/business.translations.js';
+import { businessTranslations } from '../../../src/configs/error-modal-messages';
 import routes from '../../../src/configs/routes';
 import {
   getAllBusinessTexts,

@@ -17,7 +17,7 @@ import {
   setRowsPerPage
 } from '../../redux/table/table.actions';
 
-import { tableTranslations } from '../../translations/table.translations';
+import { tableTranslations } from '../../configs/error-modal-messages';
 import { selectTablePaginationCurrentRowsOptions } from '../../redux/selectors/table.selectors';
 
 const { ROWS_PER_PAGE } = tableTranslations;

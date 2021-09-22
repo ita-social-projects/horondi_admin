@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { categoryTranslations } from '../../translations/category.translations';
+import { categoryTranslations } from '../../configs/error-modal-messages';
 
 export const getAllCategories = async (filter, pagination, sort) => {
   const getAllCategoriesQuery = `

@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { patternTranslations } from '../../translations/pattern.translations';
+import { patternTranslations } from '../../configs/error-modal-messages';
 
 export const getAllPatterns = async (limit, skip, filter) => {
   const getAllPatternsQuery = `
