@@ -20,6 +20,7 @@ export const getAllBasics = async (limit, skip, filter) => {
 							additionalPrice {
 								currency
 								value
+                type
 							}
 							available
               features {
@@ -148,6 +149,7 @@ export const getBasicById = async (id) => {
           additionalPrice {
             currency
             value
+            type
           }
           available
           features {

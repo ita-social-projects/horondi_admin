@@ -39,6 +39,7 @@ import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import { getModels } from '../../../redux/model/model.actions';
 import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 import Tooltip from '../../tooltip';
 import { sizes } from '../../../configs/tooltip-titles';
@@ -57,6 +58,7 @@ const { additionalPriceType } = labels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
 const { pathToSizes } = config.routes;
+
 function SizeForm({ id, size }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
@@ -94,6 +96,7 @@ function SizeForm({ id, size }) {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     dispatch(getModels());
@@ -136,6 +139,7 @@ function SizeForm({ id, size }) {
                 title={config.buttonTitles.SAVE_SIZE_TITLE}
                 values={values}
                 errors={errors}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

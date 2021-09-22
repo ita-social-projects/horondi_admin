@@ -12,8 +12,10 @@ import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 import { getHeaderInitialValues } from '../../../utils/header-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const {
+  HEADER_MIN_LENGTH_MESSAGE,
   HEADER_VALIDATION_ERROR,
   HEADER_ERROR_MESSAGE,
   NOT_EN_NAME_MESSAGE,
@@ -45,8 +47,8 @@ const HeaderForm = ({ header, id }) => {
       .required(HEADER_ERROR_MESSAGE),
     priority: Yup.number().required(HEADER_ERROR_MESSAGE),
     link: Yup.string()
-      .min(2, HEADER_VALIDATION_ERROR)
-      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
+      .min(2, HEADER_MIN_LENGTH_MESSAGE)
+      .matches(config.formRegExp.pageCode, HEADER_VALIDATION_ERROR)
       .required(HEADER_ERROR_MESSAGE)
   });
 
@@ -64,6 +66,7 @@ const HeaderForm = ({ header, id }) => {
       }
     });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const eventPreventHandler = (e) => {
@@ -87,6 +90,7 @@ const HeaderForm = ({ header, id }) => {
                 title={config.buttonTitles.HEADER_SAVE_TITLE}
                 values={values}
                 errors={errors}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

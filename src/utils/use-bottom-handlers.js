@@ -4,7 +4,6 @@ import { config } from '../configs';
 const { languages } = config;
 
 const useBottomHandlers = () => {
-  const getIdFromItem = (item) => item._id;
   const [color, setColor] = useState([]);
   const [bottomImage, setBottomImage] = useState('');
   const [upload, setUpload] = useState({});
@@ -26,12 +25,14 @@ const useBottomHandlers = () => {
       color: values.color
     },
     available: values.available,
-    additionalPrice: values.additionalPrice,
+    additionalPrice: {
+      value: +values.additionalPrice,
+      type: values.additionalPriceType
+    },
     optionType: 'BOTTOM'
   });
 
   return {
-    getIdFromItem,
     color,
     setColor,
     bottomImage,

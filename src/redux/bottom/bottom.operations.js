@@ -80,12 +80,14 @@ export const getBottomById = async (id) => {
                 optionType
                 features {
                   material {
+                    _id
                     name {
                       lang
                       value
                     }
                   }
                   color {
+                    _id
                     name {
                       lang
                       value

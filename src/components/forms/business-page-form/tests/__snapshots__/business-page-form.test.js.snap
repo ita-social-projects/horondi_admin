@@ -31,6 +31,7 @@ exports[`Straps form tests Should match snapshot 1`] = `
         <SaveButton
           color="primary"
           data-cy="save-btn"
+          disabled={true}
           errors={Object {}}
           id="save"
           onClickHandler={[MockFunction]}
@@ -40,7 +41,9 @@ exports[`Straps form tests Should match snapshot 1`] = `
           values={
             Object {
               "code": "some code",
+              "enText": "some text",
               "enTitle": "some title",
+              "uaText": "some text",
               "uaTitle": "some title",
             }
           }

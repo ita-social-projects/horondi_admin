@@ -2,16 +2,13 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Paper, Grid, Box, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
 
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
 import { useStyles } from './straps-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
@@ -23,13 +20,9 @@ import CheckboxOptions from '../../checkbox-options';
 import { getColors } from '../../../redux/color/color.actions';
 import useStrapsHandlers from '../../../utils/use-straps-handlers';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import {
-  calculateAddittionalPriceValue,
-  getLabelValue
-} from '../../../utils/additionalPrice-helper';
-import { getCurrencies } from '../../../redux/currencies/currencies.actions';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const labels = config.labels.strapsPageLabel;
 const {
   STRAPS_VALIDATION_ERROR,
   STRAPS_ERROR_MESSAGE,
@@ -47,11 +40,11 @@ const { enNameCreation, uaNameCreation, additionalPriceRegExp } =
 const { materialUiConstants } = config;
 const { pathToStraps } = config.routes;
 const { convertationTitle } = config.titles.strapsTitles;
+const labels = { ...config.labels.strapsPageLabel, convertationTitle };
 
 const StrapsForm = ({ strap, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
   const { createStraps, setUpload, upload, strapImage, setStrapImage } =
     useStrapsHandlers();
 
@@ -64,7 +57,6 @@ const StrapsForm = ({ strap, id, edit }) => {
         }
       })
     );
-    dispatch(getCurrencies());
   }, [dispatch]);
 
   const { colorsList } = useSelector(({ Color }) => ({
@@ -123,6 +115,7 @@ const StrapsForm = ({ strap, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -185,6 +178,7 @@ const StrapsForm = ({ strap, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>
@@ -239,59 +233,14 @@ const StrapsForm = ({ strap, id, edit }) => {
             </div>
           )}
         </Paper>
-        <Paper className={styles.additionalPricePaper}>
-          <FormControl component='fieldset'>
-            <RadioGroup
-              name='additionalPriceType'
-              className={styles.textField}
-              onChange={handleChange}
-              value={values.additionalPriceType}
-            >
-              <FormControlLabel
-                value='ABSOLUTE_INDICATOR'
-                label={labels.additionalPriceType.absolutePrice[0].value}
-                control={<Radio />}
-                key={2}
-              />
-              <FormControlLabel
-                value='RELATIVE_INDICATOR'
-                label={labels.additionalPriceType.relativePrice[0].value}
-                control={<Radio />}
-                key={1}
-              />
-            </RadioGroup>
-          </FormControl>
-          <TextField
-            data-cy='additionalPrice'
-            className={`
-                  ${styles.textField}
-                  ${styles.additionalPrice} 
-                  `}
-            id='additionalPrice'
-            variant='outlined'
-            label={getLabelValue(values, labels.additionalPriceType)}
-            value={values.additionalPrice}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.additionalPrice && errors.additionalPrice}
-          />
-          {touched.additionalPrice && errors.additionalPrice && (
-            <div data-cy='additionalPrice-error' className={styles.error}>
-              {errors.additionalPrice}
-            </div>
-          )}
-          <TextField
-            id='outlined-basic'
-            variant='outlined'
-            label={convertationTitle}
-            className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
-                  `}
-            value={calculateAddittionalPriceValue(values, exchangeRate)}
-            disabled
-          />
-        </Paper>
+        <AdditionalPriceContainer
+          values={values}
+          labels={labels}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+        />
         <Paper className={styles.inputPanel}>
           {languages.map((lang) => (
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />

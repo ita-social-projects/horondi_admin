@@ -80,7 +80,8 @@ export const categoryErrorMessages = {
   CATEGORY_CODE_MESSAGE: 'Поле не може містити спеціальні символи'
 };
 export const headerErrorMessages = {
-  HEADER_VALIDATION_ERROR: 'Мінімум 2 символи',
+  HEADER_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
+  HEADER_VALIDATION_ERROR: 'Введіть посилання для сторінки',
   HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
   HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   NOT_UA_NAME_MESSAGE: `Введіть ім'я посилання українською`,
@@ -160,8 +161,12 @@ export const sizeErrorMessages = {
 export const colorErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
-  COLOR_VALIDATION_ERROR: 'Неправильний формат кольору',
-  VALIDATION_ERROR: 'Поле обовязкове'
+  COLOR_VALIDATION_ERROR: `Неправильний формат кольору`,
+  VALIDATION_ERROR: `Поле обов'язкове`,
+  NOT_EN_NAME_MESSAGE: `Поле може містити тільки англійські літери та цифри`,
+  NOT_UA_NAME_MESSAGE: `Поле може містити тільки українські літери та цифри`,
+  NOT_EN_SIMPLE_NAME_MESSAGE: `Введіть просту назву кольору англійською`,
+  NOT_UA_SIMPLE_NAME_MESSAGE: `Введіть просту назву кольору українською`
 };
 export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'
@@ -203,6 +208,7 @@ export const replyCommentErrorMessages = {
 
 export const businessPageErrorMessages = {
   ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
+  CODE_ERROR_MESSAGE: 'Поле не може бути порожнім',
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
   ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки',
   ENTER_UA_MESSAGE: 'Поле може містити тільки українські літери та цифри',
@@ -220,7 +226,8 @@ export const pocketsErrorMessages = {
     'Поле може містити тільки англійські літери та цифри',
   POCKETS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
   POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
-  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропонованого списку'
+  POCKETS_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
+  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку'
 };
 
 export const strapsErrorMessages = {
