@@ -258,7 +258,7 @@ function SizeForm({ id, size }) {
                           <span>
                             {additionalPriceType.relativePrice[0].value}
                           </span>
-                          <Tooltip arrow title='Hello world' />
+                          <Tooltip title='lorem ipsum dolor sit amet.' />
                         </>
                       }
                       key={1}
