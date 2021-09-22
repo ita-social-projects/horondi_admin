@@ -1,6 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
+  withTooltip: {
+    display: 'grid',
+    gridTemplateColumns: '1fr auto',
+    alignItems: 'center'
+  },
+  textFieldWithTooltip: {
+    margin: '0px',
+    width: '100%',
+    '& div': {
+      '& textarea': {
+        padding: '0 1rem'
+      }
+    }
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: '120px',
@@ -100,9 +114,7 @@ export const useStyles = makeStyles((theme) => ({
     width: '390px',
     margin: '10px',
     '@media (max-width: 900px)': {
-      width: '300px',
-      display: 'block',
-      margin: 'auto'
+      width: '300px'
     }
   },
   select: {

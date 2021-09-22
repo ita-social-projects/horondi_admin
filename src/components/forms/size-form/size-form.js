@@ -41,6 +41,10 @@ import { getModels } from '../../../redux/model/model.actions';
 import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
 
 import Tooltip from '../../tooltip';
+import { sizes } from '../../../configs/tooltip-titles';
+
+const { MODEL_EXPLANATION, RELATIVE_PRICE_EXPLANATION, PRICE_EXPLANATION } =
+  sizes;
 
 const { selectTitle, modelTitle, convertationTitle } =
   config.titles.sizesTitles;
@@ -203,11 +207,11 @@ function SizeForm({ id, size }) {
               </Paper>
             </div>
             <div className={styles.contentWrapper}>
-              <Paper className={styles.sizeItemAdd}>
+              <Paper className={`${styles.sizeItemAdd}`}>
                 <FormControl
                   variant={materialUiConstants.outlined}
                   className={`${styles.formControl} 
-                ${styles.purposeSelect}`}
+                ${styles.purposeSelect} ${styles.withTooltip}`}
                 >
                   <InputLabel
                     htmlFor={materialUiConstants.outlinedAgeNativeSimple}
@@ -232,6 +236,7 @@ function SizeForm({ id, size }) {
                       </MenuItem>
                     ))}
                   </Select>
+                  <Tooltip title={MODEL_EXPLANATION} />
                   {touched.modelId && errors.modelId && (
                     <div className={styles.inputError}>{errors.modelId}</div>
                   )}
@@ -258,7 +263,7 @@ function SizeForm({ id, size }) {
                           <span>
                             {additionalPriceType.relativePrice[0].value}
                           </span>
-                          <Tooltip title='lorem ipsum dolor sit amet.' />
+                          <Tooltip title={RELATIVE_PRICE_EXPLANATION} />
                         </>
                       }
                       key={1}
@@ -266,25 +271,32 @@ function SizeForm({ id, size }) {
                     />
                   </RadioGroup>
                 </FormControl>
-                <TextField
-                  data-cy='additionalPrice'
-                  id='additionalPrice'
-                  variant='outlined'
-                  className={`
-                  ${styles.textField} 
-                  ${styles.materialSelect} 
-                  `}
-                  label={getLabelValue(values, additionalPriceType)}
-                  value={values.additionalPrice}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.additionalPrice && !!errors.additionalPrice}
-                />
-                {touched.additionalPrice && errors.additionalPrice && (
-                  <div className={styles.inputError}>
-                    {errors.additionalPrice}
-                  </div>
-                )}
+                <FormControl
+                  variant={materialUiConstants.outlined}
+                  className={`${styles.formControl} 
+                  ${styles.purposeSelect} ${styles.withTooltip}`}
+                >
+                  <TextField
+                    data-cy='additionalPrice'
+                    id='additionalPrice'
+                    variant='outlined'
+                    className={`
+                    ${styles.textFieldWithTooltip}
+                    ${styles.materialSelect}
+                    `}
+                    label={getLabelValue(values, additionalPriceType)}
+                    value={values.additionalPrice}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.additionalPrice && !!errors.additionalPrice}
+                  />
+                  <Tooltip title={PRICE_EXPLANATION} />
+                  {touched.additionalPrice && errors.additionalPrice && (
+                    <div className={styles.inputError}>
+                      {errors.additionalPrice}
+                    </div>
+                  )}
+                </FormControl>
                 <TextField
                   className={`
                     ${styles.textField} 
