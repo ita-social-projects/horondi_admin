@@ -15,8 +15,7 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { sizesSelectorWithPagination } from '../../redux/selectors/sizes.selector';
-import useSizeFilters from '../../hooks/filters/useSizesFilters';
-import FilterNavbar from '../../components/filter-search-sort';
+import Filters from './filters/filters';
 
 const tableTitles = config.tableHeadRowTitles.sizes.sizesPageTitles;
 const { materialUiConstants } = config;
@@ -31,7 +30,6 @@ const Sizes = () => {
   const commonStyles = useCommonStyles();
   const styles = useStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const sizeFilters = useSizeFilters();
   const { sizesList, loading, itemsCount, filters, rowsPerPage, currentPage } =
     useSelector(sizesSelectorWithPagination);
   useEffect(() => {
@@ -98,7 +96,7 @@ const Sizes = () => {
           {CREATE_SIZE_TITLE}
         </Button>
       </div>
-      <FilterNavbar options={sizeFilters || {}} />
+      <Filters />
       {sizeItems?.length ? (
         <TableContainerGenerator
           pagination
