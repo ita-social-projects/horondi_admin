@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Paper, TextField, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
@@ -20,8 +20,10 @@ import {
 import LanguagePanel from '../language-panel';
 import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
 
 const { languages } = config;
+const { imagePrefix } = config;
 
 const {
   SLIDE_VALIDATION_ERROR,
@@ -36,10 +38,29 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const dispatch = useDispatch();
   const { discoverMoreTitle, discoverMoreSymbol } =
     config.titles.homePageSliderTitle;
-  const { slideImage, setSlideImage, createSlide, upload, setUpload } =
-    useHomePageSlideHandlers();
+  const {
+    slideImage,
+    setSlideImage,
+    createSlide,
+    upload,
+    setUpload,
+    uploadImage,
+    setUploadImage
+  } = useHomePageSlideHandlers();
 
   const { pathToHomePageSlides } = config.routes;
+
+  const {
+    imageUploadSlideInputsId: { imageInput, homePageImageInput }
+  } = config;
+
+  useEffect(() => {
+    if (slide.images.large) {
+      setUploadImage({
+        imgUrl: `${imagePrefix}${slide.images.large}`
+      });
+    }
+  }, [dispatch, slide]);
 
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
@@ -118,16 +139,20 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   ];
 
   const handleImageLoad = (files) => {
-    if (files && files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setFieldValue('slideImage', event.target.result);
-        setSlideImage(event.target.result);
-      };
-      reader.readAsDataURL(files[0]);
-      setUpload(files[0]);
-    }
+    // if (files && files[0]) {
+    //   const reader = new FileReader();
+    //   reader.onload = (event) => {
+    //     setFieldValue('slideImage', event.target.result);
+    //     setSlideImage(event.target.result);
+    //   };
+    //   reader.readAsDataURL(files[0]);
+    //   setUpload(files[0]);
+    // }
+
+    imageHandler(files, setUploadImage, values, slideImage);
   };
+
+  // console.log(imageHandler);
 
   const inputs = [
     { label: config.labels.homePageSlide.title, name: 'title' },
@@ -176,12 +201,16 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
               {config.labels.homePageSlide.image}
             </span>
             <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
-              {slideImage && (
+              <ImageUploadContainer
+                handler={handleImageLoad}
+                src={uploadImage.imageUrl}
+                id={imageInput}
+              />
+              {/* {slideImage && (
                 <Avatar src={slideImage}>
                   <Image />
                 </Avatar>
-              )}
+              )} */}
             </div>
             <TextField
               data-cy='link'

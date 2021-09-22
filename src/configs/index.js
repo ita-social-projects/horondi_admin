@@ -51,6 +51,7 @@ import {
   valueKeys,
   inputNames
 } from './news-form-helpers';
+import { imageUploadSlideInputsId } from './home-page-slide-helpers';
 
 export const config = {
   fetchPolicy: 'no-cache',
@@ -258,6 +259,7 @@ export const config = {
   sizeErrorMessages,
   businessPageErrorMessages,
   imageUploadNewsInputsId,
+  imageUploadSlideInputsId,
   valueKeys,
   inputNames,
   pocketsErrorMessages,
