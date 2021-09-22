@@ -5,22 +5,29 @@ import HelpIcon from '@material-ui/icons/Help';
 
 import PropTypes from 'prop-types';
 
+import { useStyles } from './tooltip.styles';
+
 const placementCases = ['left', 'top', 'bottom', 'right'];
 
-const TooltipTitle = ({ text }) => (
-  <>
-    {text.split('\n').map((message) => (
-      <>
-        <span>{message}</span>
-        <br />
-      </>
-    ))}
-  </>
-);
+const TooltipTitle = ({ text, children }) => {
+  const classes = useStyles();
 
-const TooltipButton = ({ title, placement }) => (
+  return (
+    <>
+      {text.split('\n').map((message) => (
+        <>
+          <span>{message}</span>
+          <br />
+        </>
+      ))}
+      {children && <div className={classes.description}>{children}</div>}
+    </>
+  );
+};
+
+const TooltipButton = ({ title, placement, children }) => (
   <Tooltip
-    title={<TooltipTitle text={title} />}
+    title={<TooltipTitle text={title}>{children}</TooltipTitle>}
     arrow
     placement={placementCases.includes(placement) ? placement : 'bottom'}
   >
@@ -32,20 +39,24 @@ const TooltipButton = ({ title, placement }) => (
 
 TooltipButton.propTypes = {
   title: PropTypes.string,
-  placement: PropTypes.string
+  placement: PropTypes.string,
+  children: PropTypes.node
 };
 
 TooltipButton.defaultProps = {
   title: '',
-  placement: ''
+  placement: '',
+  children: undefined
 };
 
 TooltipTitle.propTypes = {
-  text: PropTypes.string
+  text: PropTypes.string,
+  children: PropTypes.node
 };
 
 TooltipTitle.defaultProps = {
-  text: ''
+  text: '',
+  children: undefined
 };
 
 export default TooltipButton;

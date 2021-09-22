@@ -43,8 +43,12 @@ import { modelSelectorWithPagination } from '../../../redux/selectors/model.sele
 import Tooltip from '../../tooltip';
 import { sizes } from '../../../configs/tooltip-titles';
 
-const { MODEL_EXPLANATION, RELATIVE_PRICE_EXPLANATION, PRICE_EXPLANATION } =
-  sizes;
+const {
+  MODEL_EXPLANATION,
+  RELATIVE_PRICE_EXPLANATION,
+  PRICE_EXPLANATION,
+  PRICE_EXPLANATION_DESCRIPTION
+} = sizes;
 
 const { selectTitle, modelTitle, convertationTitle } =
   config.titles.sizesTitles;
@@ -293,7 +297,9 @@ function SizeForm({ id, size }) {
                     onBlur={handleBlur}
                     error={touched.additionalPrice && !!errors.additionalPrice}
                   />
-                  <Tooltip title={PRICE_EXPLANATION} />
+                  <Tooltip title={PRICE_EXPLANATION}>
+                    <span>{PRICE_EXPLANATION_DESCRIPTION}</span>
+                  </Tooltip>
                   {touched.additionalPrice && errors.additionalPrice && (
                     <div className={styles.inputError}>
                       {errors.additionalPrice}
