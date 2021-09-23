@@ -1,0 +1,73 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { noop } from 'lodash';
+import ContainerFilters from '../../../components/container-filters';
+import ComponentFilterClear from '../../../components/filters-components/filter-clear';
+import ComponentFilterDateRangePicker from '../../../components/filters-components/filter-date-range-picker';
+import ComponentFilterSinglePicker from '../../../components/filters-components/filter-single-picker';
+import filterLabels from '../../../configs/filter-labels';
+import {
+  clearOrderFilters,
+  setOrderFilter,
+  setOrderSort,
+  setOrderSortLabel
+} from '../../../redux/orders/orders.actions';
+import { sortLabel } from '../../../configs/sort';
+import { setCurrentPage } from '../../../redux/table/table.actions';
+import buttonTitles from '../../../configs/button-titles';
+import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
+import { paymentStatusFilterObj } from '../../../utils/order';
+import { config } from '../../../configs';
+import ComponentFilterSearch from '../../../components/filters-components/filter-search';
+
+function Filters() {
+  const { filters, sortLabel: sortValue } = useSelector(({ Orders }) => Orders);
+
+  const paymentOptions = [...paymentStatusFilterObj()];
+
+  return (
+    <ContainerFilters>
+      <ComponentFilterDateRangePicker
+        actionSetCurrentPage={setCurrentPage}
+        actionSetFilter={setOrderFilter}
+        filters={filters}
+      />
+      <ComponentFilterSinglePicker
+        actionSetCurrentPage={setCurrentPage}
+        actionSetSingleFilter={setOrderSort}
+        actionSetLabel={setOrderSortLabel}
+        value={sortValue}
+        options={filterLabels.orders.sortLabels}
+        label={sortLabel}
+      />
+      <ComponentFilterMultiplePicker
+        actionSetCurrentPage={setCurrentPage}
+        actionSetMultipleFilter={setOrderFilter}
+        selectorFunc={(selector) => ({ paymentStatus: selector })}
+        value={filters.paymentStatus}
+        options={paymentOptions}
+        label={buttonTitles.PAYMENT_STATUS}
+      />
+      <ComponentFilterMultiplePicker
+        actionSetCurrentPage={setCurrentPage}
+        actionSetMultipleFilter={setOrderFilter}
+        selectorFunc={(selector) => ({ status: selector })}
+        value={filters.status}
+        options={config.labels.orders.select}
+        label={buttonTitles.ORDER_STATUS}
+      />
+      <ComponentFilterSearch
+        actionSetCurrentPage={setCurrentPage}
+        actionSetSearchFilter={setOrderFilter}
+        value={filters.search}
+        selectorFunc={(selector) => ({ search: selector })}
+      />
+      <ComponentFilterClear
+        actionSetCurrentPage={setCurrentPage}
+        actionClearFilters={clearOrderFilters}
+      />
+    </ContainerFilters>
+  );
+}
+
+export default Filters;
