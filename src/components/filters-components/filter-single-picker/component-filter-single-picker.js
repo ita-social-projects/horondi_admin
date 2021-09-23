@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 import OptionPicker from '../../filters/option-picker';
 import { sortDirection } from '../../../configs/sort';
+import { setCurrentPage } from '../../../redux/table/table.actions';
 
 const ComponentFilterSinglePicker = ({
-  actionSetCurrentPage,
-  actionSetSingleFilter,
+  setFilterValue,
   actionSetLabel,
   value,
   options,
@@ -16,9 +16,9 @@ const ComponentFilterSinglePicker = ({
   const dispatch = useDispatch();
 
   const setSortFilter = ({ key, type, value }) => {
-    dispatch(actionSetCurrentPage(0));
+    dispatch(setCurrentPage(0));
     dispatch(
-      actionSetSingleFilter({
+      setFilterValue({
         [key]: sortDirection[type]
       })
     );
@@ -36,8 +36,7 @@ const ComponentFilterSinglePicker = ({
 };
 
 ComponentFilterSinglePicker.propTypes = {
-  actionSetCurrentPage: PropTypes.func.isRequired,
-  actionSetSingleFilter: PropTypes.func.isRequired,
+  setFilterValue: PropTypes.func.isRequired,
   actionSetLabel: PropTypes.func.isRequired,
   options: PropTypes.instanceOf(Array).isRequired,
   value: PropTypes.string,

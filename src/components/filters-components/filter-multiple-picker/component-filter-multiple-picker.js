@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import PickerOptions from '../../filters/options-picker';
+import { setCurrentPage } from '../../../redux/table/table.actions';
 
 const ComponentFilterMultiplePicker = ({
-  actionSetCurrentPage,
-  actionSetMultipleFilter,
+  setFilterValue,
   value,
   options,
   label,
@@ -15,8 +15,8 @@ const ComponentFilterMultiplePicker = ({
   const dispatch = useDispatch();
 
   const setPaymentStatusFilter = (selector) => {
-    dispatch(actionSetCurrentPage(0));
-    dispatch(actionSetMultipleFilter(selectorFunc(selector)));
+    dispatch(setCurrentPage(0));
+    dispatch(setFilterValue(selectorFunc(selector)));
   };
 
   return (
@@ -30,8 +30,7 @@ const ComponentFilterMultiplePicker = ({
 };
 
 ComponentFilterMultiplePicker.propTypes = {
-  actionSetCurrentPage: PropTypes.func.isRequired,
-  actionSetMultipleFilter: PropTypes.func.isRequired,
+  setFilterValue: PropTypes.func.isRequired,
   options: PropTypes.instanceOf(Array).isRequired,
   value: PropTypes.string,
   label: PropTypes.string,

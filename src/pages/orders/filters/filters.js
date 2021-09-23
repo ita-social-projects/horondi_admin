@@ -13,7 +13,6 @@ import {
   setOrderSortLabel
 } from '../../../redux/orders/orders.actions';
 import { sortLabel } from '../../../configs/sort';
-import { setCurrentPage } from '../../../redux/table/table.actions';
 import buttonTitles from '../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import { paymentStatusFilterObj } from '../../../utils/order';
@@ -28,44 +27,36 @@ function Filters() {
   return (
     <ContainerFilters>
       <ComponentFilterDateRangePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetFilter={setOrderFilter}
+        setFilterValue={setOrderFilter}
         filters={filters}
       />
       <ComponentFilterSinglePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetSingleFilter={setOrderSort}
+        setFilterValue={setOrderSort}
         actionSetLabel={setOrderSortLabel}
         value={sortValue}
         options={filterLabels.orders.sortLabels}
         label={sortLabel}
       />
       <ComponentFilterMultiplePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetMultipleFilter={setOrderFilter}
+        setFilterValue={setOrderFilter}
         selectorFunc={(selector) => ({ paymentStatus: selector })}
         value={filters.paymentStatus}
         options={paymentOptions}
         label={buttonTitles.PAYMENT_STATUS}
       />
       <ComponentFilterMultiplePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetMultipleFilter={setOrderFilter}
+        setFilterValue={setOrderFilter}
         selectorFunc={(selector) => ({ status: selector })}
         value={filters.status}
         options={config.labels.orders.select}
         label={buttonTitles.ORDER_STATUS}
       />
       <ComponentFilterSearch
-        actionSetCurrentPage={setCurrentPage}
-        actionSetSearchFilter={setOrderFilter}
+        setFilterValue={setOrderFilter}
         value={filters.search}
         selectorFunc={(selector) => ({ search: selector })}
       />
-      <ComponentFilterClear
-        actionSetCurrentPage={setCurrentPage}
-        actionClearFilters={clearOrderFilters}
-      />
+      <ComponentFilterClear actionClearFilters={clearOrderFilters} />
     </ContainerFilters>
   );
 }

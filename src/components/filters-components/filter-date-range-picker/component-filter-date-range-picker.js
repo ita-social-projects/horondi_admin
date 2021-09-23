@@ -3,18 +3,15 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import DateRangePicker from '../../filters/date-range-picker';
+import { setCurrentPage } from '../../../redux/table/table.actions';
 
-const ComponentFilterDateRangePicker = ({
-  actionSetCurrentPage,
-  actionSetFilter,
-  filters
-}) => {
+const ComponentFilterDateRangePicker = ({ setFilterValue, filters }) => {
   const dispatch = useDispatch();
 
   const setDateRangeFilter = (date) => {
-    dispatch(actionSetCurrentPage(0));
+    dispatch(setCurrentPage(0));
     dispatch(
-      actionSetFilter({
+      setFilterValue({
         dateFrom: date[0],
         dateTo: date[1]
       })
@@ -31,8 +28,7 @@ const ComponentFilterDateRangePicker = ({
 };
 
 ComponentFilterDateRangePicker.propTypes = {
-  actionSetCurrentPage: PropTypes.func.isRequired,
-  actionSetFilter: PropTypes.func.isRequired,
+  setFilterValue: PropTypes.func.isRequired,
   filters: PropTypes.objectOf({
     dateFrom: PropTypes.instanceOf(Date),
     dateTo: PropTypes.instanceOf(Date)

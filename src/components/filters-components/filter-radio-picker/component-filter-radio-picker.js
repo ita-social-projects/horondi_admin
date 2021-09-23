@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import OptionPicker from '../../filters/option-picker';
+import { setCurrentPage } from '../../../redux/table/table.actions';
 
 const ComponentFilterRadioPicker = ({
-  actionSetCurrentPage,
-  actionSetSingleFilter,
+  setFilterValue,
   actionSetLabel,
   value,
   options,
@@ -16,8 +16,8 @@ const ComponentFilterRadioPicker = ({
   const dispatch = useDispatch();
 
   const setSortFilter = ({ key, type, value }) => {
-    dispatch(actionSetCurrentPage(0));
-    dispatch(actionSetSingleFilter(selectorFunc(value)));
+    dispatch(setCurrentPage(0));
+    dispatch(setFilterValue(selectorFunc(value)));
     dispatch(actionSetLabel(value));
   };
 
@@ -32,8 +32,7 @@ const ComponentFilterRadioPicker = ({
 };
 
 ComponentFilterRadioPicker.propTypes = {
-  actionSetCurrentPage: PropTypes.func.isRequired,
-  actionSetSingleFilter: PropTypes.func.isRequired,
+  setFilterValue: PropTypes.func.isRequired,
   actionSetLabel: PropTypes.func.isRequired,
   options: PropTypes.instanceOf(Array).isRequired,
   selectorFunc: PropTypes.func.isRequired,
