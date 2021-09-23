@@ -13,7 +13,7 @@ import {
 import LoadingBar from '../../components/loading-bar';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
-import { slidesTranslations } from '../../configs/slides-translations';
+import { slidesMessages } from '../../configs/slides-messages';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import SlidesOrder from './slides-order';
@@ -67,9 +67,7 @@ const SlidesPage = () => {
           id={slidesItem.id}
           index={slidesItem.order}
           name={slidesItem.title[0].value || slideTitle}
-          available={
-            slidesItem.show ? slidesTranslations.YES : slidesTranslations.NO
-          }
+          available={slidesItem.show ? slidesMessages.YES : slidesMessages.NO}
           deleteHandler={() => slideDeleteHandler(slidesItem._id)}
           editHandler={() => {
             dispatch(push(`/home-page-slides/${slidesItem._id}`));

@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { colorsErrors } from '../../configs/error-modal-messages';
+import { colorsTranslations } from '../../configs/error-modal-messages';
 
 export const getAllColors = async () => {
   const query = `
@@ -47,10 +47,14 @@ export const getColorById = async (id) => {
     `;
   const result = await getItems(query, { id });
 
-  if (Object.keys(colorsErrors).includes(result?.data?.getColorById?.message)) {
+  if (
+    Object.keys(colorsTranslations).includes(
+      result?.data?.getColorById?.message
+    )
+  ) {
     throw new Error(
       `${result.data.getColorById.statusCode} ${
-        colorsErrors[result.data.getColorById.message]
+        colorsTranslations[result.data.getColorById.message]
       }`
     );
   }
@@ -82,10 +86,12 @@ export const createColor = async (payload) => {
     `;
   const result = await setItems(query, payload);
 
-  if (Object.keys(colorsErrors).includes(result?.data?.addColor?.message)) {
+  if (
+    Object.keys(colorsTranslations).includes(result?.data?.addColor?.message)
+  ) {
     throw new Error(
       `${result.data.addColor.statusCode} ${
-        colorsErrors[result.data.addColor.message]
+        colorsTranslations[result.data.addColor.message]
       }`
     );
   }
@@ -131,7 +137,9 @@ export const deleteColor = async (id) => {
 
   const result = await setItems(query, { id });
 
-  if (Object.keys(colorsErrors).includes(result?.data?.deleteColor?.message)) {
+  if (
+    Object.keys(colorsTranslations).includes(result?.data?.deleteColor?.message)
+  ) {
     throw new Error(
       `${result.data.deleteColor.statusCode} ${
         result.data.deleteColor[result.data.deleteColor.message]

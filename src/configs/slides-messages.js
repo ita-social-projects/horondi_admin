@@ -1,4 +1,4 @@
-export const slidesTranslations = {
+export const slidesMessages = {
   YES: 'так',
   NO: 'ні',
   nonAvailable: 'Не активні',

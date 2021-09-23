@@ -14,24 +14,25 @@ import statuses from './statuses';
 import filterLabels from './filter-labels';
 import materialUiConstants from './material-ui-constants';
 import { materialTranslations } from './material-translations';
-import { slidesTranslations } from './slides-translations';
+import { slidesMessages } from './slides-messages';
 import {
   constructorErrors,
   businessPageErrors,
-  bottomErrors,
+  bottomTranslations,
   categoryErrors,
-  colorsErrors,
-  contactErrors,
-  headerErrors,
+  colorsTranslations,
+  contactTranslations,
+  headerTranslations,
   modelErrors,
   newsErrors,
   patternErrors,
   homePageEditErrors,
   commentsErrors,
-  slidesErrors,
+  slidesTranslations,
   materialErrors,
   productsErrors,
   userTranslations,
+  backTranslations,
   errorStatuses
 } from './error-modal-messages';
 import {
@@ -293,18 +294,19 @@ export const config = {
   basicsErrorMessages,
   strapsErrorMessages,
   constructorErrors,
+  backTranslations,
   businessPageErrors,
-  bottomErrors,
+  bottomTranslations,
   categoryErrors,
-  colorsErrors,
-  contactErrors,
-  headerErrors,
+  colorsTranslations,
+  contactTranslations,
+  headerTranslations,
   modelErrors,
   newsErrors,
   patternErrors,
   homePageEditErrors,
   commentsErrors,
-  slidesErrors,
+  slidesMessages,
   materialErrors,
   productsErrors,
   userTranslations,

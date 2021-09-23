@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { slidesErrors } from '../../configs/error-modal-messages';
+import { slidesTranslations } from '../../configs/error-modal-messages';
 
 export const getAllSlides = async (skip, limit) => {
   const query = `
@@ -63,8 +63,12 @@ export const getSlideById = async (id) => {
 
   const result = await getItems(query, { id });
 
-  if (Object.keys(slidesErrors).includes(result?.data?.getSlideById?.message)) {
-    throw new Error(`${slidesErrors[result.data.getSlideById.message]}`);
+  if (
+    Object.keys(slidesTranslations).includes(
+      result?.data?.getSlideById?.message
+    )
+  ) {
+    throw new Error(`${slidesTranslations[result.data.getSlideById.message]}`);
   }
 
   return result?.data?.getSlideById;
@@ -114,8 +118,10 @@ export const createSlide = async (payload) => {
 
   const result = await setItems(query, payload);
 
-  if (Object.keys(slidesErrors).includes(result?.data?.addSlide?.message)) {
-    throw new Error(`${slidesErrors[result.data.addSlide.message]}`);
+  if (
+    Object.keys(slidesTranslations).includes(result?.data?.addSlide?.message)
+  ) {
+    throw new Error(`${slidesTranslations[result.data.addSlide.message]}`);
   }
 
   return result?.data?.addSlide;
@@ -152,10 +158,12 @@ export const updateSlide = async (payload) => {
 
   const result = await setItems(query, payload);
 
-  if (Object.keys(slidesErrors).includes(result?.data?.updateSlide?.message)) {
+  if (
+    Object.keys(slidesTranslations).includes(result?.data?.updateSlide?.message)
+  ) {
     throw new Error(
       `${result.data.updateSlide.statusCode} ${
-        slidesErrors[result.data.updateSlide.message]
+        slidesTranslations[result.data.updateSlide.message]
       }`
     );
   }
@@ -181,8 +189,10 @@ export const deleteSlide = async (id) => {
 
   const result = await setItems(query, { id });
 
-  if (Object.keys(slidesErrors).includes(result?.data?.deleteSlide?.message)) {
-    throw new Error(`${slidesErrors[result.data.deleteSlide.message]}`);
+  if (
+    Object.keys(slidesTranslations).includes(result?.data?.deleteSlide?.message)
+  ) {
+    throw new Error(`${slidesTranslations[result.data.deleteSlide.message]}`);
   }
 
   return result?.data?.deleteSlide;

@@ -14,9 +14,14 @@ export const businessPageErrors = {
   BUSINESS_TEXT_WITH_THIS_CODE_ALREADY_EXIST: 'Така сторінка вже існує!'
 };
 
-export const bottomErrors = {
+export const bottomTranslations = {
   BOTTOM_NOT_FOUND: 'Низ не знайдено!',
   BOTTOM_ALREADY_EXIST: 'Такий низ вже існує!'
+};
+
+export const backTranslations = {
+  BACK_NOT_FOUND: 'Спинку не знайдено!',
+  BACK_ALREADY_EXIST: 'Така спинка вже існує!'
 };
 
 export const categoryErrors = {
@@ -24,17 +29,17 @@ export const categoryErrors = {
   CATEGORY_ALREADY_EXIST: 'Така категорія вже існує!'
 };
 
-export const colorsErrors = {
+export const colorsTranslations = {
   COLOR_NOT_FOUND: 'Колір не знайдено!',
   COLOR_ALREADY_EXIST: 'Такий колір вже існує!'
 };
 
-export const contactErrors = {
+export const contactTranslations = {
   CONTACT_NOT_FOUND: 'Контакт не знайдено!',
   CONTACT_ALREADY_EXIST: 'Контакт з такими даними вже існує!'
 };
 
-export const headerErrors = {
+export const headerTranslations = {
   HEADER_NOT_FOUND: 'Посилання не знайдено!',
   HEADER_ALREADY_EXIST: 'Таке посилання вже існує!'
 };
@@ -69,7 +74,7 @@ export const commentsErrors = {
   REPLY_COMMENT_IS_NOT_PRESENT: 'Коментар не існує!'
 };
 
-export const slidesErrors = {
+export const slidesTranslations = {
   SLIDE_NOT_FOUND: 'Слайд не знайдено!',
   SLIDE_ALREADY_EXIST: 'Слайд з таким заголовком вже існує!',
   IMAGE_NOT_PROVIDED: 'Відсутнє зображення'

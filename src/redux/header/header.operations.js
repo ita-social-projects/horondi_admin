@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { headerErrors } from '../../configs/error-modal-messages';
+import { headerTranslations } from '../../configs/error-modal-messages';
 
 export const getAllHeaders = async () => {
   const query = `
@@ -44,11 +44,13 @@ export const getHeaderById = async (id) => {
   const result = await getItems(query, { id });
 
   if (
-    Object.keys(headerErrors).includes(result?.data?.getHeaderById?.message)
+    Object.keys(headerTranslations).includes(
+      result?.data?.getHeaderById?.message
+    )
   ) {
     throw new Error(
       `${result.data.getHeaderById.statusCode} ${
-        headerErrors[result.data.getHeaderById.message]
+        headerTranslations[result.data.getHeaderById.message]
       }`
     );
   }
@@ -72,10 +74,14 @@ export const deleteHeader = async (id) => {
 
   const result = await setItems(query, { id });
 
-  if (Object.keys(headerErrors).includes(result?.data?.deleteHeader?.message)) {
+  if (
+    Object.keys(headerTranslations).includes(
+      result?.data?.deleteHeader?.message
+    )
+  ) {
     throw new Error(
       `${result.data.deleteHeader.statusCode} ${
-        headerErrors[result.data.deleteHeader.message]
+        headerTranslations[result.data.deleteHeader.message]
       }`
     );
   }
@@ -105,10 +111,12 @@ export const createHeader = async (payload) => {
 
   const result = await setItems(query, payload);
 
-  if (Object.keys(headerErrors).includes(result?.data?.addHeader?.message)) {
+  if (
+    Object.keys(headerTranslations).includes(result?.data?.addHeader?.message)
+  ) {
     throw new Error(
       `${result.data.addHeader.statusCode} ${
-        headerErrors[result.data.addHeader.message]
+        headerTranslations[result.data.addHeader.message]
       }`
     );
   }
@@ -138,10 +146,14 @@ export const updateHeader = async ({ id, header, image }) => {
 
   const result = await setItems(query, { id, header, image });
 
-  if (Object.keys(headerErrors).includes(result?.data?.updateHeader?.message)) {
+  if (
+    Object.keys(headerTranslations).includes(
+      result?.data?.updateHeader?.message
+    )
+  ) {
     throw new Error(
       `${result.data.updateHeader.statusCode} ${
-        headerErrors[result.data.updateHeader.message]
+        headerTranslations[result.data.updateHeader.message]
       }`
     );
   }
