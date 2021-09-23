@@ -1,5 +1,5 @@
 import { setItems, getItems } from '../../utils/client';
-import { contactTranslations } from '../../translations/contact.translations';
+import { contactTranslations } from '../../configs/error-modal-messages';
 
 const getContacts = async (skip, limit) => {
   const query = `

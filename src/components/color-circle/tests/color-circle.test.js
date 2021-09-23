@@ -10,7 +10,6 @@ configure({ adapter: new Adapter() });
 
 describe('ColorCircle tests', () => {
   const mockOnDelete = jest.fn(noop);
-  // let className;
   let wrapper;
 
   beforeEach(() => {

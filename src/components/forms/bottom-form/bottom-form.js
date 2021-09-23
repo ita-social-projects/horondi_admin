@@ -49,16 +49,16 @@ const labels = {
 };
 const map = require('lodash/map');
 
+const { BOTTOM_UA_NAME_MESSAGE, PHOTO_NOT_PROVIDED, BOTTOM_EN_NAME_MESSAGE } =
+  config.bottomErrorMessages;
+
 const {
-  BOTTOM_ERROR_MESSAGE,
-  BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY,
-  PHOTO_NOT_PROVIDED,
-  BOTTOM_UA_NAME_MESSAGE,
-  BOTTOM_EN_NAME_MESSAGE,
-  BOTTOM_PRICE_ERROR,
-  BOTTOM_MAX_LENGTH_MESSAGE,
-  BOTTOM_MIN_LENGTH_MESSAGE
-} = config.bottomErrorMessages;
+  ERROR_ENGLISH_AND_DIGITS_ONLY,
+  MIN_LENGTH_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  PRICE_ERROR,
+  ERROR_MESSAGE
+} = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -90,28 +90,28 @@ const BottomForm = ({ bottom, id, edit }) => {
   }, [dispatch, bottom]);
 
   const bottomValidationSchema = Yup.object().shape({
-    enName: Yup.string()
-      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
-      .max(50, BOTTOM_MAX_LENGTH_MESSAGE)
-      .required(BOTTOM_ERROR_MESSAGE)
-      .matches(enNameCreation, BOTTOM_EN_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
-      .max(50, BOTTOM_MAX_LENGTH_MESSAGE)
-      .required(BOTTOM_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(uaNameCreation, BOTTOM_UA_NAME_MESSAGE),
+    enName: Yup.string()
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, BOTTOM_EN_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
-      .matches(backMaterial, BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BOTTOM_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(backMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     color: Yup.string()
-      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
-      .matches(backColor, BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BOTTOM_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(backColor, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
-      .required(BOTTOM_ERROR_MESSAGE)
-      .matches(config.formRegExp.onlyPositiveFloat, BOTTOM_PRICE_ERROR)
+      .required(ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
       .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),

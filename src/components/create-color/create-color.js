@@ -15,17 +15,18 @@ import useColorHandlers from '../../utils/use-color-handlers';
 import { selectColorLoading } from '../../redux/selectors/color.selectors';
 import { handleNameInLanguageTabs } from '../../utils/create-color';
 
-const { languages, colorErrorMessages, buttonTitles } = config;
+const { languages, colorErrorMessages, buttonTitles, commonErrorMessages } =
+  config;
 const {
   MAX_LENGTH_MESSAGE,
-  MIN_LENGTH_MESSAGE,
   COLOR_VALIDATION_ERROR,
-  VALIDATION_ERROR,
-  NOT_UA_NAME_MESSAGE,
-  NOT_EN_NAME_MESSAGE,
   NOT_EN_SIMPLE_NAME_MESSAGE,
   NOT_UA_SIMPLE_NAME_MESSAGE
 } = colorErrorMessages;
+
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, EN_NAME_MESSAGE, UA_NAME_MESSAGE } =
+  commonErrorMessages;
+
 const { CREATE_COLOR_TITLE } = buttonTitles;
 
 const { DEFAULT_CIRCLE } = config.colorCircleSizes;
@@ -43,26 +44,26 @@ const CreateColor = () => {
     uaName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
-      .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .matches(config.formRegExp.uaNameCreation, UA_NAME_MESSAGE)
+      .required(ERROR_MESSAGE),
     enName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
-      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .matches(config.formRegExp.enNameCreation, EN_NAME_MESSAGE)
+      .required(ERROR_MESSAGE),
     uaSimpleName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
       .matches(config.formRegExp.uaNameCreation, NOT_UA_SIMPLE_NAME_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .required(ERROR_MESSAGE),
     enSimpleName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
       .matches(config.formRegExp.enNameCreation, NOT_EN_SIMPLE_NAME_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .required(ERROR_MESSAGE),
     colorHex: Yup.string()
       .matches(config.formRegExp.hexString, COLOR_VALIDATION_ERROR)
-      .required(VALIDATION_ERROR)
+      .required(ERROR_MESSAGE)
   });
 
   const langValues = languages.map((lang) => ({

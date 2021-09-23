@@ -35,12 +35,10 @@ const filter = require('lodash/filter');
 
 const { languages } = config;
 const { SAVE_TITLE } = config.buttonTitles;
-const {
-  CONSTRUCTOR_VALIDATION_ERROR,
-  CONSTRUCTOR_ERROR_MESSAGE,
-  PHOTO_NOT_PROVIDED,
-  PRICE_VALIDATION_ERROR
-} = config.constructorErrorMessages;
+const { PHOTO_NOT_PROVIDED } = config.constructorErrorMessages;
+
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, PRICE_ERROR } =
+  config.commonErrorMessages;
 
 const {
   constructorName,
@@ -93,18 +91,14 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
   }, [dispatch]);
 
   const constructorValidationSchema = Yup.object().shape({
-    enName: Yup.string()
-      .min(2, CONSTRUCTOR_VALIDATION_ERROR)
-      .required(CONSTRUCTOR_ERROR_MESSAGE),
-    uaName: Yup.string()
-      .min(2, CONSTRUCTOR_VALIDATION_ERROR)
-      .required(CONSTRUCTOR_ERROR_MESSAGE),
-    material: Yup.string().required(CONSTRUCTOR_ERROR_MESSAGE),
-    color: Yup.string().required(CONSTRUCTOR_ERROR_MESSAGE),
+    enName: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE),
+    uaName: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE),
+    material: Yup.string().required(ERROR_MESSAGE),
+    color: Yup.string().required(ERROR_MESSAGE),
     image: Yup.string().required(PHOTO_NOT_PROVIDED),
     basePrice: Yup.string()
-      .matches(config.formRegExp.onlyPositiveDigits, PRICE_VALIDATION_ERROR)
-      .required(CONSTRUCTOR_ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveDigits, PRICE_ERROR)
+      .required(ERROR_MESSAGE)
   });
 
   const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =

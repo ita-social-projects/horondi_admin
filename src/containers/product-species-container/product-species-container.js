@@ -11,7 +11,7 @@ import {
 import { map, noop } from 'lodash';
 import { useSharedStyles } from '../shared.styles';
 
-import { productsTranslations } from '../../translations/product.translations';
+import { productsTranslations } from '../../configs/product-translations';
 import { config, formConstants } from '../../configs';
 
 const { selectsLabels } = config.labels.product;

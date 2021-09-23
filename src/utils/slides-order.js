@@ -1,8 +1,8 @@
-export const TranslAvailabilityHandler = (group, slidesTranslations) => {
+export const TranslAvailabilityHandler = (group, slidesMessages) => {
   if (group.title === 'available') {
-    return slidesTranslations.available;
+    return slidesMessages.available;
   }
-  return slidesTranslations.nonAvailable;
+  return slidesMessages.nonAvailable;
 };
 
 export const isDraggableHandler = (

@@ -12,7 +12,7 @@ import {
 } from './pattern.variables';
 import statuses from '../../../src/configs/statuses';
 import routes from '../../../src/configs/routes';
-import { patternTranslations } from '../../../src/translations/pattern.translations';
+import { patternTranlations } from '../../../src/configs/error-modal-messages';
 
 describe('pattern tests', () => {
   beforeEach(() => {
@@ -72,41 +72,41 @@ describe('pattern tests', () => {
     cy.get('[data-cy=add-pattern]').click();
     cy.get('[data-cy=save-btn]').click();
     cy.get('[data-cy=material-error]').contains(
-      config.patternErrorMessages.PATTERN_ERROR_MESSAGE
+      config.commonErrorMessages.ERROR_MESSAGE
     );
     cy.get('[data-cy=ua-name-error]').contains(
-      config.patternErrorMessages.PATTERN_ERROR_MESSAGE
+      config.commonErrorMessages.ERROR_MESSAGE
     );
     cy.get('[data-cy=ua-description-error]').contains(
-      config.patternErrorMessages.PATTERN_ERROR_MESSAGE
+      config.commonErrorMessages.ERROR_MESSAGE
     );
     cy.get('[data-cy=en-tab]').click();
     cy.get('[data-cy=en-description-error]').contains(
-      config.patternErrorMessages.PATTERN_ERROR_MESSAGE
+      config.commonErrorMessages.ERROR_MESSAGE
     );
     cy.get('[data-cy=en-name-error]').contains(
-      config.patternErrorMessages.PATTERN_ERROR_MESSAGE
+      config.commonErrorMessages.ERROR_MESSAGE
     );
     cy.get('[data-cy=material').type(wrongValue);
     cy.get('[data-cy=en-name]').type(wrongValue);
     cy.get('[data-cy=en-name-error]').contains(
-      config.patternErrorMessages.PATTERN_VALIDATION_ERROR
+      config.commonErrorMessages.MIN_LENGTH_MESSAGE
     );
     cy.get('[data-cy=en-description]').type(wrongValue);
     cy.get('[data-cy=en-description-error]').contains(
-      config.patternErrorMessages.PATTERN_VALIDATION_ERROR
+      config.commonErrorMessages.MIN_LENGTH_MESSAGE
     );
     cy.get('[data-cy=ua-tab]').click();
     cy.get('[data-cy=ua-name]').type(wrongValue);
     cy.get('[data-cy=ua-name-error]').contains(
-      config.patternErrorMessages.PATTERN_VALIDATION_ERROR
+      config.commonErrorMessages.MIN_LENGTH_MESSAGE
     );
     cy.get('[data-cy=ua-description]').type(wrongValue);
     cy.get('[data-cy=ua-description-error]').contains(
-      config.patternErrorMessages.PATTERN_VALIDATION_ERROR
+      config.commonErrorMessages.MIN_LENGTH_MESSAGE
     );
     cy.get('[data-cy=material-error]').contains(
-      config.patternErrorMessages.PATTERN_VALIDATION_ERROR
+      config.commonErrorMessages.MIN_LENGTH_MESSAGE
     );
   });
 
@@ -141,7 +141,7 @@ describe('pattern tests', () => {
     cy.wait(2000);
     cy.get('.MuiAlert-message').should('be.visible');
     cy.get('.MuiAlert-message').contains(
-      patternTranslations.PATTERN_ALREADY_EXIST
+      patternTranlations.PATTERN_ALREADY_EXIST
     );
   });
 
