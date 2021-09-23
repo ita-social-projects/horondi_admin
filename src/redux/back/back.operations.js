@@ -1,4 +1,4 @@
-import { backTranslations } from '../../translations/back.translations';
+import { backTranslations } from '../../configs/error-modal-messages';
 import { getItems, setItems } from '../../utils/client';
 
 export const getAllBacks = async (limit, skip, filter) => {
@@ -36,6 +36,7 @@ query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
       additionalPrice {
         currency
         value
+        type
       }
       available
       customizable
@@ -88,6 +89,7 @@ export const getBackById = async (id) => {
             additionalPrice {
                 currency
                 value
+                type
               }
             images {
               thumbnail

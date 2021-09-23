@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 import useClosuresHandlers from '../../../utils/use-closures-handlers';
 import { useStyles } from './closures-form.styles';
 import { BackButton, SaveButton } from '../../buttons';
@@ -24,27 +20,23 @@ import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import {
-  getLabelValue,
-  calculateAddittionalPriceValue
-} from '../../../utils/additionalPrice-helper';
-import { getCurrencies } from '../../../redux/currencies/currencies.actions';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const labels = config.labels.closuresPageLabel;
-const { additionalPriceType } = config.labels.closuresPageLabel;
+const { convertationTitle } = config.titles.backTitles;
+const labels = { ...config.labels.closuresPageLabel, convertationTitle };
 
-const {
-  CLOSURES_ERROR_MESSAGE,
-  CLOSURES_UA_NAME_MESSAGE,
-  CLOSURES_EN_NAME_MESSAGE,
-  PHOTO_NOT_PROVIDED,
-  CLOSURES_MAX_LENGTH_MESSAGE,
-  CLOSURES_MIN_LENGTH_MESSAGE,
-  CLOSURES_PRICE_ERROR
-} = config.closuresErrorMessages;
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, MAX_LENGTH_MESSAGE, PRICE_ERROR } =
+  config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
-const { convertationTitle } = config.titles.closuresTitles;
+
+const {
+  CLOSURES_EN_NAME_MESSAGE,
+  PHOTO_NOT_PROVIDED,
+  CLOSURES_UA_NAME_MESSAGE
+} = config.closuresErrorMessages;
+
 const { languages, IMG_URL } = config;
 
 const { enNameCreation, uaNameCreation } = config.formRegExp;
@@ -54,29 +46,24 @@ const ClosuresForm = ({ closure, id, edit }) => {
   const dispatch = useDispatch();
   const { createClosures, setUpload, upload, closuresImage, setClosuresImage } =
     useClosuresHandlers();
-  const exchangeRate = useSelector((state) => state.Currencies.exchangeRate);
-
-  useEffect(() => {
-    dispatch(getCurrencies());
-  }, []);
 
   const { pathToClosures } = config.routes;
 
   const closuresValidationSchema = Yup.object().shape({
-    uaName: Yup.string()
-      .min(2, CLOSURES_MIN_LENGTH_MESSAGE)
-      .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
-      .required(CLOSURES_ERROR_MESSAGE)
-      .matches(uaNameCreation, CLOSURES_UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, CLOSURES_MIN_LENGTH_MESSAGE)
-      .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
-      .required(CLOSURES_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(enNameCreation, CLOSURES_EN_NAME_MESSAGE),
     additionalPriceType: Yup.string(),
+    uaName: Yup.string()
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, CLOSURES_UA_NAME_MESSAGE),
     additionalPrice: Yup.string()
-      .required(CLOSURES_ERROR_MESSAGE)
-      .matches(config.formRegExp.onlyPositiveFloat, CLOSURES_PRICE_ERROR)
+      .required(ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
       .nullable(),
 
     available: Yup.boolean(),
@@ -112,6 +99,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -169,6 +157,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>
@@ -196,62 +185,14 @@ const ClosuresForm = ({ closure, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
         </div>
-        <>
-          <Paper className={styles.additionalPrice}>
-            <Box>
-              <Typography>{labels.enterPrice}</Typography>
-            </Box>
-            <FormControl component='fieldset'>
-              <RadioGroup
-                value={values.additionalPriceType}
-                name='additionalPriceType'
-                className={styles.textField}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  control={<Radio />}
-                  label={additionalPriceType.absolutePrice[0].value}
-                  key={2}
-                  value='ABSOLUTE_INDICATOR'
-                />
-                <FormControlLabel
-                  control={<Radio />}
-                  label={additionalPriceType.relativePrice[0].value}
-                  key={1}
-                  value='RELATIVE_INDICATOR'
-                />
-              </RadioGroup>
-            </FormControl>
-            <TextField
-              data-cy='additionalPrice'
-              className={`
-                  ${styles.textField} 
-                  ${styles.materialSelect} 
-                  `}
-              variant='outlined'
-              label={getLabelValue(values, additionalPriceType)}
-              value={values.additionalPrice}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              id='additionalPrice'
-              error={touched.additionalPrice && !!errors.additionalPrice}
-            />
-            {touched.additionalPrice && errors.additionalPrice && (
-              <div className={styles.inputError}>{errors.additionalPrice}</div>
-            )}
-            <TextField
-              id='outlined-basic'
-              className={`
-                  ${styles.textField} 
-                  ${styles.currencyField}
-                  `}
-              label={convertationTitle}
-              variant='outlined'
-              value={calculateAddittionalPriceValue(values, exchangeRate)}
-              disabled
-            />
-          </Paper>
-        </>
+        <AdditionalPriceContainer
+          values={values}
+          labels={labels}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+        />
       </form>
     </div>
   );

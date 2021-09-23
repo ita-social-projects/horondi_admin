@@ -18,7 +18,7 @@ import FilterNavbar from '../../components/filter-search-sort';
 import useBasicFilters from '../../hooks/filters/use-basic-filters';
 
 const { materialUiConstants } = config;
-const labels = config.labels.basiscPageLabel;
+const labels = config.labels.basicsPageLabel;
 const { pathToAddBasic } = config.routes;
 const { AVAILABLE_TEXT, UNAVAILABLE_TEXT } = config.basicsAvailableVariants;
 const { CREATE_BASIC_TITLE } = config.buttonTitles;
@@ -60,7 +60,7 @@ const BasicsPage = () => {
       name={basic?.name[0]?.value}
       material={basic?.features?.material?.name[0].value}
       color={basic?.features?.color?.name[0].value}
-      additionalPrice={basic?.additionalPrice[1]?.value / 100}
+      additionalPrice={basic?.additionalPrice[1]?.value}
       available={basic.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         basicDeleteHandler(basic._id);

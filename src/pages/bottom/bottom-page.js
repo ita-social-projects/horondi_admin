@@ -55,7 +55,6 @@ const BottomPage = () => {
     };
     openSuccessSnackbar(removeBottom, BOTTOM_REMOVE_MESSAGE);
   };
-
   const bottomItems = map(list, (bottomItem) => (
     <TableContainerRow
       image={
@@ -68,7 +67,7 @@ const BottomPage = () => {
       name={bottomItem.name[0].value}
       material={bottomItem.features.material.name[0].value}
       color={bottomItem.features.color.name[0].value}
-      additionalPrice={bottomItem.additionalPrice[1]?.value / 100}
+      additionalPrice={bottomItem.additionalPrice[1]?.value}
       available={bottomItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => bottomDeleteHandler(bottomItem._id)}
       editHandler={() => {

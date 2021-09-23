@@ -11,8 +11,6 @@ export const getClosuresInitialValues = (edit, IMG_URL, closure) => ({
   uaName: closure?.name[0].value || '',
   enName: closure?.name[1].value || '',
   additionalPrice: getAdditionalPriceValue(closure) || '',
-  // additionalPriceType:
-  //   closure?.additionalPrice[0]?.type || 'ABSOLUTE_INDICATOR',
   additionalPriceType: closure?.additionalPriceType || 'ABSOLUTE_INDICATOR',
   available: closure?.available || false
 });

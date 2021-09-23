@@ -15,6 +15,7 @@ import LanguagePanel from '../language-panel';
 import { useFormikInitialValues } from '../../../utils/news-form';
 import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const map = require('lodash/map');
 
@@ -23,9 +24,9 @@ const { SAVE_TITLE } = config.buttonTitles;
 const {
   NAME_MIN_LENGTH_MESSAGE,
   TITLE_MIN_LENGTH_MESSAGE,
-  TEXT_MIN_LENGTH_MESSAGE,
-  NEWS_ERROR_MESSAGE
+  TEXT_MIN_LENGTH_MESSAGE
 } = config.newsErrorMessages;
+const { ERROR_MESSAGE } = config.commonErrorMessages;
 const { imagePrefix } = config;
 const { authorName, title, text } = config.labels.news;
 const {
@@ -65,7 +66,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     const formObj = languages.reduce((reducer, lang) => {
       reducer[`${lang}Text`] = Yup.string()
         .min(17, TEXT_MIN_LENGTH_MESSAGE)
-        .required(NEWS_ERROR_MESSAGE);
+        .required(ERROR_MESSAGE);
       reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
         .matches(
@@ -74,14 +75,14 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
             `NOT_${lang.toUpperCase()}_AUTHOR_NAME_MESSAGE`
           ]
         )
-        .required(NEWS_ERROR_MESSAGE);
+        .required(ERROR_MESSAGE);
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
         .matches(
           config.formRegExp[`${lang}NameCreation`],
           config.newsErrorMessages[`NOT_${lang.toUpperCase()}_TITLE_MESSAGE`]
         )
-        .required(NEWS_ERROR_MESSAGE);
+        .required(ERROR_MESSAGE);
       return reducer;
     }, {});
 
@@ -122,6 +123,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleLoadAuthorImage = (files) => {
@@ -166,6 +168,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 type='submit'
                 onClickHandler={handleSubmit}
                 title={SAVE_TITLE}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
                 values={values}
                 errors={errors}

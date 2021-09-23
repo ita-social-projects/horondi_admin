@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { materialTranslations } from '../../translations/material.translations';
+import { materialTranslations } from '../../configs/error-modal-messages';
 
 export const getAllMaterials = async (skip, limit, filter) => {
   const query = `

@@ -25,7 +25,7 @@ import {
   updateProduct
 } from '../../../redux/products/products.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import { productsTranslations } from '../../../translations/product.translations';
+import { productsTranslations } from '../../../configs/product-translations';
 import DeleteButton from '../../buttons/delete-button';
 import { config } from '../../../configs';
 import { BackButton } from '../../buttons';
@@ -50,6 +50,7 @@ import {
   productFormValues
 } from '../../../consts/product-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { priceLabel } = config.labels.product;
 
@@ -74,7 +75,7 @@ const ProductForm = ({ isEdit }) => {
 
   const product = useSelector(({ Products }) => Products.selectedProduct);
 
-  const [isFieldsChanged, toggleFieldsChanged] = useState(false);
+  const toggleFieldsChanged = useState(false)[1];
 
   const [isMountedFirst, setFirstMount] = useState(false);
 
@@ -206,7 +207,9 @@ const ProductForm = ({ isEdit }) => {
     formikMaterialsValues
   );
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     if (isMountedFirst) {
       toggleFieldsChanged(true);
@@ -335,7 +338,7 @@ const ProductForm = ({ isEdit }) => {
               type={productFormValues.submit}
               variant={productFormValues.contained}
               color={checkboxesValues.primary}
-              disabled={!isFieldsChanged}
+              {...(isEdit ? { disabled: !changed } : {})}
               onClick={handleProductValidate}
             >
               {SAVE}
@@ -419,11 +422,11 @@ const ProductForm = ({ isEdit }) => {
             </Box>
             <Box mt={3} ml={1}>
               <ProductMaterialsContainer
-                innerMaterials={materials.inner}
+                innerMaterials={materials?.inner || []}
                 innerColors={innerColors}
-                mainMaterials={materials.main}
+                mainMaterials={materials?.main || []}
                 mainColors={mainColors}
-                bottomMaterials={materials.bottom}
+                bottomMaterials={materials?.bottom || []}
                 bottomColors={bottomColors}
                 values={values}
                 errors={errors}

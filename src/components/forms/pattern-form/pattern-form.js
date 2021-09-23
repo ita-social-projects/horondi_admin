@@ -39,6 +39,7 @@ import {
   useFormikInitialValues
 } from '../../../utils/pattern-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const {
   patternName,
@@ -51,16 +52,19 @@ const { materialUiConstants } = config;
 const map = require('lodash/map');
 
 const {
-  PATTERN_VALIDATION_ERROR,
   PATTERN_VALIDATION_ERROR_NAME,
   PATTERN_VALIDATION_ERROR_DESCRIPTION,
-  PATTERN_ERROR_MESSAGE,
-  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY,
   PHOTO_NOT_PROVIDED,
-  CONSTRUCTOR_PHOTO_NOT_PROVIDED,
-  PATTERN_EN_NAME_MESSAGE,
-  PATTERN_UA_NAME_MESSAGE
+  CONSTRUCTOR_PHOTO_NOT_PROVIDED
 } = config.patternErrorMessages;
+
+const {
+  MIN_LENGTH_MESSAGE,
+  ERROR_MESSAGE,
+  UA_NAME_MESSAGE,
+  EN_NAME_MESSAGE,
+  ERROR_ENGLISH_AND_DIGITS_ONLY
+} = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { modelTitle, convertationTitle } = config.titles.patternTitles;
@@ -110,42 +114,42 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     sizes: Yup.array().notRequired(),
     enDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR_DESCRIPTION)
-      .required(PATTERN_ERROR_MESSAGE)
+      .required(ERROR_MESSAGE)
       .max(1000, PATTERN_VALIDATION_ERROR_DESCRIPTION)
-      .required(PATTERN_ERROR_MESSAGE)
-      .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, EN_NAME_MESSAGE),
     enName: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR_NAME)
-      .required(PATTERN_ERROR_MESSAGE)
+      .required(ERROR_MESSAGE)
       .max(50, PATTERN_VALIDATION_ERROR_NAME)
-      .required(PATTERN_ERROR_MESSAGE)
-      .matches(enNameCreation, PATTERN_EN_NAME_MESSAGE),
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, EN_NAME_MESSAGE),
     uaDescription: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR_DESCRIPTION)
-      .required(PATTERN_ERROR_MESSAGE)
+      .required(ERROR_MESSAGE)
       .max(1000, PATTERN_VALIDATION_ERROR_DESCRIPTION)
-      .required(PATTERN_ERROR_MESSAGE)
-      .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, UA_NAME_MESSAGE),
     uaName: Yup.string()
       .min(2, PATTERN_VALIDATION_ERROR_NAME)
-      .required(PATTERN_ERROR_MESSAGE)
+      .required(ERROR_MESSAGE)
       .max(50, PATTERN_VALIDATION_ERROR_NAME)
-      .required(PATTERN_ERROR_MESSAGE)
-      .matches(uaNameCreation, PATTERN_UA_NAME_MESSAGE),
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, UA_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, PATTERN_VALIDATION_ERROR)
-      .matches(patternMaterial, PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(PATTERN_ERROR_MESSAGE),
-    modelId: Yup.string().required(PATTERN_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(patternMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
+    modelId: Yup.string().required(ERROR_MESSAGE),
     handmade: Yup.boolean(),
     patternImage: Yup.string().required(PHOTO_NOT_PROVIDED),
     patternConstructorImage: Yup.string().required(
       CONSTRUCTOR_PHOTO_NOT_PROVIDED
     ),
-    additionalPriceType: Yup.string().required(PATTERN_ERROR_MESSAGE),
+    additionalPriceType: Yup.string().required(ERROR_MESSAGE),
     additionalPrice: Yup.string()
-      .matches(config.formRegExp.onlyPositiveFloat, PATTERN_VALIDATION_ERROR)
-      .required(PATTERN_ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, MIN_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
   });
 
   const {
@@ -192,6 +196,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
@@ -254,6 +259,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     e.preventDefault();
   };
 
+  const idCondition = id ? { disabled: !changed } : {};
+
   return (
     <div>
       {loading ? (
@@ -274,6 +281,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   title={SAVE_TITLE}
                   values={values}
                   errors={errors}
+                  {...idCondition}
                 />
               </Grid>
             </Grid>

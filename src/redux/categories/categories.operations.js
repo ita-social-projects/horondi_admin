@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { categoryTranslations } from '../../translations/category.translations';
+import { categoryErrors } from '../../configs/error-modal-messages';
 
 export const getAllCategories = async (filter, pagination, sort) => {
   const getAllCategoriesQuery = `
@@ -67,13 +67,11 @@ export const getCategoryById = async (id) => {
   const result = await getItems(getCategoryByIdQuery, { id });
 
   if (
-    Object.keys(categoryTranslations).includes(
-      result?.data?.getCategoryById?.message
-    )
+    Object.keys(categoryErrors).includes(result?.data?.getCategoryById?.message)
   ) {
     throw new Error(
       `${result.data.getCategoryById.statusCode} ${
-        categoryTranslations[result.data.getCategoryById.message]
+        categoryErrors[result.data.getCategoryById.message]
       }`
     );
   }
@@ -123,13 +121,11 @@ export const createCategory = async (payload) => {
   const result = await setItems(query, payload);
 
   if (
-    Object.keys(categoryTranslations).includes(
-      result?.data?.addCategory?.message
-    )
+    Object.keys(categoryErrors).includes(result?.data?.addCategory?.message)
   ) {
     throw new Error(
       `${result.data.addCategory.statusCode} ${
-        categoryTranslations[result.data.addCategory.message]
+        categoryErrors[result.data.addCategory.message]
       }`
     );
   }
@@ -156,13 +152,11 @@ export const updateCategory = async (payload) => {
   const result = await setItems(query, payload);
 
   if (
-    Object.keys(categoryTranslations).includes(
-      result?.data?.updateCategory?.message
-    )
+    Object.keys(categoryErrors).includes(result?.data?.updateCategory?.message)
   ) {
     throw new Error(
       `${result.data.updateCategory.statusCode} ${
-        categoryTranslations[result.data.updateCategory.message]
+        categoryErrors[result.data.updateCategory.message]
       }`
     );
   }

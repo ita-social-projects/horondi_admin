@@ -36,7 +36,6 @@ jest.mock('formik', () => ({
 }));
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
 
-const mockSetUpload = jest.fn();
 const mockSetContactsImage = jest.fn();
 
 jest.mock('../../../../utils/contacts-form', () => ({

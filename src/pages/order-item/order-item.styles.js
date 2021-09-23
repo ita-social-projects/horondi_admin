@@ -18,6 +18,11 @@ export const useStyles = makeStyles((theme) => ({
     gridGap: '15px',
     padding: '20px 15px 10px'
   },
+  registeredUser: {
+    display: 'grid',
+    gridGap: '15px',
+    padding: '20px 15px 10px'
+  },
   delivery: {
     display: 'grid',
     gridGap: '15px',

@@ -14,7 +14,7 @@ const ProductsAdd = () => {
 
   const { loading, details } = useSelector(selectProductsLoadingAndDetails);
 
-  if (loading && !details.categories.length) {
+  if (loading && !details.categories?.length) {
     return <LoadingBar />;
   }
   return <ProductForm />;

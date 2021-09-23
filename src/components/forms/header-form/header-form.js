@@ -12,13 +12,12 @@ import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 import { getHeaderInitialValues } from '../../../utils/header-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const {
-  HEADER_VALIDATION_ERROR,
-  HEADER_ERROR_MESSAGE,
-  NOT_EN_NAME_MESSAGE,
-  NOT_UA_NAME_MESSAGE
-} = config.headerErrorMessages;
+const { HEADER_VALIDATION_ERROR, NOT_EN_NAME_MESSAGE, NOT_UA_NAME_MESSAGE } =
+  config.headerErrorMessages;
+
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE } = config.commonErrorMessages;
 
 const { languages } = config;
 
@@ -38,16 +37,16 @@ const HeaderForm = ({ header, id }) => {
     enName: Yup.string()
       .min(2, HEADER_VALIDATION_ERROR)
       .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
-      .required(HEADER_ERROR_MESSAGE),
+      .required(ERROR_MESSAGE),
     uaName: Yup.string()
       .min(2, HEADER_VALIDATION_ERROR)
       .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
-      .required(HEADER_ERROR_MESSAGE),
-    priority: Yup.number().required(HEADER_ERROR_MESSAGE),
+      .required(ERROR_MESSAGE),
+    priority: Yup.number().required(ERROR_MESSAGE),
     link: Yup.string()
-      .min(2, HEADER_VALIDATION_ERROR)
-      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
-      .required(HEADER_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(config.formRegExp.pageCode, HEADER_VALIDATION_ERROR)
+      .required(ERROR_MESSAGE)
   });
 
   const { values, handleSubmit, handleChange, touched, errors, handleBlur } =
@@ -64,6 +63,7 @@ const HeaderForm = ({ header, id }) => {
       }
     });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const eventPreventHandler = (e) => {
@@ -87,6 +87,7 @@ const HeaderForm = ({ header, id }) => {
                 title={config.buttonTitles.HEADER_SAVE_TITLE}
                 values={values}
                 errors={errors}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

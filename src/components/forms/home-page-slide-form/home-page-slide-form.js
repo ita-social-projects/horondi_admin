@@ -21,17 +21,17 @@ import LanguagePanel from '../language-panel';
 import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { languages } = config;
 const { imagePrefix } = config;
 
 const {
-  SLIDE_VALIDATION_ERROR,
-  SLIDE_ERROR_MESSAGE,
   NOT_EN_DESCRIPTION_MESSAGE,
   NOT_EN_NAME_MESSAGE,
   NOT_UA_DESCRIPTION_MESSAGE
 } = config.homePageSlideErrorMessages;
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE } = config.commonErrorMessages;
 const { preview } = config.titles.homePageSliderTitle;
 const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const styles = useStyles();
@@ -64,24 +64,22 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
 
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR)
+      .min(2, MIN_LENGTH_MESSAGE)
       .matches(config.formRegExp.enDescription, NOT_EN_DESCRIPTION_MESSAGE)
-      .required(SLIDE_ERROR_MESSAGE),
+      .required(ERROR_MESSAGE),
     enTitle: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR)
+      .min(2, MIN_LENGTH_MESSAGE)
       .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
-      .required(SLIDE_ERROR_MESSAGE),
+      .required(ERROR_MESSAGE),
     uaDescription: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR)
+      .min(2, MIN_LENGTH_MESSAGE)
       .matches(config.formRegExp.uaDescription, NOT_UA_DESCRIPTION_MESSAGE)
-      .required(SLIDE_ERROR_MESSAGE),
+      .required(ERROR_MESSAGE),
     uaTitle: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR)
+      .min(2, MIN_LENGTH_MESSAGE)
       .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
-      .required(SLIDE_ERROR_MESSAGE),
-    link: Yup.string()
-      .min(2, SLIDE_VALIDATION_ERROR)
-      .required(SLIDE_ERROR_MESSAGE)
+      .required(ERROR_MESSAGE),
+    link: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE)
   });
 
   const {
@@ -124,6 +122,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
@@ -175,6 +174,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 title={config.buttonTitles.CREATE_SLIDE_TITLE}
                 values={values}
                 errors={errors}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

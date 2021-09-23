@@ -39,6 +39,17 @@ import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved
 import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import { getModels } from '../../../redux/model/model.actions';
 import { modelSelectorWithPagination } from '../../../redux/selectors/model.selectors';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
+
+import Tooltip from '../../tooltip';
+import { sizes } from '../../../configs/tooltip-titles';
+
+const {
+  MODEL_EXPLANATION,
+  RELATIVE_PRICE_EXPLANATION,
+  PRICE_EXPLANATION,
+  PRICE_EXPLANATION_DESCRIPTION
+} = sizes;
 
 const { selectTitle, modelTitle, convertationTitle } =
   config.titles.sizesTitles;
@@ -47,6 +58,7 @@ const { additionalPriceType } = labels;
 const sizeInputs = config.labels.sizeInputData;
 const { materialUiConstants } = config;
 const { pathToSizes } = config.routes;
+
 function SizeForm({ id, size }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
@@ -84,6 +96,7 @@ function SizeForm({ id, size }) {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
   useEffect(() => {
     dispatch(getModels());
@@ -126,6 +139,7 @@ function SizeForm({ id, size }) {
                 title={config.buttonTitles.SAVE_SIZE_TITLE}
                 values={values}
                 errors={errors}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>
@@ -201,11 +215,11 @@ function SizeForm({ id, size }) {
               </Paper>
             </div>
             <div className={styles.contentWrapper}>
-              <Paper className={styles.sizeItemAdd}>
+              <Paper className={`${styles.sizeItemAdd}`}>
                 <FormControl
                   variant={materialUiConstants.outlined}
                   className={`${styles.formControl} 
-                ${styles.purposeSelect}`}
+                ${styles.purposeSelect} ${styles.withTooltip}`}
                 >
                   <InputLabel
                     htmlFor={materialUiConstants.outlinedAgeNativeSimple}
@@ -230,6 +244,7 @@ function SizeForm({ id, size }) {
                       </MenuItem>
                     ))}
                   </Select>
+                  <Tooltip title={MODEL_EXPLANATION} />
                   {touched.modelId && errors.modelId && (
                     <div className={styles.inputError}>{errors.modelId}</div>
                   )}
@@ -251,31 +266,50 @@ function SizeForm({ id, size }) {
                     />
                     <FormControlLabel
                       value='RELATIVE_INDICATOR'
-                      label={additionalPriceType.relativePrice[0].value}
+                      label={
+                        <>
+                          <span>
+                            {additionalPriceType.relativePrice[0].value}
+                          </span>
+                          <Tooltip
+                            title={RELATIVE_PRICE_EXPLANATION}
+                            placement='right'
+                          />
+                        </>
+                      }
                       key={1}
                       control={<Radio />}
                     />
                   </RadioGroup>
                 </FormControl>
-                <TextField
-                  data-cy='additionalPrice'
-                  id='additionalPrice'
-                  variant='outlined'
-                  className={`
-                  ${styles.textField} 
-                  ${styles.materialSelect} 
-                  `}
-                  label={getLabelValue(values, additionalPriceType)}
-                  value={values.additionalPrice}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.additionalPrice && !!errors.additionalPrice}
-                />
-                {touched.additionalPrice && errors.additionalPrice && (
-                  <div className={styles.inputError}>
-                    {errors.additionalPrice}
-                  </div>
-                )}
+                <FormControl
+                  variant={materialUiConstants.outlined}
+                  className={`${styles.formControl} 
+                  ${styles.purposeSelect} ${styles.withTooltip}`}
+                >
+                  <TextField
+                    data-cy='additionalPrice'
+                    id='additionalPrice'
+                    variant='outlined'
+                    className={`
+                    ${styles.textFieldWithTooltip}
+                    ${styles.materialSelect}
+                    `}
+                    label={getLabelValue(values, additionalPriceType)}
+                    value={values.additionalPrice}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.additionalPrice && !!errors.additionalPrice}
+                  />
+                  <Tooltip title={PRICE_EXPLANATION}>
+                    <span>{PRICE_EXPLANATION_DESCRIPTION}</span>
+                  </Tooltip>
+                  {touched.additionalPrice && errors.additionalPrice && (
+                    <div className={styles.inputError}>
+                      {errors.additionalPrice}
+                    </div>
+                  )}
+                </FormControl>
                 <TextField
                   className={`
                     ${styles.textField} 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   Drawer,
@@ -138,7 +138,7 @@ const NavMenu = ({ width }) => {
     const ItemIcon = category[4];
 
     return (
-      <>
+      <Fragment key={category.toString()}>
         <ListItem button onClick={handleClick}>
           <ListItemIcon>
             <ItemIcon />
@@ -149,7 +149,7 @@ const NavMenu = ({ width }) => {
         <Collapse in={stateMenu} timeout='auto' unmountOnExit>
           <List>{subList}</List>
         </Collapse>
-      </>
+      </Fragment>
     );
   });
 

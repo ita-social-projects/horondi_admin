@@ -26,7 +26,10 @@ const useBackHandlers = () => {
       color: values.color
     },
     available: values.available,
-    additionalPrice: values.additionalPrice,
+    additionalPrice: {
+      value: +values.additionalPrice,
+      type: values.additionalPriceType
+    },
     optionType: 'BACK'
   });
 
