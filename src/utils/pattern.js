@@ -3,8 +3,8 @@ import { statusPatterns } from '../consts/pattern-status';
 
 export const statusPatternFilterObject = statusPatterns.map(
   ({ value, label }) => ({
-    key: value,
-    value: label
+    value,
+    label
   })
 );
 
@@ -24,7 +24,7 @@ export const convertToCatOptions = (items) => {
 export const materialFilterObj = () => {
   const arrToFilter = [];
   _.forEach(materialOptions, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
   return arrToFilter;
 };

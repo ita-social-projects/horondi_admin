@@ -18,6 +18,7 @@ import { config } from '../../configs';
 import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
 import FilterNavbar from '../../components/filter-search-sort';
 import usePatternFilters from '../../hooks/filters/use-pattern-filters';
+import Filters from './filters/filters';
 
 const map = require('lodash/map');
 
@@ -113,7 +114,8 @@ const PatternPage = () => {
               searchOptions
             } || {}
           }
-        />
+        />{' '}
+        <Filters />
       </div>
       <TableContainerGenerator
         pagination
