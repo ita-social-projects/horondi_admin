@@ -32,14 +32,8 @@ const ClosuresPage = () => {
   const { IMG_URL } = config;
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const closureOptions = useClosureFilters();
-  const {
-    filter,
-    closuresList,
-    loading,
-    currentPage,
-    rowsPerPage,
-    itemsCount
-  } = useSelector(closuresSelectorWithPagination);
+  const { filter, items, loading, currentPage, rowsPerPage, itemsCount } =
+    useSelector(closuresSelectorWithPagination);
 
   useEffect(() => {
     dispatch(
@@ -65,7 +59,7 @@ const ClosuresPage = () => {
     openSuccessSnackbar(removeClosure, DELETE_CLOSURE_MESSAGE);
   };
 
-  const closuresItems = _.map(closuresList, (closure) => (
+  const closuresItems = _.map(items, (closure) => (
     <TableContainerRow
       key={closure._id}
       id={closure._id}

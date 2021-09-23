@@ -1,0 +1,125 @@
+import React, { useEffect } from 'react';
+
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { useDispatch, useSelector } from 'react-redux';
+import { map } from 'lodash';
+import PropTypes from 'prop-types';
+import { useStyles } from './constructor-list-accordion.styles';
+import { config } from '../../../../configs';
+import TableContainerRow from '../../../../containers/table-container-row';
+import TableContainerGenerator from '../../../../containers/table-container-generator';
+
+const ConstructorListAccordion = ({ options, expanded, handleChange }) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { selector, getItems, setOptionToAdd, optionToAdd, label, optionName } =
+    options;
+
+  const tableTitles = config.tableHeadRowTitles.constructorList;
+
+  const { items, currentPage, rowsPerPage, filter } = useSelector(selector);
+
+  useEffect(() => {
+    dispatch(
+      getItems({
+        pagination: {
+          limit: rowsPerPage,
+          skip: currentPage * rowsPerPage
+        },
+        limit: rowsPerPage,
+        skip: currentPage * rowsPerPage,
+        filter
+      })
+    );
+  }, [dispatch, currentPage, rowsPerPage, filter]);
+
+  const checkboxChangeHandler = (e, id) => {
+    e.stopPropagation();
+
+    const possibleItems = optionToAdd.find((item) => item === id);
+    if (possibleItems) {
+      setOptionToAdd(optionToAdd.filter((item) => item !== id));
+    } else {
+      setOptionToAdd([...optionToAdd, id]);
+    }
+  };
+
+  const elementItems = map(items, (item) => (
+      <TableContainerRow
+        image={
+          item.images.thumbnail
+            ? `${config.imagePrefix}${item.images.thumbnail}`
+            : ''
+        }
+        key={item._id}
+        id={item._id}
+        name={item.name[0].value}
+        additionalPrice={item.additionalPrice[1]?.value}
+        available={item.available ? 'Так' : 'Ні'}
+        showEdit={false}
+        showDelete={false}
+        showCheckbox
+        checkboxChangeHandler={checkboxChangeHandler}
+      />
+    ));
+
+  return (
+    <Accordion
+      expanded={expanded === optionName}
+      onChange={handleChange(optionName)}
+    >
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls={`${optionName}bh-content`}
+        id={`${optionName}bh-header`}
+      >
+        <Typography className={classes.heading}>{label}</Typography>
+        <Typography className={classes.secondaryHeading} />
+      </AccordionSummary>
+      <AccordionDetails>
+        {elementItems.length ? (
+          <TableContainerGenerator
+            pagination
+            data-cy={`${optionName}table`}
+            tableTitles={tableTitles}
+            tableItems={elementItems}
+          />
+        ) : (
+          <p>Відсутні</p>
+        )}
+      </AccordionDetails>
+    </Accordion>
+  );
+};
+
+ConstructorListAccordion.propTypes = {
+  options: PropTypes.shape({
+    selector: PropTypes.func,
+    getItems: PropTypes.func,
+    setOptionToAdd: PropTypes.func,
+    optionToAdd: PropTypes.arrayOf(PropTypes.string),
+    label: PropTypes.string,
+    optionName: PropTypes.string
+  }),
+  expanded: PropTypes.string,
+  handleChange: PropTypes.func
+};
+
+ConstructorListAccordion.defaultProps = {
+  expanded: '',
+  options: {
+    optionToAdd: [],
+    label: '',
+    optionName: ''
+  },
+  handleChange: ''
+};
+
+export default ConstructorListAccordion;
