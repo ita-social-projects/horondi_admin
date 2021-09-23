@@ -54,14 +54,13 @@ const labels = {
 };
 const map = require('lodash/map');
 
-const { PHOTO_NOT_PROVIDED } = config.backErrorMessages;
+const { PHOTO_NOT_PROVIDED, BACK_UA_NAME_MESSAGE, BACK_EN_NAME_MESSAGE } =
+  config.backErrorMessages;
 
 const {
   MIN_LENGTH_MESSAGE,
   MAX_LENGTH_MESSAGE,
   ERROR_MESSAGE,
-  UA_NAME_MESSAGE,
-  EN_NAME_MESSAGE,
   ERROR_ENGLISH_AND_DIGITS_ONLY,
   PRICE_ERROR
 } = config.commonErrorMessages;
@@ -108,12 +107,12 @@ const BackForm = ({ back, id, edit }) => {
       .min(2, MIN_LENGTH_MESSAGE)
       .max(50, MAX_LENGTH_MESSAGE)
       .required(ERROR_MESSAGE)
-      .matches(enNameCreation, EN_NAME_MESSAGE),
+      .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
     uaName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(50, MAX_LENGTH_MESSAGE)
       .required(ERROR_MESSAGE)
-      .matches(uaNameCreation, UA_NAME_MESSAGE),
+      .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
     material: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .matches(backMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)

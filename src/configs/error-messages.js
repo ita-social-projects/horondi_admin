@@ -54,15 +54,28 @@ export const patternErrorMessages = {
 };
 
 export const backErrorMessages = {
-  PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим"
+  PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
+  BACK_UA_NAME_MESSAGE: 'Введіть назву спинки українською',
+  BACK_EN_NAME_MESSAGE: 'Введіть назву спинки англійською'
 };
 
 export const bottomErrorMessages = {
-  PHOTO_NOT_PROVIDED: "Фото низу є обов'язковим"
+  PHOTO_NOT_PROVIDED: "Фото низу є обов'язковим",
+  BOTTOM_UA_NAME_MESSAGE: 'Введіть назву низу українською',
+  BOTTOM_EN_NAME_MESSAGE: 'Введіть назву низу англійською'
 };
 
 export const closuresErrorMessages = {
-  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим"
+  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим",
+  CLOSURES_UA_NAME_MESSAGE: 'Введіть назву защіпки українською',
+  CLOSURES_EN_NAME_MESSAGE: 'Введіть назву защіпки англійською'
+};
+
+export const pocketsErrorMessages = {
+  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку',
+  POCKETS_ERROR: 'Додайте фото для кишені',
+  POCKETS_UA_NAME_MESSAGE: 'Введіть назву кишені українською',
+  POCKETS_EN_NAME_MESSAGE: 'Введіть назву кишені англійською'
 };
 
 export const basicsErrorMessages = {
@@ -71,11 +84,6 @@ export const basicsErrorMessages = {
 
 export const constructorErrorMessages = {
   PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора'
-};
-
-export const pocketsErrorMessages = {
-  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку',
-  POCKETS_ERROR: 'Додайте фото для кишені'
 };
 
 export const strapsErrorMessages = {

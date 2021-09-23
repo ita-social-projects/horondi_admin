@@ -49,16 +49,15 @@ const labels = {
 };
 const map = require('lodash/map');
 
-const { PHOTO_NOT_PROVIDED } = config.bottomErrorMessages;
+const { BOTTOM_UA_NAME_MESSAGE, PHOTO_NOT_PROVIDED, BOTTOM_EN_NAME_MESSAGE } =
+  config.bottomErrorMessages;
 
 const {
+  ERROR_ENGLISH_AND_DIGITS_ONLY,
   MIN_LENGTH_MESSAGE,
   MAX_LENGTH_MESSAGE,
-  ERROR_MESSAGE,
-  ERROR_ENGLISH_AND_DIGITS_ONLY,
-  UA_NAME_MESSAGE,
-  EN_NAME_MESSAGE,
-  PRICE_ERROR
+  PRICE_ERROR,
+  ERROR_MESSAGE
 } = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
@@ -91,16 +90,16 @@ const BottomForm = ({ bottom, id, edit }) => {
   }, [dispatch, bottom]);
 
   const bottomValidationSchema = Yup.object().shape({
-    enName: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .max(50, MAX_LENGTH_MESSAGE)
-      .required(ERROR_MESSAGE)
-      .matches(enNameCreation, EN_NAME_MESSAGE),
     uaName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(50, MAX_LENGTH_MESSAGE)
       .required(ERROR_MESSAGE)
-      .matches(uaNameCreation, UA_NAME_MESSAGE),
+      .matches(uaNameCreation, BOTTOM_UA_NAME_MESSAGE),
+    enName: Yup.string()
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, BOTTOM_EN_NAME_MESSAGE),
     material: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .matches(backMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)

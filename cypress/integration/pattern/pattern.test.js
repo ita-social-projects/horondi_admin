@@ -10,7 +10,7 @@ import {
   deletePattern,
   wrongValue
 } from './pattern.variables';
-import statuses from '../../../src/configs/success-modal-messages';
+import statuses from '../../../src/configs/statuses';
 import routes from '../../../src/configs/routes';
 import { patternErrors } from '../../../src/configs/error-modal-messages';
 

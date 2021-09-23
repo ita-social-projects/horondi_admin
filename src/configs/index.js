@@ -10,7 +10,7 @@ import {
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
-import statuses from './success-modal-messages';
+import statuses from './statuses';
 import filterLabels from './filter-labels';
 import materialUiConstants from './material-ui-constants';
 import { materialTranslations } from './material-translations';
