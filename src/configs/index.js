@@ -31,7 +31,7 @@ import {
   slidesErrors,
   materialErrors,
   productsErrors,
-  userErrors,
+  userTranslations,
   errorStatuses
 } from './error-modal-messages';
 import {
@@ -307,7 +307,7 @@ export const config = {
   slidesErrors,
   materialErrors,
   productsErrors,
-  userErrors,
+  userTranslations,
   errorStatuses
 };
 export const inputTypes = {

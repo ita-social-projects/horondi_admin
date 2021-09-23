@@ -16,7 +16,7 @@ import { handleErrorSnackbar } from '../snackbar/snackbar.sagas';
 import routes from '../../configs/routes';
 import { LOCAL_STORAGE } from '../../consts/local-storage';
 import { AUTH_ERRORS } from '../../error-messages/auth';
-import { userErrors } from '../../configs/error-modal-messages';
+import { userTranslations } from '../../configs/error-modal-messages';
 
 const { pathToMainPage, pathToLogin } = routes;
 
@@ -41,7 +41,7 @@ export function* handleAdminLoad({ payload }) {
     yield put(setAuthLoading(false));
     yield put(setAuthError(error));
     if (error.message === AUTH_ERRORS.USER_IS_BLOCKED) {
-      yield call(handleErrorSnackbar, userErrors.USER_IS_BLOCKED);
+      yield call(handleErrorSnackbar, userTranslations.USER_IS_BLOCKED);
     } else {
       yield call(handleErrorSnackbar, error.message);
     }

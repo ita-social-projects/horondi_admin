@@ -85,7 +85,7 @@ export const productsErrors = {
   PRODUCT_ALREADY_EXIST: 'Такий продукт вже існує!'
 };
 
-export const userErrors = {
+export const userTranslations = {
   USER_IS_BLOCKED: 'Користувача заблоковано',
   WRONG_CREDENTIALS: 'Неправильний логін або пароль',
   INVALID_PERMISSIONS: 'Неправильний логін або пароль',
