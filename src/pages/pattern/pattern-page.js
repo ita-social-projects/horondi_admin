@@ -16,8 +16,6 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { patternSelectorWithPagination } from '../../redux/selectors/pattern.selectors';
-import FilterNavbar from '../../components/filter-search-sort';
-import usePatternFilters from '../../hooks/filters/use-pattern-filters';
 import Filters from './filters/filters';
 
 const map = require('lodash/map');
@@ -30,9 +28,6 @@ const tableTitles = config.tableHeadRowTitles.patterns;
 
 const PatternPage = () => {
   const common = useCommonStyles();
-
-  const { searchOptions, clearOptions, filterByMultipleOptions, sortOptions } =
-    usePatternFilters();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -105,16 +100,6 @@ const PatternPage = () => {
         </Button>
       </div>
       <div>
-        <FilterNavbar
-          options={
-            {
-              sortOptions,
-              filterByMultipleOptions,
-              clearOptions,
-              searchOptions
-            } || {}
-          }
-        />{' '}
         <Filters />
       </div>
       <TableContainerGenerator
