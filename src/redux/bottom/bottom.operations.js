@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { bottomTranslations } from '../../translations/bottom.translations';
+import { bottomTranslations } from '../../configs/error-modal-messages';
 
 export const getAllBottoms = async (limit, skip, filter) => {
   const getAllBottomsQuery = `

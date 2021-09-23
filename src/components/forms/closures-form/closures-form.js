@@ -26,17 +26,17 @@ import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-che
 const { convertationTitle } = config.titles.backTitles;
 const labels = { ...config.labels.closuresPageLabel, convertationTitle };
 
-const {
-  CLOSURES_ERROR_MESSAGE,
-  CLOSURES_UA_NAME_MESSAGE,
-  CLOSURES_EN_NAME_MESSAGE,
-  PHOTO_NOT_PROVIDED,
-  CLOSURES_MAX_LENGTH_MESSAGE,
-  CLOSURES_MIN_LENGTH_MESSAGE,
-  CLOSURES_PRICE_ERROR
-} = config.closuresErrorMessages;
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, MAX_LENGTH_MESSAGE, PRICE_ERROR } =
+  config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
+
+const {
+  CLOSURES_EN_NAME_MESSAGE,
+  PHOTO_NOT_PROVIDED,
+  CLOSURES_UA_NAME_MESSAGE
+} = config.closuresErrorMessages;
+
 const { languages, IMG_URL } = config;
 
 const { enNameCreation, uaNameCreation } = config.formRegExp;
@@ -50,20 +50,20 @@ const ClosuresForm = ({ closure, id, edit }) => {
   const { pathToClosures } = config.routes;
 
   const closuresValidationSchema = Yup.object().shape({
-    uaName: Yup.string()
-      .min(2, CLOSURES_MIN_LENGTH_MESSAGE)
-      .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
-      .required(CLOSURES_ERROR_MESSAGE)
-      .matches(uaNameCreation, CLOSURES_UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, CLOSURES_MIN_LENGTH_MESSAGE)
-      .max(50, CLOSURES_MAX_LENGTH_MESSAGE)
-      .required(CLOSURES_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(enNameCreation, CLOSURES_EN_NAME_MESSAGE),
     additionalPriceType: Yup.string(),
+    uaName: Yup.string()
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, CLOSURES_UA_NAME_MESSAGE),
     additionalPrice: Yup.string()
-      .required(CLOSURES_ERROR_MESSAGE)
-      .matches(config.formRegExp.onlyPositiveFloat, CLOSURES_PRICE_ERROR)
+      .required(ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
       .nullable(),
 
     available: Yup.boolean(),

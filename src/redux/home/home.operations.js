@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { homePageEditTranslations } from '../../translations/home-page-edit.translations';
+import { homePageEditErrors } from '../../configs/error-modal-messages';
 
 const getHomePageLooksImages = async () => {
   const query = `
@@ -37,13 +37,13 @@ const updateHomePageLooksImage = async (id, upload) => {
   const result = await setItems(query, { id, upload });
 
   if (
-    Object.keys(homePageEditTranslations).includes(
+    Object.keys(homePageEditErrors).includes(
       result?.data?.updateHomePageLooksImage?.message
     )
   ) {
     throw new Error(
       `${result.data.updateHomePageLooksImage.statusCode} ${
-        homePageEditTranslations[result.data.updateHomePageLooksImage.message]
+        homePageEditErrors[result.data.updateHomePageLooksImage.message]
       }`
     );
   }

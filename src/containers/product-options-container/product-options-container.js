@@ -24,7 +24,7 @@ import { noop } from 'lodash';
 import { useStyles } from './product-options-container.styles';
 
 import { config } from '../../configs';
-import { productsTranslations } from '../../translations/product.translations';
+import { productsTranslations } from '../../configs/product-translations';
 
 const {
   labels: {

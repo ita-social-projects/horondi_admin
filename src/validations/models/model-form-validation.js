@@ -1,34 +1,31 @@
 import * as Yup from 'yup';
 import { config } from '../../configs';
 
-const {
-  MODEL_VALIDATION_ERROR,
-  MODEL_ERROR_MESSAGE,
-  NOT_EN_NAME_MESSAGE,
-  NOT_UA_NAME_MESSAGE,
-  NO_STRING_TYPE_MESSAGE
-} = config.modelErrorMessages;
+const { NO_STRING_TYPE_MESSAGE } = config.modelErrorMessages;
+
+const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE, UA_NAME_MESSAGE, EN_NAME_MESSAGE } =
+  config.commonErrorMessages;
 
 export const modelValidationSchema = Yup.object().shape({
   enDescription: Yup.string()
     .typeError(NO_STRING_TYPE_MESSAGE)
-    .min(9, MODEL_VALIDATION_ERROR)
-    .required(MODEL_ERROR_MESSAGE),
+    .min(9, MIN_LENGTH_MESSAGE)
+    .required(ERROR_MESSAGE),
   enName: Yup.string()
     .typeError(NO_STRING_TYPE_MESSAGE)
-    .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
-    .min(2, MODEL_VALIDATION_ERROR)
-    .required(MODEL_ERROR_MESSAGE),
+    .matches(config.formRegExp.enNameCreation, EN_NAME_MESSAGE)
+    .min(2, MIN_LENGTH_MESSAGE)
+    .required(ERROR_MESSAGE),
   uaDescription: Yup.string()
     .typeError(NO_STRING_TYPE_MESSAGE)
-    .min(9, MODEL_VALIDATION_ERROR)
-    .required(MODEL_ERROR_MESSAGE),
+    .min(9, MIN_LENGTH_MESSAGE)
+    .required(ERROR_MESSAGE),
   uaName: Yup.string()
     .typeError(NO_STRING_TYPE_MESSAGE)
-    .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
-    .min(9, MODEL_VALIDATION_ERROR)
-    .required(MODEL_ERROR_MESSAGE),
-  priority: Yup.number().required(MODEL_ERROR_MESSAGE),
-  category: Yup.string().required(MODEL_ERROR_MESSAGE),
-  sizes: Yup.string().required(MODEL_ERROR_MESSAGE)
+    .matches(config.formRegExp.uaNameCreation, UA_NAME_MESSAGE)
+    .min(9, MIN_LENGTH_MESSAGE)
+    .required(ERROR_MESSAGE),
+  priority: Yup.number().required(ERROR_MESSAGE),
+  category: Yup.string().required(ERROR_MESSAGE),
+  sizes: Yup.string().required(ERROR_MESSAGE)
 });

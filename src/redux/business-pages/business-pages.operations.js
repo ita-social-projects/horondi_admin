@@ -1,6 +1,8 @@
 import { getItems, setItems } from '../../utils/client';
-import { businessTranslations } from '../../translations/business.translations';
-import { newsTranslations } from '../../translations/news.translations';
+import {
+  businessPageErrors,
+  newsErrors
+} from '../../configs/error-modal-messages';
 
 export const getAllBusinessPages = async () => {
   const getAllBusinessPagesQuery = `
@@ -47,13 +49,11 @@ export const getBusinessPageById = async (id) => {
   const result = await getItems(getBusinessPageByIdQuery, { id });
 
   if (
-    Object.keys(newsTranslations).includes(
-      result?.data?.getBusinessTextById?.message
-    )
+    Object.keys(newsErrors).includes(result?.data?.getBusinessTextById?.message)
   ) {
     throw new Error(
       `${result.data.getBusinessTextById.statusCode} ${
-        newsTranslations[result.data.getBusinessTextById.message]
+        newsErrors[result.data.getBusinessTextById.message]
       }`
     );
   }
@@ -81,13 +81,13 @@ export const createBusinessPage = async ({ page, files }) => {
   });
 
   if (
-    Object.keys(businessTranslations).includes(
+    Object.keys(businessPageErrors).includes(
       result?.data?.addBusinessText?.message
     )
   ) {
     throw new Error(
       `${result.data.addBusinessText.statusCode} ${
-        businessTranslations[result.data.addBusinessText.message]
+        businessPageErrors[result.data.addBusinessText.message]
       }`
     );
   }
@@ -114,13 +114,11 @@ export const deleteBusinessPage = async (id) => {
   const result = await setItems(deleteBusinessPageMutation, { id });
 
   if (
-    Object.keys(newsTranslations).includes(
-      result?.data?.deleteBusinessText?.message
-    )
+    Object.keys(newsErrors).includes(result?.data?.deleteBusinessText?.message)
   ) {
     throw new Error(
       `${result.data.deleteBusinessText.statusCode} ${
-        newsTranslations[result.data.deleteBusinessText.message]
+        newsErrors[result.data.deleteBusinessText.message]
       }`
     );
   }
@@ -156,13 +154,11 @@ export const updateBusinessPage = async ({ id, page, files }) => {
   });
 
   if (
-    Object.keys(newsTranslations).includes(
-      result?.data?.updateBusinessText?.message
-    )
+    Object.keys(newsErrors).includes(result?.data?.updateBusinessText?.message)
   ) {
     throw new Error(
       `${result.data.updateBusinessText.statusCode} ${
-        newsTranslations[result.data.updateBusinessText.message]
+        newsErrors[result.data.updateBusinessText.message]
       }`
     );
   }

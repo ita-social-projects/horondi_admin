@@ -24,9 +24,9 @@ const { SAVE_TITLE } = config.buttonTitles;
 const {
   NAME_MIN_LENGTH_MESSAGE,
   TITLE_MIN_LENGTH_MESSAGE,
-  TEXT_MIN_LENGTH_MESSAGE,
-  NEWS_ERROR_MESSAGE
+  TEXT_MIN_LENGTH_MESSAGE
 } = config.newsErrorMessages;
+const { ERROR_MESSAGE } = config.commonErrorMessages;
 const { imagePrefix } = config;
 const { authorName, title, text } = config.labels.news;
 const {
@@ -66,7 +66,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     const formObj = languages.reduce((reducer, lang) => {
       reducer[`${lang}Text`] = Yup.string()
         .min(17, TEXT_MIN_LENGTH_MESSAGE)
-        .required(NEWS_ERROR_MESSAGE);
+        .required(ERROR_MESSAGE);
       reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
         .matches(
@@ -75,14 +75,14 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
             `NOT_${lang.toUpperCase()}_AUTHOR_NAME_MESSAGE`
           ]
         )
-        .required(NEWS_ERROR_MESSAGE);
+        .required(ERROR_MESSAGE);
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
         .matches(
           config.formRegExp[`${lang}NameCreation`],
           config.newsErrorMessages[`NOT_${lang.toUpperCase()}_TITLE_MESSAGE`]
         )
-        .required(NEWS_ERROR_MESSAGE);
+        .required(ERROR_MESSAGE);
       return reducer;
     }, {});
 

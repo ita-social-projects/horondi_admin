@@ -22,12 +22,12 @@ import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-che
 const labels = config.labels.positionPageLabel;
 
 const {
-  POSITION_MAX_LENGTH_MESSAGE,
-  POSITION_MIN_LENGTH_MESSAGE,
-  POSITION_ERROR_MESSAGE,
-  POSITION_UA_NAME_MESSAGE,
-  POSITION_EN_NAME_MESSAGE
-} = config.positionErrorMessages;
+  ERROR_MESSAGE,
+  UA_NAME_MESSAGE,
+  EN_NAME_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  MIN_LENGTH_MESSAGE
+} = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
@@ -41,15 +41,15 @@ const PositionForm = ({ position, id, edit }) => {
 
   const positionValidationSchema = Yup.object().shape({
     uaName: Yup.string()
-      .min(2, POSITION_MIN_LENGTH_MESSAGE)
-      .max(50, POSITION_MAX_LENGTH_MESSAGE)
-      .required(POSITION_ERROR_MESSAGE)
-      .matches(uaNameCreation, POSITION_UA_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, POSITION_MIN_LENGTH_MESSAGE)
-      .max(50, POSITION_MAX_LENGTH_MESSAGE)
-      .required(POSITION_ERROR_MESSAGE)
-      .matches(enNameCreation, POSITION_EN_NAME_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, EN_NAME_MESSAGE)
   });
 
   const {

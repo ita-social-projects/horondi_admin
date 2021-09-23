@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { colorsTranslations } from '../../translations/colors.translations';
+import { colorsTranslations } from '../../configs/error-modal-messages';
 
 export const getAllColors = async () => {
   const query = `
