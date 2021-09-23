@@ -1,0 +1,236 @@
+[33mcommit eeb67785fcf6306a9131c6ce846507ad6be55651[m[33m ([m[1;36mHEAD -> [m[1;32m968/refactor/filters-orders[m[33m)[m
+Author: Skrekliam <typnickman@gmail.com>
+Date:   Thu Sep 23 16:20:49 2021 +0300
+
+    Add filters for history page
+
+[33mcommit a2ee6878ecdd6644651957b0e7f3cc782fcc0a1f[m[33m ([m[1;31morigin/968/refactor/filters-orders[m[33m, [m[1;32m968/refactor/filters-history[m[33m)[m
+Author: Skrekliam <typnickman@gmail.com>
+Date:   Thu Sep 23 16:03:48 2021 +0300
+
+    Change name variables
+
+[33mcommit e8d376a15296d110923997c52ac6625ebd739556[m
+Author: Skrekliam <typnickman@gmail.com>
+Date:   Thu Sep 23 15:44:43 2021 +0300
+
+    Refactor filters for orders
+
+[33mcommit 9910c086a2fc2e81efb7213ccb2873872597d548[m[33m ([m[1;31morigin/development[m[33m, [m[1;32mdevelopment[m[33m)[m
+Merge: cac07795 0999521f
+Author: Taras Halaburda <36608907+halaburdataras@users.noreply.github.com>
+Date:   Tue Sep 21 19:54:22 2021 +0300
+
+    Merge pull request #1018 from ita-social-projects/bugfix/1017/user_select
+    
+    Fix bug with selecting registered user in order
+
+[33mcommit 0999521ff7d5d4636d5c0820fbbc7123f0fc1dd5[m
+Author: Volodymyr Romanovskyi <volodymyrrom1@gmail.com>
+Date:   Tue Sep 21 19:31:55 2021 +0300
+
+    Resolve code smells
+
+[33mcommit 7c130e2685ee5368d942cee91fb9b1898a7ccc92[m
+Author: Volodymyr Romanovskyi <volodymyrrom1@gmail.com>
+Date:   Tue Sep 21 18:40:59 2021 +0300
+
+    Add check on Id
+
+[33mcommit 4206a85f9d948aef05299431fb2a21c6c2e7942d[m
+Merge: a7e2057e cac07795
+Author: Volodymyr Romanovskyi <volodymyrrom1@gmail.com>
+Date:   Tue Sep 21 18:23:10 2021 +0300
+
+    Merge branch 'development' of https://github.com/ita-social-projects/horondi_admin into development
+
+[33mcommit cac077956fb597ec0007d66a2232036919fe0321[m
+Merge: 68ecd4c4 a6d314d6
+Author: Marta Horpynchuk <32914557+martagorpinchuk@users.noreply.github.com>
+Date:   Tue Sep 21 18:02:56 2021 +0300
+
+    Merge pull request #1009 from ita-social-projects/hotfix/976/material-styles
+    
+    Fixed material padding
+
+[33mcommit 68ecd4c4c875463b7cd629857e9a5d1c5dcc1818[m
+Merge: 0137b3d1 af0d8889
+Author: Ruslan Mjahcich <elitkondor@gmail.com>
+Date:   Tue Sep 21 18:00:11 2021 +0300
+
+    Merge pull request #992 from ita-social-projects/bugfix/991/prices-bottom-pocket
+    
+    bugfix/991 absolute prices for bottoms and pockets
+
+[33mcommit a6d314d6de5d764b3398e05d2ec704d12a443d5f[m
+Author: Ruslan Mjahcich <elitkondor@gmail.com>
+Date:   Tue Sep 21 17:42:44 2021 +0300
+
+    Trying to normalize files
+
+[33mcommit a7e2057e49f9d729d533108c1958bcf501a378d2[m
+Merge: 0137b3d1 af0d8889
+Author: Volodymyr Romanovskyi <volodymyrrom1@gmail.com>
+Date:   Tue Sep 21 17:40:42 2021 +0300
+
+    Merge branch 'bugfix/991/prices-bottom-pocket' of https://github.com/ita-social-projects/horondi_admin into development
+
+[33mcommit bb5419b3533a42f5f3f1bafd2ffc8e231453d212[m
+Merge: 4e40245a 0137b3d1
+Author: Ruslan Mjahcich <elitkondor@gmail.com>
+Date:   Tue Sep 21 17:39:46 2021 +0300
+
+    Merge branch 'development' of github.com:ita-social-projects/horondi_admin into hotfix/976/material-styles
+
+[33mcommit 4e40245a66746de872a937f485d62a4b9f0b3237[m
+Merge: 84f5bc1e 6bed19b1
+Author: Ruslan Mjahcich <elitkondor@gmail.com>
+Date:   Tue Sep 21 17:37:09 2021 +0300
+
+    Test Commit
+
+[33mcommit 0137b3d15065ffca6df9d48d2b9941f92825f3f8[m
+Merge: 0fc0d104 80d7174d
+Author: olga-gchak <67831961+olga-gchak@users.noreply.github.com>
+Date:   Tue Sep 21 17:36:12 2021 +0300
+
+    Merge pull request #1005 from ita-social-projects/sonarfix/name-regexps
+    
+    fixed sonar bugs with regexps
+
+[33mcommit 0fc0d104be68bfb1ddfa5023abbc71fd5483543a[m
+Merge: 5d6acdb7 6ac79552
+Author: Maksym Skreklia <36624127+Skrekliam@users.noreply.github.com>
+Date:   Tue Sep 21 17:31:00 2021 +0300
+
+    Merge pull request #990 from ita-social-projects/feature/882/add_registered_user
+    
+    choose register user on order history #882
+
+[33mcommit 84f5bc1ebf34ff7d639903a706ba97ff09c94da5[m
+Merge: 1f280789 5d6acdb7
+Author: Ruslan Mjahcich <elitkondor@gmail.com>
+Date:   Tue Sep 21 17:22:05 2021 +0300
+
+    Merge branch 'development' of github.com:ita-social-projects/horondi_admin into hotfix/976/material-styles
+
+[33mcommit 6bed19b1db1ee9c25476d8ca1cd14d5905c1fddd[m
+Author: Ruslan Mjahcich <elitkondor@gmail.com>
+Date:   Tue Sep 21 17:20:40 2021 +0300
+
+    File from another branch
+
+[33mcommit b6c2a1e07d671ac4c18caa9566d91fd44719a4c9[m
+Author: Ruslan Mjahcich <elitkondor@gmail.com>
+Date:   Tue Sep 21 17:20:14 2021 +0300
+
+    File from another branch
+
+[33mcommit 6ac79552d0623a6948d492aac6fd2337c61f2f95[m
+Merge: 204088ac 5d6acdb7
+Author: Volodymyr Romanovskyi <volodymyrrom1@gmail.com>
+Date:   Tue Sep 21 16:51:41 2021 +0300
+
+    fix conflict with white space
+
+[33mcommit af0d888913c34bc11f9ef1b985669b6e44e1f95b[m
+Author: halaburdataras <Taras.Galaburda@outlook.com>
+Date:   Tue Sep 21 16:45:45 2021 +0300
+
+    resolved codesmells
+
+[33mcommit 3ad4155c0e74d970e5206337a0c3362a3d621994[m
+Merge: 8830de5e 5d6acdb7
+Author: halaburdataras <Taras.Galaburda@outlook.com>
+Date:   Tue Sep 21 16:36:06 2021 +0300
+
+    resolved conflicts
+
+[33mcommit 5d6acdb7b6ac088bc3003fc78998fe451df817bd[m
+Merge: a516b9d0 032ce4df
+Author: Maksym Skreklia <36624127+Skrekliam@users.noreply.github.com>
+Date:   Tue Sep 21 16:29:27 2021 +0300
+
+    Merge pull request #1015 from ita-social-projects/bugfix/1003/orders-error
+    
+    fixed orders error
+
+[33mcommit 8830de5e0435faf10d4517fe99dabc6942b541b8[m
+Merge: 296f2ace a516b9d0
+Author: halaburdataras <Taras.Galaburda@outlook.com>
+Date:   Tue Sep 21 16:26:00 2021 +0300
+
+    resolved conflicts
+
+[33mcommit 296f2ace0e1fa2e57a32ec816f37e458e9b7f82b[m
+Merge: 6c359d93 372fef81
+Author: halaburdataras <Taras.Galaburda@outlook.com>
+Date:   Tue Sep 21 16:18:01 2021 +0300
+
+    removed conflicts
+
+[33mcommit a516b9d0aff0b058cad5e22eedef3bbb888b690d[m
+Merge: 3b522022 305db42f
+Author: Volodymyr Romanovskyi <45718327+Vlodkojr@users.noreply.github.com>
+Date:   Tue Sep 21 16:17:55 2021 +0300
+
+    Merge pull request #967 from ita-social-projects/966/features/disabled-save-button-in-edit-forms
+    
+    966/features/disabled save button in edit forms
+
+[33mcommit 3b52202275ffab20fe0c054a074e9589e7807c2f[m
+Merge: 4b65ac7f 7fe7cda0
+Author: Ruslan Mjahcich <elitkondor@gmail.com>
+Date:   Tue Sep 21 15:50:48 2021 +0300
+
+    Merge pull request #999 from ita-social-projects/960/bugfix/fix-add-product-page-when-redirect-to-it
+    
+    fixed none materials
+
+[33mcommit 4b65ac7fdc8bc6f1268ee00fcf50961b7f50353f[m
+Merge: 372fef81 1b579b17
+Author: Ukrainets Vasyl <wasya1212cool@gmail.com>
+Date:   Tue Sep 21 15:47:03 2021 +0300
+
+    Merge pull request #947 from ita-social-projects/feature/945
+    
+    Refactor filters for orders page, created main filter components
+
+[33mcommit 372fef81c2fa376ad6796869f29c93449c67a679[m
+Merge: fa5e1097 a935c5cb
+Author: Taras Halaburda <36608907+halaburdataras@users.noreply.github.com>
+Date:   Tue Sep 21 15:42:14 2021 +0300
+
+    Merge pull request #1014 from ita-social-projects/bugfix/981/create_color
+    
+    Fixed create color on materials page
+
+[33mcommit fa5e1097707d363689ec567fbb7b091d4dd36880[m
+Merge: 90860fb7 408b8285
+Author: Marta Horpynchuk <32914557+martagorpinchuk@users.noreply.github.com>
+Date:   Tue Sep 21 15:35:56 2021 +0300
+
+    Merge pull request #1008 from ita-social-projects/bug/873/sizeResponsive
+    
+    fixing responsive design
+
+[33mcommit a935c5cb67681966112133de77706bece95c5fa4[m
+Author: Анастасія Хухра <anastasiahuhra@Anastasias-MacBook-Air.local>
+Date:   Tue Sep 21 15:32:09 2021 +0300
+
+    fixed error messages
+
+[33mcommit 90860fb7de62211b2331cd2be01866f1dd60fbac[m
+Merge: b2ddeaab f21f36c1
+Author: AnastasiaKhukhra <62055382+AnastasiaKhukhra@users.noreply.github.com>
+Date:   Tue Sep 21 15:29:36 2021 +0300
+
+    Merge pull request #1011 from ita-social-projects/bugfix/989/validation
+    
+    add validation to business page and headers
+
+[33mcommit 1b579b17523452a56209cbaa0070c8142f5e71c2[m[33m ([m[1;31morigin/feature/945[m[33m, [m[1;32mfeature/945[m[33m)[m
+Author: Skrekliam <typnickman@gmail.com>
+Date:   Tue Sep 21 15:24:17 2021 +0300
+
+    Cl

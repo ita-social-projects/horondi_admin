@@ -15,15 +15,15 @@ export const handleHistory = (items, titles, NO_HISTORY_RECORDS_MESSAGE) =>
   items ? titles : [NO_HISTORY_RECORDS_MESSAGE];
 
 export const roleFilterObject = config.userRoles.map(({ role, label }) => ({
-  key: role,
-  value: label
+  value: role,
+  label
 }));
 
 export const actionFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(historyActions, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
 
   return arrToFilter;
