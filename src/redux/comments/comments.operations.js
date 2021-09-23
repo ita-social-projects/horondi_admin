@@ -1,6 +1,6 @@
 import { getItems, setItems } from '../../utils/client';
 import { config } from '../../configs';
-import { commentsTranslations } from '../../configs/error-modal-messages';
+import { commentsErrors } from '../../configs/error-modal-messages';
 import { GET_USER_COMMENTS, GET_PRODUCT_COMMENTS } from './comments.types';
 
 const formError = (error) => error.message.replace('GraphQL error: ', '');
@@ -116,13 +116,13 @@ const getRecentComments = async (limit) => {
   const result = await getItems(query, { limit });
 
   if (
-    Object.keys(commentsTranslations).includes(
+    Object.keys(commentsErrors).includes(
       result?.data?.getRecentComments?.message
     )
   ) {
     throw new Error(
       `${result.data.getRecentComments.statusCode} ${
-        commentsTranslations[result.data.getRecentComments.message]
+        commentsErrors[result.data.getRecentComments.message]
       }`
     );
   }
@@ -190,13 +190,11 @@ const getCommentById = async (id) => {
   const result = await getItems(query, { id });
 
   if (
-    Object.keys(commentsTranslations).includes(
-      result?.data?.getCommentById?.message
-    )
+    Object.keys(commentsErrors).includes(result?.data?.getCommentById?.message)
   ) {
     throw new Error(
       `${result.data.getCommentById.statusCode} ${
-        commentsTranslations[result.data.getCommentById.message]
+        commentsErrors[result.data.getCommentById.message]
       }`
     );
   }
@@ -223,13 +221,11 @@ const updateComment = async (id, comment) => {
   const result = await setItems(query, { id, comment });
 
   if (
-    Object.keys(commentsTranslations).includes(
-      result?.data?.updateComment?.message
-    )
+    Object.keys(commentsErrors).includes(result?.data?.updateComment?.message)
   ) {
     throw new Error(
       `${result.data.updateComment.statusCode} ${
-        commentsTranslations[result.data.updateComment.message]
+        commentsErrors[result.data.updateComment.message]
       }`
     );
   }
@@ -390,13 +386,11 @@ const addReplyForComment = async ({ id, commentId, replyCommentData }) => {
   const result = await setItems(query, { id, commentId, replyCommentData });
 
   if (
-    Object.keys(commentsTranslations).includes(
-      result?.data?.replyForComment?.message
-    )
+    Object.keys(commentsErrors).includes(result?.data?.replyForComment?.message)
   ) {
     throw new Error(
       `${result.data.replyForComment.statusCode} ${
-        commentsTranslations[result.data.replyForComment.message]
+        commentsErrors[result.data.replyForComment.message]
       }`
     );
   }
@@ -423,13 +417,13 @@ const updateReplyComment = async (replyCommentId, replyCommentData) => {
   const result = await setItems(query, { replyCommentId, replyCommentData });
 
   if (
-    Object.keys(commentsTranslations).includes(
+    Object.keys(commentsErrors).includes(
       result?.data?.updateReplyForComment?.message
     )
   ) {
     throw new Error(
       `${result.data.updateReplyForComment.statusCode} ${
-        commentsTranslations[result.data.updateReplyForComment.message]
+        commentsErrors[result.data.updateReplyForComment.message]
       }`
     );
   }
@@ -469,13 +463,13 @@ const getReplyComment = async (id) => {
   const result = await setItems(query, { id });
 
   if (
-    Object.keys(commentsTranslations).includes(
+    Object.keys(commentsErrors).includes(
       result?.data?.getReplyCommentById?.message
     )
   ) {
     throw new Error(
       `${result.data.getReplyCommentById.statusCode} ${
-        commentsTranslations[result.data.getReplyCommentById.message]
+        commentsErrors[result.data.getReplyCommentById.message]
       }`
     );
   }

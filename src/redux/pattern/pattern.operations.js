@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { patternTranslations } from '../../configs/error-modal-messages';
+import { patternErrors } from '../../configs/error-modal-messages';
 
 export const getAllPatterns = async (limit, skip, filter) => {
   const getAllPatternsQuery = `
@@ -113,13 +113,11 @@ export const getPatternById = async (id) => {
   const result = await getItems(getPatternByIdQuery, { id });
 
   if (
-    Object.keys(patternTranslations).includes(
-      result?.data?.getPatternById?.message
-    )
+    Object.keys(patternErrors).includes(result?.data?.getPatternById?.message)
   ) {
     throw new Error(
       `${result.data.getPatternById.statusCode} ${
-        patternTranslations[result.data.getPatternById.message]
+        patternErrors[result.data.getPatternById.message]
       }`
     );
   }
@@ -195,12 +193,10 @@ export const createPattern = async (payload) => {
 
   const result = await setItems(createPatternQuery, payload);
 
-  if (
-    Object.keys(patternTranslations).includes(result?.data?.addPattern?.message)
-  ) {
+  if (Object.keys(patternErrors).includes(result?.data?.addPattern?.message)) {
     throw new Error(
       `${result.data.addPattern.statusCode} ${
-        patternTranslations[result.data.addPattern.message]
+        patternErrors[result.data.addPattern.message]
       }`
     );
   }
@@ -243,13 +239,11 @@ export const updatePattern = async (payload) => {
   const result = await setItems(updatePatternQuery, payload);
 
   if (
-    Object.keys(patternTranslations).includes(
-      result?.data?.updatePattern?.message
-    )
+    Object.keys(patternErrors).includes(result?.data?.updatePattern?.message)
   ) {
     throw new Error(
       `${result.data.updatePattern.statusCode} ${
-        patternTranslations[result.data.updatePattern.message]
+        patternErrors[result.data.updatePattern.message]
       }`
     );
   }

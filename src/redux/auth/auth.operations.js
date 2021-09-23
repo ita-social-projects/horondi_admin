@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { userTranslations } from '../../configs/error-modal-messages';
+import { userErrors } from '../../configs/error-modal-messages';
 
 export const getUserByToken = async () => {
   const getUserByTokenQuery = `
@@ -31,10 +31,8 @@ export const loginAdmin = async (loginInput) => {
 
   const result = await setItems(loginAdminMutation, { loginInput });
 
-  if (
-    Object.keys(userTranslations).includes(result?.data?.loginAdmin?.message)
-  ) {
-    throw new Error(`${userTranslations[result.data.loginAdmin.message]}`);
+  if (Object.keys(userErrors).includes(result?.data?.loginAdmin?.message)) {
+    throw new Error(`${userErrors[result.data.loginAdmin.message]}`);
   }
 
   return result?.data?.loginAdmin;

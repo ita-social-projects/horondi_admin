@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './product-add-images.styles';
 import { config } from '../../../../configs/index';
 
-import { productsTranslations } from '../../../../configs/error-modal-messages';
+import { productErrorMessages } from '../../../../configs/error-messages';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import useProductAddImages from '../../../../hooks/product/use-product-addimages';
 import {
@@ -19,7 +19,7 @@ import {
   setPrimaryImageToUpload
 } from '../../../../redux/products/products.actions';
 
-const { REQUIRED_PHOTOS } = productsTranslations;
+const { REQUIRED_PHOTOS } = productErrorMessages;
 
 const ProductAddImages = ({
   setAdditionalImagesDisplayed,

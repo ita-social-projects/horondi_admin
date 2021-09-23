@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { bottomTranslations } from '../../configs/error-modal-messages';
+import { bottomErrors } from '../../configs/error-modal-messages';
 
 export const getAllBottoms = async (limit, skip, filter) => {
   const getAllBottomsQuery = `
@@ -54,13 +54,11 @@ export const getAllBottoms = async (limit, skip, filter) => {
   });
 
   if (
-    Object.keys(bottomTranslations).includes(
-      result?.data?.getAllBottoms?.message
-    )
+    Object.keys(bottomErrors).includes(result?.data?.getAllBottoms?.message)
   ) {
     throw new Error(
       `${result.data.getAllBottoms.statusCode} ${
-        bottomTranslations[result.data.getAllBottoms.message]
+        bottomErrors[result.data.getAllBottoms.message]
       }`
     );
   }
@@ -117,13 +115,11 @@ export const getBottomById = async (id) => {
   const result = await getItems(getBottomByIdQuery, { id });
 
   if (
-    Object.keys(bottomTranslations).includes(
-      result?.data?.getBottomById?.message
-    )
+    Object.keys(bottomErrors).includes(result?.data?.getBottomById?.message)
   ) {
     throw new Error(
       `${result.data.getBottomById.statusCode} ${
-        bottomTranslations[result.data.getBottomById.message]
+        bottomErrors[result.data.getBottomById.message]
       }`
     );
   }
@@ -172,12 +168,10 @@ export const createBottom = async (payload) => {
 
   const result = await setItems(createBottomQuery, payload);
 
-  if (
-    Object.keys(bottomTranslations).includes(result?.data?.addBottom?.message)
-  ) {
+  if (Object.keys(bottomErrors).includes(result?.data?.addBottom?.message)) {
     throw new Error(
       `${result.data.addBottom.statusCode} ${
-        bottomTranslations[result.data.addBottom.message]
+        bottomErrors[result.data.addBottom.message]
       }`
     );
   }
@@ -228,14 +222,10 @@ export const updateBottom = async (payload) => {
 
   const result = await setItems(updateBottomQuery, payload);
 
-  if (
-    Object.keys(bottomTranslations).includes(
-      result?.data?.updateBottom?.message
-    )
-  ) {
+  if (Object.keys(bottomErrors).includes(result?.data?.updateBottom?.message)) {
     throw new Error(
       `${result.data.updateBottom.statusCode} ${
-        bottomTranslations[result.data.updateBottom.message]
+        bottomErrors[result.data.updateBottom.message]
       }`
     );
   }

@@ -16,7 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useStyles } from './products-filters-container.styles';
 
-import { productsTranslations } from '../../configs/error-modal-messages';
+import { productsTranslations } from '../../configs/product-translations';
 import { config } from '../../configs';
 
 const badgePosition = {

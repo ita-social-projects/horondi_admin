@@ -15,7 +15,6 @@ import {
   updatePocket
 } from '../../../redux/pockets/pockets.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import { pocketsTranslations } from '../../../configs/error-modal-messages';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -34,7 +33,8 @@ const { convertationTitle } = config.titles.closuresTitles;
 
 const labels = { ...config.labels.pocketsPageLabel, convertationTitle };
 
-const { POCKETS_POSITION_ERROR_MESSAGE } = config.pocketsErrorMessages;
+const { POCKETS_POSITION_ERROR_MESSAGE, POCKETS_ERROR } =
+  config.pocketsErrorMessages;
 
 const {
   ERROR_MESSAGE,
@@ -47,7 +47,6 @@ const {
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
-const { POCKETS_ERROR } = pocketsTranslations;
 const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation } = config.formRegExp;
 const { materialUiConstants } = config;

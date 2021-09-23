@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { newsTranslations } from '../../configs/error-modal-messages';
+import { newsErrors } from '../../configs/error-modal-messages';
 
 const getAllNews = async (skip, limit, filter) => {
   const query = `
@@ -65,12 +65,10 @@ const getArticleById = async (id) => {
 
   const result = await getItems(query, { id });
 
-  if (
-    Object.keys(newsTranslations).includes(result?.data?.getNewsById?.message)
-  ) {
+  if (Object.keys(newsErrors).includes(result?.data?.getNewsById?.message)) {
     throw new Error(
       `${result.data.getNewsById.statusCode} ${
-        newsTranslations[result.data.getNewsById.message]
+        newsErrors[result.data.getNewsById.message]
       }`
     );
   }
@@ -98,12 +96,10 @@ const deleteArticle = async (id) => {
 
   const result = await setItems(query, { id });
 
-  if (
-    Object.keys(newsTranslations).includes(result?.data?.deleteNews?.message)
-  ) {
+  if (Object.keys(newsErrors).includes(result?.data?.deleteNews?.message)) {
     throw new Error(
       `${result.data.deleteNews.statusCode} ${
-        newsTranslations[result.data.deleteNews.message]
+        newsErrors[result.data.deleteNews.message]
       }`
     );
   }
@@ -131,10 +127,10 @@ const createArticle = async (news, upload) => {
 
   const result = await setItems(query, { news, upload });
 
-  if (Object.keys(newsTranslations).includes(result?.data?.addNews?.message)) {
+  if (Object.keys(newsErrors).includes(result?.data?.addNews?.message)) {
     throw new Error(
       `${result.data.addNews.statusCode} ${
-        newsTranslations[result.data.addNews.message]
+        newsErrors[result.data.addNews.message]
       }`
     );
   }
@@ -161,12 +157,10 @@ const updateArticle = async (id, news, upload) => {
     `;
   const result = await setItems(query, { id, news, upload });
 
-  if (
-    Object.keys(newsTranslations).includes(result?.data?.updateNews?.message)
-  ) {
+  if (Object.keys(newsErrors).includes(result?.data?.updateNews?.message)) {
     throw new Error(
       `${result.data.updateNews.statusCode} ${
-        newsTranslations[result.data.updateNews.message]
+        newsErrors[result.data.updateNews.message]
       }`
     );
   }

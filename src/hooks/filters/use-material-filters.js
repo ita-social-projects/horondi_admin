@@ -11,7 +11,7 @@ import {
   placeholderMaterialText,
   purposeFilterObj
 } from '../../utils/material';
-import { materialTranslations } from '../../configs/error-modal-messages';
+import { materialTranslations } from '../../configs/material-translations';
 
 const useMaterialFilters = () => {
   const dispatch = useDispatch();

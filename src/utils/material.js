@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { materialTranslations } from '../configs/error-modal-messages';
+import { materialTranslations } from '../configs/material-translations';
 
 export const purposeFilterObj = () => {
   const arrToFilter = [];

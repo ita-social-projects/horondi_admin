@@ -10,9 +10,9 @@ import {
   deletePattern,
   wrongValue
 } from './pattern.variables';
-import statuses from '../../../src/configs/statuses';
+import statuses from '../../../src/configs/success-modal-messages';
 import routes from '../../../src/configs/routes';
-import { patternTranslations } from '../../../src/configs/error-modal-messages';
+import { patternErrors } from '../../../src/configs/error-modal-messages';
 
 describe('pattern tests', () => {
   beforeEach(() => {
@@ -140,9 +140,7 @@ describe('pattern tests', () => {
     cy.get('[data-cy=save-btn]').click();
     cy.wait(2000);
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.get('.MuiAlert-message').contains(
-      patternTranslations.PATTERN_ALREADY_EXIST
-    );
+    cy.get('.MuiAlert-message').contains(patternErrors.PATTERN_ALREADY_EXIST);
   });
 
   it('should update pattern', () => {

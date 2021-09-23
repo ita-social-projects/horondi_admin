@@ -16,7 +16,7 @@ import LoadingBar from '../../components/loading-bar';
 import TableContainerRow from '../../containers/table-container-row';
 import getTime from '../../utils/getTime';
 import { historySelector } from '../../redux/selectors/history';
-import { userRoleTranslations } from '../../configs/error-modal-messages';
+import { userRoleTranslations } from '../../configs/user-role-translations';
 import { historyActions } from '../../consts/history-actions';
 import useHistoryFilters from '../../hooks/filters/use-history-filters';
 import routes from '../../configs/routes';

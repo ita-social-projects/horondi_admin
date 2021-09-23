@@ -74,7 +74,8 @@ export const constructorErrorMessages = {
 };
 
 export const pocketsErrorMessages = {
-  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку'
+  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку',
+  POCKETS_ERROR: 'Додайте фото для кишені'
 };
 
 export const strapsErrorMessages = {
@@ -85,7 +86,8 @@ export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
   CATEGORY_VALIDATION_ERROR_CATEGORY_NAME:
     'Назва повинна містити від 2 до 50 символів',
-  CATEGORY_CODE_MESSAGE: 'Поле не може містити спеціальні символи'
+  CATEGORY_CODE_MESSAGE: 'Поле не може містити спеціальні символи',
+  CATEGORY_ERROR: 'Додайте фото для категорії'
 };
 
 export const headerErrorMessages = {
@@ -183,4 +185,15 @@ export const businessPageErrorMessages = {
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
   ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки',
   MIN_TEXT_LENGTH_MESSAGE: 'Мінімум 10 символiв'
+};
+
+export const productErrorMessages = {
+  REQUIRED_PHOTOS: "Головне фото для продукту є обов'язковими",
+  REQUIRED_FIELD: "Обов'язкове поле",
+  NAME_TOO_SHORT_MESSAGE: 'Назва продукту повинна містити не менше 6 символів',
+  NAME_TOO_LONG_MESSAGE: 'Назва продукту повинна містити не більше 50 символів',
+  CORRECT_DATA_ERROR:
+    'Заповніть необхідні поля коректними даними для усіх мов ',
+  NOT_UA_NAME_MESSAGE: 'Введіть назву українською',
+  NOT_EN_NAME_MESSAGE: 'Введіть назву англійською'
 };

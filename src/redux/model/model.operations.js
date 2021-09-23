@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { modelTranslations } from '../../configs/error-modal-messages';
+import { modelErrors } from '../../configs/error-modal-messages';
 
 const constructorElementRequest = `
     _id
@@ -161,12 +161,10 @@ export const getModelById = async (id) => {
     `;
   const result = await getItems(getModelByIdQuery, { id });
 
-  if (
-    Object.keys(modelTranslations).includes(result?.data?.getModelById?.message)
-  ) {
+  if (Object.keys(modelErrors).includes(result?.data?.getModelById?.message)) {
     throw new Error(
       `${result.data.getModelById.statusCode} ${
-        modelTranslations[result.data.getModelById.message]
+        modelErrors[result.data.getModelById.message]
       }`
     );
   }
@@ -247,12 +245,10 @@ export const createModel = async (payload) => {
 
   const result = await setItems(addMutation, payload);
 
-  if (
-    Object.keys(modelTranslations).includes(result?.data?.addModel?.message)
-  ) {
+  if (Object.keys(modelErrors).includes(result?.data?.addModel?.message)) {
     throw new Error(
       `${result.data.addModel.statusCode} ${
-        modelTranslations[result.data.addModel.message]
+        modelErrors[result.data.addModel.message]
       }`
     );
   }
@@ -299,12 +295,10 @@ export const updateModel = async (payload) => {
 
   const result = await setItems(updateMutation, payload);
 
-  if (
-    Object.keys(modelTranslations).includes(result?.data?.updateModel?.message)
-  ) {
+  if (Object.keys(modelErrors).includes(result?.data?.updateModel?.message)) {
     throw new Error(
       `${result.data.updateModel.statusCode} ${
-        modelTranslations[result.data.updateModel.message]
+        modelErrors[result.data.updateModel.message]
       }`
     );
   }
@@ -333,13 +327,13 @@ export const addModelConstructorBasic = async (payload) => {
   const result = await setItems(query, payload);
 
   if (
-    Object.keys(modelTranslations).includes(
+    Object.keys(modelErrors).includes(
       result?.data?.addModelConstructorBasic?.message
     )
   ) {
     throw new Error(
       `${result.data.addModelConstructorBasic.statusCode} ${
-        modelTranslations[result.data.addModelConstructorBasic.message]
+        modelErrors[result.data.addModelConstructorBasic.message]
       }`
     );
   }
@@ -391,13 +385,13 @@ export const addModelConstructorPattern = async (payload) => {
   const result = await setItems(query, payload);
 
   if (
-    Object.keys(modelTranslations).includes(
+    Object.keys(modelErrors).includes(
       result?.data?.addModelConstructorPattern?.message
     )
   ) {
     throw new Error(
       `${result.data.addModelConstructorPattern.statusCode} ${
-        modelTranslations[result.data.addModelConstructorPattern.message]
+        modelErrors[result.data.addModelConstructorPattern.message]
       }`
     );
   }
@@ -448,13 +442,13 @@ export const addModelConstructorFrontPocket = async (payload) => {
   const result = await setItems(query, payload);
 
   if (
-    Object.keys(modelTranslations).includes(
+    Object.keys(modelErrors).includes(
       result?.data?.addModelConstructorFrontPocket?.message
     )
   ) {
     throw new Error(
       `${result.data.addModelConstructorFrontPocket.statusCode} ${
-        modelTranslations[result.data.addModelConstructorFrontPocket.message]
+        modelErrors[result.data.addModelConstructorFrontPocket.message]
       }`
     );
   }
@@ -506,13 +500,13 @@ export const addModelConstructorBottom = async (payload) => {
   const result = await setItems(query, payload);
 
   if (
-    Object.keys(modelTranslations).includes(
+    Object.keys(modelErrors).includes(
       result?.data?.addModelConstructorBottom?.message
     )
   ) {
     throw new Error(
       `${result.data.addModelConstructorBottom.statusCode} ${
-        modelTranslations[result.data.addModelConstructorBottom.message]
+        modelErrors[result.data.addModelConstructorBottom.message]
       }`
     );
   }

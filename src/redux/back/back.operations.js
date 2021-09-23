@@ -1,4 +1,4 @@
-import { backTranslations } from '../../configs/error-modal-messages';
+import { constructorErrors } from '../../configs/error-modal-messages';
 import { getItems, setItems } from '../../utils/client';
 
 export const getAllBacks = async (limit, skip, filter) => {
@@ -52,9 +52,9 @@ query($limit: Int!, $skip: Int!, $filter: BackFilterInput) {
   });
 
   if (
-    Object.keys(backTranslations).includes(result?.data?.getAllBacks?.message)
+    Object.keys(constructorErrors).includes(result?.data?.getAllBacks?.message)
   ) {
-    throw new Error(`${backTranslations[result.data.getAllBacks.message]}`);
+    throw new Error(`${constructorErrors[result.data.getAllBacks.message]}`);
   }
   return result?.data?.getAllBacks;
 };
@@ -106,11 +106,11 @@ export const getBackById = async (id) => {
   const result = await getItems(getBackByIdQuery, { id });
 
   if (
-    Object.keys(backTranslations).includes(result?.data?.getBackById?.message)
+    Object.keys(constructorErrors).includes(result?.data?.getBackById?.message)
   ) {
     throw new Error(
       `${result.data.getBackById.statusCode} ${
-        backTranslations[result.data.getBackById.message]
+        constructorErrors[result.data.getBackById.message]
       }`
     );
   }
@@ -158,8 +158,8 @@ export const createBack = async (payload) => {
     `;
 
   const result = await setItems(createBackQuery, payload);
-  if (Object.keys(backTranslations).includes(result?.data?.addBack?.message)) {
-    throw new Error(`${backTranslations[result.data.addBack.message]}`);
+  if (Object.keys(constructorErrors).includes(result?.data?.addBack?.message)) {
+    throw new Error(`${constructorErrors[result.data.addBack.message]}`);
   }
 
   return result?.data?.addBack;
@@ -205,11 +205,11 @@ export const updateBack = async (payload) => {
   const result = await setItems(updateBackQuery, payload);
 
   if (
-    Object.keys(backTranslations).includes(result?.data?.updateBack?.message)
+    Object.keys(constructorErrors).includes(result?.data?.updateBack?.message)
   ) {
     throw new Error(
       `${result.data.updateBack.statusCode} ${
-        backTranslations[result.data.updateBack.message]
+        constructorErrors[result.data.updateBack.message]
       }`
     );
   }

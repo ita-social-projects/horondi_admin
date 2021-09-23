@@ -7,7 +7,7 @@ import { noop } from 'lodash';
 
 import StepperControlButtons from '../index';
 import { inputTypes, config } from '../../../../configs';
-import { productsTranslations } from '../../../../configs/error-modal-messages';
+import { productsTranslations } from '../../../../configs/product-translations';
 
 Enzyme.configure({ adapter: new Adapter() });
 

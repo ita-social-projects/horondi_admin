@@ -1,5 +1,5 @@
 import { setItems, getItems } from '../../utils/client';
-import { contactTranslations } from '../../configs/error-modal-messages';
+import { contactErrors } from '../../configs/error-modal-messages';
 
 const getContacts = async (skip, limit) => {
   const query = `
@@ -61,13 +61,11 @@ const getContactById = async (id) => {
   const result = await getItems(query, { id });
 
   if (
-    Object.keys(contactTranslations).includes(
-      result?.data?.getContactById?.message
-    )
+    Object.keys(contactErrors).includes(result?.data?.getContactById?.message)
   ) {
     throw new Error(
       `${result.data?.getContactById.statusCode} ${
-        contactTranslations[result.data?.getContactById.message]
+        contactErrors[result.data?.getContactById.message]
       }`
     );
   }
@@ -98,13 +96,11 @@ const deleteContact = async (id) => {
   const result = await setItems(query, { id });
 
   if (
-    Object.keys(contactTranslations).includes(
-      result?.data?.deleteContact?.message
-    )
+    Object.keys(contactErrors).includes(result?.data?.deleteContact?.message)
   ) {
     throw new Error(
       `${result.data.deleteContact.statusCode} ${
-        contactTranslations[result.data.deleteContact.message]
+        contactErrors[result.data.deleteContact.message]
       }`
     );
   }
@@ -144,12 +140,10 @@ const addContact = async (contact, mapImages) => {
     `;
   const result = await setItems(query, { contact, mapImages });
 
-  if (
-    Object.keys(contactTranslations).includes(result?.data?.addContact?.message)
-  ) {
+  if (Object.keys(contactErrors).includes(result?.data?.addContact?.message)) {
     throw new Error(
       `${result.data.addContact.statusCode} ${
-        contactTranslations[result.data.addContact.message]
+        contactErrors[result.data.addContact.message]
       }`
     );
   }
@@ -180,13 +174,11 @@ const updateContact = async (id, contact, mapImages) => {
   const result = await setItems(query, { id, contact, mapImages });
 
   if (
-    Object.keys(contactTranslations).includes(
-      result?.data?.updateContact?.message
-    )
+    Object.keys(contactErrors).includes(result?.data?.updateContact?.message)
   ) {
     throw new Error(
       `${result.data.updateContact.statusCode} ${
-        contactTranslations[result.data.updateContact.message]
+        contactErrors[result.data.updateContact.message]
       }`
     );
   }

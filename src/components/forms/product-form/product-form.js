@@ -25,7 +25,7 @@ import {
   updateProduct
 } from '../../../redux/products/products.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import { productsTranslations } from '../../../configs/error-modal-messages';
+import { productsTranslations } from '../../../configs/product-translations';
 import DeleteButton from '../../buttons/delete-button';
 import { config } from '../../../configs';
 import { BackButton } from '../../buttons';

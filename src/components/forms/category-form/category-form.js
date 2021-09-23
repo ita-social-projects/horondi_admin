@@ -13,7 +13,6 @@ import {
   updateCategory
 } from '../../../redux/categories/categories.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import { categoryTranslations } from '../../../configs/error-modal-messages';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -30,7 +29,8 @@ import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-che
 const {
   CATEGORY_VALIDATION_ERROR,
   CATEGORY_VALIDATION_ERROR_CATEGORY_NAME,
-  CATEGORY_CODE_MESSAGE
+  CATEGORY_CODE_MESSAGE,
+  CATEGORY_ERROR
 } = config.categoryErrorMessages;
 
 const { ERROR_MESSAGE, UA_NAME_MESSAGE, EN_NAME_MESSAGE } =
@@ -38,7 +38,6 @@ const { ERROR_MESSAGE, UA_NAME_MESSAGE, EN_NAME_MESSAGE } =
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
-const { CATEGORY_ERROR } = categoryTranslations;
 const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, categoryCode } = config.formRegExp;
 const { materialUiConstants } = config;

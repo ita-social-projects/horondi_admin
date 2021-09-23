@@ -10,9 +10,30 @@ import {
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
 import buttonTitles from './button-titles';
-import statuses from './statuses';
+import statuses from './success-modal-messages';
 import filterLabels from './filter-labels';
 import materialUiConstants from './material-ui-constants';
+import { materialTranslations } from './material-translations';
+import { slidesTranslations } from './slides-translations';
+import {
+  constructorErrors,
+  businessPageErrors,
+  bottomErrors,
+  categoryErrors,
+  colorsErrors,
+  contactErrors,
+  headerErrors,
+  modelErrors,
+  newsErrors,
+  patternErrors,
+  homePageEditErrors,
+  commentsErrors,
+  slidesErrors,
+  materialErrors,
+  productsErrors,
+  userErrors,
+  errorStatuses
+} from './error-modal-messages';
 import {
   commonErrorMessages,
   loginErrorMessages,
@@ -33,6 +54,7 @@ import {
   paginationInputErrorMessages,
   sizeErrorMessages,
   businessPageErrorMessages,
+  productErrorMessages,
   pocketsErrorMessages,
   closuresErrorMessages,
   basicsErrorMessages,
@@ -42,6 +64,9 @@ import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
 import { newsPaginationPayload, contactsPaginationPayload } from './pagination';
+import { productsTranslations } from './product-translations';
+import { tableTranslations } from './table-translations';
+import { userRoleTranslations } from './user-role-translations';
 import titles from './titles';
 import languages from './languages';
 import {
@@ -243,6 +268,9 @@ export const config = {
   newsErrorMessages,
   errorMessages,
   newsPaginationPayload,
+  productsTranslations,
+  tableTranslations,
+  userRoleTranslations,
   contactsPaginationPayload,
   modelErrorMessages,
   headerErrorMessages,
@@ -252,15 +280,35 @@ export const config = {
   paginationInputErrorMessages,
   filterLabels,
   materialUiConstants,
+  materialTranslations,
+  slidesTranslations,
   sizeErrorMessages,
   businessPageErrorMessages,
+  productErrorMessages,
   imageUploadNewsInputsId,
   valueKeys,
   inputNames,
   pocketsErrorMessages,
   closuresErrorMessages,
   basicsErrorMessages,
-  strapsErrorMessages
+  strapsErrorMessages,
+  constructorErrors,
+  businessPageErrors,
+  bottomErrors,
+  categoryErrors,
+  colorsErrors,
+  contactErrors,
+  headerErrors,
+  modelErrors,
+  newsErrors,
+  patternErrors,
+  homePageEditErrors,
+  commentsErrors,
+  slidesErrors,
+  materialErrors,
+  productsErrors,
+  userErrors,
+  errorStatuses
 };
 export const inputTypes = {
   button: 'button',
