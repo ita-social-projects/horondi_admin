@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { sizeErrors } from '../../configs/error-modal-messages';
+import { sizesTranslations } from '../../configs/error-modal-messages';
 
 export const getAllSizes = async (limit, skip, filter) => {
   const query = `
@@ -60,10 +60,12 @@ export const getSizeById = async (id) => {
 
   const result = await getItems(query, { id });
 
-  if (Object.keys(sizeErrors).includes(result?.data?.getSizeById.message)) {
+  if (
+    Object.keys(sizesTranslations).includes(result?.data?.getSizeById.message)
+  ) {
     throw new Error(
       `${result.data.getSizeById.statusCode} ${
-        sizeErrors[result.data.getSizeById.message]
+        sizesTranslations[result.data.getSizeById.message]
       }`
     );
   }
@@ -110,10 +112,12 @@ export const updateSize = async (id, size) => {
 
   const result = await setItems(query, { id, size });
 
-  if (Object.keys(sizeErrors).includes(result?.data?.updateSize?.message)) {
+  if (
+    Object.keys(sizesTranslations).includes(result?.data?.updateSize?.message)
+  ) {
     throw new Error(
       `${result.data.updateSize.statusCode} ${
-        sizeErrors[result.data.updateSize.message]
+        sizesTranslations[result.data.updateSize.message]
       }`
     );
   }
@@ -140,10 +144,12 @@ export const deleteSize = async (id) => {
 
   const result = await setItems(query, { id });
 
-  if (Object.keys(sizeErrors).includes(result?.data?.deleteSize?.message)) {
+  if (
+    Object.keys(sizesTranslations).includes(result?.data?.deleteSize?.message)
+  ) {
     throw new Error(
       `${result?.data?.deleteSize.statusCode} ${
-        sizeErrors[result?.data?.deleteSize.message]
+        sizesTranslations[result?.data?.deleteSize.message]
       }`
     );
   }

@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { materialErrors } from '../../configs/error-modal-messages';
+import { materialTranslations } from '../../configs/error-modal-messages';
 
 export const getAllMaterials = async (skip, limit, filter) => {
   const query = `
@@ -108,9 +108,13 @@ export const getMaterialById = async (id) => {
   const result = await getItems(query, { id });
 
   if (
-    Object.keys(materialErrors).includes(result?.data?.getMaterialById?.message)
+    Object.keys(materialTranslations).includes(
+      result?.data?.getMaterialById?.message
+    )
   ) {
-    throw new Error(`${materialErrors[result.data.getMaterialById.message]}`);
+    throw new Error(
+      `${materialTranslations[result.data.getMaterialById.message]}`
+    );
   }
 
   return result?.data?.getMaterialById;
@@ -134,9 +138,13 @@ export const deleteMaterial = async (id) => {
   const result = await setItems(query, { id });
 
   if (
-    Object.keys(materialErrors).includes(result?.data?.deleteMaterial?.message)
+    Object.keys(materialTranslations).includes(
+      result?.data?.deleteMaterial?.message
+    )
   ) {
-    throw new Error(`${materialErrors[result.data.deleteMaterial.message]}`);
+    throw new Error(
+      `${materialTranslations[result.data.deleteMaterial.message]}`
+    );
   }
 
   return result?.data?.deleteMaterial;
@@ -159,9 +167,11 @@ export const createMaterial = async (payload) => {
   const result = await setItems(query, payload);
 
   if (
-    Object.keys(materialErrors).includes(result?.data?.addMaterial?.message)
+    Object.keys(materialTranslations).includes(
+      result?.data?.addMaterial?.message
+    )
   ) {
-    throw new Error(`${materialErrors[result.data.addMaterial.message]}`);
+    throw new Error(`${materialTranslations[result.data.addMaterial.message]}`);
   }
 
   return result?.data?.addMaterial;
@@ -194,9 +204,13 @@ export const updateMaterial = async (id, material) => {
   const result = await getItems(query, { id, material });
 
   if (
-    Object.keys(materialErrors).includes(result?.data?.updateMaterial?.message)
+    Object.keys(materialTranslations).includes(
+      result?.data?.updateMaterial?.message
+    )
   ) {
-    throw new Error(`${materialErrors[result.data.updateMaterial.message]}`);
+    throw new Error(
+      `${materialTranslations[result.data.updateMaterial.message]}`
+    );
   }
 
   return result?.data?.updateMaterial;

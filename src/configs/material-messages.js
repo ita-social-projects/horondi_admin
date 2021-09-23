@@ -1,4 +1,4 @@
-export const materialTranslations = {
+export const materialMessages = {
   YES: 'Так',
   NO: 'Ні',
   purpose: {

@@ -13,7 +13,7 @@ import buttonTitles from './button-titles';
 import statuses from './statuses';
 import filterLabels from './filter-labels';
 import materialUiConstants from './material-ui-constants';
-import { materialTranslations } from './material-translations';
+import { materialMessages } from './material-messages';
 import { slidesMessages } from './slides-messages';
 import {
   constructorErrors,
@@ -23,13 +23,13 @@ import {
   colorsTranslations,
   contactTranslations,
   headerTranslations,
-  modelErrors,
+  modelTranslations,
   newsErrors,
-  patternErrors,
+  patternTranlations,
   homePageEditErrors,
   commentsErrors,
   slidesTranslations,
-  materialErrors,
+  materialTranslations,
   productsErrors,
   userTranslations,
   backTranslations,
@@ -301,13 +301,13 @@ export const config = {
   colorsTranslations,
   contactTranslations,
   headerTranslations,
-  modelErrors,
+  modelTranslations,
   newsErrors,
-  patternErrors,
+  patternTranlations,
   homePageEditErrors,
   commentsErrors,
   slidesMessages,
-  materialErrors,
+  materialMessages,
   productsErrors,
   userTranslations,
   errorStatuses

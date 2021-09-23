@@ -44,11 +44,11 @@ export const headerTranslations = {
   HEADER_ALREADY_EXIST: 'Таке посилання вже існує!'
 };
 
-export const sizeErrors = {
+export const sizesTranslations = {
   SIZE_NOT_FOUND: 'Розмір не знайдено!'
 };
 
-export const modelErrors = {
+export const modelTranslations = {
   MODEL_NOT_FOUND: 'Модель не знайдено!',
   MODEL_ALREADY_EXIST: 'Така модель вже існує!'
 };
@@ -58,7 +58,7 @@ export const newsErrors = {
   NEWS_ALREADY_EXIST: 'Така новина вже існує!'
 };
 
-export const patternErrors = {
+export const patternTranlations = {
   PATTERN_NOT_FOUND: 'Гобелен не знайдено!',
   PATTERN_ALREADY_EXIST: 'Такий гобелен вже існує!'
 };
@@ -80,7 +80,7 @@ export const slidesTranslations = {
   IMAGE_NOT_PROVIDED: 'Відсутнє зображення'
 };
 
-export const materialErrors = {
+export const materialTranslations = {
   MATERIAL_NOT_FOUND: 'Матеріал не знайдено!',
   MATERIAL_ALREADY_EXIST: 'Такий матеріал вже існує!'
 };

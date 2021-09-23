@@ -12,7 +12,7 @@ import {
 } from './pattern.variables';
 import statuses from '../../../src/configs/statuses';
 import routes from '../../../src/configs/routes';
-import { patternErrors } from '../../../src/configs/error-modal-messages';
+import { patternTranlations } from '../../../src/configs/error-modal-messages';
 
 describe('pattern tests', () => {
   beforeEach(() => {
@@ -140,7 +140,9 @@ describe('pattern tests', () => {
     cy.get('[data-cy=save-btn]').click();
     cy.wait(2000);
     cy.get('.MuiAlert-message').should('be.visible');
-    cy.get('.MuiAlert-message').contains(patternErrors.PATTERN_ALREADY_EXIST);
+    cy.get('.MuiAlert-message').contains(
+      patternTranlations.PATTERN_ALREADY_EXIST
+    );
   });
 
   it('should update pattern', () => {
