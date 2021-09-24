@@ -7,7 +7,6 @@ import {
   setMaterialFilter
 } from '../../../redux/material/material.actions';
 import buttonTitles from '../../../configs/button-titles';
-import { setCurrentPage } from '../../../redux/table/table.actions';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import { purposeFilterObj } from '../../../utils/material';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
