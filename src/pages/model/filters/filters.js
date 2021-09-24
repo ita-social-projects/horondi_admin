@@ -11,7 +11,6 @@ import {
   setModelSortLabel
 } from '../../../redux/model/model.actions';
 import { sortLabel } from '../../../configs/sort';
-import { setCurrentPage } from '../../../redux/table/table.actions';
 import buttonTitles from '../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import {
