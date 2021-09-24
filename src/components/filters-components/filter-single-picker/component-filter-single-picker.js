@@ -9,7 +9,7 @@ import { setCurrentPage } from '../../../redux/table/table.actions';
 const ComponentFilterSinglePicker = ({
   setFilterValue,
   actionSetLabel,
-  value,
+  value: pickerValue,
   options,
   label
 }) => {
@@ -28,7 +28,7 @@ const ComponentFilterSinglePicker = ({
   return (
     <OptionPicker
       handler={setSortFilter}
-      value={value}
+      value={pickerValue}
       options={options}
       label={label}
     />

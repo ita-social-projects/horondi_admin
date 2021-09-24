@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { noop } from 'lodash';
 import ContainerFilters from '../../../components/container-filters';
 import ComponentFilterClear from '../../../components/filters-components/filter-clear';
 import ComponentFilterDateRangePicker from '../../../components/filters-components/filter-date-range-picker';

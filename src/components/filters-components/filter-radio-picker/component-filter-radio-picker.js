@@ -8,7 +8,7 @@ import { setCurrentPage } from '../../../redux/table/table.actions';
 const ComponentFilterRadioPicker = ({
   setFilterValue,
   actionSetLabel,
-  value,
+  value: pickerValue,
   options,
   label,
   selectorFunc
@@ -24,7 +24,7 @@ const ComponentFilterRadioPicker = ({
   return (
     <OptionPicker
       handler={setSortFilter}
-      value={value}
+      value={pickerValue}
       options={options}
       label={label}
     />
