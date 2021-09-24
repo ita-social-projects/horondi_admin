@@ -6,7 +6,7 @@ import { push } from 'connected-react-router';
 import { useStyles } from './admin-tab.styles';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
 import TableContainerRow from '../../../../containers/table-container-row';
-import { userRoleTranslations } from '../../../../translations/user.translations';
+import { userRoleTranslations } from '../../../../configs/user-role-translations';
 import { config } from '../../../../configs';
 import RegisterDialog from '../register-dialog';
 import useFormDialog from '../../../../hooks/form-dialog/use-form-dialog';

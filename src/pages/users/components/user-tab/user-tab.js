@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
 import TableContainerRow from '../../../../containers/table-container-row';
-import { userRoleTranslations } from '../../../../translations/user.translations';
+import { userRoleTranslations } from '../../../../configs/user-role-translations';
 import { formatPhoneNumber } from '../../../../utils/format-phone-number';
 import { config } from '../../../../configs';
 import { useStyles } from './user-tab.styles';

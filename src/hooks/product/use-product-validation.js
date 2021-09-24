@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { capitalize } from '@material-ui/core';
 import { config } from '../../configs';
-import { productsTranslations } from '../../translations/product.translations';
+import { productErrorMessages } from '../../configs/error-messages';
 
 const selectName = ({ name, validation, required }) =>
   required
@@ -30,7 +30,7 @@ const {
 } = config;
 
 const { REQUIRED_FIELD, NAME_TOO_LONG_MESSAGE, NAME_TOO_SHORT_MESSAGE } =
-  productsTranslations;
+  productErrorMessages;
 
 const useProductValidation = (
   formikInfo,
@@ -68,7 +68,7 @@ const useProductValidation = (
             .max(50, NAME_TOO_LONG_MESSAGE)
             .matches(
               config.formRegExp[`${lang}NameCreation`],
-              productsTranslations[`NOT_${lang.toUpperCase()}_NAME_MESSAGE`]
+              productErrorMessages[`NOT_${lang.toUpperCase()}_NAME_MESSAGE`]
             )
             .required(REQUIRED_FIELD),
           [`${lang}${capitalize(infoLabels[1].name)}`]: Yup.string()

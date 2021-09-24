@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { modelTranslations } from '../../translations/model.translations';
+import { modelTranslations } from '../../configs/error-modal-messages';
 
 const constructorElementRequest = `
     _id

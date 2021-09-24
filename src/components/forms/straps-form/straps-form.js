@@ -23,15 +23,15 @@ import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved
 import AdditionalPriceContainer from '../../../containers/additional-price-container';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
+const { STRAPS_COLOR_ERROR_MESSAGE } = config.strapsErrorMessages;
 const {
-  STRAPS_VALIDATION_ERROR,
-  STRAPS_ERROR_MESSAGE,
-  STRAPS_UA_NAME_MESSAGE,
-  STRAPS_EN_NAME_MESSAGE,
-  STRAPS_MAX_LENGTH_MESSAGE,
-  STRAPS_MIN_LENGTH_MESSAGE,
-  STRAPS_COLOR_ERROR_MESSAGE
-} = config.strapsErrorMessages;
+  PRICE_ERROR,
+  ERROR_MESSAGE,
+  UA_NAME_MESSAGE,
+  EN_NAME_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  MIN_LENGTH_MESSAGE
+} = config.commonErrorMessages;
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
 const { IMG_URL } = config;
@@ -65,18 +65,18 @@ const StrapsForm = ({ strap, id, edit }) => {
 
   const strapsValidationSchema = Yup.object().shape({
     uaName: Yup.string()
-      .min(2, STRAPS_MIN_LENGTH_MESSAGE)
-      .max(50, STRAPS_MAX_LENGTH_MESSAGE)
-      .required(STRAPS_ERROR_MESSAGE)
-      .matches(uaNameCreation, STRAPS_UA_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, STRAPS_MIN_LENGTH_MESSAGE)
-      .max(50, STRAPS_MAX_LENGTH_MESSAGE)
-      .required(STRAPS_ERROR_MESSAGE)
-      .matches(enNameCreation, STRAPS_EN_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, EN_NAME_MESSAGE),
     additionalPrice: Yup.string()
-      .required(STRAPS_ERROR_MESSAGE)
-      .matches(additionalPriceRegExp, STRAPS_VALIDATION_ERROR)
+      .required(ERROR_MESSAGE)
+      .matches(additionalPriceRegExp, PRICE_ERROR)
       .nullable(),
     additionalPriceType: Yup.string(),
     available: Yup.boolean(),

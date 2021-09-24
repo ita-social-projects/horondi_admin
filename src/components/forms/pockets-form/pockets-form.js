@@ -15,7 +15,6 @@ import {
   updatePocket
 } from '../../../redux/pockets/pockets.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import { pocketsTranslations } from '../../../translations/pockets.translations';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -35,18 +34,17 @@ const { convertationTitle } = config.titles.closuresTitles;
 const labels = { ...config.labels.pocketsPageLabel, convertationTitle };
 
 const {
-  POCKETS_ERROR_MESSAGE,
-  POCKETS_UA_NAME_MESSAGE,
-  POCKETS_EN_NAME_MESSAGE,
-  POCKETS_MAX_LENGTH_MESSAGE,
-  POCKETS_MIN_LENGTH_MESSAGE,
   POCKETS_POSITION_ERROR_MESSAGE,
-  POCKETS_PRICE_ERROR
+  POCKETS_ERROR,
+  POCKETS_UA_NAME_MESSAGE,
+  POCKETS_EN_NAME_MESSAGE
 } = config.pocketsErrorMessages;
+
+const { ERROR_MESSAGE, PRICE_ERROR, MAX_LENGTH_MESSAGE, MIN_LENGTH_MESSAGE } =
+  config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
-const { POCKETS_ERROR } = pocketsTranslations;
 const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation } = config.formRegExp;
 const { materialUiConstants } = config;
@@ -90,19 +88,19 @@ const PocketsForm = ({ pocket, id, edit }) => {
 
   const pocketsValidationSchema = Yup.object().shape({
     uaName: Yup.string()
-      .min(2, POCKETS_MIN_LENGTH_MESSAGE)
-      .max(50, POCKETS_MAX_LENGTH_MESSAGE)
-      .required(POCKETS_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(uaNameCreation, POCKETS_UA_NAME_MESSAGE),
     enName: Yup.string()
-      .min(2, POCKETS_MIN_LENGTH_MESSAGE)
-      .max(50, POCKETS_MAX_LENGTH_MESSAGE)
-      .required(POCKETS_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(enNameCreation, POCKETS_EN_NAME_MESSAGE),
     additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
-      .required(POCKETS_ERROR_MESSAGE)
-      .matches(config.formRegExp.onlyPositiveFloat, POCKETS_PRICE_ERROR)
+      .required(ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
       .nullable(),
     positions: Yup.string().required(POCKETS_POSITION_ERROR_MESSAGE)
   });

@@ -35,15 +35,19 @@ import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-che
 
 const { languages } = config;
 const {
-  VALIDATION_ERROR,
-  MIN_LENGTH_MESSAGE,
   MAX_LENGTH_MESSAGE,
-  PRICE_VALIDATION_ERROR,
-  NOT_UA_NAME_MESSAGE,
-  NOT_EN_NAME_MESSAGE,
   NOT_UA_DESCRIPTION_MESSAGE,
   NOT_EN_DESCRIPTION_MESSAGE
 } = config.materialErrorMessages;
+
+const {
+  MIN_LENGTH_MESSAGE,
+  ERROR_MESSAGE,
+  PRICE_ERROR,
+  UA_NAME_MESSAGE,
+  EN_NAME_MESSAGE,
+  MAX_LENGTH_MESSAGE_300
+} = config.commonErrorMessages;
 
 function MaterialForm({ material, id }) {
   const styles = useStyles();
@@ -60,37 +64,37 @@ function MaterialForm({ material, id }) {
     uaName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
-      .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .matches(config.formRegExp.uaNameCreation, UA_NAME_MESSAGE)
+      .required(ERROR_MESSAGE),
 
     enName: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
-      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .matches(config.formRegExp.enNameCreation, EN_NAME_MESSAGE)
+      .required(ERROR_MESSAGE),
 
     uaDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
-      .max(300, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE_300)
       .matches(config.formRegExp.uaDescription, NOT_UA_DESCRIPTION_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .required(ERROR_MESSAGE),
 
     enDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
-      .max(300, MAX_LENGTH_MESSAGE)
+      .max(300, MAX_LENGTH_MESSAGE_300)
       .matches(config.formRegExp.enDescription, NOT_EN_DESCRIPTION_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .required(ERROR_MESSAGE),
 
     purpose: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
       .max(100, MAX_LENGTH_MESSAGE)
-      .required(VALIDATION_ERROR),
+      .required(ERROR_MESSAGE),
     additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
-      .matches(config.formRegExp.onlyPositiveFloat, PRICE_VALIDATION_ERROR)
-      .required(VALIDATION_ERROR),
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
+      .required(ERROR_MESSAGE),
 
-    colors: Yup.array().of(Yup.string()).required(VALIDATION_ERROR)
+    colors: Yup.array().of(Yup.string()).required(ERROR_MESSAGE)
   });
 
   const {

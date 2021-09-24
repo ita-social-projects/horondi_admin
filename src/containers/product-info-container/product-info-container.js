@@ -5,7 +5,7 @@ import { noop } from 'lodash';
 import { useStyles } from './product-info-container.styles';
 
 import { config } from '../../configs';
-import { productsTranslations } from '../../translations/product.translations';
+import { productErrorMessages } from '../../configs/error-messages';
 import LanguagePanel from '../../components/forms/language-panel';
 
 const {
@@ -15,7 +15,7 @@ const {
   languages
 } = config;
 
-const { CORRECT_DATA_ERROR } = productsTranslations;
+const { CORRECT_DATA_ERROR } = productErrorMessages;
 
 const ProductInfoContainer = ({
   values,
