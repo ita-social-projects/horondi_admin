@@ -38,20 +38,13 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const dispatch = useDispatch();
   const { discoverMoreTitle, discoverMoreSymbol } =
     config.titles.homePageSliderTitle;
-  const {
-    slideImage,
-    setSlideImage,
-    createSlide,
-    upload,
-    setUpload,
-    uploadImage,
-    setUploadImage
-  } = useHomePageSlideHandlers();
+  const { slideImage, createSlide, upload, uploadImage, setUploadImage } =
+    useHomePageSlideHandlers();
 
   const { pathToHomePageSlides } = config.routes;
 
   const {
-    imageUploadSlideInputsId: { imageInput, homePageImageInput }
+    imageUploadSlideInputsId: { imageInput }
   } = config;
 
   useEffect(() => {
