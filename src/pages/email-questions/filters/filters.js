@@ -7,7 +7,6 @@ import {
   clearFilters,
   setFilter
 } from '../../../redux/email-questions/email-questions.actions';
-import { setCurrentPage } from '../../../redux/table/table.actions';
 import buttonTitles from '../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
