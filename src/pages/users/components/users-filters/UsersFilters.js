@@ -12,7 +12,6 @@ import {
   setUserSortLabel
 } from '../../../../redux/users/users.actions';
 import { sortLabel } from '../../../../configs/sort';
-import { setCurrentPage } from '../../../../redux/table/table.actions';
 import buttonTitles from '../../../../configs/button-titles';
 import { userStatusFilterObj } from '../../../../utils/user';
 import ComponentFilterSearch from '../../../../components/filters-components/filter-search';
