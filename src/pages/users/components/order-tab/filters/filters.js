@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { noop } from 'lodash';
 import ContainerFilters from '../../../../../components/container-filters';
 import ComponentFilterClear from '../../../../../components/filters-components/filter-clear';
 import ComponentFilterDateRangePicker from '../../../../../components/filters-components/filter-date-range-picker';
@@ -13,7 +12,6 @@ import {
   setOrderSortLabel
 } from '../../../../../redux/orders/orders.actions';
 import { sortLabel as labelSort } from '../../../../../configs/sort';
-import { setCurrentPage } from '../../../../../redux/table/table.actions';
 import buttonTitles from '../../../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../../../components/filters-components/filter-multiple-picker';
 import { paymentStatusFilterObj } from '../../../../../utils/order';
