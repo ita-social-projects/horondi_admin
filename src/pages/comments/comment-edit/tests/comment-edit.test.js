@@ -21,7 +21,7 @@ configure({ adapter: new Adapter() });
 
 const mockUseDispatchFn = jest.fn();
 
-describe('Comment form tests', () => {
+xdescribe('Comment form tests', () => {
   const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
   const mockUseSelector = jest.spyOn(redux, 'useSelector');
   let wrapper;
