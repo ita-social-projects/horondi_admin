@@ -33,7 +33,8 @@ const titles = {
   },
   backTitles: {
     mainPageTitle: 'Інформація про спинки',
-    createPageTitle: 'Створити спинку'
+    createPageTitle: 'Створити спинку',
+    convertationTitle: 'Відповідна ціна в UAH'
   },
   bottomTitles: {
     mainPageTitle: 'Інформація про низи',
@@ -148,7 +149,8 @@ const titles = {
     convertationTitle: 'Відповідна ціна в UAH'
   },
   basicsTitles: {
-    mainPageTitle: 'Інформація про основи'
+    mainPageTitle: 'Інформація про основи',
+    convertationTitle: 'Відповідна ціна в UAH'
   },
   strapsTitles: {
     mainPageTitle: 'Інформація про ремінці',

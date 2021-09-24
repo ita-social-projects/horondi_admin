@@ -16,15 +16,15 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
-import { materialTranslations } from '../../translations/material.translations';
+import { materialMessages } from '../../configs/material-messages';
 import { useCommonStyles } from '../common.styles';
 import { useStyles } from './material-page.styles';
 import ColorsAutocomplete from '../../components/colors-autocomplete';
 import { materialSelectorWithPagination } from '../../redux/selectors/material.selectors';
 import LoadingBar from '../../components/loading-bar';
 import useMaterialFilters from '../../hooks/filters/use-material-filters';
-import FilterNavbar from '../../components/filter-search-sort';
 import messages from '../../configs/messages';
+import Filters from './filters/filters';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
@@ -84,7 +84,7 @@ const MaterialPage = () => {
       showAvatar={false}
       id={materialItem.id}
       name={materialItem.name[0].value}
-      purpose={materialTranslations.purpose[materialItem.purpose]}
+      purpose={materialMessages.purpose[materialItem.purpose]}
       colors={
         <div className={styles.colorsCell}>
           {materialItem.colors.map((color) => (
@@ -98,9 +98,7 @@ const MaterialPage = () => {
         </div>
       }
       available={
-        materialItem.available
-          ? materialTranslations.YES
-          : materialTranslations.NO
+        materialItem.available ? materialMessages.YES : materialMessages.NO
       }
       deleteHandler={() => materialDeleteHandler(materialItem._id)}
       editHandler={() => {
@@ -137,7 +135,7 @@ const MaterialPage = () => {
             materialFilters.setColorsFilter(value);
           }}
         />
-        <FilterNavbar options={materialFilters || {}} />
+        <Filters />
       </div>
       <div>
         {materialItems?.length ? (

@@ -13,7 +13,30 @@ import buttonTitles from './button-titles';
 import statuses from './statuses';
 import filterLabels from './filter-labels';
 import materialUiConstants from './material-ui-constants';
+import { materialMessages } from './material-messages';
+import { slidesMessages } from './slides-messages';
 import {
+  constructorErrors,
+  businessPageErrors,
+  bottomTranslations,
+  categoryErrors,
+  colorsTranslations,
+  contactTranslations,
+  headerTranslations,
+  modelTranslations,
+  newsErrors,
+  patternTranlations,
+  homePageEditErrors,
+  commentsErrors,
+  slidesTranslations,
+  materialTranslations,
+  productsErrors,
+  userTranslations,
+  backTranslations,
+  errorStatuses
+} from './error-modal-messages';
+import {
+  commonErrorMessages,
   loginErrorMessages,
   colorErrorMessages,
   contactErrorMessages,
@@ -30,13 +53,11 @@ import {
   constructorErrorMessages,
   statsErrorMessages,
   paginationInputErrorMessages,
-  commentErrorMessages,
-  replyCommentErrorMessages,
   sizeErrorMessages,
   businessPageErrorMessages,
+  productErrorMessages,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages,
   basicsErrorMessages,
   strapsErrorMessages
 } from './error-messages';
@@ -44,6 +65,9 @@ import messages from './messages';
 import formRegExp from './form-regexp';
 import labels from './labels';
 import { newsPaginationPayload, contactsPaginationPayload } from './pagination';
+import { productsTranslations } from './product-translations';
+import { tableTranslations } from './table-translations';
+import { userRoleTranslations } from './user-role-translations';
 import titles from './titles';
 import languages from './languages';
 import {
@@ -233,6 +257,7 @@ export const config = {
   formRegExp,
   labels,
   titles,
+  commonErrorMessages,
   loginErrorMessages,
   colorErrorMessages,
   contactErrorMessages,
@@ -244,6 +269,9 @@ export const config = {
   newsErrorMessages,
   errorMessages,
   newsPaginationPayload,
+  productsTranslations,
+  tableTranslations,
+  userRoleTranslations,
   contactsPaginationPayload,
   modelErrorMessages,
   headerErrorMessages,
@@ -251,20 +279,38 @@ export const config = {
   homePageSlideErrorMessages,
   constructorErrorMessages,
   paginationInputErrorMessages,
-  commentErrorMessages,
-  replyCommentErrorMessages,
   filterLabels,
   materialUiConstants,
+  materialTranslations,
+  slidesTranslations,
   sizeErrorMessages,
   businessPageErrorMessages,
+  productErrorMessages,
   imageUploadNewsInputsId,
   valueKeys,
   inputNames,
   pocketsErrorMessages,
   closuresErrorMessages,
-  positionErrorMessages,
   basicsErrorMessages,
-  strapsErrorMessages
+  strapsErrorMessages,
+  constructorErrors,
+  backTranslations,
+  businessPageErrors,
+  bottomTranslations,
+  categoryErrors,
+  colorsTranslations,
+  contactTranslations,
+  headerTranslations,
+  modelTranslations,
+  newsErrors,
+  patternTranlations,
+  homePageEditErrors,
+  commentsErrors,
+  slidesMessages,
+  materialMessages,
+  productsErrors,
+  userTranslations,
+  errorStatuses
 };
 export const inputTypes = {
   button: 'button',
@@ -273,7 +319,7 @@ export const inputTypes = {
 
 export const badgePosition = {
   vertical: 'top',
-  horizontal: 'left'
+  horizontal: 'right'
 };
 
 export const dateFormat = ' HH:mm DD/MM/YYYY ';

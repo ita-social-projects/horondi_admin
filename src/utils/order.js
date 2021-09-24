@@ -13,6 +13,13 @@ export const recipientPropTypes = {
   handleChange: PropTypes.func.isRequired
 };
 
+export const registeredUserPropTypes = {
+  data: PropTypes.shape({
+    user_id: PropTypes.objectOf(PropTypes.string)
+  }),
+  setFieldValue: PropTypes.func.isRequired
+};
+
 export const productsPropTypes = {
   data: PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.object)
@@ -89,12 +96,24 @@ export const postPropTypes = {
   }).isRequired
 };
 
+const price = (item) => [
+  {
+    value: item.quantity * item.options.size.price[0].value,
+    currency: 'UAH'
+  },
+  {
+    value: item.quantity * item.options.size.price[1].value,
+    currency: 'USD'
+  }
+];
+
 const { deliveryTypes } = config;
 const items = (order) =>
   order.items?.map((item) => ({
     product: item?.product._id,
     quantity: item.quantity,
     isFromConstructor: !item.product._id,
+    price: price(item),
     options: {
       size: item.options.size._id,
       sidePocket: item.options.sidePocket
@@ -104,6 +123,7 @@ const items = (order) =>
 export const newOrder = (order) => ({
   status: order.status,
   recipient: order.recipient,
+  user_id: order.user_id,
   delivery: address(order.delivery),
   items: items(order),
   paymentMethod: order.paymentMethod,
@@ -170,6 +190,8 @@ export const inputName = {
     cityId: 'delivery.ukrPost.cityId',
     courierOffice: 'delivery.ukrPost.courierOffice'
   },
+  userId: 'user_id',
+  noUser: 'Користувача не вибрано',
   isPaidInput: 'isPaid',
   itemsName: 'items',
   status: 'status',
@@ -188,6 +210,7 @@ export const initialValues = {
     email: '',
     phoneNumber: ''
   },
+  user_id: '',
   delivery: {
     sentBy: deliveryTypes.selfPickUp,
     courier: {
@@ -263,6 +286,7 @@ export const setFormValues = (selectedOrder) => {
     paymentMethod: selectedOrder.paymentMethod,
     isPaid: selectedOrder.isPaid,
     recipient: selectedOrder.recipient,
+    user_id: selectedOrder.user_id,
     delivery: {
       sentBy,
       courier: {
@@ -287,7 +311,13 @@ export const setFormValues = (selectedOrder) => {
     },
     userComment: selectedOrder.userComment,
     items: selectedOrder.items.map((item) => ({
-      options: { size: { _id: item.options.size._id } },
+      options: {
+        size: {
+          _id: item.options.size._id,
+          name: item.options.size.name,
+          price: item.fixedPrice
+        }
+      },
       product: {
         _id: item.product._id,
         name: item.product.name,
@@ -317,7 +347,7 @@ export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
     ...orderItems,
     {
       options: {
-        size: { _id: size.id, name: size.name }
+        size: { _id: size.id, name: size.name, price: size.price }
       },
       product: {
         basePrice: selectedProduct.basePrice,
@@ -347,7 +377,7 @@ export const paymentStatusFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(config.paymentStatusTranslation, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
 
   return arrToFilter;

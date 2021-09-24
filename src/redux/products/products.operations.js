@@ -190,7 +190,7 @@ const getProductDetails = async () => {
             }
           }
         }
-        getMaterialsByPurpose(purposes: [MAIN, BOTTOM, INNER,BACK]) {
+        getMaterialsByPurpose(purposes: [MAIN, BOTTOM, INNER, BACK]) {
           main {
             _id
             name {

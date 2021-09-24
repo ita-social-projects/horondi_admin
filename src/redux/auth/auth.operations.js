@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { userTranslations } from '../../translations/user.translations';
+import { userTranslations } from '../../configs/error-modal-messages';
 
 export const getUserByToken = async () => {
   const getUserByTokenQuery = `

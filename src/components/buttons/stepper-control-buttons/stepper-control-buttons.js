@@ -8,7 +8,7 @@ import { noop } from 'lodash';
 import { useStyles } from './stepper-control-buttons.styles';
 
 import { config } from '../../../configs';
-import { productsTranslations } from '../../../translations/product.translations';
+import { productsTranslations } from '../../../configs/product-translations';
 
 const { stepsLabels } = config.labels.product;
 const { NEXT, CREATE_PRODUCT, BACK } = productsTranslations;

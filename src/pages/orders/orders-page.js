@@ -18,8 +18,7 @@ import { config } from '../../configs';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { handleOrdersPage } from '../../utils/handle-orders-page';
-import useOrderFilters from '../../hooks/filters/use-order-filters';
-import FilterNavbar from '../../components/filter-search-sort';
+import Filters from './filters/filters.js';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
@@ -31,14 +30,6 @@ const OrdersPage = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
-
-  const {
-    searchOptions,
-    clearOptions,
-    filterByMultipleOptions,
-    filterByDateOptions,
-    sortOptions
-  } = useOrderFilters();
 
   const {
     orderLoading,
@@ -128,18 +119,7 @@ const OrdersPage = () => {
           </Button>
         </div>
       </div>
-      <FilterNavbar
-        options={
-          {
-            sortOptions,
-            filterByMultipleOptions,
-            filterByDateOptions,
-            clearOptions,
-            searchOptions
-          } || {}
-        }
-      />
-
+      <Filters />
       <div className={commonStyles.table}>
         {handleOrdersPage(
           ordersList,

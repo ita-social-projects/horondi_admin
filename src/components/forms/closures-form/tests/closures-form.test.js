@@ -37,7 +37,6 @@ jest.mock('../../../../utils/use-closures-handlers', () => ({
     setClosuresImage: mockSetClosureImage
   })
 }));
-
 jest.spyOn(global, 'FileReader').mockImplementation(function () {
   this.readAsDataURL = jest.fn();
   this.onload = jest.fn();

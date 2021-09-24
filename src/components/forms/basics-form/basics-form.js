@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Paper, TextField, Grid, Box, Typography } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 
 import { find } from 'lodash';
@@ -13,6 +13,7 @@ import { useStyles } from './basics-form.styles';
 import { addBasic, updateBasic } from '../../../redux/basics/basics.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
 import MaterialsContainer from '../../../containers/materials-container';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 import { getProductDetails } from '../../../redux/products/products.actions';
 import LanguagePanel from '../language-panel';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
@@ -25,21 +26,30 @@ import {
 import useBasicsHandlers from '../../../utils/use-basics-handlers';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
+const { additionalPriceType } = config.labels.basicsPageLabel;
+const { convertationTitle } = config.titles.basicsTitles;
+const labels = {
+  enterPrice,
+  additionalPriceLabel,
+  additionalPriceType,
+  convertationTitle
+};
 const map = require('lodash/map');
 
+const { PHOTO_NOT_PROVIDED } = config.basicsErrorMessages;
 const {
-  BASICS_ERROR_MESSAGE,
-  BASICS_ERROR_ENGLISH_AND_DIGITS_ONLY,
-  PHOTO_NOT_PROVIDED,
-  BASICS_EN_NAME_MESSAGE,
-  BASICS_UA_NAME_MESSAGE,
-  BASICS_PRICE_ERROR,
-  BASICS_MAX_LENGTH_MESSAGE,
-  BASICS_MIN_LENGTH_MESSAGE
-} = config.basicsErrorMessages;
+  ERROR_MESSAGE,
+  ERROR_ENGLISH_AND_DIGITS_ONLY,
+  UA_NAME_MESSAGE,
+  EN_NAME_MESSAGE,
+  PRICE_ERROR,
+  MAX_LENGTH_MESSAGE,
+  MIN_LENGTH_MESSAGE
+} = config.commonErrorMessages;
 const { SAVE_TITLE } = config.buttonTitles;
 const {
   languages,
@@ -51,8 +61,7 @@ const {
     basicColor,
     additionalPriceRegExp
   },
-  imagePrefix,
-  materialUiConstants
+  imagePrefix
 } = config;
 const { pathToBasics } = config.routes;
 
@@ -69,35 +78,32 @@ const BasicsForm = ({ basic, id, edit }) => {
     useBasicsHandlers();
 
   useEffect(() => {
-    dispatch(getProductDetails());
-  }, []);
-
-  useEffect(() => {
     basicImageHandler(basic, setBasicImage, imagePrefix);
+    dispatch(getProductDetails());
   }, [dispatch, basic]);
 
   const basicsValidationSchema = Yup.object().shape({
     enName: Yup.string()
-      .min(2, BASICS_MIN_LENGTH_MESSAGE)
-      .max(50, BASICS_MAX_LENGTH_MESSAGE)
-      .required(BASICS_ERROR_MESSAGE)
-      .matches(enNameCreation, BASICS_EN_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, EN_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, BASICS_MIN_LENGTH_MESSAGE)
-      .max(50, BASICS_MAX_LENGTH_MESSAGE)
-      .required(BASICS_ERROR_MESSAGE)
-      .matches(uaNameCreation, BASICS_UA_NAME_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, UA_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, BASICS_MIN_LENGTH_MESSAGE)
-      .matches(basicMaterial, BASICS_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BASICS_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(basicMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     color: Yup.string()
-      .min(2, BASICS_MIN_LENGTH_MESSAGE)
-      .matches(basicColor, BASICS_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BASICS_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(basicColor, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     additionalPrice: Yup.string()
-      .matches(additionalPriceRegExp, BASICS_PRICE_ERROR)
-      .required(BASICS_ERROR_MESSAGE)
+      .matches(additionalPriceRegExp, PRICE_ERROR)
+      .required(ERROR_MESSAGE)
       .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),
@@ -145,7 +151,9 @@ const BasicsForm = ({ basic, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values);
   const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     setBasicsColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -208,6 +216,7 @@ const BasicsForm = ({ basic, id, edit }) => {
                 errors={errors}
                 values={values}
                 onClickHandler={handleSubmit}
+                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>
@@ -250,32 +259,14 @@ const BasicsForm = ({ basic, id, edit }) => {
         {map(languages, (lang) => (
           <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
         ))}
-        <Paper className={styles.additionalPrice}>
-          <Box>
-            <Typography>{enterPrice}</Typography>
-          </Box>
-          <TextField
-            data-cy='additionalPrice'
-            id='additionalPrice'
-            className={styles.textField}
-            variant={materialUiConstants.outlined}
-            type={materialUiConstants.types.number}
-            label={additionalPriceLabel}
-            value={values.additionalPrice}
-            inputProps={{ min: 0 }}
-            error={touched.additionalPrice && !!errors.additionalPrice}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {touched.additionalPrice && errors.additionalPrice && (
-            <div
-              data-cy={materialUiConstants.codeError}
-              className={styles.error}
-            >
-              {errors.additionalPrice}
-            </div>
-          )}
-        </Paper>
+        <AdditionalPriceContainer
+          values={values}
+          labels={labels}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          errors={errors}
+          touched={touched}
+        />
       </form>
     </div>
   );
@@ -297,14 +288,23 @@ BasicsForm.propTypes = {
     images: PropTypes.shape({
       thumbnail: PropTypes.string
     }),
-    name: PropTypes.arrayOf(valueShape)
+    name: PropTypes.arrayOf(valueShape),
+    additionalPrice: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        currency: PropTypes.string,
+        value: PropTypes.number
+      })
+    )
   }),
   values: PropTypes.shape({
     basicImage: PropTypes.string,
     material: PropTypes.string,
     color: PropTypes.string,
     uaName: PropTypes.string,
-    enName: PropTypes.string
+    enName: PropTypes.string,
+    additionalPrice: PropTypes.number,
+    additionalPriceType: PropTypes.string
   }),
   errors: PropTypes.shape({
     basicImage: PropTypes.string,
@@ -370,8 +370,8 @@ BasicsForm.defaultProps = {
       }
     },
     additionalPrice: [
-      { value: null, currency: '' },
-      { value: null, currency: '' }
+      { value: null, currency: '', type: '' },
+      { value: null, currency: '', type: '' }
     ],
     available: false
   },

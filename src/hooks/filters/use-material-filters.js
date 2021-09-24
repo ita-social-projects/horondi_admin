@@ -11,7 +11,7 @@ import {
   placeholderMaterialText,
   purposeFilterObj
 } from '../../utils/material';
-import { materialTranslations } from '../../translations/material.translations';
+import { materialMessages } from '../../configs/material-messages';
 
 const useMaterialFilters = () => {
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ const useMaterialFilters = () => {
         label: buttonTitles.PURPOSE,
         selectItems: purposeFilterObj(),
         setFilterHandler: setPurposeFilter,
-        objForTranslateRenderItems: materialTranslations.purpose
+        objForTranslateRenderItems: materialMessages.purpose
       },
       {
         filters: filters.available,

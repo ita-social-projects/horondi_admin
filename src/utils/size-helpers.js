@@ -77,7 +77,7 @@ export const sizeFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(sizesEnum, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
 
   return arrToFilter;
@@ -86,7 +86,7 @@ export const sizeAvailableObj = () => {
   const arrToFilter = [];
 
   _.forEach(availableEnum, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
 
   return arrToFilter;

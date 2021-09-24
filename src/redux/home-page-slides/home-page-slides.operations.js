@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { slidesTranslations } from '../../translations/home-page-slides.translations';
+import { slidesTranslations } from '../../configs/error-modal-messages';
 
 export const getAllSlides = async (skip, limit) => {
   const query = `

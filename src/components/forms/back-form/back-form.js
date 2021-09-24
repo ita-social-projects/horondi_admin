@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
 import useBackHandlers from '../../../utils/use-back-handlers';
@@ -24,6 +24,7 @@ import {
   setBackColorsHandler
 } from '../../../utils/back-form';
 import MaterialsContainer from '../../../containers/materials-container';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
 import {
   constructorObject,
@@ -34,22 +35,35 @@ import {
   imagePropTypes
 } from '../bottom-form/constructor.variables';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { IMG_URL } = config;
-const { backName, enterPrice, additionalPriceLabel, materialLabels } =
-  config.labels.back;
+const {
+  backName,
+  enterPrice,
+  additionalPriceLabel,
+  materialLabels,
+  additionalPriceType
+} = config.labels.back;
+const { convertationTitle } = config.titles.backTitles;
+const labels = {
+  enterPrice,
+  additionalPriceLabel,
+  additionalPriceType,
+  convertationTitle
+};
 const map = require('lodash/map');
 
+const { PHOTO_NOT_PROVIDED, BACK_UA_NAME_MESSAGE, BACK_EN_NAME_MESSAGE } =
+  config.backErrorMessages;
+
 const {
-  BACK_ERROR_MESSAGE,
-  BACK_ERROR_ENGLISH_AND_DIGITS_ONLY,
-  PHOTO_NOT_PROVIDED,
-  BACK_EN_NAME_MESSAGE,
-  BACK_UA_NAME_MESSAGE,
-  BACK_PRICE_ERROR,
-  BACK_MAX_LENGTH_MESSAGE,
-  BACK_MIN_LENGTH_MESSAGE
-} = config.backErrorMessages;
+  MIN_LENGTH_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  ERROR_MESSAGE,
+  ERROR_ENGLISH_AND_DIGITS_ONLY,
+  PRICE_ERROR
+} = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -62,8 +76,7 @@ const {
     backColor,
     additionalPriceRegExp
   },
-  imagePrefix,
-  materialUiConstants
+  imagePrefix
 } = config;
 const { pathToBacks } = config.routes;
 
@@ -91,26 +104,26 @@ const BackForm = ({ back, id, edit }) => {
   );
   const backValidationSchema = Yup.object().shape({
     enName: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .max(50, BACK_MAX_LENGTH_MESSAGE)
-      .required(BACK_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(enNameCreation, BACK_EN_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .max(50, BACK_MAX_LENGTH_MESSAGE)
-      .required(BACK_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(uaNameCreation, BACK_UA_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .matches(backMaterial, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BACK_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(backMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     color: Yup.string()
-      .min(2, BACK_MIN_LENGTH_MESSAGE)
-      .matches(backColor, BACK_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BACK_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(backColor, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     additionalPrice: Yup.string()
-      .matches(additionalPriceRegExp, BACK_PRICE_ERROR)
-      .required(BACK_ERROR_MESSAGE)
+      .matches(additionalPriceRegExp, PRICE_ERROR)
+      .required(ERROR_MESSAGE)
       .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),
@@ -159,7 +172,9 @@ const BackForm = ({ back, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     setBackColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -207,6 +222,8 @@ const BackForm = ({ back, id, edit }) => {
     e.preventDefault();
   };
 
+  const idCondition = id ? { disabled: !changed } : {};
+
   return (
     <div>
       {loading ? (
@@ -226,6 +243,7 @@ const BackForm = ({ back, id, edit }) => {
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
+                  {...idCondition}
                   unblockFunction={unblock}
                 />
               </Grid>
@@ -272,32 +290,14 @@ const BackForm = ({ back, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
 
-          <Paper className={styles.additionalPrice}>
-            <Box>
-              <Typography>{enterPrice}</Typography>
-            </Box>
-            <TextField
-              data-cy='additionalPrice'
-              id='additionalPrice'
-              className={styles.textField}
-              variant={materialUiConstants.outlined}
-              type={materialUiConstants.types.number}
-              label={additionalPriceLabel}
-              value={values.additionalPrice}
-              inputProps={{ min: 0 }}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.additionalPrice && !!errors.additionalPrice}
-            />
-            {touched.additionalPrice && errors.additionalPrice && (
-              <div
-                data-cy={materialUiConstants.codeError}
-                className={styles.error}
-              >
-                {errors.additionalPrice}
-              </div>
-            )}
-          </Paper>
+          <AdditionalPriceContainer
+            values={values}
+            labels={labels}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
         </form>
       )}
     </div>

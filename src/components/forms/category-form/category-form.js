@@ -13,7 +13,6 @@ import {
   updateCategory
 } from '../../../redux/categories/categories.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import { categoryTranslations } from '../../../translations/category.translations';
 import {
   setSnackBarSeverity,
   setSnackBarStatus,
@@ -25,19 +24,20 @@ import {
   onSubmitCategoryHandler
 } from '../../../utils/category-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const {
   CATEGORY_VALIDATION_ERROR,
   CATEGORY_VALIDATION_ERROR_CATEGORY_NAME,
-  CATEGORY_ERROR_MESSAGE,
-  CATEGORY_UA_NAME_MESSAGE,
-  CATEGORY_EN_NAME_MESSAGE,
-  CATEGORY_CODE_MESSAGE
+  CATEGORY_CODE_MESSAGE,
+  CATEGORY_ERROR
 } = config.categoryErrorMessages;
+
+const { ERROR_MESSAGE, UA_NAME_MESSAGE, EN_NAME_MESSAGE } =
+  config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 const { languages } = config;
-const { CATEGORY_ERROR } = categoryTranslations;
 const { IMG_URL } = config;
 const { enNameCreation, uaNameCreation, categoryCode } = config.formRegExp;
 const { materialUiConstants } = config;
@@ -54,18 +54,18 @@ const CategoryForm = ({ category, id, edit }) => {
     code: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR)
       .max(30, CATEGORY_VALIDATION_ERROR)
-      .required(CATEGORY_ERROR_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(categoryCode, CATEGORY_CODE_MESSAGE),
     uaName: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
       .max(50, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
-      .required(CATEGORY_ERROR_MESSAGE)
-      .matches(uaNameCreation, CATEGORY_UA_NAME_MESSAGE),
+      .required(ERROR_MESSAGE)
+      .matches(uaNameCreation, UA_NAME_MESSAGE),
     enName: Yup.string()
       .min(2, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
       .max(50, CATEGORY_VALIDATION_ERROR_CATEGORY_NAME)
-      .required(CATEGORY_ERROR_MESSAGE)
-      .matches(enNameCreation, CATEGORY_EN_NAME_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, EN_NAME_MESSAGE)
   });
 
   const {
@@ -99,6 +99,7 @@ const CategoryForm = ({ category, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -149,6 +150,7 @@ const CategoryForm = ({ category, id, edit }) => {
                   enName: values.enName,
                   code: values.code
                 }}
+                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

@@ -15,7 +15,8 @@ import TableContainerRow from '../../containers/table-container-row';
 import LoadingBar from '../../components/loading-bar';
 
 import { config } from '../../configs';
-import { productsTranslations } from '../../translations/product.translations';
+import { productsErrors } from '../../configs/error-modal-messages';
+import { productsTranslations } from '../../configs/product-translations';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { selectProductsAndTable } from '../../redux/selectors/multiple.selectors';
@@ -28,8 +29,8 @@ import { selectProductsLoadingAndDetails } from '../../redux/selectors/products.
 const pathToProductAddPage = config.routes.pathToAddProduct;
 const pathToProductEditPage = config.routes.pathToProducts;
 
-const { PRODUCT_NOT_FOUND, DELETE_PRODUCT_MESSAGE, DELETE_PRODUCT_TITLE } =
-  productsTranslations;
+const { DELETE_PRODUCT_MESSAGE, DELETE_PRODUCT_TITLE } = productsTranslations;
+const { PRODUCT_NOT_FOUND } = productsErrors;
 const tableTitles = config.tableHeadRowTitles.products;
 const { imagePrefix } = config;
 

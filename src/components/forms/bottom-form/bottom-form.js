@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Grid, Box, Typography, TextField } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 import { find } from 'lodash';
 import { BackButton, SaveButton } from '../../buttons';
@@ -9,11 +9,7 @@ import { checkInitialValue } from '../../../utils/check-initial-values';
 import { config } from '../../../configs';
 import { useStyles } from '../common.styles';
 import LoadingBar from '../../loading-bar';
-import {
-  addBottom,
-  updateBottom,
-  clearBottom
-} from '../../../redux/bottom/bottom.actions';
+import { addBottom, updateBottom } from '../../../redux/bottom/bottom.actions';
 import CheckboxOptions from '../../checkbox-options';
 import LanguagePanel from '../language-panel';
 import ImageUploadPreviewContainer from '../../../containers/image-upload-container/image-upload-previewContainer';
@@ -25,6 +21,7 @@ import {
 } from '../../../utils/bottom-form';
 import MaterialsContainer from '../../../containers/materials-container';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
+import { getProductDetails } from '../../../redux/products/products.actions';
 import useBottomHandlers from '../../../utils/use-bottom-handlers';
 import {
   constructorObject,
@@ -34,37 +31,41 @@ import {
   valuesPropTypes,
   imagePropTypes
 } from './constructor.variables';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import AdditionalPriceContainer from '../../../containers/additional-price-container';
 
 const { IMG_URL } = config;
-const { bottomName, enterPrice, additionalPriceLabel, materialLabels } =
+const { bottomName, enterPrice, materialLabels, additionalPriceLabel } =
   config.labels.bottom;
+const { additionalPriceType } = config.labels.closuresPageLabel;
+const { convertationTitle } = config.titles.closuresTitles;
+
+const labels = {
+  enterPrice,
+  additionalPriceLabel,
+  additionalPriceType,
+  convertationTitle
+};
 const map = require('lodash/map');
 
+const { BOTTOM_UA_NAME_MESSAGE, PHOTO_NOT_PROVIDED, BOTTOM_EN_NAME_MESSAGE } =
+  config.bottomErrorMessages;
+
 const {
-  BOTTOM_ERROR_MESSAGE,
-  BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY,
-  PHOTO_NOT_PROVIDED,
-  BOTTOM_UA_NAME_MESSAGE,
-  BOTTOM_EN_NAME_MESSAGE,
-  BOTTOM_PRICE_ERROR,
-  BOTTOM_MAX_LENGTH_MESSAGE,
-  BOTTOM_MIN_LENGTH_MESSAGE
-} = config.bottomErrorMessages;
+  ERROR_ENGLISH_AND_DIGITS_ONLY,
+  MIN_LENGTH_MESSAGE,
+  MAX_LENGTH_MESSAGE,
+  PRICE_ERROR,
+  ERROR_MESSAGE
+} = config.commonErrorMessages;
 
 const { SAVE_TITLE } = config.buttonTitles;
 
 const {
   languages,
-  formRegExp: {
-    enNameCreation,
-    uaNameCreation,
-    backMaterial,
-    backColor,
-    additionalPriceRegExp
-  },
-  imagePrefix,
-  materialUiConstants
+  formRegExp: { enNameCreation, uaNameCreation, backMaterial, backColor },
+  imagePrefix
 } = config;
 const { pathToBottoms } = config.routes;
 
@@ -81,38 +82,36 @@ const BottomForm = ({ bottom, id, edit }) => {
     useBottomHandlers();
 
   useEffect(() => {
+    dispatch(getProductDetails());
+  }, []);
+
+  useEffect(() => {
     bottomUseEffectHandler(bottom, setBottomImage, imagePrefix);
   }, [dispatch, bottom]);
 
-  useEffect(
-    () => () => {
-      dispatch(clearBottom());
-    },
-    []
-  );
-
   const bottomValidationSchema = Yup.object().shape({
-    enName: Yup.string()
-      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
-      .max(50, BOTTOM_MAX_LENGTH_MESSAGE)
-      .required(BOTTOM_ERROR_MESSAGE)
-      .matches(enNameCreation, BOTTOM_EN_NAME_MESSAGE),
     uaName: Yup.string()
-      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
-      .max(50, BOTTOM_MAX_LENGTH_MESSAGE)
-      .required(BOTTOM_ERROR_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
       .matches(uaNameCreation, BOTTOM_UA_NAME_MESSAGE),
+    enName: Yup.string()
+      .min(2, MIN_LENGTH_MESSAGE)
+      .max(50, MAX_LENGTH_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(enNameCreation, BOTTOM_EN_NAME_MESSAGE),
     material: Yup.string()
-      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
-      .matches(backMaterial, BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BOTTOM_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(backMaterial, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
     color: Yup.string()
-      .min(2, BOTTOM_MIN_LENGTH_MESSAGE)
-      .matches(backColor, BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY)
-      .required(BOTTOM_ERROR_MESSAGE),
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(backColor, ERROR_ENGLISH_AND_DIGITS_ONLY)
+      .required(ERROR_MESSAGE),
+    additionalPriceType: Yup.string(),
     additionalPrice: Yup.string()
-      .matches(additionalPriceRegExp, BOTTOM_PRICE_ERROR)
-      .required(BOTTOM_ERROR_MESSAGE)
+      .required(ERROR_MESSAGE)
+      .matches(config.formRegExp.onlyPositiveFloat, PRICE_ERROR)
       .nullable(),
     available: Yup.boolean(),
     customizable: Yup.boolean(),
@@ -161,7 +160,9 @@ const BottomForm = ({ bottom, id, edit }) => {
     }
   });
 
+  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
+
   useEffect(() => {
     setBottomColorsHandler(values, setColor, find, materials);
   }, [materials, values.material]);
@@ -213,6 +214,8 @@ const BottomForm = ({ bottom, id, edit }) => {
     e.preventDefault();
   };
 
+  const idCondition = id ? { disabled: !changed } : {};
+
   return (
     <div>
       {loading ? (
@@ -232,6 +235,7 @@ const BottomForm = ({ bottom, id, edit }) => {
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
+                  {...idCondition}
                   unblockFunction={unblock}
                 />
               </Grid>
@@ -278,32 +282,14 @@ const BottomForm = ({ bottom, id, edit }) => {
             <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
           ))}
 
-          <Paper className={styles.additionalPrice}>
-            <Box>
-              <Typography>{enterPrice}</Typography>
-            </Box>
-            <TextField
-              data-cy='additionalPrice'
-              id='additionalPrice'
-              className={styles.textField}
-              variant={materialUiConstants.outlined}
-              type={materialUiConstants.types.number}
-              label={additionalPriceLabel}
-              value={values.additionalPrice}
-              inputProps={{ min: 0 }}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.additionalPrice && !!errors.additionalPrice}
-            />
-            {touched.additionalPrice && errors.additionalPrice && (
-              <div
-                data-cy={materialUiConstants.codeError}
-                className={styles.error}
-              >
-                {errors.additionalPrice}
-              </div>
-            )}
-          </Paper>
+          <AdditionalPriceContainer
+            values={values}
+            labels={labels}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            errors={errors}
+            touched={touched}
+          />
         </form>
       )}
     </div>
