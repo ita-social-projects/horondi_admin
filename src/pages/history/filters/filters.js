@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import ContainerFilters from '../../../components/container-filters';
 import ComponentFilterClear from '../../../components/filters-components/filter-clear';
 import ComponentFilterDateRangePicker from '../../../components/filters-components/filter-date-range-picker';
-import { setCurrentPage } from '../../../redux/table/table.actions';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import buttonTitles from '../../../configs/button-titles';
 import {
