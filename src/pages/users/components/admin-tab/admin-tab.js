@@ -14,7 +14,7 @@ import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 import { UserBlockPeriod } from '../../../../consts/user-block-status';
 import { formatPhoneNumber } from '../../../../utils/format-phone-number';
-import UsersFilters from '../users-filters/filters';
+import UsersFilters from '../users-filters/UsersFilters';
 
 const tableHeaders = config.tableHeadRowTitles.users.userTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
