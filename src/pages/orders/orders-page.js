@@ -18,14 +18,7 @@ import { config } from '../../configs';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { handleOrdersPage } from '../../utils/handle-orders-page';
-import ContainerFilters from '../../components/container-filters';
-
-import FilterDateRangePicker from './components/filter-date-range-picker';
-import FilterSortPicker from './components/filter-sort-picker';
-import FilterPaymentStatusesPicker from './components/filter-payment-statuses-picker';
-import FilterOrderStatusesPicker from './components/filter-order-statuses-picker';
-import FilterSearch from './components/filter-search';
-import FilterClear from './components/filter-clear';
+import Filters from './filters/filters.js';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
@@ -80,15 +73,6 @@ const OrdersPage = () => {
     openSuccessSnackbar(removeOrders, REMOVE_ORDER_MESSAGE);
   };
 
-  const filterElems = [
-    FilterDateRangePicker,
-    FilterSortPicker,
-    FilterPaymentStatusesPicker,
-    FilterOrderStatusesPicker,
-    FilterSearch,
-    FilterClear
-  ].map((Filter) => <Filter key={Filter.toString()} />);
-
   const orderItems =
     ordersList &&
     ordersList.map((order) => (
@@ -135,7 +119,7 @@ const OrdersPage = () => {
           </Button>
         </div>
       </div>
-      <ContainerFilters>{filterElems}</ContainerFilters>
+      <Filters />
       <div className={commonStyles.table}>
         {handleOrdersPage(
           ordersList,

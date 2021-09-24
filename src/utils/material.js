@@ -6,7 +6,7 @@ export const purposeFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(materialMessages.purpose, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
 
   return arrToFilter;

@@ -89,6 +89,6 @@ describe('page Sizes tests', () => {
     mockLoading = false;
     useDispatchMock.mockReturnValue(mockHandler);
     expect(wrapper.exists(Button)).toBe(true);
-    expect(wrapper.find(Button).text()).toBe(CREATE_SIZE_TITLE);
+    expect(wrapper.find(Button).at(0).text()).toBe(CREATE_SIZE_TITLE);
   });
 });
