@@ -7,7 +7,6 @@ import {
   clearPatternFilters
 } from '../../../redux/pattern/pattern.actions';
 import buttonTitles from '../../../configs/button-titles';
-import { setCurrentPage } from '../../../redux/table/table.actions';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import {
   statusPatternFilterObject,
