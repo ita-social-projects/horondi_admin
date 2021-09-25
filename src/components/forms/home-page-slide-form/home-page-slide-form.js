@@ -38,8 +38,15 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const dispatch = useDispatch();
   const { discoverMoreTitle, discoverMoreSymbol } =
     config.titles.homePageSliderTitle;
-  const { slideImage, createSlide, upload, uploadImage, setUploadImage } =
-    useHomePageSlideHandlers();
+  const {
+    slideImage,
+    createSlide,
+    upload,
+    uploadImage,
+    setUploadImage,
+    setSlideImage,
+    setUpload
+  } = useHomePageSlideHandlers();
 
   const { pathToHomePageSlides } = config.routes;
 
@@ -131,6 +138,16 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   ];
 
   const handleImageLoad = (files) => {
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFieldValue('slideImage', event.target.result);
+        setSlideImage(event.target.result);
+      };
+      reader.readAsDataURL(files[0]);
+      setUpload(files[0]);
+    }
+
     imageHandler(files, setUploadImage, values, slideImage);
   };
 
@@ -187,11 +204,6 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 src={uploadImage.imageUrl}
                 id={imageInput}
               />
-              {slideImage && (
-                <Avatar src={slideImage}>
-                  <Image />
-                </Avatar>
-              )}
             </div>
             <TextField
               data-cy='link'
