@@ -21,6 +21,8 @@ import { patternSelectorWithPagination } from '../../../redux/selectors/pattern.
 import { backSelectorWithPagination } from '../../../redux/selectors/back.selectors.js';
 import { strapsSelectorWithPagination } from '../../../redux/selectors/straps.selectors.js';
 import { closuresSelectorWithPagination } from '../../../redux/selectors/closures.selectors.js';
+import { getAllPockets } from '../../../redux/pockets/pockets.actions.js';
+import { pocketsSelectorWithPagination } from '../../../redux/selectors/pockets.selectors.js';
 
 const { materialUiConstants } = config;
 const { MODEL_SAVE_TITLE } = config.buttonTitles;
@@ -48,6 +50,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const [backsToAdd, setBacksToAdd] = useState([]);
   const [strapsToAdd, setStrapsToAdd] = useState([]);
   const [closuresToAdd, setClosuresToAdd] = useState([]);
+  const [pocketsToAdd, setPocketsToAdd] = useState([]);
 
   const onSaveHandler = () => {
     const itemsToSave = [
@@ -56,15 +59,15 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       patternsToAdd,
       backsToAdd,
       strapsToAdd,
-      closuresToAdd
+      closuresToAdd,
+      pocketsToAdd
     ];
-    console.log(itemsToSave);
   };
 
   const constructorOptions = [
     {
       optionName: 'basic',
-      label: 'Основа',
+      label: 'Основи',
       getItems: getAllBasics,
       selector: basicsSelectorWithPagination,
       optionToAdd: basicsToAdd,
@@ -72,7 +75,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     },
     {
       optionName: 'bottom',
-      label: 'Низ',
+      label: 'Низи',
       getItems: getBottoms,
       selector: bottomSelectorWithPagination,
       optionToAdd: bottomsToAdd,
@@ -80,7 +83,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     },
     {
       optionName: 'pattern',
-      label: 'Гобелен',
+      label: 'Гобелени',
       getItems: getPatterns,
       selector: patternSelectorWithPagination,
       optionToAdd: patternsToAdd,
@@ -88,7 +91,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     },
     {
       optionName: 'back',
-      label: 'Спинка',
+      label: 'Спинки',
       getItems: getBacks,
       selector: backSelectorWithPagination,
       optionToAdd: backsToAdd,
@@ -96,7 +99,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     },
     {
       optionName: 'strap',
-      label: 'Ремінець',
+      label: 'Ремінці',
       getItems: getAllStraps,
       selector: strapsSelectorWithPagination,
       optionToAdd: strapsToAdd,
@@ -104,22 +107,30 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     },
     {
       optionName: 'closure',
-      label: 'Защіпка',
+      label: 'Защіпки',
       getItems: getAllClosures,
       selector: closuresSelectorWithPagination,
       optionToAdd: closuresToAdd,
       setOptionToAdd: setClosuresToAdd
+    },
+    {
+      optionName: 'pocket',
+      label: 'Кишені',
+      getItems: getAllPockets,
+      selector: pocketsSelectorWithPagination,
+      optionToAdd: pocketsToAdd,
+      setOptionToAdd: setPocketsToAdd
     }
   ];
 
   const constructorAccordions = constructorOptions.map((option, index) => (
-      <ConstructorListAccordion
-        option={option}
-        key={index}
-        handleChange={handleChange}
-        expanded={expanded}
-      />
-    ));
+    <ConstructorListAccordion
+      option={option}
+      key={index}
+      handleChange={handleChange}
+      expanded={expanded}
+    />
+  ));
 
   return (
     <>

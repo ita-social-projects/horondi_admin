@@ -15,12 +15,12 @@ import { config } from '../../../../configs';
 import TableContainerRow from '../../../../containers/table-container-row';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
 
-const ConstructorListAccordion = ({ options, expanded, handleChange }) => {
+const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const { selector, getItems, setOptionToAdd, optionToAdd, label, optionName } =
-    options;
+    option;
 
   const tableTitles = config.tableHeadRowTitles.constructorList;
 
@@ -52,23 +52,42 @@ const ConstructorListAccordion = ({ options, expanded, handleChange }) => {
   };
 
   const elementItems = map(items, (item) => (
-      <TableContainerRow
-        image={
-          item.images.thumbnail
-            ? `${config.imagePrefix}${item.images.thumbnail}`
-            : ''
-        }
-        key={item._id}
-        id={item._id}
-        name={item.name[0].value}
-        additionalPrice={item.additionalPrice[1]?.value}
-        available={item.available ? 'Так' : 'Ні'}
-        showEdit={false}
-        showDelete={false}
-        showCheckbox
-        checkboxChangeHandler={checkboxChangeHandler}
-      />
-    ));
+    <TableContainerRow
+      image={
+        item.images.thumbnail
+          ? `${config.imagePrefix}${item.images.thumbnail}`
+          : ''
+      }
+      key={item._id}
+      id={item._id}
+      name={item.name[0].value}
+      additionalPrice={item.additionalPrice[1]?.value}
+      available={item.available ? 'Так' : 'Ні'}
+      showEdit={false}
+      showDelete={false}
+      showCheckbox
+      checkboxChangeHandler={checkboxChangeHandler}
+    />
+  ));
+
+  if (option.isRestrictions) {
+    return (
+      <Accordion
+        expanded={expanded === optionName}
+        onChange={handleChange(optionName)}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls={`${optionName}bh-content`}
+          id={`${optionName}bh-header`}
+        >
+          <Typography className={classes.heading}>{label}</Typography>
+          <Typography className={classes.secondaryHeading} />
+        </AccordionSummary>
+        <AccordionDetails />
+      </Accordion>
+    );
+  }
 
   return (
     <Accordion
@@ -100,13 +119,14 @@ const ConstructorListAccordion = ({ options, expanded, handleChange }) => {
 };
 
 ConstructorListAccordion.propTypes = {
-  options: PropTypes.shape({
+  option: PropTypes.shape({
     selector: PropTypes.func,
     getItems: PropTypes.func,
     setOptionToAdd: PropTypes.func,
     optionToAdd: PropTypes.arrayOf(PropTypes.string),
     label: PropTypes.string,
-    optionName: PropTypes.string
+    optionName: PropTypes.string,
+    isRestrictions: PropTypes.bool
   }),
   expanded: PropTypes.string,
   handleChange: PropTypes.func
@@ -114,10 +134,11 @@ ConstructorListAccordion.propTypes = {
 
 ConstructorListAccordion.defaultProps = {
   expanded: '',
-  options: {
+  option: {
     optionToAdd: [],
     label: '',
-    optionName: ''
+    optionName: '',
+    isRestrictions: false
   },
   handleChange: ''
 };
