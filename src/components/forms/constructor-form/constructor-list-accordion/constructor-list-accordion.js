@@ -15,12 +15,16 @@ import { config } from '../../../../configs';
 import TableContainerRow from '../../../../containers/table-container-row';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
 
+<<<<<<< HEAD
 const ConstructorListAccordion = ({
   option,
   expanded,
   handleChange,
   isEdit
 }) => {
+=======
+const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
+>>>>>>> a1f7bb7e (added pockets)
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -71,10 +75,35 @@ const ConstructorListAccordion = ({
       showEdit={false}
       showDelete={false}
       showCheckbox
+<<<<<<< HEAD
       checkBoxValue={optionToAdd}
       checkboxChangeHandler={checkboxChangeHandler}
     />
   ));
+=======
+      checkboxChangeHandler={checkboxChangeHandler}
+    />
+  ));
+
+  if (option.isRestrictions) {
+    return (
+      <Accordion
+        expanded={expanded === optionName}
+        onChange={handleChange(optionName)}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls={`${optionName}bh-content`}
+          id={`${optionName}bh-header`}
+        >
+          <Typography className={classes.heading}>{label}</Typography>
+          <Typography className={classes.secondaryHeading} />
+        </AccordionSummary>
+        <AccordionDetails />
+      </Accordion>
+    );
+  }
+>>>>>>> a1f7bb7e (added pockets)
 
   return (
     <Accordion
@@ -112,7 +141,8 @@ ConstructorListAccordion.propTypes = {
     setOptionToAdd: PropTypes.func,
     optionToAdd: PropTypes.arrayOf(PropTypes.string),
     label: PropTypes.string,
-    optionName: PropTypes.string
+    optionName: PropTypes.string,
+    isRestrictions: PropTypes.bool
   }),
   expanded: PropTypes.string,
   handleChange: PropTypes.func,
@@ -124,7 +154,8 @@ ConstructorListAccordion.defaultProps = {
   option: {
     optionToAdd: [],
     label: '',
-    optionName: ''
+    optionName: '',
+    isRestrictions: false
   },
   handleChange: '',
   isEdit: false
