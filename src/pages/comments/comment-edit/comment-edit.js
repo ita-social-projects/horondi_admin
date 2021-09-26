@@ -16,7 +16,6 @@ import {
 import ReplyComments from './replyComments';
 import ReplyCommentForm from '../../../components/forms/reply-comment-form/reply-comment-form';
 import { setCurrentPage } from '../../../redux/table/table.actions';
-import useReplyCommentFilters from '../../../hooks/filters/use-reply-comment-filters';
 import Filters from './filters/filters';
 
 const CommentEdit = ({ match }) => {
