@@ -22,7 +22,6 @@ function Filters() {
     ({ Comments }) => Comments
   );
   const showOptions = [...showFilterObj()];
-  console.log(commentsOptions);
 
   return (
     <ContainerFilters>
