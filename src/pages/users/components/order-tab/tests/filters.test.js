@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
+import React from 'react';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 
-import Filters from '../users-filters/UsersFilters';
+import Filters from '../filters/filters';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -18,7 +18,7 @@ let mockSetOrderFilter = jest.fn();
 let mockSetOrderSortLabel = jest.fn();
 let mockSetOrderSort = jest.fn();
 
-jest.mock('../../../../redux/orders/orders.actions', () => ({
+jest.mock('../../../../../redux/orders/orders.actions', () => ({
   __esModule: true,
   clearOrderFilters: () => mockClearOrderFilters(),
   setOrderFilter: () => mockSetOrderFilter(),
@@ -26,7 +26,7 @@ jest.mock('../../../../redux/orders/orders.actions', () => ({
   setOrderSort: () => mockSetOrderSort()
 }));
 
-jest.mock('../../../../redux/table/table.actions', () => ({
+jest.mock('../../../../../redux/table/table.actions', () => ({
   __esModule: true,
   setCurrentPage: () => mockSetCurrentPage()
 }));
@@ -48,11 +48,20 @@ describe('Testing filters', () => {
     mockSetOrderSort = jest.fn();
   });
   describe('Filter in orders tests', () => {
+    beforeEach(() => {
+      mockDispatch = jest.fn();
+
+      spyOnUseSelector.mockImplementation(() => ({
+        filtersUser: {
+          paymentStatus: ['test'],
+          sortLabel: 'test',
+          typeComment: 'test'
+        }
+      }));
+      spyOnUseDispatch.mockReturnValue(mockDispatch);
+    });
+
     it('should render', () => {
-      spyOnUseDispatch.mockImplementation(() => jest.fn());
-      spyOnUseSelector.mockReturnValue({
-        filters: { paymentStatus: ['test'] }
-      });
       wrapper = shallow(<Filters />);
 
       expect(wrapper).toBeDefined();
