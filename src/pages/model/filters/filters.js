@@ -11,7 +11,6 @@ import {
   setModelSortLabel
 } from '../../../redux/model/model.actions';
 import { sortLabel } from '../../../configs/sort';
-import { setCurrentPage } from '../../../redux/table/table.actions';
 import buttonTitles from '../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import {
@@ -33,50 +32,45 @@ function Filters() {
     ([key, value]) => ({ value: key, label: value })
   );
 
+  const availableOptions = [...availableFilterObj()];
+  const availableConstrOptions = [...availableForConstructorFilterObj()];
+
   return (
     <ContainerFilters>
       <ComponentFilterSinglePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetSingleFilter={setSort}
+        setFilterValue={setSort}
         actionSetLabel={setModelSortLabel}
         value={sortValue}
         options={filterLabels.models.sortLabels}
         label={sortLabel}
       />
       <ComponentFilterMultiplePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetMultipleFilter={setFilter}
+        setFilterValue={setFilter}
         selectorFunc={(selector) => ({ category: selector })}
         value={filters.category}
         options={categoryFilterObj}
         label={buttonTitles.CATEGORY_TITLE}
       />
       <ComponentFilterMultiplePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetMultipleFilter={setFilter}
+        setFilterValue={setFilter}
         selectorFunc={(selector) => ({ available: selector })}
         value={filters.available}
-        options={availableFilterObj}
+        options={availableOptions}
         label={buttonTitles.USER_STATUS_TITLE}
       />
       <ComponentFilterMultiplePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetMultipleFilter={setFilter}
+        setFilterValue={setFilter}
         selectorFunc={(selector) => ({ availableForConstructor: selector })}
         value={filters.availableForConstructor}
-        options={availableForConstructorFilterObj}
+        options={availableConstrOptions}
         label={buttonTitles.AVAILABLE_FOR_CONSTRUCTOR_TITLE}
       />
       <ComponentFilterSearch
-        actionSetCurrentPage={setCurrentPage}
-        actionSetSearchFilter={setFilter}
+        setFilterValue={setFilter}
         value={filters.search}
         selectorFunc={(selector) => ({ search: selector })}
       />
-      <ComponentFilterClear
-        actionSetCurrentPage={setCurrentPage}
-        actionClearFilters={clearFilters}
-      />
+      <ComponentFilterClear actionClearFilters={clearFilters} />
     </ContainerFilters>
   );
 }

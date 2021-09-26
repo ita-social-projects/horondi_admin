@@ -6,7 +6,6 @@ import {
   clearFilters,
   setFilter
 } from '../../../redux/categories/categories.actions';
-import { setCurrentPage } from '../../../redux/table/table.actions';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
 
 function Filters() {
@@ -15,15 +14,11 @@ function Filters() {
   return (
     <ContainerFilters>
       <ComponentFilterSearch
-        actionSetCurrentPage={setCurrentPage}
-        actionSetSearchFilter={setFilter}
+        setFilterValue={setFilter}
         value={filters.search}
         selectorFunc={(selector) => ({ search: selector })}
       />
-      <ComponentFilterClear
-        actionSetCurrentPage={setCurrentPage}
-        actionClearFilters={clearFilters}
-      />
+      <ComponentFilterClear actionClearFilters={clearFilters} />
     </ContainerFilters>
   );
 }
