@@ -19,6 +19,8 @@ import { validationSchema } from '../../validations/orders/order-form-validation
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
 import { checkInitialValue } from '../../utils/check-initial-values';
 
+import { Form, ControlPanel, TextInput } from '../../components/forms/form';
+
 const OrderItem = ({ id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -85,70 +87,77 @@ const OrderItem = ({ id }) => {
   };
 
   return (
-    <form onSubmit={eventPreventHandler} className={classes.orderContainer}>
-      <div className={classes.controlsBlock}>
-        <div className={classes.buttonContainer}>
-          <Grid container spacing={2} className={classes.fixedButtons}>
-            <Grid item className={classes.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToOrders} />
+    <>
+      <Form>
+        <ControlPanel />
+        <TextInput />
+      </Form>
+      <hr />
+      <form onSubmit={eventPreventHandler} className={classes.orderContainer}>
+        <div className={classes.controlsBlock}>
+          <div className={classes.buttonContainer}>
+            <Grid container spacing={2} className={classes.fixedButtons}>
+              <Grid item className={classes.button}>
+                <BackButton initial={!valueEquality} pathBack={pathToOrders} />
+              </Grid>
+              <Grid item className={classes.button}>
+                <SaveButton
+                  type={materialUiConstants.types.submit}
+                  title={SAVE_TITLE}
+                  onClickHandler={handleSubmit}
+                  values={{
+                    code: values.code,
+                    uaTitle: values.uaTitle,
+                    enTitle: values.enTitle
+                  }}
+                  disabled={!dirty || !isValid}
+                />
+              </Grid>
             </Grid>
-            <Grid item className={classes.button}>
-              <SaveButton
-                type={materialUiConstants.types.submit}
-                title={SAVE_TITLE}
-                onClickHandler={handleSubmit}
-                values={{
-                  code: values.code,
-                  uaTitle: values.uaTitle,
-                  enTitle: values.enTitle
-                }}
-                disabled={!dirty || !isValid}
-              />
-            </Grid>
-          </Grid>
+          </div>
         </div>
-      </div>
-      <Paper>
-        <Tabs value={tabValue} onChange={handleTabChange}>
-          <Tab value={0} label={general} />
-          <Tab value={1} label={registeredUser} />
-          <Tab value={2} label={receiver} />
-          <Tab value={3} label={products} />
-          <Tab value={4} label={delivery} />
-        </Tabs>
-        <TabPanel value={tabValue} index={0}>
-          <General data={values} handleChange={formikHandleChange} />
-        </TabPanel>
-        <TabPanel value={tabValue} index={1}>
-          <RegisteredUser
-            userId={values.user_id}
-            setFieldValue={setFieldValue}
-          />
-        </TabPanel>
-        <TabPanel value={tabValue} index={2}>
-          <Recipient
-            data={{
-              recipient: values.recipient,
-              userComment: values.userComment
-            }}
-            handleChange={formikHandleChange}
-          />
-        </TabPanel>
-        <TabPanel value={tabValue} index={3}>
-          <Products
-            data={{ items: values.items }}
-            setFieldValue={setFieldValue}
-          />
-        </TabPanel>
-        <TabPanel value={tabValue} index={4}>
-          <Delivery
-            data={{ delivery: values.delivery }}
-            handleChange={formikHandleChange}
-            setFieldValue={setFieldValue}
-          />
-        </TabPanel>
-      </Paper>
-    </form>
+        <Paper>
+          <Tabs value={tabValue} onChange={handleTabChange}>
+            <Tab value={0} label={general} />
+            <Tab value={1} label={registeredUser} />
+            <Tab value={2} label={receiver} />
+            <Tab value={3} label={products} />
+            <Tab value={4} label={delivery} />
+          </Tabs>
+          <TabPanel value={tabValue} index={0}>
+            <General data={values} handleChange={formikHandleChange} />
+          </TabPanel>
+          <TabPanel value={tabValue} index={1}>
+            <RegisteredUser
+              userId={values.user_id}
+              setFieldValue={setFieldValue}
+            />
+          </TabPanel>
+          <TabPanel value={tabValue} index={2}>
+            <Recipient
+              data={{
+                recipient: values.recipient,
+                userComment: values.userComment
+              }}
+              handleChange={formikHandleChange}
+            />
+          </TabPanel>
+          <TabPanel value={tabValue} index={3}>
+            <Products
+              data={{ items: values.items }}
+              setFieldValue={setFieldValue}
+            />
+          </TabPanel>
+          <TabPanel value={tabValue} index={4}>
+            <Delivery
+              data={{ delivery: values.delivery }}
+              handleChange={formikHandleChange}
+              setFieldValue={setFieldValue}
+            />
+          </TabPanel>
+        </Paper>
+      </form>
+    </>
   );
 };
 
