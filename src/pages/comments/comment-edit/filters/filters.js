@@ -23,39 +23,34 @@ function Filters() {
     ({ Comments }) => Comments
   );
 
+  const showOptions = [...showFilterObj()];
+
   return (
     <ContainerFilters>
       <ComponentFilterDateRangePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetFilter={setReplyFilter}
+        setFilterValue={setReplyFilter}
         filters={filters}
       />
       <ComponentFilterSinglePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetSingleFilter={setReplySort}
+        setFilterValue={setReplySort}
         actionSetLabel={setReplySortLabel}
         value={replySortLabel}
         options={filterLabels.reply.sortLabels}
         label={labelSort}
       />
       <ComponentFilterMultiplePicker
-        actionSetCurrentPage={setCurrentPage}
-        actionSetMultipleFilter={setReplyFilter}
+        setFilterValue={setReplyFilter}
         selectorFunc={(selector) => ({ show: selector })}
         value={filters.show}
-        options={showFilterObj}
+        options={showOptions}
         label={buttonTitles.USER_STATUS_TITLE}
       />
       <ComponentFilterSearch
-        actionSetCurrentPage={setCurrentPage}
-        actionSetSearchFilter={setReplyFilter}
+        setFilterValue={setReplyFilter}
         value={filters.search}
         selectorFunc={(selector) => ({ search: selector })}
       />
-      <ComponentFilterClear
-        actionSetCurrentPage={setCurrentPage}
-        actionClearFilters={clearReplyFilters}
-      />
+      <ComponentFilterClear actionClearFilters={clearReplyFilters} />
     </ContainerFilters>
   );
 }
