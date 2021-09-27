@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Grid, Paper, TextField, Typography } from '@material-ui/core';
 import * as Yup from 'yup';
@@ -6,7 +6,6 @@ import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
-import { Image } from '@material-ui/icons';
 import { useStyles } from './home-page-slide-form.styles';
 import { config } from '../../../configs';
 import useHomePageSlideHandlers from '../../../utils/use-home-page-slide-handlers';
@@ -20,9 +19,11 @@ import {
 import LanguagePanel from '../language-panel';
 import { getHomePageSlidesInitialValues } from '../../../utils/home-page-slides';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { languages } = config;
+const { imagePrefix } = config;
 
 const {
   NOT_EN_DESCRIPTION_MESSAGE,
@@ -36,10 +37,29 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const dispatch = useDispatch();
   const { discoverMoreTitle, discoverMoreSymbol } =
     config.titles.homePageSliderTitle;
-  const { slideImage, setSlideImage, createSlide, upload, setUpload } =
-    useHomePageSlideHandlers();
+  const {
+    slideImage,
+    createSlide,
+    upload,
+    uploadImage,
+    setUploadImage,
+    setSlideImage,
+    setUpload
+  } = useHomePageSlideHandlers();
 
   const { pathToHomePageSlides } = config.routes;
+
+  const {
+    imageUploadSlideInputsId: { imageInput }
+  } = config;
+
+  useEffect(() => {
+    if (slide.images.large) {
+      setUploadImage({
+        imgUrl: `${imagePrefix}${slide.images.large}`
+      });
+    }
+  }, [dispatch, slide]);
 
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
@@ -126,6 +146,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       reader.readAsDataURL(files[0]);
       setUpload(files[0]);
     }
+
+    imageHandler(files, setUploadImage, values, slideImage);
   };
 
   const inputs = [
@@ -176,12 +198,11 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
               {config.labels.homePageSlide.image}
             </span>
             <div className={styles.imageUploadAvatar}>
-              <ImageUploadContainer handler={handleImageLoad} />
-              {slideImage && (
-                <Avatar src={slideImage}>
-                  <Image />
-                </Avatar>
-              )}
+              <ImageUploadContainer
+                handler={handleImageLoad}
+                src={uploadImage.imageUrl}
+                id={imageInput}
+              />
             </div>
             <TextField
               data-cy='link'
