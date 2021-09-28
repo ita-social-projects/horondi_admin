@@ -23,13 +23,13 @@ import { backSelectorWithPagination } from '../../../redux/selectors/back.select
 import { strapsSelectorWithPagination } from '../../../redux/selectors/straps.selectors.js';
 import { closuresSelectorWithPagination } from '../../../redux/selectors/closures.selectors.js';
 import { pocketsSelectorWithPagination } from '../../../redux/selectors/pockets.selectors';
-import ConstructorListPockets from './constructor-list-pockets/constructor-list-pockets.js';
-import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
 import {
   addConstructor,
   updateConstructor
 } from '../../../redux/constructor/constructor.actions.js';
 import { constructorSelector } from '../../../redux/selectors/constructor.selectors';
+import ConstructorListPockets from './constructor-list-pockets/constructor-list-pockets.js';
+import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
 
 const { materialUiConstants } = config;
 const { MODEL_SAVE_TITLE } = config.buttonTitles;
@@ -145,14 +145,6 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       selector: closuresSelectorWithPagination,
       optionToAdd: closuresToAdd,
       setOptionToAdd: setClosuresToAdd
-    },
-    {
-      optionName: 'pocket',
-      label: 'Кишені',
-      getItems: getAllPockets,
-      selector: pocketsSelectorWithPagination,
-      optionToAdd: pocketsToAdd,
-      setOptionToAdd: setPocketsToAdd
     }
   ];
 

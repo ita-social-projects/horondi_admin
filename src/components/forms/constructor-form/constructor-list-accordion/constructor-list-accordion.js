@@ -15,20 +15,16 @@ import { config } from '../../../../configs';
 import TableContainerRow from '../../../../containers/table-container-row';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
 
-<<<<<<< HEAD
 const ConstructorListAccordion = ({
   option,
   expanded,
   handleChange,
   isEdit
 }) => {
-=======
-const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
->>>>>>> a1f7bb7e (added pockets)
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { selector, getItems, setOptionToAdd, optionToAdd, label, optionName } =
+  const { selector, getItems, setOptionToAdd, optionToAdd, label, optionName, isRestrictions } =
     option;
 
   const tableTitles = config.tableHeadRowTitles.constructorElementList;
@@ -75,17 +71,12 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
       showEdit={false}
       showDelete={false}
       showCheckbox
-<<<<<<< HEAD
       checkBoxValue={optionToAdd}
       checkboxChangeHandler={checkboxChangeHandler}
     />
   ));
-=======
-      checkboxChangeHandler={checkboxChangeHandler}
-    />
-  ));
 
-  if (option.isRestrictions) {
+  if (isRestrictions) {
     return (
       <Accordion
         expanded={expanded === optionName}
@@ -103,7 +94,6 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
       </Accordion>
     );
   }
->>>>>>> a1f7bb7e (added pockets)
 
   return (
     <Accordion
@@ -154,8 +144,7 @@ ConstructorListAccordion.defaultProps = {
   option: {
     optionToAdd: [],
     label: '',
-    optionName: '',
-    isRestrictions: false
+    optionName: ''
   },
   handleChange: '',
   isEdit: false
