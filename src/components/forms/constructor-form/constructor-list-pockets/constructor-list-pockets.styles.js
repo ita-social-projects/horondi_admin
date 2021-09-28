@@ -13,5 +13,8 @@ export const useStyles = makeStyles((theme) => ({
   column: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  restrictions: {
+    marginTop: '20px'
   }
 }));

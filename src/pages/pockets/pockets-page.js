@@ -33,7 +33,7 @@ const PocketsPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const pocketOptions = usePocketFilters();
 
-  const { filter, pocketsList, loading, currentPage, rowsPerPage, itemsCount } =
+  const { filter, items, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(pocketsSelectorWithPagination);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const PocketsPage = () => {
     openSuccessSnackbar(removePocket, DELETE_POCKET_MESSAGE);
   };
 
-  const pocketsItems = _.map(pocketsList, (pocket) => (
+  const pocketsItems = _.map(items, (pocket) => (
     <TableContainerRow
       key={pocket._id}
       id={pocket._id}

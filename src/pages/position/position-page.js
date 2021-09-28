@@ -32,14 +32,8 @@ const PositionPage = () => {
   const commonStyles = useCommonStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const positionOptions = usePositionFilters();
-  const {
-    filter,
-    positionsList,
-    loading,
-    currentPage,
-    rowsPerPage,
-    itemsCount
-  } = useSelector(positionsSelectorWithPagination);
+  const { filter, items, loading, currentPage, rowsPerPage, itemsCount } =
+    useSelector(positionsSelectorWithPagination);
 
   useEffect(() => {
     dispatch(
@@ -63,7 +57,7 @@ const PositionPage = () => {
     openSuccessSnackbar(removePosition, DELETE_POSITION_MESSAGE);
   };
 
-  const positionsItems = _.map(positionsList, (position) => (
+  const positionsItems = _.map(items, (position) => (
     <TableContainerRow
       key={position._id}
       id={position._id}

@@ -53,7 +53,7 @@ const TableContainerRow = ({
         </TableCell>
       )}
       {showAvatar && (
-        <TableCell>
+        <TableCell className={classes.smallCell}>
           <Avatar className={avatarSize} src={image}>
             <ImageIcon />
           </Avatar>
@@ -61,7 +61,7 @@ const TableContainerRow = ({
       )}
       {tableCells}
       {(showEdit || showDelete) && (
-        <TableCell>
+        <TableCell className={classes.smallCell}>
           {showEdit && (
             <CustomizedEditIcon
               size={iconSize}
