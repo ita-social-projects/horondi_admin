@@ -25,7 +25,8 @@ const OptionsPicker = ({ value, handler, label, options }) => {
     }
   };
 
-  const renderValue = (selectedValues) => options.reduce((acumulator, option) => {
+  const renderValue = (selectedValues) =>
+    options.reduce((acumulator, option) => {
       let selectedItem;
 
       selectedValues.forEach((selectedValue, _index) => {
