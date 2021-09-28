@@ -21,8 +21,9 @@ import { patternSelectorWithPagination } from '../../../redux/selectors/pattern.
 import { backSelectorWithPagination } from '../../../redux/selectors/back.selectors.js';
 import { strapsSelectorWithPagination } from '../../../redux/selectors/straps.selectors.js';
 import { closuresSelectorWithPagination } from '../../../redux/selectors/closures.selectors.js';
-import { getAllPockets } from '../../../redux/pockets/pockets.actions.js';
-import { pocketsSelectorWithPagination } from '../../../redux/selectors/pockets.selectors.js';
+import ConstructorListPockets from './constructor-list-pockets/constructor-list-pockets.js';
+import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
+import { addConstructor } from '../../../redux/constructor/constructor.actions.js';
 
 const { materialUiConstants } = config;
 const { MODEL_SAVE_TITLE } = config.buttonTitles;
@@ -34,8 +35,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState('');
 
+  const { createConstructor } = useConstructorHandlers();
+
   const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+    setExpanded(isExpanded ? panel : '');
   };
 
   useEffect(() => {
@@ -50,18 +53,21 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const [backsToAdd, setBacksToAdd] = useState([]);
   const [strapsToAdd, setStrapsToAdd] = useState([]);
   const [closuresToAdd, setClosuresToAdd] = useState([]);
-  const [pocketsToAdd, setPocketsToAdd] = useState([]);
-
+  const [restrictionsToAdd, setRestrictionsToAdd] = useState([]);
   const onSaveHandler = () => {
-    const itemsToSave = [
+    const itemsToSave = {
+      model,
       basicsToAdd,
       bottomsToAdd,
       patternsToAdd,
       backsToAdd,
       strapsToAdd,
       closuresToAdd,
-      pocketsToAdd
-    ];
+      restrictionsToAdd
+    };
+    const constructor = createConstructor(itemsToSave);
+
+    dispatch(addConstructor({ constructor }));
   };
 
   const constructorOptions = [
@@ -112,14 +118,6 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       selector: closuresSelectorWithPagination,
       optionToAdd: closuresToAdd,
       setOptionToAdd: setClosuresToAdd
-    },
-    {
-      optionName: 'pocket',
-      label: 'Кишені',
-      getItems: getAllPockets,
-      selector: pocketsSelectorWithPagination,
-      optionToAdd: pocketsToAdd,
-      setOptionToAdd: setPocketsToAdd
     }
   ];
 
@@ -132,14 +130,23 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     />
   ));
 
+  const pocketAccordion = (
+    <ConstructorListPockets
+      setRestrictionsToAdd={setRestrictionsToAdd}
+      restrictionsToAdd={restrictionsToAdd}
+      handleChange={handleChange}
+      expanded={expanded}
+    />
+  );
+
   return (
     <>
-      <div className={classes.buttonContainer}>
-        <Grid container spacing={2} className={classes.fixedButtons}>
-          <Grid item className={classes.button}>
+      <div>
+        <Grid container spacing={2}>
+          <Grid item>
             <BackButton pathBack={pathToConstructorList} />
           </Grid>
-          <Grid item className={classes.button}>
+          <Grid item>
             <SaveButton
               onClickHandler={onSaveHandler}
               className={classes.constructorButton}
@@ -154,7 +161,10 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
         <Typography variant='h1' className={classes.materialTitle}>
           {pageTitle}
         </Typography>
-        <div className={classes.root}>{constructorAccordions}</div>
+        <div className={classes.root}>
+          {constructorAccordions}
+          {pocketAccordion}
+        </div>
       </div>
     </>
   );

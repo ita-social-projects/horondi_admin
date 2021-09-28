@@ -22,7 +22,7 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
   const { selector, getItems, setOptionToAdd, optionToAdd, label, optionName } =
     option;
 
-  const tableTitles = config.tableHeadRowTitles.constructorList;
+  const tableTitles = config.tableHeadRowTitles.constructorElementList;
 
   const { items, currentPage, rowsPerPage, filter } = useSelector(selector);
 
@@ -70,25 +70,6 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
     />
   ));
 
-  if (option.isRestrictions) {
-    return (
-      <Accordion
-        expanded={expanded === optionName}
-        onChange={handleChange(optionName)}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls={`${optionName}bh-content`}
-          id={`${optionName}bh-header`}
-        >
-          <Typography className={classes.heading}>{label}</Typography>
-          <Typography className={classes.secondaryHeading} />
-        </AccordionSummary>
-        <AccordionDetails />
-      </Accordion>
-    );
-  }
-
   return (
     <Accordion
       expanded={expanded === optionName}
@@ -102,7 +83,7 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
         <Typography className={classes.heading}>{label}</Typography>
         <Typography className={classes.secondaryHeading} />
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails className={classes.column}>
         {elementItems.length ? (
           <TableContainerGenerator
             pagination
@@ -125,8 +106,7 @@ ConstructorListAccordion.propTypes = {
     setOptionToAdd: PropTypes.func,
     optionToAdd: PropTypes.arrayOf(PropTypes.string),
     label: PropTypes.string,
-    optionName: PropTypes.string,
-    isRestrictions: PropTypes.bool
+    optionName: PropTypes.string
   }),
   expanded: PropTypes.string,
   handleChange: PropTypes.func
@@ -137,8 +117,7 @@ ConstructorListAccordion.defaultProps = {
   option: {
     optionToAdd: [],
     label: '',
-    optionName: '',
-    isRestrictions: false
+    optionName: ''
   },
   handleChange: ''
 };

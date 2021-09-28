@@ -53,6 +53,8 @@ const messages = {
   NO_BACKS_MESSAGE: 'Cпинки відсутні',
   NO_BOTTOMS_MESSAGE: 'Низи відсутні',
   NO_CONSTRUCTOR_MESSAGE: 'Немає доступних контрукторів для відображення',
+  DELETE_CONSTRUCTOR_MESSAGE:
+    'Ви впевнені, що хочете видалити цей конструктор?',
   DELETE_CLOSURE_MESSAGE: 'Ви впевнені, що хочете видалити цей замочок?',
   NO_CLOSURE_MESSAGE: 'Замочки відсутні',
   DELETE_BASIC_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',

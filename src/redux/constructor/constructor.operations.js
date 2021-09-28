@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { getItems, setItems, client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { constructorTranslations } from '../../translations/constructor.translations';
 
@@ -65,6 +65,114 @@ export const deleteConstructorBasic = async (payload) => {
     );
   }
   return data.deleteConstructorBasic;
+};
+
+export const createConstructor = async (payload) => {
+  const createConstructorQuery = `
+      mutation($constructor: ConstructorInput!, $image: Upload) {
+        addConstructor(constructor: $constructor, image: $image) {
+          ... on Constructor {
+            _id
+            name {
+              lang
+              value
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await setItems(createConstructorQuery, payload);
+
+  if (
+    Object.keys(constructorTranslations).includes(
+      result?.data?.addConstructor?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.addConstructor.statusCode} ${
+        constructorTranslations[result.data.addConstructor.message]
+      }`
+    );
+  }
+
+  return result?.data?.addConstructor;
+};
+
+export const deleteConstructor = async (payload) => {
+  const deleteConstructorQuery = `
+  mutation($id: ID!) {
+        deleteConstructor(id: $id) {
+          ... on Constructor {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await setItems(deleteConstructorQuery, payload);
+
+  if (
+    Object.keys(constructorTranslations).includes(
+      result?.data?.deleteConstructor?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.deleteConstructor.statusCode} ${
+        constructorTranslations[result.data.deleteConstructor.message]
+      }`
+    );
+  }
+
+  return result?.data?.deleteConstructor;
+};
+
+export const getAllConstructors = async (payload) => {
+  const getAllConstructorsQuery = `
+      query($limit: Int!, $skip: Int!, $filter: ConstructorFilterInput) {
+        getAllConstructors(limit: $limit, skip: $skip, filter: $filter) {
+          items {
+            _id
+            name {
+              lang
+              value
+            }
+            model {
+              images {
+                large
+                medium
+                small
+                thumbnail
+              }
+            }
+          }
+        }
+      }
+    `;
+
+  const result = await getItems(getAllConstructorsQuery, payload);
+
+  if (
+    Object.keys(constructorTranslations).includes(
+      result?.data?.getAllConstructors?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getAllConstructors.statusCode} ${
+        constructorTranslations[result.data.getAllConstructors.message]
+      }`
+    );
+  }
+
+  return result?.data?.getAllConstructors;
 };
 
 export const createConstructorBasic = async (payload) => {
