@@ -14,7 +14,7 @@ const messages = {
   REMOVE_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цей коментар?',
   REMOVE_REPLY_COMMENT_MESSAGE: 'Ви впевнені, що хочете видалити цю відповідь?',
   NO_COMMENTS_MESSAGE: 'Коментарі відсутні',
-  NO_ORDERS_MESSAGE: 'Коментарі відсутні',
+  NO_ORDERS_MESSAGE: 'Замовлення відсутні',
   NO_REPLY_COMMENTS_MESSAGE: 'Відповіді відсутні',
   PATTERN_REMOVE_MESSAGE: 'Ви впевнені, що хочете видалити цей гобелен?',
   DELETE_SIZE_MESSAGE: 'Ви впевнені, що хочете видалити цей розмір?',

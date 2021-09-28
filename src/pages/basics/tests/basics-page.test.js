@@ -59,7 +59,7 @@ describe('Basics-page tests', () => {
   it('should render TableRows without items', () => {
     spyOnUseSelector.mockImplementation(() => ({
       ...mockStore,
-      basicsList: []
+      items: []
     }));
     wrapper = shallow(<BasicsPage />);
     expect(wrapper.find(LoadingBar)).toBeDefined();
@@ -68,12 +68,12 @@ describe('Basics-page tests', () => {
   it('should render TableRow without properties', () => {
     spyOnUseSelector.mockImplementation(() => ({
       ...mockStore,
-      basicsList: [
+      items: [
         {
-          name: mockStore.basicsList[0].name,
+          name: mockStore.items[0].name,
           images: null,
           available: false,
-          additionalPrice: mockStore.basicsList[0].additionalPrice
+          additionalPrice: mockStore.items[0].additionalPrice
         }
       ]
     }));

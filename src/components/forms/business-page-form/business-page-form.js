@@ -49,10 +49,12 @@ const BusinessPageForm = ({ id, editMode }) => {
       ENTER_CODE_ERROR_MESSAGE,
       ENTER_TITLE_ERROR_MESSAGE,
       ENTER_TEXT_ERROR_MESSAGE,
-      ENTER_UA_MESSAGE,
-      ENTER_EN_MESSAGE,
-      MIN_TEXT_LENGTH_MESSAGE,
-      MIN_TITLE_LENGTH_MESSAGE
+      MIN_TEXT_LENGTH_MESSAGE
+    },
+    commonErrorMessages: {
+      UA_NAME_MESSAGE,
+      EN_NAME_MESSAGE,
+      MIN_LENGTH_MESSAGE
     }
   } = config;
 
@@ -102,16 +104,16 @@ const BusinessPageForm = ({ id, editMode }) => {
       .matches(config.formRegExp.pageCode, ENTER_CODE_ERROR_MESSAGE)
       .required(ENTER_CODE_ERROR_MESSAGE),
     uaTitle: Yup.string()
-      .min(2, MIN_TITLE_LENGTH_MESSAGE)
-      .matches(config.formRegExp.uaNameCreation, ENTER_EN_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(config.formRegExp.uaNameCreation, EN_NAME_MESSAGE)
       .required(ENTER_TITLE_ERROR_MESSAGE),
     enTitle: Yup.string()
-      .min(2, MIN_TITLE_LENGTH_MESSAGE)
-      .matches(config.formRegExp.enNameCreation, ENTER_UA_MESSAGE)
+      .min(2, MIN_LENGTH_MESSAGE)
+      .matches(config.formRegExp.enNameCreation, UA_NAME_MESSAGE)
       .required(ENTER_TITLE_ERROR_MESSAGE),
     enText: Yup.string()
       .min(17, MIN_TEXT_LENGTH_MESSAGE)
-      .matches(config.formRegExp.enDescription, ENTER_EN_MESSAGE)
+      .matches(config.formRegExp.enDescription, EN_NAME_MESSAGE)
       .required(ENTER_TEXT_ERROR_MESSAGE),
     uaText: Yup.string()
       .min(17, MIN_TEXT_LENGTH_MESSAGE)

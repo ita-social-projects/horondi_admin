@@ -1,5 +1,5 @@
 import { getItems, setItems } from '../../utils/client';
-import { headerTranslations } from '../../translations/header.translations';
+import { headerTranslations } from '../../configs/error-modal-messages';
 
 export const getAllHeaders = async () => {
   const query = `

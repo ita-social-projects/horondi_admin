@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 import { config } from '../../../src/configs';
-import { businessTranslations } from '../../../src/translations/business.translations.js';
+import { businessPageErrors } from '../../../src/configs/error-modal-messages';
 import routes from '../../../src/configs/routes';
 import {
   getAllBusinessTexts,
@@ -98,7 +98,7 @@ describe('Business pages test ', () => {
     cy.wait(1000);
     cy.get('.MuiAlert-message').should('be.visible');
     cy.get('.MuiAlert-message').contains(
-      businessTranslations.BUSINESS_TEXT_WITH_THIS_CODE_ALREADY_EXIST
+      businessPageErrors.BUSINESS_TEXT_WITH_THIS_CODE_ALREADY_EXIST
     );
   });
 

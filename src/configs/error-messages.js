@@ -33,60 +33,77 @@ export const loginErrorMessages = {
   WRONG_FORMAT: 'Не допускається використання спеціальних символів',
   ENTER_CODE: 'Введіть код'
 };
+
+export const commonErrorMessages = {
+  MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
+  MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
+  MAX_LENGTH_MESSAGE_300: 'Не більше 300 символів',
+  ERROR_MESSAGE: 'Поле не може бути порожнім',
+  UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
+  EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
+  ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
+  PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
+};
+
 export const patternErrorMessages = {
-  PATTERN_VALIDATION_ERROR: 'Мінімум 2 символи',
   PATTERN_VALIDATION_ERROR_NAME: 'Назва повинна містити від 2 до 50 символів',
   PATTERN_VALIDATION_ERROR_DESCRIPTION:
     'Опис повинний містити від 2 до 1000 символів',
-  PATTERN_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  PATTERN_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото гобелена є обов'язковим",
-  CONSTRUCTOR_PHOTO_NOT_PROVIDED: "Фото для конструктора є обов'язковим",
-  PATTERN_UA_NAME_MESSAGE:
-    'Поле може містити тільки українські літери та цифри',
-  PATTERN_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри'
+  CONSTRUCTOR_PHOTO_NOT_PROVIDED: "Фото для конструктора є обов'язковим"
 };
+
 export const backErrorMessages = {
-  BACK_VALIDATION_ERROR: 'Мінімум 2 символи',
-  BACK_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  BACK_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото спинки є обов'язковим",
-  BACK_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
-  BACK_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
-  BACK_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
-  BACK_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
-  BACK_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+  BACK_UA_NAME_MESSAGE: 'Введіть назву спинки українською',
+  BACK_EN_NAME_MESSAGE: 'Введіть назву спинки англійською'
 };
+
 export const bottomErrorMessages = {
-  BOTTOM_VALIDATION_ERROR: 'Мінімум 2 символи',
-  BOTTOM_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  BOTTOM_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PHOTO_NOT_PROVIDED: "Фото низу є обов'язковим",
-  BOTTOM_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
-  BOTTOM_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
-  BOTTOM_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
-  BOTTOM_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
-  BOTTOM_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+  BOTTOM_UA_NAME_MESSAGE: 'Введіть назву низу українською',
+  BOTTOM_EN_NAME_MESSAGE: 'Введіть назву низу англійською'
 };
+
+export const closuresErrorMessages = {
+  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим",
+  CLOSURES_UA_NAME_MESSAGE: 'Введіть назву защіпки українською',
+  CLOSURES_EN_NAME_MESSAGE: 'Введіть назву защіпки англійською'
+};
+
+export const pocketsErrorMessages = {
+  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку',
+  POCKETS_ERROR: 'Додайте фото для кишені',
+  POCKETS_UA_NAME_MESSAGE: 'Введіть назву кишені українською',
+  POCKETS_EN_NAME_MESSAGE: 'Введіть назву кишені англійською'
+};
+
+export const basicsErrorMessages = {
+  PHOTO_NOT_PROVIDED: "Фото основи є обов'язковим"
+};
+
+export const constructorErrorMessages = {
+  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора'
+};
+
+export const strapsErrorMessages = {
+  STRAPS_COLOR_ERROR_MESSAGE: 'Оберіть колір із запропонованого списку'
+};
+
 export const categoryErrorMessages = {
   CATEGORY_VALIDATION_ERROR: 'Це поле повинно містити від 2 до 30 символів',
   CATEGORY_VALIDATION_ERROR_CATEGORY_NAME:
     'Назва повинна містити від 2 до 50 символів',
-  CATEGORY_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  CATEGORY_UA_NAME_MESSAGE:
-    'Поле може містити тільки українські літери та цифри',
-  CATEGORY_EN_NAME_MESSAGE:
-    'Поле може містити тільки англійські літери та цифри',
-  CATEGORY_CODE_MESSAGE: 'Поле не може містити спеціальні символи'
+  CATEGORY_CODE_MESSAGE: 'Поле не може містити спеціальні символи',
+  CATEGORY_ERROR: 'Додайте фото для категорії'
 };
+
 export const headerErrorMessages = {
-  HEADER_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
   HEADER_VALIDATION_ERROR: 'Введіть посилання для сторінки',
-  HEADER_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  HEADER_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   NOT_UA_NAME_MESSAGE: `Введіть ім'я посилання українською`,
   NOT_EN_NAME_MESSAGE: `Введіть ім'я посилання англійською`
 };
+
 export const newsErrorMessages = {
   NAME_MIN_LENGTH_MESSAGE: `Ім'я автора повинне містити не менше 2 символів`,
   TITLE_MIN_LENGTH_MESSAGE: 'Заголовок повинен містити не менше 10 символів',
@@ -96,19 +113,16 @@ export const newsErrorMessages = {
   NOT_EN_TITLE_MESSAGE: 'Введіть заголовок новини англійською',
   NOT_UA_TITLE_MESSAGE: 'Введіть заголовок новини українською',
   NOT_EN_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини англійською",
-  NOT_UA_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини українською",
-  NEWS_ERROR_MESSAGE: 'Поле не може бути порожнім'
+  NOT_UA_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини українською"
 };
+
 export const modelErrorMessages = {
-  MODEL_VALIDATION_ERROR: 'Мінімум 2 символи',
-  MODEL_ERROR_MESSAGE: 'Поле не може бути порожнім',
   PHOTO_NOT_PROVIDED: 'Додайте фото для моделі',
-  NOT_UA_NAME_MESSAGE: `Введіть ім'я моделі українською`,
-  NOT_EN_NAME_MESSAGE: `Введіть ім'я моделі англійською`,
   NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис моделі англійською`,
   NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис моделі українською`,
   NO_STRING_TYPE_MESSAGE: `Повинно містити букви, цифри та спецсимволи`
 };
+
 export const contactErrorMessages = {
   INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
   ENTER_EMAIL_MESSAGE: 'Введіть email',
@@ -134,15 +148,11 @@ export const emailQuestionsErrorMessages = {
 };
 
 export const materialErrorMessages = {
-  MAX_LENGTH_MESSAGE: `Не більше 300 символів`,
-  MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
-  VALIDATION_ERROR: 'Поле обовязкове',
-  PRICE_VALIDATION_ERROR: 'Тільки цифри',
-  NOT_EN_NAME_MESSAGE: `Введіть ім'я матеріалу англійською`,
-  NOT_UA_NAME_MESSAGE: `Введіть ім'я матеріалу українською`,
+  MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
   NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис матеріалу англійською`,
   NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис матеріалу українською`
 };
+
 export const sizeErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 20 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 1см`,
@@ -150,127 +160,48 @@ export const sizeErrorMessages = {
   MIN_LENGTH_MESSAGE_SIZE: `Не менше 1 символу`,
   MAX_WEIGHT_MESSAGE_SIZE: `Не більше 5 кг`,
   MIN_WEIGHT_MESSAGE_SIZE: `Не менше 0.1 кг`,
-  VALIDATION_ERROR: `Поле обовязкове`,
-  PRICE_VALIDATION_ERROR: `Тільки цифри`,
-  NOT_UA_INPUT_MESSAGE: `Введіть ім'я розміру українською`,
-  NOT_EN_INPUT_MESSAGE: `Введіть ім'я розміру англійською`,
   NO_NUMBER_TYPE_MESSAGE: `Повинно містити число`,
   NO_STRING_TYPE_MESSAGE: `Повинно містити букви`
 };
 
 export const colorErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 100 символів`,
-  MIN_LENGTH_MESSAGE: `Не менше 2 символів`,
   COLOR_VALIDATION_ERROR: `Неправильний формат кольору`,
-  VALIDATION_ERROR: `Поле обов'язкове`,
-  NOT_EN_NAME_MESSAGE: `Поле може містити тільки англійські літери та цифри`,
-  NOT_UA_NAME_MESSAGE: `Поле може містити тільки українські літери та цифри`,
   NOT_EN_SIMPLE_NAME_MESSAGE: `Введіть просту назву кольору англійською`,
   NOT_UA_SIMPLE_NAME_MESSAGE: `Введіть просту назву кольору українською`
 };
+
 export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'
 };
+
 export const homePageSlideErrorMessages = {
-  SLIDE_VALIDATION_ERROR: 'Мінімум 2 символи',
-  SLIDE_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  SLIDE_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   NOT_UA_NAME_MESSAGE: `Введіть ім'я слайду українською`,
   NOT_EN_NAME_MESSAGE: `Введіть ім'я слайду англійською`,
   NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис слайду англійською`,
   NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис слайду українською`
 };
 
-export const constructorErrorMessages = {
-  CONSTRUCTOR_VALIDATION_ERROR: 'Мінімум 2 символи',
-  CONSTRUCTOR_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  CONSTRUCTOR_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
-  PRICE_VALIDATION_ERROR: 'Тільки цифри',
-  PHOTO_NOT_PROVIDED: 'Додайте фото для конструктора'
-};
 export const paginationInputErrorMessages = {
   MUST_BE_NUMBER: 'Тільки цифри',
   MUST_BE_POSITIVE: 'Тільки більше нуля',
   PAGE_NOT_FOUND: 'Сторінку не знайдено'
 };
 
-export const commentErrorMessages = {
-  COMMENT_VALIDATION_ERROR: 'Мінімум 2 символи',
-  COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
-};
-
-export const replyCommentErrorMessages = {
-  REPLY_COMMENT_VALIDATION_ERROR: 'Мінімум 2 символи',
-  REPLY_COMMENT_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  MAX_LENGTH_MESSAGE: 'Не більше 300 символів'
-};
-
 export const businessPageErrorMessages = {
   ENTER_CODE_ERROR_MESSAGE: 'Введіть унікальний ідентифікатор для сторінки',
-  CODE_ERROR_MESSAGE: 'Поле не може бути порожнім',
   ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
   ENTER_TEXT_ERROR_MESSAGE: 'Введіть текст для сторінки',
-  ENTER_UA_MESSAGE: 'Поле може містити тільки українські літери та цифри',
-  ENTER_EN_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
-  MIN_TEXT_LENGTH_MESSAGE: 'Мінімум 10 символiв',
-  MIN_TITLE_LENGTH_MESSAGE: 'Мінімум 2 символи'
+  MIN_TEXT_LENGTH_MESSAGE: 'Мінімум 10 символiв'
 };
 
-export const pocketsErrorMessages = {
-  POCKETS_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
-  POCKETS_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  POCKETS_UA_NAME_MESSAGE:
-    'Поле може містити тільки українські літери та цифри',
-  POCKETS_EN_NAME_MESSAGE:
-    'Поле може містити тільки англійські літери та цифри',
-  POCKETS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
-  POCKETS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
-  POCKETS_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
-  POCKETS_POSITION_ERROR_MESSAGE: 'Оберіть позицію із запропронованого списку'
-};
-
-export const strapsErrorMessages = {
-  STRAPS_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
-  STRAPS_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  STRAPS_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
-  STRAPS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
-  STRAPS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
-  STRAPS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
-  STRAPS_COLOR_ERROR_MESSAGE: 'Оберіть колір із запропонованого списку'
-};
-
-export const positionErrorMessages = {
-  POSITION_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  POSITION_UA_NAME_MESSAGE:
-    'Поле може містити тільки українські літери та цифри',
-  POSITION_EN_NAME_MESSAGE:
-    'Поле може містити тільки англійські літери та цифри',
-  POSITION_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
-  POSITION_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
-};
-
-export const closuresErrorMessages = {
-  CLOSURES_VALIDATION_ERROR: 'Це поле повинно містити тільки додатні значенння',
-  CLOSURES_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  CLOSURES_UA_NAME_MESSAGE:
-    'Поле може містити тільки українські літери та цифри',
-  CLOSURES_EN_NAME_MESSAGE:
-    'Поле може містити тільки англійські літери та цифри',
-  PHOTO_NOT_PROVIDED: "Фото защіпки є обов'язковим",
-  CLOSURES_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
-  CLOSURES_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи',
-  CLOSURES_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
-};
-
-export const basicsErrorMessages = {
-  BASICS_VALIDATION_ERROR: 'Мінімум 2 символи',
-  BASICS_ERROR_MESSAGE: 'Поле не може бути порожнім',
-  BASICS_ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
-  PHOTO_NOT_PROVIDED: "Фото основи є обов'язковим",
-  BASICS_UA_NAME_MESSAGE: 'Поле може містити тільки українські літери та цифри',
-  BASICS_EN_NAME_MESSAGE: 'Поле може містити тільки англійські літери та цифри',
-  BASICS_PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння',
-  BASICS_MAX_LENGTH_MESSAGE: 'Максимум 50 символiв',
-  BASICS_MIN_LENGTH_MESSAGE: 'Мінімум 2 символи'
+export const productErrorMessages = {
+  REQUIRED_PHOTOS: "Головне фото для продукту є обов'язковими",
+  REQUIRED_FIELD: "Обов'язкове поле",
+  NAME_TOO_SHORT_MESSAGE: 'Назва продукту повинна містити не менше 6 символів',
+  NAME_TOO_LONG_MESSAGE: 'Назва продукту повинна містити не більше 50 символів',
+  CORRECT_DATA_ERROR:
+    'Заповніть необхідні поля коректними даними для усіх мов ',
+  NOT_UA_NAME_MESSAGE: 'Введіть назву українською',
+  NOT_EN_NAME_MESSAGE: 'Введіть назву англійською'
 };

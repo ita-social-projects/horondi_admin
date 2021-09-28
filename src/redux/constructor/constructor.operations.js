@@ -1,7 +1,10 @@
 import { gql } from '@apollo/client';
 import { getItems, setItems, client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
-import { constructorTranslations } from '../../translations/constructor.translations';
+import {
+  constructorErrors,
+  constructorTranslations
+} from '../../configs/error-modal-messages';
 
 const constructorElementRequest = `
   _id
@@ -60,7 +63,7 @@ export const deleteConstructorBasic = async (payload) => {
   if (data.deleteConstructorBasic.message) {
     throw new Error(
       `${data.deleteConstructorBasic.statusCode} ${
-        constructorTranslations[data.deleteConstructorBasic.message]
+        constructorErrors[data.deleteConstructorBasic.message]
       }`
     );
   }
@@ -204,7 +207,7 @@ export const createConstructorBasic = async (payload) => {
   if (data.addConstructorBasic.message) {
     throw new Error(
       `${data.addConstructorBasic.statusCode} ${
-        constructorTranslations[data.addConstructorBasic.message]
+        constructorErrors[data.addConstructorBasic.message]
       }`
     );
   }
@@ -241,7 +244,7 @@ export const updateConstructorBasic = async (payload) => {
   if (data.updateConstructorBasic.message) {
     throw new Error(
       `${data.updateConstructorBasic.statusCode} ${
-        constructorTranslations[data.updateConstructorBasic.message]
+        constructorErrors[data.updateConstructorBasic.message]
       }`
     );
   }
@@ -277,7 +280,7 @@ export const createConstructorBottom = async (payload) => {
   if (data.addConstructorBottom.message) {
     throw new Error(
       `${data.addConstructorBottom.statusCode} ${
-        constructorTranslations[data.addConstructorBottom.message]
+        constructorErrors[data.addConstructorBottom.message]
       }`
     );
   }
@@ -310,7 +313,7 @@ export const deleteConstructorBottom = async (payload) => {
   if (data.deleteConstructorBottom.message) {
     throw new Error(
       `${data.deleteConstructorBottom.statusCode} ${
-        constructorTranslations[data.deleteConstructorBottom.message]
+        constructorErrors[data.deleteConstructorBottom.message]
       }`
     );
   }
@@ -347,7 +350,7 @@ export const updateConstructorBottom = async (payload) => {
   if (data.updateConstructorBottom.message) {
     throw new Error(
       `${data.updateConstructorBottom.statusCode} ${
-        constructorTranslations[data.updateConstructorBottom.message]
+        constructorErrors[data.updateConstructorBottom.message]
       }`
     );
   }
@@ -383,7 +386,7 @@ export const createConstructorFrontPocket = async (payload) => {
   if (data.addConstructorFrontPocket.message) {
     throw new Error(
       `${data.addConstructorFrontPocket.statusCode} ${
-        constructorTranslations[data.addConstructorFrontPocket.message]
+        constructorErrors[data.addConstructorFrontPocket.message]
       }`
     );
   }
@@ -416,7 +419,7 @@ export const deleteConstructorFrontPocket = async (payload) => {
   if (data.deleteConstructorFrontPocket.message) {
     throw new Error(
       `${data.deleteConstructorFrontPocket.statusCode} ${
-        constructorTranslations[data.deleteConstructorFrontPocket.message]
+        constructorErrors[data.deleteConstructorFrontPocket.message]
       }`
     );
   }
@@ -453,7 +456,7 @@ export const updateConstructorFrontPocket = async (payload) => {
   if (data.updateConstructorFrontPocket.message) {
     throw new Error(
       `${data.updateConstructorFrontPocket.statusCode} ${
-        constructorTranslations[data.updateConstructorFrontPocket.message]
+        constructorErrors[data.updateConstructorFrontPocket.message]
       }`
     );
   }

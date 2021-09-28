@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useStyles } from './error-page.styles';
 import { config } from '../../configs';
 
-const { ERROR_BOUNDARY_STATUS, ERROR_PAGE_STATUS } = config.statuses;
+const { ERROR_BOUNDARY_STATUS, ERROR_PAGE_STATUS } = config.errorStatuses;
 
 const ErrorPage = () => {
   const dispatch = useDispatch();
