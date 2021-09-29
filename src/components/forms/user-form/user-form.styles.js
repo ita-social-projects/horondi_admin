@@ -3,17 +3,26 @@ import { formStyles } from '../../../configs/styles';
 
 export const useStyles = makeStyles((theme) => {
   const {
-    saveButton,
-    textField,
-    imageUpload,
     imageUploadAvatar,
     returnButton,
-    inputError
+    inputError,
+    saveButton,
+    textField,
+    imageUpload
   } = formStyles(theme);
   return {
     error: {
       color: '#e60000',
       marginLeft: '5px'
+    },
+    fixedButtons: {
+      position: 'fixed',
+      height: 90,
+      zIndex: 1001,
+      backgroundColor: theme.palette.bodyColor
+    },
+    button: {
+      marginTop: theme.spacing(0.5)
     },
     buttonContainer: {
       position: 'relative',
@@ -25,23 +34,8 @@ export const useStyles = makeStyles((theme) => {
         marginTop: -21
       }
     },
-    button: {
-      marginTop: theme.spacing(0.5)
-    },
-    fixedButtons: {
-      position: 'fixed',
-      height: 90,
-      zIndex: 1001,
-      backgroundColor: theme.palette.bodyColor
-    },
     userImage: {
       marginLeft: '200px'
-    },
-    additionalPrice: {
-      width: '550px',
-      '@media (max-width: 450px)': {
-        width: 'inherit'
-      }
     },
     colorPaper: {
       display: 'flex',
@@ -49,12 +43,6 @@ export const useStyles = makeStyles((theme) => {
       margin: '10px 20px',
       padding: '10px',
       width: '700px'
-    },
-    additionalPricePaper: {
-      display: 'flex',
-      flexDirection: 'column',
-      margin: '10px 0',
-      padding: '10px'
     },
     inputPanel: {
       display: 'flex',
@@ -66,18 +54,6 @@ export const useStyles = makeStyles((theme) => {
       margin: theme.spacing(1),
       minWidth: 120,
       marginTop: 20
-    },
-    colorSelect: {
-      width: '550px',
-      '@media (max-width: 450px)': {
-        width: 'inherit'
-      }
-    },
-    currencyField: {
-      width: '170px',
-      '@media (max-width: 450px)': {
-        width: 'inherit'
-      }
     },
     textField,
     saveButton,
