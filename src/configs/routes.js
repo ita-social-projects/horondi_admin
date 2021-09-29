@@ -14,6 +14,8 @@ const routes = {
   pathToBusinessPageDetails: '/business-pages/:id',
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
+  pathToUser: '/user',
+  pathToEditUser: '/user/:id',
   pathToProducts: '/products',
   pathToAddProduct: '/products/add-product',
   pathToEditProduct: '/products/:id',

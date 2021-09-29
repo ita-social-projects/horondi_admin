@@ -96,6 +96,22 @@ const labels = {
     link: 'Посилання',
     priority: 'Пріорітет'
   },
+  userDetails: {
+    userImg: 'Зображення користувача',
+    userFirstName: "І'мя",
+    userLastName: 'Прізвище',
+    userPassword: 'Пароль',
+    email: 'Емейл',
+    phoneNumber: 'Номер телефону',
+    country: 'Країна',
+    region: 'Область',
+    city: 'Місто',
+    street: 'Вулиця',
+    house: 'Будинок',
+    flat: 'Квартира',
+    zipCode: 'Поштовий індекс',
+    userAvatar: 'Фото користувача'
+  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Матеріал',

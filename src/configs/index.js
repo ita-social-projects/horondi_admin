@@ -59,7 +59,8 @@ import {
   pocketsErrorMessages,
   closuresErrorMessages,
   basicsErrorMessages,
-  strapsErrorMessages
+  strapsErrorMessages,
+  userErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -312,7 +313,8 @@ export const config = {
   materialMessages,
   productsErrors,
   userTranslations,
-  errorStatuses
+  errorStatuses,
+  userErrorMessages
 };
 export const inputTypes = {
   button: 'button',
