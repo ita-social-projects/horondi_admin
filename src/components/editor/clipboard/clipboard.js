@@ -53,7 +53,7 @@ class Clipboard extends QuillClipboard {
             })
             .catch((error) => console.error(error));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     } else {
       super.onPaste(e);
     }
