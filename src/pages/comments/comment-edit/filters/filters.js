@@ -12,7 +12,6 @@ import {
   clearReplyFilters
 } from '../../../../redux/comments/comments.actions';
 import { sortLabel as labelSort } from '../../../../configs/sort';
-import { setCurrentPage } from '../../../../redux/table/table.actions';
 import buttonTitles from '../../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../../components/filters-components/filter-multiple-picker';
 import ComponentFilterSearch from '../../../../components/filters-components/filter-search';
@@ -24,6 +23,9 @@ function Filters() {
   );
 
   const showOptions = [...showFilterObj()];
+
+  const showSelector = (selector) => ({ show: selector });
+  const searchSelector = (selector) => ({ search: selector });
 
   return (
     <ContainerFilters>
@@ -40,7 +42,7 @@ function Filters() {
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setReplyFilter}
-        selectorFunc={(selector) => ({ show: selector })}
+        selectorFunc={showSelector}
         value={filters.show}
         options={showOptions}
         label={buttonTitles.USER_STATUS_TITLE}
@@ -48,7 +50,7 @@ function Filters() {
       <ComponentFilterSearch
         setFilterValue={setReplyFilter}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearReplyFilters} />
     </ContainerFilters>

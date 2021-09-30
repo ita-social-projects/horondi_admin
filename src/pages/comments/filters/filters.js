@@ -21,6 +21,8 @@ function Filters() {
   const { filters, sortLabel } = useSelector(({ Comments }) => Comments);
 
   const showOptions = [...showFilterObj()];
+  const showSelector = (selector) => ({ show: selector });
+  const searchSelector = (selector) => ({ search: selector });
 
   return (
     <ContainerFilters>
@@ -37,7 +39,7 @@ function Filters() {
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setFilter}
-        selectorFunc={(selector) => ({ show: selector })}
+        selectorFunc={showSelector}
         value={filters.show}
         options={showOptions}
         label={buttonTitles.USER_STATUS_TITLE}
@@ -45,7 +47,7 @@ function Filters() {
       <ComponentFilterSearch
         setFilterValue={setFilter}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearFilters} />
     </ContainerFilters>
