@@ -14,6 +14,10 @@ export const commentsOptions = Object.entries(comments.commentType).map(
   })
 );
 
+export const commentFilterObj = Object.entries(comments.commentType).map(
+  ([key, value]) => ({ value: key, label: value })
+);
+
 export const placeholderCommentSearch = 'по тексту';
 
 export const showFilterObj = () => {
