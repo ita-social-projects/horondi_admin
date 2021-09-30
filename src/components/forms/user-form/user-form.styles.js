@@ -35,7 +35,8 @@ export const useStyles = makeStyles((theme) => {
       }
     },
     userImage: {
-      marginLeft: '200px'
+      marginLeft: '200px',
+      paddingBottom: '20px'
     },
     colorPaper: {
       display: 'flex',

@@ -27,7 +27,7 @@ export const useUsersHandler = (id) => {
 
   useEffect(() => {
     if (user !== null) {
-      setImages(user.images.medium || '');
+      setImages(user.images?.medium || '');
       setFirstName(user.firstName || '');
       setLastName(user.lastName || '');
       setCountry(user.address && user.address.country);
