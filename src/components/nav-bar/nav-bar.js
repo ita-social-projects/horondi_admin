@@ -23,6 +23,8 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import routes from '../../configs/routes';
 
+import { dateRangePickerStyles } from '../filter-search-sort/filter-by-date/filter-by-date.styles';
+
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
 const { LOGOUT_MESSAGE } = config.messages;
@@ -70,25 +72,19 @@ const NavBar = () => {
 
   const urlPage = window.location.pathname;
 
-  const lightCSS =
-    '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: transparent} .rs-calendar-table-cell-content:hover {background: rgb(0 0 0 / 6%)} .rs-btn-default.active {background: transparent !important}';
-  const darkCSS =
-    '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: #424242; border: none} .rs-calendar-table-cell-content:hover {background: #3f51b5} .rs-btn-default.active {background: #424242 !important}';
-
   const sheet = document.createElement('style');
-  if (darkMode) {
-    sheet.innerHTML = darkCSS;
-  } else {
-    sheet.innerHTML = lightCSS;
-  }
+
+  const checkTheme = () => {
+    if (darkMode) {
+      sheet.innerHTML = dateRangePickerStyles.darkCSS;
+    } else {
+      sheet.innerHTML = dateRangePickerStyles.lightCSS;
+    }
+  };
   document.body.appendChild(sheet);
 
   useEffect(() => {
-    if (darkMode) {
-      sheet.innerHTML = darkCSS;
-    } else {
-      sheet.innerHTML = lightCSS;
-    }
+    checkTheme();
   }, [darkMode]);
 
   return (
