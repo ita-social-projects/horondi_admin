@@ -7,11 +7,15 @@ export const showCommentOptions = {
   false: 'Приховані'
 };
 
+
 export const commentsOptions = Object.entries(comments.commentType).map(
   ([key, value]) => ({
     value: key,
     label: value
   })
+
+export const commentFilterObj = Object.entries(comments.commentType).map(
+  ([key, value]) => ({ value: key, label: value })
 );
 
 export const placeholderCommentSearch = 'по тексту';
