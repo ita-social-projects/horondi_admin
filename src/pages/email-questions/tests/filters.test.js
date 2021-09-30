@@ -59,7 +59,7 @@ describe('Testing filters', () => {
         .at(0)
         .props()
         .selectorFunc(selector);
-      expect(result).toStrictEqual({ category: selector });
+      expect(result).toStrictEqual({ filters: selector });
     });
   });
 });
