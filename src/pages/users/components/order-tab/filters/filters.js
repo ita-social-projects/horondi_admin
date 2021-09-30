@@ -23,6 +23,11 @@ function Filters() {
     ({ Orders }) => Orders
   );
   const paymentOptions = [...paymentStatusFilterObj()];
+
+  const paymentStatusSelector = (selector) => ({ paymentStatus: selector });
+  const statusSelector = (selector) => ({ status: selector });
+  const searchSelector = (selector) => ({ search: selector });
+
   return (
     <ContainerFilters>
       <ComponentFilterDateRangePicker
@@ -38,14 +43,14 @@ function Filters() {
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setOrderFilterUser}
-        selectorFunc={(selector) => ({ paymentStatus: selector })}
+        selectorFunc={paymentStatusSelector}
         value={filters.paymentStatus}
         options={paymentOptions}
         label={buttonTitles.PAYMENT_STATUS}
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setOrderFilterUser}
-        selectorFunc={(selector) => ({ status: selector })}
+        selectorFunc={statusSelector}
         value={filters.status}
         options={config.labels.orders.select}
         label={buttonTitles.ORDER_STATUS}
@@ -53,7 +58,7 @@ function Filters() {
       <ComponentFilterSearch
         setFilterValue={setOrderFilterUser}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearOrderFiltersUser} />
     </ContainerFilters>

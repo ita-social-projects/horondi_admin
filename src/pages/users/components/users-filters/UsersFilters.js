@@ -19,6 +19,10 @@ import ComponentFilterSearch from '../../../../components/filters-components/fil
 function UsersFilters() {
   const { filters, sortLabel: sortValue } = useSelector(({ Users }) => Users);
   const userStatusOptions = [...userStatusFilterObj()];
+
+  const bannedSelector = (selector) => ({ banned: selector });
+  const searchSelector = (selector) => ({ search: selector });
+
   return (
     <ContainerFilters>
       <ComponentFilterSinglePicker
@@ -30,7 +34,7 @@ function UsersFilters() {
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setFilter}
-        selectorFunc={(selector) => ({ banned: selector })}
+        selectorFunc={bannedSelector}
         value={filters.banned}
         options={userStatusOptions}
         label={buttonTitles.USER_STATUS_TITLE}
@@ -38,7 +42,7 @@ function UsersFilters() {
       <ComponentFilterSearch
         setFilterValue={setFilter}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearFilters} />
     </ContainerFilters>

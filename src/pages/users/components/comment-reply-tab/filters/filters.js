@@ -26,13 +26,16 @@ function Filters() {
   const { filtersUser } = useSelector(({ Comments }) => Comments);
 
   const showOptions = [...showFilterObj()];
+  const typeCommentSelector = (selector) => ({ typeComment: selector });
+  const showSelector = (selector) => ({ show: selector });
+  const searchSelector = (selector) => ({ search: selector });
 
   return (
     <ContainerFilters>
       <ComponentFilterRadioPicker
         setFilterValue={setFilterUser}
         actionSetLabel={setSortLabel}
-        selectorFunc={(selector) => ({ typeComment: selector })}
+        selectorFunc={typeCommentSelector}
         value={filtersUser.typeComment}
         options={commentsOptions}
         label={buttonTitles.COMMENT_TYPE}
@@ -51,7 +54,7 @@ function Filters() {
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setFilterReplyUser}
-        selectorFunc={(selector) => ({ show: selector })}
+        selectorFunc={showSelector}
         value={filters.show}
         options={showOptions}
         label={buttonTitles.USER_STATUS_TITLE}
@@ -59,7 +62,7 @@ function Filters() {
       <ComponentFilterSearch
         setFilterValue={setFilterReplyUser}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearFiltersReplyUser} />
     </ContainerFilters>

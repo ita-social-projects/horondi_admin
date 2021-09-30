@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
+import React from 'react';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 
 import Filters from '../users-filters/UsersFilters';
+import ComponentFilterSearch from '../../../../components/filters-components/filter-search';
+import ComponentFilterMultiplePicker from '../../../../components/filters-components/filter-multiple-picker';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 let wrapper;
 let spyOnUseDispatch;
-let mockDispatch;
 let spyOnUseSelector;
+let mockDispatch;
+const selector = 'test';
 
 let mockClearOrderFilters = jest.fn();
 let mockSetCurrentPage = jest.fn();
@@ -47,7 +50,7 @@ describe('Testing filters', () => {
     mockSetOrderSortLabel = jest.fn();
     mockSetOrderSort = jest.fn();
   });
-  describe('Filter in orders tests', () => {
+  describe('Filter in users tests', () => {
     it('should render', () => {
       spyOnUseDispatch.mockImplementation(() => jest.fn());
       spyOnUseSelector.mockReturnValue({
@@ -56,6 +59,23 @@ describe('Testing filters', () => {
       wrapper = shallow(<Filters />);
 
       expect(wrapper).toBeDefined();
+    });
+    it('Should return correct search selector', () => {
+      const wrapper = shallow(<Filters />);
+      const result = wrapper
+        .find(ComponentFilterSearch)
+        .props()
+        .selectorFunc(selector);
+      expect(result).toStrictEqual({ search: selector });
+    });
+
+    it('Should return correct multiple selector', () => {
+      const wrapper = shallow(<Filters />);
+      const result = wrapper
+        .find(ComponentFilterMultiplePicker)
+        .props()
+        .selectorFunc(selector);
+      expect(result).toStrictEqual({ banned: selector });
     });
   });
 });
