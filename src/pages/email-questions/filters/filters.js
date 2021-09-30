@@ -17,6 +17,9 @@ function Filters() {
 
   const showOptions = [...showFilterObj()];
 
+  const filtersSelector = (selector) => ({ filters: selector });
+  const searchSelector = (selector) => ({ search: selector });
+
   return (
     <ContainerFilters>
       <ComponentFilterDateRangePicker
@@ -25,7 +28,7 @@ function Filters() {
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setFilter}
-        selectorFunc={(selector) => ({ filters: selector })}
+        selectorFunc={filtersSelector}
         value={filters.filters}
         options={showOptions}
         label={buttonTitles.USER_STATUS_TITLE}
@@ -33,7 +36,7 @@ function Filters() {
       <ComponentFilterSearch
         setFilterValue={setFilter}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearFilters} />
     </ContainerFilters>
