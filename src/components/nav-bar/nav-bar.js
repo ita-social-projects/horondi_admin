@@ -23,7 +23,7 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import routes from '../../configs/routes';
 
-import { dateRangePickerStyles } from '../filter-search-sort/filter-by-date/filter-by-date.styles';
+import { dateRangePickerCustomStyles } from '../filter-search-sort/filter-by-date/filter-by-date.styles';
 
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
@@ -74,17 +74,17 @@ const NavBar = () => {
 
   const sheet = document.createElement('style');
 
-  const checkTheme = () => {
+  const changeDateRangePickerStyles = () => {
     if (darkMode) {
-      sheet.innerHTML = dateRangePickerStyles.darkCSS;
+      sheet.innerHTML = dateRangePickerCustomStyles.darkCSS;
     } else {
-      sheet.innerHTML = dateRangePickerStyles.lightCSS;
+      sheet.innerHTML = dateRangePickerCustomStyles.lightCSS;
     }
   };
   document.body.appendChild(sheet);
 
   useEffect(() => {
-    checkTheme();
+    changeDateRangePickerStyles();
   }, [darkMode]);
 
   return (

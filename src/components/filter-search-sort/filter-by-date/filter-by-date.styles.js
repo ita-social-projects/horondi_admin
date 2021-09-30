@@ -50,7 +50,7 @@ export const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const dateRangePickerStyles = {
+export const dateRangePickerCustomStyles = {
   lightCSS:
     '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: transparent} .rs-calendar-table-cell-content:hover {background: rgb(0 0 0 / 6%)} .rs-btn-default.active {background: transparent !important}',
   darkCSS:
