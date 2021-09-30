@@ -11,12 +11,14 @@ import ComponentFilterSearch from '../../../components/filters-components/filter
 function Filters() {
   const { filters } = useSelector(({ Categories }) => Categories);
 
+  const returnSelector = (selector) => ({ search: selector });
+
   return (
     <ContainerFilters>
       <ComponentFilterSearch
         setFilterValue={setFilter}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={returnSelector}
       />
       <ComponentFilterClear actionClearFilters={clearFilters} />
     </ContainerFilters>

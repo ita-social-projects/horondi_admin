@@ -1,9 +1,9 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
-
 import Filters from '../filters/filters';
+import ComponentFilterSearch from '../../../components/filters-components/filter-search';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -11,6 +11,11 @@ let wrapper;
 let spyOnUseDispatch;
 let mockDispatch;
 let spyOnUseSelector;
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: (selector) => selector()
+}));
 
 describe('Testing filters', () => {
   beforeEach(() => {
@@ -24,7 +29,7 @@ describe('Testing filters', () => {
     wrapper = null;
   });
 
-  describe('Filter in orders tests', () => {
+  describe('Filter in categories tests', () => {
     beforeEach(() => {
       mockDispatch = jest.fn();
 
@@ -40,6 +45,16 @@ describe('Testing filters', () => {
       wrapper = shallow(<Filters />);
 
       expect(wrapper).toBeDefined();
+    });
+
+    it('should return correct value', () => {
+      const wrapper = shallow(<Filters />);
+      const selector = 'test';
+      const result = wrapper
+        .find(ComponentFilterSearch)
+        .props()
+        .selectorFunc(selector);
+      expect(result).toStrictEqual({ search: selector });
     });
   });
 });

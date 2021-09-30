@@ -35,6 +35,13 @@ function Filters() {
   const availableOptions = [...availableFilterObj()];
   const availableConstrOptions = [...availableForConstructorFilterObj()];
 
+  const categorySelector = (selector) => ({ category: selector });
+  const availableSelector = (selector) => ({ available: selector });
+  const availableForConstructorSelector = (selector) => ({
+    availableForConstructor: selector
+  });
+  const searchSelector = (selector) => ({ search: selector });
+
   return (
     <ContainerFilters>
       <ComponentFilterSinglePicker
@@ -46,21 +53,21 @@ function Filters() {
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setFilter}
-        selectorFunc={(selector) => ({ category: selector })}
+        selectorFunc={categorySelector}
         value={filters.category}
         options={categoryFilterObj}
         label={buttonTitles.CATEGORY_TITLE}
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setFilter}
-        selectorFunc={(selector) => ({ available: selector })}
+        selectorFunc={availableSelector}
         value={filters.available}
         options={availableOptions}
         label={buttonTitles.USER_STATUS_TITLE}
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setFilter}
-        selectorFunc={(selector) => ({ availableForConstructor: selector })}
+        selectorFunc={availableForConstructorSelector}
         value={filters.availableForConstructor}
         options={availableConstrOptions}
         label={buttonTitles.AVAILABLE_FOR_CONSTRUCTOR_TITLE}
@@ -68,7 +75,7 @@ function Filters() {
       <ComponentFilterSearch
         setFilterValue={setFilter}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearFilters} />
     </ContainerFilters>
