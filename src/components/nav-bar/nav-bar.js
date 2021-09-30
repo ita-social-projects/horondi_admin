@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Toolbar, AppBar, Typography, IconButton } from '@material-ui/core';
@@ -69,6 +69,27 @@ const NavBar = () => {
   );
 
   const urlPage = window.location.pathname;
+
+  const lightCSS =
+    '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: transparent} .rs-calendar-table-cell-content:hover {background: rgb(0 0 0 / 6%)} .rs-btn-default.active {background: transparent !important}';
+  const darkCSS =
+    '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: #424242; border: none} .rs-calendar-table-cell-content:hover {background: #3f51b5} .rs-btn-default.active {background: #424242 !important}';
+
+  const sheet = document.createElement('style');
+  if (darkMode) {
+    sheet.innerHTML = darkCSS;
+  } else {
+    sheet.innerHTML = lightCSS;
+  }
+  document.body.appendChild(sheet);
+
+  useEffect(() => {
+    if (darkMode) {
+      sheet.innerHTML = darkCSS;
+    } else {
+      sheet.innerHTML = lightCSS;
+    }
+  }, [darkMode]);
 
   return (
     <AppBar className={classes.appBar}>
