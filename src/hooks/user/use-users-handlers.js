@@ -9,6 +9,7 @@ export const useUsersHandler = (id) => {
     user: Users.user
   }));
 
+  const [images, setImages] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [country, setCountry] = useState('');
@@ -26,6 +27,7 @@ export const useUsersHandler = (id) => {
 
   useEffect(() => {
     if (user !== null) {
+      setImages(user.images?.medium || '');
       setFirstName(user.firstName || '');
       setLastName(user.lastName || '');
       setCountry(user.address && user.address.country);
@@ -43,6 +45,7 @@ export const useUsersHandler = (id) => {
   }, [user]);
 
   return {
+    images,
     firstName,
     lastName,
     country,
