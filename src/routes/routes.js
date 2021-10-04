@@ -82,6 +82,7 @@ import BasicDetails from '../pages/basics/basic-details';
 import StrapsPage from '../pages/straps/straps-page';
 import StrapsAdd from '../pages/straps/straps-add/straps-add';
 import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
+import UserDetails from '../pages/users/user/user-details';
 
 const { routes } = config;
 
@@ -136,6 +137,7 @@ const Routes = () => {
             exact
             component={UsersDetails}
           />
+          <Route path={routes.pathToEditUser} exact component={UserDetails} />
           <Route path={routes.pathToNews} exact component={NewsPage} />
           <Route path={routes.pathToPatterns} exact component={PatternPage} />
           <Route path={routes.pathToModels} exact component={ModelPage} />

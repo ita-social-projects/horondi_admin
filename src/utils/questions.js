@@ -13,7 +13,7 @@ export const showFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(showQuestionOptions, (value, key) => {
-    arrToFilter.push({ key, value });
+    arrToFilter.push({ value: key, label: value });
   });
 
   return arrToFilter;
