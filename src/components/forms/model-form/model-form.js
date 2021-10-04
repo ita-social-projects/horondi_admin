@@ -68,7 +68,6 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   };
 
-  const inputLabel = React.useRef(null);
   const { createModel, setUpload, upload, modelImage, setModelImage } =
     useModelHandlers();
 
