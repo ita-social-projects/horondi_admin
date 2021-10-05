@@ -52,7 +52,7 @@ export const useStyles = makeStyles((theme) => ({
 
 export const dateRangePickerCustomStyles = {
   lightCSS:
-    '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: transparent} .rs-calendar-table-cell-content:hover {background: rgb(0 0 0 / 6%)} .rs-btn-default.active {background: transparent !important}',
+    '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: transparent} .rs-calendar-table-cell-content:hover {background: rgb(0 0 0 / 6%)} .rs-btn-default.active {background: transparent !important} .rs-picker-toolbar-option span {color: #3f51b5 !important}',
   darkCSS:
-    '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: #424242; border: none} .rs-calendar-table-cell-content:hover {background: #3f51b5} .rs-btn-default.active {background: #424242 !important}'
+    '.rs-picker-daterange-header, .rs-calendar, .rs-picker-toolbar, a.rs-btn {background: #424242; border: none} .rs-calendar-table-cell-content:hover {background: #3f51b5} .rs-btn-default.active {background: #424242 !important} .rs-picker-toolbar-option span {color: #fff !important} .rs-picker-toolbar-option:hover {text-decoration: none}'
 };
