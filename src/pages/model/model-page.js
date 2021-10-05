@@ -80,6 +80,9 @@ const ModelPage = () => {
       name={modelItem.name[0].value}
       category={modelItem.category?.name[0].value}
       show={modelItem.show ? showEnable : showDisable}
+      availableForConstructor={
+        modelItem.availableForConstructor ? showEnable : showDisable
+      }
       priority={modelItem.priority}
       deleteHandler={() => modelDeleteHandler(modelItem._id)}
       editHandler={() => {
