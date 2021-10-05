@@ -23,7 +23,7 @@ export const modelValidationSchema = Yup.object().shape({
   uaName: Yup.string()
     .typeError(NO_STRING_TYPE_MESSAGE)
     .matches(config.formRegExp.uaNameCreation, UA_NAME_MESSAGE)
-    .min(9, MIN_LENGTH_MESSAGE)
+    .min(2, MIN_LENGTH_MESSAGE)
     .required(ERROR_MESSAGE),
   priority: Yup.number().required(ERROR_MESSAGE),
   category: Yup.string().required(ERROR_MESSAGE),
