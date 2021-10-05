@@ -245,7 +245,7 @@ const ModelForm = ({ model, id, isEdit }) => {
               />
             </div>
             <FormControl variant='outlined' className={styles.formControl}>
-              <InputLabel shrink>{availableCategory}</InputLabel>
+              <InputLabel>{availableCategory}</InputLabel>
               <Select
                 data-cy='category'
                 id='category'
