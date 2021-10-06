@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { upperFirst , find } from 'lodash';
 import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 
-import { find } from 'lodash';
 import { BackButton, SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 import { config } from '../../../configs';
@@ -29,13 +29,7 @@ import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-import {
-  Form,
-  ControlPanel,
-  TextInput,
-  Dropdown,
-  InputList
-} from '../form';
+import { Form, ControlPanel, TextInput, Dropdown, InputList } from '../form';
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
@@ -219,9 +213,7 @@ const BasicsForm = ({ basic, id, edit }) => {
     <div>
       <Form>
         <ControlPanel values={values} unblockFunction={unblock} />
-        <TextInput />
         <InputList>
-          {console.log(color)}
           {materialLabels.map(({ label, name, required }, idx) => (
             <Dropdown
               key={`basics-material-dropdown-${idx}`}
@@ -235,6 +227,24 @@ const BasicsForm = ({ basic, id, edit }) => {
             />
           ))}
         </InputList>
+        {languages.map((lang, idx) => (
+          <InputList
+            key={`basics-material-name-input-${idx}`}
+            title={lang.toUpperCase()}
+          >
+            <TextInput
+              data-cy={`${lang}-${inputs[0].name}`}
+              label={inputs[0].label[lang]}
+              name={`${lang}${upperFirst(inputs[0].name)}`}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              error={
+                touched[`${lang}${upperFirst(inputs[0].name)}`] &&
+                !!errors[`${lang}${upperFirst(inputs[0].name)}`]
+              }
+            />
+          </InputList>
+        ))}
       </Form>
       <form onSubmit={eventPreventHandler}>
         <div className={styles.buttonContainer}>
