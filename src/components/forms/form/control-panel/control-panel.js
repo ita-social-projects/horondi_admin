@@ -57,7 +57,7 @@ export const BackButtonControl = ({ pathBack, isInitial, ...props }) => {
   );
 };
 
-const ControlPanel = ({ isSaveDisabled, buttonsList }) => {
+const ControlPanel = ({ isSaveDisabled, buttonsList, values }) => {
   const classes = useStyles();
 
   return (
@@ -67,8 +67,11 @@ const ControlPanel = ({ isSaveDisabled, buttonsList }) => {
           {buttonsList.includes(ControlPanelButtonsList.BACK) && (
             <BackButtonControl />
           )}
-          {buttonsList.includes(ControlPanelButtonsList.BACK) && (
-            <SaveButtonControl isSaveDisabled={isSaveDisabled} />
+          {buttonsList.includes(ControlPanelButtonsList.SAVE) && (
+            <SaveButtonControl
+              isSaveDisabled={isSaveDisabled}
+              values={values}
+            />
           )}
         </Grid>
       </div>
@@ -100,12 +103,14 @@ BackButtonControl.defaultProps = {
 
 ControlPanel.propTypes = {
   buttonsList: PropTypes.arrayOf(PropTypes.string),
-  isSaveDisabled: PropTypes.bool
+  isSaveDisabled: PropTypes.bool,
+  values: PropTypes.objectOf(PropTypes.object)
 };
 
 ControlPanel.defaultProps = {
   buttonsList: Object.values(ControlPanelButtonsList),
-  isSaveDisabled: noop
+  isSaveDisabled: noop,
+  values: {}
 };
 
 export default ControlPanel;

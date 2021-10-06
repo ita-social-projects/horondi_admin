@@ -89,7 +89,14 @@ const OrderItem = ({ id }) => {
   return (
     <>
       <Form>
-        <ControlPanel />
+        <ControlPanel
+          values={{
+            code: values.code,
+            uaTitle: values.uaTitle,
+            enTitle: values.enTitle
+          }}
+          isSaveDisabled={!dirty || !isValid}
+        />
         <TextInput />
       </Form>
       <hr />

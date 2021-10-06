@@ -78,8 +78,8 @@ const SaveButton = ({
           }
         }, 10);
       }}
-      disabled={disabled}
       {...props}
+      disabled={disabled}
     >
       {title}
     </Button>

@@ -36,6 +36,12 @@ export const setBasicsColorsHandler = (values, setColor, find, materials) => {
   }
 };
 
+export const formatMaterialLikeOption = (materials) =>
+  materials.map((material) => ({
+    value: material._id,
+    name: material.name[0]?.value
+  }));
+
 export const basicImageHandler = (basic, setBasic, imagePrefix) => {
   if (basic?.images.thumbnail) {
     setBasic(`${imagePrefix}${basic.images.thumbnail}`);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -21,12 +21,21 @@ import {
   getBasicsInitialValues,
   basicFormOnSubmit,
   setBasicsColorsHandler,
-  basicImageHandler
+  basicImageHandler,
+  formatMaterialLikeOption
 } from '../../../utils/basics-form';
 import useBasicsHandlers from '../../../utils/use-basics-handlers';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
+
+import {
+  Form,
+  ControlPanel,
+  TextInput,
+  Dropdown,
+  InputList
+} from '../form';
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
@@ -68,6 +77,9 @@ const { pathToBasics } = config.routes;
 const BasicsForm = ({ basic, id, edit }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
+
+  const [materialOptions, setMaterialOptions] = useState();
+  const [colorOptions, setColorOptions] = useState();
 
   const {
     details: { materials },
@@ -156,7 +168,10 @@ const BasicsForm = ({ basic, id, edit }) => {
 
   useEffect(() => {
     setBasicsColorsHandler(values, setColor, find, materials);
-  }, [materials, values.material]);
+
+    setMaterialOptions(formatMaterialLikeOption(materials?.main || []));
+    setColorOptions(formatMaterialLikeOption(color));
+  }, [color, materials, values.material]);
 
   const checkboxes = [
     {
@@ -202,6 +217,25 @@ const BasicsForm = ({ basic, id, edit }) => {
 
   return (
     <div>
+      <Form>
+        <ControlPanel values={values} unblockFunction={unblock} />
+        <TextInput />
+        <InputList>
+          {console.log(color)}
+          {materialLabels.map(({ label, name, required }, idx) => (
+            <Dropdown
+              key={`basics-material-dropdown-${idx}`}
+              label={label}
+              name={name}
+              required={required}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              options={[materialOptions, colorOptions][idx]}
+              values={values}
+            />
+          ))}
+        </InputList>
+      </Form>
       <form onSubmit={eventPreventHandler}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
