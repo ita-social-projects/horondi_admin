@@ -43,6 +43,7 @@ const DialogWindow = ({
         {showCancelButton ? (
           <>
             <StandardButton
+              className={styles.yesButton}
               data-cy='dialog-cancel'
               variant='outlined'
               title={YES_BUTTON}

@@ -23,8 +23,8 @@ import ColorsAutocomplete from '../../components/colors-autocomplete';
 import { materialSelectorWithPagination } from '../../redux/selectors/material.selectors';
 import LoadingBar from '../../components/loading-bar';
 import useMaterialFilters from '../../hooks/filters/use-material-filters';
-import FilterNavbar from '../../components/filter-search-sort';
 import messages from '../../configs/messages';
+import Filters from './filters/filters';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
@@ -135,7 +135,7 @@ const MaterialPage = () => {
             materialFilters.setColorsFilter(value);
           }}
         />
-        <FilterNavbar options={materialFilters || {}} />
+        <Filters />
       </div>
       <div>
         {materialItems?.length ? (

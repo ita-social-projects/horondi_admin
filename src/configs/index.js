@@ -59,7 +59,8 @@ import {
   pocketsErrorMessages,
   closuresErrorMessages,
   basicsErrorMessages,
-  strapsErrorMessages
+  strapsErrorMessages,
+  userErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -75,6 +76,7 @@ import {
   valueKeys,
   inputNames
 } from './news-form-helpers';
+import { imageUploadSlideInputsId } from './home-page-slide-helpers';
 
 export const config = {
   fetchPolicy: 'no-cache',
@@ -287,6 +289,7 @@ export const config = {
   businessPageErrorMessages,
   productErrorMessages,
   imageUploadNewsInputsId,
+  imageUploadSlideInputsId,
   valueKeys,
   inputNames,
   pocketsErrorMessages,
@@ -310,7 +313,8 @@ export const config = {
   materialMessages,
   productsErrors,
   userTranslations,
-  errorStatuses
+  errorStatuses,
+  userErrorMessages
 };
 export const inputTypes = {
   button: 'button',

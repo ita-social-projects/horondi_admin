@@ -84,7 +84,8 @@ const buttonTitles = {
   CREATE_CLOSURES_TITLE: 'Додати защіпку',
   CREATE_POSITION_TITLE: 'Додати розміщення',
   CREATE_BASIC_TITLE: 'Додати основу',
-  CREATE_STRAP_TITLE: 'Додати ремінець'
+  CREATE_STRAP_TITLE: 'Додати ремінець',
+  AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор'
 };
 
 export default buttonTitles;

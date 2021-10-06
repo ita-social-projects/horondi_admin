@@ -18,14 +18,9 @@ import { config } from '../../configs';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { handleOrdersPage } from '../../utils/handle-orders-page';
-import ContainerFilters from '../../components/container-filters';
-
-import FilterDateRangePicker from './components/filter-date-range-picker';
-import FilterSortPicker from './components/filter-sort-picker';
-import FilterPaymentStatusesPicker from './components/filter-payment-statuses-picker';
-import FilterOrderStatusesPicker from './components/filter-order-statuses-picker';
-import FilterSearch from './components/filter-search';
-import FilterClear from './components/filter-clear';
+import Filters from './filters/filters.js';
+import { getUsers } from '../../redux/users/users.actions';
+import { inputName } from '../../utils/order';
 
 const { ADD_ORDER } = config.buttonTitles;
 const pathToOrdersAddPage = config.routes.pathToOrderAdd;
@@ -80,14 +75,26 @@ const OrdersPage = () => {
     openSuccessSnackbar(removeOrders, REMOVE_ORDER_MESSAGE);
   };
 
-  const filterElems = [
-    FilterDateRangePicker,
-    FilterSortPicker,
-    FilterPaymentStatusesPicker,
-    FilterOrderStatusesPicker,
-    FilterSearch,
-    FilterClear
-  ].map((Filter) => <Filter key={Filter.toString()} />);
+  useEffect(() => {
+    dispatch(getUsers({}));
+  }, []);
+
+  const regUser = useSelector(({ Users }) => ({
+    list: Users.list,
+    loading: Users.userLoading
+  }));
+
+  const setRegisteredUser = (id) => {
+    if (id && regUser.list) {
+      for (const user of regUser.list) {
+        if (user._id === id) {
+          return `${user?.firstName} ${user?.lastName}`;
+        }
+      }
+    } else {
+      return inputName.noUser;
+    }
+  };
 
   const orderItems =
     ordersList &&
@@ -96,6 +103,7 @@ const OrdersPage = () => {
         key={order._id}
         data={ReactHtmlParser(getTime(order.dateOfCreation, true))}
         orderId={order.orderNumber}
+        registeredUser={setRegisteredUser(order.user_id)}
         customer={`${order?.recipient?.firstName} ${order?.recipient?.lastName}`}
         totalPrice={`${order?.totalPriceToPay[0]?.value} ₴`}
         paymentStatus={
@@ -113,7 +121,7 @@ const OrdersPage = () => {
         showAvatar={false}
       />
     ));
-  if (orderLoading) {
+  if (orderLoading || regUser.loading) {
     return <LoadingBar />;
   }
   return (
@@ -135,7 +143,7 @@ const OrdersPage = () => {
           </Button>
         </div>
       </div>
-      <ContainerFilters>{filterElems}</ContainerFilters>
+      <Filters />
       <div className={commonStyles.table}>
         {handleOrdersPage(
           ordersList,
