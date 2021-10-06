@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { upperFirst , find } from 'lodash';
+import { upperFirst, find } from 'lodash';
 import { Paper, Grid } from '@material-ui/core';
 import * as Yup from 'yup';
 
@@ -29,7 +29,16 @@ import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-import { Form, ControlPanel, TextInput, Dropdown, InputList } from '../form';
+import {
+  Form,
+  ControlPanel,
+  TextInput,
+  Dropdown,
+  InputList,
+  TextLabel
+} from '../form';
+
+import { getLabelValue } from '../../../utils/additionalPrice-helper';
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
@@ -245,6 +254,19 @@ const BasicsForm = ({ basic, id, edit }) => {
             />
           </InputList>
         ))}
+        <InputList>
+          <TextLabel text={labels.enterPrice} />
+          <TextInput
+            data-cy='additionalPrice'
+            name='additionalPrice'
+            type='number'
+            label={getLabelValue(values, labels.additionalPriceType)}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.additionalPrice && errors.additionalPrice}
+          />
+          <TextInput />
+        </InputList>
       </Form>
       <form onSubmit={eventPreventHandler}>
         <div className={styles.buttonContainer}>
