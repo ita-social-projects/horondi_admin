@@ -37,7 +37,8 @@ import {
   Dropdown,
   InputList,
   TextLabel,
-  Checkbox
+  Checkbox,
+  ErrorsContainer
 } from '../form';
 
 import {
@@ -269,6 +270,7 @@ const BasicsForm = ({ basic, id, edit }) => {
                 !!errors[`${lang}${upperFirst(inputs[0].name)}`]
               }
             />
+            <ErrorsContainer name={`${lang}${upperFirst(inputs[0].name)}`} />
           </InputList>
         ))}
         <InputList {...{ handleChange, handleBlur, values, touched, errors }}>
@@ -281,6 +283,7 @@ const BasicsForm = ({ basic, id, edit }) => {
             type='number'
             className={styles.additionalPrice}
           />
+          <ErrorsContainer name='additionalPrice' />
           <TextInput
             label={labels.convertationTitle}
             value={calculateAddittionalPriceValue(values, exchangeRate)}

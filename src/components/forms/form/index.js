@@ -5,6 +5,7 @@ import DropdownComponent from './dropdown/dropdown';
 import InputListComponent from './input-list/input-list';
 import TextLabelComponent from './text-label/text-label';
 import CheckboxComponent from './checkbox/checkbox';
+import ErrorsContainerComponent from './errors-container/errors-container';
 
 export const Form = FormComponent;
 export const TextInput = TextInputComponent;
@@ -13,5 +14,6 @@ export const Dropdown = DropdownComponent;
 export const InputList = InputListComponent;
 export const TextLabel = TextLabelComponent;
 export const Checkbox = CheckboxComponent;
+export const ErrorsContainer = ErrorsContainerComponent;
 
 export default FormComponent;
