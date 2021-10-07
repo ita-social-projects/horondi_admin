@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Form = ({ children }) => (
-  <form>
-    <h1>Hello world</h1>
-    {children}
-  </form>
+const eventPreventHandler = (e) => {
+  e.preventDefault();
+};
+
+export const Form = ({ children }) => (
+  <form onSubmit={eventPreventHandler}>{children}</form>
 );
 
 Form.propTypes = {
