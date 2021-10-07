@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children, cloneElement } from 'react';
 
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
@@ -7,20 +7,39 @@ import { Paper, Typography } from '@material-ui/core';
 
 import { useStyles } from './input-list.styles';
 
+const wrapInput = (props) => (input) => cloneElement(input, props);
+
 export const InputListTitle = ({ title, ...props }) => (
   <Typography component='h1' variant='h5' {...props}>
     {title}
   </Typography>
 );
 
-const InputList = ({ title, children, ...props }) => {
+export const InputList = ({
+  title,
+  children,
+  handleChange,
+  handleBlur,
+  touched,
+  errors,
+  values,
+  ...props
+}) => {
   const styles = useStyles();
+
+  const wrapProps = {
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    values
+  };
 
   return (
     <div>
       {title && <InputListTitle title={title} className={styles.title} />}
       <Paper className={styles.inputsContainer} {...props}>
-        {children}
+        {Children.map(children, wrapInput(wrapProps))}
       </Paper>
     </div>
   );
@@ -36,11 +55,21 @@ InputListTitle.defaultProps = {
 
 InputList.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
-  title: PropTypes.string
+  title: PropTypes.string,
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
+  touched: PropTypes.objectOf(PropTypes.object),
+  errors: PropTypes.objectOf(PropTypes.object),
+  values: PropTypes.objectOf(PropTypes.object)
 };
 
 InputList.defaultProps = {
-  title: noop
+  title: noop,
+  handleChange: noop,
+  handleBlur: noop,
+  touched: {},
+  errors: {},
+  values: {}
 };
 
 export default InputList;

@@ -232,17 +232,14 @@ const BasicsForm = ({ basic, id, edit }) => {
     <div>
       <Form>
         <ControlPanel values={values} unblockFunction={unblock} />
-        <InputList>
+        <InputList {...{ handleChange, handleBlur, values, touched, errors }}>
           {materialLabels.map(({ label, name, required }, idx) => (
             <Dropdown
               key={`basics-material-dropdown-${idx}`}
               label={label}
               name={name}
               required={required}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
               options={[materialOptions, colorOptions][idx]}
-              values={values}
             />
           ))}
         </InputList>
@@ -250,13 +247,12 @@ const BasicsForm = ({ basic, id, edit }) => {
           <InputList
             key={`basics-material-name-input-${idx}`}
             title={lang.toUpperCase()}
+            {...{ handleChange, handleBlur, values, touched, errors }}
           >
             <TextInput
               data-cy={`${lang}-${inputs[0].name}`}
               label={inputs[0].label[lang]}
               name={`${lang}${upperFirst(inputs[0].name)}`}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
               error={
                 touched[`${lang}${upperFirst(inputs[0].name)}`] &&
                 !!errors[`${lang}${upperFirst(inputs[0].name)}`]
@@ -264,14 +260,12 @@ const BasicsForm = ({ basic, id, edit }) => {
             />
           </InputList>
         ))}
-        <InputList>
+        <InputList {...{ handleChange, handleBlur, values, touched, errors }}>
           <TextLabel text={labels.enterPrice} />
           <TextInput
             data-cy='additionalPrice'
             name='additionalPrice'
             label={getLabelValue(values, labels.additionalPriceType)}
-            onChange={handleChange}
-            onBlur={handleBlur}
             error={touched.additionalPrice && errors.additionalPrice}
             type='number'
           />
