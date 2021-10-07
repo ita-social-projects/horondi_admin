@@ -14,8 +14,9 @@ const Dropdown = ({
   name,
   required,
   label,
-  error,
-  values
+  values,
+  touched,
+  errors
 }) => {
   const styles = useStyles();
 
@@ -26,7 +27,7 @@ const Dropdown = ({
       </InputLabel>
       <Select
         name={name}
-        error={error}
+        error={touched[name] && !!errors[name]}
         value={values[name]}
         onChange={handleChange}
         onBlur={handleBlur}
@@ -52,8 +53,9 @@ Dropdown.propTypes = {
   name: PropTypes.string.isRequired,
   required: PropTypes.bool,
   label: PropTypes.string,
-  error: PropTypes.bool,
-  values: PropTypes.objectOf(PropTypes.object)
+  values: PropTypes.objectOf(PropTypes.object),
+  touched: PropTypes.objectOf(PropTypes.object),
+  errors: PropTypes.objectOf(PropTypes.object)
 };
 
 Dropdown.defaultProps = {
@@ -62,8 +64,9 @@ Dropdown.defaultProps = {
   handleBlur: noop,
   required: false,
   label: '',
-  error: false,
-  values: {}
+  values: {},
+  touched: {},
+  errors: {}
 };
 
 export default Dropdown;
