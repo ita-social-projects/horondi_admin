@@ -1,4 +1,4 @@
-import React, { Children, cloneElement } from 'react';
+import React, { Children, cloneElement, createElement } from 'react';
 
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
@@ -24,6 +24,7 @@ export const InputList = ({
   touched,
   errors,
   values,
+  component,
   ...props
 }) => {
   const styles = useStyles();
@@ -37,12 +38,14 @@ export const InputList = ({
     values
   };
 
+  const Container = component;
+
   return (
     <div>
       {title && <InputListTitle title={title} className={styles.title} />}
-      <Paper className={styles.inputsContainer} {...props}>
+      <Container className={styles.inputsContainer} {...props}>
         {Children.map(children, wrapInput(wrapProps))}
-      </Paper>
+      </Container>
     </div>
   );
 };
@@ -63,7 +66,8 @@ InputList.propTypes = {
   handleBlur: PropTypes.func,
   touched: PropTypes.objectOf(PropTypes.object),
   errors: PropTypes.objectOf(PropTypes.object),
-  values: PropTypes.objectOf(PropTypes.object)
+  values: PropTypes.objectOf(PropTypes.object),
+  component: PropTypes.node
 };
 
 InputList.defaultProps = {
@@ -73,7 +77,8 @@ InputList.defaultProps = {
   handleBlur: noop,
   touched: {},
   errors: {},
-  values: {}
+  values: {},
+  component: Paper
 };
 
 export default InputList;
