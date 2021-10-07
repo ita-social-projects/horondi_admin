@@ -276,11 +276,13 @@ const BasicsForm = ({ basic, id, edit }) => {
             label={getLabelValue(values, labels.additionalPriceType)}
             error={touched.additionalPrice && errors.additionalPrice}
             type='number'
+            className={styles.additionalPrice}
           />
           <TextInput
             label={labels.convertationTitle}
             value={calculateAddittionalPriceValue(values, exchangeRate)}
             disabled
+            className={styles.currencyField}
           />
         </InputList>
       </Form>

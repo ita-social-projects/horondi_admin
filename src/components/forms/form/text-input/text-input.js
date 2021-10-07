@@ -13,6 +13,7 @@ const TextInput = ({
   handleChange,
   error,
   type,
+  className,
   ...props
 }) => {
   const styles = useStyles();
@@ -23,13 +24,13 @@ const TextInput = ({
         <TextField
           name={name}
           type={type}
-          className={styles.textField}
           variant='outlined'
           multiline={type !== 'number'}
           onBlur={handleBlur}
           onChange={handleChange}
           error={error}
           {...props}
+          className={`${styles.textField} ${className}`}
         />
       </React.Fragment>
     </FormControl>
@@ -41,14 +42,16 @@ TextInput.propTypes = {
   type: PropTypes.string,
   error: PropTypes.bool,
   handleChange: PropTypes.func,
-  handleBlur: PropTypes.func
+  handleBlur: PropTypes.func,
+  className: PropTypes.string
 };
 
 TextInput.defaultProps = {
   error: false,
   type: 'text',
   handleChange: noop,
-  handleBlur: noop
+  handleBlur: noop,
+  className: ''
 };
 
 export default TextInput;

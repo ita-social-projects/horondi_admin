@@ -62,6 +62,18 @@ export const useStyles = makeStyles((theme) => {
       zIndex: 1001,
       backgroundColor: theme.palette.bodyColor
     },
+    additionalPrice: {
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      },
+      width: '550px'
+    },
+    currencyField: {
+      width: '170px',
+      '@media (max-width: 450px)': {
+        width: 'inherit'
+      }
+    },
     attachFile,
     large,
     imageUploadAvatar,
