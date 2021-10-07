@@ -7,17 +7,25 @@ import { TextField, FormControl } from '@material-ui/core';
 
 import { useStyles } from './text-input.styles';
 
-const TextInput = ({ name, handleBlur, handleChange, error, ...props }) => {
+const TextInput = ({
+  name,
+  handleBlur,
+  handleChange,
+  error,
+  type,
+  ...props
+}) => {
   const styles = useStyles();
 
   return (
     <FormControl className={styles.formControl}>
-      <React.Fragment key={name}>
+      <React.Fragment key={name} type='number'>
         <TextField
           name={name}
+          type={type}
           className={styles.textField}
           variant='outlined'
-          multiline
+          multiline={type !== 'number'}
           onBlur={handleBlur}
           onChange={handleChange}
           error={error}
@@ -30,6 +38,7 @@ const TextInput = ({ name, handleBlur, handleChange, error, ...props }) => {
 
 TextInput.propTypes = {
   name: PropTypes.string.isRequired,
+  type: PropTypes.string,
   error: PropTypes.bool,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func
@@ -37,6 +46,7 @@ TextInput.propTypes = {
 
 TextInput.defaultProps = {
   error: false,
+  type: 'text',
   handleChange: noop,
   handleBlur: noop
 };

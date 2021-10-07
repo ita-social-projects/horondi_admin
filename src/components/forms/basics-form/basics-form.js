@@ -17,6 +17,7 @@ import AdditionalPriceContainer from '../../../containers/additional-price-conta
 import { getProductDetails } from '../../../redux/products/products.actions';
 import LanguagePanel from '../language-panel';
 import { selectProductDetails } from '../../../redux/selectors/products.selectors';
+import { getCurrencies } from '../../../redux/currencies/currencies.actions';
 import {
   getBasicsInitialValues,
   basicFormOnSubmit,
@@ -38,7 +39,10 @@ import {
   TextLabel
 } from '../form';
 
-import { getLabelValue } from '../../../utils/additionalPrice-helper';
+import {
+  calculateAddittionalPriceValue,
+  getLabelValue
+} from '../../../utils/additionalPrice-helper';
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
@@ -83,6 +87,12 @@ const BasicsForm = ({ basic, id, edit }) => {
 
   const [materialOptions, setMaterialOptions] = useState();
   const [colorOptions, setColorOptions] = useState();
+
+  const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
+
+  useEffect(() => {
+    dispatch(getCurrencies());
+  }, [dispatch]);
 
   const {
     details: { materials },
@@ -259,13 +269,17 @@ const BasicsForm = ({ basic, id, edit }) => {
           <TextInput
             data-cy='additionalPrice'
             name='additionalPrice'
-            type='number'
             label={getLabelValue(values, labels.additionalPriceType)}
             onChange={handleChange}
             onBlur={handleBlur}
             error={touched.additionalPrice && errors.additionalPrice}
+            type='number'
           />
-          <TextInput />
+          <TextInput
+            label={labels.convertationTitle}
+            value={calculateAddittionalPriceValue(values, exchangeRate)}
+            disabled
+          />
         </InputList>
       </Form>
       <form onSubmit={eventPreventHandler}>

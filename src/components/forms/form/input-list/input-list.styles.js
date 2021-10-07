@@ -8,8 +8,6 @@ export const useStyles = makeStyles((theme) => ({
   inputsContainer: {
     padding: '10px',
     boxSizing: 'border-box',
-    display: 'flex',
-    flexDirection: 'column',
     margin: '10px 0'
   }
 }));
