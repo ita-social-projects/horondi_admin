@@ -55,6 +55,7 @@ const routes = {
   pathToHomePageSlideDetail: '/home-page-slides/:id',
   pathToConstructor: '/constructor/:id',
   pathToAddConstructor: '/constructor/:id/add',
+  pathToEditConstructor: '/constructor-list/:id',
   pathToConstructorDetails: '/constructor/:id/:elementId',
   pathToPockets: '/pockets',
   pathToPocketsAdd: '/pockets/add',

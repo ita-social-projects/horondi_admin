@@ -11,8 +11,8 @@ import {
 
 export const selectConstructor = ({ Constructor }) => ({
   items: Constructor.list,
-  loading: Constructor.bottomLoading,
-  constructor: Constructor.bottom,
+  loading: Constructor.constructorLoading,
+  constructor: Constructor.constructor,
   filter: Constructor.filters,
   sort: Constructor.sort
 });

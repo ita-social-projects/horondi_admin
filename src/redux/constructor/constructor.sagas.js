@@ -28,6 +28,7 @@ import {
   deleteConstructorBottom,
   deleteConstructorFrontPocket,
   getAllConstructors,
+  getConstructorById,
   updateConstructorBasic,
   updateConstructorBottom,
   updateConstructorFrontPocket,
@@ -58,13 +59,15 @@ import {
   UPDATE_CONSTRUCTOR_FRONT_POCKET,
   ADD_CONSTRUCTOR,
   GET_CONSTRUCTORS,
+  GET_CONSTRUCTOR,
   DELETE_CONSTRUCTOR
 } from './constructor.types';
 import {
   removeConstructorFromStore,
   setConstructorError,
   setConstructorLoading,
-  setConstructors
+  setConstructors,
+  setConstructor
 } from './constructor.actions';
 import { setItemsCount, updatePagination } from '../table/table.actions';
 import { handleAdminLogout } from '../auth/auth.sagas';
@@ -95,6 +98,17 @@ export function* handleConstructorsLoad({ payload: { limit, skip, filter } }) {
     });
     yield put(setItemsCount(constructors?.count));
     yield put(setConstructors(constructors?.items));
+    yield put(setConstructorLoading(false));
+  } catch (error) {
+    yield call(handleConstructorError, error);
+  }
+}
+
+export function* handleConstructorLoad({ payload }) {
+  try {
+    yield put(setConstructorLoading(true));
+    const constructor = yield call(getConstructorById, payload);
+    yield put(setConstructor(constructor));
     yield put(setConstructorLoading(false));
   } catch (error) {
     yield call(handleConstructorError, error);
@@ -306,6 +320,7 @@ export default function* constructorSaga() {
   yield takeEvery(DELETE_CONSTRUCTOR, handleConstructorDelete);
   yield takeEvery(UPDATE_CONSTRUCTOR_BOTTOM, handleConstructorBottomUpdate);
   yield takeEvery(GET_CONSTRUCTORS, handleConstructorsLoad);
+  yield takeEvery(GET_CONSTRUCTOR, handleConstructorLoad);
   yield takeEvery(ADD_CONSTRUCTOR, handleConstructorAdd);
   yield takeEvery(
     ADD_CONSTRUCTOR_FRONT_POCKET,

@@ -14,6 +14,7 @@ import { useStyles } from './constructor-list-accordion.styles';
 import { config } from '../../../../configs';
 import TableContainerRow from '../../../../containers/table-container-row';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
+import { constructorSelector } from '../../../../redux/selectors/constructor.selectors';
 
 const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
   const classes = useStyles();
@@ -21,6 +22,9 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
 
   const { selector, getItems, setOptionToAdd, optionToAdd, label, optionName } =
     option;
+
+  // const { сonstructor } = useSelector(constructorSelector);
+  // console.log(сonstructor);
 
   const tableTitles = config.tableHeadRowTitles.constructorElementList;
 

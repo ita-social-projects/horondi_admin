@@ -15,6 +15,7 @@ import {
   UPDATE_CONSTRUCTOR_BOTTOM,
   UPDATE_CONSTRUCTOR_FRONT_POCKET,
   GET_CONSTRUCTORS,
+  GET_CONSTRUCTOR,
   SET_CONSTRUCTOR,
   SET_CONSTRUCTOR_LOADING,
   SET_CONSTRUCTORS,
@@ -45,6 +46,11 @@ export const removeConstructorFromStore = (payload) => ({
 
 export const getConstructors = (payload) => ({
   type: GET_CONSTRUCTORS,
+  payload
+});
+
+export const getConstructor = (payload) => ({
+  type: GET_CONSTRUCTOR,
   payload
 });
 

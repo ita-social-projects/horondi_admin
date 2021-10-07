@@ -57,6 +57,12 @@ const ConstructorListRestrictions = ({
   const handlePocketChange = (e) => {
     const pocket = pockets.filter(({ _id }) => _id === e.target.value)[0];
     setActivePocket(pocket);
+    setCurrentRestrictions([]);
+  };
+
+  const handlePositionChange = (position) => {
+    setActivePosition(position);
+    setCurrentRestrictions([]);
   };
 
   const createTitles = () => {
@@ -87,9 +93,19 @@ const ConstructorListRestrictions = ({
     }
   };
 
+  const findCheckboxRestriction = (pocketId, positionId) => {
+    const item = currentRestrictions.find(
+      (restriction) =>
+        restriction.pocket === pocketId && restriction.position === positionId
+    );
+    return !!item;
+  };
+
   const handleAddRestriction = () => {
     const pocket = pockets.filter(({ _id }) => _id === activePocket._id)[0];
-    const position = positions.filter(({ _id }) => _id === activePosition._id)[0];
+    const position = positions.filter(
+      ({ _id }) => _id === activePosition._id
+    )[0];
 
     const possibleItems = restrictionsToAdd.find(
       (item) =>
@@ -106,6 +122,7 @@ const ConstructorListRestrictions = ({
       ...newRestrictionsToAdd,
       { pocket, position, currentRestrictions }
     ]);
+    setCurrentRestrictions([]);
     handleToggleRestrictions();
   };
 
@@ -151,9 +168,13 @@ const ConstructorListRestrictions = ({
               <Checkbox
                 color='default'
                 inputProps={{ 'aria-label': 'checkbox with default color' }}
-                onClick={(e) =>
+                onChange={(e) =>
                   checkboxChangeHandler(pocketPosition._id, pocket._id)
                 }
+                checked={findCheckboxRestriction(
+                  pocket._id,
+                  pocketPosition._id
+                )}
               />
             </TableCell>
           );
@@ -185,7 +206,7 @@ const ConstructorListRestrictions = ({
       control={
         <Radio
           onChange={() => {
-            setActivePosition(position);
+            handlePositionChange(position);
           }}
           color='default'
           size='small'

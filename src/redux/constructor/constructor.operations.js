@@ -89,13 +89,13 @@ export const createConstructor = async (payload) => {
   const result = await setItems(createConstructorQuery, payload);
 
   if (
-    Object.keys(constructorTranslations).includes(
+    Object.keys(constructorErrors).includes(
       result?.data?.addConstructor?.message
     )
   ) {
     throw new Error(
       `${result.data.addConstructor.statusCode} ${
-        constructorTranslations[result.data.addConstructor.message]
+        constructorErrors[result.data.addConstructor.message]
       }`
     );
   }
@@ -121,13 +121,13 @@ export const deleteConstructor = async (payload) => {
   const result = await setItems(deleteConstructorQuery, payload);
 
   if (
-    Object.keys(constructorTranslations).includes(
+    Object.keys(constructorErrors).includes(
       result?.data?.deleteConstructor?.message
     )
   ) {
     throw new Error(
       `${result.data.deleteConstructor.statusCode} ${
-        constructorTranslations[result.data.deleteConstructor.message]
+        constructorErrors[result.data.deleteConstructor.message]
       }`
     );
   }
@@ -161,18 +161,54 @@ export const getAllConstructors = async (payload) => {
   const result = await getItems(getAllConstructorsQuery, payload);
 
   if (
-    Object.keys(constructorTranslations).includes(
+    Object.keys(constructorErrors).includes(
       result?.data?.getAllConstructors?.message
     )
   ) {
     throw new Error(
       `${result.data.getAllConstructors.statusCode} ${
-        constructorTranslations[result.data.getAllConstructors.message]
+        constructorErrors[result.data.getAllConstructors.message]
       }`
     );
   }
 
   return result?.data?.getAllConstructors;
+};
+
+export const getConstructorById = async (payload) => {
+  const getConstructorQuery = `
+      query($id: ID!) {
+        getConstructorById(id:$id){
+          ...on Constructor{
+            _id
+            name {
+              lang
+              value
+            }
+          }
+          ...on Error{
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await getItems(getConstructorQuery, { id: payload });
+
+  if (
+    Object.keys(constructorErrors).includes(
+      result?.data?.getConstructorById?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getConstructorById.statusCode} ${
+        constructorErrors[result.data.getConstructorById.message]
+      }`
+    );
+  }
+
+  return result?.data?.getConstructorById;
 };
 
 export const createConstructorBasic = async (payload) => {
