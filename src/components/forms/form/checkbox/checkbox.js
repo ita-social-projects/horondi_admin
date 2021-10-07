@@ -20,7 +20,7 @@ export const Checkbox = ({
   const [value, setValue] = useState(false);
 
   useEffect(() => {
-    setFieldValue(name, value);
+    setFieldValue(name, !values[name]);
   }, [value]);
 
   return (
@@ -31,7 +31,7 @@ export const Checkbox = ({
         label={label}
         control={<MUICheckbox {...{ name, color }} />}
         labelPlacement='end'
-        checked={value}
+        checked={values[name]}
         value={value}
         onChange={setFieldValue ? () => setValue(!value) : null}
         {...(handleChange ? { handleChange } : {})}
