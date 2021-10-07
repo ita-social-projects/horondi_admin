@@ -36,7 +36,8 @@ import {
   TextInput,
   Dropdown,
   InputList,
-  TextLabel
+  TextLabel,
+  Checkbox
 } from '../form';
 
 import {
@@ -232,6 +233,13 @@ const BasicsForm = ({ basic, id, edit }) => {
     <div>
       <Form>
         <ControlPanel values={values} unblockFunction={unblock} />
+        <InputList {...{ setFieldValue, values }}>
+          <Checkbox
+            data-cy={checkboxes[0].dataCy}
+            label={checkboxes[0].label}
+            name={checkboxes[0].id}
+          />
+        </InputList>
         <InputList {...{ handleChange, handleBlur, values, touched, errors }}>
           {materialLabels.map(({ label, name, required }, idx) => (
             <Dropdown

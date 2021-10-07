@@ -19,7 +19,7 @@ const TextInput = ({
 
   return (
     <FormControl className={styles.formControl}>
-      <React.Fragment key={name} type='number'>
+      <React.Fragment key={name}>
         <TextField
           name={name}
           type={type}

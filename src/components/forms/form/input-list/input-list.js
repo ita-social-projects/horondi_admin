@@ -18,6 +18,7 @@ export const InputListTitle = ({ title, ...props }) => (
 export const InputList = ({
   title,
   children,
+  setFieldValue,
   handleChange,
   handleBlur,
   touched,
@@ -28,6 +29,7 @@ export const InputList = ({
   const styles = useStyles();
 
   const wrapProps = {
+    setFieldValue,
     handleChange,
     handleBlur,
     touched,
@@ -56,6 +58,7 @@ InputListTitle.defaultProps = {
 InputList.propTypes = {
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
   title: PropTypes.string,
+  setFieldValue: PropTypes.func,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
   touched: PropTypes.objectOf(PropTypes.object),
@@ -65,6 +68,7 @@ InputList.propTypes = {
 
 InputList.defaultProps = {
   title: noop,
+  setFieldValue: noop,
   handleChange: noop,
   handleBlur: noop,
   touched: {},
