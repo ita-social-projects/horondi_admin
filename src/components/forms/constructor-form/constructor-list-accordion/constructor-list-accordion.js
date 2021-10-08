@@ -14,17 +14,18 @@ import { useStyles } from './constructor-list-accordion.styles';
 import { config } from '../../../../configs';
 import TableContainerRow from '../../../../containers/table-container-row';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
-import { constructorSelector } from '../../../../redux/selectors/constructor.selectors';
 
-const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
+const ConstructorListAccordion = ({
+  option,
+  expanded,
+  handleChange,
+  isEdit
+}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const { selector, getItems, setOptionToAdd, optionToAdd, label, optionName } =
     option;
-
-  // const { сonstructor } = useSelector(constructorSelector);
-  // console.log(сonstructor);
 
   const tableTitles = config.tableHeadRowTitles.constructorElementList;
 
@@ -70,6 +71,7 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
       showEdit={false}
       showDelete={false}
       showCheckbox
+      checkBoxValue={optionToAdd}
       checkboxChangeHandler={checkboxChangeHandler}
     />
   ));
@@ -113,7 +115,8 @@ ConstructorListAccordion.propTypes = {
     optionName: PropTypes.string
   }),
   expanded: PropTypes.string,
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func,
+  isEdit: PropTypes.bool
 };
 
 ConstructorListAccordion.defaultProps = {
@@ -123,7 +126,8 @@ ConstructorListAccordion.defaultProps = {
     label: '',
     optionName: ''
   },
-  handleChange: ''
+  handleChange: '',
+  isEdit: false
 };
 
 export default ConstructorListAccordion;

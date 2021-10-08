@@ -11,13 +11,22 @@ const useConstructorHandlers = () => {
   };
 
   const createConstructor = (items) => {
-    const pocketsWithRestrictions = map(items.restrictionsToAdd, (item) => ({
+    const pocketsWithRestrictions = map(items.restrictionsToAdd, (item) => {
+      const otherPocketsWithAvailablePositions = map(
+        item.otherPocketsWithAvailablePositions,
+        (otherPocket) => ({
+          pocket: otherPocket.pocket._id,
+          position: otherPocket.position._id
+        })
+      );
+      return {
         currentPocketWithPosition: {
-          pocket: item.pocket._id,
-          position: item.position._id
+          pocket: item.currentPocketWithPosition.pocket._id,
+          position: item.currentPocketWithPosition.position._id
         },
-        otherPocketsWithAvailablePositions: [...item.currentRestrictions]
-      }));
+        otherPocketsWithAvailablePositions
+      };
+    });
 
     return {
       name: items.model.name,

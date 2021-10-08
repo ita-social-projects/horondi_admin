@@ -75,20 +75,23 @@ const ConstructorListRestrictions = ({
     return titles;
   };
 
+  console.log(currentRestrictions);
+
   const checkboxChangeHandler = (positionId, pocketId) => {
     const possibleItems = currentRestrictions.find(
-      (item) => item.pocketId === pocketId && item.positionId === positionId
+      (item) => item.pocket._id === pocketId && item.position._id === positionId
     );
     if (possibleItems) {
       setCurrentRestrictions(
         currentRestrictions.filter(
-          (item) => item.pocketId !== pocketId || item.positionId !== positionId
+          (item) =>
+            item.pocket._id !== pocketId || item.position._id !== positionId
         )
       );
     } else {
       setCurrentRestrictions([
         ...currentRestrictions,
-        { pocket: pocketId, position: positionId }
+        { pocket: { _id: pocketId }, position: { _id: positionId } }
       ]);
     }
   };
@@ -96,7 +99,8 @@ const ConstructorListRestrictions = ({
   const findCheckboxRestriction = (pocketId, positionId) => {
     const item = currentRestrictions.find(
       (restriction) =>
-        restriction.pocket === pocketId && restriction.position === positionId
+        restriction.pocket._id === pocketId &&
+        restriction.position._id === positionId
     );
     return !!item;
   };
@@ -109,18 +113,23 @@ const ConstructorListRestrictions = ({
 
     const possibleItems = restrictionsToAdd.find(
       (item) =>
-        item.pocket._id === pocket._id && item.position._id === position._id
+        item.currentPocketWithPosition.pocket._id === pocket._id &&
+        item.currentPocketWithPosition.position._id === position._id
     );
     let newRestrictionsToAdd = restrictionsToAdd;
     if (possibleItems) {
       newRestrictionsToAdd = restrictionsToAdd.filter(
         (item) =>
-          item.pocket._id !== pocket._id || item.position._id !== position._id
+          item.currentPocketWithPosition.pocket._id !== pocket._id ||
+          item.currentPocketWithPosition.position._id !== position._id
       );
     }
     setRestrictionsToAdd([
       ...newRestrictionsToAdd,
-      { pocket, position, currentRestrictions }
+      {
+        currentPocketWithPosition: { pocket, position },
+        otherPocketsWithAvailablePositions: currentRestrictions
+      }
     ]);
     setCurrentRestrictions([]);
     handleToggleRestrictions();

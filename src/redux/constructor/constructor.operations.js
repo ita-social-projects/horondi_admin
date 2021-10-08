@@ -181,9 +181,67 @@ export const getConstructorById = async (payload) => {
         getConstructorById(id:$id){
           ...on Constructor{
             _id
+            model {
+              _id
+              name{
+                lang
+                value
+              }
+            }
             name {
               lang
               value
+            }
+            bottoms {
+              _id
+            }
+            basics {
+              _id
+            }
+            patterns {
+              _id
+            }
+            backs {
+              _id
+            }
+            straps {
+              _id
+            }
+            closures {
+              _id
+            }
+            pocketsWithRestrictions {
+              currentPocketWithPosition {
+                pocket {
+                  _id
+                  name {
+                    lang
+                    value
+                  }
+                  images{
+                    thumbnail
+                  }
+                  additionalPrice{
+                    value
+                    currency
+                  }
+                }
+                position {
+                  _id
+                  name {
+                    lang
+                    value
+                  }
+                }
+              }
+              otherPocketsWithAvailablePositions {
+                pocket {
+                  _id
+                }
+                position {
+                  _id
+                }
+              }
             }
           }
           ...on Error{
@@ -209,6 +267,49 @@ export const getConstructorById = async (payload) => {
   }
 
   return result?.data?.getConstructorById;
+};
+
+export const updateConstructorById = async ({ id, constructor }) => {
+  const updateConstructorQuery = `
+  mutation($constructor: ConstructorInput!, $id:ID!){
+    updateConstructor(id:$id, constructor:$constructor){
+      ...on Constructor{
+        _id
+        name{
+          lang
+          value
+        }
+        model{
+          _id
+          name{
+            lang
+            value
+          }
+        }
+      }
+      ...on Error{
+        message
+        statusCode
+      }
+    }
+  }
+    `;
+
+  const result = await getItems(updateConstructorQuery, { id, constructor });
+
+  if (
+    Object.keys(constructorErrors).includes(
+      result?.data?.updateConstructor?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.updateConstructor.statusCode} ${
+        constructorErrors[result.data.updateConstructor.message]
+      }`
+    );
+  }
+
+  return result?.data?.updateConstructor;
 };
 
 export const createConstructorBasic = async (payload) => {

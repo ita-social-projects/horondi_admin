@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
@@ -23,7 +23,11 @@ import { strapsSelectorWithPagination } from '../../../redux/selectors/straps.se
 import { closuresSelectorWithPagination } from '../../../redux/selectors/closures.selectors.js';
 import ConstructorListPockets from './constructor-list-pockets/constructor-list-pockets.js';
 import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
-import { addConstructor } from '../../../redux/constructor/constructor.actions.js';
+import {
+  addConstructor,
+  updateConstructor
+} from '../../../redux/constructor/constructor.actions.js';
+import { constructorSelector } from '../../../redux/selectors/constructor.selectors';
 
 const { materialUiConstants } = config;
 const { MODEL_SAVE_TITLE } = config.buttonTitles;
@@ -34,6 +38,8 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState('');
+
+  const { constructor } = useSelector(constructorSelector);
 
   const { createConstructor } = useConstructorHandlers();
 
@@ -56,7 +62,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const [restrictionsToAdd, setRestrictionsToAdd] = useState([]);
   const onSaveHandler = () => {
     const itemsToSave = {
-      model,
+      model: isEdit ? constructor?.model : model,
       basicsToAdd,
       bottomsToAdd,
       patternsToAdd,
@@ -65,10 +71,29 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       closuresToAdd,
       restrictionsToAdd
     };
-    const constructor = createConstructor(itemsToSave);
+    const constructorToAdd = createConstructor(itemsToSave);
 
-    dispatch(addConstructor({ constructor }));
+    if (!isEdit) {
+      dispatch(addConstructor({ constructor: constructorToAdd }));
+      return null;
+    }
+    console.log('here');
+    dispatch(updateConstructor({ id, constructor: constructorToAdd }));
   };
+
+  const mapElement = (element) => element?.map((item) => item._id);
+
+  useEffect(() => {
+    setBasicsToAdd(isEdit ? mapElement(constructor?.basics) : []);
+    setBottomsToAdd(isEdit ? mapElement(constructor?.bottoms) : []);
+    setPatternsToAdd(isEdit ? mapElement(constructor?.patterns) : []);
+    setBacksToAdd(isEdit ? mapElement(constructor?.backs) : []);
+    setStrapsToAdd(isEdit ? mapElement(constructor?.straps) : []);
+    setClosuresToAdd(isEdit ? mapElement(constructor?.closures) : []);
+    setRestrictionsToAdd(isEdit ? constructor?.pocketsWithRestrictions : []);
+  }, [constructor]);
+
+  console.log(restrictionsToAdd);
 
   const constructorOptions = [
     {
@@ -123,6 +148,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
 
   const constructorAccordions = constructorOptions.map((option, index) => (
     <ConstructorListAccordion
+      isEdit={isEdit}
       option={option}
       key={index}
       handleChange={handleChange}

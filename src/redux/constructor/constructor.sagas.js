@@ -32,7 +32,8 @@ import {
   updateConstructorBasic,
   updateConstructorBottom,
   updateConstructorFrontPocket,
-  deleteConstructor
+  deleteConstructor,
+  updateConstructorById
 } from './constructor.operations';
 import { config } from '../../configs';
 import {
@@ -60,7 +61,8 @@ import {
   ADD_CONSTRUCTOR,
   GET_CONSTRUCTORS,
   GET_CONSTRUCTOR,
-  DELETE_CONSTRUCTOR
+  DELETE_CONSTRUCTOR,
+  UPDATE_CONSTRUCTOR
 } from './constructor.types';
 import {
   removeConstructorFromStore,
@@ -81,6 +83,21 @@ export function* handleConstructorAdd({ payload }) {
     yield put(setConstructorLoading(true));
     yield call(createConstructor, payload);
     yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+    yield put(push(config.routes.pathToConstructorList));
+    yield put(setConstructorLoading(false));
+  } catch (error) {
+    yield call(handleConstructorError, error);
+  }
+}
+
+export function* handleConstructorUpdate({ payload }) {
+  try {
+    yield put(setConstructorLoading(true));
+    yield call(updateConstructorById, {
+      id: payload.id,
+      constructor: payload.constructor
+    });
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
     yield put(push(config.routes.pathToConstructorList));
     yield put(setConstructorLoading(false));
   } catch (error) {
@@ -322,6 +339,7 @@ export default function* constructorSaga() {
   yield takeEvery(GET_CONSTRUCTORS, handleConstructorsLoad);
   yield takeEvery(GET_CONSTRUCTOR, handleConstructorLoad);
   yield takeEvery(ADD_CONSTRUCTOR, handleConstructorAdd);
+  yield takeEvery(UPDATE_CONSTRUCTOR, handleConstructorUpdate);
   yield takeEvery(
     ADD_CONSTRUCTOR_FRONT_POCKET,
     handleConstructorFrontPocketCreate

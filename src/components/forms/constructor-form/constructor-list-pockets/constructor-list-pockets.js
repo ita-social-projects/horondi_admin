@@ -31,30 +31,46 @@ const ConstructorListPockets = ({
   const deleteHandler = (id, positionId) => {
     setRestrictionsToAdd(
       restrictionsToAdd.filter(
-        (item) => item.pocket._id !== id || item.position._id !== positionId
+        (item) =>
+          item.currentPocketWithPosition.pocket._id !== id ||
+          item.currentPocketWithPosition.position._id !== positionId
       )
     );
   };
 
-  const elementItems = map(restrictionsToAdd, (item, index) => (
-    <TableRow key={index}>
-      <TableCell>
-        <Avatar src={`${config.imagePrefix}${item.pocket.images.thumbnail}`}>
-          <ImageIcon />
-        </Avatar>
-      </TableCell>
-      <TableCell>{item.pocket.name[0].value}</TableCell>
-      <TableCell>{item.position.name[0].value}</TableCell>
-      <TableCell>{item.pocket.additionalPrice[1].value}</TableCell>
-      <TableCell>
-        <CustomizedDeleteIcon
-          onClickHandler={() => {
-            deleteHandler(item.pocket._id, item.position._id);
-          }}
-        />
-      </TableCell>
-    </TableRow>
-  ));
+  const elementItems = map(restrictionsToAdd, (item, index) => {
+    console.log(item);
+    return (
+      <TableRow key={index}>
+        <TableCell>
+          <Avatar
+            src={`${config.imagePrefix}${item.currentPocketWithPosition?.pocket.images.thumbnail}`}
+          >
+            <ImageIcon />
+          </Avatar>
+        </TableCell>
+        <TableCell>
+          {item.currentPocketWithPosition?.pocket.name[0].value}
+        </TableCell>
+        <TableCell>
+          {item.currentPocketWithPosition?.position.name[0].value}
+        </TableCell>
+        <TableCell>
+          {item.currentPocketWithPosition?.pocket.additionalPrice[1].value}
+        </TableCell>
+        <TableCell>
+          <CustomizedDeleteIcon
+            onClickHandler={() => {
+              deleteHandler(
+                item.currentPocketWithPosition.pocket._id,
+                item.currentPocketWithPosition.position._id
+              );
+            }}
+          />
+        </TableCell>
+      </TableRow>
+    );
+  });
   return (
     <Accordion
       expanded={expanded === 'pocket'}

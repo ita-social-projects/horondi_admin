@@ -16,6 +16,7 @@ import {
   UPDATE_CONSTRUCTOR_FRONT_POCKET,
   GET_CONSTRUCTORS,
   GET_CONSTRUCTOR,
+  UPDATE_CONSTRUCTOR,
   SET_CONSTRUCTOR,
   SET_CONSTRUCTOR_LOADING,
   SET_CONSTRUCTORS,
@@ -51,6 +52,11 @@ export const getConstructors = (payload) => ({
 
 export const getConstructor = (payload) => ({
   type: GET_CONSTRUCTOR,
+  payload
+});
+
+export const updateConstructor = (payload) => ({
+  type: UPDATE_CONSTRUCTOR,
   payload
 });
 
