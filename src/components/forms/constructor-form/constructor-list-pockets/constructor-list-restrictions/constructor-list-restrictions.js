@@ -75,8 +75,6 @@ const ConstructorListRestrictions = ({
     return titles;
   };
 
-  console.log(currentRestrictions);
-
   const checkboxChangeHandler = (positionId, pocketId) => {
     const possibleItems = currentRestrictions.find(
       (item) => item.pocket._id === pocketId && item.position._id === positionId

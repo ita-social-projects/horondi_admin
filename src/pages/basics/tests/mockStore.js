@@ -1,6 +1,6 @@
 const mockStore = {
   count: 5,
-  basicsList: [
+  items: [
     {
       _id: '60eadfb9e913fc3f88294bd9',
       name: [

@@ -1,5 +1,5 @@
 const mockClosures = {
-  closuresList: [
+  items: [
     {
       _id: '60fed1aee3a0252140b5b79a',
       name: [

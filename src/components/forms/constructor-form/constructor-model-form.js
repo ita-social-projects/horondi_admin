@@ -75,9 +75,8 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
 
     if (!isEdit) {
       dispatch(addConstructor({ constructor: constructorToAdd }));
-      return null;
+      return;
     }
-    console.log('here');
     dispatch(updateConstructor({ id, constructor: constructorToAdd }));
   };
 

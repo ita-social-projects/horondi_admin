@@ -1,4 +1,4 @@
-export const strapsList = [
+export const items = [
   {
     additionalPrice: [
       { currency: 'UAH', value: 54536 },

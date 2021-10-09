@@ -17,6 +17,10 @@ import TableContainerGenerator from '../../../../containers/table-container-gene
 import { useStyles } from './constructor-list-pockets.styles';
 import ConstructorListRestrictions from './constructor-list-restrictions/constructor-list-restrictions';
 import { CustomizedDeleteIcon } from '../../../icons';
+import { useCommonStyles } from '../../../../pages/common.styles';
+
+const { NO_POCKET_MESSAGE } = config.messages;
+const tableTitles = config.tableHeadRowTitles.constructorPocketList;
 
 const ConstructorListPockets = ({
   handleChange,
@@ -25,8 +29,7 @@ const ConstructorListPockets = ({
   expanded
 }) => {
   const classes = useStyles();
-
-  const tableTitles = config.tableHeadRowTitles.constructorPocketList;
+  const commonStyles = useCommonStyles();
 
   const deleteHandler = (id, positionId) => {
     setRestrictionsToAdd(
@@ -38,39 +41,37 @@ const ConstructorListPockets = ({
     );
   };
 
-  const elementItems = map(restrictionsToAdd, (item, index) => {
-    console.log(item);
-    return (
-      <TableRow key={index}>
-        <TableCell>
-          <Avatar
-            src={`${config.imagePrefix}${item.currentPocketWithPosition?.pocket.images.thumbnail}`}
-          >
-            <ImageIcon />
-          </Avatar>
-        </TableCell>
-        <TableCell>
-          {item.currentPocketWithPosition?.pocket.name[0].value}
-        </TableCell>
-        <TableCell>
-          {item.currentPocketWithPosition?.position.name[0].value}
-        </TableCell>
-        <TableCell>
-          {item.currentPocketWithPosition?.pocket.additionalPrice[1].value}
-        </TableCell>
-        <TableCell>
-          <CustomizedDeleteIcon
-            onClickHandler={() => {
-              deleteHandler(
-                item.currentPocketWithPosition.pocket._id,
-                item.currentPocketWithPosition.position._id
-              );
-            }}
-          />
-        </TableCell>
-      </TableRow>
-    );
-  });
+  const elementItems = map(restrictionsToAdd, (item, index) => (
+    <TableRow key={index}>
+      <TableCell>
+        <Avatar
+          src={`${config.imagePrefix}${item.currentPocketWithPosition?.pocket.images.thumbnail}`}
+        >
+          <ImageIcon />
+        </Avatar>
+      </TableCell>
+      <TableCell>
+        {item.currentPocketWithPosition?.pocket.name[0].value}
+      </TableCell>
+      <TableCell>
+        {item.currentPocketWithPosition?.position.name[0].value}
+      </TableCell>
+      <TableCell>
+        {item.currentPocketWithPosition?.pocket.additionalPrice[1].value}
+      </TableCell>
+      <TableCell>
+        <CustomizedDeleteIcon
+          onClickHandler={() => {
+            deleteHandler(
+              item.currentPocketWithPosition.pocket._id,
+              item.currentPocketWithPosition.position._id
+            );
+          }}
+        />
+      </TableCell>
+    </TableRow>
+  ));
+
   return (
     <Accordion
       expanded={expanded === 'pocket'}
@@ -93,7 +94,7 @@ const ConstructorListPockets = ({
             tableItems={elementItems}
           />
         ) : (
-          <p>Кишені відсутні</p>
+          <p className={commonStyles.noRecords}>{NO_POCKET_MESSAGE}</p>
         )}
         <ConstructorListRestrictions
           restrictionsToAdd={restrictionsToAdd}

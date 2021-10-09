@@ -16,7 +16,7 @@ describe('Bottom-page render tests', () => {
   const zeroIndex = 0;
 
   constructorElementsMockStore.bottom =
-    constructorElementsMockStore.list[zeroIndex];
+    constructorElementsMockStore.items[zeroIndex];
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');

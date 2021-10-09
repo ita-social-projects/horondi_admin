@@ -133,7 +133,7 @@ describe('useEffect tests', () => {
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
     expect(tableContainerRowFirst.prop('name')).toBe(
-      constructorElementsMockStore.list[0].name[0].value
+      constructorElementsMockStore.items[0].name[0].value
     );
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
   });

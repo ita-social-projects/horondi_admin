@@ -115,7 +115,7 @@ describe('useEffect tests', () => {
     closurePage = wrapper.find(ClosuresPage);
     tableContainerRow = closurePage.find(TableContainerRow);
     tableContainerRowFirst = closurePage.find({
-      id: mockClosures.closuresList[0]._id
+      id: mockClosures.items[0]._id
     });
   });
 
@@ -133,7 +133,7 @@ describe('useEffect tests', () => {
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Доступний');
     expect(tableContainerRowFirst.prop('name')).toBe(
-      mockClosures.closuresList[0].name[0].value
+      mockClosures.items[0].name[0].value
     );
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
   });
