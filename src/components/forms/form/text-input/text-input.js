@@ -16,6 +16,7 @@ const TextInput = ({
   touched,
   errors,
   className,
+  inputClassName,
   onValueChange,
   children,
   ...props
@@ -27,7 +28,7 @@ const TextInput = ({
   }, [values[name]]);
 
   return (
-    <FormControl className={styles.formControl}>
+    <FormControl className={`${styles.formControl} ${className}`}>
       <React.Fragment key={name}>
         <TextField
           name={name}
@@ -39,7 +40,7 @@ const TextInput = ({
           value={values[name]}
           error={touched[name] && !!errors[name]}
           {...props}
-          className={`${styles.textField} ${className}`}
+          className={`${styles.textField} ${inputClassName}`}
         />
       </React.Fragment>
       {children}
@@ -54,6 +55,7 @@ TextInput.propTypes = {
   handleBlur: PropTypes.func,
   onValueChange: PropTypes.func,
   className: PropTypes.string,
+  inputClassName: PropTypes.string,
   values: PropTypes.objectOf(PropTypes.object),
   touched: PropTypes.objectOf(PropTypes.object),
   errors: PropTypes.objectOf(PropTypes.object),
@@ -66,6 +68,7 @@ TextInput.defaultProps = {
   handleBlur: noop,
   onValueChange: noop,
   className: '',
+  inputClassName: '',
   values: {},
   touched: {},
   errors: {}

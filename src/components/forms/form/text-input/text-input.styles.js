@@ -5,9 +5,6 @@ export const useStyles = makeStyles((theme) => ({
     margin: '10px 5px'
   },
   formControl: {
-    width: '100%',
-    display: 'grid',
-    gridTemplateColumns: '1fr auto',
-    alignItems: 'center'
+    width: '100%'
   }
 }));

@@ -49,6 +49,7 @@ import {
   RadioGroup as MyRadioGroup,
   InputList,
   TextInput,
+  Dropdown,
   ErrorsContainer
 } from '../form';
 
@@ -223,6 +224,25 @@ function SizeForm({ id, size }) {
               </Paper>
             </div>
             <div className={styles.contentWrapper}>
+              <InputList
+                {...{ errors, touched, values, handleChange, handleBlur }}
+              >
+                <Dropdown
+                  variant='outlined'
+                  label={modelTitle}
+                  required
+                  data-cy={labels.en.modelName}
+                  name={labels.en.modelName}
+                  options={list?.map((v) => ({
+                    value: v._id,
+                    name: v.name[0].value
+                  }))}
+                  className={styles.withTooltip}
+                >
+                  <Tooltip title={MODEL_EXPLANATION} />
+                </Dropdown>
+                <ErrorsContainer name={labels.en.modelName} />
+              </InputList>
               <Paper className={`${styles.sizeItemAdd}`}>
                 <FormControl
                   variant={materialUiConstants.outlined}
@@ -282,6 +302,7 @@ function SizeForm({ id, size }) {
                   name='additionalPrice'
                   label={getLabelValue(values, additionalPriceType)}
                   type='number'
+                  className={styles.withTooltip}
                 >
                   <Tooltip title={PRICE_EXPLANATION}>
                     <span>{PRICE_EXPLANATION_DESCRIPTION}</span>
@@ -293,7 +314,7 @@ function SizeForm({ id, size }) {
                   label={convertationTitle}
                   disabled
                   value={calculateAddittionalPriceValue(values, exchangeRate)}
-                 />
+                />
               </InputList>
               <Paper className={styles.sizeItemAdd}>
                 <FormControl component='fieldset'>

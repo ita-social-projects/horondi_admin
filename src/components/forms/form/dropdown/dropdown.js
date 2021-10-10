@@ -19,6 +19,9 @@ const Dropdown = ({
   errors,
   setFieldValue,
   onValueChange,
+  className,
+  children,
+  variant,
   ...props
 }) => {
   const styles = useStyles();
@@ -27,8 +30,16 @@ const Dropdown = ({
     onValueChange(values[name], values);
   }, [values[name]]);
 
+  const isSimpleDropdown = variant !== 'outlined';
+
   return (
-    <FormControl className={styles.formControl} {...props}>
+    <FormControl
+      className={`
+      ${styles.formControl} 
+      ${isSimpleDropdown ? styles.dropdown : ''} ${className}`}
+      variant={variant}
+      {...props}
+    >
       <InputLabel htmlFor={label}>
         {`${label}${required ? '*' : ''}`}
       </InputLabel>
@@ -49,6 +60,7 @@ const Dropdown = ({
           </MenuItem>
         ))}
       </Select>
+      {children}
     </FormControl>
   );
 };
@@ -64,7 +76,10 @@ Dropdown.propTypes = {
   touched: PropTypes.objectOf(PropTypes.object),
   errors: PropTypes.objectOf(PropTypes.object),
   setFieldValue: PropTypes.func,
-  onValueChange: PropTypes.func
+  onValueChange: PropTypes.func,
+  className: PropTypes.string,
+  variant: PropTypes.string,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired
 };
 
 Dropdown.defaultProps = {
@@ -77,7 +92,9 @@ Dropdown.defaultProps = {
   touched: {},
   errors: {},
   setFieldValue: noop,
-  onValueChange: noop
+  onValueChange: noop,
+  className: '',
+  variant: ''
 };
 
 export default Dropdown;

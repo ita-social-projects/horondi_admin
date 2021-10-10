@@ -7,7 +7,6 @@ import TextLabelComponent from './text-label/text-label';
 import CheckboxComponent from './checkbox/checkbox';
 import ErrorsContainerComponent from './errors-container/errors-container';
 import TextPanelComponent from './text-panel/text-panel';
-import CustomDropdownComponent from './custom-dropdown/custom-dropdown';
 import {
   RadioGroup as RadioGroupComponent,
   Radio as RadioComponent
@@ -23,7 +22,6 @@ export const TextLabel = TextLabelComponent;
 export const Checkbox = CheckboxComponent;
 export const ErrorsContainer = ErrorsContainerComponent;
 export const TextPanel = TextPanelComponent;
-export const CustomDropdown = CustomDropdownComponent;
 export const RadioGroup = RadioGroupComponent;
 export const Radio = RadioComponent;
 export const ImageUpload = ImageUploadComponent;

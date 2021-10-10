@@ -328,7 +328,7 @@ const BasicsForm = ({ basic, id, edit }) => {
             label={labels.convertationTitle}
             value={additionalPrice}
             disabled
-            className={styles.currencyField}
+            inputClassName={styles.currencyField}
           />
         </InputList>
       </Form>
