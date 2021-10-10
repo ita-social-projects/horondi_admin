@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, createElement } from 'react';
+import React, { Children, cloneElement } from 'react';
 
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';

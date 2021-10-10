@@ -19,7 +19,7 @@ export const ControlPanelButtonsList = {
 
 export const SaveButtonControl = ({
   isSaveDisabled,
-  blockFunction,
+  unblockFunction,
   values,
   handleSubmit,
   ...props
@@ -33,8 +33,9 @@ export const SaveButtonControl = ({
         title={buttonTitles.SAVE_TITLE}
         onClickHandler={handleSubmit}
         values={values}
-        disabled={isSaveDisabled}
-        unblockFunction={blockFunction}
+        // disabled={isSaveDisabled}
+        // disabled={isSaveDisabled}
+        // unblockFunction={unblockFunction}
         {...props}
       />
     </Grid>
@@ -57,7 +58,13 @@ export const BackButtonControl = ({ pathBack, isInitial, ...props }) => {
   );
 };
 
-const ControlPanel = ({ isSaveDisabled, buttonsList, values }) => {
+const ControlPanel = ({
+  handleSubmit,
+  isSaveDisabled,
+  buttonsList,
+  values,
+  unblockFunction
+}) => {
   const classes = useStyles();
 
   return (
@@ -71,6 +78,8 @@ const ControlPanel = ({ isSaveDisabled, buttonsList, values }) => {
             <SaveButtonControl
               isSaveDisabled={isSaveDisabled}
               values={values}
+              unblockFunction={unblockFunction}
+              handleSubmit={handleSubmit}
             />
           )}
         </Grid>
@@ -83,12 +92,14 @@ SaveButtonControl.propTypes = {
   isSaveDisabled: PropTypes.bool,
   blockFunction: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
-  values: PropTypes.objectOf(PropTypes.object).isRequired
+  values: PropTypes.objectOf(PropTypes.object).isRequired,
+  unblockFunction: PropTypes.func
 };
 
 SaveButtonControl.defaultProps = {
   blockFunction: noop,
-  isSaveDisabled: noop
+  isSaveDisabled: noop,
+  unblockFunction: noop
 };
 
 BackButtonControl.propTypes = {
@@ -102,15 +113,18 @@ BackButtonControl.defaultProps = {
 };
 
 ControlPanel.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
   buttonsList: PropTypes.arrayOf(PropTypes.string),
   isSaveDisabled: PropTypes.bool,
-  values: PropTypes.objectOf(PropTypes.object)
+  values: PropTypes.objectOf(PropTypes.object),
+  unblockFunction: PropTypes.func
 };
 
 ControlPanel.defaultProps = {
   buttonsList: Object.values(ControlPanelButtonsList),
   isSaveDisabled: noop,
-  values: {}
+  values: {},
+  unblockFunction: noop
 };
 
 export default ControlPanel;

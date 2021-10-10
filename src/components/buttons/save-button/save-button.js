@@ -17,6 +17,7 @@ export const saveButtonHandler = (
   saveMessage,
   saveChanges
 ) => {
+  onClickHandler();
   const backAction = () => {
     if (props.unblockFunction) {
       props.unblockFunction();

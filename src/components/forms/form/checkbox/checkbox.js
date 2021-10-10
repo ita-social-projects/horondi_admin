@@ -24,7 +24,7 @@ export const Checkbox = ({
   }, [value]);
 
   return (
-    <React.Fragment key={label}>
+    <div key={label}>
       <FormControlLabel
         className={styles.formControl}
         id={name}
@@ -37,7 +37,7 @@ export const Checkbox = ({
         {...(handleChange ? { handleChange } : {})}
         {...props}
       />
-    </React.Fragment>
+    </div>
   );
 };
 

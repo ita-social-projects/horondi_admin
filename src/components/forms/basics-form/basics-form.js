@@ -38,13 +38,16 @@ import {
   InputList,
   TextLabel,
   Checkbox,
-  ErrorsContainer
+  ErrorsContainer,
+  ImageUpload
 } from '../form';
 
 import {
   calculateAddittionalPriceValue,
   getLabelValue
 } from '../../../utils/additionalPrice-helper';
+
+const EmptyWrapper = ({ children }) => <div>{children}</div>;
 
 const { basicName, enterPrice, additionalPriceLabel, materialLabels } =
   config.labels.basics;
@@ -89,6 +92,7 @@ const BasicsForm = ({ basic, id, edit }) => {
 
   const [materialOptions, setMaterialOptions] = useState();
   const [colorOptions, setColorOptions] = useState();
+  const [additionalPrice, setAdditionalPrice] = useState(0);
 
   const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
 
@@ -136,6 +140,31 @@ const BasicsForm = ({ basic, id, edit }) => {
     customizable: Yup.boolean(),
     basicImage: Yup.string().required(PHOTO_NOT_PROVIDED)
   });
+
+  const submitBasicsForm = (values) => {
+    const newBasic = createBasic(values);
+    const editAndUpload = edit && upload instanceof File;
+    if (editAndUpload || edit) {
+      basicFormOnSubmit(
+        editAndUpload,
+        dispatch,
+        updateBasic,
+        {
+          id,
+          basic: newBasic,
+          image: upload
+        },
+        edit,
+        {
+          id,
+          basic: newBasic
+        }
+      );
+      return;
+    }
+
+    dispatch(addBasic({ basic: newBasic, image: upload }));
+  };
 
   const {
     values,
@@ -232,19 +261,28 @@ const BasicsForm = ({ basic, id, edit }) => {
 
   return (
     <div>
-      <Form>
-        <ControlPanel values={values} unblockFunction={unblock} />
-        <InputList component={React.Fragment} {...{ setFieldValue, values }}>
+      <Form
+        initialValues={getBasicsInitialValues(edit, IMG_URL, basic)}
+        validationSchema={basicsValidationSchema}
+        handleSubmit={submitBasicsForm}
+      >
+        <ControlPanel values={values} />
+        <InputList component={EmptyWrapper}>
           <Checkbox
             data-cy={checkboxes[0].dataCy}
             label={checkboxes[0].label}
             name={checkboxes[0].id}
           />
         </InputList>
-        <InputList
-          component={React.Fragment}
-          {...{ handleChange, handleBlur, values, touched, errors }}
-        >
+        <InputList>
+          <ImageUpload
+            label={config.labels.basics.avatarText}
+            handleImageLoad={handleImageLoad}
+            name='basicImage'
+          />
+          <ErrorsContainer name='basicImage' />
+        </InputList>
+        <InputList component={EmptyWrapper}>
           {materialLabels.map(({ label, name, required }, idx) => (
             <Dropdown
               key={`basics-material-dropdown-${idx}`}
@@ -252,6 +290,9 @@ const BasicsForm = ({ basic, id, edit }) => {
               name={name}
               required={required}
               options={[materialOptions, colorOptions][idx]}
+              onValueChange={(_, values) => {
+                setBasicsColorsHandler(values, setColor, find, materials);
+              }}
             />
           ))}
         </InputList>
@@ -259,39 +300,39 @@ const BasicsForm = ({ basic, id, edit }) => {
           <InputList
             key={`basics-material-name-input-${idx}`}
             title={lang.toUpperCase()}
-            {...{ handleChange, handleBlur, values, touched, errors }}
           >
             <TextInput
               data-cy={`${lang}-${inputs[0].name}`}
               label={inputs[0].label[lang]}
               name={`${lang}${upperFirst(inputs[0].name)}`}
-              error={
-                touched[`${lang}${upperFirst(inputs[0].name)}`] &&
-                !!errors[`${lang}${upperFirst(inputs[0].name)}`]
-              }
             />
             <ErrorsContainer name={`${lang}${upperFirst(inputs[0].name)}`} />
           </InputList>
         ))}
-        <InputList {...{ handleChange, handleBlur, values, touched, errors }}>
+        <InputList>
           <TextLabel text={labels.enterPrice} />
           <TextInput
             data-cy='additionalPrice'
             name='additionalPrice'
             label={getLabelValue(values, labels.additionalPriceType)}
-            error={touched.additionalPrice && errors.additionalPrice}
             type='number'
             className={styles.additionalPrice}
+            onValueChange={(_, values) => {
+              setAdditionalPrice(
+                calculateAddittionalPriceValue(values, exchangeRate)
+              );
+            }}
           />
           <ErrorsContainer name='additionalPrice' />
           <TextInput
             label={labels.convertationTitle}
-            value={calculateAddittionalPriceValue(values, exchangeRate)}
+            value={additionalPrice}
             disabled
             className={styles.currencyField}
           />
         </InputList>
       </Form>
+
       <form onSubmit={eventPreventHandler}>
         <div className={styles.buttonContainer}>
           <Grid container spacing={2} className={styles.fixedButtons}>
@@ -365,6 +406,10 @@ const BasicsForm = ({ basic, id, edit }) => {
 const valueShape = PropTypes.shape({
   value: PropTypes.string
 });
+
+EmptyWrapper.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element).isRequired
+};
 
 BasicsForm.propTypes = {
   id: PropTypes.string,

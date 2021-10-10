@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
@@ -11,12 +11,19 @@ const TextInput = ({
   name,
   handleBlur,
   handleChange,
-  error,
   type,
+  values,
+  touched,
+  errors,
   className,
+  onValueChange,
   ...props
 }) => {
   const styles = useStyles();
+
+  useEffect(() => {
+    onValueChange(values[name], values);
+  }, [values[name]]);
 
   return (
     <FormControl className={styles.formControl}>
@@ -28,7 +35,7 @@ const TextInput = ({
           multiline={type !== 'number'}
           onBlur={handleBlur}
           onChange={handleChange}
-          error={error}
+          error={touched[name] && !!errors[name]}
           {...props}
           className={`${styles.textField} ${className}`}
         />
@@ -40,18 +47,24 @@ const TextInput = ({
 TextInput.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
-  error: PropTypes.bool,
   handleChange: PropTypes.func,
   handleBlur: PropTypes.func,
-  className: PropTypes.string
+  onValueChange: PropTypes.func,
+  className: PropTypes.string,
+  values: PropTypes.objectOf(PropTypes.object),
+  touched: PropTypes.objectOf(PropTypes.object),
+  errors: PropTypes.objectOf(PropTypes.object)
 };
 
 TextInput.defaultProps = {
-  error: false,
   type: 'text',
   handleChange: noop,
   handleBlur: noop,
-  className: ''
+  onValueChange: noop,
+  className: '',
+  values: {},
+  touched: {},
+  errors: {}
 };
 
 export default TextInput;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
@@ -16,12 +16,19 @@ const Dropdown = ({
   label,
   values,
   touched,
-  errors
+  errors,
+  setFieldValue,
+  onValueChange,
+  ...props
 }) => {
   const styles = useStyles();
 
+  useEffect(() => {
+    onValueChange(values[name], values);
+  }, [values[name]]);
+
   return (
-    <FormControl className={styles.formControl}>
+    <FormControl className={styles.formControl} {...props}>
       <InputLabel htmlFor={label}>
         {`${label}${required ? '*' : ''}`}
       </InputLabel>
@@ -55,7 +62,9 @@ Dropdown.propTypes = {
   label: PropTypes.string,
   values: PropTypes.objectOf(PropTypes.object),
   touched: PropTypes.objectOf(PropTypes.object),
-  errors: PropTypes.objectOf(PropTypes.object)
+  errors: PropTypes.objectOf(PropTypes.object),
+  setFieldValue: PropTypes.func,
+  onValueChange: PropTypes.func
 };
 
 Dropdown.defaultProps = {
@@ -66,7 +75,9 @@ Dropdown.defaultProps = {
   label: '',
   values: {},
   touched: {},
-  errors: {}
+  errors: {},
+  setFieldValue: noop,
+  onValueChange: noop
 };
 
 export default Dropdown;

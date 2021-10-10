@@ -44,6 +44,12 @@ import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-che
 import Tooltip from '../../tooltip';
 import { sizes } from '../../../configs/tooltip-titles';
 
+import {
+  Radio as MyRadio,
+  RadioGroup as MyRadioGroup,
+  InputList
+} from '../form';
+
 const {
   MODEL_EXPLANATION,
   RELATIVE_PRICE_EXPLANATION,
@@ -250,6 +256,28 @@ function SizeForm({ id, size }) {
                   )}
                 </FormControl>
               </Paper>
+              <InputList {...{ values, handleChange }}>
+                <MyRadioGroup name={values.additionalPriceType}>
+                  <MyRadio
+                    label={additionalPriceType.absolutePrice[0].value}
+                    value='ABSOLUTE_INDICATOR'
+                  >
+                    <Tooltip
+                      title={RELATIVE_PRICE_EXPLANATION}
+                      placement='right'
+                    />
+                  </MyRadio>
+                  <MyRadio
+                    label={additionalPriceType.relativePrice[0].value}
+                    value='RELATIVE_INDICATOR'
+                  >
+                    <Tooltip
+                      title={RELATIVE_PRICE_EXPLANATION}
+                      placement='right'
+                    />
+                  </MyRadio>
+                </MyRadioGroup>
+              </InputList>
               <Paper className={styles.sizeItemAdd}>
                 <FormControl component='fieldset'>
                   <RadioGroup
