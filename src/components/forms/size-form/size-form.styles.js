@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     '& div': {
       '& div': {
         '& div': {
-          paddingRight: '0px'
+          // paddingRight: '0px'
         }
       }
     }

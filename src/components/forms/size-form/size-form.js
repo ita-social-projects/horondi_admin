@@ -47,7 +47,9 @@ import { sizes } from '../../../configs/tooltip-titles';
 import {
   Radio as MyRadio,
   RadioGroup as MyRadioGroup,
-  InputList
+  InputList,
+  TextInput,
+  ErrorsContainer
 } from '../form';
 
 const {
@@ -256,17 +258,15 @@ function SizeForm({ id, size }) {
                   )}
                 </FormControl>
               </Paper>
-              <InputList {...{ values, handleChange }}>
-                <MyRadioGroup name={values.additionalPriceType}>
+              <InputList
+                className={styles.sizeItemAdd}
+                {...{ errors, touched, values, handleChange, handleBlur }}
+              >
+                <MyRadioGroup name='additionalPriceType'>
                   <MyRadio
                     label={additionalPriceType.absolutePrice[0].value}
                     value='ABSOLUTE_INDICATOR'
-                  >
-                    <Tooltip
-                      title={RELATIVE_PRICE_EXPLANATION}
-                      placement='right'
-                    />
-                  </MyRadio>
+                  />
                   <MyRadio
                     label={additionalPriceType.relativePrice[0].value}
                     value='RELATIVE_INDICATOR'
@@ -277,6 +277,23 @@ function SizeForm({ id, size }) {
                     />
                   </MyRadio>
                 </MyRadioGroup>
+                <TextInput
+                  data-cy='additionalPrice'
+                  name='additionalPrice'
+                  label={getLabelValue(values, additionalPriceType)}
+                  type='number'
+                >
+                  <Tooltip title={PRICE_EXPLANATION}>
+                    <span>{PRICE_EXPLANATION_DESCRIPTION}</span>
+                  </Tooltip>
+                </TextInput>
+                <ErrorsContainer name='additionalPrice' />
+                <TextInput
+                  name='outlined-basic'
+                  label={convertationTitle}
+                  disabled
+                  value={calculateAddittionalPriceValue(values, exchangeRate)}
+                 />
               </InputList>
               <Paper className={styles.sizeItemAdd}>
                 <FormControl component='fieldset'>

@@ -25,6 +25,7 @@ export const InputList = ({
   errors,
   values,
   component,
+  className,
   ...props
 }) => {
   const styles = useStyles();
@@ -43,7 +44,10 @@ export const InputList = ({
   return (
     <div>
       {title && <InputListTitle title={title} className={styles.title} />}
-      <Container className={styles.inputsContainer} {...props}>
+      <Container
+        className={`${styles.inputsContainer} ${className}`}
+        {...props}
+      >
         {Children.map(children, wrapInput(wrapProps))}
       </Container>
     </div>
@@ -67,7 +71,8 @@ InputList.propTypes = {
   touched: PropTypes.objectOf(PropTypes.object),
   errors: PropTypes.objectOf(PropTypes.object),
   values: PropTypes.objectOf(PropTypes.object),
-  component: PropTypes.node
+  component: PropTypes.node,
+  className: PropTypes.string
 };
 
 InputList.defaultProps = {
@@ -78,7 +83,8 @@ InputList.defaultProps = {
   touched: {},
   errors: {},
   values: {},
-  component: Paper
+  component: Paper,
+  className: ''
 };
 
 export default InputList;

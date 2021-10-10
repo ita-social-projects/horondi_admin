@@ -17,6 +17,7 @@ const TextInput = ({
   errors,
   className,
   onValueChange,
+  children,
   ...props
 }) => {
   const styles = useStyles();
@@ -35,11 +36,13 @@ const TextInput = ({
           multiline={type !== 'number'}
           onBlur={handleBlur}
           onChange={handleChange}
+          value={values[name]}
           error={touched[name] && !!errors[name]}
           {...props}
           className={`${styles.textField} ${className}`}
         />
       </React.Fragment>
+      {children}
     </FormControl>
   );
 };
@@ -53,7 +56,8 @@ TextInput.propTypes = {
   className: PropTypes.string,
   values: PropTypes.objectOf(PropTypes.object),
   touched: PropTypes.objectOf(PropTypes.object),
-  errors: PropTypes.objectOf(PropTypes.object)
+  errors: PropTypes.objectOf(PropTypes.object),
+  children: PropTypes.arrayOf(PropTypes.element).isRequired
 };
 
 TextInput.defaultProps = {
