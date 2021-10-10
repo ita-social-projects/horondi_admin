@@ -12,6 +12,7 @@ import {
   Radio as RadioComponent
 } from './radio/radio';
 import ImageUploadComponent from './image-upload/image-upload';
+import ComboBoxComponent from './combo-box/combo-box';
 
 export const Form = FormComponent;
 export const TextInput = TextInputComponent;
@@ -25,5 +26,6 @@ export const TextPanel = TextPanelComponent;
 export const RadioGroup = RadioGroupComponent;
 export const Radio = RadioComponent;
 export const ImageUpload = ImageUploadComponent;
+export const ComboBox = ComboBoxComponent;
 
 export default FormComponent;

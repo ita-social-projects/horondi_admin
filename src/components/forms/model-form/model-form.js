@@ -40,6 +40,8 @@ import {
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
+import { InputList, ComboBox, ErrorsContainer } from '../form';
+
 const { languages } = config;
 const { materialUiConstants } = config;
 const { PHOTO_NOT_PROVIDED } = config.modelErrorMessages;
@@ -282,6 +284,10 @@ const ModelForm = ({ model, id, isEdit }) => {
               <div className={styles.inputError}>{errors.priority}</div>
             )}
           </Paper>
+          <InputList>
+            <ComboBox />
+            <ErrorsContainer />
+          </InputList>
           <Paper>
             <Autocomplete
               id={labelsEn.tagsFilled}
