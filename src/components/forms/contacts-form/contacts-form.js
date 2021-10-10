@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormControl, Paper, TextField, Grid, Avatar } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -23,6 +23,9 @@ import {
 import { handleAvatar } from '../../../utils/handle-avatar';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
+import LoadingBar from '../../loading-bar';
+import { materialSelector } from '../../../redux/selectors/material.selectors';
+import { getContacts } from '../../../redux/contact/contact.actions';
 
 const { languages, materialUiConstants } = config;
 const { schedule, adress } = config.labels.contacts;
@@ -106,8 +109,8 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       onSubmit: (formValues) => {
         if (
           formValues.uaCartImage &&
-          formValues.enCartImage &&
-          typeof formValues.uaCartImage === typeof formValues.enCartImage
+          formValues.enCartImage
+          // typeof formValues.uaCartImage === typeof formValues.enCartImage
         ) {
           contactSaveHandler(formValues);
         } else {
@@ -136,6 +139,16 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     e.preventDefault();
   };
 
+  const { loading } = useSelector(materialSelector);
+
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
+
+  // if (loading) {
+  //   return (<><LoadingBar />
+  //   </>)
+  // }
   return (
     <div className={classes.detailsContainer}>
       <form className={classes.form} onSubmit={(e) => eventPreventHandler(e)}>

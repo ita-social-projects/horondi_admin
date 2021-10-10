@@ -33,6 +33,11 @@ export const selectSelectedProductAndLoading = createSelector(
   })
 );
 
+export const selectProduct = createSelector(
+  selectProducts,
+  (product) => product
+);
+
 export const selectSelectedProductAndDetails = createSelector(
   selectProductDetails,
   selectSelectedProduct,

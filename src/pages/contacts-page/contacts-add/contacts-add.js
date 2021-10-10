@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
-import { addContact } from '../../../redux/contact/contact.actions';
+import {
+  addContact,
+  getContacts
+} from '../../../redux/contact/contact.actions';
+import { contactLoading } from '../../../redux/selectors/contacts.selectors';
 
 import ContactsForm from '../../../components/forms/contacts-form';
+// import { selectContact } from '../../../../contact.reducer';
 
 const { languages } = config;
 
 const ContactsAdd = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(({ News }) => News.newsLoading);
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
+
+  const { loading } = useSelector(contactLoading);
 
   const [contactFormValues] = useState({
     phoneNumber: '',
@@ -26,7 +35,7 @@ const ContactsAdd = () => {
     cartLink: ''
   });
 
-  const contactSaveHandler = async ({
+  const contactSaveHandler = ({
     phoneNumber,
     uaSchedule,
     enSchedule,
@@ -71,7 +80,6 @@ const ContactsAdd = () => {
   if (loading) {
     return <LoadingBar />;
   }
-
   return (
     <ContactsForm
       contactSaveHandler={contactSaveHandler}

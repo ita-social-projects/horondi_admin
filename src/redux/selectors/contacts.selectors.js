@@ -7,6 +7,23 @@ export const contactSelector = createSelector(
   (contact) => contact
 );
 
+export const selectProductLoading = ({ Contact }) => ({
+  contactsLoading: Contact.contactsLoading
+});
+
+export const selectSelectedContact = ({ Contact }) => ({
+  contact: Contact.selectedContact
+});
+
+export const contactLoading = createSelector(
+  selectProductLoading,
+  selectContact,
+  (loading, contact) => ({
+    ...loading,
+    ...contact
+  })
+);
+
 export const contactSelectorWithPagination = createSelector(
   contactSelector,
   selectPagination,
