@@ -85,6 +85,16 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     dispatch(updateConstructor({ id, constructor: constructorToAdd }));
   };
 
+  const values = {
+    basicsToAdd,
+    bottomsToAdd,
+    patternsToAdd,
+    backsToAdd,
+    strapsToAdd,
+    closuresToAdd,
+    restrictionsToAdd
+  };
+
   const mapElement = (element) => element?.map((item) => item._id);
 
   useEffect(() => {
@@ -180,6 +190,8 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
               className={classes.constructorButton}
               data-cy={materialUiConstants.save}
               type={materialUiConstants.types.submit}
+              vlues={values}
+              errors={values}
               title={MODEL_SAVE_TITLE}
             />
           </Grid>
