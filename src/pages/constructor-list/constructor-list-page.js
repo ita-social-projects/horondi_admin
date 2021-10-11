@@ -118,6 +118,7 @@ const ConstructorListPage = () => {
       </InputLabel>
       <Select
         value={id}
+        id={id}
         onChange={handleChange}
         autoWidth
         className={styles.selectedEmpty}

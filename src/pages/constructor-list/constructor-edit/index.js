@@ -1,3 +1,3 @@
-import constructorEdit from './constructor-edit';
+import ConstructorEdit from './constructor-edit';
 
-export default constructorEdit;
+export default ConstructorEdit;

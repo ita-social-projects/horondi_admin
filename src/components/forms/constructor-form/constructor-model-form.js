@@ -92,8 +92,6 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     setRestrictionsToAdd(isEdit ? constructor?.pocketsWithRestrictions : []);
   }, [constructor]);
 
-  console.log(restrictionsToAdd);
-
   const constructorOptions = [
     {
       optionName: 'basic',
@@ -246,12 +244,7 @@ ConstructorModelForm.defaultProps = {
     ],
     images: {
       thumbnail: ''
-    },
-    category: {},
-    sizes: [],
-    show: false,
-    availableForConstructor: false,
-    priority: 1
+    }
   },
   isEdit: false
 };

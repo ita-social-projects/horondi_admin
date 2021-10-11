@@ -1,20 +1,15 @@
 import React from 'react';
-import { Link, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
 import Adapter from 'enzyme-adapter-react-16';
-import { Button, Typography } from '@material-ui/core';
 import { configure, shallow, mount } from 'enzyme';
 import mockStore from './mockStore';
 import ConstructorListPage from '../constructor-list-page';
-import TableContainerGenerator from '../../../containers/table-container-generator';
-import TableContainerRow from '../../../containers/table-container-row';
 import LoadingBar from '../../../components/loading-bar';
 
 import { config } from '../../../configs';
 
-const { CREATE_CONSTRUCTOR } = config.buttonTitles;
-const { pathToConstructorDetails } = config.routes;
-const tableTitles = config.tableHeadRowTitles.bottoms;
+const { NO_CONSTRUCTOR_MESSAGE } = config.messages;
 
 configure({ adapter: new Adapter() });
 
@@ -23,9 +18,6 @@ describe('constructor-page tests', () => {
   let spyOnUseSelector;
   let spyOnUseDispatch;
   let mockDispatch;
-  let typography;
-  let tableContainerGenerator;
-  let button;
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
@@ -37,9 +29,6 @@ describe('constructor-page tests', () => {
     spyOnUseDispatch.mockReturnValue(mockDispatch);
 
     wrapper = shallow(<ConstructorListPage />);
-    typography = wrapper.find(Typography);
-    button = wrapper.find(Button);
-    tableContainerGenerator = wrapper.find(TableContainerGenerator);
   });
 
   afterEach(() => {
@@ -50,5 +39,67 @@ describe('constructor-page tests', () => {
   test('Should render constructor-page', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper).toHaveLength(1);
+  });
+
+  it('should render loading bar', () => {
+    spyOnUseSelector.mockImplementation(() => ({
+      ...mockStore,
+      loading: true
+    }));
+    wrapper = shallow(<ConstructorListPage />);
+    expect(wrapper.find(LoadingBar)).toBeDefined();
+  });
+
+  it('should render no constructors message', () => {
+    spyOnUseSelector.mockImplementation(() => ({
+      ...mockStore,
+      items: []
+    }));
+    wrapper = shallow(<ConstructorListPage />);
+    expect(wrapper.text().includes(NO_CONSTRUCTOR_MESSAGE)).toBe(true);
+  });
+});
+
+describe('UseEffect tests', () => {
+  let spyOnUseSelector;
+  let mockDispatchFn;
+  let wrapper;
+  let constructorPage;
+  let tableContainerRowFirst;
+
+  beforeEach(() => {
+    spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
+    spyOnUseSelector.mockImplementation(() => mockStore);
+
+    mockDispatchFn = jest.fn();
+    reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
+
+    wrapper = mount(
+      <BrowserRouter>
+        <ConstructorListPage />
+      </BrowserRouter>
+    );
+    constructorPage = wrapper.find(ConstructorListPage);
+    tableContainerRowFirst = constructorPage.find({
+      id: '60eadfb9e913fc3f88294bd9'
+    });
+  });
+  afterEach(() => {
+    wrapper.unmount();
+    spyOnUseSelector.mockClear();
+  });
+
+  test('UseEffect hook should work out', () => {
+    expect(mockDispatchFn).toHaveBeenCalled();
+  });
+
+  test('deleteHandler should work out', () => {
+    tableContainerRowFirst.at(0).props().deleteHandler();
+    expect(mockDispatchFn).toHaveBeenCalledTimes(3);
+  });
+
+  test('editHandler should work out', () => {
+    tableContainerRowFirst.at(0).props().editHandler();
+    expect(mockDispatchFn).toHaveBeenCalledTimes(3);
   });
 });
