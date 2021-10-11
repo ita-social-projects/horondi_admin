@@ -40,8 +40,8 @@ const TableContainerRow = ({
     </TableCell>
   ));
 
-  const setCheckboxValue = (id) => {
-    const checked = checkBoxValue.find((item) => item === id);
+  const setCheckboxValue = (idToFind) => {
+    const checked = checkBoxValue.find((item) => item === idToFind);
     return !!checked;
   };
 
