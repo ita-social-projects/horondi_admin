@@ -67,11 +67,7 @@ const ProductAddImages = ({
 };
 
 ProductAddImages.propTypes = {
-  productImages: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.object()])
-    )
-  ).isRequired,
+  productImages: PropTypes.arrayOf(PropTypes.object).isRequired,
   isEdit: PropTypes.bool,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,

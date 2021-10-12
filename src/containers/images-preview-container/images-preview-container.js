@@ -39,7 +39,10 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
       });
   }, [src]);
 
-  const checkedList = useMemo(() => arrItems.filter((item) => item.checked === true), [arrItems]);
+  const checkedList = useMemo(
+    () => arrItems.filter((item) => item.checked === true),
+    [arrItems]
+  );
 
   const disabledPrimary = checkedList.length !== 1;
 
@@ -73,7 +76,10 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
     imageHandler((prev) => {
       const newArr = [...prev].filter((item, idx) => {
         const check = checkedList.filter(({ index }) => index === idx);
-        return item.src.preview !== check[0]?.src;
+        const img = item.src.large
+          ? config.imagePrefix + item.src.large
+          : item.src.preview;
+        return img !== check[0]?.src;
       });
       checkedList.forEach((item) => {
         if (item.primary && prev.length !== 1) newArr[0].primary = true;
@@ -176,11 +182,7 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
 };
 
 ImagesPreviewContainer.propTypes = {
-  src: PropTypes.arrayOf(
-    PropTypes.objectOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.object()])
-    )
-  ).isRequired,
+  src: PropTypes.arrayOf(PropTypes.object).isRequired,
   labels: PropTypes.objectOf(PropTypes.string).isRequired,
   imageHandler: PropTypes.func.isRequired,
   multiple: PropTypes.bool
