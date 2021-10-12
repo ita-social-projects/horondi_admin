@@ -376,10 +376,8 @@ const ProductForm = ({ isEdit }) => {
               isEdit={isEdit}
               productImages={productImages}
               setProductImages={setProductImages}
-              validate={shouldValidate}
               toggleFieldsChanged={toggleFieldsChanged}
               setFieldValue={setFieldValue}
-              onBlur={handleBlur}
               errors={errors}
               touched={touched}
             />
