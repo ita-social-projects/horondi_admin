@@ -2,13 +2,23 @@ export const actionDispatchHandler = (
   condition,
   dispatch,
   setFilesAction,
-  primaryImage,
-  additionalImages
+  setPrimaryAction,
+  images
 ) => {
-  if (condition) {
-    dispatch(setFilesAction([primaryImage, ...additionalImages]));
-  } else if (primaryImage) {
-    dispatch(setFilesAction([primaryImage]));
+  const primaryImage = images
+    .filter((img) => img.primary === true)
+    .map(({ src }) => src);
+  const additionalImages = images.map((img) => img.src);
+  const additionalPrimaryImages = additionalImages.filter(
+    (image) => image !== primaryImage[0]
+  );
+  const addImages = [...primaryImage, ...additionalPrimaryImages];
+
+  if (!condition) {
+    dispatch(setFilesAction(addImages));
+  } else {
+    dispatch(setPrimaryAction(primaryImage[0]));
+    dispatch(setFilesAction(additionalPrimaryImages));
   }
 };
 

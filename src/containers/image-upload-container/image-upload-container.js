@@ -1,80 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
-import { Grid } from '@material-ui/core';
 import { useStyles } from './image-upload-previewContainer.styles';
 import { utils } from '../../utils/image-upload';
 
-const ImageUploadContainer = ({ handler, src, id, multiple, maxFiles }) => {
+const ImageUploadContainer = ({ handler, src, id }) => {
   const style = useStyles();
-  const onDrop = {
+  const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
-    multiple,
-    maxFiles,
     onDrop: (acceptedFiles) => {
-      const files = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
+      handler(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file)
+          })
+        )
       );
-      handler(files);
     }
-  };
-
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone(onDrop);
-  console.log(`src`, src);
-
-  const thumbs = Array.isArray(src)
-    ? acceptedFiles.map((file) => (
-        <li className={style.thumb} key={file.name}>
-          <div className={style.thumbInner}>
-            <img
-              src={file.preview}
-              className={style.img}
-              alt={utils.alt.preview}
-            />
-          </div>
-        </li>
-      ))
-    : null;
+  });
 
   return (
-    <>
-      <Grid item {...getRootProps({ className: 'dropzone' })}>
-        <input style={{ height: '100%', width: 'auto' }} {...getInputProps()} />
+    <section className='container'>
+      <div {...getRootProps({ className: 'dropzone' })}>
+        <input
+          style={{ height: '300px', width: '200px' }}
+          {...getInputProps()}
+        />
         <label
-          className={
-            src && !multiple ? style.labelWithoutBack : style.labelWithBack
-          }
+          className={src ? style.labelWithoutBack : style.labelWithBack}
           htmlFor={id}
           data-cy={utils.dataCy.preview}
         >
-          {src && !multiple && (
+          {src && (
             <img className={style.image} src={src} alt={utils.alt.preview} />
           )}
         </label>
-      </Grid>
-      <div>
-        <div className={style.thumbsContainer}>
-          {multiple && <ul>{thumbs}</ul>}
-        </div>
       </div>
-    </>
+    </section>
   );
 };
 
 ImageUploadContainer.propTypes = {
   handler: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
-  maxFiles: PropTypes.number,
   src: PropTypes.string,
   id: PropTypes.string.isRequired
 };
 
 ImageUploadContainer.defaultProps = {
   multiple: false,
-  src: null,
-  maxFiles: 1
+  src: null
 };
 
 export default ImageUploadContainer;
