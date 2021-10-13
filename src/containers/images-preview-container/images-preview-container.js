@@ -82,7 +82,8 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
         return img !== check[0]?.src;
       });
       checkedList.forEach((item) => {
-        if (item.primary && prev.length !== 1) newArr[0].primary = true;
+        if (item.primary && prev.length !== 1 && newArr.length)
+          newArr[0].primary = true;
       });
       return newArr;
     });
