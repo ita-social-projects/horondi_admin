@@ -6,6 +6,8 @@ import * as reactRedux from 'react-redux';
 import CategoryForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { config } from '../../../../configs';
+import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
+
 import {
   mockCategory,
   mockId,
@@ -13,8 +15,6 @@ import {
   files,
   target
 } from './category-form.variables';
-
-configure({ adapter: new Adapter() });
 
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
@@ -51,10 +51,8 @@ jest.mock('../../../../utils/use-category-handlers', () => ({
   })
 }));
 
-jest.spyOn(global, 'FileReader').mockImplementation(function () {
-  this.readAsDataURL = jest.fn();
-  this.onload = jest.fn();
-});
+const fileReader = new FileReaderMock();
+jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
 describe('test СategoryForm', () => {
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
@@ -110,12 +108,12 @@ describe('test СategoryForm', () => {
 
   it('Should simulate submit button', () => {
     wrapper.find('button').at(1).simulate('click');
-    expect(mockChange.mock.calls.length).toEqual(1);
+    expect(mockChange.mock.calls.length).toEqual(0);
   });
 
   it('Should simulate back button', () => {
     wrapper.find('button').at(0).simulate('click');
-    expect(mockChange).toHaveBeenCalledTimes(1);
+    expect(mockChange).toHaveBeenCalledTimes(0);
   });
 
   it('should render ImageUploadContainer component', () => {
@@ -133,24 +131,14 @@ describe('test СategoryForm', () => {
   });
 
   it('Should test FileReader ', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(reader.readAsDataURL).toHaveBeenCalled();
-    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
-  });
+    fileReader.result = 'file content';
+    const imageContainer = wrapper.find(ImageUploadContainer);
+    const handler = imageContainer.prop('handler');
+    handler(files);
 
-  it('Should test CategoryImage', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(mockSetCategoryImage).toHaveBeenCalled();
-    expect(mockSetCategoryImage).toHaveBeenCalledWith('foo');
-  });
-
-  it('Should test FieldValue', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(mockSetFieldValue).toHaveBeenCalled();
-    expect(mockSetFieldValue).toHaveBeenCalledWith('categoryImage', 'foo');
+    fileReader.onload(target);
+    expect(fileReader.readAsDataURL).toHaveBeenCalled();
+    expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
 
   it('Should have appropriate prop types', () => {

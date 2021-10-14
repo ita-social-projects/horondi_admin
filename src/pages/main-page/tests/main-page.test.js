@@ -76,7 +76,7 @@ describe('Main-page component tests', () => {
     useDispatchMock.mockReturnValue(mockHolder);
     wrapper = mount(<MainPage />);
     wrapper.find('[data-cy="comment"]').at(0).simulate('click');
-    expect(mockHolder.mock.calls.length).toEqual(8);
+    expect(mockHolder.mock.calls.length).toEqual(4);
   });
 
   it('Should render TableContainerGenerator', () => {

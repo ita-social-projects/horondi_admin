@@ -8,8 +8,6 @@ import { config } from '../../../../configs';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { initialValues } from './contacts-form.variables';
 
-configure({ adapter: new Adapter() });
-
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
 const mockSetFieldValue = jest.fn();
@@ -93,7 +91,7 @@ describe('test СategoryForm', () => {
   });
   it('Should handle enSelectImageHandler', () => {
     wrapper.find(ImageUploadContainer).at(1).props().handler();
-    expect(mockSetContactsImage).toHaveBeenCalledTimes(2);
+    expect(mockSetContactsImage).toHaveBeenCalledTimes(1);
   });
   it('should call preventDefault', () => {
     const event = { preventDefault: () => {} };

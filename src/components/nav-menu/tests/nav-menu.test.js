@@ -103,6 +103,6 @@ describe('Nav menu test', () => {
   });
   it('Should handle close Drawer', () => {
     wrapper.find(Drawer).prop('onClose')();
-    expect(mockHandleDrawerToggle).toHaveBeenCalledTimes(3);
+    expect(mockHandleDrawerToggle).toHaveBeenCalledTimes(1);
   });
 });

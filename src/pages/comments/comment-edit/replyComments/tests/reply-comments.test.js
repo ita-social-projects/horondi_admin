@@ -63,7 +63,7 @@ describe('Comment form tests', () => {
 
   it('Should simulate deleteHandler', () => {
     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
-    expect(mockUseDispatchFn).toHaveBeenCalledTimes(6);
+    expect(mockUseDispatchFn).toHaveBeenCalledTimes(1);
     expect(mockUseSuccessSnackbar).toHaveBeenCalledTimes(1);
   });
 
@@ -73,6 +73,6 @@ describe('Comment form tests', () => {
       <ReplyComments itemsCount={itemsCount} replyComments={replyComments} />
     );
     wrapper.find(TableContainerRow).at(2).props().editHandler();
-    expect(mockUseDispatchFn).toHaveBeenCalledTimes(8);
+    expect(mockUseDispatchFn).toHaveBeenCalledTimes(2);
   });
 });

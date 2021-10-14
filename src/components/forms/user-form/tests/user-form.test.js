@@ -9,8 +9,7 @@ import ImageUploadContainer from '../../../../containers/image-upload-container'
 import { config } from '../../../../configs';
 import { files, target } from './user.form.variables';
 import { SaveButton } from '../../../buttons';
-
-configure({ adapter: new Adapter() });
+import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -66,10 +65,8 @@ jest.mock('../../../../utils/use-user-handlers', () => ({
   })
 }));
 
-jest.spyOn(global, 'FileReader').mockImplementation(function foo() {
-  this.readAsDataURL = jest.fn();
-  this.onload = jest.fn();
-});
+const fileReader = new FileReaderMock();
+jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
 describe('User form tests', () => {
   let spyOnUseSelector;
@@ -128,10 +125,14 @@ describe('User form tests', () => {
   });
 
   it('Should test FileReader ', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(reader.readAsDataURL).toHaveBeenCalled();
-    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
+    fileReader.result = 'file content';
+    const imageContainer = component.find(ImageUploadContainer);
+    const handler = imageContainer.prop('handler');
+    handler(files);
+
+    fileReader.onload(target);
+    expect(fileReader.readAsDataURL).toHaveBeenCalled();
+    expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
   it('Should simulate submit button', () => {
     component.find(SaveButton).prop('onClickHandler')();

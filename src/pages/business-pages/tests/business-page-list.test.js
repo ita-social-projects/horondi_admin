@@ -78,7 +78,7 @@ describe('BusinessPageList tests', () => {
     mockLoading = false;
     useDispatchMock.mockReturnValue(mockHandler);
     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
-    expect(mockHandler).toHaveBeenCalledTimes(4);
+    expect(mockHandler).toHaveBeenCalledTimes(2);
   });
 
   it('Button addBusinessPage should exist and be clicked', () => {

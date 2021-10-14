@@ -11,8 +11,6 @@ import { sizeList, id, size } from './size-form.variables';
 import { config } from '../../../../configs';
 import { sizeDefaultProps } from '../../../../utils/size-helpers';
 
-configure({ adapter: new Adapter() });
-
 const labels = config.labels.sizeLabels;
 
 const mockAddSize = jest.fn();
@@ -103,7 +101,7 @@ describe('Size form tests', () => {
     wrapper = mount(<SizeForm />);
     const checkbox = wrapper.find('label input[type="checkbox"]');
     checkbox.props().onChange({ target: { checked: true } });
-    expect(mockSetFieldValue).toHaveBeenCalledTimes(3);
+    expect(mockSetFieldValue).toHaveBeenCalledTimes(1);
   });
 
   it('Should simulate onsubmit on Form', () => {

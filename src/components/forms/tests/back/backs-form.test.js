@@ -20,8 +20,7 @@ import {
   files,
   target
 } from '../constructor-elements-form-mock-variables';
-
-configure({ adapter: new Adapter() });
+import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -65,6 +64,9 @@ describe('Back form tests', () => {
   let mockDispatch;
   let component;
   let getState;
+
+  const fileReader = new FileReaderMock();
+  jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
@@ -133,19 +135,15 @@ describe('Back form tests', () => {
   });
 
   it('Should test FileReader ', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(reader.readAsDataURL).toHaveBeenCalled();
-    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
-  });
-
-  it('Should test BackImage', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
+    fileReader.result = 'file content';
+    const imageContainer = component.find(ImageUploadPreviewContainer);
+    const handler = imageContainer.prop('handler');
+    handler(files);
+    fileReader.onload(target);
+    expect(fileReader.readAsDataURL).toHaveBeenCalled();
+    expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
     expect(mockSetBackImage).toHaveBeenCalled();
-    expect(mockSetBackImage).toHaveBeenCalledWith('foo');
   });
-
   it('should render FormControl component', () => {
     const wrapper = component.find(FormControl);
     expect(wrapper.exists(FormControl)).toBeDefined();

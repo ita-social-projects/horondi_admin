@@ -20,8 +20,7 @@ import {
   files,
   target
 } from '../constructor-elements-form-mock-variables';
-
-configure({ adapter: new Adapter() });
+import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -54,10 +53,8 @@ jest.mock('../../../../utils/use-bottom-handlers.js', () => ({
   })
 }));
 
-jest.spyOn(global, 'FileReader').mockImplementation(function () {
-  this.readAsDataURL = jest.fn();
-  this.onload = jest.fn();
-});
+const fileReader = new FileReaderMock();
+jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
 describe('Bottom form tests', () => {
   let spyOnUseSelector;
@@ -133,17 +130,13 @@ describe('Bottom form tests', () => {
   });
 
   it('Should test FileReader ', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(reader.readAsDataURL).toHaveBeenCalled();
-    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
-  });
+    fileReader.result = 'file content';
+    const imageContainer = component.find(ImageUploadPreviewContainer);
+    const handler = imageContainer.prop('handler');
+    handler(files);
 
-  it('Should test BottomImage', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(mockSetBottomImage).toHaveBeenCalled();
-    expect(mockSetBottomImage).toHaveBeenCalledWith('foo');
+    expect(fileReader.readAsDataURL).toHaveBeenCalled();
+    expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
 
   it('should render FormControl component', () => {
