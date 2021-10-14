@@ -1,7 +1,5 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { act, fireEvent, render } from '@testing-library/react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import PocketsForm from '../index';

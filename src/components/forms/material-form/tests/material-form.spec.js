@@ -1,6 +1,4 @@
 import React from 'react';
-import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import Select from '@material-ui/core/Select';
 import LanguagePanel from '../../language-panel';

@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 import CategoryForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';

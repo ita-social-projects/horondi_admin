@@ -1,9 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { configure, mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { act, fireEvent, render } from '@testing-library/react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
@@ -16,8 +13,6 @@ import {
 } from './straps.form.variables';
 import StrapsForm from '../index';
 import { SaveButton } from '../../../buttons';
-import ModelForm from '../../model-form';
-import { mockId } from '../../model-form/tests/model-form.variables';
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();

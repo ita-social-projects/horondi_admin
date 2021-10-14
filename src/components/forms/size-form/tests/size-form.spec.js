@@ -1,6 +1,4 @@
 import React from 'react';
-import { configure, mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import { MenuItem } from '@material-ui/core';
 

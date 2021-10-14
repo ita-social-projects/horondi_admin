@@ -1,7 +1,5 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Typography, Button } from '@material-ui/core';
 
@@ -11,8 +9,6 @@ import TableContainerGenerator from '../../../containers/table-container-generat
 import TableContainerRow from '../../../containers/table-container-row';
 import BusinessPageList from '../index';
 import mockBusinessPage from './mockBusinessPage';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const { CREATE_BUSINESS_PAGE } = config.buttonTitles;
 let mockLoading = true;

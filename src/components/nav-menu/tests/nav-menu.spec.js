@@ -1,6 +1,4 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
@@ -18,8 +16,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import NavMenu from '../index';
 import { mockedStore, mockedMenuCategories, mockWidth } from './variables';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const { homePage, clientsQuestions } = mockedMenuCategories;
 

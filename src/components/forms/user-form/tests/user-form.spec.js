@@ -1,15 +1,12 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { Paper, Grid } from '@material-ui/core';
-import LoadingBar from '../../../loading-bar';
-import BasicsForm from '../index';
+import { TextField } from '@material-ui/core';
+
+import UserForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
-import MaterialsContainer from '../../../../containers/materials-container';
-import CheckboxOptions from '../../../checkbox-options';
 import { config } from '../../../../configs';
-import { mockMaterial, files, target } from './basics-form.variables';
+import { files, target } from './user.form.variables';
+import { SaveButton } from '../../../buttons';
 import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
 const mockSetFieldValue = jest.fn();
@@ -17,7 +14,7 @@ const mockSubmit = jest.fn();
 const mockChange = jest.fn();
 const mockBlur = jest.fn();
 const mockSetUpload = jest.fn();
-const mockSetBasicImage = jest.fn();
+const mockSetUserImage = jest.fn();
 
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
@@ -28,42 +25,59 @@ jest.mock('formik', () => ({
     handleSubmit: mockSubmit,
     handleChange: mockChange,
     touched: {
-      basicImage: 'image',
-      additionalPrice: 1
+      userFirstName: 'a',
+      userLastName: 'a',
+      email: 'aaaa',
+      phoneNumber: '3650',
+      country: '12',
+      region: '12',
+      city: '12',
+      street: '12',
+      buildingNumber: 'aaaa',
+      appartment: 'aaaa',
+      zipcode: '12'
     },
     errors: {
-      basicImage: 'image',
-      additionalPrice: 1
+      userFirstName: 'a',
+      userLastName: 'a',
+      email: 'aaaa',
+      phoneNumber: '3650',
+      country: '12',
+      region: '12',
+      city: '12',
+      street: '12',
+      buildingNumber: 'aaaa',
+      appartment: 'aaaa',
+      zipcode: '12'
     },
     setFieldValue: mockSetFieldValue,
     handleBlur: mockBlur
   })
 }));
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
-jest.mock('../../../../utils/use-basics-handlers', () => ({
+jest.mock('../../../../utils/use-user-handlers', () => ({
   __esModule: true,
   default: () => ({
     setUpload: mockSetUpload,
-    setBasicImage: mockSetBasicImage
+    setUserImage: mockSetUserImage
   })
 }));
 
 const fileReader = new FileReaderMock();
 jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
-describe('Basics form tests', () => {
+describe('User form tests', () => {
   let spyOnUseSelector;
   let spyOnUseDispatch;
   let component;
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockMaterial);
 
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
 
     spyOnUseDispatch.mockImplementation(() => jest.fn());
-    component = mount(<BasicsForm />);
+    component = mount(<UserForm />);
   });
   afterEach(() => {
     component.unmount();
@@ -72,7 +86,7 @@ describe('Basics form tests', () => {
   });
 
   it('should render form component', () => {
-    expect(component.find('form').length).toBe(2);
+    expect(component.find('form').length).toBe(1);
   });
 
   it('should call preventDefault method', () => {
@@ -84,42 +98,20 @@ describe('Basics form tests', () => {
     expect(event.preventDefault).toHaveBeenCalled();
   });
 
-  it('should render CheckboxOptions component', () => {
-    const wrapper = component.find(CheckboxOptions);
-    expect(wrapper).toHaveLength(1);
+  it('Should render 11 components of TextField type', () => {
+    expect(component.find(TextField)).toHaveLength(11);
   });
 
-  it('should render MaterialsContainer component', () => {
-    const wrapper = component.find(MaterialsContainer);
+  it('should render ImageUploadContainer component', () => {
+    const wrapper = component.find(ImageUploadContainer);
     expect(wrapper).toHaveLength(1);
-  });
-
-  it('Should render 2 buttons and 6 inputs', () => {
-    expect(component.find('input')).toHaveLength(6);
-    expect(component.find('button')).toHaveLength(2);
   });
 
   it(`Should render go-back button with '${GO_BACK_TITLE}' label`, () => {
     expect(component.find('button').at(0).text()).toBe(GO_BACK_TITLE);
   });
-
   it(`Should render save button with '${SAVE_TITLE}' label`, () => {
     expect(component.find('button').at(1).text()).toBe(SAVE_TITLE);
-  });
-
-  it('should render Grid component', () => {
-    const wrapper = component.find(Grid);
-    expect(wrapper.exists(Grid)).toBeDefined();
-  });
-
-  it('should render Paper component', () => {
-    const wrapper = component.find(Paper);
-    expect(wrapper.exists(Paper)).toBeDefined();
-  });
-
-  it('should render ImageUploadPreviewContainer component', () => {
-    const wrapper = component.find(ImageUploadContainer);
-    expect(wrapper.exists(ImageUploadContainer)).toBeDefined();
   });
 
   it('Should upload image', () => {
@@ -130,7 +122,7 @@ describe('Basics form tests', () => {
     expect(mockSetUpload).toHaveBeenCalledWith(files[0]);
   });
 
-  it('Should test FileReader ', async () => {
+  it('Should test FileReader ', () => {
     fileReader.result = 'file content';
     const imageContainer = component.find(ImageUploadContainer);
     const handler = imageContainer.prop('handler');
@@ -140,16 +132,8 @@ describe('Basics form tests', () => {
     expect(fileReader.readAsDataURL).toHaveBeenCalled();
     expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
-
-  it('should call setFieldValue for checkbox', () => {
-    component.find('CheckboxOptions').props().options[0].handler();
-    expect(mockSetFieldValue).toHaveBeenCalledWith('available', true);
-  });
-
-  it('Loading bar should be visible', () => {
-    mockMaterial.loading = true;
-    component = mount(<BasicsForm />);
-    const loadingBar = component.find(LoadingBar);
-    expect(loadingBar).toBeDefined();
+  it('Should simulate submit button', () => {
+    component.find(SaveButton).prop('onClickHandler')();
+    expect(mockSubmit).toHaveBeenCalled();
   });
 });

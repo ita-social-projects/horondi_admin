@@ -1,14 +1,11 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount, shallow } from 'enzyme';
+
 import Button from '@material-ui/core/Button';
 
 import ColorsBar from '../colors-bar';
 import ColorsAutocomplete from '../../colors-autocomplete';
 import DialogWindowWrapper from '../../dialog-window-wrapper';
 import mockStore from './mockStore';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({

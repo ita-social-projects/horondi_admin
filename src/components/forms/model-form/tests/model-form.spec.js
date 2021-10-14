@@ -1,8 +1,6 @@
 import React from 'react';
 import 'mutationobserver-shim';
 import * as redux from 'react-redux';
-import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Paper, TextField, Select, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import LanguagePanel from '../../language-panel';
