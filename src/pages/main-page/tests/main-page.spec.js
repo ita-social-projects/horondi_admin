@@ -1,6 +1,4 @@
 import React from 'react';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import {
   useSelector as useSelectorMock,
   useDispatch as useDispatchMock
@@ -22,8 +20,6 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementationOnce((selector) => selector()),
   useDispatch: jest.fn()
 }));
-
-configure({ adapter: new Adapter() });
 
 describe('Main-page component tests', () => {
   const mockHolder = jest.fn();
@@ -76,7 +72,7 @@ describe('Main-page component tests', () => {
     useDispatchMock.mockReturnValue(mockHolder);
     wrapper = mount(<MainPage />);
     wrapper.find('[data-cy="comment"]').at(0).simulate('click');
-    expect(mockHolder.mock.calls.length).toEqual(8);
+    expect(mockHolder.mock.calls.length).toEqual(4);
   });
 
   it('Should render TableContainerGenerator', () => {

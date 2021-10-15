@@ -153,6 +153,13 @@ const Table = {
   }
 };
 
+const target = {
+  target: {
+    result: 'foo'
+  }
+};
+const files = [new File([], 'foo.png', { type: 'image' })];
+
 module.exports = {
   mockId: mockDefaultProps.id,
   mockMatch: mockDefaultProps.match,
@@ -163,5 +170,7 @@ module.exports = {
   mockIsEdit: mockDefaultProps.isEdit,
   Categories,
   Sizes,
-  Table
+  Table,
+  target,
+  files
 };

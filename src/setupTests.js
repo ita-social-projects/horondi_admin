@@ -6,7 +6,7 @@ import toJson from 'enzyme-to-json';
 // React 16 Enzyme adapter
 Enzyme.configure({ adapter: new Adapter() });
 
-window.shallow = shallow;
-window.render = render;
-window.mount = mount;
-window.toJson = toJson;
+global.shallow = shallow;
+global.render = render;
+global.mount = mount;
+global.toJson = toJson;

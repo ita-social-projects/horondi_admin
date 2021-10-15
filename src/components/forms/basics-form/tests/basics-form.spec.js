@@ -1,7 +1,5 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Paper, Grid } from '@material-ui/core';
 import LoadingBar from '../../../loading-bar';
 import BasicsForm from '../index';
@@ -10,8 +8,7 @@ import MaterialsContainer from '../../../../containers/materials-container';
 import CheckboxOptions from '../../../checkbox-options';
 import { config } from '../../../../configs';
 import { mockMaterial, files, target } from './basics-form.variables';
-
-configure({ adapter: new Adapter() });
+import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -49,10 +46,8 @@ jest.mock('../../../../utils/use-basics-handlers', () => ({
   })
 }));
 
-jest.spyOn(global, 'FileReader').mockImplementation(function () {
-  this.readAsDataURL = jest.fn();
-  this.onload = jest.fn();
-});
+const fileReader = new FileReaderMock();
+jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
 describe('Basics form tests', () => {
   let spyOnUseSelector;
@@ -133,19 +128,17 @@ describe('Basics form tests', () => {
     expect(mockSetUpload).toHaveBeenCalledWith(files[0]);
   });
 
-  it('Should test FileReader ', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(reader.readAsDataURL).toHaveBeenCalled();
-    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
+  it('Should test FileReader ', async () => {
+    fileReader.result = 'file content';
+    const imageContainer = component.find(ImageUploadContainer);
+    const handler = imageContainer.prop('handler');
+    handler(files);
+
+    fileReader.onload(target);
+    expect(fileReader.readAsDataURL).toHaveBeenCalled();
+    expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
 
-  it('Should test BackImage', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(mockSetBasicImage).toHaveBeenCalled();
-    expect(mockSetBasicImage).toHaveBeenCalledWith('foo');
-  });
   it('should call setFieldValue for checkbox', () => {
     component.find('CheckboxOptions').props().options[0].handler();
     expect(mockSetFieldValue).toHaveBeenCalledWith('available', true);

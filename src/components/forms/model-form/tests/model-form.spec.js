@@ -1,13 +1,12 @@
 import React from 'react';
 import 'mutationobserver-shim';
 import * as redux from 'react-redux';
-import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Paper, TextField, Select, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import LanguagePanel from '../../language-panel';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { BackButton, SaveButton } from '../../../buttons';
+import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
 import ModelForm from '../index';
 import {
@@ -19,12 +18,12 @@ import {
   Categories,
   Table,
   mockTouched,
-  mockErrors
+  mockErrors,
+  files,
+  target
 } from './model-form.variables';
 
 React.useLayoutEffect = React.useEffect;
-
-configure({ adapter: new Adapter() });
 
 const mockHandleSubmit = jest.fn();
 const mockSetFieldValue = jest.fn();
@@ -60,13 +59,8 @@ jest.mock('../../../../utils/use-model-handlers', () => ({
   })
 }));
 
-Object.defineProperty(global, 'FileReader', {
-  writable: true,
-  value: jest.fn().mockImplementation(() => ({
-    readAsDataURL: jest.fn(),
-    onload: jest.fn()
-  }))
-});
+const fileReader = new FileReaderMock();
+jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
 describe('Model-form tests', () => {
   const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
@@ -195,17 +189,14 @@ describe('Model-form tests', () => {
   });
 
   it('Should upload image', () => {
-    const event = {
-      target: {
-        files: [new File([], 'foo.png', { type: 'image' })]
-      }
-    };
+    fileReader.result = 'file content';
     const imageContainer = wrapper.find(ImageUploadContainer);
-    imageContainer.props().handler(event);
+    const handler = imageContainer.prop('handler');
+    handler(files);
 
-    expect(mockSetUpload).toHaveBeenCalledTimes(
-      mockSetUpload.mock.calls.length === 1 ? 1 : 0
-    );
+    fileReader.onload(target);
+    expect(fileReader.readAsDataURL).toHaveBeenCalled();
+    expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
 
   it('should coverage getOptionLabel in Autocomplete', () => {

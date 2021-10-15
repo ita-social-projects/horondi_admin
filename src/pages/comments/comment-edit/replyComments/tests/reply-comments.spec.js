@@ -1,6 +1,4 @@
 import React from 'react';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import { config } from '../../../../../configs';
 import LoadingBar from '../../../../../components/loading-bar';
@@ -10,8 +8,6 @@ import ReplyComments from '../index';
 import { itemsCount, replyComments } from './reply-comments.variables';
 
 const { NO_REPLY_COMMENTS_MESSAGE } = config.messages;
-
-configure({ adapter: new Adapter() });
 
 const mockUseDispatchFn = jest.fn();
 const mockUseSuccessSnackbar = jest.fn();
@@ -63,7 +59,7 @@ describe('Comment form tests', () => {
 
   it('Should simulate deleteHandler', () => {
     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
-    expect(mockUseDispatchFn).toHaveBeenCalledTimes(6);
+    expect(mockUseDispatchFn).toHaveBeenCalledTimes(1);
     expect(mockUseSuccessSnackbar).toHaveBeenCalledTimes(1);
   });
 
@@ -73,6 +69,6 @@ describe('Comment form tests', () => {
       <ReplyComments itemsCount={itemsCount} replyComments={replyComments} />
     );
     wrapper.find(TableContainerRow).at(2).props().editHandler();
-    expect(mockUseDispatchFn).toHaveBeenCalledTimes(8);
+    expect(mockUseDispatchFn).toHaveBeenCalledTimes(2);
   });
 });

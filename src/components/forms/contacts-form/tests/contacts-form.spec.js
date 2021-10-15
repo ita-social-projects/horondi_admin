@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
@@ -84,6 +85,7 @@ describe('test СategoryForm', () => {
   it(`Should render Save button with '${SAVE_TITLE}' label`, () => {
     expect(wrapper.find('button').at(1).text()).toBe(SAVE_TITLE);
   });
+
   it('should call preventDefault', () => {
     const event = { preventDefault: () => {} };
     jest.spyOn(event, 'preventDefault');

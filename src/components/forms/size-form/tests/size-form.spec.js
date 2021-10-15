@@ -1,6 +1,4 @@
 import React from 'react';
-import { configure, mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import { MenuItem } from '@material-ui/core';
 
@@ -10,8 +8,6 @@ import SizeForm from '../index';
 import { sizeList, id, size } from './size-form.variables';
 import { config } from '../../../../configs';
 import { sizeDefaultProps } from '../../../../utils/size-helpers';
-
-configure({ adapter: new Adapter() });
 
 const labels = config.labels.sizeLabels;
 
@@ -103,7 +99,7 @@ describe('Size form tests', () => {
     wrapper = mount(<SizeForm />);
     const checkbox = wrapper.find('label input[type="checkbox"]');
     checkbox.props().onChange({ target: { checked: true } });
-    expect(mockSetFieldValue).toHaveBeenCalledTimes(3);
+    expect(mockSetFieldValue).toHaveBeenCalledTimes(1);
   });
 
   it('Should simulate onsubmit on Form', () => {

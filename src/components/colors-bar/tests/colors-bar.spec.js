@@ -1,14 +1,11 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount, shallow } from 'enzyme';
+
 import Button from '@material-ui/core/Button';
 
 import ColorsBar from '../colors-bar';
 import ColorsAutocomplete from '../../colors-autocomplete';
 import DialogWindowWrapper from '../../dialog-window-wrapper';
 import mockStore from './mockStore';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({
@@ -106,9 +103,8 @@ describe('Colors-Bar test', () => {
         />
       );
 
-      expect(mockDispatch.mock.calls.length).toEqual(2);
       wrapper.find(Button).simulate('click');
-      expect(mockDispatch.mock.calls.length).toEqual(3);
+      expect(mockDispatch.mock.calls.length).toEqual(2);
     });
 
     it('MaterialItem operates onClick', () => {
@@ -120,28 +116,25 @@ describe('Colors-Bar test', () => {
         />
       );
 
-      expect(mockDispatch.mock.calls.length).toEqual(3);
       wrapper
         .find({ className: 'makeStyles-materialItem-4' })
         .props()
         .onClick();
-      expect(mockDispatch.mock.calls.length).toEqual(5);
+      expect(mockDispatch.mock.calls.length).toEqual(2);
     });
 
     it('DialogWindow with title "Створити колір" operates handlesClose function', () => {
       const wrapper = component.find({ title: 'Створити колір' });
 
-      expect(mockDispatch.mock.calls.length).toEqual(5);
       wrapper.props().handleClose();
-      expect(mockDispatch.mock.calls.length).toEqual(6);
+      expect(mockDispatch.mock.calls.length).toEqual(1);
     });
 
     it('DialogWindow with title "Колір вже використовується!" operates handlesClose function', () => {
       const wrapper = component.find({ title: 'Колір вже використовується!' });
 
-      expect(mockDispatch.mock.calls.length).toEqual(6);
       wrapper.props().handleClose();
-      expect(mockDispatch.mock.calls.length).toEqual(7);
+      expect(mockDispatch.mock.calls.length).toEqual(1);
     });
 
     it('Should read showColorDialogWindow attr from store', () => {
@@ -199,8 +192,7 @@ describe('Colors-Bar test', () => {
   it('test', () => {
     const wrapper = component.find(ColorsAutocomplete);
 
-    expect(mockDispatch.mock.calls.length).toBe(7);
     wrapper.prop('deleteHandler')('fs');
-    expect(mockDispatch.mock.calls.length).toBe(8);
+    expect(mockDispatch.mock.calls.length).toBe(1);
   });
 });

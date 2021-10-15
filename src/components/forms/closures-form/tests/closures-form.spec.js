@@ -1,14 +1,11 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { act, fireEvent, render } from '@testing-library/react';
 import ClosureForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
+import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
 import { files, target } from './mockClosures';
-
-configure({ adapter: new Adapter() });
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -37,10 +34,9 @@ jest.mock('../../../../utils/use-closures-handlers', () => ({
     setClosuresImage: mockSetClosureImage
   })
 }));
-jest.spyOn(global, 'FileReader').mockImplementation(function () {
-  this.readAsDataURL = jest.fn();
-  this.onload = jest.fn();
-});
+
+const fileReader = new FileReaderMock();
+jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
 describe('closure form tests', () => {
   const mockUseSelector = jest.spyOn(reactRedux, 'useSelector');
@@ -68,10 +64,14 @@ describe('closure form tests', () => {
   });
 
   it('Should test FileReader ', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
-    expect(reader.readAsDataURL).toHaveBeenCalled();
-    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
+    fileReader.result = 'file content';
+    const imageContainer = component.find(ImageUploadContainer);
+    const handler = imageContainer.prop('handler');
+    handler(files);
+
+    fileReader.onload(target);
+    expect(fileReader.readAsDataURL).toHaveBeenCalled();
+    expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
 
   it('Should update checkboxes checked value on click', () => {

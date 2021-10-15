@@ -1,10 +1,8 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { configure, mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { act, fireEvent, render } from '@testing-library/react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
+import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
 import {
   files,
@@ -15,10 +13,6 @@ import {
 } from './straps.form.variables';
 import StrapsForm from '../index';
 import { SaveButton } from '../../../buttons';
-import ModelForm from '../../model-form';
-import { mockId } from '../../model-form/tests/model-form.variables';
-
-configure({ adapter: new Adapter() });
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -52,12 +46,10 @@ jest.mock('../../../../utils/use-straps-handlers', () => ({
   })
 }));
 
-jest.spyOn(global, 'FileReader').mockImplementation(function () {
-  this.readAsDataURL = jest.fn();
-  this.onload = jest.fn();
-});
-
 jest.mock('../../../../hooks/form-dialog/use-unsaved-changes-handler');
+
+const fileReader = new FileReaderMock();
+jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
 
 describe('Straps form tests', () => {
   let spyOnUseSelector;
@@ -94,11 +86,14 @@ describe('Straps form tests', () => {
   });
 
   it('Should test FileReader ', () => {
-    const reader = FileReader.mock.instances[0];
-    reader.onload(target);
+    fileReader.result = 'file content';
+    const imageContainer = component.find(ImageUploadContainer);
+    const handler = imageContainer.prop('handler');
+    handler(files);
+    fileReader.onload(target);
 
-    expect(reader.readAsDataURL).toHaveBeenCalled();
-    expect(reader.readAsDataURL).toHaveBeenCalledWith(files[0]);
+    expect(fileReader.readAsDataURL).toHaveBeenCalled();
+    expect(fileReader.readAsDataURL).toHaveBeenCalledWith(files[0]);
   });
 
   it('Should update checkboxes checked value on click', () => {
