@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { noop } from 'lodash';
 import ContainerFilters from '../../../../../components/container-filters';
 import ComponentFilterClear from '../../../../../components/filters-components/filter-clear';
 import ComponentFilterDateRangePicker from '../../../../../components/filters-components/filter-date-range-picker';
@@ -13,7 +12,6 @@ import {
   setOrderSortLabel
 } from '../../../../../redux/orders/orders.actions';
 import { sortLabel as labelSort } from '../../../../../configs/sort';
-import { setCurrentPage } from '../../../../../redux/table/table.actions';
 import buttonTitles from '../../../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../../../components/filters-components/filter-multiple-picker';
 import { paymentStatusFilterObj } from '../../../../../utils/order';
@@ -25,6 +23,11 @@ function Filters() {
     ({ Orders }) => Orders
   );
   const paymentOptions = [...paymentStatusFilterObj()];
+
+  const paymentStatusSelector = (selector) => ({ paymentStatus: selector });
+  const statusSelector = (selector) => ({ status: selector });
+  const searchSelector = (selector) => ({ search: selector });
+
   return (
     <ContainerFilters>
       <ComponentFilterDateRangePicker
@@ -40,14 +43,14 @@ function Filters() {
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setOrderFilterUser}
-        selectorFunc={(selector) => ({ paymentStatus: selector })}
+        selectorFunc={paymentStatusSelector}
         value={filters.paymentStatus}
         options={paymentOptions}
         label={buttonTitles.PAYMENT_STATUS}
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setOrderFilterUser}
-        selectorFunc={(selector) => ({ status: selector })}
+        selectorFunc={statusSelector}
         value={filters.status}
         options={config.labels.orders.select}
         label={buttonTitles.ORDER_STATUS}
@@ -55,7 +58,7 @@ function Filters() {
       <ComponentFilterSearch
         setFilterValue={setOrderFilterUser}
         value={filters.search}
-        selectorFunc={(selector) => ({ search: selector })}
+        selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearOrderFiltersUser} />
     </ContainerFilters>
