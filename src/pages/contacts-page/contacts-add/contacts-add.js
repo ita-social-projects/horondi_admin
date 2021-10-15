@@ -21,9 +21,7 @@ const ContactsAdd = () => {
     uaAddress: '',
     enAddress: '',
     email: '',
-    uaCartImage: null,
-    enCartImage: null,
-    cartLink: ''
+    cartLink: {}
   });
 
   const contactSaveHandler = async ({
@@ -32,8 +30,6 @@ const ContactsAdd = () => {
     enSchedule,
     uaAddress,
     enAddress,
-    uaCartImage,
-    enCartImage,
     cartLink,
     email
   }) => {
@@ -51,21 +47,7 @@ const ContactsAdd = () => {
       link: cartLink
     };
 
-    const mapImages =
-      !!uaCartImage && !!enCartImage
-        ? [
-            {
-              lang: languages[0],
-              image: uaCartImage
-            },
-            {
-              lang: languages[1],
-              image: enCartImage
-            }
-          ]
-        : [];
-
-    dispatch(addContact(newContact, mapImages));
+    dispatch(addContact(newContact));
   };
 
   if (loading) {
