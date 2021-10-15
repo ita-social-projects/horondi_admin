@@ -11,7 +11,7 @@ import { useStyles } from './user-tab.styles';
 import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 import { UserBlockPeriod } from '../../../../consts/user-block-status';
-import UsersFilters from '../users-filters/UsersFilters';
+import UsersFilters from '../users-filters/filters';
 
 const map = require('lodash/map');
 
