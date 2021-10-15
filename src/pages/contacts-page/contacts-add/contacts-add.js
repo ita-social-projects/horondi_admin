@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
 import { addContact } from '../../../redux/contact/contact.actions';
@@ -12,7 +11,6 @@ const { languages } = config;
 
 const ContactsAdd = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(({ News }) => News.newsLoading);
 
   const [contactFormValues] = useState({
     phoneNumber: '',
@@ -49,10 +47,6 @@ const ContactsAdd = () => {
 
     dispatch(addContact(newContact));
   };
-
-  if (loading) {
-    return <LoadingBar />;
-  }
 
   return (
     <ContactsForm
