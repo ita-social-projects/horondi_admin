@@ -1,14 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 import ContactsForm from '../index';
 import { config } from '../../../../configs';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { initialValues } from './contacts-form.variables';
-
-configure({ adapter: new Adapter() });
 
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
@@ -93,7 +88,7 @@ describe('test СategoryForm', () => {
   });
   it('Should handle enSelectImageHandler', () => {
     wrapper.find(ImageUploadContainer).at(1).props().handler();
-    expect(mockSetContactsImage).toHaveBeenCalledTimes(2);
+    expect(mockSetContactsImage).toHaveBeenCalledTimes(1);
   });
   it('should call preventDefault', () => {
     const event = { preventDefault: () => {} };

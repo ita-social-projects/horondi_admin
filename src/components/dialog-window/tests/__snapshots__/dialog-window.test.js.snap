@@ -424,7 +424,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                         class="MuiDialogActions-root makeStyles-buttonStyles-2 MuiDialogActions-spacing"
                       >
                         <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+                          class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-yesButton-3 MuiButton-outlinedPrimary"
                           data-cy="dialog-cancel"
                           tabindex="0"
                           type="button"
@@ -439,7 +439,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                           />
                         </button>
                         <div
-                          class="makeStyles-button-3"
+                          class="makeStyles-button-4"
                         >
                           <button
                             class="MuiButtonBase-root MuiButton-root MuiButton-outlined"
@@ -810,6 +810,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                                   className="MuiDialogActions-root makeStyles-buttonStyles-2 MuiDialogActions-spacing"
                                 >
                                   <StandardButton
+                                    className="makeStyles-yesButton-3"
                                     color="primary"
                                     data-cy="dialog-cancel"
                                     onClickHandler={[MockFunction]}
@@ -818,6 +819,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                                     variant="outlined"
                                   >
                                     <WithStyles(ForwardRef(Button))
+                                      className="makeStyles-yesButton-3"
                                       color="primary"
                                       data-cy="dialog-cancel"
                                       onClick={[MockFunction]}
@@ -825,6 +827,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                                       variant="outlined"
                                     >
                                       <ForwardRef(Button)
+                                        className="makeStyles-yesButton-3"
                                         classes={
                                           Object {
                                             "colorInherit": "MuiButton-colorInherit",
@@ -865,7 +868,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                                         variant="outlined"
                                       >
                                         <WithStyles(ForwardRef(ButtonBase))
-                                          className="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+                                          className="MuiButton-root MuiButton-outlined makeStyles-yesButton-3 MuiButton-outlinedPrimary"
                                           component="button"
                                           data-cy="dialog-cancel"
                                           disabled={false}
@@ -875,7 +878,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                                           type="button"
                                         >
                                           <ForwardRef(ButtonBase)
-                                            className="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+                                            className="MuiButton-root MuiButton-outlined makeStyles-yesButton-3 MuiButton-outlinedPrimary"
                                             classes={
                                               Object {
                                                 "disabled": "Mui-disabled",
@@ -892,7 +895,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                                             type="button"
                                           >
                                             <button
-                                              className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+                                              className="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-yesButton-3 MuiButton-outlinedPrimary"
                                               data-cy="dialog-cancel"
                                               disabled={false}
                                               onBlur={[Function]}
@@ -955,7 +958,7 @@ exports[`DialogWindow component test should match snapshot 1`] = `
                                     size="medium"
                                   >
                                     <div
-                                      className="makeStyles-button-3"
+                                      className="makeStyles-button-4"
                                     >
                                       <WithStyles(ForwardRef(Button))
                                         data-cy="dialog-confirm"

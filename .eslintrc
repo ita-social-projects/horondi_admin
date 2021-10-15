@@ -26,6 +26,11 @@
     "jquery": true,
     "jest": true
   },
+  "globals": {
+    "shallow": true,
+    "render": true,
+    "mount": true
+  },
   "extends": [
     "airbnb",
     "plugin:cypress/recommended",

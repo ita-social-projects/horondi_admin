@@ -1,6 +1,4 @@
 import React from 'react';
-import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import Select from '@material-ui/core/Select';
 import LanguagePanel from '../../language-panel';
@@ -8,8 +6,6 @@ import { BackButton, SaveButton } from '../../../buttons';
 import LoadingBar from '../../../loading-bar';
 import MaterialForm from '../index';
 import { id, material, defaultProps } from './material-form.variables';
-
-configure({ adapter: new Adapter() });
 
 const mockCreateMaterial = jest.fn();
 
@@ -79,7 +75,7 @@ describe('Material form tests', () => {
 
   it('Should simulate click event on ColorBar', () => {
     wrapper.find('ColorsBar').props().onColorChange(material.colors);
-    expect(mockSetFieldValue).toHaveBeenCalledTimes(2);
+    expect(mockSetFieldValue).toHaveBeenCalledTimes(1);
   });
 
   it('Should simulate onchange click event on Select', () => {
@@ -87,8 +83,8 @@ describe('Material form tests', () => {
       .find(Select)
       .props()
       .onChange({ target: { value: 'PATTERN' } });
-    expect(mockSetFieldValue).toHaveBeenCalledTimes(3);
-    expect(mockSetFieldValue).toHaveBeenNthCalledWith(3, 'purpose', 'PATTERN');
+    expect(mockSetFieldValue).toHaveBeenCalledTimes(1);
+    expect(mockSetFieldValue).toHaveBeenNthCalledWith(1, 'purpose', 'PATTERN');
   });
 
   it('Should simulate submit event', () => {
