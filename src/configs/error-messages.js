@@ -138,7 +138,7 @@ export const contactErrorMessages = {
   IMAGE_FORMAT_MESSAGE:
     'Введіть коректний формат, наприклад: https://example.com/',
   ENTER_LINK_MESSAGE: 'Введіть посилання',
-  SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт',
+  CONTACT_ERROR_MESSAGE: 'Помилка збереження',
   INVALID_PHONE_MESSAGE:
     'Введіть коректний формат, наприклад: 380(XX)-XXX-XX-XX'
 };

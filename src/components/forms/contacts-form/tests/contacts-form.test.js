@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import * as reactRedux from 'react-redux';
 import ContactsForm from '../index';
 import { config } from '../../../../configs';
-import ImageUploadContainer from '../../../../containers/image-upload-container';
 import { initialValues } from './contacts-form.variables';
 
 configure({ adapter: new Adapter() });
@@ -85,15 +83,6 @@ describe('test СategoryForm', () => {
 
   it(`Should render Save button with '${SAVE_TITLE}' label`, () => {
     expect(wrapper.find('button').at(1).text()).toBe(SAVE_TITLE);
-  });
-
-  it('Should handle uaSelectImageHandler', () => {
-    wrapper.find(ImageUploadContainer).at(0).props().handler();
-    expect(mockSetContactsImage).toHaveBeenCalled();
-  });
-  it('Should handle enSelectImageHandler', () => {
-    wrapper.find(ImageUploadContainer).at(1).props().handler();
-    expect(mockSetContactsImage).toHaveBeenCalledTimes(2);
   });
   it('should call preventDefault', () => {
     const event = { preventDefault: () => {} };
