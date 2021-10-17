@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import LoadingBar from '../../../components/loading-bar';
 import { config } from '../../../configs';
 
 import { addContact } from '../../../redux/contact/contact.actions';
@@ -12,7 +11,6 @@ const { languages } = config;
 
 const ContactsAdd = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(({ News }) => News.newsLoading);
 
   const [contactFormValues] = useState({
     phoneNumber: '',
@@ -21,9 +19,7 @@ const ContactsAdd = () => {
     uaAddress: '',
     enAddress: '',
     email: '',
-    uaCartImage: null,
-    enCartImage: null,
-    cartLink: ''
+    cartLink: {}
   });
 
   const contactSaveHandler = async ({
@@ -32,8 +28,6 @@ const ContactsAdd = () => {
     enSchedule,
     uaAddress,
     enAddress,
-    uaCartImage,
-    enCartImage,
     cartLink,
     email
   }) => {
@@ -51,26 +45,8 @@ const ContactsAdd = () => {
       link: cartLink
     };
 
-    const mapImages =
-      !!uaCartImage && !!enCartImage
-        ? [
-            {
-              lang: languages[0],
-              image: uaCartImage
-            },
-            {
-              lang: languages[1],
-              image: enCartImage
-            }
-          ]
-        : [];
-
-    dispatch(addContact(newContact, mapImages));
+    dispatch(addContact(newContact));
   };
-
-  if (loading) {
-    return <LoadingBar />;
-  }
 
   return (
     <ContactsForm

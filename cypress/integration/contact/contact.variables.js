@@ -103,11 +103,6 @@ export const addContact = (req) => {
         value: contactToAdd[0].addressEn
       }
     ],
-    images: {
-      value: {
-        thumbnail: ''
-      }
-    },
     email: contactToAdd[0].email,
     link: contactToAdd[0].mapLink
   });

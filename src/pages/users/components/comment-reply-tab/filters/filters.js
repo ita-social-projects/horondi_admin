@@ -40,7 +40,6 @@ function Filters() {
         options={commentsOptions}
         label={buttonTitles.COMMENT_TYPE}
       />
-
       <ComponentFilterDateRangePicker
         setFilterValue={setFilterReplyUser}
         filters={filters}
