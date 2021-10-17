@@ -15,14 +15,12 @@ import { getPatterns } from '../../../redux/pattern/pattern.actions.js';
 import { getBacks } from '../../../redux/back/back.actions.js';
 import { getAllStraps } from '../../../redux/straps/straps.actions.js';
 import { getAllClosures } from '../../../redux/closures/closures.actions.js';
-import { getAllPockets } from '../../../redux/pockets/pockets.actions.js';
 import { bottomSelectorWithPagination } from '../../../redux/selectors/bottom.selectors.js';
 import { basicsSelectorWithPagination } from '../../../redux/selectors/basics.selectors.js';
 import { patternSelectorWithPagination } from '../../../redux/selectors/pattern.selectors.js';
 import { backSelectorWithPagination } from '../../../redux/selectors/back.selectors.js';
 import { strapsSelectorWithPagination } from '../../../redux/selectors/straps.selectors.js';
 import { closuresSelectorWithPagination } from '../../../redux/selectors/closures.selectors.js';
-import { pocketsSelectorWithPagination } from '../../../redux/selectors/pockets.selectors';
 import {
   addConstructor,
   updateConstructor
@@ -62,7 +60,6 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const [strapsToAdd, setStrapsToAdd] = useState([]);
   const [closuresToAdd, setClosuresToAdd] = useState([]);
   const [restrictionsToAdd, setRestrictionsToAdd] = useState([]);
-  const [pocketsToAdd, setPocketsToAdd] = useState([]);
 
   const onSaveHandler = () => {
     const itemsToSave = {
@@ -73,8 +70,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       backsToAdd,
       strapsToAdd,
       closuresToAdd,
-      restrictionsToAdd,
-      pocketsToAdd
+      restrictionsToAdd
     };
     const constructorToAdd = createConstructor(itemsToSave);
 
@@ -191,7 +187,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
               data-cy={materialUiConstants.save}
               type={materialUiConstants.types.submit}
               vlues={values}
-              errors={values}
+              errors={{}}
               title={MODEL_SAVE_TITLE}
             />
           </Grid>

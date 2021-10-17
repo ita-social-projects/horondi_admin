@@ -31,8 +31,6 @@ const ConstructorListPockets = ({
   const classes = useStyles();
   const commonStyles = useCommonStyles();
 
-  const tableTitles = config.tableHeadRowTitles.constructorPocketList;
-
   const deleteHandler = (id, positionId) => {
     setRestrictionsToAdd(
       restrictionsToAdd.filter(

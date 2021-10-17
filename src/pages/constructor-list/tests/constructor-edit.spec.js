@@ -1,16 +1,10 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { StaticRouter, Route, Switch } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
-import Router from 'react-router';
 import Adapter from 'enzyme-adapter-react-16';
-import { configure, shallow, mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import constructorEdit from '../constructor-edit';
 import mockStore from './mockStore';
-import ConstructorEdit from '../constructor-edit';
-import LoadingBar from '../../../components/loading-bar';
-
-import { config } from '../../../configs';
-
-const { NO_CONSTRUCTOR_MESSAGE } = config.messages;
 
 configure({ adapter: new Adapter() });
 
@@ -28,19 +22,6 @@ describe('constructor-edit tests', () => {
 
     mockDispatch = jest.fn();
     spyOnUseDispatch.mockReturnValue(mockDispatch);
-
-    wrapper = mount(
-      <BrowserRouter>
-        <ConstructorEdit
-          match={{
-            params: { id: '60eadfb9e913fc288294bd9' },
-            isExact: true,
-            path: '',
-            url: ''
-          }}
-        />
-      </BrowserRouter>
-    );
   });
 
   afterEach(() => {
@@ -48,7 +29,22 @@ describe('constructor-edit tests', () => {
     spyOnUseSelector.mockClear();
   });
 
-  test.skip('Should render constructor-edit', () => {
+  test('Should render constructor-edit', () => {
+    wrapper = mount(
+      <StaticRouter
+        store={mockStore}
+        location='/constructor-list/60eadfb9e913fc288294bd9'
+      >
+        <Switch>
+          <Route
+            path='/constructor-list/:id'
+            exact
+            component={constructorEdit}
+          />
+        </Switch>
+      </StaticRouter>
+    );
+
     expect(wrapper).toBeDefined();
   });
 });
