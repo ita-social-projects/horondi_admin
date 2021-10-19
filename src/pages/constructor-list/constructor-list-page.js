@@ -40,7 +40,7 @@ const ConstructorListPage = () => {
   const constructorDeleteHandler = (constructorId) => {
     const removeConstructor = () => {
       dispatch(closeDialog());
-      dispatch(deleteConstructor({ id: constructorId }));
+      dispatch(deleteConstructor(constructorId));
     };
     openSuccessSnackbar(removeConstructor, DELETE_CONSTRUCTOR_MESSAGE);
   };

@@ -103,7 +103,7 @@ export const createConstructor = async (payload) => {
   return result?.data?.addConstructor;
 };
 
-export const deleteConstructor = async (payload) => {
+export const deleteConstructor = async (id) => {
   const deleteConstructorQuery = `
   mutation($id: ID!) {
         deleteConstructor(id: $id) {
@@ -118,7 +118,7 @@ export const deleteConstructor = async (payload) => {
       }
     `;
 
-  const result = await setItems(deleteConstructorQuery, payload);
+  const result = await setItems(deleteConstructorQuery, { id });
 
   if (
     Object.keys(constructorErrors).includes(

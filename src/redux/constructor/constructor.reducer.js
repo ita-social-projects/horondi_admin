@@ -71,7 +71,7 @@ const constructorReducer = (state = initialState, action = {}) => {
       };
     case REMOVE_CONSTRUCTOR_FROM_STORE:
       const constructors = state.list.filter(
-        (constructor) => constructor._id !== action.payload.id
+        (constructor) => constructor._id !== action.payload
       );
       return {
         ...state,
