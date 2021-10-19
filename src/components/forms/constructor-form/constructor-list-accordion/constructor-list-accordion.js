@@ -15,17 +15,19 @@ import { config } from '../../../../configs';
 import TableContainerRow from '../../../../containers/table-container-row';
 import TableContainerGenerator from '../../../../containers/table-container-generator';
 
-const ConstructorListAccordion = ({
-  option,
-  expanded,
-  handleChange,
-  isEdit
-}) => {
+const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { selector, getItems, setOptionToAdd, optionToAdd, label, optionName, isRestrictions } =
-    option;
+  const {
+    selector,
+    getItems,
+    setOptionToAdd,
+    optionToAdd,
+    label,
+    optionName,
+    isRestrictions
+  } = option;
 
   const tableTitles = config.tableHeadRowTitles.constructorElementList;
 
@@ -135,8 +137,7 @@ ConstructorListAccordion.propTypes = {
     isRestrictions: PropTypes.bool
   }),
   expanded: PropTypes.string,
-  handleChange: PropTypes.func,
-  isEdit: PropTypes.bool
+  handleChange: PropTypes.func
 };
 
 ConstructorListAccordion.defaultProps = {
@@ -146,8 +147,7 @@ ConstructorListAccordion.defaultProps = {
     label: '',
     optionName: ''
   },
-  handleChange: '',
-  isEdit: false
+  handleChange: ''
 };
 
 export default ConstructorListAccordion;
