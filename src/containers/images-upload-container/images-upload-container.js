@@ -7,22 +7,13 @@ import { useStyles } from './images-upload-container.styles';
 
 const ImagesUploadContainer = ({ handler, multiple, maxFiles }) => {
   const style = useStyles();
-  const validateImages = (file) => {
-    if (file.size > 10485760) {
-      return {
-        error: 'error'
-      };
-    }
 
-    return null;
-  };
   const options = {
     accept: 'image/*',
     multiple,
     maxFiles,
     noClick: true,
     noKeyboard: true,
-    validator: validateImages,
     onDrop: (acceptedFiles) => {
       const files = acceptedFiles.map((file) =>
         Object.assign(file, {

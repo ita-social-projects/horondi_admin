@@ -93,7 +93,7 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
     // handler for preview product page
   };
 
-  const list = Array.isArray(src)
+  const list = arrItems.length
     ? arrItems.map((file, index) => (
         <Grid item className={style.item} key={index}>
           <div className={style.thumb}>
