@@ -2,6 +2,21 @@ import React from 'react';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 import ImagesPreviewContainer from '..';
 
+const mockSrc = [
+  {
+    primary: true,
+    src: {
+      large: 'img'
+    }
+  },
+  {
+    primary: false,
+    src: {
+      large: 'img2'
+    }
+  }
+];
+
 describe('Product-form tests', () => {
   let component;
   const imageHandler = jest.fn();
@@ -9,20 +24,7 @@ describe('Product-form tests', () => {
   beforeEach(() => {
     component = mount(
       <ImagesPreviewContainer
-        src={[
-          {
-            primary: true,
-            src: {
-              large: 'img'
-            }
-          },
-          {
-            primary: false,
-            src: {
-              large: 'img2'
-            }
-          }
-        ]}
+        src={mockSrc}
         labels={{}}
         imageHandler={imageHandler}
         multiple

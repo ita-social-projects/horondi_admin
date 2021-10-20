@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 import { Grid } from '@material-ui/core';
 
-import { productsTranslations } from '../../../../translations/product.translations';
+import { productsTranslations } from '../../../../configs/product-translations';
 import ImagesUploadContainer from '../../../../containers/images-upload-container';
 import ImagesPreviewContainer from '../../../../containers/images-preview-container';
 import useProductAddImages from '../../../../hooks/product/use-product-addimages';
+import { useStyles } from './product-add-images.styles';
 
 const { MAIN_PHOTO, ADDITIONAL_PHOTOS } = productsTranslations;
 
@@ -18,6 +19,8 @@ const ProductAddImages = ({
   touched,
   setFieldValue
 }) => {
+  const styles = useStyles();
+
   const { handleImagesLoad } = useProductAddImages({
     toggleFieldsChanged,
     productImages,
@@ -55,7 +58,9 @@ const ProductAddImages = ({
         imageHandler={setProductImages}
         labels={labels}
       />
-      {errors && touched && errors.productImages}
+      {touched.images && errors.productImages && (
+        <div className={styles.inputError}>{errors.productImages}</div>
+      )}
     </Grid>
   );
 };

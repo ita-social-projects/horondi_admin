@@ -116,8 +116,8 @@ const ProductForm = ({ isEdit }) => {
     isHotItem: product.isHotItem || false,
     sizes: product?.sizes?.map((el) => getIdFromItem(el.size) || []),
     images: {
-      primary: product?.images?.primary || {},
-      additional: product?.images?.additional || []
+      primary: product.images?.primary || {},
+      additional: product.images?.additional || []
     }
   };
   const formikMaterialsValues = getFormikMaterialsValues(product);
@@ -234,18 +234,18 @@ const ProductForm = ({ isEdit }) => {
   ]);
 
   useEffect(() => {
-    if (product?.images?.additional) {
-      const previousImages = product?.images?.additional?.map((e) => ({
+    if (isEdit) {
+      const previousImages = product.images.additional.map((e) => ({
         src: e,
         primary: false
       }));
       previousImages.push({
-        src: product?.images?.primary,
+        src: product.images.primary,
         primary: true
       });
       setProductImages(previousImages);
     }
-  }, [product?.images]);
+  }, [product.images]);
 
   const handleProductValidate = async () => {
     setShouldValidate(true);
