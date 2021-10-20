@@ -9,7 +9,6 @@ const formRegExp = {
   enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
   uaRegex: '[А-ЩЬЮЯҐЄІЇа-щьюяґєії]',
   enRegex: /[a-z]/i,
-  onlyPositiveDigits: /^[0-9]\d*$/,
   onlyPositiveFloat: /^(?:[1-9]\d*|0(?!(?:\.0+)?$))?(?:\.\d+)?$/,
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
   userName: /[а-яА-Я]{2,}/g,

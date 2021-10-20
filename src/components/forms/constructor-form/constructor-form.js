@@ -96,9 +96,10 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
     material: Yup.string().required(ERROR_MESSAGE),
     color: Yup.string().required(ERROR_MESSAGE),
     image: Yup.string().required(PHOTO_NOT_PROVIDED),
-    basePrice: Yup.string()
-      .matches(config.formRegExp.onlyPositiveDigits, PRICE_ERROR)
+    basePrice: Yup.number()
+      .positive(PRICE_ERROR)
       .required(ERROR_MESSAGE)
+      .typeError(PRICE_ERROR)
   });
 
   const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
