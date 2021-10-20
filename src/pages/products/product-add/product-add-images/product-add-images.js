@@ -16,11 +16,9 @@ const ProductAddImages = ({
   toggleFieldsChanged,
   errors,
   touched,
-  setFieldValue,
-  isEdit
+  setFieldValue
 }) => {
   const { handleImagesLoad } = useProductAddImages({
-    isEdit,
     toggleFieldsChanged,
     productImages,
     setProductImages
@@ -37,23 +35,19 @@ const ProductAddImages = ({
     additional: ADDITIONAL_PHOTOS
   };
 
-  const previewImages = isEdit
-    ? productImages?.map((image) =>
-        image?.src?.preview
-          ? { src: image.src.preview, primary: image.primary }
-          : image
-      )
-    : productImages?.map((image) => ({
-        src: image.src.preview,
-        primary: image.primary
-      }));
+  const previewImages = productImages?.map((image) =>
+    image?.src?.preview
+      ? { src: image.src.preview, primary: image.primary }
+      : image
+  );
 
   return (
     <Grid container spacing={1}>
       <ImagesUploadContainer
         handler={handleImagesLoad}
         multiple
-        maxFiles={maxImages - productImages.length}
+        maxFiles={maxImages}
+        length={productImages.length}
       />
       <ImagesPreviewContainer
         src={previewImages}
@@ -68,7 +62,6 @@ const ProductAddImages = ({
 
 ProductAddImages.propTypes = {
   productImages: PropTypes.arrayOf(PropTypes.object).isRequired,
-  isEdit: PropTypes.bool,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   setProductImages: PropTypes.func.isRequired,
@@ -77,8 +70,7 @@ ProductAddImages.propTypes = {
 };
 
 ProductAddImages.defaultProps = {
-  toggleFieldsChanged: '',
-  isEdit: false
+  toggleFieldsChanged: ''
 };
 
 export default ProductAddImages;

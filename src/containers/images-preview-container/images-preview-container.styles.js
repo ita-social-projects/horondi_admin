@@ -7,11 +7,6 @@ export const useStyles = makeStyles(() => ({
     height: '290px',
     marginTop: 30
   },
-  imagePrimary: {
-    display: 'inline-flex',
-    width: 255,
-    height: 290
-  },
   imagePrimaryInner: {
     display: 'flex',
     minWidth: 0,
@@ -34,9 +29,10 @@ export const useStyles = makeStyles(() => ({
     overflow: 'hidden'
   },
   img: {
-    display: 'block',
-    width: 'auto',
-    height: '100%'
+    display: 'inline-flex',
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden'
   },
   item: {
     display: 'flex',

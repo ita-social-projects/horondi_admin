@@ -1,7 +1,8 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
+import { Button } from '@material-ui/core';
 import ProductForm from '../product-form';
-import Products from './product-form.variables';
+import { Products } from './product-form.variables';
 import ProductAddImages from '../../../../pages/products/product-add/product-add-images';
 import CheckboxOptions from '../../../checkbox-options';
 
@@ -34,11 +35,13 @@ describe('Product-form tests', () => {
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
     spyOnUseDispatch.mockImplementation(() => jest.fn());
 
-    component = shallow(<ProductForm />);
+    component = shallow(<ProductForm isEdit />);
   });
 
   afterEach(() => {
     component.unmount();
+    spyOnUseDispatch.mockClear();
+    spyOnUseDispatch.mockClear();
   });
 
   it('#1 Render the component', () => {
@@ -50,5 +53,11 @@ describe('Product-form tests', () => {
     checkboxes.props().options[0].handler();
     checkboxes.props().options[1].handler();
     expect(mockSetFieldValue).toHaveBeenCalledTimes(2);
+  });
+
+  it('#3 should submit the form', async () => {
+    const submit = component.find(Button);
+    submit.simulate('click');
+    expect(await spyOnUseDispatch).toHaveBeenCalledTimes(8);
   });
 });

@@ -126,14 +126,12 @@ const ImagesPreviewContainer = ({ src, labels, multiple, imageHandler }) => {
         <Grid item margin={10}>
           <Typography variant='h4'>{labels.primary}</Typography>
           <Box className={style.primary} data-cy={utils.dataCy.preview}>
-            <div className={style.imagePrimary}>
-              <div className={style.imagePrimaryInner}>
-                <img
-                  src={arrItems[primaryImageIndex]?.src}
-                  className={style.img}
-                  alt={utils.alt.preview}
-                />
-              </div>
+            <div className={style.imagePrimaryInner}>
+              <img
+                src={arrItems[primaryImageIndex]?.src}
+                className={style.img}
+                alt={utils.alt.preview}
+              />
             </div>
           </Box>
         </Grid>
