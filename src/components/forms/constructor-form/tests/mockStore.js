@@ -118,3 +118,41 @@ export const elementsStore = {
   rowsPerPage: 10,
   itemsCount: 7
 };
+
+export const restrictionsToAdd = [
+  {
+    currentPocketWithPosition: {
+      pocket: {
+        _id: 'asd',
+        name: [
+          { lang: 'ua', value: 'елемент2' },
+          { lang: 'en', value: 'element2' }
+        ],
+        images: {
+          thumbnail: 'thumbnail_xdasdkr0e5x4r_47.png'
+        },
+        additionalPrice: [
+          { currency: 'UAH', value: 23 },
+          { currency: 'USD', value: 1 }
+        ]
+      },
+      position: {
+        _id: 'asd',
+        name: [
+          { lang: 'ua', value: 'елемент2' },
+          { lang: 'en', value: 'element2' }
+        ]
+      }
+    }
+  }
+];
+
+export const option = {
+  selector: jest.fn(),
+  getItems: jest.fn(),
+  setOptionToAdd: jest.fn(),
+  optionToAdd: [],
+  label: 'element1',
+  optionName: 'element1',
+  isRestrictions: false
+};

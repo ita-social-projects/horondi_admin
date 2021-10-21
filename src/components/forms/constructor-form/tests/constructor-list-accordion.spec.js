@@ -1,48 +1,19 @@
 import React from 'react';
-import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import { configure, mount } from 'enzyme';
+import { mount } from 'enzyme';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { elementsStore } from './mockStore.js';
+import { elementsStore, option } from './mockStore.js';
 import ConstructorListAccordion from '../constructor-list-accordion/constructor-list-accordion.js';
 
-configure({ adapter: new Adapter() });
+jest.mock('react-redux');
 
-let elementsToAdd = [];
-const setElementsToAdd = (value) => {
-  elementsToAdd = value;
-};
+const mockDispatch = jest.fn();
 
-const option = {
-  selector: jest.fn(),
-  getItems: jest.fn(),
-  setOptionToAdd: setElementsToAdd,
-  optionToAdd: elementsToAdd,
-  label: 'element1',
-  optionName: 'element1',
-  isRestrictions: false
-};
+useDispatch.mockReturnValue(mockDispatch);
+useSelector.mockReturnValue(elementsStore);
 
 describe('constructor-details tests', () => {
   let wrapper;
-  let spyOnUseSelector;
-  let spyOnUseDispatch;
-  let mockDispatch;
-
-  beforeEach(() => {
-    spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => elementsStore);
-
-    spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
-
-    mockDispatch = jest.fn();
-    spyOnUseDispatch.mockReturnValue(mockDispatch);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-    spyOnUseSelector.mockClear();
-  });
 
   test('Should render constructor-accordion isRestrictions:false', () => {
     wrapper = mount(

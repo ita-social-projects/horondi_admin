@@ -1,44 +1,28 @@
 import React from 'react';
-import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import { configure, mount } from 'enzyme';
+import { mount } from 'enzyme';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { restrictionsStore } from './mockStore.js';
 import ConstructorListRestrictions from '../constructor-list-pockets/constructor-list-restrictions/constructor-list-restrictions';
 
-configure({ adapter: new Adapter() });
+jest.mock('react-redux');
+
+const mockDispatch = jest.fn();
+useDispatch.mockReturnValue(mockDispatch);
+useSelector.mockImplementation(() => restrictionsStore);
+const setRestrictionsToAdd = jest.fn();
 
 describe('constructor-details tests', () => {
   let wrapper;
-  let spyOnUseSelector;
-  let spyOnUseDispatch;
-  let mockDispatch;
-  let restrictionsToAdd = [];
-  const setRestrictionsToAdd = (value) => {
-    restrictionsToAdd = value;
-  };
 
   beforeEach(() => {
-    spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => restrictionsStore);
-
-    spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
-
-    mockDispatch = jest.fn();
-    spyOnUseDispatch.mockReturnValue(mockDispatch);
-
     wrapper = mount(
       <ConstructorListRestrictions
         setRestrictionsToAdd={setRestrictionsToAdd}
-        restrictionsToAdd={restrictionsToAdd}
+        restrictionsToAdd={[]}
       />
     );
     wrapper.find('button').at(0).simulate('click');
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-    spyOnUseSelector.mockClear();
   });
 
   test('Should render constructor-details', () => {

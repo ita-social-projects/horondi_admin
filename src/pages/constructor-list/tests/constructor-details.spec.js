@@ -1,30 +1,20 @@
 import React from 'react';
-import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import { configure, mount } from 'enzyme';
+import { useDispatch, useSelector } from 'react-redux';
+import { mount } from 'enzyme';
 import { StaticRouter, Route, Switch } from 'react-router-dom';
 
 import mockStore from './mockStore';
 import ConstructorModelDetails from '../constructor-details';
 import LoadingBar from '../../../components/loading-bar';
 
-configure({ adapter: new Adapter() });
+jest.mock('react-redux');
+let wrapper;
+const mockDispatch = jest.fn();
 
+useSelector.mockImplementation(() => mockStore);
+useDispatch.mockReturnValue(mockDispatch);
 describe('constructor-details tests', () => {
-  let wrapper;
-  let spyOnUseSelector;
-  let spyOnUseDispatch;
-  let mockDispatch;
-
   beforeEach(() => {
-    spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockStore);
-
-    spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
-
-    mockDispatch = jest.fn();
-    spyOnUseDispatch.mockReturnValue(mockDispatch);
-
     wrapper = mount(
       <StaticRouter
         store={mockStore}
@@ -41,16 +31,11 @@ describe('constructor-details tests', () => {
     );
   });
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-    spyOnUseSelector.mockClear();
-  });
-
   test('Should render constructor-details', () => {
     expect(wrapper).toBeDefined();
   });
   test('Should render loading bar', () => {
-    spyOnUseSelector.mockImplementation(() => ({
+    useSelector.mockImplementation(() => ({
       ...mockStore,
       loading: true
     }));
@@ -71,7 +56,7 @@ describe('constructor-details tests', () => {
     expect(wrapper.find(LoadingBar)).toBeDefined();
   });
   test('Should render constructor-details without model', () => {
-    spyOnUseSelector.mockImplementation(() => ({ ...mockStore, model: null }));
+    useSelector.mockImplementation(() => ({ ...mockStore, model: null }));
     wrapper = mount(
       <StaticRouter store={mockStore} location='/constructor-model/1'>
         <Switch>
