@@ -134,6 +134,15 @@ const tableHeadRowTitles = {
     'Доступний',
     'Дії'
   ],
+  constructorElementList: [
+    'Вибрати',
+    'Фото',
+    'Назва',
+    'Ціна (USD)',
+    'Доступність'
+  ],
+  constructorList: ['Фото', 'Модель', 'Дії'],
+  constructorPocketList: ['Фото', 'Назва', 'Позиція', 'Ціна (USD)', 'Дії'],
   basics: [
     'Фото',
     'Назва',

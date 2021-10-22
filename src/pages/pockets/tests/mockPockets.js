@@ -1,15 +1,15 @@
-const mockClosures = {
-  closuresList: [
+const mockPockets = {
+  items: [
     {
       _id: '60fed1aee3a0252140b5b79a',
       name: [
         {
           lang: 'ua',
-          value: 'Чорна пластмасова'
+          value: 'передня'
         },
         {
           lang: 'en',
-          value: 'Black plastic'
+          value: 'front'
         }
       ],
       images: {
@@ -18,7 +18,7 @@ const mockClosures = {
         small: 'small_3cczdzwkrm28odg_git.png',
         thumbnail: 'thumbnail_3cczdzwkrm28odg_git.png'
       },
-      optionType: 'CLOSURE',
+      optionType: 'POCKET',
       additionalPrice: [
         {
           currency: 'UAH',
@@ -43,4 +43,4 @@ const mockClosures = {
   }
 };
 
-export default mockClosures;
+export default mockPockets;

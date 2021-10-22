@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Straps from '../straps-page';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerRow from '../../../containers/table-container-row';
-import { strapsList } from './strapsList';
+import { items } from './items';
 
 jest.mock('../../../hooks/filters/use-strap-filters');
 jest.mock('react-redux', () => ({
@@ -55,7 +55,7 @@ describe('Straps test', () => {
     useSelector.mockReturnValue({
       filter: '',
       loading: false,
-      strapsList
+      items
     });
 
     wrapper = mount(
@@ -71,7 +71,7 @@ describe('Straps test', () => {
     useSelector.mockReturnValue({
       filter: 'test',
       loading: false,
-      strapsList
+      items
     });
 
     wrapper = mount(
@@ -89,7 +89,7 @@ describe('Straps test', () => {
     useSelector.mockReturnValue({
       filter: 'test',
       loading: false,
-      strapsList
+      items
     });
 
     wrapper = mount(

@@ -19,7 +19,12 @@ export const getAllStraps = async (limit, skip, filter) => {
             }
               }
             }
-            image
+            images{
+              thumbnail
+              medium
+              small
+              large
+            }
             available
             additionalPrice {
               currency
@@ -57,7 +62,12 @@ export const createStrap = async (payload) => {
                 }
               }
             }
-            image
+            images{
+              thumbnail
+              medium
+              small
+              large
+          }
             available
             additionalPrice {
               currency
@@ -118,7 +128,12 @@ export const getStrapById = async (id) => {
                 }
               }
             }
-            image
+            images{
+              thumbnail
+              medium
+              small
+              large
+            }
             available
             additionalPrice {
               currency
@@ -155,7 +170,12 @@ export const updateStrap = async (id, strap, image) => {
                 _id
               }
             }
-            image
+            images{
+              thumbnail
+              medium
+              small
+              large
+            }
             available
             additionalPrice {
               currency

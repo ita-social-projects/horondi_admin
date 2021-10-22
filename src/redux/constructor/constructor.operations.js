@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { client } from '../../utils/client';
+import { getItems, setItems, client } from '../../utils/client';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { constructorErrors } from '../../configs/error-modal-messages';
 
@@ -65,6 +65,251 @@ export const deleteConstructorBasic = async (payload) => {
     );
   }
   return data.deleteConstructorBasic;
+};
+
+export const createConstructor = async (payload) => {
+  const createConstructorQuery = `
+      mutation($constructor: ConstructorInput!, $image: Upload) {
+        addConstructor(constructor: $constructor, image: $image) {
+          ... on Constructor {
+            _id
+            name {
+              lang
+              value
+            }
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await setItems(createConstructorQuery, payload);
+
+  if (
+    Object.keys(constructorErrors).includes(
+      result?.data?.addConstructor?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.addConstructor.statusCode} ${
+        constructorErrors[result.data.addConstructor.message]
+      }`
+    );
+  }
+
+  return result?.data?.addConstructor;
+};
+
+export const deleteConstructor = async (id) => {
+  const deleteConstructorQuery = `
+  mutation($id: ID!) {
+        deleteConstructor(id: $id) {
+          ... on Constructor {
+            _id
+          }
+          ... on Error {
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await setItems(deleteConstructorQuery, { id });
+
+  if (
+    Object.keys(constructorErrors).includes(
+      result?.data?.deleteConstructor?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.deleteConstructor.statusCode} ${
+        constructorErrors[result.data.deleteConstructor.message]
+      }`
+    );
+  }
+
+  return result?.data?.deleteConstructor;
+};
+
+export const getAllConstructors = async (payload) => {
+  const getAllConstructorsQuery = `
+      query($limit: Int!, $skip: Int!, $filter: ConstructorFilterInput) {
+        getAllConstructors(limit: $limit, skip: $skip, filter: $filter) {
+          items {
+            _id
+            name {
+              lang
+              value
+            }
+            model {
+              images {
+                large
+                medium
+                small
+                thumbnail
+              }
+            }
+          }
+        }
+      }
+    `;
+
+  const result = await getItems(getAllConstructorsQuery, payload);
+
+  if (
+    Object.keys(constructorErrors).includes(
+      result?.data?.getAllConstructors?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getAllConstructors.statusCode} ${
+        constructorErrors[result.data.getAllConstructors.message]
+      }`
+    );
+  }
+
+  return result?.data?.getAllConstructors;
+};
+
+export const getConstructorById = async (payload) => {
+  const getConstructorQuery = `
+      query($id: ID!) {
+        getConstructorById(id:$id){
+          ...on Constructor{
+            _id
+            model {
+              _id
+              name{
+                lang
+                value
+              }
+            }
+            name {
+              lang
+              value
+            }
+            bottoms {
+              _id
+            }
+            basics {
+              _id
+            }
+            patterns {
+              _id
+            }
+            backs {
+              _id
+            }
+            straps {
+              _id
+            }
+            closures {
+              _id
+            }
+            pocketsWithRestrictions {
+              currentPocketWithPosition {
+                pocket {
+                  _id
+                  name {
+                    lang
+                    value
+                  }
+                  images{
+                    thumbnail
+                  }
+                  additionalPrice{
+                    value
+                    currency
+                  }
+                }
+                position {
+                  _id
+                  name {
+                    lang
+                    value
+                  }
+                }
+              }
+              otherPocketsWithAvailablePositions {
+                pocket {
+                  _id
+                }
+                position {
+                  _id
+                }
+              }
+            }
+          }
+          ...on Error{
+            message
+            statusCode
+          }
+        }
+      }
+    `;
+
+  const result = await getItems(getConstructorQuery, { id: payload });
+
+  if (
+    Object.keys(constructorErrors).includes(
+      result?.data?.getConstructorById?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.getConstructorById.statusCode} ${
+        constructorErrors[result.data.getConstructorById.message]
+      }`
+    );
+  }
+
+  return result?.data?.getConstructorById;
+};
+
+export const updateConstructorById = async ({ id, constructor }) => {
+  const updateConstructorQuery = `
+  mutation($constructor: ConstructorInput!, $id:ID!){
+    updateConstructor(id:$id, constructor:$constructor){
+      ...on Constructor{
+        _id
+        name{
+          lang
+          value
+        }
+        model{
+          _id
+          name{
+            lang
+            value
+          }
+        }
+      }
+      ...on Error{
+        message
+        statusCode
+      }
+    }
+  }
+    `;
+
+  const result = await getItems(updateConstructorQuery, { id, constructor });
+
+  if (
+    Object.keys(constructorErrors).includes(
+      result?.data?.updateConstructor?.message
+    )
+  ) {
+    throw new Error(
+      `${result.data.updateConstructor.statusCode} ${
+        constructorErrors[result.data.updateConstructor.message]
+      }`
+    );
+  }
+
+  return result?.data?.updateConstructor;
 };
 
 export const createConstructorBasic = async (payload) => {

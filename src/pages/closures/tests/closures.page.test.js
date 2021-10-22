@@ -4,7 +4,7 @@ import * as reactRedux from 'react-redux';
 import Adapter from 'enzyme-adapter-react-16';
 import { Button, Typography } from '@material-ui/core';
 import { configure, shallow, mount } from 'enzyme';
-import mockClosures from './mockClosures';
+import mockPockets from '../../pockets/tests/mockPockets';
 import ClosuresPage from '../closures-page';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -30,7 +30,7 @@ describe('Closure-page render tests', () => {
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockClosures);
+    spyOnUseSelector.mockImplementation(() => mockPockets);
 
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
 
@@ -75,19 +75,19 @@ describe('Closure-page render tests', () => {
   });
 
   test('Should render Loading Bar', () => {
-    mockClosures.loading = true;
+    mockPockets.loading = true;
     wrapper = shallow(<ClosuresPage />);
     const loadingBar = wrapper.find(LoadingBar);
     expect(wrapper.exists(LoadingBar)).toBeDefined();
     expect(wrapper.exists(LoadingBar)).toBe(true);
     expect(loadingBar).toHaveLength(1);
     expect(wrapper.exists(TableContainerGenerator)).toBe(false);
-    mockClosures.loading = false;
+    mockPockets.loading = false;
   });
 
   test('useSelector hook should be called', () => {
-    getState = reactRedux.useSelector(mockClosures);
-    expect(getState).toEqual(mockClosures);
+    getState = reactRedux.useSelector(mockPockets);
+    expect(getState).toEqual(mockPockets);
     expect(spyOnUseSelector).toHaveBeenCalled();
   });
 });
@@ -102,7 +102,7 @@ describe('useEffect tests', () => {
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockClosures);
+    spyOnUseSelector.mockImplementation(() => mockPockets);
 
     mockDispatchFn = jest.fn();
     reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
@@ -115,7 +115,7 @@ describe('useEffect tests', () => {
     closurePage = wrapper.find(ClosuresPage);
     tableContainerRow = closurePage.find(TableContainerRow);
     tableContainerRowFirst = closurePage.find({
-      id: mockClosures.closuresList[0]._id
+      id: mockPockets.items[0]._id
     });
   });
 
@@ -133,7 +133,7 @@ describe('useEffect tests', () => {
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Доступний');
     expect(tableContainerRowFirst.prop('name')).toBe(
-      mockClosures.closuresList[0].name[0].value
+      mockPockets.items[0].name[0].value
     );
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
   });

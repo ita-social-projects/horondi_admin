@@ -6,7 +6,9 @@ export const constructorErrors = {
   FRONT_POCKET_NOT_FOUND: 'Кишеню не знайдено!',
   FRONT_POCKET_ALREADY_EXIST: 'Така кишеня вже існує!',
   BACK_NOT_FOUND: 'Спинку не знайдено!',
-  BACK_ALREADY_EXIST: 'Така спинка вже існує!'
+  BACK_ALREADY_EXIST: 'Така спинка вже існує!',
+  CONSTRUCTOR_NOT_FOUND: 'Конструктор не знайдено',
+  CONSTRUCTOR_ALREADY_EXIST: 'Конструктор вже існує'
 };
 
 export const businessPageErrors = {
