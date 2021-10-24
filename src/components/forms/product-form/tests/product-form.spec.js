@@ -29,8 +29,12 @@ jest.mock('connected-react-router', () => ({
 
 const mockDispatch = jest.fn();
 
+const Theme = {
+  darkMode: true
+};
+
 useDispatch.mockImplementation(mockDispatch);
-useSelector.mockImplementation((fn) => fn({ Products }));
+useSelector.mockImplementation((fn) => fn({ Products, Theme }));
 
 describe('Product-form tests', () => {
   let component;
@@ -56,7 +60,8 @@ describe('Product-form tests', () => {
 
   it('#3 should submit the form', async () => {
     const submit = component.find(Button);
+    mockDispatch.mockClear();
     submit.simulate('click');
-    expect(await mockDispatch).toHaveBeenCalledTimes(8);
+    expect(mockDispatch).toHaveBeenCalledTimes(4);
   });
 });
