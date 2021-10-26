@@ -4,21 +4,22 @@ import { useDropzone } from 'react-dropzone';
 import { Grid } from '@material-ui/core';
 import { CloudUploadRounded } from '@material-ui/icons';
 import { useStyles } from './images-upload-container.styles';
+import { showErrorSnackbar } from '../../redux/snackbar/snackbar.actions';
 
 const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
   const style = useStyles();
   const availableCount = length ? maxFiles - length : maxFiles;
 
   const validate = (file) => {
-    if (file.size > 10000000)
+    if (file.size > 15000000)
       return {
         code: 'size-too-large',
-        massage: 'The Size of Image must be under 10Mb'
+        massage: 'The Size of Image must be under 15Mb'
       };
     if (length > maxFiles)
       return {
         code: 'max files',
-        massage: `The Size of Image must be ${maxFiles}`
+        massage: `You can drop only ${maxFiles} photos`
       };
     return null;
   };
@@ -40,7 +41,14 @@ const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
     }
   };
 
-  const { getRootProps, getInputProps, open } = useDropzone(options);
+  const { getRootProps, getInputProps, open, fileRejections } =
+    useDropzone(options);
+
+  if (fileRejections.length) {
+    fileRejections.forEach((item) => {
+      showErrorSnackbar(item.message);
+    });
+  }
 
   return (
     <Grid container>
