@@ -1,6 +1,11 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import ProductAddImages from '..';
 import ImagesUploadContainer from '../../../../../containers/images-upload-container';
+
+const mockDispatch = jest.fn();
+jest.mock('react-redux');
+useDispatch.mockImplementation(mockDispatch);
 
 describe('Product Add Images', () => {
   let component;
