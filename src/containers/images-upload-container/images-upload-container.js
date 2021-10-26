@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { Grid } from '@material-ui/core';
@@ -8,18 +9,19 @@ import { showErrorSnackbar } from '../../redux/snackbar/snackbar.actions';
 
 const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
   const style = useStyles();
+  const dispatch = useDispatch();
   const availableCount = length ? maxFiles - length : maxFiles;
 
   const validate = (file) => {
     if (file.size > 15000000)
       return {
         code: 'size-too-large',
-        massage: 'The Size of Image must be under 15Mb'
+        message: 'The Size of Photo must be under 15Mb'
       };
     if (length > maxFiles)
       return {
         code: 'max files',
-        massage: `You can drop only ${maxFiles} photos`
+        message: `You can drop only ${maxFiles} photos`
       };
     return null;
   };
@@ -31,24 +33,22 @@ const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
     noClick: true,
     noKeyboard: true,
     validator: validate,
-    onDrop: (acceptedFiles) => {
+    onDrop: (acceptedFiles, fileRejections) => {
       const files = acceptedFiles.map((file) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file)
         })
       );
       handler(files);
+
+      if (fileRejections.length) {
+        const {message} = fileRejections[0].errors[0];
+        dispatch(showErrorSnackbar(message));
+      }
     }
   };
 
-  const { getRootProps, getInputProps, open, fileRejections } =
-    useDropzone(options);
-
-  if (fileRejections.length) {
-    fileRejections.forEach((item) => {
-      showErrorSnackbar(item.message);
-    });
-  }
+  const { getRootProps, getInputProps, open } = useDropzone(options);
 
   return (
     <Grid container>
