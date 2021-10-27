@@ -16,12 +16,12 @@ const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
     if (file.size > 15000000)
       return {
         code: 'size-too-large',
-        message: 'The Size of Photo must be under 15Mb'
+        message: 'Максимальний розмір фото 15Mb'
       };
-    if (length > maxFiles)
+    if (length >= maxFiles)
       return {
         code: 'max files',
-        message: `You can drop only ${maxFiles} photos`
+        message: `Завантажте до ${maxFiles} фотографій`
       };
     return null;
   };
@@ -42,7 +42,7 @@ const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
       handler(files);
 
       if (fileRejections.length) {
-        const {message} = fileRejections[0].errors[0];
+        const { message } = fileRejections[0].errors[0];
         dispatch(showErrorSnackbar(message));
       }
     }
@@ -63,7 +63,7 @@ const ImagesUploadContainer = ({ handler, multiple, maxFiles, length }) => {
         </button>
       </div>
       <p className={style.description}>
-        Завантажте до {maxFiles} зображень. Максимальний розмір фото - 10MB.
+        Завантажте до {maxFiles} зображень. Максимальний розмір фото - 15MB.
         Дозволені формати: jpeg, jpg, png.
       </p>
     </Grid>
