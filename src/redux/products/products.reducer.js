@@ -213,7 +213,7 @@ const productsReducer = (state = initialState, action = {}) => {
     case SET_FILES_TO_UPLOAD:
       return {
         ...state,
-        upload: [...action.payload]
+        upload: action.payload
       };
     case SET_PRODUCT:
       return {
