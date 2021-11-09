@@ -105,7 +105,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     const timer = setTimeout(() => {
       const q = values.uaAddress.trim();
 
-      const url = `https://api.locationiq.com/v1/autocomplete.php?key=pk.d250de696729be2d1744cbfc919a178d&limit=1&accept-language=ua&q=${q}`;
+      const url = `https://api.locationiq.com/v1/autocomplete.php?key=${process.env.REACT_APP_MAP_API_KEY}&limit=1&accept-language=ua&q=${q}`;
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
