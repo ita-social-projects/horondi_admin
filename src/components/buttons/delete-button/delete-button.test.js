@@ -22,7 +22,6 @@ describe('delete button tests', () => {
 
   it('should exist', () => {
     expect(component).toMatchSnapshot();
-    expect(component.exists());
   });
   it('should have type', () => {
     expect(component.find('button').type()).toEqual('button');
