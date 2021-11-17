@@ -38,7 +38,6 @@ describe('standard button tests', () => {
     expect(mockCallBack.mock.calls.length).toBe(1);
   });
   it('should exist and have value', () => {
-    expect(component.exists()).toBeTruthy();
     expect(component.prop('title')).toEqual(SAVE_TITLE);
     expect(component.prop('type')).toEqual(type);
     expect(component.prop('onClickHandler')).toEqual(mockCallBack);

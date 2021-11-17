@@ -46,7 +46,6 @@ describe('save button tests', () => {
     component.find('button').simulate('click');
   });
   it('should exist and have value', () => {
-    expect(component.exists()).toBeTruthy();
     expect(component.prop('onClickHandler')).toEqual(mockCallBack);
   });
   it('should have type', () => {
