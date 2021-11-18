@@ -27,7 +27,7 @@ describe('edit button tests', () => {
     expect(mockCallBack.mock.calls.length).toBe(1);
   });
   it('should exist and have value', () => {
-    expect(component.exists());
+    expect(component.exists(EditButton)).toBe(true);
     expect(component.find('button').prop('aria-label')).toEqual(EDIT_TITLE);
     expect(component.find('button').prop('title')).toEqual(EDIT_TITLE);
     expect(component.prop('onClickHandler')).toEqual(mockCallBack);

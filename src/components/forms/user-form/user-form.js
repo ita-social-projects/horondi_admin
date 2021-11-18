@@ -74,14 +74,8 @@ const UserForm = ({ user, id, edit }) => {
     region: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
     city: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
     street: Yup.string().matches(uaRegex, USER_INVALID_ADDRESS_MESSAGE),
-    buildingNumber: Yup.string().matches(
-      uaNameCreation,
-      USER_INVALID_ADDRESS_MESSAGE
-    ),
-    appartment: Yup.string().matches(
-      categoryCode,
-      USER_INVALID_ADDRESS_MESSAGE
-    ),
+    house: Yup.string().matches(uaNameCreation, USER_INVALID_ADDRESS_MESSAGE),
+    flat: Yup.string().matches(categoryCode, USER_INVALID_ADDRESS_MESSAGE),
     zipcode: Yup.string().matches(postCode, USER_INVALID_ADDRESS_MESSAGE),
     userImage: Yup.string()
   });
@@ -117,7 +111,6 @@ const UserForm = ({ user, id, edit }) => {
             user: editedUser
           }
         );
-        
       }
     }
   });
@@ -171,7 +164,7 @@ const UserForm = ({ user, id, edit }) => {
         <Paper className={styles.colorPaper}>
           <Grid item xs={12}>
             <Paper>
-              <span className={styles.userImage}>{labels.userAvatar}</span>
+              <span className={styles.userImage}>Фото користувача</span>
               <div className={styles.userImage}>
                 <ImageUploadContainer
                   handler={handleImageLoad}
@@ -180,160 +173,24 @@ const UserForm = ({ user, id, edit }) => {
               </div>
             </Paper>
           </Grid>
-          <TextField
-            id='userFirstName'
-            data-cy='userFirstName'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.userFirstName}
-            value={values.userFirstName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.userFirstName && !!errors.userFirstName}
-          />
-          {touched.userFirstName && errors.userFirstName && (
-            <div className={styles.inputError}>{errors.userFirstName}</div>
-          )}
-          <TextField
-            id='userLastName'
-            data-cy='userLastName'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.userLastName}
-            value={values.userLastName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.userLastName && !!errors.userLastName}
-          />
-          {touched.userLastName && errors.userLastName && (
-            <div className={styles.inputError}>{errors.userLastName}</div>
-          )}
-          <TextField
-            id='email'
-            data-cy='email'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.email}
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.email && !!errors.email}
-          />
-          {touched.email && errors.email && (
-            <div className={styles.inputError}>{errors.email}</div>
-          )}
-          <TextField
-            id='phoneNumber'
-            data-cy='phoneNumber'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.phoneNumber}
-            value={values.phoneNumber}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.phoneNumber && !!errors.phoneNumber}
-          />
-          {touched.phoneNumber && errors.phoneNumber && (
-            <div className={styles.inputError}>{errors.phoneNumber}</div>
-          )}
-          <TextField
-            id='country'
-            data-cy='country'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.country}
-            value={values.country}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.country && !!errors.country}
-          />
-          {touched.country && errors.country && (
-            <div className={styles.inputError}>{errors.country}</div>
-          )}
-          <TextField
-            id='region'
-            data-cy='region'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.region}
-            value={values.region}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.region && !!errors.region}
-          />
-          {touched.region && errors.region && (
-            <div className={styles.inputError}>{errors.region}</div>
-          )}
-          <TextField
-            id='city'
-            data-cy='city'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.city}
-            value={values.city}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.city && !!errors.city}
-          />
-          {touched.city && errors.city && (
-            <div className={styles.inputError}>{errors.city}</div>
-          )}
-          <TextField
-            id='street'
-            data-cy='street'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.street}
-            value={values.street}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.street && !!errors.street}
-          />
-          {touched.street && errors.street && (
-            <div className={styles.inputError}>{errors.street}</div>
-          )}
-          <TextField
-            id='buildingNumber'
-            data-cy='buildingNumber'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.house}
-            value={values.buildingNumber}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.buildingNumber && !!errors.buildingNumber}
-          />
-          {touched.buildingNumber && errors.buildingNumber && (
-            <div className={styles.inputError}>{errors.buildingNumber}</div>
-          )}
-          <TextField
-            id='appartment'
-            data-cy='appartment'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.flat}
-            value={values.appartment}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.appartment && !!errors.appartment}
-          />
-          {touched.appartment && errors.appartment && (
-            <div className={styles.inputError}>{errors.appartment}</div>
-          )}
-          <TextField
-            id='zipcode'
-            data-cy='zipcode'
-            className={styles.textField}
-            variant='outlined'
-            label={config.labels.userDetails.zipCode}
-            value={values.zipcode}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.zipcode && !!errors.zipcode}
-          />
-          {touched.zipcode && errors.zipcode && (
-            <div className={styles.inputError}>{errors.zipcode}</div>
-          )}
+          {Object.keys(labels).map((fieldName) => (
+            <React.Fragment key={fieldName}>
+              <TextField
+                id={fieldName}
+                data-cy={fieldName}
+                className={styles.textField}
+                variant='outlined'
+                label={labels[fieldName]}
+                value={values[fieldName]}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched[fieldName] && !!errors[fieldName]}
+              />
+              {touched[fieldName] && errors[fieldName] && (
+                <div className={styles.inputError}>{errors[fieldName]}</div>
+              )}
+            </React.Fragment>
+          ))}
         </Paper>
       </form>
     </div>
