@@ -27,7 +27,12 @@ const UserDetails = ({ match }) => {
 
 UserDetails.propTypes = {
   id: PropTypes.string,
-  match: PropTypes.objectOf(PropTypes.object)
+  match: PropTypes.shape({
+    isExact: PropTypes.bool,
+    params: PropTypes.objectOf(PropTypes.string),
+    path: PropTypes.string,
+    url: PropTypes.string
+  })
 };
 
 UserDetails.defaultProps = {

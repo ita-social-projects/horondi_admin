@@ -97,10 +97,8 @@ const labels = {
     priority: 'Пріорітет'
   },
   userDetails: {
-    userImg: 'Зображення користувача',
     userFirstName: "І'мя",
     userLastName: 'Прізвище',
-    userPassword: 'Пароль',
     email: 'Емейл',
     phoneNumber: 'Номер телефону',
     country: 'Країна',
@@ -109,8 +107,7 @@ const labels = {
     street: 'Вулиця',
     house: 'Будинок',
     flat: 'Квартира',
-    zipCode: 'Поштовий індекс',
-    userAvatar: 'Фото користувача'
+    zipCode: 'Поштовий індекс'
   },
   pattern: {
     image: 'Фото гобелена',
