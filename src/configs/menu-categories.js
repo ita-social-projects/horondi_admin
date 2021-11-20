@@ -37,7 +37,7 @@ export const menuCategories = [
   ['Замовлення', routes.pathToOrders, ShoppingBasketIcon],
   ['Статистика', routes.pathToStatistic, BarChartIcon],
   ['Останні зміни', routes.pathToHistory, HistoryIcon],
-  ['Бізнес сторінки', routes.pathToAddBusinessPage, BusinessCenterIcon],
+  ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
   ['Посилання', routes.pathToHeaders, LinkIcon]
 ];
 
