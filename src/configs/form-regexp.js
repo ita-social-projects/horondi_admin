@@ -15,7 +15,7 @@ const formRegExp = {
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
   userStatuses: /(Активний|Неактивний)/g,
   hexString: /^#[0-9a-f]{3,6}$/i,
-  uaNameCreation: /^[а-яїієґА-ЯЇІЄҐa-zA-Z0-9\s]+$/i,
+  uaNameCreation: /^[а-яїієґА-ЯЇІЄҐA-Za-z0-9\s]+$/i,
   enNameCreation: /^[a-zA-Z0-9\s]+$/i,
   enDescription: /^[a-z0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   uaDescription: /^[а-яїієґ0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
