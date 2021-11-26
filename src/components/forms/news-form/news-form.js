@@ -69,19 +69,9 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         .required(ERROR_MESSAGE);
       reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
-        .matches(
-          config.formRegExp[`${lang}NameCreation`],
-          config.newsErrorMessages[
-            `NOT_${lang.toUpperCase()}_AUTHOR_NAME_MESSAGE`
-          ]
-        )
         .required(ERROR_MESSAGE);
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
-        .matches(
-          config.formRegExp[`${lang}NameCreation`],
-          config.newsErrorMessages[`NOT_${lang.toUpperCase()}_TITLE_MESSAGE`]
-        )
         .required(ERROR_MESSAGE);
       return reducer;
     }, {});
