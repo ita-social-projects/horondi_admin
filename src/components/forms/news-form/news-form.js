@@ -88,7 +88,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     handleBlur,
     touched,
     errors,
-    setFieldValue
+    setFieldValue,
+    setValues
   } = useFormik({
     validationSchema: formSchema,
     initialValues: useFormikInitialValues(newsArticle),
@@ -118,10 +119,12 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const handleLoadAuthorImage = (files) => {
     imageHandler(files, setUploadAuthorImage, values, authorPhoto);
+    setValues(values);
   };
 
   const handleLoadNewsImage = (files) => {
     imageHandler(files, setUploadNewsImage, values, newsImage);
+    setValues(values);
   };
 
   const inputs = [
