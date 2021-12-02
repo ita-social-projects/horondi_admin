@@ -5,6 +5,7 @@ import { Grid, Paper } from '@material-ui/core';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
+import { red } from '@material-ui/core/colors';
 import { useStyles } from './news-form.styles';
 import { SaveButton, BackButton } from '../../buttons';
 import useNewsHandlers from '../../../utils/use-news-handlers';
@@ -173,8 +174,13 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
           <Paper className={styles.newsItemUpdate}>
             <div className={styles.imageUploadBlock}>
               <div>
-                <span className={styles.imageUpload}>
-                  {config.labels.news.avatarText}
+                <span
+                  className={styles.imageUpload}
+                  style={values.authorPhoto ? {} : { color: red[900] }}
+                >
+                  {values.authorPhoto
+                    ? config.labels.news.avatarText
+                    : `${config.labels.news.avatarText}*`}
                 </span>
 
                 <div className={styles.imageUploadAvatar}>
@@ -192,8 +198,13 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
               </div>
 
               <div>
-                <span className={styles.imageUpload}>
-                  {config.labels.news.mainImgText}
+                <span
+                  className={styles.imageUpload}
+                  style={values.newsImage ? {} : { color: red[900] }}
+                >
+                  {values.newsImage
+                    ? config.labels.news.mainImgText
+                    : `${config.labels.news.mainImgText}*`}
                 </span>
 
                 <div className={styles.imageUploadAvatar}>
