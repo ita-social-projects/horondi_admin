@@ -127,7 +127,16 @@ describe('Testing filters', () => {
       expect(handler.mock.calls.length).toBe(1);
     });
 
-    it('Should separate chosen values by comma', () => {
+    it("Shouldn't separate values if only one value chosen", () => {
+      wrapper = mount(<OptionsPicker {...props} />);
+
+      const renderValue = wrapper.find(Select).prop('renderValue');
+      const selectedValues = [props.options[0].value];
+
+      expect(renderValue(selectedValues)[0]).toEqual('test');
+    });
+
+    it('Should separate values by comma if more than one value chosen', () => {
       wrapper = mount(<OptionsPicker {...props} />);
 
       const renderValue = wrapper.find(Select).prop('renderValue');
