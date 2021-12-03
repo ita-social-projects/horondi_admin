@@ -95,9 +95,16 @@ describe('Testing filters', () => {
 
   describe('OptionsPicker filter', () => {
     beforeEach(() => {
-      const value = ['test'];
-      const label = 'test';
-      props = { options: [{ value, label }], handler, value };
+      const value = ['test', 'test2'];
+      const label = ['test', 'test2'];
+      props = {
+        options: [
+          { value: value[0], label: label[0] },
+          { value: value[1], label: label[1] }
+        ],
+        handler,
+        value
+      };
     });
 
     it('Should render', () => {
@@ -118,6 +125,15 @@ describe('Testing filters', () => {
         .onChange({ target: { value: undefined } });
 
       expect(handler.mock.calls.length).toBe(1);
+    });
+
+    it('Should separate chosen values by comma', () => {
+      wrapper = mount(<OptionsPicker {...props} />);
+
+      const renderValue = wrapper.find(Select).prop('renderValue');
+      const selectedValues = props.options.map((opt) => opt.value);
+
+      expect(renderValue(selectedValues)[0]).toEqual('test, ');
     });
   });
 
