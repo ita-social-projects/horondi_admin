@@ -11,6 +11,11 @@ import {
   deleteBusinessPage
 } from '../../redux/business-pages/business-pages.actions';
 
+import {
+  getAllQuestionsAnswers,
+  deleteQuestionsAnswers
+} from '../../redux/questions-answers/questions-answers.actions';
+
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import TableContainerRow from '../../containers/table-container-row';
@@ -19,20 +24,31 @@ import LoadingBar from '../../components/loading-bar';
 
 const { REMOVE_BUSINESS_PAGE } = config.messages;
 const { CREATE_BUSINESS_PAGE } = config.buttonTitles;
+const { CREATE_ANSWERS_QUESTIONS } = config.buttonTitles;
 
 const { pathToAddBusinessPage } = config.routes;
+const { pathToAddQuestionsAnswers } = config.routes;
 const tableTitles = config.tableHeadRowTitles.businessPages;
+const questionsAnswersTableTitles = config.tableHeadRowTitles.questionsAnswers;
 
 const BusinessPageList = () => {
   const commonStyles = useCommonStyles();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
-  const { list, loading } = useSelector(({ BusinessPages }) => ({
-    list: BusinessPages.list,
-    loading: BusinessPages.loading
-  }));
+
+  const { list, loading, listQuestions } = useSelector(
+    ({ BusinessPages, QuestionsAnswers }) => ({
+      list: BusinessPages.list,
+      loading: BusinessPages.loading,
+      listQuestions: QuestionsAnswers.listQuestions.items
+    })
+  );
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllQuestionsAnswers());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getAllBusinessPages());
@@ -46,7 +62,15 @@ const BusinessPageList = () => {
     openSuccessSnackbar(removeBusinessPage, REMOVE_BUSINESS_PAGE);
   };
 
-  const pages =
+  const pageDeleteHandlerQuestionsAndAnswers = (id) => {
+    const removeQuestionsAnswers = () => {
+      dispatch(closeDialog());
+      dispatch(deleteQuestionsAnswers(id));
+    };
+    openSuccessSnackbar(removeQuestionsAnswers, REMOVE_BUSINESS_PAGE);
+  };
+
+  const businessPages =
     list !== undefined
       ? list.map((page, index) => (
           <TableContainerRow
@@ -59,6 +83,23 @@ const BusinessPageList = () => {
             deleteHandler={() => pageDeleteHandler(page._id)}
             editHandler={() => {
               dispatch(push(`/business-pages/${page._id}`));
+            }}
+          />
+        ))
+      : null;
+
+  const questionsAnswersPages =
+    listQuestions !== undefined
+      ? listQuestions.map((page, index) => (
+          <TableContainerRow
+            key={page._id}
+            id={page._id}
+            index={index + 1}
+            title={page.question[0].value}
+            showAvatar={false}
+            deleteHandler={() => pageDeleteHandlerQuestionsAndAnswers(page._id)}
+            editHandler={() => {
+              dispatch(push(`/business-pages/questions-answers/${page._id}`));
             }}
           />
         ))
@@ -92,7 +133,32 @@ const BusinessPageList = () => {
       <TableContainerGenerator
         id='businessPageTable'
         tableTitles={tableTitles}
-        tableItems={pages}
+        tableItems={businessPages}
+      />
+      <hr />
+      <div className={commonStyles.adminHeader}>
+        <Typography
+          variant='h1'
+          className={commonStyles.materialTitle}
+          data-cy='main-header'
+        >
+          {config.titles.questionsAnswersTitles.mainQuestionsAnswersTitle}
+        </Typography>
+        <Button
+          id='add-business-page'
+          component={Link}
+          to={pathToAddQuestionsAnswers}
+          variant='contained'
+          color='primary'
+          data-cy='add-business-page'
+        >
+          {CREATE_ANSWERS_QUESTIONS}
+        </Button>
+      </div>
+      <TableContainerGenerator
+        id='businessPageTable'
+        tableTitles={questionsAnswersTableTitles}
+        tableItems={questionsAnswersPages}
       />
     </div>
   );
