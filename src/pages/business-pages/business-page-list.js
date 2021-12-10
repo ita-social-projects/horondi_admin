@@ -23,6 +23,7 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import LoadingBar from '../../components/loading-bar';
 
 const { REMOVE_BUSINESS_PAGE } = config.messages;
+const { REMOVE_QUESTIONS_ANSWERS } = config.messages;
 const { CREATE_BUSINESS_PAGE } = config.buttonTitles;
 const { CREATE_ANSWERS_QUESTIONS } = config.buttonTitles;
 
@@ -67,7 +68,7 @@ const BusinessPageList = () => {
       dispatch(closeDialog());
       dispatch(deleteQuestionsAnswers(id));
     };
-    openSuccessSnackbar(removeQuestionsAnswers, REMOVE_BUSINESS_PAGE);
+    openSuccessSnackbar(removeQuestionsAnswers, REMOVE_QUESTIONS_ANSWERS);
   };
 
   const businessPages =
@@ -88,18 +89,18 @@ const BusinessPageList = () => {
         ))
       : null;
 
-  const questionsAnswersPages =
+  const questionsAnswers =
     listQuestions !== undefined
-      ? listQuestions.map((page, index) => (
+      ? listQuestions.map((item, index) => (
           <TableContainerRow
-            key={page._id}
-            id={page._id}
+            key={item._id}
+            id={item._id}
             index={index + 1}
-            title={page.question[0].value}
+            title={item.question[0].value}
             showAvatar={false}
-            deleteHandler={() => pageDeleteHandlerQuestionsAndAnswers(page._id)}
+            deleteHandler={() => pageDeleteHandlerQuestionsAndAnswers(item._id)}
             editHandler={() => {
-              dispatch(push(`/business-pages/questions-answers/${page._id}`));
+              dispatch(push(`/business-pages/questions-answers/${item._id}`));
             }}
           />
         ))
@@ -145,20 +146,20 @@ const BusinessPageList = () => {
           {config.titles.questionsAnswersTitles.mainQuestionsAnswersTitle}
         </Typography>
         <Button
-          id='add-business-page'
+          id='add-questions-answers'
           component={Link}
           to={pathToAddQuestionsAnswers}
           variant='contained'
           color='primary'
-          data-cy='add-business-page'
+          data-cy='add-questions-answers'
         >
           {CREATE_ANSWERS_QUESTIONS}
         </Button>
       </div>
       <TableContainerGenerator
-        id='businessPageTable'
+        id='questionsAnswersTable'
         tableTitles={questionsAnswersTableTitles}
-        tableItems={questionsAnswersPages}
+        tableItems={questionsAnswers}
       />
     </div>
   );
