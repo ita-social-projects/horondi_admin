@@ -13,7 +13,7 @@ export const useStyles = makeStyles((theme) => ({
       },
     display: 'flex',
     alignItems: 'center',
-    width: 250,
+    width: 290,
     height: '36px',
     '@media (max-width: 450px)': {
       width: '95%',
@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   date: {
-    width: 250,
+    width: 290,
     '& span': { color: '#828282 !important' },
     '& a.rs-btn.rs-btn-default.rs-picker-toggle.active.rs-btn-md': {
       borderColor: 'black !important'
@@ -32,6 +32,7 @@ export const useStyles = makeStyles((theme) => ({
     '& toggle.active': { borderColor: 'red !important' }
   },
   menu: {
+    width: 290,
     '& button': {
       backgroundColor: '#3f51b5 !important',
       color: '#ffffff !important'
@@ -39,6 +40,12 @@ export const useStyles = makeStyles((theme) => ({
     '& .rs-calendar-table-cell-selected .rs-calendar-table-cell-content': {
       backgroundColor: '#3f51b5 !important',
       borderColor: '#3f51b5 !important'
+    },
+    '& .rs-picker-toolbar': {
+      maxWidth: '290px !important'
+    },
+    '& .rs-picker-toolbar-ranges': {
+      marginBottom: 12
     }
   }
 }));
