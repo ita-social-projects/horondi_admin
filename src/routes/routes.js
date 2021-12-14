@@ -10,6 +10,7 @@ import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login';
 import BusinessPageList from '../pages/business-pages';
 import BusinessPageForm from '../components/forms/business-page-form';
+import FormQNA from '../components/forms/questions-answers-form';
 import ErrorPage from '../pages/error-page';
 import { config } from '../configs';
 import MaterialPage from '../pages/material';
@@ -181,6 +182,16 @@ const Routes = () => {
             path={routes.pathToAddBusinessPage}
             exact
             component={BusinessPageForm}
+          />
+          <Route
+            path={routes.pathToAddQuestionsAnswers}
+            exact
+            component={FormQNA}
+          />
+          <Route
+            path={routes.pathToEditQuestionsAnswers}
+            exact
+            render={({ match }) => <FormQNA id={match.params.id} editMode />}
           />
           <Route
             path={routes.pathToBusinessPageDetails}

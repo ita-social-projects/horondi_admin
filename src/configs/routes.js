@@ -12,6 +12,8 @@ const routes = {
   pathToBusinessPages: '/business-pages',
   pathToAddBusinessPage: '/business-page-add',
   pathToBusinessPageDetails: '/business-pages/:id',
+  pathToAddQuestionsAnswers: '/business-questions-answers',
+  pathToEditQuestionsAnswers: '/business-pages/questions-answers/:id',
   pathToUsers: '/users',
   pathToUsersDetails: '/users/:id',
   pathToUser: '/user',
