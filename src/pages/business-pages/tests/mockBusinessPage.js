@@ -18,6 +18,35 @@ const mockBusinessPage = (mockLoading) => ({
     ],
     loading: mockLoading
   },
+  QuestionsAnswers: {
+    listQuestions: {
+      items: [
+        {
+          _id: '0c3c7954dd35de268bed4fe8',
+          question: [
+            {
+              lang: 'ua',
+              value: 'Пустишка'
+            },
+            {
+              lang: 'en',
+              value: 'Fake'
+            }
+          ],
+          answer: [
+            {
+              lang: 'ua',
+              value: 'Пустишка'
+            },
+            {
+              lang: 'en',
+              value: 'Fake'
+            }
+          ]
+        }
+      ]
+    }
+  },
   Table: {
     pagination: {
       currentPage: 0,

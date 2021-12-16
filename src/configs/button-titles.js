@@ -9,6 +9,7 @@ const buttonTitles = {
   CANCEL_TITLE: 'Ні',
   LOGOUT_TITLE: 'Вихід',
   CREATE_BUSINESS_PAGE: 'Додати бізнес сторінку',
+  CREATE_ANSWERS_QUESTIONS: 'Додати питання та відповідь',
   CREATE_CONTACT_TITLE: 'Додати контакти',
   SWITCH_USER_STATUS_TITLE: 'Змінити статус користувача',
   USER_INACTIVE_TITLE: 'Деактивувати',

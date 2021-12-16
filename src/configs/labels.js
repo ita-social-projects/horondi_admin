@@ -290,6 +290,18 @@ const labels = {
       isEditor: true
     }
   ],
+  questionaAnswersLabel: [
+    {
+      label: { ua: 'Запитання', en: 'Question' },
+      name: 'question',
+      required: true
+    },
+    {
+      label: { ua: 'Відповідь', en: 'Answer' },
+      name: 'answer',
+      isEditor: true
+    }
+  ],
   product: {
     additionalPriceType: {
       absolutePrice: mapToLanguages(

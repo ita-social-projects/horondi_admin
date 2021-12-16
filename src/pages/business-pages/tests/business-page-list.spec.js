@@ -67,21 +67,21 @@ describe('BusinessPageList tests', () => {
       </Router>
     );
     wrapper.find(TableContainerRow).at(0).props().editHandler();
-    expect(mockHandler).toHaveBeenCalledTimes(2);
+    expect(mockHandler).toHaveBeenCalledTimes(3);
   });
 
   it('TableContainerRow deleteHandler should be invoked', () => {
     mockLoading = false;
     useDispatchMock.mockReturnValue(mockHandler);
     wrapper.find(TableContainerRow).at(0).props().deleteHandler();
-    expect(mockHandler).toHaveBeenCalledTimes(2);
+    expect(mockHandler).toHaveBeenCalledTimes(3);
   });
 
   it('Button addBusinessPage should exist and be clicked', () => {
     mockLoading = false;
     useDispatchMock.mockReturnValue(mockHandler);
     expect(wrapper.exists(Button)).toBe(true);
-    expect(wrapper.find(Button).text()).toBe(CREATE_BUSINESS_PAGE);
+    expect(wrapper.find(Button).at(0).text()).toBe(CREATE_BUSINESS_PAGE);
   });
 
   it('Component TableContainerGenerator should exist', () => {
