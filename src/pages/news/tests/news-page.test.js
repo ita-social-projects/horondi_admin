@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 import News from '../news-page';
 import LoadingBar from '../../../components/loading-bar';
@@ -20,8 +19,6 @@ jest.mock('../../../utils/use-success-snackbar', () => ({
   })
 }));
 
-Enzyme.configure({ adapter: new Adapter() });
-
 describe('News test', () => {
   let wrapper;
   let mockedDispatch;
@@ -35,18 +32,6 @@ describe('News test', () => {
       loading: false,
       list: newsList
     });
-  });
-
-  it('Should render news page', () => {
-    useSelector.mockReturnValue({ filters: { search: '' } });
-
-    wrapper = mount(
-      <BrowserRouter>
-        <News />
-      </BrowserRouter>
-    );
-
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render LoadingBar', () => {

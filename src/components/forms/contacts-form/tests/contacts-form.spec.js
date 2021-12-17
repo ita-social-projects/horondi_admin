@@ -1,6 +1,5 @@
 import React from 'react';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
 import ContactsForm from '../index';
 import { config } from '../../../../configs';

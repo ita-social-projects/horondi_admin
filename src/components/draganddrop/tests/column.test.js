@@ -1,14 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Enzyme, { mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 import { Droppable } from 'react-beautiful-dnd';
-import { Paper, DialogContent, DialogTitle, Tooltip } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import Slide from '../slide';
 import Column from '../column';
 import { testProps, emptyColumn } from './column.variables';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const setUp = (props) => shallow(<Column {...props} />);
 const setUpWithoutColumn = (props) => shallow(<Column {...props} />);

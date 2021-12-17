@@ -1,11 +1,8 @@
 import React from 'react';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import { Paper, TextField } from '@material-ui/core';
 import LanguagePanel from '../index';
 import { mockLang, mockInputOptions } from './language-panel.variables';
-
-configure({ adapter: new Adapter() });
 
 const mockOnEditorChange = jest.fn();
 

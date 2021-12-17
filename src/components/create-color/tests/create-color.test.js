@@ -1,6 +1,5 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
 import { ChromePicker } from 'react-color';
 import { TextField } from '@material-ui/core';
@@ -15,8 +14,6 @@ import mockStore from './mockStore';
 
 const { mockColorHex } = mockStore;
 const componentLabels = config.labels.color;
-
-Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
