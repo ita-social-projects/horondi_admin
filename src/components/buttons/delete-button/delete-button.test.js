@@ -1,9 +1,6 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import DeleteButton from './delete-button';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('delete button tests', () => {
   const size = 'small';
@@ -20,9 +17,6 @@ describe('delete button tests', () => {
     component.unmount();
   });
 
-  it('should exist', () => {
-    expect(component).toMatchSnapshot();
-  });
   it('should have type', () => {
     expect(component.find('button').type()).toEqual('button');
   });

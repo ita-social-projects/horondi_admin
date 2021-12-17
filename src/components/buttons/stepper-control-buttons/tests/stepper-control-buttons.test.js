@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
 import { noop } from 'lodash';
 
 import StepperControlButtons from '../index';
 import { inputTypes, config } from '../../../../configs';
 import { productsTranslations } from '../../../../configs/product-translations';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const { stepsLabels } = config.labels.product;
 const { NEXT, CREATE_PRODUCT, BACK } = productsTranslations;

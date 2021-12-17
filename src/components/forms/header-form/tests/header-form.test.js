@@ -1,12 +1,9 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import { header, id } from './header-form.variables';
 import HeaderForm from '../index';
 import { SaveButton } from '../../../buttons';
-
-configure({ adapter: new Adapter() });
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -57,10 +54,6 @@ describe('Straps form tests', () => {
     component.unmount();
 
     spyOnUseDispatch.mockClear();
-  });
-
-  it('Should match snapshot', () => {
-    expect(component).toMatchSnapshot;
   });
 
   it('Should simulate submit button', () => {

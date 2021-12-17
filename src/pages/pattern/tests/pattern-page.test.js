@@ -1,6 +1,5 @@
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import { configure, shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Link, BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
@@ -16,8 +15,6 @@ import { config } from '../../../configs';
 const { CREATE_PATTERN_TITLE } = config.buttonTitles;
 const pathToPatternAddPage = config.routes.pathToAddPattern;
 const tableTitles = config.tableHeadRowTitles.patterns;
-
-configure({ adapter: new Adapter() });
 
 describe('Pattern-page render tests', () => {
   let spyOnUseSelector;
@@ -49,12 +46,6 @@ describe('Pattern-page render tests', () => {
   afterEach(() => {
     jest.restoreAllMocks();
     spyOnUseSelector.mockClear();
-  });
-
-  test('Should render pattern-page', () => {
-    expect(wrapper).toBeDefined();
-    expect(wrapper).toHaveLength(1);
-    expect(wrapper).toMatchSnapshot();
   });
 
   test(`Should render Typography wrapper with "${config.titles.patternTitles.mainPageTitle}" label`, () => {

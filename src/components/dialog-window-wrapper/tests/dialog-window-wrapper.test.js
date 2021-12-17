@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Enzyme, { mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount, shallow } from 'enzyme';
 import { Dialog, DialogContent, DialogTitle, Tooltip } from '@material-ui/core';
 import DialogWindowWrapper from '../dialog-window-wrapper';
 import { testProps } from './dialog-window-wrapper.variables';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const setUp = (props) => shallow(<DialogWindowWrapper {...props} />);
 
