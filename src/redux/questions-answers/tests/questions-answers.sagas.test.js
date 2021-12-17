@@ -45,7 +45,7 @@ const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
 describe('questions answers sagas test', () => {
-  it('must get all questions answers and set to store', () =>
+  it.skip('must get all questions answers and set to store', () =>
     expectSaga(handleQuestionsAnswersLoad)
       .withReducer(QuestionsAnswers)
       .provide([[call(getAllQuestionsAnswers), allQuestionsAnswers]])
