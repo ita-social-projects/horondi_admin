@@ -48,8 +48,8 @@ DateRangePicker.propTypes = {
 };
 
 DateRangePicker.defaultProps = {
-  dateFrom: '',
-  dateTo: ''
+  dateFrom: null,
+  dateTo: null
 };
 
 export default DateRangePicker;
