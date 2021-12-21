@@ -14,7 +14,7 @@ import {
   roleFilterObject
 } from '../../../utils/history';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
-import { historyEvents } from '../../../consts/history-actions';
+import { historyEvents } from '../../../consts/history-events';
 
 function Filters() {
   const { filters } = useSelector(({ History }) => History);

@@ -12,7 +12,7 @@ import {
   userRolesForFilter
 } from '../../utils/history';
 import buttonTitles from '../../configs/button-titles';
-import { historyEvents } from '../../consts/history-actions';
+import { historyEvents } from '../../consts/history-events';
 
 const useHistoryFilters = () => {
   const dispatch = useDispatch();

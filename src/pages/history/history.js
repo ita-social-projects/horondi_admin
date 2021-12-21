@@ -17,7 +17,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import getTime from '../../utils/getTime';
 import { historySelector } from '../../redux/selectors/history';
 import { userRoleTranslations } from '../../configs/user-role-translations';
-import { historyEvents } from '../../consts/history-actions';
+import { historyEvents } from '../../consts/history-events';
 import routes from '../../configs/routes';
 import Filters from './filters/filters';
 
