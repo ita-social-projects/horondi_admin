@@ -1,5 +1,4 @@
 import React from 'react';
-import 'mutationobserver-shim';
 import * as redux from 'react-redux';
 import { Paper, TextField, Select, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
