@@ -1,6 +1,5 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import HomePageEdit from '../index';
@@ -8,8 +7,6 @@ import HomePageEdit from '../index';
 import titles from '../../../configs/titles';
 
 const { homePageTitles } = titles;
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Home page tests', () => {
   let wrapper;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
 import Contacts from '../contacts-page';
@@ -15,7 +14,6 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementationOnce((selector) => selector()),
   useDispatch: jest.fn()
 }));
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Straps test', () => {
   let wrapper;
@@ -25,18 +23,6 @@ describe('Straps test', () => {
     mockedDispatch = jest.fn();
 
     useDispatch.mockReturnValue(mockedDispatch);
-  });
-
-  it('Should render straps page', () => {
-    useSelector.mockReturnValue({ filter: 'test' });
-
-    wrapper = mount(
-      <BrowserRouter>
-        <Contacts />
-      </BrowserRouter>
-    );
-
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render LoadingBar', () => {

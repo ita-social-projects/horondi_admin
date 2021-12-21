@@ -1,6 +1,5 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 
 import { IconButton, Tooltip as TooltipUI } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
@@ -14,8 +13,6 @@ import {
 import { topPlacement, wrongPlacement, title, text } from './variables';
 
 import { sizes } from '../../../configs/tooltip-titles';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Tooltip test', () => {
   let wrapper;

@@ -1,13 +1,10 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 import * as reactRedux from 'react-redux';
 
 import Filters from '../filters/filters';
 import ComponentFilterSearch from '../../../../components/filters-components/filter-search';
 import ComponentFilterMultiplePicker from '../../../../components/filters-components/filter-multiple-picker';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 let wrapper;
 let spyOnUseDispatch;

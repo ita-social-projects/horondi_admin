@@ -1,7 +1,6 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Typography, Button } from '@material-ui/core';
 import { config } from '../../../configs';
@@ -15,7 +14,6 @@ import mockStoreReturner from './mockStoreReturner';
 const { CREATE_SIZE_TITLE } = config.buttonTitles;
 let mockLoading = true;
 
-Enzyme.configure({ adapter: new Adapter() });
 jest.mock('../../../hooks/filters/useSizesFilters');
 
 jest.mock('react-redux', () => ({

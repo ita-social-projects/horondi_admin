@@ -1,10 +1,7 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import EditButton from './customized-edit-icon';
 import { config } from '../../../configs';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const { EDIT_TITLE } = config.buttonTitles;
 
@@ -21,7 +18,6 @@ describe('edit button tests', () => {
     component.unmount();
   });
   it('should click', () => {
-    expect(component).toMatchSnapshot();
     expect(mockCallBack.mock.calls.length).toBe(0);
     component.find('button').simulate('click');
     expect(mockCallBack.mock.calls.length).toBe(1);
