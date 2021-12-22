@@ -27,22 +27,21 @@ export const useStyles = makeStyles((theme) => ({
     width: 290,
     '& span': { color: '#828282 !important' },
     '& a.rs-btn.rs-btn-default.rs-picker-toggle.active.rs-btn-md': {
-      borderColor: 'black !important'
-    },
-    '& toggle.active': { borderColor: 'red !important' }
+      borderColor: 'black'
+    }
   },
   menu: {
     width: 290,
     '& button': {
       backgroundColor: '#3f51b5 !important',
-      color: '#ffffff !important'
+      color: '#ffffff'
     },
     '& .rs-calendar-table-cell-selected .rs-calendar-table-cell-content': {
-      backgroundColor: '#3f51b5 !important',
-      borderColor: '#3f51b5 !important'
+      backgroundColor: '#3f51b5',
+      borderColor: '#3f51b5'
     },
     '& .rs-picker-toolbar': {
-      maxWidth: '290px !important'
+      maxWidth: '290px'
     },
     '& .rs-picker-toolbar-ranges': {
       marginBottom: 12
