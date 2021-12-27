@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   container: {
     '&.MuiPaper-root': {
       backgroundColor: 'inherit'
@@ -25,23 +25,26 @@ export const useStyles = makeStyles((theme) => ({
   },
   date: {
     width: 290,
-    '& span': { color: '#828282 !important' },
-    '& a.rs-btn.rs-btn-default.rs-picker-toggle.active.rs-btn-md': {
-      borderColor: 'black'
+    '& span': {
+      color: '#828282'
     }
   },
   menu: {
     width: 290,
-    '& button': {
-      backgroundColor: '#3f51b5 !important',
-      color: '#ffffff'
+    '& .rs-picker-toolbar-right-btn-ok': {
+      backgroundColor: '#3f51b5',
+      color: '#ffffff',
+      '&:hover': {
+        backgroundColor: '#3f51b5',
+        color: '#ffffff'
+      }
     },
     '& .rs-calendar-table-cell-selected .rs-calendar-table-cell-content': {
       backgroundColor: '#3f51b5',
       borderColor: '#3f51b5'
     },
-    '& .rs-picker-toolbar': {
-      maxWidth: '290px'
+    '& .rs-picker-daterange-panel-show-one-calendar .rs-picker-toolbar': {
+      maxWidth: 290
     },
     '& .rs-picker-toolbar-ranges': {
       marginBottom: 12
