@@ -78,3 +78,12 @@ export const constructorMenuCategories = [
   ['Ремінці', routes.pathToStraps, ConfirmationNumberIcon],
   ['Защіпки', routes.pathToClosures, AllInclusiveIcon]
 ];
+
+export const certificatesMenuCategories = [
+  ['Створити сертифікат', routes.pathToCreateCertificates, AccountCircleIcon],
+  [
+    'Інформація про сертифікати',
+    routes.pathToAboutCertificate,
+    AccountCircleIcon
+  ]
+];
