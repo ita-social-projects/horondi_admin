@@ -45,8 +45,8 @@ const NavMenu = ({ width }) => {
   const [navbarTab, setNavbarTab] = useState({
     clientTab: false,
     catalogTab: false,
-    constructorTab: false,
     certificatesTab: false,
+    constructorTab: false,
     staticTab: false
   });
 
@@ -131,22 +131,22 @@ const NavMenu = ({ width }) => {
     [
       () =>
         setNavbarTab({
-          constructorTab: !navbarTab.constructorTab
-        }),
-      navbarTab.constructorTab,
-      certificatesMenuItems,
-      MENU_TABS.CERTIFICATES,
-      AccessibilityNewIcon
-    ],
-    [
-      () =>
-        setNavbarTab({
           certificatesTab: !navbarTab.certificatesTab
         }),
       navbarTab.certificatesTab,
       constructorPagesMenuItems,
-      MENU_TABS.CONSTRUCTOR,
+      MENU_TABS.CERTIFICATES,
       TuneIcon
+    ],
+    [
+      () =>
+        setNavbarTab({
+          constructorTab: !navbarTab.constructorTab
+        }),
+      navbarTab.constructorTab,
+      certificatesMenuItems,
+      MENU_TABS.CONSTRUCTOR,
+      AccessibilityNewIcon
     ],
     [
       () =>
