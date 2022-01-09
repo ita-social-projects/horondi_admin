@@ -42,11 +42,13 @@ const NavMenu = ({ width }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [clientTab, setClientTab] = useState(false);
-  const [catalogTab, setCatalogTab] = useState(false);
-  const [staticTab, setStaticTab] = useState(false);
-  const [constructorTab, setConstructorTab] = useState(false);
-  const [certificatesTab, setCertificatesTab] = useState(false);
+  const [navbarTab, setNavbarTab] = useState({
+    clientTab: false,
+    catalogTab: false,
+    constructorTab: false,
+    certificatesTab: false,
+    staticTab: false
+  });
 
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
@@ -107,36 +109,51 @@ const NavMenu = ({ width }) => {
 
   const parentMenuTabsProperties = [
     [
-      () => setClientTab(!clientTab),
-      clientTab,
+      () =>
+        setNavbarTab({
+          clientTab: !navbarTab.clientTab
+        }),
+      navbarTab.clientTab,
       clientMenuItems,
       MENU_TABS.CLIENTS,
       AccessibilityNewIcon
     ],
     [
-      () => setCatalogTab(!catalogTab),
-      catalogTab,
+      () =>
+        setNavbarTab({
+          catalogTab: !navbarTab.catalogTab
+        }),
+      navbarTab.catalogTab,
       catalogMenuItems,
       MENU_TABS.CATALOG,
       ImportContactsIcon
     ],
     [
-      () => setConstructorTab(!constructorTab),
-      constructorTab,
+      () =>
+        setNavbarTab({
+          constructorTab: !navbarTab.constructorTab
+        }),
+      navbarTab.constructorTab,
       certificatesMenuItems,
       MENU_TABS.CERTIFICATES,
       AccessibilityNewIcon
     ],
     [
-      () => setCertificatesTab(!certificatesTab),
-      certificatesTab,
+      () =>
+        setNavbarTab({
+          certificatesTab: !navbarTab.certificatesTab
+        }),
+      navbarTab.certificatesTab,
       constructorPagesMenuItems,
       MENU_TABS.CONSTRUCTOR,
       TuneIcon
     ],
     [
-      () => setStaticTab(!staticTab),
-      staticTab,
+      () =>
+        setNavbarTab({
+          staticTab: !navbarTab.staticTab
+        }),
+      navbarTab.staticTab,
       staticPagesMenuItems,
       MENU_TABS.STATIC_PAGES,
       LayersIcon
