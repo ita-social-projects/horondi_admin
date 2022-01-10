@@ -85,6 +85,7 @@ import StrapsAdd from '../pages/straps/straps-add/straps-add';
 import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 import UserDetails from '../pages/users/user/user-details';
 import constructorEdit from '../pages/constructor-list/constructor-edit';
+import CreateCertificate from '../pages/certificates/create-certificate';
 
 const { routes } = config;
 
@@ -147,6 +148,11 @@ const Routes = () => {
           <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
           <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
           <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+          <Route
+            path={routes.pathToCreateCertificate}
+            exact
+            component={CreateCertificate}
+          />
           <Route
             path={routes.pathToNewsDetails}
             exact
