@@ -50,6 +50,14 @@ const NavMenu = ({ width }) => {
     staticTab: false
   });
 
+  const staticArray = {
+    clientTab: false,
+    catalogTab: false,
+    certificatesTab: false,
+    constructorTab: false,
+    staticTab: false
+  };
+
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
       sideMenuStatus: Theme.sideMenuStatus,
@@ -111,6 +119,7 @@ const NavMenu = ({ width }) => {
     [
       () =>
         setNavbarTab({
+          ...staticArray,
           clientTab: !navbarTab.clientTab
         }),
       navbarTab.clientTab,
@@ -121,6 +130,7 @@ const NavMenu = ({ width }) => {
     [
       () =>
         setNavbarTab({
+          ...staticArray,
           catalogTab: !navbarTab.catalogTab
         }),
       navbarTab.catalogTab,
@@ -131,6 +141,7 @@ const NavMenu = ({ width }) => {
     [
       () =>
         setNavbarTab({
+          ...staticArray,
           certificatesTab: !navbarTab.certificatesTab
         }),
       navbarTab.certificatesTab,
@@ -141,6 +152,7 @@ const NavMenu = ({ width }) => {
     [
       () =>
         setNavbarTab({
+          ...staticArray,
           constructorTab: !navbarTab.constructorTab
         }),
       navbarTab.constructorTab,
@@ -151,6 +163,7 @@ const NavMenu = ({ width }) => {
     [
       () =>
         setNavbarTab({
+          ...staticArray,
           staticTab: !navbarTab.staticTab
         }),
       navbarTab.staticTab,
