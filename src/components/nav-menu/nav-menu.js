@@ -145,7 +145,7 @@ const NavMenu = ({ width }) => {
           certificatesTab: !navbarTab.certificatesTab
         }),
       navbarTab.certificatesTab,
-      constructorPagesMenuItems,
+      certificatesMenuItems,
       MENU_TABS.CERTIFICATES,
       TuneIcon
     ],
@@ -156,7 +156,7 @@ const NavMenu = ({ width }) => {
           constructorTab: !navbarTab.constructorTab
         }),
       navbarTab.constructorTab,
-      certificatesMenuItems,
+      constructorPagesMenuItems,
       MENU_TABS.CONSTRUCTOR,
       AccessibilityNewIcon
     ],
