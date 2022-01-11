@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import CreateCertificate from '../index';
+import CreateCertificate from '../create-certificate';
 
 describe('test CreateCertificate component', () => {
   it('should change quantity in appropriate h5', () => {
