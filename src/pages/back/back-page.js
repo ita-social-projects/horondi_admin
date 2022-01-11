@@ -31,7 +31,7 @@ const BackPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const dispatch = useDispatch();
 
-  const { list, loading, currentPage, rowsPerPage, itemsCount, filter } =
+  const { items, loading, currentPage, rowsPerPage, itemsCount, filter } =
     useSelector(backSelectorWithPagination);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const BackPage = () => {
     openSuccessSnackbar(removeBack, BACK_REMOVE_MESSAGE);
   };
 
-  const backItems = map(list, (backItem) => (
+  const backItems = map(items, (backItem) => (
     <TableContainerRow
       image={
         backItem.images.thumbnail

@@ -1,13 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
 import Straps from '../straps-page';
 import LoadingBar from '../../../components/loading-bar';
 import TableContainerRow from '../../../containers/table-container-row';
-import { strapsList } from './strapsList';
+import { items } from './items';
 
 jest.mock('../../../hooks/filters/use-strap-filters');
 jest.mock('react-redux', () => ({
@@ -15,7 +14,6 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementationOnce((selector) => selector()),
   useDispatch: jest.fn()
 }));
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Straps test', () => {
   let wrapper;
@@ -25,18 +23,6 @@ describe('Straps test', () => {
     mockedDispatch = jest.fn();
 
     useDispatch.mockReturnValue(mockedDispatch);
-  });
-
-  it('Should render straps page', () => {
-    useSelector.mockReturnValue({ filter: 'test' });
-
-    wrapper = mount(
-      <BrowserRouter>
-        <Straps />
-      </BrowserRouter>
-    );
-
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render LoadingBar', () => {
@@ -55,7 +41,7 @@ describe('Straps test', () => {
     useSelector.mockReturnValue({
       filter: '',
       loading: false,
-      strapsList
+      items
     });
 
     wrapper = mount(
@@ -71,7 +57,7 @@ describe('Straps test', () => {
     useSelector.mockReturnValue({
       filter: 'test',
       loading: false,
-      strapsList
+      items
     });
 
     wrapper = mount(
@@ -89,7 +75,7 @@ describe('Straps test', () => {
     useSelector.mockReturnValue({
       filter: 'test',
       loading: false,
-      strapsList
+      items
     });
 
     wrapper = mount(

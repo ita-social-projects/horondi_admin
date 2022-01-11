@@ -8,7 +8,7 @@ import {
 } from './pockets.types';
 
 export const selectPockets = ({ Pockets }) => ({
-  pocketsList: Pockets.list?.items,
+  items: Pockets.list?.items,
   loading: Pockets.pocketsLoading,
   pocket: Pockets.pocket,
   filter: Pockets.filter

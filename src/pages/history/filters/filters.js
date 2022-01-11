@@ -9,13 +9,18 @@ import {
   clearHistoryFilters,
   setHistoryFilter
 } from '../../../redux/history/history.actions';
-import { actionFilterObj, roleFilterObject } from '../../../utils/history';
+import {
+  historyEventFilterObj,
+  roleFilterObject
+} from '../../../utils/history';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
+import { historyEvents } from '../../../consts/history-events';
 
 function Filters() {
   const { filters } = useSelector(({ History }) => History);
 
-  const actionOptions = [...actionFilterObj()];
+  const actionOptions = [...historyEventFilterObj(historyEvents.historyAction)];
+  const nameOptions = [...historyEventFilterObj(historyEvents.historyName)];
 
   return (
     <ContainerFilters>
@@ -29,7 +34,14 @@ function Filters() {
         selectorFunc={(selector) => ({ action: selector })}
         value={filters.action}
         options={actionOptions}
-        label={buttonTitles.EVENT_TITLE}
+        label={buttonTitles.HISTORY_ACTION}
+      />
+      <ComponentFilterMultiplePicker
+        setFilterValue={setHistoryFilter}
+        selectorFunc={(selector) => ({ historyName: selector })}
+        value={filters.historyName}
+        options={nameOptions}
+        label={buttonTitles.HISTORY_NAME}
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setHistoryFilter}

@@ -8,7 +8,7 @@ import {
 } from './position.types';
 
 export const selectPositions = ({ Positions }) => ({
-  positionsList: Positions.list?.items,
+  items: Positions.list?.items,
   loading: Positions.positionsLoading,
   position: Positions.position,
   filter: Positions.filter

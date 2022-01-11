@@ -68,7 +68,6 @@ const ModelForm = ({ model, id, isEdit }) => {
     }
   };
 
-  const inputLabel = React.useRef(null);
   const { createModel, setUpload, upload, modelImage, setModelImage } =
     useModelHandlers();
 
@@ -245,28 +244,16 @@ const ModelForm = ({ model, id, isEdit }) => {
                 }
               />
             </div>
-            <FormControl
-              variant={materialUiConstants.outlined}
-              className={styles.formControl}
-            >
-              <InputLabel
-                htmlFor={labelsEn.categorySelect}
-                ref={inputLabel}
-                id={labelsEn.labelId}
-                shrink
-              >
-                {availableCategory}
-              </InputLabel>
+            <FormControl variant='outlined' className={styles.formControl}>
+              <InputLabel>{availableCategory}</InputLabel>
               <Select
-                id={labelsEn.category}
-                labelId={labelsEn.labelId}
-                data-cy={labelsEn.category}
+                data-cy='category'
+                id='category'
+                name='category'
                 value={category}
-                native
                 onChange={handleCategory}
                 onBlur={handleBlur}
                 label={availableCategory}
-                variant={labelsEn.variantStandard}
               >
                 <option value='' />
                 {categories.map((cat) => (
@@ -275,15 +262,15 @@ const ModelForm = ({ model, id, isEdit }) => {
                   </option>
                 ))}
               </Select>
-              {touched.category && errors.category && (
-                <div className={styles.inputError}>{errors.category}</div>
-              )}
             </FormControl>
+            {touched.category && errors.category && (
+              <div className={styles.inputError}>{errors.category}</div>
+            )}
             <TextField
               id={labelsEn.priority}
               type={materialUiConstants.types.number}
               data-cy={labelsEn.priority}
-              className={styles.textField}
+              className={styles.textFields}
               variant={materialUiConstants.outlined}
               label={priority}
               value={values.priority}

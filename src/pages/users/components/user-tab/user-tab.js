@@ -11,8 +11,7 @@ import { useStyles } from './user-tab.styles';
 import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 import { UserBlockPeriod } from '../../../../consts/user-block-status';
-import useUsersFilters from '../../../../hooks/filters/use-users-filters';
-import FilterNavbar from '../../../../components/filter-search-sort';
+import UsersFilters from '../users-filters/UsersFilters';
 
 const map = require('lodash/map');
 
@@ -24,7 +23,6 @@ const UserTab = (props) => {
   const { list, onDelete } = props;
   const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
   const dispatch = useDispatch();
-  const usersFilters = useUsersFilters();
   const tabStyles = useStyles();
 
   const usersItems = map(list, (userItem) => (
@@ -56,7 +54,7 @@ const UserTab = (props) => {
   return (
     <>
       <div className={tabStyles.filters}>
-        <FilterNavbar options={usersFilters || {}} />
+        <UsersFilters />
       </div>
       <div>
         <TableContainerGenerator

@@ -11,7 +11,19 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 600
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    '&::-webkit-scrollbar': {
+      width: '5px'
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: '#f1f1f1'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#888'
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      backgroundColor: '#555'
+    }
   },
   toolbar: theme.mixins.toolbar,
   content: {

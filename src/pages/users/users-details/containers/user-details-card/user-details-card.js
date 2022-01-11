@@ -10,6 +10,7 @@ import {
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { push } from 'connected-react-router';
 import InfoItem from './containers/info-item';
 import { useStyles } from './user-details-card.styles';
 import { config } from '../../../../../configs';
@@ -36,6 +37,8 @@ const {
   EDIT_TITLE
 } = config.buttonTitles;
 const { SWITCH_USER_STATUS_MESSAGE } = config.messages;
+
+const { IMG_URL } = config;
 
 const UserDetailsCard = ({ info, pathBack }) => {
   const styles = useStyles();
@@ -86,7 +89,11 @@ const UserDetailsCard = ({ info, pathBack }) => {
         <CardContent className={styles.main}>
           <div className={styles.avatarSide}>
             <Grid item xs={12}>
-              <Avatar data-cy={userTitles.avatar.id} className={styles.avatar}>
+              <Avatar
+                data-cy={userTitles.avatar.id}
+                className={styles.avatar}
+                src={IMG_URL + info.images}
+              >
                 {`${info.firstName[0]}${info.lastName[0]}`}
               </Avatar>
             </Grid>
@@ -134,6 +141,9 @@ const UserDetailsCard = ({ info, pathBack }) => {
               variant={contained}
               color={primary}
               data-cy='edit-user-info-button'
+              onClick={() => {
+                dispatch(push(`${config.routes.pathToUser}/${info.id}`));
+              }}
             >
               {EDIT_TITLE}
             </Button>
@@ -146,6 +156,7 @@ const UserDetailsCard = ({ info, pathBack }) => {
 
 UserDetailsCard.propTypes = {
   info: PropTypes.shape({
+    images: PropTypes.string,
     confirmed: PropTypes.bool,
     email: PropTypes.string,
     firstName: PropTypes.string,

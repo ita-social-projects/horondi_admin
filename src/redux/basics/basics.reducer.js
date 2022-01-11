@@ -8,7 +8,7 @@ import {
 } from './basics.types';
 
 export const selectBasics = ({ Basics }) => ({
-  basicsList: Basics.list.items,
+  items: Basics.list.items,
   loading: Basics.basicsLoading,
   filter: Basics.filter,
   basic: Basics.basic

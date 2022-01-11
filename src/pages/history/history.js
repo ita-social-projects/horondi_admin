@@ -17,7 +17,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import getTime from '../../utils/getTime';
 import { historySelector } from '../../redux/selectors/history';
 import { userRoleTranslations } from '../../configs/user-role-translations';
-import { historyActions } from '../../consts/history-actions';
+import { historyEvents } from '../../consts/history-events';
 import routes from '../../configs/routes';
 import Filters from './filters/filters';
 
@@ -45,6 +45,7 @@ const History = () => {
           date: { dateFrom: filters.dateFrom, dateTo: filters.dateTo },
           role: filters.role,
           action: filters.action,
+          historyName: filters.historyName,
           fullName: filters.search
         }
       })
@@ -62,7 +63,8 @@ const History = () => {
       date={ReactHtmlParser(
         getTime(new Date(record.createdAt).getTime(), true)
       )}
-      action={historyActions[record.action]}
+      action={historyEvents.historyAction[record.action]}
+      historyName={historyEvents.historyName[record.historyName]}
       userName={`${record.userId.firstName} ${record.userId.lastName}`}
       userRole={userRoleTranslations[record.userId.role]}
       subject={

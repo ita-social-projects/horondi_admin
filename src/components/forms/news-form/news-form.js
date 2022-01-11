@@ -5,6 +5,7 @@ import { Grid, Paper } from '@material-ui/core';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
+import { red } from '@material-ui/core/colors';
 import { useStyles } from './news-form.styles';
 import { SaveButton, BackButton } from '../../buttons';
 import useNewsHandlers from '../../../utils/use-news-handlers';
@@ -69,19 +70,9 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
         .required(ERROR_MESSAGE);
       reducer[`${lang}AuthorName`] = Yup.string()
         .min(2, NAME_MIN_LENGTH_MESSAGE)
-        .matches(
-          config.formRegExp[`${lang}NameCreation`],
-          config.newsErrorMessages[
-            `NOT_${lang.toUpperCase()}_AUTHOR_NAME_MESSAGE`
-          ]
-        )
         .required(ERROR_MESSAGE);
       reducer[`${lang}Title`] = Yup.string()
         .min(10, TITLE_MIN_LENGTH_MESSAGE)
-        .matches(
-          config.formRegExp[`${lang}NameCreation`],
-          config.newsErrorMessages[`NOT_${lang.toUpperCase()}_TITLE_MESSAGE`]
-        )
         .required(ERROR_MESSAGE);
       return reducer;
     }, {});
@@ -98,7 +89,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     handleBlur,
     touched,
     errors,
-    setFieldValue
+    setFieldValue,
+    setValues
   } = useFormik({
     validationSchema: formSchema,
     initialValues: useFormikInitialValues(newsArticle),
@@ -128,10 +120,12 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
 
   const handleLoadAuthorImage = (files) => {
     imageHandler(files, setUploadAuthorImage, values, authorPhoto);
+    setValues(values);
   };
 
   const handleLoadNewsImage = (files) => {
     imageHandler(files, setUploadNewsImage, values, newsImage);
+    setValues(values);
   };
 
   const inputs = [
@@ -180,8 +174,13 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
           <Paper className={styles.newsItemUpdate}>
             <div className={styles.imageUploadBlock}>
               <div>
-                <span className={styles.imageUpload}>
-                  {config.labels.news.avatarText}
+                <span
+                  className={styles.imageUpload}
+                  style={values.authorPhoto ? {} : { color: red[900] }}
+                >
+                  {values.authorPhoto
+                    ? config.labels.news.avatarText
+                    : `${config.labels.news.avatarText}*`}
                 </span>
 
                 <div className={styles.imageUploadAvatar}>
@@ -199,8 +198,13 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
               </div>
 
               <div>
-                <span className={styles.imageUpload}>
-                  {config.labels.news.mainImgText}
+                <span
+                  className={styles.imageUpload}
+                  style={values.newsImage ? {} : { color: red[900] }}
+                >
+                  {values.newsImage
+                    ? config.labels.news.mainImgText
+                    : `${config.labels.news.mainImgText}*`}
                 </span>
 
                 <div className={styles.imageUploadAvatar}>

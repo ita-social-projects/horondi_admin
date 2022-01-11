@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   addConstructorBasicToStore,
@@ -13,18 +14,26 @@ import {
   removeConstructorPocketFromStore,
   setModelLoading
 } from '../model/model.actions';
-import { handleSuccessSnackbar } from '../snackbar/snackbar.sagas';
+import {
+  handleErrorSnackbar,
+  handleSuccessSnackbar
+} from '../snackbar/snackbar.sagas';
 import { handleModelError } from '../model/model.sagas';
 import {
+  createConstructor,
   createConstructorBasic,
   createConstructorBottom,
   createConstructorFrontPocket,
   deleteConstructorBasic,
   deleteConstructorBottom,
   deleteConstructorFrontPocket,
+  getAllConstructors,
+  getConstructorById,
   updateConstructorBasic,
   updateConstructorBottom,
-  updateConstructorFrontPocket
+  updateConstructorFrontPocket,
+  deleteConstructor,
+  updateConstructorById
 } from './constructor.operations';
 import { config } from '../../configs';
 import {
@@ -48,11 +57,93 @@ import {
   DELETE_CONSTRUCTOR_PATTERN,
   UPDATE_CONSTRUCTOR_BASIC,
   UPDATE_CONSTRUCTOR_BOTTOM,
-  UPDATE_CONSTRUCTOR_FRONT_POCKET
+  UPDATE_CONSTRUCTOR_FRONT_POCKET,
+  ADD_CONSTRUCTOR,
+  GET_CONSTRUCTORS,
+  GET_CONSTRUCTOR,
+  DELETE_CONSTRUCTOR,
+  UPDATE_CONSTRUCTOR
 } from './constructor.types';
+import {
+  removeConstructorFromStore,
+  setConstructorError,
+  setConstructorLoading,
+  setConstructors,
+  setConstructor
+} from './constructor.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
+import { handleAdminLogout } from '../auth/auth.sagas';
+import { AUTH_ERRORS } from '../../error-messages/auth';
 
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
+
+export function* handleConstructorAdd({ payload }) {
+  try {
+    yield put(setConstructorLoading(true));
+    yield call(createConstructor, payload);
+    yield call(handleSuccessSnackbar, SUCCESS_ADD_STATUS);
+    yield put(push(config.routes.pathToConstructorList));
+    yield put(setConstructorLoading(false));
+  } catch (error) {
+    yield call(handleConstructorError, error);
+  }
+}
+
+export function* handleConstructorUpdate({ payload }) {
+  try {
+    yield put(setConstructorLoading(true));
+    yield call(updateConstructorById, {
+      id: payload.id,
+      constructor: payload.constructor
+    });
+    yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
+    yield put(push(config.routes.pathToConstructorList));
+    yield put(setConstructorLoading(false));
+  } catch (error) {
+    yield call(handleConstructorError, error);
+  }
+}
+
+export function* handleConstructorsLoad({ payload: { limit, skip, filter } }) {
+  try {
+    yield put(setConstructorLoading(true));
+    const constructors = yield call(getAllConstructors, {
+      limit,
+      skip,
+      filter
+    });
+    yield put(setItemsCount(constructors?.count));
+    yield put(setConstructors(constructors?.items));
+    yield put(setConstructorLoading(false));
+  } catch (error) {
+    yield call(handleConstructorError, error);
+  }
+}
+
+export function* handleConstructorLoad({ payload }) {
+  try {
+    yield put(setConstructorLoading(true));
+    const constructor = yield call(getConstructorById, payload);
+    yield put(setConstructor(constructor));
+    yield put(setConstructorLoading(false));
+  } catch (error) {
+    yield call(handleConstructorError, error);
+  }
+}
+
+export function* handleConstructorDelete({ payload }) {
+  try {
+    yield put(setConstructorLoading(true));
+    yield call(deleteConstructor, payload);
+    yield put(removeConstructorFromStore(payload));
+    yield put(updatePagination());
+    yield put(setConstructorLoading(false));
+    yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
+  } catch (error) {
+    yield call(handleConstructorError, error);
+  }
+}
 
 export function* handleConstructorBasicDelete({ payload }) {
   try {
@@ -226,6 +317,16 @@ export function* handleConstructorPatternDelete({ payload }) {
   }
 }
 
+export function* handleConstructorError(e) {
+  if (e.message === AUTH_ERRORS.REFRESH_TOKEN_IS_NOT_VALID) {
+    yield call(handleAdminLogout);
+  } else {
+    yield put(setConstructorLoading(false));
+    yield put(setConstructorError({ e }));
+    yield call(handleErrorSnackbar, e.message);
+  }
+}
+
 export default function* constructorSaga() {
   yield takeEvery(DELETE_CONSTRUCTOR_BASIC, handleConstructorBasicDelete);
   yield takeEvery(ADD_CONSTRUCTOR_BASIC, handleConstructorBasicCreate);
@@ -233,6 +334,12 @@ export default function* constructorSaga() {
   yield takeEvery(ADD_CONSTRUCTOR_BOTTOM, handleConstructorBottomCreate);
   yield takeEvery(DELETE_CONSTRUCTOR_BOTTOM, handleConstructorBottomDelete);
   yield takeEvery(UPDATE_CONSTRUCTOR_BOTTOM, handleConstructorBottomUpdate);
+  yield takeEvery(DELETE_CONSTRUCTOR, handleConstructorDelete);
+  yield takeEvery(UPDATE_CONSTRUCTOR_BOTTOM, handleConstructorBottomUpdate);
+  yield takeEvery(GET_CONSTRUCTORS, handleConstructorsLoad);
+  yield takeEvery(GET_CONSTRUCTOR, handleConstructorLoad);
+  yield takeEvery(ADD_CONSTRUCTOR, handleConstructorAdd);
+  yield takeEvery(UPDATE_CONSTRUCTOR, handleConstructorUpdate);
   yield takeEvery(
     ADD_CONSTRUCTOR_FRONT_POCKET,
     handleConstructorFrontPocketCreate

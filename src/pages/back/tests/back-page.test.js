@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link, BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
 import { Button, Typography } from '@material-ui/core';
-import { configure, shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import constructorElementsMockStore from '../../constructorElementsMockStore';
 import BackPage from '../back-page';
 import TableContainerGenerator from '../../../containers/table-container-generator';
@@ -15,8 +14,6 @@ import { config } from '../../../configs';
 const { CREATE_BACK_TITLE } = config.buttonTitles;
 const { pathToAddBacks } = config.routes;
 const tableTitles = config.tableHeadRowTitles.backs;
-
-configure({ adapter: new Adapter() });
 
 describe('Back-page render tests', () => {
   let spyOnUseSelector;
@@ -133,7 +130,7 @@ describe('useEffect tests', () => {
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
     expect(tableContainerRowFirst.prop('name')).toBe(
-      constructorElementsMockStore.list[0].name[0].value
+      constructorElementsMockStore.items[0].name[0].value
     );
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
   });
