@@ -55,6 +55,7 @@ const routes = {
   pathToHeaders: '/headers',
   pathToAddHeader: '/headers/add',
   pathToHeaderDetails: '/headers/:id',
+  pathToAboutMaterials: '/about-materials',
   pathToHomePageSlides: '/home-page-slides',
   pathToAddHomePageSlide: '/home-page-slides/add',
   pathToHomePageSlideDetail: '/home-page-slides/:id',

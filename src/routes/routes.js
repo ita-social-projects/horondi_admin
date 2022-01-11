@@ -85,6 +85,7 @@ import StrapsAdd from '../pages/straps/straps-add/straps-add';
 import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 import UserDetails from '../pages/users/user/user-details';
 import constructorEdit from '../pages/constructor-list/constructor-edit';
+import MaterialAbout from '../pages/material/material-about';
 
 const { routes } = config;
 
@@ -144,6 +145,16 @@ const Routes = () => {
           <Route path={routes.pathToPatterns} exact component={PatternPage} />
           <Route path={routes.pathToModels} exact component={ModelPage} />
           <Route path={routes.pathToHeaders} exact component={HeaderPage} />
+          <Route
+            path={routes.pathToAboutMaterials}
+            exact
+            component={MaterialAbout}
+          />
+          <Route
+            path={routes.pathToAboutMaterials}
+            exact
+            component={MaterialAbout}
+          />
           <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
           <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
           <Route path={routes.pathToAddNews} exact component={NewsAdd} />
