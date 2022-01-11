@@ -41,7 +41,7 @@ export const userStatusFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(userStatus, (value, key) => {
-    arrToFilter.push({ value: key, label: value });
+    arrToFilter.push({ key, value });
   });
 
   return arrToFilter;

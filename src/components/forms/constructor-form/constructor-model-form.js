@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import { useStyles } from './constructor-model-form.styles.js';
@@ -8,26 +12,6 @@ import { BackButton, SaveButton } from '../../buttons';
 import { config } from '../../../configs';
 import { getCategories } from '../../../redux/categories/categories.actions';
 import { getSizes } from '../../../redux/sizes/sizes.actions';
-import ConstructorListAccordion from './constructor-list-accordion';
-import { getBottoms } from '../../../redux/bottom/bottom.actions.js';
-import { getAllBasics } from '../../../redux/basics/basics.actions.js';
-import { getPatterns } from '../../../redux/pattern/pattern.actions.js';
-import { getBacks } from '../../../redux/back/back.actions.js';
-import { getAllStraps } from '../../../redux/straps/straps.actions.js';
-import { getAllClosures } from '../../../redux/closures/closures.actions.js';
-import { bottomSelectorWithPagination } from '../../../redux/selectors/bottom.selectors.js';
-import { basicsSelectorWithPagination } from '../../../redux/selectors/basics.selectors.js';
-import { patternSelectorWithPagination } from '../../../redux/selectors/pattern.selectors.js';
-import { backSelectorWithPagination } from '../../../redux/selectors/back.selectors.js';
-import { strapsSelectorWithPagination } from '../../../redux/selectors/straps.selectors.js';
-import { closuresSelectorWithPagination } from '../../../redux/selectors/closures.selectors.js';
-import {
-  addConstructor,
-  updateConstructor
-} from '../../../redux/constructor/constructor.actions.js';
-import { constructorSelector } from '../../../redux/selectors/constructor.selectors';
-import ConstructorListPockets from './constructor-list-pockets/constructor-list-pockets.js';
-import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
 
 const { materialUiConstants } = config;
 const { MODEL_SAVE_TITLE } = config.buttonTitles;
@@ -39,12 +23,8 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState('');
 
-  const { constructor } = useSelector(constructorSelector);
-
-  const { createConstructor } = useConstructorHandlers();
-
   const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : '');
+    setExpanded(isExpanded ? panel : false);
   };
 
   useEffect(() => {
@@ -53,141 +33,18 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     dispatch(getCategories({}));
   }, [dispatch]);
 
-  const [basicsToAdd, setBasicsToAdd] = useState([]);
-  const [bottomsToAdd, setBottomsToAdd] = useState([]);
-  const [patternsToAdd, setPatternsToAdd] = useState([]);
-  const [backsToAdd, setBacksToAdd] = useState([]);
-  const [strapsToAdd, setStrapsToAdd] = useState([]);
-  const [closuresToAdd, setClosuresToAdd] = useState([]);
-  const [restrictionsToAdd, setRestrictionsToAdd] = useState([]);
-
-  const onSaveHandler = () => {
-    const itemsToSave = {
-      model: isEdit ? constructor?.model : model,
-      basicsToAdd,
-      bottomsToAdd,
-      patternsToAdd,
-      backsToAdd,
-      strapsToAdd,
-      closuresToAdd,
-      restrictionsToAdd
-    };
-    const constructorToAdd = createConstructor(itemsToSave);
-
-    if (!isEdit) {
-      dispatch(addConstructor({ constructor: constructorToAdd }));
-      return;
-    }
-    dispatch(updateConstructor({ id, constructor: constructorToAdd }));
-  };
-
-  const values = {
-    basicsToAdd,
-    bottomsToAdd,
-    patternsToAdd,
-    backsToAdd,
-    strapsToAdd,
-    closuresToAdd,
-    restrictionsToAdd
-  };
-
-  const mapElement = (element) => element?.map((item) => item._id);
-
-  useEffect(() => {
-    setBasicsToAdd(isEdit ? mapElement(constructor?.basics) : []);
-    setBottomsToAdd(isEdit ? mapElement(constructor?.bottoms) : []);
-    setPatternsToAdd(isEdit ? mapElement(constructor?.patterns) : []);
-    setBacksToAdd(isEdit ? mapElement(constructor?.backs) : []);
-    setStrapsToAdd(isEdit ? mapElement(constructor?.straps) : []);
-    setClosuresToAdd(isEdit ? mapElement(constructor?.closures) : []);
-    setRestrictionsToAdd(isEdit ? constructor?.pocketsWithRestrictions : []);
-  }, [constructor]);
-
-  const constructorOptions = [
-    {
-      optionName: 'basic',
-      label: 'Основи',
-      getItems: getAllBasics,
-      selector: basicsSelectorWithPagination,
-      optionToAdd: basicsToAdd,
-      setOptionToAdd: setBasicsToAdd
-    },
-    {
-      optionName: 'bottom',
-      label: 'Низи',
-      getItems: getBottoms,
-      selector: bottomSelectorWithPagination,
-      optionToAdd: bottomsToAdd,
-      setOptionToAdd: setBottomsToAdd
-    },
-    {
-      optionName: 'pattern',
-      label: 'Гобелени',
-      getItems: getPatterns,
-      selector: patternSelectorWithPagination,
-      optionToAdd: patternsToAdd,
-      setOptionToAdd: setPatternsToAdd
-    },
-    {
-      optionName: 'back',
-      label: 'Спинки',
-      getItems: getBacks,
-      selector: backSelectorWithPagination,
-      optionToAdd: backsToAdd,
-      setOptionToAdd: setBacksToAdd
-    },
-    {
-      optionName: 'strap',
-      label: 'Ремінці',
-      getItems: getAllStraps,
-      selector: strapsSelectorWithPagination,
-      optionToAdd: strapsToAdd,
-      setOptionToAdd: setStrapsToAdd
-    },
-    {
-      optionName: 'closure',
-      label: 'Защіпки',
-      getItems: getAllClosures,
-      selector: closuresSelectorWithPagination,
-      optionToAdd: closuresToAdd,
-      setOptionToAdd: setClosuresToAdd
-    }
-  ];
-
-  const constructorAccordions = constructorOptions.map((option, index) => (
-    <ConstructorListAccordion
-      isEdit={isEdit}
-      option={option}
-      key={index}
-      handleChange={handleChange}
-      expanded={expanded}
-    />
-  ));
-
-  const pocketAccordion = (
-    <ConstructorListPockets
-      setRestrictionsToAdd={setRestrictionsToAdd}
-      restrictionsToAdd={restrictionsToAdd}
-      handleChange={handleChange}
-      expanded={expanded}
-    />
-  );
-
   return (
     <>
-      <div>
-        <Grid container spacing={2}>
-          <Grid item>
+      <div className={classes.buttonContainer}>
+        <Grid container spacing={2} className={classes.fixedButtons}>
+          <Grid item className={classes.button}>
             <BackButton pathBack={pathToConstructorList} />
           </Grid>
-          <Grid item>
+          <Grid item className={classes.button}>
             <SaveButton
-              onClickHandler={onSaveHandler}
               className={classes.constructorButton}
               data-cy={materialUiConstants.save}
               type={materialUiConstants.types.submit}
-              vlues={values}
-              errors={{}}
               title={MODEL_SAVE_TITLE}
             />
           </Grid>
@@ -197,9 +54,143 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
         <Typography variant='h1' className={classes.materialTitle}>
           {pageTitle}
         </Typography>
+
         <div className={classes.root}>
-          {constructorAccordions}
-          {pocketAccordion}
+          <Accordion
+            expanded={expanded === 'panel1'}
+            onChange={handleChange('panel1')}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel1bh-content'
+              id='panel1bh-header'
+            >
+              <Typography className={classes.heading}>Основа</Typography>
+              <Typography className={classes.secondaryHeading} />
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
+                feugiat. Aliquam eget maximus est, id dignissim quam.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === 'panel2'}
+            onChange={handleChange('panel2')}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel2bh-content'
+              id='panel2bh-header'
+            >
+              <Typography className={classes.heading}>Низ</Typography>
+              <Typography className={classes.secondaryHeading} />
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Donec placerat, lectus sed mattis semper, neque lectus feugiat
+                lectus, varius pulvinar diam eros in elit. Pellentesque
+                convallis laoreet laoreet.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === 'panel3'}
+            onChange={handleChange('panel3')}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel3bh-content'
+              id='panel3bh-header'
+            >
+              <Typography className={classes.heading}>Гобелен</Typography>
+              <Typography className={classes.secondaryHeading} />
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
+                Integer sit amet egestas eros, vitae egestas augue. Duis vel est
+                augue.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === 'panel4'}
+            onChange={handleChange('panel4')}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel4bh-content'
+              id='panel4bh-header'
+            >
+              <Typography className={classes.heading}>Спинка</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
+                Integer sit amet egestas eros, vitae egestas augue. Duis vel est
+                augue.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === 'panel5'}
+            onChange={handleChange('panel5')}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel1bh-content'
+              id='panel5bh-header'
+            >
+              <Typography className={classes.heading}>Ремінці</Typography>
+              <Typography className={classes.secondaryHeading} />
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
+                feugiat. Aliquam eget maximus est, id dignissim quam.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === 'panel6'}
+            onChange={handleChange('panel6')}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel6bh-content'
+              id='panel6bh-header'
+            >
+              <Typography className={classes.heading}>Застібки</Typography>
+              <Typography className={classes.secondaryHeading} />
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
+                feugiat. Aliquam eget maximus est, id dignissim quam.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === 'panel7'}
+            onChange={handleChange('panel7')}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel7bh-content'
+              id='panel7bh-header'
+            >
+              <Typography className={classes.heading}>Обмеження</Typography>
+              <Typography className={classes.secondaryHeading} />
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
+                feugiat. Aliquam eget maximus est, id dignissim quam.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
         </div>
       </div>
     </>
@@ -257,7 +248,12 @@ ConstructorModelForm.defaultProps = {
     ],
     images: {
       thumbnail: ''
-    }
+    },
+    category: {},
+    sizes: [],
+    show: false,
+    availableForConstructor: false,
+    priority: 1
   },
   isEdit: false
 };

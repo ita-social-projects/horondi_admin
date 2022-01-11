@@ -10,8 +10,5 @@ export const useStyles = makeStyles(() => ({
   buttonStyles: {
     display: 'flex',
     justifyContent: 'center'
-  },
-  yesButton: {
-    marginRight: '60px'
   }
 }));

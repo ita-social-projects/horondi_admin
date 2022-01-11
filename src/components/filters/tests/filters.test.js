@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { act } from 'react-dom/test-utils';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
@@ -12,6 +13,8 @@ import OptionPicker from '../option-picker';
 import OptionsPicker from '../options-picker';
 import Search from '../search';
 import { config } from '../../../configs';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const { submitKey } = config;
 
@@ -92,16 +95,9 @@ describe('Testing filters', () => {
 
   describe('OptionsPicker filter', () => {
     beforeEach(() => {
-      const value = ['test', 'test2'];
-      const label = ['test', 'test2'];
-      props = {
-        options: [
-          { value: value[0], label: label[0] },
-          { value: value[1], label: label[1] }
-        ],
-        handler,
-        value
-      };
+      const value = ['test'];
+      const label = 'test';
+      props = { options: [{ value, label }], handler, value };
     });
 
     it('Should render', () => {
@@ -122,24 +118,6 @@ describe('Testing filters', () => {
         .onChange({ target: { value: undefined } });
 
       expect(handler.mock.calls.length).toBe(1);
-    });
-
-    it("Shouldn't separate values if only one value chosen", () => {
-      wrapper = mount(<OptionsPicker {...props} />);
-
-      const renderValue = wrapper.find(Select).prop('renderValue');
-      const selectedValues = [props.options[0].value];
-
-      expect(renderValue(selectedValues)[0]).toEqual('test');
-    });
-
-    it('Should separate values by comma if more than one value chosen', () => {
-      wrapper = mount(<OptionsPicker {...props} />);
-
-      const renderValue = wrapper.find(Select).prop('renderValue');
-      const selectedValues = props.options.map((opt) => opt.value);
-
-      expect(renderValue(selectedValues)[0]).toEqual('test, ');
     });
   });
 

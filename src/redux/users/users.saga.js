@@ -7,7 +7,6 @@ import {
   getAllUsers,
   getUserById,
   deleteUser,
-  updateUserById,
   completeAdminRegister,
   resendEmailToConfirmAdmin,
   registerAdmin,
@@ -31,7 +30,6 @@ import {
   GET_USERS,
   GET_USER,
   DELETE_USER,
-  UPDATE_USER,
   REGISTER_ADMIN,
   RESEND_EMAIL,
   CONFIRM_ADMIN,
@@ -85,21 +83,6 @@ export function* handleUserLoad({ payload }) {
     }
   } catch (err) {
     yield call(handleUsersError, err);
-  }
-}
-
-export function* handleUserUpdate({ payload }) {
-  try {
-    yield put(setUsersLoading(true));
-
-    const userUpdate = yield call(updateUserById, payload);
-    if (!userUpdate) {
-      yield put(setUsersLoading(false));
-      yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
-      yield put(push(config.routes.pathToUsers));
-    }
-  } catch (error) {
-    yield call(handleUsersError, error);
   }
 }
 
@@ -239,7 +222,6 @@ export default function* usersSaga() {
   yield takeEvery(GET_USERS, handleUsersLoad);
   yield takeEvery(GET_USER, handleUserLoad);
   yield takeEvery(DELETE_USER, handleUsersDelete);
-  yield takeEvery(UPDATE_USER, handleUserUpdate);
   yield takeEvery(REGISTER_ADMIN, handleAdminRegister);
   yield takeEvery(RESEND_EMAIL, handleResendEmailToConfirmAdmin);
   yield takeEvery(CONFIRM_ADMIN, handleAdminConfirm);

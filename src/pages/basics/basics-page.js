@@ -28,7 +28,7 @@ const BasicsPage = () => {
   const dispatch = useDispatch();
   const basicOptions = useBasicFilters();
   const { IMG_URL } = config;
-  const { filter, items, loading, currentPage, rowsPerPage, itemsCount } =
+  const { filter, basicsList, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(basicsSelectorWithPagination);
   useEffect(() => {
     dispatch(
@@ -52,7 +52,7 @@ const BasicsPage = () => {
     };
     openSuccessSnackbar(removeBasic, DELETE_BASIC_MESSAGE);
   };
-  const basicsItems = _.map(items, (basic) => (
+  const basicsItems = _.map(basicsList, (basic) => (
     <TableContainerRow
       key={basic._id}
       id={basic._id}

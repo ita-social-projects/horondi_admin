@@ -23,18 +23,10 @@ export const getAllPockets = async (limit, skip, filter) => {
                     value
                 }
                 restriction
-                positions {
-                  _id
-                  name {
-                    lang
-                    value
-                  }
-                  available
                 }
-              }
-              count
+                count
             }
-          }
+            }
         }
       `;
 

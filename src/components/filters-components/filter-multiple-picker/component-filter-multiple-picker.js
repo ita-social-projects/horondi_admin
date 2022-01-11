@@ -32,13 +32,13 @@ const ComponentFilterMultiplePicker = ({
 ComponentFilterMultiplePicker.propTypes = {
   setFilterValue: PropTypes.func.isRequired,
   options: PropTypes.instanceOf(Array).isRequired,
-  value: PropTypes.arrayOf(PropTypes.string),
+  value: PropTypes.string,
   label: PropTypes.string,
   selectorFunc: PropTypes.func.isRequired
 };
 
 ComponentFilterMultiplePicker.defaultProps = {
-  value: [],
+  value: '',
   label: ''
 };
 

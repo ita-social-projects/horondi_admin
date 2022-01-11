@@ -7,22 +7,12 @@ import {
   DELETE_CONSTRUCTOR_BOTTOM,
   DELETE_CONSTRUCTOR_FRONT_POCKET,
   DELETE_CONSTRUCTOR_PATTERN,
-  DELETE_CONSTRUCTOR,
   SET_CONSTRUCTOR_ELEMENT_METHOD,
   SET_CONSTRUCTOR_TABS,
   SET_EDITABLE_CONSTRUCTOR_ELEMENT,
   UPDATE_CONSTRUCTOR_BASIC,
   UPDATE_CONSTRUCTOR_BOTTOM,
-  UPDATE_CONSTRUCTOR_FRONT_POCKET,
-  GET_CONSTRUCTORS,
-  GET_CONSTRUCTOR,
-  UPDATE_CONSTRUCTOR,
-  SET_CONSTRUCTOR,
-  SET_CONSTRUCTOR_LOADING,
-  SET_CONSTRUCTORS,
-  ADD_CONSTRUCTOR,
-  SET_CONSTRUCTOR_ERROR,
-  REMOVE_CONSTRUCTOR_FROM_STORE
+  UPDATE_CONSTRUCTOR_FRONT_POCKET
 } from './constructor.types';
 
 export const deleteConstructorBasic = (payload) => ({
@@ -30,58 +20,8 @@ export const deleteConstructorBasic = (payload) => ({
   payload
 });
 
-export const deleteConstructor = (payload) => ({
-  type: DELETE_CONSTRUCTOR,
-  payload
-});
-
 export const addConstructorBasic = (payload) => ({
   type: ADD_CONSTRUCTOR_BASIC,
-  payload
-});
-
-export const removeConstructorFromStore = (payload) => ({
-  type: REMOVE_CONSTRUCTOR_FROM_STORE,
-  payload
-});
-
-export const getConstructors = (payload) => ({
-  type: GET_CONSTRUCTORS,
-  payload
-});
-
-export const getConstructor = (payload) => ({
-  type: GET_CONSTRUCTOR,
-  payload
-});
-
-export const updateConstructor = (payload) => ({
-  type: UPDATE_CONSTRUCTOR,
-  payload
-});
-
-export const addConstructor = (payload) => ({
-  type: ADD_CONSTRUCTOR,
-  payload
-});
-
-export const setConstructors = (payload) => ({
-  type: SET_CONSTRUCTORS,
-  payload
-});
-
-export const setConstructor = (payload) => ({
-  type: SET_CONSTRUCTOR,
-  payload
-});
-
-export const setConstructorLoading = (payload) => ({
-  type: SET_CONSTRUCTOR_LOADING,
-  payload
-});
-
-export const setConstructorError = (payload) => ({
-  type: SET_CONSTRUCTOR_ERROR,
   payload
 });
 

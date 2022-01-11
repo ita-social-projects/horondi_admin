@@ -56,7 +56,6 @@ export const getAllModels = async (filter, pagination, sort) => {
             }
             priority
             show
-            availableForConstructor
             description {
               value
               lang

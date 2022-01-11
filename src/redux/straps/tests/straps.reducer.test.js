@@ -88,6 +88,6 @@ describe('straps reducer tests', () => {
   it('should select straps', () => {
     const result = selectStraps(strapFromState);
 
-    expect(result).toHaveProperty('items');
+    expect(result).toHaveProperty('strapsList');
   });
 });

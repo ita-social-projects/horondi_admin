@@ -1,5 +1,5 @@
 const constructorElementsMockStore = {
-  items: [
+  list: [
     {
       _id: '60eadfb9e913fc3f88294bd9',
       name: [
@@ -28,8 +28,8 @@ const constructorElementsMockStore = {
         large: 'large_xds8am0kr0e5x4r_47.png'
       },
       additionalPrice: [
-        { currency: 'UAH', type: 'ABSOLUTE_VALUE', value: 270064 },
-        { currency: 'USD', type: 'ABSOLUTE_VALUE', value: 9900 }
+        { currency: 'UAH', value: 270064 },
+        { currency: 'USD', value: 9900 }
       ],
       available: true,
       customizable: null

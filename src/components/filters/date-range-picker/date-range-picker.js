@@ -35,7 +35,6 @@ const DateRangePicker = ({ dateFrom, dateTo, handler }) => {
         value={value}
         disabledDate={afterToday()}
         onChange={setDateHandler}
-        showOneCalendar
       />
     </Paper>
   );
@@ -48,8 +47,8 @@ DateRangePicker.propTypes = {
 };
 
 DateRangePicker.defaultProps = {
-  dateFrom: null,
-  dateTo: null
+  dateFrom: '',
+  dateTo: ''
 };
 
 export default DateRangePicker;

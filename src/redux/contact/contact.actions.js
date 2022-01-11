@@ -23,10 +23,11 @@ const getContacts = (payload) => ({
   payload
 });
 
-const addContact = (newContact) => ({
+const addContact = (newContact, mapImages) => ({
   type: ADD_CONTACT,
   payload: {
-    newContact
+    newContact,
+    mapImages
   }
 });
 

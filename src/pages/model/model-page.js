@@ -7,6 +7,8 @@ import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
 import { getModels, deleteModel } from '../../redux/model/model.actions';
 import { getCategories } from '../../redux/categories/categories.actions';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
+import useModelFilters from '../../hooks/filters/use-model-filters';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -14,7 +16,6 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 import { modelSelectorWithPagination } from '../../redux/selectors/model.selectors';
-import Filters from './filters/filters';
 
 const map = require('lodash/map');
 
@@ -30,6 +31,7 @@ const { NO_MODEL_MESSAGE } = config.messages;
 const ModelPage = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
+  const modelOptions = useModelFilters();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { filter, list, sort, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(modelSelectorWithPagination);
@@ -80,9 +82,6 @@ const ModelPage = () => {
       name={modelItem.name[0].value}
       category={modelItem.category?.name[0].value}
       show={modelItem.show ? showEnable : showDisable}
-      availableForConstructor={
-        modelItem.availableForConstructor ? showEnable : showDisable
-      }
       priority={modelItem.priority}
       deleteHandler={() => modelDeleteHandler(modelItem._id)}
       editHandler={() => {
@@ -108,7 +107,7 @@ const ModelPage = () => {
         </Button>
       </div>
       <div>
-        <Filters />
+        <FilterNavbar options={modelOptions || {}} />
       </div>
       {modelItems?.length ? (
         <TableContainerGenerator

@@ -8,9 +8,6 @@ const useHomePageSlideHandlers = () => {
   const [tabsValue, setTabsValue] = useState(0);
   const [upload, setUpload] = useState({});
   const [imageName, setImageName] = useState('');
-  const [uploadImage, setUploadImage] = useState({
-    imageUrl: ''
-  });
 
   const handleTabsChange = (event, newValue) => {
     setTabsValue(newValue);
@@ -53,9 +50,7 @@ const useHomePageSlideHandlers = () => {
     upload,
     setUpload,
     imageName,
-    setImageName,
-    uploadImage,
-    setUploadImage
+    setImageName
   };
 };
 

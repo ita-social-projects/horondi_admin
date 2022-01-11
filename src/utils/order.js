@@ -29,11 +29,11 @@ export const productsPropTypes = {
 
 export const generalPropTypes = {
   data: PropTypes.shape({
-    status: PropTypes.arrayOf(PropTypes.string),
+    status: PropTypes.string,
     isPaid: PropTypes.bool,
     courierOffice: PropTypes.string,
     paymentMethod: PropTypes.string,
-    paymentStatus: PropTypes.arrayOf(PropTypes.string),
+    paymentStatus: PropTypes.string,
     city: PropTypes.string,
     street: PropTypes.string
   }),

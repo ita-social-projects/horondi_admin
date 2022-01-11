@@ -16,13 +16,15 @@ import {
 import ReplyComments from './replyComments';
 import ReplyCommentForm from '../../../components/forms/reply-comment-form/reply-comment-form';
 import { setCurrentPage } from '../../../redux/table/table.actions';
-import Filters from './filters/filters';
+import useReplyCommentFilters from '../../../hooks/filters/use-reply-comment-filters';
+import FilterNavbar from '../../../components/filter-search-sort/filter-navbar';
 
 const CommentEdit = ({ match }) => {
   const { id } = match.params;
   const dispatch = useDispatch();
   const styles = useStyles();
   const { loading, comment } = useSelector(commentSelector);
+  const replyCommentOptions = useReplyCommentFilters();
 
   const {
     replyFilters,
@@ -103,7 +105,7 @@ const CommentEdit = ({ match }) => {
             adminReply
           />
           <div>
-            <Filters />
+            <FilterNavbar options={replyCommentOptions || {}} />
           </div>
           <ReplyComments
             replyComments={replyComments}

@@ -2,6 +2,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 import { config } from '../configs';
+import { historyActions } from '../consts/history-actions';
 
 export const placeholderText = 'за іменем';
 export const userRolesForFilter = {
@@ -18,10 +19,10 @@ export const roleFilterObject = config.userRoles.map(({ role, label }) => ({
   label
 }));
 
-export const historyEventFilterObj = (historyEvents) => {
+export const actionFilterObj = () => {
   const arrToFilter = [];
 
-  _.forEach(historyEvents, (value, key) => {
+  _.forEach(historyActions, (value, key) => {
     arrToFilter.push({ value: key, label: value });
   });
 

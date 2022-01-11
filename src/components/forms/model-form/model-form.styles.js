@@ -57,9 +57,6 @@ export const useStyles = makeStyles((theme) => {
     button: {
       marginTop: theme.spacing(0.5)
     },
-    textFields: {
-      margin: '10px 8px'
-    },
     returnButton,
     saveButton,
     textField,

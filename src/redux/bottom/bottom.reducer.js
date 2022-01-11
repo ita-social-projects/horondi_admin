@@ -10,7 +10,7 @@ import {
 } from './bottom.types';
 
 export const selectBottom = ({ Bottom }) => ({
-  items: Bottom.list,
+  list: Bottom.list,
   loading: Bottom.bottomLoading,
   bottom: Bottom.bottom,
   filter: Bottom.filters,

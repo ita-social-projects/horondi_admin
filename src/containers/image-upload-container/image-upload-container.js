@@ -44,13 +44,12 @@ ImageUploadContainer.propTypes = {
   handler: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
   src: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string.isRequired
 };
 
 ImageUploadContainer.defaultProps = {
   multiple: false,
-  src: null,
-  id: ''
+  src: null
 };
 
 export default ImageUploadContainer;

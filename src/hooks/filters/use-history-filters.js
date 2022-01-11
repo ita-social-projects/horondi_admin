@@ -6,13 +6,13 @@ import {
 } from '../../redux/history/history.actions';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import {
-  historyEventFilterObj,
+  actionFilterObj,
   placeholderText,
   roleFilterObject,
   userRolesForFilter
 } from '../../utils/history';
 import buttonTitles from '../../configs/button-titles';
-import { historyEvents } from '../../consts/history-events';
+import { historyActions } from '../../consts/history-actions';
 
 const useHistoryFilters = () => {
   const dispatch = useDispatch();
@@ -70,17 +70,10 @@ const useHistoryFilters = () => {
     filterByMultipleOptions: [
       {
         filters: filters.action,
-        label: buttonTitles.HISTORY_ACTION,
-        selectItems: historyEventFilterObj(historyEvents.historyAction),
+        label: buttonTitles.EVENT_TITLE,
+        selectItems: actionFilterObj(),
         setFilterHandler: setActionsFilter,
-        objForTranslateRenderItems: historyEvents.historyAction
-      },
-      {
-        filters: filters.historyName,
-        label: buttonTitles.HISTORY_NAME,
-        selectItems: historyEventFilterObj(historyEvents.historyName),
-        setFilterHandler: setActionsFilter,
-        objForTranslateRenderItems: historyEvents.historyName
+        objForTranslateRenderItems: historyActions
       },
       {
         filters: filters.role,

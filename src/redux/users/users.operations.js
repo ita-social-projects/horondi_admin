@@ -52,18 +52,11 @@ query($id: ID!) {
       email
       address {
         country
-        region
         city
         buildingNumber
         appartment
         street
         zipcode
-      }
-      images{
-        large
-        medium
-        small
-        thumbnail
       }
      banned{
       blockPeriod
@@ -109,53 +102,6 @@ mutation($id: ID!) {
 
   return result?.data?.deleteUser;
 };
-
-const updateUserById = async ({ id, user, image }) => {
-  const updateUserMutation = `
-  mutation($id: ID!, $user: UserUpdateInput!, $image: Upload) {
-   updateUserById(id: $id, user: $user, image: $image) {
-      firstName
-      lastName
-      email
-      phoneNumber
-      images{
-        large
-        medium
-        small
-        thumbnail
-      }
-      address {
-        country
-        region
-        city
-        buildingNumber
-        appartment
-        street
-        zipcode
-      }
-    banned{
-      blockPeriod
-      blockCount
-      updatedAt
-    }
-  }
-}
-`;
-
-  const result = await setItems(updateUserMutation, { id, user, image });
-  if (
-    Object.keys(config.errorMessages).includes(
-      result?.data?.updateUser?.message
-    )
-  ) {
-    throw new Error(
-      `Помилка: ${config.errorMessages[result.data.updateUser.message]}`
-    );
-  }
-
-  return result?.data?.updateUser;
-};
-
 const blockUser = async (userId) => {
   const blockUserMutation = `
   mutation($userId:ID!){
@@ -402,7 +348,6 @@ export {
   getAllUsers,
   getUserById,
   deleteUser,
-  updateUserById,
   registerAdmin,
   resendEmailToConfirmAdmin,
   completeAdminRegister,

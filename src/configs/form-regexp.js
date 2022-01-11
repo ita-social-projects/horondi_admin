@@ -9,23 +9,23 @@ const formRegExp = {
   enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
   uaRegex: '[А-ЩЬЮЯҐЄІЇа-щьюяґєії]',
   enRegex: /[a-z]/i,
+  onlyPositiveDigits: /^[0-9]\d*$/,
   onlyPositiveFloat: /^(?:[1-9]\d*|0(?!(?:\.0+)?$))?(?:\.\d+)?$/,
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
   userName: /[а-яА-Я]{2,}/g,
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
   userStatuses: /(Активний|Неактивний)/g,
   hexString: /^#[0-9a-f]{3,6}$/i,
-  uaNameCreation: /^[а-яїієґa-z0-9\s]+$/gi,
-  enNameCreation: /^[a-z0-9\s]+$/gi,
+  uaNameCreation: /^[а-яїієґ0-9\s]+$/i,
+  enNameCreation: /^[a-z0-9\s]+$/i,
   enDescription: /^[a-z0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   uaDescription: /^[а-яїієґ0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   categoryCode: /^[a-z0-9|-]/i,
   firstName: /^([a-zа-яіїє]|[',. -][a-zа-яіїє])*$/i,
   lastName: /^([a-zа-яіїє]|[',. -][a-zа-яіїє])*$/i,
   phoneNumber:
-    /^(\+38)?(?:\(0[0-9]{2}\)[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|0[0-9]{2}[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|0[0-9]{2}[0-9]{7})$/,
+    /^(38)?(?:\(0[0-9]{2}\)[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|0[0-9]{2}[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|0[0-9]{2}[0-9]{7})$/,
   additionalPriceRegExp: /^[0-9|]/i,
-  pageCode: /^[a-z0-9|-]/i,
-  postCode: /^\d{5}(?:[-\\s]\\d{4})?$/
+  pageCode: /^\/([a-z_\/-])+$/i // eslint-disable-line
 };
 export default formRegExp;

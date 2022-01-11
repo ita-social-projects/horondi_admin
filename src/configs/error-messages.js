@@ -138,7 +138,7 @@ export const contactErrorMessages = {
   IMAGE_FORMAT_MESSAGE:
     'Введіть коректний формат, наприклад: https://example.com/',
   ENTER_LINK_MESSAGE: 'Введіть посилання',
-  CONTACT_ERROR_MESSAGE: 'Помилка збереження',
+  SELECT_IMAGES_MESSAGE: 'Завантажте зображення для карт',
   INVALID_PHONE_MESSAGE:
     'Введіть коректний формат, наприклад: 380(XX)-XXX-XX-XX'
 };
@@ -204,29 +204,4 @@ export const productErrorMessages = {
     'Заповніть необхідні поля коректними даними для усіх мов ',
   NOT_UA_NAME_MESSAGE: 'Введіть назву українською',
   NOT_EN_NAME_MESSAGE: 'Введіть назву англійською'
-};
-
-export const userErrorMessages = {
-  USER_FIRSTNAME_MESSAGE: "Введіть коректне ім'я",
-  USER_FIRSTNAME_MIN_LENGTH_MESSAGE: "Ім'я повинно містити не менше 2 символів",
-  USER_FIRSTNAME_MAX_LENGTH_MESSAGE:
-    "Ім'я повинно містити не більше 30 символів",
-  USER_LASTNAME_MESSAGE: 'Введіть коректне прізвище',
-  USER_LASTNAME_MIN_LENGTH_MESSAGE:
-    'Прізвище повинно містити не менше 2 символів',
-  USER_LASTNAME_MAX_LENGTH_MESSAGE:
-    'Прізвище повинно містити не більше 30 символів',
-  USER_PASSWORD_MESSAGE: 'Введіть пароль',
-  USER_PASSWORD_MIN_LENGTH_MESSAGE:
-    'Пароль повинен містити не менше 8 символів',
-  USER_PASSWORD_MAX_LENGTH_MESSAGE:
-    'Пароль повинен містити не більше 20 символів',
-  USER_PASSWORD_LANG_MESSAGE:
-    'Використовуйте латиницю різних регістрів та цифри',
-  USER_EMAIL_MESSAGE: 'Введіть email',
-  USER_INVALID_EMAIL_MESSAGE: 'Некоректна email адреса',
-  USER_PHONE_NUMBER_MESSAGE: 'Введіть номер телефону',
-  USER_INVALID_PHONE_NUMBER_MESSAGE: 'Введіть номер телефону',
-  USER_INVALID_ADDRESS_MESSAGE: 'Введіть коректну адресу',
-  USER_ERROR_MESSAGE: 'Поле не може бути порожнім'
 };

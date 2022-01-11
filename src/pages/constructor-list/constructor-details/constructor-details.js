@@ -25,7 +25,9 @@ const ConstructorModelDetails = ({ match }) => {
 
   return (
     <div className={styles.detailsContainer}>
-      {model !== null ? <ConstructorModelForm id={id} model={model} /> : null}
+      {model !== null ? (
+        <ConstructorModelForm id={id} model={model} isEdit />
+      ) : null}
     </div>
   );
 };

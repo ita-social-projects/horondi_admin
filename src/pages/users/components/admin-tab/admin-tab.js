@@ -14,7 +14,8 @@ import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 import { UserBlockPeriod } from '../../../../consts/user-block-status';
 import { formatPhoneNumber } from '../../../../utils/format-phone-number';
-import UsersFilters from '../users-filters/UsersFilters';
+import useUsersFilters from '../../../../hooks/filters/use-users-filters';
+import FilterNavbar from '../../../../components/filter-search-sort';
 
 const tableHeaders = config.tableHeadRowTitles.users.userTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
@@ -27,6 +28,7 @@ const AdminTab = (props) => {
   const dispatch = useDispatch();
   const { list, onDelete } = props;
   const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
+  const usersFilters = useUsersFilters();
 
   const {
     isRegisterDialogOpen,
@@ -70,7 +72,7 @@ const AdminTab = (props) => {
   return (
     <>
       <div className={styles.filters}>
-        <UsersFilters />
+        <FilterNavbar options={usersFilters || {}} />
       </div>
       <div className={styles.tableNav}>
         <div className={styles.button}>

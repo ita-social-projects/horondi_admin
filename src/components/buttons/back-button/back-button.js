@@ -36,14 +36,14 @@ const BackButton = ({ type, variant, color, pathBack, ...props }) => {
 };
 
 BackButton.propTypes = {
-  initial: PropTypes.string,
+  initial: PropTypes.bool,
   color: PropTypes.string,
   type: PropTypes.string,
   variant: PropTypes.string,
   pathBack: PropTypes.string
 };
 BackButton.defaultProps = {
-  initial: '',
+  initial: false,
   color: primary,
   type: button,
   variant: outlined,

@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import {
@@ -12,6 +13,8 @@ import {
 import LoadingBar from '../../../components/loading-bar';
 import LoginPage from '../index';
 import { LOGIN, mockStore } from './variables';
+
+configure({ adapter: new Adapter() });
 
 const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({
@@ -48,6 +51,11 @@ describe('Login page', () => {
     component.unmount();
     mockUseDispatch.mockClear();
     mockUseSelector.mockClear();
+  });
+
+  it('Should exist', () => {
+    expect(component).toMatchSnapshot();
+    expect(component.exists());
   });
 
   it('Should render only 1 component of each type: Avatar, Typography, TextField ', () => {

@@ -1,5 +1,7 @@
-import { map } from 'lodash';
 import { useState } from 'react';
+import { config } from '../configs';
+
+const { languages } = config;
 
 const useConstructorHandlers = () => {
   const [tabsValue, setTabsValue] = useState(0);
@@ -10,36 +12,23 @@ const useConstructorHandlers = () => {
     setTabsValue(newValue);
   };
 
-  const createConstructor = (items) => {
-    const pocketsWithRestrictions = map(items.restrictionsToAdd, (item) => {
-      const otherPocketsWithAvailablePositions = map(
-        item.otherPocketsWithAvailablePositions,
-        (otherPocket) => ({
-          pocket: otherPocket.pocket._id,
-          position: otherPocket.position._id
-        })
-      );
-      return {
-        currentPocketWithPosition: {
-          pocket: item.currentPocketWithPosition.pocket._id,
-          position: item.currentPocketWithPosition.position._id
-        },
-        otherPocketsWithAvailablePositions
-      };
-    });
-
-    return {
-      name: items.model.name,
-      model: items.model._id,
-      basics: items.basicsToAdd,
-      bottoms: items.bottomsToAdd,
-      patterns: items.patternsToAdd,
-      backs: items.backsToAdd,
-      straps: items.strapsToAdd,
-      closures: items.closuresToAdd,
-      pocketsWithRestrictions
-    };
-  };
+  const createConstructor = (values) => ({
+    name: [
+      {
+        lang: languages[0],
+        value: values.uaName
+      },
+      {
+        lang: languages[1],
+        value: values.enName
+      }
+    ],
+    material: values.material,
+    color: values.color,
+    available: values.available,
+    default: values.default,
+    basePrice: +values.basePrice
+  });
 
   return {
     tabsValue,

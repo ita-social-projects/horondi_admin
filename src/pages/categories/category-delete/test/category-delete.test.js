@@ -1,11 +1,14 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { useDispatch } from 'react-redux';
 import { FormControl, Grid, InputLabel, Select } from '@material-ui/core';
 import * as reactRedux from 'react-redux';
 import { StandardButton } from '../../../../components/buttons';
 import CategoryDelete from '../category-delete';
 import store from './store';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const mockStore = store;
 

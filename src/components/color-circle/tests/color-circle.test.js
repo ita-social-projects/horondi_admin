@@ -1,9 +1,12 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { Tooltip } from '@material-ui/core';
 import { noop } from 'lodash';
 import ColorCircle from '../color-circle';
 import { mockColor, mockSize } from './color-circle.variables';
+
+configure({ adapter: new Adapter() });
 
 describe('ColorCircle tests', () => {
   const mockOnDelete = jest.fn(noop);

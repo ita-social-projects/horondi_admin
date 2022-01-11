@@ -15,8 +15,9 @@ import { useCommonStyles } from '../common.styles';
 import CategoryDeleteDialog from './category-delete-dialog';
 import { categoriesSelectorWithPagination } from '../../redux/selectors/category.selectors';
 import StandardButton from '../../components/buttons/standard-button';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
+import useCategoryFilters from '../../hooks/filters/use-category-filters';
 import messages from '../../configs/messages';
-import Filters from './filters/filters';
 
 const pathToAddCategoryPage = config.routes.pathToAddCategory;
 
@@ -25,6 +26,7 @@ const pathToEditCategoryPage = config.routes.pathToCategories;
 const Categories = () => {
   const { IMG_URL } = config;
   const { ADD_CATEGORY } = config.buttonTitles;
+  const categoryOptions = useCategoryFilters();
 
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
@@ -99,7 +101,7 @@ const Categories = () => {
         />
       </div>
       <div>
-        <Filters />
+        <FilterNavbar options={categoryOptions || {}} />
       </div>
 
       {categoriesList?.length ? (

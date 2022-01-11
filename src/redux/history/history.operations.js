@@ -16,7 +16,6 @@ query(
      items{
         _id
         action
-        historyName
         subject{
           model
           name
@@ -61,7 +60,6 @@ const getHistoryRecord = async (id) => {
       ...on HistoryRecord {
           _id
           action
-          historyName
             subject{
               model
               name

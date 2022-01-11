@@ -1,11 +1,14 @@
 import React from 'react';
 import * as redux from 'react-redux';
-import { mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { act } from '@testing-library/react';
 import { RegisteredUser } from '../../index';
 import { inputName } from '../../../../../utils/order';
 import { mockUserId, mockUsers, user } from './registered-user.variables.js';
+
+configure({ adapter: new Adapter() });
 
 const mockSetFieldValue = jest.fn();
 const event = jest.fn();

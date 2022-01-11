@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import * as redux from 'react-redux';
 import { render, fireEvent, act } from '@testing-library/react';
 
@@ -13,6 +14,7 @@ import {
   mockCommentWithoutProduct
 } from './comment-form.variables';
 
+configure({ adapter: new Adapter() });
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 const { productInfo } = config.labels.comment;
 

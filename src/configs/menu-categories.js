@@ -37,7 +37,7 @@ export const menuCategories = [
   ['Замовлення', routes.pathToOrders, ShoppingBasketIcon],
   ['Статистика', routes.pathToStatistic, BarChartIcon],
   ['Останні зміни', routes.pathToHistory, HistoryIcon],
-  ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
+  ['Бізнес сторінки', routes.pathToAddBusinessPage, BusinessCenterIcon],
   ['Посилання', routes.pathToHeaders, LinkIcon]
 ];
 
@@ -77,13 +77,4 @@ export const constructorMenuCategories = [
   ['Спинка', routes.pathToBacks, PanoramaVerticalIcon],
   ['Ремінці', routes.pathToStraps, ConfirmationNumberIcon],
   ['Защіпки', routes.pathToClosures, AllInclusiveIcon]
-];
-
-export const certificatesMenuCategories = [
-  ['Створити сертифікат', routes.pathToCreateCertificates, AccountCircleIcon],
-  [
-    'Інформація про сертифікати',
-    routes.pathToAboutCertificate,
-    AccountCircleIcon
-  ]
 ];

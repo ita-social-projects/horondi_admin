@@ -5,8 +5,7 @@ import {
   clientMenuCategories,
   catalogMenuCategories,
   staticPagesCategories,
-  constructorMenuCategories,
-  certificatesMenuCategories
+  constructorMenuCategories
 } from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
@@ -60,8 +59,7 @@ import {
   pocketsErrorMessages,
   closuresErrorMessages,
   basicsErrorMessages,
-  strapsErrorMessages,
-  userErrorMessages
+  strapsErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -77,14 +75,13 @@ import {
   valueKeys,
   inputNames
 } from './news-form-helpers';
-import { imageUploadSlideInputsId } from './home-page-slide-helpers';
 
 export const config = {
   fetchPolicy: 'no-cache',
   app: {
     title: 'Horondi Admin Portal',
     serverUrl: 'http://localhost:5000/',
-    drawerWidth: 363,
+    drawerWidth: 230,
     snackBarDuration: 4000,
     rowsPerPageOptions: [10, 25, 50, 100]
   },
@@ -109,6 +106,7 @@ export const config = {
     superadmin: 'superadmin'
   },
   userRoles: [
+    { role: 'user', label: 'Юзер' },
     { role: 'admin', label: 'Адмін' },
     { role: 'superadmin', label: 'Суперадмін' }
   ],
@@ -252,7 +250,6 @@ export const config = {
   clientMenuCategories,
   catalogMenuCategories,
   constructorMenuCategories,
-  certificatesMenuCategories,
   staticPagesCategories,
   routes,
   statuses,
@@ -290,7 +287,6 @@ export const config = {
   businessPageErrorMessages,
   productErrorMessages,
   imageUploadNewsInputsId,
-  imageUploadSlideInputsId,
   valueKeys,
   inputNames,
   pocketsErrorMessages,
@@ -314,8 +310,7 @@ export const config = {
   materialMessages,
   productsErrors,
   userTranslations,
-  errorStatuses,
-  userErrorMessages
+  errorStatuses
 };
 export const inputTypes = {
   button: 'button',
