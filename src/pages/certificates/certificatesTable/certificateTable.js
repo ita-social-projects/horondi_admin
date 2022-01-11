@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { useStyles } from '../create-certificate/create-certificate.styles';
 
-function CertificatesTable({ certificates }) {
+export const CertificatesTable = ({ certificates }) => {
   const styles = useStyles();
 
   return (
@@ -40,7 +40,7 @@ function CertificatesTable({ certificates }) {
       </Table>
     </TableContainer>
   );
-}
+};
 
 const certificateTableInterface = PropTypes.shape({
   id: PropTypes.string,
@@ -55,5 +55,3 @@ CertificatesTable.propTypes = {
 CertificatesTable.defaultProps = {
   certificates: []
 };
-
-export default CertificatesTable;

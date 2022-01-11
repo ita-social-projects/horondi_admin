@@ -1,3 +1,3 @@
-import CertificatesTable from './certificateTable';
+import { CertificatesTable } from './certificateTable';
 
 export default CertificatesTable;

@@ -5,7 +5,7 @@ import { Checkbox, Button, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useStyles } from './checkboxes.styles';
 
-function CheckBoxes({ options, handler }) {
+export const CheckBoxes = ({ options, handler }) => {
   const styles = useStyles();
 
   const updateCheckBoxCheck = (index) => (e) => {
@@ -64,7 +64,7 @@ function CheckBoxes({ options, handler }) {
       ))}
     </Grid>
   );
-}
+};
 const checkBoxInterface = PropTypes.shape({
   checked: PropTypes.bool,
   name: PropTypes.string,
@@ -80,5 +80,3 @@ CheckBoxes.defaultProps = {
   options: [],
   handler: () => {}
 };
-
-export default CheckBoxes;
