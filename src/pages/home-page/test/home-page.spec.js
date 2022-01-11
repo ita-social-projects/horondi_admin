@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render } from '@testing-library/react';
 import { useSelector, useDispatch } from 'react-redux';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
 import HomePage from '../home-page';
 
-jest.mock('../home-page.styles.js', () => ({
-  useStyles: () => ({})
-}));
-
-jest.mock('../../common.styles.js', () => ({
-  useStyles: () => ({})
-}));
-
+const mockDispatch = jest.fn();
 jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn().mockImplementationOnce((selector) => selector()),
+  useSelector: jest.fn(),
   useDispatch: jest.fn()
 }));
+
+const data = {
+  loading: HomePage.homePageLoading,
+  photos: HomePage.photos
+};
+
+useSelector.mockImplementation(() => data);
+useDispatch.mockImplementation(() => mockDispatch);
+
+describe('test HomePage component', () => {
+  it('should render h1 label', () => {
+    const { getByText } = render(<HomePage />);
+    const h1 = getByText(/Головна сторінка/i, {
+      selector: 'h1'
+    });
+    expect(h1).toBeInTheDocument();
+  });
+});
