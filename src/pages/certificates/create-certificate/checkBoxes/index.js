@@ -65,13 +65,14 @@ function CheckBoxes({ options, handler }) {
     </Grid>
   );
 }
+const checkBoxInterface = PropTypes.shape({
+  checked: PropTypes.bool,
+  name: PropTypes.string,
+  quantity: PropTypes.number
+});
 
 CheckBoxes.propTypes = {
-  options: PropTypes.arrayOf({
-    checked: PropTypes.bool,
-    name: PropTypes.string,
-    quantity: PropTypes.number
-  }),
+  options: PropTypes.arrayOf(checkBoxInterface),
   handler: PropTypes.func
 };
 

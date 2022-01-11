@@ -4,8 +4,6 @@ const routes = {
   pathToLogin: '/login',
   pathToMainPage: '/',
   pathToPatterns: '/patterns',
-  pathToCreateCertificates: '/certificates/create-certificate',
-  pathToAboutCertificate: '/certificates/about-certificate',
   pathToPatternDetails: '/patterns/:id',
   pathToAddPattern: '/patterns/add',
   pathToNews: '/news',
