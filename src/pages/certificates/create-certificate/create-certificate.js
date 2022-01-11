@@ -12,7 +12,7 @@ import { useStyles } from './create-certificate.styles';
 import { BackButton } from '../../../components/buttons';
 import materialUiConstants from '../../../configs/material-ui-constants';
 import { useCommonStyles } from '../../common.styles';
-import CheckBoxes from './checkBoxes';
+import CheckBoxes from './checkBoxes/checkBoxes';
 import formRegExp from '../../../configs/form-regexp';
 import CertificatesTable from './certificatesTable';
 import { loginErrorMessages } from '../../../configs/error-messages';
