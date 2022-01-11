@@ -18,6 +18,7 @@ import CertificatesTable from './certificatesTable';
 import { loginErrorMessages } from '../../../configs/error-messages';
 import buttonTitles from '../../../configs/button-titles';
 import titles from '../../../configs/titles';
+import routes from '../../../configs/routes';
 
 const { certificatesTitles } = titles;
 
@@ -41,7 +42,8 @@ const CreateCertificate = () => {
 
   const createData = (id, name, expired) => ({ id, name, expired });
 
-  const formatDate = (date, newDate) => `${moment(date).format('DD/MM/YYYY')} - ${moment(newDate).format(
+  const formatDate = (date, newDate) =>
+    `${moment(date).format('DD/MM/YYYY')} - ${moment(newDate).format(
       'DD/MM/YYYY'
     )}`;
 
@@ -71,7 +73,7 @@ const CreateCertificate = () => {
       <div className={styles.buttonContainer}>
         <Grid container spacing={2} className={styles.fixedButtons}>
           <Grid item className={styles.button}>
-            <BackButton />
+            <BackButton pathBack={routes.pathToAboutCertificate} />
           </Grid>
           <Grid item className={styles.button}>
             <Button
@@ -142,6 +144,7 @@ const CreateCertificate = () => {
           </Grid>
           <Grid item xs={6}>
             <Button
+              data-testid='generate'
               variant={materialUiConstants.contained}
               color={materialUiConstants.primary}
               onClick={generateCertificates}
@@ -153,7 +156,7 @@ const CreateCertificate = () => {
         </Grid>
       </div>
       {certificates.length ? (
-        <div className={styles.section}>
+        <div className={styles.section} data-testid='table'>
           <CertificatesTable certificates={certificates} />
         </div>
       ) : null}

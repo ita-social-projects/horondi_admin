@@ -29,33 +29,39 @@ function CheckBoxes({ options, handler }) {
   return (
     <Grid container spacing={5}>
       {options.map((checkbox, index) => (
-          <Grid item xs={4} key={checkbox.name} className={styles.gridItem}>
-            <div className={styles.item}>
-              <Checkbox
-                checked={checkbox.checked}
-                name={checkbox.name}
-                onChange={updateCheckBoxCheck(index)}
-              />
-              <label className={styles.label} htmlFor={checkbox.name}>
-                {checkbox.name}
-              </label>
+        <Grid item xs={4} key={checkbox.name} className={styles.gridItem}>
+          <div className={styles.item}>
+            <Checkbox
+              checked={checkbox.checked}
+              name={checkbox.name}
+              onChange={updateCheckBoxCheck(index)}
+            />
+            <label className={styles.label} htmlFor={checkbox.name}>
+              {checkbox.name}
+            </label>
+          </div>
+          {checkbox.checked && (
+            <div className={styles.quantity}>
+              <Button
+                data-testid='decrement'
+                onClick={() => decrementQuantity(index)}
+                disabled={checkbox.quantity <= 1}
+              >
+                <RemoveIcon />
+              </Button>
+              <h5 className={styles.H5} data-testid='quantity'>
+                {checkbox.quantity}
+              </h5>
+              <Button
+                onClick={() => incrementQuantity(index)}
+                data-testid='increment'
+              >
+                <AddIcon />
+              </Button>
             </div>
-            {checkbox.checked && (
-              <div className={styles.quantity}>
-                <Button
-                  onClick={() => decrementQuantity(index)}
-                  disabled={checkbox.quantity <= 1}
-                >
-                  <RemoveIcon />
-                </Button>
-                <h5 className={styles.H5}>{checkbox.quantity}</h5>
-                <Button onClick={() => incrementQuantity(index)}>
-                  <AddIcon />
-                </Button>
-              </div>
-            )}
-          </Grid>
-        ))}
+          )}
+        </Grid>
+      ))}
     </Grid>
   );
 }
