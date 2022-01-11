@@ -35,6 +35,7 @@ import {
   TEMPORARY_WIDTHS,
   MENU_TABS
 } from '../../consts/menu-categories';
+import { PromoIcon } from '../nav-bar/icons';
 
 const { titles } = config;
 
@@ -57,6 +58,7 @@ const NavMenu = ({ width }) => {
     constructorTab: false,
     staticTab: false
   };
+  const [promoTab, setPromoTab] = useState(false);
 
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
@@ -98,6 +100,9 @@ const NavMenu = ({ width }) => {
   );
 
   const catalogMenuItems = config.catalogMenuCategories.map((category) =>
+    returnedList(category[0], category[1], category[2], classes.nested)
+  );
+  const promoMenuItems = config.promoMenuCategories.map((category) =>
     returnedList(category[0], category[1], category[2], classes.nested)
   );
 
@@ -148,6 +153,13 @@ const NavMenu = ({ width }) => {
       certificatesMenuItems,
       MENU_TABS.CERTIFICATES,
       TuneIcon
+    ],
+    [
+      () => setPromoTab(!promoTab),
+      promoTab,
+      promoMenuItems,
+      MENU_TABS.PROMOCODE,
+      PromoIcon
     ],
     [
       () =>

@@ -91,6 +91,24 @@ const orders = {
     REVERSED: 'Перенаправлено',
     PROCESSING: 'В обробці',
     PAID: 'Оплачено'
+  },
+  promoCodesTranslation: {
+    status: {
+      active: 'Активний',
+      expired: 'Завершений'
+    },
+    deletePromo: 'Видалити промокод',
+    namePromo: 'Назва промокоду',
+    createPromo: 'Створи Промокод:',
+    date: {
+      validityPeriod: 'Термін дії:',
+      validFrom: 'Термін дії',
+      validTo: 'Термін до'
+    },
+    discount: {
+      title: 'Розмір знижки у процентах:',
+      label: 'Розмір знижки'
+    }
   }
 };
 
