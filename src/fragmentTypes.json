@@ -27,6 +27,18 @@
       },
       {
         "kind": "UNION",
+        "name": "PaginatedProductsResult",
+        "possibleTypes": [
+          {
+            "name": "PaginatedProducts"
+          },
+          {
+            "name": "Error"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
         "name": "MaterialResult",
         "possibleTypes": [
           {

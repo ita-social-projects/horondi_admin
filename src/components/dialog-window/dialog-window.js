@@ -3,8 +3,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  Typography
+  DialogTitle
 } from '@material-ui/core';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -37,7 +36,7 @@ const DialogWindow = ({
     <Dialog id='dialog-window' onClose={handleClose} open={isOpen}>
       <DialogTitle className={styles.dialogTitle}>{dialogTitle}</DialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom>{dialogContent}</Typography>
+        <div>{dialogContent}</div>
       </DialogContent>
       <DialogActions className={styles.buttonStyles}>
         {showCancelButton ? (
@@ -71,7 +70,7 @@ const mapStateToProps = basicSelector;
 DialogWindow.propTypes = {
   isOpen: PropTypes.bool,
   dialogTitle: PropTypes.string,
-  dialogContent: PropTypes.string,
+  dialogContent: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   showCancelButton: PropTypes.bool,
   onClickHandler: PropTypes.func
 };

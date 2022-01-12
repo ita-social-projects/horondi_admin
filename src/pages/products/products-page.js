@@ -70,7 +70,7 @@ const ProductsPage = () => {
   }, [dispatch, sort, rowsPerPage, currentPage, filters]);
 
   const handleProductDelete = (id) => {
-    const removeProduct = () => {
+    const removeProduct = async () => {
       dispatch(closeDialog());
       dispatch(
         deleteProduct({

@@ -1,5 +1,86 @@
 import { setItems, getItems } from '../../utils/client';
 
+const getAllProductsDataForDeleteValidation = async (
+  limit = 100,
+  skip = 0,
+  filter = {},
+  sort = {},
+  search = ''
+) => {
+  const query = `
+      query(
+         $skip: Int
+        $limit: Int
+        $filter: FilterInput
+        $sort: SortInput
+        $search:String
+      ) {
+        getProducts(
+          filter: $filter
+        skip: $skip
+        limit: $limit
+        sort: $sort
+        search:$search
+      ) {
+        ... on PaginatedProducts {
+            items {
+              _id
+              name {
+                value
+              }
+              model {
+                _id
+                sizes {
+                  _id
+                }
+              }
+              pattern {
+                _id
+               }
+               closure {
+                _id
+               }
+              mainMaterial {
+                material {
+                  _id
+                }
+              }
+              bottomMaterial {
+                material {
+                  _id
+                }
+              }
+              backMaterial {
+                material {
+                  _id
+                }
+              }
+              innerMaterial {
+                material {
+                  _id
+                }
+              }
+              category {
+                _id
+              }
+            }
+            count
+          }
+        }
+      }
+`;
+
+  const result = await getItems(query, {
+    limit,
+    sort,
+    skip,
+    filter,
+    search
+  });
+
+  return result?.data?.getProducts;
+};
+
 const getAllProducts = async (
   limit = 10,
   skip = 0,
@@ -310,10 +391,10 @@ const addProduct = async (product, upload) => {
   });
 };
 
-const deleteProduct = async (payload) => {
+const deleteManyProducts = async (payload) => {
   const result = `
-      mutation($id: ID!) {
-        deleteProduct(id: $id) {
+      mutation($ids: [ID!]) {
+        deleteManyProducts(ids: $ids) {
           ... on Product {
             _id
           }
@@ -322,7 +403,7 @@ const deleteProduct = async (payload) => {
     `;
 
   return setItems(result, {
-    id: payload
+    ids: payload
   });
 };
 
@@ -529,11 +610,12 @@ const deleteImages = async (id, images) => {
 
 export {
   getAllProducts,
+  getAllProductsDataForDeleteValidation,
+  deleteManyProducts,
   getAllFilters,
   getProductCategories,
   getModelsByCategory,
   addProduct,
-  deleteProduct,
   getProduct,
   updateProduct,
   deleteImages,

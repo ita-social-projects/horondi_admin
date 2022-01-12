@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { push } from 'connected-react-router';
-import { map } from 'lodash';
+import { map, noop } from 'lodash';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
@@ -25,14 +25,16 @@ import LoadingBar from '../../components/loading-bar';
 import useMaterialFilters from '../../hooks/filters/use-material-filters';
 import messages from '../../configs/messages';
 import Filters from './filters/filters';
+import { deleteManyProducts } from '../../redux/products/products.operations';
+import PropTypes from 'prop-types';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
-const { CREATE_MATERIAL_TITLE } = config.buttonTitles;
+const { CREATE_MATERIAL_TITLE, DELETE_TITLE } = config.buttonTitles;
 const pathToMaterialAddPage = config.routes.pathToAddMaterial;
 const tableTitles = config.tableHeadRowTitles.materials;
 const { SMALL_CIRCLE } = config.colorCircleSizes;
 
-const MaterialPage = () => {
+const MaterialPage = ({ validatorMethods }) => {
   const commonStyles = useCommonStyles();
   const styles = useStyles();
 
@@ -46,13 +48,14 @@ const MaterialPage = () => {
     colors,
     filters
   } = useSelector(materialSelectorWithPagination);
-
   const materialFilters = useMaterialFilters();
 
   const dispatch = useDispatch();
+  const { deleteValidation, toggleRerender } = validatorMethods;
 
   useEffect(() => {
     dispatch(getColors());
+    toggleRerender();
   }, []);
 
   useEffect(() => {
@@ -71,11 +74,20 @@ const MaterialPage = () => {
   }, [dispatch, rowsPerPage, currentPage, filters]);
 
   const materialDeleteHandler = (id) => {
-    const removeMaterial = () => {
+    const validationData = deleteValidation(id);
+    const removeMaterial = async () => {
+      await deleteManyProducts(validationData.map((el) => el.itemId));
       dispatch(closeDialog());
       dispatch(deleteMaterial(id));
+      toggleRerender();
     };
-    openSuccessSnackbar(removeMaterial, REMOVE_MATERIAL_MESSAGE);
+    openSuccessSnackbar(
+      removeMaterial,
+      REMOVE_MATERIAL_MESSAGE,
+      DELETE_TITLE,
+      true,
+      validationData
+    );
   };
 
   const materialItems = map(list, (materialItem) => (
@@ -153,6 +165,20 @@ const MaterialPage = () => {
       </div>
     </div>
   );
+};
+
+MaterialPage.propTypes = {
+  validatorMethods: PropTypes.shape({
+    deleteValidation: PropTypes.func,
+    toggleRerender: PropTypes.func
+  })
+};
+
+MaterialPage.defaultProps = {
+  validatorMethods: PropTypes.shape({
+    deleteValidation: noop,
+    toggleRerender: noop
+  })
 };
 
 export default MaterialPage;

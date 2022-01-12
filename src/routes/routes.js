@@ -85,10 +85,12 @@ import StrapsAdd from '../pages/straps/straps-add/straps-add';
 import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 import UserDetails from '../pages/users/user/user-details';
 import constructorEdit from '../pages/constructor-list/constructor-edit';
+import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 
 const { routes } = config;
 
-const Routes = () => {
+const Routes = ({ validatorMethods }) => {
   const location = useLocation();
   const history = useHistory();
 
@@ -162,7 +164,13 @@ const Routes = () => {
             exact
             component={MaterialAdd}
           />
-          <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+          <Route
+            path={routes.pathToMaterials}
+            exact
+            render={(props) => (
+              <MaterialPage {...props} validatorMethods={validatorMethods} />
+            )}
+          />
           <Route
             path={routes.pathToMaterialDetails}
             exact
@@ -371,6 +379,20 @@ const Routes = () => {
       <SnackbarItem />
     </>
   );
+};
+
+Routes.propTypes = {
+  validatorMethods: PropTypes.shape({
+    deleteValidation: PropTypes.func,
+    toggleRerender: PropTypes.func
+  })
+};
+
+Routes.defaultProps = {
+  validatorMethods: PropTypes.shape({
+    deleteValidation: noop,
+    toggleRerender: noop
+  })
 };
 
 export default Routes;
