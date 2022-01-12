@@ -3,6 +3,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { Checkbox, Button, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 import { useStyles } from './checkboxes.styles';
 
 export const CheckBoxes = ({ options, handler }) => {
@@ -78,5 +79,5 @@ CheckBoxes.propTypes = {
 
 CheckBoxes.defaultProps = {
   options: [],
-  handler: () => {}
+  handler: noop
 };

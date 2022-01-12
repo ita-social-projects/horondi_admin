@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { DatePicker } from 'rsuite';
-import {
-  Grid,
-  Button,
-  Typography,
-  TextField,
-  TableCell
-} from '@material-ui/core';
+import { Grid, Button, Typography, TextField } from '@material-ui/core';
 import { useStyles } from './create-certificate.styles';
 import { BackButton } from '../../../components/buttons';
 import materialUiConstants from '../../../configs/material-ui-constants';
@@ -36,16 +30,16 @@ const CreateCertificate = () => {
   const [isInvalid, setIsInvalid] = useState(true);
   const [certificates, setCertificates] = useState([]);
 
-  const expireDate = (date) => {
-    let newDate = new Date(date);
+  const expireDate = (pickedDate) => {
+    let newDate = new Date(pickedDate);
     newDate = newDate.setFullYear(newDate.getFullYear() + 1);
     return new Date(newDate);
   };
 
-  const disabledDate = (date) => {
+  const disabledDate = (pickedDate) => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    return date < yesterday;
+    return pickedDate < yesterday;
   };
 
   const createData = (id, name, dateFrom, dateTo) => ({
