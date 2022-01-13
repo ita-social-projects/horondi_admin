@@ -24,7 +24,6 @@ const TableContainerRow = ({
   showCheckbox,
   deleteHandler,
   clickHandler,
-  checkBoxValue,
   checkboxChangeHandler,
   ...rest
 }) => {
@@ -40,11 +39,6 @@ const TableContainerRow = ({
     </TableCell>
   ));
 
-  const setCheckboxValue = (idToFind) => {
-    const checked = checkBoxValue.find((item) => item === idToFind);
-    return !!checked;
-  };
-
   const iconSize = dense ? SMALL_SIZE : DEFAULT_SIZE;
   const avatarSize = dense ? classes.small : classes.medium;
   return (
@@ -53,14 +47,13 @@ const TableContainerRow = ({
         <TableCell>
           <Checkbox
             color='default'
-            checked={checkBoxValue && setCheckboxValue(id)}
             inputProps={{ 'aria-label': 'checkbox with default color' }}
             onClick={(e) => checkboxChangeHandler(e, id)}
           />
         </TableCell>
       )}
       {showAvatar && (
-        <TableCell className={classes.smallCell}>
+        <TableCell>
           <Avatar className={avatarSize} src={image}>
             <ImageIcon />
           </Avatar>
@@ -68,7 +61,7 @@ const TableContainerRow = ({
       )}
       {tableCells}
       {(showEdit || showDelete) && (
-        <TableCell className={classes.smallCell}>
+        <TableCell>
           {showEdit && (
             <CustomizedEditIcon
               size={iconSize}
@@ -95,7 +88,6 @@ TableContainerRow.propTypes = {
   clickHandler: PropTypes.func,
   checkboxChangeHandler: PropTypes.func,
   id: PropTypes.string,
-  checkBoxValue: PropTypes.arrayOf(PropTypes.shape),
   showAvatar: PropTypes.bool,
   showEdit: PropTypes.bool,
   showDelete: PropTypes.bool,
@@ -109,7 +101,6 @@ TableContainerRow.defaultProps = {
   editHandler: noop,
   clickHandler: noop,
   checkboxChangeHandler: noop,
-  checkBoxValue: [],
   showAvatar: true,
   showEdit: true,
   showDelete: true,

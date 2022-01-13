@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
+import Adapter from 'enzyme-adapter-react-16';
 import { Button, Typography } from '@material-ui/core';
-import { shallow, mount } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import constructorElementsMockStore from '../../constructorElementsMockStore';
 import BottomPage from '../bottom-page';
 import TableContainerGenerator from '../../../containers/table-container-generator';
@@ -14,6 +15,8 @@ import { config } from '../../../configs';
 const { CREATE_BOTTOM_TITLE } = config.buttonTitles;
 const { pathToBottomsAdd } = config.routes;
 const tableTitles = config.tableHeadRowTitles.bottoms;
+
+configure({ adapter: new Adapter() });
 
 describe('Bottom-page render tests', () => {
   let spyOnUseSelector;
@@ -130,7 +133,7 @@ describe('useEffect tests', () => {
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Так');
     expect(tableContainerRowFirst.prop('name')).toBe(
-      constructorElementsMockStore.items[0].name[0].value
+      constructorElementsMockStore.list[0].name[0].value
     );
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
   });

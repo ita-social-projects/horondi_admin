@@ -17,10 +17,7 @@ const getContacts = async (skip, limit) => {
               value
             }
             email
-            link {
-              lat
-              lon
-            }
+            link
           }
           count
         }
@@ -46,10 +43,13 @@ const getContactById = async (id) => {
               value
             }
             email
-            link {
-              lat
-              lon
+            images {
+              lang
+              value {
+                thumbnail
+              }
             }
+            link
           }
           ... on Error {
             statusCode
@@ -86,10 +86,7 @@ const deleteContact = async (id) => {
               value
             }
             email
-            link {
-              lat
-              lon
-            }
+            link
           }
           ... on Error {
             message
@@ -115,10 +112,10 @@ const deleteContact = async (id) => {
   return result?.data?.deleteContact;
 };
 
-const addContact = async (contact) => {
+const addContact = async (contact, mapImages) => {
   const query = `
-      mutation($contact: contactInput!) {
-        addContact(contact: $contact,) {
+      mutation($contact: contactInput!, $mapImages: [MapImage]!) {
+        addContact(contact: $contact, mapImages: $mapImages) {
           ... on Contact {
             _id
             phoneNumber
@@ -130,11 +127,13 @@ const addContact = async (contact) => {
               lang
               value
             }
-            email
-            link {
-              lat
-              lon
+            images {
+              value {
+                thumbnail
+              }
             }
+            email
+            link
           }
           ... on Error {
             message
@@ -143,7 +142,7 @@ const addContact = async (contact) => {
         }
       }
     `;
-  const result = await setItems(query, { contact });
+  const result = await setItems(query, { contact, mapImages });
 
   if (
     Object.keys(contactTranslations).includes(result?.data?.addContact?.message)
@@ -158,20 +157,17 @@ const addContact = async (contact) => {
   return result?.data?.addContact;
 };
 
-const updateContact = async (id, contact) => {
+const updateContact = async (id, contact, mapImages) => {
   const query = `
-      mutation($id: ID!, $contact: contactInput!) {
-        updateContact(id: $id, contact: $contact) {
+      mutation($id: ID!, $contact: contactInput!, $mapImages: [MapImage]!) {
+        updateContact(id: $id, contact: $contact, mapImages: $mapImages) {
           ... on Contact {
             address {
               lang
               value
             }
             email
-            link {
-              lat
-              lon
-            }
+            link
           }
           ... on Error {
             message
@@ -181,7 +177,7 @@ const updateContact = async (id, contact) => {
       }
     `;
 
-  const result = await setItems(query, { id, contact });
+  const result = await setItems(query, { id, contact, mapImages });
 
   if (
     Object.keys(contactTranslations).includes(

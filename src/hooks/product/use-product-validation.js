@@ -38,8 +38,7 @@ const useProductValidation = (
   formikSpeciesValues,
   product,
   formikPriceValue,
-  formikMaterialsValues,
-  formikImages
+  formikMaterialsValues
 ) => {
   const [shouldValidate, setShouldValidate] = useState(true);
 
@@ -60,10 +59,6 @@ const useProductValidation = (
         }))
       )
     : {};
-
-  const formikImagesValues = {
-    productImages: formikImages
-  };
 
   const yupInfoSchema = formikInfo
     ? Object.assign(
@@ -94,26 +89,18 @@ const useProductValidation = (
     ? { basePrice: Yup.number().min(1, REQUIRED_FIELD).required() }
     : {};
 
-  const yupImagesSchema = formikImages
-    ? {
-        productImages: Yup.array().max(8, 'Max 8 images').min(1, REQUIRED_FIELD)
-      }
-    : {};
-
   const yupSchema = Yup.object().shape({
     ...yupInfoSchema,
     ...yupSpeciesSchema,
     ...yupPriceSchema,
-    ...yupMaterialsSchema,
-    ...yupImagesSchema
+    ...yupMaterialsSchema
   });
 
   const formikValues = {
     ...formikInfoValues,
     ...formikSpeciesValues,
     ...formikPriceValue,
-    ...formikMaterialsValues,
-    ...formikImagesValues
+    ...formikMaterialsValues
   };
 
   const {

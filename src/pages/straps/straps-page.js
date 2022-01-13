@@ -28,7 +28,7 @@ const StrapsPage = () => {
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const searchOptions = useStrapFilters();
-  const { filter, items, loading, currentPage, rowsPerPage, itemsCount } =
+  const { filter, strapsList, loading, currentPage, rowsPerPage, itemsCount } =
     useSelector(strapsSelectorWithPagination);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const StrapsPage = () => {
     openSuccessSnackbar(removeStrap, DELETE_STRAP_MESSAGE);
   };
 
-  const strapsItems = _.map(items, (strap) => (
+  const strapsItems = _.map(strapsList, (strap) => (
     <TableContainerRow
       key={strap._id}
       id={strap._id}

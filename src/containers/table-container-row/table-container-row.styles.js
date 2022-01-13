@@ -14,8 +14,5 @@ export const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis'
-  },
-  smallCell: {
-    width: '150px'
   }
 }));

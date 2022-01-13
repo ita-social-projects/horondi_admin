@@ -45,7 +45,8 @@ describe('Contact actions tests', () => {
     expect(addContact(contact, mapImages)).toEqual({
       type: ADD_CONTACT,
       payload: {
-        newContact: contact
+        newContact: contact,
+        mapImages
       }
     });
   });

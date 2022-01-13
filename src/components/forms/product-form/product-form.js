@@ -22,7 +22,6 @@ import {
   addProduct,
   deleteProduct,
   setFilesToUpload,
-  setPrimaryImageToUpload,
   updateProduct
 } from '../../../redux/products/products.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
@@ -100,8 +99,14 @@ const ProductForm = ({ isEdit }) => {
     setSizes,
     getIdFromItem,
     setModels,
-    productImages,
-    setProductImages
+    setAdditionalImages,
+    additionalImages,
+    setPrimaryImage,
+    primaryImage,
+    setProductImageDisplayed,
+    productImageDisplayed,
+    setAdditionalImagesDisplayed,
+    additionalImagesDisplayed
   } = useProductHandlers();
 
   const { categories, materials, patterns, closures } = details;
@@ -116,8 +121,7 @@ const ProductForm = ({ isEdit }) => {
     isHotItem: product.isHotItem || false,
     sizes: product?.sizes?.map((el) => getIdFromItem(el.size) || []),
     images: {
-      primary: product.images?.primary || {},
-      additional: product.images?.additional || []
+      primary: {}
     }
   };
   const formikMaterialsValues = getFormikMaterialsValues(product);
@@ -136,17 +140,15 @@ const ProductForm = ({ isEdit }) => {
     } = formValues;
 
     const productInfo = createProductInfo(formValues);
-
-    actionDispatchHandler(
-      isEdit,
-      dispatch,
-      setFilesToUpload,
-      setPrimaryImageToUpload,
-      productImages
-    );
     if (!isEdit) {
       setShouldValidate(true);
-
+      actionDispatchHandler(
+        primaryImage && additionalImages.length,
+        dispatch,
+        setFilesToUpload,
+        primaryImage,
+        additionalImages
+      );
       dispatch(
         addProduct({
           closure,
@@ -202,9 +204,9 @@ const ProductForm = ({ isEdit }) => {
     formikSpeciesValues,
     productFormValues.selectedProduct,
     formikPriceValue,
-    formikMaterialsValues,
-    product?.images
+    formikMaterialsValues
   );
+
   const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
@@ -232,21 +234,6 @@ const ProductForm = ({ isEdit }) => {
     values.bottomMaterial,
     values.mainMaterial
   ]);
-
-  useEffect(() => {
-    if (isEdit) {
-      const previousImages = product.images.additional.map((e) => ({
-        src: e,
-        primary: false
-      }));
-      previousImages.push({
-        src: product.images.primary,
-        primary: true
-      });
-      setProductImages(previousImages);
-    }
-  }, [product.images]);
-
   const handleProductValidate = async () => {
     setShouldValidate(true);
 
@@ -374,12 +361,17 @@ const ProductForm = ({ isEdit }) => {
           <Paper className={styles.paper}>
             <ProductAddImages
               isEdit={isEdit}
-              productImages={productImages}
-              setProductImages={setProductImages}
+              setAdditionalImagesDisplayed={setAdditionalImagesDisplayed}
+              additionalImagesDisplayed={additionalImagesDisplayed}
+              productImageDisplayed={productImageDisplayed}
+              setProductImageDisplayed={setProductImageDisplayed}
+              setAdditionalImages={setAdditionalImages}
+              additionalImages={additionalImages}
+              setPrimaryImage={setPrimaryImage}
+              primaryImage={primaryImage}
+              validate={shouldValidate}
+              displayed={product?.images?.primary?.thumbnail}
               toggleFieldsChanged={toggleFieldsChanged}
-              setFieldValue={setFieldValue}
-              errors={errors}
-              touched={touched}
             />
           </Paper>
         </Grid>

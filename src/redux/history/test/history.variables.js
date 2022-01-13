@@ -10,8 +10,7 @@ export const historyRecord = {
   valueBeforeChange: [{ value: 'Аксесуари' }],
   valueAfterChange: [{ value: 'Аксесуари нові' }],
   createdAt: '2021-04-09T19:15:43.674+00:00',
-  action: 'EDIT_EVENT',
-  historyName: 'CATEGORY_EVENT',
+  action: 'EDIT_CATEGORY',
   userId: '60452208873045422c1dbef8'
 };
 
@@ -27,8 +26,7 @@ export const mockHistoryRecords = {
       valueBeforeChange: [{ value: 'Аксесуари' }],
       valueAfterChange: [{ value: 'Аксесуари нові' }],
       createdAt: '2021-04-09T19:15:43.674+00:00',
-      action: 'EDIT_EVENT',
-      historyName: 'CATEGORY_EVENT',
+      action: 'EDIT_CATEGORY',
       userId: '60452208873045422c1dbef8'
     }
   ],
@@ -51,7 +49,6 @@ export const filter = {};
 
 export const initialFilters = {
   action: [],
-  historyName: [],
   role: [],
   dateFrom: '',
   dateTo: '',

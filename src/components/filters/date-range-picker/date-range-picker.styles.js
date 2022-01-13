@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
   container: {
     '&.MuiPaper-root': {
       backgroundColor: 'inherit'
@@ -13,7 +13,7 @@ export const useStyles = makeStyles(() => ({
       },
     display: 'flex',
     alignItems: 'center',
-    width: 290,
+    width: 250,
     height: '36px',
     '@media (max-width: 450px)': {
       width: '95%',
@@ -24,30 +24,21 @@ export const useStyles = makeStyles(() => ({
     }
   },
   date: {
-    width: 290,
-    '& span': {
-      color: '#828282'
-    }
+    width: 250,
+    '& span': { color: '#828282 !important' },
+    '& a.rs-btn.rs-btn-default.rs-picker-toggle.active.rs-btn-md': {
+      borderColor: 'black !important'
+    },
+    '& toggle.active': { borderColor: 'red !important' }
   },
   menu: {
-    width: 290,
-    '& .rs-picker-toolbar-right-btn-ok': {
-      backgroundColor: '#3f51b5',
-      color: '#ffffff',
-      '&:hover': {
-        backgroundColor: '#3f51b5',
-        color: '#ffffff'
-      }
+    '& button': {
+      backgroundColor: '#3f51b5 !important',
+      color: '#ffffff !important'
     },
     '& .rs-calendar-table-cell-selected .rs-calendar-table-cell-content': {
-      backgroundColor: '#3f51b5',
-      borderColor: '#3f51b5'
-    },
-    '& .rs-picker-daterange-panel-show-one-calendar .rs-picker-toolbar': {
-      maxWidth: 290
-    },
-    '& .rs-picker-toolbar-ranges': {
-      marginBottom: 12
+      backgroundColor: '#3f51b5 !important',
+      borderColor: '#3f51b5 !important'
     }
   }
 }));

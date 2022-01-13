@@ -1,11 +1,14 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { shallow } from 'enzyme';
+import { configure, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
 import BusinessPageForm from '../index';
 import { SaveButton } from '../../../buttons';
 import LoadingBar from '../../../loading-bar';
 import { mockBusinessPage, mockId } from './business-page-form.variables';
+
+configure({ adapter: new Adapter() });
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -88,6 +91,10 @@ describe('Straps form tests', () => {
 
     spyOnUseDispatch.mockClear();
     spyOnUseSelector.mockClear();
+  });
+
+  it('Should match snapshot', () => {
+    expect(component).toMatchSnapshot();
   });
 
   it('Should simulate submit button', () => {

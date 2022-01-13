@@ -31,7 +31,7 @@ const BottomPage = () => {
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { items, loading, currentPage, rowsPerPage, itemsCount, filter } =
+  const { list, loading, currentPage, rowsPerPage, itemsCount, filter } =
     useSelector(bottomSelectorWithPagination);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const BottomPage = () => {
     };
     openSuccessSnackbar(removeBottom, BOTTOM_REMOVE_MESSAGE);
   };
-  const bottomItems = map(items, (bottomItem) => (
+  const bottomItems = map(list, (bottomItem) => (
     <TableContainerRow
       image={
         bottomItem.images.thumbnail

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
+import Adapter from 'enzyme-adapter-react-16';
 import { Button, Typography } from '@material-ui/core';
-import { shallow, mount } from 'enzyme';
-import mockPockets from '../../pockets/tests/mockPockets';
+import { configure, shallow, mount } from 'enzyme';
+import mockClosures from './mockClosures';
 import ClosuresPage from '../closures-page';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -14,6 +15,8 @@ import { config } from '../../../configs';
 const { CREATE_CLOSURES_TITLE } = config.buttonTitles;
 const { pathToClosuresAdd } = config.routes;
 const tableTitles = config.tableHeadRowTitles.closures;
+
+configure({ adapter: new Adapter() });
 
 describe('Closure-page render tests', () => {
   let spyOnUseSelector;
@@ -27,7 +30,7 @@ describe('Closure-page render tests', () => {
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockPockets);
+    spyOnUseSelector.mockImplementation(() => mockClosures);
 
     spyOnUseDispatch = jest.spyOn(reactRedux, 'useDispatch');
 
@@ -72,19 +75,19 @@ describe('Closure-page render tests', () => {
   });
 
   test('Should render Loading Bar', () => {
-    mockPockets.loading = true;
+    mockClosures.loading = true;
     wrapper = shallow(<ClosuresPage />);
     const loadingBar = wrapper.find(LoadingBar);
     expect(wrapper.exists(LoadingBar)).toBeDefined();
     expect(wrapper.exists(LoadingBar)).toBe(true);
     expect(loadingBar).toHaveLength(1);
     expect(wrapper.exists(TableContainerGenerator)).toBe(false);
-    mockPockets.loading = false;
+    mockClosures.loading = false;
   });
 
   test('useSelector hook should be called', () => {
-    getState = reactRedux.useSelector(mockPockets);
-    expect(getState).toEqual(mockPockets);
+    getState = reactRedux.useSelector(mockClosures);
+    expect(getState).toEqual(mockClosures);
     expect(spyOnUseSelector).toHaveBeenCalled();
   });
 });
@@ -99,7 +102,7 @@ describe('useEffect tests', () => {
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
-    spyOnUseSelector.mockImplementation(() => mockPockets);
+    spyOnUseSelector.mockImplementation(() => mockClosures);
 
     mockDispatchFn = jest.fn();
     reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatchFn);
@@ -112,7 +115,7 @@ describe('useEffect tests', () => {
     closurePage = wrapper.find(ClosuresPage);
     tableContainerRow = closurePage.find(TableContainerRow);
     tableContainerRowFirst = closurePage.find({
-      id: mockPockets.items[0]._id
+      id: mockClosures.closuresList[0]._id
     });
   });
 
@@ -130,7 +133,7 @@ describe('useEffect tests', () => {
     expect(tableContainerRow).toHaveLength(1);
     expect(tableContainerRowFirst.prop('available')).toBe('Доступний');
     expect(tableContainerRowFirst.prop('name')).toBe(
-      mockPockets.items[0].name[0].value
+      mockClosures.closuresList[0].name[0].value
     );
     expect(tableContainerRowFirst.prop('image')).toBeTruthy();
   });

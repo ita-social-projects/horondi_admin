@@ -23,8 +23,8 @@ import {
 const initialFilters = {
   status: [],
   paymentStatus: [],
-  dateFrom: null,
-  dateTo: null,
+  dateFrom: '',
+  dateTo: '',
   search: ''
 };
 

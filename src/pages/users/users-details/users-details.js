@@ -60,7 +60,6 @@ const UsersDetails = (props) => {
   }));
 
   const {
-    images,
     firstName,
     lastName,
     country,
@@ -169,7 +168,6 @@ const UsersDetails = (props) => {
               adress,
               postCode
             },
-            images,
             firstName,
             lastName,
             isBanned,

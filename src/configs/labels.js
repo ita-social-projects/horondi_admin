@@ -96,19 +96,6 @@ const labels = {
     link: 'Посилання',
     priority: 'Пріорітет'
   },
-  userDetails: {
-    userFirstName: "І'мя",
-    userLastName: 'Прізвище',
-    email: 'Емейл',
-    phoneNumber: 'Номер телефону',
-    country: 'Країна',
-    region: 'Область',
-    city: 'Місто',
-    street: 'Вулиця',
-    house: 'Будинок',
-    flat: 'Квартира',
-    zipCode: 'Поштовий індекс'
-  },
   pattern: {
     image: 'Фото гобелена',
     material: 'Матеріал',
@@ -287,18 +274,6 @@ const labels = {
     {
       label: { ua: 'Текст', en: 'Text' },
       name: 'text',
-      isEditor: true
-    }
-  ],
-  questionaAnswersLabel: [
-    {
-      label: { ua: 'Запитання', en: 'Question' },
-      name: 'question',
-      required: true
-    },
-    {
-      label: { ua: 'Відповідь', en: 'Answer' },
-      name: 'answer',
       isEditor: true
     }
   ],

@@ -9,7 +9,6 @@ import {
   NEW_ADMIN_REGISTERED,
   DELETE_USER,
   DELETE_USER_LOCALLY,
-  UPDATE_USER,
   REGISTER_ADMIN,
   RESEND_EMAIL,
   CONFIRM_ADMIN,
@@ -52,11 +51,6 @@ const setUser = (payload) => ({
 
 const getUser = (payload) => ({
   type: GET_USER,
-  payload
-});
-
-const updateUserById = (payload) => ({
-  type: UPDATE_USER,
   payload
 });
 
@@ -149,7 +143,6 @@ export {
   setUser,
   getUser,
   deleteUser,
-  updateUserById,
   setUserError,
   setUsersLoading,
   setAdminCreationLoading,

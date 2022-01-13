@@ -10,7 +10,7 @@ import {
 } from './back.types';
 
 export const selectBack = ({ Back }) => ({
-  items: Back.list,
+  list: Back.list,
   loading: Back.backLoading,
   back: Back.back,
   filter: Back.filters,

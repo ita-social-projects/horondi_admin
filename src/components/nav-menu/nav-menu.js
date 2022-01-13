@@ -46,7 +46,6 @@ const NavMenu = ({ width }) => {
   const [catalogTab, setCatalogTab] = useState(false);
   const [staticTab, setStaticTab] = useState(false);
   const [constructorTab, setConstructorTab] = useState(false);
-  const [certificatesTab, setCertificatesTab] = useState(false);
 
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
@@ -100,11 +99,6 @@ const NavMenu = ({ width }) => {
       returnedList(category[0], category[1], category[2], classes.nested)
   );
 
-  const certificatesMenuItems = config.certificatesMenuCategories.map(
-    (category) =>
-      returnedList(category[0], category[1], category[2], classes.nested)
-  );
-
   const parentMenuTabsProperties = [
     [
       () => setClientTab(!clientTab),
@@ -121,25 +115,18 @@ const NavMenu = ({ width }) => {
       ImportContactsIcon
     ],
     [
-      () => setConstructorTab(!constructorTab),
-      constructorTab,
-      certificatesMenuItems,
-      MENU_TABS.CERTIFICATES,
-      AccessibilityNewIcon
-    ],
-    [
-      () => setCertificatesTab(!certificatesTab),
-      certificatesTab,
-      constructorPagesMenuItems,
-      MENU_TABS.CONSTRUCTOR,
-      TuneIcon
-    ],
-    [
       () => setStaticTab(!staticTab),
       staticTab,
       staticPagesMenuItems,
       MENU_TABS.STATIC_PAGES,
       LayersIcon
+    ],
+    [
+      () => setConstructorTab(!constructorTab),
+      constructorTab,
+      constructorPagesMenuItems,
+      MENU_TABS.CONSTRUCTOR,
+      TuneIcon
     ]
   ];
 

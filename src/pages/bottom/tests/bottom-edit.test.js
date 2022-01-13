@@ -1,10 +1,12 @@
 import React from 'react';
 import * as reactRedux from 'react-redux';
-import { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { configure, shallow } from 'enzyme';
 import BottomForm from '../../../components/forms/bottom-form';
 import constructorElementsMockStore from '../../constructorElementsMockStore';
 import BottomEdit from '../bottom-edit';
 
+configure({ adapter: new Adapter() });
 describe('Bottom-page render tests', () => {
   let spyOnUseSelector;
   let spyOnUseDispatch;
@@ -14,7 +16,7 @@ describe('Bottom-page render tests', () => {
   const zeroIndex = 0;
 
   constructorElementsMockStore.bottom =
-    constructorElementsMockStore.items[zeroIndex];
+    constructorElementsMockStore.list[zeroIndex];
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');

@@ -20,10 +20,11 @@ import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
 import { commentSelectorWithPagination } from '../../redux/selectors/comments.selectors';
 import getTime from '../../utils/getTime';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
+import useCommentFilters from '../../hooks/filters/use-comment-filters';
 import { handleComments } from '../../utils/handle-comments';
 import materialUiConstants from '../../configs/material-ui-constants';
 import { resetPagination } from '../../redux/table/table.actions';
-import Filters from './filters/filters';
 
 const tableTitles = config.tableHeadRowTitles.comments.commentPageTitles;
 const { REMOVE_COMMENT_MESSAGE, NO_COMMENTS_MESSAGE } = config.messages;
@@ -38,6 +39,7 @@ const Comments = () => {
   const commonStyles = useCommonStyles();
   const styles = useStyles();
   const dispatch = useDispatch();
+  const commentOptions = useCommentFilters();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -106,7 +108,7 @@ const Comments = () => {
         </Typography>
       </div>
       <div>
-        <Filters />
+        <FilterNavbar options={commentOptions || {}} />
       </div>
 
       {commentItems?.length ? (

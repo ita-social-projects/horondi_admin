@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Toolbar, AppBar, Typography, IconButton } from '@material-ui/core';
@@ -22,8 +22,6 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import routes from '../../configs/routes';
-
-import { dateRangePickerCustomStyles } from '../filter-search-sort/filter-by-date/filter-by-date.styles';
 
 const { title } = config.app;
 const { LOGOUT_TITLE } = config.buttonTitles;
@@ -71,21 +69,6 @@ const NavBar = () => {
   );
 
   const urlPage = window.location.pathname;
-
-  const sheet = document.createElement('style');
-
-  const changeDateRangePickerStyles = () => {
-    if (darkMode) {
-      sheet.innerHTML = dateRangePickerCustomStyles.darkCSS;
-    } else {
-      sheet.innerHTML = dateRangePickerCustomStyles.lightCSS;
-    }
-  };
-  document.body.appendChild(sheet);
-
-  useEffect(() => {
-    changeDateRangePickerStyles();
-  }, [darkMode]);
 
   return (
     <AppBar className={classes.appBar}>

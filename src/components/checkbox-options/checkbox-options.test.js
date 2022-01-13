@@ -1,7 +1,10 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import CheckboxOptions from './checkbox-options';
 import { config } from '../../configs';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const mockCallBack = jest.fn((name) => ({ [name]: true }));
 
@@ -30,8 +33,10 @@ describe('checkbox-options tests', () => {
   const component = mount(<CheckboxOptions options={options} />);
 
   it('test checkboxes attributes', () => {
+    expect(component).toMatchSnapshot();
     const checkbox = component.find('input[type="checkbox"]');
 
+    expect(checkbox).toMatchSnapshot();
     expect(checkbox.length).toBe(2);
     expect(checkbox.at(0).props().checked).toEqual(true);
     expect(checkbox.at(0).props().checked).toBeDefined();
@@ -50,6 +55,7 @@ describe('checkbox-options tests', () => {
   });
 
   it('should have props', () => {
+    expect(CheckboxOptions.propTypes.options).toMatchSnapshot();
     expect(CheckboxOptions.propTypes.options).toBeDefined();
   });
 });

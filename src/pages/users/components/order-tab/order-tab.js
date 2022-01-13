@@ -13,11 +13,12 @@ import TableContainerRow from '../../../../containers/table-container-row';
 import { config } from '../../../../configs';
 import { useStyles } from './order-tab.styles';
 import LoadingBar from '../../../../components/loading-bar';
+import FilterNavbar from '../../../../components/filter-search-sort';
+import useOrderUserFilters from '../../../../hooks/filters/use-order-user-filters';
 import { orderSelectorWithPagination } from '../../../../redux/selectors/orders.selectors';
 import { deleteOrder } from '../../../../redux/orders/orders.actions';
 import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
-import Filters from './filters/filters';
 
 const { pathToOrderItem } = config.routes;
 const tableTitles = config.tableHeadRowTitles.users.orderTab;
@@ -32,6 +33,8 @@ const OrderTab = ({ list }) => {
   const { orderLoading: loadOrder, itemsCount } = useSelector(
     orderSelectorWithPagination
   );
+
+  const orderUserFilters = useOrderUserFilters();
 
   const ordersDeleteHandler = (id) => {
     const removeOrders = () => {
@@ -70,7 +73,7 @@ const OrderTab = ({ list }) => {
   return (
     <>
       <div className={tabStyles.filters}>
-        <Filters />
+        <FilterNavbar options={orderUserFilters || {}} />
       </div>
       <div>
         {orderItems?.length ? (

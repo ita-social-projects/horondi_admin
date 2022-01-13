@@ -10,6 +10,8 @@ import {
   deleteEmailQuestions,
   answerToEmailQuestion
 } from '../../redux/email-questions/email-questions.actions';
+import FilterNavbar from '../../components/filter-search-sort/filter-navbar';
+import useQuestionFilters from '../../hooks/filters/use-question-filters';
 
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
@@ -24,7 +26,6 @@ import {
   questionShowHandler
 } from '../../utils/email-question-list';
 import { questionSelectorWithPagination } from '../../redux/selectors/email-questions.selectors';
-import Filters from './filters/filters';
 
 const map = require('lodash/map');
 
@@ -43,6 +44,7 @@ const EmailQuestionsList = () => {
   const [questionsToOperate, setQuestionsToOperate] = useState([]);
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
+  const questionOptions = useQuestionFilters();
 
   const { filters, loading, list, currentPage, rowsPerPage, itemsCount } =
     useSelector(questionSelectorWithPagination);
@@ -143,7 +145,7 @@ const EmailQuestionsList = () => {
           {titles.emailQuestionsTitles.mainPageTitle}
         </Typography>
         <div className={styles.operations}>
-          <Filters />
+          <FilterNavbar options={questionOptions || {}} />
           <EmailQuestionsOperationsButtons
             questionsToOperate={questionsToOperate}
             setQuestionsToOperate={setQuestionsToOperate}

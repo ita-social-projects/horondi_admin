@@ -23,7 +23,7 @@ export const placeholderModelSearch = 'по назві';
 export const categoryFilterObj = () => {
   const arrToFilter = [];
   _.forEach(categoryOptions, (value, key) => {
-    arrToFilter.push({ value: key, label: value });
+    arrToFilter.push({ key, value });
   });
 
   return arrToFilter;
@@ -33,7 +33,7 @@ export const availableFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(availableOptions, (value, key) => {
-    arrToFilter.push({ value: key, label: value });
+    arrToFilter.push({ key, value });
   });
 
   return arrToFilter;
@@ -43,7 +43,7 @@ export const availableForConstructorFilterObj = () => {
   const arrToFilter = [];
 
   _.forEach(availableForConstructorOptions, (value, key) => {
-    arrToFilter.push({ value: key, label: value });
+    arrToFilter.push({ key, value });
   });
 
   return arrToFilter;

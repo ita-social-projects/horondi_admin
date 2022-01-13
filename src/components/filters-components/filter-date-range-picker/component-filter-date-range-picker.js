@@ -12,8 +12,8 @@ const ComponentFilterDateRangePicker = ({ setFilterValue, filters }) => {
     dispatch(setCurrentPage(0));
     dispatch(
       setFilterValue({
-        dateFrom: date[0] || null,
-        dateTo: date[1] || null
+        dateFrom: date[0],
+        dateTo: date[1]
       })
     );
   };
@@ -27,20 +27,18 @@ const ComponentFilterDateRangePicker = ({ setFilterValue, filters }) => {
   );
 };
 
-const FiltersShape = PropTypes.shape({
-  dateFrom: PropTypes.instanceOf(Date),
-  dateTo: PropTypes.instanceOf(Date)
-});
-
 ComponentFilterDateRangePicker.propTypes = {
   setFilterValue: PropTypes.func.isRequired,
-  filters: FiltersShape
+  filters: PropTypes.objectOf({
+    dateFrom: PropTypes.instanceOf(Date),
+    dateTo: PropTypes.instanceOf(Date)
+  })
 };
 
 ComponentFilterDateRangePicker.defaultProps = {
   filters: PropTypes.objectOf({
-    dateFrom: null,
-    dateTo: null
+    dateFrom: '',
+    dateTo: ''
   })
 };
 

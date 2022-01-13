@@ -9,7 +9,7 @@ import {
 } from './straps.types';
 
 export const selectStraps = ({ Straps }) => ({
-  items: Straps.list?.items,
+  strapsList: Straps.list?.items,
   loading: Straps.strapsLoading,
   strap: Straps.strap,
   filter: Straps.filter
@@ -17,8 +17,8 @@ export const selectStraps = ({ Straps }) => ({
 
 const initialFilter = {
   name: '',
-  color: [],
-  available: []
+  color: '',
+  available: ''
 };
 
 export const initialState = {

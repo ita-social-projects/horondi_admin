@@ -4,7 +4,9 @@ const initialValues = {
   enSchedule: 'test',
   uaAddress: 'адреса',
   enAddress: 'adress',
+  uaCartImage: 'зображення',
+  enCartImage: 'image',
   email: 'something@gmail.com',
-  cartLink: { lat: '49.22222', lon: '25.0000' }
+  cartLink: 'www.google.com'
 };
 module.exports = { initialValues };

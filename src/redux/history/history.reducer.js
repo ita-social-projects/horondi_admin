@@ -10,7 +10,6 @@ import {
 
 const initialFilters = {
   action: [],
-  historyName: [],
   role: [],
   dateFrom: '',
   dateTo: '',

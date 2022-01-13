@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { DateRangePicker as DateRangeSelector } from 'rsuite';
 import { Select } from '@material-ui/core';
 import * as reactRedux from 'react-redux';
@@ -14,6 +15,8 @@ import { paymentStatusFilterObj } from '../../../utils/order';
 import ComponentFilterSearch from '../filter-search';
 import ComponentFilterRadioPicker from '../filter-radio-picker/component-filter-radio-picker';
 import ComponentFilterDateRangePicker from '../filter-date-range-picker';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 let wrapper;
 let spyOnUseDispatch;
