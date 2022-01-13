@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
-import Enzyme, { mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import * as reactRedux from 'react-redux';
+import React from 'react';
+import { mount } from 'enzyme';
 
 import ContainerFilters from '../container-filters';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 let wrapper;
 

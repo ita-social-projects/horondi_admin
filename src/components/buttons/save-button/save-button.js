@@ -92,7 +92,7 @@ SaveButton.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  values: PropTypes.objectOf(PropTypes.object),
+  values: PropTypes.objectOf(PropTypes.string),
   errors: PropTypes.objectOf(PropTypes.object)
 };
 

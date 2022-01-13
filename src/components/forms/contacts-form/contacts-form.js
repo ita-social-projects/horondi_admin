@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { FormControl, Paper, TextField, Grid, Avatar } from '@material-ui/core';
+import { FormControl, Paper, TextField, Grid } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Image } from '@material-ui/icons';
 
 import { config } from '../../../configs';
 import { BackButton, SaveButton } from '../../buttons';
@@ -14,13 +13,8 @@ import {
   setSnackBarMessage
 } from '../../../redux/snackbar/snackbar.actions';
 import { useStyles } from './contacts-form.style';
-import ImageUploadContainer from '../../../containers/image-upload-container';
 import LanguagePanel from '../language-panel';
-import {
-  setMapImageHandler,
-  setInputsContactHandler
-} from '../../../utils/contacts-form';
-import { handleAvatar } from '../../../utils/handle-avatar';
+import { setInputsContactHandler } from '../../../utils/contacts-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
@@ -34,9 +28,7 @@ const {
   ENTER_EN_SCHEDULE_MESSAGE,
   ENTER_UA_ADDRESS_MESSAGE,
   ENTER_EN_ADDRESS_MESSAGE,
-  IMAGE_FORMAT_MESSAGE,
-  ENTER_LINK_MESSAGE,
-  SELECT_IMAGES_MESSAGE,
+  CONTACT_ERROR_MESSAGE,
   INVALID_PHONE_MESSAGE
 } = config.contactErrorMessages;
 
@@ -48,26 +40,8 @@ const { enAddressRegex, uaRegex, enRegex, phoneNumber } = config.formRegExp;
 const ContactsForm = ({ contactSaveHandler, initialValues }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [uaMapImage, uaSetMapImage] = useState({
-    name: '',
-    imageUrl: ''
-  });
-  const [enMapImage, enSetMapImage] = useState({
-    name: '',
-    imageUrl: ''
-  });
 
   const { pathToContacts } = config.routes;
-
-  const uaCartImageText = 'uaCartImage';
-  const enCartImageText = 'enCartImage';
-  const uaSelectImageHandler = (files) => {
-    setMapImageHandler(files, uaSetMapImage, values, uaCartImageText);
-  };
-
-  const enSelectImageHandler = (files) => {
-    setMapImageHandler(files, enSetMapImage, values, enCartImageText);
-  };
 
   const formSchema = Yup.object().shape({
     phoneNumber: Yup.string()
@@ -91,11 +65,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .required(ENTER_EN_ADDRESS_MESSAGE),
     email: Yup.string()
       .email(INVALID_EMAIL_MESSAGE)
-      .required(ENTER_EMAIL_MESSAGE),
-    cartLink: Yup.string()
-      .url(IMAGE_FORMAT_MESSAGE)
-      .min(10, INPUT_LENGTH_MESSAGE)
-      .required(ENTER_LINK_MESSAGE)
+      .required(ENTER_EMAIL_MESSAGE)
   });
 
   const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
@@ -104,15 +74,12 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       validationSchema: formSchema,
       validateOnBlur: true,
       onSubmit: (formValues) => {
-        if (
-          formValues.uaCartImage &&
-          formValues.enCartImage &&
-          typeof formValues.uaCartImage === typeof formValues.enCartImage
-        ) {
+        if (initialValues) {
+          formValues.cartLink = cartLink;
           contactSaveHandler(formValues);
         } else {
           dispatch(setSnackBarSeverity(materialUiConstants.styleError));
-          dispatch(setSnackBarMessage(SELECT_IMAGES_MESSAGE));
+          dispatch(setSnackBarMessage(CONTACT_ERROR_MESSAGE));
           dispatch(setSnackBarStatus(true));
         }
       }
@@ -131,6 +98,23 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
     values,
     inputs
   };
+
+  const [cartLink, setcartLink] = useState({});
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const q = values.uaAddress.trim();
+
+      const url = `https://api.locationiq.com/v1/autocomplete.php?key=${process.env.REACT_APP_MAP_API_KEY}&limit=1&accept-language=ua&q=${q}`;
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          setcartLink({ lat: data[0].lat, lon: data[0].lon });
+        })
+        .catch((err) => console.error(err));
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [values.uaAddress]);
 
   const eventPreventHandler = (e) => {
     e.preventDefault();
@@ -163,65 +147,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Paper className={classes.contactItemUpdate}>
-                <span className={classes.imageUpload}>
-                  Зображення карти (Укр.)
-                </span>
-                <div className={classes.imageUploadAvatar}>
-                  <ImageUploadContainer handler={uaSelectImageHandler} />
-                  {uaMapImage.imageUrl ? (
-                    <Avatar
-                      data-cy='ua-cart-image'
-                      src={uaMapImage.imageUrl}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
-                  ) : (
-                    handleAvatar(
-                      initialValues.uaCartImage,
-                      'uaCartImage',
-                      classes.large
-                    )
-                  )}
-                </div>
-                <span className={classes.imageUpload}>
-                  Зображення карти (Англ.)
-                </span>
-                <div className={classes.imageUploadAvatar}>
-                  <ImageUploadContainer handler={enSelectImageHandler} />
-                  {enMapImage.imageUrl ? (
-                    <Avatar
-                      data-cy='en-cart-image'
-                      src={enMapImage.imageUrl}
-                      className={classes.large}
-                    >
-                      <Image />
-                    </Avatar>
-                  ) : (
-                    handleAvatar(
-                      initialValues.enCartImage,
-                      'enCartImage',
-                      classes.large
-                    )
-                  )}
-                </div>
-                <TextField
-                  data-cy='map-link'
-                  id='cartLink'
-                  className={classes.textField}
-                  variant='outlined'
-                  label='Google maps посилання'
-                  InputLabelProps={{
-                    classes: {
-                      shrink: 'shrink'
-                    }
-                  }}
-                  value={values.cartLink}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={touched.cartLink && !!errors.cartLink}
-                  helperText={touched.cartLink && errors.cartLink}
-                />
                 <TextField
                   data-cy='phone-number'
                   id='phoneNumber'
@@ -283,17 +208,26 @@ ContactsForm.propTypes = {
     enSchedule: PropTypes.string.isRequired,
     uaAddress: PropTypes.string.isRequired,
     enAddress: PropTypes.string.isRequired,
-    uaCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    enCartImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     email: PropTypes.string.isRequired,
-    cartLink: PropTypes.string.isRequired
+    cartLink: PropTypes.shape({
+      lat: PropTypes.string.isRequired,
+      lon: PropTypes.string.isRequired
+    })
   })
 };
 
 ContactsForm.defaultProps = {
   initialValues: {
-    uaCartImage: null,
-    enCartImage: null
+    phoneNumber: '',
+    uaSchedule: '',
+    enSchedule: '',
+    uaAddress: '',
+    enAddress: '',
+    email: '',
+    cartLink: {
+      lat: '',
+      lon: ''
+    }
   }
 };
 

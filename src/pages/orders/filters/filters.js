@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { noop } from 'lodash';
 import ContainerFilters from '../../../components/container-filters';
 import ComponentFilterClear from '../../../components/filters-components/filter-clear';
 import ComponentFilterDateRangePicker from '../../../components/filters-components/filter-date-range-picker';
@@ -24,11 +23,13 @@ function Filters() {
 
   const paymentOptions = [...paymentStatusFilterObj()];
 
+  const { dateFrom, dateTo } = filters;
+
   return (
     <ContainerFilters>
       <ComponentFilterDateRangePicker
         setFilterValue={setOrderFilter}
-        filters={filters}
+        filters={{ dateFrom, dateTo }}
       />
       <ComponentFilterSinglePicker
         setFilterValue={setOrderSort}

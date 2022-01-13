@@ -1,14 +1,11 @@
 import React from 'react';
 import * as redux from 'react-redux';
-import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 import ImageUploadPreviewContainer from '../../../../containers/image-upload-container/image-upload-previewContainer';
 
 import NewsForm from '../index';
 import { mockId, mockNewsArticle, mockEditMode } from './news-form.variables';
 import LanguagePanel from '../../language-panel';
-
-configure({ adapter: new Adapter() });
 
 const mockHandleSubmit = jest.fn();
 const mockImageHandler = jest.fn();
@@ -35,7 +32,8 @@ jest.mock('formik', () => ({
     handleChange: jest.fn(),
     handleBlur: jest.fn(),
     touched: {},
-    errors: {}
+    errors: {},
+    setValues: jest.fn()
   })
 }));
 

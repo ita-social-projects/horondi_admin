@@ -14,13 +14,12 @@ import TableContainerRow from '../../../../containers/table-container-row';
 import { config } from '../../../../configs';
 import { useStyles } from './comment-reply-tab.styles';
 import LoadingBar from '../../../../components/loading-bar';
-import FilterNavbar from '../../../../components/filter-search-sort';
-import useCommentReplyUserFilters from '../../../../hooks/filters/use-comment-reply-user-filters';
 import { commentSelectorWithPagination } from '../../../../redux/selectors/comments.selectors';
 import { closeDialog } from '../../../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../../../utils/use-success-snackbar';
 import { resetPagination } from '../../../../redux/table/table.actions';
 import { useCommonStyles } from '../../../common.styles';
+import Filters from './filters/filters';
 
 const tableTitles = config.tableHeadRowTitles.users.commentReplyTab;
 const { REMOVE_REPLY_COMMENT_MESSAGE, NO_REPLY_COMMENTS_MESSAGE } =
@@ -41,8 +40,6 @@ const CommentReplyTab = ({ list }) => {
     itemsCount,
     currentPage
   } = useSelector(commentSelectorWithPagination);
-
-  const commentReplyUserFilters = useCommentReplyUserFilters();
 
   const commentReplyDeleteHandler = (id) => {
     const removeReply = () => {
@@ -82,7 +79,7 @@ const CommentReplyTab = ({ list }) => {
   return (
     <>
       <div className={tabStyles.filters}>
-        <FilterNavbar options={commentReplyUserFilters || {}} />
+        <Filters />
       </div>
       <div>
         {commentReplyItems?.length ? (

@@ -11,12 +11,7 @@ const useProductHandlers = () => {
   const [mainColors, setMainColors] = useState([]);
   const [bottomColors, setBottomColors] = useState([]);
   const [sizes, setSizes] = useState([]);
-  const [primaryImage, setPrimaryImage] = useState('');
-  const [additionalImages, setAdditionalImages] = useState([]);
-  const [productImageDisplayed, setProductImageDisplayed] = useState('');
-  const [additionalImagesDisplayed, setAdditionalImagesDisplayed] = useState(
-    []
-  );
+  const [productImages, setProductImages] = useState([]);
 
   const createProductInfo = (values) => ({
     name: [
@@ -52,16 +47,10 @@ const useProductHandlers = () => {
     sizes,
     setSizes,
     getIdFromItem,
-    primaryImage,
-    setPrimaryImage,
-    additionalImages,
-    setAdditionalImages,
     createProductInfo,
     setModels,
-    setProductImageDisplayed,
-    productImageDisplayed,
-    setAdditionalImagesDisplayed,
-    additionalImagesDisplayed
+    productImages,
+    setProductImages
   };
 };
 

@@ -1,8 +1,8 @@
 export const initFilters = {
   status: [],
   paymentStatus: [],
-  dateFrom: '',
-  dateTo: '',
+  dateFrom: null,
+  dateTo: null,
   search: ''
 };
 

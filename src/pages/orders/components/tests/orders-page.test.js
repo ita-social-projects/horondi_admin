@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import React from 'react';
+import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
-import { act } from 'react-dom/test-utils';
 import IconButton from '@material-ui/core/IconButton';
 import { DateRangePicker as DateRangeSelector } from 'rsuite';
 import { Select } from '@material-ui/core';
@@ -15,8 +13,6 @@ import FilterOrderStatusesPicker from '../filter-order-statuses-picker';
 import FilterSearch from '../filter-search';
 import FilterClear from '../filter-clear';
 import filterLabels from '../../../../configs/filter-labels';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 let wrapper;
 let spyOnUseDispatch;

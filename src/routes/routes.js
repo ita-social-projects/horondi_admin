@@ -10,6 +10,7 @@ import DialogWindow from '../components/dialog-window';
 import LoginPage from '../pages/login';
 import BusinessPageList from '../pages/business-pages';
 import BusinessPageForm from '../components/forms/business-page-form';
+import FormQNA from '../components/forms/questions-answers-form';
 import ErrorPage from '../pages/error-page';
 import { config } from '../configs';
 import MaterialPage from '../pages/material';
@@ -82,6 +83,8 @@ import BasicDetails from '../pages/basics/basic-details';
 import StrapsPage from '../pages/straps/straps-page';
 import StrapsAdd from '../pages/straps/straps-add/straps-add';
 import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
+import UserDetails from '../pages/users/user/user-details';
+import constructorEdit from '../pages/constructor-list/constructor-edit';
 
 const { routes } = config;
 
@@ -136,6 +139,7 @@ const Routes = () => {
             exact
             component={UsersDetails}
           />
+          <Route path={routes.pathToEditUser} exact component={UserDetails} />
           <Route path={routes.pathToNews} exact component={NewsPage} />
           <Route path={routes.pathToPatterns} exact component={PatternPage} />
           <Route path={routes.pathToModels} exact component={ModelPage} />
@@ -178,6 +182,16 @@ const Routes = () => {
             path={routes.pathToAddBusinessPage}
             exact
             component={BusinessPageForm}
+          />
+          <Route
+            path={routes.pathToAddQuestionsAnswers}
+            exact
+            component={FormQNA}
+          />
+          <Route
+            path={routes.pathToEditQuestionsAnswers}
+            exact
+            render={({ match }) => <FormQNA id={match.params.id} editMode />}
           />
           <Route
             path={routes.pathToBusinessPageDetails}
@@ -274,6 +288,11 @@ const Routes = () => {
             path={routes.pathToAddConstructor}
             exact
             component={ConstructorAdd}
+          />
+          <Route
+            path={routes.pathToEditConstructor}
+            exact
+            component={constructorEdit}
           />
           <Route
             path={routes.pathToConstructorDetails}

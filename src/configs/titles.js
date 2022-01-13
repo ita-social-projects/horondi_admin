@@ -98,6 +98,10 @@ const titles = {
     mainPageTitle: 'Інформація про бізнес сторінки',
     addBusinessPageTitle: 'Додати нову бізнес сторінку'
   },
+  questionsAnswersTitles: {
+    mainQuestionsAnswersTitle: 'Питання та відповіді',
+    addQuestionsAnswersTitle: 'Додати питання та відповідь'
+  },
   materialColorPaletteTitle: {
     mainPageTitle: 'Iнформація про палітру кольорів'
   },

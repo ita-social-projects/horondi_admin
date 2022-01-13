@@ -1,16 +1,12 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
-import { Button, Typography } from '@material-ui/core';
-import { configure, shallow, mount } from 'enzyme';
+import { Typography } from '@material-ui/core';
+import { shallow, mount } from 'enzyme';
 import mockStore from './mockStore';
 import BasicsPage from '../basics-page';
-import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
 import LoadingBar from '../../../components/loading-bar';
-
-configure({ adapter: new Adapter() });
 
 describe('Basics-page tests', () => {
   let spyOnUseSelector;
@@ -18,8 +14,6 @@ describe('Basics-page tests', () => {
   let mockDispatch;
   let wrapper;
   let typography;
-  let button;
-  let tableContainerGenerator;
 
   beforeEach(() => {
     spyOnUseSelector = jest.spyOn(reactRedux, 'useSelector');
@@ -59,7 +53,7 @@ describe('Basics-page tests', () => {
   it('should render TableRows without items', () => {
     spyOnUseSelector.mockImplementation(() => ({
       ...mockStore,
-      basicsList: []
+      items: []
     }));
     wrapper = shallow(<BasicsPage />);
     expect(wrapper.find(LoadingBar)).toBeDefined();
@@ -68,12 +62,12 @@ describe('Basics-page tests', () => {
   it('should render TableRow without properties', () => {
     spyOnUseSelector.mockImplementation(() => ({
       ...mockStore,
-      basicsList: [
+      items: [
         {
-          name: mockStore.basicsList[0].name,
+          name: mockStore.items[0].name,
           images: null,
           available: false,
-          additionalPrice: mockStore.basicsList[0].additionalPrice
+          additionalPrice: mockStore.items[0].additionalPrice
         }
       ]
     }));

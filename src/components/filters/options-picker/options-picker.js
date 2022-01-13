@@ -25,12 +25,13 @@ const OptionsPicker = ({ value, handler, label, options }) => {
     }
   };
 
-  const renderValue = (selectedValues) => options.reduce((acumulator, option) => {
+  const renderValue = (selectedValues) =>
+    options.reduce((acumulator, option) => {
       let selectedItem;
 
-      selectedValues.forEach((selectedValue, _index) => {
+      selectedValues.forEach((selectedValue, _index, array) => {
         if (selectedValue === option.value) {
-          if (_index !== selectedValues[selectedValues.length - 1]) {
+          if (array.length > 1) {
             selectedItem = `${option.label}, `;
           } else {
             selectedItem = option.label;

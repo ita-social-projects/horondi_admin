@@ -167,8 +167,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
       const newPattern = createPattern(values);
       const isEditAndUploadAndConstructor =
         isEdit &&
-        upload instanceof File &&
-        uploadConstructorImg instanceof File;
+        (upload instanceof File || uploadConstructorImg instanceof File);
       if (isEditAndUploadAndConstructor || isEdit) {
         patternFormOnSubmit(
           isEditAndUploadAndConstructor,
