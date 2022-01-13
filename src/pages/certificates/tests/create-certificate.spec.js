@@ -17,12 +17,14 @@ describe('test CreateCertificate component', () => {
 
   it('should render table component', () => {
     const { getAllByRole } = render(<CreateCertificate />);
-    fireEvent.click(getAllByRole('checkbox')[0]);
-    userEvent.type(
-      document.querySelector('.MuiInputBase-input'),
-      'john.dee@someemail.com'
-    );
-    fireEvent.click(screen.getByTestId('generate'));
+    const input = document.querySelector('.MuiInputBase-input');
+
+    expect(screen.getByTestId('generate')).toHaveAttribute('disabled');
+
+    userEvent.click(getAllByRole('checkbox')[0]);
+    fireEvent.change(input, { target: { value: 'john.dee@someemail.com' } });
+    fireEvent.focusOut(input);
+    userEvent.click(screen.getByTestId('generate'));
 
     expect(screen.getByTestId('table')).toBeInTheDocument();
   });

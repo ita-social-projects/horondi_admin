@@ -33,6 +33,7 @@ export const CheckBoxes = ({ options, handler }) => {
         <Grid item xs={4} key={checkbox.name} className={styles.gridItem}>
           <div className={styles.item}>
             <Checkbox
+              className={styles.checkbox}
               checked={checkbox.checked}
               name={checkbox.name}
               onChange={updateCheckBoxCheck(index)}

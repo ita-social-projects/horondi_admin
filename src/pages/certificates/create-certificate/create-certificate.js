@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { DatePicker } from 'rsuite';
 import { Grid, Button, Typography, TextField } from '@material-ui/core';
 import { useStyles } from './create-certificate.styles';
@@ -27,14 +27,34 @@ const CreateCertificate = () => {
 
   const [date, setDate] = useState(new Date());
   const [email, setEmail] = useState('');
-  const [isInvalid, setIsInvalid] = useState(true);
+  const [isInvalid, setIsInvalid] = useState(false);
   const [certificates, setCertificates] = useState([]);
+  const [disabled, setDisabled] = useState(true);
 
-  const expireDate = (pickedDate) => {
-    let newDate = new Date(pickedDate);
+  useEffect(() => {
+    let check = false;
+    checkBoxes.forEach((item) => {
+      if (item.checked) {
+        check = true;
+      }
+    });
+
+    if (!isInvalid && date && email && check) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [isInvalid, date, checkBoxes, email]);
+
+  const expireDate = useMemo(() => {
+    if (date === null) {
+      return null;
+    }
+
+    let newDate = new Date(date);
     newDate = newDate.setFullYear(newDate.getFullYear() + 1);
     return new Date(newDate);
-  };
+  }, [date]);
 
   const disabledDate = (pickedDate) => {
     const yesterday = new Date();
@@ -54,19 +74,22 @@ const CreateCertificate = () => {
     checkBoxes.forEach((certificate) => {
       if (certificate.checked && !isInvalid) {
         for (let i = 0; i < certificate.quantity; i++) {
-          newArr.push(
-            createData('#', certificate.name, date, expireDate(date))
-          );
+          newArr.push(createData('#', certificate.name, date, expireDate));
         }
       }
     });
     setCertificates(newArr);
   };
 
-  const inputEmailChange = (e, regExp) => {
-    setEmail(e.target.value);
+  const emailOnBlur = (e, regExp) => {
+    setIsInvalid(true);
     const input = e.target.value;
     input.match(regExp) ? setIsInvalid(false) : setIsInvalid(true);
+  };
+
+  const emailHandler = (e) => {
+    setIsInvalid(true);
+    setEmail(e.target.value);
   };
 
   return (
@@ -80,7 +103,7 @@ const CreateCertificate = () => {
             <Button
               variant={materialUiConstants.contained}
               color={materialUiConstants.primary}
-              disabled={isInvalid}
+              disabled={disabled}
             >
               {buttonTitles.MODEL_SAVE_TITLE}
             </Button>
@@ -125,7 +148,7 @@ const CreateCertificate = () => {
               disabled
               size='lg'
               format='D/MM/YYYY'
-              value={expireDate(date)}
+              value={expireDate}
             />
           </Grid>
         </Grid>
@@ -146,7 +169,8 @@ const CreateCertificate = () => {
               label='Email'
               value={email}
               helperText={isInvalid && loginErrorMessages.INVALID_EMAIL_MESSAGE}
-              onChange={(e) => inputEmailChange(e, formRegExp.email)}
+              onChange={(e) => emailHandler(e)}
+              onBlur={(e) => emailOnBlur(e, formRegExp.email)}
             />
           </Grid>
           <Grid item xs={6}>
@@ -155,7 +179,7 @@ const CreateCertificate = () => {
               variant={materialUiConstants.contained}
               color={materialUiConstants.primary}
               onClick={generateCertificates}
-              disabled={isInvalid}
+              disabled={disabled}
             >
               {buttonTitles.GENERATE_CERTIFICATE}
             </Button>

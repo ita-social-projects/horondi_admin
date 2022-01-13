@@ -12,19 +12,20 @@ export const useStyles = makeStyles((theme) => ({
   H5: {
     border: '1px solid gray',
     padding: '5px 12px',
-    borderRadius: '5px',
-    width: '35px'
+    borderRadius: 5,
+    width: 35
   },
   label: {
-    fontSize: '18px'
+    fontSize: 18
   },
   item: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    paddingLeft: 12
   },
   gridItem: {
-    height: '100px',
-    width: '100px'
+    height: 120,
+    width: 200
   }
 }));
