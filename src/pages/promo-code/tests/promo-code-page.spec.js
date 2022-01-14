@@ -20,7 +20,8 @@ const themeValue = theme('light');
 const dispatch = jest.fn();
 const useQueryData = {
   data: promoCodes,
-  loading: false
+  loading: false,
+  refetch: () => {}
 };
 
 useMutation.mockImplementation(() => [jest.fn()]);
