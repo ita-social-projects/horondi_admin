@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { DatePicker } from 'rsuite';
-import { Grid, Button, Typography, TextField } from '@material-ui/core';
+import {
+  Grid,
+  Button,
+  Typography,
+  TextField,
+  Tooltip
+} from '@material-ui/core';
 import { useStyles } from './create-certificate.styles';
 import { BackButton } from '../../../components/buttons';
 import materialUiConstants from '../../../configs/material-ui-constants';
@@ -99,15 +105,17 @@ const CreateCertificate = () => {
           <Grid item className={styles.button}>
             <BackButton pathBack={routes.pathToAboutCertificate} />
           </Grid>
-          <Grid item className={styles.button}>
-            <Button
-              variant={materialUiConstants.contained}
-              color={materialUiConstants.primary}
-              disabled={disabled}
-            >
-              {buttonTitles.MODEL_SAVE_TITLE}
-            </Button>
-          </Grid>
+          <Tooltip title={!disabled ? '' : 'Згенеруйте сертифікат'}>
+            <Grid item className={styles.button}>
+              <Button
+                variant={materialUiConstants.contained}
+                color={materialUiConstants.primary}
+                disabled={!certificates.length}
+              >
+                {buttonTitles.MODEL_SAVE_TITLE}
+              </Button>
+            </Grid>
+          </Tooltip>
         </Grid>
       </div>
       <div className={styles.title}>
