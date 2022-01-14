@@ -3,6 +3,7 @@ import { Button, Grid, TextField } from '@material-ui/core';
 import { DatePicker } from 'rsuite';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useStyles } from './promo-code-add.styles';
 import {
   checkboxesValues,
@@ -45,16 +46,6 @@ const PromoCodeAdd = () => {
       promoCode: promoValue
     }
   });
-  const testChange = (event) => {
-    const inputValue = event.target.value;
-    const checkedPromoValue = Number(inputValue)
-      ? Number(inputValue)
-      : inputValue;
-    return setPromoValue((prevState) => ({
-      ...prevState,
-      [`${event.target.id}`]: checkedPromoValue
-    }));
-  };
 
   return (
     <div className={styles.container}>
@@ -64,16 +55,18 @@ const PromoCodeAdd = () => {
             <BackButton pathBack={pathToPromoCodesPage} />
           </Grid>
           <Grid>
-            <Button
-              id='buttonSave'
-              size='medium'
-              type={productFormValues.submit}
-              variant={productFormValues.contained}
-              color={checkboxesValues.primary}
-              onClick={addPromoCodeHandler}
-            >
-              {SAVE}
-            </Button>
+            <Link to={pathToPromoCodesPage}>
+              <Button
+                id='buttonSave'
+                size='medium'
+                type={productFormValues.submit}
+                variant={productFormValues.contained}
+                color={checkboxesValues.primary}
+                onClick={addPromoCodeHandler}
+              >
+                {SAVE}
+              </Button>
+            </Link>
           </Grid>
         </div>
       </div>
@@ -88,7 +81,12 @@ const PromoCodeAdd = () => {
             label={promoCodesTranslation.namePromo}
             variant='outlined'
             value={promoValue.code}
-            onChange={(event) => testChange(event)}
+            onChange={(event) =>
+              setPromoValue((prevState) => ({
+                ...prevState,
+                code: event.target.value
+              }))
+            }
           />
         </div>
       </div>
@@ -127,7 +125,12 @@ const PromoCodeAdd = () => {
           variant='outlined'
           className={styles.amountInput}
           value={promoValue.discount}
-          onChange={(event) => testChange(event)}
+          onChange={(event) =>
+            setPromoValue((prevState) => ({
+              ...prevState,
+              discount: Number(event.target.value)
+            }))
+          }
         />
       </div>
     </div>

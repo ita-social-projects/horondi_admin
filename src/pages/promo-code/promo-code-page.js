@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { useStyles } from './promo-code-page.styles';
 import { productsTranslations } from '../../configs/product-translations';
 import { config } from '../../configs';
-import PromoCodeFilter from './promo-code-filter/promo-code-filter';
 import { useCommonStyles } from '../common.styles';
 import { getAllPromoCodes } from './promo-code.queries';
 import TableContainerGenerator from '../../containers/table-container-generator';
@@ -30,6 +29,8 @@ const PromoCodePage = () => {
   const { data, refetch, loading } = useQuery(getAllPromoCodes);
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
   const promoCodes = data?.getAllPromoCodes || {};
+
+  useEffect(() => refetch(), [data]);
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -103,8 +104,6 @@ const PromoCodePage = () => {
           {productsTranslations.CREATE_PROMOCODE}
         </Button>
       </div>
-
-      <PromoCodeFilter />
 
       <TableContainerGenerator
         id='questionsAnswersTable'

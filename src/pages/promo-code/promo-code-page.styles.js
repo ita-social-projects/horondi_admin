@@ -1,10 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(() => ({
-  container: {
-    width: '100%',
-    margin: '100px 16px 0 16px'
-  },
   promoTitle: {
     fontSize: '34px',
     lineHeight: '46px',
@@ -12,6 +8,7 @@ export const useStyles = makeStyles(() => ({
   },
   header: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: '20px'
   }
 }));
