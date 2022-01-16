@@ -25,6 +25,10 @@ export const useStyles = makeStyles((theme) => {
     inputBlock: {
       margin: '10px 0'
     },
+    textArea: {
+      width: '400px',
+      resize: 'none'
+    },
 
     formContainer: {
       width: '100%',

@@ -4,6 +4,7 @@ const buttonTitles = {
   CREATE_NEWS_TITLE: 'Додати новину',
   CREATE_PATTERN_TITLE: 'Додати гобелен',
   CREATE_MODEL_TITLE: 'Додати модель',
+  CREATE_MATERIAL_TITLE_BLOCK: 'Додати блок матеріалів',
   MODEL_SAVE_TITLE: 'Зберегти',
   MODEL_CONSTRUCTOR: 'Конструктор',
   CANCEL_TITLE: 'Ні',
