@@ -13,6 +13,11 @@ import { useStyles } from '../create-certificate/create-certificate.styles';
 export const CertificatesTable = ({ certificates }) => {
   const styles = useStyles();
 
+  const formatDate = (date, newDate) =>
+    `${moment(date).format('DD/MM/YYYY')} - ${moment(newDate).format(
+      'DD/MM/YYYY'
+    )}`;
+
   const rowItems = ['Номер', 'Вартість', 'Термін дії'];
   const headerItems = rowItems.map((item) => (
     <TableCell key={item} className={styles.cellHead} align='left'>
@@ -20,10 +25,15 @@ export const CertificatesTable = ({ certificates }) => {
     </TableCell>
   ));
 
-  const formatDate = (date, newDate) =>
-    `${moment(date).format('DD/MM/YYYY')} - ${moment(newDate).format(
-      'DD/MM/YYYY'
-    )}`;
+  const bodyItems = certificates.map((row) => (
+    <TableRow key={row.id}>
+      <TableCell component='th' scope='row'>
+        {row.id}
+      </TableCell>
+      <TableCell align='left'>{row.name}</TableCell>
+      <TableCell align='left'>{formatDate(row.dateFrom, row.dateTo)}</TableCell>
+    </TableRow>
+  ));
 
   return (
     <TableContainer component={Paper}>
@@ -31,19 +41,7 @@ export const CertificatesTable = ({ certificates }) => {
         <TableHead>
           <TableRow>{headerItems}</TableRow>
         </TableHead>
-        <TableBody>
-          {certificates.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell component='th' scope='row'>
-                {row.id}
-              </TableCell>
-              <TableCell align='left'>{row.name}</TableCell>
-              <TableCell align='left'>
-                {formatDate(row.dateFrom, row.dateTo)}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        <TableBody>{bodyItems}</TableBody>
       </Table>
     </TableContainer>
   );
@@ -52,7 +50,8 @@ export const CertificatesTable = ({ certificates }) => {
 const certificateTableInterface = PropTypes.shape({
   id: PropTypes.string,
   name: PropTypes.string,
-  expired: PropTypes.string
+  dateFrom: PropTypes.instanceOf(Date),
+  dateTo: PropTypes.instanceOf(Date)
 });
 
 CertificatesTable.propTypes = {

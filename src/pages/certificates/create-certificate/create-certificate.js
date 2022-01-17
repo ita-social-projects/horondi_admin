@@ -25,12 +25,13 @@ const CreateCertificate = () => {
   const commonStyles = useCommonStyles();
   const styles = useStyles();
 
-  const [checkBoxes, setCheckBoxes] = useState([
+  const initialCheckboxes = [
     { checked: false, quantity: 1, name: certificatesTitles[500] },
     { checked: false, quantity: 1, name: certificatesTitles[1000] },
     { checked: false, quantity: 1, name: certificatesTitles[1500] }
-  ]);
+  ];
 
+  const [checkBoxes, setCheckBoxes] = useState(initialCheckboxes);
   const [date, setDate] = useState(new Date());
   const [email, setEmail] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
