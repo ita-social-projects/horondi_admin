@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   closeDialog,
   showDialog
 } from '../redux/dialog-window/dialog-window.actions';
-import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import { useStyles } from '../components/nav-menu/nav-menu.styles';
 
 const useLocalStyles = makeStyles(() => ({
@@ -27,8 +27,9 @@ const useSuccessSnackbar = () => {
     showCancelButton = true,
     validationData = null
   ) => {
+    let content = dialogContent;
     if (validationData !== null && Object.keys(validationData).length) {
-      dialogContent = (
+      content = (
         <div>
           Цей елемент є частиною
           <ul className={`${styles.list} ${navMenuStyles.drawerPaper}`}>
@@ -53,7 +54,7 @@ const useSuccessSnackbar = () => {
       showDialog({
         isOpen: true,
         dialogTitle,
-        dialogContent,
+        content,
         showCancelButton,
         onClickHandler
       })
