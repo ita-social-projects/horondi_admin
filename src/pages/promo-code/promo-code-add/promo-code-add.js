@@ -74,6 +74,7 @@ const PromoCodeAdd = () => {
       });
     }
   });
+  const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
   return (
     <div className={commonStyles.container}>
@@ -126,7 +127,7 @@ const PromoCodeAdd = () => {
                 oneTap
                 style={{ width: 200 }}
                 value={values.dateFrom}
-                onChange={(value) => setFieldValue('dateFrom', value)}
+                onChange={(value) => handlerDateHandler(value, 'dateFrom')}
               />
               {touched.dateFrom && errors.dateFrom && (
                 <div className={styles.errorDate}>{errors.dateFrom}</div>
@@ -140,7 +141,7 @@ const PromoCodeAdd = () => {
                 style={{ width: 200 }}
                 id='dateTo'
                 value={values.dateTo}
-                onChange={(value) => setFieldValue('dateTo', value)}
+                onChange={(value) => handlerDateHandler(value, 'dateTo')}
               />
               {touched.dateTo && errors.dateTo && (
                 <div className={styles.errorDate}>{errors.dateTo}</div>
