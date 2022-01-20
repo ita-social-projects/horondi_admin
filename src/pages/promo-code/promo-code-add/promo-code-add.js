@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { DatePicker } from 'rsuite';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useFormik } from 'formik';
 import { useStyles } from './promo-code-add.styles';
 import {
   checkboxesValues,
@@ -19,6 +20,10 @@ import {
   setSnackBarStatus
 } from '../../../redux/snackbar/snackbar.actions';
 import orders from '../../../configs/orders';
+import { getFromLocalStorage } from '../../../services/local-storage.service';
+import { LOCAL_STORAGE } from '../../../consts/local-storage';
+import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
+import { useCommonStyles } from '../../common.styles';
 
 const pathToPromoCodesPage = config.routes.pathToPromoCodes;
 const initialState = {
@@ -29,110 +34,140 @@ const initialState = {
 };
 const { SAVE } = productsTranslations;
 const PromoCodeAdd = () => {
-  const [promoValue, setPromoValue] = useState(initialState);
-
+  const history = useHistory();
+  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
   const styles = useStyles();
   const dispatch = useDispatch();
+  const commonStyles = useCommonStyles();
   const { promoCodesTranslation } = orders;
   const onCompletedHandler = () => {
     dispatch(setSnackBarSeverity('success'));
     dispatch(setSnackBarMessage('Успішно додано'));
     dispatch(setSnackBarStatus(true));
-    setPromoValue(initialState);
   };
   const [addPromoCodeHandler] = useMutation(addPromoCodes, {
     onCompleted: onCompletedHandler,
-    variables: {
-      promoCode: promoValue
+    context: {
+      headers: {
+        token
+      }
+    }
+  });
+
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    touched,
+    errors,
+    setFieldValue
+  } = useFormik({
+    validationSchema: promoValidationSchema,
+    initialValues: initialState,
+    onSubmit: () => {
+      history.push(pathToPromoCodesPage);
+      return addPromoCodeHandler({
+        variables: {
+          promoCode: values
+        }
+      });
     }
   });
 
   return (
-    <div className={styles.container}>
-      <div className={styles.buttonContainer}>
-        <div className={styles.fixedButtons}>
-          <Grid item className={styles.button}>
-            <BackButton pathBack={pathToPromoCodesPage} />
-          </Grid>
-          <Grid>
-            <Link to={pathToPromoCodesPage}>
-              <Button
-                id='buttonSave'
-                size='medium'
-                type={productFormValues.submit}
-                variant={productFormValues.contained}
-                color={checkboxesValues.primary}
-                onClick={addPromoCodeHandler}
-              >
-                {SAVE}
-              </Button>
-            </Link>
-          </Grid>
-        </div>
-      </div>
-      <span className={styles.title}>{promoCodesTranslation.createPromo}</span>
-      <div>
-        <span
-          className={styles.subTitle}
-        >{`${promoCodesTranslation.namePromo}:`}</span>
-        <div className={styles.promoNameContainer}>
-          <TextField
-            id='code'
-            label={promoCodesTranslation.namePromo}
-            variant='outlined'
-            value={promoValue.code}
-            onChange={(event) =>
-              setPromoValue((prevState) => ({
-                ...prevState,
-                code: event.target.value
-              }))
-            }
-          />
-        </div>
-      </div>
-      <div>
-        <span className={styles.subTitle}>
-          {promoCodesTranslation.date.validityPeriod}:
-        </span>
-        <DatePicker
-          placeholder={promoCodesTranslation.date.validFrom}
-          oneTap
-          style={{ width: 200 }}
-          value={promoValue.dateFrom}
-          onChange={(item) =>
-            setPromoValue((prevState) => ({ ...prevState, dateFrom: item }))
-          }
-        />
-        <DatePicker
-          placeholder={promoCodesTranslation.date.validTo}
-          oneTap
-          style={{ width: 200 }}
-          id='dateTo'
-          value={promoValue.dateTo}
-          onChange={(item) =>
-            setPromoValue((prevState) => ({ ...prevState, dateTo: item }))
-          }
-        />
+    <div className={commonStyles.container}>
+      <div className={styles.fixedButtons}>
+        <Grid item>
+          <BackButton pathBack={pathToPromoCodesPage} />
+        </Grid>
+        <Grid>
+          <Button
+            id='buttonSave'
+            size='medium'
+            type={productFormValues.submit}
+            variant={productFormValues.contained}
+            color={checkboxesValues.primary}
+            onClick={handleSubmit}
+          >
+            {SAVE}
+          </Button>
+        </Grid>
       </div>
 
-      <div>
-        <span className={styles.subTitle}>
-          {promoCodesTranslation.discount.title}
-        </span>
-        <TextField
-          id='discount'
-          label={promoCodesTranslation.discount.label}
-          variant='outlined'
-          className={styles.amountInput}
-          value={promoValue.discount}
-          onChange={(event) =>
-            setPromoValue((prevState) => ({
-              ...prevState,
-              discount: Number(event.target.value)
-            }))
-          }
-        />
-      </div>
+      <span className={styles.title}>{promoCodesTranslation.createPromo}</span>
+      <form>
+        <div>
+          <span
+            className={styles.subTitle}
+          >{`${promoCodesTranslation.namePromo}:`}</span>
+          <div className={styles.promoNameContainer}>
+            <TextField
+              id='code'
+              label={promoCodesTranslation.namePromo}
+              variant='outlined'
+              value={values.code}
+              className={styles.textField}
+              error={!!(touched.code ? errors.code : null)}
+              helperText={touched.code ? errors.code : ''}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div>
+          <span className={styles.subTitle}>
+            {promoCodesTranslation.date.validityPeriod}:
+          </span>
+          <div className={styles.dataContainer}>
+            <div className={styles.dataPickerContainer}>
+              <DatePicker
+                placeholder={promoCodesTranslation.date.validFrom}
+                oneTap
+                style={{ width: 200 }}
+                value={values.dateFrom}
+                onChange={(value) => setFieldValue('dateFrom', value)}
+              />
+              {touched.dateFrom && errors.dateFrom && (
+                <div className={styles.errorDate}>{errors.dateFrom}</div>
+              )}
+            </div>
+
+            <div className={styles.dataPickerContainer}>
+              <DatePicker
+                placeholder={promoCodesTranslation.date.validTo}
+                oneTap
+                style={{ width: 200 }}
+                id='dateTo'
+                value={values.dateTo}
+                onChange={(value) => setFieldValue('dateTo', value)}
+              />
+              {touched.dateTo && errors.dateTo && (
+                <div className={styles.errorDate}>{errors.dateTo}</div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <span className={styles.subTitle}>
+            {promoCodesTranslation.discount.title}
+          </span>
+          <TextField
+            id='discount'
+            label={promoCodesTranslation.discount.label}
+            variant='outlined'
+            type='number'
+            className={styles.textField}
+            value={values.discount}
+            error={!!(touched.discount ? errors.discount : null)}
+            helperText={touched.discount ? errors.discount : null}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            InputProps={{ inputProps: { min: 0, max: 90 } }}
+          />
+        </div>
+      </form>
     </div>
   );
 };

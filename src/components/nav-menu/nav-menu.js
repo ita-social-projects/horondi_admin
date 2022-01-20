@@ -103,7 +103,7 @@ const NavMenu = ({ width }) => {
     returnedList(category[0], category[1], category[2], classes.nested)
   );
   const promoMenuItems = config.promoMenuCategories.map((category) =>
-    returnedList(category[0], category[1], category[2], classes.nested)
+    returnedList(...category, classes.nested)
   );
 
   const staticPagesMenuItems = config.staticPagesCategories.map((category) =>

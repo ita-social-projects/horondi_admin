@@ -1,11 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles(() => ({
-  container: {
-    marginLeft: 16,
-    fontFamily: 'Open Sans',
-    marginTop: 100
-  },
+export const useStyles = makeStyles((theme) => ({
   promoNameContainer: {
     display: 'flex'
   },
@@ -22,8 +17,23 @@ export const useStyles = makeStyles(() => ({
     fontSize: '24px',
     lineHeight: '32px'
   },
-  amountInput: {
-    display: 'block'
+  dataContainer: {
+    display: 'flex'
+  },
+  dataPickerContainer: {
+    marginRight: '16px'
+  },
+  errorDate: {
+    fontSize: '11px',
+    margin: '3px 0 0 14px',
+    textAlign: 'left',
+    color: theme.palette.red
+  },
+  textField: {
+    display: 'block',
+    '& input': {
+      width: '162px'
+    }
   },
   fixedButtons: {
     display: 'flex',

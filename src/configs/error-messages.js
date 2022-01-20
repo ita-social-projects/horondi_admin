@@ -44,6 +44,13 @@ export const commonErrorMessages = {
   ERROR_ENGLISH_AND_DIGITS_ONLY: 'Тільки англійські букви і цифри',
   PRICE_ERROR: 'Це поле повинно містити тільки додатні значенння'
 };
+export const promoCodeErrorMessages = {
+  LENGTH_CODE: 'Поле має містити від 2 до 30 символів',
+  STYLE_CODE: 'Поле має містити англійські літери або цифри',
+  ERROR_MESSAGE: 'Поле має бути заповнене',
+  LENGTH_DISCOUNT: 'Поле має містити максимально 2 цифри',
+  STYLE_DISCOUNT: 'Поле має містити цифри'
+};
 
 export const patternErrorMessages = {
   PATTERN_VALIDATION_ERROR_NAME: 'Назва повинна містити від 2 до 50 символів',

@@ -62,7 +62,8 @@ import {
   closuresErrorMessages,
   basicsErrorMessages,
   strapsErrorMessages,
-  userErrorMessages
+  userErrorMessages,
+  promoCodeErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -263,6 +264,7 @@ export const config = {
   labels,
   titles,
   commonErrorMessages,
+  promoCodeErrorMessages,
   loginErrorMessages,
   colorErrorMessages,
   contactErrorMessages,

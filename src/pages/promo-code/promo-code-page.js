@@ -15,6 +15,8 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import orders from '../../configs/orders';
 import LoadingBar from '../../components/loading-bar';
+import { getFromLocalStorage } from '../../services/local-storage.service';
+import { LOCAL_STORAGE } from '../../consts/local-storage';
 
 const pathToAddPromoCodePage = config.routes.pathToAddPromoCode;
 const tableTitles = config.tableHeadRowTitles.promoCodes;
@@ -25,6 +27,7 @@ const PromoCodePage = () => {
   const dispatch = useDispatch();
   const dateToday = new Date();
   const { promoCodesTranslation } = orders;
+  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
 
   const { data, refetch, loading } = useQuery(getAllPromoCodes);
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
@@ -53,6 +56,11 @@ const PromoCodePage = () => {
     deletePromoCodeByIDMutation({
       variables: {
         id: promoID
+      },
+      context: {
+        headers: {
+          token
+        }
       }
     });
     refetch();
@@ -94,19 +102,19 @@ const PromoCodePage = () => {
           {config.titles.promoPageTitles.mainPageTitle}
         </Typography>
         <Button
-          id='add-questions-answers'
+          id='add-promo-code'
           component={Link}
           to={pathToAddPromoCodePage}
           variant='contained'
           color='primary'
-          data-cy='add-questions-answers'
+          data-cy='add-promo-code'
         >
           {productsTranslations.CREATE_PROMOCODE}
         </Button>
       </div>
 
       <TableContainerGenerator
-        id='questionsAnswersTable'
+        id='promoCodeTable'
         tableTitles={tableTitles}
         tableItems={promoItems}
       />

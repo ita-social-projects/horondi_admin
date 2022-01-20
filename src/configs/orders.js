@@ -97,7 +97,7 @@ const orders = {
       active: 'Активний',
       expired: 'Завершений'
     },
-    deletePromo: 'Видалити промокод',
+    deletePromo: 'Ви впевнені, що хочете видалити цeй промокод?',
     namePromo: 'Назва промокоду',
     createPromo: 'Створи Промокод:',
     date: {
