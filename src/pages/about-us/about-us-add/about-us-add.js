@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useStyles } from './about-us-add.styles';
 import materialUiConstants from '../../../configs/material-ui-constants';
 import { config } from '../../../configs';
-import { SaveButton, BackButton } from '../../../components/buttons';
 
 const { GO_BACK_TITLE } = config.buttonTitles;
 const { pathToAboutUs } = config.routes;
