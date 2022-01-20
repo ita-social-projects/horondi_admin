@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AboutUsPage from '../pages/about-us';
+import AboutUsAddBlock from '../pages/about-us/about-us-add';
 import UsersPage from '../pages/users';
 import NewsPage from '../pages/news';
 import NavBar from '../components/nav-bar';

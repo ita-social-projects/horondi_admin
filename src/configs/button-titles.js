@@ -1,5 +1,4 @@
 const buttonTitles = {
-  INFO_ABOUT_US: 'Інформація Про Нас',
   ADD_ABOUT_US: 'Додати Про Нас',
   DELETE_TITLE: 'Видалити',
   EDIT_TITLE: 'Редагувати',
