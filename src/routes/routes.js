@@ -88,6 +88,8 @@ import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 import UserDetails from '../pages/users/user/user-details';
 import constructorEdit from '../pages/constructor-list/constructor-edit';
 import CreateCertificate from '../pages/certificates/create-certificate/create-certificate';
+import MaterialAbout from '../pages/material/material-about';
+import MaterialAboutAdd from '../pages/material/material-about-add';
 
 const { routes } = config;
 
@@ -155,6 +157,16 @@ const Routes = () => {
             path={routes.pathToAboutUsAdd}
             exact
             component={AboutUsAddBlock}
+          />
+          <Route
+            path={routes.pathToAboutMaterials}
+            exact
+            component={MaterialAbout}
+          />
+          <Route
+            path={routes.pathToAddAboutMaterial}
+            exact
+            component={MaterialAboutAdd}
           />
           <Route
             path={routes.pathToCreateCertificates}
