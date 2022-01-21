@@ -5,6 +5,10 @@ const titles = {
     ordersTitle: 'Останні замовлення',
     changesTitle: 'Останні зміни'
   },
+  aboutUsTitles: {
+    mainTitle: 'Інформація Про Нас',
+    mainTitleAdd: 'Додати Про Нас'
+  },
   historyTitles: {
     mainTitle: 'Останні зміни',
     detailsTitle: 'Деталі зміни',
@@ -159,6 +163,16 @@ const titles = {
   strapsTitles: {
     mainPageTitle: 'Інформація про ремінці',
     convertationTitle: 'Відповідна ціна в UAH'
+  },
+  certificatesTitles: {
+    500: '500 грн',
+    1000: '1000 грн',
+    1500: '1500 грн',
+    mainPageTitle: 'Створити Подарунковий Сертифікат:',
+    validity: 'Термін дії:',
+    validFrom: 'Дійсний від',
+    validUntil: 'Дійсний до',
+    cost: 'Вартість:'
   }
 };
 

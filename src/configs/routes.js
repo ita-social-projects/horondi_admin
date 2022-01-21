@@ -1,4 +1,6 @@
 const routes = {
+  pathToAboutUs: '/about-us',
+  pathToAboutUsAdd: '/about-us/add',
   pathToHistory: '/history',
   pathToHistoryDetails: '/history/:id',
   pathToLogin: '/login',
