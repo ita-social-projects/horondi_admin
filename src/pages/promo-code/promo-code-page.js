@@ -7,10 +7,10 @@ import { useStyles } from './promo-code-page.styles';
 import { productsTranslations } from '../../configs/product-translations';
 import { config } from '../../configs';
 import { useCommonStyles } from '../common.styles';
-import { getAllPromoCodes } from './promo-code.queries';
+import { getAllPromoCodes } from './operations/promo-code.queries';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import TableContainerRow from '../../containers/table-container-row';
-import { deletePromoCodeByID } from './promo-code.mutation';
+import { deletePromoCodeByID } from './operations/promo-code.mutation';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import orders from '../../configs/orders';
@@ -32,8 +32,9 @@ const PromoCodePage = () => {
   const { data, refetch, loading } = useQuery(getAllPromoCodes);
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
   const promoCodes = data?.getAllPromoCodes || {};
+  const runRefetchData = () => refetch();
 
-  useEffect(() => refetch(), [data]);
+  useEffect(runRefetchData, [data]);
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -62,8 +63,7 @@ const PromoCodePage = () => {
           token
         }
       }
-    });
-    refetch();
+    }).then(runRefetchData);
     dispatch(closeDialog());
   };
   const openDeleteModalHandler = (promoID) =>

@@ -13,7 +13,7 @@ import {
 import { productsTranslations } from '../../../configs/product-translations';
 import { BackButton } from '../../../components/buttons';
 import { config } from '../../../configs';
-import { addPromoCodes } from '../promo-code.mutation';
+import { addPromoCodes } from '../operations/promo-code.mutation';
 import {
   setSnackBarMessage,
   setSnackBarSeverity,
@@ -45,6 +45,9 @@ const PromoCodeAdd = () => {
     dispatch(setSnackBarMessage('Успішно додано'));
     dispatch(setSnackBarStatus(true));
   };
+  const goToPromoPage = () => {
+    history.push(pathToPromoCodesPage);
+  };
   const [addPromoCodeHandler] = useMutation(addPromoCodes, {
     onCompleted: onCompletedHandler,
     context: {
@@ -65,14 +68,12 @@ const PromoCodeAdd = () => {
   } = useFormik({
     validationSchema: promoValidationSchema,
     initialValues: initialState,
-    onSubmit: () => {
-      history.push(pathToPromoCodesPage);
-      return addPromoCodeHandler({
+    onSubmit: () =>
+      addPromoCodeHandler({
         variables: {
           promoCode: values
         }
-      });
-    }
+      }).then(goToPromoPage)
   });
   const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
