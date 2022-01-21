@@ -85,7 +85,7 @@ describe('Nav menu test', () => {
   });
 
   it('Should render ExpandLess when click on Клієнти', () => {
-    wrapper.find(ListItem).at(6).invoke('onClick')();
+    wrapper.find(ListItem).at(7).invoke('onClick')();
     expect(wrapper.exists(ExpandLess)).toBe(true);
   });
 

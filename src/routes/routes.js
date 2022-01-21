@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AboutUsPage from '../pages/about-us';
+import AboutUsAddBlock from '../pages/about-us/about-us-add';
 import UsersPage from '../pages/users';
 import NewsPage from '../pages/news';
 import NavBar from '../components/nav-bar';
@@ -148,6 +150,12 @@ const Routes = () => {
           <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
           <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
           <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+          <Route path={routes.pathToAboutUs} exact component={AboutUsPage} />
+          <Route
+            path={routes.pathToAboutUsAdd}
+            exact
+            component={AboutUsAddBlock}
+          />
           <Route
             path={routes.pathToCreateCertificates}
             exact

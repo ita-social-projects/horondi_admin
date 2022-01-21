@@ -5,6 +5,10 @@ const titles = {
     ordersTitle: 'Останні замовлення',
     changesTitle: 'Останні зміни'
   },
+  aboutUsTitles: {
+    mainTitle: 'Інформація Про Нас',
+    mainTitleAdd: 'Додати Про Нас'
+  },
   historyTitles: {
     mainTitle: 'Останні зміни',
     detailsTitle: 'Деталі зміни',
