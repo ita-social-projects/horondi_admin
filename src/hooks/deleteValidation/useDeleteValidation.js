@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 function useDeleteValidation(queryFunction) {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
   const [queryData, getQueryData] = useState(false);
 
   const toggleRerender = () => getQueryData((prev) => !prev);
@@ -24,7 +24,8 @@ function useDeleteValidation(queryFunction) {
     );
   };
 
-  const deleteValidation = (id) => products.map((item) =>
+  const deleteValidation = (id) =>
+    products.map((item) =>
       item.ids.map(
         (_id) => id === _id && { itemName: item.itemName, itemId: item._id }
       )

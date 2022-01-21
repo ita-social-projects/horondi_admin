@@ -12,7 +12,7 @@ import { getEmailQuestionsPendingCount } from '../../redux/email-questions/email
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { history } from '../../store/store';
 import { LOCAL_STORAGE } from '../../consts/local-storage';
-import useDeleteValidation from '../../hooks/useDeleteValidation';
+import useDeleteValidation from '../../hooks/deleteValidation/useDeleteValidation';
 import { getAllProductsDataForDeleteValidation } from '../../redux/products/products.operations';
 
 const { DARK_THEME, LIGHT_THEME } = config.theme;
