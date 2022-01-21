@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import MaterialAbout from '../material-about';
 
@@ -11,5 +11,15 @@ describe('MaterialAbout should, ', () => {
       </BrowserRouter>
     );
     expect(wrapper).toBeDefined();
+  });
+  it(' render', () => {
+    const { getByTestId } = render(
+      <BrowserRouter>
+        <MaterialAbout />
+      </BrowserRouter>
+    );
+    const form = getByTestId('createMaterialButton');
+    fireEvent.click(form);
+    expect(form).toBeInTheDocument();
   });
 });

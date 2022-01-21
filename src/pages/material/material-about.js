@@ -14,6 +14,7 @@ const MaterialAbout = () => {
   return (
     <div className={common.container}>
       <Button
+        data-testid='createMaterialButton'
         id='add-materials'
         component={Link}
         to={pathToAddAboutMaterial}
