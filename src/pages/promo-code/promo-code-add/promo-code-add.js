@@ -119,7 +119,7 @@ const PromoCodeAdd = () => {
         </div>
         <div>
           <span className={styles.subTitle}>
-            {promoCodesTranslation.date.validityPeriod}:
+            {promoCodesTranslation.date.validityPeriod}
           </span>
           <div className={styles.dataContainer}>
             <div className={styles.dataPickerContainer}>
