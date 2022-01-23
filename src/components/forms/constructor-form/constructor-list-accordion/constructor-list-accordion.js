@@ -40,7 +40,7 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
           limit: rowsPerPage,
           skip: currentPage * rowsPerPage
         },
-        limit: rowsPerPage,
+        limit: 20,
         skip: currentPage * rowsPerPage,
         filter
       })
