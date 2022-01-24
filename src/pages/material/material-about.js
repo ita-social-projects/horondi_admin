@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import { useStyles } from './material-page.styles';
 import { useCommonStyles } from '../common.styles';
 import buttonTitles from '../../configs/button-titles';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
-import LoadingBar from '../../components/loading-bar';
 import { config } from '../../configs';
-import { GET_ALL_MATERIALS_BLOCKS } from './operations/material-about.queries';
 
 const tableTitles = config.tableHeadRowTitles.materialsAbout;
 
@@ -18,30 +15,26 @@ const { CREATE_MATERIAL_TITLE_BLOCK } = buttonTitles;
 
 const MaterialAbout = () => {
   const styles = useStyles();
-
   const common = useCommonStyles();
 
-  const { data, refetch, loading } = useQuery(GET_ALL_MATERIALS_BLOCKS);
-  const aboutMaterialData = data?.getAllMaterialsBlocks || {};
-  const runRefetchData = () => refetch();
-  useEffect(runRefetchData, [data]);
-  if (loading) {
-    return <LoadingBar />;
-  }
+  const materialsData = [
+    { id: '1', name: 'Malmo', heading: 'Main Textile' },
+    { id: '2', name: 'Bond', heading: 'Main Textile' },
+    { id: '3', name: 'Textile', heading: 'Main Textile' },
+    { id: '4', name: 'Woven', heading: 'Main Textile' },
+    { id: '5', name: 'Knit', heading: 'Main Textile' }
+  ];
 
-  const aboutMaterialItems = aboutMaterialData
-    ? aboutMaterialData.map(({ id, title, image }) => (
-        <TableContainerRow
-          showAvatar={false}
-          key={id}
-          title={title}
-          text={id}
-          image-text={image}
-          deleteHandler={() => true}
-          editHandler={() => true}
-        />
-      ))
-    : null;
+  const aboutMaterialItems = materialsData.map(({ id, name, heading }) => (
+    <TableContainerRow
+      showAvatar={false}
+      key={id}
+      title={name}
+      text={heading}
+      deleteHandler={() => null}
+      editHandler={() => null}
+    />
+  ));
 
   return (
     <div className={common.container}>

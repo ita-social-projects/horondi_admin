@@ -5,9 +5,7 @@ import { ApolloProvider } from '@apollo/client';
 import App from './components/app';
 import configureStore from './store/store';
 import { client } from './utils/client';
-
 import './index.css';
-import { client } from './utils/client';
 
 const store = configureStore();
 
