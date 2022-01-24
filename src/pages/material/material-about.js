@@ -42,12 +42,12 @@ const MaterialAbout = () => {
         <Typography
           variant='h1'
           className={styles.materialTitle}
-          data-cy='main-header'
+          dataCy='main-header'
         >
           {config.titles.materialTitles.mainPageTitle}
         </Typography>
         <Button
-          data-testid='createMaterialButton'
+          dataTestId='createMaterialButton'
           id='add-materials'
           component={Link}
           to={pathToAddAboutMaterial}
