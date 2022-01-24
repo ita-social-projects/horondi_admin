@@ -90,6 +90,8 @@ import constructorEdit from '../pages/constructor-list/constructor-edit';
 import CreateCertificate from '../pages/certificates/create-certificate/create-certificate';
 import MaterialAbout from '../pages/material/material-about';
 import MaterialAboutAdd from '../pages/material/material-about-add';
+import PromoCodeAdd from '../pages/promo-code/promo-code-add/promo-code-add';
+import PromoCodePage from '../pages/promo-code/promo-code-page';
 
 const { routes } = config;
 
@@ -241,6 +243,16 @@ const Routes = () => {
           />
           <Route path={routes.pathToProducts} exact component={ProductsPage} />
           <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
+          <Route
+            path={routes.pathToPromoCodes}
+            exact
+            component={PromoCodePage}
+          />
+          <Route
+            path={routes.pathToAddPromoCode}
+            exact
+            component={PromoCodeAdd}
+          />
           <Route
             path={routes.pathToEditProduct}
             exact

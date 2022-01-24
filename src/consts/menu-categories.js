@@ -5,6 +5,7 @@ export const MENU_TABS = {
   CLIENTS: 'Клієнти',
   CATALOG: 'Каталог',
   CERTIFICATES: 'Сертифікати',
+  PROMOCODE: 'Промокоди',
   STATIC_PAGES: 'Статичні сторінки',
   CONSTRUCTOR: 'Конструктор'
 };

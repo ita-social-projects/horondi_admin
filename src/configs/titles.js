@@ -140,6 +140,9 @@ const titles = {
     convertationTitle: 'Відповідна ціна в UAH',
     modelTitle: 'Модель'
   },
+  promoPageTitles: {
+    mainPageTitle: 'Інформація про промокоди'
+  },
   pocketsTitles: {
     mainPageTitle: 'Інформація про кишені'
   },

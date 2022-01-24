@@ -32,6 +32,7 @@ import MyLocationIcon from '@material-ui/icons/MyLocation';
 import PeopleIcon from '@material-ui/icons/People';
 
 import routes from './routes';
+import { PromoIcon } from '../components/nav-bar/icons';
 
 export const menuCategories = [
   ['Домашня сторінка', routes.pathToMainPage, HomeIcon],
@@ -57,6 +58,9 @@ export const catalogMenuCategories = [
   ['Розміри', routes.pathToSizes, LineWeight],
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
   ['Гобелени', routes.pathToPatterns, GradientIcon]
+];
+export const promoMenuCategories = [
+  ['Створити промокод', routes.pathToPromoCodes, PromoIcon]
 ];
 
 export const staticPagesCategories = [

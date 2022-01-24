@@ -1,10 +1,12 @@
 export default {
   light: {
-    textColor: '#ffffff',
-    bodyColor: '#fafafa'
+    bodyColor: '#fafafa',
+    textColor: '#242424',
+    backgroundColor: '#FFFFFF'
   },
   dark: {
-    textColor: '#000000',
+    textColor: '#FFFFFF',
+    backgroundColor: '#242424',
     bodyColor: '#303030'
   }
 };

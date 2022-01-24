@@ -3,10 +3,12 @@ import theme from './theme';
 
 const white = '#FFFFFF';
 const black = '#000000';
+const red = '#E53935';
 
 export const paletteGenerator = (colorScheme) => ({
   black,
   white,
+  red,
   textColor: theme[colorScheme].textColor,
   bodyColor: theme[colorScheme].bodyColor,
   primary: {
