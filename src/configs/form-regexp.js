@@ -29,4 +29,5 @@ const formRegExp = {
   promoCodeName: /[a-z]{2,}\w*/i,
   promoCodeDiscount: /\d{1,2}/
 };
+
 export default formRegExp;
