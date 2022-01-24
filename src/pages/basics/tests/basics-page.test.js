@@ -1,15 +1,12 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
 import { Typography } from '@material-ui/core';
-import { configure, shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import mockStore from './mockStore';
 import BasicsPage from '../basics-page';
 import TableContainerRow from '../../../containers/table-container-row';
 import LoadingBar from '../../../components/loading-bar';
-
-configure({ adapter: new Adapter() });
 
 describe('Basics-page tests', () => {
   let spyOnUseSelector;

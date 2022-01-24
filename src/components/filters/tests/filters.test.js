@@ -1,6 +1,5 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
@@ -13,8 +12,6 @@ import OptionPicker from '../option-picker';
 import OptionsPicker from '../options-picker';
 import Search from '../search';
 import { config } from '../../../configs';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const { submitKey } = config;
 

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link, BrowserRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
-import Adapter from 'enzyme-adapter-react-16';
 import { Button, Typography } from '@material-ui/core';
-import { configure, shallow, mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import mockPockets from '../../pockets/tests/mockPockets';
 import ClosuresPage from '../closures-page';
 import TableContainerGenerator from '../../../containers/table-container-generator';
@@ -15,8 +14,6 @@ import { config } from '../../../configs';
 const { CREATE_CLOSURES_TITLE } = config.buttonTitles;
 const { pathToClosuresAdd } = config.routes;
 const tableTitles = config.tableHeadRowTitles.closures;
-
-configure({ adapter: new Adapter() });
 
 describe('Closure-page render tests', () => {
   let spyOnUseSelector;

@@ -1,10 +1,12 @@
 const buttonTitles = {
+  ADD_ABOUT_US: 'Додати Про Нас',
   DELETE_TITLE: 'Видалити',
   EDIT_TITLE: 'Редагувати',
   CREATE_NEWS_TITLE: 'Додати новину',
   CREATE_PATTERN_TITLE: 'Додати гобелен',
   CREATE_MODEL_TITLE: 'Додати модель',
   MODEL_SAVE_TITLE: 'Зберегти',
+  CREATE_MATERIAL_TITLE_BLOCK: 'Додати блок матеріалів',
   MODEL_CONSTRUCTOR: 'Конструктор',
   CANCEL_TITLE: 'Ні',
   LOGOUT_TITLE: 'Вихід',
@@ -62,7 +64,8 @@ const buttonTitles = {
   LOOK: 'Переглянути',
   ADD_ORDER: 'Додати замовлення',
   USER_ROLE_TITLE: 'Роль',
-  EVENT_TITLE: 'Подія',
+  HISTORY_ACTION: 'За подією',
+  HISTORY_NAME: "За ім'ям",
   SEND_CONFIRM: 'Надіслати підтвердження',
   SEND_CODE: 'Надіслати код для підтвердження',
   EXIT_WITHOUT_SAVING: 'Вийти без збереження',
@@ -86,7 +89,8 @@ const buttonTitles = {
   CREATE_POSITION_TITLE: 'Додати розміщення',
   CREATE_BASIC_TITLE: 'Додати основу',
   CREATE_STRAP_TITLE: 'Додати ремінець',
-  AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор'
+  AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор',
+  GENERATE_CERTIFICATE: 'Згенерувати'
 };
 
 export default buttonTitles;

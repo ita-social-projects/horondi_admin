@@ -1,10 +1,7 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import StandardButton from './standard-button';
 import { config, inputTypes } from '../../../configs';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const { SAVE_TITLE } = config.buttonTitles;
 
@@ -32,6 +29,7 @@ describe('standard button tests', () => {
   });
 
   it('should click', () => {
+    expect(mockCallBack.mock.calls.length).toBe(0);
     component.find('button').simulate('click');
     expect(mockCallBack.mock.calls.length).toBe(1);
   });

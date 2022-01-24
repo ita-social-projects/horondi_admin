@@ -71,10 +71,6 @@ describe('Straps form tests', () => {
     spyOnUseSelector.mockClear();
   });
 
-  it('Should match snapshot', () => {
-    expect(component).toMatchSnapshot;
-  });
-
   it('Should upload image', () => {
     const imageContainer = component.find(ImageUploadContainer);
     const handler = imageContainer.prop('handler');

@@ -44,7 +44,7 @@ import QuestionsAnswers from '../questions-answers.reducer';
 const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
   config.statuses;
 
-describe('questions answers sagas test', () => {
+describe.skip('questions answers sagas test', () => {
   it('must get all questions answers and set to store', () =>
     expectSaga(handleQuestionsAnswersLoad)
       .withReducer(QuestionsAnswers)

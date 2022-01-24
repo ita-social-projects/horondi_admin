@@ -29,6 +29,7 @@ import PanoramaVerticalIcon from '@material-ui/icons/PanoramaVertical';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
+import PeopleIcon from '@material-ui/icons/People';
 
 import routes from './routes';
 
@@ -37,8 +38,10 @@ export const menuCategories = [
   ['Замовлення', routes.pathToOrders, ShoppingBasketIcon],
   ['Статистика', routes.pathToStatistic, BarChartIcon],
   ['Останні зміни', routes.pathToHistory, HistoryIcon],
+  ['Про Нас', routes.pathToAboutUs, PeopleIcon],
   ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
-  ['Посилання', routes.pathToHeaders, LinkIcon]
+  ['Посилання', routes.pathToHeaders, LinkIcon],
+  ['Про матеріали', routes.pathToAboutMaterials, ExtensionIcon]
 ];
 
 export const clientMenuCategories = [
@@ -77,4 +80,13 @@ export const constructorMenuCategories = [
   ['Спинка', routes.pathToBacks, PanoramaVerticalIcon],
   ['Ремінці', routes.pathToStraps, ConfirmationNumberIcon],
   ['Защіпки', routes.pathToClosures, AllInclusiveIcon]
+];
+
+export const certificatesMenuCategories = [
+  ['Створити сертифікат', routes.pathToCreateCertificates, AccountCircleIcon],
+  [
+    'Інформація про сертифікати',
+    routes.pathToAboutCertificate,
+    AccountCircleIcon
+  ]
 ];

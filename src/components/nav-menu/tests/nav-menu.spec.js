@@ -85,7 +85,27 @@ describe('Nav menu test', () => {
   });
 
   it('Should render ExpandLess when click on Клієнти', () => {
-    wrapper.find(ListItem).at(6).invoke('onClick')();
+    wrapper.find(ListItem).at(8).invoke('onClick')();
+    expect(wrapper.exists(ExpandLess)).toBe(true);
+  });
+
+  it('Should render ExpandLess when click on Каталог', () => {
+    wrapper.find(ListItem).at(9).invoke('onClick')();
+    expect(wrapper.exists(ExpandLess)).toBe(true);
+  });
+
+  it('Should render ExpandLess when click on Сертифікати', () => {
+    wrapper.find(ListItem).at(10).invoke('onClick')();
+    expect(wrapper.exists(ExpandLess)).toBe(true);
+  });
+
+  it('Should render ExpandLess when click on Конструктор', () => {
+    wrapper.find(ListItem).at(11).invoke('onClick')();
+    expect(wrapper.exists(ExpandLess)).toBe(true);
+  });
+
+  it('Should render ExpandLess when click on Статичні сторінки', () => {
+    wrapper.find(ListItem).at(12).invoke('onClick')();
     expect(wrapper.exists(ExpandLess)).toBe(true);
   });
 

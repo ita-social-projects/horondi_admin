@@ -42,10 +42,21 @@ const NavMenu = ({ width }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [clientTab, setClientTab] = useState(false);
-  const [catalogTab, setCatalogTab] = useState(false);
-  const [staticTab, setStaticTab] = useState(false);
-  const [constructorTab, setConstructorTab] = useState(false);
+  const [navbarTab, setNavbarTab] = useState({
+    clientTab: false,
+    catalogTab: false,
+    certificatesTab: false,
+    constructorTab: false,
+    staticTab: false
+  });
+
+  const staticArray = {
+    clientTab: false,
+    catalogTab: false,
+    certificatesTab: false,
+    constructorTab: false,
+    staticTab: false
+  };
 
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
@@ -99,34 +110,66 @@ const NavMenu = ({ width }) => {
       returnedList(category[0], category[1], category[2], classes.nested)
   );
 
+  const certificatesMenuItems = config.certificatesMenuCategories.map(
+    (category) =>
+      returnedList(category[0], category[1], category[2], classes.nested)
+  );
+
   const parentMenuTabsProperties = [
     [
-      () => setClientTab(!clientTab),
-      clientTab,
+      () =>
+        setNavbarTab({
+          ...staticArray,
+          clientTab: !navbarTab.clientTab
+        }),
+      navbarTab.clientTab,
       clientMenuItems,
       MENU_TABS.CLIENTS,
       AccessibilityNewIcon
     ],
     [
-      () => setCatalogTab(!catalogTab),
-      catalogTab,
+      () =>
+        setNavbarTab({
+          ...staticArray,
+          catalogTab: !navbarTab.catalogTab
+        }),
+      navbarTab.catalogTab,
       catalogMenuItems,
       MENU_TABS.CATALOG,
       ImportContactsIcon
     ],
     [
-      () => setStaticTab(!staticTab),
-      staticTab,
+      () =>
+        setNavbarTab({
+          ...staticArray,
+          certificatesTab: !navbarTab.certificatesTab
+        }),
+      navbarTab.certificatesTab,
+      certificatesMenuItems,
+      MENU_TABS.CERTIFICATES,
+      TuneIcon
+    ],
+    [
+      () =>
+        setNavbarTab({
+          ...staticArray,
+          constructorTab: !navbarTab.constructorTab
+        }),
+      navbarTab.constructorTab,
+      constructorPagesMenuItems,
+      MENU_TABS.CONSTRUCTOR,
+      AccessibilityNewIcon
+    ],
+    [
+      () =>
+        setNavbarTab({
+          ...staticArray,
+          staticTab: !navbarTab.staticTab
+        }),
+      navbarTab.staticTab,
       staticPagesMenuItems,
       MENU_TABS.STATIC_PAGES,
       LayersIcon
-    ],
-    [
-      () => setConstructorTab(!constructorTab),
-      constructorTab,
-      constructorPagesMenuItems,
-      MENU_TABS.CONSTRUCTOR,
-      TuneIcon
     ]
   ];
 
