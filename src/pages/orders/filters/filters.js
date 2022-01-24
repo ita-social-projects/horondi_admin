@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ContainerFilters from '../../../components/container-filters';
-import ComponentFilterClear from '../../../components/filters-components/filter-clear';
 import ComponentFilterDateRangePicker from '../../../components/filters-components/filter-date-range-picker';
 import ComponentFilterSinglePicker from '../../../components/filters-components/filter-single-picker';
+import ContainerFilters from '../../../components/container-filters';
+import ComponentFilterClear from '../../../components/filters-components/filter-clear';
 import filterLabels from '../../../configs/filter-labels';
 import {
   clearOrderFilters,

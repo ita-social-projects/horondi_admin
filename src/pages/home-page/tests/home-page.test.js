@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import HomePageEdit from '../index';
-
 import titles from '../../../configs/titles';
 
 const { homePageTitles } = titles;
@@ -52,7 +51,6 @@ describe('Home page tests', () => {
   it('Should display loading bar', () => {
     state.loading = true;
     store.dispatch({ type: 'ANY_ACTION' });
-
     expect(wrapper.find('LoadingBar').length).toEqual(0);
   });
 });
