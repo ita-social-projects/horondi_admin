@@ -1,4 +1,4 @@
-import { getItems } from '../../utils/client';
+import { getItems, setItems } from '../../utils/client';
 
 export const getAllCertificates = async (skip, limit) => {
   const query = `
@@ -25,4 +25,24 @@ export const getAllCertificates = async (skip, limit) => {
   });
 
   return result?.data?.getAllCertificates;
+};
+
+export const deleteCertificate = async (id) => {
+  const query = `
+    mutation($id: ID!) {
+      deleteCertificate(id: $id) {
+        ... on Certificate {
+            _id
+        }
+        ... on Error {
+            statusCode
+            message
+        }
+      }
+    }
+  `;
+
+  const result = await setItems(query, { id });
+
+  return result?.data?.deleteCertificate;
 };

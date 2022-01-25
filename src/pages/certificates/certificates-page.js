@@ -2,17 +2,23 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import { config } from '../../configs';
 import Filter from './filters/filters';
 import { useCommonStyles } from '../common.styles';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import Status from './status/status';
-import { getCertificateList } from '../../redux/certificates/certificates.actions';
+import {
+  deleteCertificate,
+  getCertificateList
+} from '../../redux/certificates/certificates.actions';
 
 import Certificate from './certificate/certificate';
 import { inputName } from '../../utils/order';
 import { getUsers } from '../../redux/users/users.actions';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import { deleteOrder } from '../../redux/orders/orders.actions';
 
 const map = require('lodash/map');
 
@@ -22,6 +28,7 @@ const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
 const tableTitles = config.tableHeadRowTitles.certificates;
 const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
 const { NO_CERTIFICATE_MESSAGE } = config.messages;
+const { REMOVE_CERTIFICATE_MESSAGE } = config.messages;
 
 const transformDate = (date) => {
   const exactDate = new Date(date);
@@ -35,15 +42,18 @@ const transformDate = (date) => {
 const checkStatus = (active, used) => {
   if (active) {
     return 'Активний';
-  } if (used) {
+  }
+  if (used) {
     return 'Використаний';
-  } if (!active && !used) {
+  }
+  if (!active && !used) {
     return 'Прострочений';
   }
 };
 
 const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
+  const { openSuccessSnackbar } = useSuccessSnackbar();
   const dispatch = useDispatch();
   const { items: certificatesList } = useSelector(
     ({ Certificates }) => Certificates.list
@@ -54,6 +64,14 @@ const CertificatesPage = () => {
     rowsPerPage: Table.pagination.rowsPerPage,
     itemsCount: Table.itemsCount
   }));
+
+  const deleteCertificateHandler = (id) => {
+    const removeCertificate = () => {
+      dispatch(closeDialog());
+      dispatch(deleteCertificate(id));
+    };
+    openSuccessSnackbar(removeCertificate, REMOVE_CERTIFICATE_MESSAGE);
+  };
 
   useEffect(() => {
     dispatch(getUsers({}));
@@ -103,7 +121,7 @@ const CertificatesPage = () => {
             )}`
           : '-'
       }
-      deleteHandler={() => {}}
+      deleteHandler={() => deleteCertificateHandler(certificate._id)}
       editHandler={() => {}}
       showAvatar={false}
     />
