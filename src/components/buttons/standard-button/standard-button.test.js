@@ -42,13 +42,6 @@ describe('standard button tests', () => {
     expect(component.find(inputTypes.button).type()).toEqual(inputTypes.button);
   });
   it('should have props', () => {
-    expect(component.props().size).toBeDefined();
     expect(component.props().size).toEqual(size);
-    expect(component.props().onClickHandler).toBeDefined();
-    expect(component.props().onClickHandler).toBeTruthy();
-  });
-  it('should have propTypes', () => {
-    expect(StandardButton.propTypes.title).toBeDefined();
-    expect(StandardButton.propTypes.onClickHandler).toBeDefined();
   });
 });
