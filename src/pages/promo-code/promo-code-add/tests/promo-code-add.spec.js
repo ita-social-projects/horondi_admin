@@ -10,9 +10,6 @@ import { theme } from '../../../../components/app/app-theme/app.theme';
 
 jest.mock('react-redux');
 jest.mock('@apollo/client');
-jest.mock('../promo-code-add.styles', () => ({
-  useStyles: () => ({})
-}));
 
 const dispatch = jest.fn();
 const mockMutation = jest.fn();
