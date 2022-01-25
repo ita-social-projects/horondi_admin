@@ -1,9 +1,18 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { getAllCertificates } from './certificates.operations';
-import { GET_CERTIFICATES_LIST } from './certificates.types';
-import { setCertificateList } from './certificates.actions';
-import { setItemsCount } from '../table/table.actions';
+import {
+  getAllCertificates,
+  deleteCertificate
+} from './certificates.operations';
+import {
+  GET_CERTIFICATES_LIST,
+  DELETE_CERTIFICATE
+} from './certificates.types';
+import {
+  setCertificateList,
+  removeCertificateFromStore
+} from './certificates.actions';
+import { setItemsCount, updatePagination } from '../table/table.actions';
 
 export function* handleCertificatesListLoad({ payload }) {
   try {
@@ -22,6 +31,19 @@ export function* handleCertificatesListLoad({ payload }) {
   }
 }
 
+export function* handleDeleteCertificate({ payload }) {
+  try {
+    const certificate = yield call(deleteCertificate, payload);
+    if (certificate) {
+      yield put(removeCertificateFromStore(payload));
+      yield put(updatePagination());
+    }
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
 export default function* certificatesSaga() {
   yield takeEvery(GET_CERTIFICATES_LIST, handleCertificatesListLoad);
+  yield takeEvery(DELETE_CERTIFICATE, handleDeleteCertificate);
 }

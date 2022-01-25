@@ -60,6 +60,7 @@ const messages = {
   NO_CLOSURE_MESSAGE: 'Замочки відсутні',
   DELETE_BASIC_MESSAGE: 'Ви впевнені, що хочете видалити цю основу?',
   NO_BASICS_MESSAGE: 'Основи відсутні',
-  NO_CERTIFICATE_MESSAGE: 'Сертифікати відсутні'
+  NO_CERTIFICATE_MESSAGE: 'Сертифікати відсутні',
+  REMOVE_CERTIFICATE_MESSAGE: 'Ви впевнені, що хочете видалити цей сертифікат?'
 };
 export default messages;
