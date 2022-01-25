@@ -21,7 +21,7 @@ const Certificate = ({ name, value }) => {
 
 Certificate.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.number.isRequired
 };
 
 export default Certificate;
