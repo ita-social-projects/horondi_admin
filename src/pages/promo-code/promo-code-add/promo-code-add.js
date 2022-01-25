@@ -53,7 +53,7 @@ const PromoCodeAdd = () => {
       initialState={initialState}
       pathToPromoCodesPage={pathToPromoCodesPage}
       goToPromoPage={goToPromoPage}
-      onSubmittPromoCodeHandler={addPromoCodeHandler}
+      addPromoCodeHandler={addPromoCodeHandler}
       promoValidationSchema={promoValidationSchema}
     />
   );
