@@ -1,25 +1,48 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from 'react-dom';
+import { useDispatch } from 'react-redux';
+import { ThemeProvider } from '@material-ui/styles';
 import { BrowserRouter } from 'react-router-dom';
 import MaterialAbout from '../material-about';
+import { theme } from '../../../components/app/app-theme/app.theme';
+import TableContainerRow from '../../../containers/table-container-row';
+import TableContainerGenerator from '../../../containers/table-container-generator';
 
-describe('MaterialAbout should, ', () => {
-  it(' render', () => {
-    const wrapper = render(
+jest.mock('react-redux');
+jest.mock('@apollo/client');
+jest.mock('../material-page.styles', () => ({
+  useStyles: () => ({})
+}));
+
+const themeValue = theme('light');
+const dispatch = jest.fn();
+
+useDispatch.mockImplementation(() => dispatch);
+
+let wrapper;
+
+describe('MaterialAbout component tests, ', () => {
+  beforeEach(() => {
+    wrapper = mount(
       <BrowserRouter>
-        <MaterialAbout />
+        <ThemeProvider theme={themeValue}>
+          <MaterialAbout />
+        </ThemeProvider>
       </BrowserRouter>
     );
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+    wrapper = null;
+  });
+
+  it('Should render AboutMaterial', () => {
     expect(wrapper).toBeDefined();
   });
-  it(' render', () => {
-    const { getByTestId } = render(
-      <BrowserRouter>
-        <MaterialAbout />
-      </BrowserRouter>
-    );
-    const form = getByTestId('createMaterialButton');
-    fireEvent.click(form);
-    expect(form).toBeInTheDocument();
+  it('Component TableContainerRow should exist', () => {
+    expect(wrapper.exists(TableContainerRow)).toBe(true);
+  });
+  it('Component TableContainerGenerator should exist', () => {
+    expect(wrapper.exists(TableContainerGenerator)).toBe(true);
   });
 });

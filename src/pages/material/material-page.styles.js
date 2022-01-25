@@ -22,5 +22,19 @@ export const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     marginBottom: '15px',
     marginTop: '-25px'
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '20px'
+  },
+  materialTitle: {
+    marginBottom: '10px',
+    fontSize: 24,
+    color: theme.palette.text.disabled,
+    fontWeight: 'bold',
+    '@media (max-width: 450px)': {
+      fontSize: theme.spacing(2)
+    }
   }
 }));
