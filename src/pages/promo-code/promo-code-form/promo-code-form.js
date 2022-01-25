@@ -19,7 +19,7 @@ function PromoCodeForm({
   pathToPromoCodesPage,
   initialState,
   promoValidationSchema,
-  addPromoCodeHandler,
+  onSubmittPromoCodeHandler,
   goToPromoPage
 }) {
   const styles = useStyles();
@@ -37,7 +37,7 @@ function PromoCodeForm({
     validationSchema: promoValidationSchema,
     initialValues: initialState,
     onSubmit: () =>
-      addPromoCodeHandler({
+      onSubmittPromoCodeHandler({
         variables: {
           promoCode: values
         }
@@ -150,7 +150,7 @@ PromoCodeForm.propTypes = {
   pathToPromoCodesPage: PropTypes.string.isRequired,
   initialState: PropTypes.objectOf(PropTypes.string).isRequired,
   promoValidationSchema: PropTypes.objectOf(PropTypes.string).isRequired,
-  addPromoCodeHandler: PropTypes.func.isRequired,
+  onSubmittPromoCodeHandler: PropTypes.func.isRequired,
   goToPromoPage: PropTypes.func.isRequired
 };
 
