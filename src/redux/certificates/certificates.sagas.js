@@ -9,13 +9,19 @@ import {
   DELETE_CERTIFICATE
 } from './certificates.types';
 import {
-  setCertificateList,
-  removeCertificateFromStore
+  setCertificatesList,
+  removeCertificateFromStore,
+  setCertificatesLoading
 } from './certificates.actions';
 import { setItemsCount, updatePagination } from '../table/table.actions';
+import { handleSuccessSnackbar } from '../snackbar/snackbar.sagas';
+import { config } from '../../configs';
+
+const { SUCCESS_DELETE_STATUS } = config.statuses;
 
 export function* handleCertificatesListLoad({ payload }) {
   try {
+    yield put(setCertificatesLoading(true));
     const certificates = yield call(
       getAllCertificates,
       payload.skip,
@@ -24,19 +30,24 @@ export function* handleCertificatesListLoad({ payload }) {
 
     if (certificates) {
       yield put(setItemsCount(certificates?.count));
-      yield put(setCertificateList(certificates));
+      yield put(setCertificatesList(certificates));
     }
   } catch (e) {
     throw new Error(e);
+  } finally {
+    yield put(setCertificatesLoading(false));
   }
 }
 
 export function* handleDeleteCertificate({ payload }) {
   try {
+    yield put(setCertificatesLoading(true));
     const certificate = yield call(deleteCertificate, payload);
     if (certificate) {
       yield put(removeCertificateFromStore(payload));
+      yield put(setCertificatesLoading(false));
       yield put(updatePagination());
+      yield call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS);
     }
   } catch (e) {
     throw new Error(e);

@@ -1,10 +1,12 @@
 import {
   SET_CERTIFICATES_LIST,
-  REMOVE_CERTIFICATE_FROM_STORE
+  REMOVE_CERTIFICATE_FROM_STORE,
+  SET_CERTIFICATES_LOADING
 } from './certificates.types';
 
 const initialState = {
-  list: { count: 0, items: [] }
+  list: { count: 0, items: [] },
+  certificatesLoading: false
 };
 
 const certificatesReducer = (state = initialState, action = {}) => {
@@ -25,6 +27,11 @@ const certificatesReducer = (state = initialState, action = {}) => {
           ...state.list,
           items: updatedList
         }
+      };
+    case SET_CERTIFICATES_LOADING:
+      return {
+        ...state,
+        certificatesLoading: action.payload
       };
     default:
       return state;
