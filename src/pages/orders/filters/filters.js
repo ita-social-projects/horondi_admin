@@ -31,7 +31,6 @@ function Filters() {
         setFilterValue={setOrderFilter}
         filters={{ dateFrom, dateTo }}
       />
-
       <ComponentFilterSinglePicker
         setFilterValue={setOrderSort}
         actionSetLabel={setOrderSortLabel}
@@ -39,7 +38,6 @@ function Filters() {
         options={filterLabels.orders.sortLabels}
         label={sortLabel}
       />
-
       <ComponentFilterMultiplePicker
         setFilterValue={setOrderFilter}
         selectorFunc={(selector) => ({ paymentStatus: selector })}
@@ -47,7 +45,6 @@ function Filters() {
         options={paymentOptions}
         label={buttonTitles.PAYMENT_STATUS}
       />
-
       <ComponentFilterMultiplePicker
         setFilterValue={setOrderFilter}
         selectorFunc={(selector) => ({ status: selector })}
@@ -55,13 +52,11 @@ function Filters() {
         options={config.labels.orders.select}
         label={buttonTitles.ORDER_STATUS}
       />
-
       <ComponentFilterSearch
         setFilterValue={setOrderFilter}
         value={filters.search}
         selectorFunc={(selector) => ({ search: selector })}
       />
-
       <ComponentFilterClear actionClearFilters={clearOrderFilters} />
     </ContainerFilters>
   );
