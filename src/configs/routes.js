@@ -28,6 +28,7 @@ const routes = {
   pathToAboutCertificate: '/certificates/about-certificate',
   pathToPromoCodes: '/promo/',
   pathToAddPromoCode: '/promo/add-promo',
+  pathToEditPromoCode: '/promo/:id',
   pathToCategories: '/categories',
   pathToAddCategory: '/categories/add-category',
   pathToEditCategory: '/categories/:id',
