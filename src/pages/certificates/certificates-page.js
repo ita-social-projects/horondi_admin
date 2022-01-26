@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
@@ -11,14 +11,14 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import Status from './status/status';
 import {
   deleteCertificate,
-  getCertificateList
+  getCertificatesList
 } from '../../redux/certificates/certificates.actions';
 
+import LoadingBar from '../../components/loading-bar/loading-bar';
 import Certificate from './certificate/certificate';
 import { inputName } from '../../utils/order';
 import { getUsers } from '../../redux/users/users.actions';
 import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
-import { deleteOrder } from '../../redux/orders/orders.actions';
 
 const map = require('lodash/map');
 
@@ -55,9 +55,14 @@ const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const dispatch = useDispatch();
-  const { items: certificatesList } = useSelector(
-    ({ Certificates }) => Certificates.list
+
+  const { items: certificatesList, certificatesLoading: loading } = useSelector(
+    ({ Certificates }) => ({
+      items: Certificates.list,
+      certificatesLoading: Certificates.certificatesLoading
+    })
   );
+
   const usersList = useSelector(({ Users }) => Users.list);
   const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
@@ -79,7 +84,7 @@ const CertificatesPage = () => {
 
   useEffect(() => {
     dispatch(
-      getCertificateList({
+      getCertificatesList({
         limit: rowsPerPage,
         skip: currentPage * rowsPerPage
       })
@@ -98,7 +103,7 @@ const CertificatesPage = () => {
     }
   };
 
-  const certificateItems = map(certificatesList, (certificate) => (
+  const certificateItems = map(certificatesList.items, (certificate) => (
     <TableContainerRow
       key={certificate._id}
       number={certificate.name}
@@ -128,36 +133,42 @@ const CertificatesPage = () => {
   ));
 
   return (
-    <div className={commonStyles.container}>
-      <div className={commonStyles.adminHeader}>
-        <Typography variant='h1' className={commonStyles.materialTitle}>
-          {pageTitle}
-        </Typography>
-        <Button
-          data-cy='add-certificate'
-          component={Link}
-          to={pathToCreateCertificatesPage}
-          variant='contained'
-          color='primary'
-        >
-          {CREATE_CERTIFICATE_TITLE}
-        </Button>
-      </div>
-      <div>
-        <Filter />
-      </div>
-      {certificateItems.length ? (
-        <TableContainerGenerator
-          data-cy='certificateTable'
-          pagination
-          count={itemsCount}
-          tableTitles={tableTitles}
-          tableItems={certificateItems}
-        />
+    <>
+      {loading ? (
+        <LoadingBar />
       ) : (
-        <p className={commonStyles.noRecords}>{NO_CERTIFICATE_MESSAGE}</p>
+        <div className={commonStyles.container}>
+          <div className={commonStyles.adminHeader}>
+            <Typography variant='h1' className={commonStyles.materialTitle}>
+              {pageTitle}
+            </Typography>
+            <Button
+              data-cy='add-certificate'
+              component={Link}
+              to={pathToCreateCertificatesPage}
+              variant='contained'
+              color='primary'
+            >
+              {CREATE_CERTIFICATE_TITLE}
+            </Button>
+          </div>
+          <div>
+            <Filter />
+          </div>
+          {certificateItems.length ? (
+            <TableContainerGenerator
+              data-cy='certificateTable'
+              pagination
+              count={itemsCount}
+              tableTitles={tableTitles}
+              tableItems={certificateItems}
+            />
+          ) : (
+            <p className={commonStyles.noRecords}>{NO_CERTIFICATE_MESSAGE}</p>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
