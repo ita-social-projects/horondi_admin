@@ -1,11 +1,15 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import titles from '../../../configs/titles';
 import HomePageEdit from '../index';
 
+import titles from '../../../configs/titles';
+
 const { homePageTitles } = titles;
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('Home page tests', () => {
   let wrapper;
@@ -33,7 +37,7 @@ describe('Home page tests', () => {
   });
 
   it('Component should exist', () => {
-    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.exists());
     expect(wrapper.find('div[className*="container"]').first()).toBeTruthy();
   });
 
