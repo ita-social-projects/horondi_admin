@@ -1,8 +1,8 @@
 import React from 'react';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import configureStore from '../../../store/store';
 import HomePageEdit from '../index';
 
 import titles from '../../../configs/titles';
