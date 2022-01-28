@@ -9,7 +9,6 @@ import {
   handleProductSpeciesLoad,
   handleModelsLoad,
   handleProductAdd,
-  handleProductDelete,
   handleProductUpdate,
   handleProductLoad,
   handleProductsErrors,
@@ -36,7 +35,6 @@ import {
   getProductCategories,
   getModelsByCategory,
   addProduct,
-  deleteProduct,
   getProduct,
   updateProduct,
   deleteImages
@@ -54,7 +52,6 @@ import {
   mockProductsToAddState,
   mockProduct,
   statuses,
-  mockProductToDelete,
   mockProductToUpdatePayload,
   mockProductToUpload,
   mockSnackarState,
@@ -244,23 +241,6 @@ describe('Test products saga', () => {
         expect(analysisPut).toHaveLength(4);
         expect(analysisCall).toHaveLength(3);
         expect(analysisSelect).toHaveLength(1);
-      }));
-
-  it('should delete product', () =>
-    expectSaga(handleProductDelete, { payload: mockProductToDelete })
-      .withReducer(combineReducers({ Products }), {
-        Products: mockProductsState
-      })
-      .provide([
-        [call(deleteProduct, mockProductToDelete.id)],
-        [call(handleFilterLoad)],
-        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
-      ])
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisCall = analysis.filter((e) => e.type === 'CALL');
-        expect(analysisCall).toHaveLength(9);
       }));
 
   it('should update product', () =>

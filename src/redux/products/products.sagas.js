@@ -42,11 +42,11 @@ import {
   getProductCategories,
   getModelsByCategory,
   addProduct,
-  deleteProduct,
   getProduct,
   updateProduct,
   deleteImages,
-  getProductDetails
+  getProductDetails,
+  deleteManyProducts
 } from './products.operations';
 
 import {
@@ -90,7 +90,7 @@ export function* handleProductDelete({ payload }) {
   try {
     yield put(setProductsLoading(true));
 
-    yield call(deleteProduct, payload?.id);
+    yield call(deleteManyProducts, [payload?.id]);
 
     if (payload.request) {
       yield call(handleFilterLoad, payload);
