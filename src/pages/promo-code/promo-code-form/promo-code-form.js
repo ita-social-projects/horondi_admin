@@ -39,7 +39,14 @@ function PromoCodeForm({
     onSubmit: () =>
       addPromoCodeHandler({
         variables: {
-          promoCode: values
+          id: values._id || null,
+          promoCode: {
+            code: values.code,
+            dateTo: values.dateTo,
+            dateFrom: values.dateFrom,
+            discount: values.discount,
+            categories: ['Backpack']
+          }
         }
       }).then(goToPromoPage)
   });

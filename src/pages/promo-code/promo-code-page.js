@@ -30,7 +30,13 @@ const PromoCodePage = () => {
   const { promoCodesTranslation } = orders;
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
 
-  const { data, refetch, loading } = useQuery(getAllPromoCodes);
+  const { data, refetch, loading } = useQuery(getAllPromoCodes, {
+    context: {
+      headers: {
+        token
+      }
+    }
+  });
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
   const promoCodes = data?.getAllPromoCodes || {};
   const runRefetchData = () => refetch();

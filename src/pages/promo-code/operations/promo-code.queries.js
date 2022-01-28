@@ -9,6 +9,22 @@ export const getAllPromoCodes = gql`
         dateTo
         discount
         code
+        categories
+      }
+    }
+  }
+`;
+
+export const getPromoCodeById = gql`
+  query GET($id: ID!) {
+    getPromoCodeById(id: $id) {
+      ... on PromoCode {
+        _id
+        code
+        dateFrom
+        dateTo
+        discount
+        categories
       }
     }
   }

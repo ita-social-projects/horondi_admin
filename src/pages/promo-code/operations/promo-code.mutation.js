@@ -19,3 +19,25 @@ export const deletePromoCodeByID = gql`
     }
   }
 `;
+
+export const updatePromoCode = gql`
+  mutation ($id: ID!, $promoCode: PromoCodeInput!) {
+    updatePromoCode(promoCode: $promoCode, id: $id) {
+      ... on PromoCode {
+        _id
+        code
+        dateTo
+        dateFrom
+        discount
+        categories
+      }
+    }
+  }
+`;
+
+// _id
+// code
+// dateTo
+// dateFrom
+// discount
+// categories

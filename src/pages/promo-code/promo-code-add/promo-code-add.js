@@ -26,7 +26,8 @@ const PromoCodeAdd = () => {
     code: '',
     dateTo: '',
     dateFrom: '',
-    discount: ''
+    discount: '',
+    category: ['All']
   };
 
   const onCompletedHandler = () => {
