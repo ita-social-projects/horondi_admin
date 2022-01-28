@@ -34,10 +34,3 @@ export const updatePromoCode = gql`
     }
   }
 `;
-
-// _id
-// code
-// dateTo
-// dateFrom
-// discount
-// categories
