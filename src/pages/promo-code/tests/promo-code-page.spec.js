@@ -15,6 +15,9 @@ jest.mock('@apollo/client');
 jest.mock('../promo-code-page.styles', () => ({
   useStyles: () => ({})
 }));
+jest.mock('connected-react-router', () => ({
+  push: jest.fn()
+}));
 
 const themeValue = theme('light');
 const dispatch = jest.fn();
