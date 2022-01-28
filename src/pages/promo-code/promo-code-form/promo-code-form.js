@@ -17,10 +17,16 @@ import { BackButton } from '../../../components/buttons';
 
 function PromoCodeForm({
   pathToPromoCodesPage,
-  initialState,
   promoValidationSchema,
   addPromoCodeHandler,
-  goToPromoPage
+  goToPromoPage,
+  initialState = {
+    code: '',
+    dateTo: '',
+    dateFrom: '',
+    discount: '',
+    categories: ['All']
+  }
 }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
@@ -39,13 +45,13 @@ function PromoCodeForm({
     onSubmit: () =>
       addPromoCodeHandler({
         variables: {
-          id: values._id || null,
+          id: values?._id,
           promoCode: {
             code: values.code,
             dateTo: values.dateTo,
             dateFrom: values.dateFrom,
             discount: values.discount,
-            categories: ['Backpack']
+            categories: values.categories
           }
         }
       }).then(goToPromoPage)

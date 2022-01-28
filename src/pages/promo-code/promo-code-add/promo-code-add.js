@@ -22,13 +22,6 @@ const PromoCodeAdd = () => {
 
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
   const pathToPromoCodesPage = config.routes.pathToPromoCodes;
-  const initialState = {
-    code: '',
-    dateTo: '',
-    dateFrom: '',
-    discount: '',
-    category: ['All']
-  };
 
   const onCompletedHandler = () => {
     dispatch(setSnackBarSeverity('success'));
@@ -51,11 +44,10 @@ const PromoCodeAdd = () => {
 
   return (
     <PromoCodeForm
-      initialState={initialState}
+      promoValidationSchema={promoValidationSchema}
       pathToPromoCodesPage={pathToPromoCodesPage}
       goToPromoPage={goToPromoPage}
       addPromoCodeHandler={addPromoCodeHandler}
-      promoValidationSchema={promoValidationSchema}
     />
   );
 };
