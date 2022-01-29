@@ -63,7 +63,7 @@ function PromoCodeForm({
   const { SAVE } = productsTranslations;
 
   return (
-    <div className={commonStyles.container}>
+    <div className={commonStyles.container} data-testid='container'>
       <div className={styles.fixedButtons}>
         <Grid item>
           <BackButton pathBack={pathToPromoCodesPage} />

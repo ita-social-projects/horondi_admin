@@ -62,15 +62,13 @@ function PromoCodeEdit() {
   }
 
   return (
-    <>
-      <PromoCodeForm
-        initialState={promoCode}
-        promoValidationSchema={promoValidationSchema}
-        pathToPromoCodesPage={pathToPromoCodesPage}
-        addPromoCodeHandler={updatePromoCodeHandler}
-        goToPromoPage={goToPromoPage}
-      />
-    </>
+    <PromoCodeForm
+      initialState={promoCode}
+      promoValidationSchema={promoValidationSchema}
+      pathToPromoCodesPage={pathToPromoCodesPage}
+      addPromoCodeHandler={updatePromoCodeHandler}
+      goToPromoPage={goToPromoPage}
+    />
   );
 }
 
