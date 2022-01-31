@@ -17,5 +17,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   smallCell: {
     width: '150px'
+  },
+  image: {
+    maxWidth: '300px'
   }
 }));

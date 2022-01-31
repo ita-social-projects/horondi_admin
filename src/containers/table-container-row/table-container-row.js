@@ -66,7 +66,9 @@ const TableContainerRow = ({
           </Avatar>
         </TableCell>
       )}
+
       {tableCells}
+
       {(showEdit || showDelete) && (
         <TableCell className={classes.smallCell}>
           {showEdit && (
