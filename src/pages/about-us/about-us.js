@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useStyles } from './about-us.styles';
 import materialUiConstants from '../../configs/material-ui-constants';
 import { config } from '../../configs';
+import TableAboutUs from './components/about-us-table/table-about-us';
 
 const { ADD_ABOUT_US } = config.buttonTitles;
 const { pathToAboutUsAdd } = config.routes;
@@ -30,6 +31,7 @@ const AboutUs = () => {
           {ADD_ABOUT_US}
         </Button>
       </div>
+      <TableAboutUs />
     </div>
   );
 };
