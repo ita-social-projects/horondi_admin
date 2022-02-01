@@ -1,12 +1,20 @@
 import {
   SET_CERTIFICATES_LIST,
   REMOVE_CERTIFICATE_FROM_STORE,
-  SET_CERTIFICATES_LOADING
+  SET_CERTIFICATES_LOADING,
+  CLEAR_FILTERS
 } from './certificates.types';
+
+const initialFilters = {
+  price: [],
+  status: [],
+  search: ''
+};
 
 const initialState = {
   list: { count: 0, items: [] },
-  certificatesLoading: false
+  certificatesLoading: false,
+  filters: initialFilters
 };
 
 const certificatesReducer = (state = initialState, action = {}) => {
@@ -32,6 +40,11 @@ const certificatesReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         certificatesLoading: action.payload
+      };
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: initialFilters
       };
     default:
       return state;

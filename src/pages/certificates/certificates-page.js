@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
@@ -78,6 +78,8 @@ const CertificatesPage = () => {
     openSuccessSnackbar(removeCertificate, REMOVE_CERTIFICATE_MESSAGE);
   };
 
+  const deleteHandler = (item) => !item.isActive ? deleteCertificateHandler(item._id) : null;
+
   useEffect(() => {
     dispatch(getUsers({}));
   }, []);
@@ -126,7 +128,7 @@ const CertificatesPage = () => {
             )}`
           : '-'
       }
-      deleteHandler={() => deleteCertificateHandler(certificate._id)}
+      deleteHandler={() => deleteHandler(certificate)}
       editHandler={() => {}}
       showAvatar={false}
     />

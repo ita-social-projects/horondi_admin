@@ -10,6 +10,7 @@ const {
 
 const Status = ({ status }) => {
   const styles = useStyles();
+
   let color;
   switch (status) {
     case EXPIRED: {
@@ -24,6 +25,7 @@ const Status = ({ status }) => {
     default:
       color = styles.blue;
   }
+
   return <div className={color}>{status}</div>;
 };
 
