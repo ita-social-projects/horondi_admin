@@ -3,33 +3,34 @@ import ContainerFilters from '../../../components/container-filters';
 import ComponentFilterClear from '../../../components/filters-components/filter-clear';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
+import { clearFilters } from '../../../redux/certificates/certificates.actions';
 
 const Filters = () => {
   const availablePrice = [
     {
-      value: 0,
-      label: 500
+      value: '0',
+      label: '500'
     },
     {
-      value: 1,
-      label: 1000
+      value: '1',
+      label: '1000'
     },
     {
-      value: 2,
-      label: 1500
+      value: '2',
+      label: '1500'
     }
   ];
   const availableStatus = [
     {
-      value: 0,
+      value: '0',
       label: 'Активний'
     },
     {
-      value: 1,
+      value: '1',
       label: 'Використаний'
     },
     {
-      value: 2,
+      value: '2',
       label: 'Прострочений'
     }
   ];
@@ -52,7 +53,7 @@ const Filters = () => {
         setFilterValue={() => {}}
         selectorFunc={() => {}}
       />
-      <ComponentFilterClear actionClearFilters={() => {}} />
+      <ComponentFilterClear actionClearFilters={clearFilters} />
     </ContainerFilters>
   );
 };
