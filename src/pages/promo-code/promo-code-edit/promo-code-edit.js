@@ -29,7 +29,6 @@ function PromoCodeEdit() {
   const { loading, data } = useQuery(getPromoCodeById, {
     variables: { id },
     fetchPolicy: 'no-cache',
-    nextFetchPolicy: 'cache-and-network',
     context: {
       headers: { token }
     }
