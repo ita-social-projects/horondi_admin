@@ -25,13 +25,12 @@ function PromoCodeEdit() {
   const dispatch = useDispatch();
 
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
+  const tokenForContext = { headers: { token } };
 
   const { loading, data } = useQuery(getPromoCodeById, {
     variables: { id },
     fetchPolicy: 'no-cache',
-    context: {
-      headers: { token }
-    }
+    context: tokenForContext
   });
 
   const onCompletedHandler = () => {
@@ -42,15 +41,10 @@ function PromoCodeEdit() {
 
   const [updatePromoCodeHandler] = useMutation(updatePromoCode, {
     onCompleted: onCompletedHandler,
-    context: {
-      headers: {
-        token
-      }
-    }
+    context: tokenForContext
   });
 
   const pathToPromoCodesPage = config.routes.pathToPromoCodes;
-  const promoCode = data?.getPromoCodeById;
 
   const goToPromoPage = () => {
     history.push(pathToPromoCodesPage);
@@ -62,7 +56,7 @@ function PromoCodeEdit() {
 
   return (
     <PromoCodeForm
-      initialState={promoCode}
+      initialState={data.getPromoCodeById}
       promoValidationSchema={promoValidationSchema}
       pathToPromoCodesPage={pathToPromoCodesPage}
       addPromoCodeHandler={updatePromoCodeHandler}
