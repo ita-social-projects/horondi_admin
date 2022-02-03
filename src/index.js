@@ -5,10 +5,6 @@ import { Provider } from 'react-redux';
 import App from './components/app';
 import configureStore from './store/store';
 import { client } from './utils/client';
-<<<<<<< HEAD
-=======
-
->>>>>>> 0b2dd194 (draft)
 import './index.css';
 
 const store = configureStore();
