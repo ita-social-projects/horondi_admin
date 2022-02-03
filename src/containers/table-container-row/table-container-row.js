@@ -18,6 +18,7 @@ const TableContainerRow = ({
   id,
   text,
   image,
+  imageVal,
   editHandler,
   showAvatar,
   showEdit,
@@ -113,6 +114,7 @@ TableContainerRow.propTypes = {
   showAvatar: PropTypes.bool,
   showEdit: PropTypes.bool,
   showDelete: PropTypes.bool,
+  imageVal: PropTypes.string,
   showCheckbox: PropTypes.bool
 };
 
@@ -125,6 +127,7 @@ TableContainerRow.defaultProps = {
   clickHandler: noop,
   checkboxChangeHandler: noop,
   checkBoxValue: [],
+  imageVal: false,
   showAvatar: true,
   showEdit: true,
   showDelete: true,

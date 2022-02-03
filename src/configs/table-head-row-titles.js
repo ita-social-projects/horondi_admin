@@ -9,12 +9,18 @@ const tableHeadRowTitles = {
     'Деталі'
   ],
 <<<<<<< HEAD
+<<<<<<< HEAD
   aboutUsHeaderTitles: ['Основний заголовок сторінки', 'Дії'],
   aboutUsTitles: ['Заголовок', 'Текст', 'Зображення', 'Дії'],
   aboutUsFooterTitles: ['Зображення у футері сайту', 'Дії'],
 =======
   aboutUsTitles: ['Заголовок', 'Текст', 'Зображення', 'Дії'],
 >>>>>>> c2197c98 (draft)
+=======
+  aboutUsHeaderTitles: ['Основний заголовок сторінки', 'Дії'],
+  aboutUsTitles: ['Заголовок', 'Текст', 'Зображення', 'Дії'],
+  aboutUsFooterTitles: ['Зображення у футері сайту', 'Дії'],
+>>>>>>> a8ec6076 (add table and show data)
   historyDetails: ['Перед змінами', 'Після змін'],
   mainPageOrders: ['Дата', 'Вартість товару', 'Номер замовлення'],
   news: ['Аватар', 'Автор', 'Заголовок', 'Дії'],
