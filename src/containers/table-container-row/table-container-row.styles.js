@@ -20,5 +20,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   image: {
     maxWidth: '300px'
+  },
+  imageValue: {
+    '& img': {
+      maxWidth: '150px'
+    }
   }
 }));
