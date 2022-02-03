@@ -119,7 +119,7 @@ TableContainerRow.defaultProps = {
   clickHandler: noop,
   checkboxChangeHandler: noop,
   checkBoxValue: [],
-  imageVal: false,
+  imageVal: '',
   showAvatar: true,
   showEdit: true,
   showDelete: true,

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { BrowserRouter } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import AboutUs from '../about-us';
 import { theme } from '../../../components/app/app-theme/app.theme';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -41,6 +42,9 @@ describe('AboutUs component tests, ', () => {
   });
   it('Component TableContainerRow should exist', () => {
     expect(wrapper.exists(TableContainerRow)).toBe(true);
+  });
+  it('Component button should exist', () => {
+    expect(wrapper.exists(Button)).toBe(true);
   });
   it('Component TableContainerGenerator should exist', () => {
     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
