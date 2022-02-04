@@ -1,6 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 
@@ -11,10 +10,8 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { getPromoCodeById } from '../operations/promo-code.queries';
 import { updatePromoCode } from '../operations/promo-code.mutation';
-import { getFromLocalStorage } from '../../../services/local-storage.service';
 import { config } from '../../../configs';
 import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
-import { LOCAL_STORAGE } from '../../../consts/local-storage';
 
 import LoadingBar from '../../../components/loading-bar';
 import PromoCodeForm from '../promo-code-form/promo-code-form';
@@ -24,13 +21,9 @@ function PromoCodeEdit() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
-  const tokenForContext = { headers: { token } };
-
-  const { loading, data } = useQuery(getPromoCodeById, {
+  const { loading, error, data } = useQuery(getPromoCodeById, {
     variables: { id },
-    fetchPolicy: 'no-cache',
-    context: tokenForContext
+    fetchPolicy: 'no-cache'
   });
 
   const onCompletedHandler = () => {
@@ -40,8 +33,7 @@ function PromoCodeEdit() {
   };
 
   const [updatePromoCodeHandler] = useMutation(updatePromoCode, {
-    onCompleted: onCompletedHandler,
-    context: tokenForContext
+    onCompleted: onCompletedHandler
   });
 
   const pathToPromoCodesPage = config.routes.pathToPromoCodes;
@@ -50,7 +42,7 @@ function PromoCodeEdit() {
     history.push(pathToPromoCodesPage);
   };
 
-  if (loading) {
+  if (loading || error) {
     return <LoadingBar />;
   }
 

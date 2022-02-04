@@ -26,6 +26,10 @@ export const getPromoCodeById = gql`
         discount
         categories
       }
+      ... on Error {
+        message
+        statusCode
+      }
     }
   }
 `;
