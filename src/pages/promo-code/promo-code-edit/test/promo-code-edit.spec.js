@@ -29,7 +29,7 @@ const history = createMemoryHistory();
 const dispatch = jest.fn();
 useDispatch.mockImplementation(() => dispatch);
 
-describe('edit loading', () => {
+describe('should render component with current data', () => {
   beforeEach(() => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
@@ -72,10 +72,8 @@ describe('edit loading', () => {
 
   it('back button', async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
-    const backButton = screen.getByText(/Назад/i);
 
-    // userEvent.click(backButton);
-    // expect(goToPromoPage).toHaveBeenCalledTimes(1);
+    const backButton = screen.getByText(/Назад/i);
     expect(backButton).toBeInTheDocument(1);
   });
 });
