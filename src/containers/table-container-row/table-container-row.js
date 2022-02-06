@@ -71,7 +71,7 @@ const TableContainerRow = ({
       {tableCells}
       {imageVal && (
         <TableCell className={classes.imageValue}>
-          <img src={imageVal} alt='horondi' />
+          <img src={image} alt='horondi' />
         </TableCell>
       )}
 

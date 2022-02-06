@@ -25,7 +25,7 @@ const AboutUs = () => {
       key={id}
       title={title}
       text={`${text.slice(0, 300)} ...`}
-      imageVal={image}
+      image={image}
     />
   ));
   const aboutUsFooterItem = tableFooter.map(({ id, image }) => (

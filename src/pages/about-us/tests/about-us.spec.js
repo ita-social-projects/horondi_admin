@@ -32,20 +32,20 @@ describe('AboutUs component tests, ', () => {
       </BrowserRouter>
     );
   });
+
   afterEach(() => {
     jest.restoreAllMocks();
     wrapper = null;
   });
 
-  it('Should render AboutUs', () => {
-    expect(wrapper).toBeDefined();
-  });
   it('Component TableContainerRow should exist', () => {
     expect(wrapper.exists(TableContainerRow)).toBe(true);
   });
+
   it('Component button should exist', () => {
     expect(wrapper.exists(Button)).toBe(true);
   });
+
   it('Component TableContainerGenerator should exist', () => {
     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
   });
