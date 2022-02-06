@@ -10,10 +10,6 @@ import { mocks } from './promo-code-edit.variables';
 
 jest.mock('react-redux');
 
-jest.mock('../../../../services/local-storage.service', () => ({
-  getFromLocalStorage: jest.fn()
-}));
-
 const mockHistoryPush = jest.fn();
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
@@ -55,25 +51,18 @@ describe('should render component with current data', () => {
     expect(input).toBeInTheDocument();
   });
 
+  it('should render dateTo', async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    const input = screen.getByText(/2022-03-04/i);
+    expect(input).toBeInTheDocument();
+  });
+
   it('should change promocode discount', async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
 
     const input = screen.getByDisplayValue(/15/i);
     fireEvent.change(input, { target: { value: '5' } });
     expect(input.value).toEqual('5');
-  });
-
-  it('should render dateTo text', async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-
-    const text = screen.queryByText(/Термін дії:/i);
-    expect(text).toBeInTheDocument();
-  });
-
-  it('back button', async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-
-    const backButton = screen.getByText(/Назад/i);
-    expect(backButton).toBeInTheDocument(1);
   });
 });
