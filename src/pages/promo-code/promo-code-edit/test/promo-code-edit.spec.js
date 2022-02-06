@@ -38,9 +38,10 @@ describe('should render component with current data', () => {
 
   it('should change promocode code name', async () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
-    screen.debug();
+
     const input = screen.getByDisplayValue(/testttttt/i);
     fireEvent.change(input, { target: { value: 'TEST' } });
+
     expect(input.value).toEqual('TEST');
   });
 
@@ -48,6 +49,7 @@ describe('should render component with current data', () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
 
     const input = screen.getByText(/2022-02-09/i);
+
     expect(input).toBeInTheDocument();
   });
 
@@ -55,6 +57,7 @@ describe('should render component with current data', () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
 
     const input = screen.getByText(/2022-03-04/i);
+
     expect(input).toBeInTheDocument();
   });
 
@@ -63,6 +66,7 @@ describe('should render component with current data', () => {
 
     const input = screen.getByDisplayValue(/15/i);
     fireEvent.change(input, { target: { value: '5' } });
+
     expect(input.value).toEqual('5');
   });
 });
