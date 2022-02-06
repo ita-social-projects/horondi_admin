@@ -44,14 +44,19 @@ describe('AboutUs component tests, ', () => {
     );
   });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> c2197c98 (draft)
+=======
+
+>>>>>>> 138f7d37 (resolve git comments)
   afterEach(() => {
     jest.restoreAllMocks();
     wrapper = null;
   });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   it('Component TableContainerRow should exist', () => {
     expect(wrapper.exists(TableContainerRow)).toBe(true);
@@ -75,6 +80,16 @@ describe('AboutUs component tests, ', () => {
     expect(wrapper.exists(Button)).toBe(true);
   });
 >>>>>>> c797db05 (fix container row default props)
+=======
+  it('Component TableContainerRow should exist', () => {
+    expect(wrapper.exists(TableContainerRow)).toBe(true);
+  });
+
+  it('Component button should exist', () => {
+    expect(wrapper.exists(Button)).toBe(true);
+  });
+
+>>>>>>> 138f7d37 (resolve git comments)
   it('Component TableContainerGenerator should exist', () => {
     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
   });
