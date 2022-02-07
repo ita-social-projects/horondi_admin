@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import _, { noop } from 'lodash';
