@@ -19,7 +19,7 @@ const NavSort = ({ sortOptions }) => {
     </MenuItem>
   ));
 
-  const setOptionHandler = useSort(sortOptions.labels, setSorting);
+  const { optionHandler } = useSort(sortOptions.labels, setSorting);
 
   return (
     <div className={styles.sort}>
@@ -32,7 +32,7 @@ const NavSort = ({ sortOptions }) => {
           labelId='checkbox-label'
           id='checkbox'
           value={sortLabelValue}
-          onChange={setOptionHandler}
+          onChange={optionHandler}
           defaultValue={0}
         >
           {selectOptions}

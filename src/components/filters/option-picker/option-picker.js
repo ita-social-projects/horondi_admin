@@ -9,7 +9,7 @@ import { useSort } from '../../../hooks/filter/useFilterSearchAndSort';
 const OptionPicker = ({ handler, value, defaultValue, options, label }) => {
   const styles = useStyles();
 
-  const setOptionHandler = useSort(options, handler);
+  const { optionHandler } = useSort(options, handler);
 
   const optionElems = options.map((option) => (
     <MenuItem key={option.label} value={option.value}>
@@ -25,7 +25,7 @@ const OptionPicker = ({ handler, value, defaultValue, options, label }) => {
         labelId='checkbox-label'
         id='checkbox'
         value={value}
-        onChange={setOptionHandler}
+        onChange={optionHandler}
         defaultValue={defaultValue}
       >
         {optionElems}
@@ -52,3 +52,5 @@ OptionPicker.defaultProps = {
 };
 
 export default OptionPicker;
+
+/// /// ///

@@ -11,5 +11,5 @@ export const useSort = (options, handler) => {
     },
     [options]
   );
-  return setOptionHandler;
+  return { optionHandler: setOptionHandler };
 };
