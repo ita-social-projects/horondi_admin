@@ -4,6 +4,10 @@ import { ThemeProvider } from '@material-ui/styles';
 import { BrowserRouter } from 'react-router-dom';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import { MockedProvider } from '@apollo/client/testing';
+>>>>>>> 9008768b (fix git comments)
 import { Button } from '@material-ui/core';
 =======
 >>>>>>> c2197c98 (draft)
@@ -36,11 +40,13 @@ let wrapper;
 describe('AboutUs component tests, ', () => {
   beforeEach(() => {
     wrapper = mount(
-      <BrowserRouter>
-        <ThemeProvider theme={themeValue}>
-          <AboutUs />
-        </ThemeProvider>
-      </BrowserRouter>
+      <MockedProvider addTypename={false}>
+        <BrowserRouter>
+          <ThemeProvider theme={themeValue}>
+            <AboutUs />
+          </ThemeProvider>
+        </BrowserRouter>
+      </MockedProvider>
     );
   });
 <<<<<<< HEAD
