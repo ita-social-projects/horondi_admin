@@ -40,7 +40,7 @@ let wrapper;
 describe('AboutUs component tests, ', () => {
   beforeEach(() => {
     wrapper = mount(
-      <MockedProvider addTypename={false}>
+      <MockedProvider>
         <BrowserRouter>
           <ThemeProvider theme={themeValue}>
             <AboutUs />
