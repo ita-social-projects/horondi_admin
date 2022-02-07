@@ -7,7 +7,8 @@ import {
   staticPagesCategories,
   constructorMenuCategories,
   certificatesMenuCategories,
-  promoMenuCategories
+  promoMenuCategories,
+  materialMenuCategories
 } from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
@@ -251,6 +252,7 @@ export const config = {
   detailTitles,
   messages,
   menuCategories,
+  materialMenuCategories,
   clientMenuCategories,
   catalogMenuCategories,
   promoMenuCategories,

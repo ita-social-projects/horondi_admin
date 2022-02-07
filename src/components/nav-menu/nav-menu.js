@@ -22,6 +22,7 @@ import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import LayersIcon from '@material-ui/icons/Layers';
 import TuneIcon from '@material-ui/icons/Tune';
+import ExtensionIcon from '@material-ui/icons/Extension';
 
 import { useStyles } from './nav-menu.styles';
 
@@ -48,7 +49,9 @@ const NavMenu = ({ width }) => {
     catalogTab: false,
     certificatesTab: false,
     constructorTab: false,
-    staticTab: false
+    staticTab: false,
+    materialsTab: false,
+    promoTab: false
   });
 
   const staticArray = {
@@ -56,9 +59,10 @@ const NavMenu = ({ width }) => {
     catalogTab: false,
     certificatesTab: false,
     constructorTab: false,
-    staticTab: false
+    staticTab: false,
+    materialsTab: false,
+    promoTab: false
   };
-  const [promoTab, setPromoTab] = useState(false);
 
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
     ({ Theme, EmailQuestions }) => ({
@@ -95,6 +99,10 @@ const NavMenu = ({ width }) => {
     returnedList(category[0], category[1], category[2])
   );
 
+  const materialMenuItems = config.materialMenuCategories.map((category) =>
+    returnedList(...category, classes.nested)
+  );
+
   const clientMenuItems = config.clientMenuCategories.map((category) =>
     returnedList(category[0], category[1], category[2], classes.nested)
   );
@@ -102,6 +110,7 @@ const NavMenu = ({ width }) => {
   const catalogMenuItems = config.catalogMenuCategories.map((category) =>
     returnedList(category[0], category[1], category[2], classes.nested)
   );
+
   const promoMenuItems = config.promoMenuCategories.map((category) =>
     returnedList(...category, classes.nested)
   );
@@ -155,8 +164,12 @@ const NavMenu = ({ width }) => {
       TuneIcon
     ],
     [
-      () => setPromoTab(!promoTab),
-      promoTab,
+      () =>
+        setNavbarTab({
+          ...staticArray,
+          promoTab: !navbarTab.promoTab
+        }),
+      navbarTab.promoTab,
       promoMenuItems,
       MENU_TABS.PROMOCODE,
       PromoIcon
@@ -171,6 +184,17 @@ const NavMenu = ({ width }) => {
       constructorPagesMenuItems,
       MENU_TABS.CONSTRUCTOR,
       AccessibilityNewIcon
+    ],
+    [
+      () =>
+        setNavbarTab({
+          ...staticArray,
+          materialsTab: !navbarTab.materialsTab
+        }),
+      navbarTab.materialsTab,
+      materialMenuItems,
+      MENU_TABS.MATERIALS,
+      ExtensionIcon
     ],
     [
       () =>
