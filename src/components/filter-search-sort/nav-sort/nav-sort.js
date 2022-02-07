@@ -7,6 +7,8 @@ import { useStyles } from './nav-sort.styles';
 import materialUiConstants from '../../../configs/material-ui-constants';
 import { sortLabel } from '../../../configs/sort';
 
+import { useSort } from '../../../hooks/filter/useFilterSearchAndSort';
+
 const NavSort = ({ sortOptions }) => {
   const styles = useStyles();
   const { setSorting, sortLabel: sortLabelValue } = sortOptions;
@@ -17,17 +19,8 @@ const NavSort = ({ sortOptions }) => {
     </MenuItem>
   ));
 
-  const selectHandler = useCallback(
-    (e) => {
-      const { value } = e.target;
-      const result = sortOptions.labels.find((item) => item.value === value);
+  const setOptionHandler = useSort(sortOptions.labels, setSorting);
 
-      if (result) {
-        setSorting(result);
-      }
-    },
-    [sortOptions.label]
-  );
   return (
     <div className={styles.sort}>
       <FormControl className={styles.formControl}>
@@ -39,7 +32,7 @@ const NavSort = ({ sortOptions }) => {
           labelId='checkbox-label'
           id='checkbox'
           value={sortLabelValue}
-          onChange={selectHandler}
+          onChange={setOptionHandler}
           defaultValue={0}
         >
           {selectOptions}
