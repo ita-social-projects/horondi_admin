@@ -1,27 +1,30 @@
 import React from 'react';
-import { useMutation } from '@apollo/client';
+import { useParams, useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
 
-import { config } from '../../../configs';
-import { addPromoCodes } from '../operations/promo-code.mutation';
 import {
   setSnackBarMessage,
   setSnackBarSeverity,
   setSnackBarStatus
 } from '../../../redux/snackbar/snackbar.actions';
-import { getFromLocalStorage } from '../../../services/local-storage.service';
-import { LOCAL_STORAGE } from '../../../consts/local-storage';
+import { getPromoCodeById } from '../operations/promo-code.queries';
+import { updatePromoCode } from '../operations/promo-code.mutation';
+import { config } from '../../../configs';
 import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
 
+import LoadingBar from '../../../components/loading-bar';
 import PromoCodeForm from '../promo-code-form/promo-code-form';
 
-const PromoCodeAdd = () => {
+function PromoCodeEdit() {
+  const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
-  const pathToPromoCodesPage = config.routes.pathToPromoCodes;
+  const { loading, error, data } = useQuery(getPromoCodeById, {
+    variables: { id },
+    fetchPolicy: 'no-cache'
+  });
 
   const onCompletedHandler = () => {
     dispatch(setSnackBarSeverity('success'));
@@ -29,27 +32,29 @@ const PromoCodeAdd = () => {
     dispatch(setSnackBarStatus(true));
   };
 
-  const [addPromoCodeHandler] = useMutation(addPromoCodes, {
-    onCompleted: onCompletedHandler,
-    context: {
-      headers: {
-        token
-      }
-    }
+  const [updatePromoCodeHandler] = useMutation(updatePromoCode, {
+    onCompleted: onCompletedHandler
   });
+
+  const pathToPromoCodesPage = config.routes.pathToPromoCodes;
 
   const goToPromoPage = () => {
     history.push(pathToPromoCodesPage);
   };
 
+  if (loading || error) {
+    return <LoadingBar />;
+  }
+
   return (
     <PromoCodeForm
+      initialState={data.getPromoCodeById}
       promoValidationSchema={promoValidationSchema}
       pathToPromoCodesPage={pathToPromoCodesPage}
+      addPromoCodeHandler={updatePromoCodeHandler}
       goToPromoPage={goToPromoPage}
-      addPromoCodeHandler={addPromoCodeHandler}
     />
   );
-};
+}
 
-export default PromoCodeAdd;
+export default PromoCodeEdit;

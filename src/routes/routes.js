@@ -93,6 +93,7 @@ import CreateCertificate from '../pages/certificates/create-certificate/create-c
 import MaterialAbout from '../pages/material/material-about';
 import MaterialAboutAdd from '../pages/material/material-about-add';
 import PromoCodeAdd from '../pages/promo-code/promo-code-add/promo-code-add';
+import PromoCodeEdit from '../pages/promo-code/promo-code-edit/promo-code-edit';
 import PromoCodePage from '../pages/promo-code/promo-code-page';
 
 const { routes } = config;
@@ -260,6 +261,11 @@ const Routes = ({ validatorMethods }) => {
             path={routes.pathToAddPromoCode}
             exact
             component={PromoCodeAdd}
+          />
+          <Route
+            path={routes.pathToEditPromoCode}
+            exact
+            component={PromoCodeEdit}
           />
           <Route
             path={routes.pathToEditProduct}

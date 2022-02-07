@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { push } from 'connected-react-router';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -72,6 +73,10 @@ const PromoCodePage = () => {
       promoCodesTranslation.deletePromo
     );
 
+  const editPromoCodeHandler = (promoID) => {
+    dispatch(push(`${promoID}`));
+  };
+
   const promoItems = promoCodes.items
     ? promoCodes.items.map(({ _id, code, dateFrom, dateTo, discount }) => (
         <TableContainerRow
@@ -82,7 +87,7 @@ const PromoCodePage = () => {
           showAvatar={false}
           date={`${dateCorrectFormat(dateFrom)} - ${dateCorrectFormat(dateTo)}`}
           deleteHandler={() => openDeleteModalHandler(_id)}
-          editHandler={() => 'editHandler'}
+          editHandler={() => editPromoCodeHandler(_id)}
         />
       ))
     : null;
