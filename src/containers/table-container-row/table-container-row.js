@@ -17,7 +17,6 @@ import { config } from '../../configs';
 const TableContainerRow = ({
   id,
   image,
-  imageVal,
   editHandler,
   showAvatar,
   showEdit,
@@ -69,7 +68,7 @@ const TableContainerRow = ({
       )}
 
       {tableCells}
-      {imageVal && (
+      {image && (
         <TableCell className={classes.imageValue}>
           <img src={image} alt='horondi' />
         </TableCell>
@@ -107,7 +106,6 @@ TableContainerRow.propTypes = {
   showAvatar: PropTypes.bool,
   showEdit: PropTypes.bool,
   showDelete: PropTypes.bool,
-  imageVal: PropTypes.string,
   showCheckbox: PropTypes.bool
 };
 
@@ -119,7 +117,6 @@ TableContainerRow.defaultProps = {
   clickHandler: noop,
   checkboxChangeHandler: noop,
   checkBoxValue: [],
-  imageVal: '',
   showAvatar: true,
   showEdit: true,
   showDelete: true,

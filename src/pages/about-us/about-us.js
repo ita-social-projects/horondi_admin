@@ -8,9 +8,9 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { tableFooter, tableHeader, tableItems } from './operations/mockdata';
 
-const { aboutUsHeaderTitles } = config.tableHeadRowTitles;
-const { aboutUsTitles } = config.tableHeadRowTitles;
-const { aboutUsFooterTitles } = config.tableHeadRowTitles;
+const { aboutUsHeaderTitles, aboutUsFooterTitles, aboutUsTitles } =
+  config.tableHeadRowTitles;
+
 const { ADD_ABOUT_US } = config.buttonTitles;
 const { pathToAboutUsAdd } = config.routes;
 
@@ -29,7 +29,7 @@ const AboutUs = () => {
     />
   ));
   const aboutUsFooterItem = tableFooter.map(({ id, image }) => (
-    <TableContainerRow showAvatar={false} key={id} imageVal={image} />
+    <TableContainerRow showAvatar={false} key={id} image={image} />
   ));
   return (
     <div className={styles.container}>
