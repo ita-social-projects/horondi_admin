@@ -5,6 +5,7 @@ import { map, noop } from 'lodash';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
 
+import PropTypes from 'prop-types';
 import { config } from '../../configs';
 import {
   getMaterials,
@@ -26,7 +27,6 @@ import useMaterialFilters from '../../hooks/filters/use-material-filters';
 import messages from '../../configs/messages';
 import Filters from './filters/filters';
 import { deleteManyProducts } from '../../redux/products/products.operations';
-import PropTypes from 'prop-types';
 
 const { REMOVE_MATERIAL_MESSAGE } = config.messages;
 const { CREATE_MATERIAL_TITLE, DELETE_TITLE } = config.buttonTitles;
