@@ -25,13 +25,23 @@ export function* handleCertificatesListLoad({ payload }) {
     const certificates = yield call(
       getAllCertificates,
       payload.skip,
-      payload.limit
+      payload.limit,
+      payload.filter
     );
-
     if (certificates) {
       yield put(setItemsCount(certificates?.count));
       yield put(setCertificatesList(certificates));
     }
+  } catch (e) {
+    throw new Error(e);
+  } finally {
+    yield put(setCertificatesLoading(false));
+  }
+}
+
+export function* handleUpdateCertificate({ payload }) {
+  try {
+    yield put(setCertificatesLoading(true));
   } catch (e) {
     throw new Error(e);
   } finally {

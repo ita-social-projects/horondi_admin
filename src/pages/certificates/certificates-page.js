@@ -56,12 +56,15 @@ const CertificatesPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const dispatch = useDispatch();
 
-  const { items: certificatesList, certificatesLoading: loading } = useSelector(
-    ({ Certificates }) => ({
-      items: Certificates.list,
-      certificatesLoading: Certificates.certificatesLoading
-    })
-  );
+  const {
+    items: certificatesList,
+    certificatesLoading: loading,
+    filters
+  } = useSelector(({ Certificates }) => ({
+    items: Certificates.list,
+    certificatesLoading: Certificates.certificatesLoading,
+    filters: Certificates.filters
+  }));
 
   const usersList = useSelector(({ Users }) => Users.list);
   const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
@@ -78,7 +81,8 @@ const CertificatesPage = () => {
     openSuccessSnackbar(removeCertificate, REMOVE_CERTIFICATE_MESSAGE);
   };
 
-  const deleteHandler = (item) => !item.isActive ? deleteCertificateHandler(item._id) : null;
+  const deleteHandler = (item) =>
+    !item.isActivated ? deleteCertificateHandler(item._id) : null;
 
   useEffect(() => {
     dispatch(getUsers({}));
@@ -88,10 +92,13 @@ const CertificatesPage = () => {
     dispatch(
       getCertificatesList({
         limit: rowsPerPage,
-        skip: currentPage * rowsPerPage
+        skip: currentPage * rowsPerPage,
+        filter: {
+          value: filters.value
+        }
       })
     );
-  }, [dispatch, rowsPerPage, currentPage]);
+  }, [dispatch, rowsPerPage, currentPage, filters]);
 
   const setUser = (id) => {
     if (id && usersList) {
@@ -111,14 +118,14 @@ const CertificatesPage = () => {
       number={certificate.name}
       createdBy={
         <Certificate
-          name={setUser(certificate.createdBy)}
+          name={setUser(certificate.createdBy._id)}
           value={certificate.value}
         />
       }
       price={`${certificate.value} грн`}
       status={
         <Status
-          status={checkStatus(certificate.isActive, certificate.isUsed)}
+          status={checkStatus(certificate.isActivated, certificate.isUsed)}
         />
       }
       date={
