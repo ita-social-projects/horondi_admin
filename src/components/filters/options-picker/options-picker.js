@@ -14,34 +14,12 @@ import PropTypes from 'prop-types';
 import { useStyles, MenuProps } from './options-picker.styles';
 import materialUiConstants from '../../../configs/material-ui-constants';
 import { badgePosition } from '../../../configs';
+import { useFilter } from '../../../hooks/filter/useFilterSearchAndSort';
 
 const OptionsPicker = ({ value, handler, label, options }) => {
   const styles = useStyles();
 
-  const setOptionHandler = (e) => {
-    const { value: _value } = e.target;
-    if (_value) {
-      handler(_value);
-    }
-  };
-
-  const renderValue = (selectedValues) =>
-    options.reduce((acumulator, option) => {
-      let selectedItem;
-
-      selectedValues.forEach((selectedValue, _index, array) => {
-        if (selectedValue === option.value) {
-          if (array.length > 1) {
-            selectedItem = `${option.label}, `;
-          } else {
-            selectedItem = option.label;
-          }
-        }
-      });
-
-      acumulator.push(selectedItem);
-      return acumulator;
-    }, []);
+  const { optionHandler, setRenderValue } = useFilter(options, handler);
 
   return (
     <Badge
@@ -56,9 +34,11 @@ const OptionsPicker = ({ value, handler, label, options }) => {
           id={materialUiConstants.checkBoxId}
           multiple
           value={value}
-          onChange={setOptionHandler}
+          onChange={optionHandler}
+          renderValue={setRenderValue}
+          // onChange={setOptionHandler}
+          // renderValue={renderValue}
           input={<Input />}
-          renderValue={renderValue}
           autoWidth
           MenuProps={MenuProps}
         >

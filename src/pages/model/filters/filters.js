@@ -53,11 +53,11 @@ function Filters() {
         label={sortLabel}
       />
       <ComponentFilterMultiplePicker
-        setFilterValue={setFilter}
-        selectorFunc={categorySelector}
-        value={filters.category}
-        options={categoryFilterObj}
-        label={buttonTitles.CATEGORY_TITLE}
+        setFilterValue={setFilter} // записується тип для фільтрації
+        selectorFunc={categorySelector} // записується селектор
+        value={filters.category} // записується значення обраної категорії
+        options={categoryFilterObj} // назва категорії та її значення
+        label={buttonTitles.CATEGORY_TITLE} // тайтл селекту
       />
       <ComponentFilterMultiplePicker
         setFilterValue={setFilter}
