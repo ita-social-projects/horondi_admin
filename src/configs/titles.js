@@ -168,14 +168,16 @@ const titles = {
     convertationTitle: 'Відповідна ціна в UAH'
   },
   certificatesTitles: {
-    500: '500 грн',
-    1000: '1000 грн',
-    1500: '1500 грн',
     mainPageTitle: 'Створити Подарунковий Сертифікат:',
     validity: 'Термін дії:',
     validFrom: 'Дійсний від',
     validUntil: 'Дійсний до',
     cost: 'Вартість:'
+  },
+  certificatesValueTitles: {
+    500: '500 грн',
+    1000: '1000 грн',
+    1500: '1500 грн'
   }
 };
 

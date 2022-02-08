@@ -17,13 +17,6 @@ jest.mock('../../../services/local-storage.service', () => ({
 useDispatch.mockImplementation(() => jest.fn());
 
 describe('test certificates Emulation and Generation', () => {
-
-  /* beforeEach(() => {
-  const mockedDate = new Date('2023-02-04T17:28:59.947Z');
-  jest.spyOn(global, 'Date').mockImplementation(() => mockedDate);
-  console.log(new Date())
-  });
- */
   beforeEach(() => {
     render(
       <MockedProvider mocks={mutationVars} addTypename={false}>
@@ -55,29 +48,28 @@ describe('test certificates Emulation and Generation', () => {
     userEvent.click(screen.getByTestId('emulate'));
 
     expect(screen.getByTestId('table')).toBeInTheDocument();
-    screen.debug(screen.getByTestId('table'));
   });
 
   it('button generate should be disabled if there are no emulated certificates', () => {
     expect(screen.getByRole('button', { name: /bulkGenerate/ })).toBeDisabled();
   });
 
-  it('should show loader after button generate was clicked', () => {
-    userEvent.click(screen.getAllByRole('checkbox')[0]);
-    userEvent.click(screen.getByTestId('emulate'));
+  describe('test Bulk Generation', () => {
+    beforeEach(() => {
+      userEvent.click(screen.getAllByRole('checkbox')[0]);
+      userEvent.click(screen.getByTestId('emulate'));
 
-    userEvent.click(screen.getByRole('button', { name: /bulkGenerate/ }));
+      userEvent.click(screen.getByRole('button', { name: /bulkGenerate/ }));
+    });
 
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
-  });
+    it('should show loader after button generate was clicked', () => {
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    });
 
-  it('should render new table', async () => {
-    userEvent.click(screen.getAllByRole('checkbox')[0]);
-    userEvent.click(screen.getByTestId('emulate'));
+    it('should render new table', async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
-    userEvent.click(screen.getByRole('button', { name: /bulkGenerate/ }));
-    await new Promise((resolve) => setTimeout(resolve, 0));
-
-    expect(await screen.findByText('HOR123232')).toBeInTheDocument();
+      expect(await screen.findByText('HOR123232')).toBeInTheDocument();
+    });
   });
 });

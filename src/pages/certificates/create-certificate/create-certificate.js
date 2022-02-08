@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 
@@ -36,7 +36,7 @@ import { useStyles } from './create-certificate.styles';
 import CertificatesTable from '../certificatesTable';
 import { bulkGenerateCertificates } from '../operations/certificate.mutation';
 
-const { certificatesTitles } = titles;
+const { certificatesTitles, certificatesValueTitles } = titles;
 
 const CreateCertificate = () => {
   const dispatch = useDispatch();
@@ -44,25 +44,16 @@ const CreateCertificate = () => {
   const commonStyles = useCommonStyles();
   const styles = useStyles();
 
-  const initialCheckboxes = [
-    { checked: false, quantity: 1, name: certificatesTitles[500], value: 500 },
-    {
-      checked: false,
-      quantity: 1,
-      name: certificatesTitles[1000],
-      value: 1000
-    },
-    { checked: false, quantity: 1, name: certificatesTitles[1500], value: 1500 }
-  ];
+  const arrValues = Object.keys(certificatesValueTitles);
+  const initialCheckboxes = arrValues.map((key) => ({
+    checked: false,
+    quantity: 1,
+    name: certificatesValueTitles[key],
+    value: Number(key)
+  }));
 
   const [checkBoxes, setCheckBoxes] = useState(initialCheckboxes);
-  const [date, setDate] = useState(new Date(new Date().setHours(0, 0, 0, 0)));
-
-  /* 
-  const [date, setDate] = useState(new Date());
-  const [date, setDate] = useState('2023-02-04T17:28:59.947Z'); 
-  */
-
+  const [date, setDate] = useState();
   const [email, setEmail] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
   const [certificates, setCertificates] = useState([]);
@@ -103,23 +94,12 @@ const CreateCertificate = () => {
       }
     });
 
-    if (!isInvalid && date && check) {
+    if (!isInvalid && check) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [isInvalid, date, checkBoxes, email]);
-
-  const expireDate = useMemo(() => {
-    if (date === null) {
-      return null;
-    }
-
-    let newDate = new Date(date);
-    newDate = newDate.setFullYear(newDate.getFullYear() + 1);
-
-    return new Date(newDate);
-  }, [date]);
+  }, [isInvalid, checkBoxes, email]);
 
   const disabledDate = (pickedDate) => {
     const yesterday = new Date();
@@ -131,21 +111,17 @@ const CreateCertificate = () => {
     return pickedDate < yesterday || pickedDate >= oneMonthAfter;
   };
 
-  const createData = (name, value, dateStart, dateEnd) => ({
-    name,
-    value,
-    dateStart,
-    dateEnd
-  });
-
   const emulateCertificates = () => {
     const newArr = [];
     checkBoxes.forEach((certificate) => {
       if (certificate.checked && !isInvalid) {
         for (let i = 0; i < certificate.quantity; i++) {
-          newArr.push(
-            createData('HOR###', certificate.value, date, expireDate)
-          );
+          newArr.push({
+            name: 'HOR###',
+            value: certificate.value,
+            dateStart: dateResetHours(date),
+            dateEnd: expireDate
+          });
         }
       }
     });
@@ -167,12 +143,23 @@ const CreateCertificate = () => {
     setIsInvalid(true);
     setEmail(e.target.value);
   };
+
+  const dateResetHours = (dateArg) => {
+    const dateObj = dateArg ? new Date(dateArg) : new Date();
+    dateObj.setHours(0, 0, 0, 0);
+
+    return dateObj;
+  };
+
+  const expireDate = date ? new Date(date) : new Date();
+  expireDate.setFullYear(expireDate.getFullYear() + 1);
+
   const onClickMutation = () =>
     generateCertificates({
       variables: {
         generate: {
           email,
-          dateStart: date,
+          dateStart: dateResetHours(date),
           bulk: checkBoxes.reduce((newArr, item) => {
             item.checked &&
               newArr.push({ value: item.value, quantity: item.quantity });
@@ -246,7 +233,7 @@ const CreateCertificate = () => {
               disabled
               size='lg'
               format='D/MM/YYYY'
-              value={expireDate}
+              value={date && expireDate}
             />
           </Grid>
         </Grid>
