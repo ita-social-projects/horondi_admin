@@ -52,5 +52,3 @@ OptionPicker.defaultProps = {
 };
 
 export default OptionPicker;
-
-/// /// ///
