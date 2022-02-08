@@ -24,7 +24,7 @@ const AboutUs = () => {
       showAvatar={false}
       key={id}
       title={title}
-      text={`${text.slice(0, 300)} ...`}
+      text={text}
       image={image}
     />
   ));
@@ -34,7 +34,6 @@ const AboutUs = () => {
   return (
     <div className={styles.container}>
       <div className={styles.adminHeader}>
-        {' '}
         <Typography
           variant={materialUiConstants.typographyVariantH1}
           className={styles.materialTitle}
