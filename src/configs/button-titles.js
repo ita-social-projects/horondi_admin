@@ -91,7 +91,8 @@ const buttonTitles = {
   CREATE_STRAP_TITLE: 'Додати ремінець',
   AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор',
   GENERATE_CERTIFICATE: 'Згенерувати',
-  CREATE_CERTIFICATE_TITLE: 'Створити Сертифікат'
+  CREATE_CERTIFICATE_TITLE: 'Створити Сертифікат',
+  PRICE: 'Вартість'
 };
 
 export default buttonTitles;

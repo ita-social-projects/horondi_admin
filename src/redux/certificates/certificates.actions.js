@@ -33,7 +33,7 @@ const setCertificatesLoading = (payload) => ({
   payload
 });
 
-const setFilter = (payload) => ({
+const setCertificateFilter = (payload) => ({
   type: SET_FILTER,
   payload
 });
@@ -49,6 +49,6 @@ export {
   deleteCertificate,
   removeCertificateFromStore,
   setCertificatesLoading,
-  setFilter,
+  setCertificateFilter,
   clearFilters
 };

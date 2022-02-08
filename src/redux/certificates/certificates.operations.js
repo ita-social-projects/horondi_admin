@@ -1,27 +1,32 @@
 import { getItems, setItems } from '../../utils/client';
 
-export const getAllCertificates = async (skip, limit) => {
+export const getAllCertificates = async (skip, limit, filter) => {
   const query = `
-    query($limit: Int, $skip: Int) {
-      getAllCertificates(limit: $limit, skip: $skip) {
-        items {
+    query($skip: Int, $limit: Int, $filter: CertificateFilterInput) {
+      getAllCertificates(skip: $skip, limit: $limit, filter: $filter) {
+        ... on PaginatedCertificate {
+          items {
           _id
           isUsed
-          isActive
+          isActivated
           dateStart
           dateEnd
           name
           value
-          createdBy
+          createdBy {
+            _id
+          }
         }
-        count
+        count  
+        }
       } 
     }
   `;
 
   const result = await getItems(query, {
     skip,
-    limit
+    limit,
+    filter
   });
 
   return result?.data?.getAllCertificates;

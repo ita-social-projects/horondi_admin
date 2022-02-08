@@ -3,12 +3,12 @@ import {
   REMOVE_CERTIFICATE_FROM_STORE,
   SET_CERTIFICATES_LOADING,
   CLEAR_FILTERS
-} from './certificates.types';
+, SET_FILTER } from './certificates.types';
 
 const initialFilters = {
-  price: [],
-  status: [],
-  search: ''
+  value: []
+  // status: [],
+  // search: ''
 };
 
 const initialState = {
@@ -40,6 +40,14 @@ const certificatesReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         certificatesLoading: action.payload
+      };
+    case SET_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload
+        }
       };
     case CLEAR_FILTERS:
       return {
