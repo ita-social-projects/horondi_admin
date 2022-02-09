@@ -16,6 +16,7 @@ import { config } from '../../configs';
 
 const TableContainerRow = ({
   id,
+  text,
   image,
   editHandler,
   showAvatar,
@@ -66,7 +67,19 @@ const TableContainerRow = ({
           </Avatar>
         </TableCell>
       )}
+
       {tableCells}
+      {text && (
+        <TableCell>
+          <p className={classes.text}>{text}</p>
+        </TableCell>
+      )}
+      {image && (
+        <TableCell className={classes.imageValue}>
+          <img src={image} alt={image} />
+        </TableCell>
+      )}
+
       {(showEdit || showDelete) && (
         <TableCell className={classes.smallCell}>
           {showEdit && (
@@ -89,6 +102,7 @@ const TableContainerRow = ({
 };
 
 TableContainerRow.propTypes = {
+  text: PropTypes.string,
   image: PropTypes.string,
   editHandler: PropTypes.func,
   deleteHandler: PropTypes.func,
@@ -104,6 +118,7 @@ TableContainerRow.propTypes = {
 
 TableContainerRow.defaultProps = {
   id: '',
+  text: '',
   image: '',
   deleteHandler: noop,
   editHandler: noop,
