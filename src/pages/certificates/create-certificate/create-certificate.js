@@ -11,14 +11,12 @@ import {
   Tooltip
 } from '@material-ui/core';
 
-import { LOCAL_STORAGE } from '../../../consts/local-storage';
-import { getFromLocalStorage } from '../../../services/local-storage.service';
-
 import {
   setSnackBarMessage,
   setSnackBarSeverity,
   setSnackBarStatus
 } from '../../../redux/snackbar/snackbar.actions';
+
 import LoadingBar from '../../../components/loading-bar';
 
 import formRegExp from '../../../configs/form-regexp';
@@ -44,12 +42,10 @@ const CreateCertificate = () => {
   const commonStyles = useCommonStyles();
   const styles = useStyles();
 
-  const arrValues = Object.keys(certificatesValueTitles);
-  const initialCheckboxes = arrValues.map((key) => ({
+  const initialCheckboxes = certificatesValueTitles.map((item) => ({
     checked: false,
     quantity: 1,
-    name: certificatesValueTitles[key],
-    value: Number(key)
+    ...item
   }));
 
   const [checkBoxes, setCheckBoxes] = useState(initialCheckboxes);
@@ -59,16 +55,9 @@ const CreateCertificate = () => {
   const [certificates, setCertificates] = useState([]);
   const [disabled, setDisabled] = useState(true);
 
-  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
-
   const [generateCertificates, { loading: certificatesLoading }] = useMutation(
     bulkGenerateCertificates,
     {
-      context: {
-        headers: {
-          token
-        }
-      },
       onCompleted(data) {
         dispatch(setSnackBarSeverity('success'));
         dispatch(setSnackBarMessage('Успішно додано'));
@@ -140,9 +129,23 @@ const CreateCertificate = () => {
   };
 
   const emailHandler = (e) => {
-    setIsInvalid(true);
+    setIsInvalid && setIsInvalid(false);
     setEmail(e.target.value);
   };
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (email.length > 1) {
+        email.match(formRegExp.email)
+          ? setIsInvalid(false)
+          : setIsInvalid(true);
+      }
+    }, [500]);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [email]);
 
   const dateResetHours = (dateArg) => {
     const dateObj = dateArg ? new Date(dateArg) : new Date();
@@ -252,6 +255,7 @@ const CreateCertificate = () => {
               className={styles.textField}
               variant={materialUiConstants.outlined}
               label='Email'
+              inputProps={{ 'aria-label': 'email' }}
               value={email}
               helperText={isInvalid && loginErrorMessages.INVALID_EMAIL_MESSAGE}
               onChange={(e) => emailHandler(e)}

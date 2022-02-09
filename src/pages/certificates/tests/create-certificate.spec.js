@@ -10,10 +10,6 @@ import { mutationVars } from './create-certificate.variables';
 
 jest.mock('react-redux');
 
-jest.mock('../../../services/local-storage.service', () => ({
-  getFromLocalStorage: jest.fn().mockReturnValue(42)
-}));
-
 useDispatch.mockImplementation(() => jest.fn());
 
 describe('test certificates Emulation and Generation', () => {
@@ -50,7 +46,7 @@ describe('test certificates Emulation and Generation', () => {
     expect(screen.getByTestId('table')).toBeInTheDocument();
   });
 
-  it('button generate should be disabled if there are no emulated certificates', () => {
+  it('should show disabled button if there are no emulated certificates', () => {
     expect(screen.getByRole('button', { name: /bulkGenerate/ })).toBeDisabled();
   });
 
@@ -70,6 +66,26 @@ describe('test certificates Emulation and Generation', () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
 
       expect(await screen.findByText('HOR123232')).toBeInTheDocument();
+    });
+  });
+
+  describe('timeout for email validation', () => {
+    beforeEach(() => {
+      const input = screen.getByRole('textbox', { name: /email/i });
+      userEvent.type(input, '42');
+    });
+
+    it('should not show error if there are no delay', () => {
+      const errorMessage = screen.queryByText(/Некоректна email адреса/gi);
+
+      expect(errorMessage).not.toBeInTheDocument();
+    });
+
+    it('should show error after >500ms', async () => {
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      const errorMessage = screen.queryByText(/Некоректна email адреса/gi);
+
+      expect(errorMessage).toBeInTheDocument();
     });
   });
 });

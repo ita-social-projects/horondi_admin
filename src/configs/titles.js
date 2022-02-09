@@ -174,11 +174,11 @@ const titles = {
     validUntil: 'Дійсний до',
     cost: 'Вартість:'
   },
-  certificatesValueTitles: {
-    500: '500 грн',
-    1000: '1000 грн',
-    1500: '1500 грн'
-  }
+  certificatesValueTitles: [
+    { name: '500 грн', value: 500 },
+    { name: '1000 грн', value: 1000 },
+    { name: '1500 грн', value: 1500 }
+  ]
 };
 
 export default titles;
