@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
 export const useSort = (options, handler) => {
   const setOptionHandler = useCallback(
@@ -41,55 +41,20 @@ export const useFilter = (options, handler) => {
   };
 };
 
-/// /// ///
+export const useFilterByData = (dateFrom, dateTo, handler) => {
+  const [value, setValue] = useState([]);
 
-// import { useCallback } from 'react';
-// // import { filterInputToRender } from '../../../utils/history';
+  useEffect(() => {
+    if (dateFrom && dateTo) {
+      setValue([dateFrom, dateTo]);
+    }
+  }, [dateFrom, dateTo]);
 
-// export const useSort = (options, handler) => {
-//   const setOptionHandler = useCallback(
-//     (e) => {
-//       const result = options.find((item) => item.value === e.target.value);
-
-//       if (result) {
-//         handler(result);
-//       }
-//     },
-//     [options]
-//   );
-//   return { optionHandler: setOptionHandler };
-// };
-
-// export const useFilter = (options, handler) => {
-//   const setOptionHandler = useCallback(
-//     (e) => {
-//       const { value: _value } = e.target;
-//       if (_value) {
-//         handler(_value);
-//       }
-//     },
-//     [options]
-//   );
-
-//   const renderValue = (selectedValues) =>
-//     options.reduce((acumulator, option) => {
-//       let selectedItem;
-
-//       selectedValues.forEach((selectedValue, _index, array) => {
-//         if (selectedValue === option.value) {
-//           if (array.length > 1) {
-//             selectedItem = `${option.label}, `;
-//           } else {
-//             selectedItem = option.label;
-//           }
-//           return selectedItem
-//         }
-//       });
-//       acumulator.push(selectedItem);
-//       return acumulator;
-//     }, []);
-//   return {
-//     optionHandler: setOptionHandler,
-//     setRenderValue: renderValue
-//   };
-// };
+  const setDateHandler = (e) => {
+    handler(e);
+  };
+  return {
+    dataHandler: setDateHandler,
+    value
+  };
+};
