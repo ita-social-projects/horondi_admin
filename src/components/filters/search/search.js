@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import { useStyles } from './search.styles';
 import { config } from '../../../configs';
+import { useSearch } from '../../../hooks/filter/useFilterSearchAndSort';
 
 const {
   submitKey,
@@ -15,6 +16,9 @@ const {
 
 const Search = ({ value, handler, placeholder }) => {
   const styles = useStyles();
+
+  // const { setSearch, submitSearch, activateSearch, searchValue } = useSearch(value, handler, submitKey);
+
   const [searchValue, setSearchValue] = useState(value);
 
   const handleSetSearchValue = (event) => {
@@ -33,6 +37,15 @@ const Search = ({ value, handler, placeholder }) => {
 
   return (
     <Paper className={styles.container}>
+      {/* <InputBase
+        placeholder={setSearchLabel(placeholder)}
+        value={searchValue}
+        onChange={setSearch}
+        onKeyPress={submitSearch}
+      />
+      <IconButton aria-label='search' onClick={activateSearch}>
+        <SearchIcon />
+      </IconButton> */}
       <InputBase
         placeholder={setSearchLabel(placeholder)}
         value={searchValue}

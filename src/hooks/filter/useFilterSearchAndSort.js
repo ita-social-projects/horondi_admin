@@ -58,3 +58,28 @@ export const useFilterByData = (dateFrom, dateTo, handler) => {
     value
   };
 };
+
+export const useSearch = (value, handler, submitKey) => {
+  const [searchValue, setSearchValue] = useState(value);
+
+  const handleSetSearchValue = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleSubmitSearch = (event) => {
+    if (event.key === submitKey) {
+      handler(searchValue);
+    }
+  };
+
+  const handleSearch = () => {
+    handler(searchValue);
+  };
+  return {
+    setSearch: handleSetSearchValue,
+    submitSearch: handleSubmitSearch,
+    activateSearch: handleSearch,
+    searchValue,
+    submitKey
+  };
+};
