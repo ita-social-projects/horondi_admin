@@ -1,13 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+
 import ContainerFilters from '../../../components/container-filters';
 import ComponentFilterClear from '../../../components/filters-components/filter-clear';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
-import {
-  clearFilters,
-  setCertificateFilter
-} from '../../../redux/certificates/certificates.actions';
 import buttonTitles from '../../../configs/button-titles';
 
 const availablePrice = [
@@ -39,15 +35,11 @@ const availableStatus = [
   }
 ];
 
-const Filters = () => {
-  const { filters } = useSelector(({ Certificates }) => Certificates);
-
-  return (
+const Filters = () => (
     <ContainerFilters>
       <ComponentFilterMultiplePicker
-        setFilterValue={setCertificateFilter}
-        selectorFunc={(selector) => ({ value: selector })}
-        value={filters.value}
+        setFilterValue={() => {}}
+        selectorFunc={() => {}}
         options={availablePrice}
         label={buttonTitles.PRICE}
       />
@@ -55,15 +47,14 @@ const Filters = () => {
         setFilterValue={() => {}}
         selectorFunc={() => {}}
         options={availableStatus}
-        label='Статус'
+        label={buttonTitles.STATUS}
       />
       <ComponentFilterSearch
         setFilterValue={() => {}}
         selectorFunc={() => {}}
       />
-      <ComponentFilterClear actionClearFilters={clearFilters} />
+      <ComponentFilterClear actionClearFilters={() => {}} />
     </ContainerFilters>
   );
-};
 
 export default Filters;
