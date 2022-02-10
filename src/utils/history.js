@@ -28,18 +28,6 @@ export const historyEventFilterObj = (historyEvents) => {
   return arrToFilter;
 };
 
-export const filterInputToRender = (selectedValues, valueToRender) =>
-  selectedValues.map((selectedValue, inx, values) => {
-    let selectedRenderValue;
-
-    if (inx !== values.length - 1) {
-      selectedRenderValue = `${valueToRender[selectedValue]}, `;
-    } else {
-      selectedRenderValue = valueToRender[selectedValue];
-    }
-    return selectedRenderValue;
-  });
-
 export const generateDateFormatForInputValue = (date) => {
   let [dateValue, timeValue] = moment(date)
     .format('YYYY-MM-DD, h:mm:ss')

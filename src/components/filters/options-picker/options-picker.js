@@ -21,6 +21,11 @@ const OptionsPicker = ({ value, handler, label, options }) => {
 
   const { optionHandler, setRenderValue } = useFilter(options, handler);
 
+  const filteredOptions = {};
+  options.map((option) =>
+    Object.assign(filteredOptions, { [option.value]: option.label })
+  );
+
   return (
     <Badge
       badgeContent={value.length}
@@ -35,9 +40,7 @@ const OptionsPicker = ({ value, handler, label, options }) => {
           multiple
           value={value}
           onChange={optionHandler}
-          renderValue={setRenderValue}
-          // onChange={setOptionHandler}
-          // renderValue={renderValue}
+          renderValue={(selected) => setRenderValue(selected, filteredOptions)}
           input={<Input />}
           autoWidth
           MenuProps={MenuProps}
