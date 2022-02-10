@@ -20,11 +20,6 @@ const PromoCodeAdd = () => {
   const pathToPromoCodesPage = config.routes.pathToPromoCodes;
 
   const onCompletedHandler = () => {
-    const snackBar = {
-      severity: 'success',
-      message: 'Успішно додано',
-      status: true
-    };
     dispatch(showSuccessSnackbar('Успішно додано'));
   };
 
