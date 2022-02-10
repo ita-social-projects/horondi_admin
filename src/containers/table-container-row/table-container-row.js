@@ -74,7 +74,7 @@ const TableContainerRow = ({
           <p className={classes.text}>{text}</p>
         </TableCell>
       )}
-      {image && (
+      {!showAvatar && image && (
         <TableCell className={classes.imageValue}>
           <img src={image} alt={image} />
         </TableCell>

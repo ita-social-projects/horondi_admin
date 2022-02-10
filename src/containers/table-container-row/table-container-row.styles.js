@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
   text: {
     whiteSpace: 'nowrap',
-    maxWidth: '60vw',
+    maxWidth: '40vw',
     textOverflow: 'ellipsis',
     overflow: 'hidden'
   },
