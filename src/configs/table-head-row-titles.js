@@ -8,6 +8,7 @@ const tableHeadRowTitles = {
     "Об'єкт дії",
     'Деталі'
   ],
+
   aboutUsHeaderTitles: ['Основний заголовок сторінки', 'Дії'],
   aboutUsTitles: ['Заголовок', 'Текст', 'Зображення', 'Дії'],
   aboutUsFooterTitles: ['Зображення у футері сайту', 'Дії'],

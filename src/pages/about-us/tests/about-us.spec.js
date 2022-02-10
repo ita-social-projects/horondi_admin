@@ -9,7 +9,6 @@ import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 
 jest.mock('react-redux');
-
 jest.mock('../about-us.styles', () => ({
   useStyles: () => ({})
 }));
