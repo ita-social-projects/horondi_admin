@@ -17,27 +17,31 @@ const {
 const Search = ({ value, handler, placeholder }) => {
   const styles = useStyles();
 
-  // const { setSearch, submitSearch, activateSearch, searchValue } = useSearch(value, handler, submitKey);
+  const { setSearch, submitSearch, activateSearch, searchValue } = useSearch(
+    value,
+    handler,
+    submitKey
+  );
 
-  const [searchValue, setSearchValue] = useState(value);
+  // const [searchValue, setSearchValue] = useState(value);
 
-  const handleSetSearchValue = (event) => {
-    setSearchValue(event.target.value);
-  };
+  // const handleSetSearchValue = (event) => {
+  //   setSearchValue(event.target.value);
+  // };
 
-  const handleSubmitSearch = (event) => {
-    if (event.key === submitKey) {
-      handler(searchValue);
-    }
-  };
+  // const handleSubmitSearch = (event) => {
+  //   if (event.key === submitKey) {
+  //     handler(searchValue);
+  //   }
+  // };
 
-  const handleSearch = () => {
-    handler(searchValue);
-  };
+  // const handleSearch = () => {
+  //   handler(searchValue);
+  // };
 
   return (
     <Paper className={styles.container}>
-      {/* <InputBase
+      <InputBase
         placeholder={setSearchLabel(placeholder)}
         value={searchValue}
         onChange={setSearch}
@@ -45,8 +49,8 @@ const Search = ({ value, handler, placeholder }) => {
       />
       <IconButton aria-label='search' onClick={activateSearch}>
         <SearchIcon />
-      </IconButton> */}
-      <InputBase
+      </IconButton>
+      {/* <InputBase
         placeholder={setSearchLabel(placeholder)}
         value={searchValue}
         onChange={handleSetSearchValue}
@@ -54,7 +58,7 @@ const Search = ({ value, handler, placeholder }) => {
       />
       <IconButton aria-label='search' onClick={handleSearch}>
         <SearchIcon />
-      </IconButton>
+      </IconButton> */}
     </Paper>
   );
 };
