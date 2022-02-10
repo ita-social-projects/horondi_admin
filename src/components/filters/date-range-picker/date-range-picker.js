@@ -5,22 +5,12 @@ import { DateRangePicker as DateRangeSelector } from 'rsuite';
 import { FORMAT_DATE, locale, size } from '../../../consts/date-range-picker';
 import { useStyles } from './date-range-picker.styles';
 import 'rsuite/dist/styles/rsuite-default.css';
+import { useFilterByData } from '../../../hooks/filter/useFilterSearchAndSort';
 
 const DateRangePicker = ({ dateFrom, dateTo, handler }) => {
   const styles = useStyles();
-  const [value, setValue] = useState([]);
-
+  const { dataHandler, value } = useFilterByData(dateFrom, dateTo, handler);
   const { afterToday } = DateRangeSelector;
-
-  useEffect(() => {
-    if (dateFrom && dateTo) {
-      setValue([dateFrom, dateTo]);
-    }
-  }, [dateFrom, dateTo]);
-
-  const setDateHandler = (e) => {
-    handler(e);
-  };
 
   return (
     <Paper className={styles.container}>
@@ -34,7 +24,7 @@ const DateRangePicker = ({ dateFrom, dateTo, handler }) => {
         size={size.sm}
         value={value}
         disabledDate={afterToday()}
-        onChange={setDateHandler}
+        onChange={dataHandler}
         showOneCalendar
       />
     </Paper>
