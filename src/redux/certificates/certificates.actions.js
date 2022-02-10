@@ -1,11 +1,7 @@
 import {
   GET_CERTIFICATES_LIST,
   SET_CERTIFICATES_LIST,
-  DELETE_CERTIFICATE,
-  REMOVE_CERTIFICATE_FROM_STORE,
-  SET_CERTIFICATES_LOADING,
-  CLEAR_FILTERS,
-  SET_FILTER
+  SET_CERTIFICATES_LOADING
 } from './certificates.types';
 
 const getCertificatesList = (payload) => ({
@@ -18,37 +14,9 @@ const setCertificatesList = (payload) => ({
   payload
 });
 
-const deleteCertificate = (payload) => ({
-  type: DELETE_CERTIFICATE,
-  payload
-});
-
-const removeCertificateFromStore = (payload) => ({
-  type: REMOVE_CERTIFICATE_FROM_STORE,
-  payload
-});
-
 const setCertificatesLoading = (payload) => ({
   type: SET_CERTIFICATES_LOADING,
   payload
 });
 
-const setCertificateFilter = (payload) => ({
-  type: SET_FILTER,
-  payload
-});
-
-const clearFilters = (payload) => ({
-  type: CLEAR_FILTERS,
-  payload
-});
-
-export {
-  getCertificatesList,
-  setCertificatesList,
-  deleteCertificate,
-  removeCertificateFromStore,
-  setCertificatesLoading,
-  setCertificateFilter,
-  clearFilters
-};
+export { getCertificatesList, setCertificatesList, setCertificatesLoading };

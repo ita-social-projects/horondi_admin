@@ -1,34 +1,31 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { Button, Typography } from '@material-ui/core';
-import useSuccessSnackbar from '../../utils/use-success-snackbar';
-import { config } from '../../configs';
+
 import Filter from './filters/filters';
-import { useCommonStyles } from '../common.styles';
 import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import Status from './status/status';
-import {
-  deleteCertificate,
-  getCertificatesList
-} from '../../redux/certificates/certificates.actions';
-
 import LoadingBar from '../../components/loading-bar/loading-bar';
 import Certificate from './certificate/certificate';
+
+import { useCommonStyles } from '../common.styles';
+
 import { inputName } from '../../utils/order';
 import { getUsers } from '../../redux/users/users.actions';
-import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
+import { getCertificatesList } from '../../redux/certificates/certificates.actions';
 
-const map = require('lodash/map');
+import { config } from '../../configs';
 
 const { routes } = config;
-const pathToCreateCertificatesPage = routes.pathToCreateCertificates;
 const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
 const tableTitles = config.tableHeadRowTitles.certificates;
 const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
 const { NO_CERTIFICATE_MESSAGE } = config.messages;
-const { REMOVE_CERTIFICATE_MESSAGE } = config.messages;
+const { ACTIVE_STATUS, USED_STATUS, EXPIRED_STATUS } = config.statuses;
+const pathToCreateCertificatesPage = routes.pathToCreateCertificates;
 
 const transformDate = (date) => {
   const exactDate = new Date(date);
@@ -41,64 +38,39 @@ const transformDate = (date) => {
 
 const checkStatus = (active, used) => {
   if (active) {
-    return 'Активний';
-  }
-  if (used) {
-    return 'Використаний';
-  }
-  if (!active && !used) {
-    return 'Прострочений';
-  }
+    return ACTIVE_STATUS;
+  } if (used) {
+    return USED_STATUS;
+  } 
+    return EXPIRED_STATUS;
+  
 };
 
 const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
-  const { openSuccessSnackbar } = useSuccessSnackbar();
   const dispatch = useDispatch();
 
-  const {
-    items: certificatesList,
-    certificatesLoading: loading,
-    filters
-  } = useSelector(({ Certificates }) => ({
-    items: Certificates.list,
-    certificatesLoading: Certificates.certificatesLoading,
-    filters: Certificates.filters
-  }));
+  const { items: certificatesList, certificatesLoading } = useSelector(
+    ({ Certificates }) => ({
+      items: Certificates.list,
+      certificatesLoading: Certificates.certificatesLoading
+    })
+  );
 
-  const usersList = useSelector(({ Users }) => Users.list);
-  const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
-    currentPage: Table.pagination.currentPage,
-    rowsPerPage: Table.pagination.rowsPerPage,
-    itemsCount: Table.itemsCount
-  }));
-
-  const deleteCertificateHandler = (id) => {
-    const removeCertificate = () => {
-      dispatch(closeDialog());
-      dispatch(deleteCertificate(id));
-    };
-    openSuccessSnackbar(removeCertificate, REMOVE_CERTIFICATE_MESSAGE);
-  };
-
-  const deleteHandler = (item) =>
-    !item.isActivated ? deleteCertificateHandler(item._id) : null;
+  const { list: usersList, loading: usersLoading } = useSelector(
+    ({ Users }) => ({
+      list: Users.list,
+      loading: Users.userLoading
+    })
+  );
 
   useEffect(() => {
     dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
-    dispatch(
-      getCertificatesList({
-        limit: rowsPerPage,
-        skip: currentPage * rowsPerPage,
-        filter: {
-          value: filters.value
-        }
-      })
-    );
-  }, [dispatch, rowsPerPage, currentPage, filters]);
+    dispatch(getCertificatesList());
+  }, [dispatch]);
 
   const setUser = (id) => {
     if (id && usersList) {
@@ -112,7 +84,7 @@ const CertificatesPage = () => {
     }
   };
 
-  const certificateItems = map(certificatesList.items, (certificate) => (
+  const certificateItems = certificatesList.items.map((certificate) => (
     <TableContainerRow
       key={certificate._id}
       number={certificate.name}
@@ -129,13 +101,13 @@ const CertificatesPage = () => {
         />
       }
       date={
-        certificate.isActive
+        certificate.isActivated
           ? `${transformDate(certificate.dateStart)} - ${transformDate(
               certificate.dateEnd
             )}`
           : '-'
       }
-      deleteHandler={() => deleteHandler(certificate)}
+      deleteHandler={() => {}}
       editHandler={() => {}}
       showAvatar={false}
     />
@@ -143,7 +115,7 @@ const CertificatesPage = () => {
 
   return (
     <>
-      {loading ? (
+      {certificatesLoading || usersLoading ? (
         <LoadingBar />
       ) : (
         <div className={commonStyles.container}>
@@ -167,8 +139,6 @@ const CertificatesPage = () => {
           {certificateItems.length ? (
             <TableContainerGenerator
               data-cy='certificateTable'
-              pagination
-              count={itemsCount}
               tableTitles={tableTitles}
               tableItems={certificateItems}
             />
