@@ -13,11 +13,7 @@ import {
   updateCategory
 } from '../../../redux/categories/categories.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../../redux/snackbar/snackbar.actions';
+import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
 import {
   getCategoryInitialValues,
@@ -92,9 +88,7 @@ const CategoryForm = ({ category, id, edit }) => {
         upload
       });
       if (!uploadCondition && !category.images.thumbnail) {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(CATEGORY_ERROR));
-        dispatch(setSnackBarStatus(true));
+        dispatch(showErrorSnackbar(CATEGORY_ERROR));
       }
     }
   });
