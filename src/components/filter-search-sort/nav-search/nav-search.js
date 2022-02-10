@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -23,21 +23,6 @@ const NavSearch = ({
     setSearchFilter,
     submitKey
   );
-  // const [searchValue, setSearchValue] = useState(search);
-
-  // const handleSetSearchValue = (event) => {
-  //   setSearchValue(event.target.value);
-  // };
-
-  // const handleSearchSubmit = (event) => {
-  //   if (event.key === submitKey) {
-  //     handleUserSearch();
-  //   }
-  // };
-
-  // const handleUserSearch = useCallback(() => {
-  //   setSearchFilter(searchValue);
-  // }, [searchValue]);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,22 +22,6 @@ const Search = ({ value, handler, placeholder }) => {
     handler,
     submitKey
   );
-
-  // const [searchValue, setSearchValue] = useState(value);
-
-  // const handleSetSearchValue = (event) => {
-  //   setSearchValue(event.target.value);
-  // };
-
-  // const handleSubmitSearch = (event) => {
-  //   if (event.key === submitKey) {
-  //     handler(searchValue);
-  //   }
-  // };
-
-  // const handleSearch = () => {
-  //   handler(searchValue);
-  // };
 
   return (
     <Paper className={styles.container}>
@@ -65,5 +49,3 @@ Search.defaultProps = {
 };
 
 export default Search;
-
-/// /// ///
