@@ -12,9 +12,8 @@ import {
 } from '@material-ui/core';
 
 import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
+  showSuccessSnackbar,
+  showErrorSnackbar
 } from '../../../redux/snackbar/snackbar.actions';
 
 import LoadingBar from '../../../components/loading-bar';
@@ -59,18 +58,14 @@ const CreateCertificate = () => {
     bulkGenerateCertificates,
     {
       onCompleted(data) {
-        dispatch(setSnackBarSeverity('success'));
-        dispatch(setSnackBarMessage('Успішно додано'));
-        dispatch(setSnackBarStatus(true));
+        dispatch(showSuccessSnackbar('Успішно додано'));
 
         setCertificates(data.bulkGenerateCertificates.items);
         setCheckBoxes(initialCheckboxes);
         setEmail('');
       },
       onError: (err) => {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(`Помилка: ${err}`));
-        dispatch(setSnackBarStatus(true));
+        dispatch(showErrorSnackbar(`Помилка: ${err}`));
       }
     }
   );
