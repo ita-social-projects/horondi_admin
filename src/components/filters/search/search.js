@@ -50,15 +50,6 @@ const Search = ({ value, handler, placeholder }) => {
       <IconButton aria-label='search' onClick={activateSearch}>
         <SearchIcon />
       </IconButton>
-      {/* <InputBase
-        placeholder={setSearchLabel(placeholder)}
-        value={searchValue}
-        onChange={handleSetSearchValue}
-        onKeyPress={handleSubmitSearch}
-      />
-      <IconButton aria-label='search' onClick={handleSearch}>
-        <SearchIcon />
-      </IconButton> */}
     </Paper>
   );
 };
@@ -74,3 +65,5 @@ Search.defaultProps = {
 };
 
 export default Search;
+
+/// /// ///
