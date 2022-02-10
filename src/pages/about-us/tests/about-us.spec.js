@@ -37,10 +37,6 @@ describe('AboutUs component tests, ', () => {
     wrapper = null;
   });
 
-  it('Should render AboutUs', () => {
-    expect(wrapper).toBeDefined();
-  });
-
   it('Component TableContainerRow should exist', () => {
     expect(wrapper.exists(TableContainerRow)).toBe(true);
   });
