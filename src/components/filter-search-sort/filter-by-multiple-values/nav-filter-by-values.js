@@ -15,7 +15,7 @@ import _ from 'lodash';
 import { useStyles, MenuProps } from './filter-by-multiple-values.styles';
 import materialUiConstants from '../../../configs/material-ui-constants';
 import { badgePosition } from '../../../configs';
-import { filterInputToRender } from '../../../utils/history';
+import { useFilter } from '../../../hooks/filter/useFilterSearchAndSort';
 
 const NavFilterByValues = ({
   filterByMultipleOptions: {
@@ -28,11 +28,10 @@ const NavFilterByValues = ({
 }) => {
   const styles = useStyles();
 
-  const handleChangeMultiple = ({ target }) => {
-    if (target.value) {
-      setFilterHandler(target.value);
-    }
-  };
+  const { optionHandler, setRenderValue } = useFilter(
+    selectItems,
+    setFilterHandler
+  );
 
   return (
     <div className={styles.formblock}>
@@ -50,11 +49,11 @@ const NavFilterByValues = ({
             id={materialUiConstants.checkBoxId}
             multiple
             value={filters}
-            onChange={handleChangeMultiple}
-            input={<Input />}
+            onChange={optionHandler}
             renderValue={(selected) =>
-              filterInputToRender(selected, objForTranslateRenderItems)
+              setRenderValue(selected, objForTranslateRenderItems)
             }
+            input={<Input />}
             autoWidth
             MenuProps={MenuProps}
           >
