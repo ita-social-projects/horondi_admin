@@ -1,7 +1,15 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { DatePicker } from 'rsuite';
-import { Button, Grid, TextField } from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  TextField,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  FormControl
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import { productsTranslations } from '../../../configs/product-translations';
@@ -25,7 +33,7 @@ function PromoCodeForm({
     dateTo: '',
     dateFrom: '',
     discount: '',
-    categories: ['All']
+    categories: []
   }
 }) {
   const styles = useStyles();
@@ -61,6 +69,24 @@ function PromoCodeForm({
 
   const { promoCodesTranslation } = orders;
   const { SAVE } = productsTranslations;
+
+  const checkBoxes = promoCodesTranslation.categories.allCheckboxLables.map(
+    (item) => (
+        <FormControlLabel
+          key={item.label}
+          control={
+            <Checkbox
+              onChange={handleChange}
+              checked={values.categories.includes(item.value)}
+              name='categories'
+              color='primary'
+              value={item.value}
+            />
+          }
+          label={item.label}
+        />
+      )
+  );
 
   return (
     <div className={commonStyles.container}>
@@ -153,6 +179,17 @@ function PromoCodeForm({
             onChange={handleChange}
             InputProps={{ inputProps: { min: 0, max: 90 } }}
           />
+          <div>
+            <span className={styles.subTitle}>
+              {promoCodesTranslation.categories.title}
+            </span>
+            <FormControl>
+              <FormGroup className={styles.checkboxes}>{checkBoxes}</FormGroup>
+              {touched.categories && errors.categories && (
+                <div className={styles.errorCategory}>{errors.categories}</div>
+              )}
+            </FormControl>
+          </div>
         </div>
       </form>
     </div>
