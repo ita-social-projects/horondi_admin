@@ -10,7 +10,7 @@ const props = {
     dateTo: '2022-01-29T10:49:49.736Z',
     dateFrom: '2022-01-28T10:49:49.725Z',
     discount: 10,
-    categories: ['All']
+    categories: ['all']
   }
 };
 
@@ -71,5 +71,27 @@ describe('promo-code-form component test', () => {
     const text = screen.getByText(/Розмір знижки у процентах:/i);
 
     expect(text).toBeInTheDocument();
+  });
+
+  it('should render categories title', () => {
+    const text = screen.getByText(/Застосувати до:/i);
+
+    expect(text).toBeInTheDocument();
+  });
+
+  it('should render checkbox', () => {
+    const checkbox = screen.getByLabelText(/Всі товари/i);
+
+    expect(checkbox).toBeInTheDocument();
+  });
+
+  it('should click checkbox', () => {
+    const checkbox = screen.getByLabelText(/Рюкзаки/i);
+
+    expect(checkbox.checked).toEqual(false);
+
+    fireEvent.click(checkbox);
+
+    expect(checkbox.checked).toEqual(true);
   });
 });

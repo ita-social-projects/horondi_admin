@@ -39,5 +39,13 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     gap: '30px'
+  },
+  checkboxes: {
+    display: 'flex'
+  },
+  errorCategory: {
+    fontSize: '11px',
+    textAlign: 'left',
+    color: theme.palette.red
   }
 }));
