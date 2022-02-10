@@ -3,25 +3,21 @@ import PropTypes from 'prop-types';
 
 import { useStyles } from './certificate.styles';
 
-const Certificate = ({ name, value }) => {
+import certificateImg from '../img/certificate.svg';
+
+const Certificate = ({ name }) => {
   const styles = useStyles();
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.certificate}>
-        <p className={styles.logo}>Horondi</p>
-        <p
-          className={styles.text}
-        >{`Подарунковий сертифікат на ${value} грн`}</p>
-      </div>
+      <img src={certificateImg} alt='Certificate' />
       <p className={styles.name}>{name}</p>
     </div>
   );
 };
 
 Certificate.propTypes = {
-  name: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired
+  name: PropTypes.string.isRequired
 };
 
 export default Certificate;

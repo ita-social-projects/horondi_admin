@@ -1,9 +1,9 @@
-import { getItems, setItems } from '../../utils/client';
+import { getItems } from '../../utils/client';
 
-export const getAllCertificates = async (skip, limit, filter) => {
+export const getAllCertificates = async () => {
   const query = `
-    query($skip: Int, $limit: Int, $filter: CertificateFilterInput) {
-      getAllCertificates(skip: $skip, limit: $limit, filter: $filter) {
+    query {
+      getAllCertificates {
         ... on PaginatedCertificate {
           items {
           _id
@@ -16,38 +16,13 @@ export const getAllCertificates = async (skip, limit, filter) => {
           createdBy {
             _id
           }
-        }
-        count  
+        } 
         }
       } 
     }
   `;
 
-  const result = await getItems(query, {
-    skip,
-    limit,
-    filter
-  });
+  const result = await getItems(query);
 
   return result?.data?.getAllCertificates;
-};
-
-export const deleteCertificate = async (id) => {
-  const query = `
-    mutation($id: ID!) {
-      deleteCertificate(id: $id) {
-        ... on Certificate {
-            _id
-        }
-        ... on Error {
-            statusCode
-            message
-        }
-      }
-    }
-  `;
-
-  const result = await setItems(query, { id });
-
-  return result?.data?.deleteCertificate;
 };

@@ -92,7 +92,8 @@ const buttonTitles = {
   AVAILABLE_FOR_CONSTRUCTOR_TITLE: 'Конструктор',
   GENERATE_CERTIFICATE: 'Згенерувати',
   CREATE_CERTIFICATE_TITLE: 'Створити Сертифікат',
-  PRICE: 'Вартість'
+  PRICE: 'Вартість',
+  STATUS: 'Статус'
 };
 
 export default buttonTitles;
