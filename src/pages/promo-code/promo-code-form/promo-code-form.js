@@ -79,6 +79,24 @@ function PromoCodeForm({
         ]);
   };
 
+  const parentChecbox = (
+    <FormControlLabel
+      className={styles.checkboxes}
+      label='Всі товари'
+      control={
+        <Checkbox
+          color='primary'
+          name='categories'
+          checked={categories.length === chechboxLabels.length}
+          indeterminate={
+            categories.length < chechboxLabels.length && categories.length > 0
+          }
+          onChange={allCategoriesHandler}
+        />
+      }
+    />
+  );
+
   const checkoxGroup = chechboxLabels.map((item) => (
     <FormControlLabel
       key={item.label}
@@ -94,27 +112,6 @@ function PromoCodeForm({
       label={item.label}
     />
   ));
-
-  const parentChecbox = (
-    <>
-      <FormControlLabel
-        className={styles.checkboxes}
-        label='Всі товари'
-        control={
-          <Checkbox
-            color='primary'
-            name='categories'
-            checked={categories.length === chechboxLabels.length}
-            indeterminate={
-              categories.length < chechboxLabels.length && categories.length > 0
-            }
-            onChange={allCategoriesHandler}
-          />
-        }
-      />
-      {checkoxGroup}
-    </>
-  );
 
   return (
     <div className={commonStyles.container}>
@@ -212,7 +209,10 @@ function PromoCodeForm({
               {promoCodesTranslation.categories.title}
             </span>
             <FormControl>
-              <FormGroup>{parentChecbox}</FormGroup>
+              <FormGroup>
+                {parentChecbox}
+                {checkoxGroup}
+              </FormGroup>
               {touched.categories && errors.categories && (
                 <div className={styles.errorCategory}>{errors.categories}</div>
               )}
