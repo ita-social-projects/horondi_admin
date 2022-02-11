@@ -41,8 +41,12 @@ export const menuCategories = [
   ['Останні зміни', routes.pathToHistory, HistoryIcon],
   ['Про Нас', routes.pathToAboutUs, PeopleIcon],
   ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
-  ['Посилання', routes.pathToHeaders, LinkIcon],
-  ['Про матеріали', routes.pathToAboutMaterials, ExtensionIcon]
+  ['Посилання', routes.pathToHeaders, LinkIcon]
+];
+
+export const materialMenuCategories = [
+  ['Матеріали', routes.pathToAboutMaterialsMain, ExtensionIcon],
+  ['Матеріали низу', routes.pathToAboutMaterialsBottom, ExtensionIcon]
 ];
 
 export const clientMenuCategories = [

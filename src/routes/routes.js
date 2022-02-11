@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 import AboutUsPage from '../pages/about-us';
 import AboutUsAddBlock from '../pages/about-us/about-us-add';
 import UsersPage from '../pages/users';
@@ -87,14 +89,12 @@ import StrapsAdd from '../pages/straps/straps-add/straps-add';
 import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 import UserDetails from '../pages/users/user/user-details';
 import constructorEdit from '../pages/constructor-list/constructor-edit';
-import PropTypes from 'prop-types';
-import { noop } from 'lodash';
 import CreateCertificate from '../pages/certificates/create-certificate/create-certificate';
-import MaterialAbout from '../pages/material/material-about';
-import MaterialAboutAdd from '../pages/material/material-about-add';
 import PromoCodeAdd from '../pages/promo-code/promo-code-add/promo-code-add';
 import PromoCodeEdit from '../pages/promo-code/promo-code-edit/promo-code-edit';
 import PromoCodePage from '../pages/promo-code/promo-code-page';
+import MaterialAboutAdd from '../pages/material/material-about-add';
+import MaterialAbout from '../pages/material/material-about';
 
 const { routes } = config;
 
@@ -164,12 +164,19 @@ const Routes = ({ validatorMethods }) => {
             component={AboutUsAddBlock}
           />
           <Route
-            path={routes.pathToAboutMaterials}
+            path={routes.pathToAboutMaterialsMain}
             exact
-            component={MaterialAbout}
+            render={(props) => <MaterialAbout {...props} currentType='main' />}
           />
           <Route
-            path={routes.pathToAddAboutMaterial}
+            path={routes.pathToAboutMaterialsBottom}
+            exact
+            render={(props) => (
+              <MaterialAbout {...props} currentType='bottom' />
+            )}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsAdd}
             exact
             component={MaterialAboutAdd}
           />
