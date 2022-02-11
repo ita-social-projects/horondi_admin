@@ -28,7 +28,6 @@ const ComponentFilterMultiplePicker = ({
     />
   );
 };
-
 ComponentFilterMultiplePicker.propTypes = {
   setFilterValue: PropTypes.func.isRequired,
   options: PropTypes.instanceOf(Array).isRequired,

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import ContainerFilters from '../../../components/container-filters';
 import ComponentFilterClear from '../../../components/filters-components/filter-clear';
 import ComponentFilterSinglePicker from '../../../components/filters-components/filter-single-picker';
+import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import filterLabels from '../../../configs/filter-labels';
 import {
   clearFilters,
@@ -12,7 +13,6 @@ import {
 } from '../../../redux/model/model.actions';
 import { sortLabel } from '../../../configs/sort';
 import buttonTitles from '../../../configs/button-titles';
-import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import {
   availableFilterObj,
   availableForConstructorFilterObj
@@ -33,6 +33,7 @@ function Filters() {
   );
 
   const availableOptions = [...availableFilterObj()];
+
   const availableConstrOptions = [...availableForConstructorFilterObj()];
 
   const categorySelector = (selector) => ({ category: selector });

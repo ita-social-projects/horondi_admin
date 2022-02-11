@@ -25,13 +25,15 @@ export const CertificatesTable = ({ certificates }) => {
     </TableCell>
   ));
 
-  const bodyItems = certificates.map((row) => (
-    <TableRow key={row.id}>
+  const bodyItems = certificates.map((row, index) => (
+    <TableRow key={row.name + index}>
       <TableCell component='th' scope='row'>
-        {row.id}
+        {row.name}
       </TableCell>
-      <TableCell align='left'>{row.name}</TableCell>
-      <TableCell align='left'>{formatDate(row.dateFrom, row.dateTo)}</TableCell>
+      <TableCell align='left'>{row.value} грн</TableCell>
+      <TableCell align='left'>
+        {formatDate(row.dateStart, row.dateEnd)}
+      </TableCell>
     </TableRow>
   ));
 
@@ -48,10 +50,13 @@ export const CertificatesTable = ({ certificates }) => {
 };
 
 const certificateTableInterface = PropTypes.shape({
-  id: PropTypes.string,
   name: PropTypes.string,
-  dateFrom: PropTypes.instanceOf(Date),
-  dateTo: PropTypes.instanceOf(Date)
+  value: PropTypes.number,
+  dateStart: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.string
+  ]),
+  dateEnd: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string])
 });
 
 CertificatesTable.propTypes = {

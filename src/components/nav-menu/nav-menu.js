@@ -22,6 +22,7 @@ import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import LayersIcon from '@material-ui/icons/Layers';
 import TuneIcon from '@material-ui/icons/Tune';
+import ExtensionIcon from '@material-ui/icons/Extension';
 
 import { useStyles } from './nav-menu.styles';
 
@@ -35,6 +36,7 @@ import {
   TEMPORARY_WIDTHS,
   MENU_TABS
 } from '../../consts/menu-categories';
+import { PromoIcon } from '../nav-bar/icons';
 
 const { titles } = config;
 
@@ -47,7 +49,9 @@ const NavMenu = ({ width }) => {
     catalogTab: false,
     certificatesTab: false,
     constructorTab: false,
-    staticTab: false
+    staticTab: false,
+    materialsTab: false,
+    promoTab: false
   });
 
   const staticArray = {
@@ -55,7 +59,9 @@ const NavMenu = ({ width }) => {
     catalogTab: false,
     certificatesTab: false,
     constructorTab: false,
-    staticTab: false
+    staticTab: false,
+    materialsTab: false,
+    promoTab: false
   };
 
   const { sideMenuStatus, pendingQuestionsCount } = useSelector(
@@ -93,12 +99,20 @@ const NavMenu = ({ width }) => {
     returnedList(category[0], category[1], category[2])
   );
 
+  const materialMenuItems = config.materialMenuCategories.map((category) =>
+    returnedList(...category, classes.nested)
+  );
+
   const clientMenuItems = config.clientMenuCategories.map((category) =>
     returnedList(category[0], category[1], category[2], classes.nested)
   );
 
   const catalogMenuItems = config.catalogMenuCategories.map((category) =>
     returnedList(category[0], category[1], category[2], classes.nested)
+  );
+
+  const promoMenuItems = config.promoMenuCategories.map((category) =>
+    returnedList(...category, classes.nested)
   );
 
   const staticPagesMenuItems = config.staticPagesCategories.map((category) =>
@@ -153,12 +167,34 @@ const NavMenu = ({ width }) => {
       () =>
         setNavbarTab({
           ...staticArray,
+          promoTab: !navbarTab.promoTab
+        }),
+      navbarTab.promoTab,
+      promoMenuItems,
+      MENU_TABS.PROMOCODE,
+      PromoIcon
+    ],
+    [
+      () =>
+        setNavbarTab({
+          ...staticArray,
           constructorTab: !navbarTab.constructorTab
         }),
       navbarTab.constructorTab,
       constructorPagesMenuItems,
       MENU_TABS.CONSTRUCTOR,
       AccessibilityNewIcon
+    ],
+    [
+      () =>
+        setNavbarTab({
+          ...staticArray,
+          materialsTab: !navbarTab.materialsTab
+        }),
+      navbarTab.materialsTab,
+      materialMenuItems,
+      MENU_TABS.MATERIALS,
+      ExtensionIcon
     ],
     [
       () =>

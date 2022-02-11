@@ -4,17 +4,12 @@ import PropTypes from 'prop-types';
 
 import { useStyles } from './option-picker.styles';
 import materialUiConstants from '../../../configs/material-ui-constants';
+import { useSort } from '../../../hooks/filter/useFilterSearchAndSort';
 
 const OptionPicker = ({ handler, value, defaultValue, options, label }) => {
   const styles = useStyles();
 
-  const setOptionHandler = (e) => {
-    const result = options.find((item) => item.value === e.target.value);
-
-    if (result) {
-      handler(result);
-    }
-  };
+  const { optionHandler } = useSort(options, handler);
 
   const optionElems = options.map((option) => (
     <MenuItem key={option.label} value={option.value}>
@@ -30,7 +25,7 @@ const OptionPicker = ({ handler, value, defaultValue, options, label }) => {
         labelId='checkbox-label'
         id='checkbox'
         value={value}
-        onChange={setOptionHandler}
+        onChange={optionHandler}
         defaultValue={defaultValue}
       >
         {optionElems}

@@ -6,7 +6,9 @@ import {
   catalogMenuCategories,
   staticPagesCategories,
   constructorMenuCategories,
-  certificatesMenuCategories
+  certificatesMenuCategories,
+  promoMenuCategories,
+  materialMenuCategories
 } from './menu-categories';
 import tableHeadRowTitles from './table-head-row-titles';
 import detailTitles from './detail-titles';
@@ -61,7 +63,8 @@ import {
   closuresErrorMessages,
   basicsErrorMessages,
   strapsErrorMessages,
-  userErrorMessages
+  userErrorMessages,
+  promoCodeErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -249,8 +252,10 @@ export const config = {
   detailTitles,
   messages,
   menuCategories,
+  materialMenuCategories,
   clientMenuCategories,
   catalogMenuCategories,
+  promoMenuCategories,
   constructorMenuCategories,
   certificatesMenuCategories,
   staticPagesCategories,
@@ -261,6 +266,7 @@ export const config = {
   labels,
   titles,
   commonErrorMessages,
+  promoCodeErrorMessages,
   loginErrorMessages,
   colorErrorMessages,
   contactErrorMessages,

@@ -15,11 +15,7 @@ import {
   updatePocket
 } from '../../../redux/pockets/pockets.actions';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../../redux/snackbar/snackbar.actions';
+import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import LanguagePanel from '../language-panel';
 import { getPocketsInitialValues } from '../../../utils/pockets-form';
 import CheckboxOptions from '../../checkbox-options';
@@ -133,9 +129,7 @@ const PocketsForm = ({ pocket, id, edit }) => {
       dispatch(addPockets({ pocket: newPocket, upload }));
 
       if (!uploadCondition && !pocket.images.thumbnail) {
-        dispatch(setSnackBarSeverity('error'));
-        dispatch(setSnackBarMessage(POCKETS_ERROR));
-        dispatch(setSnackBarStatus(true));
+        dispatch(showErrorSnackbar(POCKETS_ERROR));
       }
     }
   });

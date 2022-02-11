@@ -72,6 +72,7 @@ export default {
     textTransform: 'uppercase'
   },
   fontFamily: [
+    'Open Sans',
     '"Montserrat"',
     '-apple-system',
     'BlinkMacSystemFont',

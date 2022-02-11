@@ -12,6 +12,8 @@ import { getEmailQuestionsPendingCount } from '../../redux/email-questions/email
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { history } from '../../store/store';
 import { LOCAL_STORAGE } from '../../consts/local-storage';
+import useDeleteValidation from '../../hooks/deleteValidation/useDeleteValidation';
+import { getAllProductsDataForDeleteValidation } from '../../redux/products/products.operations';
 
 const { DARK_THEME, LIGHT_THEME } = config.theme;
 
@@ -21,6 +23,9 @@ const App = () => {
   const themeValue = theme(themeMode);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const validatorMethods = useDeleteValidation(
+    getAllProductsDataForDeleteValidation
+  );
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
 
   useEffect(() => {
@@ -36,7 +41,7 @@ const App = () => {
       <CssBaseline>
         <div className={classes.root}>
           <ConnectedRouter history={history}>
-            <Routes />
+            <Routes validatorMethods={validatorMethods} />
           </ConnectedRouter>
         </div>
       </CssBaseline>

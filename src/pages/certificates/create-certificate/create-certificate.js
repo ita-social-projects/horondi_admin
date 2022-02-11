@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
+
 import { DatePicker } from 'rsuite';
 import {
   Grid,
@@ -7,36 +10,65 @@ import {
   TextField,
   Tooltip
 } from '@material-ui/core';
-import { useStyles } from './create-certificate.styles';
-import { BackButton } from '../../../components/buttons';
-import materialUiConstants from '../../../configs/material-ui-constants';
-import { useCommonStyles } from '../../common.styles';
-import CheckBoxes from '../checkBoxes';
+
+import {
+  showSuccessSnackbar,
+  showErrorSnackbar
+} from '../../../redux/snackbar/snackbar.actions';
+
+import LoadingBar from '../../../components/loading-bar';
+
 import formRegExp from '../../../configs/form-regexp';
-import CertificatesTable from '../certificatesTable';
 import { loginErrorMessages } from '../../../configs/error-messages';
 import buttonTitles from '../../../configs/button-titles';
 import titles from '../../../configs/titles';
 import routes from '../../../configs/routes';
+import materialUiConstants from '../../../configs/material-ui-constants';
 
-const { certificatesTitles } = titles;
+import CheckBoxes from '../checkBoxes';
+import { BackButton } from '../../../components/buttons';
+import { useCommonStyles } from '../../common.styles';
+
+import { useStyles } from './create-certificate.styles';
+import CertificatesTable from '../certificatesTable';
+import { bulkGenerateCertificates } from '../operations/certificate.mutation';
+
+const { certificatesTitles, certificatesValueTitles } = titles;
 
 const CreateCertificate = () => {
+  const dispatch = useDispatch();
+
   const commonStyles = useCommonStyles();
   const styles = useStyles();
 
-  const initialCheckboxes = [
-    { checked: false, quantity: 1, name: certificatesTitles[500] },
-    { checked: false, quantity: 1, name: certificatesTitles[1000] },
-    { checked: false, quantity: 1, name: certificatesTitles[1500] }
-  ];
+  const initialCheckboxes = certificatesValueTitles.map((item) => ({
+    checked: false,
+    quantity: 1,
+    ...item
+  }));
 
   const [checkBoxes, setCheckBoxes] = useState(initialCheckboxes);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState();
   const [email, setEmail] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
   const [certificates, setCertificates] = useState([]);
   const [disabled, setDisabled] = useState(true);
+
+  const [generateCertificates, { loading: certificatesLoading }] = useMutation(
+    bulkGenerateCertificates,
+    {
+      onCompleted(data) {
+        dispatch(showSuccessSnackbar('Успішно додано'));
+
+        setCertificates(data.bulkGenerateCertificates.items);
+        setCheckBoxes(initialCheckboxes);
+        setEmail('');
+      },
+      onError: (err) => {
+        dispatch(showErrorSnackbar(`Помилка: ${err}`));
+      }
+    }
+  );
 
   useEffect(() => {
     let check = false;
@@ -46,42 +78,34 @@ const CreateCertificate = () => {
       }
     });
 
-    if (!isInvalid && date && email && check) {
+    if (!isInvalid && check) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [isInvalid, date, checkBoxes, email]);
-
-  const expireDate = useMemo(() => {
-    if (date === null) {
-      return null;
-    }
-
-    let newDate = new Date(date);
-    newDate = newDate.setFullYear(newDate.getFullYear() + 1);
-    return new Date(newDate);
-  }, [date]);
+  }, [isInvalid, checkBoxes, email]);
 
   const disabledDate = (pickedDate) => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    return pickedDate < yesterday;
+
+    const oneMonthAfter = new Date();
+    oneMonthAfter.setDate(oneMonthAfter.getDate() + 30);
+
+    return pickedDate < yesterday || pickedDate >= oneMonthAfter;
   };
 
-  const createData = (id, name, dateFrom, dateTo) => ({
-    id,
-    name,
-    dateFrom,
-    dateTo
-  });
-
-  const generateCertificates = () => {
+  const emulateCertificates = () => {
     const newArr = [];
     checkBoxes.forEach((certificate) => {
       if (certificate.checked && !isInvalid) {
         for (let i = 0; i < certificate.quantity; i++) {
-          newArr.push(createData('#', certificate.name, date, expireDate));
+          newArr.push({
+            name: 'HOR###',
+            value: certificate.value,
+            dateStart: dateResetHours(date),
+            dateEnd: expireDate
+          });
         }
       }
     });
@@ -89,15 +113,63 @@ const CreateCertificate = () => {
   };
 
   const emailOnBlur = (e, regExp) => {
-    setIsInvalid(true);
     const input = e.target.value;
+
+    if (!input) {
+      isInvalid && setIsInvalid(false);
+      return;
+    }
+
     input.match(regExp) ? setIsInvalid(false) : setIsInvalid(true);
   };
 
   const emailHandler = (e) => {
-    setIsInvalid(true);
+    setIsInvalid && setIsInvalid(false);
     setEmail(e.target.value);
   };
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (email.length > 1) {
+        email.match(formRegExp.email)
+          ? setIsInvalid(false)
+          : setIsInvalid(true);
+      }
+    }, [500]);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [email]);
+
+  const dateResetHours = (dateArg) => {
+    const dateObj = dateArg ? new Date(dateArg) : new Date();
+    dateObj.setHours(0, 0, 0, 0);
+
+    return dateObj;
+  };
+
+  const expireDate = date ? new Date(date) : new Date();
+  expireDate.setFullYear(expireDate.getFullYear() + 1);
+
+  const onClickMutation = () =>
+    generateCertificates({
+      variables: {
+        generate: {
+          email,
+          dateStart: dateResetHours(date),
+          bulk: checkBoxes.reduce((newArr, item) => {
+            item.checked &&
+              newArr.push({ value: item.value, quantity: item.quantity });
+            return newArr;
+          }, [])
+        }
+      }
+    });
+
+  if (certificatesLoading) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className={styles.container}>
@@ -109,9 +181,11 @@ const CreateCertificate = () => {
           <Tooltip title={!disabled ? '' : 'Згенеруйте сертифікат'}>
             <Grid item className={styles.button}>
               <Button
+                aria-label='bulkGenerate'
                 variant={materialUiConstants.contained}
                 color={materialUiConstants.primary}
-                disabled={!certificates.length}
+                disabled={!(certificates.length && !disabled)}
+                onClick={() => onClickMutation()}
               >
                 {buttonTitles.MODEL_SAVE_TITLE}
               </Button>
@@ -157,7 +231,7 @@ const CreateCertificate = () => {
               disabled
               size='lg'
               format='D/MM/YYYY'
-              value={expireDate}
+              value={date && expireDate}
             />
           </Grid>
         </Grid>
@@ -176,6 +250,7 @@ const CreateCertificate = () => {
               className={styles.textField}
               variant={materialUiConstants.outlined}
               label='Email'
+              inputProps={{ 'aria-label': 'email' }}
               value={email}
               helperText={isInvalid && loginErrorMessages.INVALID_EMAIL_MESSAGE}
               onChange={(e) => emailHandler(e)}
@@ -184,10 +259,10 @@ const CreateCertificate = () => {
           </Grid>
           <Grid item xs={6}>
             <Button
-              data-testid='generate'
+              data-testid='emulate'
               variant={materialUiConstants.contained}
               color={materialUiConstants.primary}
-              onClick={generateCertificates}
+              onClick={emulateCertificates}
               disabled={disabled}
             >
               {buttonTitles.GENERATE_CERTIFICATE}

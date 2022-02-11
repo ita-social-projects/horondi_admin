@@ -5,6 +5,10 @@ const titles = {
     ordersTitle: 'Останні замовлення',
     changesTitle: 'Останні зміни'
   },
+  aboutUsTitles: {
+    mainTitle: 'Інформація Про Нас',
+    mainTitleAdd: 'Додати Про Нас'
+  },
   historyTitles: {
     mainTitle: 'Останні зміни',
     detailsTitle: 'Деталі зміни',
@@ -136,6 +140,9 @@ const titles = {
     convertationTitle: 'Відповідна ціна в UAH',
     modelTitle: 'Модель'
   },
+  promoPageTitles: {
+    mainPageTitle: 'Інформація про промокоди'
+  },
   pocketsTitles: {
     mainPageTitle: 'Інформація про кишені'
   },
@@ -161,15 +168,17 @@ const titles = {
     convertationTitle: 'Відповідна ціна в UAH'
   },
   certificatesTitles: {
-    500: '500 грн',
-    1000: '1000 грн',
-    1500: '1500 грн',
     mainPageTitle: 'Створити Подарунковий Сертифікат:',
     validity: 'Термін дії:',
     validFrom: 'Дійсний від',
     validUntil: 'Дійсний до',
     cost: 'Вартість:'
-  }
+  },
+  certificatesValueTitles: [
+    { name: '500 грн', value: 500 },
+    { name: '1000 грн', value: 1000 },
+    { name: '1500 грн', value: 1500 }
+  ]
 };
 
 export default titles;

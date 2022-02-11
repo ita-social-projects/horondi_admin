@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import { useStyles } from './search.styles';
 import { config } from '../../../configs';
+import { useSearch } from '../../../hooks/filter/useFilterSearchAndSort';
 
 const {
   submitKey,
@@ -15,31 +16,22 @@ const {
 
 const Search = ({ value, handler, placeholder }) => {
   const styles = useStyles();
-  const [searchValue, setSearchValue] = useState(value);
 
-  const handleSetSearchValue = (event) => {
-    setSearchValue(event.target.value);
-  };
-
-  const handleSubmitSearch = (event) => {
-    if (event.key === submitKey) {
-      handler(searchValue);
-    }
-  };
-
-  const handleSearch = () => {
-    handler(searchValue);
-  };
+  const { setSearch, submitSearch, activateSearch, searchValue } = useSearch(
+    value,
+    handler,
+    submitKey
+  );
 
   return (
     <Paper className={styles.container}>
       <InputBase
         placeholder={setSearchLabel(placeholder)}
         value={searchValue}
-        onChange={handleSetSearchValue}
-        onKeyPress={handleSubmitSearch}
+        onChange={setSearch}
+        onKeyPress={submitSearch}
       />
-      <IconButton aria-label='search' onClick={handleSearch}>
+      <IconButton aria-label='search' onClick={activateSearch}>
         <SearchIcon />
       </IconButton>
     </Paper>

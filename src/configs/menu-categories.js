@@ -29,16 +29,24 @@ import PanoramaVerticalIcon from '@material-ui/icons/PanoramaVertical';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
+import PeopleIcon from '@material-ui/icons/People';
 
 import routes from './routes';
+import { PromoIcon } from '../components/nav-bar/icons';
 
 export const menuCategories = [
   ['Домашня сторінка', routes.pathToMainPage, HomeIcon],
   ['Замовлення', routes.pathToOrders, ShoppingBasketIcon],
   ['Статистика', routes.pathToStatistic, BarChartIcon],
   ['Останні зміни', routes.pathToHistory, HistoryIcon],
+  ['Про Нас', routes.pathToAboutUs, PeopleIcon],
   ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
   ['Посилання', routes.pathToHeaders, LinkIcon]
+];
+
+export const materialMenuCategories = [
+  ['Матеріали', routes.pathToAboutMaterialsMain, ExtensionIcon],
+  ['Матеріали низу', routes.pathToAboutMaterialsBottom, ExtensionIcon]
 ];
 
 export const clientMenuCategories = [
@@ -54,6 +62,9 @@ export const catalogMenuCategories = [
   ['Розміри', routes.pathToSizes, LineWeight],
   ['Матеріали', routes.pathToMaterials, LocalMallIcon],
   ['Гобелени', routes.pathToPatterns, GradientIcon]
+];
+export const promoMenuCategories = [
+  ['Створити промокод', routes.pathToPromoCodes, PromoIcon]
 ];
 
 export const staticPagesCategories = [

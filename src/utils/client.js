@@ -1,5 +1,6 @@
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client';
+import { setContext } from '@apollo/client/link/context';
 
 import { getFromLocalStorage } from '../services/local-storage.service.js';
 import { config } from '../configs';
@@ -19,8 +20,18 @@ export const REACT_APP_API_URL =
     ? window.env.REACT_APP_API_URL
     : process.env.REACT_APP_API_URL;
 
+const authLink = setContext((_, { headers }) => {
+  const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
+  return {
+    headers: {
+      ...headers,
+      token: token || ''
+    }
+  };
+});
+
 export const client = new ApolloClient({
-  link: createUploadLink({ uri: REACT_APP_API_URL }),
+  link: authLink.concat(createUploadLink({ uri: REACT_APP_API_URL })),
   cache: new InMemoryCache({
     addTypename: false,
     fragmentMatcher

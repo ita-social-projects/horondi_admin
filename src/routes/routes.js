@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { noop } from 'lodash';
+import AboutUsPage from '../pages/about-us';
+import AboutUsAddBlock from '../pages/about-us/about-us-add';
 import UsersPage from '../pages/users';
 import NewsPage from '../pages/news';
 import NavBar from '../components/nav-bar';
@@ -86,10 +90,15 @@ import StrapsEdit from '../pages/straps/straps-edit/straps-edit';
 import UserDetails from '../pages/users/user/user-details';
 import constructorEdit from '../pages/constructor-list/constructor-edit';
 import CreateCertificate from '../pages/certificates/create-certificate/create-certificate';
+import PromoCodeAdd from '../pages/promo-code/promo-code-add/promo-code-add';
+import PromoCodeEdit from '../pages/promo-code/promo-code-edit/promo-code-edit';
+import PromoCodePage from '../pages/promo-code/promo-code-page';
+import MaterialAboutAdd from '../pages/material/material-about-add';
+import MaterialAbout from '../pages/material/material-about';
 
 const { routes } = config;
 
-const Routes = () => {
+const Routes = ({ validatorMethods }) => {
   const location = useLocation();
   const history = useHistory();
 
@@ -148,6 +157,29 @@ const Routes = () => {
           <Route path={routes.pathToAddHeader} exact component={HeaderAdd} />
           <Route path={routes.pathToAddPattern} exact component={PatternAdd} />
           <Route path={routes.pathToAddNews} exact component={NewsAdd} />
+          <Route path={routes.pathToAboutUs} exact component={AboutUsPage} />
+          <Route
+            path={routes.pathToAboutUsAdd}
+            exact
+            component={AboutUsAddBlock}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsMain}
+            exact
+            render={(props) => <MaterialAbout {...props} currentType='main' />}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsBottom}
+            exact
+            render={(props) => (
+              <MaterialAbout {...props} currentType='bottom' />
+            )}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsAdd}
+            exact
+            component={MaterialAboutAdd}
+          />
           <Route
             path={routes.pathToCreateCertificates}
             exact
@@ -168,7 +200,13 @@ const Routes = () => {
             exact
             component={MaterialAdd}
           />
-          <Route path={routes.pathToMaterials} exact component={MaterialPage} />
+          <Route
+            path={routes.pathToMaterials}
+            exact
+            render={(props) => (
+              <MaterialPage {...props} validatorMethods={validatorMethods} />
+            )}
+          />
           <Route
             path={routes.pathToMaterialDetails}
             exact
@@ -221,6 +259,21 @@ const Routes = () => {
           />
           <Route path={routes.pathToProducts} exact component={ProductsPage} />
           <Route path={routes.pathToAddProduct} exact component={ProductsAdd} />
+          <Route
+            path={routes.pathToPromoCodes}
+            exact
+            component={PromoCodePage}
+          />
+          <Route
+            path={routes.pathToAddPromoCode}
+            exact
+            component={PromoCodeAdd}
+          />
+          <Route
+            path={routes.pathToEditPromoCode}
+            exact
+            component={PromoCodeEdit}
+          />
           <Route
             path={routes.pathToEditProduct}
             exact
@@ -377,6 +430,20 @@ const Routes = () => {
       <SnackbarItem />
     </>
   );
+};
+
+Routes.propTypes = {
+  validatorMethods: PropTypes.shape({
+    deleteValidation: PropTypes.func,
+    toggleRerender: PropTypes.func
+  })
+};
+
+Routes.defaultProps = {
+  validatorMethods: PropTypes.shape({
+    deleteValidation: noop,
+    toggleRerender: noop
+  })
 };
 
 export default Routes;
