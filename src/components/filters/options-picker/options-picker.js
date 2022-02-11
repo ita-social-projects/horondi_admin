@@ -14,34 +14,17 @@ import PropTypes from 'prop-types';
 import { useStyles, MenuProps } from './options-picker.styles';
 import materialUiConstants from '../../../configs/material-ui-constants';
 import { badgePosition } from '../../../configs';
+import { useFilter } from '../../../hooks/filter/useFilterSearchAndSort';
 
 const OptionsPicker = ({ value, handler, label, options }) => {
   const styles = useStyles();
 
-  const setOptionHandler = (e) => {
-    const { value: _value } = e.target;
-    if (_value) {
-      handler(_value);
-    }
-  };
+  const { optionHandler, setRenderValue } = useFilter(options, handler);
 
-  const renderValue = (selectedValues) =>
-    options.reduce((acumulator, option) => {
-      let selectedItem;
-
-      selectedValues.forEach((selectedValue, _index, array) => {
-        if (selectedValue === option.value) {
-          if (array.length > 1) {
-            selectedItem = `${option.label}, `;
-          } else {
-            selectedItem = option.label;
-          }
-        }
-      });
-
-      acumulator.push(selectedItem);
-      return acumulator;
-    }, []);
+  const filteredOptions = {};
+  options.map((option) =>
+    Object.assign(filteredOptions, { [option.value]: option.label })
+  );
 
   return (
     <Badge
@@ -56,9 +39,9 @@ const OptionsPicker = ({ value, handler, label, options }) => {
           id={materialUiConstants.checkBoxId}
           multiple
           value={value}
-          onChange={setOptionHandler}
+          onChange={optionHandler}
+          renderValue={(selected) => setRenderValue(selected, filteredOptions)}
           input={<Input />}
-          renderValue={renderValue}
           autoWidth
           MenuProps={MenuProps}
         >

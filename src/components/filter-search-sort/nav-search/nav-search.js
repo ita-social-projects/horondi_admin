@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 import { useStyles } from './nav-search.styles';
 import { config } from '../../../configs';
+import { useSearch } from '../../../hooks/filter/useFilterSearchAndSort';
 
 const { submitKey, labels } = config;
 const { search: searchLabel } = labels;
@@ -16,21 +17,12 @@ const NavSearch = ({
   searchOptions: { search, setSearchFilter, placeholderText = '' }
 }) => {
   const styles = useStyles();
-  const [searchValue, setSearchValue] = useState(search);
 
-  const handleSetSearchValue = (event) => {
-    setSearchValue(event.target.value);
-  };
-
-  const handleSearchSubmit = (event) => {
-    if (event.key === submitKey) {
-      handleUserSearch();
-    }
-  };
-
-  const handleUserSearch = useCallback(() => {
-    setSearchFilter(searchValue);
-  }, [searchValue]);
+  const { setSearch, submitSearch, activateSearch, searchValue } = useSearch(
+    search,
+    setSearchFilter,
+    submitKey
+  );
 
   return (
     <div>
@@ -38,14 +30,14 @@ const NavSearch = ({
         <InputBase
           placeholder={searchLabel(placeholderText)}
           value={searchValue}
-          onChange={handleSetSearchValue}
-          onKeyPress={handleSearchSubmit}
+          onChange={setSearch}
+          onKeyPress={submitSearch}
         />
         <Tooltip title={searchLabel} placement='bottom'>
           <IconButton
             className={styles.iconButton}
             aria-label='search'
-            onClick={handleUserSearch}
+            onClick={activateSearch}
           >
             <SearchIcon />
           </IconButton>
