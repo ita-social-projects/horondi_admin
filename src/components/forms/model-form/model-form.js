@@ -21,11 +21,7 @@ import { config } from '../../../configs';
 import { addModel, updateModel } from '../../../redux/model/model.actions';
 import CheckboxOptions from '../../checkbox-options';
 import ImageUploadContainer from '../../../containers/image-upload-container';
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../../../redux/snackbar/snackbar.actions';
+import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { getCategories } from '../../../redux/categories/categories.actions';
 import LanguagePanel from '../language-panel';
 import { modelValidationSchema } from '../../../validations/models/model-form-validation';
@@ -118,9 +114,7 @@ const ModelForm = ({ model, id, isEdit }) => {
         );
         return;
       }
-      dispatch(setSnackBarSeverity(materialUiConstants.codeError));
-      dispatch(setSnackBarMessage(PHOTO_NOT_PROVIDED));
-      dispatch(setSnackBarStatus(true));
+      dispatch(showErrorSnackbar(PHOTO_NOT_PROVIDED));
     }
   });
 

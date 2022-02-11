@@ -3,11 +3,7 @@ import { useParams, useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../../../redux/snackbar/snackbar.actions';
+import { showSuccessSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { getPromoCodeById } from '../operations/promo-code.queries';
 import { updatePromoCode } from '../operations/promo-code.mutation';
 import { config } from '../../../configs';
@@ -27,9 +23,7 @@ function PromoCodeEdit() {
   });
 
   const onCompletedHandler = () => {
-    dispatch(setSnackBarSeverity('success'));
-    dispatch(setSnackBarMessage('Успішно додано'));
-    dispatch(setSnackBarStatus(true));
+    dispatch(showSuccessSnackbar('Успішно змінено'));
   };
 
   const [updatePromoCodeHandler] = useMutation(updatePromoCode, {

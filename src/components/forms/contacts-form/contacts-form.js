@@ -7,11 +7,7 @@ import * as Yup from 'yup';
 
 import { config } from '../../../configs';
 import { BackButton, SaveButton } from '../../buttons';
-import {
-  setSnackBarSeverity,
-  setSnackBarStatus,
-  setSnackBarMessage
-} from '../../../redux/snackbar/snackbar.actions';
+import { showErrorSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { useStyles } from './contacts-form.style';
 import LanguagePanel from '../language-panel';
 import { setInputsContactHandler } from '../../../utils/contacts-form';
@@ -78,9 +74,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
           formValues.cartLink = cartLink;
           contactSaveHandler(formValues);
         } else {
-          dispatch(setSnackBarSeverity(materialUiConstants.styleError));
-          dispatch(setSnackBarMessage(CONTACT_ERROR_MESSAGE));
-          dispatch(setSnackBarStatus(true));
+          dispatch(showErrorSnackbar(CONTACT_ERROR_MESSAGE));
         }
       }
     });

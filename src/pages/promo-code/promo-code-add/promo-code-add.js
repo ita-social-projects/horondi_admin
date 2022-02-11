@@ -5,11 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { config } from '../../../configs';
 import { addPromoCodes } from '../operations/promo-code.mutation';
-import {
-  setSnackBarMessage,
-  setSnackBarSeverity,
-  setSnackBarStatus
-} from '../../../redux/snackbar/snackbar.actions';
+import { showSuccessSnackbar } from '../../../redux/snackbar/snackbar.actions';
 import { getFromLocalStorage } from '../../../services/local-storage.service';
 import { LOCAL_STORAGE } from '../../../consts/local-storage';
 import { promoValidationSchema } from '../../../validations/promo-code/promo-code-validation';
@@ -24,9 +20,7 @@ const PromoCodeAdd = () => {
   const pathToPromoCodesPage = config.routes.pathToPromoCodes;
 
   const onCompletedHandler = () => {
-    dispatch(setSnackBarSeverity('success'));
-    dispatch(setSnackBarMessage('Успішно додано'));
-    dispatch(setSnackBarStatus(true));
+    dispatch(showSuccessSnackbar('Успішно додано'));
   };
 
   const [addPromoCodeHandler] = useMutation(addPromoCodes, {
