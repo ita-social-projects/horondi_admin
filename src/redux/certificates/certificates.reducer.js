@@ -3,7 +3,7 @@ import {
   SET_CERTIFICATES_LOADING
 } from './certificates.types';
 
-const initialState = {
+export const initialState = {
   list: { count: 0, items: [] },
   certificatesLoading: false
 };
