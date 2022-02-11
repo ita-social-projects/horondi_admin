@@ -112,7 +112,6 @@ const orders = {
     categories: {
       title: 'Застосувати до:',
       allCheckboxLables: [
-        { label: 'Всі товари', value: 'all' },
         { label: 'Рюкзаки', value: 'backpacks' },
         { label: 'Сумки', value: 'bags' },
         { label: 'Аксесуари', value: 'accessories' },

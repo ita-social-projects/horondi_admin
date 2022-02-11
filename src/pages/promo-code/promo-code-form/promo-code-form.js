@@ -40,7 +40,7 @@ function PromoCodeForm({
   const commonStyles = useCommonStyles();
 
   const {
-    values,
+    values: { code, dateTo, dateFrom, discount, categories, _id },
     handleSubmit,
     handleChange,
     handleBlur,
@@ -53,13 +53,13 @@ function PromoCodeForm({
     onSubmit: () =>
       addPromoCodeHandler({
         variables: {
-          id: values?._id,
+          id: _id,
           promoCode: {
-            code: values.code,
-            dateTo: values.dateTo,
-            dateFrom: values.dateFrom,
-            discount: values.discount,
-            categories: values.categories
+            code,
+            dateTo,
+            dateFrom,
+            discount,
+            categories
           }
         }
       }).then(goToPromoPage)
@@ -68,24 +68,52 @@ function PromoCodeForm({
   const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
   const { promoCodesTranslation } = orders;
+  const chechboxLabels = promoCodesTranslation.categories.allCheckboxLables;
   const { SAVE } = productsTranslations;
 
-  const checkBoxes = promoCodesTranslation.categories.allCheckboxLables.map(
-    (item) => (
-        <FormControlLabel
-          key={item.label}
-          control={
-            <Checkbox
-              onChange={handleChange}
-              checked={values.categories.includes(item.value)}
-              name='categories'
-              color='primary'
-              value={item.value}
-            />
-          }
-          label={item.label}
+  const allCategoriesHandler = () => {
+    categories.length === chechboxLabels.length
+      ? setFieldValue('categories', [])
+      : setFieldValue('categories', [
+          ...chechboxLabels.map(({ value }) => value)
+        ]);
+  };
+
+  const checkoxGroup = chechboxLabels.map((item) => (
+    <FormControlLabel
+      key={item.label}
+      control={
+        <Checkbox
+          onChange={handleChange}
+          checked={categories.includes(item.value)}
+          name='categories'
+          color='primary'
+          value={item.value}
         />
-      )
+      }
+      label={item.label}
+    />
+  ));
+
+  const parentChecbox = (
+    <>
+      <FormControlLabel
+        className={styles.checkboxes}
+        label='Всі товари'
+        control={
+          <Checkbox
+            color='primary'
+            name='categories'
+            checked={categories.length === chechboxLabels.length}
+            indeterminate={
+              categories.length < chechboxLabels.length && categories.length > 0
+            }
+            onChange={allCategoriesHandler}
+          />
+        }
+      />
+      {checkoxGroup}
+    </>
   );
 
   return (
@@ -119,7 +147,7 @@ function PromoCodeForm({
               id='code'
               label={promoCodesTranslation.namePromo}
               variant='outlined'
-              value={values.code}
+              value={code}
               className={styles.textField}
               error={!!(touched.code ? errors.code : null)}
               helperText={touched.code ? errors.code : ''}
@@ -138,7 +166,7 @@ function PromoCodeForm({
                 placeholder={promoCodesTranslation.date.validFrom}
                 oneTap
                 style={{ width: 200 }}
-                value={values.dateFrom}
+                value={dateFrom}
                 onChange={(value) => handlerDateHandler(value, 'dateFrom')}
               />
               {touched.dateFrom && errors.dateFrom && (
@@ -152,7 +180,7 @@ function PromoCodeForm({
                 oneTap
                 style={{ width: 200 }}
                 id='dateTo'
-                value={values.dateTo}
+                value={dateTo}
                 onChange={(value) => handlerDateHandler(value, 'dateTo')}
               />
               {touched.dateTo && errors.dateTo && (
@@ -172,7 +200,7 @@ function PromoCodeForm({
             variant='outlined'
             type='number'
             className={styles.textField}
-            value={values.discount}
+            value={discount}
             error={!!(touched.discount ? errors?.discount : null)}
             helperText={touched.discount ? errors?.discount : null}
             onBlur={handleBlur}
@@ -184,7 +212,7 @@ function PromoCodeForm({
               {promoCodesTranslation.categories.title}
             </span>
             <FormControl>
-              <FormGroup className={styles.checkboxes}>{checkBoxes}</FormGroup>
+              <FormGroup>{parentChecbox}</FormGroup>
               {touched.categories && errors.categories && (
                 <div className={styles.errorCategory}>{errors.categories}</div>
               )}

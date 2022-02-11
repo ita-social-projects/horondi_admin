@@ -10,7 +10,7 @@ const props = {
     dateTo: '2022-01-29T10:49:49.736Z',
     dateFrom: '2022-01-28T10:49:49.725Z',
     discount: 10,
-    categories: ['all']
+    categories: ['backpacks']
   }
 };
 
@@ -88,10 +88,10 @@ describe('promo-code-form component test', () => {
   it('should click checkbox', () => {
     const checkbox = screen.getByLabelText(/Рюкзаки/i);
 
-    expect(checkbox.checked).toEqual(false);
+    expect(checkbox.checked).toEqual(true);
 
     fireEvent.click(checkbox);
 
-    expect(checkbox.checked).toEqual(true);
+    expect(checkbox.checked).toEqual(false);
   });
 });
