@@ -36,25 +36,22 @@ const availableStatus = [
 ];
 
 const Filters = () => (
-    <ContainerFilters>
-      <ComponentFilterMultiplePicker
-        setFilterValue={() => {}}
-        selectorFunc={() => {}}
-        options={availablePrice}
-        label={buttonTitles.PRICE}
-      />
-      <ComponentFilterMultiplePicker
-        setFilterValue={() => {}}
-        selectorFunc={() => {}}
-        options={availableStatus}
-        label={buttonTitles.STATUS}
-      />
-      <ComponentFilterSearch
-        setFilterValue={() => {}}
-        selectorFunc={() => {}}
-      />
-      <ComponentFilterClear actionClearFilters={() => {}} />
-    </ContainerFilters>
-  );
+  <ContainerFilters>
+    <ComponentFilterMultiplePicker
+      setFilterValue
+      selectorFunc
+      options={availablePrice}
+      label={buttonTitles.PRICE}
+    />
+    <ComponentFilterMultiplePicker
+      setFilterValue
+      selectorFunc
+      options={availableStatus}
+      label={buttonTitles.STATUS}
+    />
+    <ComponentFilterSearch setFilterValue selectorFunc />
+    <ComponentFilterClear actionClearFilters />
+  </ContainerFilters>
+);
 
 export default Filters;

@@ -107,11 +107,21 @@ const CertificatesPage = () => {
             )}`
           : '-'
       }
-      deleteHandler={() => {}}
-      editHandler={() => {}}
+      deleteHandler
+      editHandler
       showAvatar={false}
     />
   ));
+
+  const pageContent = certificateItems.length ? (
+    <TableContainerGenerator
+      data-cy='certificateTable'
+      tableTitles={tableTitles}
+      tableItems={certificateItems}
+    />
+  ) : (
+    <p className={commonStyles.noRecords}>{NO_CERTIFICATE_MESSAGE}</p>
+  );
 
   return (
     <>
@@ -136,15 +146,7 @@ const CertificatesPage = () => {
           <div>
             <Filter />
           </div>
-          {certificateItems.length ? (
-            <TableContainerGenerator
-              data-cy='certificateTable'
-              tableTitles={tableTitles}
-              tableItems={certificateItems}
-            />
-          ) : (
-            <p className={commonStyles.noRecords}>{NO_CERTIFICATE_MESSAGE}</p>
-          )}
+          {pageContent}
         </div>
       )}
     </>
