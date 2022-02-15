@@ -41,9 +41,7 @@ const checkStatus = (active, used) => {
     return ACTIVE_STATUS;
   } if (used) {
     return USED_STATUS;
-  } 
-    return EXPIRED_STATUS;
-  
+  } return EXPIRED_STATUS;
 };
 
 const CertificatesPage = () => {
