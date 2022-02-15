@@ -31,7 +31,6 @@ import closuresSaga from './closures/closures.sagas';
 import basicsSaga from './basics/basics.sagas';
 import strapsSaga from './straps/straps.sagas';
 import questionsAnswersSaga from './questions-answers/questions-answers.sagas';
-import certificatesSaga from './certificates/certificates.sagas';
 
 export function* rootSaga() {
   yield all([
@@ -67,7 +66,6 @@ export function* rootSaga() {
     strapsSaga(),
     currenciesSaga(),
     basicsSaga(),
-    questionsAnswersSaga(),
-    certificatesSaga()
+    questionsAnswersSaga()
   ]);
 }
