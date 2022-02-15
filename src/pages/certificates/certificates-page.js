@@ -39,9 +39,11 @@ const transformDate = (date) => {
 const checkStatus = (active, used) => {
   if (active) {
     return ACTIVE_STATUS;
-  } if (used) {
+  }
+  if (used) {
     return USED_STATUS;
-  } return EXPIRED_STATUS;
+  }
+  return EXPIRED_STATUS;
 };
 
 const CertificatesPage = () => {
