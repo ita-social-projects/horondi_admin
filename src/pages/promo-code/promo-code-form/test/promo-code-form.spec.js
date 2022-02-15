@@ -21,7 +21,6 @@ beforeEach(() => {
     </BrowserRouter>
   );
 });
-
 describe('promo-code-form component test', () => {
   it('should render back button', () => {
     const backButton = screen.getByText(/назад/i);
@@ -79,14 +78,19 @@ describe('promo-code-form component test', () => {
     expect(text).toBeInTheDocument();
   });
 
-  it('should render checkbox', () => {
-    const checkbox = screen.getByLabelText(/Всі товари/i);
+  it('should click checkbox "Рюкзаки"', () => {
+    const checkbox = screen.getByLabelText(/Рюкзаки/i);
 
-    expect(checkbox).toBeInTheDocument();
+    expect(checkbox.checked).toEqual(true);
+
+    fireEvent.click(checkbox);
+
+    expect(checkbox.checked).toEqual(false);
   });
 
-  it('should click checkbox', () => {
-    const checkbox = screen.getByLabelText(/Рюкзаки/i);
+  it('should click checkbox "Всі товари"', async () => {
+    const checkbox = screen.getByLabelText(/Всі товари/i);
+    fireEvent.click(checkbox);
 
     expect(checkbox.checked).toEqual(true);
 
