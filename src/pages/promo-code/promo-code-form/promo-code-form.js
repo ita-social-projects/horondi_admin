@@ -77,7 +77,7 @@ function PromoCodeForm({
       : setFieldValue('categories', [...checkboxes.map(({ value }) => value)]);
   };
 
-  const parentChecbox = (
+  const allProductsCheckbox = (
     <FormControlLabel
       className={styles.checkboxes}
       label='Всі товари'
@@ -208,7 +208,7 @@ function PromoCodeForm({
             </span>
             <FormControl>
               <FormGroup>
-                {parentChecbox}
+                {allProductsCheckbox}
                 {checkoxGroup}
               </FormGroup>
               {touched.categories && errors.categories && (
