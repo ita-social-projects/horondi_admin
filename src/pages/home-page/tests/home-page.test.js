@@ -1,35 +1,51 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import titles from '../../../configs/titles';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import * as redux from 'react-redux';
+import LoadingBar from '../../../components/loading-bar';
 import HomePageEdit from '../index';
+
+import titles from '../../../configs/titles';
 
 const { homePageTitles } = titles;
 
-describe('Home page tests', () => {
-  let wrapper;
-  const state = {
-    loading: false,
-    photos: [{ _id: '1111111111', images: { small: 'test' } }]
-  };
+Enzyme.configure({ adapter: new Adapter() });
 
-  const onPhotoUpdateMock = jest.fn();
-  const mockStore = configureStore([]);
-  const store = mockStore(() => ({
-    HomePage: { ...state }
-  }));
+const initialState = {
+  HomePage: {
+    photos: [{ _id: '1111111111', images: { small: 'test' } }],
+    homePageLoading: false,
+    homePageError: null
+  }
+};
+
+const mockStore = initialState;
+
+const onPhotoUpdateMock = jest.fn();
+
+const mockDispatch = jest.fn();
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: () => jest.fn(),
+  useDispatch: () => mockDispatch
+}));
+
+describe('Home page tests', () => {
+  const mockUseDispatch = jest.spyOn(redux, 'useDispatch');
+  const mockUseSelector = jest.spyOn(redux, 'useSelector');
+
+  let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(
-      <Provider store={store}>
-        <HomePageEdit photoUpdateHandler={onPhotoUpdateMock} />
-      </Provider>
-    );
+    mockUseDispatch.mockImplementation(() => jest.fn());
+    mockUseSelector.mockImplementation((callback) => callback(mockStore));
+    wrapper = mount(<HomePageEdit photoUpdateHandler={onPhotoUpdateMock} />);
   });
 
   afterEach(() => {
     wrapper.unmount();
+    mockUseDispatch.mockClear();
+    mockUseSelector.mockClear();
   });
 
   it('Component should exist', () => {
@@ -49,9 +65,8 @@ describe('Home page tests', () => {
   });
 
   it('Should display loading bar', () => {
-    state.loading = true;
-    store.dispatch({ type: 'ANY_ACTION' });
-
-    expect(wrapper.find('LoadingBar').length).toEqual(0);
+    initialState.HomePage.homePageLoading = true;
+    wrapper = mount(<HomePageEdit photoUpdateHandler={onPhotoUpdateMock} />);
+    expect(wrapper.find(LoadingBar).length).toEqual(1);
   });
 });
