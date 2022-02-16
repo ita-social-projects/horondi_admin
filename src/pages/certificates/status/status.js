@@ -14,16 +14,16 @@ const Status = ({ status }) => {
   let color;
   switch (status) {
     case EXPIRED: {
-      color = styles.red;
+      color = styles.redStatus;
       break;
     }
     case ACTIVE: {
-      color = styles.green;
+      color = styles.greenStatus;
       break;
     }
     case USED:
     default:
-      color = styles.blue;
+      color = styles.blueStatus;
   }
 
   return <div className={color}>{status}</div>;
