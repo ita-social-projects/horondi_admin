@@ -92,7 +92,7 @@ const orders = {
     PROCESSING: 'В обробці',
     PAID: 'Оплачено'
   },
-  promoCodesTranslation: {
+  promoCodesConsts: {
     status: {
       active: 'Активний',
       expired: 'Завершений'
@@ -111,7 +111,7 @@ const orders = {
     },
     categories: {
       title: 'Застосувати до:',
-      allCheckboxLables: [
+      checkboxes: [
         { label: 'Рюкзаки', value: 'backpacks' },
         { label: 'Сумки', value: 'bags' },
         { label: 'Аксесуари', value: 'accessories' },
