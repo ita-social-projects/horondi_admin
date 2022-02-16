@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
 
 import { useStyles } from './certificate.styles';
 
@@ -11,7 +12,9 @@ const Certificate = ({ name }) => {
   return (
     <div className={styles.wrapper}>
       <img src={certificateImg} alt='Certificate' />
-      <p className={styles.name}>{name}</p>
+      <Typography paragraph className={styles.name}>
+        {name}
+      </Typography>
     </div>
   );
 };

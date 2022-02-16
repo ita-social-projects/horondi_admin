@@ -18,11 +18,11 @@ import { getAllUsers } from '../users/operations/user.queries';
 import { config } from '../../configs';
 
 const { routes } = config;
+const pathToCreateCertificatesPage = routes.pathToCreateCertificates;
 const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
 const tableTitles = config.tableHeadRowTitles.certificates;
 const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
 const { ACTIVE_STATUS, USED_STATUS, EXPIRED_STATUS } = config.statuses;
-const pathToCreateCertificatesPage = routes.pathToCreateCertificates;
 
 const transformDate = (date) => {
   const exactDate = new Date(date);
@@ -40,6 +40,14 @@ const checkStatus = (active, used) => {
     return USED_STATUS;
   } if (!active && !used) {
     return EXPIRED_STATUS;
+  } 
+};
+
+const setUser = (id, list) => {
+  for (const item of list.items) {
+    if (item._id === id) {
+      return `${item?.firstName} ${item?.lastName}`;
+    }
   }
 };
 
@@ -51,14 +59,6 @@ const CertificatesPage = () => {
     useQuery(getAllCertificates);
   const certificatesList = certificates?.getAllCertificates || {};
 
-  const setUser = (id) => {
-    for (const user of usersList.items) {
-      if (user._id === id) {
-        return `${user?.firstName} ${user?.lastName}`;
-      }
-    }
-  };
-
   const certificateItems =
     certificatesList.items && usersList.items
       ? certificatesList.items.map((certificate) => (
@@ -66,7 +66,9 @@ const CertificatesPage = () => {
             key={certificate._id}
             number={certificate.name}
             createdBy={
-              <Certificate name={setUser(certificate.createdBy._id)} />
+              <Certificate
+                name={setUser(certificate.createdBy._id, usersList)}
+              />
             }
             price={`${certificate.value} грн`}
             status={
