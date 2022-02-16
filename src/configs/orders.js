@@ -92,7 +92,7 @@ const orders = {
     PROCESSING: 'В обробці',
     PAID: 'Оплачено'
   },
-  promoCodesTranslation: {
+  promoCodesConsts: {
     status: {
       active: 'Активний',
       expired: 'Завершений'
@@ -108,6 +108,15 @@ const orders = {
     discount: {
       title: 'Розмір знижки у процентах:',
       label: 'Розмір знижки'
+    },
+    categories: {
+      title: 'Застосувати до:',
+      checkboxes: [
+        { label: 'Рюкзаки', value: 'backpacks' },
+        { label: 'Сумки', value: 'bags' },
+        { label: 'Аксесуари', value: 'accessories' },
+        { label: 'Зроби сам', value: 'constructor' }
+      ]
     }
   }
 };

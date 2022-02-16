@@ -1,7 +1,15 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { DatePicker } from 'rsuite';
-import { Button, Grid, TextField } from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  TextField,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  FormControl
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import { productsTranslations } from '../../../configs/product-translations';
@@ -25,14 +33,14 @@ function PromoCodeForm({
     dateTo: '',
     dateFrom: '',
     discount: '',
-    categories: ['All']
+    categories: []
   }
 }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
 
   const {
-    values,
+    values: { code, dateTo, dateFrom, discount, categories, _id },
     handleSubmit,
     handleChange,
     handleBlur,
@@ -45,13 +53,13 @@ function PromoCodeForm({
     onSubmit: () =>
       addPromoCodeHandler({
         variables: {
-          id: values?._id,
+          id: _id,
           promoCode: {
-            code: values.code,
-            dateTo: values.dateTo,
-            dateFrom: values.dateFrom,
-            discount: values.discount,
-            categories: values.categories
+            code,
+            dateTo,
+            dateFrom,
+            discount,
+            categories
           }
         }
       }).then(goToPromoPage)
@@ -59,8 +67,49 @@ function PromoCodeForm({
 
   const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
-  const { promoCodesTranslation } = orders;
+  const { promoCodesConsts } = orders;
+  const { checkboxes } = promoCodesConsts.categories;
   const { SAVE } = productsTranslations;
+
+  const allCategoriesHandler = () => {
+    categories.length === checkboxes.length
+      ? setFieldValue('categories', [])
+      : setFieldValue('categories', [...checkboxes.map(({ value }) => value)]);
+  };
+
+  const allProductsCheckbox = (
+    <FormControlLabel
+      className={styles.checkboxes}
+      label='Всі товари'
+      control={
+        <Checkbox
+          color='primary'
+          name='categories'
+          checked={categories.length === checkboxes.length}
+          indeterminate={
+            categories.length < checkboxes.length && categories.length > 0
+          }
+          onChange={allCategoriesHandler}
+        />
+      }
+    />
+  );
+
+  const checkoxGroup = checkboxes.map((item) => (
+    <FormControlLabel
+      key={item.label}
+      control={
+        <Checkbox
+          onChange={handleChange}
+          checked={categories.includes(item.value)}
+          name='categories'
+          color='primary'
+          value={item.value}
+        />
+      }
+      label={item.label}
+    />
+  ));
 
   return (
     <div className={commonStyles.container}>
@@ -82,18 +131,18 @@ function PromoCodeForm({
         </Grid>
       </div>
 
-      <span className={styles.title}>{promoCodesTranslation.createPromo}</span>
+      <span className={styles.title}>{promoCodesConsts.createPromo}</span>
       <form>
         <div>
           <span
             className={styles.subTitle}
-          >{`${promoCodesTranslation.namePromo}:`}</span>
+          >{`${promoCodesConsts.namePromo}:`}</span>
           <div className={styles.promoNameContainer}>
             <TextField
               id='code'
-              label={promoCodesTranslation.namePromo}
+              label={promoCodesConsts.namePromo}
               variant='outlined'
-              value={values.code}
+              value={code}
               className={styles.textField}
               error={!!(touched.code ? errors.code : null)}
               helperText={touched.code ? errors.code : ''}
@@ -104,15 +153,15 @@ function PromoCodeForm({
         </div>
         <div>
           <span className={styles.subTitle}>
-            {promoCodesTranslation.date.validityPeriod}
+            {promoCodesConsts.date.validityPeriod}
           </span>
           <div className={styles.dataContainer}>
             <div className={styles.dataPickerContainer}>
               <DatePicker
-                placeholder={promoCodesTranslation.date.validFrom}
+                placeholder={promoCodesConsts.date.validFrom}
                 oneTap
                 style={{ width: 200 }}
-                value={values.dateFrom}
+                value={dateFrom}
                 onChange={(value) => handlerDateHandler(value, 'dateFrom')}
               />
               {touched.dateFrom && errors.dateFrom && (
@@ -122,11 +171,11 @@ function PromoCodeForm({
 
             <div className={styles.dataPickerContainer}>
               <DatePicker
-                placeholder={promoCodesTranslation.date.validTo}
+                placeholder={promoCodesConsts.date.validTo}
                 oneTap
                 style={{ width: 200 }}
                 id='dateTo'
-                value={values.dateTo}
+                value={dateTo}
                 onChange={(value) => handlerDateHandler(value, 'dateTo')}
               />
               {touched.dateTo && errors.dateTo && (
@@ -138,21 +187,35 @@ function PromoCodeForm({
 
         <div>
           <span className={styles.subTitle}>
-            {promoCodesTranslation.discount.title}
+            {promoCodesConsts.discount.title}
           </span>
           <TextField
             id='discount'
-            label={promoCodesTranslation.discount.label}
+            label={promoCodesConsts.discount.label}
             variant='outlined'
             type='number'
             className={styles.textField}
-            value={values.discount}
+            value={discount}
             error={!!(touched.discount ? errors?.discount : null)}
             helperText={touched.discount ? errors?.discount : null}
             onBlur={handleBlur}
             onChange={handleChange}
             InputProps={{ inputProps: { min: 0, max: 90 } }}
           />
+          <div>
+            <span className={styles.subTitle}>
+              {promoCodesConsts.categories.title}
+            </span>
+            <FormControl>
+              <FormGroup>
+                {allProductsCheckbox}
+                {checkoxGroup}
+              </FormGroup>
+              {touched.categories && errors.categories && (
+                <div className={styles.errorCategory}>{errors.categories}</div>
+              )}
+            </FormControl>
+          </div>
         </div>
       </form>
     </div>

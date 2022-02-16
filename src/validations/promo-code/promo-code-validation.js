@@ -22,5 +22,6 @@ export const promoValidationSchema = Yup.object().shape({
     .min(1, LENGTH_DISCOUNT)
     .max(2, LENGTH_DISCOUNT)
     .matches(formRegExp.promoCodeDiscount, STYLE_DISCOUNT)
-    .required(ERROR_MESSAGE)
+    .required(ERROR_MESSAGE),
+  categories: Yup.array().min(1, ERROR_MESSAGE).required(ERROR_MESSAGE)
 });

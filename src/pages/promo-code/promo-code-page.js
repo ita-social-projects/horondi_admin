@@ -27,7 +27,7 @@ const PromoCodePage = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
   const dateToday = new Date();
-  const { promoCodesTranslation } = orders;
+  const { promoCodesConsts } = orders;
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
 
   const { data, refetch, loading } = useQuery(getAllPromoCodes);
@@ -51,8 +51,8 @@ const PromoCodePage = () => {
 
   const checkPromoStatus = (dateTo) =>
     dateToday < new Date(dateTo)
-      ? promoCodesTranslation.status.active
-      : promoCodesTranslation.status.expired;
+      ? promoCodesConsts.status.active
+      : promoCodesConsts.status.expired;
 
   const completeDeleteHandler = (promoID) => {
     deletePromoCodeByIDMutation({
@@ -70,7 +70,7 @@ const PromoCodePage = () => {
   const openDeleteModalHandler = (promoID) =>
     openSuccessSnackbar(
       () => completeDeleteHandler(promoID),
-      promoCodesTranslation.deletePromo
+      promoCodesConsts.deletePromo
     );
 
   const editPromoCodeHandler = (promoID) => {
