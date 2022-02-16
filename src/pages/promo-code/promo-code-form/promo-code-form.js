@@ -67,16 +67,14 @@ function PromoCodeForm({
 
   const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
-  const { promoCodesTranslation } = orders;
-  const chechboxLabels = promoCodesTranslation.categories.allCheckboxLables;
+  const { promoCodesConsts } = orders;
+  const { checkboxes } = promoCodesConsts.categories;
   const { SAVE } = productsTranslations;
 
   const allCategoriesHandler = () => {
-    categories.length === chechboxLabels.length
+    categories.length === checkboxes.length
       ? setFieldValue('categories', [])
-      : setFieldValue('categories', [
-          ...chechboxLabels.map(({ value }) => value)
-        ]);
+      : setFieldValue('categories', [...checkboxes.map(({ value }) => value)]);
   };
 
   const parentChecbox = (
@@ -87,9 +85,9 @@ function PromoCodeForm({
         <Checkbox
           color='primary'
           name='categories'
-          checked={categories.length === chechboxLabels.length}
+          checked={categories.length === checkboxes.length}
           indeterminate={
-            categories.length < chechboxLabels.length && categories.length > 0
+            categories.length < checkboxes.length && categories.length > 0
           }
           onChange={allCategoriesHandler}
         />
@@ -97,7 +95,7 @@ function PromoCodeForm({
     />
   );
 
-  const checkoxGroup = chechboxLabels.map((item) => (
+  const checkoxGroup = checkboxes.map((item) => (
     <FormControlLabel
       key={item.label}
       control={
@@ -133,16 +131,16 @@ function PromoCodeForm({
         </Grid>
       </div>
 
-      <span className={styles.title}>{promoCodesTranslation.createPromo}</span>
+      <span className={styles.title}>{promoCodesConsts.createPromo}</span>
       <form>
         <div>
           <span
             className={styles.subTitle}
-          >{`${promoCodesTranslation.namePromo}:`}</span>
+          >{`${promoCodesConsts.namePromo}:`}</span>
           <div className={styles.promoNameContainer}>
             <TextField
               id='code'
-              label={promoCodesTranslation.namePromo}
+              label={promoCodesConsts.namePromo}
               variant='outlined'
               value={code}
               className={styles.textField}
@@ -155,12 +153,12 @@ function PromoCodeForm({
         </div>
         <div>
           <span className={styles.subTitle}>
-            {promoCodesTranslation.date.validityPeriod}
+            {promoCodesConsts.date.validityPeriod}
           </span>
           <div className={styles.dataContainer}>
             <div className={styles.dataPickerContainer}>
               <DatePicker
-                placeholder={promoCodesTranslation.date.validFrom}
+                placeholder={promoCodesConsts.date.validFrom}
                 oneTap
                 style={{ width: 200 }}
                 value={dateFrom}
@@ -173,7 +171,7 @@ function PromoCodeForm({
 
             <div className={styles.dataPickerContainer}>
               <DatePicker
-                placeholder={promoCodesTranslation.date.validTo}
+                placeholder={promoCodesConsts.date.validTo}
                 oneTap
                 style={{ width: 200 }}
                 id='dateTo'
@@ -189,11 +187,11 @@ function PromoCodeForm({
 
         <div>
           <span className={styles.subTitle}>
-            {promoCodesTranslation.discount.title}
+            {promoCodesConsts.discount.title}
           </span>
           <TextField
             id='discount'
-            label={promoCodesTranslation.discount.label}
+            label={promoCodesConsts.discount.label}
             variant='outlined'
             type='number'
             className={styles.textField}
@@ -206,7 +204,7 @@ function PromoCodeForm({
           />
           <div>
             <span className={styles.subTitle}>
-              {promoCodesTranslation.categories.title}
+              {promoCodesConsts.categories.title}
             </span>
             <FormControl>
               <FormGroup>
