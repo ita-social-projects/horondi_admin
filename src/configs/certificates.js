@@ -2,7 +2,7 @@ const certificates = {
   certificateStatus: {
     ACTIVE: 'Активний',
     USED: 'Використаний',
-    EXPIRED: 'Прострочений'
+    EXPIRED: 'Протермінований'
   }
 };
 
