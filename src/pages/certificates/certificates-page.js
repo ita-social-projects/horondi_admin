@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
 
 import TableContainerRow from '../../containers/table-container-row';
@@ -9,12 +9,9 @@ import TableContainerGenerator from '../../containers/table-container-generator'
 import Status from './status/status';
 import LoadingBar from '../../components/loading-bar/loading-bar';
 import Certificate from './certificate/certificate';
-
 import { useCommonStyles } from '../common.styles';
-
 import { getAllCertificates } from './operations/certificate.queries';
-import { getAllUsers } from '../users/operations/user.queries';
-
+import { getUsers } from '../../redux/users/users.actions';
 import { config } from '../../configs';
 
 const { routes } = config;
@@ -36,62 +33,68 @@ const transformDate = (date) => {
 const checkStatus = (active, used) => {
   if (active && !used) {
     return ACTIVE_STATUS;
-  } if (!active && used) {
+  }
+  if (!active && used) {
     return USED_STATUS;
-  } if (!active && !used) {
+  }
+  if (!active && !used) {
     return EXPIRED_STATUS;
-  } 
-};
-
-const setUser = (id, list) => {
-  for (const item of list.items) {
-    if (item._id === id) {
-      return `${item?.firstName} ${item?.lastName}`;
-    }
   }
 };
 
 const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
-  const { loading: usersLoading, data: users } = useQuery(getAllUsers);
-  const usersList = users?.getAllUsers || {};
+  const dispatch = useDispatch();
   const { loading: certificatesLoading, data: certificates } =
     useQuery(getAllCertificates);
   const certificatesList = certificates?.getAllCertificates || {};
 
-  const certificateItems =
-    certificatesList.items && usersList.items
-      ? certificatesList.items.map((certificate) => (
-          <TableContainerRow
-            key={certificate._id}
-            number={certificate.name}
-            createdBy={
-              <Certificate
-                name={setUser(certificate.createdBy._id, usersList)}
-              />
-            }
-            price={`${certificate.value} грн`}
-            status={
-              <Status
-                status={checkStatus(
-                  certificate.isActivated,
-                  certificate.isUsed
-                )}
-              />
-            }
-            date={
-              certificate.isActivated
-                ? `${transformDate(certificate.dateStart)} - ${transformDate(
-                    certificate.dateEnd
-                  )}`
-                : '-'
-            }
-            deleteHandler={() => null}
-            editHandler={() => null}
-            showAvatar={false}
-          />
-        ))
-      : null;
+  useEffect(() => {
+    dispatch(getUsers({}));
+  }, []);
+
+  const { list: usersList, loading: usersLoading } = useSelector(
+    ({ Users }) => ({
+      list: Users.list,
+      loading: Users.userLoading
+    })
+  );
+
+  const setUser = (id) => {
+    if (id && usersList.length) {
+      for (const user of usersList) {
+        if (user._id === id) {
+          return `${user.firstName} ${user.lastName}`;
+        }
+      }
+    } else return '';
+  };
+
+  const certificateItems = certificatesList.items
+    ? certificatesList.items.map((certificate) => (
+        <TableContainerRow
+          key={certificate._id}
+          number={certificate.name}
+          createdBy={<Certificate name={setUser(certificate.createdBy._id)} />}
+          price={`${certificate.value} грн`}
+          status={
+            <Status
+              status={checkStatus(certificate.isActivated, certificate.isUsed)}
+            />
+          }
+          date={
+            certificate.isActivated
+              ? `${transformDate(certificate.dateStart)} - ${transformDate(
+                  certificate.dateEnd
+                )}`
+              : '-'
+          }
+          deleteHandler={() => null}
+          editHandler={() => null}
+          showAvatar={false}
+        />
+      ))
+    : null;
 
   if (certificatesLoading && usersLoading) {
     return <LoadingBar />;
