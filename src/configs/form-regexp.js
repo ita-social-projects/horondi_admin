@@ -9,7 +9,7 @@ const formRegExp = {
   enAddressRegex: '^[A-Za-z0-9_|,| |./]+$',
   uaRegex: '[А-ЩЬЮЯҐЄІЇа-щьюяґєії]',
   enRegex: /[a-z]/i,
-  onlyPositiveFloat: /^(?:[1-9]\d*|0(?!(?:\.0+)?$))?(?:\.\d+)?$/,
+  onlyPositiveFloat: /^(?!0\d)\d*(\.\d+)?$/,
   mobileNumber: /^\+380\(\d{2}\)-\d{3}-\d{2}-\d{1,2}$/g,
   userName: /[а-яА-Я]{2,}/g,
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
@@ -22,8 +22,7 @@ const formRegExp = {
   categoryCode: /^[a-z0-9|-]/i,
   firstName: /^([a-zа-яіїє]|[',. -][a-zа-яіїє])*$/i,
   lastName: /^([a-zа-яіїє]|[',. -][a-zа-яіїє])*$/i,
-  phoneNumber:
-    /^(\+38)?(?:\(0[0-9]{2}\)[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|0[0-9]{2}[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|0[0-9]{2}[0-9]{7})$/,
+  phoneNumber: /^(\+380|0)\d{9}$/,
   additionalPriceRegExp: /^[0-9|]/i,
   pageCode: /^[a-z0-9|-]/i,
   postCode: /^\d{5}(?:[-\\s]\\d{4})?$/,
