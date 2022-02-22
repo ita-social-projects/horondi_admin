@@ -12,6 +12,7 @@ const statuses = {
   USER_INACTIVE_FOREVER_STATUS: 'Користувач деактивований назавжди',
   ACTIVE_STATUS: 'Активний',
   USED_STATUS: 'Використаний',
-  EXPIRED_STATUS: 'Прострочений'
+  EXPIRED_STATUS: 'Протермінований',
+  PENDING_STATUS: 'В обробці'
 };
 export default statuses;
