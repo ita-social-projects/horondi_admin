@@ -10,7 +10,6 @@ export const useStyles = makeStyles(() => ({
     textAlign: 'center',
     fontSize: '10px',
     fontWeight: '900',
-    lineHeight: '20px',
-    letterSpacing: '0.001em'
+    lineHeight: '20px'
   }
 }));

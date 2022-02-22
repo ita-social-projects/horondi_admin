@@ -1,16 +1,21 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  redStatus: {
+  status: {
+    fontSize: '14px',
     fontWeight: 'bold',
+    marginBottom: '0px'
+  },
+  redStatus: {
     color: 'red'
   },
   blueStatus: {
-    fontWeight: 'bold',
     color: 'blue'
   },
   greenStatus: {
-    fontWeight: 'bold',
     color: 'green'
+  },
+  pendingStatus: {
+    color: 'grey'
   }
 }));
