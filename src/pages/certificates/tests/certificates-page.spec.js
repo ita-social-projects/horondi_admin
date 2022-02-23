@@ -54,6 +54,6 @@ describe('Information about certificates page', () => {
       loading: false
     }));
 
-    expect(await findAllByRole('row')).toHaveLength(4);
+    expect(await findAllByRole('row')).toHaveLength(5);
   });
 });

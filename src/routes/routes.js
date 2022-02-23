@@ -426,7 +426,6 @@ const Routes = ({ validatorMethods }) => {
           <Route path={routes.pathToStrapsEdit} exact component={StrapsEdit} />
           <Route
             path={routes.pathToAboutCertificate}
-            exact
             component={CertificatesPage}
           />
           <Route component={ErrorPage} />
