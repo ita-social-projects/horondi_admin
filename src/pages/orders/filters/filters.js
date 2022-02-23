@@ -15,8 +15,8 @@ import { sortLabel } from '../../../configs/sort';
 import buttonTitles from '../../../configs/button-titles';
 import ComponentFilterMultiplePicker from '../../../components/filters-components/filter-multiple-picker';
 import { paymentStatusFilterObj } from '../../../utils/order';
-import { config } from '../../../configs';
 import ComponentFilterSearch from '../../../components/filters-components/filter-search';
+import { config } from '../../../configs';
 
 function Filters() {
   const { filters, sortLabel: sortValue } = useSelector(({ Orders }) => Orders);
