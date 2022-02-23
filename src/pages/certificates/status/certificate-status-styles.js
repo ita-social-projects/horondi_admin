@@ -6,13 +6,13 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     marginBottom: '0px'
   },
-  redStatus: {
+  expiredStatus: {
     color: 'red'
   },
-  blueStatus: {
+  usedStatus: {
     color: 'blue'
   },
-  greenStatus: {
+  activeStatus: {
     color: 'green'
   },
   pendingStatus: {
