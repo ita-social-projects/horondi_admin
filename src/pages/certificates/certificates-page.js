@@ -70,6 +70,14 @@ const CertificatesPage = () => {
     } else return '';
   };
 
+  const editCertificate = () => {
+    // TODO
+  };
+
+  const deleteCertificate = () => {
+    // TODO
+  };
+
   const certificateItems = certificatesList.items
     ? certificatesList.items.map((certificate) => (
         <TableContainerRow
@@ -89,8 +97,8 @@ const CertificatesPage = () => {
                 )}`
               : '-'
           }
-          deleteHandler={() => null}
-          editHandler={() => null}
+          deleteHandler={deleteCertificate}
+          editHandler={editCertificate}
           showAvatar={false}
         />
       ))
