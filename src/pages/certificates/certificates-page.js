@@ -19,7 +19,8 @@ const pathToCreateCertificatesPage = routes.pathToCreateCertificates;
 const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
 const tableTitles = config.tableHeadRowTitles.certificates;
 const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
-const { ACTIVE_STATUS, USED_STATUS, EXPIRED_STATUS } = config.statuses;
+const { ACTIVE_STATUS, USED_STATUS, EXPIRED_STATUS, PENDING_STATUS } =
+  config.statuses;
 
 const transformDate = (date) => {
   const exactDate = new Date(date);
@@ -30,16 +31,17 @@ const transformDate = (date) => {
   });
 };
 
-const checkStatus = (active, used) => {
-  if (active && !used) {
+const checkStatus = (active, used, expired) => {
+  if (active) {
     return ACTIVE_STATUS;
   }
-  if (!active && used) {
+  if (used) {
     return USED_STATUS;
   }
-  if (!active && !used) {
+  if (expired) {
     return EXPIRED_STATUS;
   }
+  return PENDING_STATUS;
 };
 
 const CertificatesPage = () => {
@@ -87,15 +89,19 @@ const CertificatesPage = () => {
           price={`${certificate.value} грн`}
           status={
             <Status
-              status={checkStatus(certificate.isActivated, certificate.isUsed)}
+              status={checkStatus(
+                certificate.isActivated,
+                certificate.isUsed,
+                certificate.isExpired
+              )}
             />
           }
           date={
-            certificate.isActivated
-              ? `${transformDate(certificate.dateStart)} - ${transformDate(
+            certificate.isUsed || certificate.isExpired
+              ? '-'
+              : `${transformDate(certificate.dateStart)} - ${transformDate(
                   certificate.dateEnd
                 )}`
-              : '-'
           }
           deleteHandler={deleteCertificate}
           editHandler={editCertificate}

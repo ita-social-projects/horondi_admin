@@ -14,6 +14,7 @@ export const getAllCertificates = gql`
           }
           isUsed
           isActivated
+          isExpired
           dateStart
           dateEnd
         }

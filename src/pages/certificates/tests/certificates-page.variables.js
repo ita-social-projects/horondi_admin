@@ -19,6 +19,7 @@ export const certificatesMock = [
               },
               isUsed: false,
               isActivated: true,
+              isExpired: false,
               dateStart: '2022-01-13T16:10:29.323Z',
               dateEnd: '2023-01-14T16:10:29.323Z'
             },
@@ -31,6 +32,7 @@ export const certificatesMock = [
               },
               isUsed: true,
               isActivated: false,
+              isExpired: false,
               dateStart: '2022-01-13T16:10:29.323Z',
               dateEnd: '2023-01-14T16:10:29.323Z'
             },
@@ -43,6 +45,20 @@ export const certificatesMock = [
               },
               isUsed: false,
               isActivated: false,
+              isExpired: true,
+              dateStart: '2022-01-13T16:10:29.323Z',
+              dateEnd: '2023-01-14T16:10:29.323Z'
+            },
+            {
+              _id: '61e1591b7908b669fca1b651',
+              name: 'HOR004',
+              value: 500,
+              createdBy: {
+                _id: '5fafd90d5fa52e240c0d1d37'
+              },
+              isUsed: false,
+              isActivated: false,
+              isExpired: false,
               dateStart: '2022-01-13T16:10:29.323Z',
               dateEnd: '2023-01-14T16:10:29.323Z'
             }
