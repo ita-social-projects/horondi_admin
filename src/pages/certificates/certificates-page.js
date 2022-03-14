@@ -21,6 +21,7 @@ const tableTitles = config.tableHeadRowTitles.certificates;
 const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
 const { ACTIVE_STATUS, USED_STATUS, EXPIRED_STATUS, PENDING_STATUS } =
   config.statuses;
+const { NO_CERTIFICATES_MESSAGE } = config.messages;
 
 const transformDate = (date) => {
   const exactDate = new Date(date);
@@ -49,7 +50,7 @@ const CertificatesPage = () => {
   const dispatch = useDispatch();
   const { loading: certificatesLoading, data: certificates } =
     useQuery(getAllCertificates);
-  const certificatesList = certificates?.getAllCertificates || {};
+  const certificatesList = certificates?.getAllCertificates || { items: [] };
 
   useEffect(() => {
     dispatch(getUsers({}));
@@ -62,10 +63,10 @@ const CertificatesPage = () => {
     })
   );
 
-  const setUser = (id) => {
-    if (id && usersList.length) {
+  const setUser = (createdBy) => {
+    if (createdBy && usersList.length) {
       for (const user of usersList) {
-        if (user._id === id) {
+        if (user._id === createdBy._id) {
           return `${user.firstName} ${user.lastName}`;
         }
       }
@@ -80,39 +81,37 @@ const CertificatesPage = () => {
     // TODO
   };
 
-  const certificateItems = certificatesList.items
-    ? certificatesList.items.map((certificate) => (
-        <TableContainerRow
-          key={certificate._id}
-          number={certificate.name}
-          createdBy={<Certificate name={setUser(certificate.createdBy._id)} />}
-          price={`${certificate.value} грн`}
-          status={
-            <Status
-              status={checkStatus(
-                certificate.isActivated,
-                certificate.isUsed,
-                certificate.isExpired
-              )}
-            />
-          }
-          date={
-            certificate.isUsed || certificate.isExpired
-              ? '-'
-              : `${transformDate(certificate.dateStart)} - ${transformDate(
-                  certificate.dateEnd
-                )}`
-          }
-          deleteHandler={deleteCertificate}
-          editHandler={editCertificate}
-          showAvatar={false}
-        />
-      ))
-    : null;
-
   if (certificatesLoading && usersLoading) {
     return <LoadingBar />;
   }
+
+  const certificateItems = certificatesList.items.map((certificate) => (
+    <TableContainerRow
+      key={certificate._id}
+      number={certificate.name}
+      createdBy={<Certificate name={setUser(certificate.createdBy)} />}
+      price={`${certificate.value} грн`}
+      status={
+        <Status
+          status={checkStatus(
+            certificate.isActivated,
+            certificate.isUsed,
+            certificate.isExpired
+          )}
+        />
+      }
+      date={
+        certificate.isUsed || certificate.isExpired
+          ? '-'
+          : `${transformDate(certificate.dateStart)} - ${transformDate(
+              certificate.dateEnd
+            )}`
+      }
+      deleteHandler={deleteCertificate}
+      editHandler={editCertificate}
+      showAvatar={false}
+    />
+  ));
 
   return (
     <>
@@ -131,11 +130,17 @@ const CertificatesPage = () => {
             {CREATE_CERTIFICATE_TITLE}
           </Button>
         </div>
-        <TableContainerGenerator
-          data-cy='certificateTable'
-          tableTitles={tableTitles}
-          tableItems={certificateItems}
-        />
+        {certificateItems.length ? (
+          <TableContainerGenerator
+            data-cy='certificateTable'
+            tableTitles={tableTitles}
+            tableItems={certificateItems}
+          />
+        ) : (
+          <Typography paragraph className={commonStyles.noRecords}>
+            {NO_CERTIFICATES_MESSAGE}
+          </Typography>
+        )}
       </div>
     </>
   );

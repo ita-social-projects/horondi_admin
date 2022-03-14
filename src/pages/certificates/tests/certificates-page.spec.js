@@ -11,9 +11,6 @@ jest.mock('react-redux');
 jest.mock('connected-react-router', () => ({
   push: jest.fn()
 }));
-jest.mock('../certificates-page.styles.js', () => ({
-  useStyles: () => ({})
-}));
 
 const dispatch = jest.fn();
 
