@@ -95,6 +95,7 @@ import PromoCodeEdit from '../pages/promo-code/promo-code-edit/promo-code-edit';
 import PromoCodePage from '../pages/promo-code/promo-code-page';
 import MaterialAboutAdd from '../pages/material/material-about-add';
 import MaterialAbout from '../pages/material/material-about';
+import CertificatesPage from '../pages/certificates';
 
 const { routes } = config;
 
@@ -423,6 +424,10 @@ const Routes = ({ validatorMethods }) => {
           <Route path={routes.pathToStraps} exact component={StrapsPage} />
           <Route path={routes.pathToStrapsAdd} exact component={StrapsAdd} />
           <Route path={routes.pathToStrapsEdit} exact component={StrapsEdit} />
+          <Route
+            path={routes.pathToAboutCertificate}
+            component={CertificatesPage}
+          />
           <Route component={ErrorPage} />
         </Switch>
       </ErrorBoundary>
