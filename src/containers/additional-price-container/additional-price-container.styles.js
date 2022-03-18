@@ -22,6 +22,9 @@ export const useStyles = makeStyles((theme) => {
         width: 'inherit'
       }
     },
+    error: {
+      color: '#e60000'
+    },
     textField
   };
 });
