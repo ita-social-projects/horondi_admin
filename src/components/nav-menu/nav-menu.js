@@ -85,7 +85,7 @@ const NavMenu = ({ width }) => {
       activeClassName={classes.selectedCategory}
       isActive={(props) => (props ? props.url === pathTo : null)}
     >
-      <ListItemIcon>
+      <ListItemIcon className={classes.icon}>
         <PathIcon />
       </ListItemIcon>
       <ListItemText primary={pathTitle} />
@@ -219,7 +219,7 @@ const NavMenu = ({ width }) => {
     return (
       <Fragment key={category.toString()}>
         <ListItem button onClick={handleClick}>
-          <ListItemIcon>
+          <ListItemIcon className={classes.icon}>
             <ItemIcon />
           </ListItemIcon>
           <ListItemText primary={primary} />
