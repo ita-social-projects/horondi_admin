@@ -23,7 +23,8 @@ export const useStyles = makeStyles((theme) => {
       }
     },
     error: {
-      color: '#e60000'
+      color: theme.palette.error.main,
+      marginLeft: '5px'
     },
     textField
   };
