@@ -42,5 +42,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   sliderTab: {
     paddingLeft: theme.spacing(8)
+  },
+  icon: {
+    color: theme.palette.textColor
   }
 }));
