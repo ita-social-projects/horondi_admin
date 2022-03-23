@@ -6,16 +6,14 @@ dateStart.setHours(0, 0, 0, 0);
 const requestObj = {
   query: bulkGenerateCertificates,
   variables: {
-    generate: {
-      email: '',
-      dateStart,
-      bulk: [
-        {
-          value: 500,
-          quantity: 1
-        }
-      ]
-    }
+    email: '',
+    dateStart,
+    newCertificates: [
+      {
+        value: 500,
+        quantity: 1
+      }
+    ]
   }
 };
 
@@ -24,7 +22,7 @@ export const mutationVars = [
     request: requestObj,
     result: {
       data: {
-        bulkGenerateCertificates: {
+        generateCertificates: {
           items: [
             {
               name: 'HOR123232',
