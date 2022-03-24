@@ -65,7 +65,7 @@ describe('test certificates Emulation and Generation', () => {
     it('should render new table', async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
 
-      expect(await screen.findByText('HOR123232')).toBeInTheDocument();
+      expect(await screen.findByText('HOR12345678')).toBeInTheDocument();
     });
   });
 

@@ -152,15 +152,15 @@ const CreateCertificate = () => {
   const expireDate = date ? new Date(date) : new Date();
   expireDate.setFullYear(expireDate.getFullYear() + 1);
 
-  const newCertificates = checkBoxes.reduce(
-    (newArr, item) =>
-      item.checked &&
+  const newCertificates = checkBoxes.reduce((newArr, item) => {
+    item.checked &&
       newArr.push({
         value: item.value,
         count: item.quantity
-      }),
-    []
-  );
+      });
+
+    return newArr;
+  }, []);
 
   const onClickMutation = () =>
     generateCertificates({

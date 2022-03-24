@@ -7,11 +7,10 @@ const requestObj = {
   query: bulkGenerateCertificates,
   variables: {
     email: '',
-    dateStart,
     newCertificates: [
       {
         value: 500,
-        quantity: 1
+        count: 1
       }
     ]
   }
@@ -22,16 +21,16 @@ export const mutationVars = [
     request: requestObj,
     result: {
       data: {
-        generateCertificates: {
-          items: [
+        generateCertificate: {
+          certificates: [
             {
-              name: 'HOR123232',
+              name: 'HOR12345678',
               value: 1500,
               dateStart: '2023-02-04T17:28:59.947Z',
               dateEnd: '2024-02-04T17:28:59.947Z'
             },
             {
-              name: 'HOR543216',
+              name: 'HOR87654321',
               value: 500,
               dateStart: '2023-02-04T17:28:59.947Z',
               dateEnd: '2024-02-04T17:28:59.947Z'
