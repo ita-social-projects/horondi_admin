@@ -214,8 +214,6 @@ const BottomForm = ({ bottom, id, edit }) => {
     e.preventDefault();
   };
 
-  const idCondition = id ? { disabled: !changed } : {};
-
   return (
     <div>
       {loading ? (
@@ -235,7 +233,7 @@ const BottomForm = ({ bottom, id, edit }) => {
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
-                  {...idCondition}
+                  {...(id ? { disabled: !changed } : {})}
                   unblockFunction={unblock}
                 />
               </Grid>

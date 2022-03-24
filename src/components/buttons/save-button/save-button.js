@@ -37,7 +37,7 @@ const SaveButton = ({
   values,
   ...props
 }) => {
-  const error = !!Object.keys(errors).length;
+  const error = Boolean(Object.keys(errors).length);
   const disable = Object.values(values).every((el) => {
     if (typeof el === 'boolean' && !error) {
       return true;
@@ -49,9 +49,14 @@ const SaveButton = ({
   });
 
   const [disabled, setDisabled] = useState(!disable);
+
   useEffect(() => {
     setDisabled(!disable);
   }, [disable, values, error]);
+
+  useEffect(() => {
+    setDisabled(true);
+  }, []);
 
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -63,6 +68,7 @@ const SaveButton = ({
       variant='contained'
       color={color}
       type={type}
+      disabled={disabled}
       onClick={() => {
         saveButtonHandler(
           props,
@@ -78,8 +84,6 @@ const SaveButton = ({
           }
         }, 10);
       }}
-      disabled={disabled}
-      {...props}
     >
       {title}
     </Button>
