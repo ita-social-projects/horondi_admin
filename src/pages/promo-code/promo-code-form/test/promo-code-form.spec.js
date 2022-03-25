@@ -10,7 +10,7 @@ const props = {
     dateTo: '2022-01-29T10:49:49.736Z',
     dateFrom: '2022-01-28T10:49:49.725Z',
     discount: 10,
-    categories: ['All']
+    categories: ['backpacks']
   }
 };
 
@@ -21,7 +21,6 @@ beforeEach(() => {
     </BrowserRouter>
   );
 });
-
 describe('promo-code-form component test', () => {
   it('should render back button', () => {
     const backButton = screen.getByText(/назад/i);
@@ -71,5 +70,32 @@ describe('promo-code-form component test', () => {
     const text = screen.getByText(/Розмір знижки у процентах:/i);
 
     expect(text).toBeInTheDocument();
+  });
+
+  it('should render categories title', () => {
+    const text = screen.getByText(/Застосувати до:/i);
+
+    expect(text).toBeInTheDocument();
+  });
+
+  it('should click checkbox "Рюкзаки"', () => {
+    const checkbox = screen.getByLabelText(/Рюкзаки/i);
+
+    expect(checkbox.checked).toEqual(true);
+
+    fireEvent.click(checkbox);
+
+    expect(checkbox.checked).toEqual(false);
+  });
+
+  it('should click checkbox "Всі товари"', async () => {
+    const checkbox = screen.getByLabelText(/Всі товари/i);
+    fireEvent.click(checkbox);
+
+    expect(checkbox.checked).toEqual(true);
+
+    fireEvent.click(checkbox);
+
+    expect(checkbox.checked).toEqual(false);
   });
 });

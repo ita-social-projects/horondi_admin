@@ -178,7 +178,10 @@ const titles = {
     { name: '500 грн', value: 500 },
     { name: '1000 грн', value: 1000 },
     { name: '1500 грн', value: 1500 }
-  ]
+  ],
+  certificatesPageTitles: {
+    mainPageTitle: 'Інформація про сертифікати'
+  }
 };
 
 export default titles;

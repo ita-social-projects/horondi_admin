@@ -22,6 +22,10 @@ export const useStyles = makeStyles((theme) => {
         width: 'inherit'
       }
     },
+    error: {
+      color: theme.palette.error.main,
+      marginLeft: '5px'
+    },
     textField
   };
 });

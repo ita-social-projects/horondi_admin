@@ -9,6 +9,10 @@ const statuses = {
   USER_INACTIVE_STATUS: 'Неактивний(-a)',
   TIME_TO_FINISH_BLOCK_PERIOD_STATUS: (period) =>
     `Користувач буде автоматично розблокований через ${period} днів `,
-  USER_INACTIVE_FOREVER_STATUS: 'Користувач деактивований назавжди'
+  USER_INACTIVE_FOREVER_STATUS: 'Користувач деактивований назавжди',
+  ACTIVE_STATUS: 'Активний',
+  USED_STATUS: 'Використаний',
+  EXPIRED_STATUS: 'Протермінований',
+  PENDING_STATUS: 'В обробці'
 };
 export default statuses;
