@@ -61,7 +61,7 @@ const StrapsPage = () => {
     <TableContainerRow
       key={strap._id}
       id={strap._id}
-      image={strap?.image ? IMG_URL + strap.image : ''}
+      image={strap?.images.thumbnail ? IMG_URL + strap.images.thumbnail : ''}
       name={strap?.name[0]?.value}
       color={strap?.features?.color?.name[0]?.value}
       additionalPrice={strap?.additionalPrice[1]?.value}
