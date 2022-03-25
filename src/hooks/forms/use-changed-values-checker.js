@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import _ from 'lodash';
 import { checkInitialValue } from '../../utils/check-initial-values';
 
 export default function useChangedValuesChecker(values, errors) {
@@ -12,7 +11,6 @@ export default function useChangedValuesChecker(values, errors) {
       values.additionalPrice = JSON.stringify(values.additionalPrice);
 
     if (
-      _.isEmpty(errors) &&
       firstlyMounted.current &&
       !checkInitialValue(initialValues.current, values)
     )

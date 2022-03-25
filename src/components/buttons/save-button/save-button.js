@@ -33,30 +33,23 @@ const SaveButton = ({
   type,
   onClickHandler,
   color,
+  disabled: idCondition,
   errors,
   values,
   ...props
 }) => {
   const error = Boolean(Object.keys(errors).length);
-  const disable = Object.values(values).every((el) => {
-    if (typeof el === 'boolean' && !error) {
-      return true;
-    }
-    if ((el || el === 0) && !error) {
-      return true;
-    }
-    return false;
-  });
-
-  const [disabled, setDisabled] = useState(!disable);
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    setDisabled(!disable);
-  }, [disable, values, error]);
+    if (idCondition || error) {
+      setDisabled(true);
 
-  useEffect(() => {
-    setDisabled(true);
-  }, []);
+      return;
+    }
+
+    setDisabled(false);
+  }, [error, idCondition]);
 
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
@@ -96,6 +89,7 @@ SaveButton.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
   values: PropTypes.objectOf(PropTypes.string),
   errors: PropTypes.objectOf(PropTypes.object)
 };
@@ -104,6 +98,7 @@ SaveButton.defaultProps = {
   color: 'primary',
   errors: {},
   values: {},
+  disabled: true,
   onClickHandler: noop,
   unblockFunction: () => null
 };
