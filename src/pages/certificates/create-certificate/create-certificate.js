@@ -153,22 +153,29 @@ const CreateCertificate = () => {
   expireDate.setFullYear(expireDate.getFullYear() + 1);
 
   const newCertificates = checkBoxes.reduce((newArr, item) => {
-    item.checked &&
+    if (item.checked) {
       newArr.push({
         value: item.value,
         count: item.quantity
       });
+    }
 
     return newArr;
   }, []);
 
+  const variables = {
+    email,
+    newCertificates
+  };
+
+  if (date) {
+    const dateStart = { dateStart: dateResetHours(date) };
+    Object.assign(variables, dateStart);
+  }
+
   const onClickMutation = () =>
     generateCertificates({
-      variables: {
-        email,
-        newCertificates,
-        ...(date && { dateStart: dateResetHours(date) })
-      }
+      variables
     });
 
   if (certificatesLoading) {
