@@ -49,6 +49,9 @@ export const getOrderById = (id) => {
 								lang
 								value
 							}  
+							category {
+								code
+							}
 						}
 						model {
 							_id
@@ -66,7 +69,12 @@ export const getOrderById = (id) => {
 							}
 							sidePocket
 						}
+						discount
 						quantity
+						priceToPay {
+							value
+							currency
+						}
 						 constructorBasics {
 							_id
 							name {
@@ -162,8 +170,16 @@ export const updateOrder = (order, id) => {
 								lang
 								value
 							}  
+							category {
+								code
+							}
 						}
 						quantity
+						discount
+						priceToPay {
+							value
+							currency
+						}
 						options {
 							size {
 								_id
@@ -213,6 +229,11 @@ export const addOrder = (order) => {
 					  value
 					}
 					quantity
+					discount
+					priceToPay {
+						value
+						currency
+					}
 					options {
 					  size {
 						name

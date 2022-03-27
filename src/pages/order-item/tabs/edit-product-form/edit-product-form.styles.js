@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   selectedProduct: {
-    backgroundColor: theme.palette.textColor,
+    backgroundColor: theme.palette.bodyColor,
     display: 'flex',
     flexDirection: 'column',
     left: '50%',

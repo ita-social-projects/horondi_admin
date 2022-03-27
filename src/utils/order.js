@@ -55,7 +55,13 @@ export const deliveryPropTypes = {
 
 const itemPropType = PropTypes.shape({
   options: PropTypes.shape({
-    size: PropTypes.objectOf(PropTypes.string)
+    size: PropTypes.shape({
+      name: PropTypes.string,
+      _id: PropTypes.string,
+      price: PropTypes.arrayOf(
+        PropTypes.shape({ currency: PropTypes.string, value: PropTypes.number })
+      )
+    })
   }),
   quantity: PropTypes.number,
   product: PropTypes.shape({
@@ -113,6 +119,8 @@ const items = (order) =>
     product: item?.product._id,
     quantity: item.quantity,
     isFromConstructor: !item.product._id,
+    discount: item.discount,
+    priceToPay: item.priceToPay,
     price: price(item),
     options: {
       size: item.options.size._id,
@@ -323,17 +331,58 @@ export const setFormValues = (selectedOrder) => {
         name: item.product.name,
         basePrice: item.product.basePrice
       },
+      category: item.product.category.code,
+      priceToPay: item.priceToPay,
+      discount: item.discount,
       quantity: item.quantity
     }))
   };
 };
 
-export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
+export const calcPriceWithDiscount = (price, discount = 0, isAllowCategory) => {
+  if (isAllowCategory) {
+    return Math.round(price - (price * discount) / 100);
+  }
+  return price;
+};
+
+export const mergeProducts = (
+  selectedProduct,
+  size,
+  quantity,
+  orderItems,
+  categories,
+  discount = 0
+) => {
+  let priceToPay = size.price;
+
   const index = orderItems.findIndex(
     (item) =>
       item.product._id === selectedProduct._id &&
       item.options.size._id === size.id
   );
+  const isAllowCategory =
+    categories?.includes(selectedProduct.category.code) || false;
+
+  priceToPay = [
+    {
+      currency: 'UAH',
+      value: calcPriceWithDiscount(
+        size.price[0].value,
+        discount,
+        isAllowCategory
+      )
+    },
+    {
+      currency: 'USD',
+      value: calcPriceWithDiscount(
+        size.price[1].value,
+        discount,
+        isAllowCategory
+      )
+    }
+  ];
+
   if (index !== -1) {
     const newItem = { ...orderItems[index] };
     newItem.quantity += quantity;
@@ -354,6 +403,9 @@ export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
         name: selectedProduct.name,
         _id: selectedProduct._id
       },
+      category: selectedProduct.category.code,
+      discount,
+      priceToPay,
       quantity
     }
   ];

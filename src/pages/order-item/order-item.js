@@ -42,24 +42,18 @@ const OrderItem = ({ id }) => {
     setTabValue(newValue);
   };
 
-  const handleFormSubmit = (data) => {
-    handleOrderSubmition(dispatch, resetForm, openSuccessSnackbar, data, id);
+  const handleFormSubmit = () => {
+    handleOrderSubmition(dispatch, resetForm, openSuccessSnackbar, values, id);
     setTabValue(0);
   };
 
-  const {
-    handleChange,
-    values,
-    handleSubmit,
-    setFieldValue,
-    dirty,
-    resetForm,
-    isValid
-  } = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: handleFormSubmit
-  });
+  const { handleChange, values, setFieldValue, resetForm, isValid } = useFormik(
+    {
+      initialValues,
+      validationSchema,
+      onSubmit: handleFormSubmit
+    }
+  );
 
   useEffect(() => {
     if (selectedOrder && id) {
@@ -96,13 +90,13 @@ const OrderItem = ({ id }) => {
               <SaveButton
                 type={materialUiConstants.types.submit}
                 title={SAVE_TITLE}
-                onClickHandler={handleSubmit}
+                onClickHandler={handleFormSubmit}
                 values={{
                   code: values.code,
                   uaTitle: values.uaTitle,
                   enTitle: values.enTitle
                 }}
-                disabled={!dirty || !isValid}
+                disabled={isValid}
               />
             </Grid>
           </Grid>

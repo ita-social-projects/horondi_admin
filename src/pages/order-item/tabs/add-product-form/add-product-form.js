@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Select from '@material-ui/core/Select';
 
+import { useLazyQuery } from '@apollo/client';
 import { config } from '../../../../configs';
 import { useStyles } from './add-product-form.styles';
 import {
@@ -20,6 +21,8 @@ import {
   inputName,
   addProductFormPropTypes
 } from '../../../../utils/order';
+import { getPromoCodeByCode } from './add-product-form.operations';
+import FetchPromoCode from '../../../../components/fetch-promo-code';
 
 const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
   const { materialUiConstants } = config;
@@ -35,6 +38,7 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [size, setSize] = useState({ id: '', name: '', price: {} });
   const [quantity, setQuantity] = useState(1);
+  const [promoCodeValue, setPromoCodeValue] = useState('');
 
   useEffect(() => {
     dispatch(getFiltredProducts({}));
@@ -55,6 +59,12 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
       });
   }, [sizes]);
 
+  const [getPromoCode, { data: promoCode }] = useLazyQuery(getPromoCodeByCode, {
+    variables: {
+      code: promoCodeValue
+    }
+  });
+
   const selectHandler = (e) => {
     setSize({
       id: e.target.value,
@@ -65,10 +75,18 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
   };
 
   const addProductHandler = () => {
+    const { discount, categories } = promoCode?.getPromoCodeByCode || {};
     setQuantity(1);
     setFieldValue(
       inputName.itemsName,
-      mergeProducts(selectedProduct, size, quantity, items)
+      mergeProducts(
+        selectedProduct,
+        size,
+        quantity,
+        items,
+        categories,
+        discount
+      )
     );
   };
 
@@ -134,6 +152,11 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
           {sizeItems}
         </Select>
       </div>
+      <FetchPromoCode
+        getPromoCode={getPromoCode}
+        setPromoCodeValue={setPromoCodeValue}
+        promoCode={promoCode}
+      />
       <Button
         variant={materialUiConstants.contained}
         color={materialUiConstants.primary}

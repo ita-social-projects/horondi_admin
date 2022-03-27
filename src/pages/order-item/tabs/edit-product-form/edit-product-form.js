@@ -6,11 +6,19 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
+import { useLazyQuery } from '@apollo/client';
 import { config } from '../../../../configs';
 import { useStyles } from './edit-product-form.styles';
-import { editProductFormPropTypes, inputName } from '../../../../utils/order';
+import {
+  calcPriceWithDiscount,
+  editProductFormPropTypes,
+  inputName
+} from '../../../../utils/order';
 import { getProduct } from '../../../../redux/products/products.actions';
 import configs from '../../../../configs/orders';
+import FetchPromoCode from '../../../../components/fetch-promo-code';
+
+import { getPromoCodeByCode } from '../add-product-form/add-product-form.operations';
 
 const EditProductForm = ({
   open,
@@ -27,6 +35,13 @@ const EditProductForm = ({
 
   const [size, setSize] = useState({ _id: '', name: '', price: {} });
   const [quantity, setQuantity] = useState('');
+  const [promoCodeValue, setPromoCodeValue] = useState('');
+
+  const [getPromoCode, { data: promoCode }] = useLazyQuery(getPromoCodeByCode, {
+    variables: {
+      code: promoCodeValue
+    }
+  });
 
   useEffect(() => {
     if (selectedItem) {
@@ -58,11 +73,35 @@ const EditProductForm = ({
     const index = items.findIndex(
       (item) => item.product._id === selectedItem.product._id
     );
+    const { discount, categories } = promoCode?.getPromoCodeByCode || {};
+    const isAllowCategory =
+      categories?.includes(selectedItem.category) || false;
+
     const newValue = { ...items[index], ...items[index].options };
     newValue.options.size._id = size._id;
     newValue.options.size.price = size.price;
     newValue.options.size.name = size.name;
     newValue.quantity = quantity;
+    newValue.discount = discount || 0;
+    newValue.priceToPay = [
+      {
+        currency: 'UAH',
+        value: calcPriceWithDiscount(
+          size.price[0].value,
+          discount,
+          isAllowCategory
+        )
+      },
+      {
+        currency: 'USD',
+        value: calcPriceWithDiscount(
+          size.price[1].value,
+          discount,
+          isAllowCategory
+        )
+      }
+    ];
+
     setFieldValue(inputName.itemsName, [
       ...items.slice(0, index),
       newValue,
@@ -95,13 +134,18 @@ const EditProductForm = ({
             {sizeItems}
           </Select>
         </div>
-        <br />
+        <FetchPromoCode
+          getPromoCode={getPromoCode}
+          setPromoCodeValue={setPromoCodeValue}
+          promoCode={promoCode}
+        />
         <Button
           variant={materialUiConstants.contained}
           color={materialUiConstants.primary}
           disabled={
             size._id === selectedItem?.options.size._id &&
-            quantity === selectedItem?.quantity
+            quantity === selectedItem?.quantity &&
+            !promoCodeValue
           }
           onClick={confirmHandler}
         >

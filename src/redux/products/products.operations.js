@@ -148,6 +148,7 @@ const getAllProducts = async (
                 name {
                   value
                 }
+                code
               }
               isHotItem
             }
@@ -419,6 +420,7 @@ const getProduct = async (id) => {
                   lang
                   value
                 }
+                code
               }
               model {
                 _id
