@@ -394,7 +394,7 @@ const addProduct = async (product, upload) => {
 const deleteManyProducts = async (payload) => {
   const result = `
       mutation($ids: [ID!]) {
-        deleteProduct(ids: $ids) {
+        deleteProducts(ids: $ids) {
           ... on Product {
             _id
           }
