@@ -24,12 +24,20 @@ function useDeleteValidation(queryFunction) {
     );
   };
 
-  const deleteValidation = (id) =>
-    products.map((item) =>
-      item.ids.map(
-        (_id) => id === _id && { itemName: item.itemName, itemId: item._id }
-      )
-    );
+  const deleteValidation = (id) => {
+    const validationData = [];
+    for (const item of products) {
+      for (const _id of item.ids) {
+        if (_id === id) {
+          validationData.push({
+            itemId: item._id,
+            itemName: { value: item.itemName }
+          });
+        }
+      }
+    }
+    return validationData;
+  };
   return { deleteValidation, toggleRerender };
 }
 export default useDeleteValidation;
