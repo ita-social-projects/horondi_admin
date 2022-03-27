@@ -77,9 +77,9 @@ const tableHeadRowTitles = {
     commentPageTitles: [
       'Дата',
       'Пошта',
-      'Текст',
       'Видимий',
       'Кількість відповідей',
+      'Текст',
       'Дії'
     ],
     userPageTitles: ['Дата', 'Текст', 'Дії'],
