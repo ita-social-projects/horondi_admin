@@ -7,18 +7,9 @@ export default function useChangedValuesChecker(values, errors) {
   const firstlyMounted = useRef(false);
   const initialValues = useRef(values);
 
-  useEffect(() => {
-    if (values.additionalPrice && typeof values.additionalPrice !== 'string')
-      values.additionalPrice = JSON.stringify(values.additionalPrice);
-
-    if (
-      _.isEmpty(errors) &&
-      firstlyMounted.current &&
-      !checkInitialValue(initialValues.current, values)
-    )
-      changed.current = true;
-    else changed.current = false;
-  }, [values, errors]);
+  if (values.additionalPrice && typeof values.additionalPrice !== 'string') {
+    values.additionalPrice = JSON.stringify(values.additionalPrice);
+  }
 
   useEffect(() => {
     firstlyMounted.current = true;
@@ -31,5 +22,13 @@ export default function useChangedValuesChecker(values, errors) {
       );
   }, []);
 
-  return changed.current;
+  if (
+    _.isEmpty(errors) &&
+    firstlyMounted.current &&
+    !checkInitialValue(initialValues.current, values)
+  ) {
+    return (changed.current = true);
+  } 
+    return (changed.current = false);
+  
 }
