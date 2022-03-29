@@ -177,7 +177,6 @@ const ReplyCommentForm = ({
             title={SAVE_TITLE}
             errors={errors}
             values={values}
-            {...(isEdit ? { disabled: !changed } : {})}
             onClickHandler={handleSubmit}
             unblockFunction={unblock}
           />

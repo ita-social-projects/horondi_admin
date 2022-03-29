@@ -17,6 +17,7 @@ import {
   calculateAddittionalPriceValue,
   getLabelValue
 } from '../../utils/additionalPrice-helper';
+import { config } from '../../configs';
 
 const AdditionalPriceContainer = ({
   values,
@@ -30,6 +31,8 @@ const AdditionalPriceContainer = ({
   const styles = useStyles();
   const dispatch = useDispatch();
   const exchangeRate = useSelector(({ Currencies }) => Currencies.exchangeRate);
+  const { materialUiConstants } = config;
+
   useEffect(() => {
     dispatch(getCurrencies());
   }, [dispatch]);
@@ -70,6 +73,7 @@ const AdditionalPriceContainer = ({
         id='additionalPrice'
         variant='outlined'
         label={getLabelValue(values, labels.additionalPriceType)}
+        type={materialUiConstants.types.number}
         value={values.additionalPrice}
         onChange={onChange}
         onBlur={onBlur}

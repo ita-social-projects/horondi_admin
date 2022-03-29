@@ -35,9 +35,8 @@ import {
   imagePropTypes
 } from '../bottom-form/constructor.variables';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const { IMG_URL } = config;
+const { IMG_URL, materialUiConstants } = config;
 const {
   backName,
   enterPrice,
@@ -172,7 +171,6 @@ const BackForm = ({ back, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   useEffect(() => {
@@ -222,8 +220,6 @@ const BackForm = ({ back, id, edit }) => {
     e.preventDefault();
   };
 
-  const idCondition = id ? { disabled: !changed } : {};
-
   return (
     <div>
       {loading ? (
@@ -238,12 +234,11 @@ const BackForm = ({ back, id, edit }) => {
               <Grid item className={styles.button}>
                 <SaveButton
                   data-cy='save-btn'
-                  type='submit'
                   title={SAVE_TITLE}
+                  type={materialUiConstants.types.number}
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
-                  {...idCondition}
                   unblockFunction={unblock}
                 />
               </Grid>

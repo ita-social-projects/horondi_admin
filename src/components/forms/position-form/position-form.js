@@ -17,7 +17,6 @@ import LanguagePanel from '../language-panel';
 import { getPositionInitialValues } from '../../../utils/position-form';
 import CheckboxOptions from '../../checkbox-options';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const labels = config.labels.positionPageLabel;
 
@@ -79,7 +78,6 @@ const PositionForm = ({ position, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
@@ -129,7 +127,6 @@ const PositionForm = ({ position, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
-                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>
