@@ -46,7 +46,7 @@ const SaveButton = ({
       return true;
     }
 
-    if ((el || el === 0) && !error && changed) {
+    if ((Boolean(el) || el === 0) && !error && changed) {
       return true;
     }
 
