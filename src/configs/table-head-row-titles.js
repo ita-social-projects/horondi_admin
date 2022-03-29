@@ -86,7 +86,7 @@ const tableHeadRowTitles = {
     recentCommentsPageTitle: ['Дата', "Ім'я користувача", 'Текст']
   },
   replyComments: {
-    replyCommentsPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії']
+    replyCommentsPageTitles: ['Дата', 'Пошта', 'Видимий', 'Текст', 'Дії']
   },
   emailQuestions: [
     '#',
