@@ -235,7 +235,7 @@ const BackForm = ({ back, id, edit }) => {
                 <SaveButton
                   data-cy='save-btn'
                   title={SAVE_TITLE}
-                  type={materialUiConstants.types.number}
+                  type={materialUiConstants.types.submit}
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
