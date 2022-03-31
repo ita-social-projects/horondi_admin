@@ -112,8 +112,8 @@ export const config = {
     superadmin: 'superadmin'
   },
   userRoles: [
-    { role: 'admin', label: 'Адмін' },
-    { role: 'superadmin', label: 'Суперадмін' }
+    { role: 'user', label: 'Користувач' },
+    { role: 'admin', label: 'Адмін' }
   ],
   allowedforRegistrationRoles: ['admin', 'superadmin'],
   tabNames: {
