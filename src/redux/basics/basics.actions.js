@@ -9,7 +9,7 @@ import {
   SET_BASIC,
   UPDATE_BASIC,
   SET_BASICS_FILTER,
-  CLEAR_FILTER,
+  CLEAR_BASICS_FILTER,
   SET_BASIC_ERROR
 } from './basics.types';
 
@@ -69,5 +69,5 @@ export const setFilter = (filter) => ({
 });
 
 export const clearFilters = () => ({
-  type: CLEAR_FILTER
+  type: CLEAR_BASICS_FILTER
 });
