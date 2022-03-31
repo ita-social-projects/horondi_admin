@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Typography } from '@material-ui/core';
 
@@ -11,17 +11,32 @@ import LoadingBar from '../../components/loading-bar/loading-bar';
 import Certificate from './certificate/certificate';
 import { useCommonStyles } from '../common.styles';
 import { getAllCertificates } from './operations/certificate.queries';
+import {
+  deleteCertificateById,
+  updateCertificateByName
+} from './operations/certificate.mutation';
+import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { config } from '../../configs';
 import { setItemsCount } from '../../redux/table/table.actions';
+import useSuccessSnackbar from '../../utils/use-success-snackbar';
 
 const { routes } = config;
 const pathToCreateCertificatesPage = routes.pathToCreateCertificates;
 const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
+const DELETE_CERTIFICATE_TITLE =
+  config.titles.certificatesPageTitles.deleteCertificateTitle;
+const UPDATE_CERTIFICATE_TITLE =
+  config.titles.certificatesPageTitles.updateCertificateTitle;
 const tableTitles = config.tableHeadRowTitles.certificates;
 const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
 const { ACTIVE_STATUS, USED_STATUS, EXPIRED_STATUS, PENDING_STATUS } =
   config.statuses;
-const { NO_CERTIFICATES_MESSAGE } = config.messages;
+const {
+  NO_CERTIFICATES_MESSAGE,
+  DELETE_CERTIFICATE_MESSAGE,
+  UPDATE_CERTIFICATE_MESSAGE
+} = config.messages;
+
 const transformDate = (date) => {
   const exactDate = new Date(date);
   return exactDate.toLocaleString('en-US', {
@@ -53,32 +68,63 @@ const CertificatesPage = () => {
     itemsCount: Table.itemsCount
   }));
 
-  const { loading: certificatesLoading, data: certificates } = useQuery(
-    getAllCertificates,
-    {
-      variables: {
-        limit: rowsPerPage,
-        skip: currentPage
-      },
-      onCompleted: (data) => {
-        dispatch(setItemsCount(data.getAllCertificates.count));
-      }
+  const {
+    loading: certificatesLoading,
+    data: certificates,
+    refetch: certificatesRefetch
+  } = useQuery(getAllCertificates, {
+    variables: {
+      limit: rowsPerPage,
+      skip: currentPage
+    },
+    onCompleted: (data) => {
+      dispatch(setItemsCount(data.getAllCertificates.count));
     }
-  );
-
+  });
+  const [deleteCertificate] = useMutation(deleteCertificateById);
+  const [updateCertificate] = useMutation(updateCertificateByName);
   const certificatesList = certificates?.getAllCertificates || { items: [] };
+  const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const setUser = (usersInitials) =>
     usersInitials.length !== 0
       ? `${usersInitials[0].firstName} ${usersInitials[0].lastName}`
       : '';
 
-  const editCertificate = () => {
-    // TODO
+  const updateCertificateHandler = async (name) => {
+    await updateCertificate({
+      variables: {
+        name
+      }
+    });
+    await certificatesRefetch();
+    dispatch(closeDialog());
   };
 
-  const deleteCertificate = () => {
-    // TODO
+  const openUpdateModal = (name) => {
+    openSuccessSnackbar(
+      () => updateCertificateHandler(name),
+      UPDATE_CERTIFICATE_MESSAGE,
+      UPDATE_CERTIFICATE_TITLE
+    );
+  };
+
+  const deleteCertificateHandler = async (id) => {
+    await deleteCertificate({
+      variables: {
+        id
+      }
+    });
+    await certificatesRefetch();
+    dispatch(closeDialog());
+  };
+
+  const openDeleteModal = (id) => {
+    openSuccessSnackbar(
+      () => deleteCertificateHandler(id),
+      DELETE_CERTIFICATE_MESSAGE,
+      DELETE_CERTIFICATE_TITLE
+    );
   };
 
   if (certificatesLoading) {
@@ -107,8 +153,12 @@ const CertificatesPage = () => {
               certificate.dateEnd
             )}`
       }
-      deleteHandler={deleteCertificate}
-      editHandler={editCertificate}
+      deleteHandler={() => {
+        !certificate.isActivated && openDeleteModal(certificate._id);
+      }}
+      editHandler={() => {
+        certificate.isActivated && openUpdateModal(certificate.name);
+      }}
       showAvatar={false}
     />
   ));
