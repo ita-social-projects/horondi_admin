@@ -1,5 +1,8 @@
 import { getItems, setItems } from '../../utils/client';
-import { patternTranlations } from '../../configs/error-modal-messages';
+import {
+  patternTranlations,
+  errorStatuses
+} from '../../configs/error-modal-messages';
 
 export const getAllPatterns = async (limit, skip, filter) => {
   const getAllPatternsQuery = `
@@ -255,7 +258,7 @@ export const updatePattern = async (payload) => {
   }
 
   if (result?.data?.updatePattern?.message) {
-    throw new Error(result.data.updatePattern.message);
+    throw new Error(errorStatuses.ERROR_BOUNDARY_STATUS);
   }
 
   return result?.data?.updatePattern;
