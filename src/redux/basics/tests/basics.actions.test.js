@@ -7,7 +7,7 @@ import {
   SET_BASICS,
   SET_BASICS_LOADING,
   SET_BASICS_FILTER,
-  CLEAR_FILTER,
+  CLEAR_BASICS_FILTER,
   REMOVE_BASIC,
   DELETE_BASIC,
   UPDATE_BASIC
@@ -109,7 +109,7 @@ describe('Basic action tests', () => {
 
   it('should clear all basics filters', () => {
     expect(clearFilters()).toEqual({
-      type: CLEAR_FILTER
+      type: CLEAR_BASICS_FILTER
     });
   });
 });
