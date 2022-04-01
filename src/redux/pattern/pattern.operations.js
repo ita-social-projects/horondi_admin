@@ -254,5 +254,9 @@ export const updatePattern = async (payload) => {
     );
   }
 
+  if (result?.data?.updatePattern?.message) {
+    throw new Error(result.data.updatePattern.message);
+  }
+
   return result?.data?.updatePattern;
 };
