@@ -46,11 +46,7 @@ const SaveButton = ({
       return true;
     }
 
-    if ((Boolean(el) || el === 0) && !error && changed) {
-      return true;
-    }
-
-    return false;
+    return (Boolean(el) || el === 0) && !error && changed;
   });
 
   const [disabled, setDisabled] = useState(!disable);
