@@ -21,7 +21,6 @@ import { getColors } from '../../../redux/color/color.actions';
 import useStrapsHandlers from '../../../utils/use-straps-handlers';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import AdditionalPriceContainer from '../../../containers/additional-price-container';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { STRAPS_COLOR_ERROR_MESSAGE } = config.strapsErrorMessages;
 const {
@@ -115,7 +114,6 @@ const StrapsForm = ({ strap, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -178,7 +176,6 @@ const StrapsForm = ({ strap, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
-                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

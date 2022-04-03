@@ -15,7 +15,6 @@ import {
 } from '../../../utils/user-form';
 import useUserHandlers from '../../../utils/use-user-handlers';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const labels = config.labels.userDetails;
 
@@ -116,7 +115,6 @@ const UserForm = ({ user, id, edit }) => {
   });
 
   const unblock = useUnsavedChangesHandler(values);
-  const changed = useChangedValuesChecker(values, errors);
 
   const handleImageLoad = (files) => {
     if (files && files[0]) {
@@ -133,7 +131,6 @@ const UserForm = ({ user, id, edit }) => {
   const eventPreventHandler = (e) => {
     e.preventDefault();
   };
-  const idCondition = id ? { disabled: !changed } : {};
   return (
     <div>
       <form onSubmit={(e) => eventPreventHandler(e)}>
@@ -154,7 +151,6 @@ const UserForm = ({ user, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
-                {...idCondition}
                 unblockFunction={unblock}
               />
             </Grid>

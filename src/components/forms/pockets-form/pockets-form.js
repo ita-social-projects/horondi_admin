@@ -23,7 +23,6 @@ import { getAllPositions } from '../../../redux/position/position.actions';
 import { handleCircularProgress } from '../../../utils/handle-orders-page';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import AdditionalPriceContainer from '../../../containers/additional-price-container';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { convertationTitle } = config.titles.closuresTitles;
 
@@ -134,7 +133,6 @@ const PocketsForm = ({ pocket, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const handleImageLoad = (files) => {
@@ -203,7 +201,6 @@ const PocketsForm = ({ pocket, id, edit }) => {
                 values={values}
                 errors={errors}
                 onClickHandler={handleSubmit}
-                {...(id ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

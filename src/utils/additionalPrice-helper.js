@@ -15,6 +15,10 @@ export const calculateAddittionalPriceValue = (values, exchangeRate) =>
     : '0';
 
 const calculateConvertedValue = (values, exchangeRate) => {
+  if (values.additionalPrice < 0 || !Number(values.additionalPrice)) {
+    return '0.00';
+  }
+
   const result = Number(values?.additionalPrice) * Number(exchangeRate);
   return result.toFixed(2);
 };

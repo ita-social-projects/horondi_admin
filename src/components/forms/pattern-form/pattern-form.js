@@ -39,7 +39,6 @@ import {
   useFormikInitialValues
 } from '../../../utils/pattern-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const {
   patternName,
@@ -195,7 +194,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const checkboxes = [
@@ -258,8 +256,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     e.preventDefault();
   };
 
-  const idCondition = id ? { disabled: !changed } : {};
-
   return (
     <div>
       {loading ? (
@@ -280,7 +276,6 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   title={SAVE_TITLE}
                   values={values}
                   errors={errors}
-                  {...idCondition}
                 />
               </Grid>
             </Grid>
