@@ -59,16 +59,7 @@ const StatisticPage = () => {
     getInitialStatsHandler(categories, dispatch, getIniitalStats);
   }, [dispatch, doughnutData]);
 
-  if (loading) {
-    return <LoadingBar />;
-  }
-
-  const handleDateChange = (e) => {
-    fetchedBarStats.current = [];
-    fetchedDoughnutStats.current = [];
-    const newDate = parseInt(e.target.value);
-    dispatch(setDateValue(newDate));
-
+  useEffect(() => {
     if (doughnutValue === doughnut.select[1].value) {
       dispatch(getAllOrdersStats(date));
     }
@@ -80,6 +71,18 @@ const StatisticPage = () => {
     if (barValue === bar.select[2].value) {
       dispatch(getUsersByDays(date));
     }
+  }, [date]);
+
+  if (loading) {
+    return <LoadingBar />;
+  }
+
+  const handleDateChange = (e) => {
+    fetchedBarStats.current = [];
+    fetchedDoughnutStats.current = [];
+
+    const newDate = parseInt(e.target.value);
+    dispatch(setDateValue(newDate));
 
     fetchedDoughnutStats.current.push(doughnutValue);
     fetchedBarStats.current.push(barValue);
