@@ -3,7 +3,7 @@ import {
   REMOVE_BASIC,
   SET_BASICS_LOADING,
   SET_BASIC,
-  CLEAR_FILTER,
+  CLEAR_BASICS_FILTER,
   SET_BASICS_FILTER
 } from './basics.types';
 
@@ -62,10 +62,12 @@ const basicsReducer = (state = initialState, action = {}) => {
           ...action.payload
         }
       };
-    case CLEAR_FILTER:
+    case CLEAR_BASICS_FILTER:
       return {
         ...state,
-        filter: initialFilter
+        filter: {
+          ...initialFilter
+        }
       };
     default:
       return state;
