@@ -18,6 +18,7 @@ const map = require('lodash/map');
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const tableTitles = config.tableHeadRowTitles.users.userTab;
 const { unknownUser } = config.labels.user;
+const { IMG_URL } = config;
 
 const UserTab = (props) => {
   const { list, onDelete } = props;
@@ -36,6 +37,7 @@ const UserTab = (props) => {
       }
       mobile={formatPhoneNumber(userItem.phoneNumber) || ''}
       email={userItem.email || ''}
+      image={IMG_URL + userItem.images?.thumbnail}
       role={userRoleTranslations[userItem.role]}
       banned={
         userItem.banned.blockPeriod === UserBlockPeriod.UNLOCKED

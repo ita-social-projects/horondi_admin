@@ -16,6 +16,12 @@ query(
   items {
     _id
     firstName
+    images{
+        large
+        medium
+        small
+        thumbnail
+      }
     lastName
     email
     role
