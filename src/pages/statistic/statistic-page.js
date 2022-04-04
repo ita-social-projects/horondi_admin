@@ -68,19 +68,17 @@ const StatisticPage = () => {
     fetchedDoughnutStats.current = [];
     const newDate = parseInt(e.target.value);
     dispatch(setDateValue(newDate));
+
     if (doughnutValue === doughnut.select[1].value) {
       dispatch(getAllOrdersStats(date));
     }
 
-    switch (barValue) {
-      case barValue === bar.select[1].value:
-        dispatch(getPaidOrdersStats(date));
-        break;
-      case barValue === bar.select[2].value:
-        dispatch(getUsersByDays(date));
-        break;
-      default:
-        break;
+    if (barValue === bar.select[1].value) {
+      dispatch(getPaidOrdersStats(date));
+    }
+
+    if (barValue === bar.select[2].value) {
+      dispatch(getUsersByDays(date));
     }
 
     fetchedDoughnutStats.current.push(doughnutValue);
