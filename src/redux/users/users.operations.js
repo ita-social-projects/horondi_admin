@@ -17,9 +17,6 @@ query(
     _id
     firstName
     images{
-        large
-        medium
-        small
         thumbnail
       }
     lastName
