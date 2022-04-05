@@ -13,7 +13,7 @@ const LegendsList = ({ options, labels }) => {
     <div className={styles.root}>
       <Box display='flex' justifyContent='center' mt={2}>
         {options.map((relation, idx) => (
-          <Box key={relation} p={1} textAlign='center'>
+          <Box key={labels[idx]} p={1} textAlign='center'>
             <Typography
               data-cy='doughnut-legent-name'
               color='textPrimary'
