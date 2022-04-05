@@ -58,7 +58,7 @@ const ProductAddImages = ({
         imageHandler={setProductImages}
         labels={labels}
       />
-      {errors.productImages && (
+      {!touched.images && errors.productImages && (
         <div className={styles.inputError}>{errors.productImages}</div>
       )}
     </Grid>
