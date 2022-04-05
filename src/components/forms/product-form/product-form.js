@@ -12,7 +12,6 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { find } from 'lodash';
 import useProductHandlers from '../../../hooks/product/use-product-handlers';
-import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import useProductValidation from '../../../hooks/product/use-product-validation';
 import { useStyles } from './product-form.styles';
 import ProductInfoContainer from '../../../containers/product-info-container';
@@ -20,16 +19,13 @@ import ProductSpeciesContainer from '../../../containers/product-species-contain
 import { checkInitialValue } from '../../../utils/check-initial-values';
 import {
   addProduct,
-  deleteProduct,
   setFilesToUpload,
   setPrimaryImageToUpload,
   updateProduct
 } from '../../../redux/products/products.actions';
-import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import { productsTranslations } from '../../../configs/product-translations';
-import DeleteButton from '../../buttons/delete-button';
 import { config } from '../../../configs';
-import { BackButton } from '../../buttons';
+import { BackButton, SaveButton } from '../../buttons';
 import ProductMaterialsContainer from '../../../containers/product-materials-container';
 import ProductAddImages from '../../../pages/products/product-add/product-add-images';
 import { selectSelectedProductAndDetails } from '../../../redux/selectors/products.selectors';
@@ -55,18 +51,14 @@ import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-che
 
 const { priceLabel } = config.labels.product;
 
-const {
-  DELETE_PRODUCT_MESSAGE,
-  DELETE_PRODUCT_TITLE,
-  SAVE,
-  PRODUCT_SPECIFICATION,
-  PRODUCT_PRICE,
-  PRODUCT_MATERIALS
-} = productsTranslations;
+const { PRODUCT_SPECIFICATION, PRODUCT_PRICE, PRODUCT_MATERIALS } =
+  productsTranslations;
 
-const { SHOW_COMMENTS_TITLE, HIDE_COMMENTS_TITLE } = config.buttonTitles;
+const { SHOW_COMMENTS_TITLE, HIDE_COMMENTS_TITLE, MODEL_SAVE_TITLE } =
+  config.buttonTitles;
 
 const { pathToProducts } = config.routes;
+const { materialUiConstants } = config;
 
 const ProductForm = ({ isEdit }) => {
   const styles = useStyles();
@@ -85,7 +77,6 @@ const ProductForm = ({ isEdit }) => {
   const formikPriceValue = {
     basePrice: Math.round(product?.basePrice[1]?.value) || 0
   };
-  const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const {
     createProductInfo,
@@ -255,17 +246,6 @@ const ProductForm = ({ isEdit }) => {
     if (unblock) unblock();
   };
 
-  const handleProductDelete = () => {
-    const removeProduct = () => {
-      dispatch(closeDialog());
-      dispatch(deleteProduct({ id: product._id }));
-    };
-    openSuccessSnackbar(
-      removeProduct,
-      DELETE_PRODUCT_MESSAGE,
-      DELETE_PRODUCT_TITLE
-    );
-  };
   const checkboxes = [
     {
       id: checkboxesValues.isHotItem,
@@ -346,25 +326,16 @@ const ProductForm = ({ isEdit }) => {
             <BackButton initial={!valueEquality} pathBack={pathToProducts} />
           </Grid>
           <Grid item className={styles.button}>
-            <Button
-              size='medium'
-              type={productFormValues.submit}
-              variant={productFormValues.contained}
-              color={checkboxesValues.primary}
+            <SaveButton
+              data-cy={materialUiConstants.save}
+              type={materialUiConstants.types.submit}
+              title={MODEL_SAVE_TITLE}
+              onClickHandler={handleProductValidate}
+              values={values}
+              errors={errors}
               {...(isEdit ? { disabled: !changed } : {})}
-              onClick={handleProductValidate}
-            >
-              {SAVE}
-            </Button>
-          </Grid>
-          <Grid item className={styles.button}>
-            <DeleteButton
-              size='medium'
-              variant={productFormValues.outlined}
-              onClickHandler={handleProductDelete}
-            >
-              {DELETE_PRODUCT_TITLE}
-            </DeleteButton>
+              unblockFunction={unblock}
+            />
           </Grid>
         </Grid>
       </div>

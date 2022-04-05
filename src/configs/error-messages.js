@@ -203,7 +203,7 @@ export const businessPageErrorMessages = {
 };
 
 export const productErrorMessages = {
-  REQUIRED_PHOTOS: "Головне фото для продукту є обов'язковими",
+  REQUIRED_PHOTOS: "Головне фото для продукту є обов'язковим",
   REQUIRED_FIELD: "Обов'язкове поле",
   NAME_TOO_SHORT_MESSAGE: 'Назва продукту повинна містити не менше 6 символів',
   NAME_TOO_LONG_MESSAGE: 'Назва продукту повинна містити не більше 50 символів',
