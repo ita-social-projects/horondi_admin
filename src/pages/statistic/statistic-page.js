@@ -65,11 +65,11 @@ const StatisticPage = () => {
     }
 
     if (barValue === bar.select[1].value) {
-      dispatch(getPaidOrdersStats(date));
+      return dispatch(getPaidOrdersStats(date));
     }
 
     if (barValue === bar.select[2].value) {
-      dispatch(getUsersByDays(date));
+      return dispatch(getUsersByDays(date));
     }
   }, [date]);
 
