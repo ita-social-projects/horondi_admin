@@ -50,7 +50,6 @@ describe('Information about certificates page', () => {
       ...usersMock,
       loading: false
     }));
-
-    expect(await findAllByRole('row')).toHaveLength(5);
+    expect(await findAllByRole('row')).toHaveLength(3);
   });
 });
