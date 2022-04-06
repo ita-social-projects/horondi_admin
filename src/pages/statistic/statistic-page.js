@@ -69,7 +69,7 @@ const StatisticPage = () => {
     }
 
     if (barValue === bar.select[2].value) {
-      return dispatch(getUsersByDays(date));
+      dispatch(getUsersByDays(date));
     }
   }, [date]);
 
