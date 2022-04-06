@@ -1,10 +1,18 @@
 import { gql } from '@apollo/client';
 
 export const bulkGenerateCertificates = gql`
-  mutation ($generate: BulkCertificateInput) {
-    bulkGenerateCertificates(generate: $generate) {
-      ... on CertificateArray {
-        items {
+  mutation (
+    $newCertificates: [GenerateCertificateInput]!
+    $email: String
+    $dateStart: Date
+  ) {
+    generateCertificate(
+      newCertificates: $newCertificates
+      email: $email
+      dateStart: $dateStart
+    ) {
+      ... on Certificates {
+        certificates {
           name
           value
           dateStart
