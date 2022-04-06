@@ -59,6 +59,20 @@ const StatisticPage = () => {
     getInitialStatsHandler(categories, dispatch, getIniitalStats);
   }, [dispatch, doughnutData]);
 
+  useEffect(() => {
+    if (doughnutValue === doughnut.select[1].value) {
+      dispatch(getAllOrdersStats(date));
+    }
+
+    if (barValue === bar.select[1].value) {
+      return dispatch(getPaidOrdersStats(date));
+    }
+
+    if (barValue === bar.select[2].value) {
+      dispatch(getUsersByDays(date));
+    }
+  }, [date]);
+
   if (loading) {
     return <LoadingBar />;
   }
@@ -66,22 +80,9 @@ const StatisticPage = () => {
   const handleDateChange = (e) => {
     fetchedBarStats.current = [];
     fetchedDoughnutStats.current = [];
+
     const newDate = parseInt(e.target.value);
     dispatch(setDateValue(newDate));
-    if (doughnutValue === doughnut.select[1].value) {
-      dispatch(getAllOrdersStats(date));
-    }
-
-    switch (barValue) {
-      case barValue === bar.select[1].value:
-        dispatch(getPaidOrdersStats(date));
-        break;
-      case barValue === bar.select[2].value:
-        dispatch(getUsersByDays(date));
-        break;
-      default:
-        break;
-    }
 
     fetchedDoughnutStats.current.push(doughnutValue);
     fetchedBarStats.current.push(barValue);
