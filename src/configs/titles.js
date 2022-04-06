@@ -113,9 +113,13 @@ const titles = {
     mainPageTitle: 'Статистика',
     dateSortTitle: 'Сортувати за датою',
     statuses: {
-      DELIVERED: 'Відправлені',
-      CANCELLED: 'Відхилені',
-      CREATED: 'Створені'
+      CREATED: 'Створені',
+      DELIVERED: 'Доставлені',
+      CONFIRMED: 'Підтверджені',
+      CANCELLED: 'Скасовані',
+      REFUNDED: 'Повернені',
+      PRODUCED: 'Виготовлені',
+      SENT: 'Відправлені'
     }
   },
   orderTitles: {
