@@ -112,6 +112,7 @@ export const config = {
     superadmin: 'superadmin'
   },
   userRoles: [
+    { role: 'user', label: 'Користувач' },
     { role: 'admin', label: 'Адмін' },
     { role: 'superadmin', label: 'Суперадмін' }
   ],
