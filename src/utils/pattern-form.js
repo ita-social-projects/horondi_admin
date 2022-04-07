@@ -51,14 +51,6 @@ export const useFormikInitialValues = (pattern) => ({
   modelId: pattern.model._id || '',
   handmade: pattern.features.handmade || false,
   available: pattern.available || false,
-  additionalPrice: getAdditionalPriceValue(pattern) || '',
-  additionalPriceType: pattern.additionalPriceType || 'ABSOLUTE_INDICATOR'
+  additionalPrice: pattern.additionalPrice.value || '',
+  additionalPriceType: pattern.additionalPrice.type || 'ABSOLUTE_INDICATOR'
 });
-
-const getAdditionalPriceValue = (pattern) => {
-  const { type } = pattern?.additionalPrice?.[0] || {};
-  if (type === 'ABSOLUTE_INDICATOR') {
-    return pattern?.additionalPrice?.[1]?.value || '';
-  }
-  return pattern?.additionalPrice?.[0]?.value || '';
-};
