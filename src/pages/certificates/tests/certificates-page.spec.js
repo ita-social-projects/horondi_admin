@@ -46,11 +46,6 @@ describe('Information about certificates page', () => {
       </BrowserRouter>
     );
 
-    useSelector.mockImplementation(() => ({
-      ...usersMock,
-      loading: false
-    }));
-
-    expect(await findAllByRole('row')).toHaveLength(5);
+    expect(await findAllByRole('row')).toHaveLength(3);
   });
 });

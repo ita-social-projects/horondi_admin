@@ -11,58 +11,29 @@ export const certificatesMock = [
           __typename: 'PaginatedCertificate',
           items: [
             {
-              _id: '61e04efaedc3271854cf4f38',
-              name: 'HOR001',
-              value: 1500,
-              createdBy: {
-                _id: '5fcfc2c5823c593d1c28c459'
-              },
-              isUsed: false,
+              admin: [{ firstName: 'Andrii', lastName: 'Fedyshyn' }],
+              dateEnd: '2023-04-08T12:59:25.818Z',
+              dateStart: '2022-04-07T12:59:25.818Z',
               isActivated: true,
               isExpired: false,
-              dateStart: '2022-01-13T16:10:29.323Z',
-              dateEnd: '2023-01-14T16:10:29.323Z'
-            },
-            {
-              _id: '61e04efaedc3271854cf4f32',
-              name: 'HOR002',
+              isUsed: false,
+              name: 'HOR67541841',
               value: 1500,
-              createdBy: {
-                _id: '5fbe46259e79126198841b3e'
-              },
-              isUsed: true,
-              isActivated: false,
-              isExpired: false,
-              dateStart: '2022-01-13T16:10:29.323Z',
-              dateEnd: '2023-01-14T16:10:29.323Z'
+              _id: '624ee35a3daf9e63c88ceac3'
             },
             {
-              _id: '61e1591b7908b669fca1b651',
-              name: 'HOR003',
-              value: 500,
-              createdBy: {
-                _id: '5fafd90d5fa52e240c0d1d37'
-              },
-              isUsed: false,
-              isActivated: false,
-              isExpired: true,
-              dateStart: '2022-01-13T16:10:29.323Z',
-              dateEnd: '2023-01-14T16:10:29.323Z'
-            },
-            {
-              _id: '61e1591b7908b669fca1b651',
-              name: 'HOR004',
-              value: 500,
-              createdBy: {
-                _id: '5fafd90d5fa52e240c0d1d37'
-              },
-              isUsed: false,
-              isActivated: false,
+              admin: [{ firstName: 'Andrii', lastName: 'Fedyshyn' }],
+              dateEnd: '2023-04-08T12:59:25.818Z',
+              dateStart: '2022-04-07T12:59:25.818Z',
+              isActivated: true,
               isExpired: false,
-              dateStart: '2022-01-13T16:10:29.323Z',
-              dateEnd: '2023-01-14T16:10:29.323Z'
+              isUsed: false,
+              name: 'HOR58332589',
+              value: 1000,
+              _id: '624ee6653daf9e63c88ceb22'
             }
-          ]
+          ],
+          count: 2
         }
       }
     }
