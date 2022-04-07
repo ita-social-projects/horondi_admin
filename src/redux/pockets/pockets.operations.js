@@ -19,7 +19,7 @@ export const getAllPockets = async (limit, skip, filter) => {
                     thumbnail
                 }
                 additionalPrice {
-                    currency
+                    type
                     value
                 }
                 restriction
@@ -110,7 +110,7 @@ export const getPocketById = async (id) => {
               }
               restriction
               additionalPrice {
-                currency
+                type
                 value
               }
             }
