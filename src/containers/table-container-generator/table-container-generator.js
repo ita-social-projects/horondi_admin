@@ -13,10 +13,10 @@ import { selectTableDense } from '../../redux/selectors/table.selectors';
 const { maxItemsPerPage } = config;
 
 const TableContainerGenerator = ({
+  pagination,
   tableTitles,
   tableItems,
-  count,
-  pagination
+  count
 }) => {
   const { SMALL_SIZE, DEFAULT_SIZE } = config.tableSizes;
   const dense = useSelector(selectTableDense);

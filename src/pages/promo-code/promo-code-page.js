@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './promo-code-page.styles';
 import { productsTranslations } from '../../configs/product-translations';
 import { config } from '../../configs';
@@ -18,6 +18,7 @@ import orders from '../../configs/orders';
 import LoadingBar from '../../components/loading-bar';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { LOCAL_STORAGE } from '../../consts/local-storage';
+import { setItemsCount } from '../../redux/table/table.actions';
 
 const pathToAddPromoCodePage = config.routes.pathToAddPromoCode;
 const tableTitles = config.tableHeadRowTitles.promoCodes;
@@ -29,8 +30,20 @@ const PromoCodePage = () => {
   const dateToday = new Date();
   const { promoCodesConsts } = orders;
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
-
-  const { data, refetch, loading } = useQuery(getAllPromoCodes);
+  const { currentPage, rowsPerPage } = useSelector(({ Table }) => ({
+    currentPage: Table.pagination.currentPage,
+    rowsPerPage: Table.pagination.rowsPerPage,
+    itemsCount: Table.itemsCount
+  }));
+  const { data, refetch, loading } = useQuery(getAllPromoCodes, {
+    variables: {
+      limit: rowsPerPage,
+      skip: rowsPerPage * currentPage
+    },
+    onCompleted: (data) => {
+      dispatch(setItemsCount(data.getAllPromoCodes.count));
+    }
+  });
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
   const promoCodes = data?.getAllPromoCodes || {};
   const runRefetchData = () => refetch();
@@ -128,8 +141,10 @@ const PromoCodePage = () => {
 
       <TableContainerGenerator
         id='promoCodeTable'
+        pagination
         tableTitles={tableTitles}
         tableItems={promoItems}
+        count={20}
       />
     </div>
   );
