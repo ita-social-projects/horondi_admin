@@ -3,40 +3,41 @@ import { materialTranslations } from '../../configs/error-modal-messages';
 
 export const getAllMaterials = async (skip, limit, filter) => {
   const query = `
-      query($filter: MaterialFilterInput, $skip: Int, $limit: Int) {
-        getAllMaterials(filter: $filter, skip: $skip, limit: $limit) {
-          items {
+    query($filter: MaterialFilterInput, $skip: Int, $limit: Int) {
+      getAllMaterials(filter: $filter, skip: $skip, limit: $limit) {
+        items {
+          _id
+          name {
+            value
+          }
+          description {
+            lang
+            value
+          }
+          available
+          additionalPrice {
+            value
+            type
+          }
+          purpose
+          colors {
             _id
             name {
-              value
-            }
-            description {
               lang
               value
             }
-            available
-            additionalPrice {
+            simpleName {
+              lang
               value
-              type
             }
-            purpose
-            colors {
-              _id
-              name {
-                lang
-                value
-              }
-              simpleName {
-                lang
-                value
-              }
-              colorHex
-            }
+            colorHex
           }
-          count
         }
+        count
       }
-    `;
+    }
+  `;
+
   const result = await getItems(query, {
     skip,
     limit,
@@ -45,20 +46,21 @@ export const getAllMaterials = async (skip, limit, filter) => {
 
   return result?.data?.getAllMaterials;
 };
+
 export const getAllMaterialsByPatternPurpose = async () => {
   const query = `
-      query {
-        getMaterialsByPurpose(purposes: PATTERN) {
-          pattern {
-            _id
-            name {
-              lang
-              value
-            }
+    query {
+      getMaterialsByPurpose(purposes: PATTERN) {
+        pattern {
+          _id
+          name {
+            lang
+            value
           }
         }
       }
-    `;
+    }
+  `;
 
   const result = await getItems(query);
 
@@ -67,43 +69,43 @@ export const getAllMaterialsByPatternPurpose = async () => {
 
 export const getMaterialById = async (id) => {
   const query = `
-      query($id: ID!) {
-        getMaterialById(id: $id) {
-          ... on Material {
+    query($id: ID!) {
+      getMaterialById(id: $id) {
+        ... on Material {
+          _id
+          name {
+            value
+          }
+          description {
+            lang
+            value
+          }
+          available
+          additionalPrice {
+            value
+            type
+          }
+          purpose
+          colors {
             _id
             name {
-              value
-            }
-            description {
               lang
               value
             }
-            available
-            additionalPrice {
+            simpleName {
+              lang
               value
-              type
             }
-            purpose
-            colors {
-              _id
-              name {
-                lang
-                value
-              }
-              simpleName {
-                lang
-                value
-              }
-              colorHex
-            }
-          }
-          ... on Error {
-            message
-            statusCode
+            colorHex
           }
         }
+        ... on Error {
+          message
+          statusCode
+        }
       }
-    `;
+    }
+  `;
 
   const result = await getItems(query, { id });
 
@@ -119,22 +121,24 @@ export const getMaterialById = async (id) => {
 
   return result?.data?.getMaterialById;
 };
+
 export const deleteMaterial = async (id) => {
   const query = `
-      mutation($id: ID!) {
-        deleteMaterial(id: $id) {
-          ... on Material {
-            name {
-              value
-            }
-          }
-          ... on Error {
-            message
-            statusCode
+    mutation($id: ID!) {
+      deleteMaterial(id: $id) {
+        ... on Material {
+          name {
+            value
           }
         }
+        ... on Error {
+          message
+          statusCode
+        }
       }
-    `;
+    }
+  `;
+
   const result = await setItems(query, { id });
 
   if (
@@ -151,18 +155,18 @@ export const deleteMaterial = async (id) => {
 };
 export const createMaterial = async (payload) => {
   const query = `
-      mutation($material: MaterialInput!) {
-        addMaterial(material: $material) {
-          ... on Material {
-            _id
-          }
-          ... on Error {
-            message
-            statusCode
-          }
+    mutation($material: MaterialInput!) {
+      addMaterial(material: $material) {
+        ... on Material {
+          _id
+        }
+        ... on Error {
+          message
+          statusCode
         }
       }
-    `;
+    }
+  `;
 
   const result = await setItems(query, payload);
 
@@ -179,27 +183,27 @@ export const createMaterial = async (payload) => {
 
 export const updateMaterial = async (id, material) => {
   const query = `
-      mutation($id: ID!, $material: MaterialInput!) {
-        updateMaterial(id: $id, material: $material) {
-          ... on Material {
-            name {
-              value
-            }
-            additionalPrice {
-              value
-              type
-            }
-            colors {
-              _id
-            }
+    mutation($id: ID!, $material: MaterialInput!) {
+      updateMaterial(id: $id, material: $material) {
+        ... on Material {
+          name {
+            value
           }
-          ... on Error {
-            message
-            statusCode
+          additionalPrice {
+            value
+            type
+          }
+          colors {
+            _id
           }
         }
+        ... on Error {
+          message
+          statusCode
+        }
       }
-    `;
+    }
+  `;
 
   const result = await getItems(query, { id, material });
 
