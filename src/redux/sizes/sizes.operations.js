@@ -3,12 +3,12 @@ import { sizesTranslations } from '../../configs/error-modal-messages';
 
 export const getAllSizes = async (limit, skip, filter) => {
   const query = `
-      query (
+    query (
       $limit: Int
       $skip: Int
       $filter:SizeFilterInput
     ){
-        getAllSizes(limit: $limit, skip: $skip, filter: $filter) {
+      getAllSizes(limit: $limit, skip: $skip, filter: $filter) {
         items {
           _id
           name
@@ -20,11 +20,11 @@ export const getAllSizes = async (limit, skip, filter) => {
             }
           }
           available
-          }
-          count
         }
+        count
       }
-    `;
+    }
+  `;
 
   const result = await getItems(query, { limit, skip, filter });
   return result?.data?.getAllSizes;
@@ -32,31 +32,31 @@ export const getAllSizes = async (limit, skip, filter) => {
 
 export const getSizeById = async (id) => {
   const query = `
-      query($id: ID!) {
-        getSizeById(id: $id) {
-          ... on Size {
-            name
-            modelId { 
-              _id
-              name { 
-                value
-                lang
-              }
-            }
-            heightInCm
-            widthInCm
-            depthInCm
-            volumeInLiters
-            weightInKg
-            available
-            additionalPrice {
+    query($id: ID!) {
+      getSizeById(id: $id) {
+        ... on Size {
+          name
+          modelId { 
+            _id
+            name { 
               value
-              type
+              lang
             }
+          }
+          heightInCm
+          widthInCm
+          depthInCm
+          volumeInLiters
+          weightInKg
+          available
+          additionalPrice {
+            value
+            type
           }
         }
       }
-    `;
+    }
+  `;
 
   const result = await getItems(query, { id });
 
@@ -75,19 +75,19 @@ export const getSizeById = async (id) => {
 
 export const addSize = async (size) => {
   const query = `
-      mutation($size: SizeInput!) {
-        addSize(size: $size) {
-          ... on Size {
-            _id
-            name
-          }
-          ... on Error {
-            statusCode
-            message
-          }
+    mutation($size: SizeInput!) {
+      addSize(size: $size) {
+        ... on Size {
+          _id
+          name
+        }
+        ... on Error {
+          statusCode
+          message
         }
       }
-    `;
+    }
+  `;
 
   const result = await setItems(query, { size });
 
@@ -96,19 +96,19 @@ export const addSize = async (size) => {
 
 export const updateSize = async (id, size) => {
   const query = `
-      mutation($id: ID!, $size: SizeInput!) {
-        updateSize(id: $id, size: $size) {
-          ... on Size {
-            _id
-            name
-          }
-          ... on Error {
-            statusCode
-            message
-          }
+    mutation($id: ID!, $size: SizeInput!) {
+      updateSize(id: $id, size: $size) {
+        ... on Size {
+          _id
+          name
+        }
+        ... on Error {
+          statusCode
+          message
         }
       }
-    `;
+    }
+  `;
 
   const result = await setItems(query, { id, size });
 
@@ -127,20 +127,20 @@ export const updateSize = async (id, size) => {
 
 export const deleteSize = async (id) => {
   const query = `
-      mutation($id: ID!) {
-        deleteSize(id: $id) {
-          ... on Size {
-            _id
-            name
-            available
-          }
-          ... on Error {
-            statusCode
-            message
-          }
+    mutation($id: ID!) {
+      deleteSize(id: $id) {
+        ... on Size {
+          _id
+          name
+          available
+        }
+        ... on Error {
+          statusCode
+          message
         }
       }
-    `;
+    }
+  `;
 
   const result = await setItems(query, { id });
 

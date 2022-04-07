@@ -51,6 +51,6 @@ export const useFormikInitialValues = (pattern) => ({
   modelId: pattern.model._id || '',
   handmade: pattern.features.handmade || false,
   available: pattern.available || false,
-  additionalPrice: pattern.additionalPrice.value || '',
-  additionalPriceType: pattern.additionalPrice.type || 'ABSOLUTE_INDICATOR'
+  additionalPrice: pattern.additionalPrice?.value || '',
+  additionalPriceType: pattern.additionalPrice?.type || 'ABSOLUTE_INDICATOR'
 });
