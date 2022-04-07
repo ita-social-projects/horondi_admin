@@ -195,6 +195,10 @@ export const updateMaterial = async (id, material) => {
           message
           statusCode
         }
+        ... on Error {
+          message
+          statusCode
+        }
       }
     }
   `;
