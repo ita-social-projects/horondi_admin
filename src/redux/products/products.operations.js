@@ -111,9 +111,7 @@ const getAllProducts = async (
                 lang
                 value
               }
-              basePrice {
-                value
-              }
+              basePrice
               model {
                 name {
                   value
@@ -174,9 +172,7 @@ const getAllFilters = async () => {
         getProducts {
           ... on PaginatedProducts {
             items {
-              basePrice {
-                value
-              }
+              basePrice 
               model {
                 name {
                   value
@@ -505,19 +501,13 @@ const getProduct = async (id) => {
                   value
                 }
               }
-              basePrice {
-                value
-                currency
-              }
+              basePrice 
               sizes {
                 size {
                   _id
                   name
                 }
-                price {
-                  value
-                  currency
-                }
+                price 
               }
               bottomMaterial {
                 material {
