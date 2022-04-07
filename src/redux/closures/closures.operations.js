@@ -3,31 +3,31 @@ import { setItems, getItems } from '../../utils/client';
 export const getAllClosures = async (limit, skip, filter) => {
   const query = `
     query($limit: Int!, $skip: Int!,$filter: ClosureFilterInput) {
-  getAllClosure(limit: $limit, skip: $skip,filter: $filter) {
-    items {
-      _id
-      name {
-        lang
-        value
+      getAllClosure(limit: $limit, skip: $skip,filter: $filter) {
+        items {
+          _id
+          name {
+            lang
+            value
+          }
+          images {
+            large
+            medium
+            small
+            thumbnail
+          }
+          optionType
+          additionalPrice {
+            value
+            type
+          }
+          available
+          customizable
+        }
+        count
       }
-    images {
-           large
-           medium
-           small
-           thumbnail
-         }
-      optionType
-        additionalPrice {
-        value
-        type
-      }
-      available
-      customizable
     }
-    count
-  }
-}
-      `;
+  `;
 
   const result = await getItems(query, { limit, skip, filter });
   return result?.data?.getAllClosure;
@@ -75,35 +75,34 @@ export const deleteClosure = async (id) => {
 
 export const getClosureById = async (id) => {
   const query = `
-        query($id: ID!) {
-          getClosureById(id: $id) {
-            ... on Closure {
-              _id
-              name {
-                lang
-                value
-              }
-              available
-              optionType
-              images {
-                large
-                medium
-                small
-                thumbnail
-              }
-                additionalPrice {
-                currency
-                value
-                type
-              }
-            }
-            ... on Error {
-              statusCode
-              message
-            }
+    query($id: ID!) {
+      getClosureById(id: $id) {
+        ... on Closure {
+          _id
+          name {
+            lang
+            value
+          }
+          available
+          optionType
+          images {
+            large
+            medium
+            small
+            thumbnail
+          }
+          additionalPrice {
+            value
+            type
           }
         }
-      `;
+        ... on Error {
+          statusCode
+          message
+        }
+      }
+    }
+  `;
 
   const result = await getItems(query, { id });
 
@@ -112,22 +111,22 @@ export const getClosureById = async (id) => {
 
 export const updateClosure = async ({ id, closure, upload: image }) => {
   const query = `
-        mutation updateClosure(
-          $id: ID!
-          $closure: ClosureInput!
-          $image: Upload
-        ) {
-          updateClosure(id: $id, closure: $closure, image: $image) {
-            ... on Closure {
-              _id
-            }
-            ... on Error {
-              statusCode
-              message
-            }
-          }
+    mutation updateClosure(
+      $id: ID!
+      $closure: ClosureInput!
+      $image: Upload
+    ) {
+      updateClosure(id: $id, closure: $closure, image: $image) {
+        ... on Closure {
+          _id
         }
-      `;
+        ... on Error {
+          statusCode
+          message
+        }
+      }
+    }
+  `;
   const result = await setItems(query, { id, closure, image });
 
   return result?.data?.updateClosure;
