@@ -49,10 +49,18 @@ const PromoCodePage = () => {
       .split(' ')
       .join('-');
 
-  const checkPromoStatus = (dateTo) =>
-    dateToday < new Date(dateTo)
-      ? promoCodesConsts.status.active
-      : promoCodesConsts.status.expired;
+  const checkPromoStatus = (dateFrom, dateTo) => {
+    const startDate = new Date(dateFrom);
+    const expiredDate = new Date(dateTo);
+
+    if (dateToday < startDate) {
+      return promoCodesConsts.status.planned;
+    }
+    if (dateToday < expiredDate) {
+      return promoCodesConsts.status.active;
+    }
+    return promoCodesConsts.status.expired;
+  };
 
   const completeDeleteHandler = (promoID) => {
     deletePromoCodeByIDMutation({
@@ -83,7 +91,7 @@ const PromoCodePage = () => {
           key={_id}
           promo={code}
           discount={`${discount}%`}
-          status={checkPromoStatus(dateTo)}
+          status={checkPromoStatus(dateFrom, dateTo)}
           showAvatar={false}
           date={`${dateCorrectFormat(dateFrom)} - ${dateCorrectFormat(dateTo)}`}
           deleteHandler={() => openDeleteModalHandler(_id)}
