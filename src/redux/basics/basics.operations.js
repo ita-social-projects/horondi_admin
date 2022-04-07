@@ -18,7 +18,6 @@ export const getAllBasics = async (limit, skip, filter) => {
 								thumbnail
 							}
 							additionalPrice {
-								currency
 								value
                 type
 							}
@@ -145,7 +144,6 @@ export const getBasicById = async (id) => {
 						thumbnail
           }
           additionalPrice {
-            currency
             value
             type
           }

@@ -67,7 +67,7 @@ const BottomPage = () => {
       name={bottomItem.name[0].value}
       material={bottomItem.features.material.name[0].value}
       color={bottomItem.features.color.name[0].value}
-      additionalPrice={bottomItem.additionalPrice[1]?.value}
+      additionalPrice={bottomItem.additionalPrice?.value}
       available={bottomItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => bottomDeleteHandler(bottomItem._id)}
       editHandler={() => {

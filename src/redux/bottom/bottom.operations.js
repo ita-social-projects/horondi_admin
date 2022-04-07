@@ -37,7 +37,7 @@ export const getAllBottoms = async (limit, skip, filter) => {
                 large
             }
             additionalPrice {
-              currency
+              type
               value
             }
             available
@@ -101,7 +101,7 @@ export const getBottomById = async (id) => {
                     large
                 }
                 additionalPrice {
-                  currency
+                  type
                   value
                 }
                 available
@@ -217,7 +217,7 @@ export const updateBottom = async (payload) => {
                 large
             }
             additionalPrice {
-              currency
+              type
               value
             }
             available  
