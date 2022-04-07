@@ -11,30 +11,26 @@ export const certificatesMock = [
           __typename: 'PaginatedCertificate',
           items: [
             {
-              createdBy: null,
-              dateEnd: '2023-02-17T20:47:20.706Z',
-              dateStart: '2022-02-16T20:47:20.706Z',
+              admin: [{ firstName: 'Andrii', lastName: 'Fedyshyn' }],
+              dateEnd: '2023-04-08T12:59:25.818Z',
+              dateStart: '2022-04-07T12:59:25.818Z',
               isActivated: true,
               isExpired: false,
               isUsed: false,
-              name: 'HOR75444697',
-              value: 500,
-              _id: '620d71493d2dd60025f36aee'
+              name: 'HOR67541841',
+              value: 1500,
+              _id: '624ee35a3daf9e63c88ceac3'
             },
             {
-              dateEnd: '2023-02-18T08:09:41.156Z',
-              dateStart: '2022-02-17T08:09:41.156Z',
+              admin: [{ firstName: 'Andrii', lastName: 'Fedyshyn' }],
+              dateEnd: '2023-04-08T12:59:25.818Z',
+              dateStart: '2022-04-07T12:59:25.818Z',
               isActivated: true,
               isExpired: false,
               isUsed: false,
-              name: 'HOR72697525',
+              name: 'HOR58332589',
               value: 1000,
-              _id: '620e0d3a874ff72fb8b48f6d',
-              createdBy: {
-                firstName: 'Anastasiia',
-                lastName: 'Afanasieva',
-                _id: '61c0afbf6ae9330025bf5e4a'
-              }
+              _id: '624ee6653daf9e63c88ceb22'
             }
           ],
           count: 2

@@ -9,8 +9,7 @@ export const getAllCertificates = gql`
           _id
           name
           value
-          createdBy {
-            _id
+          admin {
             firstName
             lastName
           }

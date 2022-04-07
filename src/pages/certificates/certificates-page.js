@@ -70,7 +70,7 @@ const CertificatesPage = () => {
 
   const setUser = (usersInitials) =>
     usersInitials !== null
-      ? `${usersInitials.firstName} ${usersInitials.lastName}`
+      ? `${usersInitials[0].firstName} ${usersInitials[0].lastName}`
       : '';
 
   const editCertificate = () => {
@@ -89,7 +89,7 @@ const CertificatesPage = () => {
     <TableContainerRow
       key={certificate._id}
       number={certificate.name}
-      createdBy={<Certificate name={setUser(certificate.createdBy)} />}
+      admin={<Certificate name={setUser(certificate.admin)} />}
       price={`${certificate.value} грн`}
       status={
         <Status
