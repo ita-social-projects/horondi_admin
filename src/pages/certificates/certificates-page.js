@@ -87,7 +87,7 @@ const CertificatesPage = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
   const setUser = (usersInitials) =>
-    usersInitials.length !== 0
+    usersInitials.length
       ? `${usersInitials[0].firstName} ${usersInitials[0].lastName}`
       : '';
 
