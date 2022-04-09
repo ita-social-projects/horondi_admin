@@ -69,7 +69,7 @@ const CertificatesPage = () => {
   const certificatesList = certificates?.getAllCertificates || { items: [] };
 
   const setUser = (usersInitials) =>
-    usersInitials !== null
+    usersInitials.length !== 0
       ? `${usersInitials[0].firstName} ${usersInitials[0].lastName}`
       : '';
 
