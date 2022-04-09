@@ -49,8 +49,7 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
       sizes &&
       setSize({
         id: sizes[0].size._id,
-        name: sizes.filter(({ size: sz }) => sz._id === sizes[0].size._id)[0]
-          .size.name,
+        name: sizes[0].size.name,
         price: sizes[0].price
       });
   }, [sizes]);
@@ -58,9 +57,8 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
   const selectHandler = (e) => {
     setSize({
       id: e.target.value,
-      price: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].price,
-      name: sizes.filter(({ size: sz }) => sz._id === e.target.value)[0].size
-        .name
+      price: sizes.find(({ size: sz }) => sz._id === e.target.value).price,
+      name: sizes.find(({ size: sz }) => sz._id === e.target.value).size.name
     });
   };
 

@@ -29,18 +29,12 @@ export const getOrderById = (id) => {
 						house
 						flat
 						byCourier
-						cost {
-							currency
-							value
-						}
+						cost
 					}
 					items {
 						product {
 							_id
-							basePrice {
-								currency
-								value
-							}
+							basePrice 
 							name {
 								lang
 								value
@@ -93,11 +87,11 @@ export const getOrderById = (id) => {
 							}
 						}
 						isFromConstructor
-						fixedPrice {
-							currency
-							value
-						}
+						fixedPrice 
 					}
+					totalItemsPrice 
+            		totalPriceToPay
+					fixedExchangeRate
 					paymentMethod
 					paymentStatus
 					isPaid
@@ -142,18 +136,12 @@ export const updateOrder = (order, id) => {
 						house
 						flat
 						byCourier
-						cost {
-							currency
-							value
-						}
+						cost
 					}
 					items {
 						product {
 							_id
-							basePrice {
-								currency
-								value
-							}
+							basePrice
 							name {
 								lang
 								value
@@ -167,14 +155,12 @@ export const updateOrder = (order, id) => {
 						options {
 							size {
 								_id
+								name
 							}
 							sidePocket
 						}
 						isFromConstructor
-						fixedPrice {
-							currency
-							value
-						}
+						fixedPrice 
 					}
 					paymentMethod
 					paymentStatus
@@ -208,10 +194,7 @@ export const addOrder = (order) => {
 						}
 					  }
 					}
-					fixedPrice {
-					  currency
-					  value
-					}
+					fixedPrice 
 					quantity
 					options {
 					  size {
@@ -219,10 +202,10 @@ export const addOrder = (order) => {
 					  }
 					}
 				  }
-				  totalPriceToPay {
-					currency
-					value
-				  }
+				  totalItemsPrice 
+            	  totalPriceToPay
+				  fixedExchangeRate
+				  fixedExchangeRate
 				  paymentStatus
 				}
 				... on Error {
@@ -253,14 +236,9 @@ export const getAllOrders = async (skip, limit, filter, sort) => {
             paymentStatus
             orderNumber
             dateOfCreation
-            totalItemsPrice {
-              currency
-              value
-            }
-            totalPriceToPay {
-              currency
-              value
-            }
+            totalItemsPrice 
+            totalPriceToPay
+			fixedExchangeRate
           }
           count
         }
@@ -294,14 +272,9 @@ export const getOrdersByUser = async (skip, limit, filter, sort, userId) => {
             paymentStatus
             orderNumber
             dateOfCreation
-            totalItemsPrice {
-              currency
-              value
-            }
-            totalPriceToPay {
-              currency
-              value
-            }
+            totalItemsPrice
+            totalPriceToPay
+			fixedExchangeRate
           }
           count
         }
