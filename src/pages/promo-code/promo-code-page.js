@@ -39,16 +39,16 @@ const PromoCodePage = () => {
     variables: {
       limit: rowsPerPage,
       skip: rowsPerPage * currentPage
-    },
-    onCompleted: (data) => {
-      dispatch(setItemsCount(data.getAllPromoCodes.count));
     }
   });
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
+
   const promoCodes = data?.getAllPromoCodes || {};
   const runRefetchData = () => refetch();
 
-  useEffect(runRefetchData, [data]);
+  useEffect(() => {
+    dispatch(setItemsCount(data?.getAllPromoCodes?.count) || 0);
+  }, [data]);
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -85,7 +85,7 @@ const PromoCodePage = () => {
           token
         }
       }
-    }).then(runRefetchData);
+    }).then(() => runRefetchData);
     dispatch(closeDialog());
   };
   const openDeleteModalHandler = (promoID) =>
@@ -144,7 +144,7 @@ const PromoCodePage = () => {
         pagination
         tableTitles={tableTitles}
         tableItems={promoItems}
-        count={20}
+        count={data?.getAllPromoCodes?.count}
       />
     </div>
   );
