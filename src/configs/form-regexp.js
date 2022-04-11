@@ -16,7 +16,7 @@ const formRegExp = {
   userStatuses: /(Активний|Неактивний)/g,
   hexString: /^#[0-9a-f]{3,6}$/i,
   uaNameCreation: /^[а-яїієґa-z0-9\s-]+$/gi,
-  enNameCreation: /^[a-z0-9\s]+$/gi,
+  enNameCreation: /^[a-z0-9\s-]+$/gi,
   enDescription: /^[a-z0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   uaDescription: /^[а-яїієґ0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   categoryCode: /^[a-z0-9|-]/i,
