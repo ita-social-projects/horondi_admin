@@ -134,7 +134,6 @@ export const getOrderById = (id) => {
 
 export const updateOrder = (order, id) => {
   const query = `
-<<<<<<< HEAD
 		mutation ($order: OrderInput!, $id:ID!) {
 			updateOrder (order: $order, id: $id) {
 				...on Order {
@@ -170,18 +169,12 @@ export const updateOrder = (order, id) => {
   					worldWideStreet
   					cityCode
 						byCourier
-						cost {
-							currency
-							value
-						}
+						cost
 					}
 					items {
 						product {
 							_id
-							basePrice {
-								currency
-								value
-							}
+							basePrice
 							name {
 								lang
 								value
@@ -199,10 +192,7 @@ export const updateOrder = (order, id) => {
 							sidePocket
 						}
 						isFromConstructor
-						fixedPrice {
-							currency
-							value
-						}
+						fixedPrice
 					}
 					paymentMethod
 					paymentStatus
@@ -212,72 +202,6 @@ export const updateOrder = (order, id) => {
 					statusCode
 					message
 				}
-=======
-  mutation($order: OrderInput!, $id: ID!) {
-	updateOrder(order: $order, id: $id) {
-	  ... on Order {
-		_id
-		status
-		recipient {
-		  firstName
-		  lastName
-		  email
-		  phoneNumber
-		}
-		user_id
-		userComment
-		delivery {
-		  sentOn
-		  sentBy
-		  invoiceNumber
-		  courierOffice
-		  region
-		  district
-		  regionId
-		  districtId
-		  cityId
-		  city
-		  street
-		  house
-		  flat
-		  byCourier
-		  cost
-		}
-		items {
-		  product {
-			_id
-			basePrice
-			name {
-			  lang
-			  value
-			}
-			description {
-			  lang
-			  value
->>>>>>> 3ab7a4b4 (Refactoring/price-order (#1310))
-			}
-		  }
-		  quantity
-		  options {
-			size {
-			  _id
-			  name
-			}
-			sidePocket
-		  }
-		  isFromConstructor
-		  fixedPrice
-		}
-		paymentMethod
-		paymentStatus
-		isPaid
-	  }
-	  ... on Error {
-		statusCode
-		message
-	  }
-	}
-  }
   `;
   return setItems(query, { order, id });
 };
