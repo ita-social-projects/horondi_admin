@@ -12,6 +12,8 @@ import LoadingBar from '../../../../components/loading-bar';
 import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.selectors';
 import { UserBlockPeriod } from '../../../../consts/user-block-status';
 import UsersFilters from '../users-filters/UsersFilters';
+import { useCommonStyles } from '../../../common.styles';
+import { usersErrors } from '../../../../configs/error-modal-messages';
 
 const map = require('lodash/map');
 
@@ -19,12 +21,14 @@ const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
 const tableTitles = config.tableHeadRowTitles.users.userTab;
 const { unknownUser } = config.labels.user;
 const { IMG_URL } = config;
+const { USER_NOT_FOUND } = usersErrors;
 
 const UserTab = (props) => {
   const { list, onDelete } = props;
   const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
   const dispatch = useDispatch();
   const tabStyles = useStyles();
+  const commonStyles = useCommonStyles();
 
   const usersItems = map(list, (userItem) => (
     <TableContainerRow
@@ -59,13 +63,17 @@ const UserTab = (props) => {
         <UsersFilters />
       </div>
       <div>
-        <TableContainerGenerator
-          pagination
-          count={itemsCount}
-          id='usersTable'
-          tableTitles={tableTitles}
-          tableItems={usersItems}
-        />
+        {list?.length ? (
+          <TableContainerGenerator
+            pagination
+            count={itemsCount}
+            id='usersTable'
+            tableTitles={tableTitles}
+            tableItems={usersItems}
+          />
+        ) : (
+          <p className={commonStyles.noRecords}>{USER_NOT_FOUND}</p>
+        )}
       </div>
     </>
   );

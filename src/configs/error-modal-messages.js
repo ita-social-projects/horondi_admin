@@ -103,3 +103,11 @@ export const errorStatuses = {
   ERROR_PAGE_STATUS: 'Сторінку не знайдено!',
   ERROR_BOUNDARY_STATUS: 'Сталася помилка!'
 };
+
+export const usersErrors = {
+  USER_NOT_FOUND: 'Користувача не знайдено'
+};
+
+export const adminsErrors = {
+  ADMIN_NOT_FOUND: 'Адміністратора не знайдено'
+};
