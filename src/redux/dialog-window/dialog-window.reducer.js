@@ -4,7 +4,7 @@ import { CLOSE_DIALOG, SHOW_DIALOG } from './dialog-window.types';
 export const basicSelector = ({ DialogWindow }) => ({
   isOpen: DialogWindow.isOpen,
   dialogTitle: DialogWindow.dialogTitle,
-  dialogContent: DialogWindow.content,
+  dialogContent: DialogWindow.dialogContent,
   onClickHandler: DialogWindow.onClickHandler
 });
 

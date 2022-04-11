@@ -54,7 +54,7 @@ const useSuccessSnackbar = () => {
       showDialog({
         isOpen: true,
         dialogTitle,
-        content,
+        dialogContent: content,
         showCancelButton,
         onClickHandler
       })
