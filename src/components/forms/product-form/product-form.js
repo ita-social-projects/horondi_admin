@@ -47,7 +47,6 @@ import {
   productFormValues
 } from '../../../consts/product-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { priceLabel } = config.labels.product;
 
@@ -196,7 +195,7 @@ const ProductForm = ({ isEdit }) => {
     formikMaterialsValues,
     product?.images
   );
-  const changed = useChangedValuesChecker(values, errors);
+
   const unblock = useUnsavedChangesHandler(values);
 
   useEffect(() => {
@@ -205,7 +204,7 @@ const ProductForm = ({ isEdit }) => {
     } else {
       setFirstMount(true);
     }
-  }, [values]);
+  }, [values, isMountedFirst, toggleFieldsChanged]);
 
   useEffect(() => {
     setModelsHandler(values, setModels, find, categories);
@@ -221,7 +220,13 @@ const ProductForm = ({ isEdit }) => {
     materials,
     values.innerMaterial,
     values.bottomMaterial,
-    values.mainMaterial
+    values.mainMaterial,
+    setBottomColors,
+    setInnerColors,
+    setMainColors,
+    setModels,
+    setSizes,
+    values
   ]);
 
   useEffect(() => {
@@ -236,7 +241,7 @@ const ProductForm = ({ isEdit }) => {
       });
       setProductImages(previousImages);
     }
-  }, [product.images]);
+  }, [product.images, isEdit, setProductImages]);
 
   const handleProductValidate = async () => {
     setShouldValidate(true);
@@ -333,7 +338,6 @@ const ProductForm = ({ isEdit }) => {
               onClickHandler={handleProductValidate}
               values={values}
               errors={errors}
-              {...(isEdit ? { disabled: !changed } : {})}
               unblockFunction={unblock}
             />
           </Grid>
@@ -350,7 +354,6 @@ const ProductForm = ({ isEdit }) => {
               toggleFieldsChanged={toggleFieldsChanged}
               setFieldValue={setFieldValue}
               errors={errors}
-              touched={touched}
             />
           </Paper>
         </Grid>
