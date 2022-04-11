@@ -5,7 +5,6 @@ import { noop } from 'lodash';
 import { useStyles } from './product-info-container.styles';
 
 import { config } from '../../configs';
-import { productErrorMessages } from '../../configs/error-messages';
 import LanguagePanel from '../../components/forms/language-panel';
 
 const {
@@ -14,8 +13,6 @@ const {
   },
   languages
 } = config;
-
-const { CORRECT_DATA_ERROR } = productErrorMessages;
 
 const ProductInfoContainer = ({
   values,
@@ -38,16 +35,13 @@ const ProductInfoContainer = ({
     setFieldValue
   };
 
-  const inputsList = languages.map((lang, idx) => (
+  const inputsList = languages.map((lang) => (
     <LanguagePanel lang={lang} inputOptions={inputOptions} key={lang} />
   ));
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
       {inputsList}
-      <div className={styles.error}>
-        {!!Object.keys(errors).length && CORRECT_DATA_ERROR}
-      </div>
     </form>
   );
 };

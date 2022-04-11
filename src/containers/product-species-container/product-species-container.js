@@ -98,11 +98,6 @@ const ProductSpeciesContainer = ({
     closuresOptions
   ];
 
-  const speciesErrors = useMemo(() => {
-    const optionsNames = selectsLabels.map(({ name }) => name);
-    return Object.keys(errors).filter((key) => optionsNames.includes(key));
-  }, [errors]);
-
   const handleSelectChange = (e) => {
     if (e.target.name === selectsLabels[0].name) {
       setFieldValue(selectsLabels[1].name, '');
@@ -157,9 +152,6 @@ const ProductSpeciesContainer = ({
           />
         );
       })}
-      <div className={styles.error}>
-        {!!speciesErrors.length && ALL_FIELDS_ARE_REQUIRED}
-      </div>
     </form>
   );
 };

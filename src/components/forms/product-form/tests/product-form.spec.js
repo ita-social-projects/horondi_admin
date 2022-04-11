@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import ProductForm from '../product-form';
+import { SaveButton } from '../../../buttons';
 import { Products } from './product-form.variables';
 import ProductAddImages from '../../../../pages/products/product-add/product-add-images';
 import CheckboxOptions from '../../../checkbox-options';
@@ -27,13 +27,10 @@ jest.mock('connected-react-router', () => ({
   push: jest.fn()
 }));
 
-const mockDispatch = jest.fn();
-
 const Theme = {
   darkMode: true
 };
 
-useDispatch.mockImplementation(mockDispatch);
 useSelector.mockImplementation((fn) => fn({ Products, Theme }));
 
 describe('Product-form tests', () => {
@@ -58,10 +55,7 @@ describe('Product-form tests', () => {
     expect(mockSetFieldValue).toHaveBeenCalledTimes(2);
   });
 
-  it('#3 should submit the form', async () => {
-    const submit = component.find(Button);
-    mockDispatch.mockClear();
-    submit.simulate('click');
-    expect(mockDispatch).toHaveBeenCalledTimes(4);
+  it('#3 should render submit button', () => {
+    expect(component.exists(SaveButton)).toBe(true);
   });
 });

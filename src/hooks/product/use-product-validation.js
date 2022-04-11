@@ -29,8 +29,12 @@ const {
   languages
 } = config;
 
-const { REQUIRED_FIELD, NAME_TOO_LONG_MESSAGE, NAME_TOO_SHORT_MESSAGE } =
-  productErrorMessages;
+const {
+  REQUIRED_PHOTOS,
+  REQUIRED_FIELD,
+  NAME_TOO_LONG_MESSAGE,
+  NAME_TOO_SHORT_MESSAGE
+} = productErrorMessages;
 
 const useProductValidation = (
   formikInfo,
@@ -94,11 +98,9 @@ const useProductValidation = (
     ? { basePrice: Yup.number().min(1, REQUIRED_FIELD).required() }
     : {};
 
-  const yupImagesSchema = formikImages
-    ? {
-        productImages: Yup.array().max(8, 'Max 8 images').min(1, REQUIRED_FIELD)
-      }
-    : {};
+  const yupImagesSchema = {
+    productImages: Yup.array().max(8, 'Max 8 images').min(1, REQUIRED_PHOTOS)
+  };
 
   const yupSchema = Yup.object().shape({
     ...yupInfoSchema,
