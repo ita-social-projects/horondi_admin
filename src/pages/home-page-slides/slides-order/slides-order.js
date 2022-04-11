@@ -123,7 +123,9 @@ const SlidesOrder = (props) => {
           slide: {
             order: item.slide.order,
             show: item.slide.show,
-            link: item.slide.link
+            link: item.slide.link,
+            description: item.slide.description,
+            title: item.slide.title
           }
         })
       )
