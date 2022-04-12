@@ -53,8 +53,8 @@ export function* handleMaterialsByPurposeLoad() {
 
 export function* handleMaterialsLoad({ payload }) {
   const filter = {
-    ...payload.filter,
-    colors: payload.filter.colors.map((el) => el._id)
+    ...payload.filters,
+    colors: payload.filters.colors.map((el) => el._id)
   };
   try {
     yield put(setMaterialLoading(true));
