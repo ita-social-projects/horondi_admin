@@ -19,6 +19,11 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import { config } from '../../configs';
 import { setItemsCount } from '../../redux/table/table.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
+import {
+  setSnackBarMessage,
+  setSnackBarStatus,
+  setSnackBarSeverity
+} from '../../redux/snackbar/snackbar.actions';
 
 const { routes } = config;
 const pathToCreateCertificatesPage = routes.pathToCreateCertificates;
@@ -29,8 +34,14 @@ const UPDATE_CERTIFICATE_TITLE =
   config.titles.certificatesPageTitles.updateCertificateTitle;
 const tableTitles = config.tableHeadRowTitles.certificates;
 const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
-const { ACTIVE_STATUS, USED_STATUS, EXPIRED_STATUS, PENDING_STATUS } =
-  config.statuses;
+const {
+  ACTIVE_STATUS,
+  USED_STATUS,
+  EXPIRED_STATUS,
+  PENDING_STATUS,
+  SUCCESS_UPDATE_STATUS,
+  SUCCESS_DELETE_STATUS
+} = config.statuses;
 const {
   NO_CERTIFICATES_MESSAGE,
   DELETE_CERTIFICATE_MESSAGE,
@@ -91,14 +102,35 @@ const CertificatesPage = () => {
       ? `${usersInitials[0].firstName} ${usersInitials[0].lastName}`
       : '';
 
+  const successSnackbarHandler = (message) => {
+    dispatch(setSnackBarSeverity('success'));
+    dispatch(setSnackBarMessage(message));
+    dispatch(setSnackBarStatus(true));
+  };
+
+  const errorSnackbarHandler = (message) => {
+    dispatch(setSnackBarSeverity('error'));
+    dispatch(setSnackBarMessage(message));
+    dispatch(setSnackBarStatus(true));
+  };
+
   const updateCertificateHandler = async (name) => {
-    await updateCertificate({
-      variables: {
-        name
+    try {
+      const { data } = await updateCertificate({
+        variables: {
+          name
+        }
+      });
+      if (data.updateCertificate.statusCode) {
+        throw new Error(data.updateCertificate.message);
       }
-    });
-    await certificatesRefetch();
-    dispatch(closeDialog());
+      await certificatesRefetch();
+      successSnackbarHandler(SUCCESS_UPDATE_STATUS);
+    } catch (e) {
+      errorSnackbarHandler(e.message);
+    } finally {
+      dispatch(closeDialog());
+    }
   };
 
   const openUpdateModal = (name) => {
@@ -110,13 +142,22 @@ const CertificatesPage = () => {
   };
 
   const deleteCertificateHandler = async (id) => {
-    await deleteCertificate({
-      variables: {
-        id
+    try {
+      const { data } = await deleteCertificate({
+        variables: {
+          id
+        }
+      });
+      if (data.deleteCertificate.statusCode) {
+        throw new Error(data.deleteCertificate.message);
       }
-    });
-    await certificatesRefetch();
-    dispatch(closeDialog());
+      await certificatesRefetch();
+      successSnackbarHandler(SUCCESS_DELETE_STATUS);
+    } catch (e) {
+      errorSnackbarHandler(e.message);
+    } finally {
+      dispatch(closeDialog());
+    }
   };
 
   const openDeleteModal = (id) => {
@@ -154,10 +195,10 @@ const CertificatesPage = () => {
             )}`
       }
       deleteHandler={() => {
-        !certificate.isActivated && openDeleteModal(certificate._id);
+        openDeleteModal(certificate._id);
       }}
       editHandler={() => {
-        certificate.isActivated && openUpdateModal(certificate.name);
+        openUpdateModal(certificate.name);
       }}
       showAvatar={false}
     />
