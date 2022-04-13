@@ -178,7 +178,11 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 data-cy='save'
                 onClickHandler={handleSubmit}
                 type='submit'
-                title={config.buttonTitles.CREATE_SLIDE_TITLE}
+                title={
+                  slide._id
+                    ? config.buttonTitles.SAVE_TITLE
+                    : config.buttonTitles.CREATE_SLIDE_TITLE
+                }
                 values={values}
                 errors={errors}
                 unblockFunction={unblock}
