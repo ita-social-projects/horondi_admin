@@ -24,7 +24,7 @@ export const mocks = [
               dateFrom: '2022-04-08T14:22:43.437Z',
               dateTo: '2022-04-30T14:22:43.452Z',
               discount: 10,
-              _id: '62470ac47cc7af17305abd47'
+              _id: '123'
             }
           ]
         }
@@ -40,14 +40,13 @@ export const mocks = [
       },
       context: {
         headers: {
-          token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjJmNDhjZWEwZDEyYTAwMjRkNzgyN2EiLCJpYXQiOjE2NDk0MjkyNzAsImV4cCI6MTY0OTQzMjg3MH0.WcDQSLKvEpOCIKe_4D6DrCgNhUd0c4Hgyyo75hfEhnI'
+          token: 'token'
         }
       }
     },
     result: {
       data: {
-        deletePromoCode: { _id: '6239a310ed27613a04a17bb8' }
+        deletePromoCode: { _id: '123' }
       }
     }
   }
@@ -79,14 +78,13 @@ export const mocksWithoutPromocodes = [
       },
       context: {
         headers: {
-          token:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjJmNDhjZWEwZDEyYTAwMjRkNzgyN2EiLCJpYXQiOjE2NDk0MjkyNzAsImV4cCI6MTY0OTQzMjg3MH0.WcDQSLKvEpOCIKe_4D6DrCgNhUd0c4Hgyyo75hfEhnI'
+          token: 'token'
         }
       }
     },
     result: {
       data: {
-        deletePromoCode: { _id: '6239a310ed27613a04a17bb8' }
+        deletePromoCode: { _id: '123' }
       }
     }
   }
