@@ -124,13 +124,6 @@ const ConstructorPage = ({ match }) => {
       : handleConstructorOptions(createConstructorElement);
   };
 
-  const handleConstructorTableTitles = (label, pattern) => {
-    if (label === pattern) {
-      return patternConstructorTitles;
-    }
-    return generalConstructorTitles;
-  };
-
   const handleConstructorTableItems = (
     label,
     pattern,
@@ -274,7 +267,11 @@ const ConstructorPage = ({ match }) => {
         </div>
         <TableContainerGenerator
           data-cy='constructorTable'
-          tableTitles={handleConstructorTableTitles(label, constructorPattern)}
+          tableTitles={
+            label === constructorPattern
+              ? patternConstructorTitles
+              : generalConstructorTitles
+          }
           tableItems={handleConstructorTableItems(
             label,
             constructorPattern,
