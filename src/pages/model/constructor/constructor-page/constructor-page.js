@@ -248,40 +248,43 @@ const ConstructorPage = ({ match }) => {
         updateConstructorElement
       },
       index
-    ) => (
-      <TabPanel key={label} value={constructorTabs} index={index}>
-        <div className={commonStyles.adminHeader}>
-          <Typography variant='h1' className={commonStyles.materialTitle}>
-            {label}
-          </Typography>
-          <Button
-            data-cy='add-constructor-element'
-            onClick={() =>
-              handleConstructorOpening(label, createConstructorElement)
-            }
-            variant='contained'
-            color='primary'
-          >
-            {buttonTitle}
-          </Button>
-        </div>
-        <TableContainerGenerator
-          data-cy='constructorTable'
-          tableTitles={
-            label === constructorPattern
-              ? patternConstructorTitles
-              : generalConstructorTitles
-          }
-          tableItems={handleConstructorTableItems(
-            label,
-            constructorPattern,
-            list,
-            deleteConstructorElement,
-            updateConstructorElement
-          )}
-        />
-      </TabPanel>
-    )
+    ) => {
+      const handleConstructorTableTitles =
+        label === constructorPattern
+          ? patternConstructorTitles
+          : generalConstructorTitles;
+
+      return (
+        <TabPanel key={label} value={constructorTabs} index={index}>
+          <div className={commonStyles.adminHeader}>
+            <Typography variant='h1' className={commonStyles.materialTitle}>
+              {label}
+            </Typography>
+            <Button
+              data-cy='add-constructor-element'
+              onClick={() =>
+                handleConstructorOpening(label, createConstructorElement)
+              }
+              variant='contained'
+              color='primary'
+            >
+              {buttonTitle}
+            </Button>
+          </div>
+          <TableContainerGenerator
+            data-cy='constructorTable'
+            tableTitles={handleConstructorTableTitles}
+            tableItems={handleConstructorTableItems(
+              label,
+              constructorPattern,
+              list,
+              deleteConstructorElement,
+              updateConstructorElement
+            )}
+          />
+        </TabPanel>
+      );
+    }
   );
   if (loading) {
     return <LoadingBar />;
