@@ -12,7 +12,6 @@ import { config } from '../../../configs';
 import { addHeader, updateHeader } from '../../../redux/header/header.actions';
 import { getHeaderInitialValues } from '../../../utils/header-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 const { HEADER_VALIDATION_ERROR, NOT_EN_NAME_MESSAGE, NOT_UA_NAME_MESSAGE } =
   config.headerErrorMessages;
@@ -63,7 +62,6 @@ const HeaderForm = ({ header, id }) => {
       }
     });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const eventPreventHandler = (e) => {
@@ -87,7 +85,6 @@ const HeaderForm = ({ header, id }) => {
                 title={config.buttonTitles.HEADER_SAVE_TITLE}
                 values={values}
                 errors={errors}
-                {...(id ? { disabled: !changed } : {})}
               />
             </Grid>
           </Grid>

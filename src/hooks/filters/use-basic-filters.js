@@ -27,6 +27,7 @@ const useBasicFilters = () => {
     },
     clearOptions: {
       filter,
+      search: filter?.name,
       clearAllFilters
     }
   };

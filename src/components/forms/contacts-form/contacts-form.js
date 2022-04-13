@@ -12,9 +12,8 @@ import { useStyles } from './contacts-form.style';
 import LanguagePanel from '../language-panel';
 import { setInputsContactHandler } from '../../../utils/contacts-form';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const { languages, materialUiConstants } = config;
+const { languages } = config;
 const { schedule, adress } = config.labels.contacts;
 
 const {
@@ -79,7 +78,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       }
     });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   const inputs = setInputsContactHandler(schedule, adress);
@@ -131,7 +129,6 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 data-cy='save'
                 values={values}
                 errors={errors}
-                {...(initialValues ? { disabled: !changed } : {})}
                 unblockFunction={unblock}
               />
             </Grid>

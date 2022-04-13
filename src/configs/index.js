@@ -112,6 +112,7 @@ export const config = {
     superadmin: 'superadmin'
   },
   userRoles: [
+    { role: 'user', label: 'Користувач' },
     { role: 'admin', label: 'Адмін' },
     { role: 'superadmin', label: 'Суперадмін' }
   ],
@@ -231,7 +232,10 @@ export const config = {
       colors.green[500],
       colors.red[700],
       colors.amber[600],
-      colors.indigo[500]
+      colors.indigo[500],
+      colors.lime[600],
+      colors.purple[900],
+      colors.red[300]
     ],
     initialValues: {
       names: [],

@@ -6,6 +6,7 @@ import BottomForm from '../../../components/forms/bottom-form';
 import { getBottom } from '../../../redux/bottom/bottom.actions';
 import { useCommonStyles } from '../../common.styles';
 import { bottomSelector } from '../../../redux/selectors/bottom.selectors';
+import LoadingBar from '../../../components/loading-bar';
 
 const BottomEdit = ({ match }) => {
   const { id } = match.params;
@@ -13,11 +14,15 @@ const BottomEdit = ({ match }) => {
   const common = useCommonStyles();
 
   const dispatch = useDispatch();
-  const { bottom } = useSelector(bottomSelector);
+  const { bottom, loading } = useSelector(bottomSelector);
 
   useEffect(() => {
     dispatch(getBottom(id));
   }, [dispatch, id]);
+
+  if (loading) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className={common.detailsContainer}>

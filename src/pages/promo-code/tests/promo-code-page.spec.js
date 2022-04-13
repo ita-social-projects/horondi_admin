@@ -1,17 +1,17 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { BrowserRouter } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { MockedProvider } from '@apollo/client/testing';
 import PromoCodePage from '../promo-code-page';
 import { theme } from '../../../components/app/app-theme/app.theme';
-import { promoCodes } from './promo-code-page.variables';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 
+import { mocks, mocksWithoutPromocodes } from './promo-code-page-variables';
+
 jest.mock('react-redux');
-jest.mock('@apollo/client');
 jest.mock('../promo-code-page.styles', () => ({
   useStyles: () => ({})
 }));
@@ -19,29 +19,29 @@ jest.mock('connected-react-router', () => ({
   push: jest.fn()
 }));
 
-const themeValue = theme('light');
-const dispatch = jest.fn();
-const useQueryData = {
-  data: promoCodes,
-  loading: false,
-  refetch: () => {}
+const mockStore = {
+  rowsPerPage: 10,
+  currentPage: 1
 };
 
-useMutation.mockImplementation(() => [jest.fn()]);
+useSelector.mockImplementation(() => mockStore);
+
+const themeValue = theme('light');
+const dispatch = jest.fn();
+
 useDispatch.mockImplementation(() => dispatch);
-useQuery.mockImplementation(() => ({
-  ...useQueryData
-}));
 let wrapper;
 
 describe('PromoCodePage component tests', () => {
   beforeEach(() => {
     wrapper = mount(
-      <BrowserRouter>
-        <ThemeProvider theme={themeValue}>
-          <PromoCodePage />
-        </ThemeProvider>
-      </BrowserRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <BrowserRouter>
+          <ThemeProvider theme={themeValue}>
+            <PromoCodePage />
+          </ThemeProvider>
+        </BrowserRouter>
+      </MockedProvider>
     );
   });
   afterEach(() => {
@@ -52,40 +52,41 @@ describe('PromoCodePage component tests', () => {
   it('Should render PromoCodePage', () => {
     expect(wrapper).toBeDefined();
   });
-  it('Component TableContainerRow should exist', () => {
-    expect(wrapper.exists(TableContainerRow)).toBe(true);
+  it('Component TableContainerRow should exist', async () => {
+    setTimeout(() => {
+      expect(wrapper.exists(TableContainerRow)).toBe(true);
+    }, 1000);
   });
   it('Component TableContainerGenerator should exist', () => {
-    expect(wrapper.exists(TableContainerGenerator)).toBe(true);
+    setTimeout(() => {
+      expect(wrapper.exists(TableContainerGenerator)).toBe(true);
+    }, 1000);
   });
 });
 
 describe('PromoCodePage component test with loading', () => {
   it('test Loader in PromoCodePage component', () => {
-    useQuery.mockImplementation(() => ({
-      ...useQueryData,
-      loading: true
-    }));
     wrapper = mount(
-      <BrowserRouter>
-        <ThemeProvider theme={themeValue}>
-          <PromoCodePage />
-        </ThemeProvider>
-      </BrowserRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <BrowserRouter>
+          <ThemeProvider theme={themeValue}>
+            <PromoCodePage />
+          </ThemeProvider>
+        </BrowserRouter>
+      </MockedProvider>
     );
+
     expect(wrapper.exists(LoadingBar)).toBe(true);
   });
   it('test PromoCodePage component without items', () => {
-    useQuery.mockImplementation(() => ({
-      ...useQueryData,
-      data: []
-    }));
     wrapper = mount(
-      <BrowserRouter>
-        <ThemeProvider theme={themeValue}>
-          <PromoCodePage />
-        </ThemeProvider>
-      </BrowserRouter>
+      <MockedProvider mocks={mocksWithoutPromocodes} addTypename={false}>
+        <BrowserRouter>
+          <ThemeProvider theme={themeValue}>
+            <PromoCodePage />
+          </ThemeProvider>
+        </BrowserRouter>
+      </MockedProvider>
     );
     expect(wrapper).toBeTruthy();
   });

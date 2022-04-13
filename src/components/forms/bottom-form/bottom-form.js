@@ -31,7 +31,6 @@ import {
   valuesPropTypes,
   imagePropTypes
 } from './constructor.variables';
-import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import AdditionalPriceContainer from '../../../containers/additional-price-container';
 
@@ -160,7 +159,6 @@ const BottomForm = ({ bottom, id, edit }) => {
     }
   });
 
-  const changed = useChangedValuesChecker(values, errors);
   const unblock = useUnsavedChangesHandler(values);
 
   useEffect(() => {
@@ -214,8 +212,6 @@ const BottomForm = ({ bottom, id, edit }) => {
     e.preventDefault();
   };
 
-  const idCondition = id ? { disabled: !changed } : {};
-
   return (
     <div>
       {loading ? (
@@ -235,7 +231,6 @@ const BottomForm = ({ bottom, id, edit }) => {
                   values={values}
                   errors={errors}
                   onClickHandler={handleSubmit}
-                  {...idCondition}
                   unblockFunction={unblock}
                 />
               </Grid>

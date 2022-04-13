@@ -16,7 +16,7 @@ const ProductAddImages = ({
   setProductImages,
   toggleFieldsChanged,
   errors,
-  touched,
+  isEdit,
   setFieldValue
 }) => {
   const styles = useStyles();
@@ -31,7 +31,7 @@ const ProductAddImages = ({
   useEffect(() => {
     if (productImages.length === 1) productImages[0].primary = true;
     setFieldValue('productImages', productImages);
-  }, [productImages]);
+  }, [productImages, setFieldValue]);
 
   const labels = {
     primary: MAIN_PHOTO,
@@ -58,7 +58,7 @@ const ProductAddImages = ({
         imageHandler={setProductImages}
         labels={labels}
       />
-      {touched.images && errors.productImages && (
+      {isEdit && !productImages.length && errors.productImages && (
         <div className={styles.inputError}>{errors.productImages}</div>
       )}
     </Grid>
@@ -68,14 +68,15 @@ const ProductAddImages = ({
 ProductAddImages.propTypes = {
   productImages: PropTypes.arrayOf(PropTypes.object).isRequired,
   errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
+  isEdit: PropTypes.bool,
   setProductImages: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   toggleFieldsChanged: PropTypes.func
 };
 
 ProductAddImages.defaultProps = {
-  toggleFieldsChanged: ''
+  toggleFieldsChanged: '',
+  isEdit: false
 };
 
 export default ProductAddImages;

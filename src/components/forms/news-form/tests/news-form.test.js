@@ -83,8 +83,8 @@ describe('NewsForm tests', () => {
     expect(mockImageHandler).toHaveBeenCalled();
   });
 
-  it('UseEffect hook shoud render four times', () => {
-    expect(mockUseEffect).toHaveBeenCalledTimes(4);
+  it('UseEffect hook shoud render two times', () => {
+    expect(mockUseEffect).toHaveBeenCalledTimes(2);
   });
 
   it('UseDispatch hook shoud render one time', () => {

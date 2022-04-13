@@ -14,6 +14,20 @@ const promoCodes = {
         dateTo: '2021-12-30T23:20:26.887Z',
         discount: 17,
         code: 'test'
+      },
+      {
+        _id: '620d6d413d2dd60025f36809',
+        dateFrom: '2021-12-26T23:20:26.880Z',
+        dateTo: '2025-12-30T23:20:26.887Z',
+        discount: 10,
+        code: 'whatever'
+      },
+      {
+        _id: '6214cbfd9d4b6a00258a2e33',
+        dateFrom: '2025-12-26T23:20:26.880Z',
+        dateTo: '2030-12-30T23:20:26.887Z',
+        discount: 15,
+        code: 'promocode'
       }
     ]
   }

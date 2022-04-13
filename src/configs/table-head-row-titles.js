@@ -77,16 +77,16 @@ const tableHeadRowTitles = {
     commentPageTitles: [
       'Дата',
       'Пошта',
-      'Текст',
       'Видимий',
       'Кількість відповідей',
+      'Текст',
       'Дії'
     ],
     userPageTitles: ['Дата', 'Текст', 'Дії'],
     recentCommentsPageTitle: ['Дата', "Ім'я користувача", 'Текст']
   },
   replyComments: {
-    replyCommentsPageTitles: ['Дата', 'Пошта', 'Текст', 'Видимий', 'Дії']
+    replyCommentsPageTitles: ['Дата', 'Пошта', 'Видимий', 'Текст', 'Дії']
   },
   emailQuestions: [
     '#',

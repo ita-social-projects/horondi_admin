@@ -60,7 +60,7 @@ const CreateCertificate = () => {
       onCompleted(data) {
         dispatch(showSuccessSnackbar('Успішно додано'));
 
-        setCertificates(data.bulkGenerateCertificates.items);
+        setCertificates(data.generateCertificate.certificates);
         setCheckBoxes(initialCheckboxes);
         setEmail('');
       },
@@ -152,19 +152,30 @@ const CreateCertificate = () => {
   const expireDate = date ? new Date(date) : new Date();
   expireDate.setFullYear(expireDate.getFullYear() + 1);
 
+  const newCertificates = checkBoxes.reduce((newArr, item) => {
+    if (item.checked) {
+      newArr.push({
+        value: item.value,
+        count: item.quantity
+      });
+    }
+
+    return newArr;
+  }, []);
+
+  const variables = {
+    email,
+    newCertificates
+  };
+
+  if (date) {
+    const dateStart = { dateStart: dateResetHours(date) };
+    Object.assign(variables, dateStart);
+  }
+
   const onClickMutation = () =>
     generateCertificates({
-      variables: {
-        generate: {
-          email,
-          dateStart: dateResetHours(date),
-          bulk: checkBoxes.reduce((newArr, item) => {
-            item.checked &&
-              newArr.push({ value: item.value, quantity: item.quantity });
-            return newArr;
-          }, [])
-        }
-      }
+      variables
     });
 
   if (certificatesLoading) {

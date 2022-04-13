@@ -15,6 +15,8 @@ import { selectUserLoadAndItemsCount } from '../../../../redux/selectors/users.s
 import { UserBlockPeriod } from '../../../../consts/user-block-status';
 import { formatPhoneNumber } from '../../../../utils/format-phone-number';
 import UsersFilters from '../users-filters/UsersFilters';
+import { adminsErrors } from '../../../../configs/error-modal-messages';
+import { useCommonStyles } from '../../../common.styles';
 
 const tableHeaders = config.tableHeadRowTitles.users.userTab;
 const { CREATE_SPECIAL_USER } = config.buttonTitles;
@@ -22,11 +24,13 @@ const { REGISTER_ADMIN } = config.dialogFormTitles;
 const { unknownAdmin } = config.labels.user;
 const { forbiddenRolesFromDeleting } = config;
 const { USER_ACTIVE_STATUS, USER_INACTIVE_STATUS } = config.statuses;
+const { ADMIN_NOT_FOUND } = adminsErrors;
 
 const AdminTab = (props) => {
   const dispatch = useDispatch();
   const { list, onDelete } = props;
   const { userLoading, itemsCount } = useSelector(selectUserLoadAndItemsCount);
+  const commonStyles = useCommonStyles();
 
   const {
     isRegisterDialogOpen,
@@ -85,14 +89,17 @@ const AdminTab = (props) => {
           </Button>
         </div>
       </div>
-
-      <TableContainerGenerator
-        pagination
-        count={itemsCount}
-        id='adminsTable'
-        tableTitles={tableHeaders}
-        tableItems={adminItems}
-      />
+      {list?.length ? (
+        <TableContainerGenerator
+          pagination
+          count={itemsCount}
+          id='adminsTable'
+          tableTitles={tableHeaders}
+          tableItems={adminItems}
+        />
+      ) : (
+        <p className={commonStyles.noRecords}>{ADMIN_NOT_FOUND}</p>
+      )}
       <RegisterDialog
         data-cy='register-dialog'
         isOpen={isRegisterDialogOpen}

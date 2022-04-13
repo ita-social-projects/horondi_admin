@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
+import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
 import useSuccessSnackbar from '../../../utils/use-success-snackbar';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
@@ -38,14 +39,14 @@ const SaveButton = ({
   ...props
 }) => {
   const error = !!Object.keys(errors).length;
+  const changed = useChangedValuesChecker(values, errors);
+
   const disable = Object.values(values).every((el) => {
     if (typeof el === 'boolean' && !error) {
       return true;
     }
-    if ((el || el === 0) && !error) {
-      return true;
-    }
-    return false;
+
+    return (Boolean(el) || el === 0) && !error && changed;
   });
 
   const [disabled, setDisabled] = useState(!disable);

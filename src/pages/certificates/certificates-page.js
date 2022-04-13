@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,8 +11,8 @@ import LoadingBar from '../../components/loading-bar/loading-bar';
 import Certificate from './certificate/certificate';
 import { useCommonStyles } from '../common.styles';
 import { getAllCertificates } from './operations/certificate.queries';
-import { getUsers } from '../../redux/users/users.actions';
 import { config } from '../../configs';
+import { setItemsCount } from '../../redux/table/table.actions';
 
 const { routes } = config;
 const pathToCreateCertificatesPage = routes.pathToCreateCertificates;
@@ -22,7 +22,6 @@ const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
 const { ACTIVE_STATUS, USED_STATUS, EXPIRED_STATUS, PENDING_STATUS } =
   config.statuses;
 const { NO_CERTIFICATES_MESSAGE } = config.messages;
-
 const transformDate = (date) => {
   const exactDate = new Date(date);
   return exactDate.toLocaleString('en-US', {
@@ -48,30 +47,31 @@ const checkStatus = (active, used, expired) => {
 const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
   const dispatch = useDispatch();
-  const { loading: certificatesLoading, data: certificates } =
-    useQuery(getAllCertificates);
-  const certificatesList = certificates?.getAllCertificates || { items: [] };
+  const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
+    currentPage: Table.pagination.currentPage,
+    rowsPerPage: Table.pagination.rowsPerPage,
+    itemsCount: Table.itemsCount
+  }));
 
-  useEffect(() => {
-    dispatch(getUsers({}));
-  }, []);
-
-  const { list: usersList, loading: usersLoading } = useSelector(
-    ({ Users }) => ({
-      list: Users.list,
-      loading: Users.userLoading
-    })
+  const { loading: certificatesLoading, data: certificates } = useQuery(
+    getAllCertificates,
+    {
+      variables: {
+        limit: rowsPerPage,
+        skip: currentPage
+      },
+      onCompleted: (data) => {
+        dispatch(setItemsCount(data.getAllCertificates.count));
+      }
+    }
   );
 
-  const setUser = (createdBy) => {
-    if (createdBy && usersList.length) {
-      for (const user of usersList) {
-        if (user._id === createdBy._id) {
-          return `${user.firstName} ${user.lastName}`;
-        }
-      }
-    } else return '';
-  };
+  const certificatesList = certificates?.getAllCertificates || { items: [] };
+
+  const setUser = (usersInitials) =>
+    usersInitials.length !== 0
+      ? `${usersInitials[0].firstName} ${usersInitials[0].lastName}`
+      : '';
 
   const editCertificate = () => {
     // TODO
@@ -81,7 +81,7 @@ const CertificatesPage = () => {
     // TODO
   };
 
-  if (certificatesLoading && usersLoading) {
+  if (certificatesLoading) {
     return <LoadingBar />;
   }
 
@@ -89,7 +89,7 @@ const CertificatesPage = () => {
     <TableContainerRow
       key={certificate._id}
       number={certificate.name}
-      createdBy={<Certificate name={setUser(certificate.createdBy)} />}
+      admin={<Certificate name={setUser(certificate.admin)} />}
       price={`${certificate.value} грн`}
       status={
         <Status
@@ -133,6 +133,8 @@ const CertificatesPage = () => {
         {certificateItems.length ? (
           <TableContainerGenerator
             data-cy='certificateTable'
+            pagination
+            count={itemsCount}
             tableTitles={tableTitles}
             tableItems={certificateItems}
           />

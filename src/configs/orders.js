@@ -95,7 +95,8 @@ const orders = {
   promoCodesConsts: {
     status: {
       active: 'Активний',
-      expired: 'Завершений'
+      expired: 'Завершений',
+      planned: 'Запланований'
     },
     deletePromo: 'Ви впевнені, що хочете видалити цeй промокод?',
     namePromo: 'Назва промокоду',

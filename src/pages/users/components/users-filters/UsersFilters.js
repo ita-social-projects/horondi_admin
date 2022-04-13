@@ -35,13 +35,13 @@ function UsersFilters() {
       <ComponentFilterMultiplePicker
         setFilterValue={setFilter}
         selectorFunc={bannedSelector}
-        value={filters.banned}
+        value={filters?.banned}
         options={userStatusOptions}
         label={buttonTitles.USER_STATUS_TITLE}
       />
       <ComponentFilterSearch
         setFilterValue={setFilter}
-        value={filters.search}
+        value={filters?.search}
         selectorFunc={searchSelector}
       />
       <ComponentFilterClear actionClearFilters={clearFilters} />

@@ -57,6 +57,7 @@ export const CheckBoxes = ({ options, handler }) => {
               <Button
                 onClick={() => incrementQuantity(index)}
                 data-testid='increment'
+                disabled={checkbox.quantity >= 10}
               >
                 <AddIcon />
               </Button>
