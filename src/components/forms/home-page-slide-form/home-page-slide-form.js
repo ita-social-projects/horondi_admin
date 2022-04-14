@@ -27,6 +27,7 @@ const { imagePrefix } = config;
 const {
   NOT_EN_DESCRIPTION_MESSAGE,
   NOT_EN_NAME_MESSAGE,
+  NOT_UA_NAME_MESSAGE,
   NOT_UA_DESCRIPTION_MESSAGE
 } = config.homePageSlideErrorMessages;
 const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE } = config.commonErrorMessages;
@@ -75,7 +76,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
       .required(ERROR_MESSAGE),
     uaTitle: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
-      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
+      .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
       .required(ERROR_MESSAGE),
     link: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE)
   });
