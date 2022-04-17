@@ -543,11 +543,11 @@ const table = {
 
 export const store = createStore(
   combineReducers({
-    Material: (state = [], action) => material,
-    Model: (state = [], action) => model,
-    Pattern: (state = [], action) => pattern,
-    Constructor: (state = [], action) => constructor,
-    Table: (state = [], action) => table
+    Material: (_state = [], _action = '') => material,
+    Model: (_state = [], _action = '') => model,
+    Pattern: (_state = [], _action = '') => pattern,
+    Constructor: (_state = [], _action = '') => constructor,
+    Table: (_state = [], _action = '') => table
   })
 );
 
