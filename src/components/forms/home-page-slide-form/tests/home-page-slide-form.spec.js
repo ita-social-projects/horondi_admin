@@ -24,7 +24,7 @@ const dispatch = jest.fn();
 
 useDispatch.mockImplementation(() => dispatch);
 
-describe('component tests', () => {
+describe('component home-page-slider button name tests', () => {
   let wrapper = null;
 
   wrapper = mount(
