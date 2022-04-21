@@ -44,6 +44,4 @@ describe('Testing ConstructorPage', () => {
     const deleteBtn = screen.getAllByTitle(DELETE_TITLE)[0];
     userEvent.click(deleteBtn);
   });
-
-  it('', () => {});
 });
