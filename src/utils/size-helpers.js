@@ -11,10 +11,10 @@ export const createSize = (data) => ({
   weightInKg: data.weightInKg,
   available: data.available,
   modelId: data.modelId,
-  additionalPrice: {
-    value: +data.additionalPrice,
-    type: data.additionalPriceType
-  }
+  absolutePrice:
+    data.additionalPriceType === 'ABSOLUTE' ? +data.additionalPrice : null,
+  relativePrice:
+    data.additionalPriceType === 'RELATIVE' ? +data.additionalPrice : null
 });
 
 export const getSizeInitialValues = (size) => ({
@@ -27,8 +27,8 @@ export const getSizeInitialValues = (size) => ({
   volumeInLiters: size.volumeInLiters || '',
   weightInKg: size.weightInKg || '',
   available: size.available || false,
-  additionalPrice: size.additionalPrice.value,
-  additionalPriceType: size?.additionalPrice?.type || 'ABSOLUTE_INDICATOR'
+  additionalPriceType: size.relativePrice ? 'RELATIVE' : 'ABSOLUTE',
+  additionalPrice: size.absolutePrice ? size.absolutePrice : size.relativePrice
 });
 
 export const sizePropTypes = {

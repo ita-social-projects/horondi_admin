@@ -64,7 +64,7 @@ const StrapsPage = () => {
       image={strap?.images?.thumbnail ? IMG_URL + strap.images.thumbnail : ''}
       name={strap?.name[0]?.value}
       color={strap?.features?.color?.name[0]?.value}
-      additionalPrice={strap?.additionalPrice?.value}
+      additionalPrice={strap?.absolutePrice}
       available={strap.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         strapsDeleteHandler(strap._id);

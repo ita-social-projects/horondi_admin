@@ -34,10 +34,14 @@ const useMaterialHandlers = () => {
     ],
     available: values.available,
     purpose: values.purpose,
-    additionalPrice: {
-      value: +values.additionalPrice,
-      type: values.additionalPriceType
-    },
+    absolutePrice:
+      values.additionalPriceType === 'ABSOLUTE'
+        ? +values.additionalPrice
+        : null,
+    relativePrice:
+      values.additionalPriceType === 'RELATIVE'
+        ? +values.additionalPrice
+        : null,
     colors: values.colors
   });
 

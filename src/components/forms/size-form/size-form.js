@@ -256,13 +256,13 @@ function SizeForm({ id, size }) {
                     value={values.additionalPriceType}
                   >
                     <FormControlLabel
-                      value='ABSOLUTE_INDICATOR'
+                      value='ABSOLUTE'
                       label={additionalPriceType.absolutePrice[0].value}
                       key={2}
                       control={<Radio />}
                     />
                     <FormControlLabel
-                      value='RELATIVE_INDICATOR'
+                      value='RELATIVE'
                       label={
                         <>
                           <span>

@@ -392,13 +392,13 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   value={values.additionalPriceType}
                 >
                   <FormControlLabel
-                    value='ABSOLUTE_INDICATOR'
+                    value='ABSOLUTE'
                     label={additionalPriceType.absolutePrice[0].value}
                     control={<Radio />}
                     key={2}
                   />
                   <FormControlLabel
-                    value='RELATIVE_INDICATOR'
+                    value='RELATIVE'
                     label={additionalPriceType.relativePrice[0].value}
                     control={<Radio />}
                     key={1}

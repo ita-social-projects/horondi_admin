@@ -4,8 +4,8 @@ export const getBasicsInitialValues = (edit, IMG_URL, basic) => ({
   enName: basic?.name[1].value || '',
   color: basic?.features.color._id || '',
   material: basic?.features.material._id || '',
-  additionalPrice: edit ? basic?.additionalPrice.value : '',
-  additionalPriceType: basic?.additionalPrice.type || 'ABSOLUTE_INDICATOR',
+  additionalPrice: basic?.absolutePrice || '',
+  additionalPriceType: 'ABSOLUTE',
   available: basic?.available || false
 });
 

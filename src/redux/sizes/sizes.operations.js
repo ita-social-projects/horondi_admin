@@ -49,10 +49,8 @@ export const getSizeById = async (id) => {
           volumeInLiters
           weightInKg
           available
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
+          relativePrice
         }
       }
     }

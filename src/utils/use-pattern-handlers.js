@@ -40,10 +40,12 @@ const usePatternHandlers = () => {
       handmade: values.handmade
     },
     available: values.available,
-    additionalPrice: {
-      value: +values.additionalPrice,
-      type: values.additionalPriceType
-    }
+    absolutePrice:
+      values.additionalPriceType === 'ABSOLUTE'
+        ? +values.additionalPrice
+        : null,
+    relativePrice:
+      values.additionalPriceType === 'RELATIVE' ? +values.additionalPrice : null
   });
 
   return {

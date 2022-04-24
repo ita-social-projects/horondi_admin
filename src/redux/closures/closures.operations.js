@@ -17,10 +17,7 @@ export const getAllClosures = async (limit, skip, filter) => {
             thumbnail
           }
           optionType
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
           available
           customizable
         }
@@ -91,10 +88,7 @@ export const getClosureById = async (id) => {
             small
             thumbnail
           }
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
         }
         ... on Error {
           statusCode

@@ -26,10 +26,7 @@ export const getAllStraps = async (limit, skip, filter) => {
             large
           }
           available
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
         }
         count
       }
@@ -68,10 +65,7 @@ export const createStrap = async (payload) => {
             large
           }
           available
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
         }
         ... on Error {
           message
@@ -133,10 +127,7 @@ export const getStrapById = async (id) => {
             large
           }
           available
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
         }
         ... on Error {
           statusCode
@@ -174,10 +165,7 @@ export const updateStrap = async (id, strap, image) => {
             large
           }
           available
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
         }
         ... on Error {
           message

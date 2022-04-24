@@ -35,8 +35,10 @@ const getMaterialFormInitValues = (material, purposeEnum) => ({
   purpose: material.purpose || purposeEnum.MAIN,
   available: material.available || false,
   colors: (material.colors && material.colors.map((color) => color._id)) || [],
-  additionalPrice: material.additionalPrice.value || '',
-  additionalPriceType: material.additionalPrice.type || 'ABSOLUTE_INDICATOR'
+  additionalPriceType: material.relativePrice ? 'RELATIVE' : 'ABSOLUTE',
+  additionalPrice: material.absolutePrice
+    ? material.absolutePrice
+    : material.relativePrice
 });
 
 export default getMaterialFormInitValues;

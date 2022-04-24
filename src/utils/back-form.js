@@ -41,8 +41,8 @@ export const getBackInitialValues = (edit, IMG_URL, back) => ({
   enName: back?.name[1].value || '',
   color: back?.features.color._id || '',
   material: back?.features.material._id || '',
-  additionalPrice: edit ? back?.additionalPrice?.value : '',
-  additionalPriceType: back?.additionalPrice.type || 'ABSOLUTE_INDICATOR',
+  additionalPrice: back?.absolutePrice || '',
+  additionalPriceType: 'ABSOLUTE',
   available: back?.available || false,
   customizable: back?.customizable || false
 });
