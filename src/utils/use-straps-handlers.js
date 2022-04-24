@@ -25,10 +25,7 @@ const useStrapsHandlers = () => {
     },
     available: values.available,
     image: values.image,
-    additionalPrice: {
-      value: +values.additionalPrice,
-      type: values.additionalPriceType
-    },
+    absolutePrice: +values.additionalPrice,
     optionType: 'STRAP'
   });
 

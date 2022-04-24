@@ -33,10 +33,7 @@ export const getAllBacks = async (limit, skip, filter) => {
           small
           large
         }
-        additionalPrice {
-          value
-          type
-        }
+        absolutePrice
         available
         customizable
       }
@@ -85,10 +82,7 @@ export const getBackById = async (id) => {
           }
           available
           customizable
-          additionalPrice {
-              value
-              type
-            }
+          absolutePrice
           images {
             thumbnail
           }
@@ -189,6 +183,7 @@ export const updateBack = async (payload) => {
               }
             }
           }
+          absolutePrice
           available
           customizable
         }

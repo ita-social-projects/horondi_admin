@@ -6,10 +6,7 @@ const constructorElementRequest = `
     available
     customizable
     image
-    basePrice {
-     value
-     currency
-    }
+    basePrice
     name {
      value
      lang

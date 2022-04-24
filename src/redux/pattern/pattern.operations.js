@@ -51,10 +51,8 @@ export const getAllPatterns = async (limit, skip, filter) => {
             large
           }
           constructorImg
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
+          relativePrice
           available
           customizable
         }
@@ -101,10 +99,8 @@ export const getPatternById = async (id) => {
             thumbnail
           }
           constructorImg
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
+          relativePrice
         }
         ... on Error {
           message

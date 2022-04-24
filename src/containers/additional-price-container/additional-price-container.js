@@ -50,13 +50,13 @@ const AdditionalPriceContainer = ({
             value={values.additionalPriceType}
           >
             <FormControlLabel
-              value='ABSOLUTE_INDICATOR'
+              value='ABSOLUTE'
               label={labels.additionalPriceType.absolutePrice[0].value}
               control={<Radio />}
               key={2}
             />
             <FormControlLabel
-              value='RELATIVE_INDICATOR'
+              value='RELATIVE'
               label={labels.additionalPriceType.relativePrice[0].value}
               control={<Radio />}
               key={1}

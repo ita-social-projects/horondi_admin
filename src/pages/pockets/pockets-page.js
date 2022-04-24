@@ -66,7 +66,7 @@ const PocketsPage = () => {
       id={pocket._id}
       image={pocket?.images?.thumbnail ? IMG_URL + pocket.images.thumbnail : ''}
       name={pocket?.name[0]?.value}
-      additionalPrice={pocket?.additionalPrice?.value}
+      additionalPrice={pocket?.absolutePrice}
       available={pocket.restriction ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         pocketsDeleteHandler(pocket._id);

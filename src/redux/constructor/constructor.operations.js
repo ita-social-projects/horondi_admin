@@ -221,10 +221,7 @@ export const getConstructorById = async (payload) => {
                   images{
                     thumbnail
                   }
-                  additionalPrice{
-                    value
-                    currency
-                  }
+                  absolutePrice
                 }
                 position {
                   _id

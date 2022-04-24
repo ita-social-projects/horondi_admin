@@ -25,10 +25,7 @@ const useBottomHandlers = () => {
       color: values.color
     },
     available: values.available,
-    additionalPrice: {
-      value: +values.additionalPrice,
-      type: values.additionalPriceType
-    },
+    absolutePrice: +values.additionalPrice,
     optionType: 'BOTTOM'
   });
 

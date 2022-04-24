@@ -1,8 +1,8 @@
 export const getLabelValue = (values, additionalPriceType) => {
   switch (values.additionalPriceType) {
-    case 'ABSOLUTE_INDICATOR':
+    case 'ABSOLUTE':
       return additionalPriceType.absolutePrice[0].value;
-    case 'RELATIVE_INDICATOR':
+    case 'RELATIVE':
       return additionalPriceType.relativePrice[0].value;
     default:
       return '';
@@ -10,7 +10,7 @@ export const getLabelValue = (values, additionalPriceType) => {
 };
 
 export const calculateAddittionalPriceValue = (values, exchangeRate) =>
-  values.additionalPriceType === 'ABSOLUTE_INDICATOR'
+  values.additionalPriceType === 'ABSOLUTE'
     ? calculateConvertedValue(values, exchangeRate)
     : '0';
 

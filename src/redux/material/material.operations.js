@@ -15,10 +15,8 @@ export const getAllMaterials = async (skip, limit, filter) => {
             value
           }
           available
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
+          relativePrice
           purpose
           colors {
             _id
@@ -81,10 +79,8 @@ export const getMaterialById = async (id) => {
             value
           }
           available
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
+          relativePrice
           purpose
           colors {
             _id
@@ -189,10 +185,8 @@ export const updateMaterial = async (id, material) => {
           name {
             value
           }
-          additionalPrice {
-            value
-            type
-          }
+          absolutePrice
+          relativePrice
           colors {
             _id
           }
