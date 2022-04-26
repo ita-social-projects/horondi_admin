@@ -11,7 +11,7 @@ import TableContainerRow from '../../containers/table-container-row';
 import Certificate from './certificate/certificate';
 import Status from './status/status';
 import FilterNavbar from '../../components/filter-search-sort';
-import useProductFilters from '../../hooks/filters/use-certificate-filters';
+import useCertificateFilters from '../../hooks/filters/use-certificate-filters';
 
 const pathToCreateCertificatesPage = config.routes.pathToCreateCertificates;
 const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
@@ -20,8 +20,7 @@ const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
 const { NO_CERTIFICATES_MESSAGE } = config.messages;
 
 const CertificatesPage = () => {
-  const certificatesFilters = useProductFilters();
-
+  const certificatesFilters = useCertificateFilters();
   const commonStyles = useCommonStyles();
   const certificates = useCertificates();
 

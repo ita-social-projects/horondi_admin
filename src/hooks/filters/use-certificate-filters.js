@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { setCurrentPage } from '../../redux/table/table.actions';
 import filterLabels from '../../configs/filter-labels';
 
-const useProductFilters = () => {
+const useCertificateFilters = () => {
   const [sortLabel, setSortLabel] = useState('');
   const [search, setSearch] = useState('');
   const [sortDirection, setSortDirection] = useState(null);
@@ -52,4 +52,4 @@ const useProductFilters = () => {
   };
 };
 
-export default useProductFilters;
+export default useCertificateFilters;
