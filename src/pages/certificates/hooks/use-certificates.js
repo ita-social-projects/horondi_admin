@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 import { getAllCertificates } from '../operations/certificate.queries';
@@ -14,9 +13,6 @@ import {
   setSnackBarStatus
 } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
-import TableContainerRow from '../../../containers/table-container-row';
-import Certificate from '../certificate/certificate';
-import Status from '../status/status';
 import { config } from '../../../configs';
 
 const DELETE_CERTIFICATE_TITLE =
@@ -55,6 +51,11 @@ const checkStatus = (active, used, expired) => {
   }
   return PENDING_STATUS;
 };
+
+const setUser = (usersInitials) =>
+  usersInitials.length
+    ? `${usersInitials[0].firstName} ${usersInitials[0].lastName}`
+    : '';
 
 const useCertificates = () => {
   const dispatch = useDispatch();
@@ -150,48 +151,18 @@ const useCertificates = () => {
     );
   };
 
-  const setUser = (usersInitials) =>
-    usersInitials.length
-      ? `${usersInitials[0].firstName} ${usersInitials[0].lastName}`
-      : '';
-
-  const certificateItems = certificatesList.items.map((certificate) => (
-    <TableContainerRow
-      key={certificate._id}
-      number={certificate.name}
-      admin={<Certificate name={setUser(certificate.admin)} />}
-      price={`${certificate.value} грн`}
-      status={
-        <Status
-          status={checkStatus(
-            certificate.isActivated,
-            certificate.isUsed,
-            certificate.isExpired
-          )}
-        />
-      }
-      date={
-        certificate.isUsed || certificate.isExpired
-          ? '-'
-          : `${transformDate(certificate.dateStart)} - ${transformDate(
-              certificate.dateEnd
-            )}`
-      }
-      deleteHandler={() => {
-        openDeleteModal(certificate._id);
-      }}
-      editHandler={() => {
-        openUpdateModal(certificate.name);
-      }}
-      showAvatar={false}
-    />
-  ));
-
-  if (certificatesLoading) {
-    return { loading: certificatesLoading };
-  }
-
-  return { items: certificateItems, count: itemsCount };
+  return {
+    loading: certificatesLoading,
+    items: certificatesList.items,
+    count: itemsCount,
+    transformDate,
+    checkStatus,
+    setUser,
+    openUpdateModal,
+    openDeleteModal,
+    deleteCertificateHandler,
+    updateCertificateHandler
+  };
 };
 
 export default useCertificates;

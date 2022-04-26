@@ -112,3 +112,8 @@ export const noCertificatesMock = [
     }
   }
 ];
+
+export const mockStore = {
+  rowsPerPage: 10,
+  currentPage: 1
+};

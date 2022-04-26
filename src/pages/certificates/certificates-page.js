@@ -7,6 +7,9 @@ import { config } from '../../configs';
 import useCertificates from './hooks/use-certificates';
 import { useCommonStyles } from '../common.styles';
 import LoadingBar from '../../components/loading-bar';
+import TableContainerRow from '../../containers/table-container-row';
+import Certificate from './certificate/certificate';
+import Status from './status/status';
 
 const pathToCreateCertificatesPage = config.routes.pathToCreateCertificates;
 const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
@@ -17,6 +20,38 @@ const { NO_CERTIFICATES_MESSAGE } = config.messages;
 const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
   const certificates = useCertificates();
+
+  const getDate = (item) => item.isUsed || item.isExpired
+      ? '-'
+      : `${certificates.transformDate(
+          item.dateStart
+        )} - ${certificates.transformDate(item.dateEnd)}`;
+
+  const certificateItems = certificates.items.map((certificate) => (
+    <TableContainerRow
+      key={certificate._id}
+      number={certificate.name}
+      admin={<Certificate name={certificates.setUser(certificate.admin)} />}
+      price={`${certificate.value} грн`}
+      status={
+        <Status
+          status={certificates.checkStatus(
+            certificate.isActivated,
+            certificate.isUsed,
+            certificate.isExpired
+          )}
+        />
+      }
+      date={getDate(certificate)}
+      deleteHandler={() => {
+        certificates.openDeleteModal(certificate._id);
+      }}
+      editHandler={() => {
+        certificates.openUpdateModal(certificate.name);
+      }}
+      showAvatar={false}
+    />
+  ));
 
   if (certificates.loading) {
     return <LoadingBar />;
@@ -39,13 +74,13 @@ const CertificatesPage = () => {
             {CREATE_CERTIFICATE_TITLE}
           </Button>
         </div>
-        {certificates.items.length ? (
+        {certificateItems.length ? (
           <TableContainerGenerator
             data-cy='certificateTable'
             pagination
             count={certificates.count}
             tableTitles={tableTitles}
-            tableItems={certificates.items}
+            tableItems={certificateItems}
           />
         ) : (
           <Typography paragraph className={commonStyles.noRecords}>
