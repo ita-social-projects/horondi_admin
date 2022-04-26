@@ -7,7 +7,14 @@ import {
 export const getCertificatesMock = [
   {
     request: {
-      query: getAllCertificates
+      query: getAllCertificates,
+      variables: {
+        limit: 10,
+        skip: 0,
+        sortOrder: null,
+        sortBy: null,
+        search: ''
+      }
     },
     result: {
       data: {
