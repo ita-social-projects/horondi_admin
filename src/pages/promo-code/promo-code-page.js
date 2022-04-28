@@ -43,22 +43,18 @@ const PromoCodePage = () => {
   const { data, refetch, loading } = useQuery(getAllPromoCodes, {
     variables: {
       limit: rowsPerPage,
-      skip: rowsPerPage * currentPage,
-      sortOrder: sortOptions.sortDirection,
-      sortBy: sortOptions.sortBy,
-      search: searchOptions.search,
-      status: filterByMultipleOptions[0].status
+      skip: rowsPerPage * currentPage
     },
-    fetchPolicy: 'no-cache'
+    fetchPolicy: 'network-only'
   });
+  useEffect(() => {
+    dispatch(setItemsCount(data?.getAllPromoCodes?.count) || 0);
+  }, [data]);
+
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
 
   const promoCodes = data?.getAllPromoCodes || {};
   const runRefetchData = () => refetch();
-
-  useEffect(() => {
-    dispatch(setItemsCount(data?.getAllPromoCodes?.count) || 0);
-  }, [data]);
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -95,7 +91,7 @@ const PromoCodePage = () => {
           token
         }
       }
-    }).then(() => runRefetchData);
+    }).then(() => runRefetchData());
     dispatch(closeDialog());
   };
   const openDeleteModalHandler = (promoID) =>
@@ -126,7 +122,6 @@ const PromoCodePage = () => {
   if (loading) {
     return <LoadingBar />;
   }
-
   return (
     <div className={commonStyles.container}>
       <div className={styles.header}>
