@@ -3,18 +3,31 @@ import { BrowserRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { useDispatch, useSelector } from 'react-redux';
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import CertificatesPage from '../certificates-page';
-import { certificatesMock, usersMock } from './certificates-page.variables';
+import {
+  getCertificatesMock,
+  noCertificatesMock
+} from './certificates-page.variables';
 
 jest.mock('react-redux');
+jest.mock('react-apollo');
 jest.mock('connected-react-router', () => ({
   push: jest.fn()
 }));
 
-const dispatch = jest.fn();
+const mockOpenSnackbar = jest.fn();
 
-useDispatch.mockImplementation(() => dispatch);
+jest.mock('../../../utils/use-success-snackbar', () => ({
+  __esModule: true,
+  default: () => ({
+    openSuccessSnackbar: mockOpenSnackbar
+  })
+}));
+
+useDispatch.mockImplementation(() => jest.fn());
+useSelector.mockImplementation(() => jest.fn());
 
 describe('Information about certificates page', () => {
   afterAll(() => {
@@ -22,14 +35,9 @@ describe('Information about certificates page', () => {
   });
 
   it('should render the loading bar while getting data', async () => {
-    useSelector.mockImplementation(() => ({
-      ...usersMock,
-      loading: true
-    }));
-
     const { getByRole } = render(
       <BrowserRouter>
-        <MockedProvider mocks={certificatesMock}>
+        <MockedProvider mocks={getCertificatesMock}>
           <CertificatesPage />
         </MockedProvider>
       </BrowserRouter>
@@ -37,15 +45,55 @@ describe('Information about certificates page', () => {
     expect(getByRole('progressbar')).toBeInTheDocument();
   });
 
-  it('should render the table with information about certificates', async () => {
-    const { findAllByRole } = render(
+  it('should render the appropriate message if there is no certificates', async () => {
+    const { findByText } = render(
       <BrowserRouter>
-        <MockedProvider mocks={certificatesMock}>
+        <MockedProvider mocks={noCertificatesMock}>
           <CertificatesPage />
         </MockedProvider>
       </BrowserRouter>
     );
 
-    expect(await findAllByRole('row')).toHaveLength(3);
+    expect(await findByText(/Сертифікати відсутні/)).toBeInTheDocument();
+  });
+
+  it('should render the table with information about certificates', async () => {
+    const { findAllByRole } = render(
+      <BrowserRouter>
+        <MockedProvider mocks={getCertificatesMock}>
+          <CertificatesPage />
+        </MockedProvider>
+      </BrowserRouter>
+    );
+
+    expect(await findAllByRole('row')).toHaveLength(5);
+  });
+
+  it('should simulate deleteHandler', async () => {
+    const { findAllByTitle } = render(
+      <BrowserRouter>
+        <MockedProvider mocks={getCertificatesMock}>
+          <CertificatesPage />
+        </MockedProvider>
+      </BrowserRouter>
+    );
+
+    const deleteBtns = await findAllByTitle(/Видалити/);
+    userEvent.click(deleteBtns[0]);
+    expect(mockOpenSnackbar).toHaveBeenCalledTimes(1);
+  });
+
+  it('should simulate editHandler', async () => {
+    const { findAllByTitle } = render(
+      <BrowserRouter>
+        <MockedProvider mocks={getCertificatesMock}>
+          <CertificatesPage />
+        </MockedProvider>
+      </BrowserRouter>
+    );
+
+    const editBtns = await findAllByTitle(/Редагувати/);
+    userEvent.click(editBtns[1]);
+    expect(mockOpenSnackbar).toHaveBeenCalledTimes(1);
   });
 });
