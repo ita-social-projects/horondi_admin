@@ -50,7 +50,8 @@ import { getPatterns } from '../../../../redux/pattern/pattern.actions';
 import { getMaterials } from '../../../../redux/material/material.actions';
 import LoadingBar from '../../../../components/loading-bar';
 import {
-  listItemImages,
+  constructorListItemImage,
+  patternListItemImages,
   isListItemAvailable
 } from '../../../../utils/constructor-page';
 
@@ -64,7 +65,8 @@ const {
   showDisable
 } = config.labels.model;
 const { imagePrefix, IMG_URL } = config;
-const constructorTitles = config.tableHeadRowTitles.constructor;
+const generalConstructorTitles = config.tableHeadRowTitles.generalConstructor;
+const patternConstructorTitles = config.tableHeadRowTitles.patternConstructor;
 const { DEFAULT_CIRCLE } = config.colorCircleSizes;
 const { REMOVE_CONSTRUCTOR_MESSAGE } = config.messages;
 const {
@@ -81,14 +83,14 @@ const ConstructorPage = ({ match }) => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { id } = match.params;
   const [openDialog, setOpenDialog] = useState(false);
-  const { model, constructorTabs, patternList, filter, loading } = useSelector(
+  const { model, constructorTabs, patternList, filters, loading } = useSelector(
     selectConstructorMethodAndMaterials
   );
 
   useEffect(() => {
     dispatch(
       getMaterials({
-        filter
+        filters
       })
     );
   }, [dispatch]);
@@ -148,7 +150,7 @@ const ConstructorPage = ({ match }) => {
   const constructorItems = (list, deleteAction, editAction) =>
     map(list, (listItem) => (
       <TableContainerRow
-        image={listItemImages(IMG_URL, listItem)}
+        image={constructorListItemImage(IMG_URL, listItem)}
         showAvatar={listItem.label === constructorPattern}
         color={
           <ColorCircle
@@ -173,7 +175,7 @@ const ConstructorPage = ({ match }) => {
   const patternItems = (list, deleteAction) =>
     map(list, (listItem) => (
       <TableContainerRow
-        image={listItemImages(IMG_URL, listItem)}
+        image={patternListItemImages(IMG_URL, listItem)}
         key={listItem._id}
         id={listItem._id}
         name={listItem.name[0].value}
@@ -185,46 +187,48 @@ const ConstructorPage = ({ match }) => {
         showEdit={false}
       />
     ));
-
-  const constructorOptions = {
-    constructorBasic: {
-      list: model?.eligibleOptions?.constructorBasic,
-      label: constructorBasic,
-      buttonTitle: CREATE_CONSTRUCTOR_BASIC_TITLE,
-      createConstructorElement: addConstructorBasic,
-      deleteConstructorElement: deleteConstructorBasic,
-      updateConstructorElement: updateConstructorBasic
-    },
-    constructorPattern: {
-      list: model.eligibleOptions.constructorPattern,
-      label: constructorPattern,
-      buttonTitle: CREATE_PATTERN_TITLE,
-      deleteConstructorElement: deleteConstructorPattern
-    },
-    constructorFrontPocket: {
-      list: model.eligibleOptions.constructorFrontPocket,
-      label: constructorFrontPocket,
-      buttonTitle: CREATE_CONSTRUCTOR_FRONT_POCKET_TITLE,
-      createConstructorElement: addConstructorFrontPocket,
-      deleteConstructorElement: deleteConstructorFrontPocket,
-      updateConstructorElement: updateConstructorFrontPocket
-    },
-    constructorBottom: {
-      list: model.eligibleOptions.constructorBottom,
-      label: constructorBottom,
-      buttonTitle: CREATE_CONSTRUCTOR_BOTTOM_TITLE,
-      createConstructorElement: addConstructorBottom,
-      deleteConstructorElement: deleteConstructorBottom,
-      updateConstructorElement: updateConstructorBottom
-    }
-  };
+  const constructorOptions = model
+    ? {
+        constructorBasic: {
+          list: model?.eligibleOptions?.constructorBasic,
+          label: constructorBasic,
+          buttonTitle: CREATE_CONSTRUCTOR_BASIC_TITLE,
+          createConstructorElement: addConstructorBasic,
+          deleteConstructorElement: deleteConstructorBasic,
+          updateConstructorElement: updateConstructorBasic
+        },
+        constructorPattern: {
+          list: model.eligibleOptions.constructorPattern,
+          label: constructorPattern,
+          buttonTitle: CREATE_PATTERN_TITLE,
+          deleteConstructorElement: deleteConstructorPattern
+        },
+        constructorFrontPocket: {
+          list: model.eligibleOptions.constructorFrontPocket,
+          label: constructorFrontPocket,
+          buttonTitle: CREATE_CONSTRUCTOR_FRONT_POCKET_TITLE,
+          createConstructorElement: addConstructorFrontPocket,
+          deleteConstructorElement: deleteConstructorFrontPocket,
+          updateConstructorElement: updateConstructorFrontPocket
+        },
+        constructorBottom: {
+          list: model.eligibleOptions.constructorBottom,
+          label: constructorBottom,
+          buttonTitle: CREATE_CONSTRUCTOR_BOTTOM_TITLE,
+          createConstructorElement: addConstructorBottom,
+          deleteConstructorElement: deleteConstructorBottom,
+          updateConstructorElement: updateConstructorBottom
+        }
+      }
+    : {};
 
   const handleTabsChange = (event, newValue) => {
     dispatch(setConstructorTabs(newValue));
     if (!constructorTabs) {
       dispatch(
         getPatterns({
-          skip: 0
+          skip: 0,
+          limit: 10
         })
       );
     }
@@ -233,7 +237,6 @@ const ConstructorPage = ({ match }) => {
   const constructorTabsValue = Object.values(constructorOptions).map(
     ({ label }) => <Tab label={label} key={label} />
   );
-
   const constructorTables = Object.values(constructorOptions).map(
     (
       {
@@ -245,36 +248,43 @@ const ConstructorPage = ({ match }) => {
         updateConstructorElement
       },
       index
-    ) => (
-      <TabPanel key={label} value={constructorTabs} index={index}>
-        <div className={commonStyles.adminHeader}>
-          <Typography variant='h1' className={commonStyles.materialTitle}>
-            {label}
-          </Typography>
-          <Button
-            data-cy='add-constructor-element'
-            onClick={() =>
-              handleConstructorOpening(label, createConstructorElement)
-            }
-            variant='contained'
-            color='primary'
-          >
-            {buttonTitle}
-          </Button>
-        </div>
-        <TableContainerGenerator
-          data-cy='constructorTable'
-          tableTitles={constructorTitles}
-          tableItems={handleConstructorTableItems(
-            label,
-            constructorPattern,
-            list,
-            deleteConstructorElement,
-            updateConstructorElement
-          )}
-        />
-      </TabPanel>
-    )
+    ) => {
+      const handleConstructorTableTitles =
+        label === constructorPattern
+          ? patternConstructorTitles
+          : generalConstructorTitles;
+
+      return (
+        <TabPanel key={label} value={constructorTabs} index={index}>
+          <div className={commonStyles.adminHeader}>
+            <Typography variant='h1' className={commonStyles.materialTitle}>
+              {label}
+            </Typography>
+            <Button
+              data-cy='add-constructor-element'
+              onClick={() =>
+                handleConstructorOpening(label, createConstructorElement)
+              }
+              variant='contained'
+              color='primary'
+            >
+              {buttonTitle}
+            </Button>
+          </div>
+          <TableContainerGenerator
+            data-cy='constructorTable'
+            tableTitles={handleConstructorTableTitles}
+            tableItems={handleConstructorTableItems(
+              label,
+              constructorPattern,
+              list,
+              deleteConstructorElement,
+              updateConstructorElement
+            )}
+          />
+        </TabPanel>
+      );
+    }
   );
   if (loading) {
     return <LoadingBar />;

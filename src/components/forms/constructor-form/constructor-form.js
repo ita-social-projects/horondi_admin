@@ -84,7 +84,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
       setMaterialColors(
         filter(
           list,
-          (el) => el._id === editableConstructorElement.material._id
+          (el) => el._id === editableConstructorElement.features.material._id
         )[0].colors
       );
     }
@@ -109,8 +109,8 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         image: editableConstructorElement.image || '',
         uaName: editableConstructorElement.name[0].value || '',
         enName: editableConstructorElement.name[1].value || '',
-        material: editableConstructorElement.material._id || '',
-        color: editableConstructorElement.color._id || '',
+        material: editableConstructorElement.features.material._id || '',
+        color: editableConstructorElement.features.color._id || '',
         available: editableConstructorElement.available || false,
         default: editableConstructorElement.default || false,
         basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
@@ -316,14 +316,16 @@ ConstructorForm.propTypes = {
     available: PropTypes.bool,
     default: PropTypes.bool,
     image: PropTypes.string,
-    material: PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.arrayOf(valueShape)
-    }),
-    color: PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.arrayOf(valueShape),
-      colorHex: PropTypes.string
+    features: PropTypes.shape({
+      material: PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.arrayOf(valueShape)
+      }),
+      color: PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.arrayOf(valueShape),
+        colorHex: PropTypes.string
+      })
     }),
     name: PropTypes.arrayOf(valueShape),
     basePrice: PropTypes.arrayOf(

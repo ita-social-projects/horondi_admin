@@ -23,7 +23,7 @@ export const selectConstructorMethodAndMaterials = ({
   Pattern
 }) => ({
   list: Material.list,
-  filter: Material.filter,
+  filters: Material.filters,
   model: Model.model,
   loading: Model.modelLoading,
   patternList: Pattern.list,
