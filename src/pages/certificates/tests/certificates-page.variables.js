@@ -13,7 +13,8 @@ export const getCertificatesMock = [
         skip: 0,
         sortOrder: null,
         sortBy: null,
-        search: ''
+        search: '',
+        status: []
       }
     },
     result: {

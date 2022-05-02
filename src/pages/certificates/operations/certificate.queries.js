@@ -7,6 +7,7 @@ export const getAllCertificates = gql`
     $sortOrder: Sort
     $search: String
     $sortBy: String
+    $status: [String]
   ) {
     getAllCertificates(
       skip: $skip
@@ -14,6 +15,7 @@ export const getAllCertificates = gql`
       sortOrder: $sortOrder
       search: $search
       sortBy: $sortBy
+      status: $status
     ) {
       __typename
       ... on PaginatedCertificate {

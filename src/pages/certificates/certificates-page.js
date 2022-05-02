@@ -11,7 +11,6 @@ import TableContainerRow from '../../containers/table-container-row';
 import Certificate from './certificate/certificate';
 import Status from './status/status';
 import FilterNavbar from '../../components/filter-search-sort';
-import useCertificateFilters from '../../hooks/filters/use-certificate-filters';
 
 const pathToCreateCertificatesPage = config.routes.pathToCreateCertificates;
 const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
@@ -20,11 +19,11 @@ const { CREATE_CERTIFICATE_TITLE } = config.buttonTitles;
 const { NO_CERTIFICATES_MESSAGE } = config.messages;
 
 const CertificatesPage = () => {
-  const certificatesFilters = useCertificateFilters();
   const commonStyles = useCommonStyles();
   const certificates = useCertificates();
 
-  const getDate = (item) => item.isUsed || item.isExpired
+  const getDate = (item) =>
+    item.isUsed || item.isExpired
       ? '-'
       : `${certificates.transformDate(
           item.dateStart
@@ -77,7 +76,7 @@ const CertificatesPage = () => {
             {CREATE_CERTIFICATE_TITLE}
           </Button>
         </div>
-        <FilterNavbar options={certificatesFilters} />
+        <FilterNavbar options={certificates.certificatesFilters} />
         {certificateItems.length ? (
           <TableContainerGenerator
             data-cy='certificateTable'

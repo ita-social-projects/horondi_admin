@@ -12,13 +12,18 @@ const useStateSpy = jest
   .mockImplementation((init) => [init, setState]);
 
 describe('use-certificate-filters test', () => {
-  it('should call useS ateSpy', () => {
-    const { searchOptions, clearOptions, sortOptions } =
-      useCertificateFilters();
+  it('should call useStateSpy', () => {
+    const {
+      searchOptions,
+      clearOptions,
+      sortOptions,
+      filterByMultipleOptions
+    } = useCertificateFilters();
 
     searchOptions.setSearchFilter('name');
     sortOptions.setSorting('value', 'asc', 'sortByPriceAsc');
     clearOptions.clearAllFilters();
+    filterByMultipleOptions[0].setFilterHandler('isActivated');
 
     expect(useStateSpy).toHaveBeenCalled();
   });
