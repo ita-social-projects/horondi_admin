@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { useDispatch } from 'react-redux';
@@ -27,16 +27,14 @@ useDispatch.mockImplementation(() => dispatch);
 
 describe('should render component with current data', () => {
   beforeEach(async () => {
-    act(() => {
-      render(
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Router history={history}>
-            <PromoCodeEdit />
-          </Router>
-        </MockedProvider>
-      );
-    });
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Router history={history}>
+          <PromoCodeEdit />
+        </Router>
+      </MockedProvider>
+    );
+    await new Promise((resolve) => setTimeout(resolve, 500));
   });
 
   it('should change promocode code name', async () => {

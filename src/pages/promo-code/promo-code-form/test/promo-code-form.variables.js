@@ -1,6 +1,6 @@
 import { getCategoriesList } from '../../operations/categories-list.queries';
 
-export const getCategoriesMocks = [
+export const mocks = [
   {
     request: {
       query: getCategoriesList

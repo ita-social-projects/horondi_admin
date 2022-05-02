@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 
 import PromoCodeForm from '../promo-code-form';
-import { getCategoriesMocks } from './promo-code-form.variables';
+import { mocks } from './promo-code-form.variables';
 
 const props = {
   initialState: {
@@ -19,7 +19,7 @@ const props = {
 describe('promo-code-form component test', () => {
   beforeEach(async () => {
     render(
-      <MockedProvider addTypename={false} mocks={getCategoriesMocks}>
+      <MockedProvider addTypename={false} mocks={mocks}>
         <BrowserRouter>
           <PromoCodeForm {...props} />
         </BrowserRouter>
