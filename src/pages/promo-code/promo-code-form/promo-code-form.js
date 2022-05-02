@@ -45,7 +45,13 @@ function PromoCodeForm({
   const { promoCodesConsts } = orders;
   let { checkboxes } = promoCodesConsts.categories;
 
-  const { data: categoriesList, loading, error } = useQuery(getCategoriesList);
+  const {
+    data: categoriesList,
+    loading,
+    error
+  } = useQuery(getCategoriesList, {
+    fetchPolicy: 'no-cache'
+  });
 
   if (categoriesList) {
     checkboxes = [
