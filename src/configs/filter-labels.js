@@ -125,6 +125,22 @@ const filterLabels = {
       }
     ]
   },
+  promoCode: {
+    sortLabels: [
+      {
+        value: 'sortByPriceAsc',
+        label: 'за вартістю (по зростанню)',
+        key: 'discount',
+        type: 'asc'
+      },
+      {
+        value: 'sortByPriceDesc',
+        label: 'за вартістю (по спаданню)',
+        key: 'discount',
+        type: 'desc'
+      }
+    ]
+  },
   certificates: {
     sortLabels: [
       {
