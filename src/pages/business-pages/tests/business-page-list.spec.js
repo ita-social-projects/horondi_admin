@@ -77,13 +77,6 @@ describe('BusinessPageList tests', () => {
     expect(mockHandler).toHaveBeenCalledTimes(3);
   });
 
-  it('Button addBusinessPage should exist and be clicked', () => {
-    mockLoading = false;
-    useDispatchMock.mockReturnValue(mockHandler);
-    expect(wrapper.exists(Button)).toBe(true);
-    expect(wrapper.find(Button).at(0).text()).toBe(CREATE_BUSINESS_PAGE);
-  });
-
   it('Component TableContainerGenerator should exist', () => {
     mockLoading = false;
     expect(wrapper.exists(TableContainerGenerator)).toBe(true);
