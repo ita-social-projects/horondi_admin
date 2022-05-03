@@ -236,24 +236,28 @@ const Routes = ({ validatorMethods }) => {
           <Route
             path={routes.pathToBusinessPagePaymentAndShipping}
             exact
-            render={({ match }) => (
-                <BusinessPageForm codePath='payment-and-shipping' editMode />
-              )}
+            render={() => (
+              <BusinessPageForm codePath='payment-and-shipping' editMode />
+            )}
           />
           <Route
             path={routes.pathToBusinessPagePrivacyPolicy}
             exact
-            render={({ match }) => <BusinessPageForm codePath='privacy-policy' editMode />}
+            render={() => (
+              <BusinessPageForm codePath='privacy-policy' editMode />
+            )}
           />
           <Route
             path={routes.pathToBusinessPageTerms}
             exact
-            render={({ match }) => <BusinessPageForm codePath='terms' editMode />}
+            render={() => <BusinessPageForm codePath='terms' editMode />}
           />
           <Route
             path={routes.pathToBusinessPageUserAgreement}
             exact
-            render={({ match }) => <BusinessPageForm codePath='user-agreement' editMode />}
+            render={() => (
+              <BusinessPageForm codePath='user-agreement' editMode />
+            )}
           />
           <Route path={routes.pathToContacts} exact component={ContactsPage} />
           <Route path={routes.pathToAddContact} exact component={ContactsAdd} />
