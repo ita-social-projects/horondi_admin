@@ -16,7 +16,7 @@ export const businessPage = {
 export const error = {
   message: 'NOT_FOUND'
 };
-export const businessPageId = '0c3c7954dd35de268bed4fe8';
+export const businessPageCode = 'payment-and-shipping';
 export const businessPageToRemoveId = '0c3c7954dd35de268bed4fe8';
 export const businessPages = [
   {

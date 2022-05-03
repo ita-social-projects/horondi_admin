@@ -1,7 +1,7 @@
 import {
   setBusinessPages,
   getAllBusinessPages,
-  getBusinessPageById,
+  getBusinessPageByCode,
   setLoading,
   setBusinessPagesError,
   addBusinessPage,
@@ -11,7 +11,7 @@ import {
 } from '../business-pages.actions';
 import {
   SET_BUSINESS_PAGES,
-  GET_BUSINESS_PAGE_BY_ID,
+  GET_BUSINESS_PAGE_BY_CODE,
   SET_BUSINESS_PAGES_LOADING,
   SET_BUSINESS_PAGES_ERROR,
   ADD_BUSINESS_PAGE,
@@ -22,17 +22,17 @@ import {
 } from '../business-pages.types';
 import {
   businessPage,
-  businessPageId,
+  businessPageCode,
   businessPages,
   businessPageToRemoveId,
   businessPageToUpdate
 } from './business-pages.variables';
 
 describe('business-pages actions tests', () => {
-  it('should get business page by id', () => {
-    expect(getBusinessPageById('0c3c7954dd35de268bed4fe8')).toEqual({
-      type: GET_BUSINESS_PAGE_BY_ID,
-      payload: businessPageId
+  it('should get business page by code', () => {
+    expect(getBusinessPageByCode('payment-and-shipping')).toEqual({
+      type: GET_BUSINESS_PAGE_BY_CODE,
+      payload: businessPageCode
     });
   });
   it('should add business page', () => {
@@ -72,12 +72,6 @@ describe('business-pages actions tests', () => {
     expect(updateBusinessPage(businessPageToUpdate)).toEqual({
       type: UPDATE_BUSINESS_PAGE,
       payload: businessPageToUpdate
-    });
-  });
-  it('should delete business page', () => {
-    expect(deleteBusinessPage(businessPageToRemoveId)).toEqual({
-      type: DELETE_BUSINESS_PAGE,
-      payload: businessPageToRemoveId
     });
   });
 });
