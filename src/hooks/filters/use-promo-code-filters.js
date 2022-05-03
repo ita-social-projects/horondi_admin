@@ -1,73 +1,36 @@
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { setCurrentPage } from '../../redux/table/table.actions';
 import filterLabels from '../../configs/filter-labels';
 import buttonTitles from '../../configs/button-titles';
 import { statusPromoCodeFilterObject } from '../../utils/promo-code';
 import { promoCodeStatusTableAction } from '../../consts/promo-code-status';
+import usePromoCodeCertificateFilters from './use-promoCode-Certificate-filters';
 
 const usePromoCodeFilters = () => {
-  const [sortLabel, setSortLabel] = useState('');
-  const [search, setSearch] = useState('');
-  const [sortDirection, setSortDirection] = useState(null);
-  const [sortBy, setSortBy] = useState(null);
-  const [status, setStatus] = useState([]);
-
-  const dispatch = useDispatch();
-
-  const setSorting = ({ key, type, value }) => {
-    dispatch(setCurrentPage(0));
-    setSortDirection(type);
-    setSortLabel(value);
-    setSortBy(key);
-  };
-
-  const setSearchFilter = (str) => {
-    dispatch(setCurrentPage(0));
-    setSearch(str);
-  };
-
-  const clearCertificateFilter = () => {
-    setSearch('');
-    setSortDirection(null);
-    setSortLabel('');
-    setStatus([]);
-  };
-
-  const clearAllFilters = () => {
-    dispatch(setCurrentPage(0));
-    clearCertificateFilter();
-  };
-
-  const setStatusFilter = (status) => {
-    dispatch(setCurrentPage(0));
-    setStatus(status);
-  };
+  const useState = usePromoCodeCertificateFilters();
 
   return {
     filterByMultipleOptions: [
       {
-        filters: status,
+        filters: useState.status,
         label: buttonTitles.STATUS,
         selectItems: statusPromoCodeFilterObject,
-        setFilterHandler: setStatusFilter,
+        setFilterHandler: useState.setStatusFilter,
         objForTranslateRenderItems: promoCodeStatusTableAction,
-        status
+        status: useState.status
       }
     ],
     searchOptions: {
-      search,
-      setSearchFilter
+      search: useState.search,
+      setSearchFilter: useState.setSearchFilter
     },
     clearOptions: {
-      clearAllFilters
+      clearAllFilters: useState.clearAllFilters
     },
     sortOptions: {
       labels: filterLabels.promoCode.sortLabels,
-      setSorting,
-      sortLabel,
-      sortDirection,
-      sortBy
+      setSorting: useState.setSorting,
+      sortLabel: useState.sortLabel,
+      sortDirection: useState.sortDirection,
+      sortBy: useState.sortBy
     }
   };
 };
