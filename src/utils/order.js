@@ -96,6 +96,18 @@ export const postPropTypes = {
   }).isRequired
 };
 
+export const worldWidePropTypes = {
+  setFieldValue: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  values: PropTypes.shape({
+    worldWideCountry: PropTypes.string,
+    stateOrProvince: PropTypes.string,
+    worldWideCity: PropTypes.string,
+    worldWideStreet: PropTypes.string,
+    cityCode: PropTypes.string
+  })
+};
+
 const price = (item) => [
   {
     value: item.quantity * item.options.size.price[0].value,
@@ -147,6 +159,7 @@ export const address = (delivery) => {
   } else {
     delivery.novaPost = {};
     delivery.courier = {};
+    delivery.ukrPost = {};
   }
   return {
     sentBy,
@@ -165,6 +178,13 @@ export const address = (delivery) => {
     street: delivery.courier.street || '',
     house: delivery.courier.house || '',
     flat: delivery.courier.flat || '',
+    messenger: delivery.worldWide.messenger || '',
+    messengerPhone: delivery.worldWide.messengerPhone || '',
+    worldWideCountry: delivery.worldWide.worldWideCountry || '',
+    stateOrProvince: delivery.worldWide.stateOrProvince || '',
+    worldWideCity: delivery.worldWide.worldWideCity || '',
+    worldWideStreet: delivery.worldWide.worldWideStreet || '',
+    cityCode: delivery.worldWide.cityCode || '',
     byCourier: delivery.sentBy.includes(COURIER)
   };
 };
@@ -189,6 +209,15 @@ export const inputName = {
     city: 'delivery.ukrPost.city',
     cityId: 'delivery.ukrPost.cityId',
     courierOffice: 'delivery.ukrPost.courierOffice'
+  },
+  worldWide: {
+    messenger: 'delivery.worldWide.messenger',
+    messengerPhone: 'delivery.worldWide.messengerPhone',
+    worldWideCountry: 'delivery.worldWide.worldWideCountry',
+    stateOrProvince: 'delivery.worldWide.stateOrProvince',
+    worldWideCity: 'delivery.worldWide.worldWideCity',
+    worldWideStreet: 'delivery.worldWide.worldWideStreet',
+    cityCode: 'delivery.worldWide.cityCode'
   },
   userId: 'user_id',
   noUser: 'Користувача не вибрано',
@@ -231,6 +260,15 @@ export const initialValues = {
       city: '',
       cityId: '',
       courierOffice: ''
+    },
+    worldWide: {
+      messenger: '',
+      messengerPhone: '',
+      worldWideCountry: '',
+      stateOrProvince: '',
+      worldWideCity: '',
+      worldWideStreet: '',
+      cityCode: ''
     }
   },
   userComment: '',
@@ -279,7 +317,14 @@ export const setFormValues = (selectedOrder) => {
     region,
     regionId,
     districtId,
-    cityId
+    cityId,
+    messenger,
+    messengerPhone,
+    worldWideCountry,
+    stateOrProvince,
+    worldWideCity,
+    worldWideStreet,
+    cityCode
   } = selectedOrder.delivery;
   return {
     status: selectedOrder.status,
@@ -307,6 +352,19 @@ export const setFormValues = (selectedOrder) => {
         city: sentBy === deliveryTypes.ukrPost ? city : '',
         cityId: sentBy === deliveryTypes.ukrPost ? cityId : '',
         courierOffice: sentBy === deliveryTypes.ukrPost ? courierOffice : ''
+      },
+      worldWide: {
+        messenger: sentBy === deliveryTypes.worldWide ? messenger : '',
+        messengerPhone:
+          sentBy === deliveryTypes.worldWide ? messengerPhone : '',
+        worldWideCountry:
+          sentBy === deliveryTypes.worldWide ? worldWideCountry : '',
+        stateOrProvince:
+          sentBy === deliveryTypes.worldWide ? stateOrProvince : '',
+        worldWideCity: sentBy === deliveryTypes.worldWide ? worldWideCity : '',
+        worldWideStreet:
+          sentBy === deliveryTypes.worldWide ? worldWideStreet : '',
+        cityCode: sentBy === deliveryTypes.worldWide ? cityCode : ''
       }
     },
     userComment: selectedOrder.userComment,
