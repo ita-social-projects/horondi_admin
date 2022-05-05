@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const getAllPromoCodes = gql`
-  query (
+  query query(
     $skip: Int
     $limit: Int
     $sortBy: String
