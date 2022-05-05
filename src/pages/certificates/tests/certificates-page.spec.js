@@ -58,6 +58,11 @@ describe('Information about certificates page', () => {
   });
 
   it('should render the table with information about certificates', async () => {
+    useSelector.mockImplementation(() => ({
+      rowsPerPage: 10,
+      currentPage: 0
+    }));
+
     const { findAllByRole } = render(
       <BrowserRouter>
         <MockedProvider mocks={getCertificatesMock}>
