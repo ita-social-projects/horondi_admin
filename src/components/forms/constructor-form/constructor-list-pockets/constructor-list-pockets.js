@@ -57,7 +57,7 @@ const ConstructorListPockets = ({
         {item.currentPocketWithPosition?.position.name[0].value}
       </TableCell>
       <TableCell>
-        {item.currentPocketWithPosition?.pocket.additionalPrice[1].value}
+        {item.currentPocketWithPosition?.pocket.absolutePrice}
       </TableCell>
       <TableCell>
         <CustomizedDeleteIcon
