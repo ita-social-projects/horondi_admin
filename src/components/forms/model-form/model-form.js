@@ -87,6 +87,8 @@ const ModelForm = ({ model, id, isEdit }) => {
     handleBlur,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue
   } = useFormik({
     validationSchema: modelValidationSchema,
@@ -198,6 +200,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 values={values}
                 errors={errors}
                 unblockFunction={unblock}
+                disabled={!dirty || !isValid}
               />
             </Grid>
             <Grid item className={styles.button}>

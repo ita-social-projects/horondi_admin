@@ -58,6 +58,8 @@ const PositionForm = ({ position, id, edit }) => {
     handleBlur,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue
   } = useFormik({
     validationSchema: positionValidationSchema,
@@ -128,6 +130,7 @@ const PositionForm = ({ position, id, edit }) => {
                 errors={errors}
                 onClickHandler={handleSubmit}
                 unblockFunction={unblock}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>
