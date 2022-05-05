@@ -20,9 +20,25 @@ export const mocks = [
           items: [
             {
               categories: ['backpacks', 'bags', 'accessories', 'constructor'],
-              code: 'www',
+              code: 'test1',
               dateFrom: '2022-04-08T14:22:43.437Z',
               dateTo: '2022-04-30T14:22:43.452Z',
+              discount: 10,
+              _id: '123'
+            },
+            {
+              categories: ['backpacks', 'bags', 'accessories', 'constructor'],
+              code: 'test2',
+              dateFrom: '2022-04-08T14:22:43.437Z',
+              dateTo: '2022-05-06T14:22:43.452Z',
+              discount: 10,
+              _id: '123'
+            },
+            {
+              categories: ['backpacks', 'bags', 'accessories', 'constructor'],
+              code: 'test3',
+              dateFrom: '2022-06-08T14:22:43.437Z',
+              dateTo: '2022-06-10T14:22:43.452Z',
               discount: 10,
               _id: '123'
             }

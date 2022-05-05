@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { BrowserRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
+import { screen, render, fireEvent } from '@testing-library/react';
 import PromoCodePage from '../promo-code-page';
 import { theme } from '../../../components/app/app-theme/app.theme';
 import TableContainerRow from '../../../containers/table-container-row';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
-
 import { mocks, mocksWithoutPromocodes } from './promo-code-page-variables';
 
 jest.mock('react-redux');
@@ -89,5 +89,21 @@ describe('PromoCodePage component test with loading', () => {
       </MockedProvider>
     );
     expect(wrapper).toBeTruthy();
+  });
+
+  it('test delete btn ', async () => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <BrowserRouter>
+          <ThemeProvider theme={themeValue}>
+            <PromoCodePage />
+          </ThemeProvider>
+        </BrowserRouter>
+      </MockedProvider>
+    );
+    const btnDelete = await screen.findAllByTitle('Видалити');
+    const test2 = await screen.findByText('test2');
+    await fireEvent.click(btnDelete[0]);
+    await expect(test2).toBeInTheDocument();
   });
 });
