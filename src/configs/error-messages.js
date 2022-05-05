@@ -148,7 +148,7 @@ export const contactErrorMessages = {
   ENTER_LINK_MESSAGE: 'Введіть посилання',
   CONTACT_ERROR_MESSAGE: 'Помилка збереження',
   INVALID_PHONE_MESSAGE:
-    'Введіть коректний формат, наприклад: 380(XX)-XXX-XX-XX'
+    'Введіть коректний формат, наприклад: +380(XX)-XXX-XX-XX'
 };
 
 export const emailQuestionsErrorMessages = {
