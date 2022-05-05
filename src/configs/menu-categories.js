@@ -14,9 +14,6 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import DescriptionIcon from '@material-ui/icons/Description';
 import InfoIcon from '@material-ui/icons/Info';
 import ExtensionIcon from '@material-ui/icons/Extension';
-import ErrorIcon from '@material-ui/icons/Error';
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
-import LinkIcon from '@material-ui/icons/Link';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import GradientIcon from '@material-ui/icons/Gradient';
@@ -39,9 +36,7 @@ export const menuCategories = [
   ['Замовлення', routes.pathToOrders, ShoppingBasketIcon],
   ['Статистика', routes.pathToStatistic, BarChartIcon],
   ['Останні зміни', routes.pathToHistory, HistoryIcon],
-  ['Про Нас', routes.pathToAboutUs, PeopleIcon],
-  ['Бізнес сторінки', routes.pathToBusinessPages, BusinessCenterIcon],
-  ['Посилання', routes.pathToHeaders, LinkIcon]
+  ['Про Нас', routes.pathToAboutUs, PeopleIcon]
 ];
 
 export const materialMenuCategories = [
@@ -72,11 +67,19 @@ export const staticPagesCategories = [
   ['Слайдер', routes.pathToHomePageSlides, FilterIcon],
   ['Новини', routes.pathToNews, ImportContactsIcon],
   ['Контакти', routes.pathToContacts, ImportLocationOnIcon],
-  ['Про оплату і доставку', routes.pathToBusinessPages, MonetizationOnIcon],
-  ['Умови', routes.pathToBusinessPages, DescriptionIcon],
-  ['Про нас', routes.pathToBusinessPages, InfoIcon],
-  ['Про матеріали', routes.pathToBusinessPages, ExtensionIcon],
-  ['Правила користування сайтом', routes.pathToBusinessPages, ErrorIcon]
+  [
+    'Про оплату і доставку',
+    routes.pathToBusinessPagePaymentAndShipping,
+    MonetizationOnIcon
+  ],
+  ['Умови', routes.pathToBusinessPagePrivacyPolicy, DescriptionIcon],
+  [
+    'Угода користувача',
+    routes.pathToBusinessPageUserAgreement,
+    DescriptionIcon
+  ],
+  ['Правила користування сайтом', routes.pathToBusinessPageTerms, InfoIcon],
+  ['Питання та відповіді', routes.pathToBusinessPages, HelpIcon]
 ];
 
 export const constructorMenuCategories = [

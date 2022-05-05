@@ -6,7 +6,7 @@ import {
   ADD_BUSINESS_PAGE,
   DELETE_BUSINESS_PAGE,
   SET_CURRENT_BUSINESS_PAGE,
-  GET_BUSINESS_PAGE_BY_ID,
+  GET_BUSINESS_PAGE_BY_CODE,
   UPDATE_BUSINESS_PAGE,
   REMOVE_BUSINESS_PAGE_FROM_STORE
 } from './business-pages.types';
@@ -20,11 +20,10 @@ const getAllBusinessPages = () => ({
   type: GET_ALL_BUSINESS_PAGES
 });
 
-const getBusinessPageById = (payload) => ({
-  type: GET_BUSINESS_PAGE_BY_ID,
+const getBusinessPageByCode = (payload) => ({
+  type: GET_BUSINESS_PAGE_BY_CODE,
   payload
 });
-
 const setLoading = (loading) => ({
   type: SET_BUSINESS_PAGES_LOADING,
   payload: loading
@@ -68,7 +67,7 @@ export {
   setBusinessPagesError,
   deleteBusinessPage,
   setCurrentBusinessPage,
-  getBusinessPageById,
+  getBusinessPageByCode,
   updateBusinessPage,
   removeBusinessPageFromStore
 };
