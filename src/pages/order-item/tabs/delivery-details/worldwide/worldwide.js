@@ -34,15 +34,34 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
     }
   };
 
+  const fetchCountries = async () => {
+    const countries = await WorldwideService.getCountries();
+
+    setCountryOptions(countries);
+  };
+
+  const fetchStatesByCountry = async (country) => {
+    const states = await WorldwideService.getStatesByCountry(country);
+
+    setStatesOptions(states);
+  };
+
+  const fetchCitiesByCountryAndState = async (country, state) => {
+    const cities = await WorldwideService.getCitiesByCountryAndState(
+      country,
+      state
+    );
+
+    setCitiesOptions(cities);
+  };
+
   useEffect(() => {
-    WorldwideService.getCountries().then(setCountryOptions);
+    fetchCountries();
   }, []);
 
   useEffect(() => {
     if (values.worldWideCountry) {
-      WorldwideService.getStatesByCountry(values.worldWideCountry).then(
-        setStatesOptions
-      );
+      fetchStatesByCountry(values.worldWideCountry);
     } else {
       setFieldValue(worldWide.stateOrProvince, '');
       setFieldValue(worldWide.worldWideCity, '');
@@ -55,10 +74,10 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
 
   useEffect(() => {
     if (values.stateOrProvince) {
-      WorldwideService.getCitiesByState(
+      fetchCitiesByCountryAndState(
         values.worldWideCountry,
         values.stateOrProvince
-      ).then(setCitiesOptions);
+      );
     } else {
       setFieldValue(worldWide.worldWideCity, '');
       setFieldValue(worldWide.worldWideStreet, '');
