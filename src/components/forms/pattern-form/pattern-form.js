@@ -279,6 +279,7 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   values={values}
                   errors={errors}
                   disabled={!dirty || !isValid}
+                  data-testid='saveButton'
                 />
               </Grid>
             </Grid>
