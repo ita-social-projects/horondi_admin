@@ -128,6 +128,7 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
           options={countryOptions}
           value={values.worldWideCountry}
           inputValue={countryInputState}
+          data-testid='worldWideCountry'
           onInputChange={(_, value) => setCountryInput(value)}
           onChange={(_, value) =>
             setFieldValue(worldWide.worldWideCountry, value || '')
@@ -147,6 +148,7 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
           inputValue={stateOrProvinceInput}
           onInputChange={(_, value) => setStateOrProvinceInput(value)}
           disabled={!values.worldWideCountry}
+          data-testid='stateOrProvince'
           onChange={(_, value) =>
             setFieldValue(worldWide.stateOrProvince, value || '')
           }
@@ -166,6 +168,7 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
             handleCityInputChange(value, reason);
           }}
           disabled={!values.worldWideCountry}
+          data-testid='worldWideCity'
           onChange={(_, value) =>
             setFieldValue(worldWide.worldWideCity, value || '')
           }
