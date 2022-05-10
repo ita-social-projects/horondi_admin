@@ -145,6 +145,8 @@ export const newOrder = (order) => ({
 
 export const submitStatus = ['CREATED', 'CONFIRMED'];
 
+const handleOrderItem = (item) => item || '';
+
 export const address = (delivery) => {
   const { sentBy } = delivery;
   if (
@@ -165,26 +167,26 @@ export const address = (delivery) => {
     sentBy,
     courierOffice:
       delivery.novaPost.courierOffice || delivery.ukrPost.courierOffice || '',
-    region: delivery.ukrPost.region || '',
-    regionId: delivery.ukrPost.regionId || '',
-    district: delivery.ukrPost.district || '',
-    districtId: delivery.ukrPost.districtId || '',
+    region: handleOrderItem(delivery.ukrPost.region),
+    regionId: handleOrderItem(delivery.ukrPost.regionId),
+    district: handleOrderItem(delivery.ukrPost.district),
+    districtId: handleOrderItem(delivery.ukrPost.districtId),
     city:
       delivery.novaPost.city ||
       delivery.ukrPost.city ||
       delivery.courier.city ||
       '',
-    cityId: delivery.ukrPost.cityId || '',
-    street: delivery.courier.street || '',
-    house: delivery.courier.house || '',
-    flat: delivery.courier.flat || '',
-    messenger: delivery.worldWide.messenger || '',
-    messengerPhone: delivery.worldWide.messengerPhone || '',
-    worldWideCountry: delivery.worldWide.worldWideCountry || '',
-    stateOrProvince: delivery.worldWide.stateOrProvince || '',
-    worldWideCity: delivery.worldWide.worldWideCity || '',
-    worldWideStreet: delivery.worldWide.worldWideStreet || '',
-    cityCode: delivery.worldWide.cityCode || '',
+    cityId: handleOrderItem(delivery.ukrPost.cityId),
+    street: handleOrderItem(delivery.courier.street),
+    house: handleOrderItem(delivery.courier.house),
+    flat: handleOrderItem(delivery.courier.flat),
+    messenger: handleOrderItem(delivery.worldWide.messenger),
+    messengerPhone: handleOrderItem(delivery.worldWide.messengerPhone),
+    worldWideCountry: handleOrderItem(delivery.worldWide.worldWideCountry),
+    stateOrProvince: handleOrderItem(delivery.worldWide.stateOrProvince),
+    worldWideCity: handleOrderItem(delivery.worldWide.worldWideCity),
+    worldWideStreet: handleOrderItem(delivery.worldWide.worldWideStreet),
+    cityCode: handleOrderItem(delivery.worldWide.cityCode),
     byCourier: delivery.sentBy.includes(COURIER)
   };
 };
@@ -326,6 +328,29 @@ export const setFormValues = (selectedOrder) => {
     worldWideStreet,
     cityCode
   } = selectedOrder.delivery;
+
+  let worldWide = {
+    messenger: '',
+    messengerPhone: '',
+    worldWideCountry: '',
+    stateOrProvince: '',
+    worldWideCity: '',
+    worldWideStreet: '',
+    cityCode: ''
+  };
+
+  if (sentBy === deliveryTypes.worldWide) {
+    worldWide = {
+      messenger,
+      messengerPhone,
+      worldWideCountry,
+      stateOrProvince,
+      worldWideCity,
+      worldWideStreet,
+      cityCode
+    };
+  }
+
   return {
     status: selectedOrder.status,
     paymentMethod: selectedOrder.paymentMethod,
@@ -353,19 +378,7 @@ export const setFormValues = (selectedOrder) => {
         cityId: sentBy === deliveryTypes.ukrPost ? cityId : '',
         courierOffice: sentBy === deliveryTypes.ukrPost ? courierOffice : ''
       },
-      worldWide: {
-        messenger: sentBy === deliveryTypes.worldWide ? messenger : '',
-        messengerPhone:
-          sentBy === deliveryTypes.worldWide ? messengerPhone : '',
-        worldWideCountry:
-          sentBy === deliveryTypes.worldWide ? worldWideCountry : '',
-        stateOrProvince:
-          sentBy === deliveryTypes.worldWide ? stateOrProvince : '',
-        worldWideCity: sentBy === deliveryTypes.worldWide ? worldWideCity : '',
-        worldWideStreet:
-          sentBy === deliveryTypes.worldWide ? worldWideStreet : '',
-        cityCode: sentBy === deliveryTypes.worldWide ? cityCode : ''
-      }
+      worldWide
     },
     userComment: selectedOrder.userComment,
     items: selectedOrder.items.map((item) => ({
