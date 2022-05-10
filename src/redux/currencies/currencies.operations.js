@@ -5,8 +5,11 @@ export const getAllCurrencies = async () => {
       query {
       getAllCurrencies {
         convertOptions {
-          name
-          exchangeRate 
+          UAH {
+            name
+            exchangeRate
+            unicode
+          }
         }
       }
     }

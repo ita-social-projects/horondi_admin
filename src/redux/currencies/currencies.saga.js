@@ -8,7 +8,7 @@ export function* handleCurrenciesLoad({ payload }) {
   try {
     const currencies = yield call(getAllCurrencies);
 
-    const { exchangeRate } = currencies[0]?.convertOptions[0];
+    const { exchangeRate } = currencies[0]?.convertOptions.UAH;
     if (exchangeRate) {
       yield put(setExchangeRate({ exchangeRate }));
     }
