@@ -18,7 +18,7 @@ export const size = {
   weightInKg: 1.5,
   available: false,
   absolutePrice: 100,
-  relativePrice: null
+  relativePrice: 10
 };
 
 export const sizeList = [
