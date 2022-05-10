@@ -21,6 +21,49 @@ export const getAllBusinessPages = async () => {
 
   return result?.data?.getAllBusinessTexts;
 };
+export const getBusinessPageByCode = async (code) => {
+  const getBusinessPageByCodeQuery = `
+    query($code: String!) {
+      getBusinessTextByCode(code: $code) {
+        ... on BusinessText {
+          _id
+          code
+          title {
+            lang
+            value
+          }
+          sections {
+            lang
+            value
+          }
+          text {
+            lang
+            value
+          }
+          languages
+        }
+        ... on Error {
+          message
+          statusCode
+        }
+      }
+    }  
+    `;
+
+  const result = await getItems(getBusinessPageByCodeQuery, { code });
+
+  if (
+    Object.keys(newsErrors).includes(result?.data?.getBusinessTextById?.message)
+  ) {
+    throw new Error(
+      `${result.data.getBusinessTextById.statusCode} ${
+        newsErrors[result.data.getBusinessTextById.message]
+      }`
+    );
+  }
+
+  return result?.data?.getBusinessTextById;
+};
 export const getBusinessPageById = async (id) => {
   const getBusinessPageByIdQuery = `
       query($id: ID!) {

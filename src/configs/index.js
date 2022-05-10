@@ -64,7 +64,8 @@ import {
   basicsErrorMessages,
   strapsErrorMessages,
   userErrorMessages,
-  promoCodeErrorMessages
+  promoCodeErrorMessages,
+  aboutUsPageErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -105,6 +106,12 @@ export const config = {
       },
       name: []
     }
+  },
+  imgSizes: {
+    large: 'large',
+    medium: 'medium',
+    small: 'small',
+    thumbnail: 'thumbnail'
   },
   userRole: {
     user: 'user',
@@ -298,6 +305,7 @@ export const config = {
   slidesTranslations,
   sizeErrorMessages,
   businessPageErrorMessages,
+  aboutUsPageErrorMessages,
   productErrorMessages,
   imageUploadNewsInputsId,
   imageUploadSlideInputsId,

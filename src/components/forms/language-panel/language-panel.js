@@ -20,6 +20,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
   } = inputOptions;
   const inputsTextfields = inputs.filter((input) => !input.isEditor);
   const inputsEditor = inputs.filter((input) => input.isEditor);
+
   return (
     <>
       <div className={styles.languagePanel}>

@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 import AboutUsPage from '../pages/about-us';
-import AboutUsAddBlock from '../pages/about-us/about-us-add';
+import AboutUsTitleEdit from '../pages/about-us/about-us-title-edit';
+import AboutUsSectionAdd from '../pages/about-us/about-us-section-add';
+import AboutUsSectionEdit from '../pages/about-us/about-us-section-edit';
+import AboutUsFooterImgEdit from '../pages/about-us/about-us-footer-img-edit';
 import UsersPage from '../pages/users';
 import NewsPage from '../pages/news';
 import NavBar from '../components/nav-bar';
@@ -160,9 +163,24 @@ const Routes = ({ validatorMethods }) => {
           <Route path={routes.pathToAddNews} exact component={NewsAdd} />
           <Route path={routes.pathToAboutUs} exact component={AboutUsPage} />
           <Route
-            path={routes.pathToAboutUsAdd}
+            path={routes.pathToAboutUsTitleEdit}
             exact
-            component={AboutUsAddBlock}
+            component={AboutUsTitleEdit}
+          />
+          <Route
+            path={routes.pathToAboutUsAddSection}
+            exact
+            component={AboutUsSectionAdd}
+          />
+          <Route
+            path={routes.pathToAboutUsSectionEdit}
+            exact
+            render={({ match }) => <AboutUsSectionEdit id={match.params.id} />}
+          />
+          <Route
+            path={routes.pathToAboutUsFooterImgEdit}
+            exact
+            component={AboutUsFooterImgEdit}
           />
           <Route
             path={routes.pathToAboutMaterialsMain}

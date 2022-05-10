@@ -79,7 +79,6 @@ const ModelForm = ({ model, id, isEdit }) => {
 
   const [sizes, setSizes] = useState(model.sizes || []);
   const [category, setCategory] = useState(model.category._id || '');
-
   const {
     values,
     handleSubmit,
@@ -164,6 +163,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     { label: name, name: labelsEn.name },
     { label: description, name: labelsEn.description, isEditor: true }
   ];
+
   const inputOptions = {
     errors,
     touched,

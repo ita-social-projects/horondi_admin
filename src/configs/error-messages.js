@@ -124,6 +124,12 @@ export const newsErrorMessages = {
   NOT_UA_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини українською"
 };
 
+export const aboutUsPageErrorMessages = {
+  ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
+  NO_STRING_TYPE_MESSAGE: 'Повинно містити букви, цифри та спецсимволи',
+  REQUIRED_IMG_MESSAGE: 'Завантажте зображення'
+};
+
 export const modelErrorMessages = {
   PHOTO_NOT_PROVIDED: 'Додайте фото для моделі',
   NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис моделі англійською`,

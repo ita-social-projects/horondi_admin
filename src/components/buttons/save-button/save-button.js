@@ -11,7 +11,7 @@ import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions'
 import messages from '../../../configs/messages';
 
 export const saveButtonHandler = (
-  props,
+  unblockFunction,
   onClickHandler,
   dispatch,
   openSuccessSnackbar,
@@ -19,8 +19,8 @@ export const saveButtonHandler = (
   saveChanges
 ) => {
   const backAction = () => {
-    if (props.unblockFunction) {
-      props.unblockFunction();
+    if (unblockFunction) {
+      unblockFunction();
     }
     onClickHandler();
     dispatch(closeDialog());
@@ -36,6 +36,7 @@ const SaveButton = ({
   color,
   errors,
   values,
+  unblockFunction,
   ...props
 }) => {
   const error = !!Object.keys(errors).length;
@@ -46,10 +47,11 @@ const SaveButton = ({
       return true;
     }
 
-    return (Boolean(el) || el === 0) && !error && changed;
+    return !error && changed;
   });
 
   const [disabled, setDisabled] = useState(!disable);
+
   useEffect(() => {
     setDisabled(!disable);
   }, [disable, values, error]);
@@ -66,7 +68,7 @@ const SaveButton = ({
       type={type}
       onClick={() => {
         saveButtonHandler(
-          props,
+          unblockFunction,
           onClickHandler,
           dispatch,
           openSuccessSnackbar,
