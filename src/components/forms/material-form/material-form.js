@@ -388,7 +388,8 @@ MaterialForm.defaultProps = {
     ],
     available: false,
     purpose: '',
-    additionalPrice: 0,
+    absolutePrice: 0,
+    relativePrice: null,
     colors: []
   }
 };

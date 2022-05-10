@@ -22,16 +22,7 @@ const mockStoreReturner = (mockLoading) => ({
         volumeInLiters: 22,
         weightInKg: 1,
         available: true,
-        additionalPrice: [
-          {
-            value: 138746,
-            currency: 'UAH'
-          },
-          {
-            value: 5000,
-            currency: 'USD'
-          }
-        ]
+        absolutePrice: 5000
       }
     ],
     sizesLoading: mockLoading,
