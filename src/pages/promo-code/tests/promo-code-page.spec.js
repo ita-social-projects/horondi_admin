@@ -19,7 +19,7 @@ jest.mock('connected-react-router', () => ({
 
 const mockStore = {
   rowsPerPage: 10,
-  currentPage: 1
+  currentPage: 0
 };
 
 useSelector.mockImplementation(() => mockStore);
@@ -92,6 +92,22 @@ describe('PromoCodePage component test with loading', () => {
     const btnDelete = await screen.findAllByTitle('Видалити');
     const test2 = await screen.findByText('test2');
     await fireEvent.click(btnDelete[0]);
+    await expect(test2).toBeInTheDocument();
+  });
+
+  it('test adit btn ', async () => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <BrowserRouter>
+          <ThemeProvider theme={themeValue}>
+            <PromoCodePage />
+          </ThemeProvider>
+        </BrowserRouter>
+      </MockedProvider>
+    );
+    const aditBtn = await screen.findAllByTitle('Редагувати');
+    const test2 = await screen.findByText('test2');
+    await fireEvent.click(aditBtn[0]);
     await expect(test2).toBeInTheDocument();
   });
 });

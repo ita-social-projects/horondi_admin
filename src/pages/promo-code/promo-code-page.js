@@ -43,10 +43,15 @@ const PromoCodePage = () => {
   const { data, refetch, loading } = useQuery(getAllPromoCodes, {
     variables: {
       limit: rowsPerPage,
-      skip: rowsPerPage * currentPage
+      skip: rowsPerPage * currentPage,
+      sortOrder: sortOptions.sortDirection,
+      sortBy: sortOptions.sortBy,
+      search: searchOptions.search,
+      status: filterByMultipleOptions[0].status
     },
     fetchPolicy: 'network-only'
   });
+
   useEffect(() => {
     dispatch(setItemsCount(data?.getAllPromoCodes?.count) || 0);
   }, [data]);
