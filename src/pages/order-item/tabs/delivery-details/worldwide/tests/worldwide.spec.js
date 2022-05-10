@@ -18,9 +18,11 @@ document.createRange = () => ({
   }
 });
 
+const setFieldValue = jest.fn();
+
 describe('tests for worldwide delivery component', () => {
   it('worldwide delivery component should be rendered correctly', () => {
-    render(<Worldwide {...props} />);
+    render(<Worldwide {...props} setFieldValue={setFieldValue} />);
 
     const heading = screen.getByRole('heading', { level: 3 });
 
@@ -32,7 +34,13 @@ describe('tests for worldwide delivery component', () => {
   });
 
   it('test typing in worldwideCity input', () => {
-    render(<Worldwide {...props} values={{ worldWideCountry: 'Ukraine' }} />);
+    render(
+      <Worldwide
+        {...props}
+        values={{ worldWideCountry: 'Ukraine' }}
+        setFieldValue={setFieldValue}
+      />
+    );
 
     const citiesWrapper = screen.getByTestId('worldWideCity');
     const citiesInput = within(citiesWrapper).getByRole('textbox');

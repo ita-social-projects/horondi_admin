@@ -5,7 +5,5 @@ export const props = {
     worldWideCity: '',
     worldWideStreet: '',
     cityCode: ''
-  },
-  setFieldValue: () => {},
-  handleChange: () => {}
+  }
 };
