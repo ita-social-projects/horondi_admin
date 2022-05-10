@@ -6,8 +6,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { screen, render, fireEvent } from '@testing-library/react';
 import PromoCodePage from '../promo-code-page';
 import { theme } from '../../../components/app/app-theme/app.theme';
-import TableContainerRow from '../../../containers/table-container-row';
-import TableContainerGenerator from '../../../containers/table-container-generator';
 import LoadingBar from '../../../components/loading-bar';
 import { mocks, mocksWithoutPromocodes } from './promo-code-page-variables';
 
@@ -49,18 +47,8 @@ describe('PromoCodePage component tests', () => {
     wrapper = null;
   });
 
-  it('Should render PromoCodePage', () => {
+  it('should render PromoCodePage', () => {
     expect(wrapper).toBeDefined();
-  });
-  it('Component TableContainerRow should exist', async () => {
-    setTimeout(() => {
-      expect(wrapper.exists(TableContainerRow)).toBe(true);
-    }, 1000);
-  });
-  it('Component TableContainerGenerator should exist', () => {
-    setTimeout(() => {
-      expect(wrapper.exists(TableContainerGenerator)).toBe(true);
-    }, 1000);
   });
 });
 
