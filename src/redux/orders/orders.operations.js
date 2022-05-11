@@ -29,6 +29,13 @@ export const getOrderById = (id) => {
 						house
 						flat
 						byCourier
+						messenger
+  					messengerPhone
+  					worldWideCountry
+  					stateOrProvince
+  					worldWideCity
+  					worldWideStreet
+  					cityCode
 						cost {
 							currency
 							value
@@ -141,6 +148,13 @@ export const updateOrder = (order, id) => {
 						street
 						house
 						flat
+						messenger
+  					messengerPhone
+  					worldWideCountry
+  					stateOrProvince
+  					worldWideCity
+  					worldWideStreet
+  					cityCode
 						byCourier
 						cost {
 							currency

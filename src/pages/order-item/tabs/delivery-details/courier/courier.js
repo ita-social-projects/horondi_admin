@@ -30,6 +30,7 @@ const Courier = ({ deliveryType, values, handleChange }) => {
             <TextField
               key={`${field.name}${deliveryType}`}
               name={field.name}
+              data-testid={field.name}
               className={styles.textField}
               label={field.label}
               value={values[field.value]}
