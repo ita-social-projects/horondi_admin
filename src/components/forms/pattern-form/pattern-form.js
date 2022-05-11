@@ -158,6 +158,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
     handleBlur,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue
   } = useFormik({
     validationSchema: patternValidationSchema,
@@ -276,6 +278,8 @@ const PatternForm = ({ pattern, id, isEdit }) => {
                   title={SAVE_TITLE}
                   values={values}
                   errors={errors}
+                  disabled={!dirty || !isValid}
+                  data-testid='saveButton'
                 />
               </Grid>
             </Grid>

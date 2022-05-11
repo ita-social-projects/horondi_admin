@@ -136,6 +136,8 @@ const BackForm = ({ back, id, edit }) => {
     handleBlur,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue
   } = useFormik({
     validationSchema: backValidationSchema,
@@ -240,6 +242,7 @@ const BackForm = ({ back, id, edit }) => {
                   errors={errors}
                   onClickHandler={handleSubmit}
                   unblockFunction={unblock}
+                  disabled={!dirty || !isValid}
                 />
               </Grid>
             </Grid>
