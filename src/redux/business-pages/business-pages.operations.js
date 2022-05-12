@@ -21,33 +21,28 @@ export const getAllBusinessPages = async () => {
 
   return result?.data?.getAllBusinessTexts;
 };
-export const getBusinessPageById = async (id) => {
-  const getBusinessPageByIdQuery = `
-      query($id: ID!) {
-        getBusinessTextById(id: $id) {
-          ... on BusinessText {
-            _id
-            code
-            title {
-              lang
-              value
-            }
-            text {
-              lang
-              value
-            }
-            languages
-          }
-          ... on Error {
-            message
-            statusCode
-          }
+export const getBusinessPageByCode = async (code) => {
+  const getBusinessPageByCodeQuery = `
+  query ($code: String!) {
+    getBusinessTextByCode(code: $code) {
+      __typename
+      ... on BusinessText {
+        _id
+        code
+        title {
+          value
         }
+        text {
+          value
+        }
+        translationsKey
+        date
       }
-    `;
+    }
+  }
+`;
 
-  const result = await getItems(getBusinessPageByIdQuery, { id });
-
+  const result = await getItems(getBusinessPageByCodeQuery, { code });
   if (
     Object.keys(newsErrors).includes(result?.data?.getBusinessTextById?.message)
   ) {
@@ -58,7 +53,7 @@ export const getBusinessPageById = async (id) => {
     );
   }
 
-  return result?.data?.getBusinessTextById;
+  return result?.data?.getBusinessTextByCode;
 };
 export const getBusinessPageByCode = async (code) => {
   const getBusinessPageByCodeQuery = `

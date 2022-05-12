@@ -10,6 +10,7 @@ import LoadingBar from '../../components/loading-bar';
 import TableContainerRow from '../../containers/table-container-row';
 import Certificate from './certificate/certificate';
 import Status from './status/status';
+import FilterNavbar from '../../components/filter-search-sort';
 
 const pathToCreateCertificatesPage = config.routes.pathToCreateCertificates;
 const pageTitle = config.titles.certificatesPageTitles.mainPageTitle;
@@ -21,7 +22,8 @@ const CertificatesPage = () => {
   const commonStyles = useCommonStyles();
   const certificates = useCertificates();
 
-  const getDate = (item) => item.isUsed || item.isExpired
+  const getDate = (item) =>
+    item.isUsed || item.isExpired
       ? '-'
       : `${certificates.transformDate(
           item.dateStart
@@ -74,6 +76,7 @@ const CertificatesPage = () => {
             {CREATE_CERTIFICATE_TITLE}
           </Button>
         </div>
+        <FilterNavbar options={certificates.certificatesFilters} />
         {certificateItems.length ? (
           <TableContainerGenerator
             data-cy='certificateTable'

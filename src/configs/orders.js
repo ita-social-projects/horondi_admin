@@ -28,13 +28,20 @@ const orders = {
     novaPostCourieru: "Новa Пошта кур'єр",
     ukrPostCourier: "Укрпошта кур'єр",
     novaPost: 'Нова пошта',
-    ukrPost: 'Укрпошта'
+    ukrPost: 'Укрпошта',
+    worldWide: 'Міжнародна доставка'
   },
   deliveryLabels: {
     city: 'Місто',
     department: 'Відділення',
     region: 'Область',
-    district: 'Район'
+    district: 'Район',
+    messenger: 'Месенджер',
+    messengerPhone: 'Номер телефону',
+    country: 'Країна',
+    stateOrProvince: 'Штат/Провінція',
+    street: 'Вулиця',
+    cityCode: 'Код міста'
   },
   deliveryAdditionalInfo: {
     noOneCity: 'Жодного міста не знайдено',
@@ -47,7 +54,8 @@ const orders = {
     ukrPost: 'UKRPOST',
     novaPostCourier: 'NOVAPOSTCOURIER',
     ukrPostCourier: 'UKRPOSTCOURIER',
-    selfPickUp: 'SELFPICKUP'
+    selfPickUp: 'SELFPICKUP',
+    worldWide: 'WORLDWIDE'
   },
 
   dialogTitle: 'Замовлення',
@@ -112,12 +120,7 @@ const orders = {
     },
     categories: {
       title: 'Застосувати до:',
-      checkboxes: [
-        { label: 'Рюкзаки', value: 'backpacks' },
-        { label: 'Сумки', value: 'bags' },
-        { label: 'Аксесуари', value: 'accessories' },
-        { label: 'Зроби сам', value: 'constructor' }
-      ]
+      checkboxes: [{ label: 'Зроби сам', value: 'constructor' }]
     }
   }
 };

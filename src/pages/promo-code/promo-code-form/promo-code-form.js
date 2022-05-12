@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { useQuery } from '@apollo/client';
 import { DatePicker } from 'rsuite';
 import {
   Button,
@@ -10,8 +11,10 @@ import {
   FormGroup,
   FormControl
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
+import PropTypes from 'prop-types';
+import { getCategoriesList } from '../operations/categories-list.queries';
+import LoadingBar from '../../../components/loading-bar';
 import { productsTranslations } from '../../../configs/product-translations';
 import orders from '../../../configs/orders';
 import {
@@ -38,6 +41,27 @@ function PromoCodeForm({
 }) {
   const styles = useStyles();
   const commonStyles = useCommonStyles();
+
+  const { promoCodesConsts } = orders;
+  let { checkboxes } = promoCodesConsts.categories;
+
+  const {
+    data: categoriesList,
+    loading,
+    error
+  } = useQuery(getCategoriesList, {
+    fetchPolicy: 'no-cache'
+  });
+
+  if (categoriesList) {
+    checkboxes = [
+      ...checkboxes,
+      ...categoriesList.getAllCategories.items.map((item) => ({
+        label: item.name[0].value,
+        value: item.code
+      }))
+    ];
+  }
 
   const {
     values: { code, dateTo, dateFrom, discount, categories, _id },
@@ -67,8 +91,6 @@ function PromoCodeForm({
 
   const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
-  const { promoCodesConsts } = orders;
-  const { checkboxes } = promoCodesConsts.categories;
   const { SAVE } = productsTranslations;
 
   const allCategoriesHandler = () => {
@@ -77,7 +99,7 @@ function PromoCodeForm({
       : setFieldValue('categories', [...checkboxes.map(({ value }) => value)]);
   };
 
-  const allProductsCheckbox = (
+  const allCategoriesCheckbox = (
     <FormControlLabel
       className={styles.checkboxes}
       label='Всі товари'
@@ -110,6 +132,10 @@ function PromoCodeForm({
       label={item.label}
     />
   ));
+
+  if (loading || error) {
+    return <LoadingBar />;
+  }
 
   return (
     <div className={commonStyles.container}>
@@ -208,7 +234,7 @@ function PromoCodeForm({
             </span>
             <FormControl>
               <FormGroup>
-                {allProductsCheckbox}
+                {allCategoriesCheckbox}
                 {checkoxGroup}
               </FormGroup>
               {touched.categories && errors.categories && (

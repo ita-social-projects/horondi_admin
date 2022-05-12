@@ -116,6 +116,8 @@ const BasicsForm = ({ basic, id, edit }) => {
     handleBlur,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue
   } = useFormik({
     validationSchema: basicsValidationSchema,
@@ -215,6 +217,7 @@ const BasicsForm = ({ basic, id, edit }) => {
                 values={values}
                 onClickHandler={handleSubmit}
                 unblockFunction={unblock}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

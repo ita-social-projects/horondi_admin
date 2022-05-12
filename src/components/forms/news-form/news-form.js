@@ -88,6 +88,8 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
     handleBlur,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue,
     setValues
   } = useFormik({
@@ -163,6 +165,7 @@ const NewsForm = ({ id, newsArticle, editMode }) => {
                 unblockFunction={unblock}
                 values={values}
                 errors={errors}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

@@ -63,20 +63,28 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
       .required(ENTER_EMAIL_MESSAGE)
   });
 
-  const { handleSubmit, handleChange, handleBlur, values, touched, errors } =
-    useFormik({
-      initialValues,
-      validationSchema: formSchema,
-      validateOnBlur: true,
-      onSubmit: (formValues) => {
-        if (initialValues) {
-          formValues.cartLink = cartLink;
-          contactSaveHandler(formValues);
-        } else {
-          dispatch(showErrorSnackbar(CONTACT_ERROR_MESSAGE));
-        }
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    values,
+    touched,
+    errors,
+    dirty,
+    isValid
+  } = useFormik({
+    initialValues,
+    validationSchema: formSchema,
+    validateOnBlur: true,
+    onSubmit: (formValues) => {
+      if (initialValues) {
+        formValues.cartLink = cartLink;
+        contactSaveHandler(formValues);
+      } else {
+        dispatch(showErrorSnackbar(CONTACT_ERROR_MESSAGE));
       }
-    });
+    }
+  });
 
   const unblock = useUnsavedChangesHandler(values);
 
@@ -130,6 +138,7 @@ const ContactsForm = ({ contactSaveHandler, initialValues }) => {
                 values={values}
                 errors={errors}
                 unblockFunction={unblock}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

@@ -6,10 +6,7 @@ import { Button, Typography } from '@material-ui/core';
 
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
-import {
-  getAllBusinessPages,
-  deleteBusinessPage
-} from '../../redux/business-pages/business-pages.actions';
+import { getAllBusinessPages } from '../../redux/business-pages/business-pages.actions';
 
 import {
   getAllQuestionsAnswers,
@@ -22,14 +19,9 @@ import TableContainerRow from '../../containers/table-container-row';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import LoadingBar from '../../components/loading-bar';
 
-const { REMOVE_BUSINESS_PAGE } = config.messages;
 const { REMOVE_QUESTIONS_ANSWERS } = config.messages;
-const { CREATE_BUSINESS_PAGE } = config.buttonTitles;
 const { CREATE_ANSWERS_QUESTIONS } = config.buttonTitles;
-
-const { pathToAddBusinessPage } = config.routes;
 const { pathToAddQuestionsAnswers } = config.routes;
-const tableTitles = config.tableHeadRowTitles.businessPages;
 const questionsAnswersTableTitles = config.tableHeadRowTitles.questionsAnswers;
 
 const BusinessPageList = () => {
@@ -37,9 +29,8 @@ const BusinessPageList = () => {
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
-  const { list, loading, listQuestions } = useSelector(
+  const { loading, listQuestions } = useSelector(
     ({ BusinessPages, QuestionsAnswers }) => ({
-      list: BusinessPages.list,
       loading: BusinessPages.loading,
       listQuestions: QuestionsAnswers.listQuestions.items
     })
@@ -55,14 +46,6 @@ const BusinessPageList = () => {
     dispatch(getAllBusinessPages());
   }, [dispatch]);
 
-  const pageDeleteHandler = (id) => {
-    const removeBusinessPage = () => {
-      dispatch(closeDialog());
-      dispatch(deleteBusinessPage(id));
-    };
-    openSuccessSnackbar(removeBusinessPage, REMOVE_BUSINESS_PAGE);
-  };
-
   const pageDeleteHandlerQuestionsAndAnswers = (id) => {
     const removeQuestionsAnswers = () => {
       dispatch(closeDialog());
@@ -70,24 +53,6 @@ const BusinessPageList = () => {
     };
     openSuccessSnackbar(removeQuestionsAnswers, REMOVE_QUESTIONS_ANSWERS);
   };
-
-  const businessPages =
-    list !== undefined
-      ? list.map((page, index) => (
-          <TableContainerRow
-            key={page._id}
-            id={page._id}
-            index={index + 1}
-            code={page.code}
-            title={page.title[0].value}
-            showAvatar={false}
-            deleteHandler={() => pageDeleteHandler(page._id)}
-            editHandler={() => {
-              dispatch(push(`/business-pages/${page._id}`));
-            }}
-          />
-        ))
-      : null;
 
   const questionsAnswers =
     listQuestions !== undefined
@@ -100,7 +65,9 @@ const BusinessPageList = () => {
             showAvatar={false}
             deleteHandler={() => pageDeleteHandlerQuestionsAndAnswers(item._id)}
             editHandler={() => {
-              dispatch(push(`/business-pages/questions-answers/${item._id}`));
+              dispatch(
+                push(`/questions-answers-list/questions-answers/${item._id}`)
+              );
             }}
           />
         ))
@@ -112,31 +79,6 @@ const BusinessPageList = () => {
 
   return (
     <div className={commonStyles.container}>
-      <div className={commonStyles.adminHeader}>
-        <Typography
-          variant='h1'
-          className={commonStyles.materialTitle}
-          data-cy='main-header'
-        >
-          {config.titles.businessPageTitles.mainPageTitle}
-        </Typography>
-        <Button
-          id='add-business-page'
-          component={Link}
-          to={pathToAddBusinessPage}
-          variant='contained'
-          color='primary'
-          data-cy='add-business-page'
-        >
-          {CREATE_BUSINESS_PAGE}
-        </Button>
-      </div>
-      <TableContainerGenerator
-        id='businessPageTable'
-        tableTitles={tableTitles}
-        tableItems={businessPages}
-      />
-      <hr />
       <div className={commonStyles.adminHeader}>
         <Typography
           variant='h1'

@@ -87,6 +87,8 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
     handleChange,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue,
     handleBlur
   } = useFormik({
@@ -185,6 +187,7 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
                 values={values}
                 errors={errors}
                 unblockFunction={unblock}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

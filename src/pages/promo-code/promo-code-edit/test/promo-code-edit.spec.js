@@ -34,11 +34,11 @@ describe('should render component with current data', () => {
         </Router>
       </MockedProvider>
     );
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await new Promise((resolve) => setTimeout(resolve, 500));
   });
 
   it('should change promocode code name', async () => {
-    const input = screen.getByDisplayValue(/testttttt/i);
+    const input = screen.getByDisplayValue(/test/i);
 
     fireEvent.change(input, { target: { value: 'TEST' } });
 
