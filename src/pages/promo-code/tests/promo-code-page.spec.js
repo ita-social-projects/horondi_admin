@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { BrowserRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { screen, render, fireEvent } from '@testing-library/react';
+import { push } from 'connected-react-router';
 import PromoCodePage from '../promo-code-page';
 import { theme } from '../../../components/app/app-theme/app.theme';
 import LoadingBar from '../../../components/loading-bar';
@@ -13,6 +14,7 @@ jest.mock('react-redux');
 jest.mock('../promo-code-page.styles', () => ({
   useStyles: () => ({})
 }));
+
 jest.mock('connected-react-router', () => ({
   push: jest.fn()
 }));
@@ -23,6 +25,14 @@ const mockStore = {
 };
 
 useSelector.mockImplementation(() => mockStore);
+
+const mockOpenSuccessSnackbar = jest.fn();
+jest.mock('../../../utils/use-success-snackbar', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+      openSuccessSnackbar: mockOpenSuccessSnackbar
+    }))
+}));
 
 const themeValue = theme('light');
 const dispatch = jest.fn();
@@ -53,7 +63,7 @@ describe('PromoCodePage component tests', () => {
 });
 
 describe('PromoCodePage component test with loading', () => {
-  it('test Loader in PromoCodePage component', () => {
+  beforeEach(() => {
     wrapper = mount(
       <MockedProvider mocks={mocks} addTypename={false}>
         <BrowserRouter>
@@ -63,11 +73,18 @@ describe('PromoCodePage component test with loading', () => {
         </BrowserRouter>
       </MockedProvider>
     );
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+    wrapper = null;
+  });
 
+  it('test Loader in PromoCodePage component', () => {
     expect(wrapper.exists(LoadingBar)).toBe(true);
   });
+
   it('test PromoCodePage component without items', () => {
-    wrapper = mount(
+    const noDataWrapper = mount(
       <MockedProvider mocks={mocksWithoutPromocodes} addTypename={false}>
         <BrowserRouter>
           <ThemeProvider theme={themeValue}>
@@ -76,23 +93,8 @@ describe('PromoCodePage component test with loading', () => {
         </BrowserRouter>
       </MockedProvider>
     );
-    expect(wrapper).toBeTruthy();
-  });
 
-  it('test delete btn ', async () => {
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <BrowserRouter>
-          <ThemeProvider theme={themeValue}>
-            <PromoCodePage />
-          </ThemeProvider>
-        </BrowserRouter>
-      </MockedProvider>
-    );
-    const btnDelete = await screen.findAllByTitle('Видалити');
-    const test2 = await screen.findByText('test2');
-    await fireEvent.click(btnDelete[0]);
-    await expect(test2).toBeInTheDocument();
+    expect(noDataWrapper).toBeTruthy();
   });
 
   it('test adit btn ', async () => {
@@ -105,9 +107,25 @@ describe('PromoCodePage component test with loading', () => {
         </BrowserRouter>
       </MockedProvider>
     );
-    const aditBtn = await screen.findAllByTitle('Редагувати');
-    const test2 = await screen.findByText('test2');
-    await fireEvent.click(aditBtn[0]);
-    await expect(test2).toBeInTheDocument();
+
+    const editBtn = await screen.findAllByTitle('Редагувати');
+    await fireEvent.click(editBtn[0]);
+    expect(dispatch).toHaveBeenCalledWith(push());
+  });
+
+  it('test delete btn ', async () => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <BrowserRouter>
+          <ThemeProvider theme={themeValue}>
+            <PromoCodePage />
+          </ThemeProvider>
+        </BrowserRouter>
+      </MockedProvider>
+    );
+
+    const btnDelete = await screen.findAllByTitle('Видалити');
+    await fireEvent.click(btnDelete[0]);
+    await expect(mockOpenSuccessSnackbar).toHaveBeenCalled();
   });
 });

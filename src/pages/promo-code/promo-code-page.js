@@ -104,7 +104,6 @@ const PromoCodePage = () => {
       () => completeDeleteHandler(promoID),
       promoCodesConsts.deletePromo
     );
-
   const editPromoCodeHandler = (promoID) => {
     dispatch(push(`${promoID}`));
   };
