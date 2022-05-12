@@ -60,40 +60,6 @@ export const getBusinessPageById = async (id) => {
 
   return result?.data?.getBusinessTextById;
 };
-export const getBusinessPageByCode = async (code) => {
-  const getBusinessPageByCodeQuery = `
-  query ($code: String!) {
-    getBusinessTextByCode(code: $code) {
-      __typename
-      ... on BusinessText {
-        _id
-        code
-        title {
-          value
-        }
-        text {
-          value
-        }
-        translationsKey
-        date
-      }
-    }
-  }
-`;
-
-  const result = await getItems(getBusinessPageByCodeQuery, { code });
-  if (
-    Object.keys(newsErrors).includes(result?.data?.getBusinessTextById?.message)
-  ) {
-    throw new Error(
-      `${result.data.getBusinessTextById.statusCode} ${
-        newsErrors[result.data.getBusinessTextById.message]
-      }`
-    );
-  }
-
-  return result?.data?.getBusinessTextByCode;
-};
 export const createBusinessPage = async ({ page, files }) => {
   const createBusinessPageMutation = `
       mutation($businessText: BusinessTextInput!, $files: [Upload]!) {
