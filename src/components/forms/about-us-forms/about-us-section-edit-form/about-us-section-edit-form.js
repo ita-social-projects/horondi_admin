@@ -73,7 +73,7 @@ const AboutUsSectionEditForm = ({ businessPage }) => {
     onSubmit
   });
 
-  function onSubmit(values) {
+  function onSubmit(onSubmitValues) {
     if (upload) {
       const imgNames = getImageNamesFromSection(businessPageData, id);
       deleteImg({ variables: { fileNames: imgNames } });
@@ -81,7 +81,7 @@ const AboutUsSectionEditForm = ({ businessPage }) => {
 
     const updatedBusinessPage = getBusinessPageWithUpdatedSection(
       businessPageData,
-      values,
+      onSubmitValues,
       id,
       upload?.name
     );

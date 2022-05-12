@@ -79,7 +79,7 @@ describe('AboutUs component tests, ', () => {
     const editButtons = await screen.findAllByTestId('edit-btn');
     const titleEditButton = editButtons[0];
     fireEvent.click(titleEditButton);
-    expect(await screen.findByText(enTitle));
+    expect(await screen.findByText(enTitle)).toBeInTheDocument();
   });
 
   // it('Edit button for editing section successfully navigates to AboutUsSectionEdit page on click', async () => {
@@ -93,6 +93,6 @@ describe('AboutUs component tests, ', () => {
     const editButtons = await screen.findAllByTestId('edit-btn');
     const footerImgEditButton = editButtons[4];
     fireEvent.click(footerImgEditButton);
-    expect(await screen.findByText(imgLabel));
+    expect(await screen.findByText(imgLabel)).toBeInTheDocument();
   });
 });

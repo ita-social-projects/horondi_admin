@@ -44,10 +44,10 @@ const AboutUsTitleEditForm = ({ businessPage }) => {
       onSubmit
     });
 
-  function onSubmit(values) {
+  function onSubmit(onSubmitValues) {
     const updatedBusinessPage = getBusinessPageWithUpdatedTitle(
       businessPage,
-      values
+      onSubmitValues
     );
     updateTitle({
       variables: setVariablesForUpdatingPage(updatedBusinessPage)

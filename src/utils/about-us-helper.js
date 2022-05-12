@@ -50,22 +50,13 @@ export const getInitialValuesForFooterImgEdit = (businessPage) => ({
 export const getImageNamesFromSection = (businessPage, id) => {
   const imgSrc = getImgFromBusinessPageSection(businessPage, id).src;
   const imgName = imgSrc.match(imgNameRegex)[2];
-  const imgNames = Object.values(imgSizes).map(
-    (imgSize) => `${imgSize}_${imgName}`
-  );
-  return imgNames;
+  return Object.values(imgSizes).map((imgSize) => `${imgSize}_${imgName}`);
 };
 
 export const getFooterImgNames = (businessPage) => {
-  const imgSrc = getFooterImgFromBusinessPage(businessPage)?.src;
-  if (!imgSrc) {
-    return '';
-  }
+  const imgSrc = getFooterImgFromBusinessPage(businessPage).src;
   const imgName = imgSrc.match(imgNameRegex)[2];
-  const imgNames = Object.values(imgSizes).map(
-    (imgSize) => `${imgSize}_${imgName}`
-  );
-  return imgNames;
+  return Object.values(imgSizes).map((imgSize) => `${imgSize}_${imgName}`);
 };
 
 export const getBusinessPageWithUpdatedTitle = (businessPage, values) => {

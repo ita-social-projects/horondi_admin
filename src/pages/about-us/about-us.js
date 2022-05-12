@@ -62,26 +62,28 @@ const AboutUs = () => {
     onCompleted: (data) => setBusinessPage(data.getBusinessTextByCode)
   });
 
-  const [updateBusinessPage, { data, loading: updateBusinessTextLoading }] =
-    useMutation(updateBusinessTextByCode, {
-      onCompleted: (data) => {
-        if (data?.updateBusinessText?.message) {
-          dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
-        } else {
-          refetch();
-          dispatch(showSuccessSnackbar(SUCCESS_DELETE_STATUS));
-        }
-      },
-      onError: (_err) => {
+  const [
+    updateBusinessPage,
+    { data: updatedData, loading: updateBusinessTextLoading }
+  ] = useMutation(updateBusinessTextByCode, {
+    onCompleted: (data) => {
+      if (data?.updateBusinessText?.message) {
         dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
+      } else {
+        refetch();
+        dispatch(showSuccessSnackbar(SUCCESS_DELETE_STATUS));
       }
-    });
+    },
+    onError: (_err) => {
+      dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
+    }
+  });
 
   useEffect(() => {
-    if (data) {
-      setBusinessPage(data.updateBusinessText);
+    if (updatedData) {
+      setBusinessPage(updatedData.updateBusinessText);
     }
-  }, [data]);
+  }, [updatedData]);
 
   const [deleteImg] = useMutation(deleteFiles);
 

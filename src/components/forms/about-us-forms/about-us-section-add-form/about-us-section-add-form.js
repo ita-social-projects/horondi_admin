@@ -58,10 +58,10 @@ const AboutUsSectionAddForm = ({ businessPage }) => {
     onSubmit
   });
 
-  function onSubmit(values) {
+  function onSubmit(onSubmitValues) {
     const updatedBusinessPage = getBusinessPageWithNewSection(
       businessPage,
-      values,
+      onSubmitValues,
       upload.name
     );
 
