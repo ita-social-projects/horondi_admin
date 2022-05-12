@@ -19,6 +19,8 @@ import LoadingBar from '../../components/loading-bar';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { LOCAL_STORAGE } from '../../consts/local-storage';
 import { setItemsCount } from '../../redux/table/table.actions';
+import usePromoCodeFilters from '../../hooks/filters/use-promo-code-filters';
+import FilterNavbar from '../../components/filter-search-sort';
 
 const pathToAddPromoCodePage = config.routes.pathToAddPromoCode;
 const tableTitles = config.tableHeadRowTitles.promoCodes;
@@ -29,6 +31,9 @@ const PromoCodePage = () => {
   const dispatch = useDispatch();
   const dateToday = new Date();
   const { promoCodesConsts } = orders;
+  const promoCodeFilters = usePromoCodeFilters();
+  const { sortOptions, searchOptions, filterByMultipleOptions } =
+    promoCodeFilters;
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
   const { currentPage, rowsPerPage } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
@@ -38,8 +43,13 @@ const PromoCodePage = () => {
   const { data, refetch, loading } = useQuery(getAllPromoCodes, {
     variables: {
       limit: rowsPerPage,
-      skip: rowsPerPage * currentPage
-    }
+      skip: rowsPerPage * currentPage,
+      sortOrder: sortOptions.sortDirection,
+      sortBy: sortOptions.sortBy,
+      search: searchOptions.search,
+      status: filterByMultipleOptions[0].status
+    },
+    fetchPolicy: 'no-cache'
   });
   const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
 
@@ -139,6 +149,7 @@ const PromoCodePage = () => {
         </Button>
       </div>
 
+      <FilterNavbar options={promoCodeFilters} />
       <TableContainerGenerator
         id='promoCodeTable'
         pagination

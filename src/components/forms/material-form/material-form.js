@@ -102,6 +102,8 @@ function MaterialForm({ material, id }) {
     handleSubmit,
     errors,
     touched,
+    dirty,
+    isValid,
     setFieldValue,
     handleBlur
   } = useFormik({
@@ -193,6 +195,7 @@ function MaterialForm({ material, id }) {
                 title={config.buttonTitles.SAVE_MATERIAL}
                 values={values}
                 errors={errors}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

@@ -1,8 +1,22 @@
 import { gql } from '@apollo/client';
 
 export const getAllPromoCodes = gql`
-  query ($skip: Int, $limit: Int) {
-    getAllPromoCodes(skip: $skip, limit: $limit) {
+  query (
+    $skip: Int
+    $limit: Int
+    $sortBy: String
+    $sortOrder: Sort
+    $search: String
+    $status: [String]
+  ) {
+    getAllPromoCodes(
+      skip: $skip
+      limit: $limit
+      sortBy: $sortBy
+      sortOrder: $sortOrder
+      search: $search
+      status: $status
+    ) {
       __typename
       ... on PaginatedPromoCode {
         items {

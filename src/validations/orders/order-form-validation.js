@@ -1,5 +1,9 @@
 import * as Yup from 'yup';
-import { phoneNumberRegex, userNameRegex } from '../../configs/regexes';
+import {
+  phoneNumberRegex,
+  userNameRegex,
+  onlyNumbersRegex
+} from '../../configs/regexes';
 import { inputName } from '../../utils/order';
 import config from '../../configs/orders';
 
@@ -11,6 +15,19 @@ const postValidation = (type) =>
     then: Yup.object().shape({
       city: Yup.string().trim().required(),
       courierOffice: Yup.string().trim().required()
+    })
+  });
+
+const worldWideValidation = (type) => Yup.object().when(inputName.sentBy, {
+    is: type,
+    then: Yup.object().shape({
+      messenger: Yup.string().required(),
+      messengerPhone: Yup.string().trim().matches(phoneNumberRegex).required(),
+      worldWideCountry: Yup.string().required(),
+      stateOrProvince: Yup.string(),
+      worldWideCity: Yup.string().required(),
+      worldWideStreet: Yup.string().required(),
+      cityCode: Yup.string().required().matches(onlyNumbersRegex)
     })
   });
 
@@ -40,6 +57,7 @@ export const validationSchema = Yup.object().shape({
       })
     }),
     novaPost: postValidation(deliveryTypes.novaPost),
-    ukrPost: postValidation(deliveryTypes.ukrPost)
+    ukrPost: postValidation(deliveryTypes.ukrPost),
+    worldWide: worldWideValidation(deliveryTypes.worldWide)
   })
 });

@@ -14,6 +14,7 @@ import {
 } from '../../../redux/snackbar/snackbar.actions';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import { config } from '../../../configs';
+import useCertificateFilters from '../../../hooks/filters/use-certificate-filters';
 
 const DELETE_CERTIFICATE_TITLE =
   config.titles.certificatesPageTitles.deleteCertificateTitle;
@@ -62,6 +63,9 @@ const useCertificates = () => {
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const [deleteCertificate] = useMutation(deleteCertificateById);
   const [updateCertificate] = useMutation(updateCertificateByName);
+  const certificatesFilters = useCertificateFilters();
+  const { sortOptions, searchOptions, filterByMultipleOptions } =
+    certificatesFilters;
 
   const { currentPage, rowsPerPage, itemsCount } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
@@ -76,11 +80,16 @@ const useCertificates = () => {
   } = useQuery(getAllCertificates, {
     variables: {
       limit: rowsPerPage,
-      skip: currentPage
+      skip: currentPage * rowsPerPage,
+      sortOrder: sortOptions.sortDirection,
+      sortBy: sortOptions.sortBy,
+      search: searchOptions.search,
+      status: filterByMultipleOptions[0].status
     },
     onCompleted: (data) => {
       dispatch(setItemsCount(data.getAllCertificates.count));
-    }
+    },
+    fetchPolicy: 'no-cache'
   });
 
   const certificatesList = certificates?.getAllCertificates || { items: [] };
@@ -155,6 +164,7 @@ const useCertificates = () => {
     loading: certificatesLoading,
     items: certificatesList.items,
     count: itemsCount,
+    certificatesFilters,
     transformDate,
     checkStatus,
     setUser,

@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 import * as Yup from 'yup';
 import useBusinessHandlers from '../../../utils/use-business-handlers';
 import { useStyles } from './business-page-form.styles';
-import { SaveButton, BackButton } from '../../buttons';
+import { SaveButton } from '../../buttons';
 import LoadingBar from '../../loading-bar';
 
 import {
@@ -23,7 +23,7 @@ import {
 
 import {
   addBusinessPage,
-  getBusinessPageById,
+  getBusinessPageByCode,
   updateBusinessPage
 } from '../../../redux/business-pages/business-pages.actions';
 
@@ -33,7 +33,7 @@ import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const BusinessPageForm = ({ id, editMode }) => {
+const BusinessPageForm = ({ id, editMode, codePath }) => {
   const dispatch = useDispatch();
   const { loading, businessPage } = useSelector(({ BusinessPages }) => ({
     loading: BusinessPages.loading,
@@ -58,8 +58,6 @@ const BusinessPageForm = ({ id, editMode }) => {
     }
   } = config;
 
-  const { pathToBusinessPages } = config.routes;
-
   const {
     createBusinessPage,
     uaSetText,
@@ -77,8 +75,8 @@ const BusinessPageForm = ({ id, editMode }) => {
   } = useBusinessHandlers();
 
   useEffect(() => {
-    id && dispatch(getBusinessPageById(id));
-  }, [dispatch, id]);
+    codePath && dispatch(getBusinessPageByCode(codePath));
+  }, [dispatch, codePath]);
 
   useEffect(() => {
     const isEditingReady = businessPage && editMode;
@@ -199,9 +197,6 @@ const BusinessPageForm = ({ id, editMode }) => {
       <div className={classes.buttonContainer}>
         <Grid container spacing={2} className={classes.fixedButtons}>
           <Grid item className={classes.button}>
-            <BackButton pathBack={pathToBusinessPages} />
-          </Grid>
-          <Grid item className={classes.button}>
             <SaveButton
               id='save'
               type='submit'
@@ -261,12 +256,14 @@ const BusinessPageForm = ({ id, editMode }) => {
 
 BusinessPageForm.propTypes = {
   editMode: PropTypes.bool,
-  id: PropTypes.string
+  id: PropTypes.string,
+  codePath: PropTypes.string
 };
 
 BusinessPageForm.defaultProps = {
   editMode: false,
-  id: null
+  id: null,
+  codePath: null
 };
 
 export default withRouter(BusinessPageForm);

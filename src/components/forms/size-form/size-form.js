@@ -73,6 +73,8 @@ function SizeForm({ id, size }) {
     handleSubmit,
     errors,
     touched,
+    dirty,
+    isValid,
     setFieldValue,
     handleBlur
   } = useFormik({
@@ -137,6 +139,7 @@ function SizeForm({ id, size }) {
                 title={config.buttonTitles.SAVE_SIZE_TITLE}
                 values={values}
                 errors={errors}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

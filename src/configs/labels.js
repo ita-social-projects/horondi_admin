@@ -594,7 +594,8 @@ const labels = {
     ukrPost: 'Укрпошта',
     selfPickup: 'Самовивіз',
     novaPostCourier: "Кур'єр нової пошти",
-    ukrPostCourier: "Кур'єр укрпошти"
+    ukrPostCourier: "Кур'єр укрпошти",
+    worldWide: 'Міжнародна доставка'
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',

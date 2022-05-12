@@ -242,11 +242,6 @@ const Routes = ({ validatorMethods }) => {
             component={BusinessPageList}
           />
           <Route
-            path={routes.pathToAddBusinessPage}
-            exact
-            component={BusinessPageForm}
-          />
-          <Route
             path={routes.pathToAddQuestionsAnswers}
             exact
             component={FormQNA}
@@ -257,10 +252,29 @@ const Routes = ({ validatorMethods }) => {
             render={({ match }) => <FormQNA id={match.params.id} editMode />}
           />
           <Route
-            path={routes.pathToBusinessPageDetails}
+            path={routes.pathToBusinessPagePaymentAndShipping}
             exact
-            render={({ match }) => (
-              <BusinessPageForm id={match.params.id} editMode />
+            render={() => (
+              <BusinessPageForm codePath='payment-and-shipping' editMode />
+            )}
+          />
+          <Route
+            path={routes.pathToBusinessPagePrivacyPolicy}
+            exact
+            render={() => (
+              <BusinessPageForm codePath='privacy-policy' editMode />
+            )}
+          />
+          <Route
+            path={routes.pathToBusinessPageTerms}
+            exact
+            render={() => <BusinessPageForm codePath='terms' editMode />}
+          />
+          <Route
+            path={routes.pathToBusinessPageUserAgreement}
+            exact
+            render={() => (
+              <BusinessPageForm codePath='user-agreement' editMode />
             )}
           />
           <Route path={routes.pathToContacts} exact component={ContactsPage} />

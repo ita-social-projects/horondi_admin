@@ -7,6 +7,7 @@ import labels from '../../../configs/labels';
 import { deliveryPropTypes, inputName } from '../../../utils/order';
 import NovaPost from './delivery-details/nova-post';
 import UkrPost from './delivery-details/ukrpost';
+import Worldwide from './delivery-details/worldwide';
 import config from '../../../configs/orders';
 
 const Delivery = ({ data, handleChange, setFieldValue }) => {
@@ -47,6 +48,13 @@ const Delivery = ({ data, handleChange, setFieldValue }) => {
 
       {data.delivery.sentBy === deliveryTypes.ukrPost && (
         <UkrPost setFieldValue={setFieldValue} values={data.delivery.ukrPost} />
+      )}
+      {data.delivery.sentBy === deliveryTypes.worldWide && (
+        <Worldwide
+          handleChange={handleChange}
+          setFieldValue={setFieldValue}
+          values={data.delivery.worldWide}
+        />
       )}
     </div>
   );

@@ -333,7 +333,8 @@ export const config = {
   productsErrors,
   userTranslations,
   errorStatuses,
-  userErrorMessages
+  userErrorMessages,
+  RESET: 'reset'
 };
 export const inputTypes = {
   button: 'button',
