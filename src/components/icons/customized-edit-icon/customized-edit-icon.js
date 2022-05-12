@@ -13,6 +13,7 @@ const CustomizedEditIcon = ({ onClickHandler, size }) => (
       onClick={onClickHandler}
       color='secondary'
       data-cy='edit-btn'
+      data-testid='edit-btn'
     >
       <EditIcon fontSize={size} />
     </IconButton>
