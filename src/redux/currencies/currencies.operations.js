@@ -8,7 +8,6 @@ export const getAllCurrencies = async () => {
           UAH {
             name
             exchangeRate
-            unicode
           }
         }
       }
