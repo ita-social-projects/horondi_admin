@@ -36,18 +36,12 @@ export const getOrderById = (id) => {
   					worldWideCity
   					worldWideStreet
   					cityCode
-						cost {
-							currency
-							value
-						}
+						cost
 					}
 					items {
 						product {
 							_id
-							basePrice {
-								currency
-								value
-							}
+							basePrice
 							name {
 								lang
 								value
@@ -100,10 +94,7 @@ export const getOrderById = (id) => {
 							}
 						}
 						isFromConstructor
-						fixedPrice {
-							currency
-							value
-						}
+						fixedPrice
 					}
 					paymentMethod
 					paymentStatus
@@ -114,13 +105,36 @@ export const getOrderById = (id) => {
 					message
 				}
 			}
+		  }
+		  constructorBottom {
+			_id
+			name {
+			  value
+			}
+		  }
+		  isFromConstructor
+		  fixedPrice
 		}
+		totalItemsPrice
+		totalPriceToPay
+		fixedExchangeRate
+		paymentMethod
+		paymentStatus
+		isPaid
+	  }
+	  ... on Error {
+		statusCode
+		message
+	  }
+	}
+  }
   `;
   return getItems(query, { id });
 };
 
 export const updateOrder = (order, id) => {
   const query = `
+<<<<<<< HEAD
 		mutation ($order: OrderInput!, $id:ID!) {
 			updateOrder (order: $order, id: $id) {
 				...on Order {
@@ -198,87 +212,142 @@ export const updateOrder = (order, id) => {
 					statusCode
 					message
 				}
-			}
+=======
+  mutation($order: OrderInput!, $id: ID!) {
+	updateOrder(order: $order, id: $id) {
+	  ... on Order {
+		_id
+		status
+		recipient {
+		  firstName
+		  lastName
+		  email
+		  phoneNumber
 		}
+		user_id
+		userComment
+		delivery {
+		  sentOn
+		  sentBy
+		  invoiceNumber
+		  courierOffice
+		  region
+		  district
+		  regionId
+		  districtId
+		  cityId
+		  city
+		  street
+		  house
+		  flat
+		  byCourier
+		  cost
+		}
+		items {
+		  product {
+			_id
+			basePrice
+			name {
+			  lang
+			  value
+			}
+			description {
+			  lang
+			  value
+>>>>>>> 3ab7a4b4 (Refactoring/price-order (#1310))
+			}
+		  }
+		  quantity
+		  options {
+			size {
+			  _id
+			  name
+			}
+			sidePocket
+		  }
+		  isFromConstructor
+		  fixedPrice
+		}
+		paymentMethod
+		paymentStatus
+		isPaid
+	  }
+	  ... on Error {
+		statusCode
+		message
+	  }
+	}
+  }
   `;
   return setItems(query, { order, id });
 };
 
 export const addOrder = (order) => {
   const query = `
-		mutation ($order: OrderInput!) {
-			addOrder(order: $order) {
-				... on Order {
-				  _id
-				  items {
-					product {
-					  name {
-						lang
-						value
-					  }
-					  images {
-						primary {
-						  thumbnail
-						}
-					  }
-					}
-					fixedPrice {
-					  currency
-					  value
-					}
-					quantity
-					options {
-					  size {
-						name
-					  }
-					}
-				  }
-				  totalPriceToPay {
-					currency
-					value
-				  }
-				  paymentStatus
-				}
-				... on Error {
-				  statusCode
-				  message
-				}
+  mutation($order: OrderInput!) {
+	addOrder(order: $order) {
+	  ... on Order {
+		_id
+		items {
+		  product {
+			name {
+			  lang
+			  value
+			}
+			images {
+			  primary {
+				thumbnail
 			  }
+			}
+		  }
+		  fixedPrice
+		  quantity
+		  options {
+			size {
+			  name
+			}
+		  }
 		}
+		totalItemsPrice
+		totalPriceToPay
+		fixedExchangeRate
+		fixedExchangeRate
+		paymentStatus
+	  }
+	  ... on Error {
+		statusCode
+		message
+	  }
+	}
+  }
   `;
   return setItems(query, { order });
 };
 
 export const getAllOrders = async (skip, limit, filter, sort) => {
   const query = `
-      query($limit: Int, $skip: Int, $filter: OrderFilterInput, $sort:JSONObject) {
-        getAllOrders(limit: $limit, skip: $skip, filter: $filter, sort:$sort) {
-          items {
-            _id
-            recipient 
-                {
-                firstName
-                lastName
-                email
-                phoneNumber
-            }
-			user_id
-            status
-            paymentStatus
-            orderNumber
-            dateOfCreation
-            totalItemsPrice {
-              currency
-              value
-            }
-            totalPriceToPay {
-              currency
-              value
-            }
-          }
-          count
-        }
-      }
+  query($limit: Int, $skip: Int, $filter: OrderFilterInput, $sort: JSONObject) {
+	getAllOrders(limit: $limit, skip: $skip, filter: $filter, sort: $sort) {
+	  items {
+		_id
+		recipient {
+		  firstName
+		  lastName
+		  email
+		  phoneNumber
+		}
+		user_id
+		status
+		paymentStatus
+		orderNumber
+		dateOfCreation
+		totalItemsPrice
+		totalPriceToPay
+		fixedExchangeRate
+	  }
+	  count
+	}
+  }
     `;
 
   const result = await getItems(query, {
@@ -308,14 +377,9 @@ export const getOrdersByUser = async (skip, limit, filter, sort, userId) => {
             paymentStatus
             orderNumber
             dateOfCreation
-            totalItemsPrice {
-              currency
-              value
-            }
-            totalPriceToPay {
-              currency
-              value
-            }
+            totalItemsPrice
+            totalPriceToPay
+			fixedExchangeRate
           }
           count
         }
