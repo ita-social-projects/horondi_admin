@@ -25,7 +25,7 @@ const defaultProps = {
     available: false,
     purpose: '',
     absolutePrice: 0,
-    relativePrice: 10,
+    relativePrice: null,
     colors: []
   }
 };
