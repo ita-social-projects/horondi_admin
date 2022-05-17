@@ -105,29 +105,7 @@ export const getOrderById = (id) => {
 					message
 				}
 			}
-		  }
-		  constructorBottom {
-			_id
-			name {
-			  value
-			}
-		  }
-		  isFromConstructor
-		  fixedPrice
 		}
-		totalItemsPrice
-		totalPriceToPay
-		fixedExchangeRate
-		paymentMethod
-		paymentStatus
-		isPaid
-	  }
-	  ... on Error {
-		statusCode
-		message
-	  }
-	}
-  }
   `;
   return getItems(query, { id });
 };
@@ -162,12 +140,12 @@ export const updateOrder = (order, id) => {
 						house
 						flat
 						messenger
-  					messengerPhone
-  					worldWideCountry
-  					stateOrProvince
-  					worldWideCity
-  					worldWideStreet
-  					cityCode
+						messengerPhone
+						worldWideCountry
+						stateOrProvince
+						worldWideCity
+						worldWideStreet
+						cityCode
 						byCourier
 						cost
 					}
@@ -202,6 +180,8 @@ export const updateOrder = (order, id) => {
 					statusCode
 					message
 				}
+			}
+		}
   `;
   return setItems(query, { order, id });
 };
