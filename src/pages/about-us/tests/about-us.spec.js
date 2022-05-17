@@ -32,7 +32,7 @@ useDispatch.mockImplementation(() => dispatch);
 
 const themeValue = theme('light');
 
-describe('AboutUs component tests, ', () => {
+describe('AboutUs component tests', () => {
   beforeEach(() => {
     render(
       <MockedProvider mocks={aboutUsPageDataMock} addTypename={false}>
@@ -86,7 +86,7 @@ describe('AboutUs component tests, ', () => {
     const editButtons = await screen.findAllByTestId('edit-btn');
     const sectionEditButton = editButtons[1];
     fireEvent.click(sectionEditButton);
-    expect(await screen.findByText(firstSectionEnTitle));
+    expect(await screen.findByText(firstSectionEnTitle)).toBeInTheDocument();
   });
 
   it('Edit button for editing section successfully navigates to AboutUsFooterImgEdit page on click', async () => {

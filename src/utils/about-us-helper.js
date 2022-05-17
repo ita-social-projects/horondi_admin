@@ -72,31 +72,39 @@ export const getBusinessPageWithUpdatedSection = (
   id,
   filename
 ) => {
-  businessPage.sections[0].value.find((section) => section.id === id).title =
-    values.uaTitle;
-  businessPage.sections[1].value.find((section) => section.id === id).title =
-    values.enTitle;
-  businessPage.sections[0].value.find((section) => section.id === id).text =
+  const businessPageCopy = _.cloneDeep(businessPage);
+  businessPageCopy.sections[0].value.find(
+    (section) => section.id === id
+  ).title = values.uaTitle;
+  businessPageCopy.sections[1].value.find(
+    (section) => section.id === id
+  ).title = values.enTitle;
+  businessPageCopy.sections[0].value.find((section) => section.id === id).text =
     values.uaText;
-  businessPage.sections[1].value.find((section) => section.id === id).text =
+  businessPageCopy.sections[1].value.find((section) => section.id === id).text =
     values.enText;
 
   if (filename) {
-    businessPage.sections[0].value.find((section) => section.id === id).img = {
+    businessPageCopy.sections[0].value.find(
+      (section) => section.id === id
+    ).img = {
       name: filename
     };
-    businessPage.sections[1].value.find((section) => section.id === id).img = {
+    businessPageCopy.sections[1].value.find(
+      (section) => section.id === id
+    ).img = {
       name: filename
     };
   }
-  return businessPage;
+  return businessPageCopy;
 };
 
 export const getBusinessPageWithUpdatedFooterImg = (businessPage, filename) => {
-  businessPage.footerImg = {
+  const businessPageCopy = _.cloneDeep(businessPage);
+  businessPageCopy.footerImg = {
     name: filename
   };
-  return businessPage;
+  return businessPageCopy;
 };
 
 export const getBusinessPageWithNewSection = (
@@ -130,13 +138,16 @@ export const getBusinessPageWithNewSection = (
 };
 
 export const getBusinessPageWithoutSection = (businessPage, sectionId) => {
-  businessPage.sections[0].value = businessPage.sections[0].value.filter(
-    (section) => section.id !== sectionId
-  );
-  businessPage.sections[1].value = businessPage.sections[1].value.filter(
-    (section) => section.id !== sectionId
-  );
-  return businessPage;
+  const businessPageCopy = _.cloneDeep(businessPage);
+  businessPageCopy.sections[0].value =
+    businessPageCopy.sections[0].value.filter(
+      (section) => section.id !== sectionId
+    );
+  businessPageCopy.sections[1].value =
+    businessPageCopy.sections[1].value.filter(
+      (section) => section.id !== sectionId
+    );
+  return businessPageCopy;
 };
 
 export const setVariablesForUpdatingPage = (businessPage, files = []) => ({
