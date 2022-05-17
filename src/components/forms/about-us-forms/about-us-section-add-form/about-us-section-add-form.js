@@ -39,10 +39,26 @@ const AboutUsSectionAddForm = ({ businessPage }) => {
         history.push(pathToAboutUs);
       }
     },
-    onError: (_err) => {
+    onError: () => {
       dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
     }
   });
+
+  const onSubmit = (onSubmitValues) => {
+    const updatedBusinessPage = getBusinessPageWithNewSection(
+      businessPage,
+      onSubmitValues,
+      upload.name
+    );
+
+    const variables = setVariablesForUpdatingPage(updatedBusinessPage, [
+      upload
+    ]);
+
+    updateSection({
+      variables
+    });
+  };
 
   const {
     values,
@@ -57,22 +73,6 @@ const AboutUsSectionAddForm = ({ businessPage }) => {
     validationSchema: sectionValidationSchema,
     onSubmit
   });
-
-  function onSubmit(onSubmitValues) {
-    const updatedBusinessPage = getBusinessPageWithNewSection(
-      businessPage,
-      onSubmitValues,
-      upload.name
-    );
-
-    const variables = setVariablesForUpdatingPage(updatedBusinessPage, [
-      upload
-    ]);
-
-    updateSection({
-      variables
-    });
-  }
 
   const handleImageLoad = (files) => {
     const reader = new FileReader();

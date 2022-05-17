@@ -29,22 +29,15 @@ const AboutUsTitleEditForm = ({ businessPage }) => {
   const dispatch = useDispatch();
 
   const [updateTitle, { loading }] = useMutation(updateBusinessTextByCode, {
-    onCompleted: (_data) => {
+    onCompleted: () => {
       dispatch(showSuccessSnackbar(SUCCESS_UPDATE_STATUS));
     },
-    onError: (_err) => {
+    onError: () => {
       dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
     }
   });
 
-  const { values, errors, touched, handleChange, handleBlur, submitForm } =
-    useFormik({
-      initialValues: getInitialValuesForTitleEditing(businessPage),
-      validationSchema: titleEditValidationSchema,
-      onSubmit
-    });
-
-  function onSubmit(onSubmitValues) {
+  const onSubmit = (onSubmitValues) => {
     const updatedBusinessPage = getBusinessPageWithUpdatedTitle(
       businessPage,
       onSubmitValues
@@ -52,7 +45,14 @@ const AboutUsTitleEditForm = ({ businessPage }) => {
     updateTitle({
       variables: setVariablesForUpdatingPage(updatedBusinessPage)
     });
-  }
+  };
+
+  const { values, errors, touched, handleChange, handleBlur, submitForm } =
+    useFormik({
+      initialValues: getInitialValuesForTitleEditing(businessPage),
+      validationSchema: titleEditValidationSchema,
+      onSubmit
+    });
 
   const inputOptions = {
     errors,

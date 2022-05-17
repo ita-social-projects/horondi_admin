@@ -19,8 +19,6 @@ const formRegExp = {
   enNameCreation: /^[a-z0-9\s-]+$/gi,
   enDescription: /^[a-z0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   uaDescription: /^[а-яїієґ0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
-  uaDescriptionForBusinessPage:
-    /^[а-яїієґ0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\p]+$/gi,
   categoryCode: /^[a-z0-9|-]/i,
   firstName: /^([a-zа-яіїє]|[',. -][a-zа-яіїє])*$/i,
   lastName: /^([a-zа-яіїє]|[',. -][a-zа-яіїє])*$/i,

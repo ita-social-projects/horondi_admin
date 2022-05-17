@@ -52,7 +52,7 @@ const AboutUs = () => {
 
   const {
     loading: getBusinessTextLoading,
-    refetch,
+    refetch: getBusinessTextRefetch,
     isRefetching
   } = useQuery(getBusinessTextByCode, {
     fetchPolicy: 'network-only',
@@ -70,11 +70,11 @@ const AboutUs = () => {
       if (data?.updateBusinessText?.message) {
         dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
       } else {
-        refetch();
+        getBusinessTextRefetch();
         dispatch(showSuccessSnackbar(SUCCESS_DELETE_STATUS));
       }
     },
-    onError: (_err) => {
+    onError: () => {
       dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
     }
   });

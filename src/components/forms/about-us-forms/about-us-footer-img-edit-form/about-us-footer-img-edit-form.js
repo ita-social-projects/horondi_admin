@@ -47,7 +47,7 @@ const AboutUsFooterImgEditForm = ({ businessPage }) => {
           dispatch(showSuccessSnackbar(SUCCESS_UPDATE_STATUS));
         }
       },
-      onError: (_err) => {
+      onError: () => {
         dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
       }
     }
@@ -55,13 +55,7 @@ const AboutUsFooterImgEditForm = ({ businessPage }) => {
 
   const [deleteImg, { loading: deleteImgLoading }] = useMutation(deleteFiles);
 
-  const { values, errors, setFieldValue, submitForm } = useFormik({
-    initialValues: getInitialValuesForFooterImgEdit(businessPageData),
-    validationSchema: footerImgEditValidationSchema,
-    onSubmit
-  });
-
-  function onSubmit(_values) {
+  const onSubmit = () => {
     const imgNames = getFooterImgNames(businessPageData);
     deleteImg({ variables: { fileNames: imgNames } });
 
@@ -77,7 +71,13 @@ const AboutUsFooterImgEditForm = ({ businessPage }) => {
     updateSection({
       variables
     });
-  }
+  };
+
+  const { values, errors, setFieldValue, submitForm } = useFormik({
+    initialValues: getInitialValuesForFooterImgEdit(businessPageData),
+    validationSchema: footerImgEditValidationSchema,
+    onSubmit
+  });
 
   const handleImageLoad = (files) => {
     const reader = new FileReader();

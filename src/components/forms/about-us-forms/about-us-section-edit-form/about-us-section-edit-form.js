@@ -51,7 +51,7 @@ const AboutUsSectionEditForm = ({ businessPage }) => {
           dispatch(showSuccessSnackbar(SUCCESS_UPDATE_STATUS));
         }
       },
-      onError: (_err) => {
+      onError: () => {
         dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
       }
     }
@@ -59,21 +59,7 @@ const AboutUsSectionEditForm = ({ businessPage }) => {
 
   const [deleteImg, { loading: deleteImgLoading }] = useMutation(deleteFiles);
 
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    submitForm
-  } = useFormik({
-    initialValues: getInitialValuesForSectionEditing(businessPageData, id),
-    validationSchema: sectionValidationSchema,
-    onSubmit
-  });
-
-  function onSubmit(onSubmitValues) {
+  const onSubmit = (onSubmitValues) => {
     if (upload) {
       const imgNames = getImageNamesFromSection(businessPageData, id);
       deleteImg({ variables: { fileNames: imgNames } });
@@ -92,7 +78,21 @@ const AboutUsSectionEditForm = ({ businessPage }) => {
     updateSection({
       variables
     });
-  }
+  };
+
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    submitForm
+  } = useFormik({
+    initialValues: getInitialValuesForSectionEditing(businessPageData, id),
+    validationSchema: sectionValidationSchema,
+    onSubmit
+  });
 
   const handleImageLoad = (files) => {
     const reader = new FileReader();
