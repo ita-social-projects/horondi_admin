@@ -69,11 +69,11 @@ describe('AboutUs component tests, ', () => {
     );
   });
 
-  // it('', async () => {
-  //   const addSectionBtn = await screen.findByText(ADD_ABOUT_US_SECTION);
-  //   fireEvent.click(addSectionBtn);
-  //   screen.debug();
-  // });
+  it('Add button for adding new section successfully navigates to AboutUsAddSection page on click', async () => {
+    const addSectionBtn = await screen.findByText(ADD_ABOUT_US_SECTION);
+    fireEvent.click(addSectionBtn);
+    expect(await screen.findByText(imgLabel)).toBeInTheDocument();
+  });
 
   it('Edit button for editing title successfully navigates to AboutUsTitleEdit page on click', async () => {
     const editButtons = await screen.findAllByTestId('edit-btn');
@@ -82,12 +82,12 @@ describe('AboutUs component tests, ', () => {
     expect(await screen.findByText(enTitle)).toBeInTheDocument();
   });
 
-  // it('Edit button for editing section successfully navigates to AboutUsSectionEdit page on click', async () => {
-  //   const editButtons = await screen.findAllByTestId('edit-btn');
-  //   const sectionEditButton = editButtons[1];
-  //   fireEvent.click(sectionEditButton);
-  //   expect(await screen.findByText(firstSectionEnTitle));
-  // });
+  it('Edit button for editing section successfully navigates to AboutUsSectionEdit page on click', async () => {
+    const editButtons = await screen.findAllByTestId('edit-btn');
+    const sectionEditButton = editButtons[1];
+    fireEvent.click(sectionEditButton);
+    expect(await screen.findByText(firstSectionEnTitle));
+  });
 
   it('Edit button for editing section successfully navigates to AboutUsFooterImgEdit page on click', async () => {
     const editButtons = await screen.findAllByTestId('edit-btn');

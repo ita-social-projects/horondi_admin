@@ -62,7 +62,7 @@
     "lint:fix": "eslint . --fix --color",
     "cypress": "cypress open",
     "eslint-check": "eslint --print-config src/components/App/App.js | eslint-config-prettier-check",
-    "test": "jest --coverage",
+    "test": "jest --coverage --env=jest-environment-jsdom-sixteen",
     "generate": "graphql-codegen"
   },
   "eslintConfig": {

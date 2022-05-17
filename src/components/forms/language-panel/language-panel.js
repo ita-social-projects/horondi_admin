@@ -34,6 +34,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
               <React.Fragment key={input.name}>
                 <TextField
                   data-cy={`${lang}-${input.name}`}
+                  data-testid='title-edit-input'
                   id={inputName}
                   className={styles.textField}
                   variant='outlined'
