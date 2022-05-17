@@ -40,16 +40,8 @@ const mockPattern = {
     thumbnail: 'thumbnail_eewk311kwdggeyx_158.jpg'
   },
   constructorImg: 'small_eewk311kwdgh3ty_гобелен-5.png',
-  additionalPrice: [
-    {
-      value: 2846,
-      type: 'ABSOLUTE_INDICATOR'
-    },
-    {
-      value: 97,
-      type: 'ABSOLUTE_INDICATOR'
-    }
-  ]
+  absolutePrice: 0,
+  relativePrice: null
 };
 
 const mockMaterials = [
