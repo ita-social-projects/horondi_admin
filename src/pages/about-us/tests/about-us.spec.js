@@ -6,14 +6,12 @@ import { ThemeProvider } from '@material-ui/styles';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
 import { aboutUsPageDataMock, enTitle, imgLabel } from './about-us.variables';
 import AboutUs from '../about-us';
-import AboutUsSectionAdd from '../about-us-section-add';
 import AboutUsTitleEdit from '../about-us-title-edit';
 import AboutUsFooterImgEdit from '../about-us-footer-img-edit';
 import { theme } from '../../../components/app/app-theme/app.theme';
 import { config } from '../../../configs';
 
 const { routes } = config;
-const { ADD_ABOUT_US_SECTION } = config.buttonTitles;
 
 jest.mock('react-redux');
 jest.mock('../about-us.styles', () => ({
@@ -35,11 +33,6 @@ describe('AboutUs component tests', () => {
             <Switch>
               <Route path={routes.pathToAboutUs} exact component={AboutUs} />
               <Route
-                path={routes.pathToAboutUsAddSection}
-                exact
-                component={AboutUsSectionAdd}
-              />
-              <Route
                 path={routes.pathToAboutUsTitleEdit}
                 exact
                 component={AboutUsTitleEdit}
@@ -54,12 +47,6 @@ describe('AboutUs component tests', () => {
         </MemoryRouter>
       </MockedProvider>
     );
-  });
-
-  it('Add button for adding new section successfully navigates to AboutUsAddSection page on click', async () => {
-    const addSectionBtn = await screen.findByText(ADD_ABOUT_US_SECTION);
-    fireEvent.click(addSectionBtn);
-    expect(await screen.findByText(imgLabel)).toBeInTheDocument();
   });
 
   it('Edit button for editing title successfully navigates to AboutUsTitleEdit page on click', async () => {
