@@ -12,6 +12,7 @@ import { theme } from '../../../components/app/app-theme/app.theme';
 import { config } from '../../../configs';
 
 const { routes } = config;
+const { ADD_ABOUT_US_SECTION } = config.buttonTitles;
 
 jest.mock('react-redux');
 jest.mock('../about-us.styles', () => ({
@@ -47,6 +48,12 @@ describe('AboutUs component tests', () => {
         </MemoryRouter>
       </MockedProvider>
     );
+  });
+
+  it('Add button for adding new section successfully navigates to AboutUsAddSection page on click', async () => {
+    const addSectionBtn = await screen.findByText(ADD_ABOUT_US_SECTION);
+    fireEvent.click(addSectionBtn);
+    expect(await screen.findByText(imgLabel)).toBeInTheDocument();
   });
 
   it('Edit button for editing title successfully navigates to AboutUsTitleEdit page on click', async () => {
