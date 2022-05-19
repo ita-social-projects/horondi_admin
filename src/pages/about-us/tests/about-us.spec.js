@@ -6,6 +6,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
 import { aboutUsPageDataMock, enTitle, imgLabel } from './about-us.variables';
 import AboutUs from '../about-us';
+import AboutUsSectionAdd from '../about-us-section-add';
 import AboutUsTitleEdit from '../about-us-title-edit';
 import AboutUsFooterImgEdit from '../about-us-footer-img-edit';
 import { theme } from '../../../components/app/app-theme/app.theme';
@@ -33,6 +34,11 @@ describe('AboutUs component tests', () => {
           <ThemeProvider theme={themeValue}>
             <Switch>
               <Route path={routes.pathToAboutUs} exact component={AboutUs} />
+              <Route
+                path={routes.pathToAboutUsAddSection}
+                exact
+                component={AboutUsSectionAdd}
+              />
               <Route
                 path={routes.pathToAboutUsTitleEdit}
                 exact
