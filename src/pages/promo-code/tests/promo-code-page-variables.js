@@ -28,7 +28,7 @@ export const mocks = [
               dateFrom: '2022-04-08T14:22:43.437Z',
               dateTo: '2022-04-30T14:22:43.452Z',
               discount: 10,
-              _id: '123'
+              _id: '1'
             },
             {
               categories: ['backpacks', 'bags', 'accessories', 'constructor'],
@@ -36,7 +36,7 @@ export const mocks = [
               dateFrom: '2022-04-08T14:22:43.437Z',
               dateTo: '2023-05-06T14:22:43.452Z',
               discount: 10,
-              _id: '123'
+              _id: '2'
             },
             {
               categories: ['backpacks', 'bags', 'accessories', 'constructor'],
@@ -44,7 +44,7 @@ export const mocks = [
               dateFrom: '2023-06-08T14:22:43.437Z',
               dateTo: '2024-06-10T14:22:43.452Z',
               discount: 10,
-              _id: '123'
+              _id: '3'
             }
           ]
         }

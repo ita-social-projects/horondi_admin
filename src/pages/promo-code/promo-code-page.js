@@ -113,6 +113,7 @@ const PromoCodePage = () => {
         <TableContainerRow
           key={_id}
           promo={code}
+          id={_id}
           discount={`${discount}%`}
           status={checkPromoStatus(dateFrom, dateTo)}
           showAvatar={false}

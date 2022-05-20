@@ -30,61 +30,18 @@ const mockOpenSuccessSnackbar = jest.fn();
 jest.mock('../../../utils/use-success-snackbar', () => ({
   __esModule: true,
   default: jest.fn(() => ({
-      openSuccessSnackbar: mockOpenSuccessSnackbar
-    }))
+    openSuccessSnackbar: mockOpenSuccessSnackbar
+  }))
 }));
 
 const themeValue = theme('light');
 const dispatch = jest.fn();
 
 useDispatch.mockImplementation(() => dispatch);
-let wrapper;
-
-describe('PromoCodePage component tests', () => {
-  beforeEach(() => {
-    wrapper = mount(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <BrowserRouter>
-          <ThemeProvider theme={themeValue}>
-            <PromoCodePage />
-          </ThemeProvider>
-        </BrowserRouter>
-      </MockedProvider>
-    );
-  });
-  afterEach(() => {
-    jest.restoreAllMocks();
-    wrapper = null;
-  });
-
-  it('should render PromoCodePage', () => {
-    expect(wrapper).toBeDefined();
-  });
-});
 
 describe('PromoCodePage component test with loading', () => {
-  beforeEach(() => {
-    wrapper = mount(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <BrowserRouter>
-          <ThemeProvider theme={themeValue}>
-            <PromoCodePage />
-          </ThemeProvider>
-        </BrowserRouter>
-      </MockedProvider>
-    );
-  });
-  afterEach(() => {
-    jest.restoreAllMocks();
-    wrapper = null;
-  });
-
-  it('test Loader in PromoCodePage component', () => {
-    expect(wrapper.exists(LoadingBar)).toBe(true);
-  });
-
-  it('test PromoCodePage component without items', () => {
-    const noDataWrapper = mount(
+  it('test PromoCodePage component without items starting with LoadingBur', () => {
+    const noDataWrapper = render(
       <MockedProvider mocks={mocksWithoutPromocodes} addTypename={false}>
         <BrowserRouter>
           <ThemeProvider theme={themeValue}>
@@ -93,11 +50,10 @@ describe('PromoCodePage component test with loading', () => {
         </BrowserRouter>
       </MockedProvider>
     );
-
-    expect(noDataWrapper).toBeTruthy();
+    expect(noDataWrapper).toContain(LoadingBar);
   });
 
-  it('test adit btn ', async () => {
+  it('test delete and edit btn', async () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <BrowserRouter>
@@ -107,25 +63,11 @@ describe('PromoCodePage component test with loading', () => {
         </BrowserRouter>
       </MockedProvider>
     );
-
-    const editBtn = await screen.findAllByTitle('Редагувати');
-    await fireEvent.click(editBtn[0]);
+    const btnDelete = await screen.findByTestId('del_1');
+    fireEvent.click(btnDelete);
+    expect(mockOpenSuccessSnackbar).toHaveBeenCalled();
+    const editBtn = await screen.findByTestId('edit_1');
+    fireEvent.click(editBtn);
     expect(dispatch).toHaveBeenCalledWith(push());
-  });
-
-  it('test delete btn ', async () => {
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <BrowserRouter>
-          <ThemeProvider theme={themeValue}>
-            <PromoCodePage />
-          </ThemeProvider>
-        </BrowserRouter>
-      </MockedProvider>
-    );
-
-    const btnDelete = await screen.findAllByTitle('Видалити');
-    await fireEvent.click(btnDelete[0]);
-    await expect(mockOpenSuccessSnackbar).toHaveBeenCalled();
   });
 });
