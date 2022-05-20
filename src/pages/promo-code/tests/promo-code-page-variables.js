@@ -89,23 +89,5 @@ export const mocksWithoutPromocodes = [
       },
       loading: false
     }
-  },
-  {
-    request: {
-      query: deletePromoCodeByID,
-      variables: {
-        id: 'promoID'
-      },
-      context: {
-        headers: {
-          token: 'token'
-        }
-      }
-    },
-    result: {
-      data: {
-        deletePromoCode: { _id: '123' }
-      }
-    }
   }
 ];

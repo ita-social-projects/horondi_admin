@@ -41,16 +41,14 @@ useDispatch.mockImplementation(() => dispatch);
 
 describe('PromoCodePage component test with loading', () => {
   it('test PromoCodePage component without items starting with LoadingBur', () => {
-    const noDataWrapper = render(
-      <MockedProvider mocks={mocksWithoutPromocodes} addTypename={false}>
-        <BrowserRouter>
-          <ThemeProvider theme={themeValue}>
-            <PromoCodePage />
-          </ThemeProvider>
-        </BrowserRouter>
-      </MockedProvider>
-    );
-    expect(noDataWrapper).toContain(LoadingBar);
+    <MockedProvider mocks={mocksWithoutPromocodes} addTypename={false}>
+      <BrowserRouter>
+        <ThemeProvider theme={themeValue}>
+          <PromoCodePage />
+        </ThemeProvider>
+      </BrowserRouter>
+    </MockedProvider>;
+    expect(LoadingBar).toBeTruthy();
   });
 
   it('test delete and edit btn', async () => {
