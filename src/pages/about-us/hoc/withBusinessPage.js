@@ -2,18 +2,21 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { useStyles } from './withBusinessPage.styles';
 import LoadingBar from '../../../components/loading-bar';
-import { getBusinessTextByCode } from '../operations/about-us.queries';
+import { getBusinessTextByCodeWithPopulatedTranslationsKey } from '../operations/about-us.queries';
 import { config } from '../../../configs';
 
 const { labels } = config;
 
 const withBusinessPage = (Component) => (props) => {
   const styles = useStyles();
-  const { data, loading } = useQuery(getBusinessTextByCode, {
-    variables: {
-      code: labels.aboutUs.code
+  const { data, loading } = useQuery(
+    getBusinessTextByCodeWithPopulatedTranslationsKey,
+    {
+      variables: {
+        code: labels.aboutUs.code
+      }
     }
-  });
+  );
 
   if (loading) {
     return <LoadingBar />;
@@ -21,8 +24,11 @@ const withBusinessPage = (Component) => (props) => {
 
   return (
     <div className={styles.container}>
-      {data?.getBusinessTextByCode ? (
-        <Component businessPage={data.getBusinessTextByCode} {...props} />
+      {data?.getBusinessTextByCodeWithPopulatedTranslationsKey ? (
+        <Component
+          businessPage={data.getBusinessTextByCodeWithPopulatedTranslationsKey}
+          {...props}
+        />
       ) : null}
     </div>
   );

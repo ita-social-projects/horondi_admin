@@ -11,7 +11,7 @@ import {
   showErrorSnackbar
 } from '../../../../redux/snackbar/snackbar.actions';
 import LoadingBar from '../../../loading-bar';
-import { updateBusinessTextByCode } from '../operations/about-us.mutation';
+import { updateBusinessText } from '../operations/about-us.mutation';
 import {
   getInitialValuesForTitleEditing,
   getBusinessPageWithUpdatedTitle,
@@ -28,7 +28,7 @@ const { titleEditInput } = config.labels.aboutUs;
 const AboutUsTitleEditForm = ({ businessPage }) => {
   const dispatch = useDispatch();
 
-  const [updateTitle, { loading }] = useMutation(updateBusinessTextByCode, {
+  const [updateTitle, { loading }] = useMutation(updateBusinessText, {
     onCompleted: () => {
       dispatch(showSuccessSnackbar(SUCCESS_UPDATE_STATUS));
     },

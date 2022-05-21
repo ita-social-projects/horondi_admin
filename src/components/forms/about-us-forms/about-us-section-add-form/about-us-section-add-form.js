@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { useStyles } from '../about-us-forms.styles';
-import { updateBusinessTextByCode } from '../operations/about-us.mutation';
+import { updateBusinessText } from '../operations/about-us.mutation';
 import { showErrorSnackbar } from '../../../../redux/snackbar/snackbar.actions';
 import { businessPageShape } from '../../../../propTypes/about-us';
 import {
@@ -31,7 +31,7 @@ const AboutUsSectionAddForm = ({ businessPage }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [updateSection, { loading }] = useMutation(updateBusinessTextByCode, {
+  const [updateSection, { loading }] = useMutation(updateBusinessText, {
     onCompleted: (data) => {
       if (data?.updateBusinessText?.message) {
         dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));

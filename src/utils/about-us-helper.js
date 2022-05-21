@@ -4,25 +4,25 @@ import { imgNameRegex } from '../configs/regexes';
 
 const { imgSizes } = config;
 
-export const getInitialValuesForTitleEditing = ({ title }) => ({
-  uaTitle: title[0].value,
-  enTitle: title[1].value
+export const getInitialValuesForTitleEditing = ({ translations }) => ({
+  uaTitle: translations.ua.title,
+  enTitle: translations.en.title
 });
 
-export const getUaTitleFromBusinessPageSection = ({ sections }, id) =>
-  sections[0].value.find((section) => section.id === id).title;
+export const getUaTitleFromBusinessPageSection = ({ translations }, id) =>
+  translations.ua.sections.find((section) => section.id === id).title;
 
-export const getEnTitleFromBusinessPageSection = ({ sections }, id) =>
-  sections[1].value.find((section) => section.id === id).title;
+export const getEnTitleFromBusinessPageSection = ({ translations }, id) =>
+  translations.en.sections.find((section) => section.id === id).title;
 
-export const getUaTextFromBusinessPageSection = ({ sections }, id) =>
-  sections[0].value.find((section) => section.id === id).text;
+export const getUaTextFromBusinessPageSection = ({ translations }, id) =>
+  translations.ua.sections.find((section) => section.id === id).text;
 
-export const getEnTextFromBusinessPageSection = ({ sections }, id) =>
-  sections[1].value.find((section) => section.id === id).text;
+export const getEnTextFromBusinessPageSection = ({ translations }, id) =>
+  translations.en.sections.find((section) => section.id === id).text;
 
-export const getImgFromBusinessPageSection = ({ sections }, id) =>
-  sections[0].value.find((section) => section.id === id).img;
+export const getImgFromBusinessPageSection = ({ sectionsImgs }, id) =>
+  sectionsImgs.find((section) => section.id === id);
 
 export const getFooterImgFromBusinessPage = (businessPage) =>
   businessPage.footerImg;
@@ -61,8 +61,8 @@ export const getFooterImgNames = (businessPage) => {
 
 export const getBusinessPageWithUpdatedTitle = (businessPage, values) => {
   const businessPageCopy = _.cloneDeep(businessPage);
-  businessPageCopy.title[0].value = values.uaTitle;
-  businessPageCopy.title[1].value = values.enTitle;
+  businessPageCopy.translations.ua.title = values.uaTitle;
+  businessPageCopy.translations.en.title = values.enTitle;
   return businessPageCopy;
 };
 
@@ -73,26 +73,25 @@ export const getBusinessPageWithUpdatedSection = (
   filename
 ) => {
   const businessPageCopy = _.cloneDeep(businessPage);
-  businessPageCopy.sections[0].value.find(
+  businessPageCopy.translations.ua.sections.find(
     (section) => section.id === id
   ).title = values.uaTitle;
-  businessPageCopy.sections[1].value.find(
+  businessPageCopy.translations.en.sections.find(
     (section) => section.id === id
   ).title = values.enTitle;
-  businessPageCopy.sections[0].value.find((section) => section.id === id).text =
-    values.uaText;
-  businessPageCopy.sections[1].value.find((section) => section.id === id).text =
-    values.enText;
+  businessPageCopy.translations.ua.sections.find(
+    (section) => section.id === id
+  ).text = values.uaText;
+  businessPageCopy.translations.en.sections.find(
+    (section) => section.id === id
+  ).text = values.enText;
 
   if (filename) {
-    businessPageCopy.sections[0].value.find(
+    const sectionImgIndex = businessPageCopy.sectionsImgs.findIndex(
       (section) => section.id === id
-    ).img = {
-      name: filename
-    };
-    businessPageCopy.sections[1].value.find(
-      (section) => section.id === id
-    ).img = {
+    );
+    businessPageCopy.sectionsImgs[sectionImgIndex] = {
+      id,
       name: filename
     };
   }
@@ -153,14 +152,14 @@ export const getBusinessPageWithoutSection = (businessPage, sectionId) => {
 export const setVariablesForUpdatingPage = (businessPage, files = []) => ({
   id: businessPage._id,
   businessText: getBusinessText(businessPage),
-  files
+  businessTextTranslationFields: businessPage.translations,
+  files,
+  populated: true
 });
 
 export const getBusinessText = (businessPage) => ({
   code: businessPage.code,
-  title: businessPage.title,
-  sections: businessPage.sections,
-  text: businessPage.text,
+  sectionsImgs: businessPage.sectionsImgs,
   languages: businessPage.languages,
   footerImg: businessPage.footerImg
 });

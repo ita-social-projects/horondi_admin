@@ -2,16 +2,16 @@ export const setCodeHandler = (condition, businessPage) =>
   condition ? businessPage.code : '';
 
 export const uaSetTitleHandler = (condition, businessPage) =>
-  condition ? businessPage.title[0].value : '';
+  condition ? businessPage.translations.ua.title : '';
 
 export const uaSetTextHandler = (condition, businessPage) =>
-  condition ? businessPage.text[0].value : '';
+  condition ? businessPage.translations.ua.text : '';
 
 export const enSetTitleHandler = (condition, businessPage) =>
-  condition ? businessPage.title[1].value : '';
+  condition ? businessPage.translations.en.title : '';
 
 export const enSetTextHandler = (condition, businessPage) =>
-  condition ? businessPage.text[1].value : '';
+  condition ? businessPage.translations.en.text : '';
 
 export const businessPageDispatchHandler = (
   mode,

@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { useStyles } from '../about-us-forms.styles';
 import {
-  updateBusinessTextByCode,
+  updateBusinessText,
   deleteFiles
 } from '../operations/about-us.mutation';
 import {
@@ -37,7 +37,7 @@ const AboutUsFooterImgEditForm = ({ businessPage }) => {
   const dispatch = useDispatch();
 
   const [updateSection, { loading: updateSectionLoading }] = useMutation(
-    updateBusinessTextByCode,
+    updateBusinessText,
     {
       onCompleted: (data) => {
         if (data?.updateBusinessText?.message) {

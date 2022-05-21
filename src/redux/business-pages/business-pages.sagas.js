@@ -10,7 +10,7 @@ import {
 } from './business-pages.actions';
 import {
   getAllBusinessPages,
-  getBusinessPageByCode,
+  getBusinessTextByCodeWithPopulatedTranslationsKey,
   createBusinessPage,
   deleteBusinessPage,
   updateBusinessPage
@@ -51,7 +51,10 @@ export function* handleBusinessPagesLoad() {
 export function* handleCurrentBusinessPageLoad({ payload }) {
   try {
     yield put(setLoading(true));
-    const businessPage = yield call(getBusinessPageByCode, payload);
+    const businessPage = yield call(
+      getBusinessTextByCodeWithPopulatedTranslationsKey,
+      payload
+    );
     yield put(setCurrentBusinessPage(businessPage));
     yield put(setLoading(false));
   } catch (error) {

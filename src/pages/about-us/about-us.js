@@ -11,9 +11,9 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import materialUiConstants from '../../configs/material-ui-constants';
 import { config } from '../../configs';
 import LoadingBar from '../../components/loading-bar';
-import { getBusinessTextByCode } from './operations/about-us.queries';
+import { getBusinessTextByCodeWithPopulatedTranslationsKey } from './operations/about-us.queries';
 import {
-  updateBusinessTextByCode,
+  updateBusinessText,
   deleteFiles
 } from '../../components/forms/about-us-forms/operations/about-us.mutation';
 import {
@@ -49,23 +49,25 @@ const AboutUs = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { openSuccessSnackbar } = useSuccessSnackbar();
+  const uaTranslations = businessPage ? businessPage.translations.ua : null;
 
   const {
     loading: getBusinessTextLoading,
     refetch: getBusinessTextRefetch,
     isRefetching
-  } = useQuery(getBusinessTextByCode, {
+  } = useQuery(getBusinessTextByCodeWithPopulatedTranslationsKey, {
     fetchPolicy: 'network-only',
     variables: {
       code
     },
-    onCompleted: (data) => setBusinessPage(data.getBusinessTextByCode)
+    onCompleted: (data) =>
+      setBusinessPage(data.getBusinessTextByCodeWithPopulatedTranslationsKey)
   });
 
   const [
     updateBusinessPage,
     { data: updatedData, loading: updateBusinessTextLoading }
-  ] = useMutation(updateBusinessTextByCode, {
+  ] = useMutation(updateBusinessText, {
     onCompleted: (data) => {
       if (data?.updateBusinessText?.message) {
         dispatch(showErrorSnackbar(ERROR_BOUNDARY_STATUS));
@@ -115,8 +117,8 @@ const AboutUs = () => {
     ? [
         <TableContainerRow
           showAvatar={false}
-          key={businessPage.title[0].value}
-          title={businessPage.title[0].value}
+          key={uaTranslations.title}
+          title={uaTranslations.title}
           showDelete={false}
           editHandler={editTitleHandler}
         />
@@ -124,13 +126,13 @@ const AboutUs = () => {
     : [];
 
   const sectionItems = businessPage
-    ? businessPage.sections[0].value.map(({ id, title, text, img }) => (
+    ? uaTranslations.sections.map(({ id, title, text }, idx) => (
         <TableContainerRow
           showAvatar={false}
           key={id}
           title={title}
           text={ReactHtmlParser(text)}
-          image={img.src}
+          image={businessPage.sectionsImgs[idx].src}
           editHandler={() => editSectionHandler(id)}
           deleteHandler={() => deleteSectionHandler(id)}
         />

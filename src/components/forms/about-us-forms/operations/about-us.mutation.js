@@ -6,37 +6,64 @@ export const deleteFiles = gql`
   }
 `;
 
-export const updateBusinessTextByCode = gql`
-  mutation ($id: ID!, $businessText: BusinessTextInput!, $files: [Upload]!) {
-    updateBusinessText(id: $id, businessText: $businessText, files: $files) {
-      ... on BusinessText {
+export const updateBusinessText = gql`
+  mutation (
+    $id: ID!
+    $businessText: BusinessTextInput!
+    $businessTextTranslationFields: BusinessTextTranslationFieldsInput!
+    $files: [Upload]!
+    $populated: Boolean
+  ) {
+    updateBusinessText(
+      id: $id
+      businessText: $businessText
+      businessTextTranslationFields: $businessTextTranslationFields
+      files: $files
+      populated: $populated
+    ) {
+      ... on BusinessTextWithPopulatedTranslationsKey {
         _id
         code
-        title {
-          lang
-          value
-        }
-        sections {
-          lang
-          value {
-            id
-            title
-            text
-            img {
-              name
-              src
-            }
-          }
-        }
-        text {
-          lang
-          value
-        }
-        languages
-        footerImg {
+        sectionsImgs {
+          id
           name
           src
         }
+        footerImg {
+          id
+          name
+          src
+        }
+        languages
+        translations {
+          _id
+          ua {
+            title
+            sections {
+              id
+              title
+              text
+            }
+          }
+          en {
+            title
+            sections {
+              id
+              title
+              text
+            }
+          }
+        }
+      }
+      ... on BusinessText {
+        _id
+        code
+        sectionsImgs {
+          name
+          src
+        }
+        languages
+        translationsKey
       }
       ... on Error {
         message

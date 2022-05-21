@@ -16,27 +16,18 @@ const useBusinessHandlers = () => {
 
   const createBusinessPage = (values) => ({
     code: values.code,
-    title: [
-      {
-        lang: languages[0],
-        value: values.uaTitle
-      },
-      {
-        lang: languages[1],
-        value: values.enTitle
-      }
-    ],
-    text: [
-      {
-        lang: languages[0],
-        value: values.uaText
-      },
-      {
-        lang: languages[1],
-        value: values.enText
-      }
-    ],
     languages: [...languages]
+  });
+
+  const createBusinessTextTranslationFields = (values) => ({
+    ua: {
+      title: values.uaTitle,
+      text: values.uaText
+    },
+    en: {
+      title: values.enTitle,
+      text: values.enText
+    }
   });
 
   return {
@@ -52,6 +43,7 @@ const useBusinessHandlers = () => {
     enSetTitle,
     languages,
     createBusinessPage,
+    createBusinessTextTranslationFields,
     files,
     setFiles
   };

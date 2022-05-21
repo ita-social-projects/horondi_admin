@@ -33,7 +33,7 @@ import { config } from '../../../configs';
 import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
 import useChangedValuesChecker from '../../../hooks/forms/use-changed-values-checker';
 
-const BusinessPageForm = ({ id, editMode, codePath }) => {
+const BusinessPageForm = ({ editMode, codePath }) => {
   const dispatch = useDispatch();
   const { loading, businessPage } = useSelector(({ BusinessPages }) => ({
     loading: BusinessPages.loading,
@@ -60,6 +60,7 @@ const BusinessPageForm = ({ id, editMode, codePath }) => {
 
   const {
     createBusinessPage,
+    createBusinessTextTranslationFields,
     uaSetText,
     enSetText,
     uaSetTitle,
@@ -144,18 +145,27 @@ const BusinessPageForm = ({ id, editMode, codePath }) => {
       const newUaText = values.uaText.replace(/src="data:image.*?"/g, 'src=""');
       const newEnText = values.enText.replace(/src="data:image.*?"/g, 'src=""');
 
-      const page = createBusinessPage({
-        ...values,
-        uaText: newUaText,
-        enText: newEnText
-      });
+      const page = createBusinessPage(values);
+
+      const businessTextTranslationFields = createBusinessTextTranslationFields(
+        {
+          ...values,
+          uaText: newUaText,
+          enText: newEnText
+        }
+      );
 
       businessPageDispatchHandler(
         editMode,
         dispatch,
         updateBusinessPage,
         addBusinessPage,
-        { id, page, files: uniqueFiles },
+        {
+          id: businessPage._id,
+          page,
+          businessTextTranslationFields,
+          files: uniqueFiles
+        },
         { page, files: uniqueFiles }
       );
     }
@@ -210,7 +220,7 @@ const BusinessPageForm = ({ id, editMode, codePath }) => {
                 enTitle: values.enTitle
               }}
               errors={errors}
-              {...(id ? { disabled: !changed } : {})}
+              {...(businessPage?._id ? { disabled: !changed } : {})}
             />
           </Grid>
         </Grid>

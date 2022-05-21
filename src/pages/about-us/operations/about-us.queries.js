@@ -1,36 +1,39 @@
 import { gql } from '@apollo/client';
 
-export const getBusinessTextByCode = gql`
+export const getBusinessTextByCodeWithPopulatedTranslationsKey = gql`
   query ($code: String!) {
-    getBusinessTextByCode(code: $code) {
+    getBusinessTextByCodeWithPopulatedTranslationsKey(code: $code) {
       __typename
-      ... on BusinessText {
+      ... on BusinessTextWithPopulatedTranslationsKey {
         _id
         code
-        title {
-          lang
-          value
-        }
-        sections {
-          lang
-          value {
-            id
-            title
-            text
-            img {
-              name
-              src
-            }
-          }
-        }
-        text {
-          lang
-          value
-        }
         languages
+        sectionsImgs {
+          id
+          name
+          src
+        }
         footerImg {
           name
           src
+        }
+        translations {
+          ua {
+            title
+            sections {
+              id
+              title
+              text
+            }
+          }
+          en {
+            title
+            sections {
+              id
+              title
+              text
+            }
+          }
         }
       }
       ... on Error {
