@@ -61,7 +61,7 @@ const AboutUsFooterImgEditForm = ({ businessPage }) => {
 
     const updatedBusinessPage = getBusinessPageWithUpdatedFooterImg(
       businessPageData,
-      upload.name
+      upload?.name
     );
 
     const variables = setVariablesForUpdatingPage(updatedBusinessPage, [

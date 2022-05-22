@@ -48,7 +48,7 @@ const AboutUsSectionAddForm = ({ businessPage }) => {
     const updatedBusinessPage = getBusinessPageWithNewSection(
       businessPage,
       onSubmitValues,
-      upload.name
+      upload?.name
     );
 
     const variables = setVariablesForUpdatingPage(updatedBusinessPage, [
