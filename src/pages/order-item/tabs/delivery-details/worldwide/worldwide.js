@@ -79,9 +79,6 @@ const Worldwide = ({ values, handleChange, setFieldValue }) => {
         values.stateOrProvince
       );
     } else {
-      setFieldValue(worldWide.worldWideCity, '');
-      setFieldValue(worldWide.worldWideStreet, '');
-      setFieldValue(worldWide.cityCode, '');
       setCitiesOptions([]);
     }
   }, [values.stateOrProvince]);
