@@ -8,7 +8,10 @@ export const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    fontWeight: 600
+    fontWeight: 600,
+    '& .MuiListItemIcon-root': {
+      color: theme.palette.textColor
+    }
   },
   drawerPaper: {
     width: drawerWidth,
@@ -42,8 +45,5 @@ export const useStyles = makeStyles((theme) => ({
   },
   sliderTab: {
     paddingLeft: theme.spacing(8)
-  },
-  icon: {
-    color: theme.palette.textColor
   }
 }));
