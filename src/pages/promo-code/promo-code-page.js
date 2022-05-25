@@ -49,16 +49,17 @@ const PromoCodePage = () => {
       search: searchOptions.search,
       status: filterByMultipleOptions[0].status
     },
-    fetchPolicy: 'no-cache'
+    fetchPolicy: 'network-only'
   });
-  const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
-
-  const promoCodes = data?.getAllPromoCodes || {};
-  const runRefetchData = () => refetch();
 
   useEffect(() => {
     dispatch(setItemsCount(data?.getAllPromoCodes?.count) || 0);
   }, [data]);
+
+  const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
+
+  const promoCodes = data?.getAllPromoCodes || {};
+  const runRefetchData = () => refetch();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -95,7 +96,7 @@ const PromoCodePage = () => {
           token
         }
       }
-    }).then(() => runRefetchData);
+    }).then(() => runRefetchData());
     dispatch(closeDialog());
   };
   const openDeleteModalHandler = (promoID) =>
@@ -103,7 +104,6 @@ const PromoCodePage = () => {
       () => completeDeleteHandler(promoID),
       promoCodesConsts.deletePromo
     );
-
   const editPromoCodeHandler = (promoID) => {
     dispatch(push(`${promoID}`));
   };
@@ -113,6 +113,7 @@ const PromoCodePage = () => {
         <TableContainerRow
           key={_id}
           promo={code}
+          id={_id}
           discount={`${discount}%`}
           status={checkPromoStatus(dateFrom, dateTo)}
           showAvatar={false}
@@ -126,7 +127,6 @@ const PromoCodePage = () => {
   if (loading) {
     return <LoadingBar />;
   }
-
   return (
     <div className={commonStyles.container}>
       <div className={styles.header}>
