@@ -23,7 +23,7 @@ const mockSubmit = jest.fn();
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({
-    values: {},
+    values: { additionalPriceType: 'ABSOLUTE' },
     handleSubmit: mockSubmit,
     handleChange: jest.fn(),
     touched: {},

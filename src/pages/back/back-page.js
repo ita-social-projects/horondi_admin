@@ -68,7 +68,7 @@ const BackPage = () => {
       name={backItem.name[0].value}
       material={backItem.features.material.name[0].value}
       color={backItem.features.color.name[0].value}
-      additionalPrice={backItem?.additionalPrice[1]?.value}
+      additionalPrice={backItem?.absolutePrice}
       available={backItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => backDeleteHandler(backItem._id)}
       editHandler={() => {

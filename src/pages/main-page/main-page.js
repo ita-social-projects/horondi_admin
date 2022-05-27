@@ -91,7 +91,13 @@ const MainPage = () => {
     ordersList && ordersList.length
       ? map(
           ordersList,
-          ({ dateOfCreation, totalItemsPrice, _id, orderNumber }) => (
+          ({
+            dateOfCreation,
+            totalItemsPrice,
+            _id,
+            orderNumber,
+            fixedExchangeRate
+          }) => (
             <TableRow
               key={_id}
               onClick={() => dispatch(push(`${pathToOrders}/edit/${_id}`))}
@@ -102,9 +108,9 @@ const MainPage = () => {
                 {moment.unix(dateOfCreation / 1000).format('DD.MM.YYYY')}
               </TableCell>
               <TableCell>
-                {totalItemsPrice[0].value}
-                {totalItemsPrice[0].currency} / {totalItemsPrice[1].value}
-                {totalItemsPrice[1].currency}
+                {Math.round(totalItemsPrice * fixedExchangeRate)}
+                {'UAH'} / {totalItemsPrice}
+                {'USD'}
               </TableCell>
               <TableCell>{orderNumber}</TableCell>
             </TableRow>

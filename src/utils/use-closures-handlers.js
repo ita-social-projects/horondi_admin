@@ -19,10 +19,7 @@ const useClosuresHandlers = () => {
         value: values.enName
       }
     ],
-    additionalPrice: {
-      value: +values.additionalPrice,
-      type: values.additionalPriceType
-    },
+    absolutePrice: +values.additionalPrice,
     available: values.available,
     optionType: 'CLOSURE'
   });

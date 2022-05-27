@@ -24,7 +24,7 @@ const mockSetStrapsImage = jest.fn();
 jest.mock('formik', () => ({
   ...jest.requireActual('formik'),
   useFormik: () => ({
-    values: {},
+    values: { additionalPriceType: 'ABSOLUTE' },
     handleSubmit: mockSubmit,
     handleChange: mockChange,
     touched: {

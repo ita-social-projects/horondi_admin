@@ -60,7 +60,7 @@ const BasicsPage = () => {
       name={basic?.name[0]?.value}
       material={basic?.features?.material?.name[0].value}
       color={basic?.features?.color?.name[0].value}
-      additionalPrice={basic?.additionalPrice[1]?.value}
+      additionalPrice={basic?.absolutePrice}
       available={basic.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         basicDeleteHandler(basic._id);

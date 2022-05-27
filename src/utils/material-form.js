@@ -35,16 +35,10 @@ const getMaterialFormInitValues = (material, purposeEnum) => ({
   purpose: material.purpose || purposeEnum.MAIN,
   available: material.available || false,
   colors: (material.colors && material.colors.map((color) => color._id)) || [],
-  additionalPrice: getAdditionalPriceValue(material) || '',
-  additionalPriceType: material.additionalPriceType || 'ABSOLUTE_INDICATOR'
+  additionalPriceType: material.relativePrice ? 'RELATIVE' : 'ABSOLUTE',
+  additionalPrice: material.absolutePrice
+    ? material.absolutePrice
+    : material.relativePrice
 });
-
-const getAdditionalPriceValue = (material) => {
-  const { type } = material?.additionalPrice?.[0] || {};
-  if (type === 'ABSOLUTE_INDICATOR') {
-    return material?.additionalPrice?.[1]?.value || '';
-  }
-  return material?.additionalPrice?.[0]?.value || '';
-};
 
 export default getMaterialFormInitValues;

@@ -29,7 +29,7 @@ export const productsPropTypes = {
 
 export const generalPropTypes = {
   data: PropTypes.shape({
-    status: PropTypes.arrayOf(PropTypes.string),
+    status: PropTypes.string,
     isPaid: PropTypes.bool,
     courierOffice: PropTypes.string,
     paymentMethod: PropTypes.string,
@@ -53,20 +53,21 @@ export const deliveryPropTypes = {
   setFieldValue: PropTypes.func.isRequired
 };
 
+const SizePropTypes = {
+  _id: PropTypes.string,
+  name: PropTypes.string,
+  price: PropTypes.number
+};
+
 const itemPropType = PropTypes.shape({
   options: PropTypes.shape({
-    size: PropTypes.objectOf(PropTypes.string)
+    size: PropTypes.shape(SizePropTypes)
   }),
   quantity: PropTypes.number,
   product: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-    basePrice: PropTypes.arrayOf(
-      PropTypes.shape({
-        currency: PropTypes.string,
-        value: PropTypes.number
-      })
-    )
+    basePrice: PropTypes.number
   })
 });
 
@@ -108,24 +109,12 @@ export const worldWidePropTypes = {
   })
 };
 
-const price = (item) => [
-  {
-    value: item.quantity * item.options.size.price[0].value,
-    currency: 'UAH'
-  },
-  {
-    value: item.quantity * item.options.size.price[1].value,
-    currency: 'USD'
-  }
-];
-
 const { deliveryTypes } = config;
 const items = (order) =>
   order.items?.map((item) => ({
     product: item?.product._id,
     quantity: item.quantity,
     isFromConstructor: !item.product._id,
-    price: price(item),
     options: {
       size: item.options.size._id,
       sidePocket: item.options.sidePocket

@@ -61,10 +61,10 @@ const StrapsPage = () => {
     <TableContainerRow
       key={strap._id}
       id={strap._id}
-      image={strap?.images.thumbnail ? IMG_URL + strap.images.thumbnail : ''}
+      image={strap?.images?.thumbnail ? IMG_URL + strap.images.thumbnail : ''}
       name={strap?.name[0]?.value}
       color={strap?.features?.color?.name[0]?.value}
-      additionalPrice={strap?.additionalPrice[1]?.value}
+      additionalPrice={strap?.absolutePrice}
       available={strap.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         strapsDeleteHandler(strap._id);

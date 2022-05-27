@@ -11,19 +11,11 @@ export const createSize = (data) => ({
   weightInKg: data.weightInKg,
   available: data.available,
   modelId: data.modelId,
-  additionalPrice: {
-    value: +data.additionalPrice,
-    type: data.additionalPriceType
-  }
+  absolutePrice:
+    data.additionalPriceType === 'ABSOLUTE' ? +data.additionalPrice : null,
+  relativePrice:
+    data.additionalPriceType === 'RELATIVE' ? +data.additionalPrice : null
 });
-
-const getAdditionalPriceValue = (size) => {
-  const { type } = size?.additionalPrice[0] || {};
-  if (type === 'ABSOLUTE_INDICATOR') {
-    return size?.additionalPrice[1]?.value || '';
-  }
-  return size?.additionalPrice[0]?.value || '';
-};
 
 export const getSizeInitialValues = (size) => ({
   name: size.name || 'M',
@@ -35,8 +27,8 @@ export const getSizeInitialValues = (size) => ({
   volumeInLiters: size.volumeInLiters || '',
   weightInKg: size.weightInKg || '',
   available: size.available || false,
-  additionalPrice: getAdditionalPriceValue(size),
-  additionalPriceType: size?.additionalPrice[0]?.type || 'ABSOLUTE_INDICATOR'
+  additionalPriceType: size.relativePrice ? 'RELATIVE' : 'ABSOLUTE',
+  additionalPrice: size.absolutePrice ? size.absolutePrice : size.relativePrice
 });
 
 export const sizePropTypes = {

@@ -36,18 +36,12 @@ export const getOrderById = (id) => {
   					worldWideCity
   					worldWideStreet
   					cityCode
-						cost {
-							currency
-							value
-						}
+						cost
 					}
 					items {
 						product {
 							_id
-							basePrice {
-								currency
-								value
-							}
+							basePrice
 							name {
 								lang
 								value
@@ -100,10 +94,7 @@ export const getOrderById = (id) => {
 							}
 						}
 						isFromConstructor
-						fixedPrice {
-							currency
-							value
-						}
+						fixedPrice
 					}
 					paymentMethod
 					paymentStatus
@@ -149,25 +140,19 @@ export const updateOrder = (order, id) => {
 						house
 						flat
 						messenger
-  					messengerPhone
-  					worldWideCountry
-  					stateOrProvince
-  					worldWideCity
-  					worldWideStreet
-  					cityCode
+						messengerPhone
+						worldWideCountry
+						stateOrProvince
+						worldWideCity
+						worldWideStreet
+						cityCode
 						byCourier
-						cost {
-							currency
-							value
-						}
+						cost
 					}
 					items {
 						product {
 							_id
-							basePrice {
-								currency
-								value
-							}
+							basePrice
 							name {
 								lang
 								value
@@ -185,10 +170,7 @@ export const updateOrder = (order, id) => {
 							sidePocket
 						}
 						isFromConstructor
-						fixedPrice {
-							currency
-							value
-						}
+						fixedPrice
 					}
 					paymentMethod
 					paymentStatus
@@ -206,79 +188,70 @@ export const updateOrder = (order, id) => {
 
 export const addOrder = (order) => {
   const query = `
-		mutation ($order: OrderInput!) {
-			addOrder(order: $order) {
-				... on Order {
-				  _id
-				  items {
-					product {
-					  name {
-						lang
-						value
-					  }
-					  images {
-						primary {
-						  thumbnail
-						}
-					  }
-					}
-					fixedPrice {
-					  currency
-					  value
-					}
-					quantity
-					options {
-					  size {
-						name
-					  }
-					}
-				  }
-				  totalPriceToPay {
-					currency
-					value
-				  }
-				  paymentStatus
-				}
-				... on Error {
-				  statusCode
-				  message
-				}
+  mutation($order: OrderInput!) {
+	addOrder(order: $order) {
+	  ... on Order {
+		_id
+		items {
+		  product {
+			name {
+			  lang
+			  value
+			}
+			images {
+			  primary {
+				thumbnail
 			  }
+			}
+		  }
+		  fixedPrice
+		  quantity
+		  options {
+			size {
+			  name
+			}
+		  }
 		}
+		totalItemsPrice
+		totalPriceToPay
+		fixedExchangeRate
+		fixedExchangeRate
+		paymentStatus
+	  }
+	  ... on Error {
+		statusCode
+		message
+	  }
+	}
+  }
   `;
   return setItems(query, { order });
 };
 
 export const getAllOrders = async (skip, limit, filter, sort) => {
   const query = `
-      query($limit: Int, $skip: Int, $filter: OrderFilterInput, $sort:JSONObject) {
-        getAllOrders(limit: $limit, skip: $skip, filter: $filter, sort:$sort) {
-          items {
-            _id
-            recipient 
-                {
-                firstName
-                lastName
-                email
-                phoneNumber
-            }
-			user_id
-            status
-            paymentStatus
-            orderNumber
-            dateOfCreation
-            totalItemsPrice {
-              currency
-              value
-            }
-            totalPriceToPay {
-              currency
-              value
-            }
-          }
-          count
-        }
-      }
+  query($limit: Int, $skip: Int, $filter: OrderFilterInput, $sort: JSONObject) {
+	getAllOrders(limit: $limit, skip: $skip, filter: $filter, sort: $sort) {
+	  items {
+		_id
+		recipient {
+		  firstName
+		  lastName
+		  email
+		  phoneNumber
+		}
+		user_id
+		status
+		paymentStatus
+		orderNumber
+		dateOfCreation
+		totalItemsPrice
+		totalPriceToPay
+		fixedExchangeRate
+	  }
+	  count
+	}
+  }
     `;
 
   const result = await getItems(query, {
@@ -308,14 +281,9 @@ export const getOrdersByUser = async (skip, limit, filter, sort, userId) => {
             paymentStatus
             orderNumber
             dateOfCreation
-            totalItemsPrice {
-              currency
-              value
-            }
-            totalPriceToPay {
-              currency
-              value
-            }
+            totalItemsPrice
+            totalPriceToPay
+			fixedExchangeRate
           }
           count
         }

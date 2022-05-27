@@ -68,7 +68,7 @@ const ConstructorListAccordion = ({ option, expanded, handleChange }) => {
       key={item._id}
       id={item._id}
       name={item.name[0].value}
-      additionalPrice={item.additionalPrice[1]?.value}
+      additionalPrice={item.absolutePrice}
       available={item.available ? 'Так' : 'Ні'}
       showEdit={false}
       showDelete={false}
