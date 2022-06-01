@@ -37,7 +37,8 @@ const useConstructorHandlers = () => {
       backs: items.backsToAdd,
       straps: items.strapsToAdd,
       closures: items.closuresToAdd,
-      pocketsWithRestrictions
+      pocketsWithRestrictions,
+      basePrice: items.basePriceToAdd
     };
   };
 
