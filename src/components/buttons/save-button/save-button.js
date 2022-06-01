@@ -91,11 +91,10 @@ const SaveButton = ({
 
 SaveButton.propTypes = {
   onClickHandler: PropTypes.func,
-  unblockFunction: PropTypes.func,
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  values: PropTypes.objectOf(PropTypes.string),
+  values: PropTypes.objectOf(PropTypes.array),
   errors: PropTypes.objectOf(PropTypes.object)
 };
 
@@ -103,8 +102,7 @@ SaveButton.defaultProps = {
   color: 'primary',
   errors: {},
   values: {},
-  onClickHandler: noop,
-  unblockFunction: () => null
+  onClickHandler: noop
 };
 
 export default SaveButton;

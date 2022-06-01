@@ -16,6 +16,7 @@ export const useStyles = makeStyles((theme) => {
     imageUploadAvatar,
     itemUpdate
   } = formStyles(theme);
+
   return {
     imageUploadBlock: {
       display: 'flex',
