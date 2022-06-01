@@ -74,13 +74,13 @@ const filterLabels = {
       {
         value: 'sortByTotalPriceToPayAsc',
         label: 'за вартістю товару (по зростанню)',
-        key: 'totalPriceToPay.0.value',
+        key: 'totalPriceToPay',
         type: 'asc'
       },
       {
         value: 'sortByTotalPriceToPayDesc',
         label: 'за вартістю товару (по спаданню)',
-        key: 'totalPriceToPay.0.value',
+        key: 'totalPriceToPay',
         type: 'desc'
       },
       {
