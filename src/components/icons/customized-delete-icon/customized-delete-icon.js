@@ -17,7 +17,7 @@ const CustomizedDeleteIcon = (props) => {
         aria-label={DELETE_TITLE}
         onClick={onClickHandler}
         data-cy='delete-btn'
-        data-testId={testId}
+        data-testid={testId}
       >
         <DeleteIcon fontSize={size} color='error' />
       </IconButton>
