@@ -24,14 +24,9 @@ import { setMapImageHandler as imageHandler } from '../../../utils/contacts-form
 const { languages } = config;
 const { imagePrefix } = config;
 
-const {
-  NOT_EN_DESCRIPTION_MESSAGE,
-  NOT_EN_NAME_MESSAGE,
-  NOT_UA_NAME_MESSAGE,
-  NOT_UA_DESCRIPTION_MESSAGE
-} = config.homePageSlideErrorMessages;
 const { MIN_LENGTH_MESSAGE, ERROR_MESSAGE } = config.commonErrorMessages;
 const { preview } = config.titles.homePageSliderTitle;
+
 const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
@@ -64,20 +59,12 @@ const HomePageSlideForm = ({ slide, id, slideOrder }) => {
   const slideValidationSchema = Yup.object().shape({
     enDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
-      .matches(config.formRegExp.enDescription, NOT_EN_DESCRIPTION_MESSAGE)
       .required(ERROR_MESSAGE),
-    enTitle: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .matches(config.formRegExp.enNameCreation, NOT_EN_NAME_MESSAGE)
-      .required(ERROR_MESSAGE),
+    enTitle: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE),
     uaDescription: Yup.string()
       .min(2, MIN_LENGTH_MESSAGE)
-      .matches(config.formRegExp.uaDescription, NOT_UA_DESCRIPTION_MESSAGE)
       .required(ERROR_MESSAGE),
-    uaTitle: Yup.string()
-      .min(2, MIN_LENGTH_MESSAGE)
-      .matches(config.formRegExp.uaNameCreation, NOT_UA_NAME_MESSAGE)
-      .required(ERROR_MESSAGE),
+    uaTitle: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE),
     link: Yup.string().min(2, MIN_LENGTH_MESSAGE).required(ERROR_MESSAGE)
   });
 

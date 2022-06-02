@@ -183,13 +183,6 @@ export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'
 };
 
-export const homePageSlideErrorMessages = {
-  NOT_UA_NAME_MESSAGE: `Введіть ім'я слайду українською`,
-  NOT_EN_NAME_MESSAGE: `Введіть ім'я слайду англійською`,
-  NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис слайду англійською`,
-  NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис слайду українською`
-};
-
 export const paginationInputErrorMessages = {
   MUST_BE_NUMBER: 'Тільки цифри',
   MUST_BE_POSITIVE: 'Тільки більше нуля',
