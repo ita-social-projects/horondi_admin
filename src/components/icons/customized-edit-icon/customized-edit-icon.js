@@ -23,7 +23,7 @@ const CustomizedEditIcon = ({ onClickHandler, size, testId }) => (
 CustomizedEditIcon.propTypes = {
   onClickHandler: PropTypes.func.isRequired,
   size: PropTypes.string.isRequired,
-  testId: PropTypes.isRequired
+  testId: PropTypes.string.isRequired
 };
 
 export default CustomizedEditIcon;

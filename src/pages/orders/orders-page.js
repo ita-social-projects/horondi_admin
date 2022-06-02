@@ -65,7 +65,7 @@ const OrdersPage = () => {
         sort
       })
     );
-  }, [dispatch, rowsPerPage, currentPage, filters, sort]);
+  }, [dispatch, rowsPerPage, currentPage, filters, sort, itemsCount]);
 
   const ordersDeleteHandler = (id) => {
     const removeOrders = () => {
