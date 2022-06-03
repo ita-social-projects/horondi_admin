@@ -302,6 +302,31 @@ const labels = {
       isEditor: true
     }
   ],
+  aboutUs: {
+    code: 'about-us',
+    uaTitle: 'uaTitle',
+    enTitle: 'enTitle',
+    uaText: 'uaText',
+    enText: 'enText',
+    img: 'img',
+    DELETE_SECTION_MESSAGE: 'Ви дійсно хочете видалити секцію?',
+    DELETE_SECTION_TITLE: 'Видалити секцію',
+    titleEditInput: {
+      label: {
+        ua: 'Заголовок',
+        en: 'Title'
+      },
+      name: 'title'
+    },
+    textEditInput: {
+      label: {
+        ua: 'Текст',
+        en: 'Text'
+      },
+      name: 'text',
+      isEditor: true
+    }
+  },
   product: {
     additionalPriceType: {
       absolutePrice: mapToLanguages(

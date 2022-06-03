@@ -20,6 +20,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
   } = inputOptions;
   const inputsTextfields = inputs.filter((input) => !input.isEditor);
   const inputsEditor = inputs.filter((input) => input.isEditor);
+
   return (
     <>
       <div className={styles.languagePanel}>
@@ -33,6 +34,7 @@ const LanguagePanel = ({ lang, inputOptions }) => {
               <React.Fragment key={input.name}>
                 <TextField
                   data-cy={`${lang}-${input.name}`}
+                  data-testid='title-edit-input'
                   id={inputName}
                   className={styles.textField}
                   variant='outlined'

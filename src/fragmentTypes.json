@@ -105,6 +105,9 @@
             "name": "BusinessText"
           },
           {
+            "name": "BusinessTextWithPopulatedTranslationsKey"
+          },
+          {
             "name": "Error"
           }
         ]

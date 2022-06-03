@@ -10,9 +10,6 @@ export const getAllBusinessPages = async () => {
         getAllBusinessTexts {
           _id
           code
-          title {
-            value
-          }
         }
       }
     `;
@@ -21,28 +18,41 @@ export const getAllBusinessPages = async () => {
 
   return result?.data?.getAllBusinessTexts;
 };
-export const getBusinessPageByCode = async (code) => {
-  const getBusinessPageByCodeQuery = `
-  query ($code: String!) {
-    getBusinessTextByCode(code: $code) {
+export const getBusinessTextByCodeWithPopulatedTranslationsKey = async (
+  code
+) => {
+  const getBusinessTextByCodeWithPopulatedTranslationsKeyQuery = `
+  query($code: String!) {
+    getBusinessTextByCodeWithPopulatedTranslationsKey(code: $code) {
       __typename
-      ... on BusinessText {
+      ... on BusinessTextWithPopulatedTranslationsKey {
         _id
         code
-        title {
-          value
+        languages
+        translations {
+          ua {
+            title
+            text
+          }
+          en {
+            title
+            text
+          }
         }
-        text {
-          value
-        }
-        translationsKey
-        date
+      }
+      ... on Error {
+        message
+        statusCode
       }
     }
   }
 `;
 
-  const result = await getItems(getBusinessPageByCodeQuery, { code });
+  const result = await getItems(
+    getBusinessTextByCodeWithPopulatedTranslationsKeyQuery,
+    { code }
+  );
+
   if (
     Object.keys(newsErrors).includes(result?.data?.getBusinessTextById?.message)
   ) {
@@ -53,7 +63,7 @@ export const getBusinessPageByCode = async (code) => {
     );
   }
 
-  return result?.data?.getBusinessTextByCode;
+  return result?.data?.getBusinessTextByCodeWithPopulatedTranslationsKey;
 };
 export const createBusinessPage = async ({ page, files }) => {
   const createBusinessPageMutation = `
@@ -120,32 +130,49 @@ export const deleteBusinessPage = async (id) => {
 
   return result?.data?.deleteBusinessText;
 };
-export const updateBusinessPage = async ({ id, page, files }) => {
+export const updateBusinessPage = async ({
+  id,
+  page,
+  businessTextTranslationFields,
+  files
+}) => {
   const updateBusinessPageMutation = `
-      mutation($id: ID!, $businessText: BusinessTextInput!, $files: [Upload]!) {
-        updateBusinessText(
-          id: $id
-          businessText: $businessText
-          files: $files
-        ) {
-          ... on BusinessText {
-            _id
-            title {
-              value
-            }
-          }
-          ... on Error {
-            message
-            statusCode
-          }
-        }
+  mutation(
+    $id: ID!
+    $businessText: BusinessTextInput!
+    $businessTextTranslationFields: BusinessTextTranslationFieldsInput!
+    $files: [Upload]!
+    $populated: Boolean
+  ) {
+    updateBusinessText(
+      id: $id
+      businessText: $businessText
+      businessTextTranslationFields: $businessTextTranslationFields
+      files: $files
+      populated: $populated
+    ) {
+      ... on BusinessTextWithPopulatedTranslationsKey {
+        _id
+        code
       }
+      ... on BusinessText {
+        _id
+        code
+      }
+      ... on Error {
+        message
+        statusCode
+      }
+    }
+  }
     `;
 
   const result = await setItems(updateBusinessPageMutation, {
     id,
     businessText: page,
-    files
+    businessTextTranslationFields,
+    files,
+    populated: false
   });
 
   if (

@@ -28,7 +28,7 @@ import {
 import {
   getAllBusinessPages,
   createBusinessPage,
-  getBusinessPageByCode,
+  getBusinessTextByCodeWithPopulatedTranslationsKey,
   updateBusinessPage
 } from '../business-pages.operations';
 
@@ -64,7 +64,13 @@ describe('business pages sagas test', () => {
     expectSaga(handleCurrentBusinessPageLoad, { payload: businessPageCode })
       .withReducer(businessPagesReducer)
       .provide([
-        [call(getBusinessPageByCode, businessPageCode), fakeBusinessPage]
+        [
+          call(
+            getBusinessTextByCodeWithPopulatedTranslationsKey,
+            businessPageCode
+          ),
+          fakeBusinessPage
+        ]
       ])
       .put(setLoading(true))
       .put(setCurrentBusinessPage(fakeBusinessPage))

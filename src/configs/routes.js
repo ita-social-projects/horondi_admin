@@ -1,6 +1,9 @@
 const routes = {
   pathToAboutUs: '/about-us',
-  pathToAboutUsAdd: '/about-us/add',
+  pathToAboutUsAddSection: '/about-us/add/section',
+  pathToAboutUsTitleEdit: '/about-us/edit/title',
+  pathToAboutUsSectionEdit: '/about-us/edit/section/:id',
+  pathToAboutUsFooterImgEdit: '/about-us/edit/footer-img',
   pathToHistory: '/history',
   pathToHistoryDetails: '/history/:id',
   pathToLogin: '/login',
