@@ -74,7 +74,7 @@ const ProductForm = ({ isEdit }) => {
   const [showComments, setShowComments] = useState(false);
 
   const formikPriceValue = {
-    basePrice: Math.round(product?.basePrice[1]?.value) || 0
+    basePrice: Math.round(product?.basePrice) || 0
   };
 
   const {
