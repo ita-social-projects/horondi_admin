@@ -50,14 +50,14 @@ describe('AboutUs component tests', () => {
   });
 
   it('Edit button for editing title successfully navigates to AboutUsTitleEdit page on click', async () => {
-    const editButtons = await screen.findAllByTestId('edit-btn');
+    const editButtons = await screen.findAllByTestId('edit_btn');
     const titleEditButton = editButtons[0];
     fireEvent.click(titleEditButton);
     expect(await screen.findByText(enTitle)).toBeInTheDocument();
   });
 
   it('Edit button for editing section successfully navigates to AboutUsFooterImgEdit page on click', async () => {
-    const editButtons = await screen.findAllByTestId('edit-btn');
+    const editButtons = await screen.findAllByTestId('edit_btn');
     const footerImgEditButton = editButtons[4];
     fireEvent.click(footerImgEditButton);
     expect(await screen.findByText(imgLabel)).toBeInTheDocument();
