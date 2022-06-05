@@ -61,10 +61,10 @@ describe('PromoCodePage component test with loading', () => {
         </BrowserRouter>
       </MockedProvider>
     );
-    const btnDelete = await screen.findByTestId('del_1');
+    const btnDelete = await screen.findByTestId('del_btn1');
     fireEvent.click(btnDelete);
     expect(mockOpenSuccessSnackbar).toHaveBeenCalled();
-    const editBtn = await screen.findByTestId('edit_1');
+    const editBtn = await screen.findByTestId('edit_btn2');
     fireEvent.click(editBtn);
     expect(dispatch).toHaveBeenCalledWith(push());
   });
