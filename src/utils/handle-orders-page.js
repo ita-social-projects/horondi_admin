@@ -36,7 +36,7 @@ export const handleOrderSubmition = (
   id
 ) => {
   if (
-    newOrder.status !== initialValues.status &&
+    newOrder(data).status !== initialValues.status &&
     !submitStatus.includes(newOrder(data).status)
   ) {
     const updateOrderSnackbar = () => {
@@ -48,7 +48,9 @@ export const handleOrderSubmition = (
         resetForm({ values: initialValues });
       }
     };
-    openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
+    setTimeout(() => {
+      openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
+    }, 0);
   } else if (id) {
     dispatch(updateOrder(newOrder(data), id));
   } else {
