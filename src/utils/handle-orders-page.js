@@ -48,6 +48,7 @@ export const handleOrderSubmition = (
         resetForm({ values: initialValues });
       }
     };
+
     setTimeout(() => {
       openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
     }, 0);
