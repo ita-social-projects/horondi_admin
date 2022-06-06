@@ -20,12 +20,7 @@ const ConstructorListBasePrice = ({
 
   const priceHandleChange = (event) => {
     const { value } = event.target;
-    setBasePriceToAdd([
-      {
-        value: Number(value),
-        currency: 'USD'
-      }
-    ]);
+    setBasePriceToAdd(Number(value));
   };
 
   return (
@@ -49,27 +44,25 @@ const ConstructorListBasePrice = ({
           label='Базова ціна (USD)'
           type='number'
           onChange={priceHandleChange}
-          value={basePriceToAdd.value}
+          value={basePriceToAdd}
         />
       </AccordionDetails>
     </Accordion>
   );
 };
 
-// TODO: Check propTypes
-
 ConstructorListBasePrice.propTypes = {
   expanded: PropTypes.string,
   handleChange: PropTypes.func,
   setBasePriceToAdd: PropTypes.func,
-  basePriceToAdd: PropTypes.array //eslint-disable-line
+  basePriceToAdd: PropTypes.number
 };
 
 ConstructorListBasePrice.defaultProps = {
-  basePriceToAdd: [],
+  basePriceToAdd: 0,
   setBasePriceToAdd: '',
   expanded: '',
-  handleChange: ''
+  handleChange: () => null
 };
 
 export default ConstructorListBasePrice;
