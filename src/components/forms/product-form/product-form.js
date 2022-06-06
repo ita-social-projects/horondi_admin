@@ -61,6 +61,7 @@ const { materialUiConstants } = config;
 
 const ProductForm = ({ isEdit }) => {
   const styles = useStyles();
+
   const dispatch = useDispatch();
 
   const { details } = useSelector(selectSelectedProductAndDetails);
