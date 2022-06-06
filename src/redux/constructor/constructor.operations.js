@@ -7,10 +7,7 @@ const constructorElementRequest = `
   _id
   available
   default
-  basePrice{
-   value
-   currency
-  }
+  basePrice
   name {
    value
    lang
