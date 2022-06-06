@@ -61,7 +61,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const [strapsToAdd, setStrapsToAdd] = useState([]);
   const [closuresToAdd, setClosuresToAdd] = useState([]);
   const [restrictionsToAdd, setRestrictionsToAdd] = useState([]);
-  const [basePriceToAdd, setBasePriceToAdd] = useState([]);
+  const [basePriceToAdd, setBasePriceToAdd] = useState(0);
 
   const onSaveHandler = () => {
     const itemsToSave = {
@@ -104,7 +104,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     setStrapsToAdd(isEdit ? mapElement(constructor?.straps) : []);
     setClosuresToAdd(isEdit ? mapElement(constructor?.closures) : []);
     setRestrictionsToAdd(isEdit ? constructor?.pocketsWithRestrictions : []);
-    setBasePriceToAdd(isEdit ? constructor?.basePrice : []);
+    setBasePriceToAdd(isEdit ? constructor?.basePrice : 0);
   }, [constructor, isEdit]);
 
   const constructorOptions = [
@@ -245,9 +245,8 @@ ConstructorModelForm.propTypes = {
       }),
       name: PropTypes.arrayOf(valueShape),
       code: PropTypes.string
-    })
-    // TODO:
-    // add basePrice propType
+    }),
+    basePrice: PropTypes.number
   }),
   id: PropTypes.string
 };

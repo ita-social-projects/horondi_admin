@@ -478,7 +478,7 @@ const labels = {
     name: 'Назва',
     pattern: 'Гобелен',
     closure: 'Матеріал замку',
-    bottomMaterial: 'Матеріал дна',
+    bottomMaterial: 'Матеріал низу',
     bottomColor: 'Колір дна',
     actualPrice: 'Ціна'
   },

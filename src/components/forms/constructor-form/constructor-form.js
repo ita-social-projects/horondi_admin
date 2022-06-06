@@ -113,7 +113,7 @@ const ConstructorForm = ({ isEdit, editableConstructorElement }) => {
         color: editableConstructorElement.features.color._id || '',
         available: editableConstructorElement.available || false,
         default: editableConstructorElement.default || false,
-        basePrice: +editableConstructorElement.basePrice[1].value / 100 || 0
+        basePrice: editableConstructorElement.basePrice || 0
       },
       onSubmit: (formValues) => {
         const constructorElement = createConstructor(formValues);
@@ -328,11 +328,7 @@ ConstructorForm.propTypes = {
       })
     }),
     name: PropTypes.arrayOf(valueShape),
-    basePrice: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.number
-      })
-    )
+    basePrice: PropTypes.number
   }),
   values: PropTypes.shape({
     image: PropTypes.string,
@@ -393,14 +389,7 @@ ConstructorForm.defaultProps = {
     color: '',
     available: false,
     default: false,
-    basePrice: [
-      {
-        value: 0
-      },
-      {
-        value: 0
-      }
-    ]
+    basePrice: ''
   }
 };
 
