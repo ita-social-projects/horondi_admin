@@ -100,7 +100,7 @@ export function* handleBusinessPageUpdate({ payload }) {
     if (businessPage) {
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
       yield put(setLoading(false));
-      yield put(push(routes.pathToBusinessPages));
+      yield put(push(routes.pathToMainPage));
     }
   } catch (error) {
     yield call(handleBusinessPageError, error);
