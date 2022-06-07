@@ -237,6 +237,7 @@ export const getConstructorById = async (payload) => {
                 }
               }
             }
+            basePrice
           }
           ...on Error{
             message
