@@ -710,7 +710,7 @@ const labels = {
     },
     enterPrice: 'Додаткова ціна (USD):',
     additionalPrice: 'Введіть додаткову ціну',
-    avaliable: 'Додати до обмежень',
+    avaliable: 'Доступний',
     avatarText: 'Фото',
     labelsRestriction: 'restriction',
     labelIdAut: 'labelIdAut',
