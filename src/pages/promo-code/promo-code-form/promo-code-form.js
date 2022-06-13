@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import { useQuery } from '@apollo/client';
 import { DatePicker } from 'rsuite';
 import {
-  Button,
   Grid,
   TextField,
   Checkbox,
@@ -17,14 +16,12 @@ import { getCategoriesList } from '../operations/categories-list.queries';
 import LoadingBar from '../../../components/loading-bar';
 import { productsTranslations } from '../../../configs/product-translations';
 import orders from '../../../configs/orders';
-import {
-  checkboxesValues,
-  productFormValues
-} from '../../../consts/product-form';
+import { productFormValues } from '../../../consts/product-form';
 
 import { useStyles } from './promo-code-form.style';
 import { useCommonStyles } from '../../common.styles';
-import { BackButton } from '../../../components/buttons';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import { BackButton, SaveButton } from '../../../components/buttons';
 
 function PromoCodeForm({
   pathToPromoCodesPage,
@@ -64,7 +61,7 @@ function PromoCodeForm({
   }
 
   const {
-    values: { code, dateTo, dateFrom, discount, categories, _id },
+    values,
     handleSubmit,
     handleChange,
     handleBlur,
@@ -88,6 +85,10 @@ function PromoCodeForm({
         }
       }).then(goToPromoPage)
   });
+
+  const unblock = useUnsavedChangesHandler(values);
+
+  const { code, dateTo, dateFrom, discount, categories, _id } = values;
 
   const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
@@ -144,16 +145,14 @@ function PromoCodeForm({
           <BackButton pathBack={pathToPromoCodesPage} />
         </Grid>
         <Grid>
-          <Button
-            id='buttonSave'
-            size='medium'
+          <SaveButton
             type={productFormValues.submit}
-            variant={productFormValues.contained}
-            color={checkboxesValues.primary}
-            onClick={handleSubmit}
-          >
-            {SAVE}
-          </Button>
+            title={SAVE}
+            onClickHandler={handleSubmit}
+            values={values}
+            errors={errors}
+            unblockFunction={unblock}
+          />
         </Grid>
       </div>
 
