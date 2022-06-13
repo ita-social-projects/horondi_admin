@@ -2,9 +2,14 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
+import { useDispatch } from 'react-redux';
 
 import PromoCodeForm from '../promo-code-form';
 import { mocks } from './promo-code-form.variables';
+
+jest.mock('react-redux');
+const dispatch = jest.fn();
+useDispatch.mockImplementation(() => dispatch);
 
 const props = {
   initialState: {
