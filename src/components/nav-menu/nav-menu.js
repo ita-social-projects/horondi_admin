@@ -76,9 +76,11 @@ const NavMenu = ({ width }) => {
       onClick={() => {
         dispatch(setSideMenuStatus(!sideMenuStatus));
         dispatch(resetPagination());
-        setNavbarTab({
-          ...staticArray
-        });
+        if (!nested) {
+          setNavbarTab({
+            ...staticArray
+          });
+        }
       }}
       button
       key={pathTitle}
