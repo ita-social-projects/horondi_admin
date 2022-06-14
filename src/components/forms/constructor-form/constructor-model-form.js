@@ -195,7 +195,6 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
           </Grid>
           <Grid item>
             <SaveButton
-              // TODO: Success bar appears when constructor exist error
               onClickHandler={onSaveHandler}
               className={classes.constructorButton}
               data-cy={materialUiConstants.save}
