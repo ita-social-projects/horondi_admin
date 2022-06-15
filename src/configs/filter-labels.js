@@ -170,18 +170,6 @@ const filterLabels = {
         label: 'за датою (від новішого до старішого)',
         key: 'date',
         type: 'desc'
-      },
-      {
-        value: 'sortByReplyAsc',
-        label: 'за датою відповідей (від старішого до новішого)',
-        key: 'replyComments',
-        type: 'asc'
-      },
-      {
-        value: 'sortByReplyDesc',
-        label: 'за датою відповідей (від новішого до старішого)',
-        key: 'replyComments',
-        type: 'desc'
       }
     ]
   },
