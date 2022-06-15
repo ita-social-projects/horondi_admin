@@ -6,19 +6,11 @@ export const useStyles = makeStyles((theme) => {
 
   return {
     heading: {
-      fontSize: theme.typography.pxToRem(15),
-      flexBasis: '33.33%',
-      flexShrink: 0
+      fontSize: theme.typography
     },
     secondaryHeading: {
-      fontSize: theme.typography.pxToRem(15),
+      fontSize: theme.typography,
       color: theme.palette.text.secondary
-    },
-    materialSelect: {
-      width: '550px',
-      '@media (max-width: 450px)': {
-        width: 'inherit'
-      }
     },
     textField
   };

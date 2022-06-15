@@ -40,7 +40,7 @@ const ConstructorListBasePrice = ({
         <TextField
           data-testid='basePrice'
           variant='outlined'
-          className={`${styles.textField} ${styles.materialSelect}`}
+          className={`${styles.textField}`}
           label='Базова ціна (USD)'
           type='number'
           onChange={priceHandleChange}
