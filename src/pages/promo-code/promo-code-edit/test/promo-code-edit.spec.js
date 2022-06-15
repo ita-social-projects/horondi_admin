@@ -17,7 +17,8 @@ jest.mock('react-router', () => ({
     id: '61f3ca58fb37d558e8bba8de'
   }),
   useHistory: () => ({
-    push: mockHistoryPush
+    push: mockHistoryPush,
+    block: jest.fn()
   })
 }));
 const history = createMemoryHistory();
