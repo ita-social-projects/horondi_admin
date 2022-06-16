@@ -59,7 +59,7 @@ export const catalogMenuCategories = [
   ['Гобелени', routes.pathToPatterns, GradientIcon]
 ];
 export const promoMenuCategories = [
-  ['Створити промокод', routes.pathToPromoCodes, PromoIcon]
+  ['Інформація про промокоди', routes.pathToPromoCodes, PromoIcon]
 ];
 
 export const staticPagesCategories = [
