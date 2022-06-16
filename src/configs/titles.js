@@ -186,7 +186,7 @@ const titles = {
   certificatesPageTitles: {
     mainPageTitle: 'Інформація про сертифікати',
     deleteCertificateTitle: 'Видалити сертифікат',
-    updateCertificateTitle: 'Редагувати сертифікат'
+    updateCertificateTitle: 'Змінити статус сертифікату'
   }
 };
 
