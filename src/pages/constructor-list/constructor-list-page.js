@@ -7,7 +7,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { Link } from 'react-router-dom';
 import { map } from 'lodash';
 import { useCommonStyles } from '../common.styles';
 import { config } from '../../configs';
@@ -147,9 +146,8 @@ const ConstructorListPage = () => {
 
         <div className={styles.constructorButton}>
           <Button
-            disabled={!id ? 'disabled' : ''}
-            data-cy='add-back'
-            component={Link}
+            disabled={!id}
+            data-cy='add-constructor'
             onClick={handleConstructor}
             variant={materialUiConstants.contained}
             color={materialUiConstants.primary}

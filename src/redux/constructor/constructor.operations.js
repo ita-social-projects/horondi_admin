@@ -7,10 +7,7 @@ const constructorElementRequest = `
   _id
   available
   default
-  basePrice{
-   value
-   currency
-  }
+  basePrice
   name {
    value
    lang
@@ -240,6 +237,7 @@ export const getConstructorById = async (payload) => {
                 }
               }
             }
+            basePrice
           }
           ...on Error{
             message

@@ -27,6 +27,7 @@ import {
 } from '../../../redux/constructor/constructor.actions.js';
 import { constructorSelector } from '../../../redux/selectors/constructor.selectors';
 import ConstructorListPockets from './constructor-list-pockets/constructor-list-pockets.js';
+import ConstructorListBasePrice from './constructor-list-base-price/constructor-list-base-price.js';
 import useConstructorHandlers from '../../../utils/use-constructor-handlers.js';
 
 const { materialUiConstants } = config;
@@ -60,6 +61,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
   const [strapsToAdd, setStrapsToAdd] = useState([]);
   const [closuresToAdd, setClosuresToAdd] = useState([]);
   const [restrictionsToAdd, setRestrictionsToAdd] = useState([]);
+  const [basePriceToAdd, setBasePriceToAdd] = useState(0);
 
   const onSaveHandler = () => {
     const itemsToSave = {
@@ -70,7 +72,8 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
       backsToAdd,
       strapsToAdd,
       closuresToAdd,
-      restrictionsToAdd
+      restrictionsToAdd,
+      basePriceToAdd
     };
     const constructorToAdd = createConstructor(itemsToSave);
 
@@ -88,9 +91,9 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     backsToAdd,
     strapsToAdd,
     closuresToAdd,
-    restrictionsToAdd
+    restrictionsToAdd,
+    basePriceToAdd
   };
-
   const mapElement = (element) => element?.map((item) => item._id);
 
   useEffect(() => {
@@ -101,7 +104,8 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     setStrapsToAdd(isEdit ? mapElement(constructor?.straps) : []);
     setClosuresToAdd(isEdit ? mapElement(constructor?.closures) : []);
     setRestrictionsToAdd(isEdit ? constructor?.pocketsWithRestrictions : []);
-  }, [constructor]);
+    setBasePriceToAdd(isEdit ? constructor?.basePrice : 0);
+  }, [constructor, isEdit]);
 
   const constructorOptions = [
     {
@@ -173,6 +177,15 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
     />
   );
 
+  const basePriceAccordion = (
+    <ConstructorListBasePrice
+      handleChange={handleChange}
+      expanded={expanded}
+      basePriceToAdd={basePriceToAdd}
+      setBasePriceToAdd={setBasePriceToAdd}
+    />
+  );
+
   return (
     <>
       <div>
@@ -186,7 +199,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
               className={classes.constructorButton}
               data-cy={materialUiConstants.save}
               type={materialUiConstants.types.submit}
-              vlues={values}
+              values={values}
               errors={{}}
               title={MODEL_SAVE_TITLE}
             />
@@ -200,6 +213,7 @@ const ConstructorModelForm = ({ model, id, isEdit }) => {
         <div className={classes.root}>
           {constructorAccordions}
           {pocketAccordion}
+          {basePriceAccordion}
         </div>
       </div>
     </>
@@ -230,7 +244,8 @@ ConstructorModelForm.propTypes = {
       }),
       name: PropTypes.arrayOf(valueShape),
       code: PropTypes.string
-    })
+    }),
+    basePrice: PropTypes.number
   }),
   id: PropTypes.string
 };

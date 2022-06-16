@@ -478,7 +478,7 @@ const labels = {
     name: 'Назва',
     pattern: 'Гобелен',
     closure: 'Матеріал замку',
-    bottomMaterial: 'Матеріал дна',
+    bottomMaterial: 'Матеріал низу',
     bottomColor: 'Колір дна',
     actualPrice: 'Ціна'
   },
@@ -710,7 +710,7 @@ const labels = {
     },
     enterPrice: 'Додаткова ціна (USD):',
     additionalPrice: 'Введіть додаткову ціну',
-    avaliable: 'Додати до обмежень',
+    avaliable: 'Доступний',
     avatarText: 'Фото',
     labelsRestriction: 'restriction',
     labelIdAut: 'labelIdAut',

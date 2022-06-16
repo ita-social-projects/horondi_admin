@@ -95,7 +95,7 @@ SaveButton.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  values: PropTypes.objectOf(PropTypes.string),
+  values: PropTypes.objectOf(PropTypes.any),
   errors: PropTypes.objectOf(PropTypes.object)
 };
 
@@ -104,7 +104,7 @@ SaveButton.defaultProps = {
   errors: {},
   values: {},
   onClickHandler: noop,
-  unblockFunction: () => null
+  unblockFunction: noop
 };
 
 export default SaveButton;
