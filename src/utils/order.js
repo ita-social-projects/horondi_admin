@@ -140,7 +140,9 @@ export const address = (delivery) => {
   const { sentBy } = delivery;
   if (
     sentBy === deliveryTypes.ukrPostCourier ||
-    sentBy === deliveryTypes.novaPostCourier
+    sentBy === deliveryTypes.novaPostCourier ||
+    sentBy === deliveryTypes.selfPickUp ||
+    sentBy === deliveryTypes.worldWide
   ) {
     delivery.ukrPost = {};
     delivery.novaPost = {};
@@ -150,7 +152,6 @@ export const address = (delivery) => {
   } else {
     delivery.novaPost = {};
     delivery.courier = {};
-    delivery.ukrPost = {};
   }
   return {
     sentBy,
