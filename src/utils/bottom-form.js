@@ -36,8 +36,10 @@ export const getBottomInitialValues = (edit, IMG_URL, bottom) => ({
   enName: bottom?.name[1].value || '',
   color: bottom?.features.color._id || '',
   material: bottom?.features.material._id || '',
-  additionalPrice: bottom?.absolutePrice || '',
-  additionalPriceType: 'ABSOLUTE',
+  additionalPriceType: bottom.absolutePrice ? 'ABSOLUTE' : 'RELATIVE',
+  additionalPrice: bottom.absolutePrice
+    ? bottom.absolutePrice
+    : bottom.relativePrice,
   available: bottom?.available || false,
   customizable: bottom?.customizable || false
 });
