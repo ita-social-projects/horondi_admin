@@ -37,6 +37,7 @@ export const getAllBottoms = async (limit, skip, filter) => {
                 large
             }
             absolutePrice
+            relativePrice
             available
           }
           count
@@ -98,6 +99,7 @@ export const getBottomById = async (id) => {
                     large
                 }
                 absolutePrice
+                relativePrice
                 available
             }
             ... on Error {
@@ -211,6 +213,7 @@ export const updateBottom = async (payload) => {
                 large
             }
             absolutePrice
+            relativePrice
             available  
           }
         }
