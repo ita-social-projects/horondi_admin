@@ -100,7 +100,6 @@ const StrapsForm = ({ strap, id, edit }) => {
       if (edit && strap.image) data.image = strap.image;
 
       const newStrap = createStraps(data);
-
       if (edit) {
         dispatch(
           updateStrap({
@@ -240,6 +239,7 @@ const StrapsForm = ({ strap, id, edit }) => {
           onBlur={handleBlur}
           errors={errors}
           touched={touched}
+          radio
         />
         <Paper className={styles.inputPanel}>
           {languages.map((lang) => (
