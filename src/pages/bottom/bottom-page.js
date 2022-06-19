@@ -15,6 +15,7 @@ import useBottomFilters from '../../hooks/filters/use-bottom-filters';
 import FilterNavbar from '../../components/filter-search-sort';
 import TableContainerGenerator from '../../containers/table-container-generator';
 import { getProductDetails } from '../../redux/products/products.actions';
+import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
 const map = require('lodash/map');
@@ -67,7 +68,7 @@ const BottomPage = () => {
       name={bottomItem.name[0].value}
       material={bottomItem.features.material.name[0].value}
       color={bottomItem.features.color.name[0].value}
-      additionalPrice={bottomItem.absolutePrice}
+      additionalPrice={constructorItemPrice(bottomItem)}
       available={bottomItem.available ? 'Так' : 'Ні'}
       deleteHandler={() => bottomDeleteHandler(bottomItem._id)}
       editHandler={() => {

@@ -19,7 +19,14 @@ const useClosuresHandlers = () => {
         value: values.enName
       }
     ],
-    absolutePrice: +values.additionalPrice,
+    absolutePrice:
+      values.additionalPriceType === 'ABSOLUTE'
+        ? +values.additionalPrice
+        : null,
+    relativePrice:
+      values.additionalPriceType === 'RELATIVE'
+        ? +values.additionalPrice
+        : null,
     available: values.available,
     optionType: 'CLOSURE'
   });

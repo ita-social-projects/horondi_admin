@@ -16,6 +16,7 @@ import { closeDialog } from '../../redux/dialog-window/dialog-window.actions';
 import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import FilterNavbar from '../../components/filter-search-sort';
 import useBasicFilters from '../../hooks/filters/use-basic-filters';
+import constructorItemPrice from '../../utils/constructorItemPrice';
 
 const { materialUiConstants } = config;
 const labels = config.labels.basicsPageLabel;
@@ -60,7 +61,7 @@ const BasicsPage = () => {
       name={basic?.name[0]?.value}
       material={basic?.features?.material?.name[0].value}
       color={basic?.features?.color?.name[0].value}
-      additionalPrice={basic?.absolutePrice}
+      additionalPrice={constructorItemPrice(basic)}
       available={basic.available ? AVAILABLE_TEXT : UNAVAILABLE_TEXT}
       deleteHandler={() => {
         basicDeleteHandler(basic._id);
