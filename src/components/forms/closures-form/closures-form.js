@@ -192,6 +192,7 @@ const ClosuresForm = ({ closure, id, edit }) => {
           onBlur={handleBlur}
           errors={errors}
           touched={touched}
+          radio
         />
       </form>
     </div>
