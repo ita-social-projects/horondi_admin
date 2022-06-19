@@ -26,7 +26,14 @@ const useBackHandlers = () => {
       color: values.color
     },
     available: values.available,
-    absolutePrice: +values.additionalPrice,
+    absolutePrice:
+      values.additionalPriceType === 'ABSOLUTE'
+        ? +values.additionalPrice
+        : null,
+    relativePrice:
+      values.additionalPriceType === 'RELATIVE'
+        ? +values.additionalPrice
+        : null,
     optionType: 'BACK'
   });
 
