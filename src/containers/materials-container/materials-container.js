@@ -39,7 +39,7 @@ const MaterialsContainer = ({
   return (
     <>
       <form onSubmit={handleSubmit} className={sharedStyles.container}>
-        <Grid container spacing={1} xs={12} justify='flex-start'>
+        <Grid container spacing={1} justify='flex-start'>
           {materialLabels.map(({ label, name, required }, idx) => (
             <FormControl className={styles.formControl} key={label}>
               <InputLabel htmlFor={label}>

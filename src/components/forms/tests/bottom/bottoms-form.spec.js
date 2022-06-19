@@ -89,7 +89,7 @@ describe('Bottom form tests', () => {
   });
 
   it('Should render 2 buttons and 5 inputs', () => {
-    expect(component.find('input')).toHaveLength(6);
+    expect(component.find('input')).toHaveLength(8);
     expect(component.find('button')).toHaveLength(2);
   });
 
