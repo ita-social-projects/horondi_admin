@@ -21,7 +21,14 @@ const useBasicsHandlers = () => {
       }
     ],
     available: values.available,
-    absolutePrice: +values.additionalPrice,
+    absolutePrice:
+      values.additionalPriceType === 'ABSOLUTE'
+        ? +values.additionalPrice
+        : null,
+    relativePrice:
+      values.additionalPriceType === 'RELATIVE'
+        ? +values.additionalPrice
+        : null,
     features: {
       material: values.material,
       color: values.color
