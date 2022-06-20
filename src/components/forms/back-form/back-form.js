@@ -289,13 +289,13 @@ const BackForm = ({ back, id, edit }) => {
           ))}
 
           <AdditionalPriceContainer
+            radio
             values={values}
             labels={labels}
             onChange={handleChange}
             onBlur={handleBlur}
             errors={errors}
             touched={touched}
-            radio
           />
         </form>
       )}
