@@ -4,13 +4,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import TableContainerGenerator from '../containers/table-container-generator';
 import { config } from '../configs';
 import order from '../configs/orders';
-import {
-  newOrder,
-  submitStatus,
-  initialValues,
-  inputName,
-  POST_OFFICE_NUMBER
-} from './order';
+import { newOrder, submitStatus, inputName, POST_OFFICE_NUMBER } from './order';
+import { initialValues } from './order.values';
 import { addOrder, updateOrder } from '../redux/orders/orders.actions';
 import { closeDialog } from '../redux/dialog-window/dialog-window.actions';
 

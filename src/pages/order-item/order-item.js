@@ -14,7 +14,8 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
 import { BackButton, SaveButton } from '../../components/buttons';
-import { submitStatus, initialValues, setFormValues } from '../../utils/order';
+import { submitStatus, setFormValues } from '../../utils/order';
+import { initialValues } from '../../utils/order.values';
 import { validationSchema } from '../../validations/orders/order-form-validation';
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
 
