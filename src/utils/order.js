@@ -134,7 +134,7 @@ export const newOrder = (order) => ({
 
 export const submitStatus = ['CREATED', 'CONFIRMED'];
 
-const handleOrderItem = (item) => item || '';
+export const handleOrderItem = (item) => item || '';
 
 export const address = (delivery) => {
   const { sentBy } = delivery;
