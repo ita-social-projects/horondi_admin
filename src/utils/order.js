@@ -157,9 +157,11 @@ export const address = (delivery) => {
     sentBy,
     courierOffice:
       delivery.novaPost.courierOffice || delivery.ukrPost.courierOffice || '',
-    region: handleOrderItem(delivery.ukrPost.region),
+    region: handleOrderItem(delivery.ukrPost.region || delivery.courier.region),
     regionId: handleOrderItem(delivery.ukrPost.regionId),
-    district: handleOrderItem(delivery.ukrPost.district),
+    district: handleOrderItem(
+      delivery.ukrPost.district || delivery.courier.district
+    ),
     districtId: handleOrderItem(delivery.ukrPost.districtId),
     city:
       delivery.novaPost.city ||
@@ -184,6 +186,8 @@ export const address = (delivery) => {
 export const inputName = {
   sentByInput: 'delivery.sentBy',
   courier: {
+    region: 'delivery.courier.region',
+    district: 'delivery.courier.district',
     city: 'delivery.courier.city',
     street: 'delivery.courier.street',
     house: 'delivery.courier.house',
@@ -235,6 +239,8 @@ export const initialValues = {
   delivery: {
     sentBy: deliveryTypes.selfPickUp,
     courier: {
+      region: '',
+      district: '',
       city: '',
       street: '',
       house: '',
@@ -268,8 +274,18 @@ export const initialValues = {
 };
 
 export const courierInputLabels = () => {
-  const { city, street, house, flat } = inputName.courier;
+  const { region, district, city, street, house, flat } = inputName.courier;
   return [
+    {
+      name: region,
+      label: 'Область',
+      value: 'region'
+    },
+    {
+      name: district,
+      label: 'Район',
+      value: 'district'
+    },
     {
       name: city,
       label: 'Місто',
@@ -350,6 +366,8 @@ export const setFormValues = (selectedOrder) => {
     delivery: {
       sentBy,
       courier: {
+        region: sentBy.includes(COURIER) ? region : '',
+        district: sentBy.includes(COURIER) ? district : '',
         city: sentBy.includes(COURIER) ? city : '',
         street: sentBy.includes(COURIER) ? street : '',
         house: sentBy.includes(COURIER) ? house : '',
