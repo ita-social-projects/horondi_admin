@@ -225,54 +225,6 @@ export const inputName = {
   sentBy: 'sentBy'
 };
 
-export const initialValues = {
-  status: '',
-  paymentMethod: '',
-  isPaid: false,
-  recipient: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: ''
-  },
-  user_id: '',
-  delivery: {
-    sentBy: deliveryTypes.selfPickUp,
-    courier: {
-      region: '',
-      district: '',
-      city: '',
-      street: '',
-      house: '',
-      flat: ''
-    },
-    novaPost: {
-      city: '',
-      courierOffice: ''
-    },
-    ukrPost: {
-      region: '',
-      regionId: '',
-      district: '',
-      districtId: '',
-      city: '',
-      cityId: '',
-      courierOffice: ''
-    },
-    worldWide: {
-      messenger: '',
-      messengerPhone: '',
-      worldWideCountry: '',
-      stateOrProvince: '',
-      worldWideCity: '',
-      worldWideStreet: '',
-      cityCode: ''
-    }
-  },
-  userComment: '',
-  items: []
-};
-
 export const courierInputLabels = () => {
   const { region, district, city, street, house, flat } = inputName.courier;
   return [
