@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { push } from 'connected-react-router';
-import { Button, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 import { useMutation, useQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './promo-code-page.styles';
-import { productsTranslations } from '../../configs/product-translations';
 import { config } from '../../configs';
 import { useCommonStyles } from '../common.styles';
 import { getAllPromoCodes } from './operations/promo-code.queries';
@@ -137,18 +135,7 @@ const PromoCodePage = () => {
         >
           {config.titles.promoPageTitles.mainPageTitle}
         </Typography>
-        <Button
-          id='add-promo-code'
-          component={Link}
-          to={pathToAddPromoCodePage}
-          variant='contained'
-          color='primary'
-          data-cy='add-promo-code'
-        >
-          {productsTranslations.CREATE_PROMOCODE}
-        </Button>
       </div>
-
       <FilterNavbar options={promoCodeFilters} />
       <TableContainerGenerator
         id='promoCodeTable'
