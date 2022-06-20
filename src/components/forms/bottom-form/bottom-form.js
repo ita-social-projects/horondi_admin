@@ -288,7 +288,6 @@ const BottomForm = ({ bottom, id, edit }) => {
             radio
             errors={errors}
             touched={touched}
-            radio
           />
         </form>
       )}
