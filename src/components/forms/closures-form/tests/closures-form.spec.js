@@ -34,6 +34,7 @@ jest.mock('../../../../utils/use-closures-handlers', () => ({
     setClosuresImage: mockSetClosureImage
   })
 }));
+jest.mock('../../../../utils/closures-form.js');
 
 const fileReader = new FileReaderMock();
 jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
@@ -50,6 +51,7 @@ describe('closure form tests', () => {
 
     component = mount(<ClosureForm />);
   });
+
   afterEach(() => {
     component.unmount();
     spyOnUseDispatch.mockClear();
