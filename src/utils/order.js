@@ -345,6 +345,11 @@ export const setFormValues = (selectedOrder) => {
     cityCode: ''
   };
 
+  let novaPost = {
+    city: '',
+    courierOffice: ''
+  };
+
   if (sentBy === deliveryTypes.worldWide) {
     worldWide = {
       messenger,
@@ -355,6 +360,10 @@ export const setFormValues = (selectedOrder) => {
       worldWideStreet,
       cityCode
     };
+  }
+
+  if (sentBy === deliveryTypes.novaPost) {
+    novaPost = { city, courierOffice };
   }
 
   return {
@@ -373,10 +382,7 @@ export const setFormValues = (selectedOrder) => {
         house: sentBy.includes(COURIER) ? house : '',
         flat: sentBy.includes(COURIER) ? flat : ''
       },
-      novaPost: {
-        city: sentBy === deliveryTypes.novaPost ? city : '',
-        courierOffice: sentBy === deliveryTypes.novaPost ? courierOffice : ''
-      },
+      novaPost,
       ukrPost: {
         region: sentBy === deliveryTypes.ukrPost ? region : '',
         regionId: sentBy === deliveryTypes.ukrPost ? regionId : '',
