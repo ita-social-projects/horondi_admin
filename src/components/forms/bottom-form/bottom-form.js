@@ -285,9 +285,9 @@ const BottomForm = ({ bottom, id, edit }) => {
             labels={labels}
             onChange={handleChange}
             onBlur={handleBlur}
+            radio
             errors={errors}
             touched={touched}
-            radio
           />
         </form>
       )}
