@@ -89,6 +89,13 @@ export const addSize = async (size) => {
 
   const result = await setItems(query, { size });
 
+  if (Object.keys(sizesTranslations).includes(result?.data?.addSize?.message)) {
+    throw new Error(
+      `${result.data.addSize.statusCode} ${
+        sizesTranslations[result.data.addSize.message]
+      }`
+    );
+  }
   return result?.data?.addSize;
 };
 
