@@ -19,9 +19,10 @@ import {
   target
 } from '../constructor-elements-form-mock-variables';
 import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
+import { mockedInitialValues } from './variables';
 
 const mockSetFieldValue = jest.fn();
-const mockSubmit = jest.fn();
+const mockSubmit = jest.fn(() => null);
 const mockChange = jest.fn();
 const mockBlur = jest.fn();
 const mockSetUpload = jest.fn();
@@ -55,6 +56,13 @@ jest.spyOn(global, 'FileReader').mockImplementation(function () {
   this.readAsDataURL = jest.fn();
   this.onload = jest.fn();
 });
+
+jest.mock('../../../../utils/back-form.js', () => ({
+  backUseEffectHandler: jest.fn(),
+  backFormOnSubmit: jest.fn(() => null),
+  setBackColorsHandler: jest.fn(() => null),
+  getBackInitialValues: jest.fn(() => mockedInitialValues)
+}));
 
 describe('Back form tests', () => {
   let spyOnUseSelector;
