@@ -19,13 +19,14 @@ import {
   target
 } from '../constructor-elements-form-mock-variables';
 import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
+import { mockedInitialValues } from './variables';
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
 const mockChange = jest.fn();
 const mockBlur = jest.fn();
-const mockSetUpload = jest.fn();
-const mockSetBottomImage = jest.fn();
+const mockSetUpload = jest.fn(() => {});
+const mockSetBottomImage = jest.fn(() => '');
 
 const { GO_BACK_TITLE, SAVE_TITLE } = config.buttonTitles;
 
@@ -49,6 +50,13 @@ jest.mock('../../../../utils/use-bottom-handlers.js', () => ({
     setUpload: mockSetUpload,
     setBottomImage: mockSetBottomImage
   })
+}));
+
+jest.mock('../../../../utils/bottom-form.js', () => ({
+  bottomUseEffectHandler: jest.fn(),
+  bottomFormOnSubmit: jest.fn(() => null),
+  setBottomColorsHandler: jest.fn(() => null),
+  getBottomInitialValues: jest.fn(() => mockedInitialValues)
 }));
 
 const fileReader = new FileReaderMock();
