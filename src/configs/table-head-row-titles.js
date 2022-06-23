@@ -98,7 +98,7 @@ const tableHeadRowTitles = {
     'Дії'
   ],
   sizes: {
-    sizesPageTitles: ['Назва', 'Розмір', 'Доступно', 'Дії']
+    sizesPageTitles: ['Модель', 'Розмір', 'Доступно', 'Дії']
   },
   models: [
     'Фото',
