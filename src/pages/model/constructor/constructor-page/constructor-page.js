@@ -19,6 +19,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Image } from '@material-ui/icons';
 import map from 'lodash/map';
 
+import { useHistory } from 'react-router-dom';
 import { useStyles } from './constructor-page.styles';
 import { useCommonStyles } from '../../../common.styles';
 import { config } from '../../../../configs';
@@ -86,6 +87,7 @@ const ConstructorPage = ({ match }) => {
   const { model, constructorTabs, patternList, filters, loading } = useSelector(
     selectConstructorMethodAndMaterials
   );
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(
@@ -292,7 +294,7 @@ const ConstructorPage = ({ match }) => {
   return (
     <div className={commonStyles.container}>
       <div className={styles.backButton}>
-        <BackButton />
+        <BackButton onClick={() => history.goBack()} />
       </div>
       <AppBar position='static'>
         <Tabs
