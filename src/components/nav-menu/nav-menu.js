@@ -76,6 +76,11 @@ const NavMenu = ({ width }) => {
       onClick={() => {
         dispatch(setSideMenuStatus(!sideMenuStatus));
         dispatch(resetPagination());
+        if (!nested) {
+          setNavbarTab({
+            ...staticArray
+          });
+        }
       }}
       button
       key={pathTitle}
@@ -85,7 +90,7 @@ const NavMenu = ({ width }) => {
       activeClassName={classes.selectedCategory}
       isActive={(props) => (props ? props.url === pathTo : null)}
     >
-      <ListItemIcon className={classes.icon}>
+      <ListItemIcon>
         <PathIcon />
       </ListItemIcon>
       <ListItemText primary={pathTitle} />
@@ -219,7 +224,7 @@ const NavMenu = ({ width }) => {
     return (
       <Fragment key={category.toString()}>
         <ListItem button onClick={handleClick}>
-          <ListItemIcon className={classes.icon}>
+          <ListItemIcon>
             <ItemIcon />
           </ListItemIcon>
           <ListItemText primary={primary} />

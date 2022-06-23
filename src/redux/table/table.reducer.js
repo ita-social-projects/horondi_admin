@@ -20,8 +20,7 @@ export const initialState = {
     currentPage: 0,
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 20, 30]
-  },
-  itemsCount: 0
+  }
 };
 
 const tableState = (state = initialState, action = {}) => {
@@ -47,7 +46,10 @@ const tableState = (state = initialState, action = {}) => {
         itemsCount: action.payload
       };
     case RESET_PAGINATION:
-      return initialState;
+      return {
+        ...initialState,
+        itemsCount: state.itemsCount
+      };
     case UPDATE_PAGINATION: {
       const page =
         state.pagination.currentPage >

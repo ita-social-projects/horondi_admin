@@ -84,6 +84,7 @@ const TableContainerRow = ({
         <TableCell className={classes.smallCell}>
           {showEdit && (
             <CustomizedEditIcon
+              testId={`edit_btn${id}`}
               size={iconSize}
               onClickHandler={editHandler}
               data-cy='edit-btn'
@@ -91,6 +92,7 @@ const TableContainerRow = ({
           )}
           {showDelete && (
             <CustomizedDeleteIcon
+              testId={`del_btn${id}`}
               size={iconSize}
               onClickHandler={deleteHandler}
             />

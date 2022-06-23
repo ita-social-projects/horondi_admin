@@ -22,3 +22,23 @@ export const bulkGenerateCertificates = gql`
     }
   }
 `;
+
+export const deleteCertificateById = gql`
+  mutation ($id: ID!) {
+    deleteCertificate(id: $id) {
+      ... on Certificate {
+        _id
+      }
+    }
+  }
+`;
+
+export const updateCertificateByName = gql`
+  mutation ($name: String!) {
+    updateCertificate(name: $name) {
+      ... on Certificate {
+        name
+      }
+    }
+  }
+`;

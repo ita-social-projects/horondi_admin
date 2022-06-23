@@ -73,6 +73,8 @@ function SizeForm({ id, size }) {
     handleSubmit,
     errors,
     touched,
+    dirty,
+    isValid,
     setFieldValue,
     handleBlur
   } = useFormik({
@@ -137,6 +139,7 @@ function SizeForm({ id, size }) {
                 title={config.buttonTitles.SAVE_SIZE_TITLE}
                 values={values}
                 errors={errors}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>
@@ -256,13 +259,13 @@ function SizeForm({ id, size }) {
                     value={values.additionalPriceType}
                   >
                     <FormControlLabel
-                      value='ABSOLUTE_INDICATOR'
+                      value='ABSOLUTE'
                       label={additionalPriceType.absolutePrice[0].value}
                       key={2}
                       control={<Radio />}
                     />
                     <FormControlLabel
-                      value='RELATIVE_INDICATOR'
+                      value='RELATIVE'
                       label={
                         <>
                           <span>

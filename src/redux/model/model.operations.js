@@ -5,10 +5,8 @@ const constructorElementRequest = `
     _id
     available
     customizable
-    basePrice {
-     value
-     currency
-    }
+    image
+    basePrice
     name {
      value
      lang

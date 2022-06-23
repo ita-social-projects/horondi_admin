@@ -17,7 +17,8 @@ jest.mock('react-router', () => ({
     id: '61f3ca58fb37d558e8bba8de'
   }),
   useHistory: () => ({
-    push: mockHistoryPush
+    push: mockHistoryPush,
+    block: jest.fn()
   })
 }));
 const history = createMemoryHistory();
@@ -34,11 +35,11 @@ describe('should render component with current data', () => {
         </Router>
       </MockedProvider>
     );
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await new Promise((resolve) => setTimeout(resolve, 500));
   });
 
   it('should change promocode code name', async () => {
-    const input = screen.getByDisplayValue(/testttttt/i);
+    const input = screen.getByDisplayValue(/test/i);
 
     fireEvent.change(input, { target: { value: 'TEST' } });
 

@@ -102,6 +102,8 @@ function MaterialForm({ material, id }) {
     handleSubmit,
     errors,
     touched,
+    dirty,
+    isValid,
     setFieldValue,
     handleBlur
   } = useFormik({
@@ -193,6 +195,7 @@ function MaterialForm({ material, id }) {
                 title={config.buttonTitles.SAVE_MATERIAL}
                 values={values}
                 errors={errors}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>
@@ -253,13 +256,13 @@ function MaterialForm({ material, id }) {
               >
                 <FormControlLabel
                   control={<Radio />}
-                  value='ABSOLUTE_INDICATOR'
+                  value='ABSOLUTE'
                   label={additionalPriceType.absolutePrice[0].value}
                   key={2}
                 />
                 <FormControlLabel
                   control={<Radio />}
-                  value='RELATIVE_INDICATOR'
+                  value='RELATIVE'
                   label={additionalPriceType.relativePrice[0].value}
                   key={1}
                 />
@@ -385,7 +388,8 @@ MaterialForm.defaultProps = {
     ],
     available: false,
     purpose: '',
-    additionalPrice: 0,
+    absolutePrice: 0,
+    relativePrice: null,
     colors: []
   }
 };

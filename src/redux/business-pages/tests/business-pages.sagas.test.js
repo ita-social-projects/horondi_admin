@@ -5,21 +5,19 @@ import {
   handleCurrentBusinessPageLoad,
   handleAddBusinessPage,
   handleBusinessPageUpdate,
-  handleBusinessPageDelete,
   handleBusinessPageError
 } from '../business-pages.sagas';
 import {
   setBusinessPages,
   setLoading,
   setCurrentBusinessPage,
-  setBusinessPagesError,
-  removeBusinessPageFromStore
+  setBusinessPagesError
 } from '../business-pages.actions';
 import { config } from '../../../configs';
 
 import {
   businessPages,
-  businessPageId,
+  businessPageCode,
   businessPage,
   fakeBusinessPage,
   businessPageToUpdate,
@@ -30,8 +28,7 @@ import {
 import {
   getAllBusinessPages,
   createBusinessPage,
-  deleteBusinessPage,
-  getBusinessPageById,
+  getBusinessTextByCodeWithPopulatedTranslationsKey,
   updateBusinessPage
 } from '../business-pages.operations';
 
@@ -41,8 +38,7 @@ import {
 } from '../../snackbar/snackbar.sagas';
 import businessPagesReducer from '../business-pages.reducer';
 
-const { SUCCESS_ADD_STATUS, SUCCESS_DELETE_STATUS, SUCCESS_UPDATE_STATUS } =
-  config.statuses;
+const { SUCCESS_ADD_STATUS, SUCCESS_UPDATE_STATUS } = config.statuses;
 
 describe('business pages sagas test', () => {
   it('#1 should receive all business pages and set to store', () =>
@@ -65,9 +61,17 @@ describe('business pages sagas test', () => {
         expect(analysisPut).toHaveLength(3);
       }));
   it('#2 should receive one page and set to store', () =>
-    expectSaga(handleCurrentBusinessPageLoad, { payload: businessPageId })
+    expectSaga(handleCurrentBusinessPageLoad, { payload: businessPageCode })
       .withReducer(businessPagesReducer)
-      .provide([[call(getBusinessPageById, businessPageId), fakeBusinessPage]])
+      .provide([
+        [
+          call(
+            getBusinessTextByCodeWithPopulatedTranslationsKey,
+            businessPageCode
+          ),
+          fakeBusinessPage
+        ]
+      ])
       .put(setLoading(true))
       .put(setCurrentBusinessPage(fakeBusinessPage))
       .put(setLoading(false))
@@ -84,30 +88,7 @@ describe('business pages sagas test', () => {
         expect(analysisPut).toHaveLength(3);
       }));
 
-  it('#3 Should delete business page and remove it from store', () =>
-    expectSaga(handleBusinessPageDelete, { payload: businessPages[0]._id })
-      .withReducer(businessPagesReducer)
-      .provide([
-        [call(deleteBusinessPage, businessPages[0]._id), businessPages[0]],
-        [call(handleSuccessSnackbar, SUCCESS_DELETE_STATUS)]
-      ])
-      .put(setLoading(true))
-      .put(removeBusinessPageFromStore(businessPages[0]._id))
-      .put(setLoading(false))
-      .hasFinalState({
-        list: [],
-        currentPage: null,
-        loading: false,
-        error: null
-      })
-      .run()
-      .then((result) => {
-        const { allEffects: analysis } = result;
-        const analysisPut = analysis.filter((e) => e.type === 'PUT');
-        expect(analysisPut).toHaveLength(3);
-      }));
-
-  it('#4 Should to add business page', () =>
+  it('#3 Should to add business page', () =>
     expectSaga(handleAddBusinessPage, { payload: businessPageToCreate })
       .withReducer(businessPagesReducer)
       .provide([
@@ -132,7 +113,7 @@ describe('business pages sagas test', () => {
         expect(analysisPut).toHaveLength(3);
       }));
 
-  it('#5 Should to update business page', () =>
+  it('#4 Should to update business page', () =>
     expectSaga(handleBusinessPageUpdate, { payload: businessPageToUpdate })
       .withReducer(businessPagesReducer)
       .provide([

@@ -1,8 +1,15 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
+import { useDispatch } from 'react-redux';
 
 import PromoCodeForm from '../promo-code-form';
+import { mocks } from './promo-code-form.variables';
+
+jest.mock('react-redux');
+const dispatch = jest.fn();
+useDispatch.mockImplementation(() => dispatch);
 
 const props = {
   initialState: {
@@ -14,14 +21,18 @@ const props = {
   }
 };
 
-beforeEach(() => {
-  render(
-    <BrowserRouter>
-      <PromoCodeForm {...props} />
-    </BrowserRouter>
-  );
-});
 describe('promo-code-form component test', () => {
+  beforeEach(async () => {
+    render(
+      <MockedProvider addTypename={false} mocks={mocks}>
+        <BrowserRouter>
+          <PromoCodeForm {...props} />
+        </BrowserRouter>
+      </MockedProvider>
+    );
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
+
   it('should render back button', () => {
     const backButton = screen.getByText(/назад/i);
 

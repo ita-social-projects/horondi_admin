@@ -9,22 +9,42 @@ export const mocks = [
     request: {
       query: getAllPromoCodes,
       variables: {
-        limit: rowsPerPage,
-        skip: rowsPerPage * currentPage
+        limit: 10,
+        search: '',
+        skip: 0,
+        sortBy: null,
+        sortOrder: null,
+        status: []
       }
     },
     result: {
       data: {
         getAllPromoCodes: {
-          count: '1',
+          count: '3',
           items: [
             {
               categories: ['backpacks', 'bags', 'accessories', 'constructor'],
-              code: 'www',
+              code: 'test1',
               dateFrom: '2022-04-08T14:22:43.437Z',
               dateTo: '2022-04-30T14:22:43.452Z',
               discount: 10,
-              _id: '123'
+              _id: '1'
+            },
+            {
+              categories: ['backpacks', 'bags', 'accessories', 'constructor'],
+              code: 'test2',
+              dateFrom: '2022-04-08T14:22:43.437Z',
+              dateTo: '2023-05-06T14:22:43.452Z',
+              discount: 10,
+              _id: '2'
+            },
+            {
+              categories: ['backpacks', 'bags', 'accessories', 'constructor'],
+              code: 'test3',
+              dateFrom: '2023-06-08T14:22:43.437Z',
+              dateTo: '2024-06-10T14:22:43.452Z',
+              discount: 10,
+              _id: '3'
             }
           ]
         }
@@ -68,24 +88,6 @@ export const mocksWithoutPromocodes = [
         }
       },
       loading: false
-    }
-  },
-  {
-    request: {
-      query: deletePromoCodeByID,
-      variables: {
-        id: 'promoID'
-      },
-      context: {
-        headers: {
-          token: 'token'
-        }
-      }
-    },
-    result: {
-      data: {
-        deletePromoCode: { _id: '123' }
-      }
     }
   }
 ];

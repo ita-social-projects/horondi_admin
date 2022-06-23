@@ -15,7 +15,7 @@ const formRegExp = {
   userRoles: /(Користувач|Адмін|Суперадмін)/g,
   userStatuses: /(Активний|Неактивний)/g,
   hexString: /^#[0-9a-f]{3,6}$/i,
-  uaNameCreation: /^[а-яїієґa-z0-9\s-]+$/gi,
+  uaNameCreation: /^[а-яїієґ0-9\s-]+$/gi,
   enNameCreation: /^[a-z0-9\s-]+$/gi,
   enDescription: /^[a-z0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
   uaDescription: /^[а-яїієґ0-9!@#$%^&*)(+=,.:;'"<>`_\-—\s|/\\]+$/gi,
@@ -27,6 +27,7 @@ const formRegExp = {
   pageCode: /^[a-z0-9|-]/i,
   postCode: /^\d{5}(?:[-\\s]\\d{4})?$/,
   promoCodeName: /[a-z]{2,}\w*/i,
-  promoCodeDiscount: /\d{1,2}/
+  promoCodeDiscountMultiple: /^\d*[05]$/,
+  promoCodeDiscountPositive: /^[1-9][0-9]*$/
 };
 export default formRegExp;

@@ -184,7 +184,9 @@ const titles = {
     { name: '1500 грн', value: 1500 }
   ],
   certificatesPageTitles: {
-    mainPageTitle: 'Інформація про сертифікати'
+    mainPageTitle: 'Інформація про сертифікати',
+    deleteCertificateTitle: 'Видалити сертифікат',
+    updateCertificateTitle: 'Змінити статус сертифікату'
   }
 };
 

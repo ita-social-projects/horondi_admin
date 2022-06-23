@@ -47,7 +47,8 @@ export const headerTranslations = {
 };
 
 export const sizesTranslations = {
-  SIZE_NOT_FOUND: 'Розмір не знайдено!'
+  SIZE_NOT_FOUND: 'Розмір не знайдено!',
+  SIZE_ALREADY_EXIST: 'Такий розмір вже існує!'
 };
 
 export const modelTranslations = {

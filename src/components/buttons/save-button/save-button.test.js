@@ -66,7 +66,7 @@ describe('save button tests', () => {
     const unblockFunctionMock = jest.fn();
 
     const result = saveButtonHandler(
-      { unblockFunction: unblockFunctionMock },
+      unblockFunctionMock,
       () => null,
       () => null,
       () => null,

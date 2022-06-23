@@ -1,8 +1,8 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { useQuery } from '@apollo/client';
 import { DatePicker } from 'rsuite';
 import {
-  Button,
   Grid,
   TextField,
   Checkbox,
@@ -10,18 +10,18 @@ import {
   FormGroup,
   FormControl
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
+import PropTypes from 'prop-types';
+import { getCategoriesList } from '../operations/categories-list.queries';
+import LoadingBar from '../../../components/loading-bar';
 import { productsTranslations } from '../../../configs/product-translations';
 import orders from '../../../configs/orders';
-import {
-  checkboxesValues,
-  productFormValues
-} from '../../../consts/product-form';
+import { productFormValues } from '../../../consts/product-form';
 
 import { useStyles } from './promo-code-form.style';
 import { useCommonStyles } from '../../common.styles';
-import { BackButton } from '../../../components/buttons';
+import { useUnsavedChangesHandler } from '../../../hooks/form-dialog/use-unsaved-changes-handler';
+import { BackButton, SaveButton } from '../../../components/buttons';
 
 function PromoCodeForm({
   pathToPromoCodesPage,
@@ -39,8 +39,29 @@ function PromoCodeForm({
   const styles = useStyles();
   const commonStyles = useCommonStyles();
 
+  const { promoCodesConsts } = orders;
+  let { checkboxes } = promoCodesConsts.categories;
+
   const {
-    values: { code, dateTo, dateFrom, discount, categories, _id },
+    data: categoriesList,
+    loading,
+    error
+  } = useQuery(getCategoriesList, {
+    fetchPolicy: 'no-cache'
+  });
+
+  if (categoriesList) {
+    checkboxes = [
+      ...checkboxes,
+      ...categoriesList.getAllCategories.items.map((item) => ({
+        label: item.name[0].value,
+        value: item.code
+      }))
+    ];
+  }
+
+  const {
+    values,
     handleSubmit,
     handleChange,
     handleBlur,
@@ -65,10 +86,12 @@ function PromoCodeForm({
       }).then(goToPromoPage)
   });
 
+  const unblock = useUnsavedChangesHandler(values);
+
+  const { code, dateTo, dateFrom, discount, categories, _id } = values;
+
   const handlerDateHandler = (value, string) => setFieldValue(string, value);
 
-  const { promoCodesConsts } = orders;
-  const { checkboxes } = promoCodesConsts.categories;
   const { SAVE } = productsTranslations;
 
   const allCategoriesHandler = () => {
@@ -77,7 +100,7 @@ function PromoCodeForm({
       : setFieldValue('categories', [...checkboxes.map(({ value }) => value)]);
   };
 
-  const allProductsCheckbox = (
+  const allCategoriesCheckbox = (
     <FormControlLabel
       className={styles.checkboxes}
       label='Всі товари'
@@ -111,6 +134,10 @@ function PromoCodeForm({
     />
   ));
 
+  if (loading || error) {
+    return <LoadingBar />;
+  }
+
   return (
     <div className={commonStyles.container}>
       <div className={styles.fixedButtons}>
@@ -118,16 +145,14 @@ function PromoCodeForm({
           <BackButton pathBack={pathToPromoCodesPage} />
         </Grid>
         <Grid>
-          <Button
-            id='buttonSave'
-            size='medium'
+          <SaveButton
             type={productFormValues.submit}
-            variant={productFormValues.contained}
-            color={checkboxesValues.primary}
-            onClick={handleSubmit}
-          >
-            {SAVE}
-          </Button>
+            title={SAVE}
+            onClickHandler={handleSubmit}
+            values={values}
+            errors={errors}
+            unblockFunction={unblock}
+          />
         </Grid>
       </div>
 
@@ -208,7 +233,7 @@ function PromoCodeForm({
             </span>
             <FormControl>
               <FormGroup>
-                {allProductsCheckbox}
+                {allCategoriesCheckbox}
                 {checkoxGroup}
               </FormGroup>
               {touched.categories && errors.categories && (

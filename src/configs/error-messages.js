@@ -49,7 +49,8 @@ export const promoCodeErrorMessages = {
   STYLE_CODE: 'Поле має містити англійські літери або цифри',
   ERROR_MESSAGE: 'Поле має бути заповнене',
   LENGTH_DISCOUNT: 'Поле має містити максимально 2 цифри',
-  STYLE_DISCOUNT: 'Поле має містити цифри'
+  POSITIVE_DISCOUNT: 'Тільки більше нуля',
+  MULTIPLE_DISCOUNT: 'Число має бути кратним п’яти'
 };
 
 export const patternErrorMessages = {
@@ -123,6 +124,12 @@ export const newsErrorMessages = {
   NOT_UA_AUTHOR_NAME_MESSAGE: "Введіть ім'я автора новини українською"
 };
 
+export const aboutUsPageErrorMessages = {
+  ENTER_TITLE_ERROR_MESSAGE: 'Введіть заголовок',
+  NO_STRING_TYPE_MESSAGE: 'Повинно містити букви, цифри та спецсимволи',
+  REQUIRED_IMG_MESSAGE: 'Завантажте зображення'
+};
+
 export const modelErrorMessages = {
   PHOTO_NOT_PROVIDED: 'Додайте фото для моделі',
   NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис моделі англійською`,
@@ -147,7 +154,7 @@ export const contactErrorMessages = {
   ENTER_LINK_MESSAGE: 'Введіть посилання',
   CONTACT_ERROR_MESSAGE: 'Помилка збереження',
   INVALID_PHONE_MESSAGE:
-    'Введіть коректний формат, наприклад: 380(XX)-XXX-XX-XX'
+    'Введіть коректний формат, наприклад: +380(XX)-XXX-XX-XX'
 };
 
 export const emailQuestionsErrorMessages = {
@@ -180,13 +187,6 @@ export const colorErrorMessages = {
 
 export const statsErrorMessages = {
   NO_STATS: 'Статистика для вибраного значення відсутня'
-};
-
-export const homePageSlideErrorMessages = {
-  NOT_UA_NAME_MESSAGE: `Введіть ім'я слайду українською`,
-  NOT_EN_NAME_MESSAGE: `Введіть ім'я слайду англійською`,
-  NOT_EN_DESCRIPTION_MESSAGE: `Введіть опис слайду англійською`,
-  NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис слайду українською`
 };
 
 export const paginationInputErrorMessages = {

@@ -6,9 +6,10 @@ import { config } from '../../../configs';
 
 const { EDIT_TITLE } = config.buttonTitles;
 
-const CustomizedEditIcon = ({ onClickHandler, size }) => (
+const CustomizedEditIcon = ({ onClickHandler, size, testId }) => (
   <Tooltip title={EDIT_TITLE}>
     <IconButton
+      data-testid={testId}
       aria-label={EDIT_TITLE}
       onClick={onClickHandler}
       color='secondary'
@@ -21,7 +22,8 @@ const CustomizedEditIcon = ({ onClickHandler, size }) => (
 
 CustomizedEditIcon.propTypes = {
   onClickHandler: PropTypes.func.isRequired,
-  size: PropTypes.string.isRequired
+  size: PropTypes.string.isRequired,
+  testId: PropTypes.string.isRequired
 };
 
 export default CustomizedEditIcon;

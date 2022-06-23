@@ -21,10 +21,7 @@ const useBasicsHandlers = () => {
       }
     ],
     available: values.available,
-    additionalPrice: {
-      value: +values.additionalPrice,
-      type: values.additionalPriceType
-    },
+    absolutePrice: +values.additionalPrice,
     features: {
       material: values.material,
       color: values.color

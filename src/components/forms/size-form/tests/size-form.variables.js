@@ -17,10 +17,8 @@ export const size = {
   volumeInLiters: 24,
   weightInKg: 1.5,
   available: false,
-  additionalPrice: [
-    { currency: 'UAH', value: 272262.97 },
-    { currency: 'USD', value: 10000 }
-  ]
+  absolutePrice: 100,
+  relativePrice: 10
 };
 
 export const sizeList = [

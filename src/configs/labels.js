@@ -302,6 +302,31 @@ const labels = {
       isEditor: true
     }
   ],
+  aboutUs: {
+    code: 'about-us',
+    uaTitle: 'uaTitle',
+    enTitle: 'enTitle',
+    uaText: 'uaText',
+    enText: 'enText',
+    img: 'img',
+    DELETE_SECTION_MESSAGE: 'Ви дійсно хочете видалити секцію?',
+    DELETE_SECTION_TITLE: 'Видалити секцію',
+    titleEditInput: {
+      label: {
+        ua: 'Заголовок',
+        en: 'Title'
+      },
+      name: 'title'
+    },
+    textEditInput: {
+      label: {
+        ua: 'Текст',
+        en: 'Text'
+      },
+      name: 'text',
+      isEditor: true
+    }
+  },
   product: {
     additionalPriceType: {
       absolutePrice: mapToLanguages(
@@ -453,7 +478,7 @@ const labels = {
     name: 'Назва',
     pattern: 'Гобелен',
     closure: 'Матеріал замку',
-    bottomMaterial: 'Матеріал дна',
+    bottomMaterial: 'Матеріал низу',
     bottomColor: 'Колір дна',
     actualPrice: 'Ціна'
   },
@@ -569,7 +594,8 @@ const labels = {
     ukrPost: 'Укрпошта',
     selfPickup: 'Самовивіз',
     novaPostCourier: "Кур'єр нової пошти",
-    ukrPostCourier: "Кур'єр укрпошти"
+    ukrPostCourier: "Кур'єр укрпошти",
+    worldWide: 'Міжнародна доставка'
   },
   generalLabels: {
     deliveryStatusLabel: 'Статус замовлення:',
@@ -684,7 +710,7 @@ const labels = {
     },
     enterPrice: 'Додаткова ціна (USD):',
     additionalPrice: 'Введіть додаткову ціну',
-    avaliable: 'Додати до обмежень',
+    avaliable: 'Доступний',
     avatarText: 'Фото',
     labelsRestriction: 'restriction',
     labelIdAut: 'labelIdAut',

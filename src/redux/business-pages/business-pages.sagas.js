@@ -10,7 +10,7 @@ import {
 } from './business-pages.actions';
 import {
   getAllBusinessPages,
-  getBusinessPageById,
+  getBusinessTextByCodeWithPopulatedTranslationsKey,
   createBusinessPage,
   deleteBusinessPage,
   updateBusinessPage
@@ -19,7 +19,7 @@ import {
   ADD_BUSINESS_PAGE,
   DELETE_BUSINESS_PAGE,
   GET_ALL_BUSINESS_PAGES,
-  GET_BUSINESS_PAGE_BY_ID,
+  GET_BUSINESS_PAGE_BY_CODE,
   UPDATE_BUSINESS_PAGE
 } from './business-pages.types';
 
@@ -51,7 +51,10 @@ export function* handleBusinessPagesLoad() {
 export function* handleCurrentBusinessPageLoad({ payload }) {
   try {
     yield put(setLoading(true));
-    const businessPage = yield call(getBusinessPageById, payload);
+    const businessPage = yield call(
+      getBusinessTextByCodeWithPopulatedTranslationsKey,
+      payload
+    );
     yield put(setCurrentBusinessPage(businessPage));
     yield put(setLoading(false));
   } catch (error) {
@@ -97,7 +100,7 @@ export function* handleBusinessPageUpdate({ payload }) {
     if (businessPage) {
       yield call(handleSuccessSnackbar, SUCCESS_UPDATE_STATUS);
       yield put(setLoading(false));
-      yield put(push(routes.pathToBusinessPages));
+      yield put(push(routes.pathToMainPage));
     }
   } catch (error) {
     yield call(handleBusinessPageError, error);
@@ -121,6 +124,6 @@ export default function* businessPagesSaga() {
   yield takeEvery(GET_ALL_BUSINESS_PAGES, handleBusinessPagesLoad);
   yield takeEvery(ADD_BUSINESS_PAGE, handleAddBusinessPage);
   yield takeEvery(DELETE_BUSINESS_PAGE, handleBusinessPageDelete);
-  yield takeEvery(GET_BUSINESS_PAGE_BY_ID, handleCurrentBusinessPageLoad);
+  yield takeEvery(GET_BUSINESS_PAGE_BY_CODE, handleCurrentBusinessPageLoad);
   yield takeEvery(UPDATE_BUSINESS_PAGE, handleBusinessPageUpdate);
 }

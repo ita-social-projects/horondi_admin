@@ -37,19 +37,27 @@ const CommentForm = ({ comment, id, isEdit }) => {
     show: Yup.bool()
   });
 
-  const { values, handleSubmit, handleChange, touched, errors, setFieldValue } =
-    useFormik({
-      validationSchema: commentValidationSchema,
-      initialValues: {
-        text: comment.text,
-        show: comment.show
-      },
-      onSubmit: (data) => {
-        if (isEdit) {
-          commentUpdateHandler(data);
-        }
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    touched,
+    errors,
+    setFieldValue,
+    dirty,
+    isValid
+  } = useFormik({
+    validationSchema: commentValidationSchema,
+    initialValues: {
+      text: comment.text,
+      show: comment.show
+    },
+    onSubmit: (data) => {
+      if (isEdit) {
+        commentUpdateHandler(data);
       }
-    });
+    }
+  });
 
   const checkboxes = [
     {
@@ -107,6 +115,7 @@ const CommentForm = ({ comment, id, isEdit }) => {
                 title={SAVE_TITLE}
                 errors={errors}
                 values={values}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

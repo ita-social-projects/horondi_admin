@@ -52,7 +52,6 @@ import {
   categoryErrorMessages,
   modelErrorMessages,
   headerErrorMessages,
-  homePageSlideErrorMessages,
   constructorErrorMessages,
   statsErrorMessages,
   paginationInputErrorMessages,
@@ -64,7 +63,8 @@ import {
   basicsErrorMessages,
   strapsErrorMessages,
   userErrorMessages,
-  promoCodeErrorMessages
+  promoCodeErrorMessages,
+  aboutUsPageErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -105,6 +105,12 @@ export const config = {
       },
       name: []
     }
+  },
+  imgSizes: {
+    large: 'large',
+    medium: 'medium',
+    small: 'small',
+    thumbnail: 'thumbnail'
   },
   userRole: {
     user: 'user',
@@ -289,7 +295,6 @@ export const config = {
   modelErrorMessages,
   headerErrorMessages,
   statsErrorMessages,
-  homePageSlideErrorMessages,
   constructorErrorMessages,
   paginationInputErrorMessages,
   filterLabels,
@@ -298,6 +303,7 @@ export const config = {
   slidesTranslations,
   sizeErrorMessages,
   businessPageErrorMessages,
+  aboutUsPageErrorMessages,
   productErrorMessages,
   imageUploadNewsInputsId,
   imageUploadSlideInputsId,
@@ -325,7 +331,8 @@ export const config = {
   productsErrors,
   userTranslations,
   errorStatuses,
-  userErrorMessages
+  userErrorMessages,
+  RESET: 'reset'
 };
 export const inputTypes = {
   button: 'button',

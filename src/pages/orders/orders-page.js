@@ -65,7 +65,7 @@ const OrdersPage = () => {
         sort
       })
     );
-  }, [dispatch, rowsPerPage, currentPage, filters, sort]);
+  }, [dispatch, rowsPerPage, currentPage, filters, sort, itemsCount]);
 
   const ordersDeleteHandler = (id) => {
     const removeOrders = () => {
@@ -105,7 +105,7 @@ const OrdersPage = () => {
         orderId={order.orderNumber}
         registeredUser={setRegisteredUser(order.user_id)}
         customer={`${order?.recipient?.firstName} ${order?.recipient?.lastName}`}
-        totalPrice={`${order?.totalPriceToPay[0]?.value} ₴`}
+        totalPrice={`${order?.totalPriceToPay} $`}
         paymentStatus={
           <Status
             status={orders.paymentStatusTranslation[order?.paymentStatus]}

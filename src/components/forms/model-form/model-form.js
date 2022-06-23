@@ -79,7 +79,6 @@ const ModelForm = ({ model, id, isEdit }) => {
 
   const [sizes, setSizes] = useState(model.sizes || []);
   const [category, setCategory] = useState(model.category._id || '');
-
   const {
     values,
     handleSubmit,
@@ -87,6 +86,8 @@ const ModelForm = ({ model, id, isEdit }) => {
     handleBlur,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue
   } = useFormik({
     validationSchema: modelValidationSchema,
@@ -164,6 +165,7 @@ const ModelForm = ({ model, id, isEdit }) => {
     { label: name, name: labelsEn.name },
     { label: description, name: labelsEn.description, isEditor: true }
   ];
+
   const inputOptions = {
     errors,
     touched,
@@ -198,6 +200,7 @@ const ModelForm = ({ model, id, isEdit }) => {
                 values={values}
                 errors={errors}
                 unblockFunction={unblock}
+                disabled={!dirty || !isValid}
               />
             </Grid>
             <Grid item className={styles.button}>

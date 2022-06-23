@@ -36,10 +36,7 @@ export const getAllBottoms = async (limit, skip, filter) => {
                 small
                 large
             }
-            additionalPrice {
-              currency
-              value
-            }
+            absolutePrice
             available
           }
           count
@@ -100,10 +97,7 @@ export const getBottomById = async (id) => {
                     small
                     large
                 }
-                additionalPrice {
-                  currency
-                  value
-                }
+                absolutePrice
                 available
             }
             ... on Error {
@@ -216,10 +210,7 @@ export const updateBottom = async (payload) => {
                 small
                 large
             }
-            additionalPrice {
-              currency
-              value
-            }
+            absolutePrice
             available  
           }
         }

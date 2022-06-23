@@ -14,10 +14,10 @@ import useSuccessSnackbar from '../../utils/use-success-snackbar';
 import buttonTitles from '../../configs/button-titles';
 import labels from '../../configs/labels';
 import { BackButton, SaveButton } from '../../components/buttons';
-import { submitStatus, initialValues, setFormValues } from '../../utils/order';
+import { submitStatus, setFormValues } from '../../utils/order';
+import { initialValues } from '../../utils/order.values';
 import { validationSchema } from '../../validations/orders/order-form-validation';
 import { handleOrderSubmition } from '../../utils/handle-orders-page';
-import { checkInitialValue } from '../../utils/check-initial-values';
 
 const OrderItem = ({ id }) => {
   const classes = useStyles();
@@ -42,34 +42,23 @@ const OrderItem = ({ id }) => {
     setTabValue(newValue);
   };
 
-  const handleFormSubmit = (data) => {
-    handleOrderSubmition(dispatch, resetForm, openSuccessSnackbar, data, id);
+  const handleFormSubmit = () => {
+    handleOrderSubmition(dispatch, resetForm, openSuccessSnackbar, values, id);
     setTabValue(0);
   };
 
-  const {
-    handleChange,
-    values,
-    handleSubmit,
-    setFieldValue,
-    dirty,
-    resetForm,
-    isValid
-  } = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: handleFormSubmit
-  });
+  const { handleChange, values, setFieldValue, dirty, resetForm, isValid } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      onSubmit: handleFormSubmit
+    });
 
   useEffect(() => {
     if (selectedOrder && id) {
       resetForm({ values: setFormValues(selectedOrder) });
     }
   }, [selectedOrder, resetForm]);
-
-  const valueEquality = selectedOrder
-    ? checkInitialValue(setFormValues(selectedOrder), values)
-    : true;
 
   const formikHandleChange =
     submitStatus.includes(selectedOrder && selectedOrder.status) || !id
@@ -90,13 +79,13 @@ const OrderItem = ({ id }) => {
         <div className={classes.buttonContainer}>
           <Grid container spacing={2} className={classes.fixedButtons}>
             <Grid item className={classes.button}>
-              <BackButton initial={!valueEquality} pathBack={pathToOrders} />
+              <BackButton pathBack={pathToOrders} />
             </Grid>
             <Grid item className={classes.button}>
               <SaveButton
                 type={materialUiConstants.types.submit}
                 title={SAVE_TITLE}
-                onClickHandler={handleSubmit}
+                onClickHandler={handleFormSubmit}
                 values={{
                   code: values.code,
                   uaTitle: values.uaTitle,

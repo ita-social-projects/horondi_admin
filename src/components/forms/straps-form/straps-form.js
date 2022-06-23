@@ -90,10 +90,12 @@ const StrapsForm = ({ strap, id, edit }) => {
     handleBlur,
     touched,
     errors,
+    dirty,
+    isValid,
     setFieldValue
   } = useFormik({
     validationSchema: strapsValidationSchema,
-    initialValues: getStrapsInitialValues(edit, IMG_URL, strap),
+    initialValues: getStrapsInitialValues(IMG_URL, strap),
     onSubmit: (data) => {
       if (edit && strap.image) data.image = strap.image;
 
@@ -177,6 +179,7 @@ const StrapsForm = ({ strap, id, edit }) => {
                 errors={errors}
                 onClickHandler={handleSubmit}
                 unblockFunction={unblock}
+                disabled={!dirty || !isValid}
               />
             </Grid>
           </Grid>

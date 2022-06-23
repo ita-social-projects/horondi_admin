@@ -6,60 +6,59 @@ import {
 
 export const getAllPatterns = async (limit, skip, filter) => {
   const getAllPatternsQuery = `
-query ($limit: Int!, $skip: Int!, $filter: PatternFilterInput) {
-  getAllPatterns(limit: $limit, skip: $skip, filter: $filter) {
-    count
-    items {
-      _id
-      name {
-        lang
-        value
-      }
-      optionType
-      model {
-        _id
-        category {
-          _id
-          code
-        }
-        name {
-          lang
-        }
-        description {
-          lang
-          value
-        }
-      }
-      features {
-        material {
+    query ($limit: Int!, $skip: Int!, $filter: PatternFilterInput) {
+      getAllPatterns(limit: $limit, skip: $skip, filter: $filter) {
+        count
+        items {
           _id
           name {
             lang
             value
           }
+          optionType
+          model {
+            _id
+            category {
+              _id
+              code
+            }
+            name {
+              lang
+            }
+            description {
+              lang
+              value
+            }
+          }
+          features {
+            material {
+              _id
+              name {
+                lang
+                value
+              }
+            }
+            handmade
+          }
+          description {
+            lang
+            value
+          }
+          images {
+            thumbnail
+            medium
+            small
+            large
+          }
+          constructorImg
+          absolutePrice
+          relativePrice
+          available
+          customizable
         }
-        handmade
       }
-      description {
-        lang
-        value
-      }
-      images {
-        thumbnail
-        medium
-        small
-        large
-      }
-      constructorImg
-      additionalPrice {
-        value
-        type
-      }
-      available
-      customizable
     }
-  }
-}`;
+  `;
 
   const result = await getItems(getAllPatternsQuery, {
     skip,
@@ -72,46 +71,44 @@ query ($limit: Int!, $skip: Int!, $filter: PatternFilterInput) {
 
 export const getPatternById = async (id) => {
   const getPatternByIdQuery = `
-      query($id: ID!) {
-        getPatternById(id: $id) {
-          ... on Pattern {
+    query($id: ID!) {
+      getPatternById(id: $id) {
+        ... on Pattern {
+          _id
+          name {
+            value
+          }
+          description {
+            value
+          }
+          model{
             _id
-            name {
-              value
-            }
-            description {
-              value
-            }
-            model{
+          }
+          features {
+            material {
               _id
-            }
-            features {
-              material {
-                _id
-                name {
-                  lang
-                  value
-                }
+              name {
+                lang
+                value
               }
-              handmade
             }
-            available
-            images {
-              thumbnail
-            }
-            constructorImg
-            additionalPrice {
-              value
-              type
-            }
+            handmade
           }
-          ... on Error {
-            message
-            statusCode
+          available
+          images {
+            thumbnail
           }
+          constructorImg
+          absolutePrice
+          relativePrice
+        }
+        ... on Error {
+          message
+          statusCode
         }
       }
-    `;
+    }
+  `;
 
   const result = await getItems(getPatternByIdQuery, { id });
 
@@ -132,33 +129,33 @@ export const getPatternById = async (id) => {
 
 export const deletePattern = async (id) => {
   const deletePatternQuery = `
-      mutation($id: ID!) {
-        deletePattern(id: $id) {
-          ... on Pattern {
-            _id
-            name {
-              lang
-              value
-            }
-            features {
-              material {
-                _id
-                name {
-                  lang
-                  value
-                }
+    mutation($id: ID!) {
+      deletePattern(id: $id) {
+        ... on Pattern {
+          _id
+          name {
+            lang
+            value
+          }
+          features {
+            material {
+              _id
+              name {
+                lang
+                value
               }
-              handmade
             }
-            available
+            handmade
           }
-          ... on Error {
-            message
-            statusCode
-          }
+          available
+        }
+        ... on Error {
+          message
+          statusCode
         }
       }
-    `;
+    }
+  `;
 
   const result = await setItems(deletePatternQuery, { id });
 
@@ -167,34 +164,34 @@ export const deletePattern = async (id) => {
 
 export const createPattern = async (payload) => {
   const createPatternQuery = `
-      mutation($pattern: PatternInput!, $image: Upload!) {
-        addPattern(pattern: $pattern, image: $image) {
-          ... on Pattern {
-            _id
-            name {
-              lang
-              value
-            }
-            features {
-              material {
-                _id
-                name {
-                  lang
-                  value
-                }
+    mutation($pattern: PatternInput!, $image: Upload!) {
+      addPattern(pattern: $pattern, image: $image) {
+        ... on Pattern {
+          _id
+          name {
+            lang
+            value
+          }
+          features {
+            material {
+              _id
+              name {
+                lang
+                value
               }
-              handmade
             }
-            available
-            constructorImg
+            handmade
           }
-          ... on Error {
-            message
-            statusCode
-          }
+          available
+          constructorImg
+        }
+        ... on Error {
+          message
+          statusCode
         }
       }
-    `;
+    }
+  `;
 
   const result = await setItems(createPatternQuery, payload);
 
@@ -213,35 +210,35 @@ export const createPattern = async (payload) => {
 
 export const updatePattern = async (payload) => {
   const updatePatternQuery = `
-      mutation($id: ID!, $pattern: PatternInput!, $image: Upload) {
-        updatePattern(id: $id, pattern: $pattern, image: $image) {
-          ... on Pattern {
-            _id
-            name {
-              lang
-              value
-            }
-            optionType
-            features {
-              material {
-                _id
-                name {
-                  lang
-                  value
-                }
+    mutation($id: ID!, $pattern: PatternInput!, $image: Upload) {
+      updatePattern(id: $id, pattern: $pattern, image: $image) {
+        ... on Pattern {
+          _id
+          name {
+            lang
+            value
+          }
+          optionType
+          features {
+            material {
+              _id
+              name {
+                lang
+                value
               }
-              handmade
             }
-            available
-            constructorImg
+            handmade
           }
-          ... on Error {
-            message
-            statusCode
-          }
+          available
+          constructorImg
+        }
+        ... on Error {
+          message
+          statusCode
         }
       }
-    `;
+    }
+  `;
 
   const result = await setItems(updatePatternQuery, payload);
 

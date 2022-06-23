@@ -74,13 +74,13 @@ const filterLabels = {
       {
         value: 'sortByTotalPriceToPayAsc',
         label: 'за вартістю товару (по зростанню)',
-        key: 'totalPriceToPay.0.value',
+        key: 'totalPriceToPay',
         type: 'asc'
       },
       {
         value: 'sortByTotalPriceToPayDesc',
         label: 'за вартістю товару (по спаданню)',
-        key: 'totalPriceToPay.0.value',
+        key: 'totalPriceToPay',
         type: 'desc'
       },
       {
@@ -125,6 +125,38 @@ const filterLabels = {
       }
     ]
   },
+  promoCode: {
+    sortLabels: [
+      {
+        value: 'sortByPriceAsc',
+        label: 'за вартістю (по зростанню)',
+        key: 'discount',
+        type: 'asc'
+      },
+      {
+        value: 'sortByPriceDesc',
+        label: 'за вартістю (по спаданню)',
+        key: 'discount',
+        type: 'desc'
+      }
+    ]
+  },
+  certificates: {
+    sortLabels: [
+      {
+        value: 'sortByPriceAsc',
+        label: 'за вартістю (по зростанню)',
+        key: 'value',
+        type: 'asc'
+      },
+      {
+        value: 'sortByPriceDesc',
+        label: 'за вартістю (по спаданню)',
+        key: 'value',
+        type: 'desc'
+      }
+    ]
+  },
   comments: {
     sortLabels: [
       {
@@ -137,18 +169,6 @@ const filterLabels = {
         value: 'sortByDateDesc',
         label: 'за датою (від новішого до старішого)',
         key: 'date',
-        type: 'desc'
-      },
-      {
-        value: 'sortByReplyAsc',
-        label: 'за датою відповідей (від старішого до новішого)',
-        key: 'replyComments',
-        type: 'asc'
-      },
-      {
-        value: 'sortByReplyDesc',
-        label: 'за датою відповідей (від новішого до старішого)',
-        key: 'replyComments',
         type: 'desc'
       }
     ]

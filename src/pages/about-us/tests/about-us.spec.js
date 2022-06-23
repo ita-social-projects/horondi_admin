@@ -1,12 +1,17 @@
 import React from 'react';
+import { screen, render, fireEvent } from '@testing-library/react';
+import { MockedProvider } from '@apollo/client/testing';
 import { useDispatch } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
-import { BrowserRouter } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { MemoryRouter, Switch, Route } from 'react-router-dom';
+import { aboutUsPageDataMock, enTitle, imgLabel } from './about-us.variables';
 import AboutUs from '../about-us';
+import AboutUsTitleEdit from '../about-us-title-edit';
+import AboutUsFooterImgEdit from '../about-us-footer-img-edit';
 import { theme } from '../../../components/app/app-theme/app.theme';
-import TableContainerRow from '../../../containers/table-container-row';
-import TableContainerGenerator from '../../../containers/table-container-generator';
+import { config } from '../../../configs';
+
+const { routes } = config;
 
 jest.mock('react-redux');
 jest.mock('../about-us.styles', () => ({
@@ -19,33 +24,42 @@ useDispatch.mockImplementation(() => dispatch);
 
 const themeValue = theme('light');
 
-let wrapper;
-
-describe('AboutUs component tests, ', () => {
+describe('AboutUs component tests', () => {
   beforeEach(() => {
-    wrapper = mount(
-      <BrowserRouter>
-        <ThemeProvider theme={themeValue}>
-          <AboutUs />
-        </ThemeProvider>
-      </BrowserRouter>
+    render(
+      <MockedProvider mocks={aboutUsPageDataMock} addTypename={false}>
+        <MemoryRouter initialEntries={[routes.pathToAboutUs]}>
+          <ThemeProvider theme={themeValue}>
+            <Switch>
+              <Route path={routes.pathToAboutUs} exact component={AboutUs} />
+              <Route
+                path={routes.pathToAboutUsTitleEdit}
+                exact
+                component={AboutUsTitleEdit}
+              />
+              <Route
+                path={routes.pathToAboutUsFooterImgEdit}
+                exact
+                component={AboutUsFooterImgEdit}
+              />
+            </Switch>
+          </ThemeProvider>
+        </MemoryRouter>
+      </MockedProvider>
     );
   });
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-    wrapper = null;
+  it('Edit button for editing title successfully navigates to AboutUsTitleEdit page on click', async () => {
+    const editButtons = await screen.findAllByTestId('edit_btn');
+    const titleEditButton = editButtons[0];
+    fireEvent.click(titleEditButton);
+    expect(await screen.findByText(enTitle)).toBeInTheDocument();
   });
 
-  it('Component TableContainerRow should exist', () => {
-    expect(wrapper.exists(TableContainerRow)).toBe(true);
-  });
-
-  it('Component button should exist', () => {
-    expect(wrapper.exists(Button)).toBe(true);
-  });
-
-  it('Component TableContainerGenerator should exist', () => {
-    expect(wrapper.exists(TableContainerGenerator)).toBe(true);
+  it('Edit button for editing section successfully navigates to AboutUsFooterImgEdit page on click', async () => {
+    const editButtons = await screen.findAllByTestId('edit_btn');
+    const footerImgEditButton = editButtons[4];
+    fireEvent.click(footerImgEditButton);
+    expect(await screen.findByText(imgLabel)).toBeInTheDocument();
   });
 });

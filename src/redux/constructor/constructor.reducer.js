@@ -28,6 +28,7 @@ export const initialState = {
   },
   filters: initialFilters,
   constructor: null,
+  constructorTabs: 0,
   constructorLoading: false,
   constructorError: null
 };

@@ -29,7 +29,7 @@ export const productsPropTypes = {
 
 export const generalPropTypes = {
   data: PropTypes.shape({
-    status: PropTypes.arrayOf(PropTypes.string),
+    status: PropTypes.string,
     isPaid: PropTypes.bool,
     courierOffice: PropTypes.string,
     paymentMethod: PropTypes.string,
@@ -53,20 +53,21 @@ export const deliveryPropTypes = {
   setFieldValue: PropTypes.func.isRequired
 };
 
+const SizePropTypes = {
+  _id: PropTypes.string,
+  name: PropTypes.string,
+  price: PropTypes.number
+};
+
 const itemPropType = PropTypes.shape({
   options: PropTypes.shape({
-    size: PropTypes.objectOf(PropTypes.string)
+    size: PropTypes.shape(SizePropTypes)
   }),
   quantity: PropTypes.number,
   product: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-    basePrice: PropTypes.arrayOf(
-      PropTypes.shape({
-        currency: PropTypes.string,
-        value: PropTypes.number
-      })
-    )
+    basePrice: PropTypes.number
   })
 });
 
@@ -96,16 +97,17 @@ export const postPropTypes = {
   }).isRequired
 };
 
-const price = (item) => [
-  {
-    value: item.quantity * item.options.size.price[0].value,
-    currency: 'UAH'
-  },
-  {
-    value: item.quantity * item.options.size.price[1].value,
-    currency: 'USD'
-  }
-];
+export const worldWidePropTypes = {
+  setFieldValue: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  values: PropTypes.shape({
+    worldWideCountry: PropTypes.string,
+    stateOrProvince: PropTypes.string,
+    worldWideCity: PropTypes.string,
+    worldWideStreet: PropTypes.string,
+    cityCode: PropTypes.string
+  })
+};
 
 const { deliveryTypes } = config;
 const items = (order) =>
@@ -113,7 +115,6 @@ const items = (order) =>
     product: item?.product._id,
     quantity: item.quantity,
     isFromConstructor: !item.product._id,
-    price: price(item),
     options: {
       size: item.options.size._id,
       sidePocket: item.options.sidePocket
@@ -133,11 +134,15 @@ export const newOrder = (order) => ({
 
 export const submitStatus = ['CREATED', 'CONFIRMED'];
 
+export const handleOrderItem = (item) => item || '';
+
 export const address = (delivery) => {
   const { sentBy } = delivery;
   if (
     sentBy === deliveryTypes.ukrPostCourier ||
-    sentBy === deliveryTypes.novaPostCourier
+    sentBy === deliveryTypes.novaPostCourier ||
+    sentBy === deliveryTypes.selfPickUp ||
+    sentBy === deliveryTypes.worldWide
   ) {
     delivery.ukrPost = {};
     delivery.novaPost = {};
@@ -152,19 +157,28 @@ export const address = (delivery) => {
     sentBy,
     courierOffice:
       delivery.novaPost.courierOffice || delivery.ukrPost.courierOffice || '',
-    region: delivery.ukrPost.region || '',
-    regionId: delivery.ukrPost.regionId || '',
-    district: delivery.ukrPost.district || '',
-    districtId: delivery.ukrPost.districtId || '',
+    region: handleOrderItem(delivery.ukrPost.region || delivery.courier.region),
+    regionId: handleOrderItem(delivery.ukrPost.regionId),
+    district: handleOrderItem(
+      delivery.ukrPost.district || delivery.courier.district
+    ),
+    districtId: handleOrderItem(delivery.ukrPost.districtId),
     city:
       delivery.novaPost.city ||
       delivery.ukrPost.city ||
       delivery.courier.city ||
       '',
-    cityId: delivery.ukrPost.cityId || '',
-    street: delivery.courier.street || '',
-    house: delivery.courier.house || '',
-    flat: delivery.courier.flat || '',
+    cityId: handleOrderItem(delivery.ukrPost.cityId),
+    street: handleOrderItem(delivery.courier.street),
+    house: handleOrderItem(delivery.courier.house),
+    flat: handleOrderItem(delivery.courier.flat),
+    messenger: handleOrderItem(delivery.worldWide.messenger),
+    messengerPhone: handleOrderItem(delivery.worldWide.messengerPhone),
+    worldWideCountry: handleOrderItem(delivery.worldWide.worldWideCountry),
+    stateOrProvince: handleOrderItem(delivery.worldWide.stateOrProvince),
+    worldWideCity: handleOrderItem(delivery.worldWide.worldWideCity),
+    worldWideStreet: handleOrderItem(delivery.worldWide.worldWideStreet),
+    cityCode: handleOrderItem(delivery.worldWide.cityCode),
     byCourier: delivery.sentBy.includes(COURIER)
   };
 };
@@ -172,6 +186,8 @@ export const address = (delivery) => {
 export const inputName = {
   sentByInput: 'delivery.sentBy',
   courier: {
+    region: 'delivery.courier.region',
+    district: 'delivery.courier.district',
     city: 'delivery.courier.city',
     street: 'delivery.courier.street',
     house: 'delivery.courier.house',
@@ -190,6 +206,15 @@ export const inputName = {
     cityId: 'delivery.ukrPost.cityId',
     courierOffice: 'delivery.ukrPost.courierOffice'
   },
+  worldWide: {
+    messenger: 'delivery.worldWide.messenger',
+    messengerPhone: 'delivery.worldWide.messengerPhone',
+    worldWideCountry: 'delivery.worldWide.worldWideCountry',
+    stateOrProvince: 'delivery.worldWide.stateOrProvince',
+    worldWideCity: 'delivery.worldWide.worldWideCity',
+    worldWideStreet: 'delivery.worldWide.worldWideStreet',
+    cityCode: 'delivery.worldWide.cityCode'
+  },
   userId: 'user_id',
   noUser: 'Користувача не вибрано',
   isPaidInput: 'isPaid',
@@ -200,46 +225,19 @@ export const inputName = {
   sentBy: 'sentBy'
 };
 
-export const initialValues = {
-  status: '',
-  paymentMethod: '',
-  isPaid: false,
-  recipient: {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: ''
-  },
-  user_id: '',
-  delivery: {
-    sentBy: deliveryTypes.selfPickUp,
-    courier: {
-      city: '',
-      street: '',
-      house: '',
-      flat: ''
-    },
-    novaPost: {
-      city: '',
-      courierOffice: ''
-    },
-    ukrPost: {
-      region: '',
-      regionId: '',
-      district: '',
-      districtId: '',
-      city: '',
-      cityId: '',
-      courierOffice: ''
-    }
-  },
-  userComment: '',
-  items: []
-};
-
 export const courierInputLabels = () => {
-  const { city, street, house, flat } = inputName.courier;
+  const { region, district, city, street, house, flat } = inputName.courier;
   return [
+    {
+      name: region,
+      label: 'Область',
+      value: 'region'
+    },
+    {
+      name: district,
+      label: 'Район',
+      value: 'district'
+    },
     {
       name: city,
       label: 'Місто',
@@ -279,8 +277,47 @@ export const setFormValues = (selectedOrder) => {
     region,
     regionId,
     districtId,
-    cityId
+    cityId,
+    messenger,
+    messengerPhone,
+    worldWideCountry,
+    stateOrProvince,
+    worldWideCity,
+    worldWideStreet,
+    cityCode
   } = selectedOrder.delivery;
+
+  let worldWide = {
+    messenger: '',
+    messengerPhone: '',
+    worldWideCountry: '',
+    stateOrProvince: '',
+    worldWideCity: '',
+    worldWideStreet: '',
+    cityCode: ''
+  };
+
+  let novaPost = {
+    city: '',
+    courierOffice: ''
+  };
+
+  if (sentBy === deliveryTypes.worldWide) {
+    worldWide = {
+      messenger,
+      messengerPhone,
+      worldWideCountry,
+      stateOrProvince,
+      worldWideCity,
+      worldWideStreet,
+      cityCode
+    };
+  }
+
+  if (sentBy === deliveryTypes.novaPost) {
+    novaPost = { city, courierOffice };
+  }
+
   return {
     status: selectedOrder.status,
     paymentMethod: selectedOrder.paymentMethod,
@@ -290,15 +327,14 @@ export const setFormValues = (selectedOrder) => {
     delivery: {
       sentBy,
       courier: {
+        region: sentBy.includes(COURIER) ? region : '',
+        district: sentBy.includes(COURIER) ? district : '',
         city: sentBy.includes(COURIER) ? city : '',
         street: sentBy.includes(COURIER) ? street : '',
         house: sentBy.includes(COURIER) ? house : '',
         flat: sentBy.includes(COURIER) ? flat : ''
       },
-      novaPost: {
-        city: sentBy === deliveryTypes.novaPost ? city : '',
-        courierOffice: sentBy === deliveryTypes.novaPost ? courierOffice : ''
-      },
+      novaPost,
       ukrPost: {
         region: sentBy === deliveryTypes.ukrPost ? region : '',
         regionId: sentBy === deliveryTypes.ukrPost ? regionId : '',
@@ -307,7 +343,8 @@ export const setFormValues = (selectedOrder) => {
         city: sentBy === deliveryTypes.ukrPost ? city : '',
         cityId: sentBy === deliveryTypes.ukrPost ? cityId : '',
         courierOffice: sentBy === deliveryTypes.ukrPost ? courierOffice : ''
-      }
+      },
+      worldWide
     },
     userComment: selectedOrder.userComment,
     items: selectedOrder.items.map((item) => ({

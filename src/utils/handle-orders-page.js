@@ -4,13 +4,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import TableContainerGenerator from '../containers/table-container-generator';
 import { config } from '../configs';
 import order from '../configs/orders';
-import {
-  newOrder,
-  submitStatus,
-  initialValues,
-  inputName,
-  POST_OFFICE_NUMBER
-} from './order';
+import { newOrder, submitStatus, inputName, POST_OFFICE_NUMBER } from './order';
+import { initialValues } from './order.values';
 import { addOrder, updateOrder } from '../redux/orders/orders.actions';
 import { closeDialog } from '../redux/dialog-window/dialog-window.actions';
 
@@ -36,7 +31,7 @@ export const handleOrderSubmition = (
   id
 ) => {
   if (
-    newOrder.status !== initialValues.status &&
+    newOrder(data).status !== initialValues.status &&
     !submitStatus.includes(newOrder(data).status)
   ) {
     const updateOrderSnackbar = () => {
@@ -48,7 +43,10 @@ export const handleOrderSubmition = (
         resetForm({ values: initialValues });
       }
     };
-    openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
+
+    setTimeout(() => {
+      openSuccessSnackbar(updateOrderSnackbar, dialogContent, buttonTitle);
+    }, 0);
   } else if (id) {
     dispatch(updateOrder(newOrder(data), id));
   } else {

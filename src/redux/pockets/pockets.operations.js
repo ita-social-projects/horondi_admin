@@ -18,10 +18,7 @@ export const getAllPockets = async (limit, skip, filter) => {
                     small
                     thumbnail
                 }
-                additionalPrice {
-                    currency
-                    value
-                }
+                absolutePrice
                 restriction
                 positions {
                   _id
@@ -109,10 +106,7 @@ export const getPocketById = async (id) => {
                available
               }
               restriction
-              additionalPrice {
-                currency
-                value
-              }
+              absolutePrice
             }
             ... on Error {
               statusCode

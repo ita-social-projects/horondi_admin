@@ -24,7 +24,8 @@ const defaultProps = {
     ],
     available: false,
     purpose: '',
-    additionalPrice: 0,
+    absolutePrice: 0,
+    relativePrice: null,
     colors: []
   }
 };
@@ -50,11 +51,8 @@ const material = {
     }
   ],
   available: true,
-  additionalPrice: [
-    {
-      value: 20
-    }
-  ],
+  absolutePrice: 0,
+  relativePrice: null,
   purpose: 'CLOSURE',
   colors: [
     {

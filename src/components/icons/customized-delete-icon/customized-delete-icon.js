@@ -9,7 +9,7 @@ import { config } from '../../../configs';
 const { DELETE_TITLE } = config.buttonTitles;
 
 const CustomizedDeleteIcon = (props) => {
-  const { onClickHandler, size } = props;
+  const { onClickHandler, size, testId } = props;
 
   return (
     <Tooltip title={DELETE_TITLE}>
@@ -17,6 +17,7 @@ const CustomizedDeleteIcon = (props) => {
         aria-label={DELETE_TITLE}
         onClick={onClickHandler}
         data-cy='delete-btn'
+        data-testid={testId}
       >
         <DeleteIcon fontSize={size} color='error' />
       </IconButton>
@@ -26,7 +27,8 @@ const CustomizedDeleteIcon = (props) => {
 
 CustomizedDeleteIcon.propTypes = {
   onClickHandler: PropTypes.func,
-  size: PropTypes.string.isRequired
+  size: PropTypes.string.isRequired,
+  testId: PropTypes.string.isRequired
 };
 
 CustomizedDeleteIcon.defaultProps = {

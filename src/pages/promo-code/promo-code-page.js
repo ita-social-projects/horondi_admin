@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { push } from 'connected-react-router';
-import { Button, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 import { useMutation, useQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './promo-code-page.styles';
-import { productsTranslations } from '../../configs/product-translations';
 import { config } from '../../configs';
 import { useCommonStyles } from '../common.styles';
 import { getAllPromoCodes } from './operations/promo-code.queries';
@@ -19,6 +17,8 @@ import LoadingBar from '../../components/loading-bar';
 import { getFromLocalStorage } from '../../services/local-storage.service';
 import { LOCAL_STORAGE } from '../../consts/local-storage';
 import { setItemsCount } from '../../redux/table/table.actions';
+import usePromoCodeFilters from '../../hooks/filters/use-promo-code-filters';
+import FilterNavbar from '../../components/filter-search-sort';
 
 const pathToAddPromoCodePage = config.routes.pathToAddPromoCode;
 const tableTitles = config.tableHeadRowTitles.promoCodes;
@@ -29,6 +29,9 @@ const PromoCodePage = () => {
   const dispatch = useDispatch();
   const dateToday = new Date();
   const { promoCodesConsts } = orders;
+  const promoCodeFilters = usePromoCodeFilters();
+  const { sortOptions, searchOptions, filterByMultipleOptions } =
+    promoCodeFilters;
   const token = getFromLocalStorage(LOCAL_STORAGE.AUTH_ACCESS_TOKEN);
   const { currentPage, rowsPerPage } = useSelector(({ Table }) => ({
     currentPage: Table.pagination.currentPage,
@@ -38,17 +41,23 @@ const PromoCodePage = () => {
   const { data, refetch, loading } = useQuery(getAllPromoCodes, {
     variables: {
       limit: rowsPerPage,
-      skip: rowsPerPage * currentPage
-    }
+      skip: rowsPerPage * currentPage,
+      sortOrder: sortOptions.sortDirection,
+      sortBy: sortOptions.sortBy,
+      search: searchOptions.search,
+      status: filterByMultipleOptions[0].status
+    },
+    fetchPolicy: 'network-only'
   });
-  const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
-
-  const promoCodes = data?.getAllPromoCodes || {};
-  const runRefetchData = () => refetch();
 
   useEffect(() => {
     dispatch(setItemsCount(data?.getAllPromoCodes?.count) || 0);
   }, [data]);
+
+  const [deletePromoCodeByIDMutation] = useMutation(deletePromoCodeByID);
+
+  const promoCodes = data?.getAllPromoCodes || {};
+  const runRefetchData = () => refetch();
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
 
@@ -85,7 +94,7 @@ const PromoCodePage = () => {
           token
         }
       }
-    }).then(() => runRefetchData);
+    }).then(() => runRefetchData());
     dispatch(closeDialog());
   };
   const openDeleteModalHandler = (promoID) =>
@@ -93,7 +102,6 @@ const PromoCodePage = () => {
       () => completeDeleteHandler(promoID),
       promoCodesConsts.deletePromo
     );
-
   const editPromoCodeHandler = (promoID) => {
     dispatch(push(`${promoID}`));
   };
@@ -103,6 +111,7 @@ const PromoCodePage = () => {
         <TableContainerRow
           key={_id}
           promo={code}
+          id={_id}
           discount={`${discount}%`}
           status={checkPromoStatus(dateFrom, dateTo)}
           showAvatar={false}
@@ -116,7 +125,6 @@ const PromoCodePage = () => {
   if (loading) {
     return <LoadingBar />;
   }
-
   return (
     <div className={commonStyles.container}>
       <div className={styles.header}>
@@ -127,18 +135,8 @@ const PromoCodePage = () => {
         >
           {config.titles.promoPageTitles.mainPageTitle}
         </Typography>
-        <Button
-          id='add-promo-code'
-          component={Link}
-          to={pathToAddPromoCodePage}
-          variant='contained'
-          color='primary'
-          data-cy='add-promo-code'
-        >
-          {productsTranslations.CREATE_PROMOCODE}
-        </Button>
       </div>
-
+      <FilterNavbar options={promoCodeFilters} />
       <TableContainerGenerator
         id='promoCodeTable'
         pagination

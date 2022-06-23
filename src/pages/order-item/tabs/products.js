@@ -56,7 +56,7 @@ const Products = ({ data, setFieldValue }) => {
         name={item.product.name[0].value}
         quantity={item.quantity}
         size={item.options.size.name}
-        price={`${item.options.size.price[0].value * item.quantity}₴`}
+        price={`${item.options.size.price * item.quantity} $`}
         showAvatar={false}
         deleteHandler={() => deleteItemHendler(index)}
         editHandler={() => setSelectedItem(item)}
