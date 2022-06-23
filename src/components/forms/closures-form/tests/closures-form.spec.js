@@ -5,7 +5,7 @@ import ClosureForm from '../index';
 import ImageUploadContainer from '../../../../containers/image-upload-container';
 import FileReaderMock from '../../../../../__mocks__/fileReaderMock';
 
-import { files, target } from './mockClosures';
+import { files, target, mockedinitialValues } from './mockClosures';
 
 const mockSetFieldValue = jest.fn();
 const mockSubmit = jest.fn();
@@ -34,7 +34,9 @@ jest.mock('../../../../utils/use-closures-handlers', () => ({
     setClosuresImage: mockSetClosureImage
   })
 }));
-jest.mock('../../../../utils/closures-form.js');
+jest.mock('../../../../utils/closures-form.js', () => ({
+  getClosuresInitialValues: jest.fn(() => mockedinitialValues)
+}));
 
 const fileReader = new FileReaderMock();
 jest.spyOn(window, 'FileReader').mockImplementation(() => fileReader);
