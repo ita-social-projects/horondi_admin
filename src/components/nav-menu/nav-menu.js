@@ -118,7 +118,7 @@ const NavMenu = ({ width }) => {
     'nested'
   );
 
-  function createParentMenuTab(tabName, menuItems, TAB, icon) {
+  function createParentMenuTab(tabName, itemsInMenu, TAB, icon) {
     return [
       () =>
         setNavbarTab({
@@ -126,7 +126,7 @@ const NavMenu = ({ width }) => {
           [tabName]: !navbarTab[tabName]
         }),
       navbarTab[tabName],
-      menuItems,
+      itemsInMenu,
       MENU_TABS[TAB],
       icon
     ];
@@ -174,24 +174,24 @@ const NavMenu = ({ width }) => {
 
   const parentMenuItems = parentMenuTabsProperties.map(
     ([handleClick, stateMenu, subList, primary, ItemIcon]) => (
-        <Fragment key={ItemIcon.toString()}>
-          <ListItem
-            button
-            onClick={handleClick}
-            disableGutters
-            className={classes.notNested}
-          >
-            <ListItemIcon>
-              <ItemIcon />
-            </ListItemIcon>
-            <ListItemText primary={primary} />
-            {stateMenu ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={stateMenu} timeout='auto' unmountOnExit>
-            <List>{subList}</List>
-          </Collapse>
-        </Fragment>
-      )
+      <Fragment key={ItemIcon.toString()}>
+        <ListItem
+          button
+          onClick={handleClick}
+          disableGutters
+          className={classes.notNested}
+        >
+          <ListItemIcon>
+            <ItemIcon />
+          </ListItemIcon>
+          <ListItemText primary={primary} />
+          {stateMenu ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={stateMenu} timeout='auto' unmountOnExit>
+          <List>{subList}</List>
+        </Collapse>
+      </Fragment>
+    )
   );
 
   const handleDrawerToggle = () => {
