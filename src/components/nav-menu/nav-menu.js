@@ -97,11 +97,10 @@ const NavMenu = ({ width }) => {
     </ListItem>
   );
 
-  function makeMenuItems(arrayOfCategories, className) {
-    return config[arrayOfCategories].map(([pathTitle, pathTo, PathIcon]) =>
+  const makeMenuItems = (arrayOfCategories, className) =>
+    config[arrayOfCategories].map(([pathTitle, pathTo, PathIcon]) =>
       returnedList(pathTitle, pathTo, PathIcon, classes[className])
     );
-  }
 
   const menuItems = makeMenuItems('menuCategories', 'notNested');
   const promoMenuItems = makeMenuItems('promoMenuCategories', 'nested');
@@ -118,19 +117,17 @@ const NavMenu = ({ width }) => {
     'nested'
   );
 
-  function createParentMenuTab(tabName, itemsInMenu, TAB, icon) {
-    return [
-      () =>
-        setNavbarTab({
-          ...staticArray,
-          [tabName]: !navbarTab[tabName]
-        }),
-      navbarTab[tabName],
-      itemsInMenu,
-      MENU_TABS[TAB],
-      icon
-    ];
-  }
+  const createParentMenuTab = (tabName, itemsInMenu, TAB, icon) => [
+    () =>
+      setNavbarTab({
+        ...staticArray,
+        [tabName]: !navbarTab[tabName]
+      }),
+    navbarTab[tabName],
+    itemsInMenu,
+    MENU_TABS[TAB],
+    icon
+  ];
 
   const parentMenuTabsProperties = [
     createParentMenuTab(
