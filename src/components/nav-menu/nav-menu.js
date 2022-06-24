@@ -68,7 +68,7 @@ const NavMenu = ({ width }) => {
       onClick={() => {
         dispatch(setSideMenuStatus(!sideMenuStatus));
         dispatch(resetPagination());
-        if (!nested) {
+        if (nested === classes.notNested) {
           setNavbarTab({
             ...staticArray
           });
@@ -171,24 +171,24 @@ const NavMenu = ({ width }) => {
 
   const parentMenuItems = parentMenuTabsProperties.map(
     ([handleClick, stateMenu, subList, primary, ItemIcon]) => (
-      <Fragment key={ItemIcon.toString()}>
-        <ListItem
-          button
-          onClick={handleClick}
-          disableGutters
-          className={classes.notNested}
-        >
-          <ListItemIcon>
-            <ItemIcon />
-          </ListItemIcon>
-          <ListItemText primary={primary} />
-          {stateMenu ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={stateMenu} timeout='auto' unmountOnExit>
-          <List>{subList}</List>
-        </Collapse>
-      </Fragment>
-    )
+        <Fragment key={primary}>
+          <ListItem
+            button
+            onClick={handleClick}
+            disableGutters
+            className={classes.notNested}
+          >
+            <ListItemIcon>
+              <ItemIcon />
+            </ListItemIcon>
+            <ListItemText primary={primary} />
+            {stateMenu ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={stateMenu} timeout='auto' unmountOnExit>
+            <List>{subList}</List>
+          </Collapse>
+        </Fragment>
+      )
   );
 
   const handleDrawerToggle = () => {
