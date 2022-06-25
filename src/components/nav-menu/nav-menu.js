@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, isValidElement } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   Drawer,
@@ -204,24 +204,24 @@ const NavMenu = ({ width }) => {
 
   const parentMenuItems = parentMenuTabsProperties.map(
     ([handleClick, stateMenu, subList, primary, ItemIcon]) => (
-        <Fragment key={primary}>
-          <ListItem
-            button
-            onClick={handleClick}
-            disableGutters
-            className={classes.notNested}
-          >
-            <ListItemIcon>
-              <ItemIcon />
-            </ListItemIcon>
-            <ListItemText primary={primary} />
-            {stateMenu ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={stateMenu} timeout='auto' unmountOnExit>
-            <List>{subList}</List>
-          </Collapse>
-        </Fragment>
-      )
+      <Fragment key={primary}>
+        <ListItem
+          button
+          onClick={handleClick}
+          disableGutters
+          className={classes.notNested}
+        >
+          <ListItemIcon>
+            <ItemIcon />
+          </ListItemIcon>
+          <ListItemText primary={primary} />
+          {stateMenu ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={stateMenu} timeout='auto' unmountOnExit>
+          <List>{subList}</List>
+        </Collapse>
+      </Fragment>
+    )
   );
 
   const handleDrawerToggle = () => {
