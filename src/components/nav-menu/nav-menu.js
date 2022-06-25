@@ -50,20 +50,23 @@ const allCategories = [
   ...config.certificatesMenuCategories
 ];
 
+const truncateStr = (str = '', maxLength = 11) => {
+  if (str.length > maxLength) {
+    return `${str.slice(0, maxLength).trim()}...`;
+  }
+  return str;
+};
+
+const setDocumentTitle = (newTitle) => {
+  document.title = `Horondi - ${truncateStr(newTitle)}`;
+};
+
 const NavMenu = ({ width }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const routeLocation = useLocation();
 
   const initialDocumentTitle = config.menuCategories[0][0];
-
-  useEffect(() => {
-    const currentTab = allCategories.find(
-      (category) => category[1] === routeLocation.pathname
-    );
-    document.title =
-      currentTab && currentTab[0] ? currentTab[0] : initialDocumentTitle;
-  }, [routeLocation]);
 
   const staticArray = {
     clientTab: false,
@@ -83,6 +86,15 @@ const NavMenu = ({ width }) => {
       pendingQuestionsCount: EmailQuestions.pendingCount
     })
   );
+
+  useEffect(() => {
+    const currentTab = allCategories.find(
+      (category) => category[1] === routeLocation.pathname
+    );
+    setDocumentTitle(
+      currentTab && currentTab[0] ? currentTab[0] : initialDocumentTitle
+    );
+  }, [routeLocation]);
 
   const returnedList = (pathTitle, pathTo, PathIcon, nested) => (
     <ListItem
