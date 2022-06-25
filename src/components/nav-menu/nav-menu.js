@@ -1,5 +1,5 @@
-import React, { useState, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, Fragment, useEffect, isValidElement } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   Drawer,
   Divider,
@@ -39,10 +39,31 @@ import {
 import { PromoIcon } from '../nav-bar/icons';
 
 const { titles } = config;
+const allCategories = [
+  ...config.menuCategories,
+  ...config.materialMenuCategories,
+  ...config.clientMenuCategories,
+  ...config.catalogMenuCategories,
+  ...config.promoMenuCategories,
+  ...config.staticPagesCategories,
+  ...config.constructorMenuCategories,
+  ...config.certificatesMenuCategories
+];
 
 const NavMenu = ({ width }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const routeLocation = useLocation();
+
+  const initialDocumentTitle = config.menuCategories[0][0];
+
+  useEffect(() => {
+    const currentTab = allCategories.find(
+      (category) => category[1] === routeLocation.pathname
+    );
+    document.title =
+      currentTab && currentTab[0] ? currentTab[0] : initialDocumentTitle;
+  }, [routeLocation]);
 
   const staticArray = {
     clientTab: false,
