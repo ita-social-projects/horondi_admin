@@ -90,7 +90,7 @@ const NavMenu = ({ width }) => {
       {pathTitle === titles.emailQuestionsTitles.mainPageTitle && (
         <Badge
           badgeContent={pendingQuestionsCount}
-          className={classes.bageRight}
+          className={classes.badgeRight}
           color='error'
         />
       )}
@@ -171,24 +171,31 @@ const NavMenu = ({ width }) => {
 
   const parentMenuItems = parentMenuTabsProperties.map(
     ([handleClick, stateMenu, subList, primary, ItemIcon]) => (
-        <Fragment key={primary}>
-          <ListItem
-            button
-            onClick={handleClick}
-            disableGutters
-            className={classes.notNested}
-          >
-            <ListItemIcon>
-              <ItemIcon />
-            </ListItemIcon>
-            <ListItemText primary={primary} />
-            {stateMenu ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={stateMenu} timeout='auto' unmountOnExit>
-            <List>{subList}</List>
-          </Collapse>
-        </Fragment>
-      )
+      <Fragment key={primary}>
+        <ListItem
+          button
+          onClick={handleClick}
+          disableGutters
+          className={classes.notNested}
+        >
+          <ListItemIcon>
+            <ItemIcon />
+          </ListItemIcon>
+          <ListItemText primary={primary} />
+          {subList === clientMenuItems && !stateMenu && (
+            <Badge
+              badgeContent={pendingQuestionsCount}
+              className={classes.badgeRight}
+              color='error'
+            />
+          )}
+          {stateMenu ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={stateMenu} timeout='auto' unmountOnExit>
+          <List>{subList}</List>
+        </Collapse>
+      </Fragment>
+    )
   );
 
   const handleDrawerToggle = () => {
