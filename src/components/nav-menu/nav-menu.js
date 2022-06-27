@@ -50,15 +50,8 @@ const allCategories = [
   ...config.certificatesMenuCategories
 ];
 
-const truncateStr = (str = '', maxLength = 11) => {
-  if (str.length > maxLength) {
-    return `${str.slice(0, maxLength).trim()}...`;
-  }
-  return str;
-};
-
 const setDocumentTitle = (newTitle) => {
-  document.title = `Horondi - ${truncateStr(newTitle)}`;
+  document.title = `Horondi - ${newTitle}`;
 };
 
 const NavMenu = ({ width }) => {
