@@ -50,6 +50,10 @@ const allCategories = [
   ...config.certificatesMenuCategories
 ];
 
+const setDocumentTitle = (newTitle) => {
+  document.title = `Horondi - ${newTitle}`;
+};
+
 const NavMenu = ({ width }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -76,10 +80,6 @@ const NavMenu = ({ width }) => {
     })
   );
 
-  const setDocumentTitle = (newTitle) => {
-    document.title = `Horondi - ${newTitle}`;
-  };
-
   useEffect(() => {
     const currentTab = allCategories.find(
       (category) => category[1] === routeLocation.pathname
@@ -87,7 +87,7 @@ const NavMenu = ({ width }) => {
     setDocumentTitle(
       currentTab && currentTab[0] ? currentTab[0] : initialDocumentTitle
     );
-  }, [routeLocation, initialDocumentTitle]);
+  }, [routeLocation]);
 
   const returnedList = (pathTitle, pathTo, PathIcon, nested) => (
     <ListItem
