@@ -50,7 +50,7 @@ export const useStyles = makeStyles((theme) => ({
   sliderTab: {
     paddingLeft: theme.spacing(8)
   },
-  bageRight: {
+  badgeRight: {
     right: theme.spacing(1.5)
   }
 }));
