@@ -21,16 +21,26 @@ import {
   addProductFormPropTypes
 } from '../../../../utils/order';
 
-const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
+const AddProductForm = ({
+  items,
+  setFieldValue,
+  setSizeItems,
+  setpricesWithDiscount,
+  pricesWithDiscount,
+  promoCode
+}) => {
   const { materialUiConstants } = config;
   const styles = useStyles();
   const { productLabels, productAdditionalInfo } = configs;
   const dispatch = useDispatch();
-  const { products, loading, sizes } = useSelector(({ Products }) => ({
-    products: Products.products,
-    loading: Products.loading,
-    sizes: Products.selectedProduct.sizes
-  }));
+  const { products, loading, sizes, category } = useSelector(
+    ({ Products }) => ({
+      products: Products.products,
+      loading: Products.loading,
+      sizes: Products.selectedProduct.sizes,
+      category: Products.selectedProduct.category
+    })
+  );
   const [productInput, setProductInput] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [size, setSize] = useState({ id: '', name: '', price: {} });
@@ -66,7 +76,16 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
     setQuantity(1);
     setFieldValue(
       inputName.itemsName,
-      mergeProducts(selectedProduct, size, quantity, items)
+      mergeProducts(
+        selectedProduct,
+        size,
+        quantity,
+        items,
+        category,
+        setpricesWithDiscount,
+        pricesWithDiscount,
+        promoCode
+      )
     );
   };
 
@@ -146,7 +165,9 @@ const AddProductForm = ({ items, setFieldValue, setSizeItems }) => {
 };
 
 AddProductForm.defaultProps = {
-  items: []
+  items: [],
+  pricesWithDiscount: [],
+  promoCode: {}
 };
 
 AddProductForm.propTypes = addProductFormPropTypes;

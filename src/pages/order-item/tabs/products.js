@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { MenuItem } from '@material-ui/core';
+import { useQuery } from '@apollo/client';
 import { useStyles } from '../order-item.styles';
 import TableContainerGenerator from '../../../containers/table-container-generator';
 import TableContainerRow from '../../../containers/table-container-row';
@@ -11,17 +12,27 @@ import { config } from '../../../configs';
 import { closeDialog } from '../../../redux/dialog-window/dialog-window.actions';
 import AddProductForm from './add-product-form/add-product-form';
 import EditProductForm from './edit-product-form/edit-product-form';
+import { getPromoCodeById } from '../../promo-code/operations/promo-code.queries';
 
 const Products = ({ data, setFieldValue }) => {
   const classes = useStyles();
-  const { items } = data;
+  const { items, itemsPriceWithDiscount, promoCodeId } = data;
   const { orderProductTitles } = tableHeadRowTitles;
   const dispatch = useDispatch();
 
   const [selectedItem, setSelectedItem] = useState(null);
+  const [pricesWithDiscount, setpricesWithDiscount] = useState(
+    itemsPriceWithDiscount
+  );
 
   const { openSuccessSnackbar } = useSuccessSnackbar();
   const { REMOVE_ITEM } = config.messages;
+  const { data: promoCode } = useQuery(getPromoCodeById, {
+    variables: {
+      id: promoCodeId
+    },
+    fetchPolicy: 'no-cache'
+  });
 
   const deleteItemHendler = (indexItem) => {
     const removeItem = () => {
@@ -30,6 +41,7 @@ const Products = ({ data, setFieldValue }) => {
         inputName.itemsName,
         items.filter((item, index) => index !== indexItem)
       );
+      pricesWithDiscount.splice(indexItem, 1);
     };
     openSuccessSnackbar(removeItem, REMOVE_ITEM);
   };
@@ -57,6 +69,7 @@ const Products = ({ data, setFieldValue }) => {
         quantity={item.quantity}
         size={item.options.size.name}
         price={`${item.options.size.price * item.quantity} $`}
+        priceWithDiscount={`${pricesWithDiscount[index]} $`}
         showAvatar={false}
         deleteHandler={() => deleteItemHendler(index)}
         editHandler={() => setSelectedItem(item)}
@@ -69,6 +82,9 @@ const Products = ({ data, setFieldValue }) => {
         items={items}
         setFieldValue={setFieldValue}
         setSizeItems={setSizeItems}
+        setpricesWithDiscount={setpricesWithDiscount}
+        pricesWithDiscount={pricesWithDiscount}
+        promoCode={promoCode}
       />
       {items.length ? (
         <TableContainerGenerator
@@ -84,6 +100,9 @@ const Products = ({ data, setFieldValue }) => {
         setFieldValue={setFieldValue}
         setSizeItems={setSizeItems}
         items={items}
+        setpricesWithDiscount={setpricesWithDiscount}
+        pricesWithDiscount={pricesWithDiscount}
+        promoCode={promoCode}
       />
     </div>
   );

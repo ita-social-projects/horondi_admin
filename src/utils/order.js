@@ -22,7 +22,9 @@ export const registeredUserPropTypes = {
 
 export const productsPropTypes = {
   data: PropTypes.shape({
-    items: PropTypes.arrayOf(PropTypes.object)
+    items: PropTypes.arrayOf(PropTypes.object),
+    itemsPriceWithDiscount: PropTypes.arrayOf(PropTypes.number),
+    promoCodeId: PropTypes.string
   }),
   setFieldValue: PropTypes.func.isRequired
 };
@@ -73,7 +75,10 @@ const itemPropType = PropTypes.shape({
 
 export const addProductFormPropTypes = {
   items: PropTypes.arrayOf(itemPropType),
-  setFieldValue: PropTypes.func.isRequired
+  setFieldValue: PropTypes.func.isRequired,
+  pricesWithDiscount: PropTypes.arrayOf(PropTypes.number),
+  promoCode: PropTypes.objectOf(PropTypes.object),
+  setpricesWithDiscount: PropTypes.func.isRequired
 };
 
 export const editProductFormPropTypes = {
@@ -129,7 +134,9 @@ export const newOrder = (order) => ({
   items: items(order),
   paymentMethod: order.paymentMethod,
   userComment: order.userComment,
-  isPaid: order.isPaid
+  isPaid: order.isPaid,
+  itemsPriceWithDiscount: order.itemsPriceWithDiscount,
+  promoCodeId: order.promoCodeId
 });
 
 export const submitStatus = ['CREATED', 'CONFIRMED'];
@@ -323,7 +330,9 @@ export const setFormValues = (selectedOrder) => {
     paymentMethod: selectedOrder.paymentMethod,
     isPaid: selectedOrder.isPaid,
     recipient: selectedOrder.recipient,
+    itemsPriceWithDiscount: selectedOrder.itemsPriceWithDiscount,
     user_id: selectedOrder.user_id,
+    promoCodeId: selectedOrder.promoCodeId,
     delivery: {
       sentBy,
       courier: {
@@ -365,7 +374,16 @@ export const setFormValues = (selectedOrder) => {
   };
 };
 
-export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
+export const mergeProducts = (
+  selectedProduct,
+  size,
+  quantity,
+  orderItems,
+  category,
+  setpricesWithDiscount,
+  pricesWithDiscount,
+  promoCode
+) => {
   const index = orderItems.findIndex(
     (item) =>
       item.product._id === selectedProduct._id &&
@@ -374,12 +392,26 @@ export const mergeProducts = (selectedProduct, size, quantity, orderItems) => {
   if (index !== -1) {
     const newItem = { ...orderItems[index] };
     newItem.quantity += quantity;
+    setpricesWithDiscount([
+      ...pricesWithDiscount.slice(0, index),
+      calculateItemsPriceWithDiscount(
+        promoCode,
+        newItem.quantity,
+        category,
+        size.price
+      ),
+      ...pricesWithDiscount.slice(index + 1)
+    ]);
     return [
       ...orderItems.slice(0, index),
       newItem,
       ...orderItems.slice(index + 1)
     ];
   }
+  setpricesWithDiscount([
+    ...pricesWithDiscount,
+    calculateItemsPriceWithDiscount(promoCode, quantity, category, size.price)
+  ]);
   return [
     ...orderItems,
     {
@@ -418,4 +450,25 @@ export const paymentStatusFilterObj = () => {
   });
 
   return arrToFilter;
+};
+
+export const calculateItemsPriceWithDiscount = (
+  promoCode,
+  quantity,
+  category,
+  price
+) => {
+  if (Object.keys(promoCode).length) {
+    const { discount, categories } = promoCode.getPromoCodeById;
+    const isAllowCategory = categories?.find(
+      (item) => item.toLowerCase() === category.name[1].value.toLowerCase()
+    );
+    if (isAllowCategory) {
+      return Math.round(price - (price / 100) * discount) * quantity;
+    }
+
+    return price * quantity;
+  }
+
+  return price * quantity;
 };
