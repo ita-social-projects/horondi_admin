@@ -45,7 +45,7 @@ describe('useDocTitleUpdate hook test', () => {
     renderHook(() => useDocTitleUpdate(), {
       wrapper: ({ children }) => appWithHistory(history, children)
     });
-    expect(document.title).toBe(`Horondi - ${config.menuCategories[1][0]}`); // 'Замовлення'
+    expect(document.title).toBe(`Horondi - ${config.menuCategories[1][0]}`);
   });
 
   test('Should change the document.title to a fallback value when not using tabs', () => {
