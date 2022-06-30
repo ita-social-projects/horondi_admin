@@ -98,6 +98,7 @@ export const getOrderById = (id) => {
 					}
 					itemsPriceWithDiscount
 					promoCodeId
+					itemsDiscount
 					paymentMethod
 					paymentStatus
 					isPaid
@@ -180,6 +181,7 @@ export const updateOrder = (order, id) => {
 					isPaid
 					itemsPriceWithDiscount
 					promoCodeId
+					itemsDiscount
 				}
 				...on Error {
 					statusCode

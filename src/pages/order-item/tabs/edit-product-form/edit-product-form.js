@@ -23,8 +23,7 @@ const EditProductForm = ({
   setFieldValue,
   setSizeItems,
   items,
-  setpricesWithDiscount,
-  pricesWithDiscount,
+  setPricesWithDiscount,
   promoCode
 }) => {
   const { materialUiConstants } = config;
@@ -78,15 +77,15 @@ const EditProductForm = ({
       newValue,
       ...items.slice(index + 1)
     ]);
-    setpricesWithDiscount([
-      ...pricesWithDiscount.slice(0, index),
+    setPricesWithDiscount((prev) => [
+      ...prev.slice(0, index),
       calculateItemsPriceWithDiscount(
         promoCode,
         quantity,
         category,
         size.price
       ),
-      ...pricesWithDiscount.slice(index + 1)
+      ...prev.slice(index + 1)
     ]);
     onCloseHandler();
   };
@@ -135,7 +134,6 @@ const EditProductForm = ({
 EditProductForm.defaultProps = {
   items: [],
   selectedItem: {},
-  pricesWithDiscount: [],
   promoCode: {}
 };
 

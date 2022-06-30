@@ -25,9 +25,9 @@ const AddProductForm = ({
   items,
   setFieldValue,
   setSizeItems,
-  setpricesWithDiscount,
-  pricesWithDiscount,
-  promoCode
+  setPricesWithDiscount,
+  promoCode,
+  setDiscounts
 }) => {
   const { materialUiConstants } = config;
   const styles = useStyles();
@@ -82,9 +82,9 @@ const AddProductForm = ({
         quantity,
         items,
         category,
-        setpricesWithDiscount,
-        pricesWithDiscount,
-        promoCode
+        setPricesWithDiscount,
+        promoCode,
+        setDiscounts
       )
     );
   };
@@ -166,7 +166,6 @@ const AddProductForm = ({
 
 AddProductForm.defaultProps = {
   items: [],
-  pricesWithDiscount: [],
   promoCode: {}
 };
 

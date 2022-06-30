@@ -79,6 +79,7 @@ const tableHeadRowTitles = {
     'Розмір',
     'Ціна',
     'Ціна зі знижкою',
+    'Знижка',
     'Деталі'
   ],
   comments: {

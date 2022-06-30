@@ -24,7 +24,8 @@ export const productsPropTypes = {
   data: PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.object),
     itemsPriceWithDiscount: PropTypes.arrayOf(PropTypes.number),
-    promoCodeId: PropTypes.string
+    promoCodeId: PropTypes.string,
+    itemsDiscount: PropTypes.arrayOf(PropTypes.number)
   }),
   setFieldValue: PropTypes.func.isRequired
 };
@@ -76,9 +77,8 @@ const itemPropType = PropTypes.shape({
 export const addProductFormPropTypes = {
   items: PropTypes.arrayOf(itemPropType),
   setFieldValue: PropTypes.func.isRequired,
-  pricesWithDiscount: PropTypes.arrayOf(PropTypes.number),
   promoCode: PropTypes.objectOf(PropTypes.object),
-  setpricesWithDiscount: PropTypes.func.isRequired
+  setPricesWithDiscount: PropTypes.func.isRequired
 };
 
 export const editProductFormPropTypes = {
@@ -135,7 +135,6 @@ export const newOrder = (order) => ({
   paymentMethod: order.paymentMethod,
   userComment: order.userComment,
   isPaid: order.isPaid,
-  itemsPriceWithDiscount: order.itemsPriceWithDiscount,
   promoCodeId: order.promoCodeId
 });
 
@@ -331,6 +330,7 @@ export const setFormValues = (selectedOrder) => {
     isPaid: selectedOrder.isPaid,
     recipient: selectedOrder.recipient,
     itemsPriceWithDiscount: selectedOrder.itemsPriceWithDiscount,
+    itemsDiscount: selectedOrder.itemsDiscount,
     user_id: selectedOrder.user_id,
     promoCodeId: selectedOrder.promoCodeId,
     delivery: {
@@ -380,9 +380,9 @@ export const mergeProducts = (
   quantity,
   orderItems,
   category,
-  setpricesWithDiscount,
-  pricesWithDiscount,
-  promoCode
+  setPricesWithDiscount,
+  promoCode,
+  setDiscounts
 ) => {
   const index = orderItems.findIndex(
     (item) =>
@@ -392,15 +392,15 @@ export const mergeProducts = (
   if (index !== -1) {
     const newItem = { ...orderItems[index] };
     newItem.quantity += quantity;
-    setpricesWithDiscount([
-      ...pricesWithDiscount.slice(0, index),
+    setPricesWithDiscount((prev) => [
+      ...prev.slice(0, index),
       calculateItemsPriceWithDiscount(
         promoCode,
         newItem.quantity,
         category,
         size.price
       ),
-      ...pricesWithDiscount.slice(index + 1)
+      ...prev.slice(index + 1)
     ]);
     return [
       ...orderItems.slice(0, index),
@@ -408,9 +408,13 @@ export const mergeProducts = (
       ...orderItems.slice(index + 1)
     ];
   }
-  setpricesWithDiscount([
-    ...pricesWithDiscount,
+  setPricesWithDiscount((prev) => [
+    ...prev,
     calculateItemsPriceWithDiscount(promoCode, quantity, category, size.price)
+  ]);
+  setDiscounts((prev) => [
+    ...prev,
+    calculateDiscountsForProducts(promoCode, category)
   ]);
   return [
     ...orderItems,
@@ -460,15 +464,27 @@ export const calculateItemsPriceWithDiscount = (
 ) => {
   if (Object.keys(promoCode).length) {
     const { discount, categories } = promoCode.getPromoCodeById;
-    const isAllowCategory = categories?.find(
+    const isAllowCategory = categories.find(
       (item) => item.toLowerCase() === category.name[1].value.toLowerCase()
     );
     if (isAllowCategory) {
       return Math.round(price - (price / 100) * discount) * quantity;
     }
-
     return price * quantity;
   }
-
   return price * quantity;
+};
+
+const calculateDiscountsForProducts = (promoCode, category) => {
+  if (Object.keys(promoCode).length) {
+    const { discount, categories } = promoCode.getPromoCodeById;
+    const isAllowCategory = categories.find(
+      (item) => item.toLowerCase() === category.name[1].value.toLowerCase()
+    );
+    if (isAllowCategory) {
+      return discount;
+    }
+    return 0;
+  }
+  return 0;
 };

@@ -16,12 +16,13 @@ import { getPromoCodeById } from '../../promo-code/operations/promo-code.queries
 
 const Products = ({ data, setFieldValue }) => {
   const classes = useStyles();
-  const { items, itemsPriceWithDiscount, promoCodeId } = data;
+  const { items, itemsPriceWithDiscount, promoCodeId, itemsDiscount } = data;
   const { orderProductTitles } = tableHeadRowTitles;
   const dispatch = useDispatch();
 
   const [selectedItem, setSelectedItem] = useState(null);
-  const [pricesWithDiscount, setpricesWithDiscount] = useState(
+  const [discounts, setDiscounts] = useState(itemsDiscount);
+  const [pricesWithDiscount, setPricesWithDiscount] = useState(
     itemsPriceWithDiscount
   );
 
@@ -42,6 +43,7 @@ const Products = ({ data, setFieldValue }) => {
         items.filter((item, index) => index !== indexItem)
       );
       pricesWithDiscount.splice(indexItem, 1);
+      discounts.splice(indexItem, 1);
     };
     openSuccessSnackbar(removeItem, REMOVE_ITEM);
   };
@@ -70,6 +72,7 @@ const Products = ({ data, setFieldValue }) => {
         size={item.options.size.name}
         price={`${item.options.size.price * item.quantity} $`}
         priceWithDiscount={`${pricesWithDiscount[index]} $`}
+        discount={`${discounts[index]}%`}
         showAvatar={false}
         deleteHandler={() => deleteItemHendler(index)}
         editHandler={() => setSelectedItem(item)}
@@ -82,9 +85,9 @@ const Products = ({ data, setFieldValue }) => {
         items={items}
         setFieldValue={setFieldValue}
         setSizeItems={setSizeItems}
-        setpricesWithDiscount={setpricesWithDiscount}
-        pricesWithDiscount={pricesWithDiscount}
+        setPricesWithDiscount={setPricesWithDiscount}
         promoCode={promoCode}
+        setDiscounts={setDiscounts}
       />
       {items.length ? (
         <TableContainerGenerator
@@ -100,8 +103,7 @@ const Products = ({ data, setFieldValue }) => {
         setFieldValue={setFieldValue}
         setSizeItems={setSizeItems}
         items={items}
-        setpricesWithDiscount={setpricesWithDiscount}
-        pricesWithDiscount={pricesWithDiscount}
+        setPricesWithDiscount={setPricesWithDiscount}
         promoCode={promoCode}
       />
     </div>
