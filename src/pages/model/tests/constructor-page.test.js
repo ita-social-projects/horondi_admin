@@ -8,10 +8,7 @@ import { config } from '../../../configs';
 
 const { constructorBasic } = config.labels.model;
 const mockUseHistory = jest.fn();
-const mockDispatch = jest.fn();
-const mockOpenSnackbar = jest.fn();
 const mockEditConstructor = jest.fn();
-const mockDeleteConstructorElement = jest.fn();
 
 jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -25,15 +22,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: () => mockEditConstructor
-  // useSelector: jest.fn()
 }));
-
-// jest.mock('../../../utils/use-success-snackbar', () => ({
-//   __esModule: true,
-//   default: () => ({
-//     openSuccessSnackbar: mockOpenSnackbar
-//   })
-// }));
 
 jest.mock('../constructor/constructor-page/constructor-page.styles.js', () => ({
   useStyles: () => ({})
