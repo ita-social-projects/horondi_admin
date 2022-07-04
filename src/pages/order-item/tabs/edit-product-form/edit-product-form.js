@@ -98,13 +98,17 @@ const EditProductForm = ({
         <div className={classes.quantity}>
           {productLabels.quantity}
           <Button
+            data-testid='decrement'
             onClick={() => setQuantity((prev) => prev - 1)}
             disabled={quantity <= 1}
           >
             <RemoveIcon />
           </Button>
-          <h3>{quantity}</h3>
-          <Button onClick={() => setQuantity((prev) => prev + 1)}>
+          <h3 data-testid='quantity'>{quantity}</h3>
+          <Button
+            data-testid='increment'
+            onClick={() => setQuantity((prev) => prev + 1)}
+          >
             <AddIcon />
           </Button>
         </div>
@@ -116,6 +120,7 @@ const EditProductForm = ({
         </div>
         <br />
         <Button
+          data-testid='save-btn'
           variant={materialUiConstants.contained}
           color={materialUiConstants.primary}
           disabled={

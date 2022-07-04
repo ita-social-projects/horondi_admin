@@ -475,7 +475,7 @@ export const calculateItemsPriceWithDiscount = (
   return price * quantity;
 };
 
-const calculateDiscountsForProducts = (promoCode, category) => {
+export const calculateDiscountsForProducts = (promoCode, category) => {
   if (Object.keys(promoCode).length) {
     const { discount, categories } = promoCode.getPromoCodeById;
     const isAllowCategory = categories.find(

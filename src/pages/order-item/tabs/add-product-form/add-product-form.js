@@ -94,6 +94,7 @@ const AddProductForm = ({
   return (
     <div>
       <Autocomplete
+        data-testid='autocomplete'
         onInputChange={(e, value) => {
           setProductInput(value);
         }}
@@ -128,13 +129,15 @@ const AddProductForm = ({
       <div className={styles.quantity}>
         {productLabels.quantity}
         <Button
+          data-testid='decrement'
           onClick={() => setQuantity((prev) => prev - 1)}
           disabled={quantity <= 1}
         >
           <RemoveIcon />
         </Button>
-        <h3>{quantity}</h3>
+        <h3 data-testid='quantity'>{quantity}</h3>
         <Button
+          data-testid='increment'
           onClick={() => setQuantity((prev) => prev + 1)}
           disabled={!selectedProduct}
         >
@@ -152,9 +155,10 @@ const AddProductForm = ({
         </Select>
       </div>
       <Button
+        data-testid='add-btn'
         variant={materialUiConstants.contained}
         color={materialUiConstants.primary}
-        disabled={!selectedProduct}
+        disabled={!selectedProduct || loading}
         className={styles.addBtn}
         onClick={addProductHandler}
       >
