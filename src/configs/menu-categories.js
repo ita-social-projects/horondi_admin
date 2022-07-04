@@ -102,3 +102,14 @@ export const certificatesMenuCategories = [
     AccountCircleIcon
   ]
 ];
+
+export const allCategories = [
+  ...menuCategories,
+  ...materialMenuCategories,
+  ...clientMenuCategories,
+  ...catalogMenuCategories,
+  ...promoMenuCategories,
+  ...staticPagesCategories,
+  ...constructorMenuCategories,
+  ...certificatesMenuCategories
+];
