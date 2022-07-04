@@ -9,7 +9,7 @@ import { getFromLocalStorage } from '../../services/local-storage.service';
 import { LOCAL_STORAGE } from '../../consts/local-storage';
 import useDeleteValidation from '../../hooks/deleteValidation/useDeleteValidation';
 import { getAllProductsDataForDeleteValidation } from '../../redux/products/products.operations';
-import useDocTitleUpdate from '../../hooks/doc-title-update/doc-title-update';
+import useDocTitleUpdate from '../../hooks/doc-title-update/useDocTitleUpdate';
 
 const App = () => {
   const classes = useStyles();

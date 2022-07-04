@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom';
 import { renderHook } from '@testing-library/react-hooks';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import useDocTitleUpdate from './doc-title-update';
+import useDocTitleUpdate from './useDocTitleUpdate';
 import { config } from '../../configs';
 import configureStore from '../../store/store';
 
