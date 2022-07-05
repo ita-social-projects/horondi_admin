@@ -9,7 +9,14 @@ import { config } from '../../configs';
 const { materialUiConstants } = config;
 const { SAVE_TITLE } = config.buttonTitles;
 
-const EditingButtonsPanel = ({ pathBack, submitForm, values, errors }) => {
+const EditingButtonsPanel = ({
+  pathBack,
+  submitForm,
+  values,
+  errors,
+  dirty,
+  isValid
+}) => {
   const styles = useStyles();
   const unblock = useUnsavedChangesHandler(values);
 
@@ -28,6 +35,7 @@ const EditingButtonsPanel = ({ pathBack, submitForm, values, errors }) => {
             values={values}
             errors={errors}
             unblockFunction={unblock}
+            disabled={!dirty || !isValid}
           />
         </Grid>
       </Grid>
@@ -39,7 +47,9 @@ EditingButtonsPanel.propTypes = {
   pathBack: PropTypes.string.isRequired,
   submitForm: PropTypes.func.isRequired,
   values: PropTypes.objectOf(PropTypes.string).isRequired,
-  errors: PropTypes.objectOf(PropTypes.string).isRequired
+  errors: PropTypes.objectOf(PropTypes.string).isRequired,
+  dirty: PropTypes.bool.isRequired,
+  isValid: PropTypes.bool.isRequired
 };
 
 export default EditingButtonsPanel;

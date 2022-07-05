@@ -789,6 +789,24 @@ const labels = {
     available: 'Доступний',
     avatarText: 'Фото',
     chooseColor: { title: 'Колір', inputTitle: 'Оберіть колір' }
+  },
+  materialAbout: {
+    img: 'img',
+    titleInput: {
+      label: {
+        ua: 'Заголовок',
+        en: 'Title'
+      },
+      name: 'title'
+    },
+    textInput: {
+      label: {
+        ua: 'Текст',
+        en: 'Text'
+      },
+      name: 'text',
+      isEditor: true
+    }
   }
 };
 export default labels;

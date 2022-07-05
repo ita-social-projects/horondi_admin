@@ -167,6 +167,11 @@ export const materialErrorMessages = {
   NOT_UA_DESCRIPTION_MESSAGE: `Введіть опис матеріалу українською`
 };
 
+export const materialAboutErrorMessages = {
+  NO_STRING_TYPE_MESSAGE: 'Повинно містити букви, цифри та спецсимволи',
+  REQUIRED_IMG_MESSAGE: 'Додайте фото для матеріалу'
+};
+
 export const sizeErrorMessages = {
   MAX_LENGTH_MESSAGE: `Не більше 20 символів`,
   MIN_LENGTH_MESSAGE: `Не менше 1см`,

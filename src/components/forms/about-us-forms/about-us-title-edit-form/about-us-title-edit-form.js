@@ -47,12 +47,20 @@ const AboutUsTitleEditForm = ({ businessPage }) => {
     });
   };
 
-  const { values, errors, touched, handleChange, handleBlur, submitForm } =
-    useFormik({
-      initialValues: getInitialValuesForTitleEditing(businessPage),
-      validationSchema: titleEditValidationSchema,
-      onSubmit
-    });
+  const {
+    values,
+    errors,
+    touched,
+    dirty,
+    isValid,
+    handleChange,
+    handleBlur,
+    submitForm
+  } = useFormik({
+    initialValues: getInitialValuesForTitleEditing(businessPage),
+    validationSchema: titleEditValidationSchema,
+    onSubmit
+  });
 
   const inputOptions = {
     errors,
@@ -74,6 +82,8 @@ const AboutUsTitleEditForm = ({ businessPage }) => {
         submitForm={submitForm}
         values={values}
         errors={errors}
+        dirty={dirty}
+        isValid={isValid}
       />
       <form>
         {languages.map((lang) => (

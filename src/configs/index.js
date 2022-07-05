@@ -65,7 +65,8 @@ import {
   strapsErrorMessages,
   userErrorMessages,
   promoCodeErrorMessages,
-  aboutUsPageErrorMessages
+  aboutUsPageErrorMessages,
+  materialAboutErrorMessages
 } from './error-messages';
 import messages from './messages';
 import formRegExp from './form-regexp';
@@ -334,6 +335,7 @@ export const config = {
   userTranslations,
   errorStatuses,
   userErrorMessages,
+  materialAboutErrorMessages,
   RESET: 'reset'
 };
 export const inputTypes = {

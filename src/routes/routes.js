@@ -195,9 +195,18 @@ const Routes = ({ validatorMethods }) => {
             )}
           />
           <Route
-            path={routes.pathToAboutMaterialsAdd}
+            path={routes.pathToAboutMaterialsMainAdd}
             exact
-            component={MaterialAboutAdd}
+            render={(props) => (
+              <MaterialAboutAdd {...props} currentType='main' />
+            )}
+          />
+          <Route
+            path={routes.pathToAboutMaterialsBottomAdd}
+            exact
+            render={(props) => (
+              <MaterialAboutAdd {...props} currentType='bottom' />
+            )}
           />
           <Route
             path={routes.pathToCreateCertificates}

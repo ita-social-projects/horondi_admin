@@ -73,11 +73,12 @@ const AboutUsFooterImgEditForm = ({ businessPage }) => {
     });
   };
 
-  const { values, errors, setFieldValue, submitForm } = useFormik({
-    initialValues: getInitialValuesForFooterImgEdit(businessPageData),
-    validationSchema: footerImgEditValidationSchema,
-    onSubmit
-  });
+  const { values, errors, setFieldValue, submitForm, dirty, isValid } =
+    useFormik({
+      initialValues: getInitialValuesForFooterImgEdit(businessPageData),
+      validationSchema: footerImgEditValidationSchema,
+      onSubmit
+    });
 
   const handleImageLoad = (files) => {
     const reader = new FileReader();
@@ -99,6 +100,8 @@ const AboutUsFooterImgEditForm = ({ businessPage }) => {
         submitForm={submitForm}
         values={values}
         errors={errors}
+        dirty={dirty}
+        isValid={isValid}
       />
       <form>
         <Grid container spacing={1}>
