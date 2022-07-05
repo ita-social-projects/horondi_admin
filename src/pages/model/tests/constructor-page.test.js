@@ -10,8 +10,6 @@ const { constructorBasic } = config.labels.model;
 const mockUseHistory = jest.fn();
 const mockEditConstructor = jest.fn();
 
-jest.spyOn(console, 'error').mockImplementation(() => {});
-
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: () => ({

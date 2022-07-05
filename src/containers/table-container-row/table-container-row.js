@@ -69,11 +69,11 @@ const TableContainerRow = ({
       )}
 
       {tableCells}
-      {text && (
+      {text ? (
         <TableCell>
           <p className={classes.text}>{text}</p>
         </TableCell>
-      )}
+      ) : null}
       {!showAvatar && image && (
         <TableCell className={classes.imageValue}>
           <img src={image} alt={image} />
